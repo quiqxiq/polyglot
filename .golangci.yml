@@ -1,0 +1,29 @@
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  # "standard" sudah mencakup: errcheck, govet, ineffassign, staticcheck,
+  # unused — tidak perlu didaftar ulang di "enable" di bawah.
+  default: standard
+  enable:
+    - revive
+    - exhaustive
+    - bodyclose
+  settings:
+    exhaustive:
+      # Ditegakkan karena CLAUDE.md §3.3 mewajibkan `default` eksplisit di
+      # setiap switch pada enum/tipe tertutup — exhaustive membantu menangkap
+      # switch yang lupa menangani kasus baru.
+      default-signifies-exhaustive: true
+    revive:
+      rules:
+        - name: exported
+          # Menegakkan CLAUDE.md §7: setiap identifier exported wajib doc
+          # comment dimulai dengan nama identifier itu sendiri.
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
