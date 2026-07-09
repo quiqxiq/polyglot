@@ -9,7 +9,7 @@ import (
 
 // destructivePrefixes lists CLI command prefixes considered destructive —
 // these always require HITL approval regardless of caller.
-// TODO: fill in the full list per NetOps-Architecture.md §5.3.
+// TODO: fill in the full list per Polyglot-Architecture.md §5.3.
 var destructivePrefixes = []string{"reload", "write erase", "erase startup-config"}
 
 // operationMap translates abstract Operations to Cisco CLI commands.

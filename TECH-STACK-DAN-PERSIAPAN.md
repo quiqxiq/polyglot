@@ -1,7 +1,7 @@
 # Persiapan & Tech Stack — NetOps Engine (Go)
 
 > **Status:** v2 — keputusan tegas, semua versi diverifikasi langsung (bukan dari memori pelatihan)
-> **Melengkapi:** `NetOps-Architecture.md`
+> **Melengkapi:** `Polyglot-Architecture.md`
 > **Model tenancy:** Single-tenant per deployment
 
 Versi v1 dokumen ini menyajikan beberapa pilihan sebagai "opsi A atau B" — itu keliru. Di bawah ini satu keputusan per kategori, dengan versi yang sudah saya cek langsung (bukan tebakan), plus alasan singkat kalau ada penyimpangan dari yang Anda sebutkan.
@@ -14,7 +14,7 @@ Ini temuan paling penting dari riset saya dan berlaku terlepas dari keputusan te
 
 SDK resmi Go, Python, TypeScript, dan C# sudah punya rilis beta untuk spec baru ini (`go get github.com/modelcontextprotocol/go-sdk@v1.7.0-pre.1`), tapi **instalasi normal tanpa menyebut pre-release tetap mendapat versi stabil saat ini**, dan client lama otomatis fallback ke handshake versi sebelumnya. Implikasi konkret untuk Anda:
 - Mulai development sekarang dengan **versi stabil saat ini** (bukan pre-release) — jangan tunda proyek menunggu spec final.
-- Tapi desain `internal/adapter/mcp/` Anda sebaiknya **tidak mengasumsikan session-per-koneksi yang persisten sebagai satu-satunya model** — begitu spec final rilis akhir Juli, ada kemungkinan kuat Anda akan upgrade dalam waktu dekat, dan model stateless ini justru **kemungkinan menyederhanakan** sebagian kompleksitas connection-state yang kita bahas sebelumnya di `NetOps-Architecture.md`.
+- Tapi desain `internal/adapter/mcp/` Anda sebaiknya **tidak mengasumsikan session-per-koneksi yang persisten sebagai satu-satunya model** — begitu spec final rilis akhir Juli, ada kemungkinan kuat Anda akan upgrade dalam waktu dekat, dan model stateless ini justru **kemungkinan menyederhanakan** sebagian kompleksitas connection-state yang kita bahas sebelumnya di `Polyglot-Architecture.md`.
 - Jadwalkan review ulang bagian MCP setelah 28 Juli 2026.
 
 ---
@@ -81,7 +81,7 @@ a, _ := gormadapter.NewAdapterByDB(db) // db = *gorm.DB Anda yang sudah ada
 e, _ := casbin.NewEnforcer("model.conf", a)
 ```
 
-Model RBAC: `superadmin / owner / admin / staff / teknisi`, tanpa domain/tenant (lihat Bagian 0 di `NetOps-Architecture.md`). Migrasi dari v2 ke v3 kalau Anda pernah punya kode contoh lama: cukup ganti `/v2` jadi `/v3` di semua import path, API-nya tidak berubah drastis.
+Model RBAC: `superadmin / owner / admin / staff / teknisi`, tanpa domain/tenant (lihat Bagian 0 di `Polyglot-Architecture.md`). Migrasi dari v2 ke v3 kalau Anda pernah punya kode contoh lama: cukup ganti `/v2` jadi `/v3` di semua import path, API-nya tidak berubah drastis.
 
 ## 4. Auth: golang-jwt v5
 
@@ -92,7 +92,7 @@ Model RBAC: `superadmin / owner / admin / staff / teknisi`, tanpa domain/tenant 
 ```go
 import "github.com/modelcontextprotocol/go-sdk/mcp"
 
-server := mcp.NewServer(&mcp.Implementation{Name: "netops-engine", Version: "v1.0.0"}, nil)
+server := mcp.NewServer(&mcp.Implementation{Name: "polyglot", Version: "v1.0.0"}, nil)
 mcp.AddTool(server, &mcp.Tool{Name: "get_device_status", Description: "..."}, GetDeviceStatusHandler)
 ```
 

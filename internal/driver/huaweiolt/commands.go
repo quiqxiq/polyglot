@@ -7,7 +7,7 @@ import (
 )
 
 // destructiveCommands lists Huawei VRP CLI commands considered destructive.
-// TODO: fill in the full list per NetOps-Architecture.md §5.3.
+// TODO: fill in the full list per Polyglot-Architecture.md §5.3.
 var destructiveCommands = map[string]bool{
 	"reboot":                    true,
 	"reset saved-configuration": true,

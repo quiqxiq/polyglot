@@ -13,10 +13,10 @@ import (
 // there is no separate Session type on the driver's connection lifecycle.
 // See docs/adr/0002-devicedriver-tanpa-session-terpisah.md for the decision
 // record, including its explicit divergence from the earlier
-// Connect/Session/Stream sketch in NetOps-Architecture.md §5.3.
+// Connect/Session/Stream sketch in Polyglot-Architecture.md §5.3.
 //
 // Streaming (long-lived commands with live output) is intentionally absent
-// here. It is deferred until Fase 7 (streaming) per NetOps-Architecture.md's
+// here. It is deferred until Fase 7 (streaming) per Polyglot-Architecture.md's
 // roadmap is actually built, at which point this interface will be extended
 // — not before, to avoid a half-implemented method existing today.
 type DeviceDriver interface {

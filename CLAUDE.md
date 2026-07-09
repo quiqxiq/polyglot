@@ -1,4 +1,4 @@
-# CLAUDE.md — NetOps Engine (Go Backend)
+# CLAUDE.md — Polyglot (Go Backend)
 
 **Dokumen ini adalah instruksi operasional untuk AI agent (Claude Code atau agent lain) yang menulis kode di repo ini. Ini bukan panduan gaya untuk kontributor manusia.** Baca ulang dokumen ini di awal setiap task, bukan cuma sekali di awal sesi — kalau ada bagian yang bertentangan dengan pola yang "terlihat masuk akal" dari kode lain di repo, dokumen ini yang menang, bukan pola dominan.
 
@@ -24,7 +24,7 @@ Referensi terkait (dibaca setelah dokumen ini, bukan sebagai pengganti): `Polygl
 Ini satu-satunya sumber kebenaran struktur folder proyek. Tidak ada versi lain di dokumen mana pun yang menggantikan ini.
 
 ```
-netops-engine/
+polyglot/
 ├── cmd/
 │   └── server/
 │       └── main.go
@@ -199,9 +199,9 @@ package mikrotik
 import (
 	"context"
 
-	"github.com/quixiq/netops-engine/internal/domain/command"
-	"github.com/quixiq/netops-engine/internal/domain/device"
-	"github.com/quixiq/netops-engine/internal/port"
+	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/domain/device"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // Driver merepresentasikan satu koneksi yang sudah terbuka ke satu device.
@@ -242,7 +242,7 @@ package mikrotik
 import (
 	"fmt"
 
-	"github.com/quixiq/netops-engine/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/domain/command"
 )
 
 // Path API yang dianggap destruktif — wajib HITL approval.
@@ -332,7 +332,7 @@ Kalau sebuah task tidak cocok dengan satu baris pun di tabel ini, gunakan algori
 - **README per-package** hanya dibuat kalau logic package tersebut genuinely tidak jelas dari nama file saja (jarang — kebanyakan package tidak butuh ini). Letak: langsung di folder package itu (`internal/platformdef/README.md`), bukan dikumpulkan di `docs/`.
 - **Dokumen level-proyek** (arsitektur, tech stack, dokumen ini sendiri) → root repo, penamaan `UPPERCASE-KEBAB-CASE.md` untuk dokumen multi-kata (`TECH-STACK-DAN-PERSIAPAN.md`) atau `UPPERCASE.md` untuk nama tunggal yang sudah konvensi (`README.md`, `CLAUDE.md`).
 - **Tidak membuat file dokumen baru di root repo tanpa menautkannya dari `README.md`.** Root yang berisi banyak `.md` yang tidak saling terhubung dilarang — kalau membuat dokumen baru di root, tambahkan link ke dokumen itu di `README.md` pada commit yang sama.
-- **Tidak menaruh dokumentasi desain di dalam komentar kode yang panjang.** Kalau penjelasan butuh lebih dari ~5 baris komentar, itu seharusnya jadi ADR atau bagian di `NetOps-Architecture.md`, dengan komentar kode hanya merujuk ke sana.
+- **Tidak menaruh dokumentasi desain di dalam komentar kode yang panjang.** Kalau penjelasan butuh lebih dari ~5 baris komentar, itu seharusnya jadi ADR atau bagian di `Polyglot-Architecture.md`, dengan komentar kode hanya merujuk ke sana.
 
 ---
 
@@ -679,8 +679,8 @@ import (
     "gorm.io/gorm"
 
     // 3. Internal project
-    "github.com/quixiq/netops-engine/internal/domain/device"
-    "github.com/quixiq/netops-engine/internal/port"
+    "github.com/quixiq/polyglot/internal/domain/device"
+    "github.com/quixiq/polyglot/internal/port"
 )
 ```
 

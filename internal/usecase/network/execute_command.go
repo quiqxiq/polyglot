@@ -21,7 +21,7 @@ var ErrDenied = errors.New("execute_command: denied by policy")
 // is the single execution pipeline every other usecase in this package
 // (GetDeviceStatus, PushConfig) reuses, so the gate is applied exactly once.
 // TODO: wire actual HITL approval flow (pause/resume) per
-// NetOps-Architecture.md §6.1 (sequence: Policy -> pending_approval ->
+// Polyglot-Architecture.md §6.1 (sequence: Policy -> pending_approval ->
 // LibreChat HITL prompt -> approve/reject -> resume Execute).
 func ExecuteCommand(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
 	switch command.Decide(driver.Classify(cmd)) {
@@ -29,6 +29,22 @@ func ExecuteCommand(ctx context.Context, driver port.DeviceDriver, cmd command.C
 		return command.Result{}, ErrDenied
 	case command.DecisionRequireApproval:
 		return command.Result{}, ErrApprovalRequired
+	}
+	return driver.Execute(ctx, cmd)
+}
+
+// ExecuteCommandPreApproved runs cmd against a device via driver, skipping
+// the DecisionRequireApproval gate — the caller (e.g. the MCP adapter)
+// asserts that the client (LibreChat) already obtained human approval via
+// ToolAnnotations.DestructiveHint before calling the tool. This is the
+// idiomatic MCP flow: HITL is client-side, the server executes when called.
+//
+// DecisionDeny still blocks — no amount of client-side approval overrides a
+// hard policy deny. This preserves defense-in-depth: even if a buggy or
+// malicious client calls a denied tool, the server refuses.
+func ExecuteCommandPreApproved(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
+	if command.Decide(driver.Classify(cmd)) == command.DecisionDeny {
+		return command.Result{}, ErrDenied
 	}
 	return driver.Execute(ctx, cmd)
 }

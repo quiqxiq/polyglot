@@ -1,0 +1,114 @@
+---
+# mikrotik_routeros.yaml — platform definition untuk MikroTik RouterOS CLI
+# (SSH), dipakai lewat internal/driver/genericssh dengan
+# platformDef="internal/platformdef/mikrotik_routeros.yaml".
+#
+# INI BUKAN PENGGANTI internal/driver/mikrotik (yang memakai RouterOS API
+# lewat go-routeros/v3, lihat docs/adr/0003-*.md) — API tetap jalur utama
+# yang direkomendasikan: data terstruktur, tanpa parsing prompt/teks, dan
+# sudah mendukung streaming. Platform ini adalah JALUR CADANGAN untuk saat
+# akses API tidak tersedia/dimatikan di device (beberapa admin sengaja
+# menonaktifkan API demi keamanan, menyisakan cuma SSH), atau untuk command
+# yang belum ada di katalog driver API.
+#
+# Sumber yang dipakai untuk menyusun file ini (bukan tebakan):
+#   - Dokumentasi resmi MikroTik soal parameter login SSH/Telnet:
+#     https://help.mikrotik.com/docs/spaces/ROS/pages/328134/Command+Line+Interface
+#     (bagian "Console login options" — sintaks login_name+parameters)
+#   - Isu nyata & terdokumentasi di scrapligo sendiri soal RouterOS meng-
+#     echo prompt/command DUA KALI setelah command dikirim lewat SSH:
+#     https://github.com/scrapli/scrapligo/issues/95
+#   - scrapli_community Python driver untuk mikrotik/routeros (referensi
+#     prompt pattern & workaround echo ganda di atas)
+#   - Template resmi scrapligo: assets/platforms/example.yaml (struktur
+#     field) dan assets/platforms/vyatta_vyos.yaml (referensi vendor
+#     dengan privilege level tunggal, mirip kasus RouterOS)
+#
+# ⚠ BELUM divalidasi ke device RouterOS fisik oleh saya (Claude) — sandbox
+# saya tidak punya jalur jaringan ke lab Anda. Sebelum dipakai produksi,
+# jalankan test/integration/mikrotik_ssh_test.go (lihat komentar di file
+# itu) dan sesuaikan CATATAN PENTING di bawah kalau perlu.
+#
+# CATATAN PENTING — WAJIB dibaca sebelum pakai:
+#   RouterOS men-support parameter tambahan di login_name, dipisah '+',
+#   didokumentasikan resmi oleh MikroTik untuk SSH/Telnet:
+#     c = disable console colors      (hilangkan kode warna ANSI di output)
+#     e = enable "dumb" terminal mode (nonaktifkan redraw/fitur canggih)
+#     t = disable auto-detection      (RouterOS tidak coba deteksi terminal)
+#     <n>w = set terminal width ke n  (mis. 512w)
+#   Rekomendasi MikroTik & Ansible community.routeros: pakai suffix
+#   "+cet512w" di username. INI HARUS DISET DI SISI PEMANGGIL, bukan di
+#   file YAML ini (YAML platform tidak punya field untuk memodifikasi
+#   username) — set device.Target.Username = "<username_asli>+cet512w"
+#   saat membangun genericssh.NewDriver untuk platform ini. Lihat
+#   test/integration/mikrotik_ssh_test.go untuk contoh konkret.
+#
+#   Kalau setelah itu MASIH ada gejala seperti di issue #95 (Execute
+#   sepertinya menggantung / tidak dapat balasan), tambahkan
+#   genericcli.Catalog.ReadDelay (mis. 100*time.Millisecond) — itu sudah
+#   disediakan justru untuk kasus ini, lihat komentar di
+#   internal/driver/genericcli/catalog.go.
+platform-type: 'mikrotik_routeros'
+default:
+  # RouterOS CLI tidak punya mode privilege terpisah gaya Cisco (tidak ada
+  # "enable"/"configure terminal" — semua command dijalankan langsung di
+  # root prompt, path lengkap seperti "/system/resource/print" selalu bisa
+  # dipanggil dari mana pun). driver-type tetap 'network' (bukan
+  # 'generic') karena HANYA network-driver yang scrapligo dukung untuk
+  # hook on-open/on-close lewat YAML (dicek langsung di source
+  # scrapligo — tidak ada "generic-on-open" yang setara) — dipakai untuk
+  # on-close mengirim "quit" dengan rapi. Cukup satu privilege level tanpa
+  # escalate/deescalate sama sekali, sama seperti pola exec-level di
+  # vyatta_vyos.yaml bawaan scrapligo.
+  driver-type: 'network'
+
+  privilege-levels:
+    exec:
+      name: 'exec'
+      # [user@identity] > , dengan beberapa hal yang wajib ditoleransi:
+      #   - identity (nama router) BOLEH mengandung spasi — dikonfirmasi
+      #     lewat scrapli_community issue #20 ("Test Router" sebagai nama).
+      #   - safe mode menambahkan "<SAFE>" sebelum ">" (Ctrl+X/F4).
+      #   - kalau sedang berada di dalam menu (mis. habis "/interface"
+      #     tanpa print), prompt menyisipkan path sebelum ">" — meski
+      #     driver ini selalu kirim path lengkap per command jadi
+      #     seharusnya tidak pernah benar-benar "nyangkut" di submenu,
+      #     pattern tetap dibuat toleran terhadap itu untuk jaga-jaga.
+      pattern: '(?im)^\[[\w.\-]{1,32}@[^\]\r\n]{1,64}\]\s*(?:<SAFE>\s*)?\S*>\s*$'
+      not-contains:
+      previous-priv:
+      deescalate:
+      escalate:
+      escalate-auth: false
+      escalate-prompt:
+
+  default-desired-privilege-level: 'exec'
+
+  # Pesan error CLI RouterOS yang umum — daftar ini disusun dari
+  # pengetahuan umum sintaks command RouterOS, BELUM divalidasi lengkap ke
+  # device fisik. Tambahkan pesan lain yang Anda temukan di lab Anda ke
+  # sini (bukan ke genericcli.Catalog.FailedWhenContains, kecuali memang
+  # spesifik per-device, bukan per-platform — lihat
+  # internal/platformdef/README.md soal pembagian ini).
+  failed-when-contains:
+    - 'bad command name'
+    - 'no such item'
+    - 'syntax error'
+    - 'expected end of command'
+    - 'input does not match any value'
+    - 'failure:'
+
+  textfsm-platform: 'mikrotik_routeros' # diabaikan di Go, cuma dipakai scrapli Python
+
+  network-on-open:
+    - operation: 'acquire-priv'
+    # Sengaja TIDAK ada command "disable paging" di sini seperti Cisco
+    # ("terminal length 0") — RouterOS mengatur ini lewat parameter login
+    # di username (lihat CATATAN PENTING di atas), bukan lewat command
+    # setelah sesi terbuka.
+
+  network-on-close:
+    - operation: 'acquire-priv'
+    - operation: 'channel.write'
+      input: 'quit'
+    - operation: 'channel.return'

@@ -3,12 +3,14 @@ package mikrotik
 import (
 	"fmt"
 
+	"github.com/go-routeros/routeros/v3"
+
 	"github.com/quixiq/polyglot/internal/domain/command"
 )
 
 // destructivePaths lists RouterOS API paths considered destructive — these
 // always require HITL approval regardless of caller.
-// TODO: fill in the full list per NetOps-Architecture.md §5.3.
+// TODO: fill in the full list per Polyglot-Architecture.md §5.3.
 var destructivePaths = map[string]bool{
 	"/system/reboot":              true,
 	"/system/reset-configuration": true,
@@ -36,4 +38,77 @@ func Translate(op command.Operation) (command.Command, error) {
 		return command.Command{}, fmt.Errorf("mikrotik: unsupported operation %q", op)
 	}
 	return cmd, nil
+}
+
+// streamingBasePaths lists RouterOS API paths that are ALWAYS streaming
+// regardless of arguments — the device keeps sending "!re" sentences
+// until explicitly cancelled (or, for /ping with a count, until it
+// finishes on its own).
+// TODO: extend with other natively-streaming commands as they're actually
+// needed (e.g. /tool/torch, /tool/sniffer) — not added now, per agreed scope.
+var streamingBasePaths = map[string]bool{
+	"/ping":                      true,
+	"/interface/monitor-traffic": true,
+}
+
+// streamingFlagArgs lists Args keys that turn an otherwise one-shot command
+// (typically a /.../print) into a streaming one: RouterOS's "print follow",
+// "print follow-only", and "print interval=1s" (or any interval) all keep
+// the connection open and keep sending rows instead of returning once.
+var streamingFlagArgs = []string{"follow", "follow-only", "interval"}
+
+// isStreamingCommand reports whether cmd must be run via Driver.Stream
+// (Listen — non-blocking, event-driven, no polling) rather than
+// Driver.Execute (Run — blocking, returns exactly once). Execute refuses
+// streaming commands outright: running a bare /ping through RunArgsContext
+// would block forever waiting for a "!done" that a streaming command never
+// sends on its own.
+func isStreamingCommand(cmd command.Command) bool {
+	if streamingBasePaths[cmd.Raw] {
+		return true
+	}
+	for _, key := range streamingFlagArgs {
+		if _, ok := cmd.Args[key]; ok {
+			return true
+		}
+	}
+	return false
+}
+
+// buildArgs converts a vendor-agnostic command.Command into the sentence
+// go-routeros expects: Raw first, then one word per Args entry. RouterOS
+// API distinguishes bare words (no value, e.g. "follow") from attribute
+// words ("=key=value") — follow/follow-only never take a value, so they
+// are always written bare regardless of what's stored in cmd.Args[key].
+func buildArgs(cmd command.Command) []string {
+	args := make([]string, 0, 1+len(cmd.Args))
+	args = append(args, cmd.Raw)
+	for key, value := range cmd.Args {
+		switch key {
+		case "follow", "follow-only":
+			args = append(args, key)
+		default:
+			if value == "" {
+				args = append(args, "="+key)
+			} else {
+				args = append(args, "="+key+"="+value)
+			}
+		}
+	}
+	return args
+}
+
+// toResult converts a go-routeros *Reply (from Driver.Execute) into a
+// vendor-agnostic command.Result — one Rows entry per "!re" sentence
+// returned, so callers see every row a multi-row /print produced, not
+// only the first.
+func toResult(reply *routeros.Reply) command.Result {
+	if reply == nil {
+		return command.Result{}
+	}
+	rows := make([]map[string]string, 0, len(reply.Re))
+	for _, sen := range reply.Re {
+		rows = append(rows, sen.Map)
+	}
+	return command.Result{Rows: rows}
 }
