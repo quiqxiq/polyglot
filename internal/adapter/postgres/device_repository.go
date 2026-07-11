@@ -9,6 +9,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/quixiq/polyglot/internal/domain/device"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // deviceModel maps the `devices` table to a GORM-friendly struct.
@@ -149,3 +150,4 @@ func (r *DeviceRepository) Delete(ctx context.Context, id string) error {
 // compile-time check that DeviceRepository implements the intended interface
 // (the port package is the source of truth for the interface).
 // This will fail if port.DeviceRepository gains methods not implemented here.
+var _ port.DeviceRepository = (*DeviceRepository)(nil)

@@ -20,6 +20,11 @@ ditemukan, salin manual sebelum menulis baris kode pertama.
 - `docs/adr/0003-mikrotik-dual-connection-streaming.md` — dua koneksi persisten (exec/stream) di driver Mikrotik, dan jebakan context cancellation di go-routeros v3
 - `docs/adr/0004-generic-cli-driver-scrapligo.md` — genericssh & generictelnet berbagi satu mesin scrapligo; vendor jadi data (platform YAML + Catalog), bukan kode
 
+## Analisis & Riset
+
+- `ANALISIS-API-GENIEACS.md` — analisis NBI (Northbound Interface) GenieACS dari dokumentasi resmi, memisahkan yang terdokumentasi vs belum
+- `ANALISIS-PROVISIONING-REPO-REFERENSI.md` — analisis provisioning/sinkronisasi dari source 4 repo referensi (gembok-simple, billing-rtrw, gembok-bill, mikhmon-agent) vs Polyglot
+
 ## Menjalankan
 
 ```

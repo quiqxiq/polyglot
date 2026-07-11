@@ -13,6 +13,8 @@ import (
 
 	"gorm.io/gorm"
 
+	"github.com/quixiq/polyglot/internal/port"
+
 	"github.com/quixiq/polyglot/internal/domain/device"
 )
 
@@ -131,3 +133,4 @@ func (v *AESVault) Delete(ctx context.Context, deviceID string) error {
 }
 
 // compile-time check that the port interface is satisfied.
+var _ port.CredentialVault = (*AESVault)(nil)

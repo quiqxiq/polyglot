@@ -33,8 +33,10 @@ type Result struct {
 type Operation string
 
 const (
+	// OpGetStatus requests the device's current status/health summary.
 	OpGetStatus Operation = "get_status"
-	OpReboot    Operation = "reboot"
+	// OpReboot requests a device reboot.
+	OpReboot Operation = "reboot"
 )
 
 // Class represents the risk classification of a Command, as determined by
@@ -43,6 +45,9 @@ const (
 type Class int
 
 const (
+	// ClassReadOnly marks a Command that does not change device state.
 	ClassReadOnly Class = iota
+	// ClassDestructive marks a Command that changes device state and thus
+	// requires human approval before execution.
 	ClassDestructive
 )

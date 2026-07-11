@@ -32,6 +32,7 @@ polyglot/
 │   ├── domain/
 │   │   ├── device/
 │   │   │   ├── device.go
+│   │   │   ├── credentials.go
 │   │   │   └── errors.go
 │   │   ├── command/
 │   │   │   ├── command.go
@@ -62,11 +63,16 @@ polyglot/
 │   │
 │   ├── port/
 │   │   ├── device_driver.go
+│   │   ├── streaming_driver.go
 │   │   ├── device_repository.go
 │   │   ├── customer_repository.go
 │   │   ├── subscription_repository.go
+│   │   ├── plan_repository.go
 │   │   ├── invoice_repository.go
+│   │   ├── user_repository.go
 │   │   ├── credential_vault.go
+│   │   ├── authenticator.go
+│   │   ├── enforcer.go
 │   │   └── audit_writer.go
 │   │
 │   ├── adapter/
@@ -88,26 +94,38 @@ polyglot/
 │   │   │   ├── hub.go
 │   │   │   └── device_stream_handler.go
 │   │   ├── postgres/
+│   │   │   ├── db.go
+│   │   │   ├── models.go
 │   │   │   ├── device_repository.go
 │   │   │   ├── customer_repository.go
 │   │   │   ├── subscription_repository.go
-│   │   │   └── invoice_repository.go
+│   │   │   ├── plan_repository.go
+│   │   │   ├── invoice_repository.go
+│   │   │   └── user_repository.go
 │   │   ├── vault/
 │   │   │   └── aes_vault.go
 │   │   └── auth/
 │   │       ├── jwt.go
-│   │       └── casbin.go
+│   │       ├── casbin.go
+│   │       └── password.go
 │   │
 │   ├── driver/
 │   │   ├── mikrotik/
 │   │   │   ├── driver.go
-│   │   │   └── commands.go
+│   │   │   ├── connect.go
+│   │   │   ├── stream.go
+│   │   │   ├── commands.go
+│   │   │   └── errors.go
 │   │   ├── cisco/
 │   │   │   ├── driver.go
 │   │   │   └── commands.go
+│   │   ├── genericcli/
+│   │   │   ├── session.go
+│   │   │   └── catalog.go
 │   │   ├── genericssh/
-│   │   │   ├── driver.go
-│   │   │   └── commands.go
+│   │   │   └── driver.go
+│   │   ├── generictelnet/
+│   │   │   └── driver.go
 │   │   ├── netconf/
 │   │   │   ├── driver.go
 │   │   │   └── commands.go
@@ -120,7 +138,8 @@ polyglot/
 │   │   │   └── commands.go
 │   │   └── genieacs/
 │   │       ├── client.go
-│   │       └── commands.go
+│   │       ├── commands.go
+│   │       └── errors.go
 │   │
 │   ├── platformdef/
 │   │   ├── *.yaml
@@ -130,8 +149,14 @@ polyglot/
 │   │   └── registry.go
 │   ├── audit/
 │   │   └── writer.go
-│   └── config/
-│       └── config.go
+│   ├── config/
+│   │   └── config.go
+│   └── testutil/
+│       └── db.go
+│
+├── configs/
+│   ├── rbac_model.conf
+│   └── rbac_policy.csv
 │
 ├── pkg/
 │   └── retry/
@@ -159,7 +184,9 @@ polyglot/
 ├── docs/
 │   └── adr/
 │       ├── 0001-pilih-gin-daripada-echo.md
-│       └── 0002-devicedriver-tanpa-session-terpisah.md
+│       ├── 0002-devicedriver-tanpa-session-terpisah.md
+│       ├── 0003-mikrotik-dual-connection-streaming.md
+│       └── 0004-generic-cli-driver-scrapligo.md
 │
 ├── .golangci.yml
 ├── .github/
@@ -169,6 +196,7 @@ polyglot/
 ├── go.sum
 ├── Makefile
 ├── README.md
+├── AGENTS.md
 └── CLAUDE.md
 ```
 
@@ -186,7 +214,7 @@ Sebelum membuat file baru apa pun, jawab urutan berikut — berhenti di pertanya
 6. **Tidak cocok satu pun di atas** → JANGAN buat file. Nyatakan penempatan yang diusulkan secara eksplisit sebelum melanjutkan.
 
 **Larangan tegas terkait struktur:**
-- **Tidak ada file `.go` langsung di `internal/`** — semua file `.go` harus berada di salah satu subfolder yang sudah didefinisikan di §1.1 (`domain/usecase/port/adapter/driver/registry/audit/config`). Tidak membuat subfolder baru di level ini tanpa menyatakannya eksplisit sebagai perubahan struktur, bukan detail implementasi biasa.
+- **Tidak ada file `.go` langsung di `internal/`** — semua file `.go` harus berada di salah satu subfolder yang sudah didefinisikan di §1.1 (`domain/usecase/port/adapter/driver/registry/audit/config/testutil`). Tidak membuat subfolder baru di level ini tanpa menyatakannya eksplisit sebagai perubahan struktur, bukan detail implementasi biasa.
 - **Tidak ada file `.go` di root repo** kecuali di dalam `cmd/*/main.go`.
 - **Tidak membuat folder `utils/`, `common/`, `helpers/`, `shared/` di mana pun.** Kalau ada logic yang "terasa" perlu ditaruh di sana, itu tanda logic tersebut sebenarnya milik salah satu domain spesifik (`domain/`) atau genuinely milik `pkg/` — cari domain yang tepat, jangan buat folder generik baru.
 - **Satu vendor device baru = satu folder baru di `internal/driver/<vendor>/`.** Tidak menambah vendor baru sebagai kode di dalam folder driver vendor lain, dan tidak menambah logic vendor-spesifik di `usecase/` atau `domain/`.
@@ -273,7 +301,7 @@ func Translate(op command.Operation) (command.Command, error) {
 }
 ```
 
-Vendor lain (Cisco, dst) mengikuti bentuk identik — cuma isi `destructivePaths`/`operationMap` dan cara `Execute` bicara ke device yang beda. Satu pengecualian sengaja: `internal/driver/genericssh/commands.go` (vendor belum dikurasi) — `Classify` **selalu** mengembalikan `command.ClassDestructive` dan `Translate` **selalu** error, karena risiko vendor yang belum dikenal harus dianggap berbahaya secara default (fail-safe), bukan diam-diam auto-approve.
+Vendor lain (Cisco, dst) mengikuti bentuk identik — cuma isi `destructivePaths`/`operationMap` dan cara `Execute` bicara ke device yang beda. Satu pengecualian sengaja: driver generik (`genericssh`/`generictelnet`) **tidak punya `commands.go`** — pengetahuan vendor tidak di-hardcode per-package melainkan disuplai pemanggil lewat `genericcli.Catalog` (lihat `docs/adr/0004-generic-cli-driver-scrapligo.md`). Posture fail-safe untuk vendor yang belum dikurasi tetap dijaga: `genericcli.Catalog` dengan zero value (`Curated: false`) membuat `Classify` **selalu** mengembalikan `command.ClassDestructive` dan `Translate` **selalu** error, karena risiko vendor yang belum dikenal harus dianggap berbahaya secara default (fail-safe), bukan diam-diam auto-approve.
 
 ```go
 // ❌ TIDAK BOLEH — jangan taruh pengetahuan vendor di usecase/, karena
@@ -310,6 +338,8 @@ func ExecuteCommand(ctx context.Context, cmd Command) error {
 | Migrasi DB baru | `migrations/` | `NNNNNN_<deskripsi_snake_case>.up.sql` + `.down.sql` | `migrations/000007_create_invoices_table.up.sql` |
 | Test unit | folder sama dengan file diuji | `<nama_file>_test.go` | `internal/domain/invoice/invoice_test.go` |
 | Test integrasi | `test/integration/` | `<area>_test.go` | `test/integration/mikrotik_test.go` |
+| Helper test lintas-package (DB in-memory, dll) | `internal/testutil/` | `<nama>.go` | `internal/testutil/db.go` |
+| Aset konfigurasi runtime non-Go (model/policy Casbin, dll) | `configs/` | `<nama>.<ext>` | `configs/rbac_model.conf`, `configs/rbac_policy.csv` |
 | Script dev/one-off | `scripts/` | `<nama>.go` atau `.sh` | `scripts/seed.go` |
 | ADR (keputusan arsitektur) | `docs/adr/` | `NNNN-<slug-kebab-case>.md` | `docs/adr/0003-pilih-gorm-daripada-sqlc.md` |
 | README per-package (jarang, lihat §1.5) | folder package itu sendiri | `README.md` | `internal/platformdef/README.md` |
