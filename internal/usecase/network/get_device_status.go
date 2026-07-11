@@ -2,6 +2,7 @@ package network
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/port"
@@ -14,7 +15,7 @@ import (
 func GetDeviceStatus(ctx context.Context, driver port.DeviceDriver) (command.Result, error) {
 	cmd, err := driver.Translate(command.OpGetStatus)
 	if err != nil {
-		return command.Result{}, err
+		return command.Result{}, fmt.Errorf("get device status: %w", err)
 	}
 	return ExecuteCommand(ctx, driver, cmd)
 }

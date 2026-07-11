@@ -19,6 +19,7 @@ ditemukan, salin manual sebelum menulis baris kode pertama.
 - `docs/adr/0002-devicedriver-tanpa-session-terpisah.md` — termasuk catatan deviasi eksplisit dari `Polyglot-Architecture.md` §5.3
 - `docs/adr/0003-mikrotik-dual-connection-streaming.md` — dua koneksi persisten (exec/stream) di driver Mikrotik, dan jebakan context cancellation di go-routeros v3
 - `docs/adr/0004-generic-cli-driver-scrapligo.md` — genericssh & generictelnet berbagi satu mesin scrapligo; vendor jadi data (platform YAML + Catalog), bukan kode
+- `docs/adr/0005-genieacs-polling.md` — driver GenieACS memakai polling (NBI-nya tidak punya channel push); deviasi sah dari prinsip "no polling"
 
 ## Analisis & Riset
 

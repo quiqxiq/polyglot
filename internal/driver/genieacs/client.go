@@ -69,9 +69,9 @@ func NewDriver(ctx context.Context, target device.Target) (*Driver, error) {
 		return nil, ErrDeviceIDMissing
 	}
 
-	port := target.Port
-	if port == 0 {
-		port = 7557
+	nbiPort := target.Port
+	if nbiPort == 0 {
+		nbiPort = 7557
 	}
 
 	scheme := "http"
@@ -94,7 +94,7 @@ func NewDriver(ctx context.Context, target device.Target) (*Driver, error) {
 	d := &Driver{
 		baseURL: url.URL{
 			Scheme: scheme,
-			Host:   fmt.Sprintf("%s:%d", target.Host, port),
+			Host:   fmt.Sprintf("%s:%d", target.Host, nbiPort),
 		},
 		deviceID:     deviceID,
 		apiKey:       target.Extra["api_key"],
@@ -279,6 +279,10 @@ func (d *Driver) postTask(ctx context.Context, body []byte, connectionRequest bo
 // Returns true if the task completed within ctx, false on ctx cancellation.
 // Transient request errors are swallowed and retried — only ctx ends the
 // loop, matching the blocking-Execute contract of port.DeviceDriver.
+//
+// DEVIASI: polling. GenieACS NBI exposes no push/WebSocket channel for task
+// completion (its 202-queued model only lets you re-query), so polling is
+// the sole option here. See docs/adr/0005-genieacs-polling.md.
 func (d *Driver) waitForTask(ctx context.Context, taskID string) bool {
 	ticker := time.NewTicker(d.pollInterval)
 	defer ticker.Stop()

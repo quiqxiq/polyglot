@@ -154,7 +154,7 @@ func TestRegistry_Get_DisabledDevice(t *testing.T) {
 
 	_, err := reg.Get(context.Background(), "disabled1")
 	require.Error(t, err)
-	assert.Contains(t, err.Error(), "disabled")
+	assert.ErrorIs(t, err, ErrDeviceDisabled)
 }
 
 func TestRegistry_Get_UnknownDriverType(t *testing.T) {
@@ -173,7 +173,7 @@ func TestRegistry_Get_UnknownDriverType(t *testing.T) {
 
 	_, err := reg.Get(context.Background(), "dev2")
 	require.Error(t, err)
-	assert.Contains(t, err.Error(), "no driver factory")
+	assert.ErrorIs(t, err, ErrNoDriverFactory)
 }
 
 func TestRegistry_Close_ReleasesDrivers(t *testing.T) {

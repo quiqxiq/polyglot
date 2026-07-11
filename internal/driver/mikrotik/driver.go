@@ -81,7 +81,7 @@ func NewDriver(ctx context.Context, target device.Target) (*Driver, error) {
 
 	streamClient, streamErrC, err := dialAndLogin(ctx, target)
 	if err != nil {
-		_ = execClient.Close()
+		_ = execClient.Close() // best-effort: unwinding a half-open connection, close error is irrelevant to the dial failure being returned
 		return nil, fmt.Errorf("mikrotik: connect stream: %w", err)
 	}
 
@@ -178,7 +178,7 @@ func (d *Driver) Close() error {
 	d.closeOnce.Do(func() {
 		d.streamsMu.Lock()
 		for h := range d.streams {
-			_ = h.Cancel()
+			_ = h.Cancel() // best-effort: draining all streams on Close; a per-stream cancel error must not stop us cancelling the rest
 		}
 		d.streamsMu.Unlock()
 

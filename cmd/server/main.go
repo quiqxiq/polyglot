@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 	"errors"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
+	"strings"
 	"syscall"
 	"time"
 
@@ -119,8 +120,7 @@ func loadDemoDevices() (port.DeviceRepository, port.CredentialVault) {
 
 func envInt(key string, fallback int) int {
 	if v := os.Getenv(key); v != "" {
-		var n int
-		if _, err := fmt.Sscanf(v, "%d", &n); err == nil {
+		if n, err := strconv.Atoi(v); err == nil {
 			return n
 		}
 	}
@@ -130,23 +130,15 @@ func envInt(key string, fallback int) int {
 func loadExtraFromEnv(prefix string) map[string]string {
 	extra := make(map[string]string)
 	for _, env := range os.Environ() {
-		if len(env) > len(prefix) && env[:len(prefix)] == prefix {
-			key := env[len(prefix):]
-			if eq := indexByte(key, '='); eq >= 0 {
-				extra[key[:eq]] = key[eq+1:]
-			}
+		rest, ok := strings.CutPrefix(env, prefix)
+		if !ok {
+			continue
+		}
+		if key, val, found := strings.Cut(rest, "="); found {
+			extra[key] = val
 		}
 	}
 	return extra
-}
-
-func indexByte(s string, b byte) int {
-	for i := 0; i < len(s); i++ {
-		if s[i] == b {
-			return i
-		}
-	}
-	return -1
 }
 
 // memRepo is a temporary in-memory port.DeviceRepository for the composition

@@ -16,6 +16,14 @@ import (
 // populated at the composition root (main.go) with every supported vendor.
 type DriverFactory func(ctx context.Context, target device.Target) (port.DeviceDriver, error)
 
+// ErrDeviceDisabled indicates the device inventory record exists but is
+// disabled, so the registry refuses to build a driver for it.
+var ErrDeviceDisabled = errors.New("registry: device is disabled")
+
+// ErrNoDriverFactory indicates no DriverFactory is registered for the
+// device's driver_type.
+var ErrNoDriverFactory = errors.New("registry: no driver factory for driver_type")
+
 // Registry looks up device inventory records, resolves their encrypted
 // credentials, and builds (and caches) long-lived DeviceDriver connections
 // keyed by device ID. One driver per device is kept alive and reused across
@@ -74,7 +82,7 @@ func (r *Registry) Get(ctx context.Context, deviceID string) (port.DeviceDriver,
 	}
 
 	if !dev.Enabled {
-		return nil, fmt.Errorf("registry: device %s is disabled", deviceID)
+		return nil, fmt.Errorf("registry: device %s: %w", deviceID, ErrDeviceDisabled)
 	}
 
 	creds, err := r.vault.Get(ctx, deviceID)
@@ -84,7 +92,7 @@ func (r *Registry) Get(ctx context.Context, deviceID string) (port.DeviceDriver,
 
 	factory, ok := r.factories[dev.DriverType]
 	if !ok {
-		return nil, fmt.Errorf("registry: no driver factory for driver_type %q", dev.DriverType)
+		return nil, fmt.Errorf("registry: driver_type %q: %w", dev.DriverType, ErrNoDriverFactory)
 	}
 
 	target := dev.ToTarget(creds)
