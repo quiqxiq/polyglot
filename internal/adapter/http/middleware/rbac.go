@@ -4,13 +4,14 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/quixiq/polyglot/internal/adapter/auth"
+
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // RBACRequired creates a Gin middleware that enforces role-based access control.
 // It assumes AuthRequired has already successfully authenticated the request and
 // placed the user's role in the Gin context.
-func RBACRequired(enforcer auth.RBACEnforcer) gin.HandlerFunc {
+func RBACRequired(enforcer port.Enforcer) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		roleVal, exists := c.Get("role")
 		if !exists {

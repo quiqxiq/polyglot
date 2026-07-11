@@ -7,6 +7,8 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 var (
@@ -14,7 +16,9 @@ var (
 	ErrInvalidToken = errors.New("invalid or expired token")
 )
 
-// Claims represents the JWT claims for Polyglot auth.
+// Claims represents the JWT wire format for Polyglot auth. It is an
+// implementation detail of this adapter; callers receive a
+// library-agnostic port.Identity from Validate instead.
 type Claims struct {
 	UserID   string `json:"user_id"`
 	Username string `json:"username"`
@@ -22,19 +26,15 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-// JWTHandler defines the interface for issuing and validating tokens.
-type JWTHandler interface {
-	Issue(ctx context.Context, userID, username, role string) (string, error)
-	Validate(ctx context.Context, tokenString string) (*Claims, error)
-}
-
 type jwtHandler struct {
 	secret []byte
 	expiry time.Duration
 }
 
-// NewJWT builds a JWT issuer/validator using HMAC SHA-256.
-func NewJWT(secret []byte, expiry time.Duration) JWTHandler {
+var _ port.Authenticator = (*jwtHandler)(nil)
+
+// NewJWT builds a port.Authenticator backed by JWT with HMAC SHA-256.
+func NewJWT(secret []byte, expiry time.Duration) port.Authenticator {
 	return &jwtHandler{
 		secret: secret,
 		expiry: expiry,
@@ -61,8 +61,9 @@ func (j *jwtHandler) Issue(ctx context.Context, userID, username, role string) (
 	return token.SignedString(j.secret)
 }
 
-// Validate parses and verifies a JWT token.
-func (j *jwtHandler) Validate(ctx context.Context, tokenString string) (*Claims, error) {
+// Validate parses and verifies a JWT token, returning the Identity it
+// encodes.
+func (j *jwtHandler) Validate(ctx context.Context, tokenString string) (*port.Identity, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
 		// Ensure the signing method is what we expect
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -72,11 +73,15 @@ func (j *jwtHandler) Validate(ctx context.Context, tokenString string) (*Claims,
 	})
 
 	if err != nil {
-		return nil, fmt.Errorf("%w: %v", ErrInvalidToken, err)
+		return nil, fmt.Errorf("%w: %w", ErrInvalidToken, err)
 	}
 
 	if claims, ok := token.Claims.(*Claims); ok && token.Valid {
-		return claims, nil
+		return &port.Identity{
+			UserID:   claims.UserID,
+			Username: claims.Username,
+			Role:     claims.Role,
+		}, nil
 	}
 
 	return nil, ErrInvalidToken

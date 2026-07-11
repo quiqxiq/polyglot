@@ -14,7 +14,7 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 )
 
-// MockRBACEnforcer implements auth.RBACEnforcer for testing
+// MockRBACEnforcer implements port.Enforcer for testing
 type MockRBACEnforcer struct {
 	Allowed bool
 	Err     error

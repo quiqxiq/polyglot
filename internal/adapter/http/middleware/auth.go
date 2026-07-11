@@ -5,12 +5,13 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/quixiq/polyglot/internal/adapter/auth"
+
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // AuthRequired creates a Gin middleware that extracts and validates a JWT token.
 // It sets "user_id", "username", and "role" into the Gin context on success.
-func AuthRequired(jwtHandler auth.JWTHandler) gin.HandlerFunc {
+func AuthRequired(authenticator port.Authenticator) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
@@ -25,7 +26,7 @@ func AuthRequired(jwtHandler auth.JWTHandler) gin.HandlerFunc {
 		}
 
 		tokenString := parts[1]
-		claims, err := jwtHandler.Validate(c.Request.Context(), tokenString)
+		claims, err := authenticator.Validate(c.Request.Context(), tokenString)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
 			return

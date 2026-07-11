@@ -5,19 +5,19 @@ import (
 	"fmt"
 
 	"github.com/casbin/casbin/v3"
-)
 
-// RBACEnforcer defines the interface for Role-Based Access Control.
-type RBACEnforcer interface {
-	Enforce(ctx context.Context, role, resource, action string) (bool, error)
-}
+	"github.com/quixiq/polyglot/internal/port"
+)
 
 type casbinEnforcer struct {
 	enforcer *casbin.Enforcer
 }
 
-// NewRBAC builds the Casbin enforcer using the provided model and policy files.
-func NewRBAC(modelPath, policyPath string) (RBACEnforcer, error) {
+var _ port.Enforcer = (*casbinEnforcer)(nil)
+
+// NewRBAC builds a port.Enforcer backed by Casbin using the provided model
+// and policy files.
+func NewRBAC(modelPath, policyPath string) (port.Enforcer, error) {
 	e, err := casbin.NewEnforcer(modelPath, policyPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create casbin enforcer: %w", err)
