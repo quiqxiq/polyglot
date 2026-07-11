@@ -91,6 +91,29 @@ func (r *memDeviceRepo) FindByID(_ context.Context, id string) (device.Device, e
 	return d, nil
 }
 
+func (r *memDeviceRepo) FindAll(_ context.Context) ([]device.Device, error) {
+	result := make([]device.Device, 0, len(r.devices))
+	for _, d := range r.devices {
+		result = append(result, d)
+	}
+	return result, nil
+}
+
+func (r *memDeviceRepo) Create(_ context.Context, d device.Device) (device.Device, error) {
+	r.devices[d.ID] = d
+	return d, nil
+}
+
+func (r *memDeviceRepo) Update(_ context.Context, d device.Device) (device.Device, error) {
+	r.devices[d.ID] = d
+	return d, nil
+}
+
+func (r *memDeviceRepo) Delete(_ context.Context, id string) error {
+	delete(r.devices, id)
+	return nil
+}
+
 type memCredVault struct {
 	creds map[string]device.Credentials
 }
@@ -101,6 +124,16 @@ func (v *memCredVault) Get(_ context.Context, deviceID string) (device.Credentia
 		return device.Credentials{}, device.ErrNotFound
 	}
 	return c, nil
+}
+
+func (v *memCredVault) Store(_ context.Context, deviceID string, creds device.Credentials) error {
+	v.creds[deviceID] = creds
+	return nil
+}
+
+func (v *memCredVault) Delete(_ context.Context, deviceID string) error {
+	delete(v.creds, deviceID)
+	return nil
 }
 
 // callToolViaInMemoryTransport creates an in-memory MCP client-server pair,

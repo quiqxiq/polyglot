@@ -162,6 +162,29 @@ func (r *memRepo) FindByID(_ context.Context, id string) (device.Device, error) 
 	return d, nil
 }
 
+func (r *memRepo) FindAll(_ context.Context) ([]device.Device, error) {
+	result := make([]device.Device, 0, len(r.devices))
+	for _, d := range r.devices {
+		result = append(result, d)
+	}
+	return result, nil
+}
+
+func (r *memRepo) Create(_ context.Context, d device.Device) (device.Device, error) {
+	r.devices[d.ID] = d
+	return d, nil
+}
+
+func (r *memRepo) Update(_ context.Context, d device.Device) (device.Device, error) {
+	r.devices[d.ID] = d
+	return d, nil
+}
+
+func (r *memRepo) Delete(_ context.Context, id string) error {
+	delete(r.devices, id)
+	return nil
+}
+
 // memVault is a temporary in-memory port.CredentialVault for the composition
 // root. Replace with internal/adapter/vault when that adapter is wired.
 type memVault struct {
@@ -175,3 +198,14 @@ func (v *memVault) Get(_ context.Context, deviceID string) (device.Credentials, 
 	}
 	return c, nil
 }
+
+func (v *memVault) Store(_ context.Context, deviceID string, creds device.Credentials) error {
+	v.creds[deviceID] = creds
+	return nil
+}
+
+func (v *memVault) Delete(_ context.Context, deviceID string) error {
+	delete(v.creds, deviceID)
+	return nil
+}
+

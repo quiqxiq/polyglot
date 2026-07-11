@@ -1,0 +1,20 @@
+CREATE TABLE plans (
+    id                      UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name                    TEXT NOT NULL,
+    service_type            TEXT NOT NULL CHECK (service_type IN ('pppoe','hotspot','static_ip','dhcp')),
+    description             TEXT,
+    price                   NUMERIC(14,2) NOT NULL,
+    billing_period_months   INTEGER NOT NULL DEFAULT 1,
+    bandwidth_down_kbps     INTEGER NOT NULL,
+    bandwidth_up_kbps       INTEGER NOT NULL,
+    burst_down_kbps         INTEGER,
+    burst_up_kbps           INTEGER,
+    burst_threshold_kbps    INTEGER,
+    burst_time_seconds      INTEGER,
+    fup_quota_mb            INTEGER,
+    fup_throttle_down_kbps  INTEGER,
+    fup_throttle_up_kbps    INTEGER,
+    is_active               BOOLEAN NOT NULL DEFAULT true,
+    created_at              TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at              TIMESTAMPTZ NOT NULL DEFAULT now()
+);

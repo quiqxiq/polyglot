@@ -1,10 +1,24 @@
 package customer
 
-import "context"
+import "time"
 
-// New creates a placeholder Customer entity.
-// Named New, not NewCustomer — CLAUDE.md §2.1 (avoid package name stutter).
-// TODO: implement per Polyglot-Architecture.md business domain rules.
-func New(ctx context.Context) error {
-	return nil
+// Customer is the stored record for a subscriber/customer, mapped to the
+// `customers` table per migration 000008.
+// Named Customer — the package is "customer", so callers write customer.Customer.
+type Customer struct {
+	ID             string
+	FullName       string
+	IDNumber       string
+	Phone          string
+	WhatsApp       string
+	Email          string
+	Address        string
+	LocationLat    *float64
+	LocationLng    *float64
+	CustomerType   string // "residential" or "business"
+	Status         string // "prospect", "active", "suspended", "terminated"
+	ReferralSource string
+	Notes          string
+	RegisteredAt   time.Time
+	TerminatedAt   *time.Time
 }
