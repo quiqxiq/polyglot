@@ -26,6 +26,12 @@ ditemukan, salin manual sebelum menulis baris kode pertama.
 - `ANALISIS-API-GENIEACS.md` — analisis NBI (Northbound Interface) GenieACS dari dokumentasi resmi, memisahkan yang terdokumentasi vs belum
 - `ANALISIS-PROVISIONING-REPO-REFERENSI.md` — analisis provisioning/sinkronisasi dari source 4 repo referensi (gembok-simple, billing-rtrw, gembok-bill, mikhmon-agent) vs Polyglot
 
+## Rencana Implementasi
+
+- `docs/plan-foundation-first.md` — fondasi production-ready (Postgres, GORM, vault, JWT/Casbin, Gin REST) dan CRUD dasar
+- `docs/plan-provisioning/README.md` — rencana lapisan provisioning & sinkronisasi perangkat (MikroTik/OLT/ONU/GenieACS), dipecah 14 issue berurutan dengan alur submit issue → planning → implementasi
+- `docs/plan-provisioning/REFERENCES.md` — analisis source langsung 5 repo ISP produksi (billing-rtrw, gembok-bill, gembok-simple, mikhmonv3, mikhmon-agent) sebagai basis bukti field-tested untuk rencana provisioning
+
 ## Menjalankan
 
 ```
