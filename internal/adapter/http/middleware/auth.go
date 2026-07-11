@@ -35,7 +35,7 @@ func AuthRequired(jwtHandler auth.JWTHandler) gin.HandlerFunc {
 		c.Set("user_id", claims.UserID)
 		c.Set("username", claims.Username)
 		c.Set("role", claims.Role)
-		
+
 		c.Next()
 	}
 }

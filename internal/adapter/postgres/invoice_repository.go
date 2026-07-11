@@ -13,20 +13,20 @@ import (
 
 // invoiceModel maps the `invoices` table per migration 000014.
 type invoiceModel struct {
-	ID            string     `gorm:"column:id;primaryKey"`
-	InvoiceNumber string     `gorm:"column:invoice_number;not null;unique"`
-	CustomerID    string     `gorm:"column:customer_id;not null"`
-	BillingRunID  *string    `gorm:"column:billing_run_id"`
-	PeriodStart   time.Time  `gorm:"column:period_start;not null"`
-	PeriodEnd     time.Time  `gorm:"column:period_end;not null"`
-	IssueDate     time.Time  `gorm:"column:issue_date;not null"`
-	DueDate       time.Time  `gorm:"column:due_date;not null"`
-	Status        string     `gorm:"column:status;not null;default:'draft'"`
-	Subtotal      float64    `gorm:"column:subtotal;not null;default:0"`
-	TaxAmount     float64    `gorm:"column:tax_amount;not null;default:0"`
-	TotalAmount   float64    `gorm:"column:total_amount;not null;default:0"`
-	Notes         string     `gorm:"column:notes"`
-	CreatedAt     time.Time  `gorm:"column:created_at;not null;autoCreateTime"`
+	ID            string    `gorm:"column:id;primaryKey"`
+	InvoiceNumber string    `gorm:"column:invoice_number;not null;unique"`
+	CustomerID    string    `gorm:"column:customer_id;not null"`
+	BillingRunID  *string   `gorm:"column:billing_run_id"`
+	PeriodStart   time.Time `gorm:"column:period_start;not null"`
+	PeriodEnd     time.Time `gorm:"column:period_end;not null"`
+	IssueDate     time.Time `gorm:"column:issue_date;not null"`
+	DueDate       time.Time `gorm:"column:due_date;not null"`
+	Status        string    `gorm:"column:status;not null;default:'draft'"`
+	Subtotal      float64   `gorm:"column:subtotal;not null;default:0"`
+	TaxAmount     float64   `gorm:"column:tax_amount;not null;default:0"`
+	TotalAmount   float64   `gorm:"column:total_amount;not null;default:0"`
+	Notes         string    `gorm:"column:notes"`
+	CreatedAt     time.Time `gorm:"column:created_at;not null;autoCreateTime"`
 }
 
 // invoiceItemModel maps the `invoice_items` table per migration 000014.

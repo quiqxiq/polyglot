@@ -8,7 +8,7 @@ import (
 )
 
 // RBACRequired creates a Gin middleware that enforces role-based access control.
-// It assumes AuthRequired has already successfully authenticated the request and 
+// It assumes AuthRequired has already successfully authenticated the request and
 // placed the user's role in the Gin context.
 func RBACRequired(enforcer auth.RBACEnforcer) gin.HandlerFunc {
 	return func(c *gin.Context) {

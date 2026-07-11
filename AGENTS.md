@@ -1,4 +1,4 @@
-# AGENTS.md — NetOps Engine (Go Backend)
+# AGENTS.md — Polyglot (Go Backend)
 
 **Dokumen ini adalah instruksi operasional untuk AI agent (Claude Code atau agent lain) yang menulis kode di repo ini. Ini bukan panduan gaya untuk kontributor manusia.** Baca ulang dokumen ini di awal setiap task, bukan cuma sekali di awal sesi — kalau ada bagian yang bertentangan dengan pola yang "terlihat masuk akal" dari kode lain di repo, dokumen ini yang menang, bukan pola dominan.
 

@@ -5,7 +5,7 @@ dan WebSocket/SSE untuk multi-vendor network automation.
 
 ## Dokumen Wajib Dibaca
 
-- `CLAUDE.md` — instruksi struktur folder, penamaan, dan gaya kode (untuk AI agent). **Satu-satunya sumber kebenaran struktur folder** (§1.1).
+- `AGENTS.md` — instruksi struktur folder, penamaan, dan gaya kode (untuk AI agent). **Satu-satunya sumber kebenaran struktur folder** (§1.1). `CLAUDE.md` hanya mengimpor file ini (`@AGENTS.md`) untuk agent yang mencari nama `CLAUDE.md` — jangan menyalin aturan ke dua tempat.
 - `Polyglot-Architecture.md` — arsitektur dan alur kerja
 - `TECH-STACK-DAN-PERSIAPAN.md` — pemilihan teknologi dan versi library, termasuk peringatan revisi spec MCP 28 Juli 2026
 

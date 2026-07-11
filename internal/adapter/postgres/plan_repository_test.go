@@ -26,8 +26,8 @@ func TestPlanRepository_CRUD(t *testing.T) {
 		Description:         "Basic plan",
 		Price:               150000,
 		BillingPeriodMonths: 1,
-		BandwidthDownKbps: 10000,
-		BandwidthUpKbps:   5000,
+		BandwidthDownKbps:   10000,
+		BandwidthUpKbps:     5000,
 		IsActive:            true,
 	}
 

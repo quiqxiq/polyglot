@@ -18,9 +18,18 @@ import (
 // vendor without new Go code. See
 // docs/adr/0004-generic-cli-driver-scrapligo.md.
 type Catalog struct {
+	// Curated marks this Catalog as one whose DestructivePrefixes list has
+	// actually been reviewed for the target vendor. It defaults to false so
+	// the zero value is fail-safe: an uncurated vendor (the case genericssh
+	// exists to cover) has genuinely unknown risk, so every command must be
+	// treated as destructive until a human curates the list and sets this
+	// true. Only when Curated is true does DestructivePrefixes drive
+	// classification. See docs/adr/0004-generic-cli-driver-scrapligo.md.
+	Curated bool
+
 	// DestructivePrefixes lists literal command prefixes considered
 	// destructive for this vendor — checked with strings.HasPrefix against
-	// command.Command.Raw.
+	// command.Command.Raw. Only consulted when Curated is true.
 	DestructivePrefixes []string
 
 	// Operations maps abstract command.Operation values to this vendor's
@@ -53,10 +62,14 @@ type Catalog struct {
 	ReadDelay time.Duration
 }
 
-// Classify reports the risk class of cmd according to c's destructive
-// prefix list. Unlisted commands default to read-only — same fail-safe
-// posture as every other vendor's Classify in this project.
+// Classify reports the risk class of cmd. An uncurated Catalog (Curated
+// false — the zero value) fails safe: every command is destructive, because
+// the vendor's risk is genuinely unknown. A curated Catalog consults its
+// destructive prefix list, with unlisted commands treated as read-only.
 func (c Catalog) Classify(cmd command.Command) command.Class {
+	if !c.Curated {
+		return command.ClassDestructive
+	}
 	for _, prefix := range c.DestructivePrefixes {
 		if strings.HasPrefix(cmd.Raw, prefix) {
 			return command.ClassDestructive

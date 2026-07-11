@@ -49,7 +49,7 @@ func TestJWTHandler(t *testing.T) {
 
 		// Modify token signature (last characters)
 		invalidToken := token[:len(token)-5] + "12345"
-		
+
 		claims, err := jwtHandler.Validate(ctx, invalidToken)
 		require.Error(t, err)
 		require.Nil(t, claims)

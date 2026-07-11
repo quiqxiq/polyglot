@@ -208,4 +208,3 @@ func (v *memVault) Delete(_ context.Context, deviceID string) error {
 	delete(v.creds, deviceID)
 	return nil
 }
-
