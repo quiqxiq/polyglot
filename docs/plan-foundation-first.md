@@ -247,15 +247,15 @@ Target akhir fase ini: `make db-up && make migrate-up && make run` menjalankan s
 **Description:** Implementasi `internal/adapter/auth/jwt.go` untuk sign dan verify JWT.
 
 **Acceptance criteria:**
-- [ ] `NewJWT(secret []byte, expiry time.Duration)`.
-- [ ] `Issue(ctx, userID, username, role) (string, error)`.
-- [ ] `Validate(ctx, tokenString) (Claims, error)`.
-- [ ] Claims memuat `user_id`, `username`, `role`, `exp`.
-- [ ] Gunakan `golang-jwt/jwt/v5`.
+- [x] `NewJWT(secret []byte, expiry time.Duration)`.
+- [x] `Issue(ctx, userID, username, role) (string, error)`.
+- [x] `Validate(ctx, tokenString) (Claims, error)`.
+- [x] Claims memuat `user_id`, `username`, `role`, `exp`.
+- [x] Gunakan `golang-jwt/jwt/v5`.
 
 **Verification:**
-- [ ] Tests pass: `go test ./internal/adapter/auth/... -run JWT`
-- [ ] Build succeeds: `go build ./...`
+- [x] Tests pass: `go test ./internal/adapter/auth/... -run JWT`
+- [x] Build succeeds: `go build ./...`
 
 **Dependencies:** Task 6
 **Files likely touched:** `internal/adapter/auth/jwt.go`, `internal/adapter/auth/jwt_test.go`
@@ -268,15 +268,15 @@ Target akhir fase ini: `make db-up && make migrate-up && make run` menjalankan s
 **Description:** Implementasi `internal/adapter/auth/casbin.go` dengan model RBAC sederhana.
 
 **Acceptance criteria:**
-- [ ] `NewRBAC(modelPath, policyPath string)`.
-- [ ] Model RBAC dasar: `configs/rbac_model.conf`.
-- [ ] Policy CSV: `configs/rbac_policy.csv` mapping role → permission (method + path).
-- [ ] Method `Enforce(ctx, role, resource, action) (bool, error)`.
-- [ ] Contoh policy: `superadmin` bisa semua, `teknisi` hanya device read + run_command, `staff` hanya customer/subscription read.
+- [x] `NewRBAC(modelPath, policyPath string)`.
+- [x] Model RBAC dasar: `configs/rbac_model.conf`.
+- [x] Policy CSV: `configs/rbac_policy.csv` mapping role → permission (method + path).
+- [x] Method `Enforce(ctx, role, resource, action) (bool, error)`.
+- [x] Contoh policy: `superadmin` bisa semua, `teknisi` hanya device read + run_command, `staff` hanya customer/subscription read.
 
 **Verification:**
-- [ ] Tests pass: `go test ./internal/adapter/auth/... -run RBAC`
-- [ ] Build succeeds: `go build ./...`
+- [x] Tests pass: `go test ./internal/adapter/auth/... -run RBAC`
+- [x] Build succeeds: `go build ./...`
 
 **Dependencies:** Task 11
 **Files likely touched:** `internal/adapter/auth/casbin.go`, `internal/adapter/auth/casbin_test.go`, `configs/rbac_model.conf`, `configs/rbac_policy.csv`
@@ -289,14 +289,14 @@ Target akhir fase ini: `make db-up && make migrate-up && make run` menjalankan s
 **Description:** Implementasi middleware Gin untuk validasi JWT dan otorisasi Casbin.
 
 **Acceptance criteria:**
-- [ ] `internal/adapter/http/middleware/auth.go` — `AuthRequired(jwt)` mengekstrak token dari header `Authorization: Bearer <token>`, set `role` dan `user_id` di gin context.
-- [ ] `internal/adapter/http/middleware/rbac.go` — `RBACRequired(rbac)` mengecek `role, path, method` dengan Casbin; return 403 jika ditolak.
-- [ ] Middleware tidak crash jika token tidak ada (return 401).
-- [ ] Unit test dengan `httptest` + `gin.Test`.
+- [x] `internal/adapter/http/middleware/auth.go` — `AuthRequired(jwt)` mengekstrak token dari header `Authorization: Bearer <token>`, set `role` dan `user_id` di gin context.
+- [x] `internal/adapter/http/middleware/rbac.go` — `RBACRequired(rbac)` mengecek `role, path, method` dengan Casbin; return 403 jika ditolak.
+- [x] Middleware tidak crash jika token tidak ada (return 401).
+- [x] Unit test dengan `httptest` + `gin.Test`.
 
 **Verification:**
-- [ ] Tests pass: `go test ./internal/adapter/http/... -run Middleware`
-- [ ] Build succeeds: `go build ./...`
+- [x] Tests pass: `go test ./internal/adapter/http/... -run Middleware`
+- [x] Build succeeds: `go build ./...`
 
 **Dependencies:** Task 12
 **Files likely touched:** `internal/adapter/http/middleware/auth.go`, `internal/adapter/http/middleware/rbac.go`, `internal/adapter/http/middleware/middleware_test.go`

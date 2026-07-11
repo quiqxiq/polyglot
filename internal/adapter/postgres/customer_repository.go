@@ -11,10 +11,9 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/customer"
 )
 
-// customerModel maps the `customers` table to a GORM-friendly struct per
-// migration 000008.
+// customerModel maps the `customers` table per migration 000008.
 type customerModel struct {
-	ID             string     `gorm:"column:id;primaryKey;type:uuid"`
+	ID             string     `gorm:"column:id;primaryKey"`
 	FullName       string     `gorm:"column:full_name;not null"`
 	IDNumber       string     `gorm:"column:id_number"`
 	Phone          string     `gorm:"column:phone;not null"`
@@ -23,20 +22,18 @@ type customerModel struct {
 	Address        string     `gorm:"column:address;not null"`
 	LocationLat    *float64   `gorm:"column:location_lat"`
 	LocationLng    *float64   `gorm:"column:location_lng"`
-	CustomerType   string     `gorm:"column:customer_type;not null;default:residential"`
-	Status         string     `gorm:"column:status;not null;default:prospect"`
+	CustomerType   string     `gorm:"column:customer_type;not null;default:'residential'"`
+	Status         string     `gorm:"column:status;not null;default:'prospect'"`
 	ReferralSource string     `gorm:"column:referral_source"`
 	Notes          string     `gorm:"column:notes"`
 	RegisteredAt   time.Time  `gorm:"column:registered_at;not null;autoCreateTime"`
 	TerminatedAt   *time.Time `gorm:"column:terminated_at"`
 }
 
-// TableName returns the explicit table name for the customer model.
 func (customerModel) TableName() string {
 	return "customers"
 }
 
-// toDomain maps a customerModel to the domain customer.Customer.
 func (m customerModel) toDomain() customer.Customer {
 	return customer.Customer{
 		ID:             m.ID,
@@ -57,8 +54,7 @@ func (m customerModel) toDomain() customer.Customer {
 	}
 }
 
-// customerFromDomain maps a domain customer.Customer to a customerModel.
-func customerFromDomain(c customer.Customer) customerModel {
+func fromCustomerDomain(c customer.Customer) customerModel {
 	return customerModel{
 		ID:             c.ID,
 		FullName:       c.FullName,
@@ -106,7 +102,6 @@ func (r *CustomerRepository) FindAll(ctx context.Context) ([]customer.Customer, 
 	if err := r.db.WithContext(ctx).Order("full_name").Find(&models).Error; err != nil {
 		return nil, fmt.Errorf("list customers: %w", err)
 	}
-
 	customers := make([]customer.Customer, len(models))
 	for i, m := range models {
 		customers[i] = m.toDomain()
@@ -116,7 +111,7 @@ func (r *CustomerRepository) FindAll(ctx context.Context) ([]customer.Customer, 
 
 // Create inserts a new customer.
 func (r *CustomerRepository) Create(ctx context.Context, c customer.Customer) (customer.Customer, error) {
-	m := customerFromDomain(c)
+	m := fromCustomerDomain(c)
 	if err := r.db.WithContext(ctx).Create(&m).Error; err != nil {
 		return customer.Customer{}, fmt.Errorf("create customer: %w", err)
 	}
@@ -125,15 +120,14 @@ func (r *CustomerRepository) Create(ctx context.Context, c customer.Customer) (c
 
 // Update modifies an existing customer.
 func (r *CustomerRepository) Update(ctx context.Context, c customer.Customer) (customer.Customer, error) {
-	m := customerFromDomain(c)
+	m := fromCustomerDomain(c)
 	if err := r.db.WithContext(ctx).Save(&m).Error; err != nil {
 		return customer.Customer{}, fmt.Errorf("update customer: %w", err)
 	}
 	return m.toDomain(), nil
 }
 
-// Delete removes a customer by id. Associated customer_documents are
-// removed by ON DELETE CASCADE in the database schema.
+// Delete removes a customer by id.
 func (r *CustomerRepository) Delete(ctx context.Context, id string) error {
 	if err := r.db.WithContext(ctx).Delete(&customerModel{}, "id = ?", id).Error; err != nil {
 		return fmt.Errorf("delete customer: %w", err)

@@ -11,19 +11,18 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/subscription"
 )
 
-// subscriptionModel maps the `subscriptions` table to a GORM-friendly struct
-// per migration 000009.
+// subscriptionModel maps the `subscriptions` table per migration 000009.
 type subscriptionModel struct {
-	ID                     string     `gorm:"column:id;primaryKey;type:uuid"`
-	CustomerID             string     `gorm:"column:customer_id;not null;type:uuid"`
-	PlanID                 string     `gorm:"column:plan_id;not null;type:uuid"`
+	ID                     string     `gorm:"column:id;primaryKey"`
+	CustomerID             string     `gorm:"column:customer_id;not null"`
+	PlanID                 string     `gorm:"column:plan_id;not null"`
 	ServiceType            string     `gorm:"column:service_type;not null"`
-	Status                 string     `gorm:"column:status;not null;default:pending_install"`
-	DeviceID               string     `gorm:"column:device_id;not null;type:uuid"`
-	ODPID                  *string    `gorm:"column:odp_id;type:uuid"`
+	Status                 string     `gorm:"column:status;not null;default:'pending_install'"`
+	DeviceID               string     `gorm:"column:device_id;not null"`
+	ODPID                  *string    `gorm:"column:odp_id"`
 	ODPPort                string     `gorm:"column:odp_port"`
 	ONUSerialNumber        string     `gorm:"column:onu_serial_number"`
-	IPPoolID               *string    `gorm:"column:ip_pool_id;type:uuid"`
+	IPPoolID               *string    `gorm:"column:ip_pool_id"`
 	PPPoEUsername          string     `gorm:"column:pppoe_username"`
 	PPPoEPasswordEncrypted string     `gorm:"column:pppoe_password_encrypted"`
 	StaticIP               string     `gorm:"column:static_ip"`
@@ -37,12 +36,10 @@ type subscriptionModel struct {
 	UpdatedAt              time.Time  `gorm:"column:updated_at;not null;autoUpdateTime"`
 }
 
-// TableName returns the explicit table name for the subscription model.
 func (subscriptionModel) TableName() string {
 	return "subscriptions"
 }
 
-// toDomain maps a subscriptionModel to the domain subscription.Subscription.
 func (m subscriptionModel) toDomain() subscription.Subscription {
 	return subscription.Subscription{
 		ID:                     m.ID,
@@ -69,8 +66,7 @@ func (m subscriptionModel) toDomain() subscription.Subscription {
 	}
 }
 
-// subscriptionFromDomain maps a domain subscription.Subscription to a subscriptionModel.
-func subscriptionFromDomain(s subscription.Subscription) subscriptionModel {
+func fromSubscriptionDomain(s subscription.Subscription) subscriptionModel {
 	return subscriptionModel{
 		ID:                     s.ID,
 		CustomerID:             s.CustomerID,
@@ -91,6 +87,8 @@ func subscriptionFromDomain(s subscription.Subscription) subscriptionModel {
 		SuspendedAt:            s.SuspendedAt,
 		TerminatedAt:           s.TerminatedAt,
 		SuspensionReason:       s.SuspensionReason,
+		CreatedAt:              s.CreatedAt,
+		UpdatedAt:              s.UpdatedAt,
 	}
 }
 
@@ -119,10 +117,9 @@ func (r *SubscriptionRepository) FindByID(ctx context.Context, id string) (subsc
 // FindAll returns all subscriptions ordered by created_at desc.
 func (r *SubscriptionRepository) FindAll(ctx context.Context) ([]subscription.Subscription, error) {
 	var models []subscriptionModel
-	if err := r.db.WithContext(ctx).Order("created_at DESC").Find(&models).Error; err != nil {
+	if err := r.db.WithContext(ctx).Order("created_at desc").Find(&models).Error; err != nil {
 		return nil, fmt.Errorf("list subscriptions: %w", err)
 	}
-
 	subs := make([]subscription.Subscription, len(models))
 	for i, m := range models {
 		subs[i] = m.toDomain()
@@ -133,10 +130,9 @@ func (r *SubscriptionRepository) FindAll(ctx context.Context) ([]subscription.Su
 // FindByCustomer returns subscriptions for a specific customer.
 func (r *SubscriptionRepository) FindByCustomer(ctx context.Context, customerID string) ([]subscription.Subscription, error) {
 	var models []subscriptionModel
-	if err := r.db.WithContext(ctx).Where("customer_id = ?", customerID).Order("created_at DESC").Find(&models).Error; err != nil {
-		return nil, fmt.Errorf("find subscriptions by customer %s: %w", customerID, err)
+	if err := r.db.WithContext(ctx).Where("customer_id = ?", customerID).Order("created_at desc").Find(&models).Error; err != nil {
+		return nil, fmt.Errorf("list subscriptions by customer: %w", err)
 	}
-
 	subs := make([]subscription.Subscription, len(models))
 	for i, m := range models {
 		subs[i] = m.toDomain()
@@ -147,10 +143,9 @@ func (r *SubscriptionRepository) FindByCustomer(ctx context.Context, customerID 
 // FindByDevice returns subscriptions on a specific device.
 func (r *SubscriptionRepository) FindByDevice(ctx context.Context, deviceID string) ([]subscription.Subscription, error) {
 	var models []subscriptionModel
-	if err := r.db.WithContext(ctx).Where("device_id = ?", deviceID).Order("created_at DESC").Find(&models).Error; err != nil {
-		return nil, fmt.Errorf("find subscriptions by device %s: %w", deviceID, err)
+	if err := r.db.WithContext(ctx).Where("device_id = ?", deviceID).Order("created_at desc").Find(&models).Error; err != nil {
+		return nil, fmt.Errorf("list subscriptions by device: %w", err)
 	}
-
 	subs := make([]subscription.Subscription, len(models))
 	for i, m := range models {
 		subs[i] = m.toDomain()
@@ -160,7 +155,7 @@ func (r *SubscriptionRepository) FindByDevice(ctx context.Context, deviceID stri
 
 // Create inserts a new subscription.
 func (r *SubscriptionRepository) Create(ctx context.Context, s subscription.Subscription) (subscription.Subscription, error) {
-	m := subscriptionFromDomain(s)
+	m := fromSubscriptionDomain(s)
 	if err := r.db.WithContext(ctx).Create(&m).Error; err != nil {
 		return subscription.Subscription{}, fmt.Errorf("create subscription: %w", err)
 	}
@@ -169,7 +164,7 @@ func (r *SubscriptionRepository) Create(ctx context.Context, s subscription.Subs
 
 // Update modifies an existing subscription.
 func (r *SubscriptionRepository) Update(ctx context.Context, s subscription.Subscription) (subscription.Subscription, error) {
-	m := subscriptionFromDomain(s)
+	m := fromSubscriptionDomain(s)
 	if err := r.db.WithContext(ctx).Save(&m).Error; err != nil {
 		return subscription.Subscription{}, fmt.Errorf("update subscription: %w", err)
 	}

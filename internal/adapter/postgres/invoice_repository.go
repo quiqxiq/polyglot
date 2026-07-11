@@ -11,36 +11,29 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/billing"
 )
 
-// invoiceModel maps the `invoices` table to a GORM-friendly struct per
-// migration 000014.
+// invoiceModel maps the `invoices` table per migration 000014.
 type invoiceModel struct {
-	ID            string              `gorm:"column:id;primaryKey;type:uuid"`
-	InvoiceNumber string              `gorm:"column:invoice_number;uniqueIndex;not null"`
-	CustomerID    string              `gorm:"column:customer_id;not null;type:uuid"`
-	BillingRunID  *string             `gorm:"column:billing_run_id;type:uuid"`
-	PeriodStart   time.Time           `gorm:"column:period_start;not null"`
-	PeriodEnd     time.Time           `gorm:"column:period_end;not null"`
-	IssueDate     time.Time           `gorm:"column:issue_date;not null"`
-	DueDate       time.Time           `gorm:"column:due_date;not null"`
-	Status        string              `gorm:"column:status;not null;default:draft"`
-	Subtotal      float64             `gorm:"column:subtotal;not null;default:0"`
-	TaxAmount     float64             `gorm:"column:tax_amount;not null;default:0"`
-	TotalAmount   float64             `gorm:"column:total_amount;not null;default:0"`
-	Notes         string              `gorm:"column:notes"`
-	CreatedAt     time.Time           `gorm:"column:created_at;not null;autoCreateTime"`
-	Items         []invoiceItemModel  `gorm:"foreignKey:InvoiceID;references:ID"`
-}
-
-// TableName returns the explicit table name for the invoice model.
-func (invoiceModel) TableName() string {
-	return "invoices"
+	ID            string     `gorm:"column:id;primaryKey"`
+	InvoiceNumber string     `gorm:"column:invoice_number;not null;unique"`
+	CustomerID    string     `gorm:"column:customer_id;not null"`
+	BillingRunID  *string    `gorm:"column:billing_run_id"`
+	PeriodStart   time.Time  `gorm:"column:period_start;not null"`
+	PeriodEnd     time.Time  `gorm:"column:period_end;not null"`
+	IssueDate     time.Time  `gorm:"column:issue_date;not null"`
+	DueDate       time.Time  `gorm:"column:due_date;not null"`
+	Status        string     `gorm:"column:status;not null;default:'draft'"`
+	Subtotal      float64    `gorm:"column:subtotal;not null;default:0"`
+	TaxAmount     float64    `gorm:"column:tax_amount;not null;default:0"`
+	TotalAmount   float64    `gorm:"column:total_amount;not null;default:0"`
+	Notes         string     `gorm:"column:notes"`
+	CreatedAt     time.Time  `gorm:"column:created_at;not null;autoCreateTime"`
 }
 
 // invoiceItemModel maps the `invoice_items` table per migration 000014.
 type invoiceItemModel struct {
-	ID             string  `gorm:"column:id;primaryKey;type:uuid"`
-	InvoiceID      string  `gorm:"column:invoice_id;not null;type:uuid"`
-	SubscriptionID *string `gorm:"column:subscription_id;type:uuid"`
+	ID             string  `gorm:"column:id;primaryKey"`
+	InvoiceID      string  `gorm:"column:invoice_id;not null"`
+	SubscriptionID *string `gorm:"column:subscription_id"`
 	ItemType       string  `gorm:"column:item_type;not null"`
 	Description    string  `gorm:"column:description;not null"`
 	Quantity       float64 `gorm:"column:quantity;not null;default:1"`
@@ -48,27 +41,14 @@ type invoiceItemModel struct {
 	Amount         float64 `gorm:"column:amount;not null"`
 }
 
-// TableName returns the explicit table name for the invoice item model.
-func (invoiceItemModel) TableName() string {
-	return "invoice_items"
-}
+func (invoiceModel) TableName() string     { return "invoices" }
+func (invoiceItemModel) TableName() string { return "invoice_items" }
 
-// toDomain maps an invoiceModel (with items) to the domain billing.Invoice.
-func (m invoiceModel) toDomain() billing.Invoice {
-	items := make([]billing.InvoiceItem, len(m.Items))
-	for i, it := range m.Items {
-		items[i] = billing.InvoiceItem{
-			ID:             it.ID,
-			InvoiceID:      it.InvoiceID,
-			SubscriptionID: it.SubscriptionID,
-			ItemType:       it.ItemType,
-			Description:    it.Description,
-			Quantity:       it.Quantity,
-			UnitPrice:      it.UnitPrice,
-			Amount:         it.Amount,
-		}
+func (m invoiceModel) toDomain(items []invoiceItemModel) billing.Invoice {
+	invItems := make([]billing.InvoiceItem, len(items))
+	for i, it := range items {
+		invItems[i] = it.toDomain()
 	}
-
 	return billing.Invoice{
 		ID:            m.ID,
 		InvoiceNumber: m.InvoiceNumber,
@@ -84,26 +64,11 @@ func (m invoiceModel) toDomain() billing.Invoice {
 		TotalAmount:   m.TotalAmount,
 		Notes:         m.Notes,
 		CreatedAt:     m.CreatedAt,
-		Items:         items,
+		Items:         invItems,
 	}
 }
 
-// invoiceFromDomain maps a domain billing.Invoice to an invoiceModel.
-func invoiceFromDomain(inv billing.Invoice) invoiceModel {
-	items := make([]invoiceItemModel, len(inv.Items))
-	for i, it := range inv.Items {
-		items[i] = invoiceItemModel{
-			ID:             it.ID,
-			InvoiceID:      it.InvoiceID,
-			SubscriptionID: it.SubscriptionID,
-			ItemType:       it.ItemType,
-			Description:    it.Description,
-			Quantity:       it.Quantity,
-			UnitPrice:      it.UnitPrice,
-			Amount:         it.Amount,
-		}
-	}
-
+func fromInvoiceDomain(inv billing.Invoice) invoiceModel {
 	return invoiceModel{
 		ID:            inv.ID,
 		InvoiceNumber: inv.InvoiceNumber,
@@ -118,7 +83,33 @@ func invoiceFromDomain(inv billing.Invoice) invoiceModel {
 		TaxAmount:     inv.TaxAmount,
 		TotalAmount:   inv.TotalAmount,
 		Notes:         inv.Notes,
-		Items:         items,
+		CreatedAt:     inv.CreatedAt,
+	}
+}
+
+func (m invoiceItemModel) toDomain() billing.InvoiceItem {
+	return billing.InvoiceItem{
+		ID:             m.ID,
+		InvoiceID:      m.InvoiceID,
+		SubscriptionID: m.SubscriptionID,
+		ItemType:       m.ItemType,
+		Description:    m.Description,
+		Quantity:       m.Quantity,
+		UnitPrice:      m.UnitPrice,
+		Amount:         m.Amount,
+	}
+}
+
+func fromInvoiceItemDomain(item billing.InvoiceItem) invoiceItemModel {
+	return invoiceItemModel{
+		ID:             item.ID,
+		InvoiceID:      item.InvoiceID,
+		SubscriptionID: item.SubscriptionID,
+		ItemType:       item.ItemType,
+		Description:    item.Description,
+		Quantity:       item.Quantity,
+		UnitPrice:      item.UnitPrice,
+		Amount:         item.Amount,
 	}
 }
 
@@ -132,29 +123,32 @@ func NewInvoiceRepository(db *gorm.DB) *InvoiceRepository {
 	return &InvoiceRepository{db: db}
 }
 
-// FindByID returns the invoice (with items) for the given id, or
-// billing.ErrNotFound.
+// FindByID returns the invoice (with items) for the given id, or billing.ErrNotFound.
 func (r *InvoiceRepository) FindByID(ctx context.Context, id string) (billing.Invoice, error) {
 	var m invoiceModel
-	if err := r.db.WithContext(ctx).Preload("Items").First(&m, "id = ?", id).Error; err != nil {
+	if err := r.db.WithContext(ctx).First(&m, "id = ?", id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return billing.Invoice{}, fmt.Errorf("invoice %s: %w", id, billing.ErrNotFound)
 		}
 		return billing.Invoice{}, fmt.Errorf("invoice %s: %w", id, err)
 	}
-	return m.toDomain(), nil
+
+	var items []invoiceItemModel
+	if err := r.db.WithContext(ctx).Where("invoice_id = ?", id).Find(&items).Error; err != nil {
+		return billing.Invoice{}, fmt.Errorf("invoice %s: load items: %w", id, err)
+	}
+	return m.toDomain(items), nil
 }
 
-// FindAll returns all invoices (with items) ordered by created_at desc.
+// FindAll returns all invoices ordered by created_at desc.
 func (r *InvoiceRepository) FindAll(ctx context.Context) ([]billing.Invoice, error) {
 	var models []invoiceModel
-	if err := r.db.WithContext(ctx).Preload("Items").Order("created_at DESC").Find(&models).Error; err != nil {
+	if err := r.db.WithContext(ctx).Order("created_at desc").Find(&models).Error; err != nil {
 		return nil, fmt.Errorf("list invoices: %w", err)
 	}
-
 	invoices := make([]billing.Invoice, len(models))
 	for i, m := range models {
-		invoices[i] = m.toDomain()
+		invoices[i] = m.toDomain(nil)
 	}
 	return invoices, nil
 }
@@ -162,41 +156,83 @@ func (r *InvoiceRepository) FindAll(ctx context.Context) ([]billing.Invoice, err
 // FindByCustomer returns invoices for a specific customer.
 func (r *InvoiceRepository) FindByCustomer(ctx context.Context, customerID string) ([]billing.Invoice, error) {
 	var models []invoiceModel
-	if err := r.db.WithContext(ctx).Preload("Items").Where("customer_id = ?", customerID).Order("created_at DESC").Find(&models).Error; err != nil {
-		return nil, fmt.Errorf("find invoices by customer %s: %w", customerID, err)
+	if err := r.db.WithContext(ctx).Where("customer_id = ?", customerID).Order("created_at desc").Find(&models).Error; err != nil {
+		return nil, fmt.Errorf("list invoices by customer: %w", err)
 	}
-
 	invoices := make([]billing.Invoice, len(models))
 	for i, m := range models {
-		invoices[i] = m.toDomain()
+		invoices[i] = m.toDomain(nil)
 	}
 	return invoices, nil
 }
 
 // Create inserts a new invoice with its items.
 func (r *InvoiceRepository) Create(ctx context.Context, inv billing.Invoice) (billing.Invoice, error) {
-	m := invoiceFromDomain(inv)
-	if err := r.db.WithContext(ctx).Create(&m).Error; err != nil {
+	var created invoiceModel
+	var items []invoiceItemModel
+
+	err := r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		m := fromInvoiceDomain(inv)
+		if err := tx.Create(&m).Error; err != nil {
+			return err
+		}
+		created = m
+
+		modelItems := make([]invoiceItemModel, len(inv.Items))
+		for i, item := range inv.Items {
+			modelItems[i] = fromInvoiceItemDomain(item)
+			modelItems[i].InvoiceID = m.ID
+		}
+		if len(modelItems) > 0 {
+			if err := tx.Create(&modelItems).Error; err != nil {
+				return err
+			}
+		}
+		items = modelItems
+		return nil
+	})
+	if err != nil {
 		return billing.Invoice{}, fmt.Errorf("create invoice: %w", err)
 	}
-	return m.toDomain(), nil
+	return created.toDomain(items), nil
 }
 
 // Update modifies an existing invoice.
 func (r *InvoiceRepository) Update(ctx context.Context, inv billing.Invoice) (billing.Invoice, error) {
-	m := invoiceFromDomain(inv)
-	if err := r.db.WithContext(ctx).Save(&m).Error; err != nil {
+	var updated invoiceModel
+	var items []invoiceItemModel
+
+	err := r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		m := fromInvoiceDomain(inv)
+		if err := tx.Save(&m).Error; err != nil {
+			return err
+		}
+		updated = m
+
+		if err := tx.Where("invoice_id = ?", m.ID).Delete(&invoiceItemModel{}).Error; err != nil {
+			return err
+		}
+		modelItems := make([]invoiceItemModel, len(inv.Items))
+		for i, item := range inv.Items {
+			modelItems[i] = fromInvoiceItemDomain(item)
+			modelItems[i].InvoiceID = m.ID
+		}
+		if len(modelItems) > 0 {
+			if err := tx.Create(&modelItems).Error; err != nil {
+				return err
+			}
+		}
+		items = modelItems
+		return nil
+	})
+	if err != nil {
 		return billing.Invoice{}, fmt.Errorf("update invoice: %w", err)
 	}
-	return m.toDomain(), nil
+	return updated.toDomain(items), nil
 }
 
 // Delete removes an invoice (and its items via CASCADE) by id.
 func (r *InvoiceRepository) Delete(ctx context.Context, id string) error {
-	// Delete items first (SQLite doesn't support CASCADE), then the invoice.
-	if err := r.db.WithContext(ctx).Where("invoice_id = ?", id).Delete(&invoiceItemModel{}).Error; err != nil {
-		return fmt.Errorf("delete invoice items: %w", err)
-	}
 	if err := r.db.WithContext(ctx).Delete(&invoiceModel{}, "id = ?", id).Error; err != nil {
 		return fmt.Errorf("delete invoice: %w", err)
 	}

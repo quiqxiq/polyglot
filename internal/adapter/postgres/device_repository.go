@@ -16,7 +16,7 @@ import (
 // driver (via pgx) does not natively scan text[] into []string; they can
 // be added later with a custom scanner if the UI needs them.
 type deviceModel struct {
-	ID             string    `gorm:"column:id;primaryKey;type:uuid"`
+	ID             string    `gorm:"column:id;primaryKey"`
 	Name           string    `gorm:"column:name;not null"`
 	Vendor         string    `gorm:"column:vendor;not null"`
 	DriverType     string    `gorm:"column:driver_type;not null"`

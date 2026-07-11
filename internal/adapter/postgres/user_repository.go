@@ -11,11 +11,10 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-// userModel maps the `users` table to a GORM-friendly struct per migration
-// 000004.
+// userModel maps the `users` table per migration 000004.
 type userModel struct {
-	ID           string     `gorm:"column:id;primaryKey;type:uuid"`
-	Username     string     `gorm:"column:username;uniqueIndex;not null"`
+	ID           string     `gorm:"column:id;primaryKey"`
+	Username     string     `gorm:"column:username;not null;unique"`
 	PasswordHash string     `gorm:"column:password_hash;not null"`
 	FullName     string     `gorm:"column:full_name;not null"`
 	Email        string     `gorm:"column:email"`
@@ -26,13 +25,11 @@ type userModel struct {
 	LastLoginAt  *time.Time `gorm:"column:last_login_at"`
 }
 
-// TableName returns the explicit table name for the user model.
 func (userModel) TableName() string {
 	return "users"
 }
 
-// toDomain maps a userModel to a port.User.
-func (m userModel) toDomain() port.User {
+func (m userModel) toPortUser() port.User {
 	return port.User{
 		ID:           m.ID,
 		Username:     m.Username,
@@ -47,8 +44,7 @@ func (m userModel) toDomain() port.User {
 	}
 }
 
-// userFromDomain maps a port.User to a userModel.
-func userFromDomain(u port.User) userModel {
+func fromPortUser(u port.User) userModel {
 	return userModel{
 		ID:           u.ID,
 		Username:     u.Username,
@@ -79,43 +75,44 @@ func (r *UserRepository) FindByUsername(ctx context.Context, username string) (p
 	var m userModel
 	if err := r.db.WithContext(ctx).First(&m, "username = ?", username).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return port.User{}, fmt.Errorf("user %q: not found", username)
+			return port.User{}, fmt.Errorf("user %s: not found", username)
 		}
-		return port.User{}, fmt.Errorf("user %q: %w", username, err)
+		return port.User{}, fmt.Errorf("user %s: %w", username, err)
 	}
-	return m.toDomain(), nil
+	return m.toPortUser(), nil
 }
 
-// Create inserts a new user. The password should already be hashed.
-func (r *UserRepository) Create(ctx context.Context, u port.User) (port.User, error) {
-	m := userFromDomain(u)
+// Create inserts a new user. The password must already be hashed.
+func (r *UserRepository) Create(ctx context.Context, user port.User) (port.User, error) {
+	m := fromPortUser(user)
 	if err := r.db.WithContext(ctx).Create(&m).Error; err != nil {
 		return port.User{}, fmt.Errorf("create user: %w", err)
 	}
-	return m.toDomain(), nil
+	return m.toPortUser(), nil
 }
 
 // UpdatePassword changes the password hash for the user with the given ID.
 func (r *UserRepository) UpdatePassword(ctx context.Context, id string, passwordHash string) error {
-	result := r.db.WithContext(ctx).Model(&userModel{}).Where("id = ?", id).Update("password_hash", passwordHash)
-	if result.Error != nil {
-		return fmt.Errorf("update password: %w", result.Error)
+	res := r.db.WithContext(ctx).Model(&userModel{}).Where("id = ?", id).Update("password_hash", passwordHash)
+	if res.Error != nil {
+		return fmt.Errorf("update password: %w", res.Error)
 	}
-	if result.RowsAffected == 0 {
-		return fmt.Errorf("user %s: not found", id)
+	if res.RowsAffected == 0 {
+		return fmt.Errorf("update password: user %s not found", id)
 	}
 	return nil
 }
 
-// UpdateLastLogin records the current time as the last login for the user.
+// UpdateLastLogin records the current time as the last login for the user
+// with the given ID.
 func (r *UserRepository) UpdateLastLogin(ctx context.Context, id string) error {
 	now := time.Now()
-	result := r.db.WithContext(ctx).Model(&userModel{}).Where("id = ?", id).Update("last_login_at", now)
-	if result.Error != nil {
-		return fmt.Errorf("update last login: %w", result.Error)
+	res := r.db.WithContext(ctx).Model(&userModel{}).Where("id = ?", id).Update("last_login_at", now)
+	if res.Error != nil {
+		return fmt.Errorf("update last login: %w", res.Error)
 	}
-	if result.RowsAffected == 0 {
-		return fmt.Errorf("user %s: not found", id)
+	if res.RowsAffected == 0 {
+		return fmt.Errorf("update last login: user %s not found", id)
 	}
 	return nil
 }

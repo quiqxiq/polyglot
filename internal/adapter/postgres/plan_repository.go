@@ -11,10 +11,9 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/plan"
 )
 
-// planModel maps the `plans` table to a GORM-friendly struct per migration
-// 000005.
+// planModel maps the `plans` table per migration 000005.
 type planModel struct {
-	ID                  string    `gorm:"column:id;primaryKey;type:uuid"`
+	ID                  string    `gorm:"column:id;primaryKey"`
 	Name                string    `gorm:"column:name;not null"`
 	ServiceType         string    `gorm:"column:service_type;not null"`
 	Description         string    `gorm:"column:description"`
@@ -29,17 +28,15 @@ type planModel struct {
 	FUPQuotaMB          *int      `gorm:"column:fup_quota_mb"`
 	FUPThrottleDownKbps *int      `gorm:"column:fup_throttle_down_kbps"`
 	FUPThrottleUpKbps   *int      `gorm:"column:fup_throttle_up_kbps"`
-	IsActive            *bool     `gorm:"column:is_active;not null;default:true"`
+	IsActive            bool      `gorm:"column:is_active;not null;default:true"`
 	CreatedAt           time.Time `gorm:"column:created_at;not null;autoCreateTime"`
 	UpdatedAt           time.Time `gorm:"column:updated_at;not null;autoUpdateTime"`
 }
 
-// TableName returns the explicit table name for the plan model.
 func (planModel) TableName() string {
 	return "plans"
 }
 
-// toDomain maps a planModel to the domain plan.Plan.
 func (m planModel) toDomain() plan.Plan {
 	return plan.Plan{
 		ID:                  m.ID,
@@ -57,14 +54,13 @@ func (m planModel) toDomain() plan.Plan {
 		FUPQuotaMB:          m.FUPQuotaMB,
 		FUPThrottleDownKbps: m.FUPThrottleDownKbps,
 		FUPThrottleUpKbps:   m.FUPThrottleUpKbps,
-		IsActive:            m.IsActive != nil && *m.IsActive,
+		IsActive:            m.IsActive,
 		CreatedAt:           m.CreatedAt,
 		UpdatedAt:           m.UpdatedAt,
 	}
 }
 
-// planFromDomain maps a domain plan.Plan to a planModel.
-func planFromDomain(p plan.Plan) planModel {
+func fromPlanDomain(p plan.Plan) planModel {
 	return planModel{
 		ID:                  p.ID,
 		Name:                p.Name,
@@ -81,7 +77,9 @@ func planFromDomain(p plan.Plan) planModel {
 		FUPQuotaMB:          p.FUPQuotaMB,
 		FUPThrottleDownKbps: p.FUPThrottleDownKbps,
 		FUPThrottleUpKbps:   p.FUPThrottleUpKbps,
-		IsActive:            &p.IsActive,
+		IsActive:            p.IsActive,
+		CreatedAt:           p.CreatedAt,
+		UpdatedAt:           p.UpdatedAt,
 	}
 }
 
@@ -113,7 +111,6 @@ func (r *PlanRepository) FindAll(ctx context.Context) ([]plan.Plan, error) {
 	if err := r.db.WithContext(ctx).Order("name").Find(&models).Error; err != nil {
 		return nil, fmt.Errorf("list plans: %w", err)
 	}
-
 	plans := make([]plan.Plan, len(models))
 	for i, m := range models {
 		plans[i] = m.toDomain()
@@ -127,7 +124,6 @@ func (r *PlanRepository) FindActive(ctx context.Context) ([]plan.Plan, error) {
 	if err := r.db.WithContext(ctx).Where("is_active = ?", true).Order("name").Find(&models).Error; err != nil {
 		return nil, fmt.Errorf("list active plans: %w", err)
 	}
-
 	plans := make([]plan.Plan, len(models))
 	for i, m := range models {
 		plans[i] = m.toDomain()
@@ -135,11 +131,10 @@ func (r *PlanRepository) FindActive(ctx context.Context) ([]plan.Plan, error) {
 	return plans, nil
 }
 
-// Create inserts a new plan. Select("*") ensures zero-value fields (e.g.
-// IsActive=false) are persisted rather than falling back to column defaults.
+// Create inserts a new plan.
 func (r *PlanRepository) Create(ctx context.Context, p plan.Plan) (plan.Plan, error) {
-	m := planFromDomain(p)
-	if err := r.db.WithContext(ctx).Select("*").Create(&m).Error; err != nil {
+	m := fromPlanDomain(p)
+	if err := r.db.WithContext(ctx).Create(&m).Error; err != nil {
 		return plan.Plan{}, fmt.Errorf("create plan: %w", err)
 	}
 	return m.toDomain(), nil
@@ -147,7 +142,7 @@ func (r *PlanRepository) Create(ctx context.Context, p plan.Plan) (plan.Plan, er
 
 // Update modifies an existing plan.
 func (r *PlanRepository) Update(ctx context.Context, p plan.Plan) (plan.Plan, error) {
-	m := planFromDomain(p)
+	m := fromPlanDomain(p)
 	if err := r.db.WithContext(ctx).Save(&m).Error; err != nil {
 		return plan.Plan{}, fmt.Errorf("update plan: %w", err)
 	}

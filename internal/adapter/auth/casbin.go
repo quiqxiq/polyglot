@@ -1,13 +1,43 @@
 package auth
 
-import "context"
+import (
+	"context"
+	"fmt"
 
-// NewCasbin builds the Casbin enforcer (single-tenant RBAC, model
-// superadmin/owner/admin/staff/teknisi, no domain/tenant scoping — see
-// Polyglot-Architecture.md §12 keputusan tenancy).
-// TODO: use github.com/casbin/casbin/v3 (v3.10.0) with
-// github.com/casbin/gorm-adapter/v3 to store policy in the existing GORM/
-// Postgres connection, per TECH-STACK-DAN-PERSIAPAN.md §3.
-func NewCasbin(ctx context.Context) error {
-	return nil
+	"github.com/casbin/casbin/v3"
+)
+
+// RBACEnforcer defines the interface for Role-Based Access Control.
+type RBACEnforcer interface {
+	Enforce(ctx context.Context, role, resource, action string) (bool, error)
+}
+
+type casbinEnforcer struct {
+	enforcer *casbin.Enforcer
+}
+
+// NewRBAC builds the Casbin enforcer using the provided model and policy files.
+func NewRBAC(modelPath, policyPath string) (RBACEnforcer, error) {
+	e, err := casbin.NewEnforcer(modelPath, policyPath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create casbin enforcer: %w", err)
+	}
+
+	// Load the policy from file
+	if err := e.LoadPolicy(); err != nil {
+		return nil, fmt.Errorf("failed to load casbin policy: %w", err)
+	}
+
+	return &casbinEnforcer{
+		enforcer: e,
+	}, nil
+}
+
+// Enforce checks if the given role is allowed to perform the action on the resource.
+func (c *casbinEnforcer) Enforce(ctx context.Context, role, resource, action string) (bool, error) {
+	allowed, err := c.enforcer.Enforce(role, resource, action)
+	if err != nil {
+		return false, fmt.Errorf("rbac enforce error: %w", err)
+	}
+	return allowed, nil
 }

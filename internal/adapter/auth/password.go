@@ -1,25 +1,20 @@
 package auth
 
 import (
-	"fmt"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
-// DefaultBcryptCost is the bcrypt cost factor used for hashing passwords.
-const DefaultBcryptCost = 10
-
-// HashPassword hashes a plaintext password using bcrypt.
-func HashPassword(password string) (string, error) {
-	hash, err := bcrypt.GenerateFromPassword([]byte(password), DefaultBcryptCost)
+// HashPassword returns a bcrypt hash of the provided plaintext password.
+// It uses the default cost (10).
+func HashPassword(plaintext string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(plaintext), bcrypt.DefaultCost)
 	if err != nil {
-		return "", fmt.Errorf("hash password: %w", err)
+		return "", err
 	}
-	return string(hash), nil
+	return string(bytes), nil
 }
 
-// CheckPassword compares a plaintext password with a bcrypt hash.
-// Returns nil on match, or an error if they don't match.
-func CheckPassword(password, hash string) error {
-	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+// CheckPassword checks whether plaintext matches the given bcrypt hash.
+func CheckPassword(plaintext, hash string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(plaintext))
 }
