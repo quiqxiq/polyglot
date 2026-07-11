@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -49,19 +50,19 @@ func main() {
 		httpSrv := &http.Server{Addr: httpAddr, Handler: handler}
 		log.Printf("polyglot: MCP server starting on http://%s/mcp", httpAddr)
 		go func() {
-			if err := httpSrv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			if err := httpSrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 				log.Fatalf("mcp http: %v", err)
 			}
 		}()
 		<-ctx.Done()
 		shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
-		_ = httpSrv.Shutdown(shutdownCtx)
+		_ = httpSrv.Shutdown(shutdownCtx) // best-effort: we are already shutting down, a failed graceful shutdown does not change the exit path
 	default:
 		log.Fatalf("unknown MCP_TRANSPORT %q (use \"stdio\" or \"http\")", transport)
 	}
 
-	_ = reg.Close()
+	_ = reg.Close() // best-effort cleanup on shutdown; a failed close does not change the exit path
 	log.Printf("polyglot: shutdown complete")
 }
 

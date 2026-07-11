@@ -75,7 +75,7 @@ func (r *UserRepository) FindByUsername(ctx context.Context, username string) (p
 	var m userModel
 	if err := r.db.WithContext(ctx).First(&m, "username = ?", username).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return port.User{}, fmt.Errorf("user %s: not found", username)
+			return port.User{}, fmt.Errorf("user %s: %w", username, port.ErrUserNotFound)
 		}
 		return port.User{}, fmt.Errorf("user %s: %w", username, err)
 	}
@@ -98,7 +98,7 @@ func (r *UserRepository) UpdatePassword(ctx context.Context, id string, password
 		return fmt.Errorf("update password: %w", res.Error)
 	}
 	if res.RowsAffected == 0 {
-		return fmt.Errorf("update password: user %s not found", id)
+		return fmt.Errorf("update password: user %s: %w", id, port.ErrUserNotFound)
 	}
 	return nil
 }
@@ -112,7 +112,7 @@ func (r *UserRepository) UpdateLastLogin(ctx context.Context, id string) error {
 		return fmt.Errorf("update last login: %w", res.Error)
 	}
 	if res.RowsAffected == 0 {
-		return fmt.Errorf("update last login: user %s not found", id)
+		return fmt.Errorf("update last login: user %s: %w", id, port.ErrUserNotFound)
 	}
 	return nil
 }

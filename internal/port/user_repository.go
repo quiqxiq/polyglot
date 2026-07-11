@@ -2,8 +2,15 @@ package port
 
 import (
 	"context"
+	"errors"
 	"time"
 )
+
+// ErrUserNotFound indicates the requested user does not exist. It lives in
+// port (not a domain package) because User itself is an auth/infrastructure
+// concern, so callers use errors.Is(err, port.ErrUserNotFound) to detect the
+// not-found case.
+var ErrUserNotFound = errors.New("user: not found")
 
 // User represents an admin/staff user for authentication purposes. This
 // struct lives in the port package because users are an infrastructure

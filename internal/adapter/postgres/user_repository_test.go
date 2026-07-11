@@ -64,5 +64,5 @@ func TestUserRepository_FindByUsername_NotFound(t *testing.T) {
 
 	_, err = repo.FindByUsername(ctx, "missing")
 	require.Error(t, err)
-	assert.Contains(t, err.Error(), "not found")
+	assert.ErrorIs(t, err, port.ErrUserNotFound)
 }
