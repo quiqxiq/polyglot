@@ -570,10 +570,13 @@ Cara pengisian tabel ini juga harus konsisten dengan prinsip
 JANGAN isi lewat polling periodik `/ppp active print`. Yang lebih
 konsisten dengan arsitektur yang sudah ada: manfaatkan
 `port.StreamingDeviceDriver` (sudah diimplementasikan untuk MikroTik) dan
-`Stream()` sebuah command seperti `/log print follow` yang menyaring
-topic `ppp,info` — event connect/disconnect PPPoE MikroTik memang
-tercatat di log secara real-time. `subscriber_sessions` diisi dari event
-stream itu, bukan dari snapshot berkala.
+`Stream()` command **`/ppp/active/print follow`** — di RouterOS API setiap
+tabel ber-`print` mendukung `follow`, sehingga tabel active langsung mem-push
+record terstruktur (connect saat entry masuk, disconnect saat entry `.dead=yes`)
+secara real-time. Ini lebih andal daripada mem-parsing teks `/log`, dan `follow`
+meng-emit state awal lebih dulu sehingga snapshot inheren. `subscriber_sessions`
+diisi dari stream itu, bukan dari snapshot berkala. Detail di
+`docs/plan-provisioning/issue-12-subscriber-sessions.md`.
 
 ---
 

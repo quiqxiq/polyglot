@@ -132,9 +132,12 @@ Konvensi lintas-issue yang lahir dari sini terkodifikasi sebagai **K9–K15** di
 ## Yang Tetap Beda dari Referensi (keputusan sadar)
 
 - **No polling untuk push-capable protocol.** Semua referensi memonitor PPPoE
-  dengan `setInterval` `/ppp active print` + diff (30s). Polyglot pakai event
-  stream `/log follow` (Issue 12) — lebih superior; tapi WAJIB bootstrap snapshot
-  sekali saat connect + reconciliation pass saat stream putus (koreksi Issue 12).
+  dengan `setInterval` `/ppp active print` + diff (30s). Polyglot memakai stream
+  native **`/ppp/active/print follow`** (Issue 12) — di RouterOS API setiap tabel
+  ber-`print` mendukung `follow`, jadi tabel active langsung mem-push record
+  terstruktur (bukan `/log` topic-parsing). `follow` juga meng-emit state awal
+  lebih dulu → snapshot inheren tanpa panggilan terpisah; disconnect = record
+  `.dead=yes`. Reconciliation hanya jaring pengaman opsional (koreksi Issue 12).
 - **Satu jalur audit.** Referensi mengeksekusi command langsung; Polyglot lewat
   `provisioning_sync_log → command_audit_log` (K4). Script router = deviasi yang
   direkonsiliasi (K15).

@@ -43,23 +43,26 @@ Keputusan mekanisme (dikonfirmasi pemilik produk):
    untuk MAC/user tsb setelah `active/remove` (lihat Task 5, K9/K13).
 5. **Identitas modem untuk monitoring online/offline — dukung dua mode
    per-subscription (A+B).** Masalah inti: berbeda dari PPPoE (identitas melekat
-   pada sesi tunnel, terpantau lewat `/ppp active` + event `ppp,info`), hotspot
+   pada sesi tunnel, terpantau lewat stream `/ppp/active/print follow`), hotspot
    subscription yang polos berjalan di atas DHCP tanpa identitas stabil sehingga
    **tidak bisa dipantau seperti PPPoE**. Supaya paritas monitoring tercapai,
    subscription hotspot **wajib** punya salah satu identitas modem berikut,
    disimpan di kolom baru `subscriptions.hotspot_access_mode`:
    - **Mode A — `mac_login`:** hotspot user dengan auto-login by MAC. Sesi
-     persisten muncul di `/ip hotspot active`; event connect/disconnect terekam
-     di `/log topic hotspot,info`. Dipantau oleh Issue 12 dengan **mesin yang
-     sama** seperti PPPoE — hanya beda topik log. Wajib set `keepalive-timeout` +
-     `mac-cookie` di profile agar sesi stabil (paritas ~90% PPPoE; sesi hotspot
-     lebih rentan drop idle daripada tunnel PPPoE).
+     persisten muncul di `/ip hotspot active`; connect/disconnect di-stream
+     langsung via **`/ip/hotspot/active/print follow`** (record `!re` masuk =
+     connect, `.dead=yes` = disconnect). Dipantau oleh Issue 12 dengan **mesin
+     yang sama** seperti PPPoE — hanya beda command tabel active, bukan `/log`.
+     Wajib set `keepalive-timeout` + `mac-cookie` di profile agar sesi stabil
+     (paritas ~90% PPPoE; sesi hotspot lebih rentan drop idle daripada tunnel
+     PPPoE).
    - **Mode B — `ip_binding`:** MAC di-bind ke IP tetap via
      `/ip hotspot ip-binding type=bypassed` (bypass portal). Karena tak pernah
-     "login", ketiadaan event sesi ditutup dengan memasang `/tool netwatch` pada
-     IP tetap itu; netwatch memancarkan event up/down ke `/log topic netwatch`.
-     Jadi mode B **tetap event-driven, bukan polling dari Golang** (konsisten
-     ADR 0003) — Issue 12 memparser topik `netwatch` alih-alih `hotspot,info`.
+     "login", ketiadaan sesi ditutup dengan memasang `/tool netwatch` pada IP
+     tetap itu; status host up/down di-stream via **`/tool/netwatch/print
+     follow`**. Jadi mode B **tetap event-driven, bukan polling dari Golang**
+     (konsisten ADR 0003) — Issue 12 memparser stream netwatch alih-alih hotspot
+     active.
    Kedua mode berujung ke satu mesin monitoring (Issue 12), sehingga tidak ada
    engine monitoring kedua. Mode dipilih per subscription saat provisioning.
 
@@ -77,10 +80,11 @@ polling" dan jalur audit tunggal yang tetap dipertahankan).
   profile`) disinkronkan lewat mekanisme `plan_router_profiles` yang sama dengan
   `/ppp profile`; issue ini menambah `target_type='mikrotik_hotspot_profile'`.
 - **Issue 12 (Subscriber Session Tracking)** — dua peran: (1) capture login
-  pertama voucher (model validity "dari login pertama") via topik `hotspot,info`;
-  (2) monitoring online/offline subscription hotspot — topik `hotspot,info` untuk
-  mode A (`mac_login`) dan topik `netwatch` untuk mode B (`ip_binding`). Issue 13
-  memperluas scope Issue 12 ke dua topik ini (lihat catatan silang di Issue 12).
+  pertama voucher (model validity "dari login pertama") via stream
+  `/ip/hotspot/active/print follow`; (2) monitoring online/offline subscription
+  hotspot — `/ip/hotspot/active/print follow` untuk mode A (`mac_login`) dan
+  `/tool/netwatch/print follow` untuk mode B (`ip_binding`). Issue 13 memperluas
+  scope Issue 12 ke dua sumber stream ini (lihat catatan silang di Issue 12).
   Tanpa Issue 12, validity model (a) dan monitoring hotspot tidak jalan.
 - **Foundation:** router Gin, middleware auth/RBAC, CRUD plan (`plans`,
   migrasi 000005) dan CRUD subscription sudah ada.
@@ -398,7 +402,8 @@ saat tujuan aksi memutus koneksi.
 - [ ] **Mode B (`ip_binding`)** — `Translate` untuk `mikrotik_ip_binding`
   `action=create` menghasilkan sekuens: tambah `/ip hotspot ip-binding`
   (`mac-address`→`address` static, `type=bypassed`) **lalu** pasang `/tool
-  netwatch` pada IP itu (host up/down ke `/log topic netwatch`). `action=delete`
+  netwatch` pada IP itu (status host up/down, dipantau Issue 12 via
+  `/tool/netwatch/print follow`). `action=delete`
   menghapus keduanya; `action=disable` (suspend mode B) mengubah binding jadi
   `type=blocked` (bukan hapus), `enable` mengembalikan ke `bypassed`.
 - [ ] `Classify`: create/disable/enable read-vs-destructive sesuai konvensi vendor
@@ -469,9 +474,10 @@ provisioning, dipanggil handler `POST /voucher-batches`.
 
 **Task 7: Capture login pertama (integrasi Issue 12)**
 
-**Description:** Konsumen event `hotspot,info` dari stream Issue 12 menandai login
-pertama voucher: set `activated_at`, hitung `expires_at` sesuai `ValidityModel`
-plan, ubah `status` `unused→active`, dan isi `used_by_mac`.
+**Description:** Konsumen event connect hotspot dari stream Issue 12
+(`/ip/hotspot/active/print follow`) menandai login pertama voucher: set
+`activated_at`, hitung `expires_at` sesuai `ValidityModel` plan, ubah `status`
+`unused→active`, dan isi `used_by_mac`.
 
 **Acceptance criteria:**
 - [ ] Event login hotspot (username = kode voucher, MAC, IP) dipetakan ke voucher
@@ -712,8 +718,9 @@ migrasi 000007; issue ini hanya mengonsumsinya.
   expiry / picu scheduler → verifikasi user ter-disable/remove dan sesi aktif
   ter-kill.
 - [ ] Smoke test dua mode identitas: `provision-hotspot` `access_mode=mac_login`
-  → verifikasi login by MAC muncul di `/ip hotspot active` + event `hotspot,info`
-  tertangkap Issue 12; `access_mode=ip_binding` → verifikasi entri
+  → verifikasi login by MAC muncul di `/ip hotspot active` + record connect
+  tertangkap Issue 12 via `/ip/hotspot/active/print follow`; `access_mode=ip_binding`
+  → verifikasi entri
   `/ip hotspot ip-binding type=bypassed` + `/tool netwatch` terpasang, matikan IP
   → event `netwatch` down tertangkap Issue 12.
 - [ ] Test integrasi hotspot di `test/integration/` terhadap MikroTik nyata,

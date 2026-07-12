@@ -112,8 +112,8 @@ Issue dikelompokkan dalam 5 fase. Panah = ketergantungan (harus selesai dulu).
   untuk splitter bertingkat (temuan E, **opsional** tergantung topologi riil).
   *(butuh foundation)*
 - **[Issue 12: Subscriber Session Tracking](issue-12-subscriber-sessions.md)** —
-  isi `subscriber_sessions` dari event stream `/log follow` PPPoE (bukan
-  polling), status online pelanggan. *(butuh 01; pakai `port.StreamingDeviceDriver`)*
+  isi `subscriber_sessions` dari stream native `/ppp/active/print follow` (bukan
+  polling, bukan `/log`), status online pelanggan. *(butuh 01; pakai `port.StreamingDeviceDriver`)*
 
 ### Fase F — Otomasi Billing-Driven
 - **[Issue 14: Auto-Suspend & Auto-Restore Scheduler](issue-14-auto-suspend-scheduler.md)**
@@ -255,7 +255,7 @@ tabel ini pada PR yang sama.
 | `0008-genericsnmp-olt-katalog-oid` | 07 | Satu driver SNMP + katalog OID sebagai data |
 | `0009-influxdb-untuk-metrik-optik-timeseries` | 10 | RX power ke InfluxDB, bukan Postgres |
 | `0010-topologi-odp-bertingkat` | 11 | `odp_links` graf (opsional) |
-| `0011-subscriber-session-via-event-stream` | 12 | Sesi pelanggan dari `/log follow`, bukan polling |
+| `0011-subscriber-session-via-event-stream` | 12 | Sesi pelanggan dari `print follow` tabel active (bukan `/log`, bukan polling) |
 | `0012-hotspot-voucher-lifecycle-hybrid` | 13 | Validity per plan + enforcement hybrid Golang/script router |
 
 Setiap ADR baru wajib ditautkan dari `README.md` root pada PR yang sama
