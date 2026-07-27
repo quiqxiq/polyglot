@@ -2,19 +2,13 @@ package mikrotik
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/go-routeros/routeros/v3"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/domain/provision"
 )
-
-// destructivePaths lists RouterOS API paths considered destructive — these
-// always require HITL approval regardless of caller.
-// TODO: fill in the full list per Polyglot-Architecture.md §5.3.
-var destructivePaths = map[string]bool{
-	"/system/reboot":              true,
-	"/system/reset-configuration": true,
-}
 
 // operationMap translates abstract Operations to RouterOS API paths.
 // TODO: add more operations as new usecases need them.
@@ -23,12 +17,29 @@ var operationMap = map[command.Operation]command.Command{
 	command.OpReboot:    {Raw: "/system/reboot"},
 }
 
-// Classify reports the risk class of cmd according to RouterOS API conventions.
+// Classify reports the risk class of cmd according to RouterOS API conventions,
+// FAIL-SAFE: a command is ClassReadOnly only if it matches a known read pattern;
+// everything else — including any unrecognized path — is ClassDestructive and
+// therefore needs approval. This is a whitelist of safe reads, not a blacklist
+// of dangerous writes, so a new write op (e.g. /ppp/secret/add) is destructive
+// by default without anyone remembering to list it. See
+// docs/adr/0006-klasifikasi-perintah-fail-safe.md.
 func Classify(cmd command.Command) command.Class {
-	if destructivePaths[cmd.Raw] {
-		return command.ClassDestructive
+	if isReadOnlyCommand(cmd) {
+		return command.ClassReadOnly
 	}
-	return command.ClassReadOnly
+	return command.ClassDestructive
+}
+
+// isReadOnlyCommand reports whether cmd only observes device state. RouterOS
+// read commands all end in "/print"; /ping and /interface/monitor-traffic
+// observe without mutating (they are the streamingBasePaths). Anything else is
+// treated as state-changing by Classify.
+func isReadOnlyCommand(cmd command.Command) bool {
+	if strings.HasSuffix(cmd.Raw, "/print") {
+		return true
+	}
+	return streamingBasePaths[cmd.Raw]
 }
 
 // Translate maps an abstract Operation to a RouterOS-native Command.
@@ -38,6 +49,138 @@ func Translate(op command.Operation) (command.Command, error) {
 		return command.Command{}, fmt.Errorf("mikrotik: unsupported operation %q", op)
 	}
 	return cmd, nil
+}
+
+// translateProvision maps an abstract provisioning operation to the RouterOS
+// command sequence that fulfills it. Knowledge of RouterOS paths and field
+// names (e.g. /ppp/secret/print, .proplist) lives here per AGENTS.md §1.2,
+// never in usecase/. It returns a slice because a single provisioning
+// operation may need several ordered commands (see port.ProvisioningDriver);
+// read operations like ListPPPSecrets are simply a one-element sequence.
+func translateProvision(op provision.Operation) ([]command.Command, error) {
+	switch o := op.(type) {
+	case provision.ListPPPSecrets:
+		return []command.Command{printCmd("/ppp/secret/print", o.Fields)}, nil
+	case provision.ListPPPProfiles:
+		return []command.Command{printCmd("/ppp/profile/print", o.Fields)}, nil
+	case provision.ListActivePPP:
+		return []command.Command{printCmd("/ppp/active/print", o.Fields)}, nil
+	case provision.CreatePPPSecret:
+		return createPPPSecret(o)
+	case provision.CreatePPPProfile:
+		return createPPPProfile(o)
+	case provision.ChangeProfile:
+		return changeProfile(o)
+	default:
+		return nil, fmt.Errorf("mikrotik: unsupported provisioning operation %T", op)
+	}
+}
+
+// createPPPSecret builds the RouterOS /ppp/secret/add command for op. Name and
+// Password are mandatory on RouterOS, so an empty one is rejected here (a clear
+// error before touching the wire) rather than letting the device fail the add.
+// Optional attributes are written only when non-empty so RouterOS applies its
+// own defaults for the rest.
+func createPPPSecret(op provision.CreatePPPSecret) ([]command.Command, error) {
+	if op.Name == "" {
+		return nil, fmt.Errorf("mikrotik: create ppp secret: %w: name", errMissingField)
+	}
+	if op.Password == "" {
+		return nil, fmt.Errorf("mikrotik: create ppp secret: %w: password", errMissingField)
+	}
+
+	args := map[string]string{
+		"name":     op.Name,
+		"password": op.Password,
+	}
+	for key, value := range map[string]string{
+		"profile":        op.Profile,
+		"service":        op.Service,
+		"remote-address": op.RemoteAddress,
+		"comment":        op.Comment,
+	} {
+		if value != "" {
+			args[key] = value
+		}
+	}
+	return []command.Command{{Raw: "/ppp/secret/add", Args: args}}, nil
+}
+
+// createPPPProfile builds the RouterOS /ppp/profile/add command for op. Name is
+// mandatory (a profile is referenced by name), so an empty one is rejected here
+// before touching the wire. Optional attributes are written only when non-empty
+// so RouterOS applies its own defaults for the rest.
+func createPPPProfile(op provision.CreatePPPProfile) ([]command.Command, error) {
+	if op.Name == "" {
+		return nil, fmt.Errorf("mikrotik: create ppp profile: %w: name", errMissingField)
+	}
+
+	args := map[string]string{"name": op.Name}
+	for key, value := range map[string]string{
+		"rate-limit":     op.RateLimit,
+		"local-address":  op.LocalAddress,
+		"remote-address": op.RemoteAddress,
+		"comment":        op.Comment,
+	} {
+		if value != "" {
+			args[key] = value
+		}
+	}
+	return []command.Command{{Raw: "/ppp/profile/add", Args: args}}, nil
+}
+
+// activePPPRemovePath drops an online PPPoE session by subscriber name. Removing
+// a session that isn't there (subscriber offline) is a no-op for our intent, not
+// a failure — Driver.Execute treats RouterOS's "no such item" trap on THIS path
+// as success (see isNoSuchItem). It is a package constant so the driver's Execute
+// and changeProfile agree on the exact path that carries that idempotent
+// semantics.
+const activePPPRemovePath = "/ppp/active/remove"
+
+// changeProfile builds the RouterOS sequence that moves subscriber Username onto
+// Profile. Username and Profile are both mandatory. The subscriber is targeted
+// by name via RouterOS's numbers= selector (empirically works for /ppp/secret/set
+// without a prior .id lookup), so no read step is needed to change the stored
+// profile. The trailing /ppp/active/remove drops the online session if one
+// exists so the new profile takes effect on redial; when the subscriber is
+// offline that command's "no such item" trap is swallowed by Execute, leaving
+// the profile change as the net effect (see ChangeProfile doc and
+// activePPPRemovePath).
+func changeProfile(op provision.ChangeProfile) ([]command.Command, error) {
+	if op.Username == "" {
+		return nil, fmt.Errorf("mikrotik: change profile: %w: username", errMissingField)
+	}
+	if op.Profile == "" {
+		return nil, fmt.Errorf("mikrotik: change profile: %w: profile", errMissingField)
+	}
+	return []command.Command{
+		{Raw: "/ppp/secret/set", Args: map[string]string{"numbers": op.Username, "profile": op.Profile}},
+		{Raw: activePPPRemovePath, Args: map[string]string{"numbers": op.Username}},
+	}, nil
+}
+
+// isNoSuchItem reports whether err is RouterOS's "no such item" device trap,
+// which /ppp/active/remove returns when the targeted subscriber has no active
+// session. Only meaningful for activePPPRemovePath, where "no session to drop"
+// is a successful no-op rather than an error.
+//
+// DEVIASI §4: go-routeros surfaces device traps as plain untyped errors with no
+// sentinel to match via errors.Is, so substring-matching the device message is
+// the only option here; kept scoped to the single idempotent case that needs it.
+func isNoSuchItem(err error) bool {
+	return err != nil && strings.Contains(err.Error(), "no such item")
+}
+
+// printCmd builds a RouterOS "print" command for path, optionally projecting
+// only fields via .proplist. Omitting .proplist entirely makes RouterOS return
+// every field, which toResult then surfaces raw in Result.Rows — so an empty
+// fields slice means "all fields, raw".
+func printCmd(path string, fields []string) command.Command {
+	args := map[string]string{}
+	if len(fields) > 0 {
+		args[".proplist"] = strings.Join(fields, ",")
+	}
+	return command.Command{Raw: path, Args: args}
 }
 
 // streamingBasePaths lists RouterOS API paths that are ALWAYS streaming

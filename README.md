@@ -20,6 +20,7 @@ ditemukan, salin manual sebelum menulis baris kode pertama.
 - `docs/adr/0003-mikrotik-dual-connection-streaming.md` — dua koneksi persisten (exec/stream) di driver Mikrotik, dan jebakan context cancellation di go-routeros v3
 - `docs/adr/0004-generic-cli-driver-scrapligo.md` — genericssh & generictelnet berbagi satu mesin scrapligo; vendor jadi data (platform YAML + Catalog), bukan kode
 - `docs/adr/0005-genieacs-polling.md` — driver GenieACS memakai polling (NBI-nya tidak punya channel push); deviasi sah dari prinsip "no polling"
+- `docs/adr/0006-klasifikasi-perintah-fail-safe.md` — Classify default ke destruktif (whitelist perintah baca), menutup lubang fail-open saat provisioning write masuk; diterapkan di driver Mikrotik dulu
 
 ## Analisis & Riset
 

@@ -10,6 +10,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
+	"github.com/quixiq/polyglot/internal/domain/provision"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -66,6 +67,7 @@ type Driver struct {
 var (
 	_ port.DeviceDriver          = (*Driver)(nil)
 	_ port.StreamingDeviceDriver = (*Driver)(nil)
+	_ port.ProvisioningDriver    = (*Driver)(nil)
 )
 
 // NewDriver connects to target and returns a ready, connected Driver. Both
@@ -153,6 +155,14 @@ func (d *Driver) Execute(ctx context.Context, cmd command.Command) (command.Resu
 		return command.Result{}, fmt.Errorf("mikrotik: execute %q cancelled: %w", cmd.Raw, ctx.Err())
 	case o := <-done:
 		if o.err != nil {
+			// Dropping an active PPPoE session that isn't there means the
+			// subscriber is simply offline — a no-op for our intent, not a
+			// failure (see changeProfile / ChangeProfile). Swallowed only for
+			// this one path so the rest of a change_profile sequence still
+			// reports genuine errors (e.g. an unknown secret on /ppp/secret/set).
+			if cmd.Raw == activePPPRemovePath && isNoSuchItem(o.err) {
+				return command.Result{}, nil
+			}
 			return command.Result{}, fmt.Errorf("mikrotik: execute %q: %w", cmd.Raw, o.err)
 		}
 		return toResult(o.reply), nil
@@ -167,6 +177,12 @@ func (d *Driver) Classify(cmd command.Command) command.Class {
 // Translate maps an abstract Operation to a RouterOS-native Command.
 func (d *Driver) Translate(op command.Operation) (command.Command, error) {
 	return Translate(op)
+}
+
+// TranslateProvision maps an abstract provisioning Operation to the RouterOS
+// command sequence that fulfills it — see port.ProvisioningDriver.
+func (d *Driver) TranslateProvision(op provision.Operation) ([]command.Command, error) {
+	return translateProvision(op)
 }
 
 // Close stops both persistent connections and their reconnect supervisors,
