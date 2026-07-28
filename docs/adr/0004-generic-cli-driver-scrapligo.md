@@ -172,3 +172,32 @@ gejala echo ganda di issue #95. `test/integration/mikrotik_ssh_test.go`
 disiapkan persis untuk validasi ini — jalankan sebelum memakainya di luar
 lab.
 
+## Addendum — `genericcli.Catalog` fail-safe untuk vendor tak terkurasi
+
+Desain awal `Catalog.Classify` mengklasifikasikan command yang tidak cocok
+dengan `DestructivePrefixes` sebagai `ClassReadOnly`. Untuk vendor
+**terkurasi** (daftar destructive sudah ditinjau manusia) ini benar. Tapi
+justru kasus yang jadi alasan `genericssh` ada — **vendor yang belum
+dikurasi** — malah jadi berbahaya: `Catalog{}` kosong memperlakukan SEMUA
+command sebagai read-only (auto-approve), kebalikan dari posture fail-safe
+yang dipegang setiap driver vendor lain di proyek ini. `genericssh` sempat
+punya `commands.go` dengan `Classify` yang selalu `ClassDestructive`, tapi
+file itu jadi kode mati begitu klasifikasi pindah ke `Catalog` (lihat
+Keputusan §3 di atas: `genericssh` tidak punya `commands.go`), sehingga
+posture fail-safe-nya diam-diam hilang dari jalur yang benar-benar dipakai.
+
+Keputusan: **`genericcli.Catalog` bertambah field `Curated bool`.**
+
+- Zero value `false` = fail-safe: `Classify` mengembalikan `ClassDestructive`
+  untuk command apa pun, tanpa melihat `DestructivePrefixes`. Vendor tak
+  dikenal butuh persetujuan manusia untuk segalanya sampai seseorang
+  benar-benar mengurasi daftarnya.
+- Vendor terkurasi opt-in eksplisit dengan `Curated: true`, baru
+  `DestructivePrefixes` berlaku (unlisted → read-only).
+
+Konsekuensi: properti keamanan jadi terlihat di setiap construction site
+(`Curated: true` adalah pernyataan sadar "saya sudah meninjau ini"), dan
+zero value `Catalog{}` aman secara default. `commands.go` di `genericssh`
+dihapus karena fail-safe-nya kini hidup di jalur `Catalog` yang sebenarnya
+dipakai, bukan di kode mati.
+

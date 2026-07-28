@@ -11,6 +11,7 @@ import (
 
 func TestCatalog_Classify(t *testing.T) {
 	catalog := Catalog{
+		Curated:             true,
 		DestructivePrefixes: []string{"reload", "write erase", "delete"},
 	}
 
@@ -52,13 +53,21 @@ func TestCatalog_Translate(t *testing.T) {
 	})
 }
 
-func TestCatalog_ZeroValueIsUsable(t *testing.T) {
-	// A Catalog{} (no prefixes, no operations, no failure patterns) must
-	// not panic — it's a valid, if maximally permissive/unhelpful, catalog.
+func TestCatalog_ZeroValueIsFailSafe(t *testing.T) {
+	// A Catalog{} (Curated false — no prefixes, no operations) must not
+	// panic and must fail SAFE: with the vendor's risk unknown, every
+	// command is destructive (needs approval), never silently read-only.
 	var catalog Catalog
 
-	assert.Equal(t, command.ClassReadOnly, catalog.Classify(command.Command{Raw: "anything"}))
+	assert.Equal(t, command.ClassDestructive, catalog.Classify(command.Command{Raw: "anything"}))
 
 	_, err := catalog.Translate(command.OpGetStatus)
 	require.Error(t, err)
+}
+
+func TestCatalog_CuratedUnlistedIsReadOnly(t *testing.T) {
+	// Once curated, a command not in the destructive list is read-only.
+	catalog := Catalog{Curated: true}
+
+	assert.Equal(t, command.ClassReadOnly, catalog.Classify(command.Command{Raw: "show version"}))
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/domain/monitor"
 )
 
 // StreamHandle represents one open streaming command against a device (e.g.
@@ -57,4 +58,13 @@ type StreamingDeviceDriver interface {
 	// Passing a non-streaming command is an error, not silently accepted:
 	// callers should use DeviceDriver.Execute for those instead.
 	Stream(ctx context.Context, cmd command.Command) (StreamHandle, error)
+
+	// TranslateStream maps an abstract, vendor-neutral monitoring Operation to
+	// this vendor's native streaming command. It returns a single command
+	// (unlike ProvisioningDriver.TranslateProvision's slice) because a streaming
+	// observation is always one long-running command, never an ordered
+	// sequence. The returned command is meant to be handed straight to Stream.
+	// Returns an error if this vendor has no definition for op, or if op is
+	// missing a required field.
+	TranslateStream(op monitor.Operation) (command.Command, error)
 }

@@ -4,8 +4,11 @@ package command
 type Decision int
 
 const (
+	// DecisionAutoApprove permits the command to execute without human approval.
 	DecisionAutoApprove Decision = iota
+	// DecisionRequireApproval blocks execution until a human approves (HITL).
 	DecisionRequireApproval
+	// DecisionDeny rejects the command outright; no approval can override it.
 	DecisionDeny
 )
 

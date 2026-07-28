@@ -5,7 +5,7 @@ dan WebSocket/SSE untuk multi-vendor network automation.
 
 ## Dokumen Wajib Dibaca
 
-- `CLAUDE.md` — instruksi struktur folder, penamaan, dan gaya kode (untuk AI agent). **Satu-satunya sumber kebenaran struktur folder** (§1.1).
+- `AGENTS.md` — instruksi struktur folder, penamaan, dan gaya kode (untuk AI agent). **Satu-satunya sumber kebenaran struktur folder** (§1.1). `CLAUDE.md` hanya mengimpor file ini (`@AGENTS.md`) untuk agent yang mencari nama `CLAUDE.md` — jangan menyalin aturan ke dua tempat.
 - `Polyglot-Architecture.md` — arsitektur dan alur kerja
 - `TECH-STACK-DAN-PERSIAPAN.md` — pemilihan teknologi dan versi library, termasuk peringatan revisi spec MCP 28 Juli 2026
 
@@ -19,6 +19,19 @@ ditemukan, salin manual sebelum menulis baris kode pertama.
 - `docs/adr/0002-devicedriver-tanpa-session-terpisah.md` — termasuk catatan deviasi eksplisit dari `Polyglot-Architecture.md` §5.3
 - `docs/adr/0003-mikrotik-dual-connection-streaming.md` — dua koneksi persisten (exec/stream) di driver Mikrotik, dan jebakan context cancellation di go-routeros v3
 - `docs/adr/0004-generic-cli-driver-scrapligo.md` — genericssh & generictelnet berbagi satu mesin scrapligo; vendor jadi data (platform YAML + Catalog), bukan kode
+- `docs/adr/0005-genieacs-polling.md` — driver GenieACS memakai polling (NBI-nya tidak punya channel push); deviasi sah dari prinsip "no polling"
+- `docs/adr/0006-klasifikasi-perintah-fail-safe.md` — Classify default ke destruktif (whitelist perintah baca), menutup lubang fail-open saat provisioning write masuk; diterapkan di driver Mikrotik dulu
+
+## Analisis & Riset
+
+- `ANALISIS-API-GENIEACS.md` — analisis NBI (Northbound Interface) GenieACS dari dokumentasi resmi, memisahkan yang terdokumentasi vs belum
+- `ANALISIS-PROVISIONING-REPO-REFERENSI.md` — analisis provisioning/sinkronisasi dari source 4 repo referensi (gembok-simple, billing-rtrw, gembok-bill, mikhmon-agent) vs Polyglot
+
+## Rencana Implementasi
+
+- `docs/plan-foundation-first.md` — fondasi production-ready (Postgres, GORM, vault, JWT/Casbin, Gin REST) dan CRUD dasar
+- `docs/plan-provisioning/README.md` — rencana lapisan provisioning & sinkronisasi perangkat (MikroTik/OLT/ONU/GenieACS), dipecah 14 issue berurutan dengan alur submit issue → planning → implementasi
+- `docs/plan-provisioning/REFERENCES.md` — analisis source langsung 5 repo ISP produksi (billing-rtrw, gembok-bill, gembok-simple, mikhmonv3, mikhmon-agent) sebagai basis bukti field-tested untuk rencana provisioning
 
 ## Menjalankan
 

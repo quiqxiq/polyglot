@@ -15,6 +15,12 @@ var ErrApprovalRequired = errors.New("execute_command: approval required")
 // ErrDenied indicates cmd was denied by policy outright.
 var ErrDenied = errors.New("execute_command: denied by policy")
 
+// ErrUnknownDecision indicates command.Decide returned a Decision value this
+// usecase does not recognize. It exists so the policy switch can fail closed
+// (refuse to execute) instead of falling through to Execute — a new Decision
+// added without updating this gate must never silently auto-execute.
+var ErrUnknownDecision = errors.New("execute_command: unknown policy decision")
+
 // ExecuteCommand runs cmd against a device via driver, after checking policy.
 // usecase/ never inspects vendor command syntax — it only asks driver to
 // Classify, then applies the generic domain/command policy decision. This
@@ -25,12 +31,18 @@ var ErrDenied = errors.New("execute_command: denied by policy")
 // LibreChat HITL prompt -> approve/reject -> resume Execute).
 func ExecuteCommand(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
 	switch command.Decide(driver.Classify(cmd)) {
-	case command.DecisionDeny:
-		return command.Result{}, ErrDenied
+	case command.DecisionAutoApprove:
+		return driver.Execute(ctx, cmd)
 	case command.DecisionRequireApproval:
 		return command.Result{}, ErrApprovalRequired
+	case command.DecisionDeny:
+		return command.Result{}, ErrDenied
+	default:
+		// Fail closed: an unrecognized decision must never fall through to
+		// Execute. This is the single HITL gate, so a silently unhandled
+		// case is a policy hole, not a no-op.
+		return command.Result{}, ErrUnknownDecision
 	}
-	return driver.Execute(ctx, cmd)
 }
 
 // ExecuteCommandPreApproved runs cmd against a device via driver, skipping

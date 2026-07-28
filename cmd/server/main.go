@@ -2,11 +2,13 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
+	"strings"
 	"syscall"
 	"time"
 
@@ -49,19 +51,19 @@ func main() {
 		httpSrv := &http.Server{Addr: httpAddr, Handler: handler}
 		log.Printf("polyglot: MCP server starting on http://%s/mcp", httpAddr)
 		go func() {
-			if err := httpSrv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			if err := httpSrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 				log.Fatalf("mcp http: %v", err)
 			}
 		}()
 		<-ctx.Done()
 		shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
-		_ = httpSrv.Shutdown(shutdownCtx)
+		_ = httpSrv.Shutdown(shutdownCtx) // best-effort: we are already shutting down, a failed graceful shutdown does not change the exit path
 	default:
 		log.Fatalf("unknown MCP_TRANSPORT %q (use \"stdio\" or \"http\")", transport)
 	}
 
-	_ = reg.Close()
+	_ = reg.Close() // best-effort cleanup on shutdown; a failed close does not change the exit path
 	log.Printf("polyglot: shutdown complete")
 }
 
@@ -118,8 +120,7 @@ func loadDemoDevices() (port.DeviceRepository, port.CredentialVault) {
 
 func envInt(key string, fallback int) int {
 	if v := os.Getenv(key); v != "" {
-		var n int
-		if _, err := fmt.Sscanf(v, "%d", &n); err == nil {
+		if n, err := strconv.Atoi(v); err == nil {
 			return n
 		}
 	}
@@ -129,23 +130,15 @@ func envInt(key string, fallback int) int {
 func loadExtraFromEnv(prefix string) map[string]string {
 	extra := make(map[string]string)
 	for _, env := range os.Environ() {
-		if len(env) > len(prefix) && env[:len(prefix)] == prefix {
-			key := env[len(prefix):]
-			if eq := indexByte(key, '='); eq >= 0 {
-				extra[key[:eq]] = key[eq+1:]
-			}
+		rest, ok := strings.CutPrefix(env, prefix)
+		if !ok {
+			continue
+		}
+		if key, val, found := strings.Cut(rest, "="); found {
+			extra[key] = val
 		}
 	}
 	return extra
-}
-
-func indexByte(s string, b byte) int {
-	for i := 0; i < len(s); i++ {
-		if s[i] == b {
-			return i
-		}
-	}
-	return -1
 }
 
 // memRepo is a temporary in-memory port.DeviceRepository for the composition
@@ -162,6 +155,29 @@ func (r *memRepo) FindByID(_ context.Context, id string) (device.Device, error) 
 	return d, nil
 }
 
+func (r *memRepo) FindAll(_ context.Context) ([]device.Device, error) {
+	result := make([]device.Device, 0, len(r.devices))
+	for _, d := range r.devices {
+		result = append(result, d)
+	}
+	return result, nil
+}
+
+func (r *memRepo) Create(_ context.Context, d device.Device) (device.Device, error) {
+	r.devices[d.ID] = d
+	return d, nil
+}
+
+func (r *memRepo) Update(_ context.Context, d device.Device) (device.Device, error) {
+	r.devices[d.ID] = d
+	return d, nil
+}
+
+func (r *memRepo) Delete(_ context.Context, id string) error {
+	delete(r.devices, id)
+	return nil
+}
+
 // memVault is a temporary in-memory port.CredentialVault for the composition
 // root. Replace with internal/adapter/vault when that adapter is wired.
 type memVault struct {
@@ -174,4 +190,14 @@ func (v *memVault) Get(_ context.Context, deviceID string) (device.Credentials, 
 		return device.Credentials{}, device.ErrNotFound
 	}
 	return c, nil
+}
+
+func (v *memVault) Store(_ context.Context, deviceID string, creds device.Credentials) error {
+	v.creds[deviceID] = creds
+	return nil
+}
+
+func (v *memVault) Delete(_ context.Context, deviceID string) error {
+	delete(v.creds, deviceID)
+	return nil
 }

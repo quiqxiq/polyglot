@@ -17,3 +17,9 @@ var ErrStreamingCommand = errors.New("mikrotik: command requires Stream, not Exe
 // ErrNotStreamingCommand indicates Stream was called with a command that
 // is not recognized as streaming — use Execute instead.
 var ErrNotStreamingCommand = errors.New("mikrotik: command is not a streaming command, use Execute")
+
+// errMissingField indicates a provisioning operation omitted a field RouterOS
+// requires (e.g. a PPPoE secret with no name or password). Unexported: it's an
+// internal translate-time guard, wrapped with the offending field name at the
+// call site, not a sentinel callers outside this package match on.
+var errMissingField = errors.New("mikrotik: missing required field")

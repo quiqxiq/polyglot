@@ -47,6 +47,29 @@ func (r *memRepo) FindByID(_ context.Context, id string) (device.Device, error) 
 	return d, nil
 }
 
+func (r *memRepo) FindAll(_ context.Context) ([]device.Device, error) {
+	result := make([]device.Device, 0, len(r.devices))
+	for _, d := range r.devices {
+		result = append(result, d)
+	}
+	return result, nil
+}
+
+func (r *memRepo) Create(_ context.Context, d device.Device) (device.Device, error) {
+	r.devices[d.ID] = d
+	return d, nil
+}
+
+func (r *memRepo) Update(_ context.Context, d device.Device) (device.Device, error) {
+	r.devices[d.ID] = d
+	return d, nil
+}
+
+func (r *memRepo) Delete(_ context.Context, id string) error {
+	delete(r.devices, id)
+	return nil
+}
+
 // memVault is an in-memory port.CredentialVault for testing.
 type memVault struct {
 	creds map[string]device.Credentials
@@ -58,6 +81,16 @@ func (v *memVault) Get(_ context.Context, deviceID string) (device.Credentials, 
 		return device.Credentials{}, device.ErrNotFound
 	}
 	return c, nil
+}
+
+func (v *memVault) Store(_ context.Context, deviceID string, creds device.Credentials) error {
+	v.creds[deviceID] = creds
+	return nil
+}
+
+func (v *memVault) Delete(_ context.Context, deviceID string) error {
+	delete(v.creds, deviceID)
+	return nil
 }
 
 func newTestRegistry(t *testing.T) (*Registry, *mockDriver) {
@@ -121,7 +154,7 @@ func TestRegistry_Get_DisabledDevice(t *testing.T) {
 
 	_, err := reg.Get(context.Background(), "disabled1")
 	require.Error(t, err)
-	assert.Contains(t, err.Error(), "disabled")
+	assert.ErrorIs(t, err, ErrDeviceDisabled)
 }
 
 func TestRegistry_Get_UnknownDriverType(t *testing.T) {
@@ -140,7 +173,7 @@ func TestRegistry_Get_UnknownDriverType(t *testing.T) {
 
 	_, err := reg.Get(context.Background(), "dev2")
 	require.Error(t, err)
-	assert.Contains(t, err.Error(), "no driver factory")
+	assert.ErrorIs(t, err, ErrNoDriverFactory)
 }
 
 func TestRegistry_Close_ReleasesDrivers(t *testing.T) {

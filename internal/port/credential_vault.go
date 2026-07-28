@@ -17,4 +17,11 @@ type CredentialVault interface {
 	// Get returns the decrypted credentials for deviceID, or an error
 	// wrapping device.ErrNotFound if no credential row exists.
 	Get(ctx context.Context, deviceID string) (device.Credentials, error)
+
+	// Store encrypts and persists credentials for deviceID. If a row
+	// already exists, it is overwritten.
+	Store(ctx context.Context, deviceID string, creds device.Credentials) error
+
+	// Delete removes the credential row for deviceID.
+	Delete(ctx context.Context, deviceID string) error
 }

@@ -231,7 +231,7 @@ func (s *Session) sendWithReconnect(ctx context.Context, raw string) (*response.
 	if dialErr != nil {
 		return nil, fmt.Errorf("send failed (%w) and reconnect failed: %w", err, dialErr)
 	}
-	_ = s.driver.Close()
+	_ = s.driver.Close() // best-effort: old conn is being replaced, its close error does not affect the reconnect
 	s.driver = newDriver
 
 	return s.driver.SendCommand(raw, opoptions.WithTimeoutOps(s.opsTimeout))

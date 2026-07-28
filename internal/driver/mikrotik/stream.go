@@ -141,7 +141,23 @@ func (h *streamHandle) pump(d *Driver) {
 
 	if h.listen.Done != nil && h.listen.Done.Word == "!trap" {
 		h.mu.Lock()
-		h.err = fmt.Errorf("mikrotik: device reported error ending stream: %v", h.listen.Done.Map)
+		// A trap that merely acknowledges our own Cancel is the expected end of
+		// an unbounded stream, not a failure: RouterOS ends a cancelled
+		// /interface/monitor-traffic with an "interrupted" trap (other commands
+		// like "print follow" end cleanly). Record it as an error only when it
+		// wasn't caused by us — h.closed is set by Cancel before it triggers the
+		// cancellation that closes listen.Chan(), so it is reliably true here in
+		// that case. Any trap on a stream we did NOT cancel is a real error.
+		if !(h.closed && isInterruptedTrap(h.listen.Done.Map)) {
+			h.err = fmt.Errorf("mikrotik: device reported error ending stream: %v", h.listen.Done.Map)
+		}
 		h.mu.Unlock()
 	}
+}
+
+// isInterruptedTrap reports whether a RouterOS "!trap" sentence is the
+// "interrupted" acknowledgement the device sends when a streaming command is
+// cancelled, as opposed to a genuine error trap.
+func isInterruptedTrap(trap map[string]string) bool {
+	return trap["message"] == "interrupted"
 }

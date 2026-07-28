@@ -10,6 +10,8 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
+	"github.com/quixiq/polyglot/internal/domain/monitor"
+	"github.com/quixiq/polyglot/internal/domain/provision"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -66,6 +68,7 @@ type Driver struct {
 var (
 	_ port.DeviceDriver          = (*Driver)(nil)
 	_ port.StreamingDeviceDriver = (*Driver)(nil)
+	_ port.ProvisioningDriver    = (*Driver)(nil)
 )
 
 // NewDriver connects to target and returns a ready, connected Driver. Both
@@ -81,7 +84,7 @@ func NewDriver(ctx context.Context, target device.Target) (*Driver, error) {
 
 	streamClient, streamErrC, err := dialAndLogin(ctx, target)
 	if err != nil {
-		_ = execClient.Close()
+		_ = execClient.Close() // best-effort: unwinding a half-open connection, close error is irrelevant to the dial failure being returned
 		return nil, fmt.Errorf("mikrotik: connect stream: %w", err)
 	}
 
@@ -153,6 +156,14 @@ func (d *Driver) Execute(ctx context.Context, cmd command.Command) (command.Resu
 		return command.Result{}, fmt.Errorf("mikrotik: execute %q cancelled: %w", cmd.Raw, ctx.Err())
 	case o := <-done:
 		if o.err != nil {
+			// Dropping an active PPPoE session that isn't there means the
+			// subscriber is simply offline — a no-op for our intent, not a
+			// failure (see changeProfile / ChangeProfile). Swallowed only for
+			// this one path so the rest of a change_profile sequence still
+			// reports genuine errors (e.g. an unknown secret on /ppp/secret/set).
+			if cmd.Raw == activePPPRemovePath && isNoSuchItem(o.err) {
+				return command.Result{}, nil
+			}
 			return command.Result{}, fmt.Errorf("mikrotik: execute %q: %w", cmd.Raw, o.err)
 		}
 		return toResult(o.reply), nil
@@ -169,6 +180,19 @@ func (d *Driver) Translate(op command.Operation) (command.Command, error) {
 	return Translate(op)
 }
 
+// TranslateProvision maps an abstract provisioning Operation to the RouterOS
+// command sequence that fulfills it — see port.ProvisioningDriver.
+func (d *Driver) TranslateProvision(op provision.Operation) ([]command.Command, error) {
+	return translateProvision(op)
+}
+
+// TranslateStream maps an abstract monitoring Operation to the single RouterOS
+// streaming command that fulfills it — see port.StreamingDeviceDriver. The
+// returned command is meant to be handed to Stream.
+func (d *Driver) TranslateStream(op monitor.Operation) (command.Command, error) {
+	return translateStream(op)
+}
+
 // Close stops both persistent connections and their reconnect supervisors,
 // cancelling any streams still open first so their pump goroutines exit
 // cleanly instead of reading from a connection that's about to go away.
@@ -178,7 +202,7 @@ func (d *Driver) Close() error {
 	d.closeOnce.Do(func() {
 		d.streamsMu.Lock()
 		for h := range d.streams {
-			_ = h.Cancel()
+			_ = h.Cancel() // best-effort: draining all streams on Close; a per-stream cancel error must not stop us cancelling the rest
 		}
 		d.streamsMu.Unlock()
 
