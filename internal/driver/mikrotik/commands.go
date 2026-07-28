@@ -7,6 +7,7 @@ import (
 	"github.com/go-routeros/routeros/v3"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/domain/monitor"
 	"github.com/quixiq/polyglot/internal/domain/provision"
 )
 
@@ -73,6 +74,46 @@ func translateProvision(op provision.Operation) ([]command.Command, error) {
 		return changeProfile(o)
 	default:
 		return nil, fmt.Errorf("mikrotik: unsupported provisioning operation %T", op)
+	}
+}
+
+// translateStream maps an abstract monitoring operation to the single RouterOS
+// streaming command that fulfills it. Knowledge of RouterOS paths, field names,
+// and streaming flags (follow/follow-only, stats, the ?name query word) lives
+// here per AGENTS.md §1.2, never in usecase/. It returns a single command
+// because a streaming observation is always one long-running command (see
+// port.StreamingDeviceDriver.TranslateStream). Required fields are validated
+// here with a clear error before touching the wire rather than letting the
+// device reject the sentence.
+func translateStream(op monitor.Operation) (command.Command, error) {
+	switch o := op.(type) {
+	case monitor.HotspotHosts:
+		cmd := printCmd("/ip/hotspot/host/print", o.Fields)
+		cmd.Args["follow"] = ""
+		return cmd, nil
+	case monitor.InterfaceTraffic:
+		if o.Interface == "" {
+			return command.Command{}, fmt.Errorf("mikrotik: monitor interface traffic: %w: interface", errMissingField)
+		}
+		return command.Command{
+			Raw:  "/interface/monitor-traffic",
+			Args: map[string]string{"interface": o.Interface},
+		}, nil
+	case monitor.DHCPLeases:
+		cmd := printCmd("/ip/dhcp-server/lease/print", o.Fields)
+		cmd.Args["follow-only"] = ""
+		return cmd, nil
+	case monitor.QueueStats:
+		if o.QueueName == "" {
+			return command.Command{}, fmt.Errorf("mikrotik: monitor queue stats: %w: queue name", errMissingField)
+		}
+		cmd := printCmd("/queue/simple/print", o.Fields)
+		cmd.Args["stats"] = ""
+		cmd.Args["?name"] = o.QueueName
+		cmd.Args["interval=1s"] = ""
+		return cmd, nil
+	default:
+		return command.Command{}, fmt.Errorf("mikrotik: unsupported monitoring operation %T", op)
 	}
 }
 
@@ -218,24 +259,42 @@ func isStreamingCommand(cmd command.Command) bool {
 	return false
 }
 
+// bareWords lists Args keys that RouterOS expects as a standalone word with no
+// "=" prefix and no value: the streaming flags follow/follow-only and the
+// stats modifier on /queue/simple/print. Whatever is stored in cmd.Args[key]
+// for these is ignored — only the key itself is written.
+var bareWords = map[string]bool{
+	"follow":      true,
+	"follow-only": true,
+	"stats":       true,
+}
+
 // buildArgs converts a vendor-agnostic command.Command into the sentence
-// go-routeros expects: Raw first, then one word per Args entry. RouterOS
-// API distinguishes bare words (no value, e.g. "follow") from attribute
-// words ("=key=value") — follow/follow-only never take a value, so they
-// are always written bare regardless of what's stored in cmd.Args[key].
+// go-routeros expects: Raw first, then one word per Args entry. RouterOS API
+// distinguishes three word forms, all produced here from cmd.Args:
+//   - bare words (no "=", no value, e.g. "follow"/"stats"): keys in bareWords.
+//   - query words ("?key=value", filter the result set): keys prefixed with
+//     "?" in cmd.Args (e.g. "?name") — the "?" is already part of the key, so
+//     it is written through verbatim, not re-prefixed with "=".
+//   - attribute words ("=key=value", or bare "=key" when the value is empty):
+//     everything else.
 func buildArgs(cmd command.Command) []string {
 	args := make([]string, 0, 1+len(cmd.Args))
 	args = append(args, cmd.Raw)
 	for key, value := range cmd.Args {
-		switch key {
-		case "follow", "follow-only":
+		switch {
+		case bareWords[key]:
 			args = append(args, key)
-		default:
+		case strings.HasPrefix(key, "?"):
 			if value == "" {
-				args = append(args, "="+key)
+				args = append(args, key)
 			} else {
-				args = append(args, "="+key+"="+value)
+				args = append(args, key+"="+value)
 			}
+		case value == "":
+			args = append(args, "="+key)
+		default:
+			args = append(args, "="+key+"="+value)
 		}
 	}
 	return args

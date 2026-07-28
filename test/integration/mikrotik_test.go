@@ -26,6 +26,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
+	"github.com/quixiq/polyglot/internal/domain/monitor"
 	"github.com/quixiq/polyglot/internal/domain/provision"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
@@ -515,4 +516,174 @@ func removeByName(ctx context.Context, t *testing.T, drv *mikrotik.Driver, menuP
 		})
 		require.NoError(t, err, "gagal menghapus %s sisa %q (.id=%s)", menuPath, name, row[".id"])
 	}
+}
+
+// streamingDriver mengambil kapabilitas streaming opt-in dari drv, atau
+// menggagalkan test kalau driver tidak mengimplementasikannya.
+func streamingDriver(t *testing.T, drv *mikrotik.Driver) port.StreamingDeviceDriver {
+	t.Helper()
+	sd, ok := port.DeviceDriver(drv).(port.StreamingDeviceDriver)
+	require.True(t, ok, "mikrotik.Driver harus implement port.StreamingDeviceDriver")
+	return sd
+}
+
+// collectStreamSamples menampung hingga maxSamples hasil dari handle (atau
+// sampai budget habis), lalu Cancel dan menguras channel sampai tertutup,
+// memastikan stream berhenti tanpa error. Mengembalikan jumlah hasil yang
+// diterima sebelum dibatalkan. Sengaja toleran: stream follow/follow-only/
+// monitor-traffic tidak pernah selesai sendiri, dan device yang "sepi" bisa saja
+// menghasilkan nol baris.
+func collectStreamSamples(t *testing.T, handle port.StreamHandle, maxSamples int, budget time.Duration) int {
+	t.Helper()
+
+	received := 0
+	timeout := time.After(budget)
+collect:
+	for received < maxSamples {
+		select {
+		case _, ok := <-handle.Chan():
+			if !ok {
+				break collect
+			}
+			received++
+		case <-timeout:
+			break collect
+		}
+	}
+
+	require.NoError(t, handle.Cancel())
+	// Uras sisa (jika ada) supaya goroutine pump selesai dan Err() final.
+	for range handle.Chan() {
+	}
+	assert.NoError(t, handle.Err())
+	return received
+}
+
+// TestMikrotikDriver_MonitorHotspotHosts membuktikan jalur monitoring typed
+// end-to-end: monitor.HotspotHosts diterjemahkan jadi
+// "/ip/hotspot/host/print follow" oleh TranslateStream, dijalankan via Stream,
+// dan ditutup bersih. Jumlah host bisa nol (tidak ada hotspot aktif), jadi test
+// hanya membuktikan stream terbuka & tertutup tanpa error, bukan mengharuskan
+// ada data.
+func TestMikrotikDriver_MonitorHotspotHosts(t *testing.T) {
+	target := mikrotikTestTarget(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
+
+	drv, err := mikrotik.NewDriver(ctx, target)
+	require.NoError(t, err, "gagal konek ke Mikrotik fisik")
+	defer func() { assert.NoError(t, drv.Close()) }()
+
+	sd := streamingDriver(t, drv)
+
+	cmd, err := sd.TranslateStream(monitor.HotspotHosts{Fields: []string{"mac-address", "address", "host-name"}})
+	require.NoError(t, err)
+	require.Equal(t, "/ip/hotspot/host/print", cmd.Raw)
+
+	handle, err := sd.Stream(ctx, cmd)
+	require.NoError(t, err)
+
+	n := collectStreamSamples(t, handle, 3, 5*time.Second)
+	t.Logf("hotspot host: menerima %d sampel sebelum cancel", n)
+}
+
+// TestMikrotikDriver_MonitorInterfaceTraffic membuktikan monitor.InterfaceTraffic
+// membawa arg interface ke "/interface/monitor-traffic". Nama interface diambil
+// dari device asli (/interface/print) supaya test tidak bergantung pada nama
+// yang di-hardcode. monitor-traffic selalu mengalir, jadi diharapkan minimal
+// satu sampel.
+func TestMikrotikDriver_MonitorInterfaceTraffic(t *testing.T) {
+	target := mikrotikTestTarget(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
+
+	drv, err := mikrotik.NewDriver(ctx, target)
+	require.NoError(t, err, "gagal konek ke Mikrotik fisik")
+	defer func() { assert.NoError(t, drv.Close()) }()
+
+	sd := streamingDriver(t, drv)
+
+	// Ambil satu interface nyata dari device.
+	ifaces, err := drv.Execute(ctx, command.Command{
+		Raw:  "/interface/print",
+		Args: map[string]string{".proplist": "name"},
+	})
+	require.NoError(t, err)
+	require.NotEmpty(t, ifaces.Rows, "device harus punya minimal satu interface")
+	ifname := ifaces.Rows[0]["name"]
+	require.NotEmpty(t, ifname)
+
+	cmd, err := sd.TranslateStream(monitor.InterfaceTraffic{Interface: ifname})
+	require.NoError(t, err)
+	require.Equal(t, "/interface/monitor-traffic", cmd.Raw)
+
+	handle, err := sd.Stream(ctx, cmd)
+	require.NoError(t, err)
+
+	n := collectStreamSamples(t, handle, 3, 8*time.Second)
+	t.Logf("monitor-traffic %q: menerima %d sampel sebelum cancel", ifname, n)
+	assert.Greater(t, n, 0, "monitor-traffic harus mengalirkan minimal satu sampel")
+}
+
+// TestMikrotikDriver_MonitorDHCPLeases membuktikan monitor.DHCPLeases jadi
+// "/ip/dhcp-server/lease/print follow-only". follow-only hanya mengalirkan
+// PERUBAHAN berikutnya (bukan tabel saat ini), jadi kemungkinan besar nol sampel
+// selama window test — test hanya membuktikan stream terbuka & tertutup bersih.
+func TestMikrotikDriver_MonitorDHCPLeases(t *testing.T) {
+	target := mikrotikTestTarget(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
+
+	drv, err := mikrotik.NewDriver(ctx, target)
+	require.NoError(t, err, "gagal konek ke Mikrotik fisik")
+	defer func() { assert.NoError(t, drv.Close()) }()
+
+	sd := streamingDriver(t, drv)
+
+	cmd, err := sd.TranslateStream(monitor.DHCPLeases{Fields: []string{"address", "mac-address", "status"}})
+	require.NoError(t, err)
+	require.Equal(t, "/ip/dhcp-server/lease/print", cmd.Raw)
+
+	handle, err := sd.Stream(ctx, cmd)
+	require.NoError(t, err)
+
+	n := collectStreamSamples(t, handle, 3, 4*time.Second)
+	t.Logf("dhcp leases (follow-only): menerima %d sampel sebelum cancel", n)
+}
+
+// TestMikrotikDriver_MonitorQueueStats membuktikan monitor.QueueStats jadi
+// "/queue/simple/print stats follow" difilter ?name. Nama queue diambil dari
+// device; kalau tidak ada satu pun simple queue, test di-skip (bukan gagal)
+// karena statistik butuh objek yang benar-benar ada.
+func TestMikrotikDriver_MonitorQueueStats(t *testing.T) {
+	target := mikrotikTestTarget(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
+
+	drv, err := mikrotik.NewDriver(ctx, target)
+	require.NoError(t, err, "gagal konek ke Mikrotik fisik")
+	defer func() { assert.NoError(t, drv.Close()) }()
+
+	sd := streamingDriver(t, drv)
+
+	queues, err := drv.Execute(ctx, command.Command{
+		Raw:  "/queue/simple/print",
+		Args: map[string]string{".proplist": "name"},
+	})
+	require.NoError(t, err)
+	if len(queues.Rows) == 0 {
+		t.Skip("tidak ada simple queue di device — skip monitor queue stats")
+	}
+	qname := queues.Rows[0]["name"]
+	require.NotEmpty(t, qname)
+
+	cmd, err := sd.TranslateStream(monitor.QueueStats{QueueName: qname})
+	require.NoError(t, err)
+	require.Equal(t, "/queue/simple/print", cmd.Raw)
+
+	handle, err := sd.Stream(ctx, cmd)
+	require.NoError(t, err)
+
+	n := collectStreamSamples(t, handle, 3, 8*time.Second)
+	t.Logf("queue stats %q: menerima %d sampel sebelum cancel", qname, n)
 }

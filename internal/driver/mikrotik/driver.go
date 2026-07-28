@@ -10,6 +10,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
+	"github.com/quixiq/polyglot/internal/domain/monitor"
 	"github.com/quixiq/polyglot/internal/domain/provision"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -183,6 +184,13 @@ func (d *Driver) Translate(op command.Operation) (command.Command, error) {
 // command sequence that fulfills it — see port.ProvisioningDriver.
 func (d *Driver) TranslateProvision(op provision.Operation) ([]command.Command, error) {
 	return translateProvision(op)
+}
+
+// TranslateStream maps an abstract monitoring Operation to the single RouterOS
+// streaming command that fulfills it — see port.StreamingDeviceDriver. The
+// returned command is meant to be handed to Stream.
+func (d *Driver) TranslateStream(op monitor.Operation) (command.Command, error) {
+	return translateStream(op)
 }
 
 // Close stops both persistent connections and their reconnect supervisors,

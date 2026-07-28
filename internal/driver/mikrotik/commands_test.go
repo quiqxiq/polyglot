@@ -10,6 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/domain/monitor"
 	"github.com/quixiq/polyglot/internal/domain/provision"
 )
 
@@ -199,6 +200,75 @@ func TestTranslateProvision_ChangeProfile(t *testing.T) {
 	})
 }
 
+func TestTranslateStream(t *testing.T) {
+	tests := []struct {
+		name    string
+		op      monitor.Operation
+		want    command.Command
+		wantErr error
+	}{
+		{
+			name: "hotspot hosts, no projection, streams with follow",
+			op:   monitor.HotspotHosts{},
+			want: command.Command{Raw: "/ip/hotspot/host/print", Args: map[string]string{"follow": ""}},
+		},
+		{
+			name: "hotspot hosts, projection",
+			op:   monitor.HotspotHosts{Fields: []string{"mac-address", "address"}},
+			want: command.Command{Raw: "/ip/hotspot/host/print", Args: map[string]string{".proplist": "mac-address,address", "follow": ""}},
+		},
+		{
+			name: "interface traffic carries the interface arg",
+			op:   monitor.InterfaceTraffic{Interface: "ether1"},
+			want: command.Command{Raw: "/interface/monitor-traffic", Args: map[string]string{"interface": "ether1"}},
+		},
+		{
+			name:    "interface traffic without interface errors",
+			op:      monitor.InterfaceTraffic{},
+			wantErr: errMissingField,
+		},
+		{
+			name: "dhcp leases stream with follow-only",
+			op:   monitor.DHCPLeases{},
+			want: command.Command{Raw: "/ip/dhcp-server/lease/print", Args: map[string]string{"follow-only": ""}},
+		},
+		{
+			name: "dhcp leases, projection",
+			op:   monitor.DHCPLeases{Fields: []string{"address", "mac-address"}},
+			want: command.Command{Raw: "/ip/dhcp-server/lease/print", Args: map[string]string{".proplist": "address,mac-address", "follow-only": ""}},
+		},
+		{
+			name: "queue stats filter by name, stats + follow",
+			op:   monitor.QueueStats{QueueName: "budi"},
+			want: command.Command{Raw: "/queue/simple/print", Args: map[string]string{"stats": "", "?name": "budi", "follow": ""}},
+		},
+		{
+			name:    "queue stats without name errors",
+			op:      monitor.QueueStats{},
+			wantErr: errMissingField,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := translateStream(tt.op)
+			if tt.wantErr != nil {
+				require.ErrorIs(t, err, tt.wantErr)
+				return
+			}
+			require.NoError(t, err)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+
+	t.Run("unsupported operation errors", func(t *testing.T) {
+		// A nil Operation matches no case and must fail closed via default —
+		// the sealed interface makes any other unknown op unconstructable from
+		// outside the monitor package.
+		_, err := translateStream(nil)
+		require.Error(t, err)
+	})
+}
+
 func TestIsNoSuchItem(t *testing.T) {
 	tests := []struct {
 		name string
@@ -216,6 +286,23 @@ func TestIsNoSuchItem(t *testing.T) {
 	}
 }
 
+func TestIsInterruptedTrap(t *testing.T) {
+	tests := []struct {
+		name string
+		trap map[string]string
+		want bool
+	}{
+		{"interrupted ack from cancel", map[string]string{"category": "2", "message": "interrupted"}, true},
+		{"genuine error trap", map[string]string{"category": "0", "message": "no such command"}, false},
+		{"empty trap", map[string]string{}, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equal(t, tt.want, isInterruptedTrap(tt.trap))
+		})
+	}
+}
+
 func TestIsStreamingCommand(t *testing.T) {
 	tests := []struct {
 		name string
@@ -228,6 +315,7 @@ func TestIsStreamingCommand(t *testing.T) {
 		{"print with follow is streaming", command.Command{Raw: "/interface/print", Args: map[string]string{"follow": ""}}, true},
 		{"print with follow-only is streaming", command.Command{Raw: "/log/print", Args: map[string]string{"follow-only": ""}}, true},
 		{"print with interval is streaming", command.Command{Raw: "/interface/print", Args: map[string]string{"interval": "1s"}}, true},
+		{"queue stats with follow is streaming", command.Command{Raw: "/queue/simple/print", Args: map[string]string{"stats": "", "?name": "budi", "follow": ""}}, true},
 		{"resource print is not streaming", command.Command{Raw: "/system/resource/print"}, false},
 		{"unrelated args do not trigger streaming", command.Command{Raw: "/interface/print", Args: map[string]string{"disabled": "no"}}, false},
 	}
@@ -268,6 +356,21 @@ func TestBuildArgs(t *testing.T) {
 			name: "attribute with empty value becomes bare",
 			cmd:  command.Command{Raw: "/interface/print", Args: map[string]string{"disabled": ""}},
 			want: []string{"/interface/print", "=disabled"},
+		},
+		{
+			name: "bare stats flag",
+			cmd:  command.Command{Raw: "/queue/simple/print", Args: map[string]string{"stats": ""}},
+			want: []string{"/queue/simple/print", "stats"},
+		},
+		{
+			name: "query word keeps its ? prefix and is not turned into an attribute",
+			cmd:  command.Command{Raw: "/queue/simple/print", Args: map[string]string{"?name": "q1"}},
+			want: []string{"/queue/simple/print", "?name=q1"},
+		},
+		{
+			name: "queue stats full sentence: proplist attribute, stats + follow bare, ?name query",
+			cmd:  command.Command{Raw: "/queue/simple/print", Args: map[string]string{".proplist": "name,rate", "stats": "", "?name": "q1", "follow": ""}},
+			want: []string{"/queue/simple/print", "=.proplist=name,rate", "stats", "?name=q1", "follow"},
 		},
 	}
 	for _, tt := range tests {
