@@ -124,13 +124,13 @@
         <div class="card-top">
           <h4 class="entry-title" @click="openViewModal(entry)">{{ entry.title }}</h4>
           <div class="card-actions">
-            <button class="icon-btn" title="Baca Detail Full Markdown" @click="openViewModal(entry)">
+            <button class="icon-btn" title="Baca Detail Full Markdown" @click.stop="openViewModal(entry)">
               <Eye class="w-4 h-4" />
             </button>
-            <button class="icon-btn" title="Edit Dokumen" @click="openEditModal(entry)">
+            <button class="icon-btn" title="Edit Dokumen" @click.stop="openEditModal(entry)">
               <Edit2 class="w-4 h-4" />
             </button>
-            <button class="icon-btn danger" title="Hapus Dokumen" @click="handleDelete(entry.id)">
+            <button class="icon-btn danger" title="Hapus Dokumen" @click.stop="handleDelete(entry.id)">
               <Trash2 class="w-4 h-4" />
             </button>
           </div>
@@ -649,6 +649,7 @@ function formatDate(d: string) {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  position: relative;
   transition: transform 0.2s ease, border-color 0.2s ease;
 
   &:hover {
@@ -662,6 +663,8 @@ function formatDate(d: string) {
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
+  position: relative;
+  z-index: 10;
 }
 
 .entry-title {
@@ -679,26 +682,33 @@ function formatDate(d: string) {
 .card-actions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  position: relative;
+  z-index: 20;
 }
 
 .icon-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  padding: 6px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 7px;
   border-radius: var(--radius-sm);
   cursor: pointer;
+  position: relative;
+  z-index: 25;
+  pointer-events: auto;
   transition: all 0.2s ease;
 
   &:hover {
-    color: var(--text-main);
-    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    background: rgba(99, 102, 241, 0.15);
+    border-color: var(--primary);
   }
 
   &.danger:hover {
     color: #f43f5e;
-    background: rgba(239, 68, 68, 0.15);
+    background: rgba(244, 63, 94, 0.15);
+    border-color: #f43f5e;
   }
 }
 
@@ -708,6 +718,12 @@ function formatDate(d: string) {
   overflow: hidden;
   position: relative;
   font-size: 13px;
+  z-index: 1;
+}
+
+.content-preview :deep(.v-md-editor__preview-wrapper),
+.content-preview :deep(.vuepress-markdown-body) {
+  pointer-events: none;
 }
 
 .card-footer {
@@ -717,6 +733,8 @@ function formatDate(d: string) {
   padding-top: 12px;
   border-top: 1px solid var(--border-color);
   margin-top: auto;
+  position: relative;
+  z-index: 10;
 }
 
 .tags-wrapper {
