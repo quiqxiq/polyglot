@@ -11,7 +11,7 @@
           </span>
         </div>
         <p class="sub-text">
-          Kelola dokumen acuan resmi, FAQ, dan SOP pelayanan GNET. Data ini digunakan oleh Bot AI untuk menjawab pertanyaan pelanggan tanpa manipulasi (hallucination).
+          Kelola dokumen acuan resmi, FAQ, dan SOP pelayanan GNET. Data ini digunakan oleh Bot AI untuk menjawab pertanyaan pelanggan tanpa hallucination.
         </p>
       </div>
       <button class="btn btn-primary shadow-glow" @click="openCreateModal">
@@ -23,7 +23,7 @@
     <!-- Stats Overview Cards -->
     <div class="stats-row">
       <div class="stat-mini-card glass-panel">
-        <div class="stat-icon-wrapper bg-indigo-500/10 text-indigo-500">
+        <div class="stat-icon-wrapper icon-indigo">
           <BookOpen class="w-5 h-5" />
         </div>
         <div>
@@ -33,7 +33,7 @@
       </div>
 
       <div class="stat-mini-card glass-panel">
-        <div class="stat-icon-wrapper bg-purple-500/10 text-purple-500">
+        <div class="stat-icon-wrapper icon-purple">
           <Tag class="w-5 h-5" />
         </div>
         <div>
@@ -43,7 +43,7 @@
       </div>
 
       <div class="stat-mini-card glass-panel">
-        <div class="stat-icon-wrapper bg-emerald-500/10 text-emerald-500">
+        <div class="stat-icon-wrapper icon-emerald">
           <Check class="w-5 h-5" />
         </div>
         <div>
@@ -85,7 +85,7 @@
             :class="['tag-chip', { active: knowledgeStore.selectedTag === '' }]"
             @click="knowledgeStore.selectedTag = ''"
           >
-            Semua Tag ({{ knowledgeStore.entries.length }})
+            Semua ({{ knowledgeStore.entries.length }})
           </button>
 
           <button
@@ -120,15 +120,16 @@
         v-for="entry in knowledgeStore.filteredEntries"
         :key="entry.id"
         class="knowledge-card glass-panel"
+        @click="openViewModal(entry)"
       >
         <!-- Card Header -->
         <div class="card-header-bar">
-          <div class="card-title-group" @click="openViewModal(entry)">
-            <FileText class="w-4.5 h-4.5 text-indigo-500 shrink-0 mt-0.5" />
+          <div class="card-title-group">
+            <FileText class="card-title-icon" />
             <h4 class="entry-title">{{ entry.title }}</h4>
           </div>
 
-          <!-- Three Dots Dropdown Menu Container -->
+          <!-- Three Dots Dropdown Menu -->
           <div class="menu-container" @click.stop>
             <button
               type="button"
@@ -139,34 +140,18 @@
               <MoreVertical class="w-4 h-4" />
             </button>
 
-            <!-- Dropdown Options Menu -->
-            <div v-if="activeMenuId === entry.id" class="dropdown-menu glass-panel" @click.stop>
-              <button
-                type="button"
-                class="dropdown-item"
-                @click.stop="triggerAction('view', entry)"
-              >
+            <div v-if="activeMenuId === entry.id" class="dropdown-menu" @click.stop>
+              <button type="button" class="dropdown-item" @click="doAction('view', entry)">
                 <Eye class="w-4 h-4 text-indigo-500" />
-                <span>Lihat Detail Markdown</span>
+                <span>Lihat Detail</span>
               </button>
-
-              <button
-                type="button"
-                class="dropdown-item"
-                @click.stop="triggerAction('edit', entry)"
-              >
-                <Edit2 class="w-4 h-4 text-cyan-600" />
+              <button type="button" class="dropdown-item" @click="doAction('edit', entry)">
+                <Edit2 class="w-4 h-4 text-cyan-500" />
                 <span>Edit Dokumen</span>
               </button>
-
               <div class="dropdown-divider"></div>
-
-              <button
-                type="button"
-                class="dropdown-item danger"
-                @click.stop="triggerAction('delete', entry)"
-              >
-                <Trash2 class="w-4 h-4 text-rose-500" />
+              <button type="button" class="dropdown-item danger" @click="doAction('delete', entry)">
+                <Trash2 class="w-4 h-4" />
                 <span>Hapus Dokumen</span>
               </button>
             </div>
@@ -174,11 +159,9 @@
         </div>
 
         <!-- Clean Text Excerpt Preview -->
-        <p class="entry-excerpt" @click="openViewModal(entry)">
-          {{ getPlainTextExcerpt(entry.content) }}
-        </p>
+        <p class="entry-excerpt">{{ getPlainTextExcerpt(entry.content) }}</p>
 
-        <!-- Card Footer -->
+        <!-- Card Footer: Tags + Date -->
         <div class="card-bottom">
           <div class="tags-wrapper">
             <span
@@ -190,141 +173,106 @@
               #{{ t }}
             </span>
           </div>
-
-          <!-- Direct Action Buttons (Lihat, Edit, Hapus) -->
-          <div class="action-btn-group">
-            <button
-              type="button"
-              class="btn-action btn-view"
-              title="Lihat Detail Full Markdown"
-              @click.stop="openViewModal(entry)"
-            >
-              <Eye class="w-3.5 h-3.5 text-indigo-500" />
-              <span>Lihat</span>
-            </button>
-
-            <button
-              type="button"
-              class="btn-action btn-edit"
-              title="Edit Dokumen FAQ"
-              @click.stop="openEditModal(entry)"
-            >
-              <Edit2 class="w-3.5 h-3.5 text-cyan-600" />
-              <span>Edit</span>
-            </button>
-
-            <button
-              type="button"
-              class="btn-action btn-delete"
-              title="Hapus Dokumen FAQ"
-              @click.stop="handleDelete(entry.id)"
-            >
-              <Trash2 class="w-3.5 h-3.5 text-rose-500" />
-              <span>Hapus</span>
-            </button>
-          </div>
+          <span class="entry-date">{{ formatDate(entry.updated_at) }}</span>
         </div>
       </div>
     </div>
 
     <!-- Create / Edit Modal with v-md-editor -->
-    <div v-if="showModal" class="modal-overlay" @click.self="closeEditorModal">
-      <div class="modal-card modal-lg glass-panel">
-        <div class="modal-header">
-          <div class="flex items-center gap-2">
-            <BookOpen class="w-5 h-5 text-indigo-500" />
-            <h3>{{ editingId ? 'Edit Dokumen Basis Pengetahuan' : 'Tambah Dokumen FAQ Baru' }}</h3>
-          </div>
-          <button type="button" class="close-btn" @click="closeEditorModal">
-            <X class="w-5 h-5" />
-          </button>
-        </div>
-
-        <form @submit.prevent="handleSubmit" class="editor-form">
-          <div class="input-group">
-            <label class="input-label">Judul Dokumen / Pertanyaan FAQ</label>
-            <input
-              v-model="formTitle"
-              type="text"
-              class="form-input text-base"
-              placeholder="misal: Prosedur Pembayaran & Rekening Resmi GNET"
-              required
-            />
-          </div>
-
-          <div class="input-group">
-            <div class="flex items-center justify-between mb-1">
-              <label class="input-label">Konten Dokumen (Format Markdown Rich-Text)</label>
-              <span class="text-xs text-indigo-500 font-semibold">Markdown Editor (@kangc/v-md-editor English)</span>
+    <Teleport to="body">
+      <div v-if="showModal" class="modal-overlay" @click.self="closeEditorModal">
+        <div class="modal-card modal-lg glass-panel">
+          <div class="modal-header">
+            <div class="modal-header-title">
+              <BookOpen class="w-5 h-5 text-indigo-500" />
+              <h3>{{ editingId ? 'Edit Dokumen Basis Pengetahuan' : 'Tambah Dokumen FAQ Baru' }}</h3>
             </div>
-            <div class="v-md-editor-container">
-              <v-md-editor
-                v-if="showModal"
-                v-model="formContent"
-                height="380px"
-                placeholder="Tuliskan jawaban resmi, contoh format, list, atau panduan lengkap..."
+            <button type="button" class="close-btn" @click="closeEditorModal">
+              <X class="w-5 h-5" />
+            </button>
+          </div>
+
+          <form @submit.prevent="handleSubmit" class="editor-form">
+            <div class="input-group">
+              <label class="input-label">Judul Dokumen / Pertanyaan FAQ</label>
+              <input
+                v-model="formTitle"
+                type="text"
+                class="form-input text-base"
+                placeholder="misal: Prosedur Pembayaran & Rekening Resmi GNET"
+                required
               />
             </div>
+
+            <div class="input-group">
+              <label class="input-label">Konten Dokumen (Format Markdown)</label>
+              <div class="v-md-editor-container">
+                <v-md-editor
+                  v-model="formContent"
+                  height="380px"
+                  placeholder="Tuliskan jawaban resmi, contoh format, list, atau panduan lengkap..."
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label class="input-label">Tag / Kata Kunci (Dipisahkan Koma)</label>
+              <input
+                v-model="formTags"
+                type="text"
+                class="form-input"
+                placeholder="misal: pembayaran, tagihan, bca, mandiri, rekening"
+              />
+              <div class="tag-preview-pills mt-2" v-if="formTags">
+                <span v-for="t in getTagList(formTags)" :key="t" class="tag-pill-preview">
+                  #{{ t }}
+                </span>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" @click="closeEditorModal">Batal</button>
+              <button type="submit" class="btn btn-primary" :disabled="submitting">
+                <Loader2 v-if="submitting" class="w-4 h-4 spin" />
+                <span>{{ editingId ? 'Simpan Perubahan' : 'Buat Dokumen' }}</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </Teleport>
+
+    <!-- Read Detail Markdown Modal -->
+    <Teleport to="body">
+      <div v-if="showViewModal && viewingEntry" class="modal-overlay" @click.self="closeViewModal">
+        <div class="modal-card modal-lg glass-panel">
+          <div class="modal-header">
+            <div>
+              <h3 class="modal-view-title">{{ viewingEntry.title }}</h3>
+              <div class="modal-view-meta">
+                <span v-for="t in getTagList(viewingEntry.tags)" :key="t" class="tag-pill">#{{ t }}</span>
+                <span class="meta-date">Diperbarui: {{ formatDate(viewingEntry.updated_at) }}</span>
+              </div>
+            </div>
+            <button type="button" class="close-btn" @click="closeViewModal">
+              <X class="w-5 h-5" />
+            </button>
           </div>
 
-          <div class="input-group">
-            <label class="input-label">Tag / Kata Kunci Pencarian (Dipisahkan Koma)</label>
-            <input
-              v-model="formTags"
-              type="text"
-              class="form-input"
-              placeholder="misal: pembayaran, tagihan, bca, mandiri, rekening"
-            />
-            <div class="tag-preview-pills mt-2" v-if="formTags">
-              <span v-for="t in getTagList(formTags)" :key="t" class="tag-pill-preview">
-                #{{ t }}
-              </span>
-            </div>
+          <div class="view-content-body">
+            <v-md-preview :text="viewingEntry.content || ''" />
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeEditorModal">Batal</button>
-            <button type="submit" class="btn btn-primary" :disabled="submitting">
-              <Loader2 v-if="submitting" class="w-4 h-4 spin" />
-              <span>{{ editingId ? 'Simpan Perubahan' : 'Buat Dokumen' }}</span>
+            <button type="button" class="btn btn-secondary" @click="closeViewModal">Tutup</button>
+            <button type="button" class="btn btn-primary" @click="editFromViewModal">
+              <Edit2 class="w-4 h-4" />
+              <span>Edit Dokumen Ini</span>
             </button>
           </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Read Detail Markdown Modal -->
-    <div v-if="showViewModal && viewingEntry" class="modal-overlay" @click.self="closeViewModal">
-      <div class="modal-card modal-lg glass-panel">
-        <div class="modal-header">
-          <div>
-            <h3 class="text-lg font-bold text-main">{{ viewingEntry.title || 'Dokumen Pengetahuan' }}</h3>
-            <div class="flex items-center gap-2 mt-1">
-              <span v-for="t in getTagList(viewingEntry.tags)" :key="t" class="tag-pill">#{{ t }}</span>
-              <span class="text-xs text-muted ml-2">Diperbarui: {{ formatDate(viewingEntry.updated_at) }}</span>
-            </div>
-          </div>
-          <button type="button" class="close-btn" @click="closeViewModal">
-            <X class="w-5 h-5" />
-          </button>
-        </div>
-
-        <div class="view-content-body">
-          <v-md-preview
-            v-if="showViewModal && viewingEntry"
-            :text="viewingEntry.content || ''"
-          />
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" @click="closeViewModal">Tutup</button>
-          <button type="button" class="btn btn-primary" @click="editFromViewModal">
-            <Edit2 class="w-4 h-4" />
-            <span>Edit Dokumen Ini</span>
-          </button>
         </div>
       </div>
-    </div>
+    </Teleport>
 
     <!-- Delete Confirmation Modal -->
     <ConfirmModal
@@ -365,22 +313,27 @@ import { useKnowledgeStore } from '../stores/knowledge'
 
 const knowledgeStore = useKnowledgeStore()
 
+// Dropdown state
 const activeMenuId = ref<number | null>(null)
 
+// Modal states
 const showModal = ref(false)
 const showViewModal = ref(false)
 const viewingEntry = ref<KnowledgeEntry | null>(null)
 
+// Delete modal
 const showDeleteModal = ref(false)
 const deleteTargetId = ref<number | null>(null)
 const deleting = ref(false)
 
+// Form
 const editingId = ref<number | null>(null)
 const formTitle = ref('')
 const formContent = ref('')
 const formTags = ref('')
 const submitting = ref(false)
 
+// Close dropdown on any click outside
 function handleWindowClick() {
   activeMenuId.value = null
 }
@@ -395,26 +348,27 @@ onUnmounted(() => {
 })
 
 function toggleCardMenu(id: number) {
-  if (activeMenuId.value === id) {
-    activeMenuId.value = null
-  } else {
-    activeMenuId.value = id
-  }
+  activeMenuId.value = activeMenuId.value === id ? null : id
 }
 
-function triggerAction(action: 'view' | 'edit' | 'delete', entry: KnowledgeEntry) {
-  if (!entry) return
-  const target = { ...entry }
+// Unified action handler from dropdown
+function doAction(action: 'view' | 'edit' | 'delete', entry: KnowledgeEntry) {
+  // Clone entry data before closing menu to avoid reactive reference issues
+  const data = { ...entry }
+  // Close menu first
   activeMenuId.value = null
+
+  // Execute action on next tick to let Vue finish DOM updates
   if (action === 'view') {
-    openViewModal(target)
+    openViewModal(data)
   } else if (action === 'edit') {
-    openEditModal(target)
+    openEditModal(data)
   } else if (action === 'delete') {
-    handleDelete(target.id)
+    handleDelete(data.id)
   }
 }
 
+// Tag counts
 const tagCounts = computed(() => {
   const map = new Map<string, number>()
   knowledgeStore.entries.forEach((e) => {
@@ -431,11 +385,7 @@ const tagCounts = computed(() => {
 })
 
 function selectTag(tagName: string) {
-  if (knowledgeStore.selectedTag === tagName) {
-    knowledgeStore.selectedTag = ''
-  } else {
-    knowledgeStore.selectedTag = tagName
-  }
+  knowledgeStore.selectedTag = knowledgeStore.selectedTag === tagName ? '' : tagName
 }
 
 function resetFilters() {
@@ -443,6 +393,7 @@ function resetFilters() {
   knowledgeStore.selectedTag = ''
 }
 
+// Create modal
 function openCreateModal() {
   editingId.value = null
   formTitle.value = ''
@@ -451,6 +402,7 @@ function openCreateModal() {
   showModal.value = true
 }
 
+// Edit modal
 function openEditModal(entry: KnowledgeEntry) {
   if (!entry) return
   editingId.value = entry.id
@@ -460,6 +412,7 @@ function openEditModal(entry: KnowledgeEntry) {
   showModal.value = true
 }
 
+// View modal
 function openViewModal(entry: KnowledgeEntry) {
   if (!entry) return
   viewingEntry.value = { ...entry }
@@ -468,24 +421,28 @@ function openViewModal(entry: KnowledgeEntry) {
 
 function closeViewModal() {
   showViewModal.value = false
-  viewingEntry.value = null
+  // Delay clearing data so Vue can unmount v-md-preview cleanly
+  setTimeout(() => {
+    viewingEntry.value = null
+  }, 100)
 }
 
 function editFromViewModal() {
   if (!viewingEntry.value) return
   const entry = { ...viewingEntry.value }
   closeViewModal()
-  openEditModal(entry)
+  // Wait for view modal to close before opening edit modal
+  setTimeout(() => {
+    openEditModal(entry)
+  }, 150)
 }
 
 function closeEditorModal() {
   showModal.value = false
   editingId.value = null
-  formTitle.value = ''
-  formContent.value = ''
-  formTags.value = ''
 }
 
+// Submit create/edit
 async function handleSubmit() {
   if (!formTitle.value.trim() || !formContent.value.trim()) return
   submitting.value = true
@@ -509,6 +466,7 @@ async function handleSubmit() {
   }
 }
 
+// Delete
 function handleDelete(id: number) {
   deleteTargetId.value = id
   showDeleteModal.value = true
@@ -526,6 +484,7 @@ async function confirmDelete() {
   }
 }
 
+// Helpers
 function getTagList(tagsStr?: string) {
   if (!tagsStr) return []
   return tagsStr.split(',').map((t) => t.trim()).filter(Boolean)
@@ -533,15 +492,15 @@ function getTagList(tagsStr?: string) {
 
 function getPlainTextExcerpt(text: string) {
   if (!text) return ''
-  const cleaned = text
+  return text
     .replace(/^#+\s+/gm, '')
     .replace(/\*\*(.*?)\*\*/g, '$1')
     .replace(/`(.*?)`/g, '$1')
     .replace(/>\s+/g, '')
     .replace(/[-*+]\s+/g, '')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
     .trim()
-  if (cleaned.length <= 160) return cleaned
-  return cleaned.substring(0, 160) + '...'
+    .substring(0, 160) + (text.length > 160 ? '...' : '')
 }
 
 function formatDate(d: string) {
@@ -561,6 +520,7 @@ function formatDate(d: string) {
   gap: 20px;
 }
 
+/* Header */
 .view-header {
   display: flex;
   align-items: center;
@@ -572,12 +532,12 @@ function formatDate(d: string) {
   display: flex;
   align-items: center;
   gap: 12px;
+}
 
-  h3 {
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--text-main);
-  }
+.header-title-badge h3 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-main);
 }
 
 .badge-primary-glow {
@@ -591,17 +551,12 @@ function formatDate(d: string) {
   background: rgba(99, 102, 241, 0.15);
   color: var(--primary);
   border: 1px solid rgba(99, 102, 241, 0.3);
-  box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
 }
 
 .sub-text {
   font-size: 13px;
   color: var(--text-muted);
   margin-top: 4px;
-}
-
-.shadow-glow {
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
 }
 
 /* Stats Row */
@@ -616,7 +571,6 @@ function formatDate(d: string) {
   display: flex;
   align-items: center;
   gap: 14px;
-  border-radius: var(--radius-md);
 }
 
 .stat-icon-wrapper {
@@ -628,6 +582,10 @@ function formatDate(d: string) {
   justify-content: center;
   flex-shrink: 0;
 }
+
+.icon-indigo { background: rgba(99,102,241,0.12); color: #6366f1; }
+.icon-purple { background: rgba(168,85,247,0.12); color: #a855f7; }
+.icon-emerald { background: rgba(16,185,129,0.12); color: #10b981; }
 
 .stat-label {
   font-size: 12px;
@@ -647,10 +605,6 @@ function formatDate(d: string) {
   display: flex;
   flex-direction: column;
   gap: 14px;
-}
-
-.search-row {
-  width: 100%;
 }
 
 .search-box {
@@ -685,10 +639,10 @@ function formatDate(d: string) {
   border: none;
   color: var(--text-muted);
   cursor: pointer;
+}
 
-  &:hover {
-    color: var(--text-main);
-  }
+.clear-search-btn:hover {
+  color: var(--text-main);
 }
 
 .tag-filter-section {
@@ -727,19 +681,18 @@ function formatDate(d: string) {
   border: 1px solid var(--border-color);
   cursor: pointer;
   transition: all 0.2s ease;
+}
 
-  &:hover {
-    background: rgba(99, 102, 241, 0.15);
-    color: var(--text-main);
-    border-color: var(--primary-light);
-  }
+.tag-chip:hover {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--text-main);
+  border-color: var(--primary);
+}
 
-  &.active {
-    background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
-    color: #ffffff;
-    border-color: transparent;
-    box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
-  }
+.tag-chip.active {
+  background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+  color: #ffffff;
+  border-color: transparent;
 }
 
 .chip-count {
@@ -776,13 +729,13 @@ function formatDate(d: string) {
   flex-direction: column;
   gap: 14px;
   border-radius: var(--radius-lg);
-  position: relative;
+  cursor: pointer;
   transition: transform 0.2s ease, border-color 0.2s ease;
+}
 
-  &:hover {
-    transform: translateY(-2px);
-    border-color: var(--border-color-hover);
-  }
+.knowledge-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-color-hover);
 }
 
 .card-header-bar {
@@ -790,15 +743,21 @@ function formatDate(d: string) {
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  position: relative;
 }
 
 .card-title-group {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  cursor: pointer;
   flex: 1;
+}
+
+.card-title-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .entry-title {
@@ -808,13 +767,10 @@ function formatDate(d: string) {
   line-height: 1.4;
 }
 
-.entry-title:hover {
-  color: var(--primary);
-}
-
-/* Three Dots Dropdown Menu */
+/* Three Dots Dropdown */
 .menu-container {
   position: relative;
+  flex-shrink: 0;
 }
 
 .menu-btn {
@@ -829,23 +785,24 @@ function formatDate(d: string) {
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
+}
 
-  &:hover {
-    background: rgba(99, 102, 241, 0.15);
-    color: var(--primary);
-    border-color: var(--primary);
-  }
+.menu-btn:hover {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--primary);
+  border-color: var(--primary);
 }
 
 .dropdown-menu {
   position: absolute;
-  top: 38px;
+  top: 100%;
   right: 0;
-  min-width: 180px;
-  background: var(--bg-card-solid);
+  margin-top: 4px;
+  min-width: 170px;
+  background: var(--bg-card-solid, var(--bg-card));
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
   padding: 6px;
   display: flex;
   flex-direction: column;
@@ -867,17 +824,17 @@ function formatDate(d: string) {
   border-radius: var(--radius-sm);
   cursor: pointer;
   text-align: left;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.15s ease;
+}
 
-  &:hover {
-    background: rgba(99, 102, 241, 0.12);
-    color: var(--primary);
-  }
+.dropdown-item:hover {
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--primary);
+}
 
-  &.danger:hover {
-    background: rgba(244, 63, 94, 0.15);
-    color: #f43f5e;
-  }
+.dropdown-item.danger:hover {
+  background: rgba(244, 63, 94, 0.15);
+  color: #f43f5e;
 }
 
 .dropdown-divider {
@@ -886,17 +843,18 @@ function formatDate(d: string) {
   margin: 4px 0;
 }
 
+/* Excerpt */
 .entry-excerpt {
   font-size: 13px;
   color: var(--text-secondary);
   line-height: 1.6;
-  cursor: pointer;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
+/* Card Footer */
 .card-bottom {
   display: flex;
   align-items: center;
@@ -921,55 +879,16 @@ function formatDate(d: string) {
   background: rgba(99, 102, 241, 0.12);
   color: var(--primary);
   cursor: pointer;
-
-  &:hover {
-    background: rgba(99, 102, 241, 0.25);
-  }
 }
 
-/* Action Button Group */
-.action-btn-group {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.tag-pill:hover {
+  background: rgba(99, 102, 241, 0.25);
 }
 
-.btn-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 10px;
-  font-size: 12px;
-  font-weight: 600;
-  border-radius: var(--radius-sm);
-  background: var(--bg-input);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  user-select: none;
-
-  &:hover {
-    transform: translateY(-1px);
-  }
-}
-
-.btn-view:hover {
-  background: rgba(99, 102, 241, 0.15);
-  border-color: var(--primary);
-  color: var(--primary);
-}
-
-.btn-edit:hover {
-  background: rgba(6, 182, 212, 0.15);
-  border-color: var(--accent-cyan);
-  color: var(--accent-cyan);
-}
-
-.btn-delete:hover {
-  background: rgba(244, 63, 94, 0.15);
-  border-color: #f43f5e;
-  color: #f43f5e;
+.entry-date {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
 /* Modals */
@@ -992,6 +911,9 @@ function formatDate(d: string) {
   max-height: 90vh;
   display: flex;
   flex-direction: column;
+  background: var(--bg-card-solid, var(--bg-card));
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
 }
 
 .modal-card.modal-lg {
@@ -1000,15 +922,40 @@ function formatDate(d: string) {
 
 .modal-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 20px;
+}
 
-  h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-main);
-  }
+.modal-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.modal-header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-view-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.modal-view-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.meta-date {
+  font-size: 11px;
+  color: var(--text-muted);
 }
 
 .close-btn {
@@ -1016,10 +963,12 @@ function formatDate(d: string) {
   border: none;
   color: var(--text-muted);
   cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
 
-  &:hover {
-    color: var(--text-main);
-  }
+.close-btn:hover {
+  color: var(--text-main);
 }
 
 .editor-form {
@@ -1052,7 +1001,7 @@ function formatDate(d: string) {
 .view-content-body {
   max-height: 60vh;
   overflow-y: auto;
-  padding: 12px;
+  padding: 16px;
   background: var(--bg-input);
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -1065,6 +1014,7 @@ function formatDate(d: string) {
   gap: 10px;
 }
 
+/* Utilities */
 .spin {
   animation: spin 1s linear infinite;
 }
@@ -1084,11 +1034,6 @@ function formatDate(d: string) {
   }
   .knowledge-grid {
     grid-template-columns: 1fr;
-  }
-  .card-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
   }
 }
 </style>

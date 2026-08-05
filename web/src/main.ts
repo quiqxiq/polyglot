@@ -12,12 +12,9 @@ import '@kangc/v-md-editor/lib/style/preview.css'
 import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js'
 import '@kangc/v-md-editor/lib/theme/style/vuepress.css'
 
-// English locale for VMdEditor
-import enUS from '@kangc/v-md-editor/lib/lang/en-US'
-
 import Prism from 'prismjs'
 
-// Register theme first
+// Register vuepress theme for both editor and preview
 VMdEditor.use(vuepressTheme, {
   Prism,
 })
@@ -25,11 +22,6 @@ VMdEditor.use(vuepressTheme, {
 VMdPreview.use(vuepressTheme, {
   Prism,
 })
-
-// Register English language
-if (enUS) {
-  VMdEditor.lang.use('en-US', enUS)
-}
 
 const app = createApp(App)
 
