@@ -12,9 +12,19 @@ import '@kangc/v-md-editor/lib/style/preview.css'
 import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js'
 import '@kangc/v-md-editor/lib/theme/style/vuepress.css'
 
+// English locale for VMdEditor
+import enUS from '@kangc/v-md-editor/lib/lang/en-US'
+
 import Prism from 'prismjs'
 
-// Register vuepress theme for both editor and preview
+// IMPORTANT: Register locale BEFORE theme.
+// The vuepress theme plugin adds extra locale keys (tip, warning, danger)
+// via lang.add() — these merge on top of the base en-US locale via deepAssign.
+// If lang.use() is called AFTER the theme, it can cause a race condition
+// where the toolbar renders before locale merge completes.
+VMdEditor.lang.use('en-US', enUS)
+
+// Register vuepress theme (adds tip plugin locale keys on top of en-US)
 VMdEditor.use(vuepressTheme, {
   Prism,
 })
