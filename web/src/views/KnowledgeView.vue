@@ -178,7 +178,7 @@
       </div>
     </div>
 
-    <!-- Create / Edit Modal with v-md-editor -->
+    <!-- Create / Edit Modal with md-editor-v3 -->
     <Teleport to="body">
       <div v-if="showModal" class="modal-overlay" @click.self="closeEditorModal">
         <div class="modal-card modal-lg glass-panel">
@@ -207,8 +207,10 @@
             <div class="input-group">
               <label class="input-label">Konten Dokumen (Format Markdown)</label>
               <div class="v-md-editor-container">
-                <v-md-editor
+                <MdEditor
                   v-model="formContent"
+                  language="en-US"
+                  :theme="currentTheme"
                   height="380px"
                   placeholder="Tuliskan jawaban resmi, contoh format, list, atau panduan lengkap..."
                 />
@@ -260,7 +262,11 @@
           </div>
 
           <div class="view-content-body">
-            <v-md-preview :text="viewingEntry.content || ''" />
+            <MdPreview
+              :modelValue="viewingEntry.content || ''"
+              language="en-US"
+              :theme="currentTheme"
+            />
           </div>
 
           <div class="modal-footer">
@@ -307,11 +313,16 @@ import {
   MoreVertical,
 } from 'lucide-vue-next'
 
+import { MdEditor, MdPreview } from 'md-editor-v3'
+import 'md-editor-v3/lib/style.css'
+
 import ConfirmModal from '../components/ConfirmModal.vue'
 import type { KnowledgeEntry } from '../types'
 import { useKnowledgeStore } from '../stores/knowledge'
+import { useTheme } from '../stores/theme'
 
 const knowledgeStore = useKnowledgeStore()
+const { currentTheme } = useTheme()
 
 // Dropdown state
 const activeMenuId = ref<number | null>(null)
@@ -421,7 +432,6 @@ function openViewModal(entry: KnowledgeEntry) {
 
 function closeViewModal() {
   showViewModal.value = false
-  // Delay clearing data so Vue can unmount v-md-preview cleanly
   setTimeout(() => {
     viewingEntry.value = null
   }, 100)
@@ -431,7 +441,6 @@ function editFromViewModal() {
   if (!viewingEntry.value) return
   const entry = { ...viewingEntry.value }
   closeViewModal()
-  // Wait for view modal to close before opening edit modal
   setTimeout(() => {
     openEditModal(entry)
   }, 150)
