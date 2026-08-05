@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@kangc/v-md-editor": "^2.3.18",
     "@lucide/vue": "^1.28.0",
     "lucide-vue-next": "^1.0.0",
     "pinia": "^4.0.2",
