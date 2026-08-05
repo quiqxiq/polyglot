@@ -1,6 +1,7 @@
 package http
 
 import (
+	"encoding/base64"
 	"net/http"
 	"strconv"
 	"time"
@@ -247,3 +248,73 @@ func (h *SessionHandler) ReconnectSession(c *gin.Context) {
 		"qr_code": qrCode,
 	})
 }
+
+type SendDocumentRequest struct {
+	To          string `json:"to" binding:"required"`
+	FileName    string `json:"file_name" binding:"required"`
+	FileBase64  string `json:"file_base64" binding:"required"`
+	ContentType string `json:"content_type"`
+	Caption     string `json:"caption"`
+}
+
+type SendImageRequest struct {
+	To          string `json:"to" binding:"required"`
+	ImageBase64 string `json:"image_base64" binding:"required"`
+	ContentType string `json:"content_type"`
+	Caption     string `json:"caption"`
+}
+
+func (h *SessionHandler) SendDocument(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID tidak valid"})
+		return
+	}
+
+	var req SendDocumentRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	fileBytes, err := base64.StdEncoding.DecodeString(req.FileBase64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Base64 file_base64 tidak valid: " + err.Error()})
+		return
+	}
+
+	if err := h.waGateway.SendDocument(c.Request.Context(), uint(id), req.To, fileBytes, req.FileName, req.ContentType, req.Caption); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal mengirim dokumen WA: " + err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Dokumen WhatsApp berhasil dikirim"})
+}
+
+func (h *SessionHandler) SendImage(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID tidak valid"})
+		return
+	}
+
+	var req SendImageRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	imageBytes, err := base64.StdEncoding.DecodeString(req.ImageBase64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Base64 image_base64 tidak valid: " + err.Error()})
+		return
+	}
+
+	if err := h.waGateway.SendImage(c.Request.Context(), uint(id), req.To, imageBytes, req.ContentType, req.Caption); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal mengirim gambar WA: " + err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Gambar WhatsApp berhasil dikirim"})
+}
+

@@ -5,5 +5,6 @@ server.exe
 *.env
 .env.local
 wa_stores/
+.ref-wa-multidevice/
 web/node_modules/
 web/dist/

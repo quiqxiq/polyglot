@@ -12,6 +12,7 @@ import (
 	waLog "go.mau.fi/whatsmeow/util/log"
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 type SessionManager struct {
@@ -21,6 +22,8 @@ type SessionManager struct {
 	onMessage MessageCallback
 	onStatus  StatusCallback
 }
+
+var _ port.WhatsAppGateway = (*SessionManager)(nil)
 
 func NewSessionManager(postgresConnStr string, onMsg MessageCallback, onStat StatusCallback) (*SessionManager, error) {
 	dbLogger := waLog.Stdout("Database", "INFO", true)
@@ -145,6 +148,30 @@ func (sm *SessionManager) SendMessage(sessionID uint, to string, content string)
 	}
 
 	return client.SendMessage(context.Background(), to, content)
+}
+
+func (sm *SessionManager) SendDocument(ctx context.Context, sessionID uint, to string, fileBytes []byte, fileName string, contentType string, caption string) error {
+	sm.mutex.RLock()
+	client, ok := sm.clients[sessionID]
+	sm.mutex.RUnlock()
+
+	if !ok {
+		return fmt.Errorf("session %d is not connected or registered", sessionID)
+	}
+
+	return client.SendDocument(ctx, to, fileBytes, fileName, contentType, caption)
+}
+
+func (sm *SessionManager) SendImage(ctx context.Context, sessionID uint, to string, imageBytes []byte, contentType string, caption string) error {
+	sm.mutex.RLock()
+	client, ok := sm.clients[sessionID]
+	sm.mutex.RUnlock()
+
+	if !ok {
+		return fmt.Errorf("session %d is not connected or registered", sessionID)
+	}
+
+	return client.SendImage(ctx, to, imageBytes, contentType, caption)
 }
 
 func (sm *SessionManager) GetStatus(sessionID uint) (string, error) {

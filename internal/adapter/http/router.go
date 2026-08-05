@@ -71,6 +71,8 @@ func RegisterBotRoutes(
 		protected.PUT("/sessions/:id/webhook", sessionH.UpdateWebhook)
 		protected.POST("/sessions/:id/logout", sessionH.LogoutSession)
 		protected.POST("/sessions/:id/reconnect", sessionH.ReconnectSession)
+		protected.POST("/sessions/:id/send-document", sessionH.SendDocument)
+		protected.POST("/sessions/:id/send-image", sessionH.SendImage)
 		protected.DELETE("/sessions/:id", sessionH.DeleteSession)
 
 		// Conversations
