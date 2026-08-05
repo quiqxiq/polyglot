@@ -11,7 +11,7 @@
           </span>
         </div>
         <p class="sub-text">
-          Kelola dokumen acuan resmi, FAQ, dan SOP pelayan GNET. Data ini digunakan oleh Bot AI untuk menjawab pertanyaan pelanggan tanpa manipulasi (hallucination).
+          Kelola dokumen acuan resmi, FAQ, dan SOP pelayanan GNET. Data ini digunakan oleh Bot AI untuk menjawab pertanyaan pelanggan tanpa manipulasi (hallucination).
         </p>
       </div>
       <button class="btn btn-primary shadow-glow" @click="openCreateModal">
@@ -123,13 +123,13 @@
       >
         <!-- Card Header -->
         <div class="card-header-bar">
-          <div class="card-title-group">
+          <div class="card-title-group" @click="openViewModal(entry)">
             <FileText class="w-4.5 h-4.5 text-indigo-500 shrink-0 mt-0.5" />
             <h4 class="entry-title">{{ entry.title }}</h4>
           </div>
 
           <!-- Three Dots Dropdown Menu Container -->
-          <div class="menu-container">
+          <div class="menu-container" @click.stop>
             <button
               type="button"
               class="menu-btn"
@@ -174,7 +174,7 @@
         </div>
 
         <!-- Clean Text Excerpt Preview -->
-        <p class="entry-excerpt">
+        <p class="entry-excerpt" @click="openViewModal(entry)">
           {{ getPlainTextExcerpt(entry.content) }}
         </p>
 
@@ -259,6 +259,7 @@
             </div>
             <div class="v-md-editor-container">
               <v-md-editor
+                v-if="showModal"
                 v-model="formContent"
                 height="380px"
                 placeholder="Tuliskan jawaban resmi, contoh format, list, atau panduan lengkap..."
@@ -293,27 +294,30 @@
     </div>
 
     <!-- Read Detail Markdown Modal -->
-    <div v-if="showViewModal && viewingEntry" class="modal-overlay" @click.self="showViewModal = false">
+    <div v-if="showViewModal && viewingEntry" class="modal-overlay" @click.self="closeViewModal">
       <div class="modal-card modal-lg glass-panel">
         <div class="modal-header">
           <div>
-            <h3 class="text-lg font-bold text-main">{{ viewingEntry.title }}</h3>
+            <h3 class="text-lg font-bold text-main">{{ viewingEntry.title || 'Dokumen Pengetahuan' }}</h3>
             <div class="flex items-center gap-2 mt-1">
               <span v-for="t in getTagList(viewingEntry.tags)" :key="t" class="tag-pill">#{{ t }}</span>
               <span class="text-xs text-muted ml-2">Diperbarui: {{ formatDate(viewingEntry.updated_at) }}</span>
             </div>
           </div>
-          <button type="button" class="close-btn" @click="showViewModal = false">
+          <button type="button" class="close-btn" @click="closeViewModal">
             <X class="w-5 h-5" />
           </button>
         </div>
 
         <div class="view-content-body">
-          <v-md-preview :text="viewingEntry.content" />
+          <v-md-preview
+            v-if="showViewModal && viewingEntry"
+            :text="viewingEntry.content || ''"
+          />
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" @click="showViewModal = false">Tutup</button>
+          <button type="button" class="btn btn-secondary" @click="closeViewModal">Tutup</button>
           <button type="button" class="btn btn-primary" @click="editFromViewModal">
             <Edit2 class="w-4 h-4" />
             <span>Edit Dokumen Ini</span>
@@ -399,16 +403,16 @@ function toggleCardMenu(id: number) {
 }
 
 function triggerAction(action: 'view' | 'edit' | 'delete', entry: KnowledgeEntry) {
+  if (!entry) return
+  const target = { ...entry }
+  activeMenuId.value = null
   if (action === 'view') {
-    openViewModal(entry)
+    openViewModal(target)
   } else if (action === 'edit') {
-    openEditModal(entry)
+    openEditModal(target)
   } else if (action === 'delete') {
-    handleDelete(entry.id)
+    handleDelete(target.id)
   }
-  setTimeout(() => {
-    activeMenuId.value = null
-  }, 50)
 }
 
 const tagCounts = computed(() => {
@@ -448,27 +452,38 @@ function openCreateModal() {
 }
 
 function openEditModal(entry: KnowledgeEntry) {
+  if (!entry) return
   editingId.value = entry.id
-  formTitle.value = entry.title
-  formContent.value = entry.content
+  formTitle.value = entry.title || ''
+  formContent.value = entry.content || ''
   formTags.value = entry.tags || ''
   showModal.value = true
 }
 
 function openViewModal(entry: KnowledgeEntry) {
-  viewingEntry.value = entry
+  if (!entry) return
+  viewingEntry.value = { ...entry }
   showViewModal.value = true
+}
+
+function closeViewModal() {
+  showViewModal.value = false
+  viewingEntry.value = null
 }
 
 function editFromViewModal() {
   if (!viewingEntry.value) return
-  const entry = viewingEntry.value
-  showViewModal.value = false
+  const entry = { ...viewingEntry.value }
+  closeViewModal()
   openEditModal(entry)
 }
 
 function closeEditorModal() {
   showModal.value = false
+  editingId.value = null
+  formTitle.value = ''
+  formContent.value = ''
+  formTags.value = ''
 }
 
 async function handleSubmit() {
@@ -488,7 +503,7 @@ async function handleSubmit() {
         tags: formTags.value,
       })
     }
-    showModal.value = false
+    closeEditorModal()
   } finally {
     submitting.value = false
   }
@@ -782,6 +797,7 @@ function formatDate(d: string) {
   display: flex;
   align-items: flex-start;
   gap: 8px;
+  cursor: pointer;
   flex: 1;
 }
 
@@ -790,6 +806,10 @@ function formatDate(d: string) {
   font-weight: 700;
   color: var(--text-main);
   line-height: 1.4;
+}
+
+.entry-title:hover {
+  color: var(--primary);
 }
 
 /* Three Dots Dropdown Menu */
@@ -870,6 +890,7 @@ function formatDate(d: string) {
   font-size: 13px;
   color: var(--text-secondary);
   line-height: 1.6;
+  cursor: pointer;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;

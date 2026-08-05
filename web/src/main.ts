@@ -17,8 +17,7 @@ import enUS from '@kangc/v-md-editor/lib/lang/en-US'
 
 import Prism from 'prismjs'
 
-VMdEditor.lang.use('en-US', enUS)
-
+// Register theme first
 VMdEditor.use(vuepressTheme, {
   Prism,
 })
@@ -26,6 +25,11 @@ VMdEditor.use(vuepressTheme, {
 VMdPreview.use(vuepressTheme, {
   Prism,
 })
+
+// Register English language
+if (enUS) {
+  VMdEditor.lang.use('en-US', enUS)
+}
 
 const app = createApp(App)
 
