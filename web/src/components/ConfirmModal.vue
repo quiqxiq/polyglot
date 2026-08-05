@@ -80,7 +80,7 @@ const confirmButtonClass = computed(() => {
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(9, 13, 22, 0.85);
   backdrop-filter: blur(10px);
-  z-index: 120;
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -136,6 +136,7 @@ const confirmButtonClass = computed(() => {
     font-size: 17px;
     font-weight: 700;
     margin: 0 0 2px 0;
+    color: var(--text-main);
   }
 }
 
@@ -162,7 +163,7 @@ const confirmButtonClass = computed(() => {
   color: var(--text-secondary);
   line-height: 1.5;
   margin: 0;
-  background: rgba(15, 23, 42, 0.4);
+  background: var(--bg-input);
   padding: 12px 14px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);

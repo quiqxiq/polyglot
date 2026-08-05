@@ -121,19 +121,64 @@
         :key="entry.id"
         class="knowledge-card glass-panel"
       >
+        <!-- Card Header -->
         <div class="card-header-bar">
           <div class="card-title-group">
-            <FileText class="w-4 h-4 text-indigo-500 shrink-0 mt-1" />
-            <h4 class="entry-title" @click="openViewModal(entry)">{{ entry.title }}</h4>
+            <FileText class="w-4.5 h-4.5 text-indigo-500 shrink-0 mt-0.5" />
+            <h4 class="entry-title">{{ entry.title }}</h4>
           </div>
-          <span class="entry-date">{{ formatDate(entry.updated_at) }}</span>
+
+          <!-- Three Dots Dropdown Menu Container -->
+          <div class="menu-container">
+            <button
+              type="button"
+              class="menu-btn"
+              title="Opsi Tindakan"
+              @click.stop="toggleCardMenu(entry.id)"
+            >
+              <MoreVertical class="w-4 h-4" />
+            </button>
+
+            <!-- Dropdown Options Menu -->
+            <div v-if="activeMenuId === entry.id" class="dropdown-menu glass-panel" @click.stop>
+              <button
+                type="button"
+                class="dropdown-item"
+                @click.stop="triggerAction('view', entry)"
+              >
+                <Eye class="w-4 h-4 text-indigo-500" />
+                <span>Lihat Detail Markdown</span>
+              </button>
+
+              <button
+                type="button"
+                class="dropdown-item"
+                @click.stop="triggerAction('edit', entry)"
+              >
+                <Edit2 class="w-4 h-4 text-cyan-600" />
+                <span>Edit Dokumen</span>
+              </button>
+
+              <div class="dropdown-divider"></div>
+
+              <button
+                type="button"
+                class="dropdown-item danger"
+                @click.stop="triggerAction('delete', entry)"
+              >
+                <Trash2 class="w-4 h-4 text-rose-500" />
+                <span>Hapus Dokumen</span>
+              </button>
+            </div>
+          </div>
         </div>
 
-        <!-- Clean Excerpt Preview -->
-        <p class="entry-excerpt" @click="openViewModal(entry)">
+        <!-- Clean Text Excerpt Preview -->
+        <p class="entry-excerpt">
           {{ getPlainTextExcerpt(entry.content) }}
         </p>
 
+        <!-- Card Footer -->
         <div class="card-bottom">
           <div class="tags-wrapper">
             <span
@@ -146,18 +191,36 @@
             </span>
           </div>
 
-          <!-- Explicit Clickable Action Buttons -->
-          <div class="card-actions">
-            <button class="action-btn" title="Baca Detail Full Markdown" @click.stop="openViewModal(entry)">
-              <Eye class="w-3.5 h-3.5" />
-              <span>Detail</span>
+          <!-- Direct Action Buttons (Lihat, Edit, Hapus) -->
+          <div class="action-btn-group">
+            <button
+              type="button"
+              class="btn-action btn-view"
+              title="Lihat Detail Full Markdown"
+              @click.stop="openViewModal(entry)"
+            >
+              <Eye class="w-3.5 h-3.5 text-indigo-500" />
+              <span>Lihat</span>
             </button>
-            <button class="action-btn" title="Edit Dokumen" @click.stop="openEditModal(entry)">
-              <Edit2 class="w-3.5 h-3.5" />
+
+            <button
+              type="button"
+              class="btn-action btn-edit"
+              title="Edit Dokumen FAQ"
+              @click.stop="openEditModal(entry)"
+            >
+              <Edit2 class="w-3.5 h-3.5 text-cyan-600" />
               <span>Edit</span>
             </button>
-            <button class="action-btn danger" title="Hapus Dokumen" @click.stop="handleDelete(entry.id)">
-              <Trash2 class="w-3.5 h-3.5" />
+
+            <button
+              type="button"
+              class="btn-action btn-delete"
+              title="Hapus Dokumen FAQ"
+              @click.stop="handleDelete(entry.id)"
+            >
+              <Trash2 class="w-3.5 h-3.5 text-rose-500" />
+              <span>Hapus</span>
             </button>
           </div>
         </div>
@@ -172,7 +235,7 @@
             <BookOpen class="w-5 h-5 text-indigo-500" />
             <h3>{{ editingId ? 'Edit Dokumen Basis Pengetahuan' : 'Tambah Dokumen FAQ Baru' }}</h3>
           </div>
-          <button class="close-btn" @click="closeEditorModal">
+          <button type="button" class="close-btn" @click="closeEditorModal">
             <X class="w-5 h-5" />
           </button>
         </div>
@@ -240,7 +303,7 @@
               <span class="text-xs text-muted ml-2">Diperbarui: {{ formatDate(viewingEntry.updated_at) }}</span>
             </div>
           </div>
-          <button class="close-btn" @click="showViewModal = false">
+          <button type="button" class="close-btn" @click="showViewModal = false">
             <X class="w-5 h-5" />
           </button>
         </div>
@@ -250,8 +313,8 @@
         </div>
 
         <div class="modal-footer">
-          <button class="btn btn-secondary" @click="showViewModal = false">Tutup</button>
-          <button class="btn btn-primary" @click="editFromViewModal">
+          <button type="button" class="btn btn-secondary" @click="showViewModal = false">Tutup</button>
+          <button type="button" class="btn btn-primary" @click="editFromViewModal">
             <Edit2 class="w-4 h-4" />
             <span>Edit Dokumen Ini</span>
           </button>
@@ -274,7 +337,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import {
   Plus,
   Search,
@@ -289,6 +352,7 @@ import {
   Filter,
   Check,
   FileText,
+  MoreVertical,
 } from 'lucide-vue-next'
 
 import ConfirmModal from '../components/ConfirmModal.vue'
@@ -296,6 +360,8 @@ import type { KnowledgeEntry } from '../types'
 import { useKnowledgeStore } from '../stores/knowledge'
 
 const knowledgeStore = useKnowledgeStore()
+
+const activeMenuId = ref<number | null>(null)
 
 const showModal = ref(false)
 const showViewModal = ref(false)
@@ -311,9 +377,39 @@ const formContent = ref('')
 const formTags = ref('')
 const submitting = ref(false)
 
+function handleWindowClick() {
+  activeMenuId.value = null
+}
+
 onMounted(() => {
   knowledgeStore.fetchKnowledge()
+  window.addEventListener('click', handleWindowClick)
 })
+
+onUnmounted(() => {
+  window.removeEventListener('click', handleWindowClick)
+})
+
+function toggleCardMenu(id: number) {
+  if (activeMenuId.value === id) {
+    activeMenuId.value = null
+  } else {
+    activeMenuId.value = id
+  }
+}
+
+function triggerAction(action: 'view' | 'edit' | 'delete', entry: KnowledgeEntry) {
+  if (action === 'view') {
+    openViewModal(entry)
+  } else if (action === 'edit') {
+    openEditModal(entry)
+  } else if (action === 'delete') {
+    handleDelete(entry.id)
+  }
+  setTimeout(() => {
+    activeMenuId.value = null
+  }, 50)
+}
 
 const tagCounts = computed(() => {
   const map = new Map<string, number>()
@@ -355,7 +451,7 @@ function openEditModal(entry: KnowledgeEntry) {
   editingId.value = entry.id
   formTitle.value = entry.title
   formContent.value = entry.content
-  formTags.value = entry.tags
+  formTags.value = entry.tags || ''
   showModal.value = true
 }
 
@@ -665,6 +761,7 @@ function formatDate(d: string) {
   flex-direction: column;
   gap: 14px;
   border-radius: var(--radius-lg);
+  position: relative;
   transition: transform 0.2s ease, border-color 0.2s ease;
 
   &:hover {
@@ -678,12 +775,14 @@ function formatDate(d: string) {
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
+  position: relative;
 }
 
 .card-title-group {
   display: flex;
   align-items: flex-start;
   gap: 8px;
+  flex: 1;
 }
 
 .entry-title {
@@ -691,18 +790,86 @@ function formatDate(d: string) {
   font-weight: 700;
   color: var(--text-main);
   line-height: 1.4;
+}
+
+/* Three Dots Dropdown Menu */
+.menu-container {
+  position: relative;
+}
+
+.menu-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: all 0.2s ease;
 
   &:hover {
+    background: rgba(99, 102, 241, 0.15);
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 38px;
+  right: 0;
+  min-width: 180px;
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 999;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: rgba(99, 102, 241, 0.12);
     color: var(--primary);
   }
+
+  &.danger:hover {
+    background: rgba(244, 63, 94, 0.15);
+    color: #f43f5e;
+  }
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 4px 0;
 }
 
 .entry-excerpt {
   font-size: 13px;
   color: var(--text-secondary);
   line-height: 1.6;
-  cursor: pointer;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -717,39 +884,6 @@ function formatDate(d: string) {
   padding-top: 12px;
   border-top: 1px solid var(--border-color);
   margin-top: auto;
-}
-
-.card-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 5px 10px;
-  font-size: 12px;
-  font-weight: 600;
-  border-radius: var(--radius-sm);
-  background: var(--bg-input);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    color: var(--primary);
-    background: rgba(99, 102, 241, 0.12);
-    border-color: var(--primary);
-  }
-
-  &.danger:hover {
-    color: #f43f5e;
-    background: rgba(244, 63, 94, 0.15);
-    border-color: #f43f5e;
-  }
 }
 
 .tags-wrapper {
@@ -772,10 +906,49 @@ function formatDate(d: string) {
   }
 }
 
-.entry-date {
-  font-size: 11px;
-  color: var(--text-muted);
-  white-space: nowrap;
+/* Action Button Group */
+.action-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.btn-view:hover {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-edit:hover {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.btn-delete:hover {
+  background: rgba(244, 63, 94, 0.15);
+  border-color: #f43f5e;
+  color: #f43f5e;
 }
 
 /* Modals */
@@ -784,7 +957,7 @@ function formatDate(d: string) {
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(9, 13, 22, 0.85);
   backdrop-filter: blur(10px);
-  z-index: 100;
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
