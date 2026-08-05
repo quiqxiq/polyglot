@@ -136,4 +136,23 @@ func TestMikhmonHandler_Routes(t *testing.T) {
 		assert.Equal(t, http.StatusOK, w.Code)
 		assert.Contains(t, w.Body.String(), "success")
 	})
+
+	t.Run("GET PPP Active & Inactive", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest(http.MethodGet, "/api/v1/devices/dev-123/mikhmon/ppp/active", nil)
+		r.ServeHTTP(w, req)
+		assert.Equal(t, http.StatusOK, w.Code)
+
+		w2 := httptest.NewRecorder()
+		req2, _ := http.NewRequest(http.MethodGet, "/api/v1/devices/dev-123/mikhmon/ppp/inactive", nil)
+		r.ServeHTTP(w2, req2)
+		assert.Equal(t, http.StatusOK, w2.Code)
+	})
+
+	t.Run("GET DHCP Leases", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		req, _ := http.NewRequest(http.MethodGet, "/api/v1/devices/dev-123/mikhmon/dhcp/leases", nil)
+		r.ServeHTTP(w, req)
+		assert.Equal(t, http.StatusOK, w.Code)
+	})
 }

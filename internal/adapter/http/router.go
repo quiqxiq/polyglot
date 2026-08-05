@@ -122,8 +122,22 @@ func RegisterMikhmonRoutes(r *gin.Engine, h *MikhmonHandler) {
 		api.POST("/users/:rosId/reset-counters", h.ResetUserCounters)
 		api.POST("/vouchers/generate", h.GenerateVouchers)
 
+		// Hotspot Sessions
 		api.GET("/active", h.GetActiveSessions)
 		api.DELETE("/active/:rosId", h.RemoveActiveSession)
+		api.GET("/hotspot/active", h.GetActiveSessions)
+		api.GET("/hotspot/inactive", h.GetHotspotInactiveUsers)
+		api.DELETE("/hotspot/active/:rosId", h.RemoveActiveSession)
+
+		// PPPoE Sessions
+		api.GET("/ppp/active", h.GetPPPActiveSessions)
+		api.GET("/ppp/inactive", h.GetPPPInactiveSessions)
+		api.DELETE("/ppp/active/:rosId", h.RemovePPPActiveSession)
+
+		// DHCP Leases
+		api.GET("/dhcp/leases", h.GetDHCPLeases)
+		api.POST("/dhcp/leases/:rosId/block", h.BlockDHCPLease)
+
 		api.GET("/hosts", h.GetHosts)
 		api.DELETE("/hosts/:rosId", h.RemoveHost)
 		api.GET("/servers", h.GetServers)

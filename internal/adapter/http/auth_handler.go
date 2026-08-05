@@ -50,7 +50,7 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	tokenStr, err := h.jwtService.GenerateToken(user.ID, user.Email, user.Role)
+	tokenStr, err := h.jwtService.GenerateToken(user.ID, user.Email, user.Role, user.TenantID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal membuat token autentikasi"})
 		return
@@ -60,9 +60,10 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		"message": "Login berhasil",
 		"token":   tokenStr,
 		"user": gin.H{
-			"id":    user.ID,
-			"email": user.Email,
-			"role":  user.Role,
+			"id":        user.ID,
+			"email":     user.Email,
+			"role":      user.Role,
+			"tenant_id": user.TenantID,
 		},
 	})
 }

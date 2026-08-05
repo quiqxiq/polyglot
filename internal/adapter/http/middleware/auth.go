@@ -36,6 +36,7 @@ func AuthenticateJWT(jwtService *auth.JWTService) gin.HandlerFunc {
 		c.Set("user_id", claims.UserID)
 		c.Set("user_email", claims.Email)
 		c.Set("user_role", claims.Role)
+		c.Set("tenant_id", claims.TenantID)
 
 		c.Next()
 	}

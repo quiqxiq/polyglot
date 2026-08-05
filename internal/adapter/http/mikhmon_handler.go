@@ -14,15 +14,17 @@ type DriverProvider func(ctx *gin.Context, deviceID string) (port.DeviceDriver, 
 
 // MikhmonHandler provides HTTP REST endpoints for Mikhmon & Hotspot administration.
 type MikhmonHandler struct {
-	useCase        *network.MikhmonUseCase
-	driverProvider DriverProvider
+	useCase               *network.MikhmonUseCase
+	activeSessionsUseCase *network.ActiveSessionsUseCase
+	driverProvider        DriverProvider
 }
 
 // NewMikhmonHandler constructs a new MikhmonHandler.
 func NewMikhmonHandler(useCase *network.MikhmonUseCase, provider DriverProvider) *MikhmonHandler {
 	return &MikhmonHandler{
-		useCase:        useCase,
-		driverProvider: provider,
+		useCase:               useCase,
+		activeSessionsUseCase: network.NewActiveSessionsUseCase(),
+		driverProvider:        provider,
 	}
 }
 
@@ -340,6 +342,101 @@ func (h *MikhmonHandler) DeleteReport(c *gin.Context) {
 	}
 	rosID := c.Param("rosId")
 	res, err := h.useCase.DeleteReport(c.Request.Context(), driver, rosID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "success", "result": res})
+}
+
+// GetPPPActiveSessions fetches active PPPoE sessions from the router.
+func (h *MikhmonHandler) GetPPPActiveSessions(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	sessions, err := h.activeSessionsUseCase.GetPPPActiveSessions(c.Request.Context(), driver)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, sessions)
+}
+
+// GetPPPInactiveSessions fetches offline PPPoE subscriber secrets from the router.
+func (h *MikhmonHandler) GetPPPInactiveSessions(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	inactive, err := h.activeSessionsUseCase.GetPPPInactiveSessions(c.Request.Context(), driver)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, inactive)
+}
+
+// RemovePPPActiveSession kicks an active PPPoE session by RouterOS .id.
+func (h *MikhmonHandler) RemovePPPActiveSession(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	rosID := c.Param("rosId")
+	res, err := h.activeSessionsUseCase.KickPPPSession(c.Request.Context(), driver, rosID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "success", "result": res})
+}
+
+// GetHotspotInactiveUsers fetches offline Hotspot users from the router.
+func (h *MikhmonHandler) GetHotspotInactiveUsers(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	inactive, err := h.activeSessionsUseCase.GetHotspotInactiveUsers(c.Request.Context(), driver)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, inactive)
+}
+
+// GetDHCPLeases fetches DHCP server leases.
+func (h *MikhmonHandler) GetDHCPLeases(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	macFilter := c.Query("mac")
+	leases, err := h.activeSessionsUseCase.GetDHCPLeases(c.Request.Context(), driver, macFilter)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, leases)
+}
+
+// BlockDHCPLease blocks or unblocks a DHCP lease by RouterOS .id.
+func (h *MikhmonHandler) BlockDHCPLease(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	rosID := c.Param("rosId")
+	var body struct {
+		Blocked bool   `json:"blocked"`
+		Comment string `json:"comment"`
+	}
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	res, err := h.activeSessionsUseCase.SetDHCPLeaseBlock(c.Request.Context(), driver, rosID, body.Blocked, body.Comment)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

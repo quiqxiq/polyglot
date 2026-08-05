@@ -29,6 +29,7 @@ type Target struct {
 // the struct literal directly, which is fine for the fields it has.
 type Device struct {
 	ID             string
+	TenantID       string
 	Name           string
 	Vendor         string
 	DriverType     string
