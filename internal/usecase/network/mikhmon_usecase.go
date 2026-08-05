@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
@@ -13,6 +14,7 @@ import (
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/mikhmon"
 	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/pkg/voucher"
 )
 
 // MikhmonDashboardSummary holds aggregated statistics for the Mikhmon dashboard.
@@ -28,11 +30,20 @@ type MikhmonDashboardSummary struct {
 }
 
 // MikhmonUseCase orchestrates all Mikhmon and Hotspot operations.
-type MikhmonUseCase struct{}
+type MikhmonUseCase struct {
+	// TemplateDir is the path to the directory containing voucher template files
+	// (header/row/footer for each layout). Defaults to "internal/templates".
+	TemplateDir string
+}
 
 // NewMikhmonUseCase creates a new MikhmonUseCase instance.
-func NewMikhmonUseCase() *MikhmonUseCase {
-	return &MikhmonUseCase{}
+// templateDir is the path to the internal/templates directory.
+// Pass an empty string to use the default relative path "internal/templates".
+func NewMikhmonUseCase(templateDir string) *MikhmonUseCase {
+	if templateDir == "" {
+		templateDir = "internal/templates"
+	}
+	return &MikhmonUseCase{TemplateDir: templateDir}
 }
 
 // CreateProfile builds and executes the /ip/hotspot/user/profile/add command
@@ -224,6 +235,87 @@ func (u *MikhmonUseCase) GetTodayIncome(ctx context.Context, driver port.DeviceD
 	return todayIncome, nil
 }
 
+// UpdateProfile updates an existing Hotspot User Profile by RouterOS .id.
+func (u *MikhmonUseCase) UpdateProfile(ctx context.Context, driver port.DeviceDriver, rosID string, p mikhmon.MikhmonProfileParams) (command.Result, error) {
+	cmd := mikhmon.NewSetMikhmonProfileCommand(rosID, p)
+	return ExecuteCommand(ctx, driver, cmd)
+}
+
+// DeleteProfile removes a Hotspot User Profile by RouterOS .id.
+func (u *MikhmonUseCase) DeleteProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
+	cmd := mikrotik.NewRemoveHotspotUserProfileCommand(rosID)
+	return ExecuteCommand(ctx, driver, cmd)
+}
+
+// AddUser creates a new hotspot user (non-voucher type "up") with a pre-login Mikhmon comment.
+// The comment is formatted as "up-<code>-<date>-<tag>" per Mikhmon convention.
+func (u *MikhmonUseCase) AddUser(ctx context.Context, driver port.DeviceDriver, p mikrotik.HotspotUserParams) (command.Result, error) {
+	// Wrap comment in Mikhmon "up" format only if comment is a plain tag (no existing Mikhmon format).
+	if p.Comment != "" && !mikhmon.IsMikhmonComment(p.Comment) {
+		code := mikhmon.GenerateVoucherCode(3, mikhmon.CharSetUpperNum)
+		p.Comment = mikhmon.FormatPreLoginComment("up", code, p.Comment, time.Now())
+	}
+	cmd := mikrotik.NewAddHotspotUserCommand(p)
+	return ExecuteCommand(ctx, driver, cmd)
+}
+
+// UpdateUser updates an existing hotspot user by RouterOS .id.
+func (u *MikhmonUseCase) UpdateUser(ctx context.Context, driver port.DeviceDriver, rosID string, p mikrotik.HotspotUserParams) (command.Result, error) {
+	cmd := mikrotik.NewSetHotspotUserCommand(rosID, p)
+	return ExecuteCommand(ctx, driver, cmd)
+}
+
+// GetUsersByTag retrieves hotspot users whose comment contains the given tag prefix.
+// tag is matched against the pre-login comment label field (e.g. "Voucher_1_Hari").
+// An empty tag returns all users.
+func (u *MikhmonUseCase) GetUsersByTag(ctx context.Context, driver port.DeviceDriver, tag string) ([]mikrotik.HotspotUser, error) {
+	all, err := u.GetUsers(ctx, driver, "")
+	if err != nil {
+		return nil, err
+	}
+	if tag == "" {
+		return all, nil
+	}
+	filtered := make([]mikrotik.HotspotUser, 0)
+	for _, user := range all {
+		parsed, parseErr := mikhmon.ParseMikhmonComment(user.Comment)
+		if parseErr != nil {
+			continue
+		}
+		if strings.Contains(parsed.Tag, tag) {
+			filtered = append(filtered, user)
+		}
+	}
+	return filtered, nil
+}
+
+// GetReportsByFilter fetches sales transaction logs filtered by optional date, month, or year.
+// All filter parameters are optional — empty string = no filter for that field.
+// date format: "DD" (e.g. "05"), month format: "MMM" (e.g. "jan"), year: "YYYY" (e.g. "2026").
+func (u *MikhmonUseCase) GetReportsByFilter(ctx context.Context, driver port.DeviceDriver, date, month, year string) ([]mikhmon.MikhmonTransaction, error) {
+	all, err := u.GetReports(ctx, driver)
+	if err != nil {
+		return nil, err
+	}
+	if date == "" && month == "" && year == "" {
+		return all, nil
+	}
+	filtered := make([]mikhmon.MikhmonTransaction, 0)
+	for _, r := range all {
+		if date != "" && !strings.HasPrefix(r.Date, date) {
+			continue
+		}
+		if month != "" && !strings.Contains(strings.ToLower(r.Date), strings.ToLower(month)) {
+			continue
+		}
+		if year != "" && !strings.HasSuffix(r.Date, year) {
+			continue
+		}
+		filtered = append(filtered, r)
+	}
+	return filtered, nil
+}
+
 // GetDashboardSummary aggregates system info, active users, total users, and today's income.
 func (u *MikhmonUseCase) GetDashboardSummary(ctx context.Context, driver port.DeviceDriver) (MikhmonDashboardSummary, error) {
 	summary := MikhmonDashboardSummary{}
@@ -262,4 +354,32 @@ func (u *MikhmonUseCase) GetDashboardSummary(ctx context.Context, driver port.De
 	}
 
 	return summary, nil
+}
+
+// RenderVoucherHTML converts a generated VoucherBatch into a printable HTML page
+// using the template files at u.TemplateDir.
+//
+// layout: "default" | "small" | "thermal".
+// hotspotName, dnsName, logo are injected into every voucher card.
+// Returns the complete HTML string ready to be served as text/html.
+func (u *MikhmonUseCase) RenderVoucherHTML(batch mikhmon.VoucherBatch, layout, hotspotName, dnsName, logo string) (string, error) {
+	vouchers := make([]voucher.VoucherData, 0, len(batch.Vouchers))
+	for i, v := range batch.Vouchers {
+		// Extract tag from Mikhmon comment (used as validity label in card).
+		cardValidity := ""
+		if parsed, err := mikhmon.ParseMikhmonComment(v.Comment); err == nil {
+			cardValidity = parsed.Tag
+		}
+		vouchers = append(vouchers, voucher.VoucherData{
+			Username:    v.Username,
+			Password:    v.Password,
+			Comment:     v.Comment,
+			Validity:    cardValidity,
+			HotspotName: hotspotName,
+			DNSName:     dnsName,
+			Logo:        logo,
+			Number:      i + 1,
+		})
+	}
+	return voucher.Render(vouchers, voucher.Layout(layout), u.TemplateDir)
 }

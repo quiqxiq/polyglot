@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/mikhmon"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/network"
@@ -443,3 +444,156 @@ func (h *MikhmonHandler) BlockDHCPLease(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "success", "result": res})
 }
+
+// UpdateProfile updates an existing Hotspot User Profile by .id.
+func (h *MikhmonHandler) UpdateProfile(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	rosID := c.Param("rosId")
+	var params mikhmon.MikhmonProfileParams
+	if err := c.ShouldBindJSON(&params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	res, err := h.useCase.UpdateProfile(c.Request.Context(), driver, rosID, params)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "success", "result": res})
+}
+
+// DeleteProfile removes a Hotspot User Profile by .id.
+func (h *MikhmonHandler) DeleteProfile(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	rosID := c.Param("rosId")
+	res, err := h.useCase.DeleteProfile(c.Request.Context(), driver, rosID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "success", "result": res})
+}
+
+// AddUser creates a new hotspot user (non-voucher, type "up").
+func (h *MikhmonHandler) AddUser(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	var params mikrotik.HotspotUserParams
+	if err := c.ShouldBindJSON(&params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	res, err := h.useCase.AddUser(c.Request.Context(), driver, params)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusCreated, gin.H{"message": "success", "result": res})
+}
+
+// UpdateUser updates an existing hotspot user by .id.
+func (h *MikhmonHandler) UpdateUser(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	rosID := c.Param("rosId")
+	var params mikrotik.HotspotUserParams
+	if err := c.ShouldBindJSON(&params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	res, err := h.useCase.UpdateUser(c.Request.Context(), driver, rosID, params)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "success", "result": res})
+}
+
+// GetVouchersByTag retrieves hotspot users filtered by Mikhmon comment tag.
+// Use ?tag= query parameter to filter. Empty tag returns all users.
+func (h *MikhmonHandler) GetVouchersByTag(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	tag := c.Query("tag")
+	users, err := h.useCase.GetUsersByTag(c.Request.Context(), driver, tag)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, users)
+}
+
+// GetReportsByDate retrieves sales reports filtered by optional ?date=, ?month=, ?year= params.
+// All filters are optional; empty = no filter for that field.
+func (h *MikhmonHandler) GetReportsByDate(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	date := c.Query("date")
+	month := c.Query("month")
+	year := c.Query("year")
+	reports, err := h.useCase.GetReportsByFilter(c.Request.Context(), driver, date, month, year)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, reports)
+}
+
+// RenderVoucherHTML generates a batch of vouchers and renders them as a printable HTML page.
+// Request body: { params: VoucherGenerateParams, count: int, layout: "default"|"small"|"thermal",
+//
+//	hotspot_name: string, dns_name: string, logo: string }
+//
+// Returns: text/html response ready for browser print.
+func (h *MikhmonHandler) RenderVoucherHTML(c *gin.Context) {
+	driver, ok := h.getDriver(c)
+	if !ok {
+		return
+	}
+	var body struct {
+		mikhmon.VoucherGenerateParams
+		Count       int    `json:"count"`
+		Layout      string `json:"layout"`
+		HotspotName string `json:"hotspot_name"`
+		DNSName     string `json:"dns_name"`
+		Logo        string `json:"logo"`
+	}
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if body.Count <= 0 {
+		body.Count = 1
+	}
+	if body.Layout == "" {
+		body.Layout = "default"
+	}
+
+	batch, err := h.useCase.GenerateVouchers(c.Request.Context(), driver, body.VoucherGenerateParams, body.Count)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	html, err := h.useCase.RenderVoucherHTML(batch, body.Layout, body.HotspotName, body.DNSName, body.Logo)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(html))
+}
+

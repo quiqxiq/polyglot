@@ -131,3 +131,12 @@ func IsExpired(commentStr string, now time.Time) bool {
 
 	return now.After(expireTime)
 }
+
+// IsMikhmonComment reports whether the given comment string is in a recognised
+// Mikhmon format (either pre-login "vc/up-code-date[-tag]" or post-login
+// "DD/MM/YYYY HH:MM:SS mode old-comment"). Returns false for empty strings
+// or plain labels.
+func IsMikhmonComment(comment string) bool {
+	_, err := ParseMikhmonComment(comment)
+	return err == nil
+}

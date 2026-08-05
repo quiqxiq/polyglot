@@ -42,7 +42,7 @@ func (d *dummyDriver) Close() error {
 func setupTestRouter(driver port.DeviceDriver) *gin.Engine {
 	gin.SetMode(gin.TestMode)
 	r := gin.New()
-	uc := network.NewMikhmonUseCase()
+	uc := network.NewMikhmonUseCase("")
 	handler := NewMikhmonHandler(uc, func(ctx *gin.Context, deviceID string) (port.DeviceDriver, error) {
 		return driver, nil
 	})

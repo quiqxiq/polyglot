@@ -34,7 +34,7 @@ func (m *mockDriver) Close() error {
 }
 
 func TestMikhmonUseCase(t *testing.T) {
-	uc := NewMikhmonUseCase()
+	uc := NewMikhmonUseCase("")
 	ctx := context.Background()
 
 	t.Run("CreateProfile", func(t *testing.T) {

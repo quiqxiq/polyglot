@@ -113,14 +113,24 @@ func RegisterMikhmonRoutes(r *gin.Engine, h *MikhmonHandler) {
 		api.GET("/dashboard", h.GetDashboard)
 		api.GET("/income", h.GetIncome)
 
+		// Hotspot User Profile CRUD
 		api.GET("/profiles", h.GetProfiles)
 		api.POST("/profiles", h.CreateProfile)
+		api.PUT("/profiles/:rosId", h.UpdateProfile)
+		api.DELETE("/profiles/:rosId", h.DeleteProfile)
 
+		// Hotspot User CRUD
 		api.GET("/users", h.GetUsers)
 		api.GET("/users/:rosId", h.GetUser)
+		api.POST("/users", h.AddUser)
+		api.PUT("/users/:rosId", h.UpdateUser)
 		api.DELETE("/users/:rosId", h.RemoveUser)
 		api.POST("/users/:rosId/reset-counters", h.ResetUserCounters)
+
+		// Voucher: generate (ke RouterOS saja) + generate+render HTML
+		api.GET("/vouchers", h.GetVouchersByTag)
 		api.POST("/vouchers/generate", h.GenerateVouchers)
+		api.POST("/vouchers/render", h.RenderVoucherHTML)
 
 		// Hotspot Sessions
 		api.GET("/active", h.GetActiveSessions)
@@ -147,7 +157,9 @@ func RegisterMikhmonRoutes(r *gin.Engine, h *MikhmonHandler) {
 		api.GET("/nat-rules", h.GetNATRules)
 
 		api.POST("/expire-monitor", h.SetupExpireMonitor)
-		api.GET("/reports", h.GetReports)
+
+		// Reports with optional date/month/year filtering
+		api.GET("/reports", h.GetReportsByDate)
 		api.DELETE("/reports/:rosId", h.DeleteReport)
 	}
 }

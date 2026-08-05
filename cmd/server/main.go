@@ -106,7 +106,7 @@ func main() {
 
 	// Usecases
 	deviceUC := business.NewManageDeviceUseCase(repo, vault)
-	mikhmonUC := network.NewMikhmonUseCase()
+	mikhmonUC := network.NewMikhmonUseCase("internal/templates")
 
 	// Driver Providers
 	driverProvider := func(c *gin.Context, deviceID string) (port.DeviceDriver, error) {
