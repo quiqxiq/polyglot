@@ -121,27 +121,20 @@
         :key="entry.id"
         class="knowledge-card glass-panel"
       >
-        <div class="card-top">
-          <h4 class="entry-title" @click="openViewModal(entry)">{{ entry.title }}</h4>
-          <div class="card-actions">
-            <button class="icon-btn" title="Baca Detail Full Markdown" @click.stop="openViewModal(entry)">
-              <Eye class="w-4 h-4" />
-            </button>
-            <button class="icon-btn" title="Edit Dokumen" @click.stop="openEditModal(entry)">
-              <Edit2 class="w-4 h-4" />
-            </button>
-            <button class="icon-btn danger" title="Hapus Dokumen" @click.stop="handleDelete(entry.id)">
-              <Trash2 class="w-4 h-4" />
-            </button>
+        <div class="card-header-bar">
+          <div class="card-title-group">
+            <FileText class="w-4 h-4 text-indigo-500 shrink-0 mt-1" />
+            <h4 class="entry-title" @click="openViewModal(entry)">{{ entry.title }}</h4>
           </div>
+          <span class="entry-date">{{ formatDate(entry.updated_at) }}</span>
         </div>
 
-        <!-- Markdown Summary Preview -->
-        <div class="content-preview" @click="openViewModal(entry)">
-          <v-md-preview :text="getShortContent(entry.content)" />
-        </div>
+        <!-- Clean Excerpt Preview -->
+        <p class="entry-excerpt" @click="openViewModal(entry)">
+          {{ getPlainTextExcerpt(entry.content) }}
+        </p>
 
-        <div class="card-footer">
+        <div class="card-bottom">
           <div class="tags-wrapper">
             <span
               v-for="t in getTagList(entry.tags)"
@@ -152,7 +145,21 @@
               #{{ t }}
             </span>
           </div>
-          <span class="entry-date">{{ formatDate(entry.updated_at) }}</span>
+
+          <!-- Explicit Clickable Action Buttons -->
+          <div class="card-actions">
+            <button class="action-btn" title="Baca Detail Full Markdown" @click.stop="openViewModal(entry)">
+              <Eye class="w-3.5 h-3.5" />
+              <span>Detail</span>
+            </button>
+            <button class="action-btn" title="Edit Dokumen" @click.stop="openEditModal(entry)">
+              <Edit2 class="w-3.5 h-3.5" />
+              <span>Edit</span>
+            </button>
+            <button class="action-btn danger" title="Hapus Dokumen" @click.stop="handleDelete(entry.id)">
+              <Trash2 class="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -281,6 +288,7 @@ import {
   Sparkles,
   Filter,
   Check,
+  FileText,
 } from 'lucide-vue-next'
 
 import ConfirmModal from '../components/ConfirmModal.vue'
@@ -412,10 +420,17 @@ function getTagList(tagsStr?: string) {
   return tagsStr.split(',').map((t) => t.trim()).filter(Boolean)
 }
 
-function getShortContent(text: string) {
+function getPlainTextExcerpt(text: string) {
   if (!text) return ''
-  if (text.length <= 220) return text
-  return text.substring(0, 220) + '...'
+  const cleaned = text
+    .replace(/^#+\s+/gm, '')
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/`(.*?)`/g, '$1')
+    .replace(/>\s+/g, '')
+    .replace(/[-*+]\s+/g, '')
+    .trim()
+  if (cleaned.length <= 160) return cleaned
+  return cleaned.substring(0, 160) + '...'
 }
 
 function formatDate(d: string) {
@@ -649,7 +664,7 @@ function formatDate(d: string) {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  position: relative;
+  border-radius: var(--radius-lg);
   transition: transform 0.2s ease, border-color 0.2s ease;
 
   &:hover {
@@ -658,17 +673,21 @@ function formatDate(d: string) {
   }
 }
 
-.card-top {
+.card-header-bar {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  position: relative;
-  z-index: 10;
+}
+
+.card-title-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .entry-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text-main);
   line-height: 1.4;
@@ -679,29 +698,50 @@ function formatDate(d: string) {
   }
 }
 
+.entry-excerpt {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  cursor: pointer;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+  margin-top: auto;
+}
+
 .card-actions {
   display: flex;
   align-items: center;
   gap: 6px;
-  position: relative;
-  z-index: 20;
 }
 
-.icon-btn {
-  background: var(--bg-input);
-  border: 1px solid var(--border-color);
-  color: var(--text-secondary);
-  padding: 7px;
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
   border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
   cursor: pointer;
-  position: relative;
-  z-index: 25;
-  pointer-events: auto;
   transition: all 0.2s ease;
 
   &:hover {
     color: var(--primary);
-    background: rgba(99, 102, 241, 0.15);
+    background: rgba(99, 102, 241, 0.12);
     border-color: var(--primary);
   }
 
@@ -710,31 +750,6 @@ function formatDate(d: string) {
     background: rgba(244, 63, 94, 0.15);
     border-color: #f43f5e;
   }
-}
-
-.content-preview {
-  cursor: pointer;
-  max-height: 140px;
-  overflow: hidden;
-  position: relative;
-  font-size: 13px;
-  z-index: 1;
-}
-
-.content-preview :deep(.v-md-editor__preview-wrapper),
-.content-preview :deep(.vuepress-markdown-body) {
-  pointer-events: none;
-}
-
-.card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 12px;
-  border-top: 1px solid var(--border-color);
-  margin-top: auto;
-  position: relative;
-  z-index: 10;
 }
 
 .tags-wrapper {
@@ -760,6 +775,7 @@ function formatDate(d: string) {
 .entry-date {
   font-size: 11px;
   color: var(--text-muted);
+  white-space: nowrap;
 }
 
 /* Modals */
@@ -874,6 +890,11 @@ function formatDate(d: string) {
   }
   .knowledge-grid {
     grid-template-columns: 1fr;
+  }
+  .card-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
 }
 </style>
