@@ -23,7 +23,7 @@
     <!-- Stats Overview Cards -->
     <div class="stats-row">
       <div class="stat-mini-card glass-panel">
-        <div class="stat-icon-wrapper bg-indigo-500/10 text-indigo-400">
+        <div class="stat-icon-wrapper bg-indigo-500/10 text-indigo-500">
           <BookOpen class="w-5 h-5" />
         </div>
         <div>
@@ -33,7 +33,7 @@
       </div>
 
       <div class="stat-mini-card glass-panel">
-        <div class="stat-icon-wrapper bg-purple-500/10 text-purple-400">
+        <div class="stat-icon-wrapper bg-purple-500/10 text-purple-500">
           <Tag class="w-5 h-5" />
         </div>
         <div>
@@ -43,12 +43,12 @@
       </div>
 
       <div class="stat-mini-card glass-panel">
-        <div class="stat-icon-wrapper bg-emerald-500/10 text-emerald-400">
+        <div class="stat-icon-wrapper bg-emerald-500/10 text-emerald-500">
           <Check class="w-5 h-5" />
         </div>
         <div>
           <span class="stat-label">Status Grounding</span>
-          <h4 class="stat-value text-emerald-400">Aktif & Terhubung</h4>
+          <h4 class="stat-value text-emerald-500 font-bold">Aktif & Terhubung</h4>
         </div>
       </div>
     </div>
@@ -104,12 +104,12 @@
     <!-- Knowledge Entries Grid -->
     <div class="knowledge-grid">
       <div v-if="knowledgeStore.loading" class="loading-box glass-panel col-span-full">
-        <Loader2 class="w-8 h-8 spin text-indigo-400 mb-2" />
+        <Loader2 class="w-8 h-8 spin text-indigo-500 mb-2" />
         <span>Memuat basis pengetahuan...</span>
       </div>
 
       <div v-else-if="knowledgeStore.filteredEntries.length === 0" class="empty-box glass-panel col-span-full">
-        <BookOpen class="w-12 h-12 text-slate-600 mb-3" />
+        <BookOpen class="w-12 h-12 text-slate-400 mb-3" />
         <h4>Tidak Ada Dokumen FAQ Ditemukan</h4>
         <p>Silakan buat entri baru atau atur ulang filter pencarian Anda.</p>
         <button class="btn btn-secondary mt-3" @click="resetFilters">Reset Filter</button>
@@ -162,7 +162,7 @@
       <div class="modal-card modal-lg glass-panel">
         <div class="modal-header">
           <div class="flex items-center gap-2">
-            <BookOpen class="w-5 h-5 text-indigo-400" />
+            <BookOpen class="w-5 h-5 text-indigo-500" />
             <h3>{{ editingId ? 'Edit Dokumen Basis Pengetahuan' : 'Tambah Dokumen FAQ Baru' }}</h3>
           </div>
           <button class="close-btn" @click="closeEditorModal">
@@ -185,7 +185,7 @@
           <div class="input-group">
             <div class="flex items-center justify-between mb-1">
               <label class="input-label">Konten Dokumen (Format Markdown Rich-Text)</label>
-              <span class="text-xs text-indigo-400">Diisi dengan Markdown Editor (@kangc/v-md-editor)</span>
+              <span class="text-xs text-indigo-500 font-semibold">Markdown Editor (@kangc/v-md-editor English)</span>
             </div>
             <div class="v-md-editor-container">
               <v-md-editor
@@ -227,10 +227,10 @@
       <div class="modal-card modal-lg glass-panel">
         <div class="modal-header">
           <div>
-            <h3 class="text-lg font-bold text-white">{{ viewingEntry.title }}</h3>
+            <h3 class="text-lg font-bold text-main">{{ viewingEntry.title }}</h3>
             <div class="flex items-center gap-2 mt-1">
               <span v-for="t in getTagList(viewingEntry.tags)" :key="t" class="tag-pill">#{{ t }}</span>
-              <span class="text-xs text-slate-400 ml-2">Diperbarui: {{ formatDate(viewingEntry.updated_at) }}</span>
+              <span class="text-xs text-muted ml-2">Diperbarui: {{ formatDate(viewingEntry.updated_at) }}</span>
             </div>
           </div>
           <button class="close-btn" @click="showViewModal = false">
@@ -450,7 +450,7 @@ function formatDate(d: string) {
   h3 {
     font-size: 22px;
     font-weight: 800;
-    color: #ffffff;
+    color: var(--text-main);
   }
 }
 
@@ -463,7 +463,7 @@ function formatDate(d: string) {
   font-weight: 700;
   border-radius: 9999px;
   background: rgba(99, 102, 241, 0.15);
-  color: #a5b4fc;
+  color: var(--primary);
   border: 1px solid rgba(99, 102, 241, 0.3);
   box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
 }
@@ -512,7 +512,7 @@ function formatDate(d: string) {
 .stat-value {
   font-size: 18px;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 /* Filter Card */
@@ -547,8 +547,8 @@ function formatDate(d: string) {
   padding-left: 42px;
   padding-right: 36px;
   height: 42px;
-  background: rgba(15, 23, 42, 0.6);
-  border-color: rgba(255, 255, 255, 0.1);
+  background: var(--bg-input);
+  border-color: var(--border-color);
   font-size: 14px;
 }
 
@@ -561,7 +561,7 @@ function formatDate(d: string) {
   cursor: pointer;
 
   &:hover {
-    color: #ffffff;
+    color: var(--text-main);
   }
 }
 
@@ -596,20 +596,20 @@ function formatDate(d: string) {
   font-size: 12px;
   font-weight: 600;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--bg-card);
   color: var(--text-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
   cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover {
     background: rgba(99, 102, 241, 0.15);
-    color: #ffffff;
-    border-color: rgba(99, 102, 241, 0.3);
+    color: var(--text-main);
+    border-color: var(--primary-light);
   }
 
   &.active {
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
     color: #ffffff;
     border-color: transparent;
     box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
@@ -653,7 +653,7 @@ function formatDate(d: string) {
 
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(99, 102, 241, 0.4);
+    border-color: var(--border-color-hover);
   }
 }
 
@@ -667,12 +667,12 @@ function formatDate(d: string) {
 .entry-title {
   font-size: 16px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-main);
   line-height: 1.4;
   cursor: pointer;
 
   &:hover {
-    color: #818cf8;
+    color: var(--primary);
   }
 }
 
@@ -692,12 +692,12 @@ function formatDate(d: string) {
   transition: all 0.2s ease;
 
   &:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    background: rgba(99, 102, 241, 0.1);
   }
 
   &.danger:hover {
-    color: #f87171;
+    color: #f43f5e;
     background: rgba(239, 68, 68, 0.15);
   }
 }
@@ -708,14 +708,6 @@ function formatDate(d: string) {
   overflow: hidden;
   position: relative;
   font-size: 13px;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 40px;
-    background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.9));
-  }
 }
 
 .card-footer {
@@ -723,7 +715,7 @@ function formatDate(d: string) {
   align-items: center;
   justify-content: space-between;
   padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--border-color);
   margin-top: auto;
 }
 
@@ -739,12 +731,11 @@ function formatDate(d: string) {
   padding: 2px 8px;
   border-radius: 4px;
   background: rgba(99, 102, 241, 0.12);
-  color: #a5b4fc;
+  color: var(--primary);
   cursor: pointer;
 
   &:hover {
     background: rgba(99, 102, 241, 0.25);
-    color: #ffffff;
   }
 }
 
@@ -788,6 +779,7 @@ function formatDate(d: string) {
   h3 {
     font-size: 18px;
     font-weight: 700;
+    color: var(--text-main);
   }
 }
 
@@ -798,7 +790,7 @@ function formatDate(d: string) {
   cursor: pointer;
 
   &:hover {
-    color: #ffffff;
+    color: var(--text-main);
   }
 }
 
@@ -812,7 +804,7 @@ function formatDate(d: string) {
 .v-md-editor-container {
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--border-color);
 }
 
 .tag-preview-pills {
@@ -826,16 +818,16 @@ function formatDate(d: string) {
   padding: 2px 8px;
   border-radius: 4px;
   background: rgba(16, 185, 129, 0.15);
-  color: #6ee7b7;
+  color: #10b981;
 }
 
 .view-content-body {
   max-height: 60vh;
   overflow-y: auto;
   padding: 12px;
-  background: rgba(15, 23, 42, 0.5);
+  background: var(--bg-input);
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
 }
 
 .modal-footer {

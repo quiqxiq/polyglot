@@ -12,7 +12,12 @@ import '@kangc/v-md-editor/lib/style/preview.css'
 import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js'
 import '@kangc/v-md-editor/lib/theme/style/vuepress.css'
 
+// English locale for VMdEditor
+import enUS from '@kangc/v-md-editor/lib/lang/en-US'
+
 import Prism from 'prismjs'
+
+VMdEditor.lang.use('en-US', enUS)
 
 VMdEditor.use(vuepressTheme, {
   Prism,

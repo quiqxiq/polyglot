@@ -45,28 +45,46 @@
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-xl: 24px;
+
+  /* Editor Specific */
+  --editor-bg: #0f172a;
+  --editor-toolbar-bg: #1e293b;
+  --editor-border: rgba(255, 255, 255, 0.12);
+  --editor-text: #f8fafc;
+  --editor-icon: #cbd5e1;
 }
 
 [data-theme="light"] {
   /* Light Color Palette */
-  --bg-dark: #f1f5f9;
-  --bg-card: rgba(255, 255, 255, 0.85);
-  --bg-card-hover: rgba(248, 250, 252, 0.95);
+  --bg-dark: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-card-hover: #ffffff;
   --bg-card-solid: #ffffff;
   --bg-input: #ffffff;
-  --border-color: rgba(0, 0, 0, 0.08);
-  --border-color-hover: rgba(99, 102, 241, 0.4);
+  --border-color: #cbd5e1;
+  --border-color-hover: rgba(99, 102, 241, 0.5);
+
+  /* Brand Accents */
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-light: #6366f1;
 
   /* Typography */
   --text-main: #0f172a;
-  --text-secondary: #475569;
+  --text-secondary: #334155;
   --text-muted: #64748b;
 
   /* Shadows & Effects */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
   --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
   --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.15);
-  --shadow-glow-cyan: 0 0 20px rgba(6, 182, 212, 0.15);
+
+  /* Editor Specific */
+  --editor-bg: #ffffff;
+  --editor-toolbar-bg: #f1f5f9;
+  --editor-border: #cbd5e1;
+  --editor-text: #0f172a;
+  --editor-icon: #334155;
 }
 
 /* Global Reset */
@@ -106,19 +124,6 @@ code, pre, .font-mono {
 
 .glass-panel:hover {
   border-color: var(--border-color-hover);
-}
-
-/* Gradient Text */
-.gradient-text {
-  background: linear-gradient(135deg, var(--text-main) 0%, var(--text-secondary) 50%, var(--primary-light) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gradient-text-accent {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent-cyan) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 /* Buttons */
@@ -162,7 +167,7 @@ code, pre, .font-mono {
 
 .btn-danger {
   background: var(--color-danger-bg);
-  color: #ff6b81;
+  color: #f43f5e;
   border-color: rgba(244, 63, 94, 0.3);
 }
 
@@ -170,30 +175,6 @@ code, pre, .font-mono {
   background: var(--color-danger);
   color: #ffffff;
   box-shadow: 0 4px 14px rgba(244, 63, 94, 0.4);
-}
-
-.btn-success {
-  background: var(--color-success-bg);
-  color: var(--color-success);
-  border-color: rgba(16, 185, 129, 0.3);
-}
-
-.btn-success:hover {
-  background: var(--color-success);
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
-}
-
-.btn-sm {
-  padding: 6px 12px;
-  font-size: 13px;
-  border-radius: var(--radius-sm);
-}
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none !important;
 }
 
 /* Input Fields */
@@ -260,7 +241,7 @@ code, pre, .font-mono {
 
 .badge-primary {
   background: rgba(99, 102, 241, 0.15);
-  color: var(--primary-light);
+  color: var(--primary);
   border-color: rgba(99, 102, 241, 0.3);
 }
 
@@ -293,26 +274,82 @@ code, pre, .font-mono {
   }
 }
 
-/* Theme Adaptation for v-md-editor & v-md-preview */
-[data-theme="light"] .v-md-editor,
-[data-theme="light"] .v-md-textarea-editor textarea {
-  background-color: #ffffff !important;
+/* ==============================================================================
+   Complete Light & Dark Theme Adaptation for @kangc/v-md-editor & v-md-preview
+   ============================================================================== */
+
+.v-md-editor {
+  background-color: var(--editor-bg) !important;
+  color: var(--editor-text) !important;
+  border: 1px solid var(--editor-border) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+.v-md-editor__toolbar {
+  background-color: var(--editor-toolbar-bg) !important;
+  border-bottom: 1px solid var(--editor-border) !important;
+}
+
+.v-md-editor__toolbar-item {
+  color: var(--editor-icon) !important;
+}
+
+.v-md-editor__toolbar-item:hover {
+  background-color: rgba(99, 102, 241, 0.15) !important;
+  color: var(--primary) !important;
+}
+
+.v-md-editor__toolbar-item--active {
+  color: var(--primary) !important;
+  background-color: rgba(99, 102, 241, 0.2) !important;
+}
+
+.v-md-editor__menu {
+  background-color: var(--editor-bg) !important;
+  border: 1px solid var(--editor-border) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.v-md-editor__menu-item {
+  color: var(--editor-text) !important;
+}
+
+.v-md-editor__menu-item:hover {
+  background-color: rgba(99, 102, 241, 0.15) !important;
+  color: var(--primary) !important;
+}
+
+.v-md-textarea-editor textarea {
+  background-color: var(--editor-bg) !important;
+  color: var(--editor-text) !important;
+}
+
+.v-md-editor__preview-wrapper,
+.vuepress-markdown-body {
+  background-color: var(--editor-bg) !important;
+  color: var(--editor-text) !important;
+}
+
+[data-theme="light"] .vuepress-markdown-body {
   color: #0f172a !important;
 }
 
-[data-theme="light"] .v-md-editor__preview-wrapper {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
+[data-theme="light"] .vuepress-markdown-body code {
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
 }
 
-[data-theme="dark"] .v-md-editor,
-[data-theme="dark"] .v-md-textarea-editor textarea,
-[data-theme="dark"] .v-md-editor__preview-wrapper {
-  background-color: #0f172a !important;
+[data-theme="dark"] .vuepress-markdown-body {
   color: #f8fafc !important;
 }
 
-/* Modal Responsive Safety & Overlay Base */
+[data-theme="dark"] .vuepress-markdown-body code {
+  background-color: #1e293b !important;
+  color: #a5b4fc !important;
+}
+
+/* Modal Overlay Theme Adaptation */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -334,6 +371,33 @@ code, pre, .font-mono {
   max-height: 90vh;
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
 }
 
 /* Mobile Sidebar Backdrop Overlay */
