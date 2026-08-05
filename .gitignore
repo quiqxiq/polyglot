@@ -1,5 +1,9 @@
 /bin/
 /dist/
 /server
+server.exe
 *.env
 .env.local
+wa_stores/
+web/node_modules/
+web/dist/

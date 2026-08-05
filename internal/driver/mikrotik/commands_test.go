@@ -60,13 +60,15 @@ func TestIsStreamingCommand(t *testing.T) {
 		want bool
 	}{
 		{"ping is streaming", command.Command{Raw: "/ping", Args: map[string]string{"address": "10.0.0.1"}}, true},
-		{"monitor-traffic is streaming", command.Command{Raw: "/interface/monitor-traffic", Args: map[string]string{"interface": "ether1"}}, true},
+		{"monitor-traffic without once is streaming", command.Command{Raw: "/interface/monitor-traffic", Args: map[string]string{"interface": "ether1"}}, true},
+		{"monitor-traffic with once is NOT streaming", command.Command{Raw: "/interface/monitor-traffic", Args: map[string]string{"interface": "ether1", "once": ""}}, false},
 		{"plain print is not streaming", command.Command{Raw: "/interface/print"}, false},
 		{"print with follow is streaming", command.Command{Raw: "/interface/print", Args: map[string]string{"follow": ""}}, true},
 		{"print with follow-only is streaming", command.Command{Raw: "/log/print", Args: map[string]string{"follow-only": ""}}, true},
 		{"print with interval is streaming", command.Command{Raw: "/interface/print", Args: map[string]string{"interval": "1s"}}, true},
 		{"resource print is not streaming", command.Command{Raw: "/system/resource/print"}, false},
 		{"unrelated args do not trigger streaming", command.Command{Raw: "/interface/print", Args: map[string]string{"disabled": "no"}}, false},
+		{"scheduler add with interval is NOT streaming", command.Command{Raw: "/system/scheduler/add", Args: map[string]string{"name": "test", "interval": "00:01:00"}}, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -105,6 +107,11 @@ func TestBuildArgs(t *testing.T) {
 			name: "attribute with empty value becomes bare",
 			cmd:  command.Command{Raw: "/interface/print", Args: map[string]string{"disabled": ""}},
 			want: []string{"/interface/print", "=disabled"},
+		},
+		{
+			name: "query word starting with ?",
+			cmd:  command.Command{Raw: "/ppp/secret/print", Args: map[string]string{"?name": "budi"}},
+			want: []string{"/ppp/secret/print", "?name=budi"},
 		},
 	}
 	for _, tt := range tests {

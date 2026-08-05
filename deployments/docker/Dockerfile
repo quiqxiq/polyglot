@@ -4,7 +4,7 @@
 # Docker Hub saat build (patch terbaru per TECH-STACK-DAN-PERSIAPAN.md §1
 # adalah 1.26.4) — kalau tag ini belum ada, ganti ke tag patch spesifik
 # mis. `golang:1.26.4-alpine`.
-FROM golang:1.26-alpine AS build
+FROM golang:alpine AS build
 WORKDIR /src
 COPY go.mod go.sum ./
 RUN go mod download

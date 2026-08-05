@@ -7,25 +7,92 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 
+	"github.com/gin-gonic/gin"
+
+	"github.com/quixiq/polyglot/internal/adapter/auth"
+	mcpAdapter "github.com/quixiq/polyglot/internal/adapter/http"
+	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
+	"github.com/quixiq/polyglot/internal/adapter/postgres"
+	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
+	wsAdapter "github.com/quixiq/polyglot/internal/adapter/ws"
+	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/driver/genieacs"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
+	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
+	"github.com/quixiq/polyglot/internal/usecase/business"
+	knowledgeUC "github.com/quixiq/polyglot/internal/usecase/knowledge"
+	"github.com/quixiq/polyglot/internal/usecase/network"
 )
 
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
-	transport := envOr("MCP_TRANSPORT", "http")
-	httpAddr := envOr("MCP_HTTP_ADDR", ":8080")
+	cfg := config.Load()
 
-	repo, vault := loadDemoDevices()
+	httpAddr := envOr("PORT", ":"+cfg.Port)
+	if httpAddr[0] != ':' {
+		httpAddr = ":" + httpAddr
+	}
+
+	// 1. Initialize Database & Storage Adapters
+	log.Println("[Polyglot Engine] Initializing database and cache stores...")
+	pgStore, err := postgres.NewStore(cfg.DatabaseURL)
+	if err != nil {
+		log.Printf("[Warning] Failed to connect to PostgreSQL (%v). Features requiring database will fail until DB is online.", err)
+	}
+
+	redisStore, err := redisAdapter.NewStore(cfg.RedisURL)
+	if err != nil {
+		log.Printf("[Warning] Failed to connect to Redis (%v). Falling back to in-memory cache.", err)
+	}
+
+	jwtService := auth.NewJWTService(cfg.JWTSecret, cfg.JWTExpiryHours)
+
+	var casbinEnforcer *auth.CasbinEnforcer
+	if pgStore != nil {
+		casbinEnforcer, err = auth.NewCasbinEnforcer(ctx, pgStore.DB())
+		if err != nil {
+			log.Printf("[Warning] Failed to initialize Casbin enforcer: %v", err)
+		}
+	}
+
+	sseHub := wsAdapter.NewSSEHub()
+
+	// 2. WhatsApp Gateway & AI Bot Engine Setup
+	var waManager *whatsapp.SessionManager
+	if pgStore != nil {
+		eventHandler := whatsapp.NewEventHandler(pgStore, sseHub)
+		var err error
+		waManager, err = whatsapp.NewSessionManager(cfg.DatabaseURL, nil, eventHandler.OnStatusChanged)
+		if err != nil {
+			log.Printf("[Warning] Failed to initialize WhatsApp SessionManager: %v", err)
+		}
+
+		convService := business.NewConversationService(pgStore)
+		knowledgeRetriever := knowledgeUC.NewKeywordRetriever(pgStore)
+		botEngine := botUC.NewEngine(cfg, pgStore, redisStore, waManager, convService, knowledgeRetriever, sseHub)
+
+		if waManager != nil {
+			sessions, err := pgStore.FindAllSessions()
+			if err == nil && len(sessions) > 0 {
+				_ = waManager.RestoreAllSessions(sessions)
+			}
+			_ = botEngine
+		}
+	}
+
+	// 3. Network & Infrastructure Drivers Setup
+	repo, vault := loadInitialDevices()
 	factories := map[string]registry.DriverFactory{
 		"mikrotik": func(ctx context.Context, target device.Target) (port.DeviceDriver, error) {
 			return mikrotik.NewDriver(ctx, target)
@@ -36,36 +103,87 @@ func main() {
 	}
 
 	reg := registry.New(repo, vault, factories)
-	srv := mcp.New(reg, nil)
 
-	switch transport {
-	case "stdio":
-		log.Printf("polyglot: MCP server starting on stdio transport")
-		if err := srv.RunStdio(ctx); err != nil {
-			log.Fatalf("mcp stdio: %v", err)
-		}
-	case "http":
-		handler := srv.HTTPHandler()
-		httpSrv := &http.Server{Addr: httpAddr, Handler: handler}
-		log.Printf("polyglot: MCP server starting on http://%s/mcp", httpAddr)
-		go func() {
-			if err := httpSrv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-				log.Fatalf("mcp http: %v", err)
-			}
-		}()
-		<-ctx.Done()
-		shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-		defer cancel()
-		_ = httpSrv.Shutdown(shutdownCtx)
-	default:
-		log.Fatalf("unknown MCP_TRANSPORT %q (use \"stdio\" or \"http\")", transport)
+	// Usecases
+	deviceUC := business.NewManageDeviceUseCase(repo, vault)
+	mikhmonUC := network.NewMikhmonUseCase()
+
+	// Driver Providers
+	driverProvider := func(c *gin.Context, deviceID string) (port.DeviceDriver, error) {
+		return reg.Get(c.Request.Context(), deviceID)
 	}
 
+	streamDriverProvider := func(ctx context.Context, deviceID string) (port.StreamingDeviceDriver, error) {
+		driver, err := reg.Get(ctx, deviceID)
+		if err != nil {
+			return nil, err
+		}
+		sd, ok := driver.(port.StreamingDeviceDriver)
+		if !ok {
+			return nil, fmt.Errorf("driver for device %q does not support streaming", deviceID)
+		}
+		return sd, nil
+	}
+
+	// HTTP Handlers
+	deviceHandler := mcpAdapter.NewDeviceHandler(deviceUC, driverProvider)
+	mikhmonHandler := mcpAdapter.NewMikhmonHandler(mikhmonUC, driverProvider)
+	mikhmonStreamHandler := wsAdapter.NewMikhmonStreamHandler(streamDriverProvider)
+
+	// Gin Router Setup
+	r := gin.Default()
+	r.Use(middleware.CORS(cfg.CORSOrigins))
+
+	// Auth & RBAC Handlers
+	if pgStore != nil && casbinEnforcer != nil {
+		authHandler := mcpAdapter.NewAuthHandler(pgStore, jwtService)
+		rbacHandler := mcpAdapter.NewRBACHandler(casbinEnforcer)
+		sessionHandler := mcpAdapter.NewSessionHandler(pgStore, waManager)
+		convService := business.NewConversationService(pgStore)
+		convHandler := mcpAdapter.NewConversationHandler(convService, waManager, sseHub)
+		knowledgeHandler := mcpAdapter.NewKnowledgeHandler(pgStore)
+		llmHandler := mcpAdapter.NewLLMConfigHandler(pgStore, cfg)
+		technicianHandler := mcpAdapter.NewTechnicianHandler(pgStore)
+
+		mcpAdapter.RegisterAuthRoutes(r, authHandler, jwtService)
+		mcpAdapter.RegisterRBACRoutes(r, rbacHandler, jwtService, casbinEnforcer)
+		mcpAdapter.RegisterBotRoutes(r, sessionHandler, convHandler, knowledgeHandler, llmHandler, technicianHandler, sseHub, jwtService, casbinEnforcer)
+	}
+
+	// Network REST Routes
+	mcpAdapter.RegisterDeviceRoutes(r, deviceHandler)
+	mcpAdapter.RegisterMikhmonRoutes(r, mikhmonHandler)
+
+	// Realtime WebSockets & SSE Streaming Routes
+	wsAdapter.RegisterStreamingRoutes(r, mikhmonStreamHandler)
+
+	// MCP Protocol Handler
+	mcpServer := mcp.New(reg, nil)
+	r.Any("/mcp", gin.WrapH(mcpServer.HTTPHandler()))
+
+	httpSrv := &http.Server{
+		Addr:    httpAddr,
+		Handler: r,
+	}
+
+	log.Printf("polyglot: Engine starting on http://localhost%s (REST, WebSockets, WhatsApp Gateway & MCP)", httpAddr)
+	go func() {
+		if err := httpSrv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("server http: %v", err)
+		}
+	}()
+
+	<-ctx.Done()
+	log.Printf("polyglot: shutting down server...")
+
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	_ = httpSrv.Shutdown(shutdownCtx)
 	_ = reg.Close()
 	log.Printf("polyglot: shutdown complete")
 }
 
-// envOr reads an env var, returning fallback if empty.
 func envOr(key, fallback string) string {
 	if v := os.Getenv(key); v != "" {
 		return v
@@ -73,88 +191,51 @@ func envOr(key, fallback string) string {
 	return fallback
 }
 
-// loadDemoDevices builds an in-memory device repository and credential
-// vault from env vars. This is a temporary composition-root shim — when
-// the Postgres-backed adapters (internal/adapter/postgres + vault) are
-// ready, this function is replaced with real database connections.
-//
-// Demo device env vars (all optional — server starts with zero devices
-// if unset, and MCP tools return "device not found" until devices are
-// configured via the REST API or database):
-//
-//	POLYGLOT_DEMO_DEVICE_ID   = device ID (e.g. "mtk-1")
-//	POLYGLOT_DEMO_DRIVER_TYPE = "mikrotik" or "genieacs"
-//	POLYGLOT_DEMO_HOST        = host or IP
-//	POLYGLOT_DEMO_PORT        = port (0 = driver default)
-//	POLYGLOT_DEMO_USERNAME    = SSH/API username
-//	POLYGLOT_DEMO_PASSWORD    = SSH/API password
-//	POLYGLOT_DEMO_EXTRA_*     = extra params (e.g. POLYGLOT_DEMO_EXTRA_use_tls=true)
-func loadDemoDevices() (port.DeviceRepository, port.CredentialVault) {
+func loadInitialDevices() (port.DeviceRepository, port.CredentialVault) {
 	devices := make(map[string]device.Device)
 	creds := make(map[string]device.Credentials)
 
-	if id := os.Getenv("POLYGLOT_DEMO_DEVICE_ID"); id != "" {
-		extra := loadExtraFromEnv("POLYGLOT_DEMO_EXTRA_")
+	if host := os.Getenv("MIKROTIK_TEST_HOST"); host != "" {
+		id := "mtk-test"
+		portNum := 8728
+		if pStr := os.Getenv("MIKROTIK_TEST_PORT"); pStr != "" {
+			fmt.Sscanf(pStr, "%d", &portNum)
+		}
 		devices[id] = device.Device{
 			ID:         id,
-			Name:       id,
-			Vendor:     envOr("POLYGLOT_DEMO_DRIVER_TYPE", "mikrotik"),
-			DriverType: envOr("POLYGLOT_DEMO_DRIVER_TYPE", "mikrotik"),
-			Host:       envOr("POLYGLOT_DEMO_HOST", "127.0.0.1"),
-			Port:       envInt("POLYGLOT_DEMO_PORT", 0),
-			TimeoutMS:  30000,
+			Name:       "MikroTik Test Router",
+			Vendor:     "mikrotik",
+			DriverType: "mikrotik",
+			Host:       host,
+			Port:       portNum,
+			TimeoutMS:  10000,
 			Enabled:    true,
-			Extra:      extra,
 		}
 		creds[id] = device.Credentials{
-			Username: os.Getenv("POLYGLOT_DEMO_USERNAME"),
-			Password: os.Getenv("POLYGLOT_DEMO_PASSWORD"),
+			Username: envOr("MIKROTIK_TEST_USER", "admin"),
+			Password: os.Getenv("MIKROTIK_TEST_PASS"),
 		}
-		log.Printf("polyglot: loaded demo device %q (%s @ %s)", id, devices[id].DriverType, devices[id].Host)
+		log.Printf("polyglot: pre-loaded demo device %q (%s:%d)", id, host, portNum)
 	}
 
 	return &memRepo{devices: devices}, &memVault{creds: creds}
 }
 
-func envInt(key string, fallback int) int {
-	if v := os.Getenv(key); v != "" {
-		var n int
-		if _, err := fmt.Sscanf(v, "%d", &n); err == nil {
-			return n
-		}
-	}
-	return fallback
-}
-
-func loadExtraFromEnv(prefix string) map[string]string {
-	extra := make(map[string]string)
-	for _, env := range os.Environ() {
-		if len(env) > len(prefix) && env[:len(prefix)] == prefix {
-			key := env[len(prefix):]
-			if eq := indexByte(key, '='); eq >= 0 {
-				extra[key[:eq]] = key[eq+1:]
-			}
-		}
-	}
-	return extra
-}
-
-func indexByte(s string, b byte) int {
-	for i := 0; i < len(s); i++ {
-		if s[i] == b {
-			return i
-		}
-	}
-	return -1
-}
-
-// memRepo is a temporary in-memory port.DeviceRepository for the composition
-// root. Replace with internal/adapter/postgres when that adapter is wired.
 type memRepo struct {
+	mu      sync.RWMutex
 	devices map[string]device.Device
 }
 
+func (r *memRepo) Save(_ context.Context, d device.Device) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	r.devices[d.ID] = d
+	return nil
+}
+
 func (r *memRepo) FindByID(_ context.Context, id string) (device.Device, error) {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
 	d, ok := r.devices[id]
 	if !ok {
 		return device.Device{}, device.ErrNotFound
@@ -162,16 +243,45 @@ func (r *memRepo) FindByID(_ context.Context, id string) (device.Device, error) 
 	return d, nil
 }
 
-// memVault is a temporary in-memory port.CredentialVault for the composition
-// root. Replace with internal/adapter/vault when that adapter is wired.
+func (r *memRepo) FindAll(_ context.Context) ([]device.Device, error) {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	list := make([]device.Device, 0, len(r.devices))
+	for _, d := range r.devices {
+		list = append(list, d)
+	}
+	return list, nil
+}
+
+func (r *memRepo) Update(ctx context.Context, d device.Device) error {
+	return r.Save(ctx, d)
+}
+
+func (r *memRepo) Delete(_ context.Context, id string) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	delete(r.devices, id)
+	return nil
+}
+
 type memVault struct {
+	mu    sync.RWMutex
 	creds map[string]device.Credentials
 }
 
 func (v *memVault) Get(_ context.Context, deviceID string) (device.Credentials, error) {
+	v.mu.RLock()
+	defer v.mu.RUnlock()
 	c, ok := v.creds[deviceID]
 	if !ok {
 		return device.Credentials{}, device.ErrNotFound
 	}
 	return c, nil
+}
+
+func (v *memVault) Save(_ context.Context, deviceID string, c device.Credentials) error {
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	v.creds[deviceID] = c
+	return nil
 }

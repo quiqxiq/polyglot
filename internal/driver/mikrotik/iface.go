@@ -1,0 +1,169 @@
+package mikrotik
+
+import (
+	"strings"
+
+	"github.com/quixiq/polyglot/internal/domain/command"
+)
+
+// Interface represents one row returned by /interface/print.
+//
+// Field notes (from RouterOS /interface reference):
+//   - RosID      : internal ID — required for enable/disable.
+//   - Name       : interface name (e.g. "ether1", "pppoe-out1", "bridge").
+//   - Type       : interface type ("ether", "vlan", "bridge", "pppoe-in", etc.).
+//   - MTU        : configured MTU.
+//   - ActualMTU  : effective MTU (may differ for PPP interfaces).
+//   - L2MTU      : Layer-2 MTU.
+//   - MACAddress : hardware address.
+//   - Running    : true when the physical link is up.
+//   - Disabled   : true when administratively disabled.
+//   - RxByte     : cumulative received bytes (since last reboot/reset).
+//   - TxByte     : cumulative transmitted bytes.
+//   - RxPacket   : cumulative received packets.
+//   - TxPacket   : cumulative transmitted packets.
+//   - Comment    : free-text label.
+type Interface struct {
+	RosID      string
+	Name       string
+	Type       string
+	MTU        string
+	ActualMTU  string
+	L2MTU      string
+	MACAddress string
+	Running    bool
+	Disabled   bool
+	RxByte     string
+	TxByte     string
+	RxPacket   string
+	TxPacket   string
+	Comment    string
+}
+
+// InterfaceTrafficStats holds the real-time traffic statistics returned by
+// /interface/monitor-traffic with the "once" flag. Values are instantaneous
+// rates at the moment of the query — not cumulative.
+//
+// All rate fields are in bits per second (bps) as strings (RouterOS format).
+type InterfaceTrafficStats struct {
+	RxBitsPerSecond     string
+	TxBitsPerSecond     string
+	RxPacketsPerSecond  string
+	TxPacketsPerSecond  string
+	RxDropsPerSecond    string
+	TxDropsPerSecond    string
+	RxErrorsPerSecond   string
+	TxErrorsPerSecond   string
+}
+
+// NewPrintInterfacesCommand builds the command.Command for /interface/print.
+// Pass a non-empty nameFilter to look up one interface by name.
+func NewPrintInterfacesCommand(nameFilter string) command.Command {
+	args := map[string]string{}
+	if nameFilter != "" {
+		args["?name"] = nameFilter
+	}
+	return command.Command{
+		Raw:  "/interface/print",
+		Args: args,
+	}
+}
+
+// NewMonitorTrafficOnceCommand builds the command.Command for
+// /interface/monitor-traffic with the "once" flag, which returns a single
+// snapshot of current traffic rates and then finishes (RouterOS sends one
+// "!re" then "!done"). Use with Driver.Execute — isStreamingCommand returns
+// false for this command because "once" is present.
+func NewMonitorTrafficOnceCommand(ifaceName string) command.Command {
+	return command.Command{
+		Raw: "/interface/monitor-traffic",
+		Args: map[string]string{
+			"interface": ifaceName,
+			"once":      "",
+		},
+	}
+}
+
+// NewMonitorTrafficStreamCommand builds the command.Command for
+// /interface/monitor-traffic without "once", which causes RouterOS to send
+// updated traffic rate rows every second indefinitely until cancelled.
+// Use with Driver.Stream — isStreamingCommand returns true for this command.
+// Parse each Result from StreamHandle.Chan() with ParseInterfaceTrafficStats.
+func NewMonitorTrafficStreamCommand(ifaceName string) command.Command {
+	return command.Command{
+		Raw: "/interface/monitor-traffic",
+		Args: map[string]string{
+			"interface": ifaceName,
+			// deliberately no "once" — streaming mode
+		},
+	}
+}
+
+
+// NewEnableInterfaceCommand builds the command.Command for /interface/enable.
+// rosID must come from a prior /interface/print result.
+func NewEnableInterfaceCommand(rosID string) command.Command {
+	return command.Command{
+		Raw:  "/interface/enable",
+		Args: map[string]string{".id": rosID},
+	}
+}
+
+// NewDisableInterfaceCommand builds the command.Command for /interface/disable.
+// Classified as ClassDestructive — disabling an interface drops all traffic.
+func NewDisableInterfaceCommand(rosID string) command.Command {
+	return command.Command{
+		Raw:  "/interface/disable",
+		Args: map[string]string{".id": rosID},
+	}
+}
+
+// ParseInterfaces converts command.Result rows from /interface/print into
+// typed Interface values. Rows missing ".id" or "name" are skipped.
+func ParseInterfaces(result command.Result) []Interface {
+	ifaces := make([]Interface, 0, len(result.Rows))
+	for _, row := range result.Rows {
+		id := row[".id"]
+		name := row["name"]
+		if id == "" || name == "" {
+			continue
+		}
+		ifaces = append(ifaces, Interface{
+			RosID:      id,
+			Name:       name,
+			Type:       row["type"],
+			MTU:        row["mtu"],
+			ActualMTU:  row["actual-mtu"],
+			L2MTU:      row["l2mtu"],
+			MACAddress: row["mac-address"],
+			Running:    strings.EqualFold(row["running"], "true"),
+			Disabled:   strings.EqualFold(row["disabled"], "true"),
+			RxByte:     row["rx-byte"],
+			TxByte:     row["tx-byte"],
+			RxPacket:   row["rx-packet"],
+			TxPacket:   row["tx-packet"],
+			Comment:    row["comment"],
+		})
+	}
+	return ifaces
+}
+
+// ParseInterfaceTrafficStats converts the first row from a
+// /interface/monitor-traffic result into InterfaceTrafficStats.
+// Returns zero-value if result is empty (device returned no rows).
+func ParseInterfaceTrafficStats(result command.Result) InterfaceTrafficStats {
+	if len(result.Rows) == 0 {
+		return InterfaceTrafficStats{}
+	}
+	row := result.Rows[0]
+	return InterfaceTrafficStats{
+		RxBitsPerSecond:    row["rx-bits-per-second"],
+		TxBitsPerSecond:    row["tx-bits-per-second"],
+		RxPacketsPerSecond: row["rx-packets-per-second"],
+		TxPacketsPerSecond: row["tx-packets-per-second"],
+		RxDropsPerSecond:   row["rx-drops-per-second"],
+		TxDropsPerSecond:   row["tx-drops-per-second"],
+		RxErrorsPerSecond:  row["rx-errors-per-second"],
+		TxErrorsPerSecond:  row["tx-errors-per-second"],
+	}
+}

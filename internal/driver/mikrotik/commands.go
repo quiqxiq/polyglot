@@ -2,6 +2,7 @@ package mikrotik
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/go-routeros/routeros/v3"
 
@@ -44,11 +45,16 @@ func Translate(op command.Operation) (command.Command, error) {
 // regardless of arguments — the device keeps sending "!re" sentences
 // until explicitly cancelled (or, for /ping with a count, until it
 // finishes on its own).
+//
+// Note: /interface/monitor-traffic is NOT in this map because it supports
+// two modes depending on whether the "once" arg is present:
+//   - without "once": streaming (use Driver.Stream via NewMonitorTrafficStreamCommand)
+//   - with "once": one-shot (use Driver.Execute via NewMonitorTrafficOnceCommand)
+// The special-case is handled in isStreamingCommand below.
 // TODO: extend with other natively-streaming commands as they're actually
 // needed (e.g. /tool/torch, /tool/sniffer) — not added now, per agreed scope.
 var streamingBasePaths = map[string]bool{
-	"/ping":                      true,
-	"/interface/monitor-traffic": true,
+	"/ping": true,
 }
 
 // streamingFlagArgs lists Args keys that turn an otherwise one-shot command
@@ -67,8 +73,23 @@ func isStreamingCommand(cmd command.Command) bool {
 	if streamingBasePaths[cmd.Raw] {
 		return true
 	}
+
+	// /interface/monitor-traffic is streaming ONLY when the "once" arg is
+	// absent. With "once", RouterOS sends one snapshot then "!done" — safe
+	// for Execute. Without "once", it streams indefinitely until cancelled.
+	// See iface.go: NewMonitorTrafficOnceCommand vs NewMonitorTrafficStreamCommand.
+	if cmd.Raw == "/interface/monitor-traffic" {
+		_, hasOnce := cmd.Args["once"]
+		return !hasOnce
+	}
+
 	for _, key := range streamingFlagArgs {
 		if _, ok := cmd.Args[key]; ok {
+			// "interval" is only a streaming flag on /print commands (e.g. /queue/simple/print stats interval=1s).
+			// On mutation commands like /system/scheduler/add, "interval" is a configuration property.
+			if key == "interval" && !strings.HasSuffix(cmd.Raw, "/print") {
+				continue
+			}
 			return true
 		}
 	}
@@ -88,7 +109,13 @@ func buildArgs(cmd command.Command) []string {
 		case "follow", "follow-only":
 			args = append(args, key)
 		default:
-			if value == "" {
+			if strings.HasPrefix(key, "?") {
+				if value == "" {
+					args = append(args, key)
+				} else {
+					args = append(args, key+"="+value)
+				}
+			} else if value == "" {
 				args = append(args, "="+key)
 			} else {
 				args = append(args, "="+key+"="+value)
