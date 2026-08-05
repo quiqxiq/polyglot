@@ -9,6 +9,17 @@
     </div>
 
     <div class="header-actions">
+      <!-- Dark / Light Theme Toggle Button -->
+      <button
+        class="theme-btn"
+        :title="currentTheme === 'dark' ? 'Ganti ke Mode Terang (Light Mode)' : 'Ganti ke Mode Gelap (Dark Mode)'"
+        @click="toggleTheme"
+      >
+        <Sun v-if="currentTheme === 'dark'" class="w-4 h-4 text-amber-400" />
+        <Moon v-else class="w-4 h-4 text-indigo-500" />
+        <span class="theme-label">{{ currentTheme === 'dark' ? 'Light' : 'Dark' }}</span>
+      </button>
+
       <!-- Realtime SSE Connection Status Badge -->
       <div
         :class="['badge', realtimeStore.isConnected ? 'badge-online' : 'badge-offline']"
@@ -30,15 +41,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { Menu, Cpu } from 'lucide-vue-next'
+import { Menu, Cpu, Sun, Moon } from 'lucide-vue-next'
 import { useRealtimeStore } from '../stores/realtime'
 import { useLLMStore } from '../stores/llm'
+import { useTheme } from '../stores/theme'
 
 defineEmits(['toggleSidebar'])
 
 const route = useRoute()
 const realtimeStore = useRealtimeStore()
 const llmStore = useLLMStore()
+const { currentTheme, toggleTheme } = useTheme()
 
 const activeLLM = computed(() => llmStore.activeConfig)
 
@@ -52,6 +65,8 @@ const pageTitle = computed(() => {
       return 'Basis Pengetahuan (FAQ)'
     case '/conversations':
       return 'Percakapan & Agent Take-over'
+    case '/technicians':
+      return 'Direktori Teknisi Ops'
     default:
       return 'Overview Dashboard'
   }
@@ -89,6 +104,30 @@ const pageTitle = computed(() => {
   gap: 12px;
 }
 
+.theme-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 9999px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-btn:hover {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: var(--primary-light);
+}
+
+.theme-label {
+  font-size: 11px;
+}
+
 @media (max-width: 768px) {
   .mobile-toggle {
     display: inline-flex;
@@ -117,13 +156,10 @@ const pageTitle = computed(() => {
     gap: 6px;
   }
   .badge-primary {
-    display: none; /* Hide secondary detailed badge on small screens to prevent header overcrowding */
+    display: none;
   }
-}
-
-@media (min-width: 481px) and (max-width: 768px) {
-  .badge-primary {
-    display: inline-flex;
+  .theme-label {
+    display: none;
   }
 }
 </style>

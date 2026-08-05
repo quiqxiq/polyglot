@@ -1,9 +1,10 @@
 /* ==============================================================================
-   GNET Bot Admin Dashboard — Modern Dark Glassmorphic Design System
+   GNET Bot Admin Dashboard — Modern Dark & Light Glassmorphic Design System
    ============================================================================== */
 
-:root {
-  /* Color Palette */
+:root,
+[data-theme="dark"] {
+  /* Dark Color Palette */
   --bg-dark: #090d16;
   --bg-card: rgba(19, 27, 46, 0.75);
   --bg-card-hover: rgba(26, 36, 61, 0.85);
@@ -46,6 +47,28 @@
   --radius-xl: 24px;
 }
 
+[data-theme="light"] {
+  /* Light Color Palette */
+  --bg-dark: #f1f5f9;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(248, 250, 252, 0.95);
+  --bg-card-solid: #ffffff;
+  --bg-input: #ffffff;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-color-hover: rgba(99, 102, 241, 0.4);
+
+  /* Typography */
+  --text-main: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  /* Shadows & Effects */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.15);
+  --shadow-glow-cyan: 0 0 20px rgba(6, 182, 212, 0.15);
+}
+
 /* Global Reset */
 * {
   box-sizing: border-box;
@@ -60,9 +83,10 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.5;
+  transition: background-color 0.3s ease, color 0.3s ease;
   background-image: 
-    radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 85% 85%, rgba(6, 182, 212, 0.08) 0%, transparent 40%);
+    radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(6, 182, 212, 0.06) 0%, transparent 40%);
 }
 
 code, pre, .font-mono {
@@ -81,18 +105,18 @@ code, pre, .font-mono {
 }
 
 .glass-panel:hover {
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-color-hover);
 }
 
 /* Gradient Text */
 .gradient-text {
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, var(--primary-light) 100%);
+  background: linear-gradient(135deg, var(--text-main) 0%, var(--text-secondary) 50%, var(--primary-light) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-text-accent {
-  background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent-cyan-light) 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent-cyan) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -126,14 +150,14 @@ code, pre, .font-mono {
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-card);
   color: var(--text-main);
   border-color: var(--border-color);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.3);
 }
 
 .btn-danger {
@@ -269,75 +293,23 @@ code, pre, .font-mono {
   }
 }
 
-/* Custom Switch Toggle */
-.switch-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  user-select: none;
+/* Theme Adaptation for v-md-editor & v-md-preview */
+[data-theme="light"] .v-md-editor,
+[data-theme="light"] .v-md-textarea-editor textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
 }
 
-.switch {
-  position: relative;
-  width: 44px;
-  height: 24px;
+[data-theme="light"] .v-md-editor__preview-wrapper {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
 }
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid var(--border-color);
-  transition: .3s;
-  border-radius: 24px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 3px;
-  bottom: 3px;
-  background-color: #ffffff;
-  transition: .3s;
-  border-radius: 50%;
-}
-
-input:checked + .slider {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent-cyan) 100%);
-  border-color: transparent;
-}
-
-input:checked + .slider:before {
-  transform: translateX(20px);
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.5);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.5);
+[data-theme="dark"] .v-md-editor,
+[data-theme="dark"] .v-md-textarea-editor textarea,
+[data-theme="dark"] .v-md-editor__preview-wrapper {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
 }
 
 /* Modal Responsive Safety & Overlay Base */
@@ -352,6 +324,10 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: center;
   padding: 16px;
+}
+
+[data-theme="light"] .modal-overlay {
+  background: rgba(15, 23, 42, 0.45);
 }
 
 .modal-card {
@@ -381,4 +357,3 @@ input:checked + .slider:before {
 .fade-leave-to {
   opacity: 0;
 }
-
