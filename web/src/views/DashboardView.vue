@@ -4,12 +4,12 @@
     <div class="active-llm-banner glass-panel">
       <div class="banner-content">
         <div class="banner-badge">
-          <Cpu class="w-6 h-6 text-cyan-400" />
+          <Cpu class="w-6 h-6 text-indigo-500" />
         </div>
         <div class="banner-info">
           <span class="banner-tag">LLM Provider Aktif</span>
           <h3 v-if="activeLLM">
-            {{ activeLLM.provider.toUpperCase() }} — <span class="text-indigo-400">{{ activeLLM.model }}</span>
+            {{ activeLLM.provider.toUpperCase() }} — <span class="text-indigo-500 font-bold">{{ activeLLM.model }}</span>
           </h3>
           <h3 v-else class="text-warning">Belum ada Provider LLM yang diaktifkan</h3>
           <p>Sistem chatbot merespons menggunakan provider ini. API Key tersimpan aman (AES-256-GCM).</p>
@@ -58,22 +58,22 @@
       <!-- Quick Action Shortcuts -->
       <div class="section-card glass-panel">
         <div class="section-header">
-          <Zap class="w-5 h-5 text-amber-400" />
+          <Zap class="w-5 h-5 text-amber-500" />
           <h3>Aksi Cepat</h3>
         </div>
         <div class="shortcuts-grid">
           <router-link to="/sessions" class="shortcut-card">
-            <Smartphone class="w-6 h-6 text-indigo-400" />
+            <Smartphone class="w-6 h-6 text-indigo-500" />
             <span>Tambah Nomor WA</span>
             <ArrowRight class="w-4 h-4 arrow" />
           </router-link>
           <router-link to="/knowledge" class="shortcut-card">
-            <PlusCircle class="w-6 h-6 text-cyan-400" />
+            <PlusCircle class="w-6 h-6 text-cyan-600" />
             <span>Tambah FAQ Baru</span>
             <ArrowRight class="w-4 h-4 arrow" />
           </router-link>
           <router-link to="/conversations" class="shortcut-card">
-            <MessageSquare class="w-6 h-6 text-emerald-400" />
+            <MessageSquare class="w-6 h-6 text-emerald-500" />
             <span>Live Monitoring Chat</span>
             <ArrowRight class="w-4 h-4 arrow" />
           </router-link>
@@ -83,7 +83,7 @@
       <!-- Realtime Activity Log -->
       <div class="section-card glass-panel flex-1">
         <div class="section-header">
-          <Activity class="w-5 h-5 text-emerald-400" />
+          <Activity class="w-5 h-5 text-emerald-500" />
           <h3>Aktivitas System Realtime</h3>
           <span class="live-dot pulse-dot pulse-dot-online ml-auto"></span>
         </div>
@@ -190,7 +190,7 @@ function formatDate(dateStr: string) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(135deg, rgba(19, 27, 46, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+  background: var(--bg-card);
   border-left: 4px solid var(--accent-cyan);
 }
 
@@ -204,7 +204,7 @@ function formatDate(dateStr: string) {
   width: 48px;
   height: 48px;
   border-radius: var(--radius-md);
-  background: rgba(6, 182, 212, 0.15);
+  background: rgba(6, 182, 212, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -217,6 +217,7 @@ function formatDate(dateStr: string) {
   h3 {
     font-size: 16px;
     font-weight: 700;
+    color: var(--text-main);
   }
 
   p {
@@ -230,7 +231,7 @@ function formatDate(dateStr: string) {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--accent-cyan-light);
+  color: var(--primary);
   font-weight: 700;
 }
 
@@ -261,6 +262,7 @@ function formatDate(dateStr: string) {
   h3 {
     font-size: 16px;
     font-weight: 700;
+    color: var(--text-main);
   }
 }
 
@@ -275,7 +277,7 @@ function formatDate(dateStr: string) {
   align-items: center;
   gap: 14px;
   padding: 14px 16px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-input);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   color: var(--text-main);
@@ -291,12 +293,12 @@ function formatDate(dateStr: string) {
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(99, 102, 241, 0.4);
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--primary);
 
     .arrow {
       transform: translateX(4px);
-      color: var(--primary-light);
+      color: var(--primary);
     }
   }
 }
@@ -313,13 +315,13 @@ function formatDate(dateStr: string) {
   gap: 12px;
   padding: 10px 14px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-input);
   border: 1px solid var(--border-color);
   cursor: pointer;
   transition: background 0.2s;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(99, 102, 241, 0.08);
   }
 }
 
@@ -327,8 +329,8 @@ function formatDate(dateStr: string) {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(99, 102, 241, 0.2);
-  color: var(--primary-light);
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--primary);
   font-size: 12px;
   font-weight: 700;
   display: flex;
@@ -347,6 +349,7 @@ function formatDate(dateStr: string) {
   align-items: center;
   justify-content: space-between;
   font-size: 13px;
+  color: var(--text-main);
 }
 
 .activity-time {

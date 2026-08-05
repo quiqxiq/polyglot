@@ -4,9 +4,9 @@
     <div class="view-header">
       <div>
         <h3>Konfigurasi Provider LLM</h3>
-        <p class="sub-text">Pilih provider AI (Gemini, Claude, GPT), atur API key, dan aktifkan model tanpa ubah kode.</p>
+        <p class="sub-text">Pilih provider AI (Gemini, Claude, GPT, Groq), atur API key, dan aktifkan model tanpa ubah kode.</p>
       </div>
-      <button class="btn btn-primary" @click="openCreateModal">
+      <button class="btn btn-primary shadow-glow" @click="openCreateModal">
         <Plus class="w-4 h-4" />
         <span>Tambah Konfigurasi LLM</span>
       </button>
@@ -15,15 +15,15 @@
     <!-- Active LLM Highlight Banner -->
     <div v-if="llmStore.activeConfig" class="active-card glass-panel">
       <div class="active-badge-tag">
-        <CheckCircle2 class="w-4 h-4 text-emerald-400" />
+        <CheckCircle2 class="w-4 h-4 text-emerald-500" />
         <span>Provider Aktif Saat Ini</span>
       </div>
       <div class="active-details">
         <div class="provider-logo-box">
-          <Cpu class="w-8 h-8 text-cyan-400" />
+          <Cpu class="w-8 h-8 text-indigo-500" />
         </div>
         <div>
-          <h4>{{ llmStore.activeConfig.provider.toUpperCase() }}</h4>
+          <h4 class="text-main font-bold">{{ llmStore.activeConfig.provider.toUpperCase() }}</h4>
           <p class="model-name">{{ llmStore.activeConfig.model }}</p>
           <p class="tokens-info">Max Output Tokens: {{ llmStore.activeConfig.max_output_tokens || 512 }}</p>
         </div>
@@ -33,12 +33,12 @@
     <!-- Configs List -->
     <div class="configs-grid">
       <div v-if="llmStore.loading" class="loading-box glass-panel col-span-full">
-        <Loader2 class="w-8 h-8 spin text-indigo-400" />
+        <Loader2 class="w-8 h-8 spin text-indigo-500 mb-2" />
         <span>Memuat konfigurasi LLM...</span>
       </div>
 
       <div v-else-if="llmStore.configs.length === 0" class="empty-box glass-panel col-span-full">
-        <Cpu class="w-12 h-12 text-slate-600 mb-2" />
+        <Cpu class="w-12 h-12 text-slate-400 mb-2" />
         <h4>Belum ada konfigurasi LLM</h4>
         <p>Klik tombol "Tambah Konfigurasi LLM" untuk memasukkan API Key Gemini, Claude, atau OpenAI.</p>
       </div>
@@ -81,34 +81,34 @@
         <!-- Token Usage & Cost Analytics Card -->
         <div class="analytics-card">
           <div class="analytics-header">
-            <Coins class="w-3.5 h-3.5 text-amber-400" />
+            <Coins class="w-3.5 h-3.5 text-amber-500" />
             <span>Penggunaan Token & Estimasi Biaya</span>
           </div>
           <div class="analytics-grid">
             <div class="analytics-item">
               <span class="analytics-label">Total Token</span>
-              <strong class="analytics-val text-indigo-400">
+              <strong class="analytics-val text-indigo-500">
                 {{ formatNumber((cfg.total_input_tokens || 0) + (cfg.total_output_tokens || 0)) }}
               </strong>
               <span class="analytics-sub">In: {{ formatNumber(cfg.total_input_tokens || 0) }} | Out: {{ formatNumber(cfg.total_output_tokens || 0) }}</span>
             </div>
             <div class="analytics-item">
               <span class="analytics-label">Respon AI</span>
-              <strong class="analytics-val text-cyan-400">
+              <strong class="analytics-val text-cyan-600">
                 {{ formatNumber(cfg.total_messages || 0) }}
               </strong>
               <span class="analytics-sub">Balasan Chat</span>
             </div>
             <div class="analytics-item">
               <span class="analytics-label">Est. Biaya (USD)</span>
-              <strong class="analytics-val text-emerald-400">
+              <strong class="analytics-val text-emerald-600">
                 ${{ (cfg.total_cost_usd || 0).toFixed(4) }}
               </strong>
               <span class="analytics-sub">Kalkulasi 1M Token</span>
             </div>
             <div class="analytics-item">
               <span class="analytics-label">Est. Biaya (IDR)</span>
-              <strong class="analytics-val text-emerald-400">
+              <strong class="analytics-val text-emerald-600">
                 Rp {{ formatRupiah(cfg.total_cost_idr || 0) }}
               </strong>
               <span class="analytics-sub">1 USD = Rp 18.022</span>
@@ -131,7 +131,7 @@
             @click="handleTest(cfg.id)"
           >
             <Loader2 v-if="llmStore.testingId === cfg.id" class="w-3.5 h-3.5 spin" />
-            <Zap v-else class="w-3.5 h-3.5 text-amber-400" />
+            <Zap v-else class="w-3.5 h-3.5 text-amber-500" />
             <span>Test Connection</span>
           </button>
 
@@ -254,9 +254,9 @@
             </div>
           </div>
           <div class="mb-4 flex items-center justify-between">
-            <span class="text-xs text-slate-400">Tarif acuan per 1 Juta Token resmi.</span>
+            <span class="text-xs text-muted">Tarif acuan per 1 Juta Token resmi.</span>
             <button type="button" class="btn btn-secondary btn-xs flex items-center gap-1" @click="autoFillRates">
-              <RefreshCw class="w-3 h-3 text-cyan-400" />
+              <RefreshCw class="w-3 h-3 text-indigo-500" />
               <span>Isi Tarif Resmi</span>
             </button>
           </div>
@@ -381,7 +381,7 @@ function openEditModal(cfg: LLMConfig) {
   editingId.value = cfg.id
   formProvider.value = (cfg.provider as any) || 'gemini'
   formModel.value = cfg.model
-  formApiKey.value = '' // leave blank unless updating key
+  formApiKey.value = ''
   formMaxTokens.value = cfg.max_output_tokens || 512
   formCostInput.value = cfg.cost_per_1m_input || 0.075
   formCostOutput.value = cfg.cost_per_1m_output || 0.300
@@ -499,6 +499,7 @@ function getProviderClass(p: string) {
   h3 {
     font-size: 20px;
     font-weight: 800;
+    color: var(--text-main);
   }
 }
 
@@ -509,8 +510,8 @@ function getProviderClass(p: string) {
 
 .active-card {
   padding: 20px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+  border: 1px solid var(--border-color-hover);
 }
 
 .active-badge-tag {
@@ -533,7 +534,8 @@ function getProviderClass(p: string) {
   width: 50px;
   height: 50px;
   border-radius: var(--radius-md);
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -541,7 +543,7 @@ function getProviderClass(p: string) {
 
 .model-name {
   font-size: 14px;
-  color: var(--primary-light);
+  color: var(--primary);
   font-weight: 600;
 }
 
@@ -579,7 +581,7 @@ function getProviderClass(p: string) {
 
 .config-card-active {
   border-color: var(--primary);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+  box-shadow: var(--shadow-glow);
 }
 
 .card-top {
@@ -606,6 +608,8 @@ function getProviderClass(p: string) {
 .provider-title {
   display: block;
   font-size: 15px;
+  color: var(--text-main);
+  font-weight: 700;
 }
 
 .model-code {
@@ -618,7 +622,8 @@ function getProviderClass(p: string) {
   flex-direction: column;
   gap: 6px;
   font-size: 13px;
-  background: rgba(15, 23, 42, 0.4);
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
   padding: 12px;
   border-radius: var(--radius-sm);
 }
@@ -646,7 +651,7 @@ function getProviderClass(p: string) {
 
 .alert-danger {
   background: var(--color-danger-bg);
-  color: #ff6b81;
+  color: #f43f5e;
 }
 
 .card-actions {
@@ -688,6 +693,7 @@ function getProviderClass(p: string) {
   h3 {
     font-size: 18px;
     font-weight: 700;
+    color: var(--text-main);
   }
 }
 
@@ -696,6 +702,10 @@ function getProviderClass(p: string) {
   border: none;
   color: var(--text-muted);
   cursor: pointer;
+
+  &:hover {
+    color: var(--text-main);
+  }
 }
 
 .modal-footer {
@@ -712,19 +722,19 @@ function getProviderClass(p: string) {
 .rate-badge {
   font-size: 11px;
   font-family: monospace;
-  background: rgba(99, 102, 241, 0.15);
-  color: var(--primary-light);
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--primary);
   padding: 2px 6px;
   border-radius: 4px;
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  border: 1px solid rgba(99, 102, 241, 0.25);
 }
 
 .analytics-card {
   margin-top: 14px;
   margin-bottom: 14px;
   padding: 12px;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
 }
 
@@ -749,10 +759,10 @@ function getProviderClass(p: string) {
 .analytics-item {
   display: flex;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-card);
   padding: 8px 10px;
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
 }
 
 .analytics-label {
