@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <div class="sidebar-brand">
       <div class="brand-icon">
-        <Bot class="w-6 h-6 text-indigo-400" />
+        <Bot class="w-6 h-6 text-indigo-500" />
       </div>
       <div class="brand-text">
         <span class="brand-name gradient-text-accent">GNET Bot</span>
@@ -29,7 +29,7 @@
 
     <!-- Footer Profile & Role -->
     <div class="sidebar-footer">
-      <div class="user-card glass-panel">
+      <div class="user-card">
         <div class="avatar">
           {{ userEmail.charAt(0).toUpperCase() }}
         </div>
@@ -104,7 +104,7 @@ function handleLogout() {
   display: flex;
   flex-direction: column;
   padding: 20px 16px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .sidebar-brand {
@@ -120,7 +120,7 @@ function handleLogout() {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%);
+  background: rgba(99, 102, 241, 0.12);
   border: 1px solid rgba(99, 102, 241, 0.3);
   display: flex;
   align-items: center;
@@ -165,17 +165,16 @@ function handleLogout() {
 }
 
 .nav-link:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(99, 102, 241, 0.1);
   color: var(--text-main);
   transform: translateX(2px);
 }
 
 .nav-link-active {
-  background: linear-gradient(90deg, rgba(99, 102, 241, 0.22) 0%, rgba(99, 102, 241, 0.05) 100%);
-  color: #ffffff;
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0.05) 100%);
+  color: var(--primary);
   border-left: 3px solid var(--primary);
-  font-weight: 600;
-  box-shadow: inset 0 0 12px rgba(99, 102, 241, 0.1);
+  font-weight: 700;
 }
 
 .nav-icon {
@@ -195,8 +194,9 @@ function handleLogout() {
   gap: 10px;
   padding: 10px 12px;
   border-radius: var(--radius-md);
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
+  color: var(--text-main);
 }
 
 .avatar {
@@ -224,6 +224,7 @@ function handleLogout() {
 .user-email {
   font-size: 12px;
   font-weight: 600;
+  color: var(--text-main);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

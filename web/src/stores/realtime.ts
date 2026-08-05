@@ -11,23 +11,29 @@ export const useRealtimeStore = defineStore('realtime', () => {
   function connect() {
     if (eventSource) return
 
-    eventSource = createSSEConnection((event, data) => {
-      isConnected.value = true
-      const sessionStore = useSessionStore()
-      const convStore = useConversationsStore()
+    eventSource = createSSEConnection(
+      (event, data) => {
+        isConnected.value = true
+        const sessionStore = useSessionStore()
+        const convStore = useConversationsStore()
 
-      switch (event) {
-        case 'session_status':
-          sessionStore.handleStatusUpdate(data)
-          break
-        case 'new_message':
-          convStore.handleNewMessage(data)
-          break
-        case 'conversation_update':
-          convStore.handleConversationUpdate(data)
-          break
+        switch (event) {
+          case 'session_status':
+            sessionStore.handleStatusUpdate(data)
+            break
+          case 'new_message':
+            convStore.handleNewMessage(data)
+            break
+          case 'conversation_update':
+            convStore.handleConversationUpdate(data)
+            break
+        }
+      },
+      () => {
+        // SSE Connection Handshake Open Success
+        isConnected.value = true
       }
-    })
+    )
 
     eventSource.onerror = () => {
       isConnected.value = false

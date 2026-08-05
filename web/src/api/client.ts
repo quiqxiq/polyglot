@@ -298,10 +298,17 @@ export async function deleteTechnicianApi(id: number): Promise<{ message: string
 
 // --- SSE Realtime Stream ---
 
-export function createSSEConnection(onEvent: (event: string, data: any) => void): EventSource {
+export function createSSEConnection(
+  onEvent: (event: string, data: any) => void,
+  onOpen?: () => void
+): EventSource {
   const token = localStorage.getItem('gnet_token')
   const sseUrl = token ? `${API_BASE_URL}/events?token=${encodeURIComponent(token)}` : `${API_BASE_URL}/events`
   const eventSource = new EventSource(sseUrl)
+
+  eventSource.onopen = () => {
+    if (onOpen) onOpen()
+  }
 
   eventSource.onmessage = (e) => {
     try {
