@@ -255,7 +255,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import {
   Network,
   Wifi,
@@ -284,6 +284,8 @@ const kickTarget = ref<{ type: 'pppoe' | 'hotspot'; id: string; name: string }>(
 
 function handleDeviceChange() {
   refreshData()
+  networkStore.startHotspotActiveStream()
+  networkStore.startPPPActiveStream()
 }
 
 function refreshData() {
@@ -344,7 +346,13 @@ onMounted(async () => {
   }
   if (networkStore.selectedDeviceId) {
     networkStore.fetchAll()
+    networkStore.startHotspotActiveStream()
+    networkStore.startPPPActiveStream()
   }
+})
+
+onUnmounted(() => {
+  networkStore.stopAllStreams()
 })
 </script>
 

@@ -216,5 +216,18 @@ export interface DevicePayload {
   cred_extra?: Record<string, string>
 }
 
+/** Result of connection test */
+export interface DeviceTestResult {
+  device_id?: string
+  status: string
+  message: string
+  latency_ms?: number
+  identity?: string
+  version?: string
+  board_name?: string
+  uptime?: string
+  details?: any
+}
+
 
 

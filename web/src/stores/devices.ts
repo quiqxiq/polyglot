@@ -7,6 +7,7 @@ import {
   updateDeviceApi,
   deleteDeviceApi,
   testDeviceConnectionApi,
+  getWSBaseUrl,
 } from '../api/client'
 
 export const useDeviceStore = defineStore('devices', () => {
@@ -119,6 +120,50 @@ export const useDeviceStore = defineStore('devices', () => {
     }
   }
 
+  let devicesEventSource: EventSource | null = null
+
+  function startDevicesStream() {
+    stopDevicesStream()
+    const streamUrl = `${getWSBaseUrl()}/ws/devices/stream`
+    devicesEventSource = new EventSource(streamUrl)
+
+    devicesEventSource.addEventListener('devices_status', (event: MessageEvent) => {
+      try {
+        const items = JSON.parse(event.data)
+        if (Array.isArray(items)) {
+          devices.value = items.map((item: any) => item.device)
+          items.forEach((item: any) => {
+            if (item.device && item.device.id) {
+              const devId = item.device.id
+              testResults.value[devId] = {
+                success: item.test.status === 'connected' || item.test.status === 'ok' || item.test.status === 'success',
+                message: item.test.message || 'Streaming live from MikroTik socket',
+                latency_ms: item.test.latency_ms,
+                identity: item.test.identity,
+                version: item.test.version,
+                board_name: item.test.board_name,
+                uptime: item.test.uptime,
+              }
+            }
+          })
+        }
+      } catch (e) {
+        console.error('Error parsing devices_status SSE frame:', e)
+      }
+    })
+
+    devicesEventSource.onerror = (e) => {
+      console.warn('Devices status SSE connection error', e)
+    }
+  }
+
+  function stopDevicesStream() {
+    if (devicesEventSource) {
+      devicesEventSource.close()
+      devicesEventSource = null
+    }
+  }
+
   return {
     devices,
     loading,
@@ -131,5 +176,7 @@ export const useDeviceStore = defineStore('devices', () => {
     deleteDevice,
     testConnection,
     testAllDevices,
+    startDevicesStream,
+    stopDevicesStream,
   }
 })

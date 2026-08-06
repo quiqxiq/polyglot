@@ -7,6 +7,7 @@ import {
   listDHCPLeasesApi,
   kickPPPoESessionApi,
   kickHotspotSessionApi,
+  getWSBaseUrl,
 } from '../api/client'
 
 export const useNetworkStore = defineStore('network', () => {
@@ -98,6 +99,66 @@ export const useNetworkStore = defineStore('network', () => {
     await Promise.allSettled([fetchPPPoEActive(), fetchHotspotActive(), fetchDHCPLeases()])
   }
 
+  let hotspotActiveEventSource: EventSource | null = null
+  let pppActiveEventSource: EventSource | null = null
+
+  function startHotspotActiveStream() {
+    stopHotspotActiveStream()
+    if (!selectedDeviceId.value) return
+
+    const streamUrl = `${getWSBaseUrl()}/ws/devices/${selectedDeviceId.value}/mikhmon/hotspot-active`
+    hotspotActiveEventSource = new EventSource(streamUrl)
+
+    hotspotActiveEventSource.addEventListener('hotspot_active', (event: MessageEvent) => {
+      try {
+        const data = JSON.parse(event.data)
+        if (Array.isArray(data)) {
+          hotspotActive.value = data
+        }
+      } catch (e) {
+        console.error('Error parsing hotspot_active SSE frame:', e)
+      }
+    })
+  }
+
+  function stopHotspotActiveStream() {
+    if (hotspotActiveEventSource) {
+      hotspotActiveEventSource.close()
+      hotspotActiveEventSource = null
+    }
+  }
+
+  function startPPPActiveStream() {
+    stopPPPActiveStream()
+    if (!selectedDeviceId.value) return
+
+    const streamUrl = `${getWSBaseUrl()}/ws/devices/${selectedDeviceId.value}/mikhmon/ppp-active`
+    pppActiveEventSource = new EventSource(streamUrl)
+
+    pppActiveEventSource.addEventListener('ppp_active', (event: MessageEvent) => {
+      try {
+        const data = JSON.parse(event.data)
+        if (Array.isArray(data)) {
+          pppoeActive.value = data
+        }
+      } catch (e) {
+        console.error('Error parsing ppp_active SSE frame:', e)
+      }
+    })
+  }
+
+  function stopPPPActiveStream() {
+    if (pppActiveEventSource) {
+      pppActiveEventSource.close()
+      pppActiveEventSource = null
+    }
+  }
+
+  function stopAllStreams() {
+    stopHotspotActiveStream()
+    stopPPPActiveStream()
+  }
+
   return {
     selectedDeviceId,
     pppoeActive,
@@ -111,5 +172,10 @@ export const useNetworkStore = defineStore('network', () => {
     kickPPPoESession,
     kickHotspotSession,
     fetchAll,
+    startHotspotActiveStream,
+    stopHotspotActiveStream,
+    startPPPActiveStream,
+    stopPPPActiveStream,
+    stopAllStreams,
   }
 })

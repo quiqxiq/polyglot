@@ -16,9 +16,14 @@ import type {
   VoucherReport,
   Device,
   DevicePayload,
+  DeviceTestResult,
 } from '../types'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1'
+
+export function getWSBaseUrl(): string {
+  return API_BASE_URL.replace('/api/v1', '')
+}
 
 function getAuthHeader(): Record<string, string> {
   const token = localStorage.getItem('gnet_token')
@@ -445,7 +450,7 @@ export async function deleteDeviceApi(id: string): Promise<{ message: string }> 
   })
 }
 
-export async function testDeviceConnectionApi(id: string): Promise<{ status: string; message: string; details?: any }> {
+export async function testDeviceConnectionApi(id: string): Promise<DeviceTestResult> {
   return apiFetch(`/devices/${id}/test`, {
     method: 'POST',
   })

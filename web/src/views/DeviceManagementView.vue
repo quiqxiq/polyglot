@@ -335,6 +335,16 @@ import type { Device, DevicePayload } from '../types'
 import ConfirmModal from '../components/ConfirmModal.vue'
 
 const deviceStore = useDeviceStore()
+
+onMounted(() => {
+  deviceStore.fetchDevices()
+  deviceStore.startDevicesStream()
+})
+
+onUnmounted(() => {
+  deviceStore.stopDevicesStream()
+})
+
 const searchQuery = ref('')
 const showModal = ref(false)
 const isEditing = ref(false)
