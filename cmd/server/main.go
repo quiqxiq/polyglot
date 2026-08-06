@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"sync"
 	"syscall"
 	"time"
 
@@ -18,11 +17,11 @@ import (
 	mcpAdapter "github.com/quixiq/polyglot/internal/adapter/http"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
+	"github.com/quixiq/polyglot/internal/adapter/memory"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
 	wsAdapter "github.com/quixiq/polyglot/internal/adapter/ws"
 	"github.com/quixiq/polyglot/internal/config"
-	customerDomain "github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/driver/genieacs"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
@@ -114,7 +113,7 @@ func main() {
 	if pgStore != nil {
 		customerRepo = postgres.NewCustomerRepository(pgStore.DB())
 	} else {
-		customerRepo = &memCustomerRepo{customers: make(map[string]customerDomain.Customer)}
+		customerRepo = memory.NewCustomerRepository()
 	}
 	customerUC := business.NewManageCustomerUseCase(customerRepo)
 
@@ -220,113 +219,5 @@ func loadInitialDevices(pgStore *postgres.Store) (port.DeviceRepository, port.Cr
 	if pgStore != nil {
 		return postgres.NewDeviceRepository(pgStore.DB()), postgres.NewCredentialVault(pgStore.DB())
 	}
-	return &memRepo{devices: make(map[string]device.Device)}, &memVault{creds: make(map[string]device.Credentials)}
-}
-
-type memRepo struct {
-	mu      sync.RWMutex
-	devices map[string]device.Device
-}
-
-func (r *memRepo) Save(_ context.Context, d device.Device) error {
-	r.mu.Lock()
-	defer r.mu.Unlock()
-	r.devices[d.ID] = d
-	return nil
-}
-
-func (r *memRepo) FindByID(_ context.Context, id string) (device.Device, error) {
-	r.mu.RLock()
-	defer r.mu.RUnlock()
-	d, ok := r.devices[id]
-	if !ok {
-		return device.Device{}, device.ErrNotFound
-	}
-	return d, nil
-}
-
-func (r *memRepo) FindAll(_ context.Context) ([]device.Device, error) {
-	r.mu.RLock()
-	defer r.mu.RUnlock()
-	list := make([]device.Device, 0, len(r.devices))
-	for _, d := range r.devices {
-		list = append(list, d)
-	}
-	return list, nil
-}
-
-func (r *memRepo) Update(ctx context.Context, d device.Device) error {
-	return r.Save(ctx, d)
-}
-
-func (r *memRepo) Delete(_ context.Context, id string) error {
-	r.mu.Lock()
-	defer r.mu.Unlock()
-	delete(r.devices, id)
-	return nil
-}
-
-type memVault struct {
-	mu    sync.RWMutex
-	creds map[string]device.Credentials
-}
-
-func (v *memVault) Get(_ context.Context, deviceID string) (device.Credentials, error) {
-	v.mu.RLock()
-	defer v.mu.RUnlock()
-	c, ok := v.creds[deviceID]
-	if !ok {
-		return device.Credentials{}, device.ErrNotFound
-	}
-	return c, nil
-}
-
-func (v *memVault) Save(_ context.Context, deviceID string, c device.Credentials) error {
-	v.mu.Lock()
-	defer v.mu.Unlock()
-	v.creds[deviceID] = c
-	return nil
-}
-
-type memCustomerRepo struct {
-	mu        sync.RWMutex
-	customers map[string]customerDomain.Customer
-}
-
-func (r *memCustomerRepo) Save(_ context.Context, c customerDomain.Customer) error {
-	r.mu.Lock()
-	defer r.mu.Unlock()
-	r.customers[c.ID] = c
-	return nil
-}
-
-func (r *memCustomerRepo) FindByID(_ context.Context, id string) (customerDomain.Customer, error) {
-	r.mu.RLock()
-	defer r.mu.RUnlock()
-	c, ok := r.customers[id]
-	if !ok {
-		return customerDomain.Customer{}, fmt.Errorf("customer not found")
-	}
-	return c, nil
-}
-
-func (r *memCustomerRepo) FindAll(_ context.Context) ([]customerDomain.Customer, error) {
-	r.mu.RLock()
-	defer r.mu.RUnlock()
-	list := make([]customerDomain.Customer, 0, len(r.customers))
-	for _, c := range r.customers {
-		list = append(list, c)
-	}
-	return list, nil
-}
-
-func (r *memCustomerRepo) Delete(_ context.Context, id string) error {
-	r.mu.Lock()
-	defer r.mu.Unlock()
-	delete(r.customers, id)
-	return nil
-}
-
-func (r *memCustomerRepo) FindSubscriptions(_ context.Context, _ string) ([]customerDomain.Subscription, error) {
-	return []customerDomain.Subscription{}, nil
+	return memory.NewDeviceRepository(), memory.NewCredentialVault()
 }
