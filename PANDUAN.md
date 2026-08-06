@@ -55,6 +55,11 @@ timeline
 - [ ] Buat usecase `internal/usecase/network/get_active_sessions.go`.
 - [ ] Daftarkan REST API di `internal/adapter/http/mikhmon_handler.go`.
 
+#### 1.3 Router & Network Device Management CRUD (`internal/adapter/postgres/`)
+- [ ] Model GORM PostgreSQL `DeviceModel` & `CredentialModel` untuk persistence router per tenant.
+- [ ] REST API CRUD `/api/v1/devices` & Test Connection Endpoint (`POST /api/v1/devices/:id/test`).
+- [ ] Frontend UI Manajemen Router (`web/src/views/DeviceManagementView.vue`).
+
 ---
 
 ### TAHAP 2: Mikhmon Hotspot Engine & Voucher PDF Generator
