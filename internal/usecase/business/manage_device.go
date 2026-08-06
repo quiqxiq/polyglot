@@ -79,6 +79,18 @@ func (uc *ManageDeviceUseCase) UpdateDevice(ctx context.Context, d device.Device
 		return fmt.Errorf("failed to update device: %w", err)
 	}
 	if c.Username != "" || c.Password != "" || len(c.Extra) > 0 {
+		existingCreds, err := uc.vault.Get(ctx, d.ID)
+		if err == nil {
+			if c.Password == "" {
+				c.Password = existingCreds.Password
+			}
+			if c.Username == "" {
+				c.Username = existingCreds.Username
+			}
+			if c.Extra == nil {
+				c.Extra = existingCreds.Extra
+			}
+		}
 		if err := uc.vault.Save(ctx, d.ID, c); err != nil {
 			return fmt.Errorf("failed to update credentials: %w", err)
 		}
