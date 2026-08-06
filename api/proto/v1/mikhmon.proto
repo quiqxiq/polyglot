@@ -1,0 +1,161 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/proto/v1;devicepb";
+
+message MikhmonDashboardSummary {
+  int32 total_hotspot_users = 1;
+  int32 total_active_users = 2;
+  double today_income = 3;
+  string uptime = 4;
+}
+
+message MikhmonProfile {
+  string id = 1;
+  string name = 2;
+  string shared_users = 3;
+  string rate_limit = 4;
+  string mode_expire = 5;
+  string validity = 6;
+  double price = 7;
+  double selling_price = 8;
+  string lock_user = 9;
+  string parent_queue = 10;
+  string comment = 11;
+}
+
+message MikhmonUser {
+  string id = 1;
+  string name = 2;
+  string password = 3;
+  string profile = 4;
+  string limit_uptime = 5;
+  string limit_bytes = 6;
+  string uptime = 7;
+  string bytes_in = 8;
+  string bytes_out = 9;
+  string comment = 10;
+  bool disabled = 11;
+}
+
+message MikhmonActiveSession {
+  string id = 1;
+  string server = 2;
+  string user = 3;
+  string address = 4;
+  string mac_address = 5;
+  string uptime = 6;
+  string bytes_in = 7;
+  string bytes_out = 8;
+  string comment = 9;
+}
+
+message MikhmonDHCPLease {
+  string id = 1;
+  string address = 2;
+  string mac_address = 3;
+  string host_name = 4;
+  string status = 5;
+  bool blocked = 6;
+  string comment = 7;
+}
+
+message MikhmonReport {
+  string id = 1;
+  string date = 2;
+  string time = 3;
+  string username = 4;
+  string profile = 5;
+  double price = 6;
+  string comment = 7;
+}
+
+// Request & Response Messages
+message GetMikhmonDashboardRequest {
+  string device_id = 1;
+}
+
+message GetMikhmonDashboardResponse {
+  MikhmonDashboardSummary summary = 1;
+}
+
+message ListMikhmonProfilesRequest {
+  string device_id = 1;
+}
+
+message ListMikhmonProfilesResponse {
+  repeated MikhmonProfile profiles = 1;
+}
+
+message ListMikhmonUsersRequest {
+  string device_id = 1;
+  string profile = 2;
+}
+
+message ListMikhmonUsersResponse {
+  repeated MikhmonUser users = 1;
+}
+
+message ListMikhmonActiveSessionsRequest {
+  string device_id = 1;
+}
+
+message ListMikhmonActiveSessionsResponse {
+  repeated MikhmonActiveSession sessions = 1;
+}
+
+message KickMikhmonSessionRequest {
+  string device_id = 1;
+  string ros_id = 2;
+}
+
+message KickMikhmonSessionResponse {
+  string message = 1;
+}
+
+message ListMikhmonDHCPLeasesRequest {
+  string device_id = 1;
+  string mac_filter = 2;
+}
+
+message ListMikhmonDHCPLeasesResponse {
+  repeated MikhmonDHCPLease leases = 1;
+}
+
+message BlockDHCPLeaseRequest {
+  string device_id = 1;
+  string ros_id = 2;
+  bool blocked = 3;
+  string comment = 4;
+}
+
+message BlockDHCPLeaseResponse {
+  string message = 1;
+}
+
+message GenerateVouchersRequest {
+  string device_id = 1;
+  string profile = 2;
+  int32 count = 3;
+  string user_type = 4;
+  int32 user_length = 5;
+  string prefix = 6;
+  string character_set = 7;
+}
+
+message GenerateVouchersResponse {
+  repeated MikhmonUser vouchers = 1;
+  string message = 2;
+}
+
+service MikhmonService {
+  rpc GetDashboard(GetMikhmonDashboardRequest) returns (GetMikhmonDashboardResponse);
+  rpc ListProfiles(ListMikhmonProfilesRequest) returns (ListMikhmonProfilesResponse);
+  rpc ListUsers(ListMikhmonUsersRequest) returns (ListMikhmonUsersResponse);
+  rpc ListActiveSessions(ListMikhmonActiveSessionsRequest) returns (ListMikhmonActiveSessionsResponse);
+  rpc KickActiveSession(KickMikhmonSessionRequest) returns (KickMikhmonSessionResponse);
+  rpc ListDHCPLeases(ListMikhmonDHCPLeasesRequest) returns (ListMikhmonDHCPLeasesResponse);
+  rpc BlockDHCPLease(BlockDHCPLeaseRequest) returns (BlockDHCPLeaseResponse);
+  rpc GenerateVouchers(GenerateVouchersRequest) returns (GenerateVouchersResponse);
+}

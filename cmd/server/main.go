@@ -15,7 +15,6 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	connectAdapter "github.com/quixiq/polyglot/internal/adapter/connect"
-	grpcAdapter "github.com/quixiq/polyglot/internal/adapter/grpc"
 	mcpAdapter "github.com/quixiq/polyglot/internal/adapter/http"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
@@ -174,16 +173,6 @@ func main() {
 	mcpServer := mcp.New(reg, nil)
 	r.Any("/mcp", gin.WrapH(mcpServer.HTTPHandler()))
 
-	// gRPC Server Adapter
-	grpcAddr := envOr("GRPC_ADDR", ":50051")
-	grpcSrv, err := grpcAdapter.NewServer(grpcAddr, deviceUC, deviceStreamHandler)
-	if err != nil {
-		log.Printf("[gRPC Adapter Warning] Failed to initialize gRPC server: %v", err)
-	} else {
-		grpcSrv.Start()
-		defer grpcSrv.Stop()
-	}
-
 	// ConnectRPC Protocol Handler (Buf / Connect RPC served over standard HTTP on :8080)
 	connectPath, connectHandler := connectAdapter.NewDeviceServiceHandler(deviceUC, deviceStreamHandler)
 	r.Any(connectPath+"*action", gin.WrapH(connectHandler))
@@ -191,12 +180,18 @@ func main() {
 	custConnectPath, custConnectHandler := connectAdapter.NewCustomerServiceHandler(customerUC)
 	r.Any(custConnectPath+"*action", gin.WrapH(custConnectHandler))
 
+	connectDriverProvider := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
+		return reg.Get(ctx, deviceID)
+	}
+	mikhmonConnectPath, mikhmonConnectHandler := connectAdapter.NewMikhmonServiceHandler(mikhmonUC, connectDriverProvider)
+	r.Any(mikhmonConnectPath+"*action", gin.WrapH(mikhmonConnectHandler))
+
 	httpSrv := &http.Server{
 		Addr:    httpAddr,
 		Handler: r,
 	}
 
-	log.Printf("polyglot: Engine starting on http://localhost%s (REST, WebSockets, WhatsApp Gateway & MCP) and gRPC on %s", httpAddr, grpcAddr)
+	log.Printf("polyglot: Engine starting on http://localhost%s (REST, ConnectRPC, WebSockets, WhatsApp Gateway & MCP)", httpAddr)
 	go func() {
 		if err := httpSrv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("server http: %v", err)
