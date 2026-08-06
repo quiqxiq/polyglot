@@ -109,18 +109,26 @@ timeline
 ---
 
 ### TAHAP 5: Modern UI Dashboard & Live Realtime Updates
-> **Goal**: Menampilkan monitoring session dan manajemen voucher secara visual di Dashboard Web.
+> **Goal**: Menampilkan monitoring session, manajemen voucher, dan RBAC secara visual di Dashboard Web Vue 3.
 
-#### 5.1 Realtime Monitoring Views (`web/src/views/`)
-- [ ] Halaman **Active Sessions View** (Tab PPPoE, Hotspot Active, DHCP Leases) dengan filter & kick user button.
-- [ ] Halaman **Hotspot & Voucher View** (Form Generate Voucher, Pilihan Template, Preview PDF, dan Tombol "Kirim PDF ke WA Admin").
+#### 5.1 Active Sessions & Network Monitoring View (`web/src/views/ActiveSessionsView.vue`)
+- [ ] Tab **PPPoE Active Sessions**: Tabel realtime, filter, tombol kick user (`DELETE /api/v1/mikrotik/ppp/active/:id`).
+- [ ] Tab **Hotspot Active Sessions**: Tabel realtime (MAC, IP, Uptime, Bytes), tombol kick user (`DELETE /api/v1/mikrotik/hotspot/active/:id`).
+- [ ] Tab **DHCP Leases**: Tabel leases (IP, MAC Address, Server, Dynamic/Static Status).
 
-#### 5.2 User & RBAC Management View (`web/src/views/`)
-- [ ] Halaman **User Management View** (Tabel Pengguna, Form Tambah/Edit User, Reset Password).
-- [ ] Halaman **RBAC & Role Assignment View** (Matriks Centang Permission per Role, Form Penugasan Role ke User via Casbin API).
+#### 5.2 Hotspot Voucher Engine & Printing View (`web/src/views/VouchersView.vue`)
+- [ ] Tab **Voucher Generator**: Form pembuatan voucher massal (Profile, Qty, Mode Server, Prefix, Character Set).
+- [ ] Modal **Preview & Cetak Voucher**: Render HTML layout voucher (A4 grid 3x10 / Thermal receipt) lengkap dengan QR Code base64.
+- [ ] Integrasi **Kirim Voucher ke WA Admin**: Tombol instant untuk mengirim voucher via WhatsApp Gateway (`POST /api/v1/sessions/:id/send-document`).
+- [ ] Tab **Laporan Penjualan (Income Report)**: Filter laporan harian, bulanan, dan tahunan dari backend.
 
-#### 5.3 Realtime SSE Integration
-- [ ] SSE Event `active_sessions_update` untuk grafik traffic dan status session.
+#### 5.3 User & RBAC Management View (`web/src/views/RbacManagementView.vue`)
+- [ ] Tab **User Management**: Tabel Pengguna, Form Tambah/Edit User, Reset Password per Tenant.
+- [ ] Tab **RBAC Policy & Role Assignment**: Matriks Centang Permission per Role, Form Penugasan Role ke User via Casbin API.
+
+#### 5.4 Realtime SSE & Pinia Integration
+- [ ] `stores/network.ts`, `stores/mikhmon.ts`, dan `stores/rbac.ts` untuk manajemen state.
+- [ ] Integration `stores/realtime.ts` (SSE Event `active_sessions_update` & status update).
 
 ---
 
