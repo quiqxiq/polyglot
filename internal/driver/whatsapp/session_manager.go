@@ -42,6 +42,9 @@ func NewSessionManager(postgresConnStr string, onMsg MessageCallback, onStat Sta
 }
 
 func (sm *SessionManager) Connect(session *bot.WASession) error {
+	if sm == nil {
+		return nil
+	}
 	sm.mutex.Lock()
 	defer sm.mutex.Unlock()
 
@@ -99,6 +102,9 @@ func (sm *SessionManager) Connect(session *bot.WASession) error {
 }
 
 func (sm *SessionManager) Disconnect(sessionID uint) error {
+	if sm == nil {
+		return nil
+	}
 	sm.mutex.Lock()
 	defer sm.mutex.Unlock()
 
@@ -113,6 +119,9 @@ func (sm *SessionManager) Disconnect(sessionID uint) error {
 }
 
 func (sm *SessionManager) Logout(sessionID uint) error {
+	if sm == nil {
+		return nil
+	}
 	sm.mutex.Lock()
 	defer sm.mutex.Unlock()
 
@@ -127,6 +136,9 @@ func (sm *SessionManager) Logout(sessionID uint) error {
 }
 
 func (sm *SessionManager) Reconnect(sessionID uint) error {
+	if sm == nil {
+		return nil
+	}
 	sm.mutex.Lock()
 	client, ok := sm.clients[sessionID]
 	sm.mutex.Unlock()
@@ -139,6 +151,9 @@ func (sm *SessionManager) Reconnect(sessionID uint) error {
 }
 
 func (sm *SessionManager) SendMessage(sessionID uint, to string, content string) error {
+	if sm == nil {
+		return fmt.Errorf("session manager not initialized")
+	}
 	sm.mutex.RLock()
 	client, ok := sm.clients[sessionID]
 	sm.mutex.RUnlock()
@@ -151,6 +166,9 @@ func (sm *SessionManager) SendMessage(sessionID uint, to string, content string)
 }
 
 func (sm *SessionManager) SendDocument(ctx context.Context, sessionID uint, to string, fileBytes []byte, fileName string, contentType string, caption string) error {
+	if sm == nil {
+		return fmt.Errorf("session manager not initialized")
+	}
 	sm.mutex.RLock()
 	client, ok := sm.clients[sessionID]
 	sm.mutex.RUnlock()
@@ -163,6 +181,9 @@ func (sm *SessionManager) SendDocument(ctx context.Context, sessionID uint, to s
 }
 
 func (sm *SessionManager) SendImage(ctx context.Context, sessionID uint, to string, imageBytes []byte, contentType string, caption string) error {
+	if sm == nil {
+		return fmt.Errorf("session manager not initialized")
+	}
 	sm.mutex.RLock()
 	client, ok := sm.clients[sessionID]
 	sm.mutex.RUnlock()
@@ -175,6 +196,9 @@ func (sm *SessionManager) SendImage(ctx context.Context, sessionID uint, to stri
 }
 
 func (sm *SessionManager) GetStatus(sessionID uint) (string, error) {
+	if sm == nil {
+		return "offline", nil
+	}
 	sm.mutex.RLock()
 	defer sm.mutex.RUnlock()
 
@@ -186,6 +210,9 @@ func (sm *SessionManager) GetStatus(sessionID uint) (string, error) {
 }
 
 func (sm *SessionManager) GetQRCode(sessionID uint) (string, error) {
+	if sm == nil {
+		return "", nil
+	}
 	sm.mutex.RLock()
 	defer sm.mutex.RUnlock()
 
@@ -197,6 +224,9 @@ func (sm *SessionManager) GetQRCode(sessionID uint) (string, error) {
 }
 
 func (sm *SessionManager) GetPairingCode(sessionID uint, phoneNumber string) (string, error) {
+	if sm == nil {
+		return "", nil
+	}
 	sm.mutex.RLock()
 	client, ok := sm.clients[sessionID]
 	sm.mutex.RUnlock()
@@ -209,6 +239,9 @@ func (sm *SessionManager) GetPairingCode(sessionID uint, phoneNumber string) (st
 }
 
 func (sm *SessionManager) RestoreAllSessions(sessions []bot.WASession) error {
+	if sm == nil {
+		return nil
+	}
 	log.Printf("[SessionManager] Restoring %d WhatsApp sessions...", len(sessions))
 	for i := range sessions {
 		sess := &sessions[i]

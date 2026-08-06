@@ -117,10 +117,7 @@ func main() {
 	}
 	customerUC := business.NewManageCustomerUseCase(customerRepo)
 
-	// Driver Providers
-	httpDriverProvider := func(c *gin.Context, deviceID string) (port.DeviceDriver, error) {
-		return reg.Get(c.Request.Context(), deviceID)
-	}
+	// Streaming Driver Provider
 
 	streamDriverProvider := func(ctx context.Context, deviceID string) (port.StreamingDeviceDriver, error) {
 		driver, err := reg.Get(ctx, deviceID)
@@ -134,9 +131,7 @@ func main() {
 		return sd, nil
 	}
 
-	// HTTP Handlers
-	deviceHandler := mcpAdapter.NewDeviceHandler(deviceUC, httpDriverProvider)
-	mikhmonHandler := mcpAdapter.NewMikhmonHandler(mikhmonUC, httpDriverProvider)
+	// Streaming Handlers (WebSockets & SSE)
 	mikhmonStreamHandler := wsAdapter.NewMikhmonStreamHandler(streamDriverProvider)
 	deviceStreamHandler := wsAdapter.NewDeviceStreamHandler(deviceUC, streamDriverProvider)
 
@@ -144,25 +139,17 @@ func main() {
 	r := gin.Default()
 	r.Use(middleware.CORS(cfg.CORSOrigins))
 
-	// Auth & RBAC Handlers
+	// Auth & RBAC REST Routes (Pending ConnectRPC Migration)
 	if pgStore != nil && casbinEnforcer != nil {
 		authHandler := mcpAdapter.NewAuthHandler(pgStore, jwtService)
 		rbacHandler := mcpAdapter.NewRBACHandler(casbinEnforcer)
-		sessionHandler := mcpAdapter.NewSessionHandler(pgStore, waManager)
-		convService := business.NewConversationService(pgStore)
-		convHandler := mcpAdapter.NewConversationHandler(convService, waManager, sseHub)
-		knowledgeHandler := mcpAdapter.NewKnowledgeHandler(pgStore)
-		llmHandler := mcpAdapter.NewLLMConfigHandler(pgStore, cfg)
-		technicianHandler := mcpAdapter.NewTechnicianHandler(pgStore)
 
 		mcpAdapter.RegisterAuthRoutes(r, authHandler, jwtService)
 		mcpAdapter.RegisterRBACRoutes(r, rbacHandler, jwtService, casbinEnforcer)
-		mcpAdapter.RegisterBotRoutes(r, sessionHandler, convHandler, knowledgeHandler, llmHandler, technicianHandler, sseHub, jwtService, casbinEnforcer)
 	}
 
-	// Network REST Routes
-	mcpAdapter.RegisterDeviceRoutes(r, deviceHandler)
-	mcpAdapter.RegisterMikhmonRoutes(r, mikhmonHandler)
+	// Realtime Event Streaming Route (SSE)
+	mcpAdapter.RegisterEventRoutes(r, sseHub)
 
 	// Realtime WebSockets & SSE Streaming Routes
 	wsAdapter.RegisterStreamingRoutes(r, mikhmonStreamHandler)
