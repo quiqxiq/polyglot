@@ -89,3 +89,97 @@ export interface Technician {
   updated_at: string
 }
 
+/** PPPoE Active Session entity */
+export interface PPPoEActiveSession {
+  id: string
+  name: string
+  service: string
+  caller_id: string
+  address: string
+  uptime: string
+  bytes_in?: number
+  bytes_out?: number
+}
+
+/** Hotspot Active Session entity */
+export interface HotspotActiveSession {
+  id: string
+  user: string
+  server: string
+  domain?: string
+  address: string
+  mac_address: string
+  uptime: string
+  bytes_in?: number
+  bytes_out?: number
+}
+
+/** DHCP Lease entity */
+export interface DHCPLease {
+  id: string
+  address: string
+  mac_address: string
+  server: string
+  active_address?: string
+  active_mac_address?: string
+  host_name?: string
+  status: string
+  dynamic: boolean
+  disabled: boolean
+}
+
+/** Hotspot User Profile entity */
+export interface HotspotProfile {
+  id: string
+  name: string
+  shared_users?: string
+  rate_limit?: string
+  on_login?: string
+  price?: string
+  validity?: string
+}
+
+/** Voucher Generation Request & Batch */
+export interface VoucherBatchRequest {
+  qty: number
+  profile: string
+  server_mode?: string
+  user_type?: string
+  prefix?: string
+  char_len?: number
+  char_set?: string
+}
+
+export interface VoucherData {
+  username: string
+  password: string
+  profile: string
+  price: string
+  validity: string
+  qr_code?: string
+}
+
+export interface VoucherReport {
+  id?: string
+  date: string
+  time?: string
+  user: string
+  profile: string
+  price: number
+  comment?: string
+}
+
+/** RBAC Policy Rule */
+export interface RBACPolicy {
+  role: string
+  path: string
+  method: string
+}
+
+/** RBAC Role Assignment */
+export interface RBACRoleAssignment {
+  user: string
+  role: string
+}
+
+

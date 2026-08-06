@@ -8,6 +8,9 @@ import LLMConfigView from '../views/LLMConfigView.vue'
 import KnowledgeView from '../views/KnowledgeView.vue'
 import ConversationsView from '../views/ConversationsView.vue'
 import TechniciansView from '../views/TechniciansView.vue'
+import ActiveSessionsView from '../views/ActiveSessionsView.vue'
+import VouchersView from '../views/VouchersView.vue'
+import RbacManagementView from '../views/RbacManagementView.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -20,6 +23,18 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     name: 'Dashboard',
     component: DashboardView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/active-sessions',
+    name: 'ActiveSessions',
+    component: ActiveSessionsView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/vouchers',
+    name: 'Vouchers',
+    component: VouchersView,
     meta: { requiresAuth: true },
   },
   {
@@ -44,6 +59,12 @@ const routes: RouteRecordRaw[] = [
     path: '/technicians',
     name: 'Technicians',
     component: TechniciansView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/rbac-users',
+    name: 'RbacManagement',
+    component: RbacManagementView,
     meta: { requiresAuth: true },
   },
   {

@@ -7,6 +7,13 @@ import type {
   KnowledgeEntry,
   Technician,
   User,
+  PPPoEActiveSession,
+  HotspotActiveSession,
+  DHCPLease,
+  HotspotProfile,
+  VoucherBatchRequest,
+  VoucherData,
+  VoucherReport,
 } from '../types'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1'
@@ -296,6 +303,112 @@ export async function deleteTechnicianApi(id: number): Promise<{ message: string
   })
 }
 
+// --- Active Sessions API ---
+
+export async function listPPPoEActiveApi(deviceId: string = 'mtk-test'): Promise<{ data: PPPoEActiveSession[] }> {
+  return apiFetch(`/mikrotik/ppp/active?device_id=${encodeURIComponent(deviceId)}`)
+}
+
+export async function listHotspotActiveApi(deviceId: string = 'mtk-test'): Promise<{ data: HotspotActiveSession[] }> {
+  return apiFetch(`/mikrotik/hotspot/active?device_id=${encodeURIComponent(deviceId)}`)
+}
+
+export async function listDHCPLeasesApi(deviceId: string = 'mtk-test'): Promise<{ data: DHCPLease[] }> {
+  return apiFetch(`/mikrotik/dhcp/leases?device_id=${encodeURIComponent(deviceId)}`)
+}
+
+export async function kickPPPoESessionApi(deviceId: string, rosId: string): Promise<{ message: string }> {
+  return apiFetch(`/mikrotik/ppp/active/${rosId}?device_id=${encodeURIComponent(deviceId)}`, {
+    method: 'DELETE',
+  })
+}
+
+export async function kickHotspotSessionApi(deviceId: string, rosId: string): Promise<{ message: string }> {
+  return apiFetch(`/mikrotik/hotspot/active/${rosId}?device_id=${encodeURIComponent(deviceId)}`, {
+    method: 'DELETE',
+  })
+}
+
+// --- Mikhmon Hotspot & Voucher Engine API ---
+
+export async function listHotspotProfilesApi(deviceId: string = 'mtk-test'): Promise<{ data: HotspotProfile[] }> {
+  return apiFetch(`/mikrotik/hotspot/profiles?device_id=${encodeURIComponent(deviceId)}`)
+}
+
+export async function generateVouchersApi(deviceId: string, req: VoucherBatchRequest): Promise<{ vouchers: VoucherData[]; count: number }> {
+  return apiFetch(`/mikrotik/hotspot/vouchers/generate?device_id=${encodeURIComponent(deviceId)}`, {
+    method: 'POST',
+    body: JSON.stringify(req),
+  })
+}
+
+export async function renderVoucherHTMLApi(vouchers: VoucherData[], templateName: string = 'default'): Promise<{ html: string }> {
+  return apiFetch(`/mikrotik/hotspot/vouchers/render`, {
+    method: 'POST',
+    body: JSON.stringify({ vouchers, template_name: templateName }),
+  })
+}
+
+export async function getVoucherReportsApi(deviceId: string = 'mtk-test', date?: string, month?: string, year?: string): Promise<{ reports: VoucherReport[] }> {
+  const params = new URLSearchParams()
+  params.append('device_id', deviceId)
+  if (date) params.append('date', date)
+  if (month) params.append('month', month)
+  if (year) params.append('year', year)
+  return apiFetch(`/mikrotik/hotspot/reports?${params.toString()}`)
+}
+
+export async function sendVoucherDocumentWAApi(sessionId: number, to: string, fileName: string, fileBase64: string, caption?: string): Promise<{ message: string }> {
+  return apiFetch(`/sessions/${sessionId}/send-document`, {
+    method: 'POST',
+    body: JSON.stringify({
+      to,
+      file_name: fileName,
+      file_base64: fileBase64,
+      content_type: 'text/html',
+      caption,
+    }),
+  })
+}
+
+// --- RBAC & User Management API ---
+
+export async function listPoliciesApi(): Promise<{ policies: string[][] }> {
+  return apiFetch('/rbac/policies')
+}
+
+export async function addPolicyApi(role: string, path: string, method: string): Promise<{ message: string; policy: string[] }> {
+  return apiFetch('/rbac/policies', {
+    method: 'POST',
+    body: JSON.stringify({ role, path, method }),
+  })
+}
+
+export async function removePolicyApi(role: string, path: string, method: string): Promise<{ message: string }> {
+  return apiFetch('/rbac/policies', {
+    method: 'DELETE',
+    body: JSON.stringify({ role, path, method }),
+  })
+}
+
+export async function listRoleAssignmentsApi(): Promise<{ roles: string[][] }> {
+  return apiFetch('/rbac/roles')
+}
+
+export async function assignRoleApi(user: string, role: string): Promise<{ message: string; user: string; role: string }> {
+  return apiFetch('/rbac/roles/assign', {
+    method: 'POST',
+    body: JSON.stringify({ user, role }),
+  })
+}
+
+export async function unassignRoleApi(user: string, role: string): Promise<{ message: string }> {
+  return apiFetch('/rbac/roles/assign', {
+    method: 'DELETE',
+    body: JSON.stringify({ user, role }),
+  })
+}
+
 // --- SSE Realtime Stream ---
 
 export function createSSEConnection(
@@ -321,7 +434,7 @@ export function createSSEConnection(
   }
 
   // Handle specific named events from SSEHub
-  const eventTypes = ['new_message', 'session_status', 'conversation_update', 'rate_limit_alert']
+  const eventTypes = ['new_message', 'session_status', 'conversation_update', 'rate_limit_alert', 'active_sessions_update']
   eventTypes.forEach((type) => {
     eventSource.addEventListener(type, (e: MessageEvent) => {
       try {

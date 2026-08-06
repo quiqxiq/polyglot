@@ -57,6 +57,9 @@ import {
   Wrench,
   LogOut,
   Bot,
+  Activity,
+  Ticket,
+  ShieldCheck,
 } from 'lucide-vue-next'
 import { useAuthStore } from '../stores/auth'
 
@@ -78,10 +81,13 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { path: '/', label: 'Overview', icon: LayoutDashboard },
+  { path: '/active-sessions', label: 'Sesi Aktif', icon: Activity },
+  { path: '/vouchers', label: 'Voucher & Hotspot', icon: Ticket },
   { path: '/sessions', label: 'Koneksi WA', icon: Smartphone },
   { path: '/llm-config', label: 'Konfigurasi LLM', icon: Cpu },
   { path: '/knowledge', label: 'Basis Pengetahuan', icon: BookOpen },
   { path: '/technicians', label: 'Tim Teknisi', icon: Wrench },
+  { path: '/rbac-users', label: 'User & Hak Akses', icon: ShieldCheck },
   { path: '/conversations', label: 'Percakapan Live', icon: MessageSquare },
 ]
 
