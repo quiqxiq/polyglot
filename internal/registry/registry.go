@@ -100,15 +100,18 @@ func (r *Registry) Get(ctx context.Context, deviceID string) (port.DeviceDriver,
 // Evict closes and removes the cached driver for deviceID, forcing subsequent Get calls to dial fresh.
 func (r *Registry) Evict(deviceID string) error {
 	r.mu.Lock()
-	defer r.mu.Unlock()
-
 	driver, ok := r.drivers[deviceID]
-	if !ok {
-		return nil
+	if ok {
+		delete(r.drivers, deviceID)
 	}
+	r.mu.Unlock()
 
-	delete(r.drivers, deviceID)
-	return driver.Close()
+	if ok && driver != nil {
+		go func() {
+			_ = driver.Close()
+		}()
+	}
+	return nil
 }
 
 // Close releases all cached driver connections. Safe to call more than once.
