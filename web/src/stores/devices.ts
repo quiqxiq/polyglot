@@ -20,6 +20,7 @@ export const useDeviceStore = defineStore('devices', () => {
       {
         success: boolean
         message: string
+        connecting?: boolean
         latency_ms?: number
         identity?: string
         version?: string
@@ -157,14 +158,24 @@ export const useDeviceStore = defineStore('devices', () => {
           items.forEach((item: any) => {
             if (item.device && item.device.id) {
               const devId = item.device.id
-              testResults.value[devId] = {
-                success: item.test.status === 'connected' || item.test.status === 'ok' || item.test.status === 'success',
-                message: item.test.message || 'Streaming live from MikroTik socket',
-                latency_ms: item.test.latency_ms,
-                identity: item.test.identity,
-                version: item.test.version,
-                board_name: item.test.board_name,
-                uptime: item.test.uptime,
+              if (item.test && item.test.status === 'connecting') {
+                if (!testResults.value[devId]) {
+                  testResults.value[devId] = {
+                    success: false,
+                    connecting: true,
+                    message: item.test.message || 'Connecting to device...',
+                  }
+                }
+              } else if (item.test) {
+                testResults.value[devId] = {
+                  success: item.test.status === 'connected' || item.test.status === 'ok' || item.test.status === 'success',
+                  message: item.test.message || 'Streaming live from MikroTik socket',
+                  latency_ms: item.test.latency_ms,
+                  identity: item.test.identity,
+                  version: item.test.version,
+                  board_name: item.test.board_name,
+                  uptime: item.test.uptime,
+                }
               }
             }
           })

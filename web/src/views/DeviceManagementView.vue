@@ -111,7 +111,7 @@
                 <div v-if="!dev.enabled" class="badge badge-offline">
                   Disabled
                 </div>
-                <div v-else-if="deviceStore.testResults[dev.id]" class="flex items-center gap-2">
+                <div v-else-if="deviceStore.testResults[dev.id] && !(deviceStore.testResults[dev.id] as any).connecting" class="flex items-center gap-2">
                   <span v-if="deviceStore.testResults[dev.id].success" class="badge badge-online">
                     <span class="pulse-dot pulse-dot-online mr-1"></span>
                     LIVE / ONLINE
@@ -251,16 +251,16 @@
 
           <div class="grid grid-cols-2 gap-4 mb-4">
             <div class="form-group">
-              <label class="form-label">Username API</label>
-              <input v-model="form.username" type="text" placeholder="admin" class="form-control" required />
+              <label class="form-label">Username</label>
+              <input v-model="form.username" type="text" class="form-control" placeholder="misal: admin" />
             </div>
             <div class="form-group">
-              <label class="form-label">Password API</label>
+              <label class="form-label">Password</label>
               <input
                 v-model="form.password"
                 type="password"
-                :placeholder="isEditing ? '(Tetap simpan lama)' : 'Password'"
                 class="form-control"
+                placeholder="Biarkan kosong jika tidak diubah"
               />
             </div>
           </div>
@@ -268,45 +268,49 @@
           <div class="grid grid-cols-2 gap-4 mb-4">
             <div class="form-group">
               <label class="form-label">Timeout (ms)</label>
-              <input v-model.number="form.timeout_ms" type="number" class="form-control" required />
+              <input v-model.number="form.timeout_ms" type="number" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="form-label">Poll Interval (ms)</label>
-              <input v-model.number="form.poll_interval_ms" type="number" placeholder="30000" class="form-control" />
+              <label class="form-label">Interval Polling (ms)</label>
+              <input v-model.number="form.poll_interval_ms" type="number" class="form-control" />
             </div>
           </div>
 
-          <div class="form-group mb-6">
-            <label class="form-label">Tags (Pisahkan koma)</label>
-            <input v-model="tagsInput" type="text" placeholder="core, hotspot, pppoe" class="form-control" />
+          <div class="form-group mb-4">
+            <label class="form-label">Tags (dipisahkan koma)</label>
+            <input
+              v-model="tagsInput"
+              type="text"
+              placeholder="misal: core, hotspot, pppoe"
+              class="form-control"
+            />
           </div>
 
           <div class="form-group mb-6">
             <label class="flex items-center gap-2 cursor-pointer">
-              <input v-model="form.enabled" type="checkbox" class="w-4 h-4 accent-indigo-500" />
-              <span class="text-main font-bold">Aktifkan Router Ini (Enabled)</span>
+              <input v-model="form.enabled" type="checkbox" class="rounded border-slate-700" />
+              <span class="text-sm font-medium text-main">Aktifkan Monitoring Router</span>
             </label>
           </div>
 
-          <div class="flex justify-end gap-2">
+          <div class="flex justify-end gap-3">
             <button type="button" class="btn btn-secondary" @click="showModal = false">Batal</button>
             <button type="submit" class="btn btn-primary" :disabled="submitting">
               <RefreshCw v-if="submitting" class="w-4 h-4 mr-2 animate-spin" />
-              <Save v-else class="w-4 h-4 mr-2" />
-              Simpan Router
+              {{ isEditing ? 'Simpan Perubahan' : 'Tambah Router' }}
             </button>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- Confirm Modal -->
+    <!-- Confirm Delete Modal -->
     <ConfirmModal
       :show="showDeleteModal"
       title="Hapus Router"
-      :message="`Apakah Anda yakin ingin menghapus router '${targetDevice?.name}' (${targetDevice?.id})?`"
-      confirmText="Ya, Hapus Router"
-      variant="danger"
+      :message="`Apakah Anda yakin ingin menghapus router '${targetDevice?.name}' (${targetDevice?.id})? Tindakan ini tidak dapat dibatalkan.`"
+      confirmText="Hapus Router"
+      confirmVariant="danger"
       @confirm="executeDelete"
       @cancel="showDeleteModal = false"
     />
@@ -327,7 +331,6 @@ import {
   Trash2,
   AlertCircle,
   Cpu,
-  Save,
   X,
 } from 'lucide-vue-next'
 import { useDeviceStore } from '../stores/devices'
@@ -336,8 +339,9 @@ import ConfirmModal from '../components/ConfirmModal.vue'
 
 const deviceStore = useDeviceStore()
 
-onMounted(() => {
-  deviceStore.fetchDevices()
+onMounted(async () => {
+  await deviceStore.fetchDevices()
+  deviceStore.testAllDevices()
   deviceStore.startDevicesStream()
 })
 
