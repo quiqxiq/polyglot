@@ -92,7 +92,7 @@ func main() {
 	}
 
 	// 3. Network & Infrastructure Drivers Setup
-	repo, vault := loadInitialDevices()
+	repo, vault := loadInitialDevices(pgStore)
 	factories := map[string]registry.DriverFactory{
 		"mikrotik": func(ctx context.Context, target device.Target) (port.DeviceDriver, error) {
 			return mikrotik.NewDriver(ctx, target)
@@ -191,9 +191,19 @@ func envOr(key, fallback string) string {
 	return fallback
 }
 
-func loadInitialDevices() (port.DeviceRepository, port.CredentialVault) {
-	devices := make(map[string]device.Device)
-	creds := make(map[string]device.Credentials)
+func loadInitialDevices(pgStore *postgres.Store) (port.DeviceRepository, port.CredentialVault) {
+	var repo port.DeviceRepository
+	var vault port.CredentialVault
+
+	if pgStore != nil {
+		repo = pgStore
+		vault = pgStore
+	} else {
+		memR := &memRepo{devices: make(map[string]device.Device)}
+		memV := &memVault{creds: make(map[string]device.Credentials)}
+		repo = memR
+		vault = memV
+	}
 
 	if host := os.Getenv("MIKROTIK_TEST_HOST"); host != "" {
 		id := "mtk-test"
@@ -201,8 +211,9 @@ func loadInitialDevices() (port.DeviceRepository, port.CredentialVault) {
 		if pStr := os.Getenv("MIKROTIK_TEST_PORT"); pStr != "" {
 			fmt.Sscanf(pStr, "%d", &portNum)
 		}
-		devices[id] = device.Device{
+		dev := device.Device{
 			ID:         id,
+			TenantID:   "tenant-default",
 			Name:       "MikroTik Test Router",
 			Vendor:     "mikrotik",
 			DriverType: "mikrotik",
@@ -211,14 +222,16 @@ func loadInitialDevices() (port.DeviceRepository, port.CredentialVault) {
 			TimeoutMS:  10000,
 			Enabled:    true,
 		}
-		creds[id] = device.Credentials{
+		cred := device.Credentials{
 			Username: envOr("MIKROTIK_TEST_USER", "admin"),
 			Password: os.Getenv("MIKROTIK_TEST_PASS"),
 		}
+		_ = repo.Save(context.Background(), dev)
+		_ = vault.SaveCredentials(context.Background(), id, cred)
 		log.Printf("polyglot: pre-loaded demo device %q (%s:%d)", id, host, portNum)
 	}
 
-	return &memRepo{devices: devices}, &memVault{creds: creds}
+	return repo, vault
 }
 
 type memRepo struct {

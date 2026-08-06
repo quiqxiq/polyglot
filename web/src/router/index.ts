@@ -11,6 +11,7 @@ import TechniciansView from '../views/TechniciansView.vue'
 import ActiveSessionsView from '../views/ActiveSessionsView.vue'
 import VouchersView from '../views/VouchersView.vue'
 import RbacManagementView from '../views/RbacManagementView.vue'
+import DeviceManagementView from '../views/DeviceManagementView.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -23,6 +24,12 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     name: 'Dashboard',
     component: DashboardView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/devices',
+    name: 'DeviceManagement',
+    component: DeviceManagementView,
     meta: { requiresAuth: true },
   },
   {

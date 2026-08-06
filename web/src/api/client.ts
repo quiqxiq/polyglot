@@ -14,6 +14,8 @@ import type {
   VoucherBatchRequest,
   VoucherData,
   VoucherReport,
+  Device,
+  DevicePayload,
 } from '../types'
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1'
@@ -406,6 +408,42 @@ export async function unassignRoleApi(user: string, role: string): Promise<{ mes
   return apiFetch('/rbac/roles/assign', {
     method: 'DELETE',
     body: JSON.stringify({ user, role }),
+  })
+}
+
+// --- Devices API ---
+
+export async function listDevicesApi(): Promise<Device[]> {
+  return apiFetch('/devices')
+}
+
+export async function getDeviceApi(id: string): Promise<Device> {
+  return apiFetch(`/devices/${id}`)
+}
+
+export async function createDeviceApi(payload: DevicePayload): Promise<{ message: string; device: Device }> {
+  return apiFetch('/devices', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+export async function updateDeviceApi(id: string, payload: DevicePayload): Promise<{ message: string; device: Device }> {
+  return apiFetch(`/devices/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  })
+}
+
+export async function deleteDeviceApi(id: string): Promise<{ message: string }> {
+  return apiFetch(`/devices/${id}`, {
+    method: 'DELETE',
+  })
+}
+
+export async function testDeviceConnectionApi(id: string): Promise<{ status: string; message: string; details?: any }> {
+  return apiFetch(`/devices/${id}/test`, {
+    method: 'POST',
   })
 }
 

@@ -182,4 +182,39 @@ export interface RBACRoleAssignment {
   role: string
 }
 
+/** Network Device entity */
+export interface Device {
+  id: string
+  tenant_id?: string
+  name: string
+  vendor: 'mikrotik' | 'cisco' | 'genieacs' | string
+  driver_type: string
+  host: string
+  port: number
+  timeout_ms: number
+  poll_interval_ms?: number
+  extra?: Record<string, string>
+  tags?: string[]
+  enabled: boolean
+}
+
+/** Payload for creating/updating device */
+export interface DevicePayload {
+  id: string
+  name: string
+  vendor: string
+  driver_type: string
+  host: string
+  port: number
+  timeout_ms: number
+  poll_interval_ms?: number
+  extra?: Record<string, string>
+  tags?: string[]
+  enabled: boolean
+  username: string
+  password?: string
+  cred_extra?: Record<string, string>
+}
+
+
 

@@ -60,6 +60,7 @@ import {
   Activity,
   Ticket,
   ShieldCheck,
+  Router,
 } from 'lucide-vue-next'
 import { useAuthStore } from '../stores/auth'
 
@@ -81,6 +82,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { path: '/', label: 'Overview', icon: LayoutDashboard },
+  { path: '/devices', label: 'Perangkat Router', icon: Router },
   { path: '/active-sessions', label: 'Sesi Aktif', icon: Activity },
   { path: '/vouchers', label: 'Voucher & Hotspot', icon: Ticket },
   { path: '/sessions', label: 'Koneksi WA', icon: Smartphone },

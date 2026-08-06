@@ -30,6 +30,8 @@ func NewStore(dsn string) (*Store, error) {
 		&models.MessageModel{},
 		&models.KnowledgeEntryModel{},
 		&models.TechnicianModel{},
+		&models.DeviceModel{},
+		&models.CredentialModel{},
 	); err != nil {
 		return nil, fmt.Errorf("failed to auto-migrate: %w", err)
 	}
