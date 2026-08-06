@@ -22,17 +22,24 @@ type DeviceTestResult struct {
 	Message   string `json:"message,omitempty"`
 }
 
+// DriverEvicter defines the contract for evicting cached driver connections.
+type DriverEvicter interface {
+	Evict(deviceID string) error
+}
+
 // ManageDeviceUseCase manages device inventory CRUD and live connectivity testing.
 type ManageDeviceUseCase struct {
-	repo  port.DeviceRepository
-	vault port.CredentialVault
+	repo    port.DeviceRepository
+	vault   port.CredentialVault
+	evicter DriverEvicter
 }
 
 // NewManageDeviceUseCase constructs a new ManageDeviceUseCase.
-func NewManageDeviceUseCase(repo port.DeviceRepository, vault port.CredentialVault) *ManageDeviceUseCase {
+func NewManageDeviceUseCase(repo port.DeviceRepository, vault port.CredentialVault, evicter DriverEvicter) *ManageDeviceUseCase {
 	return &ManageDeviceUseCase{
-		repo:  repo,
-		vault: vault,
+		repo:    repo,
+		vault:   vault,
+		evicter: evicter,
 	}
 }
 
@@ -49,6 +56,9 @@ func (uc *ManageDeviceUseCase) CreateDevice(ctx context.Context, d device.Device
 	}
 	if err := uc.vault.Save(ctx, d.ID, c); err != nil {
 		return fmt.Errorf("failed to save credentials: %w", err)
+	}
+	if uc.evicter != nil {
+		_ = uc.evicter.Evict(d.ID)
 	}
 	return nil
 }
@@ -73,12 +83,21 @@ func (uc *ManageDeviceUseCase) UpdateDevice(ctx context.Context, d device.Device
 			return fmt.Errorf("failed to update credentials: %w", err)
 		}
 	}
+	if uc.evicter != nil {
+		_ = uc.evicter.Evict(d.ID)
+	}
 	return nil
 }
 
 // DeleteDevice deletes a device inventory record.
 func (uc *ManageDeviceUseCase) DeleteDevice(ctx context.Context, id string) error {
-	return uc.repo.Delete(ctx, id)
+	if err := uc.repo.Delete(ctx, id); err != nil {
+		return err
+	}
+	if uc.evicter != nil {
+		_ = uc.evicter.Evict(id)
+	}
+	return nil
 }
 
 // TestConnection executes diagnostic checks against a live driver instance to verify connectivity and latency.

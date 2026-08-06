@@ -105,7 +105,7 @@ func main() {
 	reg := registry.New(repo, vault, factories)
 
 	// Usecases
-	deviceUC := business.NewManageDeviceUseCase(repo, vault)
+	deviceUC := business.NewManageDeviceUseCase(repo, vault, reg)
 	mikhmonUC := network.NewMikhmonUseCase("internal/templates")
 
 	// Driver Providers

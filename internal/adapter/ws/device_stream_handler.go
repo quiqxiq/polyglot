@@ -118,17 +118,22 @@ func (h *DeviceStreamHandler) StreamSingleDeviceStatus(ctx context.Context, devi
 			}
 
 			sysRes := mikrotik.ParseSystemResource(res)
+			latestDev, errGet := h.useCase.GetDevice(ctx, deviceID)
+			if errGet == nil {
+				dev = latestDev
+			}
+
 			item := DeviceStatusItem{
 				Device: dev,
 				Test: business.DeviceTestResult{
-					DeviceID: dev.ID,
-					Status:   "connected",
+					DeviceID:  dev.ID,
+					Status:    "connected",
 					LatencyMS: 0,
-					Identity: dev.Name,
-					Version:  sysRes.Version,
+					Identity:  dev.Name,
+					Version:   sysRes.Version,
 					BoardName: sysRes.BoardName,
-					Uptime:   sysRes.Uptime,
-					Message:  "Streaming live from MikroTik socket",
+					Uptime:    sysRes.Uptime,
+					Message:   "Streaming live from MikroTik socket",
 				},
 			}
 			data, err := json.Marshal(item)
