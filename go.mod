@@ -24,6 +24,7 @@ require (
 )
 
 require (
+	connectrpc.com/connect v1.20.0 // indirect
 	filippo.io/edwards25519 v1.2.0 // indirect
 	github.com/beeper/argo-go v1.1.2 // indirect
 	github.com/bmatcuk/doublestar/v4 v4.9.1 // indirect

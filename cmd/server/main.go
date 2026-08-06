@@ -14,6 +14,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
+	connectAdapter "github.com/quixiq/polyglot/internal/adapter/connect"
 	grpcAdapter "github.com/quixiq/polyglot/internal/adapter/grpc"
 	mcpAdapter "github.com/quixiq/polyglot/internal/adapter/http"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
@@ -173,6 +174,10 @@ func main() {
 		grpcSrv.Start()
 		defer grpcSrv.Stop()
 	}
+
+	// ConnectRPC Protocol Handler (Buf / Connect RPC served over standard HTTP on :8080)
+	connectPath, connectHandler := connectAdapter.NewDeviceServiceHandler(deviceUC, deviceStreamHandler)
+	r.Any(connectPath+"*action", gin.WrapH(connectHandler))
 
 	httpSrv := &http.Server{
 		Addr:    httpAddr,
