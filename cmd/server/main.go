@@ -14,6 +14,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
+	grpcAdapter "github.com/quixiq/polyglot/internal/adapter/grpc"
 	mcpAdapter "github.com/quixiq/polyglot/internal/adapter/http"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
@@ -163,12 +164,22 @@ func main() {
 	mcpServer := mcp.New(reg, nil)
 	r.Any("/mcp", gin.WrapH(mcpServer.HTTPHandler()))
 
+	// gRPC Server Adapter
+	grpcAddr := envOr("GRPC_ADDR", ":50051")
+	grpcSrv, err := grpcAdapter.NewServer(grpcAddr, deviceUC, deviceStreamHandler)
+	if err != nil {
+		log.Printf("[gRPC Adapter Warning] Failed to initialize gRPC server: %v", err)
+	} else {
+		grpcSrv.Start()
+		defer grpcSrv.Stop()
+	}
+
 	httpSrv := &http.Server{
 		Addr:    httpAddr,
 		Handler: r,
 	}
 
-	log.Printf("polyglot: Engine starting on http://localhost%s (REST, WebSockets, WhatsApp Gateway & MCP)", httpAddr)
+	log.Printf("polyglot: Engine starting on http://localhost%s (REST, WebSockets, WhatsApp Gateway & MCP) and gRPC on %s", httpAddr, grpcAddr)
 	go func() {
 		if err := httpSrv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("server http: %v", err)

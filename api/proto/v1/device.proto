@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/proto/v1;devicepb";
+
+// Device represents a network router/device inventory record.
+message Device {
+  string id = 1;
+  string tenant_id = 2;
+  string name = 3;
+  string vendor = 4;
+  string driver_type = 5;
+  string host = 6;
+  int32 port = 7;
+  int32 timeout_ms = 8;
+  int32 poll_interval_ms = 9;
+  repeated string tags = 10;
+  bool enabled = 11;
+}
+
+message ListDevicesRequest {}
+
+message ListDevicesResponse {
+  repeated Device devices = 1;
+}
+
+message GetDeviceRequest {
+  string id = 1;
+}
+
+message GetDeviceResponse {
+  Device device = 1;
+}
+
+message UpdateDeviceRequest {
+  Device device = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message UpdateDeviceResponse {
+  Device device = 1;
+  string message = 2;
+}
+
+message StreamDeviceStatusRequest {
+  string id = 1;
+}
+
+message DeviceTestMetrics {
+  string device_id = 1;
+  string status = 2;
+  int64 latency_ms = 3;
+  string uptime = 4;
+  string version = 5;
+  string board_name = 6;
+  string identity = 7;
+  string message = 8;
+}
+
+message DeviceStatusFrame {
+  Device device = 1;
+  DeviceTestMetrics test = 2;
+}
+
+// DeviceService defines gRPC procedures for network device inventory and streaming telemetry.
+service DeviceService {
+  rpc ListDevices(ListDevicesRequest) returns (ListDevicesResponse);
+  rpc GetDevice(GetDeviceRequest) returns (GetDeviceResponse);
+  rpc UpdateDevice(UpdateDeviceRequest) returns (UpdateDeviceResponse);
+  rpc StreamDeviceStatus(StreamDeviceStatusRequest) returns (stream DeviceStatusFrame);
+}
