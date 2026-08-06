@@ -9,7 +9,12 @@
 
       <div class="header-actions">
         <select v-model="networkStore.selectedDeviceId" class="device-select" @change="handleDeviceChange">
-          <option value="mtk-test">MikroTik Test Router (mtk-test)</option>
+          <option value="" disabled v-if="deviceStore.devices.length === 0">
+            -- Belum Ada Router Terdaftar --
+          </option>
+          <option v-for="dev in deviceStore.devices" :key="dev.id" :value="dev.id">
+            {{ dev.name }} ({{ dev.id }})
+          </option>
         </select>
         <button class="btn btn-secondary" :disabled="networkStore.loading" @click="refreshData">
           <RefreshCw :class="['w-4 h-4 mr-2', { 'animate-spin': networkStore.loading }]" />
@@ -262,9 +267,11 @@ import {
   AlertCircle,
 } from 'lucide-vue-next'
 import { useNetworkStore } from '../stores/network'
+import { useDeviceStore } from '../stores/devices'
 import ConfirmModal from '../components/ConfirmModal.vue'
 
 const networkStore = useNetworkStore()
+const deviceStore = useDeviceStore()
 const activeTab = ref<'pppoe' | 'hotspot' | 'dhcp'>('pppoe')
 const searchQuery = ref('')
 
@@ -330,8 +337,14 @@ async function executeKick() {
   }
 }
 
-onMounted(() => {
-  networkStore.fetchAll()
+onMounted(async () => {
+  await deviceStore.fetchDevices()
+  if (deviceStore.devices.length > 0 && !networkStore.selectedDeviceId) {
+    networkStore.selectedDeviceId = deviceStore.devices[0].id
+  }
+  if (networkStore.selectedDeviceId) {
+    networkStore.fetchAll()
+  }
 })
 </script>
 

@@ -1,33 +1,77 @@
 services:
   server:
+    container_name: polyglot-server-dev
     build:
       context: ..
       dockerfile: deployments/docker/Dockerfile
+      target: dev
     ports:
       - "8080:8080"
+    volumes:
+      - ..:/app
     environment:
       - PORT=8080
-      - MIKROTIK_TEST_HOST=192.168.230.3
-      - MIKROTIK_TEST_PORT=8728
-      - MIKROTIK_TEST_USER=admin
-      - MIKROTIK_TEST_PASS=r00t
+      - APP_ENV=development
+      - DATABASE_URL=postgres://postgres:netops@postgres:5432/netops?sslmode=disable
+      - REDIS_URL=redis://redis:6379/0
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=netops
       - POSTGRES_DB=netops
+      - MIKROTIK_TEST_HOST=${MIKROTIK_TEST_HOST:-192.168.230.3}
+      - MIKROTIK_TEST_PORT=${MIKROTIK_TEST_PORT:-8728}
+      - MIKROTIK_TEST_USER=${MIKROTIK_TEST_USER:-admin}
+      - MIKROTIK_TEST_PASS=${MIKROTIK_TEST_PASS:-r00t}
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  web:
+    container_name: polyglot-web-dev
+    image: node:20-alpine
+    working_dir: /app
+    ports:
+      - "5173:5173"
+    volumes:
+      - ../web:/app
+      - /app/node_modules
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    depends_on:
+      - server
 
   postgres:
     image: postgres:16-alpine
+    container_name: polyglot-postgres
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: netops
       POSTGRES_DB: netops
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d netops"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: polyglot-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
 
 volumes:
   pgdata:
+  redisdata:

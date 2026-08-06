@@ -10,7 +10,7 @@ import {
 } from '../api/client'
 
 export const useMikhmonStore = defineStore('mikhmon', () => {
-  const selectedDeviceId = ref<string>('mtk-test')
+  const selectedDeviceId = ref<string>('')
   const profiles = ref<HotspotProfile[]>([])
   const generatedVouchers = ref<VoucherData[]>([])
   const renderedHTML = ref<string>('')
@@ -19,6 +19,10 @@ export const useMikhmonStore = defineStore('mikhmon', () => {
   const error = ref<string | null>(null)
 
   async function fetchProfiles() {
+    if (!selectedDeviceId.value) {
+      profiles.value = []
+      return
+    }
     try {
       loading.value = true
       error.value = null
@@ -32,6 +36,9 @@ export const useMikhmonStore = defineStore('mikhmon', () => {
   }
 
   async function generateVouchers(req: VoucherBatchRequest) {
+    if (!selectedDeviceId.value) {
+      throw new Error('Pilih router terlebih dahulu')
+    }
     try {
       loading.value = true
       error.value = null
@@ -47,11 +54,14 @@ export const useMikhmonStore = defineStore('mikhmon', () => {
   }
 
   async function renderHTML(vouchers?: VoucherData[], templateName: string = 'default') {
+    if (!selectedDeviceId.value) {
+      throw new Error('Pilih router terlebih dahulu')
+    }
     try {
       loading.value = true
       error.value = null
       const listToRender = vouchers || generatedVouchers.value
-      const res = await renderVoucherHTMLApi(listToRender, templateName)
+      const res = await renderVoucherHTMLApi(selectedDeviceId.value, listToRender, templateName)
       renderedHTML.value = res.html || ''
       return res.html
     } catch (e: any) {
@@ -63,6 +73,10 @@ export const useMikhmonStore = defineStore('mikhmon', () => {
   }
 
   async function fetchReports(date?: string, month?: string, year?: string) {
+    if (!selectedDeviceId.value) {
+      reports.value = []
+      return
+    }
     try {
       loading.value = true
       error.value = null

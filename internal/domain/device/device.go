@@ -28,18 +28,18 @@ type Target struct {
 // entity is still TODO (validation, defaults); callers currently construct
 // the struct literal directly, which is fine for the fields it has.
 type Device struct {
-	ID             string
-	TenantID       string
-	Name           string
-	Vendor         string
-	DriverType     string
-	Host           string
-	Port           int
-	TimeoutMS      int
-	PollIntervalMS int
-	Extra          map[string]string
-	Tags           []string
-	Enabled        bool
+	ID             string            `json:"id"`
+	TenantID       string            `json:"tenant_id"`
+	Name           string            `json:"name"`
+	Vendor         string            `json:"vendor"`
+	DriverType     string            `json:"driver_type"`
+	Host           string            `json:"host"`
+	Port           int               `json:"port"`
+	TimeoutMS      int               `json:"timeout_ms"`
+	PollIntervalMS int               `json:"poll_interval_ms,omitempty"`
+	Extra          map[string]string `json:"extra,omitempty"`
+	Tags           []string          `json:"tags,omitempty"`
+	Enabled        bool              `json:"enabled"`
 }
 
 // ToTarget merges a Device inventory record with decrypted Credentials into

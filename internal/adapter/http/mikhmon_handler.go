@@ -32,6 +32,9 @@ func NewMikhmonHandler(useCase *network.MikhmonUseCase, provider DriverProvider)
 func (h *MikhmonHandler) getDriver(c *gin.Context) (port.DeviceDriver, bool) {
 	deviceID := c.Param("deviceId")
 	if deviceID == "" {
+		deviceID = c.Query("device_id")
+	}
+	if deviceID == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "deviceId parameter is required"})
 		return nil, false
 	}

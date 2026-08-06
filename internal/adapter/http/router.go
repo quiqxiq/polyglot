@@ -164,6 +164,42 @@ func RegisterMikhmonRoutes(r *gin.Engine, h *MikhmonHandler) {
 		api.GET("/reports", h.GetReportsByDate)
 		api.DELETE("/reports/:rosId", h.DeleteReport)
 	}
+
+	// Alias routes under /api/v1/mikrotik for direct device_id query param calls
+	mikrotikAlias := r.Group("/api/v1/mikrotik")
+	{
+		mikrotikAlias.GET("/dashboard", h.GetDashboard)
+		mikrotikAlias.GET("/income", h.GetIncome)
+
+		mikrotikAlias.GET("/hotspot/profiles", h.GetProfiles)
+		mikrotikAlias.POST("/hotspot/profiles", h.CreateProfile)
+		mikrotikAlias.PUT("/hotspot/profiles/:rosId", h.UpdateProfile)
+		mikrotikAlias.DELETE("/hotspot/profiles/:rosId", h.DeleteProfile)
+
+		mikrotikAlias.GET("/hotspot/users", h.GetUsers)
+		mikrotikAlias.GET("/hotspot/users/:rosId", h.GetUser)
+		mikrotikAlias.POST("/hotspot/users", h.AddUser)
+		mikrotikAlias.PUT("/hotspot/users/:rosId", h.UpdateUser)
+		mikrotikAlias.DELETE("/hotspot/users/:rosId", h.RemoveUser)
+
+		mikrotikAlias.GET("/hotspot/vouchers", h.GetVouchersByTag)
+		mikrotikAlias.POST("/hotspot/vouchers/generate", h.GenerateVouchers)
+		mikrotikAlias.POST("/hotspot/vouchers/render", h.RenderVoucherHTML)
+
+		mikrotikAlias.GET("/active", h.GetActiveSessions)
+		mikrotikAlias.GET("/hotspot/active", h.GetActiveSessions)
+		mikrotikAlias.DELETE("/hotspot/active/:rosId", h.RemoveActiveSession)
+
+		mikrotikAlias.GET("/ppp/active", h.GetPPPActiveSessions)
+		mikrotikAlias.GET("/ppp/inactive", h.GetPPPInactiveSessions)
+		mikrotikAlias.DELETE("/ppp/active/:rosId", h.RemovePPPActiveSession)
+
+		mikrotikAlias.GET("/dhcp/leases", h.GetDHCPLeases)
+		mikrotikAlias.POST("/dhcp/leases/:rosId/block", h.BlockDHCPLease)
+
+		mikrotikAlias.GET("/hotspot/reports", h.GetReportsByDate)
+		mikrotikAlias.DELETE("/hotspot/reports/:rosId", h.DeleteReport)
+	}
 }
 
 // RegisterDeviceRoutes registers REST API endpoints for Device Inventory CRUD and live testing.

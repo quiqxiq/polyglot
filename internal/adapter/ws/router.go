@@ -235,6 +235,54 @@ func RegisterStreamingRoutes(r *gin.Engine, h *MikhmonStreamHandler) {
 	})
 }
 
+// RegisterDeviceStreamingRoutes registers SSE/WebSocket realtime streaming endpoints for device inventory status.
+func RegisterDeviceStreamingRoutes(r *gin.Engine, dh *DeviceStreamHandler) {
+	// Stream status for all registered devices using native wire streaming
+	r.GET("/ws/devices/stream", func(c *gin.Context) {
+		c.Header("Content-Type", "text/event-stream")
+		c.Header("Cache-Control", "no-cache")
+		c.Header("Connection", "keep-alive")
+
+		outChan := make(chan []byte, 10)
+		go func() {
+			_ = dh.StreamDevicesStatus(c.Request.Context(), outChan)
+			close(outChan)
+		}()
+
+		c.Stream(func(w io.Writer) bool {
+			msg, ok := <-outChan
+			if !ok {
+				return false
+			}
+			c.SSEvent("devices_status", string(msg))
+			return true
+		})
+	})
+
+	// Stream status for a single device using native wire streaming
+	r.GET("/ws/devices/:deviceId/status", func(c *gin.Context) {
+		deviceID := c.Param("deviceId")
+		c.Header("Content-Type", "text/event-stream")
+		c.Header("Cache-Control", "no-cache")
+		c.Header("Connection", "keep-alive")
+
+		outChan := make(chan []byte, 10)
+		go func() {
+			_ = dh.StreamSingleDeviceStatus(c.Request.Context(), deviceID, outChan)
+			close(outChan)
+		}()
+
+		c.Stream(func(w io.Writer) bool {
+			msg, ok := <-outChan
+			if !ok {
+				return false
+			}
+			c.SSEvent("device_status", string(msg))
+			return true
+		})
+	})
+}
+
 func envOr(key, fallback string) string {
 	if v := os.Getenv(key); v != "" {
 		return v

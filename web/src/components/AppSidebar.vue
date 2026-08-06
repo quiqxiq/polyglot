@@ -19,7 +19,7 @@
         :to="item.path"
         class="nav-link"
         active-class="nav-link-active"
-        @click="mobileOpen = false"
+        @click="emit('update:mobileOpen', false)"
       >
         <component :is="item.icon" class="nav-icon" />
         <span class="nav-label">{{ item.label }}</span>
@@ -65,7 +65,7 @@ import {
 import { useAuthStore } from '../stores/auth'
 
 defineProps<{ mobileOpen?: boolean }>()
-defineEmits(['update:mobileOpen'])
+const emit = defineEmits(['update:mobileOpen'])
 
 const router = useRouter()
 const authStore = useAuthStore()

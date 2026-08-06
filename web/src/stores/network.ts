@@ -10,7 +10,7 @@ import {
 } from '../api/client'
 
 export const useNetworkStore = defineStore('network', () => {
-  const selectedDeviceId = ref<string>('mtk-test')
+  const selectedDeviceId = ref<string>('')
   const pppoeActive = ref<PPPoEActiveSession[]>([])
   const hotspotActive = ref<HotspotActiveSession[]>([])
   const dhcpLeases = ref<DHCPLease[]>([])
@@ -18,6 +18,10 @@ export const useNetworkStore = defineStore('network', () => {
   const error = ref<string | null>(null)
 
   async function fetchPPPoEActive() {
+    if (!selectedDeviceId.value) {
+      pppoeActive.value = []
+      return
+    }
     try {
       loading.value = true
       error.value = null
@@ -31,6 +35,10 @@ export const useNetworkStore = defineStore('network', () => {
   }
 
   async function fetchHotspotActive() {
+    if (!selectedDeviceId.value) {
+      hotspotActive.value = []
+      return
+    }
     try {
       loading.value = true
       error.value = null
@@ -44,6 +52,10 @@ export const useNetworkStore = defineStore('network', () => {
   }
 
   async function fetchDHCPLeases() {
+    if (!selectedDeviceId.value) {
+      dhcpLeases.value = []
+      return
+    }
     try {
       loading.value = true
       error.value = null
@@ -57,6 +69,7 @@ export const useNetworkStore = defineStore('network', () => {
   }
 
   async function kickPPPoESession(rosId: string) {
+    if (!selectedDeviceId.value) return
     try {
       await kickPPPoESessionApi(selectedDeviceId.value, rosId)
       pppoeActive.value = pppoeActive.value.filter((s) => s.id !== rosId)
@@ -66,6 +79,7 @@ export const useNetworkStore = defineStore('network', () => {
   }
 
   async function kickHotspotSession(rosId: string) {
+    if (!selectedDeviceId.value) return
     try {
       await kickHotspotSessionApi(selectedDeviceId.value, rosId)
       hotspotActive.value = hotspotActive.value.filter((s) => s.id !== rosId)
@@ -75,6 +89,12 @@ export const useNetworkStore = defineStore('network', () => {
   }
 
   async function fetchAll() {
+    if (!selectedDeviceId.value) {
+      pppoeActive.value = []
+      hotspotActive.value = []
+      dhcpLeases.value = []
+      return
+    }
     await Promise.allSettled([fetchPPPoEActive(), fetchHotspotActive(), fetchDHCPLeases()])
   }
 

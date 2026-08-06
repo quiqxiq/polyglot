@@ -109,7 +109,7 @@ func main() {
 	mikhmonUC := network.NewMikhmonUseCase("internal/templates")
 
 	// Driver Providers
-	driverProvider := func(c *gin.Context, deviceID string) (port.DeviceDriver, error) {
+	httpDriverProvider := func(c *gin.Context, deviceID string) (port.DeviceDriver, error) {
 		return reg.Get(c.Request.Context(), deviceID)
 	}
 
@@ -126,9 +126,10 @@ func main() {
 	}
 
 	// HTTP Handlers
-	deviceHandler := mcpAdapter.NewDeviceHandler(deviceUC, driverProvider)
-	mikhmonHandler := mcpAdapter.NewMikhmonHandler(mikhmonUC, driverProvider)
+	deviceHandler := mcpAdapter.NewDeviceHandler(deviceUC, httpDriverProvider)
+	mikhmonHandler := mcpAdapter.NewMikhmonHandler(mikhmonUC, httpDriverProvider)
 	mikhmonStreamHandler := wsAdapter.NewMikhmonStreamHandler(streamDriverProvider)
+	deviceStreamHandler := wsAdapter.NewDeviceStreamHandler(deviceUC, streamDriverProvider)
 
 	// Gin Router Setup
 	r := gin.Default()
@@ -156,6 +157,7 @@ func main() {
 
 	// Realtime WebSockets & SSE Streaming Routes
 	wsAdapter.RegisterStreamingRoutes(r, mikhmonStreamHandler)
+	wsAdapter.RegisterDeviceStreamingRoutes(r, deviceStreamHandler)
 
 	// MCP Protocol Handler
 	mcpServer := mcp.New(reg, nil)
@@ -192,46 +194,10 @@ func envOr(key, fallback string) string {
 }
 
 func loadInitialDevices(pgStore *postgres.Store) (port.DeviceRepository, port.CredentialVault) {
-	var repo port.DeviceRepository
-	var vault port.CredentialVault
-
 	if pgStore != nil {
-		repo = pgStore
-		vault = pgStore
-	} else {
-		memR := &memRepo{devices: make(map[string]device.Device)}
-		memV := &memVault{creds: make(map[string]device.Credentials)}
-		repo = memR
-		vault = memV
+		return postgres.NewDeviceRepository(pgStore.DB()), postgres.NewCredentialVault(pgStore.DB())
 	}
-
-	if host := os.Getenv("MIKROTIK_TEST_HOST"); host != "" {
-		id := "mtk-test"
-		portNum := 8728
-		if pStr := os.Getenv("MIKROTIK_TEST_PORT"); pStr != "" {
-			fmt.Sscanf(pStr, "%d", &portNum)
-		}
-		dev := device.Device{
-			ID:         id,
-			TenantID:   "tenant-default",
-			Name:       "MikroTik Test Router",
-			Vendor:     "mikrotik",
-			DriverType: "mikrotik",
-			Host:       host,
-			Port:       portNum,
-			TimeoutMS:  10000,
-			Enabled:    true,
-		}
-		cred := device.Credentials{
-			Username: envOr("MIKROTIK_TEST_USER", "admin"),
-			Password: os.Getenv("MIKROTIK_TEST_PASS"),
-		}
-		_ = repo.Save(context.Background(), dev)
-		_ = vault.SaveCredentials(context.Background(), id, cred)
-		log.Printf("polyglot: pre-loaded demo device %q (%s:%d)", id, host, portNum)
-	}
-
-	return repo, vault
+	return &memRepo{devices: make(map[string]device.Device)}, &memVault{creds: make(map[string]device.Credentials)}
 }
 
 type memRepo struct {

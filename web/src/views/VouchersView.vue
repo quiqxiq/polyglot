@@ -9,7 +9,12 @@
 
       <div class="header-actions">
         <select v-model="mikhmonStore.selectedDeviceId" class="device-select" @change="handleDeviceChange">
-          <option value="mtk-test">MikroTik Test Router (mtk-test)</option>
+          <option value="" disabled v-if="deviceStore.devices.length === 0">
+            -- Belum Ada Router Terdaftar --
+          </option>
+          <option v-for="dev in deviceStore.devices" :key="dev.id" :value="dev.id">
+            {{ dev.name }} ({{ dev.id }})
+          </option>
         </select>
       </div>
     </div>
@@ -327,10 +332,12 @@ import {
 } from 'lucide-vue-next'
 import { useMikhmonStore } from '../stores/mikhmon'
 import { useSessionStore } from '../stores/sessions'
+import { useDeviceStore } from '../stores/devices'
 import type { VoucherBatchRequest } from '../types'
 
 const mikhmonStore = useMikhmonStore()
 const sessionsStore = useSessionStore()
+const deviceStore = useDeviceStore()
 
 const activeTab = ref<'generate' | 'reports'>('generate')
 const showPrintModal = ref(false)
@@ -431,9 +438,15 @@ function loadReports() {
   mikhmonStore.fetchReports(filterDate.value)
 }
 
-onMounted(() => {
-  mikhmonStore.fetchProfiles()
-  loadReports()
+onMounted(async () => {
+  await deviceStore.fetchDevices()
+  if (deviceStore.devices.length > 0 && !mikhmonStore.selectedDeviceId) {
+    mikhmonStore.selectedDeviceId = deviceStore.devices[0].id
+  }
+  if (mikhmonStore.selectedDeviceId) {
+    mikhmonStore.fetchProfiles()
+    loadReports()
+  }
 })
 </script>
 

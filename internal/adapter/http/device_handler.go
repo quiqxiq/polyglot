@@ -84,6 +84,9 @@ func (h *DeviceHandler) ListDevices(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+	if devices == nil {
+		devices = []device.Device{}
+	}
 	c.JSON(http.StatusOK, devices)
 }
 
@@ -154,14 +157,22 @@ func (h *DeviceHandler) TestConnection(c *gin.Context) {
 		var err error
 		driver, err = h.driverProvider(c, deviceID)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			c.JSON(http.StatusOK, business.DeviceTestResult{
+				DeviceID: deviceID,
+				Status:   "failed",
+				Message:  err.Error(),
+			})
 			return
 		}
 	}
 
 	result, err := h.useCase.TestConnection(c.Request.Context(), driver, deviceID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusOK, business.DeviceTestResult{
+			DeviceID: deviceID,
+			Status:   "failed",
+			Message:  err.Error(),
+		})
 		return
 	}
 

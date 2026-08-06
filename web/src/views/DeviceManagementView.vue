@@ -102,30 +102,56 @@
               </td>
               <td>
                 <span :class="['badge', getVendorBadgeClass(dev.vendor)]">
-                  {{ dev.vendor.toUpperCase() }} ({{ dev.driver_type }})
+                  {{ (dev.vendor || 'mikrotik').toUpperCase() }} ({{ dev.driver_type || 'mikrotik' }})
                 </span>
               </td>
               <td class="font-mono text-cyan font-bold">{{ dev.host }}</td>
               <td class="font-mono text-xs">{{ dev.port }}</td>
               <td>
-                <span :class="['badge', dev.enabled ? 'badge-success' : 'badge-danger']">
-                  {{ dev.enabled ? 'Enabled' : 'Disabled' }}
-                </span>
+                <div v-if="!dev.enabled" class="badge badge-offline">
+                  Disabled
+                </div>
+                <div v-else-if="deviceStore.testResults[dev.id]" class="flex items-center gap-2">
+                  <span v-if="deviceStore.testResults[dev.id].success" class="badge badge-online">
+                    <span class="pulse-dot pulse-dot-online mr-1"></span>
+                    LIVE / ONLINE
+                  </span>
+                  <span v-else class="badge badge-danger">
+                    <XCircle class="w-3.5 h-3.5 inline mr-1" />
+                    OFFLINE
+                  </span>
+                </div>
+                <div v-else class="flex items-center gap-1.5 text-xs text-muted">
+                  <RefreshCw class="w-3.5 h-3.5 animate-spin text-indigo-400" />
+                  Checking Live...
+                </div>
               </td>
               <td>
-                <div v-if="deviceStore.testResults[dev.id]" class="test-result-box">
+                <div v-if="deviceStore.testResults[dev.id]" class="test-result-box flex flex-wrap gap-1">
                   <span
                     :class="[
                       'badge',
                       deviceStore.testResults[dev.id].success ? 'badge-success' : 'badge-danger',
                     ]"
                   >
-                    <CheckCircle2 v-if="deviceStore.testResults[dev.id].success" class="w-3 h-3 inline mr-1" />
-                    <XCircle v-else class="w-3 h-3 inline mr-1" />
+                    <CheckCircle2 v-if="deviceStore.testResults[dev.id].success" class="w-3.5 h-3.5 inline mr-1" />
+                    <XCircle v-else class="w-3.5 h-3.5 inline mr-1" />
                     {{ deviceStore.testResults[dev.id].message }}
                   </span>
+                  <span v-if="deviceStore.testResults[dev.id].latency_ms !== undefined" class="badge badge-info text-xs font-mono">
+                    ⚡ {{ deviceStore.testResults[dev.id].latency_ms }}ms
+                  </span>
+                  <span v-if="deviceStore.testResults[dev.id].identity" class="badge badge-primary text-xs font-mono">
+                    🏷️ {{ deviceStore.testResults[dev.id].identity }}
+                  </span>
+                  <span v-if="deviceStore.testResults[dev.id].version" class="badge badge-warning text-xs font-mono">
+                    📦 ROS {{ deviceStore.testResults[dev.id].version }}
+                  </span>
                 </div>
-                <span v-else class="text-xs text-muted">Belum ditest</span>
+                <span v-else-if="deviceStore.testingId === dev.id" class="text-xs text-muted animate-pulse">
+                  Connecting API...
+                </span>
+                <span v-else class="text-xs text-muted">Auto-testing...</span>
               </td>
               <td>
                 <div class="flex gap-2">
@@ -246,7 +272,7 @@
             </div>
             <div class="form-group">
               <label class="form-label">Poll Interval (ms)</label>
-              <input v-model.number="form.poll_interval_ms" type="number" class="form-control" />
+              <input v-model.number="form.poll_interval_ms" type="number" placeholder="30000" class="form-control" />
             </div>
           </div>
 
@@ -288,7 +314,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import {
   Router as RouterIcon,
   PlusCircle,
@@ -356,11 +382,11 @@ function refreshData() {
 function openCreateModal() {
   isEditing.value = false
   form.value = {
-    id: `mtk-${Date.now().toString().slice(-4)}`,
+    id: '',
     name: '',
     vendor: 'mikrotik',
     driver_type: 'mikrotik',
-    host: '192.168.1.1',
+    host: '',
     port: 8728,
     timeout_ms: 10000,
     poll_interval_ms: 30000,
@@ -368,7 +394,7 @@ function openCreateModal() {
     username: 'admin',
     password: '',
   }
-  tagsInput.value = 'core, hotspot'
+  tagsInput.value = ''
   showModal.value = true
 }
 
@@ -439,7 +465,8 @@ async function executeDelete() {
   }
 }
 
-function getVendorBadgeClass(vendor: string): string {
+function getVendorBadgeClass(vendor?: string): string {
+  if (!vendor) return 'badge-primary'
   switch (vendor.toLowerCase()) {
     case 'mikrotik':
       return 'badge-primary'
@@ -452,8 +479,20 @@ function getVendorBadgeClass(vendor: string): string {
   }
 }
 
-onMounted(() => {
-  deviceStore.fetchDevices()
+let autoTestInterval: any = null
+
+onMounted(async () => {
+  await deviceStore.fetchDevices()
+  deviceStore.testAllDevices()
+  autoTestInterval = setInterval(() => {
+    deviceStore.testAllDevices()
+  }, 15000)
+})
+
+onUnmounted(() => {
+  if (autoTestInterval) {
+    clearInterval(autoTestInterval)
+  }
 })
 </script>
 

@@ -307,57 +307,57 @@ export async function deleteTechnicianApi(id: number): Promise<{ message: string
 
 // --- Active Sessions API ---
 
-export async function listPPPoEActiveApi(deviceId: string = 'mtk-test'): Promise<{ data: PPPoEActiveSession[] }> {
-  return apiFetch(`/mikrotik/ppp/active?device_id=${encodeURIComponent(deviceId)}`)
+export async function listPPPoEActiveApi(deviceId: string): Promise<{ data: PPPoEActiveSession[] }> {
+  return apiFetch(`/devices/${encodeURIComponent(deviceId)}/mikhmon/ppp/active`)
 }
 
-export async function listHotspotActiveApi(deviceId: string = 'mtk-test'): Promise<{ data: HotspotActiveSession[] }> {
-  return apiFetch(`/mikrotik/hotspot/active?device_id=${encodeURIComponent(deviceId)}`)
+export async function listHotspotActiveApi(deviceId: string): Promise<{ data: HotspotActiveSession[] }> {
+  return apiFetch(`/devices/${encodeURIComponent(deviceId)}/mikhmon/hotspot/active`)
 }
 
-export async function listDHCPLeasesApi(deviceId: string = 'mtk-test'): Promise<{ data: DHCPLease[] }> {
-  return apiFetch(`/mikrotik/dhcp/leases?device_id=${encodeURIComponent(deviceId)}`)
+export async function listDHCPLeasesApi(deviceId: string): Promise<{ data: DHCPLease[] }> {
+  return apiFetch(`/devices/${encodeURIComponent(deviceId)}/mikhmon/dhcp/leases`)
 }
 
 export async function kickPPPoESessionApi(deviceId: string, rosId: string): Promise<{ message: string }> {
-  return apiFetch(`/mikrotik/ppp/active/${rosId}?device_id=${encodeURIComponent(deviceId)}`, {
+  return apiFetch(`/devices/${encodeURIComponent(deviceId)}/mikhmon/ppp/active/${rosId}`, {
     method: 'DELETE',
   })
 }
 
 export async function kickHotspotSessionApi(deviceId: string, rosId: string): Promise<{ message: string }> {
-  return apiFetch(`/mikrotik/hotspot/active/${rosId}?device_id=${encodeURIComponent(deviceId)}`, {
+  return apiFetch(`/devices/${encodeURIComponent(deviceId)}/mikhmon/hotspot/active/${rosId}`, {
     method: 'DELETE',
   })
 }
 
 // --- Mikhmon Hotspot & Voucher Engine API ---
 
-export async function listHotspotProfilesApi(deviceId: string = 'mtk-test'): Promise<{ data: HotspotProfile[] }> {
-  return apiFetch(`/mikrotik/hotspot/profiles?device_id=${encodeURIComponent(deviceId)}`)
+export async function listHotspotProfilesApi(deviceId: string): Promise<{ data: HotspotProfile[] }> {
+  return apiFetch(`/devices/${encodeURIComponent(deviceId)}/mikhmon/profiles`)
 }
 
 export async function generateVouchersApi(deviceId: string, req: VoucherBatchRequest): Promise<{ vouchers: VoucherData[]; count: number }> {
-  return apiFetch(`/mikrotik/hotspot/vouchers/generate?device_id=${encodeURIComponent(deviceId)}`, {
+  return apiFetch(`/devices/${encodeURIComponent(deviceId)}/mikhmon/vouchers/generate`, {
     method: 'POST',
     body: JSON.stringify(req),
   })
 }
 
-export async function renderVoucherHTMLApi(vouchers: VoucherData[], templateName: string = 'default'): Promise<{ html: string }> {
-  return apiFetch(`/mikrotik/hotspot/vouchers/render`, {
+export async function renderVoucherHTMLApi(deviceId: string, vouchers: VoucherData[], templateName: string = 'default'): Promise<{ html: string }> {
+  return apiFetch(`/devices/${encodeURIComponent(deviceId)}/mikhmon/vouchers/render`, {
     method: 'POST',
     body: JSON.stringify({ vouchers, template_name: templateName }),
   })
 }
 
-export async function getVoucherReportsApi(deviceId: string = 'mtk-test', date?: string, month?: string, year?: string): Promise<{ reports: VoucherReport[] }> {
+export async function getVoucherReportsApi(deviceId: string, date?: string, month?: string, year?: string): Promise<{ reports: VoucherReport[] }> {
   const params = new URLSearchParams()
-  params.append('device_id', deviceId)
   if (date) params.append('date', date)
   if (month) params.append('month', month)
   if (year) params.append('year', year)
-  return apiFetch(`/mikrotik/hotspot/reports?${params.toString()}`)
+  const queryString = params.toString() ? `?${params.toString()}` : ''
+  return apiFetch(`/devices/${encodeURIComponent(deviceId)}/mikhmon/reports${queryString}`)
 }
 
 export async function sendVoucherDocumentWAApi(sessionId: number, to: string, fileName: string, fileBase64: string, caption?: string): Promise<{ message: string }> {
@@ -414,7 +414,11 @@ export async function unassignRoleApi(user: string, role: string): Promise<{ mes
 // --- Devices API ---
 
 export async function listDevicesApi(): Promise<Device[]> {
-  return apiFetch('/devices')
+  const res = await apiFetch<any>('/devices')
+  if (Array.isArray(res)) return res
+  if (res && Array.isArray(res.devices)) return res.devices
+  if (res && Array.isArray(res.data)) return res.data
+  return []
 }
 
 export async function getDeviceApi(id: string): Promise<Device> {

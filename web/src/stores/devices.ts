@@ -13,7 +13,20 @@ export const useDeviceStore = defineStore('devices', () => {
   const devices = ref<Device[]>([])
   const loading = ref<boolean>(false)
   const testingId = ref<string | null>(null)
-  const testResults = ref<Record<string, { success: boolean; message: string }>>({})
+  const testResults = ref<
+    Record<
+      string,
+      {
+        success: boolean
+        message: string
+        latency_ms?: number
+        identity?: string
+        version?: string
+        board_name?: string
+        uptime?: string
+      }
+    >
+  >({})
   const error = ref<string | null>(null)
 
   async function fetchDevices() {
@@ -78,8 +91,13 @@ export const useDeviceStore = defineStore('devices', () => {
       testingId.value = id
       const res = await testDeviceConnectionApi(id)
       testResults.value[id] = {
-        success: res.status === 'ok' || res.status === 'success',
+        success: res.status === 'connected' || res.status === 'ok' || res.status === 'success',
         message: res.message || 'Connection test successful',
+        latency_ms: res.latency_ms,
+        identity: res.identity,
+        version: res.version,
+        board_name: res.board_name,
+        uptime: res.uptime,
       }
       return res
     } catch (e: any) {
@@ -90,6 +108,14 @@ export const useDeviceStore = defineStore('devices', () => {
       throw e
     } finally {
       testingId.value = null
+    }
+  }
+
+  async function testAllDevices() {
+    for (const dev of devices.value) {
+      if (dev.enabled) {
+        testConnection(dev.id).catch(() => {})
+      }
     }
   }
 
@@ -104,5 +130,6 @@ export const useDeviceStore = defineStore('devices', () => {
     updateDevice,
     deleteDevice,
     testConnection,
+    testAllDevices,
   }
 })
