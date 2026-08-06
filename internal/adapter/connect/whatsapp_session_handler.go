@@ -53,6 +53,10 @@ func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
+	if h.waGateway != nil {
+		_ = h.waGateway.Connect(sess)
+	}
+
 	return connect.NewResponse(&devicepb.CreateWASessionResponse{
 		Session: &devicepb.WASession{
 			Id:          fmt.Sprintf("%d", sess.ID),
@@ -66,15 +70,29 @@ func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect
 }
 
 func (h *WhatsAppConnectHandler) GetQRCode(ctx context.Context, req *connect.Request[devicepb.GetWASessionQRRequest]) (*connect.Response[devicepb.GetWASessionQRResponse], error) {
+	idUint, _ := strconv.ParseUint(req.Msg.SessionId, 10, 64)
+	qrBase64 := ""
+	if h.waGateway != nil && idUint > 0 {
+		if code, err := h.waGateway.GetQRCode(uint(idUint)); err == nil {
+			qrBase64 = code
+		}
+	}
 	return connect.NewResponse(&devicepb.GetWASessionQRResponse{
-		QrCodeBase64:    "",
+		QrCodeBase64:    qrBase64,
 		QrCodePath:      "",
 		DurationSeconds: 60,
 	}), nil
 }
 
 func (h *WhatsAppConnectHandler) GetPairingCode(ctx context.Context, req *connect.Request[devicepb.GetWASessionPairingRequest]) (*connect.Response[devicepb.GetWASessionPairingResponse], error) {
-	return connect.NewResponse(&devicepb.GetWASessionPairingResponse{PairingCode: ""}), nil
+	idUint, _ := strconv.ParseUint(req.Msg.SessionId, 10, 64)
+	code := ""
+	if h.waGateway != nil && idUint > 0 {
+		if pairing, err := h.waGateway.GetPairingCode(uint(idUint), req.Msg.PhoneNumber); err == nil {
+			code = pairing
+		}
+	}
+	return connect.NewResponse(&devicepb.GetWASessionPairingResponse{PairingCode: code}), nil
 }
 
 func (h *WhatsAppConnectHandler) ToggleBot(ctx context.Context, req *connect.Request[devicepb.ToggleWABotRequest]) (*connect.Response[devicepb.ToggleWABotResponse], error) {
@@ -86,11 +104,15 @@ func (h *WhatsAppConnectHandler) ToggleBot(ctx context.Context, req *connect.Req
 
 func (h *WhatsAppConnectHandler) ReconnectSession(ctx context.Context, req *connect.Request[devicepb.ReconnectWASessionRequest]) (*connect.Response[devicepb.ReconnectWASessionResponse], error) {
 	idUint, _ := strconv.ParseUint(req.Msg.SessionId, 10, 64)
+	var err error
 	if h.waGateway != nil && idUint > 0 {
-		_ = h.waGateway.Reconnect(uint(idUint))
+		err = h.waGateway.Reconnect(uint(idUint))
+	}
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("reconnect failed: %w", err))
 	}
 	return connect.NewResponse(&devicepb.ReconnectWASessionResponse{
-		Message: "reconnect request sent",
+		Message: "manual reconnect initiated (auto-reconnect active)",
 		Status:  "RECONNECTING",
 	}), nil
 }
@@ -100,20 +122,28 @@ func (h *WhatsAppConnectHandler) LogoutSession(ctx context.Context, req *connect
 	if h.waGateway != nil && idUint > 0 {
 		_ = h.waGateway.Disconnect(uint(idUint))
 	}
-	return connect.NewResponse(&devicepb.LogoutWASessionResponse{Message: "session logged out (slot kept)"}), nil
+	return connect.NewResponse(&devicepb.LogoutWASessionResponse{Message: "session logged out (slot kept for re-pairing)"}), nil
 }
 
 func (h *WhatsAppConnectHandler) PurgeSession(ctx context.Context, req *connect.Request[devicepb.PurgeWASessionRequest]) (*connect.Response[devicepb.PurgeWASessionResponse], error) {
+	idUint, _ := strconv.ParseUint(req.Msg.SessionId, 10, 64)
+	if h.waGateway != nil && idUint > 0 {
+		_ = h.waGateway.Logout(uint(idUint))
+	}
 	return connect.NewResponse(&devicepb.PurgeWASessionResponse{Message: "session purged permanently"}), nil
 }
 
 func (h *WhatsAppConnectHandler) SendTextMessage(ctx context.Context, req *connect.Request[devicepb.SendWATextMessageRequest]) (*connect.Response[devicepb.SendWATextMessageResponse], error) {
 	idUint, _ := strconv.ParseUint(req.Msg.SessionId, 10, 64)
+	var err error
 	if h.waGateway != nil && idUint > 0 {
-		_ = h.waGateway.SendMessage(uint(idUint), req.Msg.RecipientPhone, req.Msg.MessageText)
+		err = h.waGateway.SendMessage(uint(idUint), req.Msg.RecipientPhone, req.Msg.MessageText)
+	}
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("send text message failed: %w", err))
 	}
 	return connect.NewResponse(&devicepb.SendWATextMessageResponse{
-		MessageId: "msg-sent-001",
+		MessageId: "msg-sent-ok",
 		Status:    "SENT",
 	}), nil
 }

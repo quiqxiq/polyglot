@@ -2,6 +2,8 @@ package whatsapp
 
 import (
 	"context"
+	"encoding/base64"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,6 +11,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/skip2/go-qrcode"
 	"go.mau.fi/whatsmeow"
 	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/store"
@@ -30,6 +33,7 @@ type Client struct {
 	deviceStore *store.Device
 	waClient    *whatsmeow.Client
 	qrCode      string
+	qrBase64    string
 	qrMutex     sync.RWMutex
 	onMessage   MessageCallback
 	onStatus    StatusCallback
@@ -59,24 +63,42 @@ func (c *Client) Connect(ctx context.Context) error {
 	}
 
 	if c.waClient.Store.ID == nil {
-		qrChan, err := c.waClient.GetQRChannel(ctx)
+		c.waClient.Disconnect()
+
+		// Detached 3-minute context for QR watcher so HTTP request timeouts don't cancel QR polling
+		qrCtx, qrCancel := context.WithTimeout(context.Background(), 3*time.Minute)
+
+		qrChan, err := c.waClient.GetQRChannel(qrCtx)
 		if err != nil {
+			qrCancel()
+			if errors.Is(err, whatsmeow.ErrQRStoreContainsID) {
+				log.Printf("[WhatsApp Client %d] Store already contains ID, attempting direct connect...", c.SessionID)
+				if err := c.waClient.Connect(); err != nil {
+					return fmt.Errorf("connect with saved session failed: %w", err)
+				}
+				return nil
+			}
 			return fmt.Errorf("failed to get QR channel: %w", err)
 		}
 
 		if err := c.waClient.Connect(); err != nil {
+			qrCancel()
 			return fmt.Errorf("failed to connect WA client: %w", err)
 		}
 
 		go func() {
+			defer qrCancel()
 			for evt := range qrChan {
 				if evt.Event == "code" {
 					c.qrMutex.Lock()
 					c.qrCode = evt.Code
+					if pngBytes, err := qrcode.Encode(evt.Code, qrcode.Medium, 256); err == nil {
+						c.qrBase64 = "data:image/png;base64," + base64.StdEncoding.EncodeToString(pngBytes)
+					}
 					c.qrMutex.Unlock()
 
 					if c.onStatus != nil {
-						c.onStatus(c.SessionID, "needs_rescan", evt.Code, "", "")
+						c.onStatus(c.SessionID, "needs_rescan", c.qrBase64, "", "")
 					}
 				} else {
 					log.Printf("[WhatsApp Client %d] QR event: %s", c.SessionID, evt.Event)
@@ -109,12 +131,16 @@ func (c *Client) Disconnect() {
 
 func (c *Client) Logout(ctx context.Context) error {
 	if c.waClient.IsConnected() {
-		return c.waClient.Logout(ctx)
+		err := c.waClient.Logout(ctx)
+		c.Disconnect()
+		return err
 	}
+	c.Disconnect()
 	return nil
 }
 
 func (c *Client) Reconnect(ctx context.Context) error {
+	log.Printf("[WhatsApp Client %d] Manual reconnect initiated...", c.SessionID)
 	c.Disconnect()
 	time.Sleep(1 * time.Second)
 	return c.Connect(ctx)
@@ -123,6 +149,9 @@ func (c *Client) Reconnect(ctx context.Context) error {
 func (c *Client) GetQRCode() string {
 	c.qrMutex.RLock()
 	defer c.qrMutex.RUnlock()
+	if c.qrBase64 != "" {
+		return c.qrBase64
+	}
 	return c.qrCode
 }
 
@@ -132,7 +161,7 @@ func (c *Client) GetPairingCode(ctx context.Context, phoneNumber string) (string
 			return "", fmt.Errorf("failed to connect for pairing: %w", err)
 		}
 	}
-	code, err := c.waClient.PairPhone(ctx, phoneNumber, true, whatsmeow.PairClientChrome, "Chrome (Polyglot)")
+	code, err := c.waClient.PairPhone(ctx, phoneNumber, true, whatsmeow.PairClientChrome, "Chrome (Polyglot NetOps)")
 	if err != nil {
 		return "", fmt.Errorf("failed to request pairing code: %w", err)
 	}
@@ -258,17 +287,17 @@ func (c *Client) handleEvent(evt interface{}) {
 	case *events.Message:
 		c.handleIncomingMessage(v)
 	case *events.Connected:
-		log.Printf("[WhatsApp Client %d] Connected successfully", c.SessionID)
+		log.Printf("[WhatsApp Client %d] Connected successfully (Auto-reconnect active)", c.SessionID)
 		if c.onStatus != nil && c.waClient.Store.ID != nil {
 			c.onStatus(c.SessionID, "online", "", c.waClient.Store.ID.String(), c.waClient.Store.ID.User)
 		}
 	case *events.Disconnected:
-		log.Printf("[WhatsApp Client %d] Disconnected", c.SessionID)
+		log.Printf("[WhatsApp Client %d] Disconnected (Auto-reconnect will retry)", c.SessionID)
 		if c.onStatus != nil {
 			c.onStatus(c.SessionID, "offline", "", "", "")
 		}
 	case *events.LoggedOut:
-		log.Printf("[WhatsApp Client %d] Logged out", c.SessionID)
+		log.Printf("[WhatsApp Client %d] Remote LoggedOut event received from phone", c.SessionID)
 		if c.onStatus != nil {
 			c.onStatus(c.SessionID, "needs_rescan", "", "", "")
 		}
