@@ -185,6 +185,12 @@ func main() {
 	mikhmonConnectPath, mikhmonConnectHandler := connectAdapter.NewMikhmonServiceHandler(mikhmonUC, connectDriverProvider)
 	r.Any(mikhmonConnectPath+"*action", gin.WrapH(mikhmonConnectHandler))
 
+	botConnectPath, botConnectHandler := connectAdapter.NewBotServiceHandler(pgStore, waManager)
+	r.Any(botConnectPath+"*action", gin.WrapH(botConnectHandler))
+
+	knwConnectPath, knwConnectHandler := connectAdapter.NewKnowledgeServiceHandler()
+	r.Any(knwConnectPath+"*action", gin.WrapH(knwConnectHandler))
+
 	httpSrv := &http.Server{
 		Addr:    httpAddr,
 		Handler: r,

@@ -1,0 +1,196 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/proto/v1;devicepb";
+
+service KnowledgeService {
+  rpc ListKnowledge (ListKnowledgeRequest) returns (ListKnowledgeResponse);
+  rpc GetKnowledge (GetKnowledgeRequest) returns (GetKnowledgeResponse);
+  rpc CreateKnowledge (CreateKnowledgeRequest) returns (CreateKnowledgeResponse);
+  rpc UpdateKnowledge (UpdateKnowledgeRequest) returns (UpdateKnowledgeResponse);
+  rpc DeleteKnowledge (DeleteKnowledgeRequest) returns (DeleteKnowledgeResponse);
+
+  rpc ListLLMConfigs (ListLLMConfigsRequest) returns (ListLLMConfigsResponse);
+  rpc CreateLLMConfig (CreateLLMConfigRequest) returns (CreateLLMConfigResponse);
+  rpc UpdateLLMConfig (UpdateLLMConfigRequest) returns (UpdateLLMConfigResponse);
+  rpc ActivateLLMConfig (ActivateLLMConfigRequest) returns (ActivateLLMConfigResponse);
+  rpc TestLLMConfig (TestLLMConfigRequest) returns (TestLLMConfigResponse);
+  rpc DeleteLLMConfig (DeleteLLMConfigRequest) returns (DeleteLLMConfigResponse);
+
+  rpc ListTechnicians (ListTechniciansRequest) returns (ListTechniciansResponse);
+  rpc CreateTechnician (CreateTechnicianRequest) returns (CreateTechnicianResponse);
+  rpc UpdateTechnician (UpdateTechnicianRequest) returns (UpdateTechnicianResponse);
+  rpc ToggleTechnicianActive (ToggleTechnicianActiveRequest) returns (ToggleTechnicianActiveResponse);
+  rpc DeleteTechnician (DeleteTechnicianRequest) returns (DeleteTechnicianResponse);
+}
+
+message KnowledgeItem {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  string category = 4;
+  repeated string tags = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message ListKnowledgeRequest {
+  string category = 1;
+  string search_query = 2;
+}
+message ListKnowledgeResponse {
+  repeated KnowledgeItem items = 1;
+}
+
+message GetKnowledgeRequest {
+  string id = 1;
+}
+message GetKnowledgeResponse {
+  KnowledgeItem item = 1;
+}
+
+message CreateKnowledgeRequest {
+  string title = 1;
+  string content = 2;
+  string category = 3;
+  repeated string tags = 4;
+}
+message CreateKnowledgeResponse {
+  KnowledgeItem item = 1;
+}
+
+message UpdateKnowledgeRequest {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  string category = 4;
+  repeated string tags = 5;
+}
+message UpdateKnowledgeResponse {
+  KnowledgeItem item = 1;
+}
+
+message DeleteKnowledgeRequest {
+  string id = 1;
+}
+message DeleteKnowledgeResponse {
+  string message = 1;
+}
+
+message LLMConfig {
+  string id = 1;
+  string provider = 2; // e.g. "openai", "gemini", "ollama", "groq"
+  string model_name = 3;
+  string api_key_masked = 4;
+  string base_url = 5;
+  bool is_active = 6;
+  double temperature = 7;
+  int32 max_tokens = 8;
+  string system_prompt = 9;
+}
+
+message ListLLMConfigsRequest {}
+message ListLLMConfigsResponse {
+  repeated LLMConfig configs = 1;
+}
+
+message CreateLLMConfigRequest {
+  string provider = 1;
+  string model_name = 2;
+  string api_key = 3;
+  string base_url = 4;
+  double temperature = 5;
+  int32 max_tokens = 6;
+  string system_prompt = 7;
+}
+message CreateLLMConfigResponse {
+  LLMConfig config = 1;
+}
+
+message UpdateLLMConfigRequest {
+  string id = 1;
+  string provider = 2;
+  string model_name = 3;
+  string api_key = 4;
+  string base_url = 5;
+  double temperature = 6;
+  int32 max_tokens = 7;
+  string system_prompt = 8;
+}
+message UpdateLLMConfigResponse {
+  LLMConfig config = 1;
+}
+
+message ActivateLLMConfigRequest {
+  string id = 1;
+}
+message ActivateLLMConfigResponse {
+  string message = 1;
+}
+
+message TestLLMConfigRequest {
+  string id = 1;
+  string test_prompt = 2;
+}
+message TestLLMConfigResponse {
+  bool success = 1;
+  string response_text = 2;
+  string error_message = 3;
+}
+
+message DeleteLLMConfigRequest {
+  string id = 1;
+}
+message DeleteLLMConfigResponse {
+  string message = 1;
+}
+
+message Technician {
+  string id = 1;
+  string name = 2;
+  string phone_number = 3;
+  string email = 4;
+  bool is_active = 5;
+  int32 active_tickets = 6;
+}
+
+message ListTechniciansRequest {}
+message ListTechniciansResponse {
+  repeated Technician technicians = 1;
+}
+
+message CreateTechnicianRequest {
+  string name = 1;
+  string phone_number = 2;
+  string email = 3;
+}
+message CreateTechnicianResponse {
+  Technician technician = 1;
+}
+
+message UpdateTechnicianRequest {
+  string id = 1;
+  string name = 2;
+  string phone_number = 3;
+  string email = 4;
+}
+message UpdateTechnicianResponse {
+  Technician technician = 1;
+}
+
+message ToggleTechnicianActiveRequest {
+  string id = 1;
+  bool is_active = 2;
+}
+message ToggleTechnicianActiveResponse {
+  string message = 1;
+  bool is_active = 2;
+}
+
+message DeleteTechnicianRequest {
+  string id = 1;
+}
+message DeleteTechnicianResponse {
+  string message = 1;
+}
