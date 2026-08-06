@@ -91,10 +91,10 @@ export async function listSessionsApi(): Promise<{ sessions: WASession[] }> {
   return apiFetch('/sessions')
 }
 
-export async function createSessionApi(deviceName: string, phoneNumber?: string, webhookUrl?: string): Promise<{ session: WASession; qr_code?: string }> {
+export async function createSessionApi(deviceName: string, phoneNumber?: string): Promise<{ session: WASession; qr_code?: string }> {
   return apiFetch('/sessions', {
     method: 'POST',
-    body: JSON.stringify({ device_name: deviceName, phone_number: phoneNumber, webhook_url: webhookUrl }),
+    body: JSON.stringify({ device_name: deviceName, phone_number: phoneNumber }),
   })
 }
 
@@ -113,13 +113,6 @@ export async function toggleBotApi(id: number, isBotEnabled: boolean): Promise<{
   return apiFetch(`/sessions/${id}/toggle-bot`, {
     method: 'PUT',
     body: JSON.stringify({ is_bot_enabled: isBotEnabled }),
-  })
-}
-
-export async function updateWebhookApi(id: number, webhookUrl: string): Promise<{ message: string; session: WASession }> {
-  return apiFetch(`/sessions/${id}/webhook`, {
-    method: 'PUT',
-    body: JSON.stringify({ webhook_url: webhookUrl }),
   })
 }
 

@@ -14,7 +14,6 @@ type WASessionModel struct {
 	JID          string
 	Status       string `gorm:"default:offline"`
 	IsBotEnabled bool   `gorm:"default:true"`
-	WebhookURL   string
 	ConnectedAt  time.Time
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
@@ -31,7 +30,6 @@ func (m *WASessionModel) ToDomain() *bot.WASession {
 		JID:          m.JID,
 		Status:       bot.WASessionStatus(m.Status),
 		IsBotEnabled: m.IsBotEnabled,
-		WebhookURL:   m.WebhookURL,
 		ConnectedAt:  m.ConnectedAt,
 		CreatedAt:    m.CreatedAt,
 		UpdatedAt:    m.UpdatedAt,
@@ -49,7 +47,6 @@ func WASessionModelFromDomain(s *bot.WASession) *WASessionModel {
 		JID:          s.JID,
 		Status:       string(s.Status),
 		IsBotEnabled: s.IsBotEnabled,
-		WebhookURL:   s.WebhookURL,
 		ConnectedAt:  s.ConnectedAt,
 		CreatedAt:    s.CreatedAt,
 		UpdatedAt:    s.UpdatedAt,

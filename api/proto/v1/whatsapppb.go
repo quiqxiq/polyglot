@@ -14,7 +14,6 @@ type WASession struct {
 	PhoneNumber string `json:"phone_number"`
 	Status      string `json:"status"`
 	IsBotActive bool   `json:"is_bot_active"`
-	WebhookUrl  string `json:"webhook_url"`
 	CreatedAt   string `json:"created_at"`
 }
 

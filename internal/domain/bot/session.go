@@ -19,7 +19,6 @@ type WASession struct {
 	JID          string          `json:"jid"`
 	Status       WASessionStatus `json:"status"`
 	IsBotEnabled bool            `json:"is_bot_enabled"`
-	WebhookURL   string          `json:"webhook_url"`
 	ConnectedAt  time.Time       `json:"connected_at"`
 	CreatedAt    time.Time       `json:"created_at"`
 	UpdatedAt    time.Time       `json:"updated_at"`

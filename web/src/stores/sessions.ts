@@ -63,15 +63,6 @@ export const useSessionStore = defineStore('sessions', () => {
     return res
   }
 
-  async function updateWebhook(id: number, webhookUrl: string) {
-    const res = await updateWebhookApi(id, webhookUrl)
-    const idx = sessions.value.findIndex((s) => s.id === id)
-    if (idx !== -1) {
-      sessions.value[idx] = res.session
-    }
-    return res
-  }
-
   async function logoutSession(id: number) {
     await logoutSessionApi(id)
     await fetchSessions()
@@ -110,7 +101,6 @@ export const useSessionStore = defineStore('sessions', () => {
     fetchQRCode,
     fetchPairingCode,
     toggleBot,
-    updateWebhook,
     logoutSession,
     deleteSession,
     reconnectSession,

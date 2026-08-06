@@ -18,7 +18,6 @@ export interface WASession {
   jid?: string
   status: 'online' | 'offline' | 'needs_rescan'
   is_bot_enabled: boolean
-  webhook_url?: string
   connected_at: string
   created_at: string
   updated_at: string

@@ -163,52 +163,11 @@
               placeholder="mis. 628123456789"
             />
           </div>
-          <div class="input-group">
-            <label class="input-label">Webhook URL (Opsional)</label>
-            <input
-              v-model="newWebhookUrl"
-              type="url"
-              class="form-input"
-              placeholder="https://example.com/api/wa-webhook"
-            />
-          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="showAddModal = false">Batal</button>
             <button type="submit" class="btn btn-primary" :disabled="submitting">
               <Loader2 v-if="submitting" class="w-4 h-4 spin" />
               <span>Buat & Tampilkan Tautan</span>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Edit Webhook Modal -->
-    <div v-if="showWebhookModal" class="modal-overlay" @click.self="showWebhookModal = false">
-      <div class="modal-card glass-panel">
-        <div class="modal-header">
-          <h3>Konfigurasi Webhook URL</h3>
-          <button class="close-btn" @click="showWebhookModal = false">
-            <X class="w-5 h-5" />
-          </button>
-        </div>
-        <form @submit.prevent="handleSaveWebhook">
-          <div class="input-group">
-            <label class="input-label">URL Webhook Forwarder</label>
-            <input
-              v-model="webhookInputUrl"
-              type="url"
-              class="form-input"
-              placeholder="https://domain-anda.com/webhook"
-              required
-            />
-            <p class="field-hint">Server akan mengirimkan payload HTTP POST JSON setiap kali ada pesan WhatsApp masuk atau perubahan status sesi.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showWebhookModal = false">Batal</button>
-            <button type="submit" class="btn btn-primary" :disabled="savingWebhook">
-              <Loader2 v-if="savingWebhook" class="w-4 h-4 spin" />
-              <span>Simpan Webhook</span>
             </button>
           </div>
         </form>
@@ -282,11 +241,6 @@ const selectedSessionName = ref('')
 
 const newDeviceName = ref('')
 const newPhoneNumber = ref('')
-const newWebhookUrl = ref('')
-
-const webhookInputUrl = ref('')
-const webhookSessionId = ref<number | null>(null)
-const savingWebhook = ref(false)
 
 const submitting = ref(false)
 const reconnectingId = ref<number | null>(null)
@@ -324,36 +278,16 @@ async function handleReconnect(id: number, name: string) {
 async function handleCreateSession() {
   submitting.value = true
   try {
-    const res = await sessionStore.createSession(newDeviceName.value, newPhoneNumber.value, newWebhookUrl.value)
+    const res = await sessionStore.createSession(newDeviceName.value, newPhoneNumber.value)
     showAddModal.value = false
     newDeviceName.value = ''
     newPhoneNumber.value = ''
-    newWebhookUrl.value = ''
 
     selectedSessionId.value = res.session.id
     selectedSessionName.value = res.session.device_name
     showQRModal.value = true
   } finally {
     submitting.value = false
-  }
-}
-
-function openWebhookModal(id: number, currentUrl: string) {
-  webhookSessionId.value = id
-  webhookInputUrl.value = currentUrl
-  showWebhookModal.value = true
-}
-
-async function handleSaveWebhook() {
-  if (!webhookSessionId.value) return
-  savingWebhook.value = true
-  try {
-    await sessionStore.updateWebhook(webhookSessionId.value, webhookInputUrl.value)
-    showWebhookModal.value = false
-    webhookSessionId.value = null
-    webhookInputUrl.value = ''
-  } finally {
-    savingWebhook.value = false
   }
 }
 

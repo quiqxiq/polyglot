@@ -29,7 +29,6 @@ func (h *WhatsAppConnectHandler) ListSessions(ctx context.Context, req *connect.
 			PhoneNumber: s.PhoneNumber,
 			Status:      string(s.Status),
 			IsBotActive: s.IsBotEnabled,
-			WebhookUrl:  s.WebhookURL,
 			CreatedAt:   s.CreatedAt.Format("2006-01-02 15:04:05"),
 		}
 	}

@@ -74,7 +74,7 @@ func main() {
 	if pgStore != nil {
 		eventHandler := whatsapp.NewEventHandler(pgStore, sseHub)
 		var err error
-		waManager, err = whatsapp.NewSessionManager(cfg.DatabaseURL, nil, eventHandler.OnStatusChanged)
+		waManager, err = whatsapp.NewSessionManager(cfg.DatabaseURL, nil, eventHandler.MakeStatusCallback())
 		if err != nil {
 			log.Printf("[Warning] Failed to initialize WhatsApp SessionManager: %v", err)
 		}
