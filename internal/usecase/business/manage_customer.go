@@ -1,10 +1,55 @@
 package business
 
-import "context"
+import (
+	"context"
+	"fmt"
 
-// ManageCustomer orchestrates customer CRUD operations, consumed purely via
-// REST/WS per Polyglot-Architecture.md §6.2 (no AI/MCP involved in this flow).
-// TODO: implement.
-func ManageCustomer(ctx context.Context) error {
-	return nil
+	"github.com/quixiq/polyglot/internal/domain/customer"
+	"github.com/quixiq/polyglot/internal/port"
+)
+
+// ManageCustomerUseCase orchestrates customer CRUD and subscription management.
+type ManageCustomerUseCase struct {
+	repo port.CustomerRepository
+}
+
+// NewManageCustomerUseCase constructs a new ManageCustomerUseCase.
+func NewManageCustomerUseCase(repo port.CustomerRepository) *ManageCustomerUseCase {
+	return &ManageCustomerUseCase{repo: repo}
+}
+
+func (uc *ManageCustomerUseCase) ListCustomers(ctx context.Context) ([]customer.Customer, error) {
+	return uc.repo.FindAll(ctx)
+}
+
+func (uc *ManageCustomerUseCase) GetCustomer(ctx context.Context, id string) (customer.Customer, error) {
+	if id == "" {
+		return customer.Customer{}, fmt.Errorf("customer id required")
+	}
+	return uc.repo.FindByID(ctx, id)
+}
+
+func (uc *ManageCustomerUseCase) CreateCustomer(ctx context.Context, c customer.Customer) error {
+	if c.ID == "" || c.Name == "" {
+		return fmt.Errorf("customer id and name are required")
+	}
+	return uc.repo.Save(ctx, c)
+}
+
+func (uc *ManageCustomerUseCase) UpdateCustomer(ctx context.Context, c customer.Customer) error {
+	if c.ID == "" {
+		return fmt.Errorf("customer id required")
+	}
+	return uc.repo.Save(ctx, c)
+}
+
+func (uc *ManageCustomerUseCase) DeleteCustomer(ctx context.Context, id string) error {
+	if id == "" {
+		return fmt.Errorf("customer id required")
+	}
+	return uc.repo.Delete(ctx, id)
+}
+
+func (uc *ManageCustomerUseCase) ListSubscriptions(ctx context.Context, customerID string) ([]customer.Subscription, error) {
+	return uc.repo.FindSubscriptions(ctx, customerID)
 }

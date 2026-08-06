@@ -23,6 +23,7 @@ import (
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
 	wsAdapter "github.com/quixiq/polyglot/internal/adapter/ws"
 	"github.com/quixiq/polyglot/internal/config"
+	customerDomain "github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/driver/genieacs"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
@@ -110,6 +111,14 @@ func main() {
 	deviceUC := business.NewManageDeviceUseCase(repo, vault, reg)
 	mikhmonUC := network.NewMikhmonUseCase("internal/templates")
 
+	var customerRepo port.CustomerRepository
+	if pgStore != nil {
+		customerRepo = postgres.NewCustomerRepository(pgStore.DB())
+	} else {
+		customerRepo = &memCustomerRepo{customers: make(map[string]customerDomain.Customer)}
+	}
+	customerUC := business.NewManageCustomerUseCase(customerRepo)
+
 	// Driver Providers
 	httpDriverProvider := func(c *gin.Context, deviceID string) (port.DeviceDriver, error) {
 		return reg.Get(c.Request.Context(), deviceID)
@@ -178,6 +187,9 @@ func main() {
 	// ConnectRPC Protocol Handler (Buf / Connect RPC served over standard HTTP on :8080)
 	connectPath, connectHandler := connectAdapter.NewDeviceServiceHandler(deviceUC, deviceStreamHandler)
 	r.Any(connectPath+"*action", gin.WrapH(connectHandler))
+
+	custConnectPath, custConnectHandler := connectAdapter.NewCustomerServiceHandler(customerUC)
+	r.Any(custConnectPath+"*action", gin.WrapH(custConnectHandler))
 
 	httpSrv := &http.Server{
 		Addr:    httpAddr,
@@ -279,4 +291,47 @@ func (v *memVault) Save(_ context.Context, deviceID string, c device.Credentials
 	defer v.mu.Unlock()
 	v.creds[deviceID] = c
 	return nil
+}
+
+type memCustomerRepo struct {
+	mu        sync.RWMutex
+	customers map[string]customerDomain.Customer
+}
+
+func (r *memCustomerRepo) Save(_ context.Context, c customerDomain.Customer) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	r.customers[c.ID] = c
+	return nil
+}
+
+func (r *memCustomerRepo) FindByID(_ context.Context, id string) (customerDomain.Customer, error) {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	c, ok := r.customers[id]
+	if !ok {
+		return customerDomain.Customer{}, fmt.Errorf("customer not found")
+	}
+	return c, nil
+}
+
+func (r *memCustomerRepo) FindAll(_ context.Context) ([]customerDomain.Customer, error) {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	list := make([]customerDomain.Customer, 0, len(r.customers))
+	for _, c := range r.customers {
+		list = append(list, c)
+	}
+	return list, nil
+}
+
+func (r *memCustomerRepo) Delete(_ context.Context, id string) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	delete(r.customers, id)
+	return nil
+}
+
+func (r *memCustomerRepo) FindSubscriptions(_ context.Context, _ string) ([]customerDomain.Subscription, error) {
+	return []customerDomain.Subscription{}, nil
 }
