@@ -168,6 +168,10 @@ func (h *DeviceStreamHandler) StreamDevicesStatus(ctx context.Context, outChan c
 
 	pushSnapshot := func() {
 		mu.Lock()
+		latestDevices, errList := h.useCase.ListDevices(ctx)
+		if errList == nil && len(latestDevices) > 0 {
+			devices = latestDevices
+		}
 		items := make([]DeviceStatusItem, 0, len(statusMap))
 		for _, dev := range devices {
 			if item, exists := statusMap[dev.ID]; exists {

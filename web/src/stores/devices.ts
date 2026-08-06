@@ -49,6 +49,7 @@ export const useDeviceStore = defineStore('devices', () => {
       error.value = null
       const res = await createDeviceApi(payload)
       await fetchDevices()
+      startDevicesStream()
       return res
     } catch (e: any) {
       error.value = e.message || 'Failed to create device'
@@ -63,7 +64,14 @@ export const useDeviceStore = defineStore('devices', () => {
       loading.value = true
       error.value = null
       const res = await updateDeviceApi(id, payload)
+      if (res && res.device) {
+        const idx = devices.value.findIndex((d) => d.id === id)
+        if (idx !== -1) {
+          devices.value[idx] = res.device
+        }
+      }
       await fetchDevices()
+      startDevicesStream()
       return res
     } catch (e: any) {
       error.value = e.message || 'Failed to update device'
@@ -79,6 +87,7 @@ export const useDeviceStore = defineStore('devices', () => {
       error.value = null
       await deleteDeviceApi(id)
       devices.value = devices.value.filter((d) => d.id !== id)
+      startDevicesStream()
     } catch (e: any) {
       error.value = e.message || 'Failed to delete device'
       throw e
@@ -131,7 +140,20 @@ export const useDeviceStore = defineStore('devices', () => {
       try {
         const items = JSON.parse(event.data)
         if (Array.isArray(items)) {
-          devices.value = items.map((item: any) => item.device)
+          if (devices.value.length === 0) {
+            devices.value = items.map((item: any) => item.device)
+          } else {
+            items.forEach((item: any) => {
+              if (item.device && item.device.id) {
+                const idx = devices.value.findIndex((d) => d.id === item.device.id)
+                if (idx !== -1) {
+                  devices.value[idx] = { ...devices.value[idx], ...item.device }
+                } else {
+                  devices.value.push(item.device)
+                }
+              }
+            })
+          }
           items.forEach((item: any) => {
             if (item.device && item.device.id) {
               const devId = item.device.id
