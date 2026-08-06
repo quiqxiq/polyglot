@@ -115,7 +115,11 @@ timeline
 - [ ] Halaman **Active Sessions View** (Tab PPPoE, Hotspot Active, DHCP Leases) dengan filter & kick user button.
 - [ ] Halaman **Hotspot & Voucher View** (Form Generate Voucher, Pilihan Template, Preview PDF, dan Tombol "Kirim PDF ke WA Admin").
 
-#### 5.2 Realtime SSE Integration
+#### 5.2 User & RBAC Management View (`web/src/views/`)
+- [ ] Halaman **User Management View** (Tabel Pengguna, Form Tambah/Edit User, Reset Password).
+- [ ] Halaman **RBAC & Role Assignment View** (Matriks Centang Permission per Role, Form Penugasan Role ke User via Casbin API).
+
+#### 5.3 Realtime SSE Integration
 - [ ] SSE Event `active_sessions_update` untuk grafik traffic dan status session.
 
 ---
