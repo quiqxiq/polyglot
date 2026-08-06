@@ -36,9 +36,9 @@ function makeConnectRequest(service, method, payload) {
 async function runBotKnowledgeConnectRPCTest() {
   console.log('🚀 STARTING BOT & KNOWLEDGE ConnectRPC INTEGRATION TEST (over HTTP :8080)...');
 
-  // 1. BotService - ListSessions
-  console.log('\n1️⃣  Testing BotService.ListSessions...');
-  const sessRes = await makeConnectRequest('BotService', 'ListSessions', {});
+  // 1. WhatsAppService - ListSessions
+  console.log('\n1️⃣  Testing WhatsAppService.ListSessions...');
+  const sessRes = await makeConnectRequest('WhatsAppService', 'ListSessions', {});
   console.log('   Status:', sessRes.status);
   console.log('   Sessions Count:', sessRes.data?.sessions?.length || 0);
 

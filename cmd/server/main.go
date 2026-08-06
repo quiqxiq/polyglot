@@ -185,7 +185,10 @@ func main() {
 	mikhmonConnectPath, mikhmonConnectHandler := connectAdapter.NewMikhmonServiceHandler(mikhmonUC, connectDriverProvider)
 	r.Any(mikhmonConnectPath+"*action", gin.WrapH(mikhmonConnectHandler))
 
-	botConnectPath, botConnectHandler := connectAdapter.NewBotServiceHandler(pgStore, waManager)
+	waConnectPath, waConnectHandler := connectAdapter.NewWhatsAppServiceHandler(pgStore, waManager)
+	r.Any(waConnectPath+"*action", gin.WrapH(waConnectHandler))
+
+	botConnectPath, botConnectHandler := connectAdapter.NewBotServiceHandler()
 	r.Any(botConnectPath+"*action", gin.WrapH(botConnectHandler))
 
 	knwConnectPath, knwConnectHandler := connectAdapter.NewKnowledgeServiceHandler()

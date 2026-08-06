@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/proto/v1;devicepb";
+
+service WhatsAppService {
+  rpc ListSessions (ListWASessionsRequest) returns (ListWASessionsResponse);
+  rpc CreateSession (CreateWASessionRequest) returns (CreateWASessionResponse);
+  rpc GetQRCode (GetWASessionQRRequest) returns (GetWASessionQRResponse);
+  rpc GetPairingCode (GetWASessionPairingRequest) returns (GetWASessionPairingResponse);
+  rpc ToggleBot (ToggleWABotRequest) returns (ToggleWABotResponse);
+  rpc ReconnectSession (ReconnectWASessionRequest) returns (ReconnectWASessionResponse);
+  rpc LogoutSession (LogoutWASessionRequest) returns (LogoutWASessionResponse);
+  rpc PurgeSession (PurgeWASessionRequest) returns (PurgeWASessionResponse);
+  rpc SendTextMessage (SendWATextMessageRequest) returns (SendWATextMessageResponse);
+}
+
+message WASession {
+  string id = 1;
+  string name = 2;
+  string phone_number = 3;
+  string status = 4; // e.g. "CONNECTED", "DISCONNECTED", "NEEDS_RESCAN"
+  bool is_bot_active = 5;
+  string webhook_url = 6;
+  string created_at = 7;
+}
+
+message ListWASessionsRequest {}
+message ListWASessionsResponse {
+  repeated WASession sessions = 1;
+}
+
+message CreateWASessionRequest {
+  string name = 1;
+  string phone_number = 2;
+}
+message CreateWASessionResponse {
+  WASession session = 1;
+}
+
+message GetWASessionQRRequest {
+  string session_id = 1;
+}
+message GetWASessionQRResponse {
+  string qr_code_base64 = 1;
+  string qr_code_path = 2;
+  int32 duration_seconds = 3;
+}
+
+message GetWASessionPairingRequest {
+  string session_id = 1;
+  string phone_number = 2;
+}
+message GetWASessionPairingResponse {
+  string pairing_code = 1;
+}
+
+message ToggleWABotRequest {
+  string session_id = 1;
+  bool is_active = 2;
+}
+message ToggleWABotResponse {
+  string message = 1;
+  bool is_active = 2;
+}
+
+message ReconnectWASessionRequest {
+  string session_id = 1;
+}
+message ReconnectWASessionResponse {
+  string message = 1;
+  string status = 2;
+}
+
+message LogoutWASessionRequest {
+  string session_id = 1;
+}
+message LogoutWASessionResponse {
+  string message = 1;
+}
+
+message PurgeWASessionRequest {
+  string session_id = 1;
+}
+message PurgeWASessionResponse {
+  string message = 1;
+}
+
+message SendWATextMessageRequest {
+  string session_id = 1;
+  string recipient_phone = 2;
+  string message_text = 3;
+}
+message SendWATextMessageResponse {
+  string message_id = 1;
+  string status = 2;
+}
