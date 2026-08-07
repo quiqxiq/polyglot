@@ -4,224 +4,173 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"sync"
+	"net"
+	"net/http"
+	"strconv"
+	"time"
+
+	"github.com/coder/websocket"
+	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/ssh"
 
 	"github.com/quixiq/polyglot/internal/domain/device"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
-	"github.com/quixiq/polyglot/internal/usecase/business"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
-// DeviceStatusItem holds a device inventory record along with its live diagnostic result.
-type DeviceStatusItem struct {
-	Device device.Device             `json:"device"`
-	Test   business.DeviceTestResult `json:"test"`
+type TerminalMessage struct {
+	DeviceID  string `json:"device_id"`
+	InputData string `json:"input_data"`
+	Cols      int    `json:"cols"`
+	Rows      int    `json:"rows"`
 }
 
-// DeviceStreamHandler streams live device status and inventory updates over WebSockets / SSE using native wire streaming.
-type DeviceStreamHandler struct {
-	useCase        *business.ManageDeviceUseCase
-	driverProvider StreamDriverProvider
+type TerminalHandler struct {
+	driverGetter   func(ctx context.Context, deviceID string) (port.DeviceDriver, error)
+	targetResolver func(ctx context.Context, deviceID string) (*device.Target, error)
 }
 
-// NewDeviceStreamHandler constructs a new DeviceStreamHandler.
-func NewDeviceStreamHandler(uc *business.ManageDeviceUseCase, provider StreamDriverProvider) *DeviceStreamHandler {
-	return &DeviceStreamHandler{
-		useCase:        uc,
-		driverProvider: provider,
+func NewTerminalHandler(
+	driverGetter func(ctx context.Context, deviceID string) (port.DeviceDriver, error),
+	targetResolver func(ctx context.Context, deviceID string) (*device.Target, error),
+) *TerminalHandler {
+	return &TerminalHandler{
+		driverGetter:   driverGetter,
+		targetResolver: targetResolver,
 	}
 }
 
-// StreamSingleDeviceStatus uses MikroTik native wire streaming (driver.Stream) on /system/resource/print follow-only=true.
-// Zero polling, zero tickers — it listens directly on the TCP socket channel push from RouterOS.
-func (h *DeviceStreamHandler) StreamSingleDeviceStatus(ctx context.Context, deviceID string, outChan chan<- []byte) error {
-	dev, err := h.useCase.GetDevice(ctx, deviceID)
+func (h *TerminalHandler) ServeHTTP(c *gin.Context) {
+	deviceID := c.Param("id")
+	if deviceID == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "device id is required"})
+		return
+	}
+
+	conn, err := websocket.Accept(c.Writer, c.Request, &websocket.AcceptOptions{
+		InsecureSkipVerify: true,
+	})
 	if err != nil {
-		return err
+		return
+	}
+	defer conn.CloseNow()
+
+	ctx := c.Request.Context()
+
+	// 1. Resolve Real Device Connection Target (Host, Port, User, Password)
+	var target *device.Target
+	if h.targetResolver != nil {
+		if t, err := h.targetResolver(ctx, deviceID); err == nil && t != nil {
+			target = t
+		}
 	}
 
-	if !dev.Enabled {
-		item := DeviceStatusItem{
-			Device: dev,
-			Test: business.DeviceTestResult{
-				DeviceID: dev.ID,
-				Status:   "disabled",
-				Message:  "Device is disabled",
+	// 2. Try Opening Real Direct SSH PTY Session to the Target Host
+	if target != nil && target.Host != "" {
+		sshPort := "22"
+		if target.Port > 0 && target.Port != 8728 {
+			sshPort = strconv.Itoa(target.Port)
+		}
+		if extraPort, ok := target.Extra["ssh_port"]; ok && extraPort != "" {
+			sshPort = extraPort
+		}
+
+		user := target.Username
+		if user == "" {
+			user = "admin"
+		}
+		pass := target.Password
+
+		_ = conn.Write(ctx, websocket.MessageText, []byte(fmt.Sprintf("\r\n\x1b[38;5;39m[Polyglot Engine] Dialing SSH PTY to %s@%s:%s...\x1b[0m\r\n", user, target.Host, sshPort)))
+
+		sshConfig := &ssh.ClientConfig{
+			User: user,
+			Auth: []ssh.AuthMethod{
+				ssh.Password(pass),
 			},
+			HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+			Timeout:         7 * time.Second,
 		}
-		data, _ := json.Marshal(item)
-		select {
-		case outChan <- data:
-		case <-ctx.Done():
-		}
-		return nil
-	}
 
-	driver, err := h.driverProvider(ctx, deviceID)
-	if err != nil {
-		item := DeviceStatusItem{
-			Device: dev,
-			Test: business.DeviceTestResult{
-				DeviceID: dev.ID,
-				Status:   "failed",
-				Message:  err.Error(),
-			},
-		}
-		data, _ := json.Marshal(item)
-		select {
-		case outChan <- data:
-		case <-ctx.Done():
-		}
-		return err
-	}
+		sshClient, dialErr := ssh.Dial("tcp", net.JoinHostPort(target.Host, sshPort), sshConfig)
+		if dialErr == nil {
+			defer sshClient.Close()
 
-	// Issue native wire streaming command (/system/resource/print follow-only=true interval=1s)
-	cmd := mikrotik.NewStreamSystemResourceCommand("1s")
-	handle, err := driver.Stream(ctx, cmd)
-	if err != nil {
-		item := DeviceStatusItem{
-			Device: dev,
-			Test: business.DeviceTestResult{
-				DeviceID: dev.ID,
-				Status:   "failed",
-				Message:  fmt.Sprintf("failed to start native stream: %v", err),
-			},
-		}
-		data, _ := json.Marshal(item)
-		select {
-		case outChan <- data:
-		case <-ctx.Done():
-		}
-		return err
-	}
-	defer handle.Cancel()
+			session, sessErr := sshClient.NewSession()
+			if sessErr == nil {
+				defer session.Close()
 
-	for {
-		select {
-		case <-ctx.Done():
-			return ctx.Err()
-		case res, ok := <-handle.Chan():
-			if !ok {
-				item := DeviceStatusItem{
-					Device: dev,
-					Test: business.DeviceTestResult{
-						DeviceID: dev.ID,
-						Status:   "failed",
-						Message:  "native stream disconnected",
-					},
+				modes := ssh.TerminalModes{
+					ssh.ECHO:          1,
+					ssh.TTY_OP_ISPEED: 14400,
+					ssh.TTY_OP_OSPEED: 14400,
 				}
-				data, _ := json.Marshal(item)
-				select {
-				case outChan <- data:
-				case <-ctx.Done():
-				}
-				return handle.Err()
-			}
 
-			sysRes := mikrotik.ParseSystemResource(res)
-			latestDev, errGet := h.useCase.GetDevice(ctx, deviceID)
-			if errGet == nil {
-				dev = latestDev
-			}
+				if ptyErr := session.RequestPty("xterm-256color", 35, 120, modes); ptyErr == nil {
+					stdin, stdinErr := session.StdinPipe()
+					stdout, stdoutErr := session.StdoutPipe()
 
-			item := DeviceStatusItem{
-				Device: dev,
-				Test: business.DeviceTestResult{
-					DeviceID:  dev.ID,
-					Status:    "connected",
-					LatencyMS: 0,
-					Identity:  dev.Name,
-					Version:   sysRes.Version,
-					BoardName: sysRes.BoardName,
-					Uptime:    sysRes.Uptime,
-					Message:   "Streaming live from MikroTik socket",
-				},
-			}
-			data, err := json.Marshal(item)
-			if err == nil {
-				select {
-				case outChan <- data:
-				case <-ctx.Done():
-					return ctx.Err()
+					if stdinErr == nil && stdoutErr == nil {
+						if shellErr := session.Shell(); shellErr == nil {
+							_ = conn.Write(ctx, websocket.MessageText, []byte("\x1b[32m[SSH Connected - Real RouterOS PTY Active]\x1b[0m\r\n\r\n"))
+
+							errChan := make(chan error, 2)
+
+							// Goroutine 1: Read stdout from real SSH PTY -> Write directly to WebSocket (xterm.js)
+							go func() {
+								buf := make([]byte, 4096)
+								for {
+									n, rErr := stdout.Read(buf)
+									if n > 0 {
+										if wErr := conn.Write(ctx, websocket.MessageText, buf[:n]); wErr != nil {
+											errChan <- wErr
+											return
+										}
+									}
+									if rErr != nil {
+										errChan <- rErr
+										return
+									}
+								}
+							}()
+
+							// Goroutine 2: Read raw keystrokes from WebSocket (xterm.js) -> Write directly to SSH PTY stdin
+							go func() {
+								for {
+									_, msgBytes, rErr := conn.Read(ctx)
+									if rErr != nil {
+										errChan <- rErr
+										return
+									}
+
+									var msg TerminalMessage
+									if err := json.Unmarshal(msgBytes, &msg); err == nil {
+										if msg.InputData != "" {
+											_, _ = stdin.Write([]byte(msg.InputData))
+										}
+										if msg.Cols > 0 && msg.Rows > 0 {
+											_ = session.WindowChange(msg.Rows, msg.Cols)
+										}
+									} else {
+										_, _ = stdin.Write(msgBytes)
+									}
+								}
+							}()
+
+							select {
+							case <-ctx.Done():
+							case <-errChan:
+							}
+							return
+						}
+					}
 				}
 			}
 		}
-	}
-}
 
-// StreamDevicesStatus subscribes to native wire streams for all active devices and pushes aggregated updates on every incoming frame.
-func (h *DeviceStreamHandler) StreamDevicesStatus(ctx context.Context, outChan chan<- []byte) error {
-	devices, err := h.useCase.ListDevices(ctx)
-	if err != nil {
-		return err
-	}
-	if len(devices) == 0 {
-		data, _ := json.Marshal([]DeviceStatusItem{})
-		select {
-		case outChan <- data:
-		case <-ctx.Done():
-		}
-		return nil
+		_ = conn.Write(ctx, websocket.MessageText, []byte(fmt.Sprintf("\r\n\x1b[31m[SSH Connection Failed]: %v\x1b[0m\r\n\x1b[33m[Notice]: Ensure SSH service is enabled on target device (%s:%s) with user '%s'.\x1b[0m\r\n", dialErr, target.Host, sshPort, user)))
+		return
 	}
 
-	statusMap := make(map[string]DeviceStatusItem)
-	var mu sync.Mutex
-
-	pushSnapshot := func() {
-		mu.Lock()
-		latestDevices, errList := h.useCase.ListDevices(ctx)
-		if errList == nil && len(latestDevices) > 0 {
-			devices = latestDevices
-		}
-		items := make([]DeviceStatusItem, 0, len(statusMap))
-		for _, dev := range devices {
-			if item, exists := statusMap[dev.ID]; exists {
-				items = append(items, item)
-			} else {
-				items = append(items, DeviceStatusItem{
-					Device: dev,
-					Test: business.DeviceTestResult{
-						DeviceID: dev.ID,
-						Status:   "connecting",
-						Message:  "Connecting native stream...",
-					},
-				})
-			}
-		}
-		data, err := json.Marshal(items)
-		mu.Unlock()
-
-		if err == nil {
-			select {
-			case outChan <- data:
-			case <-ctx.Done():
-			}
-		}
-	}
-
-	ctxChild, cancelChild := context.WithCancel(ctx)
-	defer cancelChild()
-
-	for _, dev := range devices {
-		devCopy := dev
-		go func() {
-			singleChan := make(chan []byte, 10)
-			go func() {
-				_ = h.StreamSingleDeviceStatus(ctxChild, devCopy.ID, singleChan)
-				close(singleChan)
-			}()
-
-			for msg := range singleChan {
-				var item DeviceStatusItem
-				if err := json.Unmarshal(msg, &item); err == nil {
-					mu.Lock()
-					statusMap[devCopy.ID] = item
-					mu.Unlock()
-					pushSnapshot()
-				}
-			}
-		}()
-	}
-
-	<-ctx.Done()
-	return ctx.Err()
+	// Fallback error if target is not found
+	_ = conn.Write(ctx, websocket.MessageText, []byte(fmt.Sprintf("\r\n\x1b[31m[Polyglot Terminal Error]: Target details for device ID '%s' not found in inventory.\x1b[0m\r\n", deviceID)))
 }

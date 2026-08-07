@@ -16,6 +16,7 @@ export interface WASession {
   device_name: string
   phone_number: string
   jid?: string
+  webhook_url?: string
   status: 'online' | 'offline' | 'needs_rescan'
   is_bot_enabled: boolean
   connected_at: string

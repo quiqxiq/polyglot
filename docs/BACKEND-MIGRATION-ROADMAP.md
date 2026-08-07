@@ -8,9 +8,9 @@ Dokumen ini adalah peta jalan definitif dan status migrasi komprehensif untuk me
 
 | Jalur Komunikasi | Transport Target | Alasan Engineering | Status Backend Go |
 | :--- | :--- | :--- | :--- |
-| **1. Web UI Frontend ↔ Go Backend** | 🚀 **ConnectRPC** | Type-safe, otomatis auto-complete di Vue TS, performa streaming HTTP/2 tinggi. | 🟡 **80% Selesai** (`Device`, `Customer`, `Mikhmon`, `Bot`, `Knowledge` **Done**; `Auth`, `RBAC`, `Billing` **Pending**) |
-| **2. AI Agent / MCP Tool ↔ Go Backend** | 🤖 **MCP (JSON-RPC)** | Memanggil Usecase teruji yang sama dengan ConnectRPC. | 🟡 **40% Selesai** (Core `/mcp` Engine **Done**; Tool Mikhmon, WA & Customer Lookup **Pending**) |
-| **3. Inter-Service / POP Remote Probe** | 📡 **ConnectRPC Binary** | Kompresi binary Protobuf hemat bandwidth antar-POP ISP. | 🟡 **20% Selesai** (Protobuf Binary Schema **Done**; Executable `cmd/probe/` **Pending**) |
+| **1. Web UI Frontend ↔ Go Backend** | 🚀 **ConnectRPC** | Type-safe, otomatis auto-complete di Vue TS, performa streaming HTTP/2 tinggi. | 🟢 **100% Selesai** (Backend Go ConnectRPC Handlers **Done**: `Device`, `Customer`, `Mikhmon`, `Bot`, `Knowledge`, `WhatsApp`, `Technician`, `LLMConfig`, `Auth`, `RBAC`, `Billing`) |
+| **2. AI Agent / MCP Tool ↔ Go Backend** | 🤖 **MCP (JSON-RPC)** | Memanggil Usecase teruji yang sama dengan ConnectRPC. | 🟢 **100% Selesai** (Core `/mcp` Engine & 8 Tools **Done**: `get_device_status`, `run_command`, `push_config`, `mikhmon_get_dashboard`, `mikhmon_generate_voucher`, `mikhmon_kick_session`, `customer_lookup`, `search_knowledge`) |
+| **3. Inter-Service / POP Remote Probe** | 📡 **ConnectRPC Binary** | Kompresi binary Protobuf hemat bandwidth antar-POP ISP. | 🟢 **100% Selesai** (Protobuf Schema `probe.proto` & Executable `cmd/probe/` **Done**) |
 | **4. Webhook Pihak Ke-3 (WA, Midtrans)** | 🌐 **REST API** | Layanan eksternal publik biasanya hanya mendukung HTTP POST JSON standar. | 🟢 **100% Selesai** (Midtrans, WA Webhook, SSE Stream) |
 
 ---

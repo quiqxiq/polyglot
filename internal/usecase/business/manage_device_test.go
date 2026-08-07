@@ -101,7 +101,7 @@ func (m *mockDriver) Close() error {
 func TestManageDeviceUseCase(t *testing.T) {
 	repo := newMockDeviceRepo()
 	vault := newMockVault()
-	uc := NewManageDeviceUseCase(repo, vault)
+	uc := NewManageDeviceUseCase(repo, vault, nil)
 	ctx := context.Background()
 
 	t.Run("Create and Get Device", func(t *testing.T) {

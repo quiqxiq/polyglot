@@ -308,6 +308,16 @@ async function handleToggleBot(id: number, isEnabled: boolean) {
   await sessionStore.toggleBot(id, isEnabled)
 }
 
+function truncateUrl(url: string): string {
+  if (!url) return ''
+  return url.length > 25 ? url.substring(0, 22) + '...' : url
+}
+
+function openWebhookModal(id: number, _currentUrl?: string) {
+  selectedSessionId.value = id
+  showWebhookModal.value = true
+}
+
 function handleLogout(id: number) {
   logoutTargetId.value = id
   showLogoutModal.value = true
@@ -340,14 +350,6 @@ async function confirmDelete() {
   } finally {
     deleting.value = false
   }
-}
-
-function truncateUrl(url: string) {
-  if (!url) return ''
-  if (url.length > 28) {
-    return url.substring(0, 25) + '...'
-  }
-  return url
 }
 
 function getStatusClass(status: string) {

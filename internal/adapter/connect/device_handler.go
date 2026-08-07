@@ -5,24 +5,25 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/proto/v1"
-	"github.com/quixiq/polyglot/internal/adapter/ws"
 	"github.com/quixiq/polyglot/internal/domain/device"
+	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/business"
 )
 
 type DeviceConnectHandler struct {
-	useCase       *business.ManageDeviceUseCase
-	streamHandler *ws.DeviceStreamHandler
+	useCase      *business.ManageDeviceUseCase
+	driverGetter DriverGetter
 }
 
-func NewDeviceConnectHandler(uc *business.ManageDeviceUseCase, streamH *ws.DeviceStreamHandler) *DeviceConnectHandler {
+func NewDeviceConnectHandler(uc *business.ManageDeviceUseCase, getter DriverGetter) *DeviceConnectHandler {
 	return &DeviceConnectHandler{
-		useCase:       uc,
-		streamHandler: streamH,
+		useCase:      uc,
+		driverGetter: getter,
 	}
 }
 
@@ -79,47 +80,181 @@ func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Re
 	}), nil
 }
 
-func (h *DeviceConnectHandler) StreamDeviceStatus(ctx context.Context, req *connect.Request[devicepb.StreamDeviceStatusRequest], stream *connect.ServerStream[devicepb.DeviceStatusFrame]) error {
-	outChan := make(chan []byte, 10)
+func (h *DeviceConnectHandler) DeleteDevice(ctx context.Context, req *connect.Request[devicepb.DeleteDeviceRequest]) (*connect.Response[devicepb.DeleteDeviceResponse], error) {
+	if req.Msg.Id == "" {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device id is required"))
+	}
 
-	go func() {
-		if req.Msg.Id != "" {
-			_ = h.streamHandler.StreamSingleDeviceStatus(ctx, req.Msg.Id, outChan)
-		} else {
-			_ = h.streamHandler.StreamDevicesStatus(ctx, outChan)
+	if err := h.useCase.DeleteDevice(ctx, req.Msg.Id); err != nil {
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
+	return connect.NewResponse(&devicepb.DeleteDeviceResponse{
+		Message: "device deleted successfully",
+	}), nil
+}
+
+func (h *DeviceConnectHandler) TestDeviceConnection(ctx context.Context, req *connect.Request[devicepb.TestDeviceConnectionRequest]) (*connect.Response[devicepb.TestDeviceConnectionResponse], error) {
+	if req.Msg.Id == "" {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device id is required"))
+	}
+
+	var drv port.DeviceDriver
+	if h.driverGetter != nil {
+		if d, err := h.driverGetter(ctx, req.Msg.Id); err == nil {
+			drv = d
 		}
-		close(outChan)
-	}()
+	}
+
+	res, err := h.useCase.TestConnection(ctx, drv, req.Msg.Id)
+	if err != nil {
+		return connect.NewResponse(&devicepb.TestDeviceConnectionResponse{
+			DeviceId: req.Msg.Id,
+			Status:   "error",
+			Message:  err.Error(),
+			Success:  false,
+		}), nil
+	}
+
+	return connect.NewResponse(&devicepb.TestDeviceConnectionResponse{
+		DeviceId:  res.DeviceID,
+		Status:    res.Status,
+		LatencyMs: res.LatencyMS,
+		Uptime:    res.Uptime,
+		Version:   res.Version,
+		BoardName: res.BoardName,
+		Identity:  res.Identity,
+		Message:   res.Message,
+		Success:   res.Status == "connected" || res.Status == "online",
+	}), nil
+}
+
+func (h *DeviceConnectHandler) StreamDeviceStatus(ctx context.Context, req *connect.Request[devicepb.StreamDeviceStatusRequest], stream *connect.ServerStream[devicepb.DeviceStatusFrame]) error {
+	ticker := time.NewTicker(3 * time.Second)
+	defer ticker.Stop()
 
 	for {
 		select {
-		case msg, ok := <-outChan:
-			if !ok {
-				return nil
-			}
-
-			var item ws.DeviceStatusItem
-			if err := json.Unmarshal(msg, &item); err == nil {
-				frame := &devicepb.DeviceStatusFrame{
-					Device: domainToPb(item.Device),
-					Test: &devicepb.DeviceTestMetrics{
-						DeviceId:  item.Test.DeviceID,
-						Status:    item.Test.Status,
-						LatencyMs: item.Test.LatencyMS,
-						Uptime:    item.Test.Uptime,
-						Version:   item.Test.Version,
-						BoardName: item.Test.BoardName,
-						Identity:  item.Test.Identity,
-						Message:   item.Test.Message,
-					},
-				}
-				if err := stream.Send(frame); err != nil {
-					return err
-				}
-			}
 		case <-ctx.Done():
-			return ctx.Err()
+			return nil
+		case <-ticker.C:
+			if req.Msg.Id != "" {
+				dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
+				if err == nil {
+					frame := &devicepb.DeviceStatusFrame{
+						Device: domainToPb(dev),
+					}
+					if err := stream.Send(frame); err != nil {
+						return err
+					}
+				}
+			} else {
+				devices, err := h.useCase.ListDevices(ctx)
+				if err == nil {
+					for _, dev := range devices {
+						frame := &devicepb.DeviceStatusFrame{
+							Device: domainToPb(dev),
+						}
+						if err := stream.Send(frame); err != nil {
+							return err
+						}
+					}
+				}
+			}
 		}
+	}
+}
+
+func (h *DeviceConnectHandler) StreamTerminal(ctx context.Context, stream *connect.BidiStream[devicepb.TerminalFrame, devicepb.TerminalFrame]) error {
+	firstFrame, err := stream.Receive()
+	if err != nil {
+		return err
+	}
+
+	deviceID := firstFrame.DeviceId
+	if deviceID == "" {
+		return connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device_id is required"))
+	}
+
+	if h.driverGetter == nil {
+		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver getter not configured"))
+	}
+
+	driver, err := h.driverGetter(ctx, deviceID)
+	if err != nil {
+		return connect.NewError(connect.CodeInternal, fmt.Errorf("failed to get device driver: %w", err))
+	}
+
+	td, ok := driver.(port.TerminalDeviceDriver)
+	if !ok {
+		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver for device %s does not support terminal streaming", deviceID))
+	}
+
+	cols := int(firstFrame.Cols)
+	if cols <= 0 {
+		cols = 80
+	}
+	rows := int(firstFrame.Rows)
+	if rows <= 0 {
+		rows = 24
+	}
+
+	session, err := td.OpenTerminalSession(ctx, cols, rows)
+	if err != nil {
+		return connect.NewError(connect.CodeInternal, fmt.Errorf("failed to open terminal session: %w", err))
+	}
+	defer session.Close()
+
+	// Goroutine 1: Read PTY stdout and send to client
+	errChan := make(chan error, 2)
+	go func() {
+		buf := make([]byte, 4096)
+		stdout := session.Stdout()
+		for {
+			n, err := stdout.Read(buf)
+			if n > 0 {
+				outFrame := &devicepb.TerminalFrame{
+					DeviceId:   deviceID,
+					OutputData: buf[:n],
+				}
+				if sendErr := stream.Send(outFrame); sendErr != nil {
+					errChan <- sendErr
+					return
+				}
+			}
+			if err != nil {
+				errChan <- err
+				return
+			}
+		}
+	}()
+
+	// Goroutine 2: Receive client frames and write to PTY stdin / handle resize
+	go func() {
+		stdin := session.Stdin()
+		for {
+			req, err := stream.Receive()
+			if err != nil {
+				errChan <- err
+				return
+			}
+			if len(req.InputData) > 0 {
+				if _, wErr := stdin.Write(req.InputData); wErr != nil {
+					errChan <- wErr
+					return
+				}
+			}
+			if req.Cols > 0 && req.Rows > 0 {
+				_ = session.Resize(int(req.Cols), int(req.Rows))
+			}
+		}
+	}()
+
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	case err := <-errChan:
+		return err
 	}
 }
 
@@ -129,9 +264,15 @@ func (connectJSONCodec) Name() string                     { return "json" }
 func (connectJSONCodec) Marshal(v any) ([]byte, error)    { return json.Marshal(v) }
 func (connectJSONCodec) Unmarshal(b []byte, v any) error { return json.Unmarshal(b, v) }
 
+// DriverGetter fetches a connected port.DeviceDriver by device ID.
+type DriverGetter func(ctx context.Context, deviceID string) (port.DeviceDriver, error)
+
 // NewDeviceServiceHandler creates the Connect http.Handler and registers procedures.
-func NewDeviceServiceHandler(uc *business.ManageDeviceUseCase, streamH *ws.DeviceStreamHandler) (string, http.Handler) {
-	handler := NewDeviceConnectHandler(uc, streamH)
+func NewDeviceServiceHandler(uc *business.ManageDeviceUseCase, getter DriverGetter) (string, http.Handler) {
+	handler := &DeviceConnectHandler{
+		useCase:      uc,
+		driverGetter: getter,
+	}
 	mux := http.NewServeMux()
 	codecOpt := connect.WithCodec(connectJSONCodec{})
 
@@ -151,9 +292,24 @@ func NewDeviceServiceHandler(uc *business.ManageDeviceUseCase, streamH *ws.Devic
 		handler.UpdateDevice,
 		codecOpt,
 	))
+	mux.Handle("/"+serviceName+"/DeleteDevice", connect.NewUnaryHandler(
+		"/"+serviceName+"/DeleteDevice",
+		handler.DeleteDevice,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/TestDeviceConnection", connect.NewUnaryHandler(
+		"/"+serviceName+"/TestDeviceConnection",
+		handler.TestDeviceConnection,
+		codecOpt,
+	))
 	mux.Handle("/"+serviceName+"/StreamDeviceStatus", connect.NewServerStreamHandler(
 		"/"+serviceName+"/StreamDeviceStatus",
 		handler.StreamDeviceStatus,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/StreamTerminal", connect.NewBidiStreamHandler(
+		"/"+serviceName+"/StreamTerminal",
+		handler.StreamTerminal,
 		codecOpt,
 	))
 

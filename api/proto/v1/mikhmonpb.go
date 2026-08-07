@@ -142,6 +142,42 @@ type GenerateVouchersResponse struct {
 	Message  string         `json:"message"`
 }
 
+type StreamTrafficRequest struct {
+	DeviceId  string `json:"device_id"`
+	Interface string `json:"interface"`
+}
+
+type TrafficStreamData struct {
+	DeviceId      string `json:"device_id"`
+	Interface     string `json:"interface"`
+	RxBps         int64  `json:"rx_bps"`
+	TxBps         int64  `json:"tx_bps"`
+	TimestampUnix int64  `json:"timestamp_unix"`
+}
+
+type StreamResourceRequest struct {
+	DeviceId string `json:"device_id"`
+}
+
+type ResourceStreamData struct {
+	DeviceId      string `json:"device_id"`
+	CpuLoad       int32  `json:"cpu_load"`
+	FreeMemory    string `json:"free_memory"`
+	Uptime        string `json:"uptime"`
+	TimestampUnix int64  `json:"timestamp_unix"`
+}
+
+type StreamActiveSessionsRequest struct {
+	DeviceId   string `json:"device_id"`
+	UserFilter string `json:"user_filter"`
+}
+
+type ActiveSessionsStreamData struct {
+	DeviceId      string                  `json:"device_id"`
+	Sessions      []*MikhmonActiveSession `json:"sessions"`
+	TimestampUnix int64                   `json:"timestamp_unix"`
+}
+
 type MikhmonServiceServer interface {
 	GetDashboard(context.Context, *GetMikhmonDashboardRequest) (*GetMikhmonDashboardResponse, error)
 	ListProfiles(context.Context, *ListMikhmonProfilesRequest) (*ListMikhmonProfilesResponse, error)

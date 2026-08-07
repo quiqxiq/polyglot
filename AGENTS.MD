@@ -70,6 +70,12 @@ polyglot/
 │   │   └── audit_writer.go
 │   │
 │   ├── adapter/
+│   │   ├── connect/
+│   │   │   ├── device_handler.go
+│   │   │   ├── customer_handler.go
+│   │   │   ├── auth_handler.go
+│   │   │   ├── rbac_handler.go
+│   │   │   └── billing_handler.go
 │   │   ├── http/
 │   │   │   ├── router.go
 │   │   │   ├── device_handler.go
@@ -94,9 +100,12 @@ polyglot/
 │   │   │   └── invoice_repository.go
 │   │   ├── vault/
 │   │   │   └── aes_vault.go
-│   │   └── auth/
-│   │       ├── jwt.go
-│   │       └── casbin.go
+│   │   ├── auth/
+│   │   │   ├── jwt.go
+│   │   │   └── casbin.go
+│   │   ├── llm/
+│   │   ├── memory/
+│   │   └── redis/
 │   │
 │   ├── driver/
 │   │   ├── mikrotik/

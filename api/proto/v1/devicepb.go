@@ -68,6 +68,30 @@ type UpdateDeviceResponse struct {
 	Message string  `json:"message"`
 }
 
+type DeleteDeviceRequest struct {
+	Id string `json:"id"`
+}
+
+type DeleteDeviceResponse struct {
+	Message string `json:"message"`
+}
+
+type TestDeviceConnectionRequest struct {
+	Id string `json:"id"`
+}
+
+type TestDeviceConnectionResponse struct {
+	DeviceId  string `json:"device_id"`
+	Status    string `json:"status"`
+	LatencyMs int64  `json:"latency_ms"`
+	Uptime    string `json:"uptime"`
+	Version   string `json:"version"`
+	BoardName string `json:"board_name"`
+	Identity  string `json:"identity"`
+	Message   string `json:"message"`
+	Success   bool   `json:"success"`
+}
+
 type StreamDeviceStatusRequest struct {
 	Id string `json:"id"`
 }
@@ -86,6 +110,14 @@ type DeviceTestMetrics struct {
 type DeviceStatusFrame struct {
 	Device *Device            `json:"device"`
 	Test   *DeviceTestMetrics `json:"test"`
+}
+
+type TerminalFrame struct {
+	DeviceId   string `json:"device_id"`
+	InputData  []byte `json:"input_data"`
+	OutputData []byte `json:"output_data"`
+	Cols       int32  `json:"cols"`
+	Rows       int32  `json:"rows"`
 }
 
 // DeviceServiceServer is the server API for DeviceService service.

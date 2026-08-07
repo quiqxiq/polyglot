@@ -176,7 +176,11 @@ func TestMCP_ListTools(t *testing.T) {
 	for i, tool := range tools.Tools {
 		names[i] = tool.Name
 	}
-	assert.ElementsMatch(t, []string{"get_device_status", "run_command", "push_config"}, names)
+	assert.ElementsMatch(t, []string{
+		"get_device_status", "run_command", "push_config",
+		"mikhmon_get_dashboard", "mikhmon_generate_voucher", "mikhmon_kick_session",
+		"customer_lookup", "search_knowledge",
+	}, names)
 }
 
 func TestMCP_GetDeviceStatus_E2E(t *testing.T) {

@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/proto/v1;devicepb";
+
+message Invoice {
+  string id = 1;
+  string customer_id = 2;
+  double amount = 3;
+  string status = 4;
+  int64 due_date_unix = 5;
+  int64 created_at_unix = 6;
+}
+
+message ListInvoicesRequest {
+  string customer_id = 1;
+}
+message ListInvoicesResponse {
+  repeated Invoice invoices = 1;
+}
+
+message GetInvoiceRequest {
+  string id = 1;
+}
+message GetInvoiceResponse {
+  Invoice invoice = 1;
+}
+
+message CreateInvoiceRequest {
+  string customer_id = 1;
+  double amount = 2;
+  int64 due_date_unix = 3;
+}
+message CreateInvoiceResponse {
+  Invoice invoice = 1;
+}
+
+message PayInvoiceRequest {
+  string id = 1;
+  string payment_method = 2;
+}
+message PayInvoiceResponse {
+  Invoice invoice = 1;
+  string message = 2;
+}
+
+message ListSubscriptionsRequest {
+  string customer_id = 1;
+}
+message ListSubscriptionsResponse {
+  repeated Subscription subscriptions = 1;
+}
+
+message CreateSubscriptionRequest {
+  string customer_id = 1;
+  string plan_id = 2;
+  double price = 3;
+}
+message CreateSubscriptionResponse {
+  Subscription subscription = 1;
+}
+
+message CancelSubscriptionRequest {
+  string id = 1;
+}
+message CancelSubscriptionResponse {
+  Subscription subscription = 1;
+  string message = 2;
+}
+
+service BillingService {
+  rpc ListInvoices(ListInvoicesRequest) returns (ListInvoicesResponse);
+  rpc GetInvoice(GetInvoiceRequest) returns (GetInvoiceResponse);
+  rpc CreateInvoice(CreateInvoiceRequest) returns (CreateInvoiceResponse);
+  rpc PayInvoice(PayInvoiceRequest) returns (PayInvoiceResponse);
+  rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse);
+  rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse);
+  rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse);
+}

@@ -7,7 +7,6 @@ import {
   listDHCPLeasesApi,
   kickPPPoESessionApi,
   kickHotspotSessionApi,
-  getWSBaseUrl,
 } from '../api/client'
 
 export const useNetworkStore = defineStore('network', () => {
@@ -105,20 +104,7 @@ export const useNetworkStore = defineStore('network', () => {
   function startHotspotActiveStream() {
     stopHotspotActiveStream()
     if (!selectedDeviceId.value) return
-
-    const streamUrl = `${getWSBaseUrl()}/ws/devices/${selectedDeviceId.value}/mikhmon/hotspot-active`
-    hotspotActiveEventSource = new EventSource(streamUrl)
-
-    hotspotActiveEventSource.addEventListener('hotspot_active', (event: MessageEvent) => {
-      try {
-        const data = JSON.parse(event.data)
-        if (Array.isArray(data)) {
-          hotspotActive.value = data
-        }
-      } catch (e) {
-        console.error('Error parsing hotspot_active SSE frame:', e)
-      }
-    })
+    fetchHotspotActive()
   }
 
   function stopHotspotActiveStream() {
@@ -131,20 +117,7 @@ export const useNetworkStore = defineStore('network', () => {
   function startPPPActiveStream() {
     stopPPPActiveStream()
     if (!selectedDeviceId.value) return
-
-    const streamUrl = `${getWSBaseUrl()}/ws/devices/${selectedDeviceId.value}/mikhmon/ppp-active`
-    pppActiveEventSource = new EventSource(streamUrl)
-
-    pppActiveEventSource.addEventListener('ppp_active', (event: MessageEvent) => {
-      try {
-        const data = JSON.parse(event.data)
-        if (Array.isArray(data)) {
-          pppoeActive.value = data
-        }
-      } catch (e) {
-        console.error('Error parsing ppp_active SSE frame:', e)
-      }
-    })
+    fetchPPPoEActive()
   }
 
   function stopPPPActiveStream() {

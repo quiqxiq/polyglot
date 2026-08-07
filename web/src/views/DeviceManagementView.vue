@@ -156,6 +156,14 @@
               <td>
                 <div class="flex gap-2">
                   <button
+                    class="btn btn-sm btn-primary"
+                    title="Buka Web Terminal SSH"
+                    @click="openTerminal(dev)"
+                  >
+                    <TerminalIcon class="w-3.5 h-3.5 mr-1 text-sky-400" />
+                    Terminal
+                  </button>
+                  <button
                     class="btn btn-sm btn-secondary"
                     :disabled="deviceStore.testingId === dev.id"
                     title="Test Ping/Koneksi API"
@@ -314,6 +322,15 @@
       @confirm="executeDelete"
       @cancel="showDeleteModal = false"
     />
+
+    <!-- Interactive Web Terminal SSH Modal -->
+    <TerminalModal
+      :show="showTerminalModal"
+      :device-id="selectedTerminalDevice?.id || ''"
+      :device-name="selectedTerminalDevice?.name || ''"
+      :vendor="selectedTerminalDevice?.vendor || ''"
+      @close="showTerminalModal = false"
+    />
   </div>
 </template>
 
@@ -332,10 +349,12 @@ import {
   AlertCircle,
   Cpu,
   X,
+  Terminal as TerminalIcon,
 } from 'lucide-vue-next'
 import { useDeviceStore } from '../stores/devices'
 import type { Device, DevicePayload } from '../types'
 import ConfirmModal from '../components/ConfirmModal.vue'
+import TerminalModal from '../components/TerminalModal.vue'
 
 const deviceStore = useDeviceStore()
 
@@ -356,6 +375,14 @@ const submitting = ref(false)
 
 const showDeleteModal = ref(false)
 const targetDevice = ref<Device | null>(null)
+
+const showTerminalModal = ref(false)
+const selectedTerminalDevice = ref<Device | null>(null)
+
+function openTerminal(dev: Device) {
+  selectedTerminalDevice.value = dev
+  showTerminalModal.value = true
+}
 
 const tagsInput = ref('')
 

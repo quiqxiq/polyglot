@@ -7,8 +7,8 @@ import {
   updateDeviceApi,
   deleteDeviceApi,
   testDeviceConnectionApi,
-  getWSBaseUrl,
 } from '../api/client'
+import { deviceConnectClient } from '../api/connect_services'
 
 export const useDeviceStore = defineStore('devices', () => {
   const devices = ref<Device[]>([])
@@ -130,70 +130,41 @@ export const useDeviceStore = defineStore('devices', () => {
     }
   }
 
-  let devicesEventSource: EventSource | null = null
+  let activeStreamController: AbortController | null = null
 
-  function startDevicesStream() {
+  async function startDevicesStream() {
     stopDevicesStream()
-    const streamUrl = `${getWSBaseUrl()}/ws/devices/stream`
-    devicesEventSource = new EventSource(streamUrl)
-
-    devicesEventSource.addEventListener('devices_status', (event: MessageEvent) => {
-      try {
-        const items = JSON.parse(event.data)
-        if (Array.isArray(items)) {
-          if (devices.value.length === 0) {
-            devices.value = items.map((item: any) => item.device)
-          } else {
-            items.forEach((item: any) => {
-              if (item.device && item.device.id) {
-                const idx = devices.value.findIndex((d) => d.id === item.device.id)
-                if (idx !== -1) {
-                  devices.value[idx] = { ...devices.value[idx], ...item.device }
-                } else {
-                  devices.value.push(item.device)
-                }
-              }
-            })
-          }
-          items.forEach((item: any) => {
-            if (item.device && item.device.id) {
-              const devId = item.device.id
-              if (item.test && item.test.status === 'connecting') {
-                if (!testResults.value[devId]) {
-                  testResults.value[devId] = {
-                    success: false,
-                    connecting: true,
-                    message: item.test.message || 'Connecting to device...',
-                  }
-                }
-              } else if (item.test) {
-                testResults.value[devId] = {
-                  success: item.test.status === 'connected' || item.test.status === 'ok' || item.test.status === 'success',
-                  message: item.test.message || 'Streaming live from MikroTik socket',
-                  latency_ms: item.test.latency_ms,
-                  identity: item.test.identity,
-                  version: item.test.version,
-                  board_name: item.test.board_name,
-                  uptime: item.test.uptime,
-                }
-              }
-            }
-          })
+    activeStreamController = new AbortController()
+    try {
+      const stream: any = await deviceConnectClient.streamDeviceStatus(
+        {} as any,
+        {
+          signal: activeStreamController.signal,
         }
-      } catch (e) {
-        console.error('Error parsing devices_status SSE frame:', e)
+      )
+      for await (const frame of stream) {
+        if (activeStreamController?.signal.aborted) break
+        if (frame && frame.device) {
+          const dev = frame.device
+          const idx = devices.value.findIndex((d) => d.id === dev.id)
+          if (idx !== -1) {
+            devices.value[idx] = { ...devices.value[idx], ...dev }
+          } else {
+            devices.value.push(dev)
+          }
+        }
       }
-    })
-
-    devicesEventSource.onerror = (e) => {
-      console.warn('Devices status SSE connection error', e)
+    } catch (e: any) {
+      if (e.name !== 'AbortError') {
+        console.warn('ConnectRPC StreamDeviceStatus stream ended:', e)
+      }
     }
   }
 
   function stopDevicesStream() {
-    if (devicesEventSource) {
-      devicesEventSource.close()
-      devicesEventSource = null
+    if (activeStreamController) {
+      activeStreamController.abort()
+      activeStreamController = null
     }
   }
 

@@ -149,6 +149,42 @@ message GenerateVouchersResponse {
   string message = 2;
 }
 
+message StreamTrafficRequest {
+  string device_id = 1;
+  string interface = 2;
+}
+
+message TrafficStreamData {
+  string device_id = 1;
+  string interface = 2;
+  int64 rx_bps = 3;
+  int64 tx_bps = 4;
+  int64 timestamp_unix = 5;
+}
+
+message StreamResourceRequest {
+  string device_id = 1;
+}
+
+message ResourceStreamData {
+  string device_id = 1;
+  int32 cpu_load = 2;
+  string free_memory = 3;
+  string uptime = 4;
+  int64 timestamp_unix = 5;
+}
+
+message StreamActiveSessionsRequest {
+  string device_id = 1;
+  string user_filter = 2;
+}
+
+message ActiveSessionsStreamData {
+  string device_id = 1;
+  repeated MikhmonActiveSession sessions = 2;
+  int64 timestamp_unix = 3;
+}
+
 service MikhmonService {
   rpc GetDashboard(GetMikhmonDashboardRequest) returns (GetMikhmonDashboardResponse);
   rpc ListProfiles(ListMikhmonProfilesRequest) returns (ListMikhmonProfilesResponse);
@@ -158,4 +194,7 @@ service MikhmonService {
   rpc ListDHCPLeases(ListMikhmonDHCPLeasesRequest) returns (ListMikhmonDHCPLeasesResponse);
   rpc BlockDHCPLease(BlockDHCPLeaseRequest) returns (BlockDHCPLeaseResponse);
   rpc GenerateVouchers(GenerateVouchersRequest) returns (GenerateVouchersResponse);
+  rpc StreamTraffic(StreamTrafficRequest) returns (stream TrafficStreamData);
+  rpc StreamResource(StreamResourceRequest) returns (stream ResourceStreamData);
+  rpc StreamActiveSessions(StreamActiveSessionsRequest) returns (stream ActiveSessionsStreamData);
 }

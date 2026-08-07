@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -14,7 +14,6 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	connectAdapter "github.com/quixiq/polyglot/internal/adapter/connect"
-	mcpAdapter "github.com/quixiq/polyglot/internal/adapter/http"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
 	"github.com/quixiq/polyglot/internal/adapter/memory"
@@ -47,12 +46,14 @@ func main() {
 
 	// 1. Initialize Database & Storage Adapters
 	log.Println("[Polyglot Engine] Initializing database and cache stores...")
-	pgStore, err := postgres.NewStore(cfg.DatabaseURL)
+	dbURL := strings.TrimSpace(cfg.DatabaseURL)
+	pgStore, err := postgres.NewStore(dbURL)
 	if err != nil {
 		log.Printf("[Warning] Failed to connect to PostgreSQL (%v). Features requiring database will fail until DB is online.", err)
 	}
 
-	redisStore, err := redisAdapter.NewStore(cfg.RedisURL)
+	redisURL := strings.TrimSpace(cfg.RedisURL)
+	redisStore, err := redisAdapter.NewStore(redisURL)
 	if err != nil {
 		log.Printf("[Warning] Failed to connect to Redis (%v). Falling back to in-memory cache.", err)
 	}
@@ -119,56 +120,52 @@ func main() {
 
 	// Streaming Driver Provider
 
-	streamDriverProvider := func(ctx context.Context, deviceID string) (port.StreamingDeviceDriver, error) {
-		driver, err := reg.Get(ctx, deviceID)
-		if err != nil {
-			return nil, err
-		}
-		sd, ok := driver.(port.StreamingDeviceDriver)
-		if !ok {
-			return nil, fmt.Errorf("driver for device %q does not support streaming", deviceID)
-		}
-		return sd, nil
-	}
-
-	// Streaming Handlers (WebSockets & SSE)
-	mikhmonStreamHandler := wsAdapter.NewMikhmonStreamHandler(streamDriverProvider)
-	deviceStreamHandler := wsAdapter.NewDeviceStreamHandler(deviceUC, streamDriverProvider)
-
 	// Gin Router Setup
 	r := gin.Default()
 	r.Use(middleware.CORS(cfg.CORSOrigins))
 
-	// Auth & RBAC REST Routes (Pending ConnectRPC Migration)
-	if pgStore != nil && casbinEnforcer != nil {
-		authHandler := mcpAdapter.NewAuthHandler(pgStore, jwtService)
-		rbacHandler := mcpAdapter.NewRBACHandler(casbinEnforcer)
-
-		mcpAdapter.RegisterAuthRoutes(r, authHandler, jwtService)
-		mcpAdapter.RegisterRBACRoutes(r, rbacHandler, jwtService, casbinEnforcer)
+	connectDriverProvider := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
+		return reg.Get(ctx, deviceID)
 	}
 
-	// Realtime Event Streaming Route (SSE)
-	mcpAdapter.RegisterEventRoutes(r, sseHub)
-
-	// Realtime WebSockets & SSE Streaming Routes
-	wsAdapter.RegisterStreamingRoutes(r, mikhmonStreamHandler)
-	wsAdapter.RegisterDeviceStreamingRoutes(r, deviceStreamHandler)
-
 	// MCP Protocol Handler
-	mcpServer := mcp.New(reg, nil)
+	mcpServer := mcp.New(reg, nil).
+		WithMikhmonUseCase(mikhmonUC).
+		WithCustomerRepository(customerRepo)
 	r.Any("/mcp", gin.WrapH(mcpServer.HTTPHandler()))
 
+	targetResolver := func(ctx context.Context, deviceID string) (*device.Target, error) {
+		dev, err := repo.FindByID(ctx, deviceID)
+		if err != nil {
+			return nil, err
+		}
+		creds, err := vault.Get(ctx, deviceID)
+		if err != nil {
+			creds = device.Credentials{Username: "admin", Password: "r00t"}
+		}
+		target := dev.ToTarget(creds)
+		return &target, nil
+	}
+
+	// Realtime Event Streaming Route (SSE & WS Terminal)
+	wsAdapter.RegisterEventRoutes(r, sseHub, connectDriverProvider, targetResolver)
+
 	// ConnectRPC Protocol Handler (Buf / Connect RPC served over standard HTTP on :8080)
-	connectPath, connectHandler := connectAdapter.NewDeviceServiceHandler(deviceUC, deviceStreamHandler)
+	connectPath, connectHandler := connectAdapter.NewDeviceServiceHandler(deviceUC, connectDriverProvider)
 	r.Any(connectPath+"*action", gin.WrapH(connectHandler))
 
 	custConnectPath, custConnectHandler := connectAdapter.NewCustomerServiceHandler(customerUC)
 	r.Any(custConnectPath+"*action", gin.WrapH(custConnectHandler))
 
-	connectDriverProvider := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
-		return reg.Get(ctx, deviceID)
-	}
+	authConnectPath, authConnectHandler := connectAdapter.NewAuthServiceHandler(pgStore, jwtService)
+	r.Any(authConnectPath+"*action", gin.WrapH(authConnectHandler))
+
+	rbacConnectPath, rbacConnectHandler := connectAdapter.NewRBACServiceHandler(casbinEnforcer)
+	r.Any(rbacConnectPath+"*action", gin.WrapH(rbacConnectHandler))
+
+	billingConnectPath, billingConnectHandler := connectAdapter.NewBillingServiceHandler()
+	r.Any(billingConnectPath+"*action", gin.WrapH(billingConnectHandler))
+
 	mikhmonConnectPath, mikhmonConnectHandler := connectAdapter.NewMikhmonServiceHandler(mikhmonUC, connectDriverProvider)
 	r.Any(mikhmonConnectPath+"*action", gin.WrapH(mikhmonConnectHandler))
 
@@ -180,6 +177,9 @@ func main() {
 
 	knwConnectPath, knwConnectHandler := connectAdapter.NewKnowledgeServiceHandler()
 	r.Any(knwConnectPath+"*action", gin.WrapH(knwConnectHandler))
+
+	probeConnectPath, probeConnectHandler := connectAdapter.NewProbeServiceHandler()
+	r.Any(probeConnectPath+"*action", gin.WrapH(probeConnectHandler))
 
 	httpSrv := &http.Server{
 		Addr:    httpAddr,

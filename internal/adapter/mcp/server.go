@@ -7,26 +7,22 @@ import (
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
+	"github.com/quixiq/polyglot/internal/usecase/network"
 )
 
 // Server wraps the MCP SDK server and holds the dependencies every tool
-// handler needs: the device driver registry (for looking up a connected
-// driver by device_id) and an optional audit writer (for recording tool
-// executions per Polyglot-Architecture.md §2 prinsip 8).
-//
-// MCP surface is intentionally narrow per Polyglot-Architecture.md §2
-// prinsip 3: only get_device_status, run_command, and push_config are
-// exposed — operations that genuinely need AI judgment. Admin CRUD
-// (device/customer/subscription/plan) stays in internal/adapter/http.
+// handler needs: the device driver registry, audit writer, Mikhmon use case,
+// customer repository, and knowledge retriever.
 type Server struct {
-	mcpServer *mcp.Server
-	registry  *registry.Registry
-	audit     port.AuditWriter
+	mcpServer          *mcp.Server
+	registry           *registry.Registry
+	audit              port.AuditWriter
+	mikhmonUC          *network.MikhmonUseCase
+	customerRepo       port.CustomerRepository
+	knowledgeRetriever port.KnowledgeRetriever
 }
 
-// New builds an MCP Server with all three network tools registered. The
-// registry resolves device_id → connected driver; the audit writer records
-// executions (pass nil to skip auditing until the audit adapter is wired).
+// New builds an MCP Server with registered tools.
 func New(reg *registry.Registry, audit port.AuditWriter) *Server {
 	s := &Server{
 		mcpServer: mcp.NewServer(&mcp.Implementation{Name: "polyglot", Version: "v1.0.0"}, nil),
@@ -34,6 +30,24 @@ func New(reg *registry.Registry, audit port.AuditWriter) *Server {
 		audit:     audit,
 	}
 	s.registerTools()
+	return s
+}
+
+// WithMikhmonUseCase sets the MikhmonUseCase dependency.
+func (s *Server) WithMikhmonUseCase(uc *network.MikhmonUseCase) *Server {
+	s.mikhmonUC = uc
+	return s
+}
+
+// WithCustomerRepository sets the CustomerRepository dependency.
+func (s *Server) WithCustomerRepository(repo port.CustomerRepository) *Server {
+	s.customerRepo = repo
+	return s
+}
+
+// WithKnowledgeRetriever sets the KnowledgeRetriever dependency.
+func (s *Server) WithKnowledgeRetriever(kr port.KnowledgeRetriever) *Server {
+	s.knowledgeRetriever = kr
 	return s
 }
 
@@ -56,6 +70,38 @@ func (s *Server) registerTools() {
 		Description: "Push a configuration change to a device. Destructive — approval required.",
 		Annotations: &mcp.ToolAnnotations{DestructiveHint: &destructive},
 	}, s.pushConfig)
+
+	// Mikhmon & Hotspot Tools
+	mcp.AddTool(s.mcpServer, &mcp.Tool{
+		Name:        "mikhmon_get_dashboard",
+		Description: "Get Mikrotik Mikhmon hotspot dashboard metrics (CPU, Memory, Uptime, Active users, Today income). Read-only.",
+		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
+	}, s.mikhmonGetDashboard)
+
+	mcp.AddTool(s.mcpServer, &mcp.Tool{
+		Name:        "mikhmon_generate_voucher",
+		Description: "Generate a batch of hotspot user vouchers for a given profile. Destructive — approval required.",
+		Annotations: &mcp.ToolAnnotations{DestructiveHint: &destructive},
+	}, s.mikhmonGenerateVoucher)
+
+	mcp.AddTool(s.mcpServer, &mcp.Tool{
+		Name:        "mikhmon_kick_session",
+		Description: "Disconnect an active hotspot user session by username, IP, or session ID. Destructive — approval required.",
+		Annotations: &mcp.ToolAnnotations{DestructiveHint: &destructive},
+	}, s.mikhmonKickSession)
+
+	// Customer & Support Tools
+	mcp.AddTool(s.mcpServer, &mcp.Tool{
+		Name:        "customer_lookup",
+		Description: "Lookup ISP customer profile and active subscriptions by phone number, name, or customer ID. Read-only.",
+		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
+	}, s.customerLookup)
+
+	mcp.AddTool(s.mcpServer, &mcp.Tool{
+		Name:        "search_knowledge",
+		Description: "Search RAG Knowledge Base articles and troubleshooting solutions for technical customer issues. Read-only.",
+		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
+	}, s.searchKnowledge)
 }
 
 // HTTPHandler returns an http.Handler that serves the MCP streamable-HTTP

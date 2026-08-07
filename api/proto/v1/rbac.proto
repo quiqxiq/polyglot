@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/proto/v1;devicepb";
+
+message Policy {
+  string sub = 1;
+  string obj = 2;
+  string act = 3;
+}
+
+message RoleAssignment {
+  string user = 1;
+  string role = 2;
+}
+
+message ListPoliciesRequest {}
+message ListPoliciesResponse {
+  repeated Policy policies = 1;
+}
+
+message AddPolicyRequest {
+  Policy policy = 1;
+}
+message AddPolicyResponse {
+  bool success = 1;
+}
+
+message RemovePolicyRequest {
+  Policy policy = 1;
+}
+message RemovePolicyResponse {
+  bool success = 1;
+}
+
+message ListRoleAssignmentsRequest {}
+message ListRoleAssignmentsResponse {
+  repeated RoleAssignment role_assignments = 1;
+}
+
+message AssignRoleRequest {
+  RoleAssignment assignment = 1;
+}
+message AssignRoleResponse {
+  bool success = 1;
+}
+
+message UnassignRoleRequest {
+  RoleAssignment assignment = 1;
+}
+message UnassignRoleResponse {
+  bool success = 1;
+}
+
+service RBACService {
+  rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse);
+  rpc AddPolicy(AddPolicyRequest) returns (AddPolicyResponse);
+  rpc RemovePolicy(RemovePolicyRequest) returns (RemovePolicyResponse);
+  rpc ListRoleAssignments(ListRoleAssignmentsRequest) returns (ListRoleAssignmentsResponse);
+  rpc AssignRole(AssignRoleRequest) returns (AssignRoleResponse);
+  rpc UnassignRole(UnassignRoleRequest) returns (UnassignRoleResponse);
+}

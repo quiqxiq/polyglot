@@ -7,7 +7,6 @@ import {
   getQRCodeApi,
   getPairingCodeApi,
   toggleBotApi,
-  updateWebhookApi,
   logoutSessionApi,
   deleteSessionApi,
   reconnectSessionApi,
@@ -30,8 +29,8 @@ export const useSessionStore = defineStore('sessions', () => {
     }
   }
 
-  async function createSession(deviceName: string, phoneNumber?: string, webhookUrl?: string) {
-    const res = await createSessionApi(deviceName, phoneNumber, webhookUrl)
+  async function createSession(deviceName: string, phoneNumber?: string) {
+    const res = await createSessionApi(deviceName, phoneNumber)
     if (res.qr_code) {
       activeQRCode.value = res.qr_code
       activeSessionId.value = res.session.id
