@@ -1,6 +1,7 @@
 package device
 
 import (
+	"strconv"
 	"time"
 )
 
@@ -35,6 +36,7 @@ type Device struct {
 	DriverType     string            `json:"driver_type"`
 	Host           string            `json:"host"`
 	Port           int               `json:"port"`
+	SSHPort        int               `json:"ssh_port,omitempty"`
 	TimeoutMS      int               `json:"timeout_ms"`
 	PollIntervalMS int               `json:"poll_interval_ms,omitempty"`
 	Extra          map[string]string `json:"extra,omitempty"`
@@ -44,20 +46,20 @@ type Device struct {
 
 // ToTarget merges a Device inventory record with decrypted Credentials into
 // a Target suitable for passing to a vendor's NewDriver(ctx, target).
-// Non-sensitive vendor params from Device.Extra (e.g. use_tls, device_id for
-// genieacs) and sensitive ones from Credentials.Extra (e.g. api_key,
-// community string) are merged into a single Extra map — the driver sees one
-// uniform map regardless of where each field physically lives. Credential
-// fields win on key conflict, since they are the authoritative source for
-// secrets.
 func (d Device) ToTarget(c Credentials) Target {
-	extra := make(map[string]string, len(d.Extra)+len(c.Extra))
+	extra := make(map[string]string, len(d.Extra)+len(c.Extra)+1)
 	for k, v := range d.Extra {
 		extra[k] = v
 	}
 	for k, v := range c.Extra {
 		extra[k] = v
 	}
+	sshPort := d.SSHPort
+	if sshPort <= 0 {
+		sshPort = 22
+	}
+	extra["ssh_port"] = strconv.Itoa(sshPort)
+
 	return Target{
 		Host:     d.Host,
 		Port:     d.Port,

@@ -191,6 +191,7 @@ export interface Device {
   driver_type: string
   host: string
   port: number
+  ssh_port?: number
   timeout_ms: number
   poll_interval_ms?: number
   extra?: Record<string, string>
@@ -206,6 +207,7 @@ export interface DevicePayload {
   driver_type: string
   host: string
   port: number
+  ssh_port?: number
   timeout_ms: number
   poll_interval_ms?: number
   extra?: Record<string, string>

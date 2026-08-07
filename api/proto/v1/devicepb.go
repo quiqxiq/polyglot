@@ -37,6 +37,7 @@ type Device struct {
 	DriverType     string   `json:"driver_type"`
 	Host           string   `json:"host"`
 	Port           int32    `json:"port"`
+	SshPort        int32    `json:"ssh_port"`
 	TimeoutMs      int32    `json:"timeout_ms"`
 	PollIntervalMs int32    `json:"poll_interval_ms"`
 	Tags           []string `json:"tags"`

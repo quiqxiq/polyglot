@@ -17,6 +17,7 @@ message Device {
   int32 poll_interval_ms = 9;
   repeated string tags = 10;
   bool enabled = 11;
+  int32 ssh_port = 12;
 }
 
 message ListDevicesRequest {}

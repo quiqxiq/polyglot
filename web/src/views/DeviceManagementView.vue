@@ -240,7 +240,7 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-4 mb-4">
+          <div class="grid grid-cols-3 gap-4 mb-4">
             <div class="form-group">
               <label class="form-label">Host / IP Address</label>
               <input
@@ -252,8 +252,12 @@
               />
             </div>
             <div class="form-group">
-              <label class="form-label">Port API / SSH</label>
+              <label class="form-label">Port API Router</label>
               <input v-model.number="form.port" type="number" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Port SSH (Default: 22)</label>
+              <input v-model.number="form.ssh_port" type="number" class="form-control" placeholder="22" />
             </div>
           </div>
 
@@ -393,6 +397,7 @@ const form = ref<DevicePayload>({
   driver_type: 'mikrotik',
   host: '',
   port: 8728,
+  ssh_port: 22,
   timeout_ms: 10000,
   poll_interval_ms: 30000,
   enabled: true,
@@ -429,6 +434,7 @@ function openCreateModal() {
     driver_type: 'mikrotik',
     host: '',
     port: 8728,
+    ssh_port: 22,
     timeout_ms: 10000,
     poll_interval_ms: 30000,
     enabled: true,
@@ -448,6 +454,7 @@ function openEditModal(dev: Device) {
     driver_type: dev.driver_type,
     host: dev.host,
     port: dev.port,
+    ssh_port: dev.ssh_port || 22,
     timeout_ms: dev.timeout_ms,
     poll_interval_ms: dev.poll_interval_ms || 30000,
     enabled: dev.enabled,

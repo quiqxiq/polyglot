@@ -16,6 +16,7 @@ type DeviceModel struct {
 	DriverType     string `gorm:"not null;default:mikrotik"`
 	Host           string `gorm:"not null"`
 	Port           int    `gorm:"not null;default:8728"`
+	SSHPort        int    `gorm:"column:ssh_port;not null;default:22"`
 	TimeoutMS      int    `gorm:"not null;default:10000"`
 	PollIntervalMS int    `gorm:"not null;default:30000"`
 	ExtraJSON      string `gorm:"type:text"`
@@ -50,6 +51,11 @@ func (m *DeviceModel) ToDomain() device.Device {
 		_ = json.Unmarshal([]byte(m.TagsJSON), &tags)
 	}
 
+	sshPort := m.SSHPort
+	if sshPort <= 0 {
+		sshPort = 22
+	}
+
 	return device.Device{
 		ID:             m.ID,
 		TenantID:       m.TenantID,
@@ -58,6 +64,7 @@ func (m *DeviceModel) ToDomain() device.Device {
 		DriverType:     m.DriverType,
 		Host:           m.Host,
 		Port:           m.Port,
+		SSHPort:        sshPort,
 		TimeoutMS:      m.TimeoutMS,
 		PollIntervalMS: m.PollIntervalMS,
 		Extra:          extra,
@@ -75,6 +82,11 @@ func DeviceModelFromDomain(d device.Device) *DeviceModel {
 		tenantID = "tenant-default"
 	}
 
+	sshPort := d.SSHPort
+	if sshPort <= 0 {
+		sshPort = 22
+	}
+
 	return &DeviceModel{
 		ID:             d.ID,
 		TenantID:       tenantID,
@@ -83,6 +95,7 @@ func DeviceModelFromDomain(d device.Device) *DeviceModel {
 		DriverType:     d.DriverType,
 		Host:           d.Host,
 		Port:           d.Port,
+		SSHPort:        sshPort,
 		TimeoutMS:      d.TimeoutMS,
 		PollIntervalMS: d.PollIntervalMS,
 		ExtraJSON:      string(extraJSON),

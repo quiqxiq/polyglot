@@ -317,6 +317,10 @@ func NewDeviceServiceHandler(uc *business.ManageDeviceUseCase, getter DriverGett
 }
 
 func domainToPb(d device.Device) *devicepb.Device {
+	sshPort := int32(d.SSHPort)
+	if sshPort <= 0 {
+		sshPort = 22
+	}
 	return &devicepb.Device{
 		Id:             d.ID,
 		TenantId:       d.TenantID,
@@ -325,6 +329,7 @@ func domainToPb(d device.Device) *devicepb.Device {
 		DriverType:     d.DriverType,
 		Host:           d.Host,
 		Port:           int32(d.Port),
+		SshPort:        sshPort,
 		TimeoutMs:      int32(d.TimeoutMS),
 		PollIntervalMs: int32(d.PollIntervalMS),
 		Tags:           d.Tags,
@@ -336,6 +341,10 @@ func pbToDomain(pb *devicepb.Device) device.Device {
 	if pb == nil {
 		return device.Device{}
 	}
+	sshPort := int(pb.SshPort)
+	if sshPort <= 0 {
+		sshPort = 22
+	}
 	return device.Device{
 		ID:             pb.Id,
 		TenantID:       pb.TenantId,
@@ -344,6 +353,7 @@ func pbToDomain(pb *devicepb.Device) device.Device {
 		DriverType:     pb.DriverType,
 		Host:           pb.Host,
 		Port:           int(pb.Port),
+		SSHPort:        sshPort,
 		TimeoutMS:      int(pb.TimeoutMs),
 		PollIntervalMS: int(pb.PollIntervalMs),
 		Tags:           pb.Tags,
