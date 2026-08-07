@@ -134,21 +134,10 @@ func main() {
 		WithCustomerRepository(customerRepo)
 	r.Any("/mcp", gin.WrapH(mcpServer.HTTPHandler()))
 
-	targetResolver := func(ctx context.Context, deviceID string) (*device.Target, error) {
-		dev, err := repo.FindByID(ctx, deviceID)
-		if err != nil {
-			return nil, err
-		}
-		creds, err := vault.Get(ctx, deviceID)
-		if err != nil {
-			creds = device.Credentials{Username: "admin", Password: "r00t"}
-		}
-		target := dev.ToTarget(creds)
-		return &target, nil
-	}
+	openTermUC := network.NewOpenTerminalUseCase(repo, vault)
 
 	// Realtime Event Streaming Route (SSE & WS Terminal)
-	wsAdapter.RegisterEventRoutes(r, sseHub, connectDriverProvider, targetResolver)
+	wsAdapter.RegisterEventRoutes(r, sseHub, openTermUC)
 
 	// ConnectRPC Protocol Handler (Buf / Connect RPC served over standard HTTP on :8080)
 	connectPath, connectHandler := connectAdapter.NewDeviceServiceHandler(deviceUC, connectDriverProvider)
