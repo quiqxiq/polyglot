@@ -27,13 +27,13 @@ export const DeviceService = {
       name: 'StreamDeviceStatus',
       I: class StreamDeviceStatusRequest {},
       O: class DeviceStatusFrame {},
-      kind: 'server_streaming',
+      kind: 'serverStreaming',
     },
     {
       name: 'StreamTerminal',
       I: class TerminalFrame {},
       O: class TerminalFrame {},
-      kind: 'bidi_streaming',
+      kind: 'bidiStreaming',
     },
   ],
 } as const;
