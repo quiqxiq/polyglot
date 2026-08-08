@@ -12,7 +12,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	devicepb "github.com/quixiq/polyglot/api/proto/v1"
+	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 )
 
 func main() {

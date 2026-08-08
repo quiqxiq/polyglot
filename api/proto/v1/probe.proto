@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package polyglot.v1;
 
-option go_package = "github.com/quixiq/polyglot/api/proto/v1;devicepb";
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 message PingTelemetry {
   string probe_id = 1;

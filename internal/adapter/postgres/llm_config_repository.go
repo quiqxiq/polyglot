@@ -15,6 +15,34 @@ type tokenStats struct {
 	Count    int64
 }
 
+func (s *Store) Create(config *llm.LLMConfig) error {
+	return s.CreateLLMConfig(config)
+}
+
+func (s *Store) FindByID(id uint) (*llm.LLMConfig, error) {
+	return s.FindLLMConfigByID(id)
+}
+
+func (s *Store) FindActive() (*llm.LLMConfig, error) {
+	return s.FindActiveLLMConfig()
+}
+
+func (s *Store) FindAll() ([]llm.LLMConfig, error) {
+	return s.FindAllLLMConfigs()
+}
+
+func (s *Store) Update(config *llm.LLMConfig) error {
+	return s.UpdateLLMConfig(config)
+}
+
+func (s *Store) SetActive(id uint) error {
+	return s.SetActiveLLMConfig(id)
+}
+
+func (s *Store) Delete(id uint) error {
+	return s.DeleteLLMConfig(id)
+}
+
 func (s *Store) CreateLLMConfig(config *llm.LLMConfig) error {
 	m := models.LLMConfigModelFromDomain(config)
 	if err := s.db.Create(m).Error; err != nil {

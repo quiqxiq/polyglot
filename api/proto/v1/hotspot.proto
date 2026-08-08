@@ -1,0 +1,200 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+message HotspotDashboardSummary {
+  int32 total_hotspot_users = 1;
+  int32 total_active_users = 2;
+  double today_income = 3;
+  string uptime = 4;
+}
+
+message HotspotProfile {
+  string id = 1;
+  string name = 2;
+  string shared_users = 3;
+  string rate_limit = 4;
+  string mode_expire = 5;
+  string validity = 6;
+  double price = 7;
+  double selling_price = 8;
+  string lock_user = 9;
+  string parent_queue = 10;
+  string comment = 11;
+}
+
+message HotspotUser {
+  string id = 1;
+  string name = 2;
+  string password = 3;
+  string profile = 4;
+  string limit_uptime = 5;
+  string limit_bytes = 6;
+  string uptime = 7;
+  string bytes_in = 8;
+  string bytes_out = 9;
+  string comment = 10;
+  bool disabled = 11;
+}
+
+message HotspotActiveSession {
+  string id = 1;
+  string server = 2;
+  string user = 3;
+  string address = 4;
+  string mac_address = 5;
+  string uptime = 6;
+  string bytes_in = 7;
+  string bytes_out = 8;
+  string comment = 9;
+}
+
+message DHCPLease {
+  string id = 1;
+  string address = 2;
+  string mac_address = 3;
+  string host_name = 4;
+  string status = 5;
+  bool blocked = 6;
+  string comment = 7;
+}
+
+message HotspotReport {
+  string id = 1;
+  string date = 2;
+  string time = 3;
+  string username = 4;
+  string profile = 5;
+  double price = 6;
+  string comment = 7;
+}
+
+// Request & Response Messages
+message GetHotspotDashboardRequest {
+  string device_id = 1;
+}
+
+message GetHotspotDashboardResponse {
+  HotspotDashboardSummary summary = 1;
+}
+
+message ListHotspotProfilesRequest {
+  string device_id = 1;
+}
+
+message ListHotspotProfilesResponse {
+  repeated HotspotProfile profiles = 1;
+}
+
+message ListHotspotUsersRequest {
+  string device_id = 1;
+  string profile = 2;
+}
+
+message ListHotspotUsersResponse {
+  repeated HotspotUser users = 1;
+}
+
+message ListHotspotActiveSessionsRequest {
+  string device_id = 1;
+}
+
+message ListHotspotActiveSessionsResponse {
+  repeated HotspotActiveSession sessions = 1;
+}
+
+message KickHotspotSessionRequest {
+  string device_id = 1;
+  string ros_id = 2;
+}
+
+message KickHotspotSessionResponse {
+  string message = 1;
+}
+
+message ListDHCPLeasesRequest {
+  string device_id = 1;
+  string mac_filter = 2;
+}
+
+message ListDHCPLeasesResponse {
+  repeated DHCPLease leases = 1;
+}
+
+message BlockDHCPLeaseRequest {
+  string device_id = 1;
+  string ros_id = 2;
+  bool blocked = 3;
+  string comment = 4;
+}
+
+message BlockDHCPLeaseResponse {
+  string message = 1;
+}
+
+message GenerateVouchersRequest {
+  string device_id = 1;
+  string profile = 2;
+  int32 count = 3;
+  string user_type = 4;
+  int32 user_length = 5;
+  string prefix = 6;
+  string character_set = 7;
+}
+
+message GenerateVouchersResponse {
+  repeated HotspotUser vouchers = 1;
+  string message = 2;
+}
+
+message StreamTrafficRequest {
+  string device_id = 1;
+  string interface = 2;
+}
+
+message TrafficStreamData {
+  string device_id = 1;
+  string interface = 2;
+  int64 rx_bps = 3;
+  int64 tx_bps = 4;
+  int64 timestamp_unix = 5;
+}
+
+message StreamResourceRequest {
+  string device_id = 1;
+}
+
+message ResourceStreamData {
+  string device_id = 1;
+  int32 cpu_load = 2;
+  string free_memory = 3;
+  string uptime = 4;
+  int64 timestamp_unix = 5;
+}
+
+message StreamActiveSessionsRequest {
+  string device_id = 1;
+  string user_filter = 2;
+}
+
+message ActiveSessionsStreamData {
+  string device_id = 1;
+  repeated HotspotActiveSession sessions = 2;
+  int64 timestamp_unix = 3;
+}
+
+service HotspotService {
+  rpc GetDashboard(GetHotspotDashboardRequest) returns (GetHotspotDashboardResponse);
+  rpc ListProfiles(ListHotspotProfilesRequest) returns (ListHotspotProfilesResponse);
+  rpc ListUsers(ListHotspotUsersRequest) returns (ListHotspotUsersResponse);
+  rpc ListActiveSessions(ListHotspotActiveSessionsRequest) returns (ListHotspotActiveSessionsResponse);
+  rpc KickActiveSession(KickHotspotSessionRequest) returns (KickHotspotSessionResponse);
+  rpc ListDHCPLeases(ListDHCPLeasesRequest) returns (ListDHCPLeasesResponse);
+  rpc BlockDHCPLease(BlockDHCPLeaseRequest) returns (BlockDHCPLeaseResponse);
+  rpc GenerateVouchers(GenerateVouchersRequest) returns (GenerateVouchersResponse);
+  rpc StreamTraffic(StreamTrafficRequest) returns (stream TrafficStreamData);
+  rpc StreamResource(StreamResourceRequest) returns (stream ResourceStreamData);
+  rpc StreamActiveSessions(StreamActiveSessionsRequest) returns (stream ActiveSessionsStreamData);
+}

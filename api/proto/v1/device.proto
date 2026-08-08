@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package polyglot.v1;
 
-option go_package = "github.com/quixiq/polyglot/api/proto/v1;devicepb";
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 // Device represents a network router/device inventory record.
 message Device {
@@ -73,11 +73,38 @@ message TerminalFrame {
   int32 rows = 5;
 }
 
+message DeleteDeviceRequest {
+  string id = 1;
+}
+
+message DeleteDeviceResponse {
+  string message = 1;
+}
+
+message TestDeviceConnectionRequest {
+  string id = 1;
+}
+
+message TestDeviceConnectionResponse {
+  string device_id = 1;
+  string status = 2;
+  string message = 3;
+  bool success = 4;
+  int64 latency_ms = 5;
+  string uptime = 6;
+  string version = 7;
+  string board_name = 8;
+  string identity = 9;
+  DeviceTestMetrics metrics = 10;
+}
+
 // DeviceService defines gRPC procedures for network device inventory and streaming telemetry.
 service DeviceService {
   rpc ListDevices(ListDevicesRequest) returns (ListDevicesResponse);
   rpc GetDevice(GetDeviceRequest) returns (GetDeviceResponse);
   rpc UpdateDevice(UpdateDeviceRequest) returns (UpdateDeviceResponse);
+  rpc DeleteDevice(DeleteDeviceRequest) returns (DeleteDeviceResponse);
+  rpc TestDeviceConnection(TestDeviceConnectionRequest) returns (TestDeviceConnectionResponse);
   rpc StreamDeviceStatus(StreamDeviceStatusRequest) returns (stream DeviceStatusFrame);
   rpc StreamTerminal(stream TerminalFrame) returns (stream TerminalFrame);
 }

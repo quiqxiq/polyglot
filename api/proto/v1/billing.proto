@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package polyglot.v1;
 
-option go_package = "github.com/quixiq/polyglot/api/proto/v1;devicepb";
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 message Invoice {
   string id = 1;
@@ -11,6 +11,16 @@ message Invoice {
   string status = 4;
   int64 due_date_unix = 5;
   int64 created_at_unix = 6;
+}
+
+message Subscription {
+  string id = 1;
+  string customer_id = 2;
+  string plan_id = 3;
+  string status = 4;
+  int64 start_date_unix = 5;
+  int64 end_date_unix = 6;
+  double price = 7;
 }
 
 message ListInvoicesRequest {

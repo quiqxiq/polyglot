@@ -1,8 +1,9 @@
 syntax = "proto3";
-
 package polyglot.v1;
 
-option go_package = "github.com/quixiq/polyglot/api/proto/v1;customerpb";
+import "v1/billing.proto";
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 message Customer {
   string id = 1;
@@ -13,16 +14,6 @@ message Customer {
   string address = 6;
   string status = 7;
   int64 created_at_unix = 8;
-}
-
-message Subscription {
-  string id = 1;
-  string customer_id = 2;
-  string plan_id = 3;
-  string status = 4;
-  int64 start_date_unix = 5;
-  int64 end_date_unix = 6;
-  double price = 7;
 }
 
 message ListCustomersRequest {}
@@ -65,13 +56,6 @@ message DeleteCustomerResponse {
   string message = 1;
 }
 
-message ListSubscriptionsRequest {
-  string customer_id = 1;
-}
-
-message ListSubscriptionsResponse {
-  repeated Subscription subscriptions = 1;
-}
 
 service CustomerService {
   rpc ListCustomers(ListCustomersRequest) returns (ListCustomersResponse);
