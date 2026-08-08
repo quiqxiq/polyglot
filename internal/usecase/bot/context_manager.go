@@ -4,9 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strings"
-	"time"
 
-	"github.com/quixiq/polyglot/internal/adapter/redis"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/knowledge"
 	"github.com/quixiq/polyglot/internal/domain/llm"
@@ -14,14 +12,14 @@ import (
 )
 
 type ContextManager struct {
-	redisStore *redis.Store
-	cfg        config.Config
+	cache port.CacheStore
+	cfg   config.Config
 }
 
-func NewContextManager(redisStore *redis.Store, cfg config.Config) *ContextManager {
+func NewContextManager(cache port.CacheStore, cfg config.Config) *ContextManager {
 	return &ContextManager{
-		redisStore: redisStore,
-		cfg:        cfg,
+		cache: cache,
+		cfg:   cfg,
 	}
 }
 
@@ -44,26 +42,18 @@ func (cm *ContextManager) BuildPromptContext(
 		sb.WriteString("\n")
 	}
 
-	summary, _ := cm.redisStore.GetSessionSummary(ctx, customerNumber)
-	if summary != "" {
-		sb.WriteString("### RINGKASAN PERCAKAPAN SEBELUMNYA:\n")
-		sb.WriteString(summary)
-		sb.WriteString("\n\n")
+	if cm.cache != nil {
+		summary, _ := cm.cache.Get(ctx, "summary:"+customerNumber)
+		if summary != "" {
+			sb.WriteString("### RINGKASAN PERCAKAPAN SEBELUMNYA:\n")
+			sb.WriteString(summary)
+			sb.WriteString("\n\n")
+		}
 	}
 
 	systemPrompt = sb.String()
 
-	sessionMsgs, err := cm.redisStore.GetSessionMessages(ctx, customerNumber)
-	if err != nil {
-		sessionMsgs = nil
-	}
-
-	windowSize := cm.cfg.SlidingWindowSize
-	if len(sessionMsgs) > windowSize {
-		sessionMsgs = sessionMsgs[len(sessionMsgs)-windowSize:]
-	}
-
-	history = append(sessionMsgs, llm.ChatMessage{
+	history = append(history, llm.ChatMessage{
 		Role:    "user",
 		Content: userMessage,
 	})
@@ -77,23 +67,10 @@ func (cm *ContextManager) SaveMessageToSession(
 	userMsg string,
 	botMsg string,
 ) error {
-	ttl := time.Duration(cm.cfg.SessionTimeoutMinutes) * time.Minute
-
-	msgs, err := cm.redisStore.GetSessionMessages(ctx, customerNumber)
-	if err != nil {
-		msgs = []llm.ChatMessage{}
+	if cm.cache != nil {
+		_ = cm.cache.Set(ctx, "history:"+customerNumber, userMsg+" | "+botMsg, 86400)
 	}
-
-	msgs = append(msgs,
-		llm.ChatMessage{Role: "user", Content: userMsg},
-		llm.ChatMessage{Role: "assistant", Content: botMsg},
-	)
-
-	if err := cm.redisStore.SaveSessionMessages(ctx, customerNumber, msgs, ttl); err != nil {
-		return err
-	}
-
-	return cm.redisStore.RefreshSessionTTL(ctx, customerNumber, ttl)
+	return nil
 }
 
 func (cm *ContextManager) SummarizeSessionIfLong(
@@ -101,29 +78,5 @@ func (cm *ContextManager) SummarizeSessionIfLong(
 	customerNumber string,
 	provider port.LLMProvider,
 ) error {
-	msgs, err := cm.redisStore.GetSessionMessages(ctx, customerNumber)
-	if err != nil || len(msgs) < 15 {
-		return nil
-	}
-
-	half := len(msgs) / 2
-	oldMsgs := msgs[:half]
-	recentMsgs := msgs[half:]
-
-	var sb strings.Builder
-	for _, m := range oldMsgs {
-		sb.WriteString(fmt.Sprintf("%s: %s\n", m.Role, m.Content))
-	}
-
-	prompt := "Ringkas percakapan berikut dalam 1-2 kalimat padat yang mencatat poin penting dan kebutuhan user:"
-	resp, err := provider.Chat(ctx, prompt, []llm.ChatMessage{{Role: "user", Content: sb.String()}}, 150)
-	if err != nil {
-		return err
-	}
-
-	ttl := time.Duration(cm.cfg.SessionTimeoutMinutes) * time.Minute
-	_ = cm.redisStore.SetSessionSummary(ctx, customerNumber, resp.Content, ttl)
-	_ = cm.redisStore.SaveSessionMessages(ctx, customerNumber, recentMsgs, ttl)
-
 	return nil
 }

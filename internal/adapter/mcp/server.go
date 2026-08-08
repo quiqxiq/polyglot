@@ -7,7 +7,7 @@ import (
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
-	"github.com/quixiq/polyglot/internal/usecase/network"
+	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 )
 
 // Server wraps the MCP SDK server and holds the dependencies every tool
@@ -17,7 +17,7 @@ type Server struct {
 	mcpServer          *mcp.Server
 	registry           *registry.Registry
 	audit              port.AuditWriter
-	mikhmonUC          *network.MikhmonUseCase
+	mikhmonUC          *hotspotUC.HotspotUseCase
 	customerRepo       port.CustomerRepository
 	knowledgeRetriever port.KnowledgeRetriever
 }
@@ -34,7 +34,7 @@ func New(reg *registry.Registry, audit port.AuditWriter) *Server {
 }
 
 // WithMikhmonUseCase sets the MikhmonUseCase dependency.
-func (s *Server) WithMikhmonUseCase(uc *network.MikhmonUseCase) *Server {
+func (s *Server) WithMikhmonUseCase(uc *hotspotUC.HotspotUseCase) *Server {
 	s.mikhmonUC = uc
 	return s
 }

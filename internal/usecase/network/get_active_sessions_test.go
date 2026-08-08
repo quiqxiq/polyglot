@@ -9,6 +9,29 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+type mockDriver struct {
+	executeFn func(ctx context.Context, cmd command.Command) (command.Result, error)
+}
+
+func (m *mockDriver) Execute(ctx context.Context, cmd command.Command) (command.Result, error) {
+	if m.executeFn != nil {
+		return m.executeFn(ctx, cmd)
+	}
+	return command.Result{}, nil
+}
+
+func (m *mockDriver) Classify(cmd command.Command) command.Class {
+	return command.ClassReadOnly
+}
+
+func (m *mockDriver) Translate(op command.Operation) (command.Command, error) {
+	return command.Command{}, nil
+}
+
+func (m *mockDriver) Close() error {
+	return nil
+}
+
 func TestActiveSessionsUseCase(t *testing.T) {
 	uc := NewActiveSessionsUseCase()
 	ctx := context.Background()

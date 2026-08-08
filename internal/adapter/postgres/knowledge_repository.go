@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"context"
 	"errors"
 
 	"gorm.io/gorm"
@@ -94,4 +95,8 @@ func (s *Store) SearchKnowledgeByTags(tags []string) ([]knowledge.KnowledgeEntry
 		}
 	}
 	return res, nil
+}
+
+func (s *Store) Retrieve(ctx context.Context, query string) ([]knowledge.KnowledgeEntry, error) {
+	return s.FindAllKnowledgeEntries()
 }

@@ -8,3 +8,8 @@ wa_stores/
 .ref-wa-multidevice/
 web/node_modules/
 web/dist/
+*.exe
+# Added by code-review-graph
+.code-review-graph/
+/website/node_modules/
+/website/dist/

@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	"github.com/quixiq/polyglot/internal/usecase/network"
+	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 )
 
 type mikhmonGetDashboardArgs struct {
@@ -38,7 +38,7 @@ func (s *Server) mikhmonGetDashboard(ctx context.Context, _ *mcp.CallToolRequest
 
 	uc := s.mikhmonUC
 	if uc == nil {
-		uc = network.NewMikhmonUseCase("")
+		uc = hotspotUC.NewHotspotUseCase("")
 	}
 
 	summary, err := uc.GetDashboardSummary(ctx, driver)

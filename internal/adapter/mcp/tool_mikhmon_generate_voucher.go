@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik/mikhmon"
-	"github.com/quixiq/polyglot/internal/usecase/network"
+	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 )
 
 type mikhmonGenerateVoucherArgs struct {
@@ -36,7 +36,7 @@ func (s *Server) mikhmonGenerateVoucher(ctx context.Context, _ *mcp.CallToolRequ
 
 	uc := s.mikhmonUC
 	if uc == nil {
-		uc = network.NewMikhmonUseCase("")
+		uc = hotspotUC.NewHotspotUseCase("")
 	}
 
 	params := mikhmon.VoucherGenerateParams{

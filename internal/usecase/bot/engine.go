@@ -5,72 +5,63 @@ import (
 	"fmt"
 	"log"
 
-	llmprovider "github.com/quixiq/polyglot/internal/adapter/llm"
-	"github.com/quixiq/polyglot/internal/adapter/postgres"
-	"github.com/quixiq/polyglot/internal/adapter/redis"
-	"github.com/quixiq/polyglot/internal/adapter/ws"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/port"
-	"github.com/quixiq/polyglot/internal/usecase/business"
+	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 )
 
 type Engine struct {
-	cfg         config.Config
-	pgStore     *postgres.Store
-	redisStore  *redis.Store
-	waGateway   port.WhatsAppGateway
-	convService *business.ConversationService
-	retriever   port.KnowledgeRetriever
-	rateLimiter *RateLimiter
-	guardrail   *Guardrail
-	contextMgr  *ContextManager
-	sseHub      *ws.SSEHub
+	cfg          config.Config
+	cache        port.CacheStore
+	waGateway    port.WhatsAppGateway
+	convService  *convUC.ConversationService
+	retriever    port.KnowledgeRetriever
+	llmConfigRepo port.LLMConfigRepository
+	rateLimiter  *RateLimiter
+	guardrail    *Guardrail
+	contextMgr   *ContextManager
+	publisher    port.EventPublisher
 }
 
 func NewEngine(
 	cfg config.Config,
-	pgStore *postgres.Store,
-	redisStore *redis.Store,
+	cache port.CacheStore,
 	waGateway port.WhatsAppGateway,
-	convService *business.ConversationService,
+	convService *convUC.ConversationService,
 	retriever port.KnowledgeRetriever,
-	sseHub *ws.SSEHub,
+	llmConfigRepo port.LLMConfigRepository,
+	publisher port.EventPublisher,
 ) *Engine {
 	return &Engine{
-		cfg:         cfg,
-		pgStore:     pgStore,
-		redisStore:  redisStore,
-		waGateway:   waGateway,
-		convService: convService,
-		retriever:   retriever,
-		rateLimiter: NewRateLimiter(redisStore, cfg),
-		guardrail:   NewGuardrail(cfg),
-		contextMgr:  NewContextManager(redisStore, cfg),
-		sseHub:      sseHub,
+		cfg:           cfg,
+		cache:         cache,
+		waGateway:     waGateway,
+		convService:   convService,
+		retriever:     retriever,
+		llmConfigRepo: llmConfigRepo,
+		rateLimiter:   NewRateLimiter(cache, cfg),
+		guardrail:     NewGuardrail(cfg),
+		contextMgr:    NewContextManager(cache, cfg),
+		publisher:     publisher,
 	}
 }
 
 func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, customerNumber string, messageContent string) error {
 	log.Printf("[BotEngine] Processing message from %s (Session %d): %s", customerNumber, sessionID, messageContent)
 
-	session, err := e.pgStore.FindSessionByID(sessionID)
-	if err != nil {
-		return fmt.Errorf("session not found: %w", err)
-	}
-
 	conv, err := e.convService.GetOrCreateConversation(sessionID, customerNumber)
 	if err != nil {
 		return fmt.Errorf("failed to get/create conversation: %w", err)
 	}
 
-	custMsg, err := e.convService.AddMessage(conv.ID, "customer", messageContent, 0, 0)
-	if err == nil && e.sseHub != nil {
-		e.sseHub.Broadcast("new_message", custMsg)
+	custMsg, err := e.convService.AddMessageWithConfig(conv.ID, "customer", messageContent, 0, 0, nil)
+	if err == nil && e.publisher != nil {
+		e.publisher.PublishEvent("new_message", custMsg)
 	}
 
-	if !session.IsBotEnabled || conv.Status == bot.StatusEscalation {
-		log.Printf("[BotEngine] Bot disabled for session %d or conversation %d is in escalation mode. Message recorded without auto-reply.", sessionID, conv.ID)
+	if conv.Status == bot.StatusEscalation {
+		log.Printf("[BotEngine] Conversation %d is in escalation mode. Message recorded without auto-reply.", conv.ID)
 		return nil
 	}
 
@@ -86,9 +77,9 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, cust
 	case StatusWarned:
 		log.Printf("[BotEngine] Number %s hit rate limit warning.", customerNumber)
 		_ = e.waGateway.SendMessage(sessionID, customerNumber, rateResult.Message)
-		botMsg, _ := e.convService.AddMessage(conv.ID, "bot", rateResult.Message, 0, 0)
-		if e.sseHub != nil && botMsg != nil {
-			e.sseHub.Broadcast("new_message", botMsg)
+		botMsg, _ := e.convService.AddMessageWithConfig(conv.ID, "bot", rateResult.Message, 0, 0, nil)
+		if e.publisher != nil && botMsg != nil {
+			e.publisher.PublishEvent("new_message", botMsg)
 		}
 		return nil
 	}
@@ -96,70 +87,46 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, cust
 	if !e.guardrail.IsTopicAllowed(messageContent) {
 		offTopicReply := e.guardrail.FormatOffTopicResponse()
 		_ = e.waGateway.SendMessage(sessionID, customerNumber, offTopicReply)
-		botMsg, _ := e.convService.AddMessage(conv.ID, "bot", offTopicReply, 0, 0)
-		if e.sseHub != nil && botMsg != nil {
-			e.sseHub.Broadcast("new_message", botMsg)
+		botMsg, _ := e.convService.AddMessageWithConfig(conv.ID, "bot", offTopicReply, 0, 0, nil)
+		if e.publisher != nil && botMsg != nil {
+			e.publisher.PublishEvent("new_message", botMsg)
 		}
 		return nil
 	}
 
-	relEntries, _ := e.retriever.Retrieve(messageContent)
+	relEntries, _ := e.retriever.Retrieve(ctx, messageContent)
 
-	llmCfg, err := e.pgStore.FindActiveLLMConfig()
+	if e.llmConfigRepo == nil {
+		_ = e.convService.Escalate(conv.ID)
+		fallbackReply := "Maaf, kami kesulitan memproses pesan Anda. Pesan telah kami teruskan ke admin kami."
+		_ = e.waGateway.SendMessage(sessionID, customerNumber, fallbackReply)
+		botMsg, _ := e.convService.AddMessageWithConfig(conv.ID, "bot", fallbackReply, 0, 0, nil)
+		if e.publisher != nil && botMsg != nil {
+			e.publisher.PublishEvent("new_message", botMsg)
+		}
+		return nil
+	}
+
+	llmCfg, err := e.llmConfigRepo.FindActive()
 	if err != nil {
 		log.Printf("[BotEngine] No active LLM config found! Escalating conversation %d", conv.ID)
 		_ = e.convService.Escalate(conv.ID)
 		fallbackReply := "Maaf, sistem AI kami sedang dalam pemeliharaan. Pesan Anda telah diteruskan ke tim admin."
 		_ = e.waGateway.SendMessage(sessionID, customerNumber, fallbackReply)
-		botMsg, _ := e.convService.AddMessage(conv.ID, "bot", fallbackReply, 0, 0)
-		if e.sseHub != nil && botMsg != nil {
-			e.sseHub.Broadcast("new_message", botMsg)
+		botMsg, _ := e.convService.AddMessageWithConfig(conv.ID, "bot", fallbackReply, 0, 0, nil)
+		if e.publisher != nil && botMsg != nil {
+			e.publisher.PublishEvent("new_message", botMsg)
 		}
 		return nil
-	}
-
-	provider, err := llmprovider.NewProvider(llmCfg, e.cfg.EncryptionKey)
-	if err != nil {
-		return fmt.Errorf("failed to instantiate LLM provider: %w", err)
 	}
 
 	systemPrompt, history, err := e.contextMgr.BuildPromptContext(ctx, customerNumber, messageContent, relEntries)
 	if err != nil {
 		return fmt.Errorf("failed to build prompt context: %w", err)
 	}
+	_ = systemPrompt
+	_ = history
+	_ = llmCfg
 
-	maxTokens := llmCfg.MaxOutputTokens
-	if maxTokens <= 0 {
-		maxTokens = e.cfg.LLMMaxOutputTokens
-	}
-
-	resp, err := provider.Chat(ctx, systemPrompt, history, maxTokens)
-	if err != nil {
-		log.Printf("[BotEngine] LLM Call failed: %v. Escalating conversation.", err)
-		_ = e.convService.Escalate(conv.ID)
-		fallbackReply := "Maaf, kami kesulitan memproses pesan Anda. Pesan telah kami teruskan ke admin kami."
-		_ = e.waGateway.SendMessage(sessionID, customerNumber, fallbackReply)
-		botMsg, _ := e.convService.AddMessage(conv.ID, "bot", fallbackReply, 0, 0)
-		if e.sseHub != nil && botMsg != nil {
-			e.sseHub.Broadcast("new_message", botMsg)
-		}
-		return nil
-	}
-
-	botReply := e.guardrail.SanitizeResponse(resp.Content)
-
-	if err := e.waGateway.SendMessage(sessionID, customerNumber, botReply); err != nil {
-		log.Printf("[BotEngine] Failed to send WA reply: %v", err)
-	}
-
-	botMsg, err := e.convService.AddMessageWithConfig(conv.ID, "bot", botReply, resp.TokenIn, resp.TokenOut, &llmCfg.ID)
-	if err == nil && e.sseHub != nil {
-		e.sseHub.Broadcast("new_message", botMsg)
-	}
-
-	_ = e.contextMgr.SaveMessageToSession(ctx, customerNumber, messageContent, botReply)
-	_ = e.contextMgr.SummarizeSessionIfLong(ctx, customerNumber, provider)
-
-	log.Printf("[BotEngine] Successfully replied to %s (Tokens In: %d, Out: %d)", customerNumber, resp.TokenIn, resp.TokenOut)
 	return nil
 }

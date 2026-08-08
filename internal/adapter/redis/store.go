@@ -32,8 +32,16 @@ func NewStore(url string) (*Store, error) {
 	return &Store{client: client}, nil
 }
 
-func (s *Store) Client() *redis.Client {
-	return s.client
+func (s *Store) Get(ctx context.Context, key string) (string, error) {
+	return s.client.Get(ctx, key).Result()
+}
+
+func (s *Store) Set(ctx context.Context, key string, value string, expirationSeconds int) error {
+	return s.client.Set(ctx, key, value, time.Duration(expirationSeconds)*time.Second).Err()
+}
+
+func (s *Store) Delete(ctx context.Context, key string) error {
+	return s.client.Del(ctx, key).Err()
 }
 
 func sessionKey(customerNumber string) string {

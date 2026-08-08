@@ -82,3 +82,7 @@ func (h *SSEHub) Broadcast(eventName string, data interface{}) {
 		}
 	}
 }
+
+func (h *SSEHub) PublishEvent(eventType string, data interface{}) {
+	h.Broadcast(eventType, data)
+}

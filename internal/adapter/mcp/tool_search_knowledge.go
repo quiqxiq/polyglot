@@ -37,7 +37,7 @@ func (s *Server) searchKnowledge(ctx context.Context, _ *mcp.CallToolRequest, ar
 		})
 	}
 
-	entries, err := s.knowledgeRetriever.Retrieve(args.Query)
+	entries, err := s.knowledgeRetriever.Retrieve(ctx, args.Query)
 	if err != nil {
 		return toolError(searchKnowledgeOutput{Status: "error", Summary: err.Error()})
 	}
