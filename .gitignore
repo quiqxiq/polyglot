@@ -11,5 +11,29 @@ web/dist/
 *.exe
 # Added by code-review-graph
 .code-review-graph/
+
+# Website & Frontend rules
 /website/node_modules/
 /website/dist/
+/website/dist-ssr/
+/website/coverage/
+.vitest-attachments/
+**/__screenshots__/
+
+# Logs & Debug
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor & OS files
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
