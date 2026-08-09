@@ -4,7 +4,7 @@
 # 1. Base Stage: Shared Go Environment
 FROM golang:alpine AS base
 WORKDIR /app
-RUN apk add --no-linux-headers --no-cache git ca-certificates tzdata
+RUN apk add --no-cache git ca-certificates tzdata
 COPY go.mod go.sum ./
 RUN go mod download
 

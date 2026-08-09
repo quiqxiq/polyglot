@@ -29,6 +29,7 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
 	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
+	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
@@ -137,7 +138,12 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	rbacConnectPath, rbacConnectHandler := authConnect.NewRBACServiceHandler(casbinEnforcer)
 	connectGroup.Any(rbacConnectPath+"*action", gin.WrapH(rbacConnectHandler))
 
-	billingConnectPath, billingConnectHandler := billingConnect.NewBillingServiceHandler()
+	invRepo := postgres.NewInvoiceRepository(pgStore.DB())
+	subRepo := postgres.NewSubscriptionRepository(pgStore.DB())
+	invUC := billingUC.NewInvoiceUsecase(invRepo)
+	subUC := billingUC.NewSubscriptionUsecase(subRepo)
+
+	billingConnectPath, billingConnectHandler := billingConnect.NewBillingServiceHandler(invUC, subUC)
 	connectGroup.Any(billingConnectPath+"*action", gin.WrapH(billingConnectHandler))
 
 	mikhmonConnectPath, mikhmonConnectHandler := hotspotConnect.NewHotspotServiceHandler(hotUC, connectDriverProvider)

@@ -11,8 +11,8 @@ import (
 )
 
 type SSEEvent struct {
-	Event string      `json:"event"`
-	Data  interface{} `json:"data"`
+	Event string `json:"event"`
+	Data  any    `json:"data"`
 }
 
 type SSEHub struct {
@@ -66,7 +66,7 @@ func (h *SSEHub) RegisterClient(c *gin.Context) {
 	})
 }
 
-func (h *SSEHub) Broadcast(eventName string, data interface{}) {
+func (h *SSEHub) Broadcast(eventName string, data any) {
 	h.mutex.RLock()
 	defer h.mutex.RUnlock()
 
@@ -83,6 +83,6 @@ func (h *SSEHub) Broadcast(eventName string, data interface{}) {
 	}
 }
 
-func (h *SSEHub) PublishEvent(eventType string, data interface{}) {
+func (h *SSEHub) PublishEvent(eventType string, data any) {
 	h.Broadcast(eventType, data)
 }

@@ -1,7 +1,12 @@
 package models
 
 import (
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
 	"encoding/json"
+	"fmt"
+	"io"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/device"
@@ -26,15 +31,23 @@ type DeviceModel struct {
 	UpdatedAt      time.Time
 }
 
-// CredentialModel is the GORM database model for encrypted device credentials.
-type CredentialModel struct {
-	DeviceID  string `gorm:"primaryKey"`
-	Username  string `gorm:"not null"`
-	Password  string `gorm:"not null"`
-	ExtraJSON string `gorm:"type:text"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
+func (DeviceModel) TableName() string {
+	return "devices"
 }
+
+// CredentialModel is the GORM database model for encrypted device credentials (AES-256-GCM).
+type CredentialModel struct {
+	DeviceID   string    `gorm:"column:device_id;primaryKey"`
+	Ciphertext []byte    `gorm:"column:ciphertext;not null"`
+	Nonce      []byte    `gorm:"column:nonce;not null"`
+	UpdatedAt  time.Time `gorm:"column:updated_at"`
+}
+
+func (CredentialModel) TableName() string {
+	return "credentials"
+}
+
+const defaultTestEncryptionKey = "12345678901234567890123456789012"
 
 func (m *DeviceModel) ToDomain() device.Device {
 	if m == nil {
@@ -104,29 +117,69 @@ func DeviceModelFromDomain(d device.Device) *DeviceModel {
 	}
 }
 
-func (c *CredentialModel) ToDomain() device.Credentials {
-	if c == nil {
-		return device.Credentials{}
+func (c *CredentialModel) ToDomain(key string) (device.Credentials, error) {
+	if c == nil || len(c.Ciphertext) == 0 {
+		return device.Credentials{}, nil
 	}
-
-	var extra map[string]string
-	if c.ExtraJSON != "" {
-		_ = json.Unmarshal([]byte(c.ExtraJSON), &extra)
+	if key == "" {
+		key = defaultTestEncryptionKey
 	}
-
-	return device.Credentials{
-		Username: c.Username,
-		Password: c.Password,
-		Extra:    extra,
+	keyBytes := []byte(key)
+	if len(keyBytes) != 32 {
+		return device.Credentials{}, fmt.Errorf("encryption key must be exactly 32 bytes")
 	}
+	block, err := aes.NewCipher(keyBytes)
+	if err != nil {
+		return device.Credentials{}, err
+	}
+	aesGCM, err := cipher.NewGCM(block)
+	if err != nil {
+		return device.Credentials{}, err
+	}
+	if len(c.Nonce) != aesGCM.NonceSize() {
+		return device.Credentials{}, fmt.Errorf("invalid nonce size: %d", len(c.Nonce))
+	}
+	plaintext, err := aesGCM.Open(nil, c.Nonce, c.Ciphertext, nil)
+	if err != nil {
+		return device.Credentials{}, fmt.Errorf("decrypt credentials failed: %w", err)
+	}
+	var creds device.Credentials
+	if err := json.Unmarshal(plaintext, &creds); err != nil {
+		return device.Credentials{}, fmt.Errorf("unmarshal decrypted credentials failed: %w", err)
+	}
+	return creds, nil
 }
 
-func CredentialModelFromDomain(deviceID string, c device.Credentials) *CredentialModel {
-	extraJSON, _ := json.Marshal(c.Extra)
+func CredentialModelFromDomain(deviceID string, c device.Credentials, key string) (*CredentialModel, error) {
+	if key == "" {
+		key = defaultTestEncryptionKey
+	}
+	keyBytes := []byte(key)
+	if len(keyBytes) != 32 {
+		return nil, fmt.Errorf("encryption key must be exactly 32 bytes")
+	}
+	data, err := json.Marshal(c)
+	if err != nil {
+		return nil, err
+	}
+	block, err := aes.NewCipher(keyBytes)
+	if err != nil {
+		return nil, err
+	}
+	aesGCM, err := cipher.NewGCM(block)
+	if err != nil {
+		return nil, err
+	}
+	nonce := make([]byte, aesGCM.NonceSize())
+	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
+		return nil, err
+	}
+	ciphertext := aesGCM.Seal(nil, nonce, data, nil)
 	return &CredentialModel{
-		DeviceID:  deviceID,
-		Username:  c.Username,
-		Password:  c.Password,
-		ExtraJSON: string(extraJSON),
-	}
+		DeviceID:   deviceID,
+		Ciphertext: ciphertext,
+		Nonce:      nonce,
+		UpdatedAt:  time.Now(),
+	}, nil
 }
+

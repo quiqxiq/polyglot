@@ -56,7 +56,7 @@ func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[dev
 		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to generate auth token"))
 	}
 
-	exp := time.Now().Add(24 * time.Hour).Unix()
+	exp := time.Now().Add(h.jwtService.ExpiryDuration()).Unix()
 
 	return connect.NewResponse(&devicepb.LoginResponse{
 		Token: tokenStr,
@@ -115,7 +115,7 @@ func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Requ
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("refresh token is required"))
 	}
 
-	exp := time.Now().Add(24 * time.Hour).Unix()
+	exp := time.Now().Add(h.jwtService.ExpiryDuration()).Unix()
 	return connect.NewResponse(&devicepb.RefreshTokenResponse{
 		Token:         req.Msg.RefreshToken,
 		ExpiresAtUnix: exp,

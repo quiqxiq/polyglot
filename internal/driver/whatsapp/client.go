@@ -282,7 +282,7 @@ func (c *Client) SendImage(ctx context.Context, to string, imageBytes []byte, co
 	return nil
 }
 
-func (c *Client) handleEvent(evt interface{}) {
+func (c *Client) handleEvent(evt any) {
 	switch v := evt.(type) {
 	case *events.Message:
 		c.handleIncomingMessage(v)

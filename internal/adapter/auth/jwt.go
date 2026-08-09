@@ -59,8 +59,15 @@ func (s *JWTService) GenerateToken(userID uint, email string, role string, tenan
 	return tokenStr, nil
 }
 
+func (s *JWTService) ExpiryDuration() time.Duration {
+	if s == nil || s.expiry <= 0 {
+		return 24 * time.Hour
+	}
+	return s.expiry
+}
+
 func (s *JWTService) ValidateToken(tokenStr string) (*Claims, error) {
-	token, err := jwt.ParseWithClaims(tokenStr, &Claims{}, func(t *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenStr, &Claims{}, func(t *jwt.Token) (any, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("%w: unexpected signing method %v", ErrInvalidToken, t.Header["alg"])
 		}

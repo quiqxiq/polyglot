@@ -64,7 +64,7 @@ func (s *Store) PopulateLLMConfigAnalytics(config *llm.LLMConfig) {
 		config.CostPer1MInput = costInRate
 		config.CostPer1MOutput = costOutRate
 		_ = s.db.Model(&models.LLMConfigModel{}).Where("id = ?", config.ID).
-			Updates(map[string]interface{}{
+			Updates(map[string]any{
 				"cost_per_1m_input":  costInRate,
 				"cost_per_1m_output": costOutRate,
 			})

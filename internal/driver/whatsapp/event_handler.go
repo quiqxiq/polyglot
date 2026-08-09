@@ -45,7 +45,7 @@ func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode
 	}
 
 	if eh.sseHub != nil {
-		eh.sseHub.Broadcast("session_status", map[string]interface{}{
+		eh.sseHub.Broadcast("session_status", map[string]any{
 			"session_id": sessionID,
 			"status":     status,
 			"qr_code":    qrCode,

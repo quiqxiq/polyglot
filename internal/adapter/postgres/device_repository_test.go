@@ -59,11 +59,14 @@ func TestCredentialModel_Conversion(t *testing.T) {
 		Extra:    map[string]string{"api_key": "xyz123"},
 	}
 
-	model := models.CredentialModelFromDomain("router-1", creds)
+	model, err := models.CredentialModelFromDomain("router-1", creds, "")
+	require.NoError(t, err)
 	assert.Equal(t, "router-1", model.DeviceID)
-	assert.Equal(t, "admin", model.Username)
+	assert.NotEmpty(t, model.Ciphertext)
+	assert.NotEmpty(t, model.Nonce)
 
-	domainCreds := model.ToDomain()
+	domainCreds, err := model.ToDomain("")
+	require.NoError(t, err)
 	assert.Equal(t, creds.Username, domainCreds.Username)
 	assert.Equal(t, creds.Password, domainCreds.Password)
 	assert.Equal(t, creds.Extra, domainCreds.Extra)

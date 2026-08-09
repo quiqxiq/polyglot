@@ -1,10 +1,23 @@
 package subscription
 
-import "context"
+import "time"
 
-// New creates a placeholder Subscription entity.
-// Named New, not NewSubscription — CLAUDE.md §2.1 (avoid package name stutter).
-// TODO: implement per Polyglot-Architecture.md business domain rules.
-func New(ctx context.Context) error {
-	return nil
+const (
+	StatusActive    = "ACTIVE"
+	StatusCancelled = "CANCELLED"
+	StatusExpired   = "EXPIRED"
+	StatusPending   = "PENDING"
+)
+
+// Subscription represents an active or historic plan subscription.
+type Subscription struct {
+	ID         string    `json:"id" gorm:"primaryKey"`
+	CustomerID string    `json:"customer_id" gorm:"not null;index"`
+	PlanID     string    `json:"plan_id" gorm:"not null"`
+	Status     string    `json:"status" gorm:"not null;default:ACTIVE"`
+	StartDate  time.Time `json:"start_date" gorm:"not null"`
+	EndDate    time.Time `json:"end_date" gorm:"not null"`
+	Price      float64   `json:"price" gorm:"not null"`
+	CreatedAt  time.Time `json:"created_at"`
+	UpdatedAt  time.Time `json:"updated_at"`
 }

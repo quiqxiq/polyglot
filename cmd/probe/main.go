@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -79,11 +80,25 @@ func runTelemetryLoop(ctx context.Context, client *probeClient, probeID string) 
 			target := targetIPs[idx%len(targetIPs)]
 			idx++
 
-			// Simulate ICMP Ping measurement
-			latency := int64(5 + (idx * 3) % 25)
-			log.Printf("[Probe Telemetry] Polled target %s: Latency %dms (Alive=true)", target, latency)
+			latency, alive := measureTargetLatency(target)
+			log.Printf("[Probe Telemetry] Polled target %s: Latency %dms (Alive=%v)", target, latency, alive)
 		}
 	}
+}
+
+func measureTargetLatency(target string) (int64, bool) {
+	start := time.Now()
+	port := "53"
+	if target == "192.168.1.1" {
+		port = "80"
+	}
+	conn, err := net.DialTimeout("tcp", net.JoinHostPort(target, port), 2*time.Second)
+	elapsed := time.Since(start).Milliseconds()
+	if err != nil {
+		return elapsed, false
+	}
+	_ = conn.Close()
+	return elapsed, true
 }
 
 type probeClient struct {
