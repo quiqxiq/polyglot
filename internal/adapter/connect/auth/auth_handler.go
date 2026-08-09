@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	"connectrpc.com/connect"
@@ -14,6 +15,8 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 )
+
+const BearerScheme = "Bearer"
 
 type AuthConnectHandler struct {
 	pgStore    *postgres.Store
@@ -36,7 +39,7 @@ func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[dev
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("database store unavailable"))
 	}
 
-	user, err := h.pgStore.FindUserByEmail(req.Msg.Username)
+	user, err := h.pgStore.FindUserByUsername(req.Msg.Username)
 	if err != nil {
 		if errors.Is(err, postgres.ErrNotFound) {
 			return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid username or password"))
@@ -59,7 +62,7 @@ func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[dev
 		Token: tokenStr,
 		User: &devicepb.UserProfile{
 			Id:       fmt.Sprintf("%d", user.ID),
-			Username: user.Email,
+			Username: user.Username,
 			Email:    user.Email,
 			Role:     user.Role,
 		},
@@ -68,12 +71,41 @@ func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[dev
 }
 
 func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[devicepb.GetMeRequest]) (*connect.Response[devicepb.GetMeResponse], error) {
+	authHeader := req.Header().Get("Authorization")
+	if authHeader == "" {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("unauthorized: missing authorization header"))
+	}
+
+	parts := strings.SplitN(authHeader, " ", 2)
+	if len(parts) != 2 || !strings.EqualFold(parts[0], BearerScheme) {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("unauthorized: invalid authorization header format"))
+	}
+
+	claims, err := h.jwtService.ValidateToken(parts[1])
+	if err != nil {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("unauthorized: %w", err))
+	}
+
+	if h.pgStore != nil {
+		user, err := h.pgStore.FindUserByID(claims.UserID)
+		if err == nil && user != nil {
+			return connect.NewResponse(&devicepb.GetMeResponse{
+				User: &devicepb.UserProfile{
+					Id:       fmt.Sprintf("%d", user.ID),
+					Username: user.Username,
+					Email:    user.Email,
+					Role:     user.Role,
+				},
+			}), nil
+		}
+	}
+
 	return connect.NewResponse(&devicepb.GetMeResponse{
 		User: &devicepb.UserProfile{
-			Id:       "1",
-			Username: "admin@polyglot.net",
-			Email:    "admin@polyglot.net",
-			Role:     "admin",
+			Id:       fmt.Sprintf("%d", claims.UserID),
+			Username: claims.Email,
+			Email:    claims.Email,
+			Role:     claims.Role,
 		},
 	}), nil
 }

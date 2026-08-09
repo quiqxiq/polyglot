@@ -78,7 +78,7 @@ func DialSSHPty(ctx context.Context, target device.Target, cols, rows int) (port
 
 	user := target.Username
 	if user == "" {
-		user = "admin"
+		return nil, fmt.Errorf("genericssh: target username is empty")
 	}
 	pass := target.Password
 
@@ -87,12 +87,23 @@ func DialSSHPty(ctx context.Context, target device.Target, cols, rows int) (port
 		timeout = 7 * time.Second
 	}
 
+	hostKeyCallback := ssh.InsecureIgnoreHostKey()
+	if hostKeyPEm := target.Extra["ssh_host_key"]; hostKeyPEm != "" {
+		pub, err := ssh.ParsePublicKey([]byte(hostKeyPEm))
+		if err != nil {
+			return nil, fmt.Errorf("genericssh: parse ssh_host_key: %w", err)
+		}
+		hostKeyCallback = ssh.FixedHostKey(pub)
+	} else if target.Extra["insecure_ignore_host_key"] != "true" {
+		return nil, fmt.Errorf("genericssh: host key verification failed: ssh_host_key is required (or set insecure_ignore_host_key=true)")
+	}
+
 	sshConfig := &ssh.ClientConfig{
 		User: user,
 		Auth: []ssh.AuthMethod{
 			ssh.Password(pass),
 		},
-		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		HostKeyCallback: hostKeyCallback,
 		Timeout:         timeout,
 	}
 

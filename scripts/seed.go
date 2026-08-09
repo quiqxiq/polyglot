@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"os"
 
 	"golang.org/x/crypto/bcrypt"
 
@@ -15,6 +16,9 @@ import (
 
 func main() {
 	cfg := config.Load()
+	if err := cfg.Validate(); err != nil {
+		log.Fatalf("[Seeder Error] invalid configuration: %v", err)
+	}
 
 	log.Printf("[Seeder] Connecting to PostgreSQL database...")
 	pgStore, err := postgres.NewStore(cfg.DatabaseURL)
@@ -25,11 +29,18 @@ func main() {
 	db := pgStore.DB()
 
 	// 1. Seed Admin User
-	adminEmail := "admin@gnet.id"
-	adminPassword := "admin123"
+	adminUsername := "admin"
+	adminEmail := "admin@example.com"
+	adminPassword := os.Getenv("SEED_ADMIN_PASSWORD")
+	if adminPassword == "" {
+		log.Fatalf("[Seeder Error] SEED_ADMIN_PASSWORD environment variable is required")
+	}
+	if len(adminPassword) < 8 {
+		log.Fatalf("[Seeder Error] SEED_ADMIN_PASSWORD must be at least 8 characters long")
+	}
 
 	var existing models.UserModel
-	err = db.Where("email = ?", adminEmail).First(&existing).Error
+	err = db.Where("username = ?", adminUsername).First(&existing).Error
 	if err != nil {
 		hash, err := bcrypt.GenerateFromPassword([]byte(adminPassword), bcrypt.DefaultCost)
 		if err != nil {
@@ -37,6 +48,7 @@ func main() {
 		}
 
 		adminUser := &customer.User{
+			Username:     adminUsername,
 			Email:        adminEmail,
 			PasswordHash: string(hash),
 			Role:         "admin",
@@ -46,9 +58,9 @@ func main() {
 		if err := pgStore.CreateUser(adminUser); err != nil {
 			log.Fatalf("[Seeder Error] Failed to create admin user: %v", err)
 		}
-		log.Printf("[Seeder] Created default Admin user: %s (Password: %s)", adminEmail, adminPassword)
+		log.Printf("[Seeder] Created default Admin user: %s", adminUsername)
 	} else {
-		log.Printf("[Seeder] Admin user %s already exists in database.", adminEmail)
+		log.Printf("[Seeder] Admin user %s already exists in database.", adminUsername)
 	}
 
 	// 2. Initialize Casbin Enforcer & Seed System RBAC Policies

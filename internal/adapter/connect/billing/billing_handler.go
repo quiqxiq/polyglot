@@ -11,6 +11,13 @@ import (
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 )
 
+const (
+	StatusUnpaid    = "UNPAID"
+	StatusPaid      = "PAID"
+	StatusActive    = "ACTIVE"
+	StatusCancelled = "CANCELLED"
+)
+
 type BillingConnectHandler struct{}
 
 func NewBillingConnectHandler() *BillingConnectHandler {
@@ -24,7 +31,7 @@ func (h *BillingConnectHandler) ListInvoices(ctx context.Context, req *connect.R
 			Id:            "inv-1001",
 			CustomerId:    req.Msg.CustomerId,
 			Amount:        150000.0,
-			Status:        "UNPAID",
+			Status:        StatusUnpaid,
 			DueDateUnix:   now.AddDate(0, 0, 7).Unix(),
 			CreatedAtUnix: now.Unix(),
 		},
@@ -43,7 +50,7 @@ func (h *BillingConnectHandler) GetInvoice(ctx context.Context, req *connect.Req
 			Id:            req.Msg.Id,
 			CustomerId:    "cust-1",
 			Amount:        150000.0,
-			Status:        "UNPAID",
+			Status:        StatusUnpaid,
 			DueDateUnix:   now.AddDate(0, 0, 7).Unix(),
 			CreatedAtUnix: now.Unix(),
 		},
@@ -78,7 +85,7 @@ func (h *BillingConnectHandler) PayInvoice(ctx context.Context, req *connect.Req
 		Id:            req.Msg.Id,
 		CustomerId:    "cust-1",
 		Amount:        150000.0,
-		Status:        "PAID",
+			Status:        StatusPaid,
 		DueDateUnix:   now.Unix(),
 		CreatedAtUnix: now.AddDate(0, 0, -5).Unix(),
 	}
@@ -96,7 +103,7 @@ func (h *BillingConnectHandler) ListSubscriptions(ctx context.Context, req *conn
 			Id:            "sub-101",
 			CustomerId:    req.Msg.CustomerId,
 			PlanId:        "plan-home-50mbps",
-			Status:        "ACTIVE",
+			Status:        StatusActive,
 			StartDateUnix: now.AddDate(0, -1, 0).Unix(),
 			EndDateUnix:   now.AddDate(0, 11, 0).Unix(),
 			Price:         250000.0,
@@ -134,7 +141,7 @@ func (h *BillingConnectHandler) CancelSubscription(ctx context.Context, req *con
 		Id:            req.Msg.Id,
 		CustomerId:    "cust-1",
 		PlanId:        "plan-home-50mbps",
-		Status:        "CANCELLED",
+			Status:        StatusCancelled,
 		StartDateUnix: now.AddDate(0, -1, 0).Unix(),
 		EndDateUnix:   now.Unix(),
 		Price:         250000.0,

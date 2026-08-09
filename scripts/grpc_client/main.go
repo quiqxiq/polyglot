@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"os"
 	"time"
 
 	"google.golang.org/grpc"
@@ -16,7 +17,14 @@ import (
 func main() {
 	log.Println("🚀 STARTING gRPC INTEGRATION TEST CLIENT...")
 
-	target := "localhost:50051"
+	target := os.Getenv("GRPC_TARGET")
+	if target == "" {
+		target = "localhost:50051"
+	}
+	updateUsername := os.Getenv("GRPC_TEST_USER")
+	if updateUsername == "" {
+		updateUsername = "admin"
+	}
 	conn, err := grpc.NewClient(
 		target,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
@@ -66,7 +74,7 @@ func main() {
 				TimeoutMs:  getRes.Device.TimeoutMs,
 				Enabled:    getRes.Device.Enabled,
 			},
-			Username: "admin",
+			Username: updateUsername,
 			Password: "",
 		}
 		updateRes, err := client.UpdateDevice(ctx, updateReq)

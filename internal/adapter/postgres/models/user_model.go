@@ -9,6 +9,7 @@ import (
 // UserModel is the GORM database model for users.
 type UserModel struct {
 	ID           uint   `gorm:"primaryKey"`
+	Username     string `gorm:"uniqueIndex;not null"`
 	Email        string `gorm:"uniqueIndex;not null"`
 	PasswordHash string `gorm:"not null"`
 	Role         string `gorm:"not null;default:agent"`
@@ -23,6 +24,7 @@ func (m *UserModel) ToDomain() *customer.User {
 	}
 	return &customer.User{
 		ID:           m.ID,
+		Username:     m.Username,
 		Email:        m.Email,
 		PasswordHash: m.PasswordHash,
 		Role:         m.Role,
@@ -38,6 +40,7 @@ func UserModelFromDomain(u *customer.User) *UserModel {
 	}
 	return &UserModel{
 		ID:           u.ID,
+		Username:     u.Username,
 		Email:        u.Email,
 		PasswordHash: u.PasswordHash,
 		Role:         u.Role,

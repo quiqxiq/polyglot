@@ -1,4 +1,4 @@
-package connectadapter
+package connect
 
 import (
 	"errors"

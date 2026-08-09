@@ -2,6 +2,7 @@ package config
 
 import (
 	_ "embed"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -47,16 +48,18 @@ func Load() Config {
 	if err := godotenv.Load(); err != nil {
 		log.Println("[Config] No .env file found or error loading, using environment/default values")
 	}
+	// Per-developer overrides loaded after .env so they take precedence.
+	_ = godotenv.Load(".env.local")
 
 	return Config{
-		Port:   getEnv("APP_PORT", "8080"),
+		Port:   getEnv("APP_PORT", getEnv("PORT", "8080")),
 		AppEnv: getEnv("APP_ENV", "development"),
 
-		DatabaseURL: getEnv("DATABASE_URL", "postgres://postgres:postgres@localhost:5432/polyglot?sslmode=disable"),
+		DatabaseURL: getEnv("DATABASE_URL", ""),
 		RedisURL:    getEnv("REDIS_URL", "redis://localhost:6379/0"),
 
-		EncryptionKey:  getEnv("ENCRYPTION_KEY", "change-me-to-a-32-byte-key!!!!!!"),
-		JWTSecret:      getEnv("JWT_SECRET", "change-me-jwt-secret"),
+		EncryptionKey:  getEnv("ENCRYPTION_KEY", ""),
+		JWTSecret:      getEnv("JWT_SECRET", ""),
 		JWTExpiryHours: getEnvInt("JWT_EXPIRY_HOURS", 24),
 
 		SessionTimeoutMinutes: getEnvInt("SESSION_TIMEOUT_MINUTES", 30),
@@ -110,4 +113,24 @@ func getEnvSlice(key string, fallback []string) []string {
 		return result
 	}
 	return fallback
+}
+
+// Validate ensures required secrets and configuration values are present.
+func (c Config) Validate() error {
+	if strings.TrimSpace(c.JWTSecret) == "" {
+		return fmt.Errorf("JWT_SECRET is required")
+	}
+	if len(c.JWTSecret) < 32 {
+		return fmt.Errorf("JWT_SECRET must be at least 32 bytes")
+	}
+	if strings.TrimSpace(c.EncryptionKey) == "" {
+		return fmt.Errorf("ENCRYPTION_KEY is required")
+	}
+	if len(c.EncryptionKey) != 32 {
+		return fmt.Errorf("ENCRYPTION_KEY must be exactly 32 bytes, got %d bytes", len(c.EncryptionKey))
+	}
+	if strings.TrimSpace(c.DatabaseURL) == "" {
+		return fmt.Errorf("DATABASE_URL is required")
+	}
+	return nil
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"os"
 
 	"github.com/joho/godotenv"
 	"golang.org/x/crypto/bcrypt"
@@ -21,6 +22,10 @@ func main() {
 	}
 
 	cfg := config.Load()
+	if err := cfg.Validate(); err != nil {
+		log.Fatalf("invalid configuration: %v", err)
+	}
+
 	log.Println("Connecting to database for seeding...")
 
 	pgStore, err := postgres.NewStore(cfg.DatabaseURL)
@@ -40,38 +45,78 @@ func main() {
 }
 
 func seedUsers(pgStore *postgres.Store) {
+	adminPassword := os.Getenv("SEED_ADMIN_PASSWORD")
+	if adminPassword == "" {
+		log.Println("SEED_ADMIN_PASSWORD not set, skipping admin user seeding.")
+	}
+	agentPassword := os.Getenv("SEED_AGENT_PASSWORD")
+	if agentPassword == "" {
+		log.Println("SEED_AGENT_PASSWORD not set, skipping agent user seeding.")
+	}
+
+	if adminPassword == "" && agentPassword == "" {
+		return
+	}
+
+	validatePassword := func(pw string) bool {
+		return len(pw) >= 8
+	}
+
 	users := []struct {
+		username string
 		email    string
 		password string
 		role     string
-	}{
-		{email: "admin@gnet.co.id", password: "admin123", role: "admin"},
-		{email: "agent@gnet.co.id", password: "agent123", role: "agent"},
+	}{}
+
+	if adminPassword != "" {
+		if !validatePassword(adminPassword) {
+			log.Fatalf("SEED_ADMIN_PASSWORD does not meet strength requirements (min 8 chars)")
+		}
+		users = append(users, struct {
+			username string
+			email    string
+			password string
+			role     string
+		}{username: "admin", email: "admin@example.com", password: adminPassword, role: "admin"})
+	}
+
+	if agentPassword != "" {
+		if !validatePassword(agentPassword) {
+			log.Fatalf("SEED_AGENT_PASSWORD does not meet strength requirements (min 8 chars)")
+		}
+		users = append(users, struct {
+			username string
+			email    string
+			password string
+			role     string
+		}{username: "agent", email: "agent@example.com", password: agentPassword, role: "agent"})
 	}
 
 	for _, u := range users {
-		existing, err := pgStore.FindUserByEmail(u.email)
+		existing, err := pgStore.FindUserByUsername(u.username)
 		if err == nil && existing != nil {
-			log.Printf("User %s already exists, skipping.", u.email)
+			log.Printf("User %s already exists, skipping.", u.username)
 			continue
 		}
 
 		hash, err := bcrypt.GenerateFromPassword([]byte(u.password), bcrypt.DefaultCost)
 		if err != nil {
-			log.Printf("Failed to hash password for %s: %v", u.email, err)
+			log.Printf("Failed to hash password for %s: %v", u.username, err)
 			continue
 		}
 
 		user := &customer.User{
+			Username:     u.username,
 			Email:        u.email,
 			PasswordHash: string(hash),
 			Role:         u.role,
 		}
 
 		if err := pgStore.CreateUser(user); err != nil {
-			log.Printf("Failed to create user %s: %v", u.email, err)
+			log.Printf("Failed to create user %s: %v", u.username, err)
 		} else {
-			log.Printf("Created user: %s (%s) [Password: %s]", u.email, u.role, u.password)
+			log.Printf("Created user: %s [Email: %s] (%s)", u.username, u.email, u.role)
 		}
 	}
 }
@@ -100,13 +145,10 @@ func seedKnowledge(pgStore *postgres.Store) {
 		},
 		{
 			Title: "Prosedur Pembayaran Tagihan Bulanan",
-			Content: "Pembayaran tagihan internet GNET dilakukan paling lambat tanggal 20 setiap bulannya.\n" +
-				"Transfer dapat dilakukan ke rekening resmi PT Ghaib Network:\n" +
-				"- Bank BCA: 1234-5678-90 a.n PT Ghaib Network\n" +
-				"- Bank Mandiri: 137-00-1234567-8 a.n PT Ghaib Network\n" +
-				"- Bank BRI: 0012-01-000123-30-5 a.n PT Ghaib Network\n\n" +
+			Content: "Pembayaran tagihan internet dilakukan paling lambat tanggal 20 setiap bulannya.\n" +
+				"Transfer dapat dilakukan ke rekening resmi perusahaan yang tertera pada invoice.\n" +
 				"Setelah melakukan pembayaran, mohon simpan resi transfer dan konfirmasikan ke WhatsApp ini.",
-			Tags: "pembayaran,bayar,tagihan,rekening,bca,mandiri,bri,virtual account,va,jatuh tempo,transfer",
+			Tags: "pembayaran,bayar,tagihan,rekening,virtual account,va,jatuh tempo,transfer",
 		},
 		{
 			Title: "Penanganan Gangguan Koneksi Internet (Troubleshooting)",
@@ -126,11 +168,10 @@ func seedKnowledge(pgStore *postgres.Store) {
 		},
 		{
 			Title: "Kontak Layanan Pelanggan & Kantor Pusat",
-			Content: "Layanan Pelanggan PT Ghaib Network (GNET) beroperasi 24 jam setiap hari.\n" +
-				"- Kantor Pusat: Jl. Jaringan Utama No. 88, Jakarta Selatan\n" +
-				"- Telepon: (021) 555-4638\n" +
-				"- Email Support: support@gnet.co.id\n" +
-				"- Website: https://gnet.co.id",
+			Content: "Layanan pelanggan beroperasi 24 jam setiap hari.\n" +
+				"- Telepon: sesuai nomor yang tertera pada invoice atau aplikasi\n" +
+				"- Email Support: support@example.com\n" +
+				"- Website: https://example.com",
 			Tags: "kontak,alamat,lokasi,kantor,telepon,email,call center,operasional,jam,hubungi",
 		},
 	}

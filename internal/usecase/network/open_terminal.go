@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/driver/genericssh"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -36,11 +35,7 @@ func (u *OpenTerminalUseCase) Execute(ctx context.Context, deviceID string, cols
 
 	creds, err := u.vault.Get(ctx, deviceID)
 	if err != nil {
-		// Fallback to default credentials if not stored in vault
-		creds = device.Credentials{
-			Username: "admin",
-			Password: "r00t",
-		}
+		return nil, fmt.Errorf("open_terminal: get credentials for device %s: %w", deviceID, err)
 	}
 
 	target := dev.ToTarget(creds)

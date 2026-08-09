@@ -11,9 +11,14 @@ import (
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 )
 
+const (
+	SenderCustomer = "customer"
+	SenderBot      = "bot"
+)
+
 type Engine struct {
-	cfg          config.Config
-	cache        port.CacheStore
+	cfg           config.Config
+	cache         port.CacheStore
 	waGateway    port.WhatsAppGateway
 	convService  *convUC.ConversationService
 	retriever    port.KnowledgeRetriever
@@ -55,7 +60,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, cust
 		return fmt.Errorf("failed to get/create conversation: %w", err)
 	}
 
-	custMsg, err := e.convService.AddMessageWithConfig(conv.ID, "customer", messageContent, 0, 0, nil)
+	custMsg, err := e.convService.AddMessageWithConfig(conv.ID, SenderCustomer, messageContent, 0, 0, nil)
 	if err == nil && e.publisher != nil {
 		e.publisher.PublishEvent("new_message", custMsg)
 	}
@@ -77,7 +82,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, cust
 	case StatusWarned:
 		log.Printf("[BotEngine] Number %s hit rate limit warning.", customerNumber)
 		_ = e.waGateway.SendMessage(sessionID, customerNumber, rateResult.Message)
-		botMsg, _ := e.convService.AddMessageWithConfig(conv.ID, "bot", rateResult.Message, 0, 0, nil)
+		botMsg, _ := e.convService.AddMessageWithConfig(conv.ID, SenderBot, rateResult.Message, 0, 0, nil)
 		if e.publisher != nil && botMsg != nil {
 			e.publisher.PublishEvent("new_message", botMsg)
 		}

@@ -41,7 +41,7 @@ func NewSessionManager(postgresConnStr string, onMsg MessageCallback, onStat Sta
 	}, nil
 }
 
-func (sm *SessionManager) Connect(session *bot.WASession) error {
+func (sm *SessionManager) ConnectWithContext(ctx context.Context, session *bot.WASession) error {
 	if sm == nil {
 		return nil
 	}
@@ -52,7 +52,6 @@ func (sm *SessionManager) Connect(session *bot.WASession) error {
 		return nil
 	}
 
-	ctx := context.Background()
 	devices, err := sm.container.GetAllDevices(ctx)
 	if err != nil {
 		return fmt.Errorf("failed to get device stores: %w", err)
@@ -98,7 +97,11 @@ func (sm *SessionManager) Connect(session *bot.WASession) error {
 	client := NewClient(session.ID, deviceStore, sm.onMessage, sm.onStatus)
 	sm.clients[session.ID] = client
 
-	return client.Connect(context.Background())
+	return client.Connect(ctx)
+}
+
+func (sm *SessionManager) Connect(session *bot.WASession) error {
+	return sm.ConnectWithContext(context.Background(), session)
 }
 
 func (sm *SessionManager) Disconnect(sessionID uint) error {
@@ -151,6 +154,10 @@ func (sm *SessionManager) Reconnect(sessionID uint) error {
 }
 
 func (sm *SessionManager) SendMessage(sessionID uint, to string, content string) error {
+	return sm.SendMessageContext(context.Background(), sessionID, to, content)
+}
+
+func (sm *SessionManager) SendMessageContext(ctx context.Context, sessionID uint, to string, content string) error {
 	if sm == nil {
 		return fmt.Errorf("session manager not initialized")
 	}
@@ -162,7 +169,7 @@ func (sm *SessionManager) SendMessage(sessionID uint, to string, content string)
 		return fmt.Errorf("session %d is not connected or registered", sessionID)
 	}
 
-	return client.SendMessage(context.Background(), to, content)
+	return client.SendMessage(ctx, to, content)
 }
 
 func (sm *SessionManager) SendDocument(ctx context.Context, sessionID uint, to string, fileBytes []byte, fileName string, contentType string, caption string) error {

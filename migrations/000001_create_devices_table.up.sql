@@ -13,25 +13,15 @@
 
 CREATE TABLE devices (
     id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id        TEXT NOT NULL DEFAULT 'tenant-default',
     name             TEXT NOT NULL,
-    -- vendor: hardware vendor (mikrotik, cisco, zte, huawei, genieacs, ...).
-    -- driver_type: Go driver package to instantiate (mikrotik, cisco,
-    -- zteolt, huaweiolt, genieacs, genericssh, ...). These are distinct —
-    -- a GenieACS-managed CPE may have vendor "zte" but driver_type
-    -- "genieacs", because the CPE is reached through the ACS, not directly.
     vendor           TEXT NOT NULL,
     driver_type      TEXT NOT NULL,
     host             TEXT NOT NULL,
-    -- port 0 means "use the driver's default" (e.g. 7557 for genieacs,
-    -- 8728 for mikrotik API). The driver resolves it at connect time.
     port             INTEGER NOT NULL DEFAULT 0,
+    ssh_port         INTEGER NOT NULL DEFAULT 22,
     timeout_ms       INTEGER NOT NULL DEFAULT 30000,
     poll_interval_ms INTEGER NOT NULL DEFAULT 30000,
-    -- extra: non-sensitive vendor-specific params as JSONB. Examples:
-    --   genieacs: {"device_id":"...","use_tls":"true","fault_channel":"default"}
-    --   zteolt:   {"snmp_port":"161"}
-    -- Sensitive values (password, community string, api_key) do NOT go
-    -- here — they live in the credentials blob.
     extra            JSONB NOT NULL DEFAULT '{}',
     tags             TEXT[] NOT NULL DEFAULT '{}',
     enabled          BOOLEAN NOT NULL DEFAULT TRUE,
@@ -39,6 +29,7 @@ CREATE TABLE devices (
     updated_at       TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+CREATE INDEX idx_devices_tenant_id   ON devices (tenant_id);
 CREATE INDEX idx_devices_driver_type ON devices (driver_type);
 CREATE INDEX idx_devices_vendor      ON devices (vendor);
 CREATE INDEX idx_devices_tags        ON devices USING GIN (tags);

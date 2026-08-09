@@ -18,7 +18,6 @@ import (
 	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
-	"github.com/quixiq/polyglot/internal/adapter/memory"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
 	wsAdapter "github.com/quixiq/polyglot/internal/adapter/ws"
@@ -53,7 +52,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	dbURL := strings.TrimSpace(cfg.DatabaseURL)
 	pgStore, err := postgres.NewStore(dbURL)
 	if err != nil {
-		log.Printf("[Warning] Failed to connect to PostgreSQL (%v). Features requiring database will fail until DB is online.", err)
+		return nil, fmt.Errorf("failed to connect to PostgreSQL: %w", err)
 	}
 
 	redisURL := strings.TrimSpace(cfg.RedisURL)
@@ -64,37 +63,30 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	jwtService := auth.NewJWTService(cfg.JWTSecret, cfg.JWTExpiryHours)
 
-	var casbinEnforcer *auth.CasbinEnforcer
-	if pgStore != nil {
-		casbinEnforcer, err = auth.NewCasbinEnforcer(ctx, pgStore.DB())
-		if err != nil {
-			log.Printf("[Warning] Failed to initialize Casbin enforcer: %v", err)
-		}
+	casbinEnforcer, err := auth.NewCasbinEnforcer(ctx, pgStore.DB())
+	if err != nil {
+		log.Printf("[Warning] Failed to initialize Casbin enforcer: %v", err)
 	}
 
 	sseHub := wsAdapter.NewSSEHub()
 
-	var waManager *whatsapp.SessionManager
-	var convService *convUC.ConversationService
-	if pgStore != nil {
-		eventHandler := whatsapp.NewEventHandler(pgStore, sseHub)
-		waManager, err = whatsapp.NewSessionManager(cfg.DatabaseURL, nil, eventHandler.MakeStatusCallback())
-		if err != nil {
-			log.Printf("[Warning] Failed to initialize WhatsApp SessionManager: %v", err)
-		}
+	eventHandler := whatsapp.NewEventHandler(pgStore, sseHub)
+	waManager, err := whatsapp.NewSessionManager(cfg.DatabaseURL, nil, eventHandler.MakeStatusCallback())
+	if err != nil {
+		log.Printf("[Warning] Failed to initialize WhatsApp SessionManager: %v", err)
+	}
 
-		convService = convUC.NewConversationService(pgStore)
-		knowledgeRetriever := knowledgeUC.NewKeywordRetriever(pgStore)
-		botEngine := botUC.NewEngine(cfg, redisStore, waManager, convService, knowledgeRetriever, pgStore, sseHub)
+	convService := convUC.NewConversationService(pgStore)
+	knowledgeRetriever := knowledgeUC.NewKeywordRetriever(pgStore)
+	botEngine := botUC.NewEngine(cfg, redisStore, waManager, convService, knowledgeRetriever, pgStore, sseHub)
 
-		if waManager != nil {
-			sessions, err := pgStore.FindAllSessions()
-			if err == nil && len(sessions) > 0 {
-				_ = waManager.RestoreAllSessions(sessions)
-			}
-			_ = botEngine
+	if waManager != nil {
+		sessions, err := pgStore.FindAllSessions()
+		if err == nil && len(sessions) > 0 {
+			_ = waManager.RestoreAllSessions(sessions)
 		}
 	}
+	_ = botEngine
 
 	repo, vault := loadInitialDevices(pgStore)
 	factories := map[string]registry.DriverFactory{
@@ -111,16 +103,11 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	devUC := deviceUC.NewManageDeviceUseCase(repo, vault, reg)
 	hotUC := hotspotUC.NewHotspotUseCase("internal/templates")
 
-	var customerRepo port.CustomerRepository
-	if pgStore != nil {
-		customerRepo = postgres.NewCustomerRepository(pgStore.DB())
-	} else {
-		customerRepo = memory.NewCustomerRepository()
-	}
+	customerRepo := postgres.NewCustomerRepository(pgStore.DB())
 	custUC := customerUC.NewManageCustomerUseCase(customerRepo)
 
 	r := gin.Default()
-	r.Use(middleware.CORS(cfg.CORSOrigins))
+	r.Use(middleware.CORS(cfg.CORSOrigins, cfg.AppEnv))
 
 	connectDriverProvider := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
 		return reg.Get(ctx, deviceID)
@@ -223,8 +210,5 @@ func envOr(key, fallback string) string {
 }
 
 func loadInitialDevices(pgStore *postgres.Store) (port.DeviceRepository, port.CredentialVault) {
-	if pgStore != nil {
-		return postgres.NewDeviceRepository(pgStore.DB()), postgres.NewCredentialVault(pgStore.DB())
-	}
-	return memory.NewDeviceRepository(), memory.NewCredentialVault()
+	return postgres.NewDeviceRepository(pgStore.DB()), postgres.NewCredentialVault(pgStore.DB())
 }

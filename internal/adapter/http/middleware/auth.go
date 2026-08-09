@@ -9,6 +9,8 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 )
 
+const BearerScheme = "Bearer"
+
 func AuthenticateJWT(jwtService *auth.JWTService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
@@ -19,7 +21,7 @@ func AuthenticateJWT(jwtService *auth.JWTService) gin.HandlerFunc {
 		}
 
 		parts := strings.SplitN(authHeader, " ", 2)
-		if len(parts) != 2 || !strings.EqualFold(parts[0], "Bearer") {
+		if len(parts) != 2 || !strings.EqualFold(parts[0], BearerScheme) {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid Authorization header format. Expected 'Bearer <token>'"})
 			c.Abort()
 			return

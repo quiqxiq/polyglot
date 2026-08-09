@@ -29,6 +29,17 @@ func (s *Store) FindUserByID(id uint) (*customer.User, error) {
 	return m.ToDomain(), nil
 }
 
+func (s *Store) FindUserByUsername(username string) (*customer.User, error) {
+	var m models.UserModel
+	if err := s.db.Where("username = ?", username).First(&m).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, ErrNotFound
+		}
+		return nil, err
+	}
+	return m.ToDomain(), nil
+}
+
 func (s *Store) FindUserByEmail(email string) (*customer.User, error) {
 	var m models.UserModel
 	if err := s.db.Where("email = ?", email).First(&m).Error; err != nil {
