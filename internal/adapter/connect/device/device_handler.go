@@ -3,13 +3,21 @@ package device
 import (
 	"context"
 	"fmt"
+	"log"
+	"math"
+	"net"
 	"net/http"
+	"strconv"
+	"strings"
 	"time"
 
 	"connectrpc.com/connect"
+	"github.com/google/uuid"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	"github.com/quixiq/polyglot/internal/domain/device"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 )
@@ -54,8 +62,8 @@ func (h *DeviceConnectHandler) GetDevice(ctx context.Context, req *connect.Reque
 }
 
 func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Request[devicepb.UpdateDeviceRequest]) (*connect.Response[devicepb.UpdateDeviceResponse], error) {
-	if req.Msg.Device == nil || req.Msg.Device.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device with id is required"))
+	if req.Msg.Device == nil {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device payload is required"))
 	}
 
 	d := pbToDomain(req.Msg.Device)
@@ -64,8 +72,20 @@ func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Re
 		Password: req.Msg.Password,
 	}
 
-	if err := h.useCase.UpdateDevice(ctx, d, c); err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+	isNew := false
+	if d.ID == "" {
+		d.ID = uuid.NewString()
+		isNew = true
+	}
+
+	if isNew {
+		if err := h.useCase.CreateDevice(ctx, d, c); err != nil {
+			return nil, connect.NewError(connect.CodeInternal, err)
+		}
+	} else {
+		if err := h.useCase.UpdateDevice(ctx, d, c); err != nil {
+			return nil, connect.NewError(connect.CodeInternal, err)
+		}
 	}
 
 	updated, err := h.useCase.GetDevice(ctx, d.ID)
@@ -73,9 +93,14 @@ func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Re
 		updated = d
 	}
 
+	msg := "device updated successfully via ConnectRPC"
+	if isNew {
+		msg = "device created successfully via ConnectRPC"
+	}
+
 	return connect.NewResponse(&devicepb.UpdateDeviceResponse{
 		Device:  domainToPb(updated),
-		Message: "device updated successfully via ConnectRPC",
+		Message: msg,
 	}), nil
 }
 
@@ -100,12 +125,19 @@ func (h *DeviceConnectHandler) TestDeviceConnection(ctx context.Context, req *co
 
 	var drv port.DeviceDriver
 	if h.driverGetter != nil {
-		if d, err := h.driverGetter(ctx, req.Msg.Id); err == nil {
-			drv = d
+		d, err := h.driverGetter(ctx, req.Msg.Id)
+		if err != nil {
+			return connect.NewResponse(&devicepb.TestDeviceConnectionResponse{
+				DeviceId: req.Msg.Id,
+				Status:   "failed",
+				Message:  fmt.Sprintf("Failed to connect to device: %v", err),
+				Success:  false,
+			}), nil
 		}
+		drv = d
 	}
 
-	res, err := h.useCase.TestConnection(ctx, drv, req.Msg.Id)
+	res, err := h.useCase.TestConnection(ctx, drv, req.Msg.Id, req.Msg.SelectedInterface)
 	if err != nil {
 		return connect.NewResponse(&devicepb.TestDeviceConnectionResponse{
 			DeviceId: req.Msg.Id,
@@ -115,50 +147,238 @@ func (h *DeviceConnectHandler) TestDeviceConnection(ctx context.Context, req *co
 		}), nil
 	}
 
+	var pbIfaces []*devicepb.DeviceInterfaceInfo
+	for _, ifc := range res.InterfaceDetails {
+		pbIfaces = append(pbIfaces, &devicepb.DeviceInterfaceInfo{
+			Name:       ifc.Name,
+			Type:       ifc.Type,
+			Disabled:   ifc.Disabled,
+			Running:    ifc.Running,
+			MacAddress: ifc.MACAddress,
+			RxBps:      ifc.RxBps,
+			TxBps:      ifc.TxBps,
+		})
+	}
+
 	return connect.NewResponse(&devicepb.TestDeviceConnectionResponse{
-		DeviceId:  res.DeviceID,
-		Status:    res.Status,
-		LatencyMs: res.LatencyMS,
-		Uptime:    res.Uptime,
-		Version:   res.Version,
-		BoardName: res.BoardName,
-		Identity:  res.Identity,
-		Message:   res.Message,
-		Success:   res.Status == "connected" || res.Status == "online",
+		DeviceId:      res.DeviceID,
+		Status:        res.Status,
+		LatencyMs:     res.LatencyMS,
+		Uptime:        res.Uptime,
+		Version:       res.Version,
+		BoardName:     res.BoardName,
+		Identity:      res.Identity,
+		CpuLoad:       int32(res.CPULoad),
+		FreeMemory:    res.FreeMemory,
+		TotalMemory:   res.TotalMemory,
+		Interfaces:    res.Interfaces,
+		InterfaceList: pbIfaces,
+		RxBps:         res.RxBps,
+		TxBps:         res.TxBps,
+		Message:       res.Message,
+		Success:       res.Status == "connected" || res.Status == "online",
 	}), nil
 }
 
 func (h *DeviceConnectHandler) StreamDeviceStatus(ctx context.Context, req *connect.Request[devicepb.StreamDeviceStatusRequest], stream *connect.ServerStream[devicepb.DeviceStatusFrame]) error {
-	ticker := time.NewTicker(3 * time.Second)
-	defer ticker.Stop()
+	if req.Msg.Id == "" {
+		return connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device id is required"))
+	}
+
+	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
+	if err != nil {
+		return connect.NewError(connect.CodeNotFound, err)
+	}
+
+	frame := &devicepb.DeviceStatusFrame{
+		Device: domainToPb(dev),
+		Test: &devicepb.DeviceTestMetrics{
+			DeviceId: dev.ID,
+			Status:   "offline",
+		},
+	}
+
+	if !dev.Enabled || h.driverGetter == nil {
+		return stream.Send(frame)
+	}
+
+	drv, err := h.driverGetter(ctx, dev.ID)
+	if err != nil || drv == nil {
+		return stream.Send(frame)
+	}
+
+	// 1. Snapshot awal untuk data resource & daftar interface
+	initialRes, _ := h.useCase.TestConnection(ctx, drv, dev.ID, req.Msg.SelectedInterface)
+	var pbIfaces []*devicepb.DeviceInterfaceInfo
+	for _, ifc := range initialRes.InterfaceDetails {
+		pbIfaces = append(pbIfaces, &devicepb.DeviceInterfaceInfo{
+			Name:       ifc.Name,
+			Type:       ifc.Type,
+			Disabled:   ifc.Disabled,
+			Running:    ifc.Running,
+			MacAddress: ifc.MACAddress,
+			RxBps:      ifc.RxBps,
+			TxBps:      ifc.TxBps,
+		})
+	}
+
+	metrics := &devicepb.DeviceTestMetrics{
+		DeviceId:      dev.ID,
+		Status:        initialRes.Status,
+		LatencyMs:     initialRes.LatencyMS,
+		Uptime:        initialRes.Uptime,
+		Version:       initialRes.Version,
+		BoardName:     initialRes.BoardName,
+		Identity:      initialRes.Identity,
+		Message:       initialRes.Message,
+		CpuLoad:       int32(initialRes.CPULoad),
+		FreeMemory:    initialRes.FreeMemory,
+		TotalMemory:   initialRes.TotalMemory,
+		Interfaces:    initialRes.Interfaces,
+		InterfaceList: pbIfaces,
+		RxBps:         initialRes.RxBps,
+		TxBps:         initialRes.TxBps,
+	}
+	frame.Test = metrics
+	if err := stream.Send(frame); err != nil {
+		return err
+	}
+
+	// Snapshot sent, wait until context cancelled for status stream
+	<-ctx.Done()
+	return nil
+}
+
+func (h *DeviceConnectHandler) StreamPing(ctx context.Context, req *connect.Request[devicepb.StreamDevicePingRequest], stream *connect.ServerStream[devicepb.StreamDevicePingFrame]) error {
+	if req.Msg.Id == "" {
+		return connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device id is required"))
+	}
+
+	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
+	if err != nil {
+		return connect.NewError(connect.CodeNotFound, err)
+	}
+
+	if !dev.Enabled || h.driverGetter == nil {
+		return nil
+	}
+
+	drv, err := h.driverGetter(ctx, dev.ID)
+	if err != nil || drv == nil {
+		return nil
+	}
+
+	sDrv, ok := drv.(port.StreamingDeviceDriver)
+	if !ok {
+		<-ctx.Done()
+		return nil
+	}
+
+	pingTarget := req.Msg.Address
+	if pingTarget == "" {
+		pingTarget = dev.Host
+	}
+	if hostOnly, _, err := net.SplitHostPort(pingTarget); err == nil {
+		pingTarget = hostOnly
+	}
+
+	pingCmd := mikrotik.NewPingStreamCommand(pingTarget)
+	pingHandle, err := sDrv.Stream(ctx, pingCmd)
+	if err != nil {
+		return connect.NewError(connect.CodeInternal, fmt.Errorf("failed to start ping stream: %w", err))
+	}
+	defer pingHandle.Cancel()
 
 	for {
 		select {
 		case <-ctx.Done():
 			return nil
-		case <-ticker.C:
-			if req.Msg.Id != "" {
-				dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
-				if err == nil {
-					frame := &devicepb.DeviceStatusFrame{
-						Device: domainToPb(dev),
-					}
-					if err := stream.Send(frame); err != nil {
-						return err
-					}
+		case res, ok := <-pingHandle.Chan():
+			if !ok {
+				return nil
+			}
+			if len(res.Rows) > 0 {
+				row := res.Rows[0]
+				latency, status := parsePingLatency(row)
+				frame := &devicepb.StreamDevicePingFrame{
+					DeviceId:  dev.ID,
+					Address:   pingTarget,
+					LatencyMs: latency,
+					Status:    status,
 				}
-			} else {
-				devices, err := h.useCase.ListDevices(ctx)
-				if err == nil {
-					for _, dev := range devices {
-						frame := &devicepb.DeviceStatusFrame{
-							Device: domainToPb(dev),
-						}
-						if err := stream.Send(frame); err != nil {
-							return err
-						}
-					}
+				if err := stream.Send(frame); err != nil {
+					return err
 				}
+			}
+		}
+	}
+}
+
+func (h *DeviceConnectHandler) StreamInterfaceTraffic(ctx context.Context, req *connect.Request[devicepb.StreamDeviceTrafficRequest], stream *connect.ServerStream[devicepb.StreamDeviceTrafficFrame]) error {
+	if req.Msg.Id == "" {
+		return connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device id is required"))
+	}
+
+	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
+	if err != nil {
+		return connect.NewError(connect.CodeNotFound, err)
+	}
+
+	if !dev.Enabled || h.driverGetter == nil {
+		return nil
+	}
+
+	drv, err := h.driverGetter(ctx, dev.ID)
+	if err != nil || drv == nil {
+		return nil
+	}
+
+	sDrv, ok := drv.(port.StreamingDeviceDriver)
+	if !ok {
+		<-ctx.Done()
+		return nil
+	}
+
+	ifaceName := req.Msg.InterfaceName
+	if ifaceName == "" || ifaceName == "default" {
+		ifaceName = "ether1"
+	}
+
+	log.Printf("[StreamInterfaceTraffic] Starting stream for device=%s iface=%s", dev.ID, ifaceName)
+
+	trafficCmd := mikrotik.NewMonitorTrafficStreamCommand(ifaceName)
+	trafficHandle, err := sDrv.Stream(ctx, trafficCmd)
+	if err != nil {
+		log.Printf("[StreamInterfaceTraffic] Error starting stream for iface=%s: %v", ifaceName, err)
+		return connect.NewError(connect.CodeInternal, fmt.Errorf("failed to start traffic stream: %w", err))
+	}
+	defer func() {
+		log.Printf("[StreamInterfaceTraffic] Cancelling stream for iface=%s", ifaceName)
+		trafficHandle.Cancel()
+	}()
+
+	for {
+		select {
+		case <-ctx.Done():
+			log.Printf("[StreamInterfaceTraffic] Context done for iface=%s", ifaceName)
+			return nil
+		case res, ok := <-trafficHandle.Chan():
+			if !ok {
+				log.Printf("[StreamInterfaceTraffic] Channel closed for iface=%s", ifaceName)
+				return nil
+			}
+			stats := mikrotik.ParseInterfaceTrafficStats(res)
+			rx, _ := strconv.ParseInt(stats.RxBitsPerSecond, 10, 64)
+			tx, _ := strconv.ParseInt(stats.TxBitsPerSecond, 10, 64)
+			log.Printf("[StreamInterfaceTraffic] Sending frame iface=%s rx=%d tx=%d raw=%+v", ifaceName, rx, tx, stats)
+			frame := &devicepb.StreamDeviceTrafficFrame{
+				DeviceId:      dev.ID,
+				InterfaceName: ifaceName,
+				RxBps:         rx,
+				TxBps:         tx,
+			}
+			if err := stream.Send(frame); err != nil {
+				return err
 			}
 		}
 	}
@@ -267,7 +487,7 @@ func NewDeviceServiceHandler(uc *deviceUC.ManageDeviceUseCase, getter DriverGett
 		driverGetter: getter,
 	}
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
 	serviceName := "polyglot.v1.DeviceService"
 	mux.Handle("/"+serviceName+"/ListDevices", connect.NewUnaryHandler(
@@ -298,6 +518,16 @@ func NewDeviceServiceHandler(uc *deviceUC.ManageDeviceUseCase, getter DriverGett
 	mux.Handle("/"+serviceName+"/StreamDeviceStatus", connect.NewServerStreamHandler(
 		"/"+serviceName+"/StreamDeviceStatus",
 		handler.StreamDeviceStatus,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/StreamPing", connect.NewServerStreamHandler(
+		"/"+serviceName+"/StreamPing",
+		handler.StreamPing,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/StreamInterfaceTraffic", connect.NewServerStreamHandler(
+		"/"+serviceName+"/StreamInterfaceTraffic",
+		handler.StreamInterfaceTraffic,
 		codecOpt,
 	))
 	mux.Handle("/"+serviceName+"/StreamTerminal", connect.NewBidiStreamHandler(
@@ -352,4 +582,79 @@ func pbToDomain(pb *devicepb.Device) device.Device {
 		Tags:           pb.Tags,
 		Enabled:        pb.Enabled,
 	}
+}
+
+func parsePingLatency(row map[string]string) (int64, string) {
+	status := row["status"]
+	if status == "timeout" || status == "host unreachable" || status == "net unreachable" {
+		return 0, status
+	}
+	if status == "" {
+		status = "connected"
+	}
+
+	timeStr := row["time"]
+	if timeStr == "" {
+		timeStr = row["avg-rtt"]
+	}
+	if timeStr == "" {
+		timeStr = row["min-rtt"]
+	}
+	if timeStr == "" {
+		timeStr = row["rtt"]
+	}
+	if timeStr == "" {
+		timeStr = row["response-time"]
+	}
+
+	if timeStr == "" {
+		if _, hasSeq := row["seq"]; hasSeq {
+			return 1, status
+		}
+		if _, hasHost := row["host"]; hasHost {
+			return 1, status
+		}
+		return 0, status
+	}
+
+	timeStr = strings.TrimSpace(timeStr)
+	timeStr = strings.TrimPrefix(timeStr, "<")
+	timeStr = strings.TrimPrefix(timeStr, ">")
+
+	// Try Go stdlib time.ParseDuration (handles "15ms", "1ms200us", "230us", etc.)
+	if d, err := time.ParseDuration(timeStr); err == nil {
+		ms := float64(d) / float64(time.Millisecond)
+		if ms > 0 && ms < 1.0 {
+			return 1, status
+		}
+		return int64(math.Round(ms)), status
+	}
+
+	// Check HH:MM:SS.microsecond format (e.g. 00:00:00.023000)
+	if strings.Contains(timeStr, ":") {
+		parts := strings.Split(timeStr, ":")
+		if len(parts) == 3 {
+			secStr := parts[2]
+			if sec, err := strconv.ParseFloat(secStr, 64); err == nil {
+				ms := sec * 1000.0
+				if ms > 0 && ms < 1.0 {
+					return 1, status
+				}
+				return int64(math.Round(ms)), status
+			}
+		}
+	}
+
+	cleanStr := strings.TrimSuffix(timeStr, "ms")
+	cleanStr = strings.TrimSuffix(cleanStr, "s")
+	cleanStr = strings.TrimSpace(cleanStr)
+
+	if f, err := strconv.ParseFloat(cleanStr, 64); err == nil {
+		if f > 0 && f < 1.0 {
+			return 1, status
+		}
+		return int64(math.Round(f)), status
+	}
+
+	return 1, status
 }

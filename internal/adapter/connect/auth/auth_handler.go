@@ -13,6 +13,7 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/adapter/auth"
+	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 )
 
@@ -125,7 +126,7 @@ func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Requ
 func NewAuthServiceHandler(pgStore *postgres.Store, jwtService *auth.JWTService) (string, http.Handler) {
 	handler := NewAuthConnectHandler(pgStore, jwtService)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
 	serviceName := "polyglot.v1.AuthService"
 	mux.Handle("/"+serviceName+"/Login", connect.NewUnaryHandler(

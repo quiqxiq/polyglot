@@ -10,6 +10,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
+	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/knowledge"
@@ -95,14 +96,18 @@ func seedUsers(pgStore *postgres.Store) {
 
 	for _, u := range users {
 		existing, err := pgStore.FindUserByUsername(u.username)
-		if err == nil && existing != nil {
-			log.Printf("User %s already exists, skipping.", u.username)
+		hash, errHash := bcrypt.GenerateFromPassword([]byte(u.password), bcrypt.DefaultCost)
+		if errHash != nil {
+			log.Printf("Failed to hash password for %s: %v", u.username, errHash)
 			continue
 		}
 
-		hash, err := bcrypt.GenerateFromPassword([]byte(u.password), bcrypt.DefaultCost)
-		if err != nil {
-			log.Printf("Failed to hash password for %s: %v", u.username, err)
+		if err == nil && existing != nil {
+			if err := pgStore.DB().Model(&models.UserModel{}).Where("username = ?", u.username).Update("password_hash", string(hash)).Error; err != nil {
+				log.Printf("Failed to update password for existing user %s: %v", u.username, err)
+			} else {
+				log.Printf("Updated password for existing user: %s", u.username)
+			}
 			continue
 		}
 

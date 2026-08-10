@@ -354,6 +354,16 @@ export class StreamDeviceStatusRequest extends Message<StreamDeviceStatusRequest
    */
   id = "";
 
+  /**
+   * @generated from field: string selected_interface = 2;
+   */
+  selectedInterface = "";
+
+  /**
+   * @generated from field: string ping_address = 3;
+   */
+  pingAddress = "";
+
   constructor(data?: PartialMessage<StreamDeviceStatusRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -363,6 +373,8 @@ export class StreamDeviceStatusRequest extends Message<StreamDeviceStatusRequest
   static readonly typeName = "polyglot.v1.StreamDeviceStatusRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "selected_interface", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "ping_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StreamDeviceStatusRequest {
@@ -379,6 +391,79 @@ export class StreamDeviceStatusRequest extends Message<StreamDeviceStatusRequest
 
   static equals(a: StreamDeviceStatusRequest | PlainMessage<StreamDeviceStatusRequest> | undefined, b: StreamDeviceStatusRequest | PlainMessage<StreamDeviceStatusRequest> | undefined): boolean {
     return proto3.util.equals(StreamDeviceStatusRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.DeviceInterfaceInfo
+ */
+export class DeviceInterfaceInfo extends Message<DeviceInterfaceInfo> {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  /**
+   * @generated from field: string type = 2;
+   */
+  type = "";
+
+  /**
+   * @generated from field: bool disabled = 3;
+   */
+  disabled = false;
+
+  /**
+   * @generated from field: bool running = 4;
+   */
+  running = false;
+
+  /**
+   * @generated from field: int64 rx_bps = 5;
+   */
+  rxBps = protoInt64.zero;
+
+  /**
+   * @generated from field: int64 tx_bps = 6;
+   */
+  txBps = protoInt64.zero;
+
+  /**
+   * @generated from field: string mac_address = 7;
+   */
+  macAddress = "";
+
+  constructor(data?: PartialMessage<DeviceInterfaceInfo>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.DeviceInterfaceInfo";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "disabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 4, name: "running", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 5, name: "rx_bps", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 6, name: "tx_bps", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 7, name: "mac_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeviceInterfaceInfo {
+    return new DeviceInterfaceInfo().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeviceInterfaceInfo {
+    return new DeviceInterfaceInfo().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeviceInterfaceInfo {
+    return new DeviceInterfaceInfo().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeviceInterfaceInfo | PlainMessage<DeviceInterfaceInfo> | undefined, b: DeviceInterfaceInfo | PlainMessage<DeviceInterfaceInfo> | undefined): boolean {
+    return proto3.util.equals(DeviceInterfaceInfo, a, b);
   }
 }
 
@@ -426,6 +511,41 @@ export class DeviceTestMetrics extends Message<DeviceTestMetrics> {
    */
   message = "";
 
+  /**
+   * @generated from field: int32 cpu_load = 9;
+   */
+  cpuLoad = 0;
+
+  /**
+   * @generated from field: int64 free_memory = 10;
+   */
+  freeMemory = protoInt64.zero;
+
+  /**
+   * @generated from field: int64 total_memory = 11;
+   */
+  totalMemory = protoInt64.zero;
+
+  /**
+   * @generated from field: repeated string interfaces = 12;
+   */
+  interfaces: string[] = [];
+
+  /**
+   * @generated from field: repeated polyglot.v1.DeviceInterfaceInfo interface_list = 13;
+   */
+  interfaceList: DeviceInterfaceInfo[] = [];
+
+  /**
+   * @generated from field: int64 rx_bps = 14;
+   */
+  rxBps = protoInt64.zero;
+
+  /**
+   * @generated from field: int64 tx_bps = 15;
+   */
+  txBps = protoInt64.zero;
+
   constructor(data?: PartialMessage<DeviceTestMetrics>) {
     super();
     proto3.util.initPartial(data, this);
@@ -442,6 +562,13 @@ export class DeviceTestMetrics extends Message<DeviceTestMetrics> {
     { no: 6, name: "board_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "identity", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 8, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "cpu_load", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 10, name: "free_memory", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 11, name: "total_memory", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 12, name: "interfaces", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 13, name: "interface_list", kind: "message", T: DeviceInterfaceInfo, repeated: true },
+    { no: 14, name: "rx_bps", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 15, name: "tx_bps", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeviceTestMetrics {
@@ -648,6 +775,11 @@ export class TestDeviceConnectionRequest extends Message<TestDeviceConnectionReq
    */
   id = "";
 
+  /**
+   * @generated from field: string selected_interface = 2;
+   */
+  selectedInterface = "";
+
   constructor(data?: PartialMessage<TestDeviceConnectionRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -657,6 +789,7 @@ export class TestDeviceConnectionRequest extends Message<TestDeviceConnectionReq
   static readonly typeName = "polyglot.v1.TestDeviceConnectionRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "selected_interface", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TestDeviceConnectionRequest {
@@ -730,6 +863,41 @@ export class TestDeviceConnectionResponse extends Message<TestDeviceConnectionRe
    */
   metrics?: DeviceTestMetrics;
 
+  /**
+   * @generated from field: int32 cpu_load = 11;
+   */
+  cpuLoad = 0;
+
+  /**
+   * @generated from field: int64 free_memory = 12;
+   */
+  freeMemory = protoInt64.zero;
+
+  /**
+   * @generated from field: int64 total_memory = 13;
+   */
+  totalMemory = protoInt64.zero;
+
+  /**
+   * @generated from field: repeated string interfaces = 14;
+   */
+  interfaces: string[] = [];
+
+  /**
+   * @generated from field: repeated polyglot.v1.DeviceInterfaceInfo interface_list = 15;
+   */
+  interfaceList: DeviceInterfaceInfo[] = [];
+
+  /**
+   * @generated from field: int64 rx_bps = 16;
+   */
+  rxBps = protoInt64.zero;
+
+  /**
+   * @generated from field: int64 tx_bps = 17;
+   */
+  txBps = protoInt64.zero;
+
   constructor(data?: PartialMessage<TestDeviceConnectionResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -748,6 +916,13 @@ export class TestDeviceConnectionResponse extends Message<TestDeviceConnectionRe
     { no: 8, name: "board_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 9, name: "identity", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 10, name: "metrics", kind: "message", T: DeviceTestMetrics },
+    { no: 11, name: "cpu_load", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 12, name: "free_memory", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 13, name: "total_memory", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 14, name: "interfaces", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 15, name: "interface_list", kind: "message", T: DeviceInterfaceInfo, repeated: true },
+    { no: 16, name: "rx_bps", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 17, name: "tx_bps", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TestDeviceConnectionResponse {
@@ -764,6 +939,206 @@ export class TestDeviceConnectionResponse extends Message<TestDeviceConnectionRe
 
   static equals(a: TestDeviceConnectionResponse | PlainMessage<TestDeviceConnectionResponse> | undefined, b: TestDeviceConnectionResponse | PlainMessage<TestDeviceConnectionResponse> | undefined): boolean {
     return proto3.util.equals(TestDeviceConnectionResponse, a, b);
+  }
+}
+
+/**
+ * StreamDevicePing requests continuous ping execution targeting address.
+ *
+ * @generated from message polyglot.v1.StreamDevicePingRequest
+ */
+export class StreamDevicePingRequest extends Message<StreamDevicePingRequest> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string address = 2;
+   */
+  address = "";
+
+  constructor(data?: PartialMessage<StreamDevicePingRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.StreamDevicePingRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StreamDevicePingRequest {
+    return new StreamDevicePingRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StreamDevicePingRequest {
+    return new StreamDevicePingRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StreamDevicePingRequest {
+    return new StreamDevicePingRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: StreamDevicePingRequest | PlainMessage<StreamDevicePingRequest> | undefined, b: StreamDevicePingRequest | PlainMessage<StreamDevicePingRequest> | undefined): boolean {
+    return proto3.util.equals(StreamDevicePingRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.StreamDevicePingFrame
+ */
+export class StreamDevicePingFrame extends Message<StreamDevicePingFrame> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string address = 2;
+   */
+  address = "";
+
+  /**
+   * @generated from field: int64 latency_ms = 3;
+   */
+  latencyMs = protoInt64.zero;
+
+  /**
+   * @generated from field: string status = 4;
+   */
+  status = "";
+
+  constructor(data?: PartialMessage<StreamDevicePingFrame>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.StreamDevicePingFrame";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "latency_ms", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 4, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StreamDevicePingFrame {
+    return new StreamDevicePingFrame().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StreamDevicePingFrame {
+    return new StreamDevicePingFrame().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StreamDevicePingFrame {
+    return new StreamDevicePingFrame().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: StreamDevicePingFrame | PlainMessage<StreamDevicePingFrame> | undefined, b: StreamDevicePingFrame | PlainMessage<StreamDevicePingFrame> | undefined): boolean {
+    return proto3.util.equals(StreamDevicePingFrame, a, b);
+  }
+}
+
+/**
+ * StreamDeviceTraffic requests continuous interface traffic monitoring.
+ *
+ * @generated from message polyglot.v1.StreamDeviceTrafficRequest
+ */
+export class StreamDeviceTrafficRequest extends Message<StreamDeviceTrafficRequest> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string interface_name = 2;
+   */
+  interfaceName = "";
+
+  constructor(data?: PartialMessage<StreamDeviceTrafficRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.StreamDeviceTrafficRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "interface_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StreamDeviceTrafficRequest {
+    return new StreamDeviceTrafficRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StreamDeviceTrafficRequest {
+    return new StreamDeviceTrafficRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StreamDeviceTrafficRequest {
+    return new StreamDeviceTrafficRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: StreamDeviceTrafficRequest | PlainMessage<StreamDeviceTrafficRequest> | undefined, b: StreamDeviceTrafficRequest | PlainMessage<StreamDeviceTrafficRequest> | undefined): boolean {
+    return proto3.util.equals(StreamDeviceTrafficRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.StreamDeviceTrafficFrame
+ */
+export class StreamDeviceTrafficFrame extends Message<StreamDeviceTrafficFrame> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string interface_name = 2;
+   */
+  interfaceName = "";
+
+  /**
+   * @generated from field: int64 rx_bps = 3;
+   */
+  rxBps = protoInt64.zero;
+
+  /**
+   * @generated from field: int64 tx_bps = 4;
+   */
+  txBps = protoInt64.zero;
+
+  constructor(data?: PartialMessage<StreamDeviceTrafficFrame>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.StreamDeviceTrafficFrame";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "interface_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "rx_bps", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 4, name: "tx_bps", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StreamDeviceTrafficFrame {
+    return new StreamDeviceTrafficFrame().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StreamDeviceTrafficFrame {
+    return new StreamDeviceTrafficFrame().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StreamDeviceTrafficFrame {
+    return new StreamDeviceTrafficFrame().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: StreamDeviceTrafficFrame | PlainMessage<StreamDeviceTrafficFrame> | undefined, b: StreamDeviceTrafficFrame | PlainMessage<StreamDeviceTrafficFrame> | undefined): boolean {
+    return proto3.util.equals(StreamDeviceTrafficFrame, a, b);
   }
 }
 

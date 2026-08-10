@@ -8,6 +8,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 )
 
@@ -69,7 +70,7 @@ func (h *CustomerConnectHandler) GetCustomer(ctx context.Context, req *connect.R
 func NewCustomerServiceHandler(uc *customerUC.ManageCustomerUseCase) (string, http.Handler) {
 	handler := NewCustomerConnectHandler(uc)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
 	serviceName := "polyglot.v1.CustomerService"
 	mux.Handle("/"+serviceName+"/ListCustomers", connect.NewUnaryHandler(

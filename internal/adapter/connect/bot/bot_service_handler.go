@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"connectrpc.com/connect"
+
+	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 )
 
@@ -18,7 +20,7 @@ func NewBotConnectHandler(convService *convUC.ConversationService) *BotConnectHa
 func NewBotServiceHandler(convService *convUC.ConversationService) (string, http.Handler) {
 	handler := NewBotConnectHandler(convService)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
 	serviceName := "polyglot.v1.BotService"
 	mux.Handle("/"+serviceName+"/ListConversations", connect.NewUnaryHandler(

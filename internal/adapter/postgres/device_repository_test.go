@@ -18,7 +18,26 @@ func setupTestDB(t *testing.T) *gorm.DB {
 	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
 	require.NoError(t, err)
 
-	err = db.AutoMigrate(&models.DeviceModel{}, &models.CredentialModel{})
+	err = db.Exec(`CREATE TABLE devices (
+		id TEXT PRIMARY KEY,
+		tenant_id TEXT NOT NULL DEFAULT 'tenant-default',
+		name TEXT NOT NULL,
+		vendor TEXT NOT NULL DEFAULT 'mikrotik',
+		driver_type TEXT NOT NULL DEFAULT 'mikrotik',
+		host TEXT NOT NULL,
+		port INTEGER NOT NULL DEFAULT 8728,
+		ssh_port INTEGER NOT NULL DEFAULT 22,
+		timeout_ms INTEGER NOT NULL DEFAULT 10000,
+		poll_interval_ms INTEGER NOT NULL DEFAULT 30000,
+		extra_json TEXT,
+		tags_json TEXT,
+		enabled NUMERIC NOT NULL DEFAULT 1,
+		created_at DATETIME,
+		updated_at DATETIME
+	)`).Error
+	require.NoError(t, err)
+
+	err = db.AutoMigrate(&models.CredentialModel{})
 	require.NoError(t, err)
 
 	return db

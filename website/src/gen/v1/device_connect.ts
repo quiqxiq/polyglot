@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteDeviceRequest, DeleteDeviceResponse, DeviceStatusFrame, GetDeviceRequest, GetDeviceResponse, ListDevicesRequest, ListDevicesResponse, StreamDeviceStatusRequest, TerminalFrame, TestDeviceConnectionRequest, TestDeviceConnectionResponse, UpdateDeviceRequest, UpdateDeviceResponse } from "./device_pb.js";
+import { DeleteDeviceRequest, DeleteDeviceResponse, DeviceStatusFrame, GetDeviceRequest, GetDeviceResponse, ListDevicesRequest, ListDevicesResponse, StreamDevicePingFrame, StreamDevicePingRequest, StreamDeviceStatusRequest, StreamDeviceTrafficFrame, StreamDeviceTrafficRequest, TerminalFrame, TestDeviceConnectionRequest, TestDeviceConnectionResponse, UpdateDeviceRequest, UpdateDeviceResponse } from "./device_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -66,6 +66,24 @@ export const DeviceService = {
       name: "StreamDeviceStatus",
       I: StreamDeviceStatusRequest,
       O: DeviceStatusFrame,
+      kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * @generated from rpc polyglot.v1.DeviceService.StreamPing
+     */
+    streamPing: {
+      name: "StreamPing",
+      I: StreamDevicePingRequest,
+      O: StreamDevicePingFrame,
+      kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * @generated from rpc polyglot.v1.DeviceService.StreamInterfaceTraffic
+     */
+    streamInterfaceTraffic: {
+      name: "StreamInterfaceTraffic",
+      I: StreamDeviceTrafficRequest,
+      O: StreamDeviceTrafficFrame,
       kind: MethodKind.ServerStreaming,
     },
     /**

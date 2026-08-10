@@ -1,5 +1,5 @@
 import { createConnectTransport } from '@connectrpc/connect-web'
-import { createPromiseClient } from '@connectrpc/connect'
+import { createPromiseClient, Code, ConnectError } from '@connectrpc/connect'
 import { AuthService } from '@/gen/v1/auth_connect'
 import { BillingService } from '@/gen/v1/billing_connect'
 import { BotService } from '@/gen/v1/bot_connect'
@@ -20,7 +20,20 @@ const transport = createConnectTransport({
       if (token) {
         req.header.set('Authorization', `Bearer ${token}`)
       }
-      return await next(req)
+      try {
+        return await next(req)
+      } catch (err: unknown) {
+        if (
+          (err instanceof ConnectError && err.code === Code.Unauthenticated) ||
+          (err instanceof Error && (err.message.includes('401') || err.message.toLowerCase().includes('unauthorized')))
+        ) {
+          useAuthStore.getState().auth.reset()
+          if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/sign-in')) {
+            window.location.href = '/sign-in'
+          }
+        }
+        throw err
+      }
     },
   ],
 })

@@ -19,13 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DeviceService_ListDevices_FullMethodName          = "/polyglot.v1.DeviceService/ListDevices"
-	DeviceService_GetDevice_FullMethodName            = "/polyglot.v1.DeviceService/GetDevice"
-	DeviceService_UpdateDevice_FullMethodName         = "/polyglot.v1.DeviceService/UpdateDevice"
-	DeviceService_DeleteDevice_FullMethodName         = "/polyglot.v1.DeviceService/DeleteDevice"
-	DeviceService_TestDeviceConnection_FullMethodName = "/polyglot.v1.DeviceService/TestDeviceConnection"
-	DeviceService_StreamDeviceStatus_FullMethodName   = "/polyglot.v1.DeviceService/StreamDeviceStatus"
-	DeviceService_StreamTerminal_FullMethodName       = "/polyglot.v1.DeviceService/StreamTerminal"
+	DeviceService_ListDevices_FullMethodName            = "/polyglot.v1.DeviceService/ListDevices"
+	DeviceService_GetDevice_FullMethodName              = "/polyglot.v1.DeviceService/GetDevice"
+	DeviceService_UpdateDevice_FullMethodName           = "/polyglot.v1.DeviceService/UpdateDevice"
+	DeviceService_DeleteDevice_FullMethodName           = "/polyglot.v1.DeviceService/DeleteDevice"
+	DeviceService_TestDeviceConnection_FullMethodName   = "/polyglot.v1.DeviceService/TestDeviceConnection"
+	DeviceService_StreamDeviceStatus_FullMethodName     = "/polyglot.v1.DeviceService/StreamDeviceStatus"
+	DeviceService_StreamPing_FullMethodName             = "/polyglot.v1.DeviceService/StreamPing"
+	DeviceService_StreamInterfaceTraffic_FullMethodName = "/polyglot.v1.DeviceService/StreamInterfaceTraffic"
+	DeviceService_StreamTerminal_FullMethodName         = "/polyglot.v1.DeviceService/StreamTerminal"
 )
 
 // DeviceServiceClient is the client API for DeviceService service.
@@ -40,6 +42,8 @@ type DeviceServiceClient interface {
 	DeleteDevice(ctx context.Context, in *DeleteDeviceRequest, opts ...grpc.CallOption) (*DeleteDeviceResponse, error)
 	TestDeviceConnection(ctx context.Context, in *TestDeviceConnectionRequest, opts ...grpc.CallOption) (*TestDeviceConnectionResponse, error)
 	StreamDeviceStatus(ctx context.Context, in *StreamDeviceStatusRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[DeviceStatusFrame], error)
+	StreamPing(ctx context.Context, in *StreamDevicePingRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamDevicePingFrame], error)
+	StreamInterfaceTraffic(ctx context.Context, in *StreamDeviceTrafficRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamDeviceTrafficFrame], error)
 	StreamTerminal(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[TerminalFrame, TerminalFrame], error)
 }
 
@@ -120,9 +124,47 @@ func (c *deviceServiceClient) StreamDeviceStatus(ctx context.Context, in *Stream
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type DeviceService_StreamDeviceStatusClient = grpc.ServerStreamingClient[DeviceStatusFrame]
 
+func (c *deviceServiceClient) StreamPing(ctx context.Context, in *StreamDevicePingRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamDevicePingFrame], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &DeviceService_ServiceDesc.Streams[1], DeviceService_StreamPing_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamDevicePingRequest, StreamDevicePingFrame]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DeviceService_StreamPingClient = grpc.ServerStreamingClient[StreamDevicePingFrame]
+
+func (c *deviceServiceClient) StreamInterfaceTraffic(ctx context.Context, in *StreamDeviceTrafficRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamDeviceTrafficFrame], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &DeviceService_ServiceDesc.Streams[2], DeviceService_StreamInterfaceTraffic_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamDeviceTrafficRequest, StreamDeviceTrafficFrame]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DeviceService_StreamInterfaceTrafficClient = grpc.ServerStreamingClient[StreamDeviceTrafficFrame]
+
 func (c *deviceServiceClient) StreamTerminal(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[TerminalFrame, TerminalFrame], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &DeviceService_ServiceDesc.Streams[1], DeviceService_StreamTerminal_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &DeviceService_ServiceDesc.Streams[3], DeviceService_StreamTerminal_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -145,6 +187,8 @@ type DeviceServiceServer interface {
 	DeleteDevice(context.Context, *DeleteDeviceRequest) (*DeleteDeviceResponse, error)
 	TestDeviceConnection(context.Context, *TestDeviceConnectionRequest) (*TestDeviceConnectionResponse, error)
 	StreamDeviceStatus(*StreamDeviceStatusRequest, grpc.ServerStreamingServer[DeviceStatusFrame]) error
+	StreamPing(*StreamDevicePingRequest, grpc.ServerStreamingServer[StreamDevicePingFrame]) error
+	StreamInterfaceTraffic(*StreamDeviceTrafficRequest, grpc.ServerStreamingServer[StreamDeviceTrafficFrame]) error
 	StreamTerminal(grpc.BidiStreamingServer[TerminalFrame, TerminalFrame]) error
 	mustEmbedUnimplementedDeviceServiceServer()
 }
@@ -173,6 +217,12 @@ func (UnimplementedDeviceServiceServer) TestDeviceConnection(context.Context, *T
 }
 func (UnimplementedDeviceServiceServer) StreamDeviceStatus(*StreamDeviceStatusRequest, grpc.ServerStreamingServer[DeviceStatusFrame]) error {
 	return status.Error(codes.Unimplemented, "method StreamDeviceStatus not implemented")
+}
+func (UnimplementedDeviceServiceServer) StreamPing(*StreamDevicePingRequest, grpc.ServerStreamingServer[StreamDevicePingFrame]) error {
+	return status.Error(codes.Unimplemented, "method StreamPing not implemented")
+}
+func (UnimplementedDeviceServiceServer) StreamInterfaceTraffic(*StreamDeviceTrafficRequest, grpc.ServerStreamingServer[StreamDeviceTrafficFrame]) error {
+	return status.Error(codes.Unimplemented, "method StreamInterfaceTraffic not implemented")
 }
 func (UnimplementedDeviceServiceServer) StreamTerminal(grpc.BidiStreamingServer[TerminalFrame, TerminalFrame]) error {
 	return status.Error(codes.Unimplemented, "method StreamTerminal not implemented")
@@ -299,6 +349,28 @@ func _DeviceService_StreamDeviceStatus_Handler(srv interface{}, stream grpc.Serv
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type DeviceService_StreamDeviceStatusServer = grpc.ServerStreamingServer[DeviceStatusFrame]
 
+func _DeviceService_StreamPing_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamDevicePingRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(DeviceServiceServer).StreamPing(m, &grpc.GenericServerStream[StreamDevicePingRequest, StreamDevicePingFrame]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DeviceService_StreamPingServer = grpc.ServerStreamingServer[StreamDevicePingFrame]
+
+func _DeviceService_StreamInterfaceTraffic_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamDeviceTrafficRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(DeviceServiceServer).StreamInterfaceTraffic(m, &grpc.GenericServerStream[StreamDeviceTrafficRequest, StreamDeviceTrafficFrame]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DeviceService_StreamInterfaceTrafficServer = grpc.ServerStreamingServer[StreamDeviceTrafficFrame]
+
 func _DeviceService_StreamTerminal_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(DeviceServiceServer).StreamTerminal(&grpc.GenericServerStream[TerminalFrame, TerminalFrame]{ServerStream: stream})
 }
@@ -338,6 +410,16 @@ var DeviceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "StreamDeviceStatus",
 			Handler:       _DeviceService_StreamDeviceStatus_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamPing",
+			Handler:       _DeviceService_StreamPing_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamInterfaceTraffic",
+			Handler:       _DeviceService_StreamInterfaceTraffic_Handler,
 			ServerStreams: true,
 		},
 		{

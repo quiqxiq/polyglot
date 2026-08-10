@@ -153,7 +153,7 @@ func TestManageDeviceUseCase(t *testing.T) {
 			},
 		}
 
-		res, err := uc.TestConnection(ctx, driver, "dev-1")
+		res, err := uc.TestConnection(ctx, driver, "dev-1", "")
 		require.NoError(t, err)
 		assert.Equal(t, "connected", res.Status)
 		assert.Equal(t, "hEX", res.BoardName)

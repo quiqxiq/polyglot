@@ -435,10 +435,12 @@ func (x *UpdateDeviceResponse) GetMessage() string {
 }
 
 type StreamDeviceStatusRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Id                string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	SelectedInterface string                 `protobuf:"bytes,2,opt,name=selected_interface,json=selectedInterface,proto3" json:"selected_interface,omitempty"`
+	PingAddress       string                 `protobuf:"bytes,3,opt,name=ping_address,json=pingAddress,proto3" json:"ping_address,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *StreamDeviceStatusRequest) Reset() {
@@ -478,6 +480,112 @@ func (x *StreamDeviceStatusRequest) GetId() string {
 	return ""
 }
 
+func (x *StreamDeviceStatusRequest) GetSelectedInterface() string {
+	if x != nil {
+		return x.SelectedInterface
+	}
+	return ""
+}
+
+func (x *StreamDeviceStatusRequest) GetPingAddress() string {
+	if x != nil {
+		return x.PingAddress
+	}
+	return ""
+}
+
+type DeviceInterfaceInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Type          string                 `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
+	Disabled      bool                   `protobuf:"varint,3,opt,name=disabled,proto3" json:"disabled,omitempty"`
+	Running       bool                   `protobuf:"varint,4,opt,name=running,proto3" json:"running,omitempty"`
+	RxBps         int64                  `protobuf:"varint,5,opt,name=rx_bps,json=rxBps,proto3" json:"rx_bps,omitempty"`
+	TxBps         int64                  `protobuf:"varint,6,opt,name=tx_bps,json=txBps,proto3" json:"tx_bps,omitempty"`
+	MacAddress    string                 `protobuf:"bytes,7,opt,name=mac_address,json=macAddress,proto3" json:"mac_address,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeviceInterfaceInfo) Reset() {
+	*x = DeviceInterfaceInfo{}
+	mi := &file_v1_device_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeviceInterfaceInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeviceInterfaceInfo) ProtoMessage() {}
+
+func (x *DeviceInterfaceInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeviceInterfaceInfo.ProtoReflect.Descriptor instead.
+func (*DeviceInterfaceInfo) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *DeviceInterfaceInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *DeviceInterfaceInfo) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *DeviceInterfaceInfo) GetDisabled() bool {
+	if x != nil {
+		return x.Disabled
+	}
+	return false
+}
+
+func (x *DeviceInterfaceInfo) GetRunning() bool {
+	if x != nil {
+		return x.Running
+	}
+	return false
+}
+
+func (x *DeviceInterfaceInfo) GetRxBps() int64 {
+	if x != nil {
+		return x.RxBps
+	}
+	return 0
+}
+
+func (x *DeviceInterfaceInfo) GetTxBps() int64 {
+	if x != nil {
+		return x.TxBps
+	}
+	return 0
+}
+
+func (x *DeviceInterfaceInfo) GetMacAddress() string {
+	if x != nil {
+		return x.MacAddress
+	}
+	return ""
+}
+
 type DeviceTestMetrics struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
@@ -488,13 +596,20 @@ type DeviceTestMetrics struct {
 	BoardName     string                 `protobuf:"bytes,6,opt,name=board_name,json=boardName,proto3" json:"board_name,omitempty"`
 	Identity      string                 `protobuf:"bytes,7,opt,name=identity,proto3" json:"identity,omitempty"`
 	Message       string                 `protobuf:"bytes,8,opt,name=message,proto3" json:"message,omitempty"`
+	CpuLoad       int32                  `protobuf:"varint,9,opt,name=cpu_load,json=cpuLoad,proto3" json:"cpu_load,omitempty"`
+	FreeMemory    int64                  `protobuf:"varint,10,opt,name=free_memory,json=freeMemory,proto3" json:"free_memory,omitempty"`
+	TotalMemory   int64                  `protobuf:"varint,11,opt,name=total_memory,json=totalMemory,proto3" json:"total_memory,omitempty"`
+	Interfaces    []string               `protobuf:"bytes,12,rep,name=interfaces,proto3" json:"interfaces,omitempty"`
+	InterfaceList []*DeviceInterfaceInfo `protobuf:"bytes,13,rep,name=interface_list,json=interfaceList,proto3" json:"interface_list,omitempty"`
+	RxBps         int64                  `protobuf:"varint,14,opt,name=rx_bps,json=rxBps,proto3" json:"rx_bps,omitempty"`
+	TxBps         int64                  `protobuf:"varint,15,opt,name=tx_bps,json=txBps,proto3" json:"tx_bps,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *DeviceTestMetrics) Reset() {
 	*x = DeviceTestMetrics{}
-	mi := &file_v1_device_proto_msgTypes[8]
+	mi := &file_v1_device_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -506,7 +621,7 @@ func (x *DeviceTestMetrics) String() string {
 func (*DeviceTestMetrics) ProtoMessage() {}
 
 func (x *DeviceTestMetrics) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_device_proto_msgTypes[8]
+	mi := &file_v1_device_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -519,7 +634,7 @@ func (x *DeviceTestMetrics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeviceTestMetrics.ProtoReflect.Descriptor instead.
 func (*DeviceTestMetrics) Descriptor() ([]byte, []int) {
-	return file_v1_device_proto_rawDescGZIP(), []int{8}
+	return file_v1_device_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *DeviceTestMetrics) GetDeviceId() string {
@@ -578,6 +693,55 @@ func (x *DeviceTestMetrics) GetMessage() string {
 	return ""
 }
 
+func (x *DeviceTestMetrics) GetCpuLoad() int32 {
+	if x != nil {
+		return x.CpuLoad
+	}
+	return 0
+}
+
+func (x *DeviceTestMetrics) GetFreeMemory() int64 {
+	if x != nil {
+		return x.FreeMemory
+	}
+	return 0
+}
+
+func (x *DeviceTestMetrics) GetTotalMemory() int64 {
+	if x != nil {
+		return x.TotalMemory
+	}
+	return 0
+}
+
+func (x *DeviceTestMetrics) GetInterfaces() []string {
+	if x != nil {
+		return x.Interfaces
+	}
+	return nil
+}
+
+func (x *DeviceTestMetrics) GetInterfaceList() []*DeviceInterfaceInfo {
+	if x != nil {
+		return x.InterfaceList
+	}
+	return nil
+}
+
+func (x *DeviceTestMetrics) GetRxBps() int64 {
+	if x != nil {
+		return x.RxBps
+	}
+	return 0
+}
+
+func (x *DeviceTestMetrics) GetTxBps() int64 {
+	if x != nil {
+		return x.TxBps
+	}
+	return 0
+}
+
 type DeviceStatusFrame struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Device        *Device                `protobuf:"bytes,1,opt,name=device,proto3" json:"device,omitempty"`
@@ -588,7 +752,7 @@ type DeviceStatusFrame struct {
 
 func (x *DeviceStatusFrame) Reset() {
 	*x = DeviceStatusFrame{}
-	mi := &file_v1_device_proto_msgTypes[9]
+	mi := &file_v1_device_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -600,7 +764,7 @@ func (x *DeviceStatusFrame) String() string {
 func (*DeviceStatusFrame) ProtoMessage() {}
 
 func (x *DeviceStatusFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_device_proto_msgTypes[9]
+	mi := &file_v1_device_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -613,7 +777,7 @@ func (x *DeviceStatusFrame) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeviceStatusFrame.ProtoReflect.Descriptor instead.
 func (*DeviceStatusFrame) Descriptor() ([]byte, []int) {
-	return file_v1_device_proto_rawDescGZIP(), []int{9}
+	return file_v1_device_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *DeviceStatusFrame) GetDevice() *Device {
@@ -643,7 +807,7 @@ type TerminalFrame struct {
 
 func (x *TerminalFrame) Reset() {
 	*x = TerminalFrame{}
-	mi := &file_v1_device_proto_msgTypes[10]
+	mi := &file_v1_device_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -655,7 +819,7 @@ func (x *TerminalFrame) String() string {
 func (*TerminalFrame) ProtoMessage() {}
 
 func (x *TerminalFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_device_proto_msgTypes[10]
+	mi := &file_v1_device_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -668,7 +832,7 @@ func (x *TerminalFrame) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TerminalFrame.ProtoReflect.Descriptor instead.
 func (*TerminalFrame) Descriptor() ([]byte, []int) {
-	return file_v1_device_proto_rawDescGZIP(), []int{10}
+	return file_v1_device_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *TerminalFrame) GetDeviceId() string {
@@ -715,7 +879,7 @@ type DeleteDeviceRequest struct {
 
 func (x *DeleteDeviceRequest) Reset() {
 	*x = DeleteDeviceRequest{}
-	mi := &file_v1_device_proto_msgTypes[11]
+	mi := &file_v1_device_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -727,7 +891,7 @@ func (x *DeleteDeviceRequest) String() string {
 func (*DeleteDeviceRequest) ProtoMessage() {}
 
 func (x *DeleteDeviceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_device_proto_msgTypes[11]
+	mi := &file_v1_device_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -740,7 +904,7 @@ func (x *DeleteDeviceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteDeviceRequest.ProtoReflect.Descriptor instead.
 func (*DeleteDeviceRequest) Descriptor() ([]byte, []int) {
-	return file_v1_device_proto_rawDescGZIP(), []int{11}
+	return file_v1_device_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *DeleteDeviceRequest) GetId() string {
@@ -759,7 +923,7 @@ type DeleteDeviceResponse struct {
 
 func (x *DeleteDeviceResponse) Reset() {
 	*x = DeleteDeviceResponse{}
-	mi := &file_v1_device_proto_msgTypes[12]
+	mi := &file_v1_device_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -771,7 +935,7 @@ func (x *DeleteDeviceResponse) String() string {
 func (*DeleteDeviceResponse) ProtoMessage() {}
 
 func (x *DeleteDeviceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_device_proto_msgTypes[12]
+	mi := &file_v1_device_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -784,7 +948,7 @@ func (x *DeleteDeviceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteDeviceResponse.ProtoReflect.Descriptor instead.
 func (*DeleteDeviceResponse) Descriptor() ([]byte, []int) {
-	return file_v1_device_proto_rawDescGZIP(), []int{12}
+	return file_v1_device_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *DeleteDeviceResponse) GetMessage() string {
@@ -795,15 +959,16 @@ func (x *DeleteDeviceResponse) GetMessage() string {
 }
 
 type TestDeviceConnectionRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Id                string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	SelectedInterface string                 `protobuf:"bytes,2,opt,name=selected_interface,json=selectedInterface,proto3" json:"selected_interface,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *TestDeviceConnectionRequest) Reset() {
 	*x = TestDeviceConnectionRequest{}
-	mi := &file_v1_device_proto_msgTypes[13]
+	mi := &file_v1_device_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -815,7 +980,7 @@ func (x *TestDeviceConnectionRequest) String() string {
 func (*TestDeviceConnectionRequest) ProtoMessage() {}
 
 func (x *TestDeviceConnectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_device_proto_msgTypes[13]
+	mi := &file_v1_device_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -828,12 +993,19 @@ func (x *TestDeviceConnectionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TestDeviceConnectionRequest.ProtoReflect.Descriptor instead.
 func (*TestDeviceConnectionRequest) Descriptor() ([]byte, []int) {
-	return file_v1_device_proto_rawDescGZIP(), []int{13}
+	return file_v1_device_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *TestDeviceConnectionRequest) GetId() string {
 	if x != nil {
 		return x.Id
+	}
+	return ""
+}
+
+func (x *TestDeviceConnectionRequest) GetSelectedInterface() string {
+	if x != nil {
+		return x.SelectedInterface
 	}
 	return ""
 }
@@ -850,13 +1022,20 @@ type TestDeviceConnectionResponse struct {
 	BoardName     string                 `protobuf:"bytes,8,opt,name=board_name,json=boardName,proto3" json:"board_name,omitempty"`
 	Identity      string                 `protobuf:"bytes,9,opt,name=identity,proto3" json:"identity,omitempty"`
 	Metrics       *DeviceTestMetrics     `protobuf:"bytes,10,opt,name=metrics,proto3" json:"metrics,omitempty"`
+	CpuLoad       int32                  `protobuf:"varint,11,opt,name=cpu_load,json=cpuLoad,proto3" json:"cpu_load,omitempty"`
+	FreeMemory    int64                  `protobuf:"varint,12,opt,name=free_memory,json=freeMemory,proto3" json:"free_memory,omitempty"`
+	TotalMemory   int64                  `protobuf:"varint,13,opt,name=total_memory,json=totalMemory,proto3" json:"total_memory,omitempty"`
+	Interfaces    []string               `protobuf:"bytes,14,rep,name=interfaces,proto3" json:"interfaces,omitempty"`
+	InterfaceList []*DeviceInterfaceInfo `protobuf:"bytes,15,rep,name=interface_list,json=interfaceList,proto3" json:"interface_list,omitempty"`
+	RxBps         int64                  `protobuf:"varint,16,opt,name=rx_bps,json=rxBps,proto3" json:"rx_bps,omitempty"`
+	TxBps         int64                  `protobuf:"varint,17,opt,name=tx_bps,json=txBps,proto3" json:"tx_bps,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *TestDeviceConnectionResponse) Reset() {
 	*x = TestDeviceConnectionResponse{}
-	mi := &file_v1_device_proto_msgTypes[14]
+	mi := &file_v1_device_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -868,7 +1047,7 @@ func (x *TestDeviceConnectionResponse) String() string {
 func (*TestDeviceConnectionResponse) ProtoMessage() {}
 
 func (x *TestDeviceConnectionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_device_proto_msgTypes[14]
+	mi := &file_v1_device_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -881,7 +1060,7 @@ func (x *TestDeviceConnectionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TestDeviceConnectionResponse.ProtoReflect.Descriptor instead.
 func (*TestDeviceConnectionResponse) Descriptor() ([]byte, []int) {
-	return file_v1_device_proto_rawDescGZIP(), []int{14}
+	return file_v1_device_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *TestDeviceConnectionResponse) GetDeviceId() string {
@@ -954,6 +1133,297 @@ func (x *TestDeviceConnectionResponse) GetMetrics() *DeviceTestMetrics {
 	return nil
 }
 
+func (x *TestDeviceConnectionResponse) GetCpuLoad() int32 {
+	if x != nil {
+		return x.CpuLoad
+	}
+	return 0
+}
+
+func (x *TestDeviceConnectionResponse) GetFreeMemory() int64 {
+	if x != nil {
+		return x.FreeMemory
+	}
+	return 0
+}
+
+func (x *TestDeviceConnectionResponse) GetTotalMemory() int64 {
+	if x != nil {
+		return x.TotalMemory
+	}
+	return 0
+}
+
+func (x *TestDeviceConnectionResponse) GetInterfaces() []string {
+	if x != nil {
+		return x.Interfaces
+	}
+	return nil
+}
+
+func (x *TestDeviceConnectionResponse) GetInterfaceList() []*DeviceInterfaceInfo {
+	if x != nil {
+		return x.InterfaceList
+	}
+	return nil
+}
+
+func (x *TestDeviceConnectionResponse) GetRxBps() int64 {
+	if x != nil {
+		return x.RxBps
+	}
+	return 0
+}
+
+func (x *TestDeviceConnectionResponse) GetTxBps() int64 {
+	if x != nil {
+		return x.TxBps
+	}
+	return 0
+}
+
+// StreamDevicePing requests continuous ping execution targeting address.
+type StreamDevicePingRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StreamDevicePingRequest) Reset() {
+	*x = StreamDevicePingRequest{}
+	mi := &file_v1_device_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StreamDevicePingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StreamDevicePingRequest) ProtoMessage() {}
+
+func (x *StreamDevicePingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StreamDevicePingRequest.ProtoReflect.Descriptor instead.
+func (*StreamDevicePingRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *StreamDevicePingRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *StreamDevicePingRequest) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+type StreamDevicePingFrame struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
+	LatencyMs     int64                  `protobuf:"varint,3,opt,name=latency_ms,json=latencyMs,proto3" json:"latency_ms,omitempty"`
+	Status        string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StreamDevicePingFrame) Reset() {
+	*x = StreamDevicePingFrame{}
+	mi := &file_v1_device_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StreamDevicePingFrame) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StreamDevicePingFrame) ProtoMessage() {}
+
+func (x *StreamDevicePingFrame) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StreamDevicePingFrame.ProtoReflect.Descriptor instead.
+func (*StreamDevicePingFrame) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *StreamDevicePingFrame) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *StreamDevicePingFrame) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *StreamDevicePingFrame) GetLatencyMs() int64 {
+	if x != nil {
+		return x.LatencyMs
+	}
+	return 0
+}
+
+func (x *StreamDevicePingFrame) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+// StreamDeviceTraffic requests continuous interface traffic monitoring.
+type StreamDeviceTrafficRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	InterfaceName string                 `protobuf:"bytes,2,opt,name=interface_name,json=interfaceName,proto3" json:"interface_name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StreamDeviceTrafficRequest) Reset() {
+	*x = StreamDeviceTrafficRequest{}
+	mi := &file_v1_device_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StreamDeviceTrafficRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StreamDeviceTrafficRequest) ProtoMessage() {}
+
+func (x *StreamDeviceTrafficRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StreamDeviceTrafficRequest.ProtoReflect.Descriptor instead.
+func (*StreamDeviceTrafficRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *StreamDeviceTrafficRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *StreamDeviceTrafficRequest) GetInterfaceName() string {
+	if x != nil {
+		return x.InterfaceName
+	}
+	return ""
+}
+
+type StreamDeviceTrafficFrame struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	InterfaceName string                 `protobuf:"bytes,2,opt,name=interface_name,json=interfaceName,proto3" json:"interface_name,omitempty"`
+	RxBps         int64                  `protobuf:"varint,3,opt,name=rx_bps,json=rxBps,proto3" json:"rx_bps,omitempty"`
+	TxBps         int64                  `protobuf:"varint,4,opt,name=tx_bps,json=txBps,proto3" json:"tx_bps,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StreamDeviceTrafficFrame) Reset() {
+	*x = StreamDeviceTrafficFrame{}
+	mi := &file_v1_device_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StreamDeviceTrafficFrame) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StreamDeviceTrafficFrame) ProtoMessage() {}
+
+func (x *StreamDeviceTrafficFrame) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StreamDeviceTrafficFrame.ProtoReflect.Descriptor instead.
+func (*StreamDeviceTrafficFrame) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *StreamDeviceTrafficFrame) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *StreamDeviceTrafficFrame) GetInterfaceName() string {
+	if x != nil {
+		return x.InterfaceName
+	}
+	return ""
+}
+
+func (x *StreamDeviceTrafficFrame) GetRxBps() int64 {
+	if x != nil {
+		return x.RxBps
+	}
+	return 0
+}
+
+func (x *StreamDeviceTrafficFrame) GetTxBps() int64 {
+	if x != nil {
+		return x.TxBps
+	}
+	return 0
+}
+
 var File_v1_device_proto protoreflect.FileDescriptor
 
 const file_v1_device_proto_rawDesc = "" +
@@ -988,9 +1458,20 @@ const file_v1_device_proto_rawDesc = "" +
 	"\bpassword\x18\x03 \x01(\tR\bpassword\"]\n" +
 	"\x14UpdateDeviceResponse\x12+\n" +
 	"\x06device\x18\x01 \x01(\v2\x13.polyglot.v1.DeviceR\x06device\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"+\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"}\n" +
 	"\x19StreamDeviceStatusRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\xee\x01\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12-\n" +
+	"\x12selected_interface\x18\x02 \x01(\tR\x11selectedInterface\x12!\n" +
+	"\fping_address\x18\x03 \x01(\tR\vpingAddress\"\xc2\x01\n" +
+	"\x13DeviceInterfaceInfo\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
+	"\x04type\x18\x02 \x01(\tR\x04type\x12\x1a\n" +
+	"\bdisabled\x18\x03 \x01(\bR\bdisabled\x12\x18\n" +
+	"\arunning\x18\x04 \x01(\bR\arunning\x12\x15\n" +
+	"\x06rx_bps\x18\x05 \x01(\x03R\x05rxBps\x12\x15\n" +
+	"\x06tx_bps\x18\x06 \x01(\x03R\x05txBps\x12\x1f\n" +
+	"\vmac_address\x18\a \x01(\tR\n" +
+	"macAddress\"\xe4\x03\n" +
 	"\x11DeviceTestMetrics\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status\x12\x1d\n" +
@@ -1001,7 +1482,18 @@ const file_v1_device_proto_rawDesc = "" +
 	"\n" +
 	"board_name\x18\x06 \x01(\tR\tboardName\x12\x1a\n" +
 	"\bidentity\x18\a \x01(\tR\bidentity\x12\x18\n" +
-	"\amessage\x18\b \x01(\tR\amessage\"t\n" +
+	"\amessage\x18\b \x01(\tR\amessage\x12\x19\n" +
+	"\bcpu_load\x18\t \x01(\x05R\acpuLoad\x12\x1f\n" +
+	"\vfree_memory\x18\n" +
+	" \x01(\x03R\n" +
+	"freeMemory\x12!\n" +
+	"\ftotal_memory\x18\v \x01(\x03R\vtotalMemory\x12\x1e\n" +
+	"\n" +
+	"interfaces\x18\f \x03(\tR\n" +
+	"interfaces\x12G\n" +
+	"\x0einterface_list\x18\r \x03(\v2 .polyglot.v1.DeviceInterfaceInfoR\rinterfaceList\x12\x15\n" +
+	"\x06rx_bps\x18\x0e \x01(\x03R\x05rxBps\x12\x15\n" +
+	"\x06tx_bps\x18\x0f \x01(\x03R\x05txBps\"t\n" +
 	"\x11DeviceStatusFrame\x12+\n" +
 	"\x06device\x18\x01 \x01(\v2\x13.polyglot.v1.DeviceR\x06device\x122\n" +
 	"\x04test\x18\x02 \x01(\v2\x1e.polyglot.v1.DeviceTestMetricsR\x04test\"\x94\x01\n" +
@@ -1016,9 +1508,10 @@ const file_v1_device_proto_rawDesc = "" +
 	"\x13DeleteDeviceRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"0\n" +
 	"\x14DeleteDeviceResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"-\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\\\n" +
 	"\x1bTestDeviceConnectionRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"\xcd\x02\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12-\n" +
+	"\x12selected_interface\x18\x02 \x01(\tR\x11selectedInterface\"\xc3\x04\n" +
 	"\x1cTestDeviceConnectionResponse\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status\x12\x18\n" +
@@ -1032,14 +1525,44 @@ const file_v1_device_proto_rawDesc = "" +
 	"board_name\x18\b \x01(\tR\tboardName\x12\x1a\n" +
 	"\bidentity\x18\t \x01(\tR\bidentity\x128\n" +
 	"\ametrics\x18\n" +
-	" \x01(\v2\x1e.polyglot.v1.DeviceTestMetricsR\ametrics2\xf2\x04\n" +
+	" \x01(\v2\x1e.polyglot.v1.DeviceTestMetricsR\ametrics\x12\x19\n" +
+	"\bcpu_load\x18\v \x01(\x05R\acpuLoad\x12\x1f\n" +
+	"\vfree_memory\x18\f \x01(\x03R\n" +
+	"freeMemory\x12!\n" +
+	"\ftotal_memory\x18\r \x01(\x03R\vtotalMemory\x12\x1e\n" +
+	"\n" +
+	"interfaces\x18\x0e \x03(\tR\n" +
+	"interfaces\x12G\n" +
+	"\x0einterface_list\x18\x0f \x03(\v2 .polyglot.v1.DeviceInterfaceInfoR\rinterfaceList\x12\x15\n" +
+	"\x06rx_bps\x18\x10 \x01(\x03R\x05rxBps\x12\x15\n" +
+	"\x06tx_bps\x18\x11 \x01(\x03R\x05txBps\"C\n" +
+	"\x17StreamDevicePingRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
+	"\aaddress\x18\x02 \x01(\tR\aaddress\"\x85\x01\n" +
+	"\x15StreamDevicePingFrame\x12\x1b\n" +
+	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x18\n" +
+	"\aaddress\x18\x02 \x01(\tR\aaddress\x12\x1d\n" +
+	"\n" +
+	"latency_ms\x18\x03 \x01(\x03R\tlatencyMs\x12\x16\n" +
+	"\x06status\x18\x04 \x01(\tR\x06status\"S\n" +
+	"\x1aStreamDeviceTrafficRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12%\n" +
+	"\x0einterface_name\x18\x02 \x01(\tR\rinterfaceName\"\x8c\x01\n" +
+	"\x18StreamDeviceTrafficFrame\x12\x1b\n" +
+	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
+	"\x0einterface_name\x18\x02 \x01(\tR\rinterfaceName\x12\x15\n" +
+	"\x06rx_bps\x18\x03 \x01(\x03R\x05rxBps\x12\x15\n" +
+	"\x06tx_bps\x18\x04 \x01(\x03R\x05txBps2\xb8\x06\n" +
 	"\rDeviceService\x12P\n" +
 	"\vListDevices\x12\x1f.polyglot.v1.ListDevicesRequest\x1a .polyglot.v1.ListDevicesResponse\x12J\n" +
 	"\tGetDevice\x12\x1d.polyglot.v1.GetDeviceRequest\x1a\x1e.polyglot.v1.GetDeviceResponse\x12S\n" +
 	"\fUpdateDevice\x12 .polyglot.v1.UpdateDeviceRequest\x1a!.polyglot.v1.UpdateDeviceResponse\x12S\n" +
 	"\fDeleteDevice\x12 .polyglot.v1.DeleteDeviceRequest\x1a!.polyglot.v1.DeleteDeviceResponse\x12k\n" +
 	"\x14TestDeviceConnection\x12(.polyglot.v1.TestDeviceConnectionRequest\x1a).polyglot.v1.TestDeviceConnectionResponse\x12^\n" +
-	"\x12StreamDeviceStatus\x12&.polyglot.v1.StreamDeviceStatusRequest\x1a\x1e.polyglot.v1.DeviceStatusFrame0\x01\x12L\n" +
+	"\x12StreamDeviceStatus\x12&.polyglot.v1.StreamDeviceStatusRequest\x1a\x1e.polyglot.v1.DeviceStatusFrame0\x01\x12X\n" +
+	"\n" +
+	"StreamPing\x12$.polyglot.v1.StreamDevicePingRequest\x1a\".polyglot.v1.StreamDevicePingFrame0\x01\x12j\n" +
+	"\x16StreamInterfaceTraffic\x12'.polyglot.v1.StreamDeviceTrafficRequest\x1a%.polyglot.v1.StreamDeviceTrafficFrame0\x01\x12L\n" +
 	"\x0eStreamTerminal\x12\x1a.polyglot.v1.TerminalFrame\x1a\x1a.polyglot.v1.TerminalFrame(\x010\x01B0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
@@ -1054,7 +1577,7 @@ func file_v1_device_proto_rawDescGZIP() []byte {
 	return file_v1_device_proto_rawDescData
 }
 
-var file_v1_device_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_v1_device_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_v1_device_proto_goTypes = []any{
 	(*Device)(nil),                       // 0: polyglot.v1.Device
 	(*ListDevicesRequest)(nil),           // 1: polyglot.v1.ListDevicesRequest
@@ -1064,41 +1587,52 @@ var file_v1_device_proto_goTypes = []any{
 	(*UpdateDeviceRequest)(nil),          // 5: polyglot.v1.UpdateDeviceRequest
 	(*UpdateDeviceResponse)(nil),         // 6: polyglot.v1.UpdateDeviceResponse
 	(*StreamDeviceStatusRequest)(nil),    // 7: polyglot.v1.StreamDeviceStatusRequest
-	(*DeviceTestMetrics)(nil),            // 8: polyglot.v1.DeviceTestMetrics
-	(*DeviceStatusFrame)(nil),            // 9: polyglot.v1.DeviceStatusFrame
-	(*TerminalFrame)(nil),                // 10: polyglot.v1.TerminalFrame
-	(*DeleteDeviceRequest)(nil),          // 11: polyglot.v1.DeleteDeviceRequest
-	(*DeleteDeviceResponse)(nil),         // 12: polyglot.v1.DeleteDeviceResponse
-	(*TestDeviceConnectionRequest)(nil),  // 13: polyglot.v1.TestDeviceConnectionRequest
-	(*TestDeviceConnectionResponse)(nil), // 14: polyglot.v1.TestDeviceConnectionResponse
+	(*DeviceInterfaceInfo)(nil),          // 8: polyglot.v1.DeviceInterfaceInfo
+	(*DeviceTestMetrics)(nil),            // 9: polyglot.v1.DeviceTestMetrics
+	(*DeviceStatusFrame)(nil),            // 10: polyglot.v1.DeviceStatusFrame
+	(*TerminalFrame)(nil),                // 11: polyglot.v1.TerminalFrame
+	(*DeleteDeviceRequest)(nil),          // 12: polyglot.v1.DeleteDeviceRequest
+	(*DeleteDeviceResponse)(nil),         // 13: polyglot.v1.DeleteDeviceResponse
+	(*TestDeviceConnectionRequest)(nil),  // 14: polyglot.v1.TestDeviceConnectionRequest
+	(*TestDeviceConnectionResponse)(nil), // 15: polyglot.v1.TestDeviceConnectionResponse
+	(*StreamDevicePingRequest)(nil),      // 16: polyglot.v1.StreamDevicePingRequest
+	(*StreamDevicePingFrame)(nil),        // 17: polyglot.v1.StreamDevicePingFrame
+	(*StreamDeviceTrafficRequest)(nil),   // 18: polyglot.v1.StreamDeviceTrafficRequest
+	(*StreamDeviceTrafficFrame)(nil),     // 19: polyglot.v1.StreamDeviceTrafficFrame
 }
 var file_v1_device_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.ListDevicesResponse.devices:type_name -> polyglot.v1.Device
 	0,  // 1: polyglot.v1.GetDeviceResponse.device:type_name -> polyglot.v1.Device
 	0,  // 2: polyglot.v1.UpdateDeviceRequest.device:type_name -> polyglot.v1.Device
 	0,  // 3: polyglot.v1.UpdateDeviceResponse.device:type_name -> polyglot.v1.Device
-	0,  // 4: polyglot.v1.DeviceStatusFrame.device:type_name -> polyglot.v1.Device
-	8,  // 5: polyglot.v1.DeviceStatusFrame.test:type_name -> polyglot.v1.DeviceTestMetrics
-	8,  // 6: polyglot.v1.TestDeviceConnectionResponse.metrics:type_name -> polyglot.v1.DeviceTestMetrics
-	1,  // 7: polyglot.v1.DeviceService.ListDevices:input_type -> polyglot.v1.ListDevicesRequest
-	3,  // 8: polyglot.v1.DeviceService.GetDevice:input_type -> polyglot.v1.GetDeviceRequest
-	5,  // 9: polyglot.v1.DeviceService.UpdateDevice:input_type -> polyglot.v1.UpdateDeviceRequest
-	11, // 10: polyglot.v1.DeviceService.DeleteDevice:input_type -> polyglot.v1.DeleteDeviceRequest
-	13, // 11: polyglot.v1.DeviceService.TestDeviceConnection:input_type -> polyglot.v1.TestDeviceConnectionRequest
-	7,  // 12: polyglot.v1.DeviceService.StreamDeviceStatus:input_type -> polyglot.v1.StreamDeviceStatusRequest
-	10, // 13: polyglot.v1.DeviceService.StreamTerminal:input_type -> polyglot.v1.TerminalFrame
-	2,  // 14: polyglot.v1.DeviceService.ListDevices:output_type -> polyglot.v1.ListDevicesResponse
-	4,  // 15: polyglot.v1.DeviceService.GetDevice:output_type -> polyglot.v1.GetDeviceResponse
-	6,  // 16: polyglot.v1.DeviceService.UpdateDevice:output_type -> polyglot.v1.UpdateDeviceResponse
-	12, // 17: polyglot.v1.DeviceService.DeleteDevice:output_type -> polyglot.v1.DeleteDeviceResponse
-	14, // 18: polyglot.v1.DeviceService.TestDeviceConnection:output_type -> polyglot.v1.TestDeviceConnectionResponse
-	9,  // 19: polyglot.v1.DeviceService.StreamDeviceStatus:output_type -> polyglot.v1.DeviceStatusFrame
-	10, // 20: polyglot.v1.DeviceService.StreamTerminal:output_type -> polyglot.v1.TerminalFrame
-	14, // [14:21] is the sub-list for method output_type
-	7,  // [7:14] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	8,  // 4: polyglot.v1.DeviceTestMetrics.interface_list:type_name -> polyglot.v1.DeviceInterfaceInfo
+	0,  // 5: polyglot.v1.DeviceStatusFrame.device:type_name -> polyglot.v1.Device
+	9,  // 6: polyglot.v1.DeviceStatusFrame.test:type_name -> polyglot.v1.DeviceTestMetrics
+	9,  // 7: polyglot.v1.TestDeviceConnectionResponse.metrics:type_name -> polyglot.v1.DeviceTestMetrics
+	8,  // 8: polyglot.v1.TestDeviceConnectionResponse.interface_list:type_name -> polyglot.v1.DeviceInterfaceInfo
+	1,  // 9: polyglot.v1.DeviceService.ListDevices:input_type -> polyglot.v1.ListDevicesRequest
+	3,  // 10: polyglot.v1.DeviceService.GetDevice:input_type -> polyglot.v1.GetDeviceRequest
+	5,  // 11: polyglot.v1.DeviceService.UpdateDevice:input_type -> polyglot.v1.UpdateDeviceRequest
+	12, // 12: polyglot.v1.DeviceService.DeleteDevice:input_type -> polyglot.v1.DeleteDeviceRequest
+	14, // 13: polyglot.v1.DeviceService.TestDeviceConnection:input_type -> polyglot.v1.TestDeviceConnectionRequest
+	7,  // 14: polyglot.v1.DeviceService.StreamDeviceStatus:input_type -> polyglot.v1.StreamDeviceStatusRequest
+	16, // 15: polyglot.v1.DeviceService.StreamPing:input_type -> polyglot.v1.StreamDevicePingRequest
+	18, // 16: polyglot.v1.DeviceService.StreamInterfaceTraffic:input_type -> polyglot.v1.StreamDeviceTrafficRequest
+	11, // 17: polyglot.v1.DeviceService.StreamTerminal:input_type -> polyglot.v1.TerminalFrame
+	2,  // 18: polyglot.v1.DeviceService.ListDevices:output_type -> polyglot.v1.ListDevicesResponse
+	4,  // 19: polyglot.v1.DeviceService.GetDevice:output_type -> polyglot.v1.GetDeviceResponse
+	6,  // 20: polyglot.v1.DeviceService.UpdateDevice:output_type -> polyglot.v1.UpdateDeviceResponse
+	13, // 21: polyglot.v1.DeviceService.DeleteDevice:output_type -> polyglot.v1.DeleteDeviceResponse
+	15, // 22: polyglot.v1.DeviceService.TestDeviceConnection:output_type -> polyglot.v1.TestDeviceConnectionResponse
+	10, // 23: polyglot.v1.DeviceService.StreamDeviceStatus:output_type -> polyglot.v1.DeviceStatusFrame
+	17, // 24: polyglot.v1.DeviceService.StreamPing:output_type -> polyglot.v1.StreamDevicePingFrame
+	19, // 25: polyglot.v1.DeviceService.StreamInterfaceTraffic:output_type -> polyglot.v1.StreamDeviceTrafficFrame
+	11, // 26: polyglot.v1.DeviceService.StreamTerminal:output_type -> polyglot.v1.TerminalFrame
+	18, // [18:27] is the sub-list for method output_type
+	9,  // [9:18] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_v1_device_proto_init() }
@@ -1112,7 +1646,7 @@ func file_v1_device_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_device_proto_rawDesc), len(file_v1_device_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

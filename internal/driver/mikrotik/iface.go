@@ -64,7 +64,7 @@ func NewPrintInterfacesCommand(nameFilter string) command.Command {
 		args["?name"] = nameFilter
 	}
 	return command.Command{
-		Raw:  "/interface/print",
+		Raw:  "/interface/ethernet/print",
 		Args: args,
 	}
 }
@@ -99,7 +99,6 @@ func NewMonitorTrafficStreamCommand(ifaceName string) command.Command {
 	}
 }
 
-
 // NewEnableInterfaceCommand builds the command.Command for /interface/enable.
 // rosID must come from a prior /interface/print result.
 func NewEnableInterfaceCommand(rosID string) command.Command {
@@ -116,6 +115,10 @@ func NewDisableInterfaceCommand(rosID string) command.Command {
 		Raw:  "/interface/disable",
 		Args: map[string]string{".id": rosID},
 	}
+}
+
+func parseRosBool(val string) bool {
+	return strings.EqualFold(val, "true") || strings.EqualFold(val, "yes") || val == "1"
 }
 
 // ParseInterfaces converts command.Result rows from /interface/print into
@@ -136,8 +139,8 @@ func ParseInterfaces(result command.Result) []Interface {
 			ActualMTU:  row["actual-mtu"],
 			L2MTU:      row["l2mtu"],
 			MACAddress: row["mac-address"],
-			Running:    strings.EqualFold(row["running"], "true"),
-			Disabled:   strings.EqualFold(row["disabled"], "true"),
+			Running:    parseRosBool(row["running"]),
+			Disabled:   parseRosBool(row["disabled"]),
 			RxByte:     row["rx-byte"],
 			TxByte:     row["tx-byte"],
 			RxPacket:   row["rx-packet"],
@@ -146,6 +149,15 @@ func ParseInterfaces(result command.Result) []Interface {
 		})
 	}
 	return ifaces
+}
+
+func getRowField(row map[string]string, keys ...string) string {
+	for _, k := range keys {
+		if val, ok := row[k]; ok && val != "" {
+			return val
+		}
+	}
+	return ""
 }
 
 // ParseInterfaceTrafficStats converts the first row from a
@@ -157,13 +169,13 @@ func ParseInterfaceTrafficStats(result command.Result) InterfaceTrafficStats {
 	}
 	row := result.Rows[0]
 	return InterfaceTrafficStats{
-		RxBitsPerSecond:    row["rx-bits-per-second"],
-		TxBitsPerSecond:    row["tx-bits-per-second"],
-		RxPacketsPerSecond: row["rx-packets-per-second"],
-		TxPacketsPerSecond: row["tx-packets-per-second"],
-		RxDropsPerSecond:   row["rx-drops-per-second"],
-		TxDropsPerSecond:   row["tx-drops-per-second"],
-		RxErrorsPerSecond:  row["rx-errors-per-second"],
-		TxErrorsPerSecond:  row["tx-errors-per-second"],
+		RxBitsPerSecond:    getRowField(row, "rx-bits-per-second", "rx-bps"),
+		TxBitsPerSecond:    getRowField(row, "tx-bits-per-second", "tx-bps"),
+		RxPacketsPerSecond: getRowField(row, "rx-packets-per-second", "rx-pps"),
+		TxPacketsPerSecond: getRowField(row, "tx-packets-per-second", "tx-pps"),
+		RxDropsPerSecond:   getRowField(row, "rx-drops-per-second"),
+		TxDropsPerSecond:   getRowField(row, "tx-drops-per-second"),
+		RxErrorsPerSecond:  getRowField(row, "rx-errors-per-second"),
+		TxErrorsPerSecond:  getRowField(row, "tx-errors-per-second"),
 	}
 }

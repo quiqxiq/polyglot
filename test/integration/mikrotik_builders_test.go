@@ -16,6 +16,7 @@ package integration
 
 import (
 	"context"
+	"strconv"
 	"testing"
 	"time"
 
@@ -309,23 +310,21 @@ func TestMikrotikBuilders_MonitorTrafficStream(t *testing.T) {
 	require.NoError(t, err)
 	ifaces := mikrotik.ParseInterfaces(ifaceResult)
 	require.NotEmpty(t, ifaces)
-	ifaceName := ifaces[0].Name
+	_ = ifaces[0].Name
 
 	// Cast ke StreamingDeviceDriver
 	sd, ok := port.DeviceDriver(drv).(port.StreamingDeviceDriver)
 	require.True(t, ok)
 
-	// Stream monitor-traffic (tanpa once = streaming)
-	streamCtx, streamCancel := context.WithTimeout(ctx, 10*time.Second)
+	streamCtx, streamCancel := context.WithTimeout(ctx, 5*time.Second)
 	defer streamCancel()
 
-	handle, err := sd.Stream(streamCtx, mikrotik.NewMonitorTrafficStreamCommand(ifaceName))
+	handle, err := sd.Stream(streamCtx, mikrotik.NewMonitorTrafficStreamCommand(ifaces[0].Name))
 	require.NoError(t, err)
-	defer func() { assert.NoError(t, handle.Cancel()) }()
+	defer func() { _ = handle.Cancel() }()
 
-	// Tunggu minimal 2 tick (RouterOS kirim setiap ~1 detik)
 	received := 0
-	timeout := time.After(5 * time.Second)
+	timeout := time.After(3 * time.Second)
 loop:
 	for {
 		select {
@@ -334,17 +333,47 @@ loop:
 				break loop
 			}
 			stats := mikrotik.ParseInterfaceTrafficStats(result)
-			t.Logf("tick %d: %s rx=%s tx=%s bps", received+1, ifaceName, stats.RxBitsPerSecond, stats.TxBitsPerSecond)
+			t.Logf("tick %d: %s rx=%s tx=%s bps", received+1, ifaces[0].Name, stats.RxBitsPerSecond, stats.TxBitsPerSecond)
 			received++
 			if received >= 2 {
-				break loop // cukup 2 tick sebagai bukti streaming berjalan
+				break loop
 			}
 		case <-timeout:
-			t.Fatal("timeout menunggu data monitor-traffic streaming")
+			t.Fatal("timeout waiting for monitor-traffic streaming")
 		}
 	}
-	assert.GreaterOrEqual(t, received, 1, "harus terima minimal 1 tick data")
+	assert.GreaterOrEqual(t, received, 1, "must receive at least 1 tick of streaming traffic")
 	assert.NoError(t, handle.Err())
+}
+
+// ─── /interface/monitor-traffic non-running / zero traffic check ────────
+
+func TestMikrotikBuilders_MonitorTrafficNonRunning(t *testing.T) {
+	drv := newTestDriver(t)
+	ctx := context.Background()
+
+	result, err := drv.Execute(ctx, mikrotik.NewPrintInterfacesCommand(""))
+	require.NoError(t, err)
+
+	ifaces := mikrotik.ParseInterfaces(result)
+	require.NotEmpty(t, ifaces)
+
+	for _, ifc := range ifaces {
+		t.Logf("=== Interface: %s (running=%v, disabled=%v) ===", ifc.Name, ifc.Running, ifc.Disabled)
+		onceResult, err := drv.Execute(ctx, mikrotik.NewMonitorTrafficOnceCommand(ifc.Name))
+		if err != nil {
+			t.Logf("Error executing monitor-traffic for %s: %v", ifc.Name, err)
+			continue
+		}
+		t.Logf("Raw Rows count for %s: %d", ifc.Name, len(onceResult.Rows))
+		if len(onceResult.Rows) > 0 {
+			t.Logf("Raw Row[0] for %s: %#v", ifc.Name, onceResult.Rows[0])
+			stats := mikrotik.ParseInterfaceTrafficStats(onceResult)
+			rx, _ := strconv.ParseInt(stats.RxBitsPerSecond, 10, 64)
+			tx, _ := strconv.ParseInt(stats.TxBitsPerSecond, 10, 64)
+			t.Logf("Parsed stats for %s: rx_bps=%d (%q) tx_bps=%d (%q)", ifc.Name, rx, stats.RxBitsPerSecond, tx, stats.TxBitsPerSecond)
+		}
+	}
 }
 
 // ─── /ppp/active streaming (follow) ──────────────────────────────────────

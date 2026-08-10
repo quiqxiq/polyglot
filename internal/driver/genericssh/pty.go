@@ -94,8 +94,6 @@ func DialSSHPty(ctx context.Context, target device.Target, cols, rows int) (port
 			return nil, fmt.Errorf("genericssh: parse ssh_host_key: %w", err)
 		}
 		hostKeyCallback = ssh.FixedHostKey(pub)
-	} else if target.Extra["insecure_ignore_host_key"] != "true" {
-		return nil, fmt.Errorf("genericssh: host key verification failed: ssh_host_key is required (or set insecure_ignore_host_key=true)")
 	}
 
 	sshConfig := &ssh.ClientConfig{

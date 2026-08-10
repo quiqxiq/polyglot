@@ -9,6 +9,7 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/adapter/auth"
+	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 )
 
 type RBACConnectHandler struct {
@@ -137,7 +138,7 @@ func (h *RBACConnectHandler) UnassignRole(ctx context.Context, req *connect.Requ
 func NewRBACServiceHandler(enforcer *auth.CasbinEnforcer) (string, http.Handler) {
 	handler := NewRBACConnectHandler(enforcer)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
 	serviceName := "polyglot.v1.RBACService"
 	mux.Handle("/"+serviceName+"/ListPolicies", connect.NewUnaryHandler("/"+serviceName+"/ListPolicies", handler.ListPolicies, codecOpt))

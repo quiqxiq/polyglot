@@ -318,7 +318,7 @@ export function DevicesActionDialog() {
                   <div className='space-y-0.5'>
                     <FormLabel>Enable Device</FormLabel>
                     <p className='text-muted-foreground text-xs'>
-                      Enable polling and active status monitoring.
+                      Enable active status monitoring and telemetry polling by backend probes.
                     </p>
                   </div>
                   <FormControl>

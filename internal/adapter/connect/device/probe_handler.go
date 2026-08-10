@@ -11,6 +11,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 )
 
 type ProbeConnectHandler struct{}
@@ -50,7 +51,7 @@ func (h *ProbeConnectHandler) StreamTelemetry(ctx context.Context, stream *conne
 func NewProbeServiceHandler() (string, http.Handler) {
 	handler := NewProbeConnectHandler()
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
 	serviceName := "polyglot.v1.ProbeService"
 	mux.Handle("/"+serviceName+"/ReportStatus", connect.NewUnaryHandler(

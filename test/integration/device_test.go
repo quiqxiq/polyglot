@@ -10,7 +10,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
-	"github.com/quixiq/polyglot/internal/usecase/business"
+	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -42,8 +42,8 @@ func TestDeviceIntegration_TestConnection(t *testing.T) {
 	require.NoError(t, err, "Gagal terkoneksi ke MikroTik live")
 	defer driver.Close()
 
-	uc := business.NewManageDeviceUseCase(nil, nil)
-	result, err := uc.TestConnection(ctx, driver, "dev-integration")
+	uc := deviceUC.NewManageDeviceUseCase(nil, nil, nil)
+	result, err := uc.TestConnection(ctx, driver, "dev-integration", "")
 	require.NoError(t, err)
 
 	assert.Equal(t, "dev-integration", result.DeviceID)

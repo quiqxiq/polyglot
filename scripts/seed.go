@@ -40,13 +40,13 @@ func main() {
 	}
 
 	var existing models.UserModel
+	hash, errHash := bcrypt.GenerateFromPassword([]byte(adminPassword), bcrypt.DefaultCost)
+	if errHash != nil {
+		log.Fatalf("[Seeder Error] Failed to hash password: %v", errHash)
+	}
+
 	err = db.Where("username = ?", adminUsername).First(&existing).Error
 	if err != nil {
-		hash, err := bcrypt.GenerateFromPassword([]byte(adminPassword), bcrypt.DefaultCost)
-		if err != nil {
-			log.Fatalf("[Seeder Error] Failed to hash password: %v", err)
-		}
-
 		adminUser := &customer.User{
 			Username:     adminUsername,
 			Email:        adminEmail,
@@ -60,7 +60,8 @@ func main() {
 		}
 		log.Printf("[Seeder] Created default Admin user: %s", adminUsername)
 	} else {
-		log.Printf("[Seeder] Admin user %s already exists in database.", adminUsername)
+		db.Model(&models.UserModel{}).Where("username = ?", adminUsername).Update("password_hash", string(hash))
+		log.Printf("[Seeder] Updated password for existing Admin user: %s", adminUsername)
 	}
 
 	// 2. Initialize Casbin Enforcer & Seed System RBAC Policies

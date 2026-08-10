@@ -10,6 +10,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
@@ -184,7 +185,7 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 func NewHotspotServiceHandler(uc *hotspotUC.HotspotUseCase, provider ConnectDriverProvider) (string, http.Handler) {
 	handler := NewHotspotConnectHandler(uc, provider)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
 	serviceName := "polyglot.v1.HotspotService"
 	mux.Handle("/"+serviceName+"/GetDashboard", connect.NewUnaryHandler(

@@ -14,7 +14,7 @@ import (
 
 // DeviceModel is the GORM database model for network devices inventory.
 type DeviceModel struct {
-	ID             string `gorm:"primaryKey"`
+	ID             string `gorm:"type:uuid;primaryKey;default:gen_random_uuid()"`
 	TenantID       string `gorm:"not null;index;default:tenant-default"`
 	Name           string `gorm:"not null"`
 	Vendor         string `gorm:"not null;default:mikrotik"`

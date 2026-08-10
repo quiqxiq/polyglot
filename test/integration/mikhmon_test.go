@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik/mikhmon"
+	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 )
 
 func TestMikhmonIntegration_FullWorkflow(t *testing.T) {

@@ -3,6 +3,7 @@ package device
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/device"
@@ -10,16 +11,34 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
+// DeviceInterfaceDetail represents structured details for a device interface.
+type DeviceInterfaceDetail struct {
+	Name       string `json:"name"`
+	Type       string `json:"type"`
+	Disabled   bool   `json:"disabled"`
+	Running    bool   `json:"running"`
+	RxBps      int64  `json:"rx_bps"`
+	TxBps      int64  `json:"tx_bps"`
+	MACAddress string `json:"mac_address"`
+}
+
 // DeviceTestResult holds live connection test metrics for a device.
 type DeviceTestResult struct {
-	DeviceID  string `json:"device_id"`
-	Status    string `json:"status"` // "connected" or "failed"
-	LatencyMS int64  `json:"latency_ms"`
-	Uptime    string `json:"uptime,omitempty"`
-	Version   string `json:"version,omitempty"`
-	BoardName string `json:"board_name,omitempty"`
-	Identity  string `json:"identity,omitempty"`
-	Message   string `json:"message,omitempty"`
+	DeviceID         string                  `json:"device_id"`
+	Status           string                  `json:"status"` // "connected" or "failed"
+	LatencyMS        int64                   `json:"latency_ms"`
+	Uptime           string                  `json:"uptime,omitempty"`
+	Version          string                  `json:"version,omitempty"`
+	BoardName        string                  `json:"board_name,omitempty"`
+	Identity         string                  `json:"identity,omitempty"`
+	CPULoad          int                     `json:"cpu_load,omitempty"`
+	FreeMemory       int64                   `json:"free_memory,omitempty"`
+	TotalMemory      int64                   `json:"total_memory,omitempty"`
+	Interfaces       []string                `json:"interfaces,omitempty"`
+	InterfaceDetails []DeviceInterfaceDetail `json:"interface_details,omitempty"`
+	RxBps            int64                   `json:"rx_bps,omitempty"`
+	TxBps            int64                   `json:"tx_bps,omitempty"`
+	Message          string                  `json:"message,omitempty"`
 }
 
 // DriverEvicter defines the contract for evicting cached driver connections.
@@ -45,9 +64,6 @@ func NewManageDeviceUseCase(repo port.DeviceRepository, vault port.CredentialVau
 
 // CreateDevice saves device inventory data and encrypts/stores its credentials in vault.
 func (uc *ManageDeviceUseCase) CreateDevice(ctx context.Context, d device.Device, c device.Credentials) error {
-	if d.ID == "" {
-		return fmt.Errorf("device ID cannot be empty")
-	}
 	if d.Host == "" {
 		return fmt.Errorf("device host cannot be empty")
 	}
@@ -113,7 +129,7 @@ func (uc *ManageDeviceUseCase) DeleteDevice(ctx context.Context, id string) erro
 }
 
 // TestConnection executes diagnostic checks against a live driver instance to verify connectivity and latency.
-func (uc *ManageDeviceUseCase) TestConnection(ctx context.Context, driver port.DeviceDriver, deviceID string) (DeviceTestResult, error) {
+func (uc *ManageDeviceUseCase) TestConnection(ctx context.Context, driver port.DeviceDriver, deviceID string, selectedIface string) (DeviceTestResult, error) {
 	start := time.Now()
 
 	// Execute /system/resource/print to test device response
@@ -131,20 +147,54 @@ func (uc *ManageDeviceUseCase) TestConnection(ctx context.Context, driver port.D
 	}
 
 	sysRes := mikrotik.ParseSystemResource(res)
+	freeMem, _ := strconv.ParseInt(sysRes.FreeMemory, 10, 64)
+	totalMem, _ := strconv.ParseInt(sysRes.TotalMemory, 10, 64)
+
 	result := DeviceTestResult{
-		DeviceID:  deviceID,
-		Status:    "connected",
-		LatencyMS: latency,
-		Uptime:    sysRes.Uptime,
-		Version:   sysRes.Version,
-		BoardName: sysRes.BoardName,
-		Message:   "Connection test successful",
+		DeviceID:    deviceID,
+		Status:      "connected",
+		LatencyMS:   latency,
+		Uptime:      sysRes.Uptime,
+		Version:     sysRes.Version,
+		BoardName:   sysRes.BoardName,
+		CPULoad:     sysRes.CPULoad,
+		FreeMemory:  freeMem,
+		TotalMemory: totalMem,
+		Message:     "Connection test successful",
 	}
 
 	// Try fetching system identity if available
 	identCmd := mikrotik.NewPrintSystemIdentityCommand()
 	if identRes, err := driver.Execute(ctx, identCmd); err == nil && len(identRes.Rows) > 0 {
 		result.Identity = identRes.Rows[0]["name"]
+	}
+
+	// Fetch interface list if available
+	ifaceCmd := mikrotik.NewPrintInterfacesCommand("")
+	if ifaceRes, err := driver.Execute(ctx, ifaceCmd); err == nil {
+		ifaces := mikrotik.ParseInterfaces(ifaceRes)
+		for _, ifc := range ifaces {
+			result.Interfaces = append(result.Interfaces, ifc.Name)
+			result.InterfaceDetails = append(result.InterfaceDetails, DeviceInterfaceDetail{
+				Name:       ifc.Name,
+				Type:       ifc.Type,
+				Disabled:   ifc.Disabled,
+				Running:    ifc.Running,
+				MACAddress: ifc.MACAddress,
+			})
+		}
+	}
+
+	// Fetch selected interface traffic rates if specified
+	if selectedIface != "" && selectedIface != "default" {
+		monCmd := mikrotik.NewMonitorTrafficOnceCommand(selectedIface)
+		if monRes, err := driver.Execute(ctx, monCmd); err == nil {
+			stats := mikrotik.ParseInterfaceTrafficStats(monRes)
+			rx, _ := strconv.ParseInt(stats.RxBitsPerSecond, 10, 64)
+			tx, _ := strconv.ParseInt(stats.TxBitsPerSecond, 10, 64)
+			result.RxBps = rx
+			result.TxBps = tx
+		}
 	}
 
 	return result, nil

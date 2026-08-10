@@ -9,6 +9,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	billingUsecase "github.com/quixiq/polyglot/internal/usecase/billing"
@@ -253,7 +254,7 @@ func NewBillingServiceHandler(
 ) (string, http.Handler) {
 	handler := NewBillingConnectHandler(invUsecase, subUsecase)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
 	serviceName := "polyglot.v1.BillingService"
 	mux.Handle("/"+serviceName+"/ListInvoices", connect.NewUnaryHandler("/"+serviceName+"/ListInvoices", handler.ListInvoices, codecOpt))

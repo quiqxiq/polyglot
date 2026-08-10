@@ -185,6 +185,18 @@ func NewPingCommand(host, count string) command.Command {
 	}
 }
 
+// NewPingStreamCommand builds the command.Command for continuous /ping streaming.
+// Without the "count" argument, RouterOS sends streaming ping responses continuously
+// until cancelled via StreamHandle.Cancel.
+func NewPingStreamCommand(host string) command.Command {
+	return command.Command{
+		Raw: "/ping",
+		Args: map[string]string{
+			"address": host,
+		},
+	}
+}
+
 // ParseSystemResource converts the first row from /system/resource/print
 // into a typed SystemResource. Returns zero-value if result is empty.
 func ParseSystemResource(result command.Result) SystemResource {

@@ -163,3 +163,38 @@ func TestMikrotikDriver_ExecuteWhileStreaming(t *testing.T) {
 		t.Fatal("stream berhenti mengalir setelah Execute — indikasi koneksi bentrok")
 	}
 }
+
+// TestMikrotikDriver_PingStreamDetails menguji secara langsung output row dari /ping streaming
+// MikroTik fisik dan mencetak seluruh key-value map untuk menganalisis format respons RTT/time.
+func TestMikrotikDriver_PingStreamDetails(t *testing.T) {
+	target := mikrotikTestTarget(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+
+	drv, err := mikrotik.NewDriver(ctx, target)
+	require.NoError(t, err)
+	defer func() { assert.NoError(t, drv.Close()) }()
+
+	sd, ok := port.DeviceDriver(drv).(port.StreamingDeviceDriver)
+	require.True(t, ok)
+
+	cmd := mikrotik.NewPingStreamCommand("8.8.8.8")
+	handle, err := sd.Stream(ctx, cmd)
+	require.NoError(t, err)
+	defer func() { assert.NoError(t, handle.Cancel()) }()
+
+	t.Logf("=== MEMULAI INTEGRATION TEST STREAM PING KE 8.8.8.8 VIA %s:%d ===", target.Host, target.Port)
+
+	for i := 0; i < 5; i++ {
+		select {
+		case res, ok := <-handle.Chan():
+			require.True(t, ok, "channel stream ping harus tetap terbuka")
+			if len(res.Rows) > 0 {
+				row := res.Rows[0]
+				t.Logf("[Frame %d] Received Row Map from MikroTik: %+v", i+1, row)
+			}
+		case <-time.After(5 * time.Second):
+			t.Fatalf("[Frame %d] Timeout menunggu response /ping dari MikroTik", i+1)
+		}
+	}
+}

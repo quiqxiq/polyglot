@@ -5,6 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 
+	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -24,7 +25,7 @@ func NewWhatsAppConnectHandler(pgStore *postgres.Store, waGateway port.WhatsAppG
 func NewWhatsAppServiceHandler(pgStore *postgres.Store, waGateway port.WhatsAppGateway) (string, http.Handler) {
 	handler := NewWhatsAppConnectHandler(pgStore, waGateway)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
 	serviceName := "polyglot.v1.WhatsAppService"
 	mux.Handle("/"+serviceName+"/ListSessions", connect.NewUnaryHandler(
