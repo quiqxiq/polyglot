@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/go-routeros/routeros/v3"
+	"github.com/quiqxiq/goros/v4"
+	"github.com/quiqxiq/goros/v4/transport"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 )
@@ -50,6 +51,7 @@ func Translate(op command.Operation) (command.Command, error) {
 // two modes depending on whether the "once" arg is present:
 //   - without "once": streaming (use Driver.Stream via NewMonitorTrafficStreamCommand)
 //   - with "once": one-shot (use Driver.Execute via NewMonitorTrafficOnceCommand)
+//
 // The special-case is handled in isStreamingCommand below.
 // TODO: extend with other natively-streaming commands as they're actually
 // needed (e.g. /tool/torch, /tool/sniffer) — not added now, per agreed scope.
@@ -125,7 +127,42 @@ func buildArgs(cmd command.Command) []string {
 	return args
 }
 
-// toResult converts a go-routeros *Reply (from Driver.Execute) into a
+// toTransportCommand converts a vendor-agnostic command.Command into the
+// canonical goros transport.Command used by Driver.Validate's dry-run. The
+// mapping mirrors buildArgs' split of Args into sentence words: keys
+// prefixed "?" become RouterOS query words, ".proplist" becomes the field
+// projection, everything else is a command attribute. Raw is split at its
+// last "/" into the menu path and verb, so Gate 2 can discover the schema
+// for (path, verb).
+func toTransportCommand(cmd command.Command) *transport.Command {
+	tc := &transport.Command{Attributes: map[string]string{}}
+
+	idx := strings.LastIndex(cmd.Raw, "/")
+	if idx >= 0 {
+		tc.Path = cmd.Raw[:idx]
+		tc.Verb = cmd.Raw[idx+1:]
+	} else {
+		tc.Verb = cmd.Raw
+	}
+
+	for key, value := range cmd.Args {
+		switch {
+		case key == ".proplist":
+			tc.Proplist = strings.Split(value, ",")
+		case strings.HasPrefix(key, "?"):
+			q := strings.TrimPrefix(key, "?")
+			if value != "" {
+				q += "=" + value
+			}
+			tc.Queries = append(tc.Queries, q)
+		default:
+			tc.Attributes[key] = value
+		}
+	}
+	return tc
+}
+
+// toResult converts a goros *routeros.Reply (from Driver.Execute) into a
 // vendor-agnostic command.Result — one Rows entry per "!re" sentence
 // returned, so callers see every row a multi-row /print produced, not
 // only the first.

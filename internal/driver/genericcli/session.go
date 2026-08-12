@@ -144,6 +144,9 @@ func (s *Session) dial(ctx context.Context) (cliDriver, error) {
 	if s.catalog.ReadDelay > 0 {
 		opts = append(opts, options.WithReadDelay(s.catalog.ReadDelay))
 	}
+	if s.catalog.ReturnChar != "" {
+		opts = append(opts, options.WithReturnChar(s.catalog.ReturnChar))
+	}
 
 	p, err := platform.NewPlatform(s.platformDef, s.target.Host, opts...)
 	if err != nil {

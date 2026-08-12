@@ -23,7 +23,23 @@ var ErrDenied = errors.New("execute_command: denied by policy")
 // TODO: wire actual HITL approval flow (pause/resume) per
 // Polyglot-Architecture.md §6.1 (sequence: Policy -> pending_approval ->
 // LibreChat HITL prompt -> approve/reject -> resume Execute).
+// validateIfSupported pre-flights cmd via the driver's optional validation
+// capability when it has one (see port.ValidatingDeviceDriver). Drivers
+// without it are skipped — validation is strictly additive, never a
+// required capability. Validation runs BEFORE policy: an invalid command
+// (unknown path/attribute, syntax error) is a client bug to surface
+// immediately, not a policy question to escalate for HITL.
+func validateIfSupported(ctx context.Context, driver port.DeviceDriver, cmd command.Command) error {
+	if v, ok := driver.(port.ValidatingDeviceDriver); ok {
+		return v.Validate(ctx, cmd)
+	}
+	return nil
+}
+
 func ExecuteCommand(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
+	if err := validateIfSupported(ctx, driver, cmd); err != nil {
+		return command.Result{}, err
+	}
 	switch command.Decide(driver.Classify(cmd)) {
 	case command.DecisionDeny:
 		return command.Result{}, ErrDenied

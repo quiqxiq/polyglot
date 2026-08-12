@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/go-routeros/routeros/v3"
+	"github.com/quiqxiq/goros/v4"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
@@ -14,7 +14,7 @@ import (
 )
 
 // Driver implements port.DeviceDriver AND port.StreamingDeviceDriver for
-// Mikrotik RouterOS via go-routeros/v3 (github.com/go-routeros/routeros/v3).
+// Mikrotik RouterOS via goros (github.com/quiqxiq/goros/v4).
 //
 // It holds TWO independent, persistent connections to the same device —
 // exec for one-shot commands (Execute, via RunArgsContext) and stream for
@@ -24,7 +24,7 @@ import (
 // rationale: without this separation, a long-running stream (/ping,
 // /interface/monitor-traffic, or any print follow/follow-only/interval=)
 // starves command execution on the same connection — confirmed directly
-// from go-routeros's own source, not assumed.
+// from goros's own source, not assumed.
 //
 // DEVIASI: CLAUDE.md §1.2 describes vendor driver packages as normally
 // just driver.go + commands.go. Mikrotik's dual-connection, reconnecting,
@@ -62,10 +62,12 @@ type Driver struct {
 // Compile-time proof that *Driver actually satisfies both port.DeviceDriver
 // (required per CLAUDE.md §1.2 for every vendor driver) and
 // port.StreamingDeviceDriver (this vendor's opt-in — see
-// internal/port/streaming_driver.go).
+// internal/port/streaming_driver.go) and port.ValidatingDeviceDriver (this
+// vendor's opt-in pre-flight validation — see internal/port/validating_driver.go).
 var (
-	_ port.DeviceDriver          = (*Driver)(nil)
-	_ port.StreamingDeviceDriver = (*Driver)(nil)
+	_ port.DeviceDriver           = (*Driver)(nil)
+	_ port.StreamingDeviceDriver  = (*Driver)(nil)
+	_ port.ValidatingDeviceDriver = (*Driver)(nil)
 )
 
 // NewDriver connects to target and returns a ready, connected Driver. Both
@@ -109,7 +111,7 @@ func NewDriver(ctx context.Context, target device.Target) (*Driver, error) {
 // in commands.go) — use Stream for those instead.
 //
 // ctx bounds how long Execute is willing to WAIT, but is deliberately
-// never passed into the underlying go-routeros call itself: if
+// never passed into the underlying goros call itself: if
 // RunArgsContext's ctx is cancelled, it cancels the shared connection
 // reader outright, taking down every other in-flight command and stream on
 // this same connection — not just this one call. See connect.go's
@@ -156,6 +158,56 @@ func (d *Driver) Execute(ctx context.Context, cmd command.Command) (command.Resu
 			return command.Result{}, fmt.Errorf("mikrotik: execute %q: %w", cmd.Raw, o.err)
 		}
 		return toResult(o.reply), nil
+	}
+}
+
+// Validate dry-runs cmd against the connected RouterOS device's own parser
+// (Gate 1 `:parse`) and attribute schema (Gate 2 `/console/inspect`) via
+// goros, WITHOUT executing it — catching unknown paths, unknown attributes,
+// and syntax errors before they reach the device. It returns nil when the
+// command is valid, or when the session cannot validate (RouterOS v6
+// degrades silently by design). Streaming commands are skipped here: they
+// are refused by Execute anyway, and their flags (follow, interval) are
+// stream-path concerns, not validation concerns.
+//
+// The underlying goros call is a network round-trip on the persistent exec
+// connection, so — exactly like Execute — it deliberately runs against
+// context.Background() in its own goroutine: if Validate's ctx is
+// cancelled, only THIS call's wait is abandoned, never the shared
+// connection reader. See connect.go's dialAndLogin doc comment and
+// docs/adr/0003-mikrotik-dual-connection-streaming.md.
+func (d *Driver) Validate(ctx context.Context, cmd command.Command) error {
+	if isStreamingCommand(cmd) {
+		return nil
+	}
+
+	select {
+	case d.execSem <- struct{}{}:
+	case <-ctx.Done():
+		return fmt.Errorf("mikrotik: waiting for validate slot: %w", ctx.Err())
+	}
+
+	client := d.exec.get()
+	if client == nil {
+		<-d.execSem
+		return ErrNotConnected
+	}
+
+	tc := toTransportCommand(cmd)
+	done := make(chan error, 1)
+	go func() {
+		done <- client.Validate(context.Background(), tc)
+		<-d.execSem // released only once the wire operation truly finished — see Execute's doc comment
+	}()
+
+	select {
+	case <-ctx.Done():
+		return fmt.Errorf("mikrotik: validate %q cancelled: %w", cmd.Raw, ctx.Err())
+	case err := <-done:
+		if err == nil {
+			return nil
+		}
+		return fmt.Errorf("mikrotik: validate %q: %w", cmd.Raw, err)
 	}
 }
 

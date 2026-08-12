@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/go-routeros/routeros/v3"
+	"github.com/quiqxiq/goros/v4"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/port"
@@ -19,7 +19,7 @@ import (
 //
 // Only the brief moment of ISSUING the underlying ListenArgsContext call is
 // serialized against other Stream calls (via d.streamSem) — once issued,
-// ListenArgsContext returns immediately (per go-routeros's own source, it
+// ListenArgsContext returns immediately (per goros's own source, it
 // registers a tag and returns; it does not block for data), so multiple
 // streams (e.g. a /ping and a /interface/monitor-traffic at the same time)
 // can run concurrently afterward without contending for that slot. This is
@@ -27,10 +27,10 @@ import (
 // the whole underlying RunArgsContext call — see driver.go's Execute for
 // why.
 //
-// Like Execute, the actual go-routeros call always runs against
+// Like Execute, the actual goros call always runs against
 // context.Background(), never ctx: see connect.go's dialAndLogin doc
 // comment and docs/adr/0003-mikrotik-dual-connection-streaming.md for why
-// handing a request-scoped context straight to go-routeros is unsafe for a
+// handing a request-scoped context straight to goros is unsafe for a
 // persistent connection. ctx here only bounds how long Stream is willing
 // to wait for a free issuance slot; once a stream is running, stop it with
 // StreamHandle.Cancel, not by cancelling ctx.

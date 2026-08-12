@@ -51,6 +51,18 @@ type Catalog struct {
 	// parameter (CLAUDE.md §3.4: more than 4 params needs a struct — this
 	// keeps the constructor at 4 by folding it into the one already there).
 	ReadDelay time.Duration
+
+	// ReturnChar, if non-empty, is passed to scrapligo as
+	// options.WithReturnChar — the byte sequence sent as "Enter" after a
+	// command. scrapligo's default is "\n". RouterOS is a documented
+	// exception: its CLI only executes a line when it receives a carriage
+	// return, so the community scrapli driver sets this to "\r\n"
+	// (comms_return_char) for every RouterOS platform. Verified in lab:
+	// with the default "\n" the G-Net RouterOS v6 firmware (192.168.233.1)
+	// never executes commands and SendCommand times out; with "\r\n" both
+	// v6 G-Net and v7 vanilla execute correctly. Leave unset for vendors
+	// that accept the scrapligo default.
+	ReturnChar string
 }
 
 // Classify reports the risk class of cmd according to c's destructive
