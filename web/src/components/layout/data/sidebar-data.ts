@@ -8,6 +8,7 @@ import {
   HelpCircle,
   Lock,
   Bell,
+  MessageCircleMore,
   Package,
   Palette,
   ServerOff,
@@ -77,6 +78,11 @@ export const sidebarData: SidebarData = {
           url: '/chats',
           badge: '3',
           icon: MessagesSquare,
+        },
+        {
+          title: 'WhatsApp Devices',
+          url: '/whatsapp',
+          icon: MessageCircleMore,
         },
         {
           title: 'Users',

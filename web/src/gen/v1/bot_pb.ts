@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
-import { Message, proto3 } from "@bufbuild/protobuf";
+import { Message, proto3, protoInt64 } from "@bufbuild/protobuf";
 
 /**
  * @generated from message polyglot.v1.ConversationMessage
@@ -515,6 +515,206 @@ export class CloseConversationResponse extends Message<CloseConversationResponse
 
   static equals(a: CloseConversationResponse | PlainMessage<CloseConversationResponse> | undefined, b: CloseConversationResponse | PlainMessage<CloseConversationResponse> | undefined): boolean {
     return proto3.util.equals(CloseConversationResponse, a, b);
+  }
+}
+
+/**
+ * ConversationContextMessage adalah pesan bisnis (conversation.messages)
+ * dengan metrik token LLM — berbeda dari mirror wa_messages.
+ *
+ * @generated from message polyglot.v1.ConversationContextMessage
+ */
+export class ConversationContextMessage extends Message<ConversationContextMessage> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string sender = 2;
+   */
+  sender = "";
+
+  /**
+   * @generated from field: string text = 3;
+   */
+  text = "";
+
+  /**
+   * @generated from field: string timestamp = 4;
+   */
+  timestamp = "";
+
+  /**
+   * @generated from field: int64 token_in = 5;
+   */
+  tokenIn = protoInt64.zero;
+
+  /**
+   * @generated from field: int64 token_out = 6;
+   */
+  tokenOut = protoInt64.zero;
+
+  /**
+   * @generated from field: string llm_config_id = 7;
+   */
+  llmConfigId = "";
+
+  constructor(data?: PartialMessage<ConversationContextMessage>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ConversationContextMessage";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "sender", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "text", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "timestamp", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "token_in", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 6, name: "token_out", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 7, name: "llm_config_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ConversationContextMessage {
+    return new ConversationContextMessage().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ConversationContextMessage {
+    return new ConversationContextMessage().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ConversationContextMessage {
+    return new ConversationContextMessage().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ConversationContextMessage | PlainMessage<ConversationContextMessage> | undefined, b: ConversationContextMessage | PlainMessage<ConversationContextMessage> | undefined): boolean {
+    return proto3.util.equals(ConversationContextMessage, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetConversationContextRequest
+ */
+export class GetConversationContextRequest extends Message<GetConversationContextRequest> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  constructor(data?: PartialMessage<GetConversationContextRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetConversationContextRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetConversationContextRequest {
+    return new GetConversationContextRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetConversationContextRequest {
+    return new GetConversationContextRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetConversationContextRequest {
+    return new GetConversationContextRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetConversationContextRequest | PlainMessage<GetConversationContextRequest> | undefined, b: GetConversationContextRequest | PlainMessage<GetConversationContextRequest> | undefined): boolean {
+    return proto3.util.equals(GetConversationContextRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetConversationContextResponse
+ */
+export class GetConversationContextResponse extends Message<GetConversationContextResponse> {
+  /**
+   * @generated from field: string conversation_id = 1;
+   */
+  conversationId = "";
+
+  /**
+   * bot | escalation | done
+   *
+   * @generated from field: string status = 2;
+   */
+  status = "";
+
+  /**
+   * @generated from field: string client_phone = 3;
+   */
+  clientPhone = "";
+
+  /**
+   * @generated from field: string summary = 4;
+   */
+  summary = "";
+
+  /**
+   * @generated from field: repeated polyglot.v1.ConversationContextMessage recent_messages = 5;
+   */
+  recentMessages: ConversationContextMessage[] = [];
+
+  /**
+   * @generated from field: int64 total_token_in = 6;
+   */
+  totalTokenIn = protoInt64.zero;
+
+  /**
+   * @generated from field: int64 total_token_out = 7;
+   */
+  totalTokenOut = protoInt64.zero;
+
+  /**
+   * @generated from field: int64 total_llm_calls = 8;
+   */
+  totalLlmCalls = protoInt64.zero;
+
+  /**
+   * @generated from field: string updated_at = 9;
+   */
+  updatedAt = "";
+
+  constructor(data?: PartialMessage<GetConversationContextResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetConversationContextResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "conversation_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "client_phone", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "summary", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "recent_messages", kind: "message", T: ConversationContextMessage, repeated: true },
+    { no: 6, name: "total_token_in", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 7, name: "total_token_out", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 8, name: "total_llm_calls", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 9, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetConversationContextResponse {
+    return new GetConversationContextResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetConversationContextResponse {
+    return new GetConversationContextResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetConversationContextResponse {
+    return new GetConversationContextResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetConversationContextResponse | PlainMessage<GetConversationContextResponse> | undefined, b: GetConversationContextResponse | PlainMessage<GetConversationContextResponse> | undefined): boolean {
+    return proto3.util.equals(GetConversationContextResponse, a, b);
   }
 }
 

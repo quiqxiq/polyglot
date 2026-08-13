@@ -12,11 +12,11 @@ web/dist/
 # Added by code-review-graph
 .code-review-graph/
 
-# Website & Frontend rules
-/website/node_modules/
-/website/dist/
-/website/dist-ssr/
-/website/coverage/
+# web & Frontend rules
+/web/node_modules/
+/web/dist/
+/web/dist-ssr/
+/web/coverage/
 .vitest-attachments/
 **/__screenshots__/
 
@@ -38,3 +38,4 @@ lerna-debug.log*
 *.sln
 *.sw?
 .understand-anything/
+.ref

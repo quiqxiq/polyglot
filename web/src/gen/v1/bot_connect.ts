@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CloseConversationRequest, CloseConversationResponse, GetConversationRequest, GetConversationResponse, ListConversationsRequest, ListConversationsResponse, ResetConversationBotRequest, ResetConversationBotResponse, TakeOverConversationRequest, TakeOverConversationResponse } from "./bot_pb.js";
+import { CloseConversationRequest, CloseConversationResponse, GetConversationContextRequest, GetConversationContextResponse, GetConversationRequest, GetConversationResponse, ListConversationsRequest, ListConversationsResponse, ResetConversationBotRequest, ResetConversationBotResponse, TakeOverConversationRequest, TakeOverConversationResponse } from "./bot_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -28,6 +28,15 @@ export const BotService = {
       name: "GetConversation",
       I: GetConversationRequest,
       O: GetConversationResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.GetConversationContext
+     */
+    getConversationContext: {
+      name: "GetConversationContext",
+      I: GetConversationContextRequest,
+      O: GetConversationContextResponse,
       kind: MethodKind.Unary,
     },
     /**

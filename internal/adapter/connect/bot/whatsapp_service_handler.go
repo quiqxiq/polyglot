@@ -8,22 +8,25 @@ import (
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/port"
+	chatUC "github.com/quixiq/polyglot/internal/usecase/chat"
 )
 
 type WhatsAppConnectHandler struct {
-	pgStore   *postgres.Store
-	waGateway port.WhatsAppGateway
+	pgStore     *postgres.Store
+	waGateway   port.WhatsAppGateway
+	chatService *chatUC.ChatService
 }
 
-func NewWhatsAppConnectHandler(pgStore *postgres.Store, waGateway port.WhatsAppGateway) *WhatsAppConnectHandler {
+func NewWhatsAppConnectHandler(pgStore *postgres.Store, waGateway port.WhatsAppGateway, chatService *chatUC.ChatService) *WhatsAppConnectHandler {
 	return &WhatsAppConnectHandler{
-		pgStore:   pgStore,
-		waGateway: waGateway,
+		pgStore:     pgStore,
+		waGateway:   waGateway,
+		chatService: chatService,
 	}
 }
 
-func NewWhatsAppServiceHandler(pgStore *postgres.Store, waGateway port.WhatsAppGateway) (string, http.Handler) {
-	handler := NewWhatsAppConnectHandler(pgStore, waGateway)
+func NewWhatsAppServiceHandler(pgStore *postgres.Store, waGateway port.WhatsAppGateway, chatService *chatUC.ChatService) (string, http.Handler) {
+	handler := NewWhatsAppConnectHandler(pgStore, waGateway, chatService)
 	mux := http.NewServeMux()
 	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
@@ -71,6 +74,26 @@ func NewWhatsAppServiceHandler(pgStore *postgres.Store, waGateway port.WhatsAppG
 	mux.Handle("/"+serviceName+"/SendTextMessage", connect.NewUnaryHandler(
 		"/"+serviceName+"/SendTextMessage",
 		handler.SendTextMessage,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/ListChats", connect.NewUnaryHandler(
+		"/"+serviceName+"/ListChats",
+		handler.ListChats,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/GetChatMessages", connect.NewUnaryHandler(
+		"/"+serviceName+"/GetChatMessages",
+		handler.GetChatMessages,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/MarkChatRead", connect.NewUnaryHandler(
+		"/"+serviceName+"/MarkChatRead",
+		handler.MarkChatRead,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/ToggleChatBot", connect.NewUnaryHandler(
+		"/"+serviceName+"/ToggleChatBot",
+		handler.ToggleChatBot,
 		codecOpt,
 	))
 

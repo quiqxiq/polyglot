@@ -3,13 +3,23 @@ package bot
 import (
 	"context"
 	"fmt"
+	"log"
 	"strconv"
+	"time"
 
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/bot"
 )
+
+// formatTime renders a time value as a compact local timestamp; empty for zero values.
+func formatTime(t time.Time) string {
+	if t.IsZero() {
+		return ""
+	}
+	return t.Format("2006-01-02 15:04:05")
+}
 
 func (h *WhatsAppConnectHandler) ListSessions(ctx context.Context, req *connect.Request[devicepb.ListWASessionsRequest]) (*connect.Response[devicepb.ListWASessionsResponse], error) {
 	if h.pgStore == nil {
@@ -23,13 +33,24 @@ func (h *WhatsAppConnectHandler) ListSessions(ctx context.Context, req *connect.
 
 	pbSessions := make([]*devicepb.WASession, len(sessions))
 	for i, s := range sessions {
+		// Status live dari client (online/offline/connecting/needs_rescan),
+		// fallback ke status tersimpan di DB bila gateway tidak tersedia.
+		status := string(s.Status)
+		if h.waGateway != nil {
+			if live, err := h.waGateway.GetStatus(s.ID); err == nil && live != "" {
+				status = live
+			}
+		}
+
 		pbSessions[i] = &devicepb.WASession{
 			Id:          fmt.Sprintf("%d", s.ID),
 			Name:        s.DeviceName,
 			PhoneNumber: s.PhoneNumber,
-			Status:      string(s.Status),
+			Status:      status,
 			IsBotActive: s.IsBotEnabled,
+			Jid:         s.JID,
 			CreatedAt:   s.CreatedAt.Format("2006-01-02 15:04:05"),
+			ConnectedAt: formatTime(s.ConnectedAt),
 		}
 	}
 
@@ -52,8 +73,14 @@ func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
+	// Langsung connect — untuk session baru (belum ter-pair) ini memicu QR
+	// flow; frontend langsung membuka modal QR setelah create.
 	if h.waGateway != nil {
-		_ = h.waGateway.Connect(sess)
+		if err := h.waGateway.Connect(sess); err != nil {
+			log.Printf("[WhatsApp] CreateSession %d: connect failed (QR flow): %v", sess.ID, err)
+		}
+		sess.Status = bot.StatusConnecting
+		_ = h.pgStore.UpdateSession(sess)
 	}
 
 	return connect.NewResponse(&devicepb.CreateWASessionResponse{
@@ -69,13 +96,32 @@ func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect
 }
 
 func (h *WhatsAppConnectHandler) GetQRCode(ctx context.Context, req *connect.Request[devicepb.GetWASessionQRRequest]) (*connect.Response[devicepb.GetWASessionQRResponse], error) {
-	idUint, _ := strconv.ParseUint(req.Msg.SessionId, 10, 64)
-	qrBase64 := ""
-	if h.waGateway != nil && idUint > 0 {
-		if code, err := h.waGateway.GetQRCode(uint(idUint)); err == nil {
-			qrBase64 = code
+	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
+	if err != nil || idUint == 0 {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid session_id"))
+	}
+
+	if h.waGateway == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("whatsapp gateway not initialized"))
+	}
+
+	sessionID := uint(idUint)
+
+	// Jika client belum connect (mis. baru dibuat / reconnect diminta), trigger
+	// koneksi dulu supaya QR flow aktif dan QR bisa dibaca dari cache.
+	status, _ := h.waGateway.GetStatus(sessionID)
+	if status != string(bot.StatusOnline) {
+		sess, findErr := h.pgStore.FindSessionByID(sessionID)
+		if findErr == nil {
+			_ = h.waGateway.Connect(sess)
 		}
 	}
+
+	qrBase64, qrErr := h.waGateway.GetQRCode(sessionID)
+	if qrErr != nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("get QR code: %w", qrErr))
+	}
+
 	return connect.NewResponse(&devicepb.GetWASessionQRResponse{
 		QrCodeBase64:    qrBase64,
 		QrCodePath:      "",
@@ -84,12 +130,32 @@ func (h *WhatsAppConnectHandler) GetQRCode(ctx context.Context, req *connect.Req
 }
 
 func (h *WhatsAppConnectHandler) GetPairingCode(ctx context.Context, req *connect.Request[devicepb.GetWASessionPairingRequest]) (*connect.Response[devicepb.GetWASessionPairingResponse], error) {
-	idUint, _ := strconv.ParseUint(req.Msg.SessionId, 10, 64)
-	code := ""
-	if h.waGateway != nil && idUint > 0 {
-		if pairing, err := h.waGateway.GetPairingCode(uint(idUint), req.Msg.PhoneNumber); err == nil {
-			code = pairing
+	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
+	if err != nil || idUint == 0 {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid session_id"))
+	}
+	if req.Msg.PhoneNumber == "" {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("phone_number is required"))
+	}
+
+	if h.waGateway == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("whatsapp gateway not initialized"))
+	}
+
+	sessionID := uint(idUint)
+
+	// Pairing code memerlukan client yang terhubung — pastikan connect dulu.
+	status, _ := h.waGateway.GetStatus(sessionID)
+	if status != string(bot.StatusOnline) {
+		sess, findErr := h.pgStore.FindSessionByID(sessionID)
+		if findErr == nil {
+			_ = h.waGateway.Connect(sess)
 		}
+	}
+
+	code, err := h.waGateway.GetPairingCode(sessionID, req.Msg.PhoneNumber)
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("get pairing code: %w", err))
 	}
 	return connect.NewResponse(&devicepb.GetWASessionPairingResponse{PairingCode: code}), nil
 }
@@ -102,32 +168,56 @@ func (h *WhatsAppConnectHandler) ToggleBot(ctx context.Context, req *connect.Req
 }
 
 func (h *WhatsAppConnectHandler) ReconnectSession(ctx context.Context, req *connect.Request[devicepb.ReconnectWASessionRequest]) (*connect.Response[devicepb.ReconnectWASessionResponse], error) {
-	idUint, _ := strconv.ParseUint(req.Msg.SessionId, 10, 64)
-	var err error
-	if h.waGateway != nil && idUint > 0 {
-		err = h.waGateway.Reconnect(uint(idUint))
+	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
+	if err != nil || idUint == 0 {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid session_id"))
 	}
-	if err != nil {
+	if h.waGateway == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("whatsapp gateway not initialized"))
+	}
+	if err := h.waGateway.Reconnect(uint(idUint)); err != nil {
 		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("reconnect failed: %w", err))
 	}
 	return connect.NewResponse(&devicepb.ReconnectWASessionResponse{
 		Message: "manual reconnect initiated (auto-reconnect active)",
-		Status:  "RECONNECTING",
+		Status:  "connecting",
 	}), nil
 }
 
 func (h *WhatsAppConnectHandler) LogoutSession(ctx context.Context, req *connect.Request[devicepb.LogoutWASessionRequest]) (*connect.Response[devicepb.LogoutWASessionResponse], error) {
-	idUint, _ := strconv.ParseUint(req.Msg.SessionId, 10, 64)
-	if h.waGateway != nil && idUint > 0 {
-		_ = h.waGateway.Disconnect(uint(idUint))
+	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
+	if err != nil || idUint == 0 {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid session_id"))
+	}
+	if h.waGateway == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("whatsapp gateway not initialized"))
+	}
+
+	// Logout = unlink dari WhatsApp + hapus session lokal, tapi slot di DB
+	// TETAP (keep-slot) sehingga device masih tampil dan bisa di-pair ulang.
+	if err := h.waGateway.Logout(uint(idUint)); err != nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("logout failed: %w", err))
 	}
 	return connect.NewResponse(&devicepb.LogoutWASessionResponse{Message: "session logged out (slot kept for re-pairing)"}), nil
 }
 
 func (h *WhatsAppConnectHandler) PurgeSession(ctx context.Context, req *connect.Request[devicepb.PurgeWASessionRequest]) (*connect.Response[devicepb.PurgeWASessionResponse], error) {
-	idUint, _ := strconv.ParseUint(req.Msg.SessionId, 10, 64)
-	if h.waGateway != nil && idUint > 0 {
-		_ = h.waGateway.Logout(uint(idUint))
+	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
+	if err != nil || idUint == 0 {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid session_id"))
+	}
+
+	// Purge = logout + hapus baris session di DB (mirror chat terhapus otomatis
+	// via ON DELETE CASCADE pada wa_chats / wa_messages).
+	if h.waGateway != nil {
+		if err := h.waGateway.Purge(uint(idUint)); err != nil {
+			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("purge session: %w", err))
+		}
+	}
+	if h.pgStore != nil {
+		if err := h.pgStore.DeleteSession(uint(idUint)); err != nil {
+			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("delete session record: %w", err))
+		}
 	}
 	return connect.NewResponse(&devicepb.PurgeWASessionResponse{Message: "session purged permanently"}), nil
 }

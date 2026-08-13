@@ -26,9 +26,11 @@ type WASession struct {
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	PhoneNumber   string                 `protobuf:"bytes,3,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
-	Status        string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"` // e.g. "CONNECTED", "DISCONNECTED", "NEEDS_RESCAN"
+	Status        string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"` // e.g. "online", "offline", "connecting", "needs_rescan"
 	IsBotActive   bool                   `protobuf:"varint,5,opt,name=is_bot_active,json=isBotActive,proto3" json:"is_bot_active,omitempty"`
 	CreatedAt     string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	Jid           string                 `protobuf:"bytes,7,opt,name=jid,proto3" json:"jid,omitempty"` // "62812xxxxxxx@s.whatsapp.net" setelah ter-pair
+	ConnectedAt   string                 `protobuf:"bytes,8,opt,name=connected_at,json=connectedAt,proto3" json:"connected_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -101,6 +103,20 @@ func (x *WASession) GetIsBotActive() bool {
 func (x *WASession) GetCreatedAt() string {
 	if x != nil {
 		return x.CreatedAt
+	}
+	return ""
+}
+
+func (x *WASession) GetJid() string {
+	if x != nil {
+		return x.Jid
+	}
+	return ""
+}
+
+func (x *WASession) GetConnectedAt() string {
+	if x != nil {
+		return x.ConnectedAt
 	}
 	return ""
 }
@@ -969,11 +985,667 @@ func (x *SendWATextMessageResponse) GetStatus() string {
 	return ""
 }
 
+type WAChat struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	SessionId          string                 `protobuf:"bytes,2,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	ChatJid            string                 `protobuf:"bytes,3,opt,name=chat_jid,json=chatJid,proto3" json:"chat_jid,omitempty"`
+	DisplayName        string                 `protobuf:"bytes,4,opt,name=display_name,json=displayName,proto3" json:"display_name,omitempty"`
+	IsGroup            bool                   `protobuf:"varint,5,opt,name=is_group,json=isGroup,proto3" json:"is_group,omitempty"`
+	LastMessagePreview string                 `protobuf:"bytes,6,opt,name=last_message_preview,json=lastMessagePreview,proto3" json:"last_message_preview,omitempty"`
+	LastMessageTime    string                 `protobuf:"bytes,7,opt,name=last_message_time,json=lastMessageTime,proto3" json:"last_message_time,omitempty"`
+	UnreadCount        int32                  `protobuf:"varint,8,opt,name=unread_count,json=unreadCount,proto3" json:"unread_count,omitempty"`
+	BotEnabled         bool                   `protobuf:"varint,9,opt,name=bot_enabled,json=botEnabled,proto3" json:"bot_enabled,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *WAChat) Reset() {
+	*x = WAChat{}
+	mi := &file_v1_whatsapp_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WAChat) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WAChat) ProtoMessage() {}
+
+func (x *WAChat) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_whatsapp_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WAChat.ProtoReflect.Descriptor instead.
+func (*WAChat) Descriptor() ([]byte, []int) {
+	return file_v1_whatsapp_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *WAChat) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *WAChat) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *WAChat) GetChatJid() string {
+	if x != nil {
+		return x.ChatJid
+	}
+	return ""
+}
+
+func (x *WAChat) GetDisplayName() string {
+	if x != nil {
+		return x.DisplayName
+	}
+	return ""
+}
+
+func (x *WAChat) GetIsGroup() bool {
+	if x != nil {
+		return x.IsGroup
+	}
+	return false
+}
+
+func (x *WAChat) GetLastMessagePreview() string {
+	if x != nil {
+		return x.LastMessagePreview
+	}
+	return ""
+}
+
+func (x *WAChat) GetLastMessageTime() string {
+	if x != nil {
+		return x.LastMessageTime
+	}
+	return ""
+}
+
+func (x *WAChat) GetUnreadCount() int32 {
+	if x != nil {
+		return x.UnreadCount
+	}
+	return 0
+}
+
+func (x *WAChat) GetBotEnabled() bool {
+	if x != nil {
+		return x.BotEnabled
+	}
+	return false
+}
+
+type WAChatMessage struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	ChatJid       string                 `protobuf:"bytes,2,opt,name=chat_jid,json=chatJid,proto3" json:"chat_jid,omitempty"`
+	SenderJid     string                 `protobuf:"bytes,3,opt,name=sender_jid,json=senderJid,proto3" json:"sender_jid,omitempty"`
+	SenderName    string                 `protobuf:"bytes,4,opt,name=sender_name,json=senderName,proto3" json:"sender_name,omitempty"`
+	Content       string                 `protobuf:"bytes,5,opt,name=content,proto3" json:"content,omitempty"`
+	MediaType     string                 `protobuf:"bytes,6,opt,name=media_type,json=mediaType,proto3" json:"media_type,omitempty"`
+	IsFromMe      bool                   `protobuf:"varint,7,opt,name=is_from_me,json=isFromMe,proto3" json:"is_from_me,omitempty"`
+	Timestamp     string                 `protobuf:"bytes,8,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WAChatMessage) Reset() {
+	*x = WAChatMessage{}
+	mi := &file_v1_whatsapp_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WAChatMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WAChatMessage) ProtoMessage() {}
+
+func (x *WAChatMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_whatsapp_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WAChatMessage.ProtoReflect.Descriptor instead.
+func (*WAChatMessage) Descriptor() ([]byte, []int) {
+	return file_v1_whatsapp_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *WAChatMessage) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *WAChatMessage) GetChatJid() string {
+	if x != nil {
+		return x.ChatJid
+	}
+	return ""
+}
+
+func (x *WAChatMessage) GetSenderJid() string {
+	if x != nil {
+		return x.SenderJid
+	}
+	return ""
+}
+
+func (x *WAChatMessage) GetSenderName() string {
+	if x != nil {
+		return x.SenderName
+	}
+	return ""
+}
+
+func (x *WAChatMessage) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *WAChatMessage) GetMediaType() string {
+	if x != nil {
+		return x.MediaType
+	}
+	return ""
+}
+
+func (x *WAChatMessage) GetIsFromMe() bool {
+	if x != nil {
+		return x.IsFromMe
+	}
+	return false
+}
+
+func (x *WAChatMessage) GetTimestamp() string {
+	if x != nil {
+		return x.Timestamp
+	}
+	return ""
+}
+
+type ListChatsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionId     string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
+	Offset        int32                  `protobuf:"varint,3,opt,name=offset,proto3" json:"offset,omitempty"`
+	Search        string                 `protobuf:"bytes,4,opt,name=search,proto3" json:"search,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListChatsRequest) Reset() {
+	*x = ListChatsRequest{}
+	mi := &file_v1_whatsapp_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListChatsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListChatsRequest) ProtoMessage() {}
+
+func (x *ListChatsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_whatsapp_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListChatsRequest.ProtoReflect.Descriptor instead.
+func (*ListChatsRequest) Descriptor() ([]byte, []int) {
+	return file_v1_whatsapp_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *ListChatsRequest) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *ListChatsRequest) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+func (x *ListChatsRequest) GetOffset() int32 {
+	if x != nil {
+		return x.Offset
+	}
+	return 0
+}
+
+func (x *ListChatsRequest) GetSearch() string {
+	if x != nil {
+		return x.Search
+	}
+	return ""
+}
+
+type ListChatsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Chats         []*WAChat              `protobuf:"bytes,1,rep,name=chats,proto3" json:"chats,omitempty"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListChatsResponse) Reset() {
+	*x = ListChatsResponse{}
+	mi := &file_v1_whatsapp_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListChatsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListChatsResponse) ProtoMessage() {}
+
+func (x *ListChatsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_whatsapp_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListChatsResponse.ProtoReflect.Descriptor instead.
+func (*ListChatsResponse) Descriptor() ([]byte, []int) {
+	return file_v1_whatsapp_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *ListChatsResponse) GetChats() []*WAChat {
+	if x != nil {
+		return x.Chats
+	}
+	return nil
+}
+
+func (x *ListChatsResponse) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+type GetChatMessagesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionId     string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	ChatJid       string                 `protobuf:"bytes,2,opt,name=chat_jid,json=chatJid,proto3" json:"chat_jid,omitempty"`
+	Limit         int32                  `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
+	Offset        int32                  `protobuf:"varint,4,opt,name=offset,proto3" json:"offset,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetChatMessagesRequest) Reset() {
+	*x = GetChatMessagesRequest{}
+	mi := &file_v1_whatsapp_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetChatMessagesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetChatMessagesRequest) ProtoMessage() {}
+
+func (x *GetChatMessagesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_whatsapp_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetChatMessagesRequest.ProtoReflect.Descriptor instead.
+func (*GetChatMessagesRequest) Descriptor() ([]byte, []int) {
+	return file_v1_whatsapp_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *GetChatMessagesRequest) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *GetChatMessagesRequest) GetChatJid() string {
+	if x != nil {
+		return x.ChatJid
+	}
+	return ""
+}
+
+func (x *GetChatMessagesRequest) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+func (x *GetChatMessagesRequest) GetOffset() int32 {
+	if x != nil {
+		return x.Offset
+	}
+	return 0
+}
+
+type GetChatMessagesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Messages      []*WAChatMessage       `protobuf:"bytes,1,rep,name=messages,proto3" json:"messages,omitempty"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetChatMessagesResponse) Reset() {
+	*x = GetChatMessagesResponse{}
+	mi := &file_v1_whatsapp_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetChatMessagesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetChatMessagesResponse) ProtoMessage() {}
+
+func (x *GetChatMessagesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_whatsapp_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetChatMessagesResponse.ProtoReflect.Descriptor instead.
+func (*GetChatMessagesResponse) Descriptor() ([]byte, []int) {
+	return file_v1_whatsapp_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *GetChatMessagesResponse) GetMessages() []*WAChatMessage {
+	if x != nil {
+		return x.Messages
+	}
+	return nil
+}
+
+func (x *GetChatMessagesResponse) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+type MarkChatReadRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionId     string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	ChatJid       string                 `protobuf:"bytes,2,opt,name=chat_jid,json=chatJid,proto3" json:"chat_jid,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MarkChatReadRequest) Reset() {
+	*x = MarkChatReadRequest{}
+	mi := &file_v1_whatsapp_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MarkChatReadRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MarkChatReadRequest) ProtoMessage() {}
+
+func (x *MarkChatReadRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_whatsapp_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MarkChatReadRequest.ProtoReflect.Descriptor instead.
+func (*MarkChatReadRequest) Descriptor() ([]byte, []int) {
+	return file_v1_whatsapp_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *MarkChatReadRequest) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *MarkChatReadRequest) GetChatJid() string {
+	if x != nil {
+		return x.ChatJid
+	}
+	return ""
+}
+
+type MarkChatReadResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MarkChatReadResponse) Reset() {
+	*x = MarkChatReadResponse{}
+	mi := &file_v1_whatsapp_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MarkChatReadResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MarkChatReadResponse) ProtoMessage() {}
+
+func (x *MarkChatReadResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_whatsapp_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MarkChatReadResponse.ProtoReflect.Descriptor instead.
+func (*MarkChatReadResponse) Descriptor() ([]byte, []int) {
+	return file_v1_whatsapp_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *MarkChatReadResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type ToggleChatBotRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionId     string                 `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	ChatJid       string                 `protobuf:"bytes,2,opt,name=chat_jid,json=chatJid,proto3" json:"chat_jid,omitempty"`
+	IsActive      bool                   `protobuf:"varint,3,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ToggleChatBotRequest) Reset() {
+	*x = ToggleChatBotRequest{}
+	mi := &file_v1_whatsapp_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ToggleChatBotRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ToggleChatBotRequest) ProtoMessage() {}
+
+func (x *ToggleChatBotRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_whatsapp_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ToggleChatBotRequest.ProtoReflect.Descriptor instead.
+func (*ToggleChatBotRequest) Descriptor() ([]byte, []int) {
+	return file_v1_whatsapp_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *ToggleChatBotRequest) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *ToggleChatBotRequest) GetChatJid() string {
+	if x != nil {
+		return x.ChatJid
+	}
+	return ""
+}
+
+func (x *ToggleChatBotRequest) GetIsActive() bool {
+	if x != nil {
+		return x.IsActive
+	}
+	return false
+}
+
+type ToggleChatBotResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	IsActive      bool                   `protobuf:"varint,2,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ToggleChatBotResponse) Reset() {
+	*x = ToggleChatBotResponse{}
+	mi := &file_v1_whatsapp_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ToggleChatBotResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ToggleChatBotResponse) ProtoMessage() {}
+
+func (x *ToggleChatBotResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_whatsapp_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ToggleChatBotResponse.ProtoReflect.Descriptor instead.
+func (*ToggleChatBotResponse) Descriptor() ([]byte, []int) {
+	return file_v1_whatsapp_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *ToggleChatBotResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *ToggleChatBotResponse) GetIsActive() bool {
+	if x != nil {
+		return x.IsActive
+	}
+	return false
+}
+
 var File_v1_whatsapp_proto protoreflect.FileDescriptor
 
 const file_v1_whatsapp_proto_rawDesc = "" +
 	"\n" +
-	"\x11v1/whatsapp.proto\x12\vpolyglot.v1\"\xad\x01\n" +
+	"\x11v1/whatsapp.proto\x12\vpolyglot.v1\"\xe2\x01\n" +
 	"\tWASession\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12!\n" +
@@ -981,7 +1653,9 @@ const file_v1_whatsapp_proto_rawDesc = "" +
 	"\x06status\x18\x04 \x01(\tR\x06status\x12\"\n" +
 	"\ris_bot_active\x18\x05 \x01(\bR\visBotActive\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x06 \x01(\tR\tcreatedAt\"\x17\n" +
+	"created_at\x18\x06 \x01(\tR\tcreatedAt\x12\x10\n" +
+	"\x03jid\x18\a \x01(\tR\x03jid\x12!\n" +
+	"\fconnected_at\x18\b \x01(\tR\vconnectedAt\"\x17\n" +
 	"\x15ListWASessionsRequest\"L\n" +
 	"\x16ListWASessionsResponse\x122\n" +
 	"\bsessions\x18\x01 \x03(\v2\x16.polyglot.v1.WASessionR\bsessions\"O\n" +
@@ -1035,7 +1709,64 @@ const file_v1_whatsapp_proto_rawDesc = "" +
 	"\x19SendWATextMessageResponse\x12\x1d\n" +
 	"\n" +
 	"message_id\x18\x01 \x01(\tR\tmessageId\x12\x16\n" +
-	"\x06status\x18\x02 \x01(\tR\x06status2\xcd\x06\n" +
+	"\x06status\x18\x02 \x01(\tR\x06status\"\xb2\x02\n" +
+	"\x06WAChat\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x02 \x01(\tR\tsessionId\x12\x19\n" +
+	"\bchat_jid\x18\x03 \x01(\tR\achatJid\x12!\n" +
+	"\fdisplay_name\x18\x04 \x01(\tR\vdisplayName\x12\x19\n" +
+	"\bis_group\x18\x05 \x01(\bR\aisGroup\x120\n" +
+	"\x14last_message_preview\x18\x06 \x01(\tR\x12lastMessagePreview\x12*\n" +
+	"\x11last_message_time\x18\a \x01(\tR\x0flastMessageTime\x12!\n" +
+	"\funread_count\x18\b \x01(\x05R\vunreadCount\x12\x1f\n" +
+	"\vbot_enabled\x18\t \x01(\bR\n" +
+	"botEnabled\"\xef\x01\n" +
+	"\rWAChatMessage\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x19\n" +
+	"\bchat_jid\x18\x02 \x01(\tR\achatJid\x12\x1d\n" +
+	"\n" +
+	"sender_jid\x18\x03 \x01(\tR\tsenderJid\x12\x1f\n" +
+	"\vsender_name\x18\x04 \x01(\tR\n" +
+	"senderName\x12\x18\n" +
+	"\acontent\x18\x05 \x01(\tR\acontent\x12\x1d\n" +
+	"\n" +
+	"media_type\x18\x06 \x01(\tR\tmediaType\x12\x1c\n" +
+	"\n" +
+	"is_from_me\x18\a \x01(\bR\bisFromMe\x12\x1c\n" +
+	"\ttimestamp\x18\b \x01(\tR\ttimestamp\"w\n" +
+	"\x10ListChatsRequest\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\x12\x14\n" +
+	"\x05limit\x18\x02 \x01(\x05R\x05limit\x12\x16\n" +
+	"\x06offset\x18\x03 \x01(\x05R\x06offset\x12\x16\n" +
+	"\x06search\x18\x04 \x01(\tR\x06search\"T\n" +
+	"\x11ListChatsResponse\x12)\n" +
+	"\x05chats\x18\x01 \x03(\v2\x13.polyglot.v1.WAChatR\x05chats\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\"\x80\x01\n" +
+	"\x16GetChatMessagesRequest\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\x12\x19\n" +
+	"\bchat_jid\x18\x02 \x01(\tR\achatJid\x12\x14\n" +
+	"\x05limit\x18\x03 \x01(\x05R\x05limit\x12\x16\n" +
+	"\x06offset\x18\x04 \x01(\x05R\x06offset\"g\n" +
+	"\x17GetChatMessagesResponse\x126\n" +
+	"\bmessages\x18\x01 \x03(\v2\x1a.polyglot.v1.WAChatMessageR\bmessages\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\"O\n" +
+	"\x13MarkChatReadRequest\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\x12\x19\n" +
+	"\bchat_jid\x18\x02 \x01(\tR\achatJid\"0\n" +
+	"\x14MarkChatReadResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"m\n" +
+	"\x14ToggleChatBotRequest\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\x12\x19\n" +
+	"\bchat_jid\x18\x02 \x01(\tR\achatJid\x12\x1b\n" +
+	"\tis_active\x18\x03 \x01(\bR\bisActive\"N\n" +
+	"\x15ToggleChatBotResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\x12\x1b\n" +
+	"\tis_active\x18\x02 \x01(\bR\bisActive2\xa4\t\n" +
 	"\x0fWhatsAppService\x12W\n" +
 	"\fListSessions\x12\".polyglot.v1.ListWASessionsRequest\x1a#.polyglot.v1.ListWASessionsResponse\x12Z\n" +
 	"\rCreateSession\x12#.polyglot.v1.CreateWASessionRequest\x1a$.polyglot.v1.CreateWASessionResponse\x12T\n" +
@@ -1045,7 +1776,11 @@ const file_v1_whatsapp_proto_rawDesc = "" +
 	"\x10ReconnectSession\x12&.polyglot.v1.ReconnectWASessionRequest\x1a'.polyglot.v1.ReconnectWASessionResponse\x12Z\n" +
 	"\rLogoutSession\x12#.polyglot.v1.LogoutWASessionRequest\x1a$.polyglot.v1.LogoutWASessionResponse\x12W\n" +
 	"\fPurgeSession\x12\".polyglot.v1.PurgeWASessionRequest\x1a#.polyglot.v1.PurgeWASessionResponse\x12`\n" +
-	"\x0fSendTextMessage\x12%.polyglot.v1.SendWATextMessageRequest\x1a&.polyglot.v1.SendWATextMessageResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x0fSendTextMessage\x12%.polyglot.v1.SendWATextMessageRequest\x1a&.polyglot.v1.SendWATextMessageResponse\x12J\n" +
+	"\tListChats\x12\x1d.polyglot.v1.ListChatsRequest\x1a\x1e.polyglot.v1.ListChatsResponse\x12\\\n" +
+	"\x0fGetChatMessages\x12#.polyglot.v1.GetChatMessagesRequest\x1a$.polyglot.v1.GetChatMessagesResponse\x12S\n" +
+	"\fMarkChatRead\x12 .polyglot.v1.MarkChatReadRequest\x1a!.polyglot.v1.MarkChatReadResponse\x12V\n" +
+	"\rToggleChatBot\x12!.polyglot.v1.ToggleChatBotRequest\x1a\".polyglot.v1.ToggleChatBotResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_whatsapp_proto_rawDescOnce sync.Once
@@ -1059,7 +1794,7 @@ func file_v1_whatsapp_proto_rawDescGZIP() []byte {
 	return file_v1_whatsapp_proto_rawDescData
 }
 
-var file_v1_whatsapp_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
+var file_v1_whatsapp_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
 var file_v1_whatsapp_proto_goTypes = []any{
 	(*WASession)(nil),                   // 0: polyglot.v1.WASession
 	(*ListWASessionsRequest)(nil),       // 1: polyglot.v1.ListWASessionsRequest
@@ -1080,33 +1815,53 @@ var file_v1_whatsapp_proto_goTypes = []any{
 	(*PurgeWASessionResponse)(nil),      // 16: polyglot.v1.PurgeWASessionResponse
 	(*SendWATextMessageRequest)(nil),    // 17: polyglot.v1.SendWATextMessageRequest
 	(*SendWATextMessageResponse)(nil),   // 18: polyglot.v1.SendWATextMessageResponse
+	(*WAChat)(nil),                      // 19: polyglot.v1.WAChat
+	(*WAChatMessage)(nil),               // 20: polyglot.v1.WAChatMessage
+	(*ListChatsRequest)(nil),            // 21: polyglot.v1.ListChatsRequest
+	(*ListChatsResponse)(nil),           // 22: polyglot.v1.ListChatsResponse
+	(*GetChatMessagesRequest)(nil),      // 23: polyglot.v1.GetChatMessagesRequest
+	(*GetChatMessagesResponse)(nil),     // 24: polyglot.v1.GetChatMessagesResponse
+	(*MarkChatReadRequest)(nil),         // 25: polyglot.v1.MarkChatReadRequest
+	(*MarkChatReadResponse)(nil),        // 26: polyglot.v1.MarkChatReadResponse
+	(*ToggleChatBotRequest)(nil),        // 27: polyglot.v1.ToggleChatBotRequest
+	(*ToggleChatBotResponse)(nil),       // 28: polyglot.v1.ToggleChatBotResponse
 }
 var file_v1_whatsapp_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.ListWASessionsResponse.sessions:type_name -> polyglot.v1.WASession
 	0,  // 1: polyglot.v1.CreateWASessionResponse.session:type_name -> polyglot.v1.WASession
-	1,  // 2: polyglot.v1.WhatsAppService.ListSessions:input_type -> polyglot.v1.ListWASessionsRequest
-	3,  // 3: polyglot.v1.WhatsAppService.CreateSession:input_type -> polyglot.v1.CreateWASessionRequest
-	5,  // 4: polyglot.v1.WhatsAppService.GetQRCode:input_type -> polyglot.v1.GetWASessionQRRequest
-	7,  // 5: polyglot.v1.WhatsAppService.GetPairingCode:input_type -> polyglot.v1.GetWASessionPairingRequest
-	9,  // 6: polyglot.v1.WhatsAppService.ToggleBot:input_type -> polyglot.v1.ToggleWABotRequest
-	11, // 7: polyglot.v1.WhatsAppService.ReconnectSession:input_type -> polyglot.v1.ReconnectWASessionRequest
-	13, // 8: polyglot.v1.WhatsAppService.LogoutSession:input_type -> polyglot.v1.LogoutWASessionRequest
-	15, // 9: polyglot.v1.WhatsAppService.PurgeSession:input_type -> polyglot.v1.PurgeWASessionRequest
-	17, // 10: polyglot.v1.WhatsAppService.SendTextMessage:input_type -> polyglot.v1.SendWATextMessageRequest
-	2,  // 11: polyglot.v1.WhatsAppService.ListSessions:output_type -> polyglot.v1.ListWASessionsResponse
-	4,  // 12: polyglot.v1.WhatsAppService.CreateSession:output_type -> polyglot.v1.CreateWASessionResponse
-	6,  // 13: polyglot.v1.WhatsAppService.GetQRCode:output_type -> polyglot.v1.GetWASessionQRResponse
-	8,  // 14: polyglot.v1.WhatsAppService.GetPairingCode:output_type -> polyglot.v1.GetWASessionPairingResponse
-	10, // 15: polyglot.v1.WhatsAppService.ToggleBot:output_type -> polyglot.v1.ToggleWABotResponse
-	12, // 16: polyglot.v1.WhatsAppService.ReconnectSession:output_type -> polyglot.v1.ReconnectWASessionResponse
-	14, // 17: polyglot.v1.WhatsAppService.LogoutSession:output_type -> polyglot.v1.LogoutWASessionResponse
-	16, // 18: polyglot.v1.WhatsAppService.PurgeSession:output_type -> polyglot.v1.PurgeWASessionResponse
-	18, // 19: polyglot.v1.WhatsAppService.SendTextMessage:output_type -> polyglot.v1.SendWATextMessageResponse
-	11, // [11:20] is the sub-list for method output_type
-	2,  // [2:11] is the sub-list for method input_type
-	2,  // [2:2] is the sub-list for extension type_name
-	2,  // [2:2] is the sub-list for extension extendee
-	0,  // [0:2] is the sub-list for field type_name
+	19, // 2: polyglot.v1.ListChatsResponse.chats:type_name -> polyglot.v1.WAChat
+	20, // 3: polyglot.v1.GetChatMessagesResponse.messages:type_name -> polyglot.v1.WAChatMessage
+	1,  // 4: polyglot.v1.WhatsAppService.ListSessions:input_type -> polyglot.v1.ListWASessionsRequest
+	3,  // 5: polyglot.v1.WhatsAppService.CreateSession:input_type -> polyglot.v1.CreateWASessionRequest
+	5,  // 6: polyglot.v1.WhatsAppService.GetQRCode:input_type -> polyglot.v1.GetWASessionQRRequest
+	7,  // 7: polyglot.v1.WhatsAppService.GetPairingCode:input_type -> polyglot.v1.GetWASessionPairingRequest
+	9,  // 8: polyglot.v1.WhatsAppService.ToggleBot:input_type -> polyglot.v1.ToggleWABotRequest
+	11, // 9: polyglot.v1.WhatsAppService.ReconnectSession:input_type -> polyglot.v1.ReconnectWASessionRequest
+	13, // 10: polyglot.v1.WhatsAppService.LogoutSession:input_type -> polyglot.v1.LogoutWASessionRequest
+	15, // 11: polyglot.v1.WhatsAppService.PurgeSession:input_type -> polyglot.v1.PurgeWASessionRequest
+	17, // 12: polyglot.v1.WhatsAppService.SendTextMessage:input_type -> polyglot.v1.SendWATextMessageRequest
+	21, // 13: polyglot.v1.WhatsAppService.ListChats:input_type -> polyglot.v1.ListChatsRequest
+	23, // 14: polyglot.v1.WhatsAppService.GetChatMessages:input_type -> polyglot.v1.GetChatMessagesRequest
+	25, // 15: polyglot.v1.WhatsAppService.MarkChatRead:input_type -> polyglot.v1.MarkChatReadRequest
+	27, // 16: polyglot.v1.WhatsAppService.ToggleChatBot:input_type -> polyglot.v1.ToggleChatBotRequest
+	2,  // 17: polyglot.v1.WhatsAppService.ListSessions:output_type -> polyglot.v1.ListWASessionsResponse
+	4,  // 18: polyglot.v1.WhatsAppService.CreateSession:output_type -> polyglot.v1.CreateWASessionResponse
+	6,  // 19: polyglot.v1.WhatsAppService.GetQRCode:output_type -> polyglot.v1.GetWASessionQRResponse
+	8,  // 20: polyglot.v1.WhatsAppService.GetPairingCode:output_type -> polyglot.v1.GetWASessionPairingResponse
+	10, // 21: polyglot.v1.WhatsAppService.ToggleBot:output_type -> polyglot.v1.ToggleWABotResponse
+	12, // 22: polyglot.v1.WhatsAppService.ReconnectSession:output_type -> polyglot.v1.ReconnectWASessionResponse
+	14, // 23: polyglot.v1.WhatsAppService.LogoutSession:output_type -> polyglot.v1.LogoutWASessionResponse
+	16, // 24: polyglot.v1.WhatsAppService.PurgeSession:output_type -> polyglot.v1.PurgeWASessionResponse
+	18, // 25: polyglot.v1.WhatsAppService.SendTextMessage:output_type -> polyglot.v1.SendWATextMessageResponse
+	22, // 26: polyglot.v1.WhatsAppService.ListChats:output_type -> polyglot.v1.ListChatsResponse
+	24, // 27: polyglot.v1.WhatsAppService.GetChatMessages:output_type -> polyglot.v1.GetChatMessagesResponse
+	26, // 28: polyglot.v1.WhatsAppService.MarkChatRead:output_type -> polyglot.v1.MarkChatReadResponse
+	28, // 29: polyglot.v1.WhatsAppService.ToggleChatBot:output_type -> polyglot.v1.ToggleChatBotResponse
+	17, // [17:30] is the sub-list for method output_type
+	4,  // [4:17] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_v1_whatsapp_proto_init() }
@@ -1120,7 +1875,7 @@ func file_v1_whatsapp_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_whatsapp_proto_rawDesc), len(file_v1_whatsapp_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   19,
+			NumMessages:   29,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

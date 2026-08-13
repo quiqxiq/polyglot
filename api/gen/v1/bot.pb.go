@@ -637,6 +637,252 @@ func (x *CloseConversationResponse) GetMessage() string {
 	return ""
 }
 
+// ConversationContextMessage adalah pesan bisnis (conversation.messages)
+// dengan metrik token LLM — berbeda dari mirror wa_messages.
+type ConversationContextMessage struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Sender        string                 `protobuf:"bytes,2,opt,name=sender,proto3" json:"sender,omitempty"`
+	Text          string                 `protobuf:"bytes,3,opt,name=text,proto3" json:"text,omitempty"`
+	Timestamp     string                 `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	TokenIn       int64                  `protobuf:"varint,5,opt,name=token_in,json=tokenIn,proto3" json:"token_in,omitempty"`
+	TokenOut      int64                  `protobuf:"varint,6,opt,name=token_out,json=tokenOut,proto3" json:"token_out,omitempty"`
+	LlmConfigId   string                 `protobuf:"bytes,7,opt,name=llm_config_id,json=llmConfigId,proto3" json:"llm_config_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ConversationContextMessage) Reset() {
+	*x = ConversationContextMessage{}
+	mi := &file_v1_bot_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ConversationContextMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ConversationContextMessage) ProtoMessage() {}
+
+func (x *ConversationContextMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ConversationContextMessage.ProtoReflect.Descriptor instead.
+func (*ConversationContextMessage) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *ConversationContextMessage) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ConversationContextMessage) GetSender() string {
+	if x != nil {
+		return x.Sender
+	}
+	return ""
+}
+
+func (x *ConversationContextMessage) GetText() string {
+	if x != nil {
+		return x.Text
+	}
+	return ""
+}
+
+func (x *ConversationContextMessage) GetTimestamp() string {
+	if x != nil {
+		return x.Timestamp
+	}
+	return ""
+}
+
+func (x *ConversationContextMessage) GetTokenIn() int64 {
+	if x != nil {
+		return x.TokenIn
+	}
+	return 0
+}
+
+func (x *ConversationContextMessage) GetTokenOut() int64 {
+	if x != nil {
+		return x.TokenOut
+	}
+	return 0
+}
+
+func (x *ConversationContextMessage) GetLlmConfigId() string {
+	if x != nil {
+		return x.LlmConfigId
+	}
+	return ""
+}
+
+type GetConversationContextRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetConversationContextRequest) Reset() {
+	*x = GetConversationContextRequest{}
+	mi := &file_v1_bot_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetConversationContextRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetConversationContextRequest) ProtoMessage() {}
+
+func (x *GetConversationContextRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetConversationContextRequest.ProtoReflect.Descriptor instead.
+func (*GetConversationContextRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *GetConversationContextRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type GetConversationContextResponse struct {
+	state          protoimpl.MessageState        `protogen:"open.v1"`
+	ConversationId string                        `protobuf:"bytes,1,opt,name=conversation_id,json=conversationId,proto3" json:"conversation_id,omitempty"`
+	Status         string                        `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"` // bot | escalation | done
+	ClientPhone    string                        `protobuf:"bytes,3,opt,name=client_phone,json=clientPhone,proto3" json:"client_phone,omitempty"`
+	Summary        string                        `protobuf:"bytes,4,opt,name=summary,proto3" json:"summary,omitempty"`
+	RecentMessages []*ConversationContextMessage `protobuf:"bytes,5,rep,name=recent_messages,json=recentMessages,proto3" json:"recent_messages,omitempty"`
+	TotalTokenIn   int64                         `protobuf:"varint,6,opt,name=total_token_in,json=totalTokenIn,proto3" json:"total_token_in,omitempty"`
+	TotalTokenOut  int64                         `protobuf:"varint,7,opt,name=total_token_out,json=totalTokenOut,proto3" json:"total_token_out,omitempty"`
+	TotalLlmCalls  int64                         `protobuf:"varint,8,opt,name=total_llm_calls,json=totalLlmCalls,proto3" json:"total_llm_calls,omitempty"`
+	UpdatedAt      string                        `protobuf:"bytes,9,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetConversationContextResponse) Reset() {
+	*x = GetConversationContextResponse{}
+	mi := &file_v1_bot_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetConversationContextResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetConversationContextResponse) ProtoMessage() {}
+
+func (x *GetConversationContextResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetConversationContextResponse.ProtoReflect.Descriptor instead.
+func (*GetConversationContextResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *GetConversationContextResponse) GetConversationId() string {
+	if x != nil {
+		return x.ConversationId
+	}
+	return ""
+}
+
+func (x *GetConversationContextResponse) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *GetConversationContextResponse) GetClientPhone() string {
+	if x != nil {
+		return x.ClientPhone
+	}
+	return ""
+}
+
+func (x *GetConversationContextResponse) GetSummary() string {
+	if x != nil {
+		return x.Summary
+	}
+	return ""
+}
+
+func (x *GetConversationContextResponse) GetRecentMessages() []*ConversationContextMessage {
+	if x != nil {
+		return x.RecentMessages
+	}
+	return nil
+}
+
+func (x *GetConversationContextResponse) GetTotalTokenIn() int64 {
+	if x != nil {
+		return x.TotalTokenIn
+	}
+	return 0
+}
+
+func (x *GetConversationContextResponse) GetTotalTokenOut() int64 {
+	if x != nil {
+		return x.TotalTokenOut
+	}
+	return 0
+}
+
+func (x *GetConversationContextResponse) GetTotalLlmCalls() int64 {
+	if x != nil {
+		return x.TotalLlmCalls
+	}
+	return 0
+}
+
+func (x *GetConversationContextResponse) GetUpdatedAt() string {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return ""
+}
+
 var File_v1_bot_proto protoreflect.FileDescriptor
 
 const file_v1_bot_proto_rawDesc = "" +
@@ -680,11 +926,33 @@ const file_v1_bot_proto_rawDesc = "" +
 	"\x18CloseConversationRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"5\n" +
 	"\x19CloseConversationResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\x8c\x04\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\xd2\x01\n" +
+	"\x1aConversationContextMessage\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
+	"\x06sender\x18\x02 \x01(\tR\x06sender\x12\x12\n" +
+	"\x04text\x18\x03 \x01(\tR\x04text\x12\x1c\n" +
+	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\x12\x19\n" +
+	"\btoken_in\x18\x05 \x01(\x03R\atokenIn\x12\x1b\n" +
+	"\ttoken_out\x18\x06 \x01(\x03R\btokenOut\x12\"\n" +
+	"\rllm_config_id\x18\a \x01(\tR\vllmConfigId\"/\n" +
+	"\x1dGetConversationContextRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"\x85\x03\n" +
+	"\x1eGetConversationContextResponse\x12'\n" +
+	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\tR\x06status\x12!\n" +
+	"\fclient_phone\x18\x03 \x01(\tR\vclientPhone\x12\x18\n" +
+	"\asummary\x18\x04 \x01(\tR\asummary\x12P\n" +
+	"\x0frecent_messages\x18\x05 \x03(\v2'.polyglot.v1.ConversationContextMessageR\x0erecentMessages\x12$\n" +
+	"\x0etotal_token_in\x18\x06 \x01(\x03R\ftotalTokenIn\x12&\n" +
+	"\x0ftotal_token_out\x18\a \x01(\x03R\rtotalTokenOut\x12&\n" +
+	"\x0ftotal_llm_calls\x18\b \x01(\x03R\rtotalLlmCalls\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\t \x01(\tR\tupdatedAt2\xff\x04\n" +
 	"\n" +
 	"BotService\x12b\n" +
 	"\x11ListConversations\x12%.polyglot.v1.ListConversationsRequest\x1a&.polyglot.v1.ListConversationsResponse\x12\\\n" +
-	"\x0fGetConversation\x12#.polyglot.v1.GetConversationRequest\x1a$.polyglot.v1.GetConversationResponse\x12k\n" +
+	"\x0fGetConversation\x12#.polyglot.v1.GetConversationRequest\x1a$.polyglot.v1.GetConversationResponse\x12q\n" +
+	"\x16GetConversationContext\x12*.polyglot.v1.GetConversationContextRequest\x1a+.polyglot.v1.GetConversationContextResponse\x12k\n" +
 	"\x14TakeOverConversation\x12(.polyglot.v1.TakeOverConversationRequest\x1a).polyglot.v1.TakeOverConversationResponse\x12k\n" +
 	"\x14ResetConversationBot\x12(.polyglot.v1.ResetConversationBotRequest\x1a).polyglot.v1.ResetConversationBotResponse\x12b\n" +
 	"\x11CloseConversation\x12%.polyglot.v1.CloseConversationRequest\x1a&.polyglot.v1.CloseConversationResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
@@ -701,40 +969,46 @@ func file_v1_bot_proto_rawDescGZIP() []byte {
 	return file_v1_bot_proto_rawDescData
 }
 
-var file_v1_bot_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_v1_bot_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_v1_bot_proto_goTypes = []any{
-	(*ConversationMessage)(nil),          // 0: polyglot.v1.ConversationMessage
-	(*Conversation)(nil),                 // 1: polyglot.v1.Conversation
-	(*ListConversationsRequest)(nil),     // 2: polyglot.v1.ListConversationsRequest
-	(*ListConversationsResponse)(nil),    // 3: polyglot.v1.ListConversationsResponse
-	(*GetConversationRequest)(nil),       // 4: polyglot.v1.GetConversationRequest
-	(*GetConversationResponse)(nil),      // 5: polyglot.v1.GetConversationResponse
-	(*TakeOverConversationRequest)(nil),  // 6: polyglot.v1.TakeOverConversationRequest
-	(*TakeOverConversationResponse)(nil), // 7: polyglot.v1.TakeOverConversationResponse
-	(*ResetConversationBotRequest)(nil),  // 8: polyglot.v1.ResetConversationBotRequest
-	(*ResetConversationBotResponse)(nil), // 9: polyglot.v1.ResetConversationBotResponse
-	(*CloseConversationRequest)(nil),     // 10: polyglot.v1.CloseConversationRequest
-	(*CloseConversationResponse)(nil),    // 11: polyglot.v1.CloseConversationResponse
+	(*ConversationMessage)(nil),            // 0: polyglot.v1.ConversationMessage
+	(*Conversation)(nil),                   // 1: polyglot.v1.Conversation
+	(*ListConversationsRequest)(nil),       // 2: polyglot.v1.ListConversationsRequest
+	(*ListConversationsResponse)(nil),      // 3: polyglot.v1.ListConversationsResponse
+	(*GetConversationRequest)(nil),         // 4: polyglot.v1.GetConversationRequest
+	(*GetConversationResponse)(nil),        // 5: polyglot.v1.GetConversationResponse
+	(*TakeOverConversationRequest)(nil),    // 6: polyglot.v1.TakeOverConversationRequest
+	(*TakeOverConversationResponse)(nil),   // 7: polyglot.v1.TakeOverConversationResponse
+	(*ResetConversationBotRequest)(nil),    // 8: polyglot.v1.ResetConversationBotRequest
+	(*ResetConversationBotResponse)(nil),   // 9: polyglot.v1.ResetConversationBotResponse
+	(*CloseConversationRequest)(nil),       // 10: polyglot.v1.CloseConversationRequest
+	(*CloseConversationResponse)(nil),      // 11: polyglot.v1.CloseConversationResponse
+	(*ConversationContextMessage)(nil),     // 12: polyglot.v1.ConversationContextMessage
+	(*GetConversationContextRequest)(nil),  // 13: polyglot.v1.GetConversationContextRequest
+	(*GetConversationContextResponse)(nil), // 14: polyglot.v1.GetConversationContextResponse
 }
 var file_v1_bot_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.Conversation.messages:type_name -> polyglot.v1.ConversationMessage
 	1,  // 1: polyglot.v1.ListConversationsResponse.conversations:type_name -> polyglot.v1.Conversation
 	1,  // 2: polyglot.v1.GetConversationResponse.conversation:type_name -> polyglot.v1.Conversation
-	2,  // 3: polyglot.v1.BotService.ListConversations:input_type -> polyglot.v1.ListConversationsRequest
-	4,  // 4: polyglot.v1.BotService.GetConversation:input_type -> polyglot.v1.GetConversationRequest
-	6,  // 5: polyglot.v1.BotService.TakeOverConversation:input_type -> polyglot.v1.TakeOverConversationRequest
-	8,  // 6: polyglot.v1.BotService.ResetConversationBot:input_type -> polyglot.v1.ResetConversationBotRequest
-	10, // 7: polyglot.v1.BotService.CloseConversation:input_type -> polyglot.v1.CloseConversationRequest
-	3,  // 8: polyglot.v1.BotService.ListConversations:output_type -> polyglot.v1.ListConversationsResponse
-	5,  // 9: polyglot.v1.BotService.GetConversation:output_type -> polyglot.v1.GetConversationResponse
-	7,  // 10: polyglot.v1.BotService.TakeOverConversation:output_type -> polyglot.v1.TakeOverConversationResponse
-	9,  // 11: polyglot.v1.BotService.ResetConversationBot:output_type -> polyglot.v1.ResetConversationBotResponse
-	11, // 12: polyglot.v1.BotService.CloseConversation:output_type -> polyglot.v1.CloseConversationResponse
-	8,  // [8:13] is the sub-list for method output_type
-	3,  // [3:8] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	12, // 3: polyglot.v1.GetConversationContextResponse.recent_messages:type_name -> polyglot.v1.ConversationContextMessage
+	2,  // 4: polyglot.v1.BotService.ListConversations:input_type -> polyglot.v1.ListConversationsRequest
+	4,  // 5: polyglot.v1.BotService.GetConversation:input_type -> polyglot.v1.GetConversationRequest
+	13, // 6: polyglot.v1.BotService.GetConversationContext:input_type -> polyglot.v1.GetConversationContextRequest
+	6,  // 7: polyglot.v1.BotService.TakeOverConversation:input_type -> polyglot.v1.TakeOverConversationRequest
+	8,  // 8: polyglot.v1.BotService.ResetConversationBot:input_type -> polyglot.v1.ResetConversationBotRequest
+	10, // 9: polyglot.v1.BotService.CloseConversation:input_type -> polyglot.v1.CloseConversationRequest
+	3,  // 10: polyglot.v1.BotService.ListConversations:output_type -> polyglot.v1.ListConversationsResponse
+	5,  // 11: polyglot.v1.BotService.GetConversation:output_type -> polyglot.v1.GetConversationResponse
+	14, // 12: polyglot.v1.BotService.GetConversationContext:output_type -> polyglot.v1.GetConversationContextResponse
+	7,  // 13: polyglot.v1.BotService.TakeOverConversation:output_type -> polyglot.v1.TakeOverConversationResponse
+	9,  // 14: polyglot.v1.BotService.ResetConversationBot:output_type -> polyglot.v1.ResetConversationBotResponse
+	11, // 15: polyglot.v1.BotService.CloseConversation:output_type -> polyglot.v1.CloseConversationResponse
+	10, // [10:16] is the sub-list for method output_type
+	4,  // [4:10] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_v1_bot_proto_init() }
@@ -748,7 +1022,7 @@ func file_v1_bot_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_bot_proto_rawDesc), len(file_v1_bot_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

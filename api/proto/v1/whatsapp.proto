@@ -14,15 +14,21 @@ service WhatsAppService {
   rpc LogoutSession (LogoutWASessionRequest) returns (LogoutWASessionResponse);
   rpc PurgeSession (PurgeWASessionRequest) returns (PurgeWASessionResponse);
   rpc SendTextMessage (SendWATextMessageRequest) returns (SendWATextMessageResponse);
+  rpc ListChats (ListChatsRequest) returns (ListChatsResponse);
+  rpc GetChatMessages (GetChatMessagesRequest) returns (GetChatMessagesResponse);
+  rpc MarkChatRead (MarkChatReadRequest) returns (MarkChatReadResponse);
+  rpc ToggleChatBot (ToggleChatBotRequest) returns (ToggleChatBotResponse);
 }
 
 message WASession {
   string id = 1;
   string name = 2;
   string phone_number = 3;
-  string status = 4; // e.g. "CONNECTED", "DISCONNECTED", "NEEDS_RESCAN"
+  string status = 4; // e.g. "online", "offline", "connecting", "needs_rescan"
   bool is_bot_active = 5;
   string created_at = 6;
+  string jid = 7; // "62812xxxxxxx@s.whatsapp.net" setelah ter-pair
+  string connected_at = 8;
 }
 
 message ListWASessionsRequest {}
@@ -94,4 +100,67 @@ message SendWATextMessageRequest {
 message SendWATextMessageResponse {
   string message_id = 1;
   string status = 2;
+}
+
+message WAChat {
+  string id = 1;
+  string session_id = 2;
+  string chat_jid = 3;
+  string display_name = 4;
+  bool is_group = 5;
+  string last_message_preview = 6;
+  string last_message_time = 7;
+  int32 unread_count = 8;
+  bool bot_enabled = 9;
+}
+
+message WAChatMessage {
+  string id = 1;
+  string chat_jid = 2;
+  string sender_jid = 3;
+  string sender_name = 4;
+  string content = 5;
+  string media_type = 6;
+  bool is_from_me = 7;
+  string timestamp = 8;
+}
+
+message ListChatsRequest {
+  string session_id = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+  string search = 4;
+}
+message ListChatsResponse {
+  repeated WAChat chats = 1;
+  int32 total = 2;
+}
+
+message GetChatMessagesRequest {
+  string session_id = 1;
+  string chat_jid = 2;
+  int32 limit = 3;
+  int32 offset = 4;
+}
+message GetChatMessagesResponse {
+  repeated WAChatMessage messages = 1;
+  int32 total = 2;
+}
+
+message MarkChatReadRequest {
+  string session_id = 1;
+  string chat_jid = 2;
+}
+message MarkChatReadResponse {
+  string message = 1;
+}
+
+message ToggleChatBotRequest {
+  string session_id = 1;
+  string chat_jid = 2;
+  bool is_active = 3;
+}
+message ToggleChatBotResponse {
+  string message = 1;
+  bool is_active = 2;
 }

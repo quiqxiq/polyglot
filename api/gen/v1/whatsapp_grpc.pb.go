@@ -28,6 +28,10 @@ const (
 	WhatsAppService_LogoutSession_FullMethodName    = "/polyglot.v1.WhatsAppService/LogoutSession"
 	WhatsAppService_PurgeSession_FullMethodName     = "/polyglot.v1.WhatsAppService/PurgeSession"
 	WhatsAppService_SendTextMessage_FullMethodName  = "/polyglot.v1.WhatsAppService/SendTextMessage"
+	WhatsAppService_ListChats_FullMethodName        = "/polyglot.v1.WhatsAppService/ListChats"
+	WhatsAppService_GetChatMessages_FullMethodName  = "/polyglot.v1.WhatsAppService/GetChatMessages"
+	WhatsAppService_MarkChatRead_FullMethodName     = "/polyglot.v1.WhatsAppService/MarkChatRead"
+	WhatsAppService_ToggleChatBot_FullMethodName    = "/polyglot.v1.WhatsAppService/ToggleChatBot"
 )
 
 // WhatsAppServiceClient is the client API for WhatsAppService service.
@@ -43,6 +47,10 @@ type WhatsAppServiceClient interface {
 	LogoutSession(ctx context.Context, in *LogoutWASessionRequest, opts ...grpc.CallOption) (*LogoutWASessionResponse, error)
 	PurgeSession(ctx context.Context, in *PurgeWASessionRequest, opts ...grpc.CallOption) (*PurgeWASessionResponse, error)
 	SendTextMessage(ctx context.Context, in *SendWATextMessageRequest, opts ...grpc.CallOption) (*SendWATextMessageResponse, error)
+	ListChats(ctx context.Context, in *ListChatsRequest, opts ...grpc.CallOption) (*ListChatsResponse, error)
+	GetChatMessages(ctx context.Context, in *GetChatMessagesRequest, opts ...grpc.CallOption) (*GetChatMessagesResponse, error)
+	MarkChatRead(ctx context.Context, in *MarkChatReadRequest, opts ...grpc.CallOption) (*MarkChatReadResponse, error)
+	ToggleChatBot(ctx context.Context, in *ToggleChatBotRequest, opts ...grpc.CallOption) (*ToggleChatBotResponse, error)
 }
 
 type whatsAppServiceClient struct {
@@ -143,6 +151,46 @@ func (c *whatsAppServiceClient) SendTextMessage(ctx context.Context, in *SendWAT
 	return out, nil
 }
 
+func (c *whatsAppServiceClient) ListChats(ctx context.Context, in *ListChatsRequest, opts ...grpc.CallOption) (*ListChatsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListChatsResponse)
+	err := c.cc.Invoke(ctx, WhatsAppService_ListChats_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *whatsAppServiceClient) GetChatMessages(ctx context.Context, in *GetChatMessagesRequest, opts ...grpc.CallOption) (*GetChatMessagesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetChatMessagesResponse)
+	err := c.cc.Invoke(ctx, WhatsAppService_GetChatMessages_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *whatsAppServiceClient) MarkChatRead(ctx context.Context, in *MarkChatReadRequest, opts ...grpc.CallOption) (*MarkChatReadResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MarkChatReadResponse)
+	err := c.cc.Invoke(ctx, WhatsAppService_MarkChatRead_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *whatsAppServiceClient) ToggleChatBot(ctx context.Context, in *ToggleChatBotRequest, opts ...grpc.CallOption) (*ToggleChatBotResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ToggleChatBotResponse)
+	err := c.cc.Invoke(ctx, WhatsAppService_ToggleChatBot_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WhatsAppServiceServer is the server API for WhatsAppService service.
 // All implementations must embed UnimplementedWhatsAppServiceServer
 // for forward compatibility.
@@ -156,6 +204,10 @@ type WhatsAppServiceServer interface {
 	LogoutSession(context.Context, *LogoutWASessionRequest) (*LogoutWASessionResponse, error)
 	PurgeSession(context.Context, *PurgeWASessionRequest) (*PurgeWASessionResponse, error)
 	SendTextMessage(context.Context, *SendWATextMessageRequest) (*SendWATextMessageResponse, error)
+	ListChats(context.Context, *ListChatsRequest) (*ListChatsResponse, error)
+	GetChatMessages(context.Context, *GetChatMessagesRequest) (*GetChatMessagesResponse, error)
+	MarkChatRead(context.Context, *MarkChatReadRequest) (*MarkChatReadResponse, error)
+	ToggleChatBot(context.Context, *ToggleChatBotRequest) (*ToggleChatBotResponse, error)
 	mustEmbedUnimplementedWhatsAppServiceServer()
 }
 
@@ -192,6 +244,18 @@ func (UnimplementedWhatsAppServiceServer) PurgeSession(context.Context, *PurgeWA
 }
 func (UnimplementedWhatsAppServiceServer) SendTextMessage(context.Context, *SendWATextMessageRequest) (*SendWATextMessageResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SendTextMessage not implemented")
+}
+func (UnimplementedWhatsAppServiceServer) ListChats(context.Context, *ListChatsRequest) (*ListChatsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListChats not implemented")
+}
+func (UnimplementedWhatsAppServiceServer) GetChatMessages(context.Context, *GetChatMessagesRequest) (*GetChatMessagesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetChatMessages not implemented")
+}
+func (UnimplementedWhatsAppServiceServer) MarkChatRead(context.Context, *MarkChatReadRequest) (*MarkChatReadResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method MarkChatRead not implemented")
+}
+func (UnimplementedWhatsAppServiceServer) ToggleChatBot(context.Context, *ToggleChatBotRequest) (*ToggleChatBotResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleChatBot not implemented")
 }
 func (UnimplementedWhatsAppServiceServer) mustEmbedUnimplementedWhatsAppServiceServer() {}
 func (UnimplementedWhatsAppServiceServer) testEmbeddedByValue()                         {}
@@ -376,6 +440,78 @@ func _WhatsAppService_SendTextMessage_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WhatsAppService_ListChats_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListChatsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WhatsAppServiceServer).ListChats(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WhatsAppService_ListChats_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WhatsAppServiceServer).ListChats(ctx, req.(*ListChatsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WhatsAppService_GetChatMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetChatMessagesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WhatsAppServiceServer).GetChatMessages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WhatsAppService_GetChatMessages_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WhatsAppServiceServer).GetChatMessages(ctx, req.(*GetChatMessagesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WhatsAppService_MarkChatRead_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MarkChatReadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WhatsAppServiceServer).MarkChatRead(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WhatsAppService_MarkChatRead_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WhatsAppServiceServer).MarkChatRead(ctx, req.(*MarkChatReadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WhatsAppService_ToggleChatBot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ToggleChatBotRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WhatsAppServiceServer).ToggleChatBot(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WhatsAppService_ToggleChatBot_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WhatsAppServiceServer).ToggleChatBot(ctx, req.(*ToggleChatBotRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WhatsAppService_ServiceDesc is the grpc.ServiceDesc for WhatsAppService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -418,6 +554,22 @@ var WhatsAppService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendTextMessage",
 			Handler:    _WhatsAppService_SendTextMessage_Handler,
+		},
+		{
+			MethodName: "ListChats",
+			Handler:    _WhatsAppService_ListChats_Handler,
+		},
+		{
+			MethodName: "GetChatMessages",
+			Handler:    _WhatsAppService_GetChatMessages_Handler,
+		},
+		{
+			MethodName: "MarkChatRead",
+			Handler:    _WhatsAppService_MarkChatRead_Handler,
+		},
+		{
+			MethodName: "ToggleChatBot",
+			Handler:    _WhatsAppService_ToggleChatBot_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

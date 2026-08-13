@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateWASessionRequest, CreateWASessionResponse, GetWASessionPairingRequest, GetWASessionPairingResponse, GetWASessionQRRequest, GetWASessionQRResponse, ListWASessionsRequest, ListWASessionsResponse, LogoutWASessionRequest, LogoutWASessionResponse, PurgeWASessionRequest, PurgeWASessionResponse, ReconnectWASessionRequest, ReconnectWASessionResponse, SendWATextMessageRequest, SendWATextMessageResponse, ToggleWABotRequest, ToggleWABotResponse } from "./whatsapp_pb.js";
+import { CreateWASessionRequest, CreateWASessionResponse, GetChatMessagesRequest, GetChatMessagesResponse, GetWASessionPairingRequest, GetWASessionPairingResponse, GetWASessionQRRequest, GetWASessionQRResponse, ListChatsRequest, ListChatsResponse, ListWASessionsRequest, ListWASessionsResponse, LogoutWASessionRequest, LogoutWASessionResponse, MarkChatReadRequest, MarkChatReadResponse, PurgeWASessionRequest, PurgeWASessionResponse, ReconnectWASessionRequest, ReconnectWASessionResponse, SendWATextMessageRequest, SendWATextMessageResponse, ToggleChatBotRequest, ToggleChatBotResponse, ToggleWABotRequest, ToggleWABotResponse } from "./whatsapp_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -91,6 +91,42 @@ export const WhatsAppService = {
       name: "SendTextMessage",
       I: SendWATextMessageRequest,
       O: SendWATextMessageResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.WhatsAppService.ListChats
+     */
+    listChats: {
+      name: "ListChats",
+      I: ListChatsRequest,
+      O: ListChatsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.WhatsAppService.GetChatMessages
+     */
+    getChatMessages: {
+      name: "GetChatMessages",
+      I: GetChatMessagesRequest,
+      O: GetChatMessagesResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.WhatsAppService.MarkChatRead
+     */
+    markChatRead: {
+      name: "MarkChatRead",
+      I: MarkChatReadRequest,
+      O: MarkChatReadResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.WhatsAppService.ToggleChatBot
+     */
+    toggleChatBot: {
+      name: "ToggleChatBot",
+      I: ToggleChatBotRequest,
+      O: ToggleChatBotResponse,
       kind: MethodKind.Unary,
     },
   }

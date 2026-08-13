@@ -26,7 +26,7 @@ export class WASession extends Message<WASession> {
   phoneNumber = "";
 
   /**
-   * e.g. "CONNECTED", "DISCONNECTED", "NEEDS_RESCAN"
+   * e.g. "online", "offline", "connecting", "needs_rescan"
    *
    * @generated from field: string status = 4;
    */
@@ -42,6 +42,18 @@ export class WASession extends Message<WASession> {
    */
   createdAt = "";
 
+  /**
+   * "62812xxxxxxx@s.whatsapp.net" setelah ter-pair
+   *
+   * @generated from field: string jid = 7;
+   */
+  jid = "";
+
+  /**
+   * @generated from field: string connected_at = 8;
+   */
+  connectedAt = "";
+
   constructor(data?: PartialMessage<WASession>) {
     super();
     proto3.util.initPartial(data, this);
@@ -56,6 +68,8 @@ export class WASession extends Message<WASession> {
     { no: 4, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 5, name: "is_bot_active", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 6, name: "created_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "jid", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "connected_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): WASession {
@@ -792,6 +806,538 @@ export class SendWATextMessageResponse extends Message<SendWATextMessageResponse
 
   static equals(a: SendWATextMessageResponse | PlainMessage<SendWATextMessageResponse> | undefined, b: SendWATextMessageResponse | PlainMessage<SendWATextMessageResponse> | undefined): boolean {
     return proto3.util.equals(SendWATextMessageResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.WAChat
+ */
+export class WAChat extends Message<WAChat> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string session_id = 2;
+   */
+  sessionId = "";
+
+  /**
+   * @generated from field: string chat_jid = 3;
+   */
+  chatJid = "";
+
+  /**
+   * @generated from field: string display_name = 4;
+   */
+  displayName = "";
+
+  /**
+   * @generated from field: bool is_group = 5;
+   */
+  isGroup = false;
+
+  /**
+   * @generated from field: string last_message_preview = 6;
+   */
+  lastMessagePreview = "";
+
+  /**
+   * @generated from field: string last_message_time = 7;
+   */
+  lastMessageTime = "";
+
+  /**
+   * @generated from field: int32 unread_count = 8;
+   */
+  unreadCount = 0;
+
+  /**
+   * @generated from field: bool bot_enabled = 9;
+   */
+  botEnabled = false;
+
+  constructor(data?: PartialMessage<WAChat>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.WAChat";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "session_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "chat_jid", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "display_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "is_group", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 6, name: "last_message_preview", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "last_message_time", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "unread_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 9, name: "bot_enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): WAChat {
+    return new WAChat().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): WAChat {
+    return new WAChat().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): WAChat {
+    return new WAChat().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: WAChat | PlainMessage<WAChat> | undefined, b: WAChat | PlainMessage<WAChat> | undefined): boolean {
+    return proto3.util.equals(WAChat, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.WAChatMessage
+ */
+export class WAChatMessage extends Message<WAChatMessage> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string chat_jid = 2;
+   */
+  chatJid = "";
+
+  /**
+   * @generated from field: string sender_jid = 3;
+   */
+  senderJid = "";
+
+  /**
+   * @generated from field: string sender_name = 4;
+   */
+  senderName = "";
+
+  /**
+   * @generated from field: string content = 5;
+   */
+  content = "";
+
+  /**
+   * @generated from field: string media_type = 6;
+   */
+  mediaType = "";
+
+  /**
+   * @generated from field: bool is_from_me = 7;
+   */
+  isFromMe = false;
+
+  /**
+   * @generated from field: string timestamp = 8;
+   */
+  timestamp = "";
+
+  constructor(data?: PartialMessage<WAChatMessage>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.WAChatMessage";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "chat_jid", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "sender_jid", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "sender_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "content", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "media_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "is_from_me", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 8, name: "timestamp", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): WAChatMessage {
+    return new WAChatMessage().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): WAChatMessage {
+    return new WAChatMessage().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): WAChatMessage {
+    return new WAChatMessage().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: WAChatMessage | PlainMessage<WAChatMessage> | undefined, b: WAChatMessage | PlainMessage<WAChatMessage> | undefined): boolean {
+    return proto3.util.equals(WAChatMessage, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListChatsRequest
+ */
+export class ListChatsRequest extends Message<ListChatsRequest> {
+  /**
+   * @generated from field: string session_id = 1;
+   */
+  sessionId = "";
+
+  /**
+   * @generated from field: int32 limit = 2;
+   */
+  limit = 0;
+
+  /**
+   * @generated from field: int32 offset = 3;
+   */
+  offset = 0;
+
+  /**
+   * @generated from field: string search = 4;
+   */
+  search = "";
+
+  constructor(data?: PartialMessage<ListChatsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListChatsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "session_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "limit", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "offset", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "search", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListChatsRequest {
+    return new ListChatsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListChatsRequest {
+    return new ListChatsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListChatsRequest {
+    return new ListChatsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListChatsRequest | PlainMessage<ListChatsRequest> | undefined, b: ListChatsRequest | PlainMessage<ListChatsRequest> | undefined): boolean {
+    return proto3.util.equals(ListChatsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListChatsResponse
+ */
+export class ListChatsResponse extends Message<ListChatsResponse> {
+  /**
+   * @generated from field: repeated polyglot.v1.WAChat chats = 1;
+   */
+  chats: WAChat[] = [];
+
+  /**
+   * @generated from field: int32 total = 2;
+   */
+  total = 0;
+
+  constructor(data?: PartialMessage<ListChatsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListChatsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "chats", kind: "message", T: WAChat, repeated: true },
+    { no: 2, name: "total", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListChatsResponse {
+    return new ListChatsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListChatsResponse {
+    return new ListChatsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListChatsResponse {
+    return new ListChatsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListChatsResponse | PlainMessage<ListChatsResponse> | undefined, b: ListChatsResponse | PlainMessage<ListChatsResponse> | undefined): boolean {
+    return proto3.util.equals(ListChatsResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetChatMessagesRequest
+ */
+export class GetChatMessagesRequest extends Message<GetChatMessagesRequest> {
+  /**
+   * @generated from field: string session_id = 1;
+   */
+  sessionId = "";
+
+  /**
+   * @generated from field: string chat_jid = 2;
+   */
+  chatJid = "";
+
+  /**
+   * @generated from field: int32 limit = 3;
+   */
+  limit = 0;
+
+  /**
+   * @generated from field: int32 offset = 4;
+   */
+  offset = 0;
+
+  constructor(data?: PartialMessage<GetChatMessagesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetChatMessagesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "session_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "chat_jid", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "limit", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "offset", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChatMessagesRequest {
+    return new GetChatMessagesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChatMessagesRequest {
+    return new GetChatMessagesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChatMessagesRequest {
+    return new GetChatMessagesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChatMessagesRequest | PlainMessage<GetChatMessagesRequest> | undefined, b: GetChatMessagesRequest | PlainMessage<GetChatMessagesRequest> | undefined): boolean {
+    return proto3.util.equals(GetChatMessagesRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetChatMessagesResponse
+ */
+export class GetChatMessagesResponse extends Message<GetChatMessagesResponse> {
+  /**
+   * @generated from field: repeated polyglot.v1.WAChatMessage messages = 1;
+   */
+  messages: WAChatMessage[] = [];
+
+  /**
+   * @generated from field: int32 total = 2;
+   */
+  total = 0;
+
+  constructor(data?: PartialMessage<GetChatMessagesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetChatMessagesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "messages", kind: "message", T: WAChatMessage, repeated: true },
+    { no: 2, name: "total", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetChatMessagesResponse {
+    return new GetChatMessagesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetChatMessagesResponse {
+    return new GetChatMessagesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetChatMessagesResponse {
+    return new GetChatMessagesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetChatMessagesResponse | PlainMessage<GetChatMessagesResponse> | undefined, b: GetChatMessagesResponse | PlainMessage<GetChatMessagesResponse> | undefined): boolean {
+    return proto3.util.equals(GetChatMessagesResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.MarkChatReadRequest
+ */
+export class MarkChatReadRequest extends Message<MarkChatReadRequest> {
+  /**
+   * @generated from field: string session_id = 1;
+   */
+  sessionId = "";
+
+  /**
+   * @generated from field: string chat_jid = 2;
+   */
+  chatJid = "";
+
+  constructor(data?: PartialMessage<MarkChatReadRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.MarkChatReadRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "session_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "chat_jid", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MarkChatReadRequest {
+    return new MarkChatReadRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MarkChatReadRequest {
+    return new MarkChatReadRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MarkChatReadRequest {
+    return new MarkChatReadRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: MarkChatReadRequest | PlainMessage<MarkChatReadRequest> | undefined, b: MarkChatReadRequest | PlainMessage<MarkChatReadRequest> | undefined): boolean {
+    return proto3.util.equals(MarkChatReadRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.MarkChatReadResponse
+ */
+export class MarkChatReadResponse extends Message<MarkChatReadResponse> {
+  /**
+   * @generated from field: string message = 1;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<MarkChatReadResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.MarkChatReadResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MarkChatReadResponse {
+    return new MarkChatReadResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): MarkChatReadResponse {
+    return new MarkChatReadResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): MarkChatReadResponse {
+    return new MarkChatReadResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: MarkChatReadResponse | PlainMessage<MarkChatReadResponse> | undefined, b: MarkChatReadResponse | PlainMessage<MarkChatReadResponse> | undefined): boolean {
+    return proto3.util.equals(MarkChatReadResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ToggleChatBotRequest
+ */
+export class ToggleChatBotRequest extends Message<ToggleChatBotRequest> {
+  /**
+   * @generated from field: string session_id = 1;
+   */
+  sessionId = "";
+
+  /**
+   * @generated from field: string chat_jid = 2;
+   */
+  chatJid = "";
+
+  /**
+   * @generated from field: bool is_active = 3;
+   */
+  isActive = false;
+
+  constructor(data?: PartialMessage<ToggleChatBotRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ToggleChatBotRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "session_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "chat_jid", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "is_active", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ToggleChatBotRequest {
+    return new ToggleChatBotRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ToggleChatBotRequest {
+    return new ToggleChatBotRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ToggleChatBotRequest {
+    return new ToggleChatBotRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ToggleChatBotRequest | PlainMessage<ToggleChatBotRequest> | undefined, b: ToggleChatBotRequest | PlainMessage<ToggleChatBotRequest> | undefined): boolean {
+    return proto3.util.equals(ToggleChatBotRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ToggleChatBotResponse
+ */
+export class ToggleChatBotResponse extends Message<ToggleChatBotResponse> {
+  /**
+   * @generated from field: string message = 1;
+   */
+  message = "";
+
+  /**
+   * @generated from field: bool is_active = 2;
+   */
+  isActive = false;
+
+  constructor(data?: PartialMessage<ToggleChatBotResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ToggleChatBotResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "is_active", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ToggleChatBotResponse {
+    return new ToggleChatBotResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ToggleChatBotResponse {
+    return new ToggleChatBotResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ToggleChatBotResponse {
+    return new ToggleChatBotResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ToggleChatBotResponse | PlainMessage<ToggleChatBotResponse> | undefined, b: ToggleChatBotResponse | PlainMessage<ToggleChatBotResponse> | undefined): boolean {
+    return proto3.util.equals(ToggleChatBotResponse, a, b);
   }
 }
 

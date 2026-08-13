@@ -53,7 +53,7 @@ run:
 
 # ─── Protobuf / gRPC & ConnectRPC Web (api/proto/v1) ───────────────────
 PROTO_FILES := $(shell find $(PROTO_ROOT) -name '*.proto' 2>/dev/null)
-WEB_GEN_OUT := website/src/gen
+WEB_GEN_OUT := web/src/gen
 
 proto:
 	mkdir -p $(PROTO_OUT)
@@ -67,9 +67,9 @@ proto-web:
 	mkdir -p $(WEB_GEN_OUT)
 	protoc \
 		--proto_path=$(PROTO_ROOT) \
-		--plugin=protoc-gen-es=website/node_modules/.bin/protoc-gen-es \
+		--plugin=protoc-gen-es=web/node_modules/.bin/protoc-gen-es \
 		--es_out=$(WEB_GEN_OUT) --es_opt=target=ts \
-		--plugin=protoc-gen-connect-es=website/node_modules/.bin/protoc-gen-connect-es \
+		--plugin=protoc-gen-connect-es=web/node_modules/.bin/protoc-gen-connect-es \
 		--connect-es_out=$(WEB_GEN_OUT) --connect-es_opt=target=ts \
 		$(PROTO_FILES)
 

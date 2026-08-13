@@ -6,8 +6,14 @@ import "time"
 type WASessionStatus string
 
 const (
-	StatusOnline      WASessionStatus = "online"
-	StatusOffline     WASessionStatus = "offline"
+	// StatusOnline berarti client terhubung DAN sudah ter-pair (Store.ID ada).
+	StatusOnline WASessionStatus = "online"
+	// StatusOffline berarti client terdaftar tapi tidak ada koneksi aktif.
+	StatusOffline WASessionStatus = "offline"
+	// StatusConnecting berarti client sedang dial ke server WhatsApp.
+	StatusConnecting WASessionStatus = "connecting"
+	// StatusNeedsRescan berarti client belum ter-pair / perlu scan QR ulang
+	// (session baru, logout, atau remote logged-out).
 	StatusNeedsRescan WASessionStatus = "needs_rescan"
 )
 

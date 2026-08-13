@@ -1,124 +1,71 @@
 import { useState } from 'react'
-import { Check, X } from 'lucide-react'
-import { showSubmittedData } from '@/lib/show-submitted-data'
-import { Badge } from '@/components/ui/badge'
+import { Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '@/components/ui/command'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-import { type ChatUser } from '../data/chat-types'
-
-type User = Omit<ChatUser, 'messages'>
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
 
 type NewChatProps = {
-  users: User[]
   open: boolean
   onOpenChange: (open: boolean) => void
+  onSend: (phone: string, messageText: string) => void
+  pending?: boolean
 }
-export function NewChat({ users, onOpenChange, open }: NewChatProps) {
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([])
 
-  const handleSelectUser = (user: User) => {
-    if (!selectedUsers.find((u) => u.id === user.id)) {
-      setSelectedUsers([...selectedUsers, user])
-    } else {
-      handleRemoveUser(user.id)
-    }
-  }
-
-  const handleRemoveUser = (userId: string) => {
-    setSelectedUsers(selectedUsers.filter((user) => user.id !== userId))
-  }
+export function NewChat({ open, onOpenChange, onSend, pending }: NewChatProps) {
+  const [phone, setPhone] = useState('')
+  const [messageText, setMessageText] = useState('')
 
   const handleOpenChange = (newOpen: boolean) => {
     onOpenChange(newOpen)
-    // Reset selected users when dialog closes
     if (!newOpen) {
-      setSelectedUsers([])
+      setPhone('')
+      setMessageText('')
     }
+  }
+
+  const handleSend = () => {
+    const clean = phone.trim()
+    if (!clean) return
+    onSend(clean, messageText.trim())
+    setPhone('')
+    setMessageText('')
   }
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className='sm:max-w-150'>
+      <DialogContent className='sm:max-w-120'>
         <DialogHeader>
           <DialogTitle>New message</DialogTitle>
         </DialogHeader>
         <div className='flex flex-col gap-4'>
-          <div className='flex flex-wrap items-baseline-last gap-2'>
-            <span className='min-h-6 text-sm text-muted-foreground'>To:</span>
-            {selectedUsers.map((user) => (
-              <Badge key={user.id} variant='default'>
-                {user.fullName}
-                <button
-                  className='ms-1 rounded-full ring-offset-background outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2'
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleRemoveUser(user.id)
-                    }
-                  }}
-                  onClick={() => handleRemoveUser(user.id)}
-                >
-                  <X className='h-3 w-3 text-muted-foreground hover:text-foreground' />
-                </button>
-              </Badge>
-            ))}
-          </div>
-          <Command className='rounded-lg border'>
-            <CommandInput
-              placeholder='Search people...'
-              className='text-foreground'
+          <div className='flex flex-col gap-1.5'>
+            <label htmlFor='new-chat-phone' className='text-sm text-muted-foreground'>
+              Nomor WhatsApp penerima
+            </label>
+            <Input
+              id='new-chat-phone'
+              type='tel'
+              placeholder='e.g. 6281234567890'
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
-            <CommandList>
-              <CommandEmpty>No people found.</CommandEmpty>
-              <CommandGroup>
-                {users.map((user) => (
-                  <CommandItem
-                    key={user.id}
-                    onSelect={() => handleSelectUser(user)}
-                    className='flex items-center justify-between gap-2 hover:bg-accent hover:text-accent-foreground'
-                  >
-                    <div className='flex items-center gap-2'>
-                      <img
-                        src={user.profile || '/placeholder.svg'}
-                        alt={user.fullName}
-                        className='h-8 w-8 rounded-full'
-                      />
-                      <div className='flex flex-col'>
-                        <span className='text-sm font-medium'>
-                          {user.fullName}
-                        </span>
-                        <span className='text-xs text-accent-foreground/70'>
-                          {user.username}
-                        </span>
-                      </div>
-                    </div>
-
-                    {selectedUsers.find((u) => u.id === user.id) && (
-                      <Check className='h-4 w-4' />
-                    )}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
-          <Button
-            variant={'default'}
-            onClick={() => showSubmittedData(selectedUsers)}
-            disabled={selectedUsers.length === 0}
-          >
-            Chat
+          </div>
+          <div className='flex flex-col gap-1.5'>
+            <label htmlFor='new-chat-message' className='text-sm text-muted-foreground'>
+              Pesan awal (opsional)
+            </label>
+            <Input
+              id='new-chat-message'
+              placeholder='Halo...'
+              value={messageText}
+              onChange={(e) => setMessageText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleSend()
+              }}
+            />
+          </div>
+          <Button variant='default' onClick={handleSend} disabled={!phone.trim() || pending}>
+            <Send size={16} className='me-1' /> Chat
           </Button>
         </div>
       </DialogContent>

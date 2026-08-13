@@ -19,11 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	BotService_ListConversations_FullMethodName    = "/polyglot.v1.BotService/ListConversations"
-	BotService_GetConversation_FullMethodName      = "/polyglot.v1.BotService/GetConversation"
-	BotService_TakeOverConversation_FullMethodName = "/polyglot.v1.BotService/TakeOverConversation"
-	BotService_ResetConversationBot_FullMethodName = "/polyglot.v1.BotService/ResetConversationBot"
-	BotService_CloseConversation_FullMethodName    = "/polyglot.v1.BotService/CloseConversation"
+	BotService_ListConversations_FullMethodName      = "/polyglot.v1.BotService/ListConversations"
+	BotService_GetConversation_FullMethodName        = "/polyglot.v1.BotService/GetConversation"
+	BotService_GetConversationContext_FullMethodName = "/polyglot.v1.BotService/GetConversationContext"
+	BotService_TakeOverConversation_FullMethodName   = "/polyglot.v1.BotService/TakeOverConversation"
+	BotService_ResetConversationBot_FullMethodName   = "/polyglot.v1.BotService/ResetConversationBot"
+	BotService_CloseConversation_FullMethodName      = "/polyglot.v1.BotService/CloseConversation"
 )
 
 // BotServiceClient is the client API for BotService service.
@@ -32,6 +33,7 @@ const (
 type BotServiceClient interface {
 	ListConversations(ctx context.Context, in *ListConversationsRequest, opts ...grpc.CallOption) (*ListConversationsResponse, error)
 	GetConversation(ctx context.Context, in *GetConversationRequest, opts ...grpc.CallOption) (*GetConversationResponse, error)
+	GetConversationContext(ctx context.Context, in *GetConversationContextRequest, opts ...grpc.CallOption) (*GetConversationContextResponse, error)
 	TakeOverConversation(ctx context.Context, in *TakeOverConversationRequest, opts ...grpc.CallOption) (*TakeOverConversationResponse, error)
 	ResetConversationBot(ctx context.Context, in *ResetConversationBotRequest, opts ...grpc.CallOption) (*ResetConversationBotResponse, error)
 	CloseConversation(ctx context.Context, in *CloseConversationRequest, opts ...grpc.CallOption) (*CloseConversationResponse, error)
@@ -59,6 +61,16 @@ func (c *botServiceClient) GetConversation(ctx context.Context, in *GetConversat
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetConversationResponse)
 	err := c.cc.Invoke(ctx, BotService_GetConversation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) GetConversationContext(ctx context.Context, in *GetConversationContextRequest, opts ...grpc.CallOption) (*GetConversationContextResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetConversationContextResponse)
+	err := c.cc.Invoke(ctx, BotService_GetConversationContext_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -101,6 +113,7 @@ func (c *botServiceClient) CloseConversation(ctx context.Context, in *CloseConve
 type BotServiceServer interface {
 	ListConversations(context.Context, *ListConversationsRequest) (*ListConversationsResponse, error)
 	GetConversation(context.Context, *GetConversationRequest) (*GetConversationResponse, error)
+	GetConversationContext(context.Context, *GetConversationContextRequest) (*GetConversationContextResponse, error)
 	TakeOverConversation(context.Context, *TakeOverConversationRequest) (*TakeOverConversationResponse, error)
 	ResetConversationBot(context.Context, *ResetConversationBotRequest) (*ResetConversationBotResponse, error)
 	CloseConversation(context.Context, *CloseConversationRequest) (*CloseConversationResponse, error)
@@ -119,6 +132,9 @@ func (UnimplementedBotServiceServer) ListConversations(context.Context, *ListCon
 }
 func (UnimplementedBotServiceServer) GetConversation(context.Context, *GetConversationRequest) (*GetConversationResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetConversation not implemented")
+}
+func (UnimplementedBotServiceServer) GetConversationContext(context.Context, *GetConversationContextRequest) (*GetConversationContextResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetConversationContext not implemented")
 }
 func (UnimplementedBotServiceServer) TakeOverConversation(context.Context, *TakeOverConversationRequest) (*TakeOverConversationResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method TakeOverConversation not implemented")
@@ -182,6 +198,24 @@ func _BotService_GetConversation_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BotServiceServer).GetConversation(ctx, req.(*GetConversationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_GetConversationContext_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetConversationContextRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).GetConversationContext(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_GetConversationContext_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).GetConversationContext(ctx, req.(*GetConversationContextRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -254,6 +288,10 @@ var BotService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetConversation",
 			Handler:    _BotService_GetConversation_Handler,
+		},
+		{
+			MethodName: "GetConversationContext",
+			Handler:    _BotService_GetConversationContext_Handler,
 		},
 		{
 			MethodName: "TakeOverConversation",

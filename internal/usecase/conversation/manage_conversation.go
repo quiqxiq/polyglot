@@ -2,6 +2,7 @@ package conversation
 
 import (
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
@@ -15,8 +16,11 @@ type ConversationRepository interface {
 	FindConversationByID(id uint) (*bot.Conversation, error)
 	FindConversationByIDWithMessages(id uint) (*bot.Conversation, error)
 	FindConversationsByStatus(status bot.ConversationStatus) ([]bot.Conversation, error)
+	FindConversationsBySessionID(sessionID uint) ([]bot.Conversation, error)
 	FindAllConversations() ([]bot.Conversation, error)
 	UpdateConversation(conv *bot.Conversation) error
+	CreateMessage(msg *bot.Message) error
+	FindRecentMessages(conversationID uint, limit int) ([]bot.Message, error)
 }
 
 type ConversationService struct {
@@ -52,6 +56,9 @@ func (s *ConversationService) GetOrCreateConversation(sessionID uint, customerNu
 }
 
 func (s *ConversationService) AddMessageWithConfig(convID uint, senderType string, content string, tokenIn, tokenOut int, llmConfigID *uint) (*bot.Message, error) {
+	if convID == 0 {
+		return nil, errors.New("conversation id is required")
+	}
 	msg := &bot.Message{
 		ConversationID: convID,
 		SenderType:     bot.SenderType(senderType),
@@ -60,6 +67,9 @@ func (s *ConversationService) AddMessageWithConfig(convID uint, senderType strin
 		TokenOut:       tokenOut,
 		LLMConfigID:    llmConfigID,
 		CreatedAt:      time.Now(),
+	}
+	if err := s.repo.CreateMessage(msg); err != nil {
+		return nil, fmt.Errorf("persist message: %w", err)
 	}
 	return msg, nil
 }
@@ -74,6 +84,15 @@ func (s *ConversationService) GetHistory(convID uint, limit int) ([]bot.Message,
 		return nil, err
 	}
 	return conv.Messages, nil
+}
+
+// GetRecentHistory returns the most recent N messages of a conversation in
+// ascending (chronological) order — used to build the LLM prompt context.
+func (s *ConversationService) GetRecentHistory(convID uint, limit int) ([]bot.Message, error) {
+	if limit <= 0 {
+		limit = 20
+	}
+	return s.repo.FindRecentMessages(convID, limit)
 }
 
 func (s *ConversationService) Escalate(convID uint) error {
@@ -127,4 +146,10 @@ func (s *ConversationService) ListConversations(status string) ([]bot.Conversati
 		return s.repo.FindConversationsByStatus(bot.ConversationStatus(status))
 	}
 	return s.repo.FindAllConversations()
+}
+
+// ListConversationsBySession returns all conversations belonging to one WA
+// session (perangkat), terbaru lebih dulu.
+func (s *ConversationService) ListConversationsBySession(sessionID uint) ([]bot.Conversation, error) {
+	return s.repo.FindConversationsBySessionID(sessionID)
 }

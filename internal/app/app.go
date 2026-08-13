@@ -17,19 +17,22 @@ import (
 	deviceConnect "github.com/quixiq/polyglot/internal/adapter/connect/device"
 	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
+	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
 	wsAdapter "github.com/quixiq/polyglot/internal/adapter/ws"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/device"
+	domainllm "github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/driver/genieacs"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
-	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
+	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
+	chatUC "github.com/quixiq/polyglot/internal/usecase/chat"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
@@ -72,22 +75,29 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	sseHub := wsAdapter.NewSSEHub()
 
 	eventHandler := whatsapp.NewEventHandler(pgStore, sseHub)
-	waManager, err := whatsapp.NewSessionManager(cfg.DatabaseURL, nil, eventHandler.MakeStatusCallback())
+	chatService := chatUC.NewChatService(pgStore)
+	waManager, err := whatsapp.NewSessionManager(cfg.DatabaseURL, pgStore, nil, eventHandler.MakeStatusCallback())
 	if err != nil {
 		log.Printf("[Warning] Failed to initialize WhatsApp SessionManager: %v", err)
 	}
 
 	convService := convUC.NewConversationService(pgStore)
 	knowledgeRetriever := knowledgeUC.NewKeywordRetriever(pgStore)
-	botEngine := botUC.NewEngine(cfg, redisStore, waManager, convService, knowledgeRetriever, pgStore, sseHub)
+	// Factory LLM di-inject agar usecase/bot tetap bersih dari adapter layer.
+	llmFactory := func(c *domainllm.LLMConfig) (port.LLMProvider, error) {
+		return llmadapter.NewProvider(c, cfg.EncryptionKey)
+	}
+	botEngine := botUC.NewEngine(cfg, redisStore, waManager, convService, knowledgeRetriever, pgStore, pgStore, sseHub, llmFactory)
 
 	if waManager != nil {
+		// Hubungkan pesan masuk WhatsApp ke engine bot. Dilakukan setelah engine
+		// dibangun (bukan saat NewSessionManager) karena ada circular dependency.
+		waManager.SetMessageCallback(eventHandler.MakeMessageCallback(botEngine.HandleIncomingMessage))
 		sessions, err := pgStore.FindAllSessions()
 		if err == nil && len(sessions) > 0 {
 			_ = waManager.RestoreAllSessions(sessions)
 		}
 	}
-	_ = botEngine
 
 	repo, vault := loadInitialDevices(pgStore)
 	factories := map[string]registry.DriverFactory{
@@ -149,10 +159,10 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	mikhmonConnectPath, mikhmonConnectHandler := hotspotConnect.NewHotspotServiceHandler(hotUC, connectDriverProvider)
 	connectGroup.Any(mikhmonConnectPath+"*action", gin.WrapH(mikhmonConnectHandler))
 
-	waConnectPath, waConnectHandler := botConnect.NewWhatsAppServiceHandler(pgStore, waManager)
+	waConnectPath, waConnectHandler := botConnect.NewWhatsAppServiceHandler(pgStore, waManager, chatService)
 	connectGroup.Any(waConnectPath+"*action", gin.WrapH(waConnectHandler))
 
-	botConnectPath, botConnectHandler := botConnect.NewBotServiceHandler(convService)
+	botConnectPath, botConnectHandler := botConnect.NewBotServiceHandler(convService, botEngine)
 	connectGroup.Any(botConnectPath+"*action", gin.WrapH(botConnectHandler))
 
 	knwConnectPath, knwConnectHandler := botConnect.NewKnowledgeServiceHandler()

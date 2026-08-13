@@ -3,6 +3,7 @@ package whatsapp
 import (
 	"context"
 	"log"
+	"time"
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/adapter/ws"
@@ -35,6 +36,9 @@ func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode
 	sess, err := eh.pgStore.FindSessionByID(sessionID)
 	if err == nil {
 		sess.Status = bot.WASessionStatus(status)
+		if status == string(bot.StatusOnline) {
+			sess.ConnectedAt = time.Now()
+		}
 		if jid != "" {
 			sess.JID = jid
 		}
@@ -46,18 +50,21 @@ func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode
 
 	if eh.sseHub != nil {
 		eh.sseHub.Broadcast("session_status", map[string]any{
-			"session_id": sessionID,
-			"status":     status,
-			"qr_code":    qrCode,
+			"session_id":   sessionID,
+			"status":       status,
+			"qr_code":      qrCode,
+			"jid":          jid,
+			"phone_number": phoneNumber,
+			"is_logged_in": status == string(bot.StatusOnline),
 		})
 	}
 }
 
-func (eh *EventHandler) MakeMessageCallback(engineHandler func(ctx context.Context, sessionID uint, customerNumber string, content string) error) MessageCallback {
-	return func(sessionID uint, customerNumber string, content string) {
+func (eh *EventHandler) MakeMessageCallback(engineHandler func(ctx context.Context, sessionID uint, chatJID string, customerNumber string, content string) error) MessageCallback {
+	return func(sessionID uint, chatJID string, customerNumber string, content string) {
 		go func() {
 			ctx := context.Background()
-			if err := engineHandler(ctx, sessionID, customerNumber, content); err != nil {
+			if err := engineHandler(ctx, sessionID, chatJID, customerNumber, content); err != nil {
 				log.Printf("[EventHandler] Error processing message from %s: %v", customerNumber, err)
 			}
 		}()

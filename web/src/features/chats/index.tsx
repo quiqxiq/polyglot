@@ -1,24 +1,28 @@
-import { useState } from 'react'
-import { Fragment } from 'react/jsx-runtime'
-import { format } from 'date-fns'
+import { Fragment, useEffect, useMemo, useState } from 'react'
+import { format, isSameDay } from 'date-fns'
 import {
   ArrowLeft,
-  MoreVertical,
+  Bot,
+  BotOff,
   Edit,
-  Paperclip,
-  Phone,
-  ImagePlus,
-  Plus,
-  Search as SearchIcon,
   Send,
-  Video,
+  Search as SearchIcon,
   MessagesSquare,
+  Smartphone,
+  UserCheck,
 } from 'lucide-react'
 import { cn, getDisplayNameInitials } from '@/lib/utils'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -26,46 +30,220 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { NewChat } from './components/new-chat'
-import { type ChatUser, type Convo } from './data/chat-types'
-// Fake Data
-import { conversations } from './data/convo.json'
+import {
+  useListChatsQuery,
+  useGetChatMessagesQuery,
+  useMarkChatReadMutation,
+  useSendWATextMessageMutation,
+  useToggleChatBotMutation,
+  useWASessionsQuery,
+  useConversationsQuery,
+  useConversationContextQuery,
+  useTakeOverConversationMutation,
+  useResetConversationBotMutation,
+  useCloseConversationMutation,
+} from './api/use-chats'
+import {
+  MarkChatReadRequest,
+  SendWATextMessageRequest,
+  ToggleChatBotRequest,
+  type WAChat,
+  type WAChatMessage,
+} from '@/gen/v1/whatsapp_pb'
+import {
+  TakeOverConversationRequest,
+  ResetConversationBotRequest,
+  CloseConversationRequest,
+} from '@/gen/v1/bot_pb'
+
+// jid → nomor tampilan ("62812xxxxxxx@s.whatsapp.net" → "62812xxxxxxx")
+function formatJid(jid: string): string {
+  return jid.split('@')[0] || jid
+}
+
+function mediaLabel(mediaType: string, content: string): string {
+  if (content) return content
+  switch (mediaType) {
+    case 'image':
+      return '📷 Foto'
+    case 'video':
+      return '🎬 Video'
+    case 'audio':
+      return '🎵 Audio'
+    case 'document':
+      return '📄 Dokumen'
+    case 'sticker':
+      return '🖼️ Stiker'
+    case 'location':
+      return '📍 Lokasi'
+    case 'contact':
+      return '👤 Kontak'
+    case 'call':
+      return '📞 Panggilan'
+    default:
+      return '[media]'
+  }
+}
+
+function chatTime(ts: string): string {
+  if (!ts) return ''
+  const date = new Date(ts)
+  if (Number.isNaN(date.getTime())) return ''
+  return isSameDay(date, new Date()) ? format(date, 'HH:mm') : format(date, 'd MMM')
+}
+
+function statusLabel(status: string): string {
+  switch (status) {
+    case 'escalation':
+      return 'Diteruskan ke agen'
+    case 'done':
+      return 'Selesai'
+    case 'bot':
+      return 'Bot aktif'
+    default:
+      return status
+  }
+}
+
+const statusStyles: Record<string, string> = {
+  bot: 'bg-emerald-500/15 text-emerald-600',
+  escalation: 'bg-amber-500/15 text-amber-600',
+  done: 'bg-muted text-muted-foreground',
+}
 
 export function Chats() {
   const [search, setSearch] = useState('')
-  const [selectedUser, setSelectedUser] = useState<ChatUser | null>(null)
-  const [mobileSelectedUser, setMobileSelectedUser] = useState<ChatUser | null>(
-    null
+  const [selectedSessionId, setSelectedSessionId] = useState('')
+  const [selectedChat, setSelectedChat] = useState<WAChat | null>(null)
+  const [mobileSelected, setMobileSelected] = useState(false)
+  const [createDialogOpen, setCreateDialogOpen] = useState(false)
+  const [draft, setDraft] = useState('')
+
+  const sessionsQuery = useWASessionsQuery()
+  const sessions = useMemo(() => sessionsQuery.data ?? [], [sessionsQuery.data])
+
+  // Fallback ke session pertama bila belum ada pilihan eksplisit.
+  const activeSessionId = selectedSessionId || sessions[0]?.id || ''
+
+  const chatsQuery = useListChatsQuery(activeSessionId, search.trim())
+  const chats = useMemo(() => chatsQuery.data ?? [], [chatsQuery.data])
+
+  const messagesQuery = useGetChatMessagesQuery(
+    activeSessionId,
+    selectedChat?.chatJid ?? '',
+    Boolean(selectedChat),
   )
-  const [createConversationDialogOpened, setCreateConversationDialog] =
-    useState(false)
+  const messages = useMemo(() => messagesQuery.data ?? [], [messagesQuery.data])
 
-  // Filtered data based on the search query
-  const filteredChatList = conversations.filter(({ fullName }) =>
-    fullName.toLowerCase().includes(search.trim().toLowerCase())
+  // Temukan percakapan bisnis (bot) milik chat yang dipilih — dicocokkan lewat
+  // nomor WA. Percakapan hanya ada setelah bot/agen pernah terlibat.
+  const conversationsQuery = useConversationsQuery(activeSessionId)
+  const conversations = useMemo(
+    () => conversationsQuery.data ?? [],
+    [conversationsQuery.data],
   )
-
-  const currentMessage = selectedUser?.messages.reduce(
-    (acc: Record<string, Convo[]>, obj) => {
-      const key = format(obj.timestamp, 'd MMM, yyyy')
-
-      // Create an array for the category if it doesn't exist
-      if (!acc[key]) {
-        acc[key] = []
-      }
-
-      // Push the current object to the array
-      acc[key].push(obj)
-
-      return acc
-    },
-    {}
+  const selectedConv = useMemo(() => {
+    if (!selectedChat) return undefined
+    const phone = formatJid(selectedChat.chatJid)
+    return conversations.find((c) => c.clientPhone === phone)
+  }, [selectedChat, conversations])
+  const contextQuery = useConversationContextQuery(
+    selectedConv?.id ?? '',
+    Boolean(selectedConv),
   )
+  const convContext = contextQuery.data
 
-  const users = conversations.map(({ messages, ...user }) => user)
+  const markReadMutation = useMarkChatReadMutation()
+  const sendMutation = useSendWATextMessageMutation()
+  const toggleChatBotMutation = useToggleChatBotMutation()
+  const takeOverMutation = useTakeOverConversationMutation()
+  const resetBotMutation = useResetConversationBotMutation()
+  const closeConvMutation = useCloseConversationMutation()
+
+  // Polling ringan agar pesan masuk baru muncul tanpa reload manual.
+  useEffect(() => {
+    if (!activeSessionId) return
+    const t = setInterval(() => {
+      chatsQuery.refetch()
+      if (selectedChat) messagesQuery.refetch()
+      if (selectedConv) contextQuery.refetch()
+    }, 8000)
+    return () => clearInterval(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeSessionId, selectedChat?.chatJid])
+
+  const handleSelectChat = (chat: WAChat) => {
+    setSelectedChat(chat)
+    setMobileSelected(true)
+    if (chat.unreadCount > 0) {
+      markReadMutation.mutate(
+        new MarkChatReadRequest({ sessionId: activeSessionId, chatJid: chat.chatJid }),
+      )
+    }
+  }
+
+  const handleToggleChatBot = () => {
+    if (!selectedChat) return
+    const next = !selectedChat.botEnabled
+    const prev = selectedChat
+    // Optimistic — UI langsung berubah, di-revert bila request gagal.
+    const nextChat = prev.clone()
+    nextChat.botEnabled = next
+    setSelectedChat(nextChat)
+    toggleChatBotMutation.mutate(
+      new ToggleChatBotRequest({
+        sessionId: activeSessionId,
+        chatJid: selectedChat.chatJid,
+        isActive: next,
+      }),
+      {
+        onError: () => setSelectedChat(prev),
+      },
+    )
+  }
+
+  const handleTakeOver = () => {
+    if (!selectedConv) return
+    takeOverMutation.mutate(new TakeOverConversationRequest({ id: selectedConv.id }))
+  }
+
+  const handleResetBot = () => {
+    if (!selectedConv) return
+    resetBotMutation.mutate(new ResetConversationBotRequest({ id: selectedConv.id }))
+  }
+
+  const handleCloseConversation = () => {
+    if (!selectedConv) return
+    closeConvMutation.mutate(new CloseConversationRequest({ id: selectedConv.id }))
+  }
+
+  const handleSend = (to: string, content: string) => {
+    if (!activeSessionId || !to || (!content.trim() && !selectedChat)) return
+    sendMutation.mutate(
+      new SendWATextMessageRequest({
+        sessionId: activeSessionId,
+        recipientPhone: to,
+        messageText: content.trim(),
+      }),
+      {
+        onSuccess: () => setDraft(''),
+      },
+    )
+  }
+
+  const groupedMessages = useMemo(() => {
+    const groups = new Map<string, WAChatMessage[]>()
+    for (const msg of messages) {
+      const key = msg.timestamp ? format(new Date(msg.timestamp), 'd MMM yyyy') : '—'
+      const list = groups.get(key) ?? []
+      list.push(msg)
+      groups.set(key, list)
+    }
+    return [...groups.entries()]
+  }, [messages])
 
   return (
     <>
-      {/* ===== Top Heading ===== */}
       <Header>
         <Search className='me-auto' />
         <ThemeSwitch />
@@ -75,29 +253,44 @@ export function Chats() {
 
       <Main fixed>
         <section className='flex h-full gap-6'>
-          {/* Left Side */}
+          {/* ── Kiri: daftar chat ─────────────────────────────── */}
           <div className='flex w-full flex-col gap-2 sm:w-56 lg:w-72 2xl:w-80'>
             <div className='sticky top-0 z-10 -mx-4 bg-background px-4 pb-3 shadow-md sm:static sm:z-auto sm:mx-0 sm:p-0 sm:shadow-none'>
               <div className='flex items-center justify-between py-2'>
-                <div className='flex gap-2'>
+                <div className='flex items-center gap-2'>
                   <h1 className='text-2xl font-bold'>Inbox</h1>
                   <MessagesSquare size={20} />
                 </div>
-
                 <Button
                   size='icon'
                   variant='ghost'
-                  onClick={() => setCreateConversationDialog(true)}
+                  onClick={() => setCreateDialogOpen(true)}
                   className='rounded-lg'
+                  title='New message'
                 >
                   <Edit size={24} className='stroke-muted-foreground' />
                 </Button>
               </div>
 
+              {sessions.length > 1 && (
+                <Select value={selectedSessionId} onValueChange={(v) => setSelectedSessionId(v)}>
+                  <SelectTrigger className='mb-2 h-9 w-full'>
+                    <SelectValue placeholder='Pilih perangkat WhatsApp' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {sessions.map((s) => (
+                      <SelectItem key={s.id} value={s.id}>
+                        {s.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+
               <label
                 className={cn(
                   'focus-within:ring-1 focus-within:ring-ring focus-within:outline-hidden',
-                  'flex h-10 w-full items-center space-x-0 rounded-md border border-border ps-2'
+                  'flex h-10 w-full items-center space-x-0 rounded-md border border-border ps-2',
                 )}
               >
                 <SearchIcon size={15} className='me-2 stroke-slate-500' />
@@ -113,40 +306,65 @@ export function Chats() {
             </div>
 
             <ScrollArea className='-mx-3 h-full overflow-scroll p-3'>
-              {filteredChatList.map((chatUsr) => {
-                const { id, profile, username, messages, fullName } = chatUsr
-                const lastConvo = messages[0]
-                const lastMsg =
-                  lastConvo.sender === 'You'
-                    ? `You: ${lastConvo.message}`
-                    : lastConvo.message
+              {!sessions.length && (
+                <p className='px-3 py-6 text-center text-sm text-muted-foreground'>
+                  Belum ada perangkat WhatsApp terhubung.
+                </p>
+              )}
+              {sessions.length > 0 && !chats.length && (
+                <p className='px-3 py-6 text-center text-sm text-muted-foreground'>
+                  {search
+                    ? 'Tidak ada chat yang cocok.'
+                    : 'Belum ada percakapan. Kirim pesan untuk memulai.'}
+                </p>
+              )}
+              {chats.map((chat) => {
+                const displayName = chat.displayName || formatJid(chat.chatJid)
+                const preview = chat.lastMessagePreview || '[media]'
                 return (
-                  <Fragment key={id}>
+                  <Fragment key={chat.id}>
                     <button
                       type='button'
                       className={cn(
                         'group hover:bg-accent hover:text-accent-foreground',
-                        `flex w-full rounded-md px-2 py-2 text-start text-sm`,
-                        selectedUser?.id === id && 'sm:bg-muted'
+                        'flex w-full items-center gap-2 rounded-md px-2 py-2 text-start text-sm',
+                        selectedChat?.chatJid === chat.chatJid && 'sm:bg-muted',
                       )}
-                      onClick={() => {
-                        setSelectedUser(chatUsr)
-                        setMobileSelectedUser(chatUsr)
-                      }}
+                      onClick={() => handleSelectChat(chat)}
                     >
-                      <div className='flex gap-2'>
-                        <Avatar>
-                          <AvatarImage src={profile} alt={username} />
-                          <AvatarFallback>
-                            {getDisplayNameInitials(fullName)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <span className='col-start-2 row-span-2 font-medium'>
-                            {fullName}
+                      <Avatar className='size-10 shrink-0'>
+                        {chat.isGroup ? (
+                          <AvatarFallback className='bg-primary/15 text-primary'>
+                            {getDisplayNameInitials(displayName)}
+                          </AvatarFallback>						) : (
+							<AvatarFallback>{getDisplayNameInitials(displayName)}</AvatarFallback>
+						)}
+                      </Avatar>
+                      <div className='min-w-0 flex-1'>
+                        <div className='flex items-baseline justify-between gap-2'>
+                          <span className='truncate font-medium'>{displayName}</span>
+                          <span className='shrink-0 text-xs text-muted-foreground'>
+                            {chatTime(chat.lastMessageTime)}
                           </span>
-                          <span className='col-start-2 row-span-2 row-start-2 line-clamp-2 text-ellipsis text-muted-foreground group-hover:text-accent-foreground/90'>
-                            {lastMsg}
+                        </div>
+                        <div className='flex items-center justify-between gap-2'>
+                          <span className='line-clamp-1 truncate text-ellipsis text-muted-foreground'>
+                            {preview}
+                          </span>
+                          <span className='flex shrink-0 items-center gap-1'>
+                            {!chat.botEnabled && (
+                              <span
+                                className='inline-flex items-center rounded bg-muted px-1 py-0.5 text-[10px] font-medium text-muted-foreground'
+                                title='Bot nonaktif untuk chat ini'
+                              >
+                                <BotOff size={11} className='me-0.5' /> off
+                              </span>
+                            )}
+                            {chat.unreadCount > 0 && (
+                              <span className='inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-xs font-medium text-primary-foreground'>
+                                {chat.unreadCount}
+                              </span>
+                            )}
                           </span>
                         </div>
                       </div>
@@ -158,160 +376,205 @@ export function Chats() {
             </ScrollArea>
           </div>
 
-          {/* Right Side */}
-          {selectedUser ? (
+          {/* ── Kanan: percakapan ─────────────────────────────── */}
+          {selectedChat ? (
             <div
               className={cn(
                 'absolute inset-0 start-full z-50 hidden w-full flex-1 flex-col border bg-background shadow-xs sm:static sm:z-auto sm:flex sm:rounded-md',
-                mobileSelectedUser && 'inset-s-0 flex'
+                mobileSelected && 'inset-s-0 flex',
               )}
             >
-              {/* Top Part */}
               <div className='mb-1 flex flex-none justify-between bg-card p-4 shadow-lg sm:rounded-t-md'>
-                {/* Left */}
                 <div className='flex gap-3'>
                   <Button
                     size='icon'
                     variant='ghost'
                     className='-ms-2 h-full sm:hidden'
-                    onClick={() => setMobileSelectedUser(null)}
+                    onClick={() => setMobileSelected(false)}
                   >
                     <ArrowLeft className='rtl:rotate-180' />
                   </Button>
                   <div className='flex items-center gap-2 lg:gap-4'>
                     <Avatar className='size-9 lg:size-11'>
-                      <AvatarImage
-                        src={selectedUser.profile}
-                        alt={selectedUser.username}
-                      />
                       <AvatarFallback>
-                        {getDisplayNameInitials(selectedUser.fullName)}
+                        {getDisplayNameInitials(
+                          selectedChat.displayName || formatJid(selectedChat.chatJid),
+                        )}
                       </AvatarFallback>
                     </Avatar>
                     <div>
                       <span className='col-start-2 row-span-2 text-sm font-medium lg:text-base'>
-                        {selectedUser.fullName}
+                        {selectedChat.displayName || formatJid(selectedChat.chatJid)}
                       </span>
-                      <span className='col-start-2 row-span-2 row-start-2 line-clamp-1 block max-w-32 text-xs text-nowrap text-ellipsis text-muted-foreground lg:max-w-none lg:text-sm'>
-                        {selectedUser.title}
+                      <span className='col-start-2 row-span-2 row-start-2 block max-w-32 text-xs text-nowrap text-ellipsis text-muted-foreground lg:max-w-none lg:text-sm'>
+                        {selectedChat.isGroup ? 'Grup' : formatJid(selectedChat.chatJid)}
                       </span>
                     </div>
                   </div>
                 </div>
-
-                {/* Right */}
                 <div className='-me-1 flex items-center gap-1 lg:gap-2'>
                   <Button
                     size='icon'
                     variant='ghost'
-                    className='hidden size-8 rounded-full sm:inline-flex lg:size-10'
+                    className='h-9 w-9 rounded-md'
+                    title={
+                      selectedChat.botEnabled
+                        ? 'Nonaktifkan bot untuk chat ini'
+                        : 'Aktifkan bot untuk chat ini'
+                    }
+                    disabled={toggleChatBotMutation.isPending}
+                    onClick={handleToggleChatBot}
                   >
-                    <Video size={22} className='stroke-muted-foreground' />
-                  </Button>
-                  <Button
-                    size='icon'
-                    variant='ghost'
-                    className='hidden size-8 rounded-full sm:inline-flex lg:size-10'
-                  >
-                    <Phone size={22} className='stroke-muted-foreground' />
-                  </Button>
-                  <Button
-                    size='icon'
-                    variant='ghost'
-                    className='h-10 rounded-md sm:h-8 sm:w-4 lg:h-10 lg:w-6'
-                  >
-                    <MoreVertical className='stroke-muted-foreground sm:size-5' />
+                    {selectedChat.botEnabled ? (
+                      <Bot size={18} className='text-emerald-500' />
+                    ) : (
+                      <BotOff size={18} className='text-muted-foreground' />
+                    )}
                   </Button>
                 </div>
               </div>
 
-              {/* Conversation */}
-              <div className='flex flex-1 flex-col gap-2 rounded-md px-4 pt-0 pb-4'>
+              {convContext && (
+                <div className='flex flex-none flex-wrap items-center gap-x-3 gap-y-1 border-b bg-card px-4 py-2 text-xs'>
+                  <span
+                    className={cn(
+                      'rounded-full px-2 py-0.5 font-medium',
+                      statusStyles[convContext.status] ?? 'bg-muted text-muted-foreground',
+                    )}
+                  >
+                    {statusLabel(convContext.status)}
+                  </span>
+                  <span className='text-muted-foreground'>
+                    Tokens:{' '}
+                    <span className='font-medium text-foreground'>
+                      {convContext.totalTokenIn.toLocaleString('id-ID')}
+                    </span>
+                    {' '}in /{' '}
+                    <span className='font-medium text-foreground'>
+                      {convContext.totalTokenOut.toLocaleString('id-ID')}
+                    </span>
+                    {' '}out
+                  </span>
+                  <span className='text-muted-foreground'>
+                    {convContext.totalLlmCalls.toLocaleString('id-ID')} balasan LLM
+                  </span>
+                  {convContext.summary && (
+                    <p className='w-full truncate text-muted-foreground' title={convContext.summary}>
+                      <span className='font-medium not-italic text-foreground'>Ringkasan bot:</span>{' '}
+                      {convContext.summary}
+                    </p>
+                  )}
+                  <div className='ms-auto flex items-center gap-2'>
+                    {convContext.status === 'bot' && (
+                      <Button
+                        size='sm'
+                        variant='outline'
+                        className='gap-1.5'
+                        disabled={takeOverMutation.isPending}
+                        onClick={handleTakeOver}
+                      >
+                        <UserCheck size={14} /> Ambil alih
+                      </Button>
+                    )}
+                    {convContext.status === 'escalation' && (
+                      <Button
+                        size='sm'
+                        variant='outline'
+                        className='gap-1.5'
+                        disabled={resetBotMutation.isPending}
+                        onClick={handleResetBot}
+                      >
+                        <Bot size={14} /> Kembalikan ke bot
+                      </Button>
+                    )}
+                    {convContext.status !== 'done' && (
+                      <Button
+                        size='sm'
+                        variant='ghost'
+                        disabled={closeConvMutation.isPending}
+                        onClick={handleCloseConversation}
+                      >
+                        Selesai
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <div className='flex flex-1 flex-col gap-2 rounded-md px-4 pb-4 pt-0'>
                 <div className='flex size-full flex-1'>
                   <div className='chat-text-container relative -me-4 flex flex-1 flex-col overflow-y-hidden'>
-                    <div className='chat-flex flex h-40 w-full grow flex-col-reverse justify-start gap-4 overflow-y-auto py-2 pe-4 pb-4'>
-                      {currentMessage &&
-                        Object.keys(currentMessage).map((key) => (
-                          <Fragment key={key}>
-                            {currentMessage[key].map((msg, index) => (
-                              <div
-                                key={`${msg.sender}-${msg.timestamp}-${index}`}
+                    <div className='chat-flex flex h-40 w-full grow flex-col-reverse justify-start gap-4 overflow-y-auto py-2 pb-4 pe-4'>
+                      {groupedMessages.length === 0 && (
+                        <p className='py-6 text-center text-sm text-muted-foreground'>
+                          Belum ada pesan di percakapan ini.
+                        </p>
+                      )}
+                      {groupedMessages.map(([day, msgs]) => (
+                        <Fragment key={day}>
+                          <div className='text-center text-xs text-muted-foreground'>{day}</div>
+                          {msgs.map((msg, index) => (
+                            <div
+                              key={`${msg.id}-${index}`}
+                              className={cn(
+                                'chat-box max-w-72 px-3 py-2 wrap-break-word shadow-lg',
+                                msg.isFromMe
+                                  ? 'self-end rounded-[16px_16px_0_16px] bg-primary/90 text-primary-foreground/75'
+                                  : 'self-start rounded-[16px_16px_16px_0] bg-muted',
+                              )}
+                            >
+                              {msg.content
+                                ? msg.content
+                                : mediaLabel(msg.mediaType ?? '', msg.content)}
+                              <span
                                 className={cn(
-                                  'chat-box max-w-72 px-3 py-2 wrap-break-word shadow-lg',
-                                  msg.sender === 'You'
-                                    ? 'self-end rounded-[16px_16px_0_16px] bg-primary/90 text-primary-foreground/75'
-                                    : 'self-start rounded-[16px_16px_16px_0] bg-muted'
+                                  'mt-1 block text-xs font-light text-foreground/75 italic',
+                                  msg.isFromMe && 'text-end text-primary-foreground/85',
                                 )}
                               >
-                                {msg.message}{' '}
-                                <span
-                                  className={cn(
-                                    'mt-1 block text-xs font-light text-foreground/75 italic',
-                                    msg.sender === 'You' &&
-                                      'text-end text-primary-foreground/85'
-                                  )}
-                                >
-                                  {format(msg.timestamp, 'h:mm a')}
-                                </span>
-                              </div>
-                            ))}
-                            <div className='text-center text-xs'>{key}</div>
-                          </Fragment>
-                        ))}
+                                {msg.timestamp ? format(new Date(msg.timestamp), 'HH:mm') : ''}
+                              </span>
+                            </div>
+                          ))}
+                        </Fragment>
+                      ))}
                     </div>
                   </div>
                 </div>
-                <form className='flex w-full flex-none gap-2'>
+
+                <form
+                  className='flex w-full flex-none gap-2'
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    handleSend(selectedChat.chatJid, draft)
+                  }}
+                >
                   <div className='flex flex-1 items-center gap-2 rounded-md border border-input bg-card px-2 py-1 focus-within:ring-1 focus-within:ring-ring focus-within:outline-hidden lg:gap-4'>
-                    <div className='space-x-1'>
-                      <Button
-                        size='icon'
-                        type='button'
-                        variant='ghost'
-                        className='h-8 rounded-md'
-                      >
-                        <Plus size={20} className='stroke-muted-foreground' />
-                      </Button>
-                      <Button
-                        size='icon'
-                        type='button'
-                        variant='ghost'
-                        className='hidden h-8 rounded-md lg:inline-flex'
-                      >
-                        <ImagePlus
-                          size={20}
-                          className='stroke-muted-foreground'
-                        />
-                      </Button>
-                      <Button
-                        size='icon'
-                        type='button'
-                        variant='ghost'
-                        className='hidden h-8 rounded-md lg:inline-flex'
-                      >
-                        <Paperclip
-                          size={20}
-                          className='stroke-muted-foreground'
-                        />
-                      </Button>
-                    </div>
                     <label className='flex-1'>
                       <span className='sr-only'>Chat Text Box</span>
                       <input
                         type='text'
                         placeholder='Type your messages...'
                         className='h-8 w-full bg-inherit focus-visible:outline-hidden'
+                        value={draft}
+                        onChange={(e) => setDraft(e.target.value)}
                       />
                     </label>
                     <Button
+                      type='submit'
                       variant='ghost'
                       size='icon'
                       className='hidden sm:inline-flex'
+                      disabled={!draft.trim() || sendMutation.isPending}
                     >
                       <Send size={20} />
                     </Button>
                   </div>
-                  <Button className='h-full sm:hidden'>
+                  <Button
+                    type='submit'
+                    className='h-full sm:hidden'
+                    disabled={!draft.trim() || sendMutation.isPending}
+                  >
                     <Send size={18} /> Send
                   </Button>
                 </form>
@@ -320,30 +583,33 @@ export function Chats() {
           ) : (
             <div
               className={cn(
-                'absolute inset-0 start-full z-50 hidden w-full flex-1 flex-col justify-center rounded-md border bg-card shadow-xs sm:static sm:z-auto sm:flex'
+                'absolute inset-0 start-full z-50 hidden w-full flex-1 flex-col justify-center rounded-md border bg-card shadow-xs sm:static sm:z-auto sm:flex',
               )}
             >
               <div className='flex flex-col items-center space-y-6'>
                 <div className='flex size-16 items-center justify-center rounded-full border-2 border-border'>
-                  <MessagesSquare className='size-8' />
+                  <Smartphone className='size-8' />
                 </div>
                 <div className='space-y-2 text-center'>
                   <h1 className='text-xl font-semibold'>Your messages</h1>
                   <p className='text-sm text-muted-foreground'>
-                    Send a message to start a chat.
+                    Pilih percakapan di kiri atau kirim pesan untuk memulai.
                   </p>
                 </div>
-                <Button onClick={() => setCreateConversationDialog(true)}>
-                  Send message
-                </Button>
+                <Button onClick={() => setCreateDialogOpen(true)}>Send message</Button>
               </div>
             </div>
           )}
         </section>
+
         <NewChat
-          users={users}
-          onOpenChange={setCreateConversationDialog}
-          open={createConversationDialogOpened}
+          open={createDialogOpen}
+          onOpenChange={setCreateDialogOpen}
+          pending={sendMutation.isPending}
+          onSend={(phone, messageText) => {
+            handleSend(phone, messageText)
+            setCreateDialogOpen(false)
+          }}
         />
       </Main>
     </>

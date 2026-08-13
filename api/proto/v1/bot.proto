@@ -7,6 +7,7 @@ option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 service BotService {
   rpc ListConversations (ListConversationsRequest) returns (ListConversationsResponse);
   rpc GetConversation (GetConversationRequest) returns (GetConversationResponse);
+  rpc GetConversationContext (GetConversationContextRequest) returns (GetConversationContextResponse);
   rpc TakeOverConversation (TakeOverConversationRequest) returns (TakeOverConversationResponse);
   rpc ResetConversationBot (ResetConversationBotRequest) returns (ResetConversationBotResponse);
   rpc CloseConversation (CloseConversationRequest) returns (CloseConversationResponse);
@@ -64,4 +65,32 @@ message CloseConversationRequest {
 }
 message CloseConversationResponse {
   string message = 1;
+}
+
+// ConversationContextMessage adalah pesan bisnis (conversation.messages)
+// dengan metrik token LLM — berbeda dari mirror wa_messages.
+message ConversationContextMessage {
+  string id = 1;
+  string sender = 2;
+  string text = 3;
+  string timestamp = 4;
+  int64 token_in = 5;
+  int64 token_out = 6;
+  string llm_config_id = 7;
+}
+
+message GetConversationContextRequest {
+  string id = 1;
+}
+
+message GetConversationContextResponse {
+  string conversation_id = 1;
+  string status = 2; // bot | escalation | done
+  string client_phone = 3;
+  string summary = 4;
+  repeated ConversationContextMessage recent_messages = 5;
+  int64 total_token_in = 6;
+  int64 total_token_out = 7;
+  int64 total_llm_calls = 8;
+  string updated_at = 9;
 }

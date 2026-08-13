@@ -21,11 +21,12 @@ type SessionManager struct {
 	mutex     sync.RWMutex
 	onMessage MessageCallback
 	onStatus  StatusCallback
+	chatRepo  port.ChatRepository
 }
 
 var _ port.WhatsAppGateway = (*SessionManager)(nil)
 
-func NewSessionManager(postgresConnStr string, onMsg MessageCallback, onStat StatusCallback) (*SessionManager, error) {
+func NewSessionManager(postgresConnStr string, chatRepo port.ChatRepository, onMsg MessageCallback, onStat StatusCallback) (*SessionManager, error) {
 	dbLogger := waLog.Stdout("Database", "INFO", true)
 	ctx := context.Background()
 	container, err := sqlstore.New(ctx, "postgres", postgresConnStr, dbLogger)
@@ -38,6 +39,7 @@ func NewSessionManager(postgresConnStr string, onMsg MessageCallback, onStat Sta
 		clients:   make(map[uint]*Client),
 		onMessage: onMsg,
 		onStatus:  onStat,
+		chatRepo:  chatRepo,
 	}, nil
 }
 
@@ -94,7 +96,7 @@ func (sm *SessionManager) ConnectWithContext(ctx context.Context, session *bot.W
 		deviceStore = sm.container.NewDevice()
 	}
 
-	client := NewClient(session.ID, deviceStore, sm.onMessage, sm.onStatus)
+	client := NewClient(session.ID, deviceStore, sm.onMessage, sm.onStatus, sm.chatRepo)
 	sm.clients[session.ID] = client
 
 	return client.Connect(ctx)
@@ -104,38 +106,53 @@ func (sm *SessionManager) Connect(session *bot.WASession) error {
 	return sm.ConnectWithContext(context.Background(), session)
 }
 
+// Disconnect hanya memutus koneksi — session lokal & pairing DIpertahankan
+// sehingga Reconnect bisa menyambung lagi tanpa scan ulang. Berbeda dengan
+// Logout yang menghapus session dari store.
 func (sm *SessionManager) Disconnect(sessionID uint) error {
 	if sm == nil {
 		return nil
 	}
-	sm.mutex.Lock()
-	defer sm.mutex.Unlock()
+	sm.mutex.RLock()
+	client, ok := sm.clients[sessionID]
+	sm.mutex.RUnlock()
 
-	if client, ok := sm.clients[sessionID]; ok {
-		client.Disconnect()
-		if client.deviceStore != nil {
-			_ = client.deviceStore.Delete(context.Background())
-		}
-		delete(sm.clients, sessionID)
+	if !ok {
+		return nil
 	}
+	client.Disconnect()
 	return nil
 }
 
+// Logout unlink device dari WhatsApp (best-effort), menghapus session lokal
+// dari store whatsmeow, dan melepas client dari registry in-memory. Baris
+// session di DB DIpertahankan (keep-slot) agar slot tetap tampil di UI dan
+// bisa di-pair ulang dengan QR baru di bawah id yang sama.
 func (sm *SessionManager) Logout(sessionID uint) error {
 	if sm == nil {
 		return nil
 	}
 	sm.mutex.Lock()
-	defer sm.mutex.Unlock()
-
-	if client, ok := sm.clients[sessionID]; ok {
+	client, ok := sm.clients[sessionID]
+	if ok {
 		_ = client.Logout(context.Background())
-		if client.deviceStore != nil {
-			_ = client.deviceStore.Delete(context.Background())
-		}
 		delete(sm.clients, sessionID)
 	}
+	sm.mutex.Unlock()
+
+	// Slot DB tetap; beri tahu UI bahwa device perlu re-pair.
+	if sm.onStatus != nil {
+		sm.onStatus(sessionID, "needs_rescan", "", "", "")
+	}
 	return nil
+}
+
+// Purge sama dengan Logout pada sisi gateway (unlink + hapus session lokal +
+// lepas dari registry). Penghapusan baris DB dan mirror chat (wa_chats,
+// wa_messages, conversations) dilakukan oleh caller (handler) yang punya
+// akses repository.
+func (sm *SessionManager) Purge(sessionID uint) error {
+	return sm.Logout(sessionID)
 }
 
 func (sm *SessionManager) Reconnect(sessionID uint) error {
@@ -210,8 +227,14 @@ func (sm *SessionManager) GetStatus(sessionID uint) (string, error) {
 	defer sm.mutex.RUnlock()
 
 	client, ok := sm.clients[sessionID]
-	if !ok || !client.waClient.IsConnected() {
+	if !ok {
 		return "offline", nil
+	}
+	if !client.waClient.IsConnected() {
+		return "offline", nil
+	}
+	if client.waClient.Store.ID == nil {
+		return "needs_rescan", nil
 	}
 	return "online", nil
 }
@@ -227,7 +250,16 @@ func (sm *SessionManager) GetQRCode(sessionID uint) (string, error) {
 	if !ok {
 		return "", fmt.Errorf("session %d not found", sessionID)
 	}
-	return client.GetQRCode(), nil
+
+	qr := client.GetQRCode()
+	if qr == "" && client.waClient.Store.ID == nil {
+		// Belum ter-pair dan QR kosong (baru dibuat / QR timeout) — restart
+		// aliran QR supaya polling berikutnya mendapat QR baru tanpa perlu
+		// tombol Reconnect manual. EnsureQRFlow idempoten (guard internal).
+		client.EnsureQRFlow()
+		qr = client.GetQRCode()
+	}
+	return qr, nil
 }
 
 func (sm *SessionManager) GetPairingCode(sessionID uint, phoneNumber string) (string, error) {
@@ -252,11 +284,30 @@ func (sm *SessionManager) RestoreAllSessions(sessions []bot.WASession) error {
 	log.Printf("[SessionManager] Restoring %d WhatsApp sessions...", len(sessions))
 	for i := range sessions {
 		sess := &sessions[i]
-		if sess.Status == bot.StatusOnline || sess.IsBotEnabled {
+		// Hanya session yang pernah online/logged-in yang di-restore otomatis.
+		// Session needs_rescan (belum pernah paired / sudah logout) dibiarkan
+		// menunggu scan manual dari UI.
+		if sess.Status == bot.StatusOnline || sess.JID != "" {
 			if err := sm.Connect(sess); err != nil {
 				log.Printf("[SessionManager] Warning: Failed to connect session %d (%s): %v", sess.ID, sess.DeviceName, err)
 			}
 		}
 	}
 	return nil
+}
+
+// SetMessageCallback registers (or replaces) the incoming-message handler for
+// all clients — termasuk yang sudah terhubung. Dipanggil setelah Engine bot
+// dibangun untuk memutus circular dependency SessionManager <-> Engine.
+func (sm *SessionManager) SetMessageCallback(cb MessageCallback) {
+	if sm == nil {
+		return
+	}
+	// Mutasi state (sm.onMessage) — harus write lock, bukan RLock.
+	sm.mutex.Lock()
+	defer sm.mutex.Unlock()
+	sm.onMessage = cb
+	for _, c := range sm.clients {
+		c.SetMessageCallback(cb)
+	}
 }
