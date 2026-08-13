@@ -82,6 +82,9 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	}
 
 	convService := convUC.NewConversationService(pgStore)
+	// Broadcast SSE `conversation_status` tiap kali status percakapan berubah
+	// (take-over/return bot/close/escalation) — dikonsumsi useWARealtimeStream.
+	convService.SetPublisher(sseHub)
 	knowledgeRetriever := knowledgeUC.NewKeywordRetriever(pgStore)
 	// Factory LLM di-inject agar usecase/bot tetap bersih dari adapter layer.
 	llmFactory := func(c *domainllm.LLMConfig) (port.LLMProvider, error) {
@@ -93,6 +96,9 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		// Hubungkan pesan masuk WhatsApp ke engine bot. Dilakukan setelah engine
 		// dibangun (bukan saat NewSessionManager) karena ada circular dependency.
 		waManager.SetMessageCallback(eventHandler.MakeMessageCallback(botEngine.HandleIncomingMessage))
+		// Broadcast SSE `chat_update` setiap kali mirror chat berubah, supaya
+		// Inbox frontend ter-update instan (lihat useWARealtimeStream).
+		waManager.SetChatUpdateCallback(eventHandler.MakeChatUpdateCallback())
 		sessions, err := pgStore.FindAllSessions()
 		if err == nil && len(sessions) > 0 {
 			_ = waManager.RestoreAllSessions(sessions)

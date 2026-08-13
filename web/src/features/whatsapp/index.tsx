@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   MessageCircleMore,
   Plus,
@@ -39,6 +39,8 @@ import {
   useLogoutWASessionMutation,
   usePurgeWASessionMutation,
 } from './api/use-whatsapp'
+import { useWARealtimeStream } from './api/use-whatsapp-sse'
+import { SSEIndicator } from '@/components/sse-indicator'
 import type { WASession } from '@/gen/v1/whatsapp_pb'
 
 function statusMeta(status: string): { label: string; className: string; dot: string } {
@@ -76,12 +78,45 @@ function formatJid(jid: string): string {
 }
 
 export function WhatsAppDevices() {
+  // Status device & QR ter-update instan via SSE, bukan polling.
+  // Status koneksi untuk indikator header.
+  const sseStatus = useWARealtimeStream()
+
   const [createOpen, setCreateOpen] = useState(false)
-  const [qrSession, setQrSession] = useState<WASession | null>(null)
+  // Modal QR memakai ID + flag snapshot (bukan objek session) supaya status
+  // bisa di-derive dari cache live — auto-close saat device jadi online tanpa
+  // setState dalam effect (hindari react-hooks/set-state-in-effect).
+  const [qrSessionId, setQrSessionId] = useState<string | null>(null)
+  const [qrOpenedOnline, setQrOpenedOnline] = useState(false)
   const [purgeTarget, setPurgeTarget] = useState<WASession | null>(null)
 
   const sessionsQuery = useWASessionsQuery()
   const sessions = useMemo(() => sessionsQuery.data ?? [], [sessionsQuery.data])
+
+  // Session live dari query cache (status ter-update via SSE) untuk modal QR.
+  const qrSession = useMemo(
+    () => (qrSessionId ? sessions.find((s) => s.id === qrSessionId) ?? null : null),
+    [sessions, qrSessionId],
+  )
+  // Auto-close: modal di-render tertutup (session null) saat device yang tadinya
+  // offline berubah jadi online via SSE. Modal yang dibuka untuk device
+  // sudah-online (qrOpenedOnline) tetap menampilkan state "sudah terhubung".
+  const qrAutoClosed = qrSession !== null && !qrOpenedOnline && qrSession.status === 'online'
+
+  const autoCloseNotifiedRef = useRef(false)
+  useEffect(() => {
+    if (qrAutoClosed && !autoCloseNotifiedRef.current) {
+      autoCloseNotifiedRef.current = true
+      toast.success(`${qrSession?.name || 'Perangkat'} berhasil ditautkan`)
+    } else if (!qrAutoClosed) {
+      autoCloseNotifiedRef.current = false
+    }
+  }, [qrAutoClosed, qrSession?.name])
+
+  const handleOpenQr = (s: WASession) => {
+    setQrSessionId(s.id)
+    setQrOpenedOnline(s.status === 'online')
+  }
 
   const reconnectMutation = useReconnectWASessionMutation()
   const logoutMutation = useLogoutWASessionMutation()
@@ -118,6 +153,7 @@ export function WhatsAppDevices() {
     <>
       <Header fixed>
         <Search className='me-auto' />
+        <SSEIndicator status={sseStatus} />
         <ThemeSwitch />
         <ConfigDrawer />
         <ProfileDropdown />
@@ -225,7 +261,7 @@ export function WhatsAppDevices() {
                         size='sm'
                         variant='outline'
                         className='gap-1.5'
-                        onClick={() => setQrSession(s)}
+                        onClick={() => handleOpenQr(s)}
                       >
                         <QrCode size={14} />
                         {s.status === 'needs_rescan' ? 'Scan QR' : 'QR / Pairing'}
@@ -258,7 +294,11 @@ export function WhatsAppDevices() {
 
       <CreateDeviceDialog open={createOpen} onOpenChange={setCreateOpen} />
 
-      <QRModal key={qrSession?.id ?? 'closed'} session={qrSession} onOpenChange={(open) => !open && setQrSession(null)} />
+      <QRModal
+        key={qrSessionId ?? 'closed'}
+        session={qrAutoClosed ? null : qrSession}
+        onOpenChange={(open) => !open && setQrSessionId(null)}
+      />
 
       <AlertDialog
         open={purgeTarget !== null}

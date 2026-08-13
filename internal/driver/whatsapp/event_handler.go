@@ -28,6 +28,20 @@ func (eh *EventHandler) MakeStatusCallback() StatusCallback {
 	}
 }
 
+// MakeChatUpdateCallback returns the callback yang menyiarkan event SSE
+// `chat_update` setiap kali mirror chat berubah (pesan masuk ATAU keluar),
+// sehingga Inbox frontend bisa refresh instan tanpa polling.
+func (eh *EventHandler) MakeChatUpdateCallback() ChatUpdateCallback {
+	return func(sessionID uint, chatJID string) {
+		if eh.sseHub != nil {
+			eh.sseHub.Broadcast("chat_update", map[string]any{
+				"session_id": sessionID,
+				"chat_jid":   chatJID,
+			})
+		}
+	}
+}
+
 func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode string, jid string, phoneNumber string) {
 	if eh.pgStore == nil {
 		return

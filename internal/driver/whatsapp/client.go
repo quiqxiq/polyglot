@@ -30,6 +30,11 @@ import (
 type MessageCallback func(sessionID uint, chatJID string, customerNumber string, content string)
 type StatusCallback func(sessionID uint, status string, qrCode string, jid string, phoneNumber string)
 
+// ChatUpdateCallback memberitahukan bahwa mirror chat berubah (pesan masuk
+// ATAU keluar sudah ditulis ke wa_messages/wa_chats) — dipakai untuk broadcast
+// SSE `chat_update` agar Inbox frontend ter-update instan tanpa polling.
+type ChatUpdateCallback func(sessionID uint, chatJID string)
+
 func init() {
 	store.SetOSInfo("Polyglot NetOps WA Bot", [3]uint32{2, 3000, 1015901307})
 }
@@ -44,6 +49,7 @@ type Client struct {
 	onMessage   MessageCallback
 	callbackMu  sync.RWMutex
 	onStatus    StatusCallback
+	onChatUpd   ChatUpdateCallback
 	chatRepo    port.ChatRepository
 
 	// qrFlowMu/qrFlowActive memastikan hanya ada SATU aliran QR (GetQRChannel +
@@ -85,6 +91,27 @@ func (c *Client) getMessageCallback() MessageCallback {
 	c.callbackMu.RLock()
 	defer c.callbackMu.RUnlock()
 	return c.onMessage
+}
+
+// SetChatUpdateCallback swaps the chat-mirror-change handler at runtime.
+// Dipasang lewat SessionManager.SetChatUpdateCallback setelah EventHandler
+// (pemilik SSE hub) dibangun.
+func (c *Client) SetChatUpdateCallback(cb ChatUpdateCallback) {
+	c.callbackMu.Lock()
+	defer c.callbackMu.Unlock()
+	c.onChatUpd = cb
+}
+
+func (c *Client) getChatUpdateCallback() ChatUpdateCallback {
+	c.callbackMu.RLock()
+	defer c.callbackMu.RUnlock()
+	return c.onChatUpd
+}
+
+func (c *Client) notifyChatUpdate(chatJID string) {
+	if cb := c.getChatUpdateCallback(); cb != nil {
+		cb(c.SessionID, chatJID)
+	}
 }
 
 func (c *Client) Connect(ctx context.Context) error {
@@ -599,6 +626,9 @@ func (c *Client) persistMirrorMessage(evt *events.Message) {
 			log.Printf("[WhatsApp Client %d] Failed to increment unread: %v", c.SessionID, err)
 		}
 	}
+
+	// Beri tahu UI (via SSE) bahwa mirror chat berubah — Inbox refresh instan.
+	c.notifyChatUpdate(chatJID)
 }
 
 // recordOutgoingMessage mirrors messages sent from this device (bot/agent) into
@@ -641,6 +671,10 @@ func (c *Client) recordOutgoingMessage(jid types.JID, waMessageID string, conten
 	if err := c.chatRepo.UpsertChat(chat); err != nil {
 		log.Printf("[WhatsApp Client %d] Failed to mirror outgoing chat: %v", c.SessionID, err)
 	}
+
+	// Beri tahu UI (via SSE) bahwa mirror chat berubah — balasan bot/agen
+	// langsung tampil di Inbox tanpa polling.
+	c.notifyChatUpdate(chatJID)
 }
 
 func parseJID(target string) (types.JID, error) {

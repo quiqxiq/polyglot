@@ -16,13 +16,10 @@ export function useWASessionsQuery() {
       const res = await whatsappClient.listSessions({})
       return res.sessions
     },
-    // Polling dinamis: cepat (2s) saat ada device belum online (QR/connecting)
-    // supaya status terasa live; melambat (10s) saat semua device sudah online.
-    refetchInterval: (query) => {
-      const sessions = query.state.data ?? []
-      const hasPending = sessions.some((s) => s.status !== 'online')
-      return hasPending ? 2_000 : 10_000
-    },
+    // Status diperbarui instan via SSE (useWARealtimeStream) — tidak ada
+    // polling. staleTime diperpanjang karena SSE menjaga data tetap segar;
+    // observer kedua (mis. create-dialog) tidak memicu refetch saat mount.
+    staleTime: 15_000,
   })
 }
 
@@ -52,10 +49,9 @@ export function useWASessionQRQuery(sessionId: string, enabled = true) {
       return res
     },
     enabled: Boolean(sessionId) && enabled,
-    // QR berubah-ubah setiap beberapa detik selama menunggu scan. Polling
-    // tetap berjalan walau QR kosong — backend me-restart aliran QR otomatis
-    // saat timeout, sehingga QR baru muncul tanpa klik manual.
-    refetchInterval: enabled ? 5_000 : false,
+    // QR diperbarui instan via SSE (useWASessionStatusStream) — tidak ada
+    // polling. Tombol "Muat Ulang QR" di modal tetap tersedia sebagai
+    // fallback manual (mis. koneksi SSE sempat terputus).
   })
 }
 

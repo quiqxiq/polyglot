@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 var ErrNotFound = errors.New("conversation not found")
@@ -24,7 +25,38 @@ type ConversationRepository interface {
 }
 
 type ConversationService struct {
-	repo ConversationRepository
+	repo      ConversationRepository
+	publisher port.EventPublisher
+}
+
+// SetPublisher wires the realtime broadcaster (SSE hub) so conversation
+// status changes (take-over, bot reset, close, escalation) are pushed to the
+// frontend immediately. Di-set setelah konstruksi karena SSE hub dibangun
+// sebelum usecase di app wiring.
+func (s *ConversationService) SetPublisher(p port.EventPublisher) {
+	s.publisher = p
+}
+
+// ConversationStatusEvent is the SSE payload broadcast on every conversation
+// status change — dikonsumsi useWARealtimeStream di frontend untuk refresh
+// daftar percakapan & bar status konteks tanpa polling.
+type ConversationStatusEvent struct {
+	ConversationID uint   `json:"conversation_id"`
+	SessionID      uint   `json:"session_id"`
+	CustomerNumber string `json:"customer_number"`
+	Status         string `json:"status"`
+}
+
+func (s *ConversationService) publishStatusChange(conv *bot.Conversation) {
+	if s.publisher == nil || conv == nil {
+		return
+	}
+	s.publisher.PublishEvent("conversation_status", ConversationStatusEvent{
+		ConversationID: conv.ID,
+		SessionID:      conv.SessionID,
+		CustomerNumber: conv.CustomerWANumber,
+		Status:         string(conv.Status),
+	})
 }
 
 type Service = ConversationService
@@ -101,7 +133,11 @@ func (s *ConversationService) Escalate(convID uint) error {
 		return err
 	}
 	conv.Status = bot.StatusEscalation
-	return s.repo.UpdateConversation(conv)
+	if err := s.repo.UpdateConversation(conv); err != nil {
+		return err
+	}
+	s.publishStatusChange(conv)
+	return nil
 }
 
 func (s *ConversationService) ResetBot(convID uint) error {
@@ -111,7 +147,11 @@ func (s *ConversationService) ResetBot(convID uint) error {
 	}
 	conv.Status = bot.StatusBot
 	conv.AssignedAgentID = nil
-	return s.repo.UpdateConversation(conv)
+	if err := s.repo.UpdateConversation(conv); err != nil {
+		return err
+	}
+	s.publishStatusChange(conv)
+	return nil
 }
 
 func (s *ConversationService) TakeOver(convID uint, agentID uint) error {
@@ -121,7 +161,11 @@ func (s *ConversationService) TakeOver(convID uint, agentID uint) error {
 	}
 	conv.Status = bot.StatusEscalation
 	conv.AssignedAgentID = &agentID
-	return s.repo.UpdateConversation(conv)
+	if err := s.repo.UpdateConversation(conv); err != nil {
+		return err
+	}
+	s.publishStatusChange(conv)
+	return nil
 }
 
 func (s *ConversationService) CloseConversation(convID uint) error {
@@ -130,7 +174,11 @@ func (s *ConversationService) CloseConversation(convID uint) error {
 		return err
 	}
 	conv.Status = bot.StatusDone
-	return s.repo.UpdateConversation(conv)
+	if err := s.repo.UpdateConversation(conv); err != nil {
+		return err
+	}
+	s.publishStatusChange(conv)
+	return nil
 }
 
 func (s *ConversationService) GetConversation(id uint) (*bot.Conversation, error) {

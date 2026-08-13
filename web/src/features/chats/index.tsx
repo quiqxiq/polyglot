@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { format, isSameDay } from 'date-fns'
 import {
   ArrowLeft,
@@ -43,6 +43,8 @@ import {
   useResetConversationBotMutation,
   useCloseConversationMutation,
 } from './api/use-chats'
+import { useWARealtimeStream } from '../whatsapp/api/use-whatsapp-sse'
+import { SSEIndicator } from '@/components/sse-indicator'
 import {
   MarkChatReadRequest,
   SendWATextMessageRequest,
@@ -112,6 +114,10 @@ const statusStyles: Record<string, string> = {
 }
 
 export function Chats() {
+  // Status device & pesan baru ter-update live via SSE (chat_update) —
+  // Inbox refresh instan tanpa polling. Status koneksi untuk indikator header.
+  const sseStatus = useWARealtimeStream()
+
   const [search, setSearch] = useState('')
   const [selectedSessionId, setSelectedSessionId] = useState('')
   const [selectedChat, setSelectedChat] = useState<WAChat | null>(null)
@@ -159,18 +165,6 @@ export function Chats() {
   const takeOverMutation = useTakeOverConversationMutation()
   const resetBotMutation = useResetConversationBotMutation()
   const closeConvMutation = useCloseConversationMutation()
-
-  // Polling ringan agar pesan masuk baru muncul tanpa reload manual.
-  useEffect(() => {
-    if (!activeSessionId) return
-    const t = setInterval(() => {
-      chatsQuery.refetch()
-      if (selectedChat) messagesQuery.refetch()
-      if (selectedConv) contextQuery.refetch()
-    }, 8000)
-    return () => clearInterval(t)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeSessionId, selectedChat?.chatJid])
 
   const handleSelectChat = (chat: WAChat) => {
     setSelectedChat(chat)
@@ -246,6 +240,7 @@ export function Chats() {
     <>
       <Header>
         <Search className='me-auto' />
+        <SSEIndicator status={sseStatus} />
         <ThemeSwitch />
         <ConfigDrawer />
         <ProfileDropdown />

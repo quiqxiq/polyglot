@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -11,7 +11,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
-import { useCreateWASessionMutation } from '../api/use-whatsapp'
+import { useCreateWASessionMutation, useWASessionsQuery } from '../api/use-whatsapp'
 import { QRModal } from './qr-modal'
 import type { WASession } from '@/gen/v1/whatsapp_pb'
 
@@ -26,6 +26,20 @@ export function CreateDeviceDialog({ open, onOpenChange }: CreateDeviceDialogPro
   const [qrSession, setQrSession] = useState<WASession | null>(null)
 
   const createMutation = useCreateWASessionMutation()
+
+  // Session live dari cache sessions (status ter-update via SSE) — dipakai
+  // untuk auto-close modal QR saat device hasil create berhasil ditautkan.
+  // Query key sama dengan halaman /whatsapp, jadi tidak ada fetch tambahan
+  // (staleTime sudah diperpanjang di useWASessionsQuery).
+  const sessionsQuery = useWASessionsQuery()
+  const liveQrSession = useMemo(
+    () => sessionsQuery.data?.find((s) => s.id === qrSession?.id) ?? null,
+    [sessionsQuery.data, qrSession?.id],
+  )
+  // Derived (bukan setState dalam effect): modal ditutup saat device yang
+  // tadinya offline (snapshot create) berubah jadi online via SSE.
+  const qrAutoClosed =
+    qrSession !== null && qrSession.status !== 'online' && liveQrSession?.status === 'online'
 
   // Reset form saat dialog ditutup (batal / sukses), bukan via effect.
   const handleOpenChange = (next: boolean) => {
@@ -104,7 +118,11 @@ export function CreateDeviceDialog({ open, onOpenChange }: CreateDeviceDialogPro
         </DialogContent>
       </Dialog>
 
-      <QRModal key={qrSession?.id ?? 'closed'} session={qrSession} onOpenChange={(open) => !open && setQrSession(null)} />
+      <QRModal
+        key={qrSession?.id ?? 'closed'}
+        session={qrAutoClosed ? null : qrSession}
+        onOpenChange={(open) => !open && setQrSession(null)}
+      />
     </>
   )
 }

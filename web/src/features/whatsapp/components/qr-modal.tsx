@@ -129,7 +129,7 @@ export function QRModal({ session, onOpenChange }: QRModalProps) {
               <RefreshCw size={14} /> Muat Ulang QR
             </Button>
             <p className='max-w-72 text-center text-xs text-muted-foreground'>
-              QR berlaku ±60 detik dan otomatis diperbarui setiap 5 detik sampai
+              QR berlaku ±60 detik dan diperbarui otomatis secara live sampai
               perangkat berhasil ditautkan.
             </p>
           </TabsContent>

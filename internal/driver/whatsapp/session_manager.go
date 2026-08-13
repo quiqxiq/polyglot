@@ -21,6 +21,7 @@ type SessionManager struct {
 	mutex     sync.RWMutex
 	onMessage MessageCallback
 	onStatus  StatusCallback
+	onChatUpd ChatUpdateCallback
 	chatRepo  port.ChatRepository
 }
 
@@ -97,6 +98,12 @@ func (sm *SessionManager) ConnectWithContext(ctx context.Context, session *bot.W
 	}
 
 	client := NewClient(session.ID, deviceStore, sm.onMessage, sm.onStatus, sm.chatRepo)
+	// Callback chat-update diteruskan ke client yang BARU dibuat (lock sudah
+	// dipegang di fungsi ini, baca sm.onChatUpd aman). Manager-level
+	// SetChatUpdateCallback hanya menjangkau client yang sudah terdaftar,
+	// sehingga tanpa ini client baru punya onChatUpd nil dan SSE chat_update
+	// tidak pernah terkirim untuk session tersebut.
+	client.SetChatUpdateCallback(sm.onChatUpd)
 	sm.clients[session.ID] = client
 
 	return client.Connect(ctx)
@@ -309,5 +316,20 @@ func (sm *SessionManager) SetMessageCallback(cb MessageCallback) {
 	sm.onMessage = cb
 	for _, c := range sm.clients {
 		c.SetMessageCallback(cb)
+	}
+}
+
+// SetChatUpdateCallback registers (or replaces) the chat-mirror-change handler
+// for all clients — termasuk yang sudah terhubung. Dipakai untuk broadcast
+// SSE `chat_update` dari EventHandler (pemilik SSE hub).
+func (sm *SessionManager) SetChatUpdateCallback(cb ChatUpdateCallback) {
+	if sm == nil {
+		return
+	}
+	sm.mutex.Lock()
+	defer sm.mutex.Unlock()
+	sm.onChatUpd = cb
+	for _, c := range sm.clients {
+		c.SetChatUpdateCallback(cb)
 	}
 }
