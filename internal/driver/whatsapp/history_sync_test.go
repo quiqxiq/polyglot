@@ -10,6 +10,7 @@ import (
 	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/proto/waHistorySync"
 	"go.mau.fi/whatsmeow/proto/waWeb"
+	"go.mau.fi/whatsmeow/types"
 	"go.mau.fi/whatsmeow/types/events"
 	"google.golang.org/protobuf/proto"
 
@@ -20,12 +21,20 @@ import (
 // fakeHistoryRepo records mirrored chats/messages/unread untuk pengujian
 // history sync mirror tanpa database nyata.
 type fakeHistoryRepo struct {
-	mu          sync.Mutex
-	chats       map[string]*bot.WAChat
-	messages    map[string][]*bot.WAMessage
-	unread      map[string]uint32
-	batchCalls  int
-	singleCalls int
+	mu            sync.Mutex
+	chats         map[string]*bot.WAChat
+	messages      map[string][]*bot.WAMessage
+	unread        map[string]uint32
+	statusUpdates []statusUpdate
+	batchCalls    int
+	singleCalls   int
+}
+
+// statusUpdate merekam satu panggilan MarkMessagesStatus untuk pengujian.
+type statusUpdate struct {
+	chatJID    string
+	messageIDs []string
+	status     string
 }
 
 func newFakeHistoryRepo() *fakeHistoryRepo {
@@ -77,6 +86,12 @@ func (f *fakeHistoryRepo) ListChatMessages(_ uint, _ string, _, _ int) ([]bot.WA
 }
 func (f *fakeHistoryRepo) SetChatBotEnabled(_ uint, _ string, _ bool) error { return nil }
 func (f *fakeHistoryRepo) IsChatBotEnabled(_ uint, _ string) (bool, error)  { return true, nil }
+func (f *fakeHistoryRepo) MarkMessagesStatus(_ uint, chatJID string, messageIDs []string, status string) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.statusUpdates = append(f.statusUpdates, statusUpdate{chatJID: chatJID, messageIDs: messageIDs, status: status})
+	return nil
+}
 
 var _ port.ChatRepository = (*fakeHistoryRepo)(nil)
 
@@ -252,4 +267,71 @@ func waitFor(t *testing.T, timeout time.Duration, cond func() bool) {
 		time.Sleep(10 * time.Millisecond)
 	}
 	t.Fatal("condition tidak terpenuhi sebelum timeout")
+}
+
+// TestHandleReceiptEventMarksStatus memverifikasi bahwa events.Receipt
+// diterjemahkan ke status WhatsApp (delivered ✓✓ / read ✓✓ biru) dan diteruskan
+// ke ChatRepository untuk pesan keluar. Ini melengkapi 4-status pesan:
+// sent (✓) di-set saat kirim, delivered/read di-set saat receipt tiba.
+func TestHandleReceiptEventMarksStatus(t *testing.T) {
+	repo := newFakeHistoryRepo()
+	c := &Client{SessionID: 7, chatRepo: repo, waClient: &whatsmeow.Client{}}
+
+	delivered := &events.Receipt{
+		MessageSource: types.MessageSource{
+			Chat:   types.NewJID("628123456789", types.DefaultUserServer),
+			Sender: types.NewJID("628123456789", types.DefaultUserServer),
+		},
+		MessageIDs: []types.MessageID{"id-delivered-1"},
+		Type:       types.ReceiptTypeDelivered,
+		Timestamp:  time.Now(),
+	}
+	c.handleReceiptEvent(delivered)
+
+	read := &events.Receipt{
+		MessageSource: types.MessageSource{
+			Chat:   types.NewJID("628123456789", types.DefaultUserServer),
+			Sender: types.NewJID("628123456789", types.DefaultUserServer),
+		},
+		MessageIDs: []types.MessageID{"id-read-1", "id-read-2"},
+		Type:       types.ReceiptTypeRead,
+		Timestamp:  time.Now(),
+	}
+	c.handleReceiptEvent(read)
+
+	repo.mu.Lock()
+	defer repo.mu.Unlock()
+	if len(repo.statusUpdates) != 2 {
+		t.Fatalf("statusUpdates = %d, want 2", len(repo.statusUpdates))
+	}
+	if repo.statusUpdates[0].status != "delivered" || len(repo.statusUpdates[0].messageIDs) != 1 {
+		t.Errorf("update[0] = %+v, want delivered with 1 message id", repo.statusUpdates[0])
+	}
+	if repo.statusUpdates[0].chatJID != "628123456789@s.whatsapp.net" {
+		t.Errorf("update[0].chatJID = %q, want 628123456789@s.whatsapp.net", repo.statusUpdates[0].chatJID)
+	}
+	if repo.statusUpdates[1].status != "read" || len(repo.statusUpdates[1].messageIDs) != 2 {
+		t.Errorf("update[1] = %+v, want read with 2 message ids", repo.statusUpdates[1])
+	}
+}
+
+// TestHandleReceiptEventIgnoresUnrelated memverifikasi receipt tipe lain
+// (sender/retry/played) tidak mengubah status centang pesan.
+func TestHandleReceiptEventIgnoresUnrelated(t *testing.T) {
+	repo := newFakeHistoryRepo()
+	c := &Client{SessionID: 7, chatRepo: repo, waClient: &whatsmeow.Client{}}
+
+	c.handleReceiptEvent(&events.Receipt{
+		MessageSource: types.MessageSource{
+			Chat: types.NewJID("628123456789", types.DefaultUserServer),
+		},
+		MessageIDs: []types.MessageID{"id-played"},
+		Type:       types.ReceiptTypePlayed,
+	})
+
+	repo.mu.Lock()
+	defer repo.mu.Unlock()
+	if len(repo.statusUpdates) != 0 {
+		t.Errorf("statusUpdates = %d, want 0 (played tidak mengubah centang)", len(repo.statusUpdates))
+	}
 }

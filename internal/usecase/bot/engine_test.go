@@ -189,6 +189,7 @@ func (f *fakeChatRepo) IsChatBotEnabled(_ uint, chatJID string) (bool, error) {
 	}
 	return true, nil // default aktif
 }
+func (f *fakeChatRepo) MarkMessagesStatus(_ uint, _ string, _ []string, _ string) error { return nil }
 
 func newTestEngine(cache port.CacheStore, gw *fakeGateway, llmRepo *fakeLLMConfigRepo, prov *fakeProvider, convRepo *fakeConvRepo) *Engine {
 	return newTestEngineWithChatRepo(cache, gw, llmRepo, prov, convRepo, newFakeChatRepo())

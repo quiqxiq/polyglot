@@ -95,6 +95,8 @@ func (h *WhatsAppConnectHandler) GetChatMessages(ctx context.Context, req *conne
 			Content:    m.Content,
 			MediaType:  m.MediaType,
 			IsFromMe:   m.IsFromMe,
+			IsRead:     m.IsRead,
+			Status:     m.Status,
 			Timestamp:  ts,
 		}
 	}

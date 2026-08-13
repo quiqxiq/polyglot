@@ -938,6 +938,18 @@ export class WAChatMessage extends Message<WAChatMessage> {
    */
   timestamp = "";
 
+  /**
+   * Status pengiriman pesan keluar: "sent" (✓), "delivered" (✓✓), "read" (✓✓ biru).
+   *
+   * @generated from field: string status = 9;
+   */
+  status = "";
+
+  /**
+   * @generated from field: bool is_read = 10;
+   */
+  isRead = false;
+
   constructor(data?: PartialMessage<WAChatMessage>) {
     super();
     proto3.util.initPartial(data, this);
@@ -954,6 +966,8 @@ export class WAChatMessage extends Message<WAChatMessage> {
     { no: 6, name: "media_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "is_from_me", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 8, name: "timestamp", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 10, name: "is_read", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): WAChatMessage {

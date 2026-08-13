@@ -19,17 +19,27 @@ const (
 // UpsertChat writes or updates one WhatsApp chat mirror row.
 // Catatan: kolom conflict-update TIDAK menyertakan bot_enabled — toggle bot
 // per-chat milik agen tidak boleh ter-reset oleh penulisan pesan berikutnya.
+// display_name hanya di-update bila non-kosong — sehingga nama grup yang sudah
+// benar dari history sync tidak ketimpa nama pengirim saat pesan live masuk,
+// dan nama kustom agen tetap bertahan.
 func (s *Store) UpsertChat(chat *bot.WAChat) error {
 	m := models.WAChatModelFromDomain(chat)
 	if m == nil {
 		return nil
 	}
+	updates := map[string]any{
+		"is_group":             m.IsGroup,
+		"last_message_id":      m.LastMessageID,
+		"last_message_preview": m.LastMessagePreview,
+		"last_message_time":    m.LastMessageTime,
+		"updated_at":           m.UpdatedAt,
+	}
+	if m.DisplayName != "" {
+		updates["display_name"] = m.DisplayName
+	}
 	return s.db.Clauses(clause.OnConflict{
-		Columns: []clause.Column{{Name: "session_id"}, {Name: "chat_jid"}},
-		DoUpdates: clause.AssignmentColumns([]string{
-			"display_name", "is_group", "last_message_id", "last_message_preview",
-			"last_message_time", "updated_at",
-		}),
+		Columns:   []clause.Column{{Name: "session_id"}, {Name: "chat_jid"}},
+		DoUpdates: clause.Assignments(updates),
 	}).Create(m).Error
 }
 
@@ -113,6 +123,24 @@ func (s *Store) SetChatUnread(sessionID uint, chatJID string, count uint32) erro
 	return s.db.Model(&models.WAChatModel{}).
 		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		UpdateColumn("unread_count", count).Error
+}
+
+// MarkMessagesStatus memperbarui status pengiriman pesan keluar
+// ("sent" → "delivered" → "read") untuk wa_message_id tertentu dalam satu
+// chat. Status "read" otomatis menandai is_read = true (✓✓ biru di UI).
+// Dipanggil dari handler events.Receipt whatsmeow (dikirim saat pesan
+// diterima device penerima / dibaca).
+func (s *Store) MarkMessagesStatus(sessionID uint, chatJID string, messageIDs []string, status string) error {
+	if len(messageIDs) == 0 {
+		return nil
+	}
+	updates := map[string]any{"status": status}
+	if status == "read" {
+		updates["is_read"] = true
+	}
+	return s.db.Model(&models.WAMessageModel{}).
+		Where("session_id = ? AND chat_jid = ? AND wa_message_id IN ?", sessionID, chatJID, messageIDs).
+		Updates(updates).Error
 }
 
 // ListChats returns the chat mirror list ordered by most recent activity.

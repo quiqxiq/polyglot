@@ -29,6 +29,11 @@ type ChatRepository interface {
 	ListChats(sessionID uint, limit, offset int, search string) ([]bot.WAChat, error)
 	// ListChatMessages mengembalikan pesan sebuah chat, diurutkan ascending.
 	ListChatMessages(sessionID uint, chatJID string, limit, offset int) ([]bot.WAMessage, error)
+	// MarkMessagesStatus memperbarui status pengiriman pesan keluar
+	// ("sent" → "delivered" → "read") untuk message IDs tertentu. Dipanggil
+	// dari handler events.Receipt whatsmeow. Pesan yang statusnya "read"
+	// otomatis ditandai is_read = true.
+	MarkMessagesStatus(sessionID uint, chatJID string, messageIDs []string, status string) error
 	// SetChatBotEnabled mengubah status bot auto-reply per chat.
 	SetChatBotEnabled(sessionID uint, chatJID string, enabled bool) error
 	// IsChatBotEnabled melaporkan status bot auto-reply per chat. Chat yang

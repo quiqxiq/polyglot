@@ -1094,15 +1094,18 @@ func (x *WAChat) GetBotEnabled() bool {
 }
 
 type WAChatMessage struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	ChatJid       string                 `protobuf:"bytes,2,opt,name=chat_jid,json=chatJid,proto3" json:"chat_jid,omitempty"`
-	SenderJid     string                 `protobuf:"bytes,3,opt,name=sender_jid,json=senderJid,proto3" json:"sender_jid,omitempty"`
-	SenderName    string                 `protobuf:"bytes,4,opt,name=sender_name,json=senderName,proto3" json:"sender_name,omitempty"`
-	Content       string                 `protobuf:"bytes,5,opt,name=content,proto3" json:"content,omitempty"`
-	MediaType     string                 `protobuf:"bytes,6,opt,name=media_type,json=mediaType,proto3" json:"media_type,omitempty"`
-	IsFromMe      bool                   `protobuf:"varint,7,opt,name=is_from_me,json=isFromMe,proto3" json:"is_from_me,omitempty"`
-	Timestamp     string                 `protobuf:"bytes,8,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	Id         string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	ChatJid    string                 `protobuf:"bytes,2,opt,name=chat_jid,json=chatJid,proto3" json:"chat_jid,omitempty"`
+	SenderJid  string                 `protobuf:"bytes,3,opt,name=sender_jid,json=senderJid,proto3" json:"sender_jid,omitempty"`
+	SenderName string                 `protobuf:"bytes,4,opt,name=sender_name,json=senderName,proto3" json:"sender_name,omitempty"`
+	Content    string                 `protobuf:"bytes,5,opt,name=content,proto3" json:"content,omitempty"`
+	MediaType  string                 `protobuf:"bytes,6,opt,name=media_type,json=mediaType,proto3" json:"media_type,omitempty"`
+	IsFromMe   bool                   `protobuf:"varint,7,opt,name=is_from_me,json=isFromMe,proto3" json:"is_from_me,omitempty"`
+	Timestamp  string                 `protobuf:"bytes,8,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	// Status pengiriman pesan keluar: "sent" (✓), "delivered" (✓✓), "read" (✓✓ biru).
+	Status        string `protobuf:"bytes,9,opt,name=status,proto3" json:"status,omitempty"`
+	IsRead        bool   `protobuf:"varint,10,opt,name=is_read,json=isRead,proto3" json:"is_read,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1191,6 +1194,20 @@ func (x *WAChatMessage) GetTimestamp() string {
 		return x.Timestamp
 	}
 	return ""
+}
+
+func (x *WAChatMessage) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *WAChatMessage) GetIsRead() bool {
+	if x != nil {
+		return x.IsRead
+	}
+	return false
 }
 
 type ListChatsRequest struct {
@@ -1721,7 +1738,7 @@ const file_v1_whatsapp_proto_rawDesc = "" +
 	"\x11last_message_time\x18\a \x01(\tR\x0flastMessageTime\x12!\n" +
 	"\funread_count\x18\b \x01(\x05R\vunreadCount\x12\x1f\n" +
 	"\vbot_enabled\x18\t \x01(\bR\n" +
-	"botEnabled\"\xef\x01\n" +
+	"botEnabled\"\xa0\x02\n" +
 	"\rWAChatMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x19\n" +
 	"\bchat_jid\x18\x02 \x01(\tR\achatJid\x12\x1d\n" +
@@ -1734,7 +1751,10 @@ const file_v1_whatsapp_proto_rawDesc = "" +
 	"media_type\x18\x06 \x01(\tR\tmediaType\x12\x1c\n" +
 	"\n" +
 	"is_from_me\x18\a \x01(\bR\bisFromMe\x12\x1c\n" +
-	"\ttimestamp\x18\b \x01(\tR\ttimestamp\"w\n" +
+	"\ttimestamp\x18\b \x01(\tR\ttimestamp\x12\x16\n" +
+	"\x06status\x18\t \x01(\tR\x06status\x12\x17\n" +
+	"\ais_read\x18\n" +
+	" \x01(\bR\x06isRead\"w\n" +
 	"\x10ListChatsRequest\x12\x1d\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\tR\tsessionId\x12\x14\n" +

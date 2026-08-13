@@ -84,6 +84,7 @@ type WAMessageModel struct {
 	MediaType   string `gorm:"default:text"`
 	IsFromMe    bool
 	IsRead      bool
+	Status      string    `gorm:"type:varchar(20);default:sent;not null"`
 	Timestamp   time.Time `gorm:"index:idx_wa_messages_session_chat_time,priority:2"`
 	CreatedAt   time.Time
 }
@@ -106,6 +107,7 @@ func (m *WAMessageModel) ToDomain() *bot.WAMessage {
 		MediaType:   m.MediaType,
 		IsFromMe:    m.IsFromMe,
 		IsRead:      m.IsRead,
+		Status:      m.Status,
 		Timestamp:   m.Timestamp,
 		CreatedAt:   m.CreatedAt,
 	}
@@ -126,6 +128,7 @@ func WAMessageModelFromDomain(m *bot.WAMessage) *WAMessageModel {
 		MediaType:   m.MediaType,
 		IsFromMe:    m.IsFromMe,
 		IsRead:      m.IsRead,
+		Status:      m.Status,
 		Timestamp:   m.Timestamp,
 		CreatedAt:   m.CreatedAt,
 	}

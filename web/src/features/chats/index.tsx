@@ -4,6 +4,9 @@ import {
   ArrowLeft,
   Bot,
   BotOff,
+  Check,
+  CheckCheck,
+  Clock,
   Edit,
   Send,
   Search as SearchIcon,
@@ -92,6 +95,25 @@ function chatTime(ts: string): string {
   const date = new Date(ts)
   if (Number.isNaN(date.getTime())) return ''
   return isSameDay(date, new Date()) ? format(date, 'HH:mm') : format(date, 'd MMM')
+}
+
+// Centang status pengiriman ala WhatsApp pada pesan keluar:
+//   - status kosong/sent → ✓ (terkirim)
+//   - delivered          → ✓✓ (sampai di device penerima)
+//   - read               → ✓✓ biru (dibaca)
+// Pesan masuk tidak menampilkan centang.
+function MessageStatus({ msg }: { msg: WAChatMessage }) {
+  if (!msg.isFromMe) return null
+  if (msg.status === 'read') {
+    return <CheckCheck size={15} className='text-blue-500' aria-label='Dibaca' />
+  }
+  if (msg.status === 'delivered') {
+    return <CheckCheck size={15} aria-label='Terkirim (✓✓)' />
+  }
+  if (msg.status === 'pending') {
+    return <Clock size={13} aria-label='Mengirim...' />
+  }
+  return <Check size={15} aria-label='Terkirim (✓)' />
 }
 
 function statusLabel(status: string): string {
@@ -523,11 +545,12 @@ export function Chats() {
                                 : mediaLabel(msg.mediaType ?? '', msg.content)}
                               <span
                                 className={cn(
-                                  'mt-1 block text-xs font-light text-foreground/75 italic',
-                                  msg.isFromMe && 'text-end text-primary-foreground/85',
+                                  'mt-1 flex items-center gap-1 text-xs font-light text-foreground/75 italic',
+                                  msg.isFromMe && 'justify-end text-primary-foreground/85',
                                 )}
                               >
                                 {msg.timestamp ? format(new Date(msg.timestamp), 'HH:mm') : ''}
+                                <MessageStatus msg={msg} />
                               </span>
                             </div>
                           ))}

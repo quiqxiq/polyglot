@@ -76,6 +76,10 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 			log.Printf("[WhatsApp Client %d] History sync: skip chat %q (invalid JID): %v", c.SessionID, rawJID, err)
 			continue
 		}
+		// Fase 1: normalisasi LID → nomor HP untuk CHAT JID (bukan hanya sender).
+		// WhatsApp mengirim history sync dengan @lid untuk kontak privasi;
+		// tanpa ini chat tampil sebagai angka LID di Inbox.
+		jid = normalizeJIDFromLID(context.Background(), jid, c.waClient)
 		chatJID := jid.String()
 
 		// Fase 1: sistem JID (story & channel) tidak masuk mirror Inbox.
@@ -184,7 +188,7 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 		}
 		flush()
 
-		displayName := conv.GetName()
+		displayName := c.resolveChatDisplayName(context.Background(), jid, conv.GetName())
 		if displayName == "" {
 			displayName = fallbackName
 		}
@@ -242,6 +246,10 @@ func (c *Client) processHistoryPushNames(data *waHistorySync.HistorySync) {
 		if err != nil {
 			continue
 		}
+		// Fase 1: normalisasi LID → nomor HP juga untuk push name, supaya
+		// baris chat yang di-update match dengan chat 1:1 (yang sudah
+		// dinormalisasi) — bukan baris @lid yang tidak pernah ada.
+		jid = normalizeJIDFromLID(context.Background(), jid, c.waClient)
 		chat := &bot.WAChat{
 			SessionID:   c.SessionID,
 			ChatJID:     jid.String(),

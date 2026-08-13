@@ -24,6 +24,8 @@ type WAChat struct {
 }
 
 // WAMessage adalah mirror satu pesan WhatsApp nyata pada satu perangkat.
+// Status mengikuti konvensi WhatsApp: "sent" (✓), "delivered" (✓✓), "read"
+// (✓✓ biru) — dipakai frontend untuk merender centang pada pesan keluar.
 type WAMessage struct {
 	ID          uint      `json:"id"`
 	SessionID   uint      `json:"session_id"`
@@ -35,6 +37,7 @@ type WAMessage struct {
 	MediaType   string    `json:"media_type"`
 	IsFromMe    bool      `json:"is_from_me"`
 	IsRead      bool      `json:"is_read"`
+	Status      string    `json:"status"`
 	Timestamp   time.Time `json:"timestamp"`
 	CreatedAt   time.Time `json:"created_at"`
 }

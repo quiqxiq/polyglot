@@ -32,6 +32,40 @@ func isSkippedJID(jid string) bool {
 	return isSystemBroadcastJID(jid) || isNewsletterJID(jid)
 }
 
+// resolveChatDisplayName menentukan nama tampil sebuah chat:
+//   - Grup: nama grup dari history sync (fallback) — nama pengirim tidak pernah
+//     dipakai sebagai nama chat.
+//   - 1:1: prioritas nama tersimpan pengguna (FullName/FirstName dari contact
+//     store whatsmeow, yang diisi dari buku alamat HP) → push name → fallback
+//     (push name pesan) → nomor HP asli (setelah normalisasi LID→PN).
+//
+// Ini meniru perilaku GetChatNameWithPushName pada referensi
+// go-whatsapp-web-multidevice, dan menyelesaikan dua masalah sekaligus:
+// nama kontak tidak muncul dan chat @lid menampilkan angka LID.
+func (c *Client) resolveChatDisplayName(ctx context.Context, jid types.JID, fallback string) string {
+	if jid.Server == types.GroupServer {
+		return fallback
+	}
+	pnJID := normalizeJIDFromLID(ctx, jid, c.waClient)
+	if c.waClient != nil && c.waClient.Store != nil && c.waClient.Store.Contacts != nil {
+		if info, err := c.waClient.Store.Contacts.GetContact(ctx, pnJID); err == nil {
+			if info.FullName != "" {
+				return info.FullName
+			}
+			if info.FirstName != "" {
+				return info.FirstName
+			}
+			if info.PushName != "" {
+				return info.PushName
+			}
+		}
+	}
+	if fallback != "" {
+		return fallback
+	}
+	return pnJID.ToNonAD().User
+}
+
 // normalizeJIDFromLID mengkonversi JID @lid ke JID @s.whatsapp.net yang sesuai
 // (nomor HP nyata). Dibutuhkan karena WhatsApp mulai mengirimkan JID berformat
 // @lid untuk sebagian kontak (privacy-preserving linked IDs). Tanpa normalisasi,

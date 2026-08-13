@@ -123,6 +123,9 @@ message WAChatMessage {
   string media_type = 6;
   bool is_from_me = 7;
   string timestamp = 8;
+  // Status pengiriman pesan keluar: "sent" (✓), "delivered" (✓✓), "read" (✓✓ biru).
+  string status = 9;
+  bool is_read = 10;
 }
 
 message ListChatsRequest {

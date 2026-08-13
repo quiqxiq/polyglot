@@ -448,6 +448,10 @@ func (c *Client) handleEvent(evt any) {
 		if !v.Info.IsFromMe {
 			c.handleIncomingMessage(v)
 		}
+	case *events.Receipt:
+		// Acknowledge pesan keluar: "delivered" (✓✓) saat sampai di device
+		// penerima, "read" (✓✓ biru) saat dibaca — 4 status WhatsApp.
+		c.handleReceiptEvent(v)
 	case *events.ChatPresence:
 		c.handleChatPresenceEvent(v)
 	case *events.Connected:
@@ -490,7 +494,7 @@ func (c *Client) handleIncomingMessage(evt *events.Message) {
 		return
 	}
 
-	chatJID := evt.Info.Chat.String()
+	chatJID := normalizeJIDFromLID(context.Background(), evt.Info.Chat, c.waClient).String()
 	if chatJID == "" {
 		return
 	}
@@ -599,7 +603,9 @@ func (c *Client) persistMirrorMessage(evt *events.Message) {
 		return
 	}
 
-	chatJID := evt.Info.Chat.String()
+	// Fase 1: normalisasi LID → nomor HP untuk chat JID, supaya chat yang
+	// ditulis oleh pesan live konsisten dengan yang ditulis history sync.
+	chatJID := normalizeJIDFromLID(context.Background(), evt.Info.Chat, c.waClient).String()
 	if chatJID == "" {
 		return
 	}
@@ -610,21 +616,17 @@ func (c *Client) persistMirrorMessage(evt *events.Message) {
 		return
 	}
 
-	// Fase 2: status@broadcast selalu diberi nama tetap "Status" (tidak pakai
-	// pushName fallback yang bisa berisi nama kontak pengirim story).
+	// Fase 2: nama tampil chat di-resolve dari contact store whatsmeow
+	// (FullName/FirstName nama tersimpan pengguna > PushName > nomor HP).
+	// Untuk grup: displayName dikosongkan — nama grup otoritatif datang dari
+	// history sync (conv.GetName()), dan UpsertChat tidak menimpa display_name
+	// yang kosong, sehingga nama grup tidak tertimpa nama pengirim.
 	var displayName string
 	switch {
-	case chatJID == "status@broadcast":
-		displayName = "Status"
 	case evt.Info.IsGroup:
-		// Untuk grup, PushName adalah nama pengirim (bukan nama grup) —
-		// nama grup akurat bisa didapat dari contact store whatsmeow bila dibutuhkan.
-		displayName = evt.Info.PushName
+		displayName = ""
 	default:
-		displayName = evt.Info.PushName
-		if displayName == "" && evt.Info.Sender.User != "" {
-			displayName = evt.Info.Sender.User
-		}
+		displayName = c.resolveChatDisplayName(context.Background(), evt.Info.Chat, evt.Info.PushName)
 	}
 
 	content := extractMessageBody(evt.Message)
@@ -644,6 +646,9 @@ func (c *Client) persistMirrorMessage(evt *events.Message) {
 		MediaType:   mediaType,
 		IsFromMe:    evt.Info.IsFromMe,
 		Timestamp:   evt.Info.Timestamp,
+	}
+	if evt.Info.IsFromMe {
+		msg.Status = "sent"
 	}
 	if msg.WAMessageID == "" {
 		msg.WAMessageID = fmt.Sprintf("evt-%d", evt.Info.Timestamp.UnixNano())
@@ -706,7 +711,7 @@ func (c *Client) recordOutgoingMessage(jid types.JID, waMessageID string, conten
 		Content:     content,
 		MediaType:   mediaType,
 		IsFromMe:    true,
-		IsRead:      true,
+		Status:      "sent",
 		Timestamp:   now,
 	}
 	if _, err := c.chatRepo.UpsertMessage(msg); err != nil {
@@ -749,6 +754,38 @@ func (c *Client) handleChatPresenceEvent(evt *events.ChatPresence) {
 	if cb := c.getChatPresenceCallback(); cb != nil {
 		cb(c.SessionID, chatJID, senderStr, state, media, evt.IsGroup)
 	}
+}
+
+// handleReceiptEvent memproses events.Receipt (acknowledge pengiriman pesan
+// keluar) dan memperbarui status centang WhatsApp: "delivered" (✓✓) saat
+// pesan sampai di device penerima, "read" (✓✓ biru) saat dibaca.
+//
+// ReceiptTypeDelivered adalah string kosong ("") di whatsmeow — switch di
+// bawah menggunakan konstanta tipe, bukan literal, agar tetap tahan terhadap
+// perubahan nilai internal.
+func (c *Client) handleReceiptEvent(evt *events.Receipt) {
+	if c.chatRepo == nil || evt == nil || len(evt.MessageIDs) == 0 {
+		return
+	}
+	var status string
+	switch evt.Type {
+	case types.ReceiptTypeDelivered:
+		status = "delivered"
+	case types.ReceiptTypeRead, types.ReceiptTypeReadSelf:
+		status = "read"
+	default:
+		// receipt sender/retry/played tidak mengubah status centang.
+		return
+	}
+	chatJID := normalizeJIDFromLID(context.Background(), evt.Chat, c.waClient).String()
+	if err := c.chatRepo.MarkMessagesStatus(c.SessionID, chatJID, evt.MessageIDs, status); err != nil {
+		log.Printf("[WhatsApp Client %d] Failed to mark %d messages as %s in %s: %v",
+			c.SessionID, len(evt.MessageIDs), status, chatJID, err)
+		return
+	}
+	log.Printf("[WhatsApp Client %d] Marked %d message(s) as %s in %s", c.SessionID, len(evt.MessageIDs), status, chatJID)
+	// Beri tahu UI (via SSE) agar centang di bubble ter-update instan.
+	c.notifyChatUpdate(chatJID)
 }
 
 func parseJID(target string) (types.JID, error) {
