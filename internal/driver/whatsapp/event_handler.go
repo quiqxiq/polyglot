@@ -42,6 +42,26 @@ func (eh *EventHandler) MakeChatUpdateCallback() ChatUpdateCallback {
 	}
 }
 
+// MakeChatPresenceCallback returns the callback yang menyiarkan event SSE
+// `chat_presence` setiap kali kontak mengetik atau merekam voice, sehingga
+// frontend bisa menampilkan indikator "mengetik…" / "merekam…" secara real-time.
+// Payload: session_id, chat_jid, sender_jid, state ("composing"|"paused"),
+// media (""|"audio"), is_group.
+func (eh *EventHandler) MakeChatPresenceCallback() ChatPresenceCallback {
+	return func(sessionID uint, chatJID, senderJID, state, media string, isGroup bool) {
+		if eh.sseHub != nil {
+			eh.sseHub.Broadcast("chat_presence", map[string]any{
+				"session_id": sessionID,
+				"chat_jid":   chatJID,
+				"sender_jid": senderJID,
+				"state":      state,
+				"media":      media,
+				"is_group":   isGroup,
+			})
+		}
+	}
+}
+
 func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode string, jid string, phoneNumber string) {
 	if eh.pgStore == nil {
 		return

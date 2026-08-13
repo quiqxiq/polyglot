@@ -122,6 +122,10 @@ func (s *Store) ListChats(sessionID uint, limit, offset int, search string) ([]b
 	}
 
 	q := s.db.Where("session_id = ?", sessionID)
+	// Safety-net: sistem JID (story & channel) tidak boleh tampil di Inbox
+	// bahkan jika row sudah terlanjur ada di DB sebelum fix layer driver.
+	q = q.Where("chat_jid NOT IN (?, ?) AND chat_jid NOT LIKE ?",
+		"status@broadcast", "0@s.whatsapp.net", "%@newsletter")
 	search = strings.TrimSpace(search)
 	if search != "" {
 		like := "%" + search + "%"

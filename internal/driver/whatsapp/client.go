@@ -35,6 +35,10 @@ type StatusCallback func(sessionID uint, status string, qrCode string, jid strin
 // SSE `chat_update` agar Inbox frontend ter-update instan tanpa polling.
 type ChatUpdateCallback func(sessionID uint, chatJID string)
 
+// ChatPresenceCallback memberitahukan event typing/recording dari kontak.
+// state: "composing" atau "paused"; media: "" (teks) atau "audio" (voice).
+type ChatPresenceCallback func(sessionID uint, chatJID, senderJID, state, media string, isGroup bool)
+
 func init() {
 	store.SetOSInfo("Polyglot NetOps WA Bot", [3]uint32{2, 3000, 1015901307})
 }
@@ -50,6 +54,7 @@ type Client struct {
 	callbackMu  sync.RWMutex
 	onStatus    StatusCallback
 	onChatUpd   ChatUpdateCallback
+	onChatPres  ChatPresenceCallback
 	chatRepo    port.ChatRepository
 
 	// qrFlowMu/qrFlowActive memastikan hanya ada SATU aliran QR (GetQRChannel +
@@ -112,6 +117,21 @@ func (c *Client) notifyChatUpdate(chatJID string) {
 	if cb := c.getChatUpdateCallback(); cb != nil {
 		cb(c.SessionID, chatJID)
 	}
+}
+
+// SetChatPresenceCallback swaps the chat-presence handler at runtime.
+// Dipasang lewat SessionManager.SetChatPresenceCallback setelah EventHandler
+// dibangun.
+func (c *Client) SetChatPresenceCallback(cb ChatPresenceCallback) {
+	c.callbackMu.Lock()
+	defer c.callbackMu.Unlock()
+	c.onChatPres = cb
+}
+
+func (c *Client) getChatPresenceCallback() ChatPresenceCallback {
+	c.callbackMu.RLock()
+	defer c.callbackMu.RUnlock()
+	return c.onChatPres
 }
 
 func (c *Client) Connect(ctx context.Context) error {
@@ -428,6 +448,8 @@ func (c *Client) handleEvent(evt any) {
 		if !v.Info.IsFromMe {
 			c.handleIncomingMessage(v)
 		}
+	case *events.ChatPresence:
+		c.handleChatPresenceEvent(v)
 	case *events.Connected:
 		log.Printf("[WhatsApp Client %d] Connected successfully (Auto-reconnect active)", c.SessionID)
 		// Saat sudah ter-pair, QR tidak relevan lagi — kosongkan cache agar UI
@@ -468,14 +490,20 @@ func (c *Client) handleIncomingMessage(evt *events.Message) {
 		return
 	}
 
-	senderJID := evt.Info.Sender.User
-	if senderJID == "" {
-		senderJID = evt.Info.Chat.User
-	}
-
 	chatJID := evt.Info.Chat.String()
 	if chatJID == "" {
 		return
+	}
+
+	// Fase 1: bot tidak boleh membalas story (status@broadcast) maupun channel
+	// (@newsletter). Pesan dari JID ini bukan percakapan nyata.
+	if isSkippedJID(chatJID) {
+		return
+	}
+
+	senderJID := evt.Info.Sender.User
+	if senderJID == "" {
+		senderJID = evt.Info.Chat.User
 	}
 
 	body := extractMessageBody(evt.Message)
@@ -576,22 +604,41 @@ func (c *Client) persistMirrorMessage(evt *events.Message) {
 		return
 	}
 
-	// Untuk 1:1, display name memakai push name pengirim. Untuk grup, PushName
-	// adalah nama pengirim (bukan nama grup) — limitation Fase A: nama grup
-	// akurat bisa didapat dari contact/group store whatsmeow bila dibutuhkan.
-	displayName := evt.Info.PushName
-	if !evt.Info.IsGroup && displayName == "" && evt.Info.Sender.User != "" {
-		displayName = evt.Info.Sender.User
+	// Fase 1: story (status@broadcast, 0@s.whatsapp.net) dan channel (@newsletter)
+	// bukan percakapan nyata — tidak boleh masuk mirror Inbox.
+	if isSkippedJID(chatJID) {
+		return
+	}
+
+	// Fase 2: status@broadcast selalu diberi nama tetap "Status" (tidak pakai
+	// pushName fallback yang bisa berisi nama kontak pengirim story).
+	var displayName string
+	switch {
+	case chatJID == "status@broadcast":
+		displayName = "Status"
+	case evt.Info.IsGroup:
+		// Untuk grup, PushName adalah nama pengirim (bukan nama grup) —
+		// nama grup akurat bisa didapat dari contact store whatsmeow bila dibutuhkan.
+		displayName = evt.Info.PushName
+	default:
+		displayName = evt.Info.PushName
+		if displayName == "" && evt.Info.Sender.User != "" {
+			displayName = evt.Info.Sender.User
+		}
 	}
 
 	content := extractMessageBody(evt.Message)
 	mediaType := extractMediaType(evt.Message)
 
+	// Fase 4: normalisasi LID → nomor HP agar senderJID tidak tampil sebagai
+	// "12345@lid" yang tidak dapat dikenali pengguna.
+	senderJID := normalizeJIDFromLID(context.Background(), evt.Info.Sender, c.waClient).String()
+
 	msg := &bot.WAMessage{
 		SessionID:   c.SessionID,
 		ChatJID:     chatJID,
 		WAMessageID: evt.Info.ID,
-		SenderJID:   evt.Info.Sender.String(),
+		SenderJID:   senderJID,
 		SenderName:  evt.Info.PushName,
 		Content:     content,
 		MediaType:   mediaType,
@@ -680,6 +727,28 @@ func (c *Client) recordOutgoingMessage(jid types.JID, waMessageID string, conten
 	// Beri tahu UI (via SSE) bahwa mirror chat berubah — balasan bot/agen
 	// langsung tampil di Inbox tanpa polling.
 	c.notifyChatUpdate(chatJID)
+}
+
+// handleChatPresenceEvent memproses events.ChatPresence (typing/recording)
+// dan meneruskannya ke ChatPresenceCallback (→ SSE broadcast ke frontend).
+//
+// WhatsApp hanya mengirim event ini ketika client ditandai online oleh server.
+// Referensi: .ref-wa-multidevice/src/infrastructure/whatsapp/event_chat_presence.go
+func (c *Client) handleChatPresenceEvent(evt *events.ChatPresence) {
+	// Normalisasi LID → nomor HP untuk sender.
+	senderJID := normalizeJIDFromLID(context.Background(), evt.Sender, c.waClient)
+	chatJID := evt.Chat.ToNonAD().String()
+	senderStr := senderJID.ToNonAD().String()
+
+	state := string(evt.State) // "composing" | "paused"
+	media := string(evt.Media) // "" | "audio"
+
+	log.Printf("[WhatsApp Client %d] ChatPresence: %s %s in %s (media=%q)",
+		c.SessionID, senderStr, state, chatJID, media)
+
+	if cb := c.getChatPresenceCallback(); cb != nil {
+		cb(c.SessionID, chatJID, senderStr, state, media, evt.IsGroup)
+	}
 }
 
 func parseJID(target string) (types.JID, error) {

@@ -100,6 +100,8 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		// Broadcast SSE `chat_update` setiap kali mirror chat berubah, supaya
 		// Inbox frontend ter-update instan (lihat useWARealtimeStream).
 		waManager.SetChatUpdateCallback(eventHandler.MakeChatUpdateCallback())
+		// Broadcast SSE `chat_presence` (typing/recording indicator) ke frontend.
+		waManager.SetChatPresenceCallback(eventHandler.MakeChatPresenceCallback())
 		sessions, err := pgStore.FindAllSessions()
 		if err == nil && len(sessions) > 0 {
 			_ = waManager.RestoreAllSessions(sessions)

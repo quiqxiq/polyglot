@@ -1,6 +1,7 @@
 package whatsapp
 
 import (
+	"context"
 	"log"
 	"time"
 
@@ -37,11 +38,15 @@ func (c *Client) handleHistorySync(evt *events.HistorySync) {
 		switch evt.Data.GetSyncType() {
 		case waHistorySync.HistorySync_INITIAL_BOOTSTRAP, waHistorySync.HistorySync_RECENT:
 			c.processHistoryConversations(evt.Data)
+		case waHistorySync.HistorySync_FULL, waHistorySync.HistorySync_ON_DEMAND:
+			// FULL terjadi saat user membuka chat di HP (lazy load); ON_DEMAND
+			// saat aplikasi merequest sync manual — keduanya membawa conversations
+			// nyata yang harus di-mirror. Referensi memproses keduanya.
+			c.processHistoryConversations(evt.Data)
 		case waHistorySync.HistorySync_PUSH_NAME:
 			c.processHistoryPushNames(evt.Data)
 		default:
-			// Sync type lain (FULL, ON_DEMAND, dsb.) tidak membawa data
-			// percakapan yang perlu di-mirror ke Inbox.
+			// Tipe lain yang genuinely tidak membawa conversations.
 		}
 	}()
 }
@@ -72,6 +77,12 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 			continue
 		}
 		chatJID := jid.String()
+
+		// Fase 1: sistem JID (story & channel) tidak masuk mirror Inbox.
+		if isSkippedJID(chatJID) {
+			continue
+		}
+
 		isGroup := jid.Server == types.GroupServer
 
 		var latest time.Time
@@ -118,22 +129,33 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 			}
 
 			isFromMe := key.GetFromMe()
-			senderJID := ""
+			senderJIDStr := ""
 			switch {
 			case isFromMe:
-				senderJID = selfJID
+				senderJIDStr = selfJID
 			case key.GetParticipant() != "":
-				senderJID = key.GetParticipant()
+				// Fase 4: normalisasi LID → nomor HP untuk sender.
+				parsedSender, perr := types.ParseJID(key.GetParticipant())
+				if perr == nil {
+					senderJIDStr = normalizeJIDFromLID(context.Background(), parsedSender, c.waClient).String()
+				} else {
+					senderJIDStr = key.GetParticipant()
+				}
 			case info.GetParticipant() != "":
 				// History-sync group messages menaruh pengirim di level
 				// WebMessageInfo, bukan key.participant (lihat referensi
 				// go-whatsapp-web-multidevice, issue #609).
-				senderJID = info.GetParticipant()
+				parsedSender, perr := types.ParseJID(info.GetParticipant())
+				if perr == nil {
+					senderJIDStr = normalizeJIDFromLID(context.Background(), parsedSender, c.waClient).String()
+				} else {
+					senderJIDStr = info.GetParticipant()
+				}
 			case isGroup:
 				// Pesan grup tanpa info pengirim tidak bisa diatribusikan.
 				continue
 			default:
-				senderJID = chatJID
+				senderJIDStr = chatJID
 			}
 
 			ts := time.Unix(int64(info.GetMessageTimestamp()), 0)
@@ -141,7 +163,7 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 				SessionID:   c.SessionID,
 				ChatJID:     chatJID,
 				WAMessageID: key.GetID(),
-				SenderJID:   senderJID,
+				SenderJID:   senderJIDStr,
 				SenderName:  info.GetPushName(),
 				Content:     body,
 				MediaType:   mediaType,

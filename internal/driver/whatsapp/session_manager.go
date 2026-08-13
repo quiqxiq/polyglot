@@ -16,13 +16,14 @@ import (
 )
 
 type SessionManager struct {
-	container *sqlstore.Container
-	clients   map[uint]*Client
-	mutex     sync.RWMutex
-	onMessage MessageCallback
-	onStatus  StatusCallback
-	onChatUpd ChatUpdateCallback
-	chatRepo  port.ChatRepository
+	container  *sqlstore.Container
+	clients    map[uint]*Client
+	mutex      sync.RWMutex
+	onMessage  MessageCallback
+	onStatus   StatusCallback
+	onChatUpd  ChatUpdateCallback
+	onChatPres ChatPresenceCallback
+	chatRepo   port.ChatRepository
 }
 
 var _ port.WhatsAppGateway = (*SessionManager)(nil)
@@ -104,6 +105,7 @@ func (sm *SessionManager) ConnectWithContext(ctx context.Context, session *bot.W
 	// sehingga tanpa ini client baru punya onChatUpd nil dan SSE chat_update
 	// tidak pernah terkirim untuk session tersebut.
 	client.SetChatUpdateCallback(sm.onChatUpd)
+	client.SetChatPresenceCallback(sm.onChatPres)
 	sm.clients[session.ID] = client
 
 	return client.Connect(ctx)
@@ -352,5 +354,20 @@ func (sm *SessionManager) SetChatUpdateCallback(cb ChatUpdateCallback) {
 	sm.onChatUpd = cb
 	for _, c := range sm.clients {
 		c.SetChatUpdateCallback(cb)
+	}
+}
+
+// SetChatPresenceCallback registers (or replaces) the chat-presence handler
+// for all clients — termasuk yang sudah terhubung. Dipakai untuk broadcast
+// SSE `chat_presence` (typing/recording indicator) dari EventHandler.
+func (sm *SessionManager) SetChatPresenceCallback(cb ChatPresenceCallback) {
+	if sm == nil {
+		return
+	}
+	sm.mutex.Lock()
+	defer sm.mutex.Unlock()
+	sm.onChatPres = cb
+	for _, c := range sm.clients {
+		c.SetChatPresenceCallback(cb)
 	}
 }
