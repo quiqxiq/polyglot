@@ -40,13 +40,28 @@ func (h *SSEHub) RegisterClient(c *gin.Context) {
 
 	defer func() {
 		h.mutex.Lock()
-		delete(h.clients, clientChan)
-		close(clientChan)
+		// Idempoten: hanya tutup channel kalau masih terdaftar. Tanpa guard ini,
+		// Close() saat shutdown bisa menutup channel lebih dulu lalu cleanup ini
+		// memanggil close lagi -> panic "close of closed channel".
+		if _, ok := h.clients[clientChan]; ok {
+			delete(h.clients, clientChan)
+			close(clientChan)
+		}
 		h.mutex.Unlock()
 		log.Println("[SSEHub] Client disconnected")
 	}()
 
 	log.Println("[SSEHub] New client connected")
+
+	// Event awal (ready) langsung ditulis + di-flush SEBELUM loop stream.
+	// Tanpa ini gin c.Stream baru mengirim header HTTP setelah event pertama
+	// masuk, sehingga EventSource browser tetap di state CONNECTING
+	// ("Menghubungkan…") sampai event berikutnya tiba — dan semua broadcast
+	// (session_status, chat_update, conversation_status) yang terjadi di
+	// antara terlewat tanpa pernah sampai ke browser. Dengan flush segera,
+	// EventSource membuka koneksi (onopen) dan siap menerima broadcast.
+	fmt.Fprintf(c.Writer, "event: ready\ndata: {}\n\n")
+	c.Writer.Flush()
 
 	c.Stream(func(w io.Writer) bool {
 		select {
@@ -85,4 +100,20 @@ func (h *SSEHub) Broadcast(eventName string, data any) {
 
 func (h *SSEHub) PublishEvent(eventType string, data any) {
 	h.Broadcast(eventType, data)
+}
+
+// Close disconnects every registered SSE client by closing their channels.
+// Dipanggil saat graceful shutdown supaya http.Server.Shutdown tidak menunggu
+// koneksi streaming yang tidak pernah selesai (EventSource browser tetap
+// terbuka) sampai context deadline habis lalu gagal. Setelah Close, stream di
+// RegisterClient menerima ok=false dan handler selesai sehingga koneksi jadi
+// idle dan shutdown bisa selesai segera.
+func (h *SSEHub) Close() {
+	h.mutex.Lock()
+	defer h.mutex.Unlock()
+
+	for clientChan := range h.clients {
+		close(clientChan)
+	}
+	h.clients = make(map[chan SSEEvent]bool)
 }

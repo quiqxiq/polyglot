@@ -1,0 +1,1017 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/driver/mikrotik/ip.go",
+   "type": "file",
+   "name": "ip.go",
+   "filePath": "internal/driver/mikrotik/ip.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports IPAddress, IPAddressPrintParams, NewPrintIPAddressesCommand, NewAddIPAddressCommand, NewRemoveIPAddressCommand, ParseIPAddresses.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ip.go:NewPrintIPAddressesCommand",
+   "type": "function",
+   "name": "NewPrintIPAddressesCommand",
+   "filePath": "internal/driver/mikrotik/ip.go",
+   "lineRange": [
+    38,
+    46
+   ],
+   "summary": "Constructor that creates and initializes a PrintIPAddressesCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ip.go:NewAddIPAddressCommand",
+   "type": "function",
+   "name": "NewAddIPAddressCommand",
+   "filePath": "internal/driver/mikrotik/ip.go",
+   "lineRange": [
+    50,
+    58
+   ],
+   "summary": "Constructor that creates and initializes a AddIPAddressCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ip.go:NewRemoveIPAddressCommand",
+   "type": "function",
+   "name": "NewRemoveIPAddressCommand",
+   "filePath": "internal/driver/mikrotik/ip.go",
+   "lineRange": [
+    62,
+    67
+   ],
+   "summary": "Constructor that creates and initializes a RemoveIPAddressCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ip.go:ParseIPAddresses",
+   "type": "function",
+   "name": "ParseIPAddresses",
+   "filePath": "internal/driver/mikrotik/ip.go",
+   "lineRange": [
+    71,
+    90
+   ],
+   "summary": "Implements the ParseIPAddresses logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ip.go:NewPrintIPRoutesCommand",
+   "type": "function",
+   "name": "NewPrintIPRoutesCommand",
+   "filePath": "internal/driver/mikrotik/ip.go",
+   "lineRange": [
+    116,
+    125
+   ],
+   "summary": "Constructor that creates and initializes a PrintIPRoutesCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ip.go:NewAddIPRouteCommand",
+   "type": "function",
+   "name": "NewAddIPRouteCommand",
+   "filePath": "internal/driver/mikrotik/ip.go",
+   "lineRange": [
+    129,
+    142
+   ],
+   "summary": "Constructor that creates and initializes a AddIPRouteCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ip.go:NewRemoveIPRouteCommand",
+   "type": "function",
+   "name": "NewRemoveIPRouteCommand",
+   "filePath": "internal/driver/mikrotik/ip.go",
+   "lineRange": [
+    146,
+    151
+   ],
+   "summary": "Constructor that creates and initializes a RemoveIPRouteCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ip.go:ParseIPRoutes",
+   "type": "function",
+   "name": "ParseIPRoutes",
+   "filePath": "internal/driver/mikrotik/ip.go",
+   "lineRange": [
+    155,
+    176
+   ],
+   "summary": "Implements the ParseIPRoutes logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/ip.go:IPAddress",
+   "type": "class",
+   "name": "IPAddress",
+   "filePath": "internal/driver/mikrotik/ip.go",
+   "lineRange": [
+    20,
+    28
+   ],
+   "summary": "IPAddress Go type with 0 method(s) [—] and 7 field(s), defining the ipaddress behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/ip.go:IPAddressPrintParams",
+   "type": "class",
+   "name": "IPAddressPrintParams",
+   "filePath": "internal/driver/mikrotik/ip.go",
+   "lineRange": [
+    31,
+    34
+   ],
+   "summary": "IPAddressPrintParams Go type with 0 method(s) [—] and 2 field(s), defining the ipaddressprintparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/ip.go:IPRoute",
+   "type": "class",
+   "name": "IPRoute",
+   "filePath": "internal/driver/mikrotik/ip.go",
+   "lineRange": [
+    103,
+    112
+   ],
+   "summary": "IPRoute Go type with 0 method(s) [—] and 8 field(s), defining the iproute behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/pool.go",
+   "type": "file",
+   "name": "pool.go",
+   "filePath": "internal/driver/mikrotik/pool.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports IPPool, NewPrintIPPoolsCommand, ParseIPPools.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/pool.go:NewPrintIPPoolsCommand",
+   "type": "function",
+   "name": "NewPrintIPPoolsCommand",
+   "filePath": "internal/driver/mikrotik/pool.go",
+   "lineRange": [
+    18,
+    27
+   ],
+   "summary": "Constructor that creates and initializes a PrintIPPoolsCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/pool.go:ParseIPPools",
+   "type": "function",
+   "name": "ParseIPPools",
+   "filePath": "internal/driver/mikrotik/pool.go",
+   "lineRange": [
+    31,
+    48
+   ],
+   "summary": "Implements the ParseIPPools logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/pool.go:IPPool",
+   "type": "class",
+   "name": "IPPool",
+   "filePath": "internal/driver/mikrotik/pool.go",
+   "lineRange": [
+    8,
+    14
+   ],
+   "summary": "IPPool Go type with 0 method(s) [—] and 5 field(s), defining the ippool behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/ppp.go",
+   "type": "file",
+   "name": "ppp.go",
+   "filePath": "internal/driver/mikrotik/ppp.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports PPPoESecretParams, PPPoESecret, NewAddPPPoESecretCommand, NewSetPPPoESecretCommand, NewRemovePPPoESecretCommand, NewPrintPPPoESecretsCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp.go:NewAddPPPoESecretCommand",
+   "type": "function",
+   "name": "NewAddPPPoESecretCommand",
+   "filePath": "internal/driver/mikrotik/ppp.go",
+   "lineRange": [
+    80,
+    113
+   ],
+   "summary": "Constructor that creates and initializes a AddPPPoESecretCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp.go:NewSetPPPoESecretCommand",
+   "type": "function",
+   "name": "NewSetPPPoESecretCommand",
+   "filePath": "internal/driver/mikrotik/ppp.go",
+   "lineRange": [
+    123,
+    153
+   ],
+   "summary": "Constructor that creates and initializes a SetPPPoESecretCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp.go:NewRemovePPPoESecretCommand",
+   "type": "function",
+   "name": "NewRemovePPPoESecretCommand",
+   "filePath": "internal/driver/mikrotik/ppp.go",
+   "lineRange": [
+    158,
+    163
+   ],
+   "summary": "Constructor that creates and initializes a RemovePPPoESecretCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp.go:NewPrintPPPoESecretsCommand",
+   "type": "function",
+   "name": "NewPrintPPPoESecretsCommand",
+   "filePath": "internal/driver/mikrotik/ppp.go",
+   "lineRange": [
+    173,
+    185
+   ],
+   "summary": "Constructor that creates and initializes a PrintPPPoESecretsCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp.go:NewStreamPPPoESecretsCommand",
+   "type": "function",
+   "name": "NewStreamPPPoESecretsCommand",
+   "filePath": "internal/driver/mikrotik/ppp.go",
+   "lineRange": [
+    189,
+    200
+   ],
+   "summary": "Constructor that creates and initializes a StreamPPPoESecretsCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp.go:ParsePPPoESecrets",
+   "type": "function",
+   "name": "ParsePPPoESecrets",
+   "filePath": "internal/driver/mikrotik/ppp.go",
+   "lineRange": [
+    207,
+    229
+   ],
+   "summary": "Implements the ParsePPPoESecrets logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp.go:FindPPPoESecretRosID",
+   "type": "function",
+   "name": "FindPPPoESecretRosID",
+   "filePath": "internal/driver/mikrotik/ppp.go",
+   "lineRange": [
+    235,
+    242
+   ],
+   "summary": "Retrieves pppoesecretrosid data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/ppp.go:PPPoESecretParams",
+   "type": "class",
+   "name": "PPPoESecretParams",
+   "filePath": "internal/driver/mikrotik/ppp.go",
+   "lineRange": [
+    32,
+    41
+   ],
+   "summary": "PPPoESecretParams Go type with 0 method(s) [—] and 8 field(s), defining the pppoesecretparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/ppp.go:PPPoESecret",
+   "type": "class",
+   "name": "PPPoESecret",
+   "filePath": "internal/driver/mikrotik/ppp.go",
+   "lineRange": [
+    61,
+    72
+   ],
+   "summary": "PPPoESecret Go type with 0 method(s) [—] and 10 field(s), defining the pppoesecret behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/ppp_active.go",
+   "type": "file",
+   "name": "ppp_active.go",
+   "filePath": "internal/driver/mikrotik/ppp_active.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports PPPActiveSession, NewPrintPPPActiveCommand, NewStreamPPPActiveCommand, NewKickPPPActiveCommand, ParsePPPActiveSessions, FilterInactivePPPoESecrets.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active.go:NewPrintPPPActiveCommand",
+   "type": "function",
+   "name": "NewPrintPPPActiveCommand",
+   "filePath": "internal/driver/mikrotik/ppp_active.go",
+   "lineRange": [
+    45,
+    54
+   ],
+   "summary": "Constructor that creates and initializes a PrintPPPActiveCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active.go:NewStreamPPPActiveCommand",
+   "type": "function",
+   "name": "NewStreamPPPActiveCommand",
+   "filePath": "internal/driver/mikrotik/ppp_active.go",
+   "lineRange": [
+    67,
+    76
+   ],
+   "summary": "Constructor that creates and initializes a StreamPPPActiveCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active.go:NewKickPPPActiveCommand",
+   "type": "function",
+   "name": "NewKickPPPActiveCommand",
+   "filePath": "internal/driver/mikrotik/ppp_active.go",
+   "lineRange": [
+    87,
+    92
+   ],
+   "summary": "Constructor that creates and initializes a KickPPPActiveCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active.go:ParsePPPActiveSessions",
+   "type": "function",
+   "name": "ParsePPPActiveSessions",
+   "filePath": "internal/driver/mikrotik/ppp_active.go",
+   "lineRange": [
+    97,
+    120
+   ],
+   "summary": "Implements the ParsePPPActiveSessions logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active.go:FilterInactivePPPoESecrets",
+   "type": "function",
+   "name": "FilterInactivePPPoESecrets",
+   "filePath": "internal/driver/mikrotik/ppp_active.go",
+   "lineRange": [
+    126,
+    138
+   ],
+   "summary": "Implements the FilterInactivePPPoESecrets logic (inputs: secrets, active) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/ppp_active.go:PPPActiveSession",
+   "type": "class",
+   "name": "PPPActiveSession",
+   "filePath": "internal/driver/mikrotik/ppp_active.go",
+   "lineRange": [
+    25,
+    37
+   ],
+   "summary": "PPPActiveSession Go type with 0 method(s) [—] and 11 field(s), defining the pppactivesession behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:NewPrintIPAddressesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:NewAddIPAddressCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:NewRemoveIPAddressCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:ParseIPAddresses",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:NewPrintIPRoutesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:NewAddIPRouteCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:NewRemoveIPRouteCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:ParseIPRoutes",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "class:internal/driver/mikrotik/ip.go:IPAddress",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "class:internal/driver/mikrotik/ip.go:IPAddressPrintParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "class:internal/driver/mikrotik/ip.go:IPRoute",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "class:internal/driver/mikrotik/ip.go:IPAddress",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "class:internal/driver/mikrotik/ip.go:IPAddressPrintParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:NewPrintIPAddressesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:NewAddIPAddressCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:NewRemoveIPAddressCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:ParseIPAddresses",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "class:internal/driver/mikrotik/ip.go:IPRoute",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:NewPrintIPRoutesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:NewAddIPRouteCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:NewRemoveIPRouteCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "function:internal/driver/mikrotik/ip.go:ParseIPRoutes",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ip.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/pool.go",
+   "target": "function:internal/driver/mikrotik/pool.go:NewPrintIPPoolsCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/pool.go",
+   "target": "function:internal/driver/mikrotik/pool.go:ParseIPPools",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/pool.go",
+   "target": "class:internal/driver/mikrotik/pool.go:IPPool",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/pool.go",
+   "target": "class:internal/driver/mikrotik/pool.go:IPPool",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/pool.go",
+   "target": "function:internal/driver/mikrotik/pool.go:NewPrintIPPoolsCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/pool.go",
+   "target": "function:internal/driver/mikrotik/pool.go:ParseIPPools",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/pool.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/pool.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:NewAddPPPoESecretCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:NewSetPPPoESecretCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:NewRemovePPPoESecretCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:NewPrintPPPoESecretsCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:NewStreamPPPoESecretsCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:ParsePPPoESecrets",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:FindPPPoESecretRosID",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "class:internal/driver/mikrotik/ppp.go:PPPoESecretParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "class:internal/driver/mikrotik/ppp.go:PPPoESecret",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "class:internal/driver/mikrotik/ppp.go:PPPoESecretParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "class:internal/driver/mikrotik/ppp.go:PPPoESecret",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:NewAddPPPoESecretCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:NewSetPPPoESecretCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:NewRemovePPPoESecretCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:NewPrintPPPoESecretsCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:NewStreamPPPoESecretsCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:ParsePPPoESecrets",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "function:internal/driver/mikrotik/ppp.go:FindPPPoESecretRosID",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "function:internal/driver/mikrotik/ppp_active.go:NewPrintPPPActiveCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "function:internal/driver/mikrotik/ppp_active.go:NewStreamPPPActiveCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "function:internal/driver/mikrotik/ppp_active.go:NewKickPPPActiveCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "function:internal/driver/mikrotik/ppp_active.go:ParsePPPActiveSessions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "function:internal/driver/mikrotik/ppp_active.go:FilterInactivePPPoESecrets",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "class:internal/driver/mikrotik/ppp_active.go:PPPActiveSession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "class:internal/driver/mikrotik/ppp_active.go:PPPActiveSession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "function:internal/driver/mikrotik/ppp_active.go:NewPrintPPPActiveCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "function:internal/driver/mikrotik/ppp_active.go:NewStreamPPPActiveCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "function:internal/driver/mikrotik/ppp_active.go:NewKickPPPActiveCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "function:internal/driver/mikrotik/ppp_active.go:ParsePPPActiveSessions",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "function:internal/driver/mikrotik/ppp_active.go:FilterInactivePPPoESecrets",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

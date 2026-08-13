@@ -1,0 +1,574 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/port/authorizer.go",
+   "type": "file",
+   "name": "authorizer.go",
+   "filePath": "internal/port/authorizer.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports Authorizer.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/authorizer.go:Authorizer",
+   "type": "class",
+   "name": "Authorizer",
+   "filePath": "internal/port/authorizer.go",
+   "lineRange": [
+    6,
+    15
+   ],
+   "summary": "Authorizer Go type with 8 method(s) [Enforce, AddPolicy, RemovePolicy, GetPolicies, AddRoleForUser, …] and 0 field(s), defining the authorizer behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/port/bot_repository.go",
+   "type": "file",
+   "name": "bot_repository.go",
+   "filePath": "internal/port/bot_repository.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports WASessionRepository, ConversationRepository, MessageRepository.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/bot_repository.go:WASessionRepository",
+   "type": "class",
+   "name": "WASessionRepository",
+   "filePath": "internal/port/bot_repository.go",
+   "lineRange": [
+    8,
+    14
+   ],
+   "summary": "WASessionRepository Go type with 5 method(s) [Create, FindByID, FindAll, Update, Delete] and 0 field(s), defining the wasessionrepository behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/bot_repository.go:ConversationRepository",
+   "type": "class",
+   "name": "ConversationRepository",
+   "filePath": "internal/port/bot_repository.go",
+   "lineRange": [
+    17,
+    26
+   ],
+   "summary": "ConversationRepository Go type with 8 method(s) [Create, FindByID, FindByIDWithMessages, FindBySessionID, FindByStatus, …] and 0 field(s), defining the conversationrepository behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/bot_repository.go:MessageRepository",
+   "type": "class",
+   "name": "MessageRepository",
+   "filePath": "internal/port/bot_repository.go",
+   "lineRange": [
+    29,
+    33
+   ],
+   "summary": "MessageRepository Go type with 3 method(s) [Create, FindByConversationID, FindRecent] and 0 field(s), defining the messagerepository behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/port/cache_store.go",
+   "type": "file",
+   "name": "cache_store.go",
+   "filePath": "internal/port/cache_store.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports CacheStore, EventPublisher.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/cache_store.go:CacheStore",
+   "type": "class",
+   "name": "CacheStore",
+   "filePath": "internal/port/cache_store.go",
+   "lineRange": [
+    8,
+    12
+   ],
+   "summary": "CacheStore Go type with 3 method(s) [Get, Set, Delete] and 0 field(s), defining the cachestore behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/cache_store.go:EventPublisher",
+   "type": "class",
+   "name": "EventPublisher",
+   "filePath": "internal/port/cache_store.go",
+   "lineRange": [
+    15,
+    17
+   ],
+   "summary": "EventPublisher Go type with 1 method(s) [PublishEvent] and 0 field(s), defining the eventpublisher behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/port/credential_vault.go",
+   "type": "file",
+   "name": "credential_vault.go",
+   "filePath": "internal/port/credential_vault.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports CredentialVault.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/credential_vault.go:CredentialVault",
+   "type": "class",
+   "name": "CredentialVault",
+   "filePath": "internal/port/credential_vault.go",
+   "lineRange": [
+    16,
+    23
+   ],
+   "summary": "CredentialVault Go type with 2 method(s) [Get, Save] and 0 field(s), defining the credentialvault behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/port/customer_repository.go",
+   "type": "file",
+   "name": "customer_repository.go",
+   "filePath": "internal/port/customer_repository.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports CustomerRepository.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/customer_repository.go:CustomerRepository",
+   "type": "class",
+   "name": "CustomerRepository",
+   "filePath": "internal/port/customer_repository.go",
+   "lineRange": [
+    10,
+    16
+   ],
+   "summary": "CustomerRepository Go type with 5 method(s) [Save, FindByID, FindAll, Delete, FindSubscriptions] and 0 field(s), defining the customerrepository behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/port/device_driver.go",
+   "type": "file",
+   "name": "device_driver.go",
+   "filePath": "internal/port/device_driver.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports DeviceDriver, TerminalSession, TerminalDeviceDriver.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/device_driver.go:DeviceDriver",
+   "type": "class",
+   "name": "DeviceDriver",
+   "filePath": "internal/port/device_driver.go",
+   "lineRange": [
+    23,
+    35
+   ],
+   "summary": "DeviceDriver Go type with 4 method(s) [Execute, Classify, Translate, Close] and 0 field(s), defining the devicedriver behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/device_driver.go:TerminalSession",
+   "type": "class",
+   "name": "TerminalSession",
+   "filePath": "internal/port/device_driver.go",
+   "lineRange": [
+    38,
+    43
+   ],
+   "summary": "TerminalSession Go type with 4 method(s) [Stdin, Stdout, Resize, Close] and 0 field(s), defining the terminalsession behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/device_driver.go:TerminalDeviceDriver",
+   "type": "class",
+   "name": "TerminalDeviceDriver",
+   "filePath": "internal/port/device_driver.go",
+   "lineRange": [
+    46,
+    48
+   ],
+   "summary": "TerminalDeviceDriver Go type with 1 method(s) [OpenTerminalSession] and 0 field(s), defining the terminaldevicedriver behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/port/device_repository.go",
+   "type": "file",
+   "name": "device_repository.go",
+   "filePath": "internal/port/device_repository.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports DeviceRepository.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/device_repository.go:DeviceRepository",
+   "type": "class",
+   "name": "DeviceRepository",
+   "filePath": "internal/port/device_repository.go",
+   "lineRange": [
+    12,
+    24
+   ],
+   "summary": "DeviceRepository Go type with 5 method(s) [Save, FindByID, FindAll, Update, Delete] and 0 field(s), defining the devicerepository behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/port/authorizer.go",
+   "target": "class:internal/port/authorizer.go:Authorizer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/authorizer.go",
+   "target": "class:internal/port/authorizer.go:Authorizer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "class:internal/port/bot_repository.go:WASessionRepository",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "class:internal/port/bot_repository.go:ConversationRepository",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "class:internal/port/bot_repository.go:MessageRepository",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "class:internal/port/bot_repository.go:WASessionRepository",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "class:internal/port/bot_repository.go:ConversationRepository",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "class:internal/port/bot_repository.go:MessageRepository",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "file:internal/domain/bot/conversation.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "file:internal/domain/bot/message.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/bot_repository.go",
+   "target": "file:internal/domain/bot/session.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/cache_store.go",
+   "target": "class:internal/port/cache_store.go:CacheStore",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/cache_store.go",
+   "target": "class:internal/port/cache_store.go:EventPublisher",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/cache_store.go",
+   "target": "class:internal/port/cache_store.go:CacheStore",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/cache_store.go",
+   "target": "class:internal/port/cache_store.go:EventPublisher",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "class:internal/port/credential_vault.go:CredentialVault",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "class:internal/port/credential_vault.go:CredentialVault",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/credential_vault.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "class:internal/port/customer_repository.go:CustomerRepository",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "class:internal/port/customer_repository.go:CustomerRepository",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/customer/customer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/customer/technician.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/customer_repository.go",
+   "target": "file:internal/domain/customer/user.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "class:internal/port/device_driver.go:DeviceDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "class:internal/port/device_driver.go:TerminalSession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "class:internal/port/device_driver.go:TerminalDeviceDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "class:internal/port/device_driver.go:DeviceDriver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "class:internal/port/device_driver.go:TerminalSession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "class:internal/port/device_driver.go:TerminalDeviceDriver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "class:internal/port/device_repository.go:DeviceRepository",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "class:internal/port/device_repository.go:DeviceRepository",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/device_repository.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

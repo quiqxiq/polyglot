@@ -1,0 +1,16 @@
+{
+  "nodes": [
+    {
+      "id": "resource:.github/workflows/ci.yml",
+      "type": "resource",
+      "name": "ci.yml",
+      "summary": "ci.yml (31 lines)",
+      "tags": [
+        "yaml"
+      ],
+      "complexity": "simple",
+      "filePath": ".github/workflows/ci.yml"
+    }
+  ],
+  "edges": []
+}

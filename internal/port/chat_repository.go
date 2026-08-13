@@ -11,10 +11,20 @@ type ChatRepository interface {
 	// Mengembalikan true bila baris baru benar-benar dibuat (untuk menghitung unread
 	// tanpa risiko dobel-hitung saat event terkirim ulang).
 	UpsertMessage(msg *bot.WAMessage) (bool, error)
+	// UpsertMessagesBatch menulis banyak pesan mirror dalam SATU pernyataan SQL
+	// (multi-row INSERT ... ON CONFLICT DO NOTHING), idempotent per
+	// (session, wa_message_id). Dipakai sinkronisasi history sync yang bisa
+	// membawa ribuan pesan — memotong ribuan round-trip menjadi beberapa saja.
+	// Mengembalikan jumlah baris yang benar-benar baru dibuat.
+	UpsertMessagesBatch(msgs []*bot.WAMessage) (int, error)
 	// IncrementUnread menaikkan hitungan belum-dibaca sebuah chat (pesan masuk).
 	IncrementUnread(sessionID uint, chatJID string) error
 	// MarkChatRead mereset hitungan belum-dibaca sebuah chat.
 	MarkChatRead(sessionID uint, chatJID string) error
+	// SetChatUnread menetapkan hitungan belum-dibaca sebuah chat ke nilai
+	// eksplisit (dipakai saat sinkronisasi history sync agar angka unread dari
+	// HP tercermin di Inbox).
+	SetChatUnread(sessionID uint, chatJID string, count uint32) error
 	// ListChats mengembalikan daftar chat mirror, diurutkan dari paling baru.
 	ListChats(sessionID uint, limit, offset int, search string) ([]bot.WAChat, error)
 	// ListChatMessages mengembalikan pesan sebuah chat, diurutkan ascending.

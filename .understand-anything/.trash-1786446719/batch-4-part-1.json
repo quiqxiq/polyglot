@@ -1,0 +1,879 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/driver/mikrotik/hotspot/report.go",
+   "type": "file",
+   "name": "report.go",
+   "filePath": "internal/driver/mikrotik/hotspot/report.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports MikhmonTransaction, NewPrintMikhmonReportsCommand, ParseMikhmonTransactions.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/report.go:NewPrintMikhmonReportsCommand",
+   "type": "function",
+   "name": "NewPrintMikhmonReportsCommand",
+   "filePath": "internal/driver/mikrotik/hotspot/report.go",
+   "lineRange": [
+    41,
+    43
+   ],
+   "summary": "Constructor that creates and initializes a PrintMikhmonReportsCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/report.go:ParseMikhmonTransactions",
+   "type": "function",
+   "name": "ParseMikhmonTransactions",
+   "filePath": "internal/driver/mikrotik/hotspot/report.go",
+   "lineRange": [
+    50,
+    97
+   ],
+   "summary": "Implements the ParseMikhmonTransactions logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/hotspot/report.go:MikhmonTransaction",
+   "type": "class",
+   "name": "MikhmonTransaction",
+   "filePath": "internal/driver/mikrotik/hotspot/report.go",
+   "lineRange": [
+    24,
+    36
+   ],
+   "summary": "MikhmonTransaction Go type with 0 method(s) [—] and 11 field(s), defining the mikhmontransaction behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/hotspot/report_test.go",
+   "type": "file",
+   "name": "report_test.go",
+   "filePath": "internal/driver/mikrotik/hotspot/report_test.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports TestParseMikhmonTransactions, TestNewPrintMikhmonReportsCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go",
+    "test"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/report_test.go:TestParseMikhmonTransactions",
+   "type": "function",
+   "name": "TestParseMikhmonTransactions",
+   "filePath": "internal/driver/mikrotik/hotspot/report_test.go",
+   "lineRange": [
+    12,
+    42
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/report_test.go:TestNewPrintMikhmonReportsCommand",
+   "type": "function",
+   "name": "TestNewPrintMikhmonReportsCommand",
+   "filePath": "internal/driver/mikrotik/hotspot/report_test.go",
+   "lineRange": [
+    44,
+    48
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "type": "file",
+   "name": "voucher.go",
+   "filePath": "internal/driver/mikrotik/hotspot/voucher.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports VoucherGenerateParams, GeneratedVoucher, VoucherBatch, GenerateVoucherCode, ParseDataLimit, NewAddMikhmonVoucherCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/voucher.go:GenerateVoucherCode",
+   "type": "function",
+   "name": "GenerateVoucherCode",
+   "filePath": "internal/driver/mikrotik/hotspot/voucher.go",
+   "lineRange": [
+    64,
+    84
+   ],
+   "summary": "Implements the GenerateVoucherCode logic (inputs: length, cs) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/voucher.go:ParseDataLimit",
+   "type": "function",
+   "name": "ParseDataLimit",
+   "filePath": "internal/driver/mikrotik/hotspot/voucher.go",
+   "lineRange": [
+    88,
+    109
+   ],
+   "summary": "Implements the ParseDataLimit logic (inputs: s) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/voucher.go:NewAddMikhmonVoucherCommand",
+   "type": "function",
+   "name": "NewAddMikhmonVoucherCommand",
+   "filePath": "internal/driver/mikrotik/hotspot/voucher.go",
+   "lineRange": [
+    113,
+    132
+   ],
+   "summary": "Constructor that creates and initializes a AddMikhmonVoucherCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/voucher.go:NewGenerateVoucherBatchCommands",
+   "type": "function",
+   "name": "NewGenerateVoucherBatchCommands",
+   "filePath": "internal/driver/mikrotik/hotspot/voucher.go",
+   "lineRange": [
+    136,
+    188
+   ],
+   "summary": "Constructor that creates and initializes a GenerateVoucherBatchCommands instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/hotspot/voucher.go:VoucherGenerateParams",
+   "type": "class",
+   "name": "VoucherGenerateParams",
+   "filePath": "internal/driver/mikrotik/hotspot/voucher.go",
+   "lineRange": [
+    36,
+    46
+   ],
+   "summary": "VoucherGenerateParams Go type with 0 method(s) [—] and 9 field(s), defining the vouchergenerateparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/hotspot/voucher.go:GeneratedVoucher",
+   "type": "class",
+   "name": "GeneratedVoucher",
+   "filePath": "internal/driver/mikrotik/hotspot/voucher.go",
+   "lineRange": [
+    49,
+    54
+   ],
+   "summary": "GeneratedVoucher Go type with 0 method(s) [—] and 4 field(s), defining the generatedvoucher behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/hotspot/voucher.go:VoucherBatch",
+   "type": "class",
+   "name": "VoucherBatch",
+   "filePath": "internal/driver/mikrotik/hotspot/voucher.go",
+   "lineRange": [
+    57,
+    60
+   ],
+   "summary": "VoucherBatch Go type with 0 method(s) [—] and 2 field(s), defining the voucherbatch behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/hotspot/voucher_test.go",
+   "type": "file",
+   "name": "voucher_test.go",
+   "filePath": "internal/driver/mikrotik/hotspot/voucher_test.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports TestGenerateVoucherCode, TestNewAddMikhmonVoucherCommand, TestNewGenerateVoucherBatchCommands.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go",
+    "test"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/voucher_test.go:TestGenerateVoucherCode",
+   "type": "function",
+   "name": "TestGenerateVoucherCode",
+   "filePath": "internal/driver/mikrotik/hotspot/voucher_test.go",
+   "lineRange": [
+    10,
+    26
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/voucher_test.go:TestNewAddMikhmonVoucherCommand",
+   "type": "function",
+   "name": "TestNewAddMikhmonVoucherCommand",
+   "filePath": "internal/driver/mikrotik/hotspot/voucher_test.go",
+   "lineRange": [
+    28,
+    44
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/voucher_test.go:TestNewGenerateVoucherBatchCommands",
+   "type": "function",
+   "name": "TestNewGenerateVoucherBatchCommands",
+   "filePath": "internal/driver/mikrotik/hotspot/voucher_test.go",
+   "lineRange": [
+    46,
+    64
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "function:internal/driver/mikrotik/hotspot/report.go:NewPrintMikhmonReportsCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "function:internal/driver/mikrotik/hotspot/report.go:ParseMikhmonTransactions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "class:internal/driver/mikrotik/hotspot/report.go:MikhmonTransaction",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "class:internal/driver/mikrotik/hotspot/report.go:MikhmonTransaction",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "function:internal/driver/mikrotik/hotspot/report.go:NewPrintMikhmonReportsCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "function:internal/driver/mikrotik/hotspot/report.go:ParseMikhmonTransactions",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/commands.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/connect.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/dhcp.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/drivers_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/firewall.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/hotspot_active.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/hotspot_user.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/iface.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/ip.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/pool.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/ppp_active.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/ppp_profile.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/ppp_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/ppp.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/queue.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/stream.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report.go",
+   "target": "file:internal/driver/mikrotik/system.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/report_test.go:TestParseMikhmonTransactions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/report_test.go:TestNewPrintMikhmonReportsCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/report_test.go:TestParseMikhmonTransactions",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/report_test.go:TestNewPrintMikhmonReportsCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/report_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher.go:GenerateVoucherCode",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher.go:ParseDataLimit",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher.go:NewAddMikhmonVoucherCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher.go:NewGenerateVoucherBatchCommands",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "class:internal/driver/mikrotik/hotspot/voucher.go:VoucherGenerateParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "class:internal/driver/mikrotik/hotspot/voucher.go:GeneratedVoucher",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "class:internal/driver/mikrotik/hotspot/voucher.go:VoucherBatch",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "class:internal/driver/mikrotik/hotspot/voucher.go:VoucherGenerateParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "class:internal/driver/mikrotik/hotspot/voucher.go:GeneratedVoucher",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "class:internal/driver/mikrotik/hotspot/voucher.go:VoucherBatch",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher.go:GenerateVoucherCode",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher.go:ParseDataLimit",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher.go:NewAddMikhmonVoucherCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher.go:NewGenerateVoucherBatchCommands",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/commands.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/connect.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/dhcp.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/drivers_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/firewall.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/hotspot_active.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/hotspot_user.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/iface.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/ip.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/pool.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/ppp_active.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/ppp_profile.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/ppp_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/ppp.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/queue.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/stream.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "target": "file:internal/driver/mikrotik/system.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher_test.go:TestGenerateVoucherCode",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher_test.go:TestNewAddMikhmonVoucherCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher_test.go:TestNewGenerateVoucherBatchCommands",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher_test.go:TestGenerateVoucherCode",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher_test.go:TestNewAddMikhmonVoucherCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/voucher_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/voucher_test.go:TestNewGenerateVoucherBatchCommands",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

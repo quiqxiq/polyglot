@@ -1,0 +1,760 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/domain/device/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/domain/device/errors.go",
+   "summary": "Go source file implementing the domain model — domain model logic for the polyglot backend. Exports IsNotFound.",
+   "tags": [
+    "domain",
+    "model",
+    "entity",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/domain/device/errors.go:IsNotFound",
+   "type": "function",
+   "name": "IsNotFound",
+   "filePath": "internal/domain/device/errors.go",
+   "lineRange": [
+    9,
+    11
+   ],
+   "summary": "Implements the IsNotFound logic (inputs: err) for this component.",
+   "tags": [
+    "function",
+    "domain",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/domain/subscription/subscription.go",
+   "type": "file",
+   "name": "subscription.go",
+   "filePath": "internal/domain/subscription/subscription.go",
+   "summary": "Go source file implementing the domain model — domain model logic for the polyglot backend. Exports Subscription.",
+   "tags": [
+    "domain",
+    "model",
+    "entity",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/domain/subscription/subscription.go:Subscription",
+   "type": "class",
+   "name": "Subscription",
+   "filePath": "internal/domain/subscription/subscription.go",
+   "lineRange": [
+    13,
+    23
+   ],
+   "summary": "Subscription Go type with 0 method(s) [—] and 9 field(s), defining the subscription behavior of this component.",
+   "tags": [
+    "class",
+    "domain",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/cisco/driver.go",
+   "type": "file",
+   "name": "driver.go",
+   "filePath": "internal/driver/cisco/driver.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports Driver, NewDriver, Execute, Classify, Translate, Close.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/cisco/driver.go:NewDriver",
+   "type": "function",
+   "name": "NewDriver",
+   "filePath": "internal/driver/cisco/driver.go",
+   "lineRange": [
+    23,
+    25
+   ],
+   "summary": "Constructor that creates and initializes a Driver instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/cisco/driver.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/driver/cisco/driver.go",
+   "lineRange": [
+    29,
+    31
+   ],
+   "summary": "Runs the execute operation to completion (or streaming, when applicable).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/cisco/driver.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/cisco/driver.go",
+   "lineRange": [
+    34,
+    36
+   ],
+   "summary": "Classifies a command as destructive or read-only based on vendor conventions.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/cisco/driver.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/cisco/driver.go",
+   "lineRange": [
+    39,
+    41
+   ],
+   "summary": "Translates an abstract operation into a vendor-native command.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/cisco/driver.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/cisco/driver.go",
+   "lineRange": [
+    44,
+    46
+   ],
+   "summary": "Releases resources held by this component (connections, goroutines).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/cisco/driver.go:Driver",
+   "type": "class",
+   "name": "Driver",
+   "filePath": "internal/driver/cisco/driver.go",
+   "lineRange": [
+    15,
+    15
+   ],
+   "summary": "Driver Go type with 4 method(s) [Execute, Classify, Translate, Close] and 0 field(s), defining the driver behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/genericcli/session.go",
+   "type": "file",
+   "name": "session.go",
+   "filePath": "internal/driver/genericcli/session.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports Session, NewSession, Execute, Classify, Translate, Close.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:resolveDriver",
+   "type": "function",
+   "name": "resolveDriver",
+   "filePath": "internal/driver/genericcli/session.go",
+   "lineRange": [
+    44,
+    53
+   ],
+   "summary": "Implements the resolveDriver logic (inputs: p) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:NewSession",
+   "type": "function",
+   "name": "NewSession",
+   "filePath": "internal/driver/genericcli/session.go",
+   "lineRange": [
+    87,
+    117
+   ],
+   "summary": "Constructor that creates and initializes a Session instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:dial",
+   "type": "function",
+   "name": "dial",
+   "filePath": "internal/driver/genericcli/session.go",
+   "lineRange": [
+    123,
+    174
+   ],
+   "summary": "Implements the dial logic (inputs: ctx) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/driver/genericcli/session.go",
+   "lineRange": [
+    184,
+    214
+   ],
+   "summary": "Runs the execute operation to completion (or streaming, when applicable).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:sendWithReconnect",
+   "type": "function",
+   "name": "sendWithReconnect",
+   "filePath": "internal/driver/genericcli/session.go",
+   "lineRange": [
+    224,
+    238
+   ],
+   "summary": "Implements the sendWithReconnect logic (inputs: ctx, raw) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/genericcli/session.go",
+   "lineRange": [
+    241,
+    243
+   ],
+   "summary": "Classifies a command as destructive or read-only based on vendor conventions.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/genericcli/session.go",
+   "lineRange": [
+    246,
+    248
+   ],
+   "summary": "Translates an abstract operation into a vendor-native command.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genericcli/session.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/genericcli/session.go",
+   "lineRange": [
+    253,
+    258
+   ],
+   "summary": "Releases resources held by this component (connections, goroutines).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/genericcli/session.go:cliDriver",
+   "type": "class",
+   "name": "cliDriver",
+   "filePath": "internal/driver/genericcli/session.go",
+   "lineRange": [
+    32,
+    36
+   ],
+   "summary": "cliDriver Go type with 3 method(s) [Open, Close, SendCommand] and 0 field(s), defining the clidriver behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "internal"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/genericcli/session.go:Session",
+   "type": "class",
+   "name": "Session",
+   "filePath": "internal/driver/genericcli/session.go",
+   "lineRange": [
+    64,
+    78
+   ],
+   "summary": "Session Go type with 6 method(s) [dial, Execute, sendWithReconnect, Classify, Translate, …] and 8 field(s), defining the session behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/domain/device/errors.go",
+   "target": "function:internal/domain/device/errors.go:IsNotFound",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/device/errors.go",
+   "target": "function:internal/domain/device/errors.go:IsNotFound",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/domain/subscription/subscription.go",
+   "target": "class:internal/domain/subscription/subscription.go:Subscription",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/subscription/subscription.go",
+   "target": "class:internal/domain/subscription/subscription.go:Subscription",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:NewDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:Execute",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:Classify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:Translate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:Close",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "class:internal/driver/cisco/driver.go:Driver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "class:internal/driver/cisco/driver.go:Driver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:NewDriver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:Execute",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:Classify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:Translate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "function:internal/driver/cisco/driver.go:Close",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/audit_writer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/knowledge_retriever.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/cisco/driver.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:resolveDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:NewSession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:dial",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:Execute",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:sendWithReconnect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:Classify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:Translate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:Close",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "class:internal/driver/genericcli/session.go:cliDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "class:internal/driver/genericcli/session.go:Session",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "class:internal/driver/genericcli/session.go:Session",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:NewSession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:Execute",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:Classify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:Translate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "function:internal/driver/genericcli/session.go:Close",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genericcli/session.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

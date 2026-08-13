@@ -1,0 +1,5999 @@
+{
+  "nodes": [
+    {
+      "id": "file:cmd/seed/main.go",
+      "type": "file",
+      "name": "main.go",
+      "summary": "main.go (226 lines)",
+      "tags": [
+        "cmd",
+        "go"
+      ],
+      "complexity": "complex",
+      "filePath": "cmd/seed/main.go"
+    },
+    {
+      "id": "function:cmd/seed/main.go:main",
+      "type": "function",
+      "name": "main",
+      "summary": "Function main in cmd/seed/main.go",
+      "tags": [
+        "cmd",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "cmd/seed/main.go"
+    },
+    {
+      "id": "function:cmd/seed/main.go:seedUsers",
+      "type": "function",
+      "name": "seedUsers",
+      "summary": "Function seedUsers(pgStore) in cmd/seed/main.go",
+      "tags": [
+        "cmd",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "cmd/seed/main.go"
+    },
+    {
+      "id": "function:cmd/seed/main.go:seedCasbin",
+      "type": "function",
+      "name": "seedCasbin",
+      "summary": "Function seedCasbin(ctx, pgStore) in cmd/seed/main.go",
+      "tags": [
+        "cmd",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "cmd/seed/main.go"
+    },
+    {
+      "id": "function:cmd/seed/main.go:seedKnowledge",
+      "type": "function",
+      "name": "seedKnowledge",
+      "summary": "Function seedKnowledge(pgStore) in cmd/seed/main.go",
+      "tags": [
+        "cmd",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "cmd/seed/main.go"
+    },
+    {
+      "id": "function:cmd/seed/main.go:seedLLMConfig",
+      "type": "function",
+      "name": "seedLLMConfig",
+      "summary": "Function seedLLMConfig(pgStore, cfg) in cmd/seed/main.go",
+      "tags": [
+        "cmd",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "cmd/seed/main.go"
+    },
+    {
+      "id": "file:internal/adapter/llm/claude/claude.go",
+      "type": "file",
+      "name": "claude.go",
+      "summary": "claude.go (141 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/claude/claude.go"
+    },
+    {
+      "id": "function:internal/adapter/llm/claude/claude.go:NewProvider",
+      "type": "function",
+      "name": "NewProvider",
+      "summary": "Function NewProvider(apiKey, model, maxTokens) in internal/adapter/llm/claude/claude.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/claude/claude.go"
+    },
+    {
+      "id": "function:internal/adapter/llm/claude/claude.go:Chat",
+      "type": "function",
+      "name": "Chat",
+      "summary": "Function Chat(ctx, systemPrompt, messages, maxTokens) in internal/adapter/llm/claude/claude.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/claude/claude.go"
+    },
+    {
+      "id": "function:internal/adapter/llm/claude/claude.go:TestConnection",
+      "type": "function",
+      "name": "TestConnection",
+      "summary": "Function TestConnection(ctx) in internal/adapter/llm/claude/claude.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/claude/claude.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/claude/claude.go:Provider",
+      "type": "class",
+      "name": "Provider",
+      "summary": "Type/class Provider in internal/adapter/llm/claude/claude.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/claude/claude.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/claude/claude.go:claudeRequest",
+      "type": "class",
+      "name": "claudeRequest",
+      "summary": "Type/class claudeRequest in internal/adapter/llm/claude/claude.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/claude/claude.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/claude/claude.go:claudeMessage",
+      "type": "class",
+      "name": "claudeMessage",
+      "summary": "Type/class claudeMessage in internal/adapter/llm/claude/claude.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/claude/claude.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/claude/claude.go:claudeResponse",
+      "type": "class",
+      "name": "claudeResponse",
+      "summary": "Type/class claudeResponse in internal/adapter/llm/claude/claude.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/claude/claude.go"
+    },
+    {
+      "id": "file:internal/adapter/llm/gemini/gemini.go",
+      "type": "file",
+      "name": "gemini.go",
+      "summary": "gemini.go (149 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/gemini/gemini.go"
+    },
+    {
+      "id": "function:internal/adapter/llm/gemini/gemini.go:NewProvider",
+      "type": "function",
+      "name": "NewProvider",
+      "summary": "Function NewProvider(apiKey, model, maxTokens) in internal/adapter/llm/gemini/gemini.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/gemini/gemini.go"
+    },
+    {
+      "id": "function:internal/adapter/llm/gemini/gemini.go:Chat",
+      "type": "function",
+      "name": "Chat",
+      "summary": "Function Chat(ctx, systemPrompt, messages, maxTokens) in internal/adapter/llm/gemini/gemini.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/gemini/gemini.go"
+    },
+    {
+      "id": "function:internal/adapter/llm/gemini/gemini.go:TestConnection",
+      "type": "function",
+      "name": "TestConnection",
+      "summary": "Function TestConnection(ctx) in internal/adapter/llm/gemini/gemini.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/gemini/gemini.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/gemini/gemini.go:Provider",
+      "type": "class",
+      "name": "Provider",
+      "summary": "Type/class Provider in internal/adapter/llm/gemini/gemini.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/gemini/gemini.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/gemini/gemini.go:geminiRequest",
+      "type": "class",
+      "name": "geminiRequest",
+      "summary": "Type/class geminiRequest in internal/adapter/llm/gemini/gemini.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/gemini/gemini.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/gemini/gemini.go:geminiContent",
+      "type": "class",
+      "name": "geminiContent",
+      "summary": "Type/class geminiContent in internal/adapter/llm/gemini/gemini.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/gemini/gemini.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/gemini/gemini.go:geminiPart",
+      "type": "class",
+      "name": "geminiPart",
+      "summary": "Type/class geminiPart in internal/adapter/llm/gemini/gemini.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/gemini/gemini.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/gemini/gemini.go:geminiGenerationConfig",
+      "type": "class",
+      "name": "geminiGenerationConfig",
+      "summary": "Type/class geminiGenerationConfig in internal/adapter/llm/gemini/gemini.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/gemini/gemini.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/gemini/gemini.go:geminiResponse",
+      "type": "class",
+      "name": "geminiResponse",
+      "summary": "Type/class geminiResponse in internal/adapter/llm/gemini/gemini.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/gemini/gemini.go"
+    },
+    {
+      "id": "file:internal/adapter/llm/groq/groq.go",
+      "type": "file",
+      "name": "groq.go",
+      "summary": "groq.go (129 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/groq/groq.go"
+    },
+    {
+      "id": "function:internal/adapter/llm/groq/groq.go:NewProvider",
+      "type": "function",
+      "name": "NewProvider",
+      "summary": "Function NewProvider(apiKey, model, maxTokens) in internal/adapter/llm/groq/groq.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/groq/groq.go"
+    },
+    {
+      "id": "function:internal/adapter/llm/groq/groq.go:Chat",
+      "type": "function",
+      "name": "Chat",
+      "summary": "Function Chat(ctx, systemPrompt, messages, maxTokens) in internal/adapter/llm/groq/groq.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/groq/groq.go"
+    },
+    {
+      "id": "function:internal/adapter/llm/groq/groq.go:TestConnection",
+      "type": "function",
+      "name": "TestConnection",
+      "summary": "Function TestConnection(ctx) in internal/adapter/llm/groq/groq.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/groq/groq.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/groq/groq.go:Provider",
+      "type": "class",
+      "name": "Provider",
+      "summary": "Type/class Provider in internal/adapter/llm/groq/groq.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/groq/groq.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/groq/groq.go:chatRequest",
+      "type": "class",
+      "name": "chatRequest",
+      "summary": "Type/class chatRequest in internal/adapter/llm/groq/groq.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/groq/groq.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/groq/groq.go:apiMessage",
+      "type": "class",
+      "name": "apiMessage",
+      "summary": "Type/class apiMessage in internal/adapter/llm/groq/groq.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/groq/groq.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/groq/groq.go:chatResponse",
+      "type": "class",
+      "name": "chatResponse",
+      "summary": "Type/class chatResponse in internal/adapter/llm/groq/groq.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/groq/groq.go"
+    },
+    {
+      "id": "file:internal/adapter/llm/openai/openai.go",
+      "type": "file",
+      "name": "openai.go",
+      "summary": "openai.go (129 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/openai/openai.go"
+    },
+    {
+      "id": "function:internal/adapter/llm/openai/openai.go:NewProvider",
+      "type": "function",
+      "name": "NewProvider",
+      "summary": "Function NewProvider(apiKey, model, maxTokens) in internal/adapter/llm/openai/openai.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/openai/openai.go"
+    },
+    {
+      "id": "function:internal/adapter/llm/openai/openai.go:Chat",
+      "type": "function",
+      "name": "Chat",
+      "summary": "Function Chat(ctx, systemPrompt, messages, maxTokens) in internal/adapter/llm/openai/openai.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/openai/openai.go"
+    },
+    {
+      "id": "function:internal/adapter/llm/openai/openai.go:TestConnection",
+      "type": "function",
+      "name": "TestConnection",
+      "summary": "Function TestConnection(ctx) in internal/adapter/llm/openai/openai.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/openai/openai.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/openai/openai.go:Provider",
+      "type": "class",
+      "name": "Provider",
+      "summary": "Type/class Provider in internal/adapter/llm/openai/openai.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/openai/openai.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/openai/openai.go:chatRequest",
+      "type": "class",
+      "name": "chatRequest",
+      "summary": "Type/class chatRequest in internal/adapter/llm/openai/openai.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/openai/openai.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/openai/openai.go:apiMessage",
+      "type": "class",
+      "name": "apiMessage",
+      "summary": "Type/class apiMessage in internal/adapter/llm/openai/openai.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/openai/openai.go"
+    },
+    {
+      "id": "class:internal/adapter/llm/openai/openai.go:chatResponse",
+      "type": "class",
+      "name": "chatResponse",
+      "summary": "Type/class chatResponse in internal/adapter/llm/openai/openai.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/llm/openai/openai.go"
+    },
+    {
+      "id": "file:internal/adapter/mcp/tool_customer_lookup.go",
+      "type": "file",
+      "name": "tool_customer_lookup.go",
+      "summary": "tool_customer_lookup.go (93 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/mcp/tool_customer_lookup.go"
+    },
+    {
+      "id": "function:internal/adapter/mcp/tool_customer_lookup.go:customerLookup",
+      "type": "function",
+      "name": "customerLookup",
+      "summary": "Function customerLookup(ctx, _, args) in internal/adapter/mcp/tool_customer_lookup.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/mcp/tool_customer_lookup.go"
+    },
+    {
+      "id": "class:internal/adapter/mcp/tool_customer_lookup.go:customerLookupArgs",
+      "type": "class",
+      "name": "customerLookupArgs",
+      "summary": "Type/class customerLookupArgs in internal/adapter/mcp/tool_customer_lookup.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/mcp/tool_customer_lookup.go"
+    },
+    {
+      "id": "class:internal/adapter/mcp/tool_customer_lookup.go:customerDetail",
+      "type": "class",
+      "name": "customerDetail",
+      "summary": "Type/class customerDetail in internal/adapter/mcp/tool_customer_lookup.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/mcp/tool_customer_lookup.go"
+    },
+    {
+      "id": "class:internal/adapter/mcp/tool_customer_lookup.go:customerLookupOutput",
+      "type": "class",
+      "name": "customerLookupOutput",
+      "summary": "Type/class customerLookupOutput in internal/adapter/mcp/tool_customer_lookup.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/mcp/tool_customer_lookup.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/bot_repository.go",
+      "type": "file",
+      "name": "bot_repository.go",
+      "summary": "bot_repository.go (189 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:CreateSession",
+      "type": "function",
+      "name": "CreateSession",
+      "summary": "Function CreateSession(session) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:FindSessionByID",
+      "type": "function",
+      "name": "FindSessionByID",
+      "summary": "Function FindSessionByID(id) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:FindAllSessions",
+      "type": "function",
+      "name": "FindAllSessions",
+      "summary": "Function FindAllSessions in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:UpdateSession",
+      "type": "function",
+      "name": "UpdateSession",
+      "summary": "Function UpdateSession(session) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:DeleteSession",
+      "type": "function",
+      "name": "DeleteSession",
+      "summary": "Function DeleteSession(id) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:CreateConversation",
+      "type": "function",
+      "name": "CreateConversation",
+      "summary": "Function CreateConversation(conv) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:FindConversationByID",
+      "type": "function",
+      "name": "FindConversationByID",
+      "summary": "Function FindConversationByID(id) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:FindConversationByIDWithMessages",
+      "type": "function",
+      "name": "FindConversationByIDWithMessages",
+      "summary": "Function FindConversationByIDWithMessages(id) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:FindConversationsBySessionID",
+      "type": "function",
+      "name": "FindConversationsBySessionID",
+      "summary": "Function FindConversationsBySessionID(sessionID) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:FindConversationsByStatus",
+      "type": "function",
+      "name": "FindConversationsByStatus",
+      "summary": "Function FindConversationsByStatus(status) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:FindAllConversations",
+      "type": "function",
+      "name": "FindAllConversations",
+      "summary": "Function FindAllConversations in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:FindActiveConversationByCustomer",
+      "type": "function",
+      "name": "FindActiveConversationByCustomer",
+      "summary": "Function FindActiveConversationByCustomer(sessionID, customerNumber) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:UpdateConversation",
+      "type": "function",
+      "name": "UpdateConversation",
+      "summary": "Function UpdateConversation(conv) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:CreateMessage",
+      "type": "function",
+      "name": "CreateMessage",
+      "summary": "Function CreateMessage(msg) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:FindMessagesByConversationID",
+      "type": "function",
+      "name": "FindMessagesByConversationID",
+      "summary": "Function FindMessagesByConversationID(conversationID) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/bot_repository.go:FindRecentMessages",
+      "type": "function",
+      "name": "FindRecentMessages",
+      "summary": "Function FindRecentMessages(conversationID, limit) in internal/adapter/postgres/bot_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/bot_repository.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/device_repository.go",
+      "type": "file",
+      "name": "device_repository.go",
+      "summary": "device_repository.go (110 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository.go:NewDeviceRepository",
+      "type": "function",
+      "name": "NewDeviceRepository",
+      "summary": "Function NewDeviceRepository(db) in internal/adapter/postgres/device_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository.go:NewCredentialVault",
+      "type": "function",
+      "name": "NewCredentialVault",
+      "summary": "Function NewCredentialVault(db) in internal/adapter/postgres/device_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository.go:Save",
+      "type": "function",
+      "name": "Save",
+      "summary": "Function Save(ctx, d) in internal/adapter/postgres/device_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository.go:FindByID",
+      "type": "function",
+      "name": "FindByID",
+      "summary": "Function FindByID(ctx, id) in internal/adapter/postgres/device_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository.go:FindAll",
+      "type": "function",
+      "name": "FindAll",
+      "summary": "Function FindAll(ctx) in internal/adapter/postgres/device_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository.go:Update",
+      "type": "function",
+      "name": "Update",
+      "summary": "Function Update(ctx, d) in internal/adapter/postgres/device_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository.go:Delete",
+      "type": "function",
+      "name": "Delete",
+      "summary": "Function Delete(ctx, id) in internal/adapter/postgres/device_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository.go:Get",
+      "type": "function",
+      "name": "Get",
+      "summary": "Function Get(ctx, deviceID) in internal/adapter/postgres/device_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository.go:Save",
+      "type": "function",
+      "name": "Save",
+      "summary": "Function Save(ctx, deviceID, creds) in internal/adapter/postgres/device_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/device_repository.go:DeviceRepository",
+      "type": "class",
+      "name": "DeviceRepository",
+      "summary": "Type/class DeviceRepository in internal/adapter/postgres/device_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/device_repository.go:CredentialVault",
+      "type": "class",
+      "name": "CredentialVault",
+      "summary": "Type/class CredentialVault in internal/adapter/postgres/device_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/device_repository_test.go",
+      "type": "file",
+      "name": "device_repository_test.go",
+      "summary": "device_repository_test.go (144 lines)",
+      "tags": [
+        "test",
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository_test.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository_test.go:setupTestDB",
+      "type": "function",
+      "name": "setupTestDB",
+      "summary": "Function setupTestDB(t) in internal/adapter/postgres/device_repository_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository_test.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository_test.go:TestDeviceModel_Conversion",
+      "type": "function",
+      "name": "TestDeviceModel_Conversion",
+      "summary": "Function TestDeviceModel_Conversion(t) in internal/adapter/postgres/device_repository_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository_test.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository_test.go:TestCredentialModel_Conversion",
+      "type": "function",
+      "name": "TestCredentialModel_Conversion",
+      "summary": "Function TestCredentialModel_Conversion(t) in internal/adapter/postgres/device_repository_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository_test.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/device_repository_test.go:TestPostgresDeviceRepository_CRUD",
+      "type": "function",
+      "name": "TestPostgresDeviceRepository_CRUD",
+      "summary": "Function TestPostgresDeviceRepository_CRUD(t) in internal/adapter/postgres/device_repository_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/device_repository_test.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/knowledge_repository.go",
+      "type": "file",
+      "name": "knowledge_repository.go",
+      "summary": "knowledge_repository.go (102 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/knowledge_repository.go:CreateKnowledgeEntry",
+      "type": "function",
+      "name": "CreateKnowledgeEntry",
+      "summary": "Function CreateKnowledgeEntry(entry) in internal/adapter/postgres/knowledge_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/knowledge_repository.go:CreateKnowledge",
+      "type": "function",
+      "name": "CreateKnowledge",
+      "summary": "Function CreateKnowledge(entry) in internal/adapter/postgres/knowledge_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/knowledge_repository.go:FindKnowledgeEntryByID",
+      "type": "function",
+      "name": "FindKnowledgeEntryByID",
+      "summary": "Function FindKnowledgeEntryByID(id) in internal/adapter/postgres/knowledge_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/knowledge_repository.go:FindAllKnowledgeEntries",
+      "type": "function",
+      "name": "FindAllKnowledgeEntries",
+      "summary": "Function FindAllKnowledgeEntries in internal/adapter/postgres/knowledge_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/knowledge_repository.go:FindAllKnowledge",
+      "type": "function",
+      "name": "FindAllKnowledge",
+      "summary": "Function FindAllKnowledge in internal/adapter/postgres/knowledge_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/knowledge_repository.go:FindKnowledgeByID",
+      "type": "function",
+      "name": "FindKnowledgeByID",
+      "summary": "Function FindKnowledgeByID(id) in internal/adapter/postgres/knowledge_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/knowledge_repository.go:UpdateKnowledge",
+      "type": "function",
+      "name": "UpdateKnowledge",
+      "summary": "Function UpdateKnowledge(entry) in internal/adapter/postgres/knowledge_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/knowledge_repository.go:DeleteKnowledge",
+      "type": "function",
+      "name": "DeleteKnowledge",
+      "summary": "Function DeleteKnowledge(id) in internal/adapter/postgres/knowledge_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/knowledge_repository.go:UpdateKnowledgeEntry",
+      "type": "function",
+      "name": "UpdateKnowledgeEntry",
+      "summary": "Function UpdateKnowledgeEntry(entry) in internal/adapter/postgres/knowledge_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/knowledge_repository.go:DeleteKnowledgeEntry",
+      "type": "function",
+      "name": "DeleteKnowledgeEntry",
+      "summary": "Function DeleteKnowledgeEntry(id) in internal/adapter/postgres/knowledge_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/knowledge_repository.go:SearchKnowledgeByTags",
+      "type": "function",
+      "name": "SearchKnowledgeByTags",
+      "summary": "Function SearchKnowledgeByTags(tags) in internal/adapter/postgres/knowledge_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/knowledge_repository.go:Retrieve",
+      "type": "function",
+      "name": "Retrieve",
+      "summary": "Function Retrieve(ctx, query) in internal/adapter/postgres/knowledge_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/knowledge_repository.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/llm_config_repository.go",
+      "type": "file",
+      "name": "llm_config_repository.go",
+      "summary": "llm_config_repository.go (157 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:Create",
+      "type": "function",
+      "name": "Create",
+      "summary": "Function Create(config) in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:FindByID",
+      "type": "function",
+      "name": "FindByID",
+      "summary": "Function FindByID(id) in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:FindActive",
+      "type": "function",
+      "name": "FindActive",
+      "summary": "Function FindActive in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:FindAll",
+      "type": "function",
+      "name": "FindAll",
+      "summary": "Function FindAll in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:Update",
+      "type": "function",
+      "name": "Update",
+      "summary": "Function Update(config) in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:SetActive",
+      "type": "function",
+      "name": "SetActive",
+      "summary": "Function SetActive(id) in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:Delete",
+      "type": "function",
+      "name": "Delete",
+      "summary": "Function Delete(id) in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:CreateLLMConfig",
+      "type": "function",
+      "name": "CreateLLMConfig",
+      "summary": "Function CreateLLMConfig(config) in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:PopulateLLMConfigAnalytics",
+      "type": "function",
+      "name": "PopulateLLMConfigAnalytics",
+      "summary": "Function PopulateLLMConfigAnalytics(config) in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:FindLLMConfigByID",
+      "type": "function",
+      "name": "FindLLMConfigByID",
+      "summary": "Function FindLLMConfigByID(id) in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:FindActiveLLMConfig",
+      "type": "function",
+      "name": "FindActiveLLMConfig",
+      "summary": "Function FindActiveLLMConfig in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:FindAllLLMConfigs",
+      "type": "function",
+      "name": "FindAllLLMConfigs",
+      "summary": "Function FindAllLLMConfigs in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:UpdateLLMConfig",
+      "type": "function",
+      "name": "UpdateLLMConfig",
+      "summary": "Function UpdateLLMConfig(config) in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:SetActiveLLMConfig",
+      "type": "function",
+      "name": "SetActiveLLMConfig",
+      "summary": "Function SetActiveLLMConfig(id) in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/llm_config_repository.go:DeleteLLMConfig",
+      "type": "function",
+      "name": "DeleteLLMConfig",
+      "summary": "Function DeleteLLMConfig(id) in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/llm_config_repository.go:tokenStats",
+      "type": "class",
+      "name": "tokenStats",
+      "summary": "Type/class tokenStats in internal/adapter/postgres/llm_config_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/llm_config_repository.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/models/conversation_model.go",
+      "type": "file",
+      "name": "conversation_model.go",
+      "summary": "conversation_model.go (104 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/conversation_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/conversation_model.go:ToDomain",
+      "type": "function",
+      "name": "ToDomain",
+      "summary": "Function ToDomain in internal/adapter/postgres/models/conversation_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/conversation_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/conversation_model.go:ConversationModelFromDomain",
+      "type": "function",
+      "name": "ConversationModelFromDomain",
+      "summary": "Function ConversationModelFromDomain(c) in internal/adapter/postgres/models/conversation_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/conversation_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/conversation_model.go:ToDomain",
+      "type": "function",
+      "name": "ToDomain",
+      "summary": "Function ToDomain in internal/adapter/postgres/models/conversation_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/conversation_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/conversation_model.go:MessageModelFromDomain",
+      "type": "function",
+      "name": "MessageModelFromDomain",
+      "summary": "Function MessageModelFromDomain(msg) in internal/adapter/postgres/models/conversation_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/conversation_model.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/models/conversation_model.go:ConversationModel",
+      "type": "class",
+      "name": "ConversationModel",
+      "summary": "Type/class ConversationModel in internal/adapter/postgres/models/conversation_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/conversation_model.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/models/conversation_model.go:MessageModel",
+      "type": "class",
+      "name": "MessageModel",
+      "summary": "Type/class MessageModel in internal/adapter/postgres/models/conversation_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/conversation_model.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/models/device_model.go",
+      "type": "file",
+      "name": "device_model.go",
+      "summary": "device_model.go (185 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/device_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/device_model.go:TableName",
+      "type": "function",
+      "name": "TableName",
+      "summary": "Function TableName in internal/adapter/postgres/models/device_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/device_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/device_model.go:TableName",
+      "type": "function",
+      "name": "TableName",
+      "summary": "Function TableName in internal/adapter/postgres/models/device_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/device_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/device_model.go:ToDomain",
+      "type": "function",
+      "name": "ToDomain",
+      "summary": "Function ToDomain in internal/adapter/postgres/models/device_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/device_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/device_model.go:DeviceModelFromDomain",
+      "type": "function",
+      "name": "DeviceModelFromDomain",
+      "summary": "Function DeviceModelFromDomain(d) in internal/adapter/postgres/models/device_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/device_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/device_model.go:ToDomain",
+      "type": "function",
+      "name": "ToDomain",
+      "summary": "Function ToDomain(key) in internal/adapter/postgres/models/device_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/device_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/device_model.go:CredentialModelFromDomain",
+      "type": "function",
+      "name": "CredentialModelFromDomain",
+      "summary": "Function CredentialModelFromDomain(deviceID, c, key) in internal/adapter/postgres/models/device_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/device_model.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/models/device_model.go:DeviceModel",
+      "type": "class",
+      "name": "DeviceModel",
+      "summary": "Type/class DeviceModel in internal/adapter/postgres/models/device_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/device_model.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/models/device_model.go:CredentialModel",
+      "type": "class",
+      "name": "CredentialModel",
+      "summary": "Type/class CredentialModel in internal/adapter/postgres/models/device_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/device_model.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "type": "file",
+      "name": "knowledge_model.go",
+      "summary": "knowledge_model.go (45 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/adapter/postgres/models/knowledge_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/knowledge_model.go:ToDomain",
+      "type": "function",
+      "name": "ToDomain",
+      "summary": "Function ToDomain in internal/adapter/postgres/models/knowledge_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/knowledge_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/knowledge_model.go:KnowledgeEntryModelFromDomain",
+      "type": "function",
+      "name": "KnowledgeEntryModelFromDomain",
+      "summary": "Function KnowledgeEntryModelFromDomain(k) in internal/adapter/postgres/models/knowledge_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/knowledge_model.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/models/knowledge_model.go:KnowledgeEntryModel",
+      "type": "class",
+      "name": "KnowledgeEntryModel",
+      "summary": "Type/class KnowledgeEntryModel in internal/adapter/postgres/models/knowledge_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/knowledge_model.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "type": "file",
+      "name": "llm_config_model.go",
+      "summary": "llm_config_model.go (60 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/llm_config_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/llm_config_model.go:ToDomain",
+      "type": "function",
+      "name": "ToDomain",
+      "summary": "Function ToDomain in internal/adapter/postgres/models/llm_config_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/llm_config_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/llm_config_model.go:LLMConfigModelFromDomain",
+      "type": "function",
+      "name": "LLMConfigModelFromDomain",
+      "summary": "Function LLMConfigModelFromDomain(c) in internal/adapter/postgres/models/llm_config_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/llm_config_model.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/models/llm_config_model.go:LLMConfigModel",
+      "type": "class",
+      "name": "LLMConfigModel",
+      "summary": "Type/class LLMConfigModel in internal/adapter/postgres/models/llm_config_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/llm_config_model.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/models/session_model.go",
+      "type": "file",
+      "name": "session_model.go",
+      "summary": "session_model.go (54 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/session_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/session_model.go:ToDomain",
+      "type": "function",
+      "name": "ToDomain",
+      "summary": "Function ToDomain in internal/adapter/postgres/models/session_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/session_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/session_model.go:WASessionModelFromDomain",
+      "type": "function",
+      "name": "WASessionModelFromDomain",
+      "summary": "Function WASessionModelFromDomain(s) in internal/adapter/postgres/models/session_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/session_model.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/models/session_model.go:WASessionModel",
+      "type": "class",
+      "name": "WASessionModel",
+      "summary": "Type/class WASessionModel in internal/adapter/postgres/models/session_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/session_model.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/models/technician_model.go",
+      "type": "file",
+      "name": "technician_model.go",
+      "summary": "technician_model.go (51 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/technician_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/technician_model.go:ToDomain",
+      "type": "function",
+      "name": "ToDomain",
+      "summary": "Function ToDomain in internal/adapter/postgres/models/technician_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/technician_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/technician_model.go:TechnicianModelFromDomain",
+      "type": "function",
+      "name": "TechnicianModelFromDomain",
+      "summary": "Function TechnicianModelFromDomain(t) in internal/adapter/postgres/models/technician_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/technician_model.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/models/technician_model.go:TechnicianModel",
+      "type": "class",
+      "name": "TechnicianModel",
+      "summary": "Type/class TechnicianModel in internal/adapter/postgres/models/technician_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/technician_model.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/models/user_model.go",
+      "type": "file",
+      "name": "user_model.go",
+      "summary": "user_model.go (51 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/user_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/user_model.go:ToDomain",
+      "type": "function",
+      "name": "ToDomain",
+      "summary": "Function ToDomain in internal/adapter/postgres/models/user_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/user_model.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/models/user_model.go:UserModelFromDomain",
+      "type": "function",
+      "name": "UserModelFromDomain",
+      "summary": "Function UserModelFromDomain(u) in internal/adapter/postgres/models/user_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/user_model.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/models/user_model.go:UserModel",
+      "type": "class",
+      "name": "UserModel",
+      "summary": "Type/class UserModel in internal/adapter/postgres/models/user_model.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/models/user_model.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/store.go",
+      "type": "file",
+      "name": "store.go",
+      "summary": "store.go (54 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/store.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/store.go:NewStore",
+      "type": "function",
+      "name": "NewStore",
+      "summary": "Function NewStore(dsn) in internal/adapter/postgres/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/store.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/store.go:DB",
+      "type": "function",
+      "name": "DB",
+      "summary": "Function DB in internal/adapter/postgres/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/store.go"
+    },
+    {
+      "id": "class:internal/adapter/postgres/store.go:Store",
+      "type": "class",
+      "name": "Store",
+      "summary": "Type/class Store in internal/adapter/postgres/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/store.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/technician_repository.go",
+      "type": "file",
+      "name": "technician_repository.go",
+      "summary": "technician_repository.go (67 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/technician_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/technician_repository.go:CreateTechnician",
+      "type": "function",
+      "name": "CreateTechnician",
+      "summary": "Function CreateTechnician(tech) in internal/adapter/postgres/technician_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/technician_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/technician_repository.go:FindAllTechnicians",
+      "type": "function",
+      "name": "FindAllTechnicians",
+      "summary": "Function FindAllTechnicians in internal/adapter/postgres/technician_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/technician_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/technician_repository.go:FindActiveTechnicians",
+      "type": "function",
+      "name": "FindActiveTechnicians",
+      "summary": "Function FindActiveTechnicians in internal/adapter/postgres/technician_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/technician_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/technician_repository.go:FindTechnicianByID",
+      "type": "function",
+      "name": "FindTechnicianByID",
+      "summary": "Function FindTechnicianByID(id) in internal/adapter/postgres/technician_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/technician_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/technician_repository.go:UpdateTechnician",
+      "type": "function",
+      "name": "UpdateTechnician",
+      "summary": "Function UpdateTechnician(tech) in internal/adapter/postgres/technician_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/technician_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/technician_repository.go:DeleteTechnician",
+      "type": "function",
+      "name": "DeleteTechnician",
+      "summary": "Function DeleteTechnician(id) in internal/adapter/postgres/technician_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/technician_repository.go"
+    },
+    {
+      "id": "file:internal/adapter/postgres/user_repository.go",
+      "type": "file",
+      "name": "user_repository.go",
+      "summary": "user_repository.go (58 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/user_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/user_repository.go:CreateUser",
+      "type": "function",
+      "name": "CreateUser",
+      "summary": "Function CreateUser(user) in internal/adapter/postgres/user_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/user_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/user_repository.go:FindUserByID",
+      "type": "function",
+      "name": "FindUserByID",
+      "summary": "Function FindUserByID(id) in internal/adapter/postgres/user_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/user_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/user_repository.go:FindUserByUsername",
+      "type": "function",
+      "name": "FindUserByUsername",
+      "summary": "Function FindUserByUsername(username) in internal/adapter/postgres/user_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/user_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/user_repository.go:FindUserByEmail",
+      "type": "function",
+      "name": "FindUserByEmail",
+      "summary": "Function FindUserByEmail(email) in internal/adapter/postgres/user_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/user_repository.go"
+    },
+    {
+      "id": "function:internal/adapter/postgres/user_repository.go:CountUsers",
+      "type": "function",
+      "name": "CountUsers",
+      "summary": "Function CountUsers in internal/adapter/postgres/user_repository.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/postgres/user_repository.go"
+    },
+    {
+      "id": "file:internal/adapter/redis/store.go",
+      "type": "file",
+      "name": "store.go",
+      "summary": "store.go (176 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:NewStore",
+      "type": "function",
+      "name": "NewStore",
+      "summary": "Function NewStore(url) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:Get",
+      "type": "function",
+      "name": "Get",
+      "summary": "Function Get(ctx, key) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:Set",
+      "type": "function",
+      "name": "Set",
+      "summary": "Function Set(ctx, key, value, expirationSeconds) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:Delete",
+      "type": "function",
+      "name": "Delete",
+      "summary": "Function Delete(ctx, key) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:sessionKey",
+      "type": "function",
+      "name": "sessionKey",
+      "summary": "Function sessionKey(customerNumber) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:summaryKey",
+      "type": "function",
+      "name": "summaryKey",
+      "summary": "Function summaryKey(customerNumber) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:SaveSessionMessages",
+      "type": "function",
+      "name": "SaveSessionMessages",
+      "summary": "Function SaveSessionMessages(ctx, customerNumber, messages, ttl) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:GetSessionMessages",
+      "type": "function",
+      "name": "GetSessionMessages",
+      "summary": "Function GetSessionMessages(ctx, customerNumber) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:DeleteSession",
+      "type": "function",
+      "name": "DeleteSession",
+      "summary": "Function DeleteSession(ctx, customerNumber) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:SetSessionSummary",
+      "type": "function",
+      "name": "SetSessionSummary",
+      "summary": "Function SetSessionSummary(ctx, customerNumber, summary, ttl) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:GetSessionSummary",
+      "type": "function",
+      "name": "GetSessionSummary",
+      "summary": "Function GetSessionSummary(ctx, customerNumber) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:RefreshSessionTTL",
+      "type": "function",
+      "name": "RefreshSessionTTL",
+      "summary": "Function RefreshSessionTTL(ctx, customerNumber, ttl) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:rateLimitKey",
+      "type": "function",
+      "name": "rateLimitKey",
+      "summary": "Function rateLimitKey(customerNumber, window) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:muteKey",
+      "type": "function",
+      "name": "muteKey",
+      "summary": "Function muteKey(customerNumber) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:spamKey",
+      "type": "function",
+      "name": "spamKey",
+      "summary": "Function spamKey(customerNumber) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:IncrementRateLimit",
+      "type": "function",
+      "name": "IncrementRateLimit",
+      "summary": "Function IncrementRateLimit(ctx, customerNumber, window, ttl) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:GetRateLimitCount",
+      "type": "function",
+      "name": "GetRateLimitCount",
+      "summary": "Function GetRateLimitCount(ctx, customerNumber, window) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:MuteNumber",
+      "type": "function",
+      "name": "MuteNumber",
+      "summary": "Function MuteNumber(ctx, customerNumber, duration) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:IsMuted",
+      "type": "function",
+      "name": "IsMuted",
+      "summary": "Function IsMuted(ctx, customerNumber) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:UnmuteNumber",
+      "type": "function",
+      "name": "UnmuteNumber",
+      "summary": "Function UnmuteNumber(ctx, customerNumber) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "function:internal/adapter/redis/store.go:RecordMessageForSpamDetection",
+      "type": "function",
+      "name": "RecordMessageForSpamDetection",
+      "summary": "Function RecordMessageForSpamDetection(ctx, customerNumber, messageHash) in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "class:internal/adapter/redis/store.go:Store",
+      "type": "class",
+      "name": "Store",
+      "summary": "Type/class Store in internal/adapter/redis/store.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/redis/store.go"
+    },
+    {
+      "id": "file:internal/domain/bot/conversation.go",
+      "type": "file",
+      "name": "conversation.go",
+      "summary": "conversation.go (26 lines)",
+      "tags": [
+        "internal",
+        "domain",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/domain/bot/conversation.go"
+    },
+    {
+      "id": "class:internal/domain/bot/conversation.go:Conversation",
+      "type": "class",
+      "name": "Conversation",
+      "summary": "Type/class Conversation in internal/domain/bot/conversation.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/bot/conversation.go"
+    },
+    {
+      "id": "file:internal/domain/bot/message.go",
+      "type": "file",
+      "name": "message.go",
+      "summary": "message.go (24 lines)",
+      "tags": [
+        "internal",
+        "domain",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/domain/bot/message.go"
+    },
+    {
+      "id": "class:internal/domain/bot/message.go:Message",
+      "type": "class",
+      "name": "Message",
+      "summary": "Type/class Message in internal/domain/bot/message.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/bot/message.go"
+    },
+    {
+      "id": "file:internal/domain/bot/session.go",
+      "type": "file",
+      "name": "session.go",
+      "summary": "session.go (25 lines)",
+      "tags": [
+        "internal",
+        "domain",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/domain/bot/session.go"
+    },
+    {
+      "id": "class:internal/domain/bot/session.go:WASession",
+      "type": "class",
+      "name": "WASession",
+      "summary": "Type/class WASession in internal/domain/bot/session.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/bot/session.go"
+    },
+    {
+      "id": "file:internal/domain/customer/customer.go",
+      "type": "file",
+      "name": "customer.go",
+      "summary": "customer.go (27 lines)",
+      "tags": [
+        "internal",
+        "domain",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/domain/customer/customer.go"
+    },
+    {
+      "id": "class:internal/domain/customer/customer.go:Customer",
+      "type": "class",
+      "name": "Customer",
+      "summary": "Type/class Customer in internal/domain/customer/customer.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/customer/customer.go"
+    },
+    {
+      "id": "class:internal/domain/customer/customer.go:Subscription",
+      "type": "class",
+      "name": "Subscription",
+      "summary": "Type/class Subscription in internal/domain/customer/customer.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/customer/customer.go"
+    },
+    {
+      "id": "file:internal/domain/customer/technician.go",
+      "type": "file",
+      "name": "technician.go",
+      "summary": "technician.go (15 lines)",
+      "tags": [
+        "internal",
+        "domain",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/domain/customer/technician.go"
+    },
+    {
+      "id": "class:internal/domain/customer/technician.go:Technician",
+      "type": "class",
+      "name": "Technician",
+      "summary": "Type/class Technician in internal/domain/customer/technician.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/customer/technician.go"
+    },
+    {
+      "id": "file:internal/domain/customer/user.go",
+      "type": "file",
+      "name": "user.go",
+      "summary": "user.go (16 lines)",
+      "tags": [
+        "internal",
+        "domain",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/domain/customer/user.go"
+    },
+    {
+      "id": "class:internal/domain/customer/user.go:User",
+      "type": "class",
+      "name": "User",
+      "summary": "Type/class User in internal/domain/customer/user.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/customer/user.go"
+    },
+    {
+      "id": "file:internal/domain/knowledge/knowledge.go",
+      "type": "file",
+      "name": "knowledge.go",
+      "summary": "knowledge.go (13 lines)",
+      "tags": [
+        "internal",
+        "domain",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/domain/knowledge/knowledge.go"
+    },
+    {
+      "id": "class:internal/domain/knowledge/knowledge.go:KnowledgeEntry",
+      "type": "class",
+      "name": "KnowledgeEntry",
+      "summary": "Type/class KnowledgeEntry in internal/domain/knowledge/knowledge.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/knowledge/knowledge.go"
+    },
+    {
+      "id": "file:internal/domain/llm/llm_config.go",
+      "type": "file",
+      "name": "llm_config.go",
+      "summary": "llm_config.go (38 lines)",
+      "tags": [
+        "internal",
+        "domain",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/domain/llm/llm_config.go"
+    },
+    {
+      "id": "class:internal/domain/llm/llm_config.go:LLMConfig",
+      "type": "class",
+      "name": "LLMConfig",
+      "summary": "Type/class LLMConfig in internal/domain/llm/llm_config.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/llm/llm_config.go"
+    },
+    {
+      "id": "class:internal/domain/llm/llm_config.go:ChatMessage",
+      "type": "class",
+      "name": "ChatMessage",
+      "summary": "Type/class ChatMessage in internal/domain/llm/llm_config.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/llm/llm_config.go"
+    },
+    {
+      "id": "class:internal/domain/llm/llm_config.go:ChatResponse",
+      "type": "class",
+      "name": "ChatResponse",
+      "summary": "Type/class ChatResponse in internal/domain/llm/llm_config.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/llm/llm_config.go"
+    },
+    {
+      "id": "file:internal/domain/llm/llm_pricing.go",
+      "type": "file",
+      "name": "llm_pricing.go",
+      "summary": "llm_pricing.go (61 lines)",
+      "tags": [
+        "internal",
+        "domain",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/llm/llm_pricing.go"
+    },
+    {
+      "id": "function:internal/domain/llm/llm_pricing.go:GetDefaultModelPricing",
+      "type": "function",
+      "name": "GetDefaultModelPricing",
+      "summary": "Function GetDefaultModelPricing(provider, model) in internal/domain/llm/llm_pricing.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/llm/llm_pricing.go"
+    },
+    {
+      "id": "class:internal/domain/llm/llm_pricing.go:ModelPricing",
+      "type": "class",
+      "name": "ModelPricing",
+      "summary": "Type/class ModelPricing in internal/domain/llm/llm_pricing.go",
+      "tags": [
+        "internal",
+        "domain",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/domain/llm/llm_pricing.go"
+    },
+    {
+      "id": "file:internal/driver/whatsapp/event_handler.go",
+      "type": "file",
+      "name": "event_handler.go",
+      "summary": "event_handler.go (65 lines)",
+      "tags": [
+        "internal",
+        "driver",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/event_handler.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/event_handler.go:NewEventHandler",
+      "type": "function",
+      "name": "NewEventHandler",
+      "summary": "Function NewEventHandler(pgStore, sseHub) in internal/driver/whatsapp/event_handler.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/event_handler.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/event_handler.go:MakeStatusCallback",
+      "type": "function",
+      "name": "MakeStatusCallback",
+      "summary": "Function MakeStatusCallback in internal/driver/whatsapp/event_handler.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/event_handler.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/event_handler.go:handleStatusUpdate",
+      "type": "function",
+      "name": "handleStatusUpdate",
+      "summary": "Function handleStatusUpdate(sessionID, status, qrCode, jid, phoneNumber) in internal/driver/whatsapp/event_handler.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/event_handler.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/event_handler.go:MakeMessageCallback",
+      "type": "function",
+      "name": "MakeMessageCallback",
+      "summary": "Function MakeMessageCallback(engineHandler) in internal/driver/whatsapp/event_handler.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/event_handler.go"
+    },
+    {
+      "id": "class:internal/driver/whatsapp/event_handler.go:EventHandler",
+      "type": "class",
+      "name": "EventHandler",
+      "summary": "Type/class EventHandler in internal/driver/whatsapp/event_handler.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/event_handler.go"
+    },
+    {
+      "id": "file:internal/usecase/conversation/manage_conversation.go",
+      "type": "file",
+      "name": "manage_conversation.go",
+      "summary": "manage_conversation.go (130 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:NewConversationService",
+      "type": "function",
+      "name": "NewConversationService",
+      "summary": "Function NewConversationService(repo) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:NewService",
+      "type": "function",
+      "name": "NewService",
+      "summary": "Function NewService(repo) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:GetOrCreateConversation",
+      "type": "function",
+      "name": "GetOrCreateConversation",
+      "summary": "Function GetOrCreateConversation(sessionID, customerNumber) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:AddMessageWithConfig",
+      "type": "function",
+      "name": "AddMessageWithConfig",
+      "summary": "Function AddMessageWithConfig(convID, senderType, content, tokenIn, tokenOut, llmConfigID) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:AddMessage",
+      "type": "function",
+      "name": "AddMessage",
+      "summary": "Function AddMessage(convID, senderType, content, tokenIn, tokenOut) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:GetHistory",
+      "type": "function",
+      "name": "GetHistory",
+      "summary": "Function GetHistory(convID, limit) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:Escalate",
+      "type": "function",
+      "name": "Escalate",
+      "summary": "Function Escalate(convID) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:ResetBot",
+      "type": "function",
+      "name": "ResetBot",
+      "summary": "Function ResetBot(convID) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:TakeOver",
+      "type": "function",
+      "name": "TakeOver",
+      "summary": "Function TakeOver(convID, agentID) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:CloseConversation",
+      "type": "function",
+      "name": "CloseConversation",
+      "summary": "Function CloseConversation(convID) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:GetConversation",
+      "type": "function",
+      "name": "GetConversation",
+      "summary": "Function GetConversation(id) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:GetConversationWithMessages",
+      "type": "function",
+      "name": "GetConversationWithMessages",
+      "summary": "Function GetConversationWithMessages(id) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "function:internal/usecase/conversation/manage_conversation.go:ListConversations",
+      "type": "function",
+      "name": "ListConversations",
+      "summary": "Function ListConversations(status) in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "class:internal/usecase/conversation/manage_conversation.go:ConversationRepository",
+      "type": "class",
+      "name": "ConversationRepository",
+      "summary": "Type/class ConversationRepository in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    },
+    {
+      "id": "class:internal/usecase/conversation/manage_conversation.go:ConversationService",
+      "type": "class",
+      "name": "ConversationService",
+      "summary": "Type/class ConversationService in internal/usecase/conversation/manage_conversation.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/conversation/manage_conversation.go"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "function:cmd/seed/main.go:main",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "function:cmd/seed/main.go:seedUsers",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "function:cmd/seed/main.go:seedCasbin",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "function:cmd/seed/main.go:seedKnowledge",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "function:cmd/seed/main.go:seedLLMConfig",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:cmd/seed/main.go:main",
+      "target": "function:cmd/seed/main.go:seedUsers",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:cmd/seed/main.go:main",
+      "target": "function:cmd/seed/main.go:seedKnowledge",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:cmd/seed/main.go:main",
+      "target": "function:cmd/seed/main.go:seedLLMConfig",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:cmd/seed/main.go:main",
+      "target": "function:cmd/seed/main.go:seedCasbin",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/auth/casbin.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/auth/jwt_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/auth/jwt.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/auth/policy_seeder.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/device_repository_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/knowledge_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/llm_config_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/models/conversation_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/models/device_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/models/session_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/models/technician_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/models/user_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/technician_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/adapter/postgres/user_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/config/config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/config/crypto.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/domain/customer/customer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/domain/customer/technician.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/domain/customer/user.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/domain/knowledge/knowledge.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/domain/llm/llm_config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/seed/main.go",
+      "target": "file:internal/domain/llm/llm_pricing.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/claude/claude.go",
+      "target": "function:internal/adapter/llm/claude/claude.go:NewProvider",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/claude/claude.go",
+      "target": "function:internal/adapter/llm/claude/claude.go:Chat",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/claude/claude.go",
+      "target": "function:internal/adapter/llm/claude/claude.go:TestConnection",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/claude/claude.go",
+      "target": "class:internal/adapter/llm/claude/claude.go:Provider",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/claude/claude.go",
+      "target": "class:internal/adapter/llm/claude/claude.go:claudeRequest",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/claude/claude.go",
+      "target": "class:internal/adapter/llm/claude/claude.go:claudeMessage",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/claude/claude.go",
+      "target": "class:internal/adapter/llm/claude/claude.go:claudeResponse",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/claude/claude.go",
+      "target": "file:internal/domain/llm/llm_config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/claude/claude.go",
+      "target": "file:internal/domain/llm/llm_pricing.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/gemini/gemini.go",
+      "target": "function:internal/adapter/llm/gemini/gemini.go:NewProvider",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/gemini/gemini.go",
+      "target": "function:internal/adapter/llm/gemini/gemini.go:Chat",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/gemini/gemini.go",
+      "target": "function:internal/adapter/llm/gemini/gemini.go:TestConnection",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/gemini/gemini.go",
+      "target": "class:internal/adapter/llm/gemini/gemini.go:Provider",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/gemini/gemini.go",
+      "target": "class:internal/adapter/llm/gemini/gemini.go:geminiRequest",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/gemini/gemini.go",
+      "target": "class:internal/adapter/llm/gemini/gemini.go:geminiContent",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/gemini/gemini.go",
+      "target": "class:internal/adapter/llm/gemini/gemini.go:geminiPart",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/gemini/gemini.go",
+      "target": "class:internal/adapter/llm/gemini/gemini.go:geminiGenerationConfig",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/gemini/gemini.go",
+      "target": "class:internal/adapter/llm/gemini/gemini.go:geminiResponse",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/gemini/gemini.go",
+      "target": "file:internal/domain/llm/llm_config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/gemini/gemini.go",
+      "target": "file:internal/domain/llm/llm_pricing.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/groq/groq.go",
+      "target": "function:internal/adapter/llm/groq/groq.go:NewProvider",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/groq/groq.go",
+      "target": "function:internal/adapter/llm/groq/groq.go:Chat",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/groq/groq.go",
+      "target": "function:internal/adapter/llm/groq/groq.go:TestConnection",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/groq/groq.go",
+      "target": "class:internal/adapter/llm/groq/groq.go:Provider",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/groq/groq.go",
+      "target": "class:internal/adapter/llm/groq/groq.go:chatRequest",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/groq/groq.go",
+      "target": "class:internal/adapter/llm/groq/groq.go:apiMessage",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/groq/groq.go",
+      "target": "class:internal/adapter/llm/groq/groq.go:chatResponse",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/groq/groq.go",
+      "target": "file:internal/domain/llm/llm_config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/groq/groq.go",
+      "target": "file:internal/domain/llm/llm_pricing.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/openai/openai.go",
+      "target": "function:internal/adapter/llm/openai/openai.go:NewProvider",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/openai/openai.go",
+      "target": "function:internal/adapter/llm/openai/openai.go:Chat",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/openai/openai.go",
+      "target": "function:internal/adapter/llm/openai/openai.go:TestConnection",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/openai/openai.go",
+      "target": "class:internal/adapter/llm/openai/openai.go:Provider",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/openai/openai.go",
+      "target": "class:internal/adapter/llm/openai/openai.go:chatRequest",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/openai/openai.go",
+      "target": "class:internal/adapter/llm/openai/openai.go:apiMessage",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/openai/openai.go",
+      "target": "class:internal/adapter/llm/openai/openai.go:chatResponse",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/openai/openai.go",
+      "target": "file:internal/domain/llm/llm_config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/llm/openai/openai.go",
+      "target": "file:internal/domain/llm/llm_pricing.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/mcp/tool_customer_lookup.go",
+      "target": "function:internal/adapter/mcp/tool_customer_lookup.go:customerLookup",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/mcp/tool_customer_lookup.go",
+      "target": "class:internal/adapter/mcp/tool_customer_lookup.go:customerLookupArgs",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/mcp/tool_customer_lookup.go",
+      "target": "class:internal/adapter/mcp/tool_customer_lookup.go:customerDetail",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/mcp/tool_customer_lookup.go",
+      "target": "class:internal/adapter/mcp/tool_customer_lookup.go:customerLookupOutput",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/mcp/tool_customer_lookup.go:customerLookup",
+      "target": "function:internal/adapter/mcp/tool_get_device_status.go:toolError",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/mcp/tool_customer_lookup.go:customerLookup",
+      "target": "function:internal/adapter/mcp/tool_get_device_status.go:toolOK",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/mcp/tool_customer_lookup.go:customerLookup",
+      "target": "function:internal/adapter/mcp/tool_get_device_status.go:toolError",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/mcp/tool_customer_lookup.go:customerLookup",
+      "target": "function:internal/adapter/mcp/tool_get_device_status.go:toolOK",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/mcp/tool_customer_lookup.go:customerLookup",
+      "target": "function:internal/adapter/mcp/tool_get_device_status.go:toolOK",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/mcp/tool_customer_lookup.go",
+      "target": "file:internal/domain/customer/customer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/mcp/tool_customer_lookup.go",
+      "target": "file:internal/domain/customer/technician.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/mcp/tool_customer_lookup.go",
+      "target": "file:internal/domain/customer/user.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:CreateSession",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:FindSessionByID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:FindAllSessions",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:UpdateSession",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:DeleteSession",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:CreateConversation",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:FindConversationByID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:FindConversationByIDWithMessages",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:FindConversationsBySessionID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:FindConversationsByStatus",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:FindAllConversations",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:FindActiveConversationByCustomer",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:UpdateConversation",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:CreateMessage",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:FindMessagesByConversationID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "function:internal/adapter/postgres/bot_repository.go:FindRecentMessages",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "file:internal/adapter/postgres/models/conversation_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "file:internal/adapter/postgres/models/device_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "file:internal/adapter/postgres/models/session_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "file:internal/adapter/postgres/models/technician_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "file:internal/adapter/postgres/models/user_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "file:internal/domain/bot/conversation.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "file:internal/domain/bot/message.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/bot_repository.go",
+      "target": "file:internal/domain/bot/session.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "function:internal/adapter/postgres/device_repository.go:NewDeviceRepository",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "function:internal/adapter/postgres/device_repository.go:NewCredentialVault",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "function:internal/adapter/postgres/device_repository.go:Save",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "function:internal/adapter/postgres/device_repository.go:FindByID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "function:internal/adapter/postgres/device_repository.go:FindAll",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "function:internal/adapter/postgres/device_repository.go:Update",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "function:internal/adapter/postgres/device_repository.go:Delete",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "function:internal/adapter/postgres/device_repository.go:Get",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "function:internal/adapter/postgres/device_repository.go:Save",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "class:internal/adapter/postgres/device_repository.go:DeviceRepository",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "class:internal/adapter/postgres/device_repository.go:CredentialVault",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/adapter/postgres/models/conversation_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/adapter/postgres/models/device_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/adapter/postgres/models/session_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/adapter/postgres/models/technician_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/adapter/postgres/models/user_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/domain/device/credentials.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/domain/device/device.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/domain/device/errors.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "function:internal/adapter/postgres/device_repository_test.go:setupTestDB",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "function:internal/adapter/postgres/device_repository_test.go:TestDeviceModel_Conversion",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "function:internal/adapter/postgres/device_repository_test.go:TestCredentialModel_Conversion",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "function:internal/adapter/postgres/device_repository_test.go:TestPostgresDeviceRepository_CRUD",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/postgres/device_repository_test.go:TestPostgresDeviceRepository_CRUD",
+      "target": "function:internal/adapter/postgres/device_repository_test.go:setupTestDB",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/device_repository_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/knowledge_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/llm_config_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/models/conversation_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/models/device_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/models/session_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/models/technician_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/models/user_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/technician_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/adapter/postgres/user_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/domain/device/credentials.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/domain/device/device.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/device_repository_test.go",
+      "target": "file:internal/domain/device/errors.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "function:internal/adapter/postgres/knowledge_repository.go:CreateKnowledgeEntry",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "function:internal/adapter/postgres/knowledge_repository.go:CreateKnowledge",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "function:internal/adapter/postgres/knowledge_repository.go:FindKnowledgeEntryByID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "function:internal/adapter/postgres/knowledge_repository.go:FindAllKnowledgeEntries",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "function:internal/adapter/postgres/knowledge_repository.go:FindAllKnowledge",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "function:internal/adapter/postgres/knowledge_repository.go:FindKnowledgeByID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "function:internal/adapter/postgres/knowledge_repository.go:UpdateKnowledge",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "function:internal/adapter/postgres/knowledge_repository.go:DeleteKnowledge",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "function:internal/adapter/postgres/knowledge_repository.go:UpdateKnowledgeEntry",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "function:internal/adapter/postgres/knowledge_repository.go:DeleteKnowledgeEntry",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "function:internal/adapter/postgres/knowledge_repository.go:SearchKnowledgeByTags",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "function:internal/adapter/postgres/knowledge_repository.go:Retrieve",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "file:internal/adapter/postgres/models/conversation_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "file:internal/adapter/postgres/models/device_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "file:internal/adapter/postgres/models/session_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "file:internal/adapter/postgres/models/technician_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "file:internal/adapter/postgres/models/user_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/knowledge_repository.go",
+      "target": "file:internal/domain/knowledge/knowledge.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:Create",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:FindByID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:FindActive",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:FindAll",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:Update",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:SetActive",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:Delete",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:CreateLLMConfig",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:PopulateLLMConfigAnalytics",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:FindLLMConfigByID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:FindActiveLLMConfig",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:FindAllLLMConfigs",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:UpdateLLMConfig",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:SetActiveLLMConfig",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "function:internal/adapter/postgres/llm_config_repository.go:DeleteLLMConfig",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "class:internal/adapter/postgres/llm_config_repository.go:tokenStats",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "file:internal/adapter/postgres/models/conversation_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "file:internal/adapter/postgres/models/device_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "file:internal/adapter/postgres/models/session_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "file:internal/adapter/postgres/models/technician_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "file:internal/adapter/postgres/models/user_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "file:internal/domain/llm/llm_config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/llm_config_repository.go",
+      "target": "file:internal/domain/llm/llm_pricing.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/conversation_model.go",
+      "target": "function:internal/adapter/postgres/models/conversation_model.go:ToDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/conversation_model.go",
+      "target": "function:internal/adapter/postgres/models/conversation_model.go:ConversationModelFromDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/conversation_model.go",
+      "target": "function:internal/adapter/postgres/models/conversation_model.go:ToDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/conversation_model.go",
+      "target": "function:internal/adapter/postgres/models/conversation_model.go:MessageModelFromDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/conversation_model.go",
+      "target": "class:internal/adapter/postgres/models/conversation_model.go:ConversationModel",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/conversation_model.go",
+      "target": "class:internal/adapter/postgres/models/conversation_model.go:MessageModel",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/conversation_model.go",
+      "target": "file:internal/domain/bot/conversation.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/conversation_model.go",
+      "target": "file:internal/domain/bot/message.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/conversation_model.go",
+      "target": "file:internal/domain/bot/session.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/device_model.go",
+      "target": "function:internal/adapter/postgres/models/device_model.go:TableName",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/device_model.go",
+      "target": "function:internal/adapter/postgres/models/device_model.go:TableName",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/device_model.go",
+      "target": "function:internal/adapter/postgres/models/device_model.go:ToDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/device_model.go",
+      "target": "function:internal/adapter/postgres/models/device_model.go:DeviceModelFromDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/device_model.go",
+      "target": "function:internal/adapter/postgres/models/device_model.go:ToDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/device_model.go",
+      "target": "function:internal/adapter/postgres/models/device_model.go:CredentialModelFromDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/device_model.go",
+      "target": "class:internal/adapter/postgres/models/device_model.go:DeviceModel",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/device_model.go",
+      "target": "class:internal/adapter/postgres/models/device_model.go:CredentialModel",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/device_model.go",
+      "target": "file:internal/domain/device/credentials.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/device_model.go",
+      "target": "file:internal/domain/device/device.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/device_model.go",
+      "target": "file:internal/domain/device/errors.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "target": "function:internal/adapter/postgres/models/knowledge_model.go:ToDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "target": "function:internal/adapter/postgres/models/knowledge_model.go:KnowledgeEntryModelFromDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "target": "class:internal/adapter/postgres/models/knowledge_model.go:KnowledgeEntryModel",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "target": "file:internal/domain/knowledge/knowledge.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "target": "function:internal/adapter/postgres/models/llm_config_model.go:ToDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "target": "function:internal/adapter/postgres/models/llm_config_model.go:LLMConfigModelFromDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "target": "class:internal/adapter/postgres/models/llm_config_model.go:LLMConfigModel",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "target": "file:internal/domain/llm/llm_config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "target": "file:internal/domain/llm/llm_pricing.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/session_model.go",
+      "target": "function:internal/adapter/postgres/models/session_model.go:ToDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/session_model.go",
+      "target": "function:internal/adapter/postgres/models/session_model.go:WASessionModelFromDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/session_model.go",
+      "target": "class:internal/adapter/postgres/models/session_model.go:WASessionModel",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/session_model.go",
+      "target": "file:internal/domain/bot/conversation.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/session_model.go",
+      "target": "file:internal/domain/bot/message.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/session_model.go",
+      "target": "file:internal/domain/bot/session.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/technician_model.go",
+      "target": "function:internal/adapter/postgres/models/technician_model.go:ToDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/technician_model.go",
+      "target": "function:internal/adapter/postgres/models/technician_model.go:TechnicianModelFromDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/technician_model.go",
+      "target": "class:internal/adapter/postgres/models/technician_model.go:TechnicianModel",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/technician_model.go",
+      "target": "file:internal/domain/customer/customer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/technician_model.go",
+      "target": "file:internal/domain/customer/technician.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/technician_model.go",
+      "target": "file:internal/domain/customer/user.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/user_model.go",
+      "target": "function:internal/adapter/postgres/models/user_model.go:ToDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/user_model.go",
+      "target": "function:internal/adapter/postgres/models/user_model.go:UserModelFromDomain",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/user_model.go",
+      "target": "class:internal/adapter/postgres/models/user_model.go:UserModel",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/user_model.go",
+      "target": "file:internal/domain/customer/customer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/user_model.go",
+      "target": "file:internal/domain/customer/technician.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/models/user_model.go",
+      "target": "file:internal/domain/customer/user.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/store.go",
+      "target": "function:internal/adapter/postgres/store.go:NewStore",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/store.go",
+      "target": "function:internal/adapter/postgres/store.go:DB",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/store.go",
+      "target": "class:internal/adapter/postgres/store.go:Store",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/store.go",
+      "target": "file:internal/adapter/postgres/models/conversation_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/store.go",
+      "target": "file:internal/adapter/postgres/models/device_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/store.go",
+      "target": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/store.go",
+      "target": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/store.go",
+      "target": "file:internal/adapter/postgres/models/session_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/store.go",
+      "target": "file:internal/adapter/postgres/models/technician_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/store.go",
+      "target": "file:internal/adapter/postgres/models/user_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "function:internal/adapter/postgres/technician_repository.go:CreateTechnician",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "function:internal/adapter/postgres/technician_repository.go:FindAllTechnicians",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "function:internal/adapter/postgres/technician_repository.go:FindActiveTechnicians",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "function:internal/adapter/postgres/technician_repository.go:FindTechnicianByID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "function:internal/adapter/postgres/technician_repository.go:UpdateTechnician",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "function:internal/adapter/postgres/technician_repository.go:DeleteTechnician",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "file:internal/adapter/postgres/models/conversation_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "file:internal/adapter/postgres/models/device_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "file:internal/adapter/postgres/models/session_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "file:internal/adapter/postgres/models/technician_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "file:internal/adapter/postgres/models/user_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "file:internal/domain/customer/customer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "file:internal/domain/customer/technician.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/technician_repository.go",
+      "target": "file:internal/domain/customer/user.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "function:internal/adapter/postgres/user_repository.go:CreateUser",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "function:internal/adapter/postgres/user_repository.go:FindUserByID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "function:internal/adapter/postgres/user_repository.go:FindUserByUsername",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "function:internal/adapter/postgres/user_repository.go:FindUserByEmail",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "function:internal/adapter/postgres/user_repository.go:CountUsers",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "file:internal/adapter/postgres/models/conversation_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "file:internal/adapter/postgres/models/device_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "file:internal/adapter/postgres/models/knowledge_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "file:internal/adapter/postgres/models/llm_config_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "file:internal/adapter/postgres/models/session_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "file:internal/adapter/postgres/models/technician_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "file:internal/adapter/postgres/models/user_model.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "file:internal/domain/customer/customer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "file:internal/domain/customer/technician.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/postgres/user_repository.go",
+      "target": "file:internal/domain/customer/user.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:NewStore",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:Get",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:Set",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:Delete",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:sessionKey",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:summaryKey",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:SaveSessionMessages",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:GetSessionMessages",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:DeleteSession",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:SetSessionSummary",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:GetSessionSummary",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:RefreshSessionTTL",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:rateLimitKey",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:muteKey",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:spamKey",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:IncrementRateLimit",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:GetRateLimitCount",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:MuteNumber",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:IsMuted",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:UnmuteNumber",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "function:internal/adapter/redis/store.go:RecordMessageForSpamDetection",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "class:internal/adapter/redis/store.go:Store",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:SaveSessionMessages",
+      "target": "function:internal/adapter/redis/store.go:sessionKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:GetSessionMessages",
+      "target": "function:internal/adapter/redis/store.go:sessionKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:DeleteSession",
+      "target": "function:internal/adapter/redis/store.go:sessionKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:DeleteSession",
+      "target": "function:internal/adapter/redis/store.go:summaryKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:SetSessionSummary",
+      "target": "function:internal/adapter/redis/store.go:summaryKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:GetSessionSummary",
+      "target": "function:internal/adapter/redis/store.go:summaryKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:RefreshSessionTTL",
+      "target": "function:internal/adapter/redis/store.go:sessionKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:RefreshSessionTTL",
+      "target": "function:internal/adapter/redis/store.go:summaryKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:IncrementRateLimit",
+      "target": "function:internal/adapter/redis/store.go:rateLimitKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:GetRateLimitCount",
+      "target": "function:internal/adapter/redis/store.go:rateLimitKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:MuteNumber",
+      "target": "function:internal/adapter/redis/store.go:muteKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:IsMuted",
+      "target": "function:internal/adapter/redis/store.go:muteKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:UnmuteNumber",
+      "target": "function:internal/adapter/redis/store.go:muteKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/redis/store.go:RecordMessageForSpamDetection",
+      "target": "function:internal/adapter/redis/store.go:spamKey",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "file:internal/domain/llm/llm_config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/redis/store.go",
+      "target": "file:internal/domain/llm/llm_pricing.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/bot/conversation.go",
+      "target": "class:internal/domain/bot/conversation.go:Conversation",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/bot/message.go",
+      "target": "class:internal/domain/bot/message.go:Message",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/bot/session.go",
+      "target": "class:internal/domain/bot/session.go:WASession",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/customer/customer.go",
+      "target": "class:internal/domain/customer/customer.go:Customer",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/customer/customer.go",
+      "target": "class:internal/domain/customer/customer.go:Subscription",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/customer/technician.go",
+      "target": "class:internal/domain/customer/technician.go:Technician",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/customer/user.go",
+      "target": "class:internal/domain/customer/user.go:User",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/knowledge/knowledge.go",
+      "target": "class:internal/domain/knowledge/knowledge.go:KnowledgeEntry",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/llm/llm_config.go",
+      "target": "class:internal/domain/llm/llm_config.go:LLMConfig",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/llm/llm_config.go",
+      "target": "class:internal/domain/llm/llm_config.go:ChatMessage",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/llm/llm_config.go",
+      "target": "class:internal/domain/llm/llm_config.go:ChatResponse",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/llm/llm_pricing.go",
+      "target": "function:internal/domain/llm/llm_pricing.go:GetDefaultModelPricing",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/domain/llm/llm_pricing.go",
+      "target": "class:internal/domain/llm/llm_pricing.go:ModelPricing",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "function:internal/driver/whatsapp/event_handler.go:NewEventHandler",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "function:internal/driver/whatsapp/event_handler.go:MakeStatusCallback",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "function:internal/driver/whatsapp/event_handler.go:handleStatusUpdate",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "function:internal/driver/whatsapp/event_handler.go:MakeMessageCallback",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "class:internal/driver/whatsapp/event_handler.go:EventHandler",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/postgres/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/postgres/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/postgres/device_repository_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/postgres/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/postgres/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/postgres/knowledge_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/postgres/llm_config_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/postgres/store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/postgres/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/postgres/technician_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/postgres/user_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/ws/device_stream_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/ws/hub.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/ws/router.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/adapter/ws/sse_hub.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/domain/bot/conversation.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/domain/bot/message.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/event_handler.go",
+      "target": "file:internal/domain/bot/session.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:NewConversationService",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:NewService",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:GetOrCreateConversation",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:AddMessageWithConfig",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:AddMessage",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:GetHistory",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:Escalate",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:ResetBot",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:TakeOver",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:CloseConversation",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:GetConversation",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:GetConversationWithMessages",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:ListConversations",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "class:internal/usecase/conversation/manage_conversation.go:ConversationRepository",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "class:internal/usecase/conversation/manage_conversation.go:ConversationService",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/usecase/conversation/manage_conversation.go:NewService",
+      "target": "function:internal/usecase/conversation/manage_conversation.go:NewConversationService",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "file:internal/domain/bot/conversation.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "file:internal/domain/bot/message.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/conversation/manage_conversation.go",
+      "target": "file:internal/domain/bot/session.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    }
+  ]
+}

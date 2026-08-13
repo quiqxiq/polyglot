@@ -1,0 +1,1741 @@
+{
+ "nodes": [
+  {
+   "id": "file:cmd/probe/main.go",
+   "type": "file",
+   "name": "main.go",
+   "filePath": "cmd/probe/main.go",
+   "summary": "Standalone probe binary that tests connectivity to external services (database, Redis, WhatsApp, MCP, RPC) for diagnostics.",
+   "tags": [
+    "entry-point",
+    "probe",
+    "network",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:cmd/probe/main.go:main",
+   "type": "function",
+   "name": "main",
+   "filePath": "cmd/probe/main.go",
+   "lineRange": [
+    19,
+    39
+   ],
+   "summary": "Implements the main logic for this component.",
+   "tags": [
+    "function",
+    "entry-point",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:cmd/probe/main.go:runHeartbeatLoop",
+   "type": "function",
+   "name": "runHeartbeatLoop",
+   "filePath": "cmd/probe/main.go",
+   "lineRange": [
+    41,
+    66
+   ],
+   "summary": "Implements the runHeartbeatLoop logic (inputs: ctx, client, probeID) for this component.",
+   "tags": [
+    "function",
+    "entry-point",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:cmd/probe/main.go:runTelemetryLoop",
+   "type": "function",
+   "name": "runTelemetryLoop",
+   "filePath": "cmd/probe/main.go",
+   "lineRange": [
+    68,
+    87
+   ],
+   "summary": "Implements the runTelemetryLoop logic (inputs: ctx, client, probeID) for this component.",
+   "tags": [
+    "function",
+    "entry-point",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:cmd/probe/main.go:measureTargetLatency",
+   "type": "function",
+   "name": "measureTargetLatency",
+   "filePath": "cmd/probe/main.go",
+   "lineRange": [
+    89,
+    102
+   ],
+   "summary": "Implements the measureTargetLatency logic (inputs: target) for this component.",
+   "tags": [
+    "function",
+    "entry-point",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:cmd/probe/main.go:ReportStatus",
+   "type": "function",
+   "name": "ReportStatus",
+   "filePath": "cmd/probe/main.go",
+   "lineRange": [
+    116,
+    126
+   ],
+   "summary": "Implements the ReportStatus logic (inputs: ctx, req) for this component.",
+   "tags": [
+    "function",
+    "entry-point",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/auth/auth_handler.go",
+   "type": "file",
+   "name": "auth_handler.go",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "summary": "Go source file implementing the ConnectRPC/REST handler adapter — ConnectRPC/REST handler adapter logic for the polyglot backend. Exports AuthConnectHandler, NewAuthConnectHandler, Login, GetMe, RefreshToken, NewAuthServiceHandler.",
+   "tags": [
+    "api-handler",
+    "connectrpc",
+    "adapter",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthConnectHandler",
+   "type": "function",
+   "name": "NewAuthConnectHandler",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "lineRange": [
+    27,
+    32
+   ],
+   "summary": "Constructor that creates and initializes a AuthConnectHandler instance with the provided configuration.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/auth_handler.go:Login",
+   "type": "function",
+   "name": "Login",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "lineRange": [
+    34,
+    72
+   ],
+   "summary": "Implements the Login logic (inputs: ctx, req) for this component.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/auth_handler.go:GetMe",
+   "type": "function",
+   "name": "GetMe",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "lineRange": [
+    74,
+    112
+   ],
+   "summary": "Retrieves me data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/auth_handler.go:RefreshToken",
+   "type": "function",
+   "name": "RefreshToken",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "lineRange": [
+    114,
+    124
+   ],
+   "summary": "Implements the RefreshToken logic (inputs: ctx, req) for this component.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthServiceHandler",
+   "type": "function",
+   "name": "NewAuthServiceHandler",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "lineRange": [
+    126,
+    149
+   ],
+   "summary": "Constructor that creates and initializes a AuthServiceHandler instance with the provided configuration.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/connect/auth/auth_handler.go:AuthConnectHandler",
+   "type": "class",
+   "name": "AuthConnectHandler",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "lineRange": [
+    22,
+    25
+   ],
+   "summary": "AuthConnectHandler Go type with 3 method(s) [Login, GetMe, RefreshToken] and 2 field(s), defining the authconnecthandler behavior of this component.",
+   "tags": [
+    "class",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "type": "file",
+   "name": "rbac_handler.go",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "summary": "Go source file implementing the ConnectRPC/REST handler adapter — ConnectRPC/REST handler adapter logic for the polyglot backend. Exports RBACConnectHandler, NewRBACConnectHandler, ListPolicies, AddPolicy, RemovePolicy, ListRoleAssignments.",
+   "tags": [
+    "api-handler",
+    "connectrpc",
+    "adapter",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACConnectHandler",
+   "type": "function",
+   "name": "NewRBACConnectHandler",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    19,
+    21
+   ],
+   "summary": "Constructor that creates and initializes a RBACConnectHandler instance with the provided configuration.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:ListPolicies",
+   "type": "function",
+   "name": "ListPolicies",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    23,
+    45
+   ],
+   "summary": "Retrieves policies data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:AddPolicy",
+   "type": "function",
+   "name": "AddPolicy",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    47,
+    62
+   ],
+   "summary": "Creates a new policy record or resource.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:RemovePolicy",
+   "type": "function",
+   "name": "RemovePolicy",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    64,
+    79
+   ],
+   "summary": "Removes policy from the system.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:ListRoleAssignments",
+   "type": "function",
+   "name": "ListRoleAssignments",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    81,
+    102
+   ],
+   "summary": "Retrieves roleassignments data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:AssignRole",
+   "type": "function",
+   "name": "AssignRole",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    104,
+    119
+   ],
+   "summary": "Implements the AssignRole logic (inputs: ctx, req) for this component.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:UnassignRole",
+   "type": "function",
+   "name": "UnassignRole",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    121,
+    136
+   ],
+   "summary": "Implements the UnassignRole logic (inputs: ctx, req) for this component.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACServiceHandler",
+   "type": "function",
+   "name": "NewRBACServiceHandler",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    138,
+    152
+   ],
+   "summary": "Constructor that creates and initializes a RBACServiceHandler instance with the provided configuration.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/connect/auth/rbac_handler.go:RBACConnectHandler",
+   "type": "class",
+   "name": "RBACConnectHandler",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    15,
+    17
+   ],
+   "summary": "RBACConnectHandler Go type with 6 method(s) [ListPolicies, AddPolicy, RemovePolicy, ListRoleAssignments, AssignRole, …] and 1 field(s), defining the rbacconnecthandler behavior of this component.",
+   "tags": [
+    "class",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/billing/billing_handler.go",
+   "type": "file",
+   "name": "billing_handler.go",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "summary": "Go source file implementing the ConnectRPC/REST handler adapter — ConnectRPC/REST handler adapter logic for the polyglot backend. Exports BillingConnectHandler, NewBillingConnectHandler, ListInvoices, GetInvoice, CreateInvoice, PayInvoice.",
+   "tags": [
+    "api-handler",
+    "connectrpc",
+    "adapter",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingConnectHandler",
+   "type": "function",
+   "name": "NewBillingConnectHandler",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    30,
+    38
+   ],
+   "summary": "Constructor that creates and initializes a BillingConnectHandler instance with the provided configuration.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:ListInvoices",
+   "type": "function",
+   "name": "ListInvoices",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    40,
+    63
+   ],
+   "summary": "Retrieves invoices data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:GetInvoice",
+   "type": "function",
+   "name": "GetInvoice",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    65,
+    88
+   ],
+   "summary": "Retrieves invoice data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:CreateInvoice",
+   "type": "function",
+   "name": "CreateInvoice",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    90,
+    130
+   ],
+   "summary": "Creates a new invoice record or resource.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:PayInvoice",
+   "type": "function",
+   "name": "PayInvoice",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    132,
+    156
+   ],
+   "summary": "Implements the PayInvoice logic (inputs: ctx, req) for this component.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:ListSubscriptions",
+   "type": "function",
+   "name": "ListSubscriptions",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    158,
+    182
+   ],
+   "summary": "Retrieves subscriptions data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:CreateSubscription",
+   "type": "function",
+   "name": "CreateSubscription",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    184,
+    222
+   ],
+   "summary": "Creates a new subscription record or resource.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:CancelSubscription",
+   "type": "function",
+   "name": "CancelSubscription",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    224,
+    249
+   ],
+   "summary": "Implements the CancelSubscription logic (inputs: ctx, req) for this component.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingServiceHandler",
+   "type": "function",
+   "name": "NewBillingServiceHandler",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    251,
+    269
+   ],
+   "summary": "Constructor that creates and initializes a BillingServiceHandler instance with the provided configuration.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/connect/billing/billing_handler.go:BillingConnectHandler",
+   "type": "class",
+   "name": "BillingConnectHandler",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    25,
+    28
+   ],
+   "summary": "BillingConnectHandler Go type with 7 method(s) [ListInvoices, GetInvoice, CreateInvoice, PayInvoice, ListSubscriptions, …] and 2 field(s), defining the billingconnecthandler behavior of this component.",
+   "tags": [
+    "class",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:main",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:runHeartbeatLoop",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:runTelemetryLoop",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:measureTargetLatency",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:ReportStatus",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:ReportStatus",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:Login",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:GetMe",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:RefreshToken",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthServiceHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "class:internal/adapter/connect/auth/auth_handler.go:AuthConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "class:internal/adapter/connect/auth/auth_handler.go:AuthConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:Login",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:GetMe",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:RefreshToken",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthServiceHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/auth/casbin.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/auth/jwt_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/auth/jwt.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/auth/policy_seeder.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/connect/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/device_repository_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/knowledge_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/technician_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/user_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:ListPolicies",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:AddPolicy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:RemovePolicy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:ListRoleAssignments",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:AssignRole",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:UnassignRole",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACServiceHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "class:internal/adapter/connect/auth/rbac_handler.go:RBACConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "class:internal/adapter/connect/auth/rbac_handler.go:RBACConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:ListPolicies",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:AddPolicy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:RemovePolicy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:ListRoleAssignments",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:AssignRole",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:UnassignRole",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACServiceHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:internal/adapter/auth/casbin.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:internal/adapter/auth/jwt_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:internal/adapter/auth/jwt.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:internal/adapter/auth/policy_seeder.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:internal/adapter/connect/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:ListInvoices",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:GetInvoice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:CreateInvoice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:PayInvoice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:ListSubscriptions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:CreateSubscription",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:CancelSubscription",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingServiceHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "class:internal/adapter/connect/billing/billing_handler.go:BillingConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "class:internal/adapter/connect/billing/billing_handler.go:BillingConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:ListInvoices",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:GetInvoice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:CreateInvoice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:PayInvoice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:ListSubscriptions",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:CreateSubscription",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:CancelSubscription",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingServiceHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/adapter/connect/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/domain/billing/invoice.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/domain/billing/payment.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/usecase/billing/manage_invoice.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/usecase/billing/manage_plan.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/usecase/billing/manage_subscription.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

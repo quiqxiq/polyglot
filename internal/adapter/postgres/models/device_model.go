@@ -182,4 +182,3 @@ func CredentialModelFromDomain(deviceID string, c device.Credentials, key string
 		UpdatedAt:  time.Now(),
 	}, nil
 }
-

@@ -7,6 +7,8 @@ import (
 )
 
 // ConversationModel is the GORM database model for Conversations.
+// TableName eksplisit ke `conversations` (migrasi 000002) — tanpa ini GORM
+// memakai `conversation_models`, divergen dari migrasi (prod).
 type ConversationModel struct {
 	ID               uint   `gorm:"primaryKey"`
 	SessionID        uint   `gorm:"index"`
@@ -19,6 +21,9 @@ type ConversationModel struct {
 
 	Messages []MessageModel `gorm:"foreignKey:ConversationID"`
 }
+
+// TableName maps ConversationModel ke tabel migrasi `conversations`.
+func (ConversationModel) TableName() string { return "conversations" }
 
 func (m *ConversationModel) ToDomain() *bot.Conversation {
 	if m == nil {
@@ -60,6 +65,8 @@ func ConversationModelFromDomain(c *bot.Conversation) *ConversationModel {
 }
 
 // MessageModel is the GORM database model for Messages.
+// TableName eksplisit ke `messages` (migrasi 000002) — tanpa ini GORM memakai
+// `message_models`, divergen dari migrasi (prod).
 type MessageModel struct {
 	ID             uint   `gorm:"primaryKey"`
 	ConversationID uint   `gorm:"index"`
@@ -70,6 +77,9 @@ type MessageModel struct {
 	LLMConfigID    *uint
 	CreatedAt      time.Time
 }
+
+// TableName maps MessageModel ke tabel migrasi `messages`.
+func (MessageModel) TableName() string { return "messages" }
 
 func (m *MessageModel) ToDomain() *bot.Message {
 	if m == nil {

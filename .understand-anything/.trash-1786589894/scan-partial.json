@@ -1,0 +1,1673 @@
+{
+  "scriptCompleted": true,
+  "files": [
+    {
+      "path": ".dockerignore",
+      "language": "unknown",
+      "sizeLines": 11,
+      "fileCategory": "infra"
+    },
+    {
+      "path": ".env.example",
+      "language": "config",
+      "sizeLines": 56,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "language": "yaml",
+      "sizeLines": 31,
+      "fileCategory": "infra"
+    },
+    {
+      "path": ".golangci.yml",
+      "language": "yaml",
+      "sizeLines": 29,
+      "fileCategory": "config"
+    },
+    {
+      "path": ".mcp.json",
+      "language": "json",
+      "sizeLines": 13,
+      "fileCategory": "config"
+    },
+    {
+      "path": "AGENTS.md",
+      "language": "markdown",
+      "sizeLines": 801,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "analisis-api-genieacs.md",
+      "language": "markdown",
+      "sizeLines": 311,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "api/gen/v1/auth_grpc.pb.go",
+      "language": "go",
+      "sizeLines": 197,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/auth.pb.go",
+      "language": "go",
+      "sizeLines": 470,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/billing_grpc.pb.go",
+      "language": "go",
+      "sizeLines": 349,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/billing.pb.go",
+      "language": "go",
+      "sizeLines": 1026,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/bot_grpc.pb.go",
+      "language": "go",
+      "sizeLines": 273,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/bot.pb.go",
+      "language": "go",
+      "sizeLines": 762,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/customer_grpc.pb.go",
+      "language": "go",
+      "sizeLines": 311,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/customer.pb.go",
+      "language": "go",
+      "sizeLines": 692,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/device_grpc.pb.go",
+      "language": "go",
+      "sizeLines": 433,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/device.pb.go",
+      "language": "go",
+      "sizeLines": 1660,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/hotspot_grpc.pb.go",
+      "language": "go",
+      "sizeLines": 511,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/hotspot.pb.go",
+      "language": "go",
+      "sizeLines": 2056,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/knowledge_grpc.pb.go",
+      "language": "go",
+      "sizeLines": 691,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/knowledge.pb.go",
+      "language": "go",
+      "sizeLines": 2225,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/probe_grpc.pb.go",
+      "language": "go",
+      "sizeLines": 154,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/probe.pb.go",
+      "language": "go",
+      "sizeLines": 353,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/rbac_grpc.pb.go",
+      "language": "go",
+      "sizeLines": 311,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/rbac.pb.go",
+      "language": "go",
+      "sizeLines": 772,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/whatsapp_grpc.pb.go",
+      "language": "go",
+      "sizeLines": 425,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/gen/v1/whatsapp.pb.go",
+      "language": "go",
+      "sizeLines": 1134,
+      "fileCategory": "code"
+    },
+    {
+      "path": "api/mcp-tools.md",
+      "language": "markdown",
+      "sizeLines": 15,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "api/openapi.yaml",
+      "language": "yaml",
+      "sizeLines": 5,
+      "fileCategory": "config"
+    },
+    {
+      "path": "api/proto/v1/auth.proto",
+      "language": "protobuf",
+      "sizeLines": 44,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/billing.proto",
+      "language": "protobuf",
+      "sizeLines": 90,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/bot.proto",
+      "language": "protobuf",
+      "sizeLines": 67,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/customer.proto",
+      "language": "protobuf",
+      "sizeLines": 67,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/device.proto",
+      "language": "protobuf",
+      "sizeLines": 165,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/hotspot.proto",
+      "language": "protobuf",
+      "sizeLines": 200,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/knowledge.proto",
+      "language": "protobuf",
+      "sizeLines": 196,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/probe.proto",
+      "language": "protobuf",
+      "sizeLines": 35,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/rbac.proto",
+      "language": "protobuf",
+      "sizeLines": 63,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/whatsapp.proto",
+      "language": "protobuf",
+      "sizeLines": 97,
+      "fileCategory": "data"
+    },
+    {
+      "path": "CLAUDE.md",
+      "language": "markdown",
+      "sizeLines": 790,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "cmd/probe/main.go",
+      "language": "go",
+      "sizeLines": 132,
+      "fileCategory": "code"
+    },
+    {
+      "path": "cmd/seed/main.go",
+      "language": "go",
+      "sizeLines": 226,
+      "fileCategory": "code"
+    },
+    {
+      "path": "cmd/server/main.go",
+      "language": "go",
+      "sizeLines": 42,
+      "fileCategory": "code"
+    },
+    {
+      "path": "deployments/docker-compose.prod.yml",
+      "language": "yaml",
+      "sizeLines": 61,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "deployments/docker-compose.yml",
+      "language": "yaml",
+      "sizeLines": 77,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "deployments/docker/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 38,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "docs/adr/0001-pilih-gin-daripada-echo.md",
+      "language": "markdown",
+      "sizeLines": 15,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/adr/0002-devicedriver-tanpa-session-terpisah.md",
+      "language": "markdown",
+      "sizeLines": 42,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/adr/0003-mikrotik-dual-connection-streaming.md",
+      "language": "markdown",
+      "sizeLines": 113,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/adr/0004-generic-cli-driver-scrapligo.md",
+      "language": "markdown",
+      "sizeLines": 174,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/BACKEND-MIGRATION-ROADMAP.md",
+      "language": "markdown",
+      "sizeLines": 84,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "go.mod",
+      "language": "mod",
+      "sizeLines": 107,
+      "fileCategory": "config"
+    },
+    {
+      "path": "go.sum",
+      "language": "sum",
+      "sizeLines": 455,
+      "fileCategory": "config"
+    },
+    {
+      "path": "internal/adapter/auth/casbin.go",
+      "language": "go",
+      "sizeLines": 103,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/auth/jwt_test.go",
+      "language": "go",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/auth/jwt.go",
+      "language": "go",
+      "sizeLines": 87,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/auth/policy_seeder.go",
+      "language": "go",
+      "sizeLines": 50,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/auth/auth_handler.go",
+      "language": "go",
+      "sizeLines": 149,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/auth/rbac_handler.go",
+      "language": "go",
+      "sizeLines": 152,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/billing/billing_handler.go",
+      "language": "go",
+      "sizeLines": 269,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/bot/bot_conversation_handler.go",
+      "language": "go",
+      "sizeLines": 96,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/bot/bot_service_handler.go",
+      "language": "go",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/bot/knowledge_handler.go",
+      "language": "go",
+      "sizeLines": 56,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/bot/knowledge_service_handler.go",
+      "language": "go",
+      "sizeLines": 80,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/bot/llm_config_handler.go",
+      "language": "go",
+      "sizeLines": 72,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/bot/whatsapp_service_handler.go",
+      "language": "go",
+      "sizeLines": 78,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/bot/whatsapp_session_handler.go",
+      "language": "go",
+      "sizeLines": 148,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/codec.go",
+      "language": "go",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/customer/customer_handler.go",
+      "language": "go",
+      "sizeLines": 88,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/customer/technician_handler.go",
+      "language": "go",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/device/device_handler_test.go",
+      "language": "go",
+      "sizeLines": 107,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/device/device_handler.go",
+      "language": "go",
+      "sizeLines": 660,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/device/probe_handler.go",
+      "language": "go",
+      "sizeLines": 69,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/errors.go",
+      "language": "go",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/hotspot/hotspot_handler.go",
+      "language": "go",
+      "sizeLines": 248,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/hotspot/profile_user_handler.go",
+      "language": "go",
+      "sizeLines": 104,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/hotspot/session_handler.go",
+      "language": "go",
+      "sizeLines": 101,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/connect/hotspot/system_report_handler.go",
+      "language": "go",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/http/middleware/auth.go",
+      "language": "go",
+      "sizeLines": 45,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/http/middleware/cors.go",
+      "language": "go",
+      "sizeLines": 45,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/http/middleware/rbac.go",
+      "language": "go",
+      "sizeLines": 52,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/llm/claude/claude.go",
+      "language": "go",
+      "sizeLines": 141,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/llm/gemini/gemini.go",
+      "language": "go",
+      "sizeLines": 149,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/llm/groq/groq.go",
+      "language": "go",
+      "sizeLines": 129,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/llm/openai/openai.go",
+      "language": "go",
+      "sizeLines": 129,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/llm/provider.go",
+      "language": "go",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/mcp/server_test.go",
+      "language": "go",
+      "sizeLines": 291,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/mcp/server.go",
+      "language": "go",
+      "sizeLines": 123,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/mcp/tool_customer_lookup.go",
+      "language": "go",
+      "sizeLines": 93,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/mcp/tool_get_device_status.go",
+      "language": "go",
+      "sizeLines": 117,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/mcp/tool_mikhmon_generate_voucher.go",
+      "language": "go",
+      "sizeLines": 66,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/mcp/tool_mikhmon_get_dashboard.go",
+      "language": "go",
+      "sizeLines": 67,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/mcp/tool_mikhmon_kick_session.go",
+      "language": "go",
+      "sizeLines": 67,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/mcp/tool_push_config.go",
+      "language": "go",
+      "sizeLines": 56,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/mcp/tool_run_command.go",
+      "language": "go",
+      "sizeLines": 63,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/mcp/tool_search_knowledge.go",
+      "language": "go",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/mcp/tools_test.go",
+      "language": "go",
+      "sizeLines": 63,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/bot_repository.go",
+      "language": "go",
+      "sizeLines": 189,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/customer_repository.go",
+      "language": "go",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/device_repository_test.go",
+      "language": "go",
+      "sizeLines": 144,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/device_repository.go",
+      "language": "go",
+      "sizeLines": 110,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/invoice_repository.go",
+      "language": "go",
+      "sizeLines": 59,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/knowledge_repository.go",
+      "language": "go",
+      "sizeLines": 102,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/llm_config_repository.go",
+      "language": "go",
+      "sizeLines": 157,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/models/conversation_model.go",
+      "language": "go",
+      "sizeLines": 104,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/models/device_model.go",
+      "language": "go",
+      "sizeLines": 185,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/models/knowledge_model.go",
+      "language": "go",
+      "sizeLines": 45,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/models/llm_config_model.go",
+      "language": "go",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/models/session_model.go",
+      "language": "go",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/models/technician_model.go",
+      "language": "go",
+      "sizeLines": 51,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/models/user_model.go",
+      "language": "go",
+      "sizeLines": 51,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/store.go",
+      "language": "go",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/subscription_repository.go",
+      "language": "go",
+      "sizeLines": 59,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/technician_repository.go",
+      "language": "go",
+      "sizeLines": 67,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/postgres/user_repository.go",
+      "language": "go",
+      "sizeLines": 58,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/redis/store.go",
+      "language": "go",
+      "sizeLines": 176,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/vault/aes_vault.go",
+      "language": "go",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/ws/device_stream_handler.go",
+      "language": "go",
+      "sizeLines": 113,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/ws/hub.go",
+      "language": "go",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/ws/router.go",
+      "language": "go",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/adapter/ws/sse_hub.go",
+      "language": "go",
+      "sizeLines": 88,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/app/app.go",
+      "language": "go",
+      "sizeLines": 220,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/audit/writer.go",
+      "language": "go",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/config/config.go",
+      "language": "go",
+      "sizeLines": 136,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/config/crypto.go",
+      "language": "go",
+      "sizeLines": 70,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/config/rbac_model.conf",
+      "language": "conf",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/config/system_prompt.md",
+      "language": "markdown",
+      "sizeLines": 14,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/domain/billing/invoice.go",
+      "language": "go",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/billing/payment.go",
+      "language": "go",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/bot/conversation.go",
+      "language": "go",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/bot/message.go",
+      "language": "go",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/bot/session.go",
+      "language": "go",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/command/command.go",
+      "language": "go",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/command/policy.go",
+      "language": "go",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/customer/customer.go",
+      "language": "go",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/customer/technician.go",
+      "language": "go",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/customer/user.go",
+      "language": "go",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/device/credentials.go",
+      "language": "go",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/device/device.go",
+      "language": "go",
+      "sizeLines": 71,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/device/errors.go",
+      "language": "go",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/knowledge/knowledge.go",
+      "language": "go",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/llm/llm_config.go",
+      "language": "go",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/llm/llm_pricing.go",
+      "language": "go",
+      "sizeLines": 61,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/plan/plan.go",
+      "language": "go",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/session/session.go",
+      "language": "go",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/domain/subscription/subscription.go",
+      "language": "go",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/cisco/commands.go",
+      "language": "go",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/cisco/driver.go",
+      "language": "go",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/genericcli/catalog_test.go",
+      "language": "go",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/genericcli/catalog.go",
+      "language": "go",
+      "sizeLines": 87,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/genericcli/session.go",
+      "language": "go",
+      "sizeLines": 261,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/genericssh/commands.go",
+      "language": "go",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/genericssh/driver.go",
+      "language": "go",
+      "sizeLines": 104,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/genericssh/pty.go",
+      "language": "go",
+      "sizeLines": 165,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/generictelnet/driver.go",
+      "language": "go",
+      "sizeLines": 92,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/genieacs/client_test.go",
+      "language": "go",
+      "sizeLines": 336,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/genieacs/client.go",
+      "language": "go",
+      "sizeLines": 440,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/genieacs/commands_test.go",
+      "language": "go",
+      "sizeLines": 221,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/genieacs/commands.go",
+      "language": "go",
+      "sizeLines": 136,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/genieacs/errors.go",
+      "language": "go",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/huaweiolt/commands.go",
+      "language": "go",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/huaweiolt/driver.go",
+      "language": "go",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/commands_test.go",
+      "language": "go",
+      "sizeLines": 212,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/commands.go",
+      "language": "go",
+      "sizeLines": 178,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/connect.go",
+      "language": "go",
+      "sizeLines": 151,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/dhcp.go",
+      "language": "go",
+      "sizeLines": 171,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/driver.go",
+      "language": "go",
+      "sizeLines": 267,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/drivers_test.go",
+      "language": "go",
+      "sizeLines": 386,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/errors.go",
+      "language": "go",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/firewall.go",
+      "language": "go",
+      "sizeLines": 249,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot_active.go",
+      "language": "go",
+      "sizeLines": 186,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot_profile.go",
+      "language": "go",
+      "sizeLines": 150,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot_user.go",
+      "language": "go",
+      "sizeLines": 177,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/comment_test.go",
+      "language": "go",
+      "sizeLines": 79,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/comment.go",
+      "language": "go",
+      "sizeLines": 142,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/expire_test.go",
+      "language": "go",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/expire.go",
+      "language": "go",
+      "sizeLines": 106,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/profile_test.go",
+      "language": "go",
+      "sizeLines": 62,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/profile.go",
+      "language": "go",
+      "sizeLines": 161,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/report_test.go",
+      "language": "go",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/report.go",
+      "language": "go",
+      "sizeLines": 97,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/voucher_test.go",
+      "language": "go",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/voucher.go",
+      "language": "go",
+      "sizeLines": 189,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/iface.go",
+      "language": "go",
+      "sizeLines": 181,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/ip.go",
+      "language": "go",
+      "sizeLines": 176,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/pool.go",
+      "language": "go",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp_active_test.go",
+      "language": "go",
+      "sizeLines": 166,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp_active.go",
+      "language": "go",
+      "sizeLines": 139,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp_profile.go",
+      "language": "go",
+      "sizeLines": 196,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp_test.go",
+      "language": "go",
+      "sizeLines": 166,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp.go",
+      "language": "go",
+      "sizeLines": 242,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/queue.go",
+      "language": "go",
+      "sizeLines": 215,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/stream.go",
+      "language": "go",
+      "sizeLines": 147,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/system.go",
+      "language": "go",
+      "sizeLines": 451,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/netconf/commands.go",
+      "language": "go",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/netconf/driver.go",
+      "language": "go",
+      "sizeLines": 45,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/whatsapp/client.go",
+      "language": "go",
+      "sizeLines": 366,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/whatsapp/event_handler.go",
+      "language": "go",
+      "sizeLines": 65,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/whatsapp/session_manager.go",
+      "language": "go",
+      "sizeLines": 262,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/zteolt/commands.go",
+      "language": "go",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/zteolt/snmp.go",
+      "language": "go",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/zteolt/telnet.go",
+      "language": "go",
+      "sizeLines": 72,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/platformdef/mikrotik_routeros.yaml",
+      "language": "yaml",
+      "sizeLines": 168,
+      "fileCategory": "config"
+    },
+    {
+      "path": "internal/platformdef/README.md",
+      "language": "markdown",
+      "sizeLines": 10,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/port/audit_writer.go",
+      "language": "go",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/authorizer.go",
+      "language": "go",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/bot_repository.go",
+      "language": "go",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/cache_store.go",
+      "language": "go",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/credential_vault.go",
+      "language": "go",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/customer_repository.go",
+      "language": "go",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/device_driver.go",
+      "language": "go",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/device_repository.go",
+      "language": "go",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/invoice_repository.go",
+      "language": "go",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/knowledge_retriever.go",
+      "language": "go",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/llm_provider.go",
+      "language": "go",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/streaming_driver.go",
+      "language": "go",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/subscription_repository.go",
+      "language": "go",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/validating_driver.go",
+      "language": "go",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/port/whatsapp_gateway.go",
+      "language": "go",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/registry/registry_test.go",
+      "language": "go",
+      "sizeLines": 179,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/registry/registry.go",
+      "language": "go",
+      "sizeLines": 131,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/templates/embed.go",
+      "language": "go",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/templates/footer.default.txt",
+      "language": "txt",
+      "sizeLines": 43,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/footer.small.txt",
+      "language": "txt",
+      "sizeLines": 25,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/footer.thermal.txt",
+      "language": "txt",
+      "sizeLines": 25,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/header.default.txt",
+      "language": "txt",
+      "sizeLines": 74,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/header.small.txt",
+      "language": "txt",
+      "sizeLines": 45,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/header.thermal.txt",
+      "language": "txt",
+      "sizeLines": 65,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/row.default.txt",
+      "language": "txt",
+      "sizeLines": 43,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/row.small.txt",
+      "language": "txt",
+      "sizeLines": 31,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/row.thermal.txt",
+      "language": "txt",
+      "sizeLines": 66,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/usecase/billing/manage_invoice.go",
+      "language": "go",
+      "sizeLines": 65,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/billing/manage_plan.go",
+      "language": "go",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/billing/manage_subscription.go",
+      "language": "go",
+      "sizeLines": 65,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/bot/context_manager.go",
+      "language": "go",
+      "sizeLines": 82,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/bot/engine.go",
+      "language": "go",
+      "sizeLines": 137,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/bot/guardrail.go",
+      "language": "go",
+      "sizeLines": 69,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/bot/media_cleaner_test.go",
+      "language": "go",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/bot/media_cleaner.go",
+      "language": "go",
+      "sizeLines": 96,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/bot/ratelimit.go",
+      "language": "go",
+      "sizeLines": 45,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/conversation/manage_conversation.go",
+      "language": "go",
+      "sizeLines": 130,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/customer/manage_customer.go",
+      "language": "go",
+      "sizeLines": 55,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/device/manage_device_test.go",
+      "language": "go",
+      "sizeLines": 170,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/device/manage_device.go",
+      "language": "go",
+      "sizeLines": 201,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/hotspot/hotspot_usecase_test.go",
+      "language": "go",
+      "sizeLines": 108,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/hotspot/hotspot_usecase.go",
+      "language": "go",
+      "sizeLines": 409,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/knowledge/retriever.go",
+      "language": "go",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/network/execute_command_test.go",
+      "language": "go",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/network/execute_command.go",
+      "language": "go",
+      "sizeLines": 66,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/network/get_active_sessions_test.go",
+      "language": "go",
+      "sizeLines": 137,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/network/get_active_sessions.go",
+      "language": "go",
+      "sizeLines": 109,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/network/get_device_status.go",
+      "language": "go",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/network/open_terminal.go",
+      "language": "go",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/network/push_config.go",
+      "language": "go",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/network/stream_output.go",
+      "language": "go",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/network/stream_terminal.go",
+      "language": "go",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Makefile",
+      "language": "makefile",
+      "sizeLines": 178,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "migrations/000001_create_devices_table.down.sql",
+      "language": "sql",
+      "sizeLines": 7,
+      "fileCategory": "data"
+    },
+    {
+      "path": "migrations/000001_create_devices_table.up.sql",
+      "language": "sql",
+      "sizeLines": 70,
+      "fileCategory": "data"
+    },
+    {
+      "path": "migrations/000002_create_bot_tables.down.sql",
+      "language": "sql",
+      "sizeLines": 9,
+      "fileCategory": "data"
+    },
+    {
+      "path": "migrations/000002_create_bot_tables.up.sql",
+      "language": "sql",
+      "sizeLines": 85,
+      "fileCategory": "data"
+    },
+    {
+      "path": "migrations/000003_add_ssh_port_to_devices.down.sql",
+      "language": "sql",
+      "sizeLines": 2,
+      "fileCategory": "data"
+    },
+    {
+      "path": "migrations/000003_add_ssh_port_to_devices.up.sql",
+      "language": "sql",
+      "sizeLines": 2,
+      "fileCategory": "data"
+    },
+    {
+      "path": "MIKROTIK-COMMAND.md",
+      "language": "markdown",
+      "sizeLines": 636,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "opencode.jsonc",
+      "language": "jsonc",
+      "sizeLines": 15,
+      "fileCategory": "config"
+    },
+    {
+      "path": "PANDUAN.md",
+      "language": "markdown",
+      "sizeLines": 155,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "pkg/retry/retry.go",
+      "language": "go",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "pkg/voucher/generator_test.go",
+      "language": "go",
+      "sizeLines": 144,
+      "fileCategory": "code"
+    },
+    {
+      "path": "pkg/voucher/generator.go",
+      "language": "go",
+      "sizeLines": 143,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Polyglot-Architecture.md",
+      "language": "markdown",
+      "sizeLines": 511,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "sizeLines": 166,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "SYSTEM-STRUCTURE-AND-ARCHITECTURE.md",
+      "language": "markdown",
+      "sizeLines": 325,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "TECH-STACK-DAN-PERSIAPAN.md",
+      "language": "markdown",
+      "sizeLines": 168,
+      "fileCategory": "docs"
+    }
+  ],
+  "totalFiles": 273,
+  "filteredByIgnore": 377,
+  "estimatedComplexity": "large",
+  "stats": {
+    "filesScanned": 273,
+    "byCategory": {
+      "infra": 6,
+      "config": 8,
+      "docs": 26,
+      "code": 217,
+      "data": 16
+    },
+    "byLanguage": {
+      "unknown": 1,
+      "config": 1,
+      "yaml": 6,
+      "json": 1,
+      "markdown": 17,
+      "go": 216,
+      "protobuf": 10,
+      "dockerfile": 1,
+      "mod": 1,
+      "sum": 1,
+      "conf": 1,
+      "txt": 9,
+      "makefile": 1,
+      "sql": 6,
+      "jsonc": 1
+    }
+  }
+}

@@ -1,0 +1,1260 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/config/crypto.go",
+   "type": "file",
+   "name": "crypto.go",
+   "filePath": "internal/config/crypto.go",
+   "summary": "Go source file implementing the configuration — configuration logic for the polyglot backend. Exports Encrypt, Decrypt.",
+   "tags": [
+    "configuration",
+    "env",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/config/crypto.go:Encrypt",
+   "type": "function",
+   "name": "Encrypt",
+   "filePath": "internal/config/crypto.go",
+   "lineRange": [
+    12,
+    35
+   ],
+   "summary": "Implements the Encrypt logic (inputs: plaintext, key) for this component.",
+   "tags": [
+    "function",
+    "configuration",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/config/crypto.go:Decrypt",
+   "type": "function",
+   "name": "Decrypt",
+   "filePath": "internal/config/crypto.go",
+   "lineRange": [
+    37,
+    70
+   ],
+   "summary": "Implements the Decrypt logic (inputs: ciphertext, key) for this component.",
+   "tags": [
+    "function",
+    "configuration",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/genieacs/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/driver/genieacs/errors.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/whatsapp/client.go",
+   "type": "file",
+   "name": "client.go",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports Client, NewClient, Connect, Disconnect, Logout, Reconnect.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:NewClient",
+   "type": "function",
+   "name": "NewClient",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    42,
+    58
+   ],
+   "summary": "Constructor that creates and initializes a Client instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:Connect",
+   "type": "function",
+   "name": "Connect",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    60,
+    124
+   ],
+   "summary": "Implements the Connect logic (inputs: ctx) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:Disconnect",
+   "type": "function",
+   "name": "Disconnect",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    126,
+    130
+   ],
+   "summary": "Implements the Disconnect logic for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:Logout",
+   "type": "function",
+   "name": "Logout",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    132,
+    140
+   ],
+   "summary": "Implements the Logout logic (inputs: ctx) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:Reconnect",
+   "type": "function",
+   "name": "Reconnect",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    142,
+    147
+   ],
+   "summary": "Implements the Reconnect logic (inputs: ctx) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:GetQRCode",
+   "type": "function",
+   "name": "GetQRCode",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    149,
+    156
+   ],
+   "summary": "Retrieves qrcode data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:GetPairingCode",
+   "type": "function",
+   "name": "GetPairingCode",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    158,
+    169
+   ],
+   "summary": "Retrieves pairingcode data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:SendMessage",
+   "type": "function",
+   "name": "SendMessage",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    171,
+    191
+   ],
+   "summary": "Implements the SendMessage logic (inputs: ctx, to, content) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:SendDocument",
+   "type": "function",
+   "name": "SendDocument",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    193,
+    239
+   ],
+   "summary": "Implements the SendDocument logic (inputs: ctx, to, fileBytes, fileName, contentType, caption) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:SendImage",
+   "type": "function",
+   "name": "SendImage",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    241,
+    283
+   ],
+   "summary": "Implements the SendImage logic (inputs: ctx, to, imageBytes, contentType, caption) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:handleEvent",
+   "type": "function",
+   "name": "handleEvent",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    285,
+    305
+   ],
+   "summary": "Implements the handleEvent logic (inputs: evt) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:handleIncomingMessage",
+   "type": "function",
+   "name": "handleIncomingMessage",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    307,
+    327
+   ],
+   "summary": "Implements the handleIncomingMessage logic (inputs: evt) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:extractMessageBody",
+   "type": "function",
+   "name": "extractMessageBody",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    329,
+    346
+   ],
+   "summary": "Implements the extractMessageBody logic (inputs: msg) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/client.go:parseJID",
+   "type": "function",
+   "name": "parseJID",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    348,
+    366
+   ],
+   "summary": "Implements the parseJID logic (inputs: target) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/whatsapp/client.go:Client",
+   "type": "class",
+   "name": "Client",
+   "filePath": "internal/driver/whatsapp/client.go",
+   "lineRange": [
+    31,
+    40
+   ],
+   "summary": "Client Go type with 11 method(s) [Connect, Disconnect, Logout, Reconnect, GetQRCode, …] and 8 field(s), defining the client behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/usecase/bot/guardrail.go",
+   "type": "file",
+   "name": "guardrail.go",
+   "filePath": "internal/usecase/bot/guardrail.go",
+   "summary": "Go source file implementing the use case orchestration — use case orchestration logic for the polyglot backend. Exports Guardrail, NewGuardrail, IsTopicAllowed, FormatOffTopicResponse, SanitizeResponse.",
+   "tags": [
+    "usecase",
+    "business-logic",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/usecase/bot/guardrail.go:NewGuardrail",
+   "type": "function",
+   "name": "NewGuardrail",
+   "filePath": "internal/usecase/bot/guardrail.go",
+   "lineRange": [
+    13,
+    17
+   ],
+   "summary": "Constructor that creates and initializes a Guardrail instance with the provided configuration.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/usecase/bot/guardrail.go:IsTopicAllowed",
+   "type": "function",
+   "name": "IsTopicAllowed",
+   "filePath": "internal/usecase/bot/guardrail.go",
+   "lineRange": [
+    19,
+    61
+   ],
+   "summary": "Implements the IsTopicAllowed logic (inputs: message) for this component.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/usecase/bot/guardrail.go:FormatOffTopicResponse",
+   "type": "function",
+   "name": "FormatOffTopicResponse",
+   "filePath": "internal/usecase/bot/guardrail.go",
+   "lineRange": [
+    63,
+    65
+   ],
+   "summary": "Implements the FormatOffTopicResponse logic for this component.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/usecase/bot/guardrail.go:SanitizeResponse",
+   "type": "function",
+   "name": "SanitizeResponse",
+   "filePath": "internal/usecase/bot/guardrail.go",
+   "lineRange": [
+    67,
+    69
+   ],
+   "summary": "Implements the SanitizeResponse logic (inputs: response) for this component.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/usecase/bot/guardrail.go:Guardrail",
+   "type": "class",
+   "name": "Guardrail",
+   "filePath": "internal/usecase/bot/guardrail.go",
+   "lineRange": [
+    9,
+    11
+   ],
+   "summary": "Guardrail Go type with 3 method(s) [IsTopicAllowed, FormatOffTopicResponse, SanitizeResponse] and 1 field(s), defining the guardrail behavior of this component.",
+   "tags": [
+    "class",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/usecase/bot/media_cleaner.go",
+   "type": "file",
+   "name": "media_cleaner.go",
+   "filePath": "internal/usecase/bot/media_cleaner.go",
+   "summary": "Go source file implementing the use case orchestration — use case orchestration logic for the polyglot backend. Exports MediaCleanerConfig, MediaCleanerWorker, NewMediaCleanerWorker, CleanOnce, Start.",
+   "tags": [
+    "usecase",
+    "business-logic",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/usecase/bot/media_cleaner.go:NewMediaCleanerWorker",
+   "type": "function",
+   "name": "NewMediaCleanerWorker",
+   "filePath": "internal/usecase/bot/media_cleaner.go",
+   "lineRange": [
+    26,
+    37
+   ],
+   "summary": "Constructor that creates and initializes a MediaCleanerWorker instance with the provided configuration.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/usecase/bot/media_cleaner.go:CleanOnce",
+   "type": "function",
+   "name": "CleanOnce",
+   "filePath": "internal/usecase/bot/media_cleaner.go",
+   "lineRange": [
+    40,
+    77
+   ],
+   "summary": "Implements the CleanOnce logic (inputs: _) for this component.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/usecase/bot/media_cleaner.go:Start",
+   "type": "function",
+   "name": "Start",
+   "filePath": "internal/usecase/bot/media_cleaner.go",
+   "lineRange": [
+    80,
+    96
+   ],
+   "summary": "Runs the start operation to completion (or streaming, when applicable).",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/usecase/bot/media_cleaner.go:MediaCleanerConfig",
+   "type": "class",
+   "name": "MediaCleanerConfig",
+   "filePath": "internal/usecase/bot/media_cleaner.go",
+   "lineRange": [
+    14,
+    18
+   ],
+   "summary": "MediaCleanerConfig Go type with 0 method(s) [—] and 3 field(s), defining the mediacleanerconfig behavior of this component.",
+   "tags": [
+    "class",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/usecase/bot/media_cleaner.go:MediaCleanerWorker",
+   "type": "class",
+   "name": "MediaCleanerWorker",
+   "filePath": "internal/usecase/bot/media_cleaner.go",
+   "lineRange": [
+    21,
+    23
+   ],
+   "summary": "MediaCleanerWorker Go type with 2 method(s) [CleanOnce, Start] and 1 field(s), defining the mediacleanerworker behavior of this component.",
+   "tags": [
+    "class",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/usecase/bot/media_cleaner_test.go",
+   "type": "file",
+   "name": "media_cleaner_test.go",
+   "filePath": "internal/usecase/bot/media_cleaner_test.go",
+   "summary": "Go source file implementing the use case orchestration — use case orchestration logic for the polyglot backend. Exports TestMediaCleanerWorker_CleanOnce, TestMediaCleanerWorker_NonExistentDir.",
+   "tags": [
+    "usecase",
+    "business-logic",
+    "go",
+    "test"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/usecase/bot/media_cleaner_test.go:TestMediaCleanerWorker_CleanOnce",
+   "type": "function",
+   "name": "TestMediaCleanerWorker_CleanOnce",
+   "filePath": "internal/usecase/bot/media_cleaner_test.go",
+   "lineRange": [
+    15,
+    52
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/usecase/bot/media_cleaner_test.go:TestMediaCleanerWorker_NonExistentDir",
+   "type": "function",
+   "name": "TestMediaCleanerWorker_NonExistentDir",
+   "filePath": "internal/usecase/bot/media_cleaner_test.go",
+   "lineRange": [
+    54,
+    64
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/usecase/network/get_active_sessions_test.go",
+   "type": "file",
+   "name": "get_active_sessions_test.go",
+   "filePath": "internal/usecase/network/get_active_sessions_test.go",
+   "summary": "Go source file implementing the network use case — network use case logic for the polyglot backend. Exports Execute, Classify, Translate, Close, TestActiveSessionsUseCase.",
+   "tags": [
+    "usecase",
+    "network",
+    "orchestration",
+    "go",
+    "test"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/usecase/network/get_active_sessions_test.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/usecase/network/get_active_sessions_test.go",
+   "lineRange": [
+    16,
+    21
+   ],
+   "summary": "Runs the execute operation to completion (or streaming, when applicable).",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/usecase/network/get_active_sessions_test.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/usecase/network/get_active_sessions_test.go",
+   "lineRange": [
+    23,
+    25
+   ],
+   "summary": "Classifies a command as destructive or read-only based on vendor conventions.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/usecase/network/get_active_sessions_test.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/usecase/network/get_active_sessions_test.go",
+   "lineRange": [
+    27,
+    29
+   ],
+   "summary": "Translates an abstract operation into a vendor-native command.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/usecase/network/get_active_sessions_test.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/usecase/network/get_active_sessions_test.go",
+   "lineRange": [
+    31,
+    33
+   ],
+   "summary": "Releases resources held by this component (connections, goroutines).",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/usecase/network/get_active_sessions_test.go:TestActiveSessionsUseCase",
+   "type": "function",
+   "name": "TestActiveSessionsUseCase",
+   "filePath": "internal/usecase/network/get_active_sessions_test.go",
+   "lineRange": [
+    35,
+    137
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "class:internal/usecase/network/get_active_sessions_test.go:mockDriver",
+   "type": "class",
+   "name": "mockDriver",
+   "filePath": "internal/usecase/network/get_active_sessions_test.go",
+   "lineRange": [
+    12,
+    14
+   ],
+   "summary": "mockDriver Go type with 4 method(s) [Execute, Classify, Translate, Close] and 1 field(s), defining the mockdriver behavior of this component.",
+   "tags": [
+    "class",
+    "usecase",
+    "internal"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/usecase/network/stream_output.go",
+   "type": "file",
+   "name": "stream_output.go",
+   "filePath": "internal/usecase/network/stream_output.go",
+   "summary": "Go source file implementing the network use case — network use case logic for the polyglot backend. Exports StreamOutput.",
+   "tags": [
+    "usecase",
+    "network",
+    "orchestration",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/usecase/network/stream_output.go:StreamOutput",
+   "type": "function",
+   "name": "StreamOutput",
+   "filePath": "internal/usecase/network/stream_output.go",
+   "lineRange": [
+    9,
+    11
+   ],
+   "summary": "Implements the StreamOutput logic (inputs: ctx) for this component.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/config/crypto.go",
+   "target": "function:internal/config/crypto.go:Encrypt",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/config/crypto.go",
+   "target": "function:internal/config/crypto.go:Decrypt",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/config/crypto.go",
+   "target": "function:internal/config/crypto.go:Encrypt",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/config/crypto.go",
+   "target": "function:internal/config/crypto.go:Decrypt",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:NewClient",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:Connect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:Disconnect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:Logout",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:Reconnect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:GetQRCode",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:GetPairingCode",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:SendMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:SendDocument",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:SendImage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:handleEvent",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:handleIncomingMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:extractMessageBody",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:parseJID",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "class:internal/driver/whatsapp/client.go:Client",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "class:internal/driver/whatsapp/client.go:Client",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:NewClient",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:Connect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:Disconnect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:Logout",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:Reconnect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:GetQRCode",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:GetPairingCode",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:SendMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:SendDocument",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/client.go",
+   "target": "function:internal/driver/whatsapp/client.go:SendImage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/guardrail.go",
+   "target": "function:internal/usecase/bot/guardrail.go:NewGuardrail",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/bot/guardrail.go",
+   "target": "function:internal/usecase/bot/guardrail.go:IsTopicAllowed",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/bot/guardrail.go",
+   "target": "function:internal/usecase/bot/guardrail.go:FormatOffTopicResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/bot/guardrail.go",
+   "target": "function:internal/usecase/bot/guardrail.go:SanitizeResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/bot/guardrail.go",
+   "target": "class:internal/usecase/bot/guardrail.go:Guardrail",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/bot/guardrail.go",
+   "target": "class:internal/usecase/bot/guardrail.go:Guardrail",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/guardrail.go",
+   "target": "function:internal/usecase/bot/guardrail.go:NewGuardrail",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/guardrail.go",
+   "target": "function:internal/usecase/bot/guardrail.go:IsTopicAllowed",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/guardrail.go",
+   "target": "function:internal/usecase/bot/guardrail.go:FormatOffTopicResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/guardrail.go",
+   "target": "function:internal/usecase/bot/guardrail.go:SanitizeResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/guardrail.go",
+   "target": "file:internal/config/config.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/usecase/bot/guardrail.go",
+   "target": "file:internal/config/crypto.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner.go",
+   "target": "function:internal/usecase/bot/media_cleaner.go:NewMediaCleanerWorker",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner.go",
+   "target": "function:internal/usecase/bot/media_cleaner.go:CleanOnce",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner.go",
+   "target": "function:internal/usecase/bot/media_cleaner.go:Start",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner.go",
+   "target": "class:internal/usecase/bot/media_cleaner.go:MediaCleanerConfig",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner.go",
+   "target": "class:internal/usecase/bot/media_cleaner.go:MediaCleanerWorker",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner.go",
+   "target": "class:internal/usecase/bot/media_cleaner.go:MediaCleanerConfig",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner.go",
+   "target": "class:internal/usecase/bot/media_cleaner.go:MediaCleanerWorker",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner.go",
+   "target": "function:internal/usecase/bot/media_cleaner.go:NewMediaCleanerWorker",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner.go",
+   "target": "function:internal/usecase/bot/media_cleaner.go:CleanOnce",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner.go",
+   "target": "function:internal/usecase/bot/media_cleaner.go:Start",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner_test.go",
+   "target": "function:internal/usecase/bot/media_cleaner_test.go:TestMediaCleanerWorker_CleanOnce",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner_test.go",
+   "target": "function:internal/usecase/bot/media_cleaner_test.go:TestMediaCleanerWorker_NonExistentDir",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner_test.go",
+   "target": "function:internal/usecase/bot/media_cleaner_test.go:TestMediaCleanerWorker_CleanOnce",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner_test.go",
+   "target": "function:internal/usecase/bot/media_cleaner_test.go:TestMediaCleanerWorker_NonExistentDir",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner_test.go",
+   "target": "file:internal/usecase/bot/context_manager.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner_test.go",
+   "target": "file:internal/usecase/bot/engine.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner_test.go",
+   "target": "file:internal/usecase/bot/guardrail.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner_test.go",
+   "target": "file:internal/usecase/bot/media_cleaner.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/usecase/bot/media_cleaner_test.go",
+   "target": "file:internal/usecase/bot/ratelimit.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "function:internal/usecase/network/get_active_sessions_test.go:Execute",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "function:internal/usecase/network/get_active_sessions_test.go:Classify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "function:internal/usecase/network/get_active_sessions_test.go:Translate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "function:internal/usecase/network/get_active_sessions_test.go:Close",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "function:internal/usecase/network/get_active_sessions_test.go:TestActiveSessionsUseCase",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "class:internal/usecase/network/get_active_sessions_test.go:mockDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "function:internal/usecase/network/get_active_sessions_test.go:Execute",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "function:internal/usecase/network/get_active_sessions_test.go:Classify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "function:internal/usecase/network/get_active_sessions_test.go:Translate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "function:internal/usecase/network/get_active_sessions_test.go:Close",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "function:internal/usecase/network/get_active_sessions_test.go:TestActiveSessionsUseCase",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/usecase/network/get_active_sessions_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/usecase/network/stream_output.go",
+   "target": "function:internal/usecase/network/stream_output.go:StreamOutput",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/network/stream_output.go",
+   "target": "function:internal/usecase/network/stream_output.go:StreamOutput",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

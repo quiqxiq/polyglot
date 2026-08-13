@@ -2,7 +2,7 @@
 /dist/
 /server
 server.exe
-*.env
+# *.env
 .env.local
 wa_stores/
 .ref-wa-multidevice/
@@ -37,5 +37,5 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
-.understand-anything/
+# .understand-anything/
 .ref

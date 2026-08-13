@@ -1,0 +1,2375 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 10,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "api/proto/v1/auth.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 44,
+      "nonEmptyLines": 34,
+      "definitions": [
+        {
+          "name": "LoginRequest",
+          "kind": "message",
+          "fields": [
+            "username",
+            "password"
+          ],
+          "startLine": 7,
+          "endLine": 10
+        },
+        {
+          "name": "UserProfile",
+          "kind": "message",
+          "fields": [
+            "id",
+            "username",
+            "email",
+            "role"
+          ],
+          "startLine": 12,
+          "endLine": 17
+        },
+        {
+          "name": "LoginResponse",
+          "kind": "message",
+          "fields": [
+            "token",
+            "user",
+            "expires_at_unix"
+          ],
+          "startLine": 19,
+          "endLine": 23
+        },
+        {
+          "name": "GetMeRequest",
+          "kind": "message",
+          "fields": [],
+          "startLine": 25,
+          "endLine": 25
+        },
+        {
+          "name": "GetMeResponse",
+          "kind": "message",
+          "fields": [
+            "user"
+          ],
+          "startLine": 27,
+          "endLine": 29
+        },
+        {
+          "name": "RefreshTokenRequest",
+          "kind": "message",
+          "fields": [
+            "refresh_token"
+          ],
+          "startLine": 31,
+          "endLine": 33
+        },
+        {
+          "name": "RefreshTokenResponse",
+          "kind": "message",
+          "fields": [
+            "token",
+            "expires_at_unix"
+          ],
+          "startLine": 35,
+          "endLine": 38
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "AuthService.Login",
+          "startLine": 41,
+          "endLine": 41
+        },
+        {
+          "method": "rpc",
+          "path": "AuthService.GetMe",
+          "startLine": 42,
+          "endLine": 42
+        },
+        {
+          "method": "rpc",
+          "path": "AuthService.RefreshToken",
+          "startLine": 43,
+          "endLine": 43
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 7,
+        "endpointCount": 3
+      }
+    },
+    {
+      "path": "api/proto/v1/billing.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 90,
+      "nonEmptyLines": 78,
+      "definitions": [
+        {
+          "name": "Invoice",
+          "kind": "message",
+          "fields": [
+            "id",
+            "customer_id",
+            "amount",
+            "status",
+            "due_date_unix",
+            "created_at_unix"
+          ],
+          "startLine": 7,
+          "endLine": 14
+        },
+        {
+          "name": "Subscription",
+          "kind": "message",
+          "fields": [
+            "id",
+            "customer_id",
+            "plan_id",
+            "status",
+            "start_date_unix",
+            "end_date_unix",
+            "price"
+          ],
+          "startLine": 16,
+          "endLine": 24
+        },
+        {
+          "name": "ListInvoicesRequest",
+          "kind": "message",
+          "fields": [
+            "customer_id"
+          ],
+          "startLine": 26,
+          "endLine": 28
+        },
+        {
+          "name": "ListInvoicesResponse",
+          "kind": "message",
+          "fields": [
+            "invoices"
+          ],
+          "startLine": 29,
+          "endLine": 31
+        },
+        {
+          "name": "GetInvoiceRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 33,
+          "endLine": 35
+        },
+        {
+          "name": "GetInvoiceResponse",
+          "kind": "message",
+          "fields": [
+            "invoice"
+          ],
+          "startLine": 36,
+          "endLine": 38
+        },
+        {
+          "name": "CreateInvoiceRequest",
+          "kind": "message",
+          "fields": [
+            "customer_id",
+            "amount",
+            "due_date_unix"
+          ],
+          "startLine": 40,
+          "endLine": 44
+        },
+        {
+          "name": "CreateInvoiceResponse",
+          "kind": "message",
+          "fields": [
+            "invoice"
+          ],
+          "startLine": 45,
+          "endLine": 47
+        },
+        {
+          "name": "PayInvoiceRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "payment_method"
+          ],
+          "startLine": 49,
+          "endLine": 52
+        },
+        {
+          "name": "PayInvoiceResponse",
+          "kind": "message",
+          "fields": [
+            "invoice",
+            "message"
+          ],
+          "startLine": 53,
+          "endLine": 56
+        },
+        {
+          "name": "ListSubscriptionsRequest",
+          "kind": "message",
+          "fields": [
+            "customer_id"
+          ],
+          "startLine": 58,
+          "endLine": 60
+        },
+        {
+          "name": "ListSubscriptionsResponse",
+          "kind": "message",
+          "fields": [
+            "subscriptions"
+          ],
+          "startLine": 61,
+          "endLine": 63
+        },
+        {
+          "name": "CreateSubscriptionRequest",
+          "kind": "message",
+          "fields": [
+            "customer_id",
+            "plan_id",
+            "price"
+          ],
+          "startLine": 65,
+          "endLine": 69
+        },
+        {
+          "name": "CreateSubscriptionResponse",
+          "kind": "message",
+          "fields": [
+            "subscription"
+          ],
+          "startLine": 70,
+          "endLine": 72
+        },
+        {
+          "name": "CancelSubscriptionRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 74,
+          "endLine": 76
+        },
+        {
+          "name": "CancelSubscriptionResponse",
+          "kind": "message",
+          "fields": [
+            "subscription",
+            "message"
+          ],
+          "startLine": 77,
+          "endLine": 80
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "BillingService.ListInvoices",
+          "startLine": 83,
+          "endLine": 83
+        },
+        {
+          "method": "rpc",
+          "path": "BillingService.GetInvoice",
+          "startLine": 84,
+          "endLine": 84
+        },
+        {
+          "method": "rpc",
+          "path": "BillingService.CreateInvoice",
+          "startLine": 85,
+          "endLine": 85
+        },
+        {
+          "method": "rpc",
+          "path": "BillingService.PayInvoice",
+          "startLine": 86,
+          "endLine": 86
+        },
+        {
+          "method": "rpc",
+          "path": "BillingService.ListSubscriptions",
+          "startLine": 87,
+          "endLine": 87
+        },
+        {
+          "method": "rpc",
+          "path": "BillingService.CreateSubscription",
+          "startLine": 88,
+          "endLine": 88
+        },
+        {
+          "method": "rpc",
+          "path": "BillingService.CancelSubscription",
+          "startLine": 89,
+          "endLine": 89
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 16,
+        "endpointCount": 7
+      }
+    },
+    {
+      "path": "api/proto/v1/bot.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 67,
+      "nonEmptyLines": 57,
+      "definitions": [
+        {
+          "name": "ConversationMessage",
+          "kind": "message",
+          "fields": [
+            "id",
+            "sender",
+            "text",
+            "timestamp"
+          ],
+          "startLine": 15,
+          "endLine": 20
+        },
+        {
+          "name": "Conversation",
+          "kind": "message",
+          "fields": [
+            "id",
+            "session_id",
+            "client_phone",
+            "client_name",
+            "status",
+            "assigned_technician",
+            "messages",
+            "updated_at"
+          ],
+          "startLine": 22,
+          "endLine": 31
+        },
+        {
+          "name": "ListConversationsRequest",
+          "kind": "message",
+          "fields": [
+            "session_id"
+          ],
+          "startLine": 33,
+          "endLine": 35
+        },
+        {
+          "name": "ListConversationsResponse",
+          "kind": "message",
+          "fields": [
+            "conversations"
+          ],
+          "startLine": 36,
+          "endLine": 38
+        },
+        {
+          "name": "GetConversationRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 40,
+          "endLine": 42
+        },
+        {
+          "name": "GetConversationResponse",
+          "kind": "message",
+          "fields": [
+            "conversation"
+          ],
+          "startLine": 43,
+          "endLine": 45
+        },
+        {
+          "name": "TakeOverConversationRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "technician_id"
+          ],
+          "startLine": 47,
+          "endLine": 50
+        },
+        {
+          "name": "TakeOverConversationResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 51,
+          "endLine": 53
+        },
+        {
+          "name": "ResetConversationBotRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 55,
+          "endLine": 57
+        },
+        {
+          "name": "ResetConversationBotResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 58,
+          "endLine": 60
+        },
+        {
+          "name": "CloseConversationRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 62,
+          "endLine": 64
+        },
+        {
+          "name": "CloseConversationResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 65,
+          "endLine": 67
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "BotService.ListConversations",
+          "startLine": 8,
+          "endLine": 8
+        },
+        {
+          "method": "rpc",
+          "path": "BotService.GetConversation",
+          "startLine": 9,
+          "endLine": 9
+        },
+        {
+          "method": "rpc",
+          "path": "BotService.TakeOverConversation",
+          "startLine": 10,
+          "endLine": 10
+        },
+        {
+          "method": "rpc",
+          "path": "BotService.ResetConversationBot",
+          "startLine": 11,
+          "endLine": 11
+        },
+        {
+          "method": "rpc",
+          "path": "BotService.CloseConversation",
+          "startLine": 12,
+          "endLine": 12
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 12,
+        "endpointCount": 5
+      }
+    },
+    {
+      "path": "api/proto/v1/customer.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 67,
+      "nonEmptyLines": 52,
+      "definitions": [
+        {
+          "name": "Customer",
+          "kind": "message",
+          "fields": [
+            "id",
+            "tenant_id",
+            "name",
+            "email",
+            "phone",
+            "address",
+            "status",
+            "created_at_unix"
+          ],
+          "startLine": 8,
+          "endLine": 17
+        },
+        {
+          "name": "ListCustomersRequest",
+          "kind": "message",
+          "fields": [],
+          "startLine": 19,
+          "endLine": 19
+        },
+        {
+          "name": "ListCustomersResponse",
+          "kind": "message",
+          "fields": [
+            "customers"
+          ],
+          "startLine": 21,
+          "endLine": 23
+        },
+        {
+          "name": "GetCustomerRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 25,
+          "endLine": 27
+        },
+        {
+          "name": "GetCustomerResponse",
+          "kind": "message",
+          "fields": [
+            "customer"
+          ],
+          "startLine": 29,
+          "endLine": 31
+        },
+        {
+          "name": "CreateCustomerRequest",
+          "kind": "message",
+          "fields": [
+            "customer"
+          ],
+          "startLine": 33,
+          "endLine": 35
+        },
+        {
+          "name": "CreateCustomerResponse",
+          "kind": "message",
+          "fields": [
+            "customer",
+            "message"
+          ],
+          "startLine": 37,
+          "endLine": 40
+        },
+        {
+          "name": "UpdateCustomerRequest",
+          "kind": "message",
+          "fields": [
+            "customer"
+          ],
+          "startLine": 42,
+          "endLine": 44
+        },
+        {
+          "name": "UpdateCustomerResponse",
+          "kind": "message",
+          "fields": [
+            "customer",
+            "message"
+          ],
+          "startLine": 46,
+          "endLine": 49
+        },
+        {
+          "name": "DeleteCustomerRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 51,
+          "endLine": 53
+        },
+        {
+          "name": "DeleteCustomerResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 55,
+          "endLine": 57
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "CustomerService.ListCustomers",
+          "startLine": 61,
+          "endLine": 61
+        },
+        {
+          "method": "rpc",
+          "path": "CustomerService.GetCustomer",
+          "startLine": 62,
+          "endLine": 62
+        },
+        {
+          "method": "rpc",
+          "path": "CustomerService.CreateCustomer",
+          "startLine": 63,
+          "endLine": 63
+        },
+        {
+          "method": "rpc",
+          "path": "CustomerService.UpdateCustomer",
+          "startLine": 64,
+          "endLine": 64
+        },
+        {
+          "method": "rpc",
+          "path": "CustomerService.DeleteCustomer",
+          "startLine": 65,
+          "endLine": 65
+        },
+        {
+          "method": "rpc",
+          "path": "CustomerService.ListSubscriptions",
+          "startLine": 66,
+          "endLine": 66
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 11,
+        "endpointCount": 6
+      }
+    },
+    {
+      "path": "api/proto/v1/device.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 165,
+      "nonEmptyLines": 142,
+      "definitions": [
+        {
+          "name": "Device",
+          "kind": "message",
+          "fields": [
+            "id",
+            "tenant_id",
+            "name",
+            "vendor",
+            "driver_type",
+            "host",
+            "port",
+            "timeout_ms",
+            "poll_interval_ms",
+            "tags",
+            "enabled",
+            "ssh_port"
+          ],
+          "startLine": 8,
+          "endLine": 21
+        },
+        {
+          "name": "ListDevicesRequest",
+          "kind": "message",
+          "fields": [],
+          "startLine": 23,
+          "endLine": 23
+        },
+        {
+          "name": "ListDevicesResponse",
+          "kind": "message",
+          "fields": [
+            "devices"
+          ],
+          "startLine": 25,
+          "endLine": 27
+        },
+        {
+          "name": "GetDeviceRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 29,
+          "endLine": 31
+        },
+        {
+          "name": "GetDeviceResponse",
+          "kind": "message",
+          "fields": [
+            "device"
+          ],
+          "startLine": 33,
+          "endLine": 35
+        },
+        {
+          "name": "UpdateDeviceRequest",
+          "kind": "message",
+          "fields": [
+            "device",
+            "username",
+            "password"
+          ],
+          "startLine": 37,
+          "endLine": 41
+        },
+        {
+          "name": "UpdateDeviceResponse",
+          "kind": "message",
+          "fields": [
+            "device",
+            "message"
+          ],
+          "startLine": 43,
+          "endLine": 46
+        },
+        {
+          "name": "StreamDeviceStatusRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "selected_interface",
+            "ping_address"
+          ],
+          "startLine": 48,
+          "endLine": 52
+        },
+        {
+          "name": "DeviceInterfaceInfo",
+          "kind": "message",
+          "fields": [
+            "name",
+            "type",
+            "disabled",
+            "running",
+            "rx_bps",
+            "tx_bps",
+            "mac_address"
+          ],
+          "startLine": 54,
+          "endLine": 62
+        },
+        {
+          "name": "DeviceTestMetrics",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "status",
+            "latency_ms",
+            "uptime",
+            "version",
+            "board_name",
+            "identity",
+            "message",
+            "cpu_load",
+            "free_memory",
+            "total_memory",
+            "interfaces",
+            "interface_list",
+            "rx_bps",
+            "tx_bps"
+          ],
+          "startLine": 64,
+          "endLine": 80
+        },
+        {
+          "name": "DeviceStatusFrame",
+          "kind": "message",
+          "fields": [
+            "device",
+            "test"
+          ],
+          "startLine": 82,
+          "endLine": 85
+        },
+        {
+          "name": "TerminalFrame",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "input_data",
+            "output_data",
+            "cols",
+            "rows"
+          ],
+          "startLine": 87,
+          "endLine": 93
+        },
+        {
+          "name": "DeleteDeviceRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 95,
+          "endLine": 97
+        },
+        {
+          "name": "DeleteDeviceResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 99,
+          "endLine": 101
+        },
+        {
+          "name": "TestDeviceConnectionRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "selected_interface"
+          ],
+          "startLine": 103,
+          "endLine": 106
+        },
+        {
+          "name": "TestDeviceConnectionResponse",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "status",
+            "message",
+            "success",
+            "latency_ms",
+            "uptime",
+            "version",
+            "board_name",
+            "identity",
+            "metrics",
+            "cpu_load",
+            "free_memory",
+            "total_memory",
+            "interfaces",
+            "interface_list",
+            "rx_bps",
+            "tx_bps"
+          ],
+          "startLine": 108,
+          "endLine": 126
+        },
+        {
+          "name": "StreamDevicePingRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "address"
+          ],
+          "startLine": 129,
+          "endLine": 132
+        },
+        {
+          "name": "StreamDevicePingFrame",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "address",
+            "latency_ms",
+            "status"
+          ],
+          "startLine": 134,
+          "endLine": 139
+        },
+        {
+          "name": "StreamDeviceTrafficRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "interface_name"
+          ],
+          "startLine": 142,
+          "endLine": 145
+        },
+        {
+          "name": "StreamDeviceTrafficFrame",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "interface_name",
+            "rx_bps",
+            "tx_bps"
+          ],
+          "startLine": 147,
+          "endLine": 152
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "DeviceService.ListDevices",
+          "startLine": 156,
+          "endLine": 156
+        },
+        {
+          "method": "rpc",
+          "path": "DeviceService.GetDevice",
+          "startLine": 157,
+          "endLine": 157
+        },
+        {
+          "method": "rpc",
+          "path": "DeviceService.UpdateDevice",
+          "startLine": 158,
+          "endLine": 158
+        },
+        {
+          "method": "rpc",
+          "path": "DeviceService.DeleteDevice",
+          "startLine": 159,
+          "endLine": 159
+        },
+        {
+          "method": "rpc",
+          "path": "DeviceService.TestDeviceConnection",
+          "startLine": 160,
+          "endLine": 160
+        },
+        {
+          "method": "rpc",
+          "path": "DeviceService.StreamDeviceStatus",
+          "startLine": 161,
+          "endLine": 161
+        },
+        {
+          "method": "rpc",
+          "path": "DeviceService.StreamPing",
+          "startLine": 162,
+          "endLine": 162
+        },
+        {
+          "method": "rpc",
+          "path": "DeviceService.StreamInterfaceTraffic",
+          "startLine": 163,
+          "endLine": 163
+        },
+        {
+          "method": "rpc",
+          "path": "DeviceService.StreamTerminal",
+          "startLine": 164,
+          "endLine": 164
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 20,
+        "endpointCount": 9
+      }
+    },
+    {
+      "path": "api/proto/v1/hotspot.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 200,
+      "nonEmptyLines": 169,
+      "definitions": [
+        {
+          "name": "HotspotDashboardSummary",
+          "kind": "message",
+          "fields": [
+            "total_hotspot_users",
+            "total_active_users",
+            "today_income",
+            "uptime"
+          ],
+          "startLine": 7,
+          "endLine": 12
+        },
+        {
+          "name": "HotspotProfile",
+          "kind": "message",
+          "fields": [
+            "id",
+            "name",
+            "shared_users",
+            "rate_limit",
+            "mode_expire",
+            "validity",
+            "price",
+            "selling_price",
+            "lock_user",
+            "parent_queue",
+            "comment"
+          ],
+          "startLine": 14,
+          "endLine": 26
+        },
+        {
+          "name": "HotspotUser",
+          "kind": "message",
+          "fields": [
+            "id",
+            "name",
+            "password",
+            "profile",
+            "limit_uptime",
+            "limit_bytes",
+            "uptime",
+            "bytes_in",
+            "bytes_out",
+            "comment",
+            "disabled"
+          ],
+          "startLine": 28,
+          "endLine": 40
+        },
+        {
+          "name": "HotspotActiveSession",
+          "kind": "message",
+          "fields": [
+            "id",
+            "server",
+            "user",
+            "address",
+            "mac_address",
+            "uptime",
+            "bytes_in",
+            "bytes_out",
+            "comment"
+          ],
+          "startLine": 42,
+          "endLine": 52
+        },
+        {
+          "name": "DHCPLease",
+          "kind": "message",
+          "fields": [
+            "id",
+            "address",
+            "mac_address",
+            "host_name",
+            "status",
+            "blocked",
+            "comment"
+          ],
+          "startLine": 54,
+          "endLine": 62
+        },
+        {
+          "name": "HotspotReport",
+          "kind": "message",
+          "fields": [
+            "id",
+            "date",
+            "time",
+            "username",
+            "profile",
+            "price",
+            "comment"
+          ],
+          "startLine": 64,
+          "endLine": 72
+        },
+        {
+          "name": "GetHotspotDashboardRequest",
+          "kind": "message",
+          "fields": [
+            "device_id"
+          ],
+          "startLine": 75,
+          "endLine": 77
+        },
+        {
+          "name": "GetHotspotDashboardResponse",
+          "kind": "message",
+          "fields": [
+            "summary"
+          ],
+          "startLine": 79,
+          "endLine": 81
+        },
+        {
+          "name": "ListHotspotProfilesRequest",
+          "kind": "message",
+          "fields": [
+            "device_id"
+          ],
+          "startLine": 83,
+          "endLine": 85
+        },
+        {
+          "name": "ListHotspotProfilesResponse",
+          "kind": "message",
+          "fields": [
+            "profiles"
+          ],
+          "startLine": 87,
+          "endLine": 89
+        },
+        {
+          "name": "ListHotspotUsersRequest",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "profile"
+          ],
+          "startLine": 91,
+          "endLine": 94
+        },
+        {
+          "name": "ListHotspotUsersResponse",
+          "kind": "message",
+          "fields": [
+            "users"
+          ],
+          "startLine": 96,
+          "endLine": 98
+        },
+        {
+          "name": "ListHotspotActiveSessionsRequest",
+          "kind": "message",
+          "fields": [
+            "device_id"
+          ],
+          "startLine": 100,
+          "endLine": 102
+        },
+        {
+          "name": "ListHotspotActiveSessionsResponse",
+          "kind": "message",
+          "fields": [
+            "sessions"
+          ],
+          "startLine": 104,
+          "endLine": 106
+        },
+        {
+          "name": "KickHotspotSessionRequest",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "ros_id"
+          ],
+          "startLine": 108,
+          "endLine": 111
+        },
+        {
+          "name": "KickHotspotSessionResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 113,
+          "endLine": 115
+        },
+        {
+          "name": "ListDHCPLeasesRequest",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "mac_filter"
+          ],
+          "startLine": 117,
+          "endLine": 120
+        },
+        {
+          "name": "ListDHCPLeasesResponse",
+          "kind": "message",
+          "fields": [
+            "leases"
+          ],
+          "startLine": 122,
+          "endLine": 124
+        },
+        {
+          "name": "BlockDHCPLeaseRequest",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "ros_id",
+            "blocked",
+            "comment"
+          ],
+          "startLine": 126,
+          "endLine": 131
+        },
+        {
+          "name": "BlockDHCPLeaseResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 133,
+          "endLine": 135
+        },
+        {
+          "name": "GenerateVouchersRequest",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "profile",
+            "count",
+            "user_type",
+            "user_length",
+            "prefix",
+            "character_set"
+          ],
+          "startLine": 137,
+          "endLine": 145
+        },
+        {
+          "name": "GenerateVouchersResponse",
+          "kind": "message",
+          "fields": [
+            "vouchers",
+            "message"
+          ],
+          "startLine": 147,
+          "endLine": 150
+        },
+        {
+          "name": "StreamTrafficRequest",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "interface"
+          ],
+          "startLine": 152,
+          "endLine": 155
+        },
+        {
+          "name": "TrafficStreamData",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "interface",
+            "rx_bps",
+            "tx_bps",
+            "timestamp_unix"
+          ],
+          "startLine": 157,
+          "endLine": 163
+        },
+        {
+          "name": "StreamResourceRequest",
+          "kind": "message",
+          "fields": [
+            "device_id"
+          ],
+          "startLine": 165,
+          "endLine": 167
+        },
+        {
+          "name": "ResourceStreamData",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "cpu_load",
+            "free_memory",
+            "uptime",
+            "timestamp_unix"
+          ],
+          "startLine": 169,
+          "endLine": 175
+        },
+        {
+          "name": "StreamActiveSessionsRequest",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "user_filter"
+          ],
+          "startLine": 177,
+          "endLine": 180
+        },
+        {
+          "name": "ActiveSessionsStreamData",
+          "kind": "message",
+          "fields": [
+            "device_id",
+            "sessions",
+            "timestamp_unix"
+          ],
+          "startLine": 182,
+          "endLine": 186
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "HotspotService.GetDashboard",
+          "startLine": 189,
+          "endLine": 189
+        },
+        {
+          "method": "rpc",
+          "path": "HotspotService.ListProfiles",
+          "startLine": 190,
+          "endLine": 190
+        },
+        {
+          "method": "rpc",
+          "path": "HotspotService.ListUsers",
+          "startLine": 191,
+          "endLine": 191
+        },
+        {
+          "method": "rpc",
+          "path": "HotspotService.ListActiveSessions",
+          "startLine": 192,
+          "endLine": 192
+        },
+        {
+          "method": "rpc",
+          "path": "HotspotService.KickActiveSession",
+          "startLine": 193,
+          "endLine": 193
+        },
+        {
+          "method": "rpc",
+          "path": "HotspotService.ListDHCPLeases",
+          "startLine": 194,
+          "endLine": 194
+        },
+        {
+          "method": "rpc",
+          "path": "HotspotService.BlockDHCPLease",
+          "startLine": 195,
+          "endLine": 195
+        },
+        {
+          "method": "rpc",
+          "path": "HotspotService.GenerateVouchers",
+          "startLine": 196,
+          "endLine": 196
+        },
+        {
+          "method": "rpc",
+          "path": "HotspotService.StreamTraffic",
+          "startLine": 197,
+          "endLine": 197
+        },
+        {
+          "method": "rpc",
+          "path": "HotspotService.StreamResource",
+          "startLine": 198,
+          "endLine": 198
+        },
+        {
+          "method": "rpc",
+          "path": "HotspotService.StreamActiveSessions",
+          "startLine": 199,
+          "endLine": 199
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 28,
+        "endpointCount": 11
+      }
+    },
+    {
+      "path": "api/proto/v1/knowledge.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 196,
+      "nonEmptyLines": 172,
+      "definitions": [
+        {
+          "name": "KnowledgeItem",
+          "kind": "message",
+          "fields": [
+            "id",
+            "title",
+            "content",
+            "category",
+            "tags",
+            "created_at",
+            "updated_at"
+          ],
+          "startLine": 28,
+          "endLine": 36
+        },
+        {
+          "name": "ListKnowledgeRequest",
+          "kind": "message",
+          "fields": [
+            "category",
+            "search_query"
+          ],
+          "startLine": 38,
+          "endLine": 41
+        },
+        {
+          "name": "ListKnowledgeResponse",
+          "kind": "message",
+          "fields": [
+            "items"
+          ],
+          "startLine": 42,
+          "endLine": 44
+        },
+        {
+          "name": "GetKnowledgeRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 46,
+          "endLine": 48
+        },
+        {
+          "name": "GetKnowledgeResponse",
+          "kind": "message",
+          "fields": [
+            "item"
+          ],
+          "startLine": 49,
+          "endLine": 51
+        },
+        {
+          "name": "CreateKnowledgeRequest",
+          "kind": "message",
+          "fields": [
+            "title",
+            "content",
+            "category",
+            "tags"
+          ],
+          "startLine": 53,
+          "endLine": 58
+        },
+        {
+          "name": "CreateKnowledgeResponse",
+          "kind": "message",
+          "fields": [
+            "item"
+          ],
+          "startLine": 59,
+          "endLine": 61
+        },
+        {
+          "name": "UpdateKnowledgeRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "title",
+            "content",
+            "category",
+            "tags"
+          ],
+          "startLine": 63,
+          "endLine": 69
+        },
+        {
+          "name": "UpdateKnowledgeResponse",
+          "kind": "message",
+          "fields": [
+            "item"
+          ],
+          "startLine": 70,
+          "endLine": 72
+        },
+        {
+          "name": "DeleteKnowledgeRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 74,
+          "endLine": 76
+        },
+        {
+          "name": "DeleteKnowledgeResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 77,
+          "endLine": 79
+        },
+        {
+          "name": "LLMConfig",
+          "kind": "message",
+          "fields": [
+            "id",
+            "provider",
+            "model_name",
+            "api_key_masked",
+            "base_url",
+            "is_active",
+            "temperature",
+            "max_tokens",
+            "system_prompt"
+          ],
+          "startLine": 81,
+          "endLine": 91
+        },
+        {
+          "name": "ListLLMConfigsRequest",
+          "kind": "message",
+          "fields": [],
+          "startLine": 93,
+          "endLine": 93
+        },
+        {
+          "name": "ListLLMConfigsResponse",
+          "kind": "message",
+          "fields": [
+            "configs"
+          ],
+          "startLine": 94,
+          "endLine": 96
+        },
+        {
+          "name": "CreateLLMConfigRequest",
+          "kind": "message",
+          "fields": [
+            "provider",
+            "model_name",
+            "api_key",
+            "base_url",
+            "temperature",
+            "max_tokens",
+            "system_prompt"
+          ],
+          "startLine": 98,
+          "endLine": 106
+        },
+        {
+          "name": "CreateLLMConfigResponse",
+          "kind": "message",
+          "fields": [
+            "config"
+          ],
+          "startLine": 107,
+          "endLine": 109
+        },
+        {
+          "name": "UpdateLLMConfigRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "provider",
+            "model_name",
+            "api_key",
+            "base_url",
+            "temperature",
+            "max_tokens",
+            "system_prompt"
+          ],
+          "startLine": 111,
+          "endLine": 120
+        },
+        {
+          "name": "UpdateLLMConfigResponse",
+          "kind": "message",
+          "fields": [
+            "config"
+          ],
+          "startLine": 121,
+          "endLine": 123
+        },
+        {
+          "name": "ActivateLLMConfigRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 125,
+          "endLine": 127
+        },
+        {
+          "name": "ActivateLLMConfigResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 128,
+          "endLine": 130
+        },
+        {
+          "name": "TestLLMConfigRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "test_prompt"
+          ],
+          "startLine": 132,
+          "endLine": 135
+        },
+        {
+          "name": "TestLLMConfigResponse",
+          "kind": "message",
+          "fields": [
+            "success",
+            "response_text",
+            "error_message"
+          ],
+          "startLine": 136,
+          "endLine": 140
+        },
+        {
+          "name": "DeleteLLMConfigRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 142,
+          "endLine": 144
+        },
+        {
+          "name": "DeleteLLMConfigResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 145,
+          "endLine": 147
+        },
+        {
+          "name": "Technician",
+          "kind": "message",
+          "fields": [
+            "id",
+            "name",
+            "phone_number",
+            "email",
+            "is_active",
+            "active_tickets"
+          ],
+          "startLine": 149,
+          "endLine": 156
+        },
+        {
+          "name": "ListTechniciansRequest",
+          "kind": "message",
+          "fields": [],
+          "startLine": 158,
+          "endLine": 158
+        },
+        {
+          "name": "ListTechniciansResponse",
+          "kind": "message",
+          "fields": [
+            "technicians"
+          ],
+          "startLine": 159,
+          "endLine": 161
+        },
+        {
+          "name": "CreateTechnicianRequest",
+          "kind": "message",
+          "fields": [
+            "name",
+            "phone_number",
+            "email"
+          ],
+          "startLine": 163,
+          "endLine": 167
+        },
+        {
+          "name": "CreateTechnicianResponse",
+          "kind": "message",
+          "fields": [
+            "technician"
+          ],
+          "startLine": 168,
+          "endLine": 170
+        },
+        {
+          "name": "UpdateTechnicianRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "name",
+            "phone_number",
+            "email"
+          ],
+          "startLine": 172,
+          "endLine": 177
+        },
+        {
+          "name": "UpdateTechnicianResponse",
+          "kind": "message",
+          "fields": [
+            "technician"
+          ],
+          "startLine": 178,
+          "endLine": 180
+        },
+        {
+          "name": "ToggleTechnicianActiveRequest",
+          "kind": "message",
+          "fields": [
+            "id",
+            "is_active"
+          ],
+          "startLine": 182,
+          "endLine": 185
+        },
+        {
+          "name": "ToggleTechnicianActiveResponse",
+          "kind": "message",
+          "fields": [
+            "message",
+            "is_active"
+          ],
+          "startLine": 186,
+          "endLine": 189
+        },
+        {
+          "name": "DeleteTechnicianRequest",
+          "kind": "message",
+          "fields": [
+            "id"
+          ],
+          "startLine": 191,
+          "endLine": 193
+        },
+        {
+          "name": "DeleteTechnicianResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 194,
+          "endLine": 196
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.ListKnowledge",
+          "startLine": 8,
+          "endLine": 8
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.GetKnowledge",
+          "startLine": 9,
+          "endLine": 9
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.CreateKnowledge",
+          "startLine": 10,
+          "endLine": 10
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.UpdateKnowledge",
+          "startLine": 11,
+          "endLine": 11
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.DeleteKnowledge",
+          "startLine": 12,
+          "endLine": 12
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.ListLLMConfigs",
+          "startLine": 14,
+          "endLine": 14
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.CreateLLMConfig",
+          "startLine": 15,
+          "endLine": 15
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.UpdateLLMConfig",
+          "startLine": 16,
+          "endLine": 16
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.ActivateLLMConfig",
+          "startLine": 17,
+          "endLine": 17
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.TestLLMConfig",
+          "startLine": 18,
+          "endLine": 18
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.DeleteLLMConfig",
+          "startLine": 19,
+          "endLine": 19
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.ListTechnicians",
+          "startLine": 21,
+          "endLine": 21
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.CreateTechnician",
+          "startLine": 22,
+          "endLine": 22
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.UpdateTechnician",
+          "startLine": 23,
+          "endLine": 23
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.ToggleTechnicianActive",
+          "startLine": 24,
+          "endLine": 24
+        },
+        {
+          "method": "rpc",
+          "path": "KnowledgeService.DeleteTechnician",
+          "startLine": 25,
+          "endLine": 25
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 35,
+        "endpointCount": 16
+      }
+    },
+    {
+      "path": "api/proto/v1/probe.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 35,
+      "nonEmptyLines": 28,
+      "definitions": [
+        {
+          "name": "PingTelemetry",
+          "kind": "message",
+          "fields": [
+            "probe_id",
+            "target_ip",
+            "latency_ms",
+            "is_alive",
+            "timestamp_unix"
+          ],
+          "startLine": 7,
+          "endLine": 13
+        },
+        {
+          "name": "ProbeControlCommand",
+          "kind": "message",
+          "fields": [
+            "command_id",
+            "action",
+            "target"
+          ],
+          "startLine": 15,
+          "endLine": 19
+        },
+        {
+          "name": "ProbeStatusRequest",
+          "kind": "message",
+          "fields": [
+            "probe_id",
+            "version",
+            "uptime_seconds"
+          ],
+          "startLine": 21,
+          "endLine": 25
+        },
+        {
+          "name": "ProbeStatusResponse",
+          "kind": "message",
+          "fields": [
+            "acknowledged",
+            "server_time_unix"
+          ],
+          "startLine": 27,
+          "endLine": 30
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "ProbeService.ReportStatus",
+          "startLine": 33,
+          "endLine": 33
+        },
+        {
+          "method": "rpc",
+          "path": "ProbeService.StreamTelemetry",
+          "startLine": 34,
+          "endLine": 34
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 4,
+        "endpointCount": 2
+      }
+    },
+    {
+      "path": "api/proto/v1/rbac.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 63,
+      "nonEmptyLines": 52,
+      "definitions": [
+        {
+          "name": "Policy",
+          "kind": "message",
+          "fields": [
+            "sub",
+            "obj",
+            "act"
+          ],
+          "startLine": 7,
+          "endLine": 11
+        },
+        {
+          "name": "RoleAssignment",
+          "kind": "message",
+          "fields": [
+            "user",
+            "role"
+          ],
+          "startLine": 13,
+          "endLine": 16
+        },
+        {
+          "name": "ListPoliciesRequest",
+          "kind": "message",
+          "fields": [],
+          "startLine": 18,
+          "endLine": 18
+        },
+        {
+          "name": "ListPoliciesResponse",
+          "kind": "message",
+          "fields": [
+            "policies"
+          ],
+          "startLine": 19,
+          "endLine": 21
+        },
+        {
+          "name": "AddPolicyRequest",
+          "kind": "message",
+          "fields": [
+            "policy"
+          ],
+          "startLine": 23,
+          "endLine": 25
+        },
+        {
+          "name": "AddPolicyResponse",
+          "kind": "message",
+          "fields": [
+            "success"
+          ],
+          "startLine": 26,
+          "endLine": 28
+        },
+        {
+          "name": "RemovePolicyRequest",
+          "kind": "message",
+          "fields": [
+            "policy"
+          ],
+          "startLine": 30,
+          "endLine": 32
+        },
+        {
+          "name": "RemovePolicyResponse",
+          "kind": "message",
+          "fields": [
+            "success"
+          ],
+          "startLine": 33,
+          "endLine": 35
+        },
+        {
+          "name": "ListRoleAssignmentsRequest",
+          "kind": "message",
+          "fields": [],
+          "startLine": 37,
+          "endLine": 37
+        },
+        {
+          "name": "ListRoleAssignmentsResponse",
+          "kind": "message",
+          "fields": [
+            "role_assignments"
+          ],
+          "startLine": 38,
+          "endLine": 40
+        },
+        {
+          "name": "AssignRoleRequest",
+          "kind": "message",
+          "fields": [
+            "assignment"
+          ],
+          "startLine": 42,
+          "endLine": 44
+        },
+        {
+          "name": "AssignRoleResponse",
+          "kind": "message",
+          "fields": [
+            "success"
+          ],
+          "startLine": 45,
+          "endLine": 47
+        },
+        {
+          "name": "UnassignRoleRequest",
+          "kind": "message",
+          "fields": [
+            "assignment"
+          ],
+          "startLine": 49,
+          "endLine": 51
+        },
+        {
+          "name": "UnassignRoleResponse",
+          "kind": "message",
+          "fields": [
+            "success"
+          ],
+          "startLine": 52,
+          "endLine": 54
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "RBACService.ListPolicies",
+          "startLine": 57,
+          "endLine": 57
+        },
+        {
+          "method": "rpc",
+          "path": "RBACService.AddPolicy",
+          "startLine": 58,
+          "endLine": 58
+        },
+        {
+          "method": "rpc",
+          "path": "RBACService.RemovePolicy",
+          "startLine": 59,
+          "endLine": 59
+        },
+        {
+          "method": "rpc",
+          "path": "RBACService.ListRoleAssignments",
+          "startLine": 60,
+          "endLine": 60
+        },
+        {
+          "method": "rpc",
+          "path": "RBACService.AssignRole",
+          "startLine": 61,
+          "endLine": 61
+        },
+        {
+          "method": "rpc",
+          "path": "RBACService.UnassignRole",
+          "startLine": 62,
+          "endLine": 62
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 14,
+        "endpointCount": 6
+      }
+    },
+    {
+      "path": "api/proto/v1/whatsapp.proto",
+      "language": "protobuf",
+      "fileCategory": "data",
+      "totalLines": 97,
+      "nonEmptyLines": 84,
+      "definitions": [
+        {
+          "name": "WASession",
+          "kind": "message",
+          "fields": [
+            "id",
+            "name",
+            "phone_number",
+            "status",
+            "is_bot_active",
+            "created_at"
+          ],
+          "startLine": 19,
+          "endLine": 26
+        },
+        {
+          "name": "ListWASessionsRequest",
+          "kind": "message",
+          "fields": [],
+          "startLine": 28,
+          "endLine": 28
+        },
+        {
+          "name": "ListWASessionsResponse",
+          "kind": "message",
+          "fields": [
+            "sessions"
+          ],
+          "startLine": 29,
+          "endLine": 31
+        },
+        {
+          "name": "CreateWASessionRequest",
+          "kind": "message",
+          "fields": [
+            "name",
+            "phone_number"
+          ],
+          "startLine": 33,
+          "endLine": 36
+        },
+        {
+          "name": "CreateWASessionResponse",
+          "kind": "message",
+          "fields": [
+            "session"
+          ],
+          "startLine": 37,
+          "endLine": 39
+        },
+        {
+          "name": "GetWASessionQRRequest",
+          "kind": "message",
+          "fields": [
+            "session_id"
+          ],
+          "startLine": 41,
+          "endLine": 43
+        },
+        {
+          "name": "GetWASessionQRResponse",
+          "kind": "message",
+          "fields": [
+            "qr_code_base64",
+            "qr_code_path",
+            "duration_seconds"
+          ],
+          "startLine": 44,
+          "endLine": 48
+        },
+        {
+          "name": "GetWASessionPairingRequest",
+          "kind": "message",
+          "fields": [
+            "session_id",
+            "phone_number"
+          ],
+          "startLine": 50,
+          "endLine": 53
+        },
+        {
+          "name": "GetWASessionPairingResponse",
+          "kind": "message",
+          "fields": [
+            "pairing_code"
+          ],
+          "startLine": 54,
+          "endLine": 56
+        },
+        {
+          "name": "ToggleWABotRequest",
+          "kind": "message",
+          "fields": [
+            "session_id",
+            "is_active"
+          ],
+          "startLine": 58,
+          "endLine": 61
+        },
+        {
+          "name": "ToggleWABotResponse",
+          "kind": "message",
+          "fields": [
+            "message",
+            "is_active"
+          ],
+          "startLine": 62,
+          "endLine": 65
+        },
+        {
+          "name": "ReconnectWASessionRequest",
+          "kind": "message",
+          "fields": [
+            "session_id"
+          ],
+          "startLine": 67,
+          "endLine": 69
+        },
+        {
+          "name": "ReconnectWASessionResponse",
+          "kind": "message",
+          "fields": [
+            "message",
+            "status"
+          ],
+          "startLine": 70,
+          "endLine": 73
+        },
+        {
+          "name": "LogoutWASessionRequest",
+          "kind": "message",
+          "fields": [
+            "session_id"
+          ],
+          "startLine": 75,
+          "endLine": 77
+        },
+        {
+          "name": "LogoutWASessionResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 78,
+          "endLine": 80
+        },
+        {
+          "name": "PurgeWASessionRequest",
+          "kind": "message",
+          "fields": [
+            "session_id"
+          ],
+          "startLine": 82,
+          "endLine": 84
+        },
+        {
+          "name": "PurgeWASessionResponse",
+          "kind": "message",
+          "fields": [
+            "message"
+          ],
+          "startLine": 85,
+          "endLine": 87
+        },
+        {
+          "name": "SendWATextMessageRequest",
+          "kind": "message",
+          "fields": [
+            "session_id",
+            "recipient_phone",
+            "message_text"
+          ],
+          "startLine": 89,
+          "endLine": 93
+        },
+        {
+          "name": "SendWATextMessageResponse",
+          "kind": "message",
+          "fields": [
+            "message_id",
+            "status"
+          ],
+          "startLine": 94,
+          "endLine": 97
+        }
+      ],
+      "endpoints": [
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.ListSessions",
+          "startLine": 8,
+          "endLine": 8
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.CreateSession",
+          "startLine": 9,
+          "endLine": 9
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.GetQRCode",
+          "startLine": 10,
+          "endLine": 10
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.GetPairingCode",
+          "startLine": 11,
+          "endLine": 11
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.ToggleBot",
+          "startLine": 12,
+          "endLine": 12
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.ReconnectSession",
+          "startLine": 13,
+          "endLine": 13
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.LogoutSession",
+          "startLine": 14,
+          "endLine": 14
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.PurgeSession",
+          "startLine": 15,
+          "endLine": 15
+        },
+        {
+          "method": "rpc",
+          "path": "WhatsAppService.SendTextMessage",
+          "startLine": 16,
+          "endLine": 16
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 19,
+        "endpointCount": 9
+      }
+    }
+  ]
+}

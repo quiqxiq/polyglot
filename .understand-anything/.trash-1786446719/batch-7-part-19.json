@@ -1,0 +1,2816 @@
+{
+ "nodes": [
+  {
+   "id": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "file",
+   "name": "whatsapp.pb.go",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "summary": "Go source file implementing the API specification — API specification logic for the polyglot backend. Exports WASession, Reset, String, ProtoMessage, ProtoReflect, Descriptor.",
+   "tags": [
+    "api-schema",
+    "openapi",
+    "documentation",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "function",
+   "name": "Reset",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    36,
+    41
+   ],
+   "summary": "Implements the Reset logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "function",
+   "name": "String",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    43,
+    45
+   ],
+   "summary": "Implements the String logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "function",
+   "name": "ProtoMessage",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    47,
+    47
+   ],
+   "summary": "Implements the ProtoMessage logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "function",
+   "name": "ProtoReflect",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    49,
+    59
+   ],
+   "summary": "Implements the ProtoReflect logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "function",
+   "name": "Descriptor",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    62,
+    64
+   ],
+   "summary": "Implements the Descriptor logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetId",
+   "type": "function",
+   "name": "GetId",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    66,
+    71
+   ],
+   "summary": "Retrieves id data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetName",
+   "type": "function",
+   "name": "GetName",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    73,
+    78
+   ],
+   "summary": "Retrieves name data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetPhoneNumber",
+   "type": "function",
+   "name": "GetPhoneNumber",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    80,
+    85
+   ],
+   "summary": "Retrieves phonenumber data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetStatus",
+   "type": "function",
+   "name": "GetStatus",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    87,
+    92
+   ],
+   "summary": "Retrieves status data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetIsBotActive",
+   "type": "function",
+   "name": "GetIsBotActive",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    94,
+    99
+   ],
+   "summary": "Retrieves isbotactive data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetCreatedAt",
+   "type": "function",
+   "name": "GetCreatedAt",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    101,
+    106
+   ],
+   "summary": "Retrieves createdat data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetSessions",
+   "type": "function",
+   "name": "GetSessions",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    181,
+    186
+   ],
+   "summary": "Retrieves sessions data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetSession",
+   "type": "function",
+   "name": "GetSession",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    277,
+    282
+   ],
+   "summary": "Retrieves session data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "function",
+   "name": "GetSessionId",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    321,
+    326
+   ],
+   "summary": "Retrieves sessionid data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetQrCodeBase64",
+   "type": "function",
+   "name": "GetQrCodeBase64",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    367,
+    372
+   ],
+   "summary": "Retrieves qrcodebase64 data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetQrCodePath",
+   "type": "function",
+   "name": "GetQrCodePath",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    374,
+    379
+   ],
+   "summary": "Retrieves qrcodepath data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetDurationSeconds",
+   "type": "function",
+   "name": "GetDurationSeconds",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    381,
+    386
+   ],
+   "summary": "Retrieves durationseconds data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetPairingCode",
+   "type": "function",
+   "name": "GetPairingCode",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    477,
+    482
+   ],
+   "summary": "Retrieves pairingcode data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetIsActive",
+   "type": "function",
+   "name": "GetIsActive",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    529,
+    534
+   ],
+   "summary": "Retrieves isactive data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetMessage",
+   "type": "function",
+   "name": "GetMessage",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    574,
+    579
+   ],
+   "summary": "Retrieves message data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetRecipientPhone",
+   "type": "function",
+   "name": "GetRecipientPhone",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    906,
+    911
+   ],
+   "summary": "Retrieves recipientphone data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetMessageText",
+   "type": "function",
+   "name": "GetMessageText",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    913,
+    918
+   ],
+   "summary": "Retrieves messagetext data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:GetMessageId",
+   "type": "function",
+   "name": "GetMessageId",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    958,
+    963
+   ],
+   "summary": "Retrieves messageid data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/whatsapp.pb.go:file_v1_whatsapp_proto_init",
+   "type": "function",
+   "name": "file_v1_whatsapp_proto_init",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    1113,
+    1134
+   ],
+   "summary": "Implements the file_v1_whatsapp_proto_init logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:WASession",
+   "type": "class",
+   "name": "WASession",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    24,
+    34
+   ],
+   "summary": "WASession Go type with 11 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 9 field(s), defining the wasession behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:ListWASessionsRequest",
+   "type": "class",
+   "name": "ListWASessionsRequest",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    108,
+    112
+   ],
+   "summary": "ListWASessionsRequest Go type with 5 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor] and 3 field(s), defining the listwasessionsrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:ListWASessionsResponse",
+   "type": "class",
+   "name": "ListWASessionsResponse",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    144,
+    149
+   ],
+   "summary": "ListWASessionsResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the listwasessionsresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:CreateWASessionRequest",
+   "type": "class",
+   "name": "CreateWASessionRequest",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    188,
+    194
+   ],
+   "summary": "CreateWASessionRequest Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the createwasessionrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:CreateWASessionResponse",
+   "type": "class",
+   "name": "CreateWASessionResponse",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    240,
+    245
+   ],
+   "summary": "CreateWASessionResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the createwasessionresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:GetWASessionQRRequest",
+   "type": "class",
+   "name": "GetWASessionQRRequest",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    284,
+    289
+   ],
+   "summary": "GetWASessionQRRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the getwasessionqrrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:GetWASessionQRResponse",
+   "type": "class",
+   "name": "GetWASessionQRResponse",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    328,
+    335
+   ],
+   "summary": "GetWASessionQRResponse Go type with 8 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 6 field(s), defining the getwasessionqrresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:GetWASessionPairingRequest",
+   "type": "class",
+   "name": "GetWASessionPairingRequest",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    388,
+    394
+   ],
+   "summary": "GetWASessionPairingRequest Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the getwasessionpairingrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:GetWASessionPairingResponse",
+   "type": "class",
+   "name": "GetWASessionPairingResponse",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    440,
+    445
+   ],
+   "summary": "GetWASessionPairingResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the getwasessionpairingresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:ToggleWABotRequest",
+   "type": "class",
+   "name": "ToggleWABotRequest",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    484,
+    490
+   ],
+   "summary": "ToggleWABotRequest Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the togglewabotrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:ToggleWABotResponse",
+   "type": "class",
+   "name": "ToggleWABotResponse",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    536,
+    542
+   ],
+   "summary": "ToggleWABotResponse Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the togglewabotresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:ReconnectWASessionRequest",
+   "type": "class",
+   "name": "ReconnectWASessionRequest",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    588,
+    593
+   ],
+   "summary": "ReconnectWASessionRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the reconnectwasessionrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:ReconnectWASessionResponse",
+   "type": "class",
+   "name": "ReconnectWASessionResponse",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    632,
+    638
+   ],
+   "summary": "ReconnectWASessionResponse Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the reconnectwasessionresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:LogoutWASessionRequest",
+   "type": "class",
+   "name": "LogoutWASessionRequest",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    684,
+    689
+   ],
+   "summary": "LogoutWASessionRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the logoutwasessionrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:LogoutWASessionResponse",
+   "type": "class",
+   "name": "LogoutWASessionResponse",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    728,
+    733
+   ],
+   "summary": "LogoutWASessionResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the logoutwasessionresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:PurgeWASessionRequest",
+   "type": "class",
+   "name": "PurgeWASessionRequest",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    772,
+    777
+   ],
+   "summary": "PurgeWASessionRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the purgewasessionrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:PurgeWASessionResponse",
+   "type": "class",
+   "name": "PurgeWASessionResponse",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    816,
+    821
+   ],
+   "summary": "PurgeWASessionResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the purgewasessionresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:SendWATextMessageRequest",
+   "type": "class",
+   "name": "SendWATextMessageRequest",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    860,
+    867
+   ],
+   "summary": "SendWATextMessageRequest Go type with 8 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 6 field(s), defining the sendwatextmessagerequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/whatsapp.pb.go:SendWATextMessageResponse",
+   "type": "class",
+   "name": "SendWATextMessageResponse",
+   "filePath": "api/gen/v1/whatsapp.pb.go",
+   "lineRange": [
+    920,
+    926
+   ],
+   "summary": "SendWATextMessageResponse Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the sendwatextmessageresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetName",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetPhoneNumber",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetStatus",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetIsBotActive",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetCreatedAt",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetName",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetPhoneNumber",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetQrCodeBase64",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetQrCodePath",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetDurationSeconds",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetPhoneNumber",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetPairingCode",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetIsActive",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetIsActive",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetStatus",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetRecipientPhone",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetMessageText",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetMessageId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetStatus",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:file_v1_whatsapp_proto_init",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:WASession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:ListWASessionsRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:ListWASessionsResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:CreateWASessionRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:CreateWASessionResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:GetWASessionQRRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:GetWASessionQRResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:GetWASessionPairingRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:GetWASessionPairingResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:ToggleWABotRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:ToggleWABotResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:ReconnectWASessionRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:ReconnectWASessionResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:LogoutWASessionRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:LogoutWASessionResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:PurgeWASessionRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:PurgeWASessionResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:SendWATextMessageRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:SendWATextMessageResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:WASession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetName",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetPhoneNumber",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetStatus",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetIsBotActive",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetCreatedAt",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:ListWASessionsRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:ListWASessionsResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessions",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:CreateWASessionRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetName",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetPhoneNumber",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:CreateWASessionResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:GetWASessionQRRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:GetWASessionQRResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetQrCodeBase64",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetQrCodePath",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetDurationSeconds",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:GetWASessionPairingRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetPhoneNumber",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:GetWASessionPairingResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetPairingCode",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:ToggleWABotRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetIsActive",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:ToggleWABotResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetIsActive",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:ReconnectWASessionRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:ReconnectWASessionResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetStatus",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:LogoutWASessionRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:LogoutWASessionResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:PurgeWASessionRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:PurgeWASessionResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:SendWATextMessageRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetSessionId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetRecipientPhone",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetMessageText",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "class:api/gen/v1/whatsapp.pb.go:SendWATextMessageResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetMessageId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/whatsapp.pb.go",
+   "target": "function:api/gen/v1/whatsapp.pb.go:GetStatus",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

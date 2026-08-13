@@ -113,6 +113,27 @@ func (sm *SessionManager) Connect(session *bot.WASession) error {
 	return sm.ConnectWithContext(context.Background(), session)
 }
 
+// DisconnectAll memutus semua koneksi WhatsApp aktif (dipakai saat graceful
+// shutdown). Session lokal & pairing DIpertahankan, sehingga
+// RestoreAllSessions pada startup berikutnya bisa menyambung tanpa scan ulang.
+func (sm *SessionManager) DisconnectAll() {
+	if sm == nil {
+		return
+	}
+	sm.mutex.RLock()
+	clients := make([]*Client, 0, len(sm.clients))
+	for _, c := range sm.clients {
+		clients = append(clients, c)
+	}
+	sm.mutex.RUnlock()
+
+	// Panggil Disconnect di luar lock: kalau implementasinya memicu callback
+	// (status/message) yang re-enter ke manager, tidak terjadi deadlock.
+	for _, c := range clients {
+		c.Disconnect()
+	}
+}
+
 // Disconnect hanya memutus koneksi — session lokal & pairing DIpertahankan
 // sehingga Reconnect bisa menyambung lagi tanpa scan ulang. Berbeda dengan
 // Logout yang menghapus session dari store.

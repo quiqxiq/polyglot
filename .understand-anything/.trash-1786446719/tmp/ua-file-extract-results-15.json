@@ -1,0 +1,79 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 9,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/templates/footer.default.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "totalLines": 44,
+      "nonEmptyLines": 41,
+      "metrics": {}
+    },
+    {
+      "path": "internal/templates/footer.small.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "totalLines": 26,
+      "nonEmptyLines": 23,
+      "metrics": {}
+    },
+    {
+      "path": "internal/templates/footer.thermal.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "totalLines": 26,
+      "nonEmptyLines": 23,
+      "metrics": {}
+    },
+    {
+      "path": "internal/templates/header.default.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "totalLines": 75,
+      "nonEmptyLines": 72,
+      "metrics": {}
+    },
+    {
+      "path": "internal/templates/header.small.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "totalLines": 46,
+      "nonEmptyLines": 45,
+      "metrics": {}
+    },
+    {
+      "path": "internal/templates/header.thermal.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "totalLines": 66,
+      "nonEmptyLines": 63,
+      "metrics": {}
+    },
+    {
+      "path": "internal/templates/row.default.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "totalLines": 43,
+      "nonEmptyLines": 38,
+      "metrics": {}
+    },
+    {
+      "path": "internal/templates/row.small.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "totalLines": 31,
+      "nonEmptyLines": 31,
+      "metrics": {}
+    },
+    {
+      "path": "internal/templates/row.thermal.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "totalLines": 66,
+      "nonEmptyLines": 63,
+      "metrics": {}
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "projectRoot": "/home/quixiq/projects/polyground/polyglot",
+  "batchFiles": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "language": "yaml",
+      "sizeLines": 31,
+      "fileCategory": "infra"
+    }
+  ],
+  "batchImportData": {
+    ".github/workflows/ci.yml": []
+  }
+}

@@ -1,0 +1,5370 @@
+{
+ "nodes": [
+  {
+   "id": "file:api/gen/v1/knowledge.pb.go",
+   "type": "file",
+   "name": "knowledge.pb.go",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "summary": "Go source file implementing the API specification — API specification logic for the polyglot backend. Exports KnowledgeItem, Reset, String, ProtoMessage, ProtoReflect, Descriptor.",
+   "tags": [
+    "api-schema",
+    "openapi",
+    "documentation",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "function",
+   "name": "Reset",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    37,
+    42
+   ],
+   "summary": "Implements the Reset logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "function",
+   "name": "String",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    44,
+    46
+   ],
+   "summary": "Implements the String logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "function",
+   "name": "ProtoMessage",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    48,
+    48
+   ],
+   "summary": "Implements the ProtoMessage logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "function",
+   "name": "ProtoReflect",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    50,
+    60
+   ],
+   "summary": "Implements the ProtoReflect logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "function",
+   "name": "Descriptor",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    63,
+    65
+   ],
+   "summary": "Implements the Descriptor logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "function",
+   "name": "GetId",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    67,
+    72
+   ],
+   "summary": "Retrieves id data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetTitle",
+   "type": "function",
+   "name": "GetTitle",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    74,
+    79
+   ],
+   "summary": "Retrieves title data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetContent",
+   "type": "function",
+   "name": "GetContent",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    81,
+    86
+   ],
+   "summary": "Retrieves content data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetCategory",
+   "type": "function",
+   "name": "GetCategory",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    88,
+    93
+   ],
+   "summary": "Retrieves category data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetTags",
+   "type": "function",
+   "name": "GetTags",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    95,
+    100
+   ],
+   "summary": "Retrieves tags data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetCreatedAt",
+   "type": "function",
+   "name": "GetCreatedAt",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    102,
+    107
+   ],
+   "summary": "Retrieves createdat data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetUpdatedAt",
+   "type": "function",
+   "name": "GetUpdatedAt",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    109,
+    114
+   ],
+   "summary": "Retrieves updatedat data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetSearchQuery",
+   "type": "function",
+   "name": "GetSearchQuery",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    161,
+    166
+   ],
+   "summary": "Retrieves searchquery data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetItems",
+   "type": "function",
+   "name": "GetItems",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    205,
+    210
+   ],
+   "summary": "Retrieves items data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetItem",
+   "type": "function",
+   "name": "GetItem",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    293,
+    298
+   ],
+   "summary": "Retrieves item data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetMessage",
+   "type": "function",
+   "name": "GetMessage",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    613,
+    618
+   ],
+   "summary": "Retrieves message data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetProvider",
+   "type": "function",
+   "name": "GetProvider",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    672,
+    677
+   ],
+   "summary": "Retrieves provider data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetModelName",
+   "type": "function",
+   "name": "GetModelName",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    679,
+    684
+   ],
+   "summary": "Retrieves modelname data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetApiKeyMasked",
+   "type": "function",
+   "name": "GetApiKeyMasked",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    686,
+    691
+   ],
+   "summary": "Retrieves apikeymasked data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetBaseUrl",
+   "type": "function",
+   "name": "GetBaseUrl",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    693,
+    698
+   ],
+   "summary": "Retrieves baseurl data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetIsActive",
+   "type": "function",
+   "name": "GetIsActive",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    700,
+    705
+   ],
+   "summary": "Retrieves isactive data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetTemperature",
+   "type": "function",
+   "name": "GetTemperature",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    707,
+    712
+   ],
+   "summary": "Retrieves temperature data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetMaxTokens",
+   "type": "function",
+   "name": "GetMaxTokens",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    714,
+    719
+   ],
+   "summary": "Retrieves maxtokens data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetSystemPrompt",
+   "type": "function",
+   "name": "GetSystemPrompt",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    721,
+    726
+   ],
+   "summary": "Retrieves systemprompt data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetConfigs",
+   "type": "function",
+   "name": "GetConfigs",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    801,
+    806
+   ],
+   "summary": "Retrieves configs data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetApiKey",
+   "type": "function",
+   "name": "GetApiKey",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    865,
+    870
+   ],
+   "summary": "Retrieves apikey data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetConfig",
+   "type": "function",
+   "name": "GetConfig",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    937,
+    942
+   ],
+   "summary": "Retrieves config data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetTestPrompt",
+   "type": "function",
+   "name": "GetTestPrompt",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1221,
+    1226
+   ],
+   "summary": "Retrieves testprompt data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetSuccess",
+   "type": "function",
+   "name": "GetSuccess",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1267,
+    1272
+   ],
+   "summary": "Retrieves success data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetResponseText",
+   "type": "function",
+   "name": "GetResponseText",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1274,
+    1279
+   ],
+   "summary": "Retrieves responsetext data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetErrorMessage",
+   "type": "function",
+   "name": "GetErrorMessage",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1281,
+    1286
+   ],
+   "summary": "Retrieves errormessage data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetName",
+   "type": "function",
+   "name": "GetName",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1425,
+    1430
+   ],
+   "summary": "Retrieves name data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetPhoneNumber",
+   "type": "function",
+   "name": "GetPhoneNumber",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1432,
+    1437
+   ],
+   "summary": "Retrieves phonenumber data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetEmail",
+   "type": "function",
+   "name": "GetEmail",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1439,
+    1444
+   ],
+   "summary": "Retrieves email data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetActiveTickets",
+   "type": "function",
+   "name": "GetActiveTickets",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1453,
+    1458
+   ],
+   "summary": "Retrieves activetickets data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetTechnicians",
+   "type": "function",
+   "name": "GetTechnicians",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1533,
+    1538
+   ],
+   "summary": "Retrieves technicians data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:GetTechnician",
+   "type": "function",
+   "name": "GetTechnician",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1637,
+    1642
+   ],
+   "summary": "Retrieves technician data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/knowledge.pb.go:file_v1_knowledge_proto_init",
+   "type": "function",
+   "name": "file_v1_knowledge_proto_init",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    2204,
+    2225
+   ],
+   "summary": "Implements the file_v1_knowledge_proto_init logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:KnowledgeItem",
+   "type": "class",
+   "name": "KnowledgeItem",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    24,
+    35
+   ],
+   "summary": "KnowledgeItem Go type with 12 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 10 field(s), defining the knowledgeitem behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:ListKnowledgeRequest",
+   "type": "class",
+   "name": "ListKnowledgeRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    116,
+    122
+   ],
+   "summary": "ListKnowledgeRequest Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the listknowledgerequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:ListKnowledgeResponse",
+   "type": "class",
+   "name": "ListKnowledgeResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    168,
+    173
+   ],
+   "summary": "ListKnowledgeResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the listknowledgeresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:GetKnowledgeRequest",
+   "type": "class",
+   "name": "GetKnowledgeRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    212,
+    217
+   ],
+   "summary": "GetKnowledgeRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the getknowledgerequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:GetKnowledgeResponse",
+   "type": "class",
+   "name": "GetKnowledgeResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    256,
+    261
+   ],
+   "summary": "GetKnowledgeResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the getknowledgeresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:CreateKnowledgeRequest",
+   "type": "class",
+   "name": "CreateKnowledgeRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    300,
+    308
+   ],
+   "summary": "CreateKnowledgeRequest Go type with 9 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 7 field(s), defining the createknowledgerequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:CreateKnowledgeResponse",
+   "type": "class",
+   "name": "CreateKnowledgeResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    368,
+    373
+   ],
+   "summary": "CreateKnowledgeResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the createknowledgeresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:UpdateKnowledgeRequest",
+   "type": "class",
+   "name": "UpdateKnowledgeRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    412,
+    421
+   ],
+   "summary": "UpdateKnowledgeRequest Go type with 10 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 8 field(s), defining the updateknowledgerequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:UpdateKnowledgeResponse",
+   "type": "class",
+   "name": "UpdateKnowledgeResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    488,
+    493
+   ],
+   "summary": "UpdateKnowledgeResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the updateknowledgeresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:DeleteKnowledgeRequest",
+   "type": "class",
+   "name": "DeleteKnowledgeRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    532,
+    537
+   ],
+   "summary": "DeleteKnowledgeRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the deleteknowledgerequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:DeleteKnowledgeResponse",
+   "type": "class",
+   "name": "DeleteKnowledgeResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    576,
+    581
+   ],
+   "summary": "DeleteKnowledgeResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the deleteknowledgeresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:LLMConfig",
+   "type": "class",
+   "name": "LLMConfig",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    620,
+    633
+   ],
+   "summary": "LLMConfig Go type with 14 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 12 field(s), defining the llmconfig behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:ListLLMConfigsRequest",
+   "type": "class",
+   "name": "ListLLMConfigsRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    728,
+    732
+   ],
+   "summary": "ListLLMConfigsRequest Go type with 5 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor] and 3 field(s), defining the listllmconfigsrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:ListLLMConfigsResponse",
+   "type": "class",
+   "name": "ListLLMConfigsResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    764,
+    769
+   ],
+   "summary": "ListLLMConfigsResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the listllmconfigsresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:CreateLLMConfigRequest",
+   "type": "class",
+   "name": "CreateLLMConfigRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    808,
+    819
+   ],
+   "summary": "CreateLLMConfigRequest Go type with 12 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 10 field(s), defining the createllmconfigrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:CreateLLMConfigResponse",
+   "type": "class",
+   "name": "CreateLLMConfigResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    900,
+    905
+   ],
+   "summary": "CreateLLMConfigResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the createllmconfigresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:UpdateLLMConfigRequest",
+   "type": "class",
+   "name": "UpdateLLMConfigRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    944,
+    956
+   ],
+   "summary": "UpdateLLMConfigRequest Go type with 13 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 11 field(s), defining the updatellmconfigrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:UpdateLLMConfigResponse",
+   "type": "class",
+   "name": "UpdateLLMConfigResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1044,
+    1049
+   ],
+   "summary": "UpdateLLMConfigResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the updatellmconfigresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:ActivateLLMConfigRequest",
+   "type": "class",
+   "name": "ActivateLLMConfigRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1088,
+    1093
+   ],
+   "summary": "ActivateLLMConfigRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the activatellmconfigrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:ActivateLLMConfigResponse",
+   "type": "class",
+   "name": "ActivateLLMConfigResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1132,
+    1137
+   ],
+   "summary": "ActivateLLMConfigResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the activatellmconfigresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:TestLLMConfigRequest",
+   "type": "class",
+   "name": "TestLLMConfigRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1176,
+    1182
+   ],
+   "summary": "TestLLMConfigRequest Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the testllmconfigrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:TestLLMConfigResponse",
+   "type": "class",
+   "name": "TestLLMConfigResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1228,
+    1235
+   ],
+   "summary": "TestLLMConfigResponse Go type with 8 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 6 field(s), defining the testllmconfigresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:DeleteLLMConfigRequest",
+   "type": "class",
+   "name": "DeleteLLMConfigRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1288,
+    1293
+   ],
+   "summary": "DeleteLLMConfigRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the deletellmconfigrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:DeleteLLMConfigResponse",
+   "type": "class",
+   "name": "DeleteLLMConfigResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1332,
+    1337
+   ],
+   "summary": "DeleteLLMConfigResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the deletellmconfigresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:Technician",
+   "type": "class",
+   "name": "Technician",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1376,
+    1386
+   ],
+   "summary": "Technician Go type with 11 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 9 field(s), defining the technician behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:ListTechniciansRequest",
+   "type": "class",
+   "name": "ListTechniciansRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1460,
+    1464
+   ],
+   "summary": "ListTechniciansRequest Go type with 5 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor] and 3 field(s), defining the listtechniciansrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:ListTechniciansResponse",
+   "type": "class",
+   "name": "ListTechniciansResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1496,
+    1501
+   ],
+   "summary": "ListTechniciansResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the listtechniciansresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:CreateTechnicianRequest",
+   "type": "class",
+   "name": "CreateTechnicianRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1540,
+    1547
+   ],
+   "summary": "CreateTechnicianRequest Go type with 8 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 6 field(s), defining the createtechnicianrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:CreateTechnicianResponse",
+   "type": "class",
+   "name": "CreateTechnicianResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1600,
+    1605
+   ],
+   "summary": "CreateTechnicianResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the createtechnicianresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:UpdateTechnicianRequest",
+   "type": "class",
+   "name": "UpdateTechnicianRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1644,
+    1652
+   ],
+   "summary": "UpdateTechnicianRequest Go type with 9 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 7 field(s), defining the updatetechnicianrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:UpdateTechnicianResponse",
+   "type": "class",
+   "name": "UpdateTechnicianResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1712,
+    1717
+   ],
+   "summary": "UpdateTechnicianResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the updatetechnicianresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:ToggleTechnicianActiveRequest",
+   "type": "class",
+   "name": "ToggleTechnicianActiveRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1756,
+    1762
+   ],
+   "summary": "ToggleTechnicianActiveRequest Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the toggletechnicianactiverequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:ToggleTechnicianActiveResponse",
+   "type": "class",
+   "name": "ToggleTechnicianActiveResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1808,
+    1814
+   ],
+   "summary": "ToggleTechnicianActiveResponse Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the toggletechnicianactiveresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:DeleteTechnicianRequest",
+   "type": "class",
+   "name": "DeleteTechnicianRequest",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1860,
+    1865
+   ],
+   "summary": "DeleteTechnicianRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the deletetechnicianrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/knowledge.pb.go:DeleteTechnicianResponse",
+   "type": "class",
+   "name": "DeleteTechnicianResponse",
+   "filePath": "api/gen/v1/knowledge.pb.go",
+   "lineRange": [
+    1904,
+    1909
+   ],
+   "summary": "DeleteTechnicianResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the deletetechnicianresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTitle",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetContent",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetCategory",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTags",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetCreatedAt",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetUpdatedAt",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetCategory",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetSearchQuery",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetItems",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetItem",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTitle",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetContent",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetCategory",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTags",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetItem",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTitle",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetContent",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetCategory",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTags",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetItem",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetProvider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetModelName",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetApiKeyMasked",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetBaseUrl",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetIsActive",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTemperature",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMaxTokens",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetSystemPrompt",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetConfigs",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetProvider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetModelName",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetApiKey",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetBaseUrl",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTemperature",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMaxTokens",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetSystemPrompt",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetConfig",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetProvider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetModelName",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetApiKey",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetBaseUrl",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTemperature",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMaxTokens",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetSystemPrompt",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetConfig",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTestPrompt",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetSuccess",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetResponseText",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetErrorMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetName",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetPhoneNumber",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetEmail",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetIsActive",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetActiveTickets",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTechnicians",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetName",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetPhoneNumber",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetEmail",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTechnician",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetName",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetPhoneNumber",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetEmail",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTechnician",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetIsActive",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetIsActive",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:file_v1_knowledge_proto_init",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:KnowledgeItem",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ListKnowledgeRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ListKnowledgeResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:GetKnowledgeRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:GetKnowledgeResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:CreateKnowledgeRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:CreateKnowledgeResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:UpdateKnowledgeRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:UpdateKnowledgeResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:DeleteKnowledgeRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:DeleteKnowledgeResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:LLMConfig",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ListLLMConfigsRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ListLLMConfigsResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:CreateLLMConfigRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:CreateLLMConfigResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:UpdateLLMConfigRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:UpdateLLMConfigResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ActivateLLMConfigRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ActivateLLMConfigResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:TestLLMConfigRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:TestLLMConfigResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:DeleteLLMConfigRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:DeleteLLMConfigResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:Technician",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ListTechniciansRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ListTechniciansResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:CreateTechnicianRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:CreateTechnicianResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:UpdateTechnicianRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:UpdateTechnicianResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ToggleTechnicianActiveRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ToggleTechnicianActiveResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:DeleteTechnicianRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:DeleteTechnicianResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:KnowledgeItem",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTitle",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetContent",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetCategory",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTags",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetCreatedAt",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetUpdatedAt",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ListKnowledgeRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetCategory",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetSearchQuery",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ListKnowledgeResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetItems",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:GetKnowledgeRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:GetKnowledgeResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetItem",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:CreateKnowledgeRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTitle",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetContent",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetCategory",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTags",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:CreateKnowledgeResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetItem",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:UpdateKnowledgeRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTitle",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetContent",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetCategory",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTags",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:UpdateKnowledgeResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetItem",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:DeleteKnowledgeRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:DeleteKnowledgeResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:LLMConfig",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetProvider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetModelName",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetApiKeyMasked",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetBaseUrl",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetIsActive",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTemperature",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMaxTokens",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetSystemPrompt",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ListLLMConfigsRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ListLLMConfigsResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetConfigs",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:CreateLLMConfigRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetProvider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetModelName",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetApiKey",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetBaseUrl",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTemperature",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMaxTokens",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetSystemPrompt",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:CreateLLMConfigResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetConfig",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:UpdateLLMConfigRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetProvider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetModelName",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetApiKey",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetBaseUrl",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTemperature",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMaxTokens",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetSystemPrompt",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:UpdateLLMConfigResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetConfig",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ActivateLLMConfigRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ActivateLLMConfigResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:TestLLMConfigRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTestPrompt",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:TestLLMConfigResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetSuccess",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetResponseText",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetErrorMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:DeleteLLMConfigRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:DeleteLLMConfigResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:Technician",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetName",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetPhoneNumber",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetEmail",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetIsActive",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetActiveTickets",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ListTechniciansRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ListTechniciansResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTechnicians",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:CreateTechnicianRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetName",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetPhoneNumber",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetEmail",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:CreateTechnicianResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTechnician",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:UpdateTechnicianRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetName",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetPhoneNumber",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetEmail",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:UpdateTechnicianResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetTechnician",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ToggleTechnicianActiveRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetIsActive",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:ToggleTechnicianActiveResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetIsActive",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:DeleteTechnicianRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "class:api/gen/v1/knowledge.pb.go:DeleteTechnicianResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/knowledge.pb.go",
+   "target": "function:api/gen/v1/knowledge.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

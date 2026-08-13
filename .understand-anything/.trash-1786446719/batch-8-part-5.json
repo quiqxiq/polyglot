@@ -1,0 +1,830 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "type": "file",
+   "name": "profile_user_handler.go",
+   "filePath": "internal/adapter/connect/hotspot/profile_user_handler.go",
+   "summary": "Go source file implementing the hotspot ConnectRPC handler — hotspot ConnectRPC handler logic for the polyglot backend. Exports ListProfiles, ListUsers, GenerateVouchers.",
+   "tags": [
+    "api-handler",
+    "connectrpc",
+    "hotspot",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/profile_user_handler.go:ListProfiles",
+   "type": "function",
+   "name": "ListProfiles",
+   "filePath": "internal/adapter/connect/hotspot/profile_user_handler.go",
+   "lineRange": [
+    12,
+    37
+   ],
+   "summary": "Retrieves profiles data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/profile_user_handler.go:ListUsers",
+   "type": "function",
+   "name": "ListUsers",
+   "filePath": "internal/adapter/connect/hotspot/profile_user_handler.go",
+   "lineRange": [
+    39,
+    65
+   ],
+   "summary": "Retrieves users data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/profile_user_handler.go:GenerateVouchers",
+   "type": "function",
+   "name": "GenerateVouchers",
+   "filePath": "internal/adapter/connect/hotspot/profile_user_handler.go",
+   "lineRange": [
+    67,
+    104
+   ],
+   "summary": "Implements the GenerateVouchers logic (inputs: ctx, req) for this component.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "type": "file",
+   "name": "session_handler.go",
+   "filePath": "internal/adapter/connect/hotspot/session_handler.go",
+   "summary": "Go source file implementing the hotspot ConnectRPC handler — hotspot ConnectRPC handler logic for the polyglot backend. Exports ListActiveSessions, KickActiveSession, ListDHCPLeases, BlockDHCPLease.",
+   "tags": [
+    "api-handler",
+    "connectrpc",
+    "hotspot",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/session_handler.go:ListActiveSessions",
+   "type": "function",
+   "name": "ListActiveSessions",
+   "filePath": "internal/adapter/connect/hotspot/session_handler.go",
+   "lineRange": [
+    12,
+    38
+   ],
+   "summary": "Retrieves activesessions data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/session_handler.go:KickActiveSession",
+   "type": "function",
+   "name": "KickActiveSession",
+   "filePath": "internal/adapter/connect/hotspot/session_handler.go",
+   "lineRange": [
+    40,
+    58
+   ],
+   "summary": "Implements the KickActiveSession logic (inputs: ctx, req) for this component.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/session_handler.go:ListDHCPLeases",
+   "type": "function",
+   "name": "ListDHCPLeases",
+   "filePath": "internal/adapter/connect/hotspot/session_handler.go",
+   "lineRange": [
+    60,
+    85
+   ],
+   "summary": "Retrieves dhcpleases data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/session_handler.go:BlockDHCPLease",
+   "type": "function",
+   "name": "BlockDHCPLease",
+   "filePath": "internal/adapter/connect/hotspot/session_handler.go",
+   "lineRange": [
+    87,
+    101
+   ],
+   "summary": "Implements the BlockDHCPLease logic (inputs: ctx, req) for this component.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "type": "file",
+   "name": "system_report_handler.go",
+   "filePath": "internal/adapter/connect/hotspot/system_report_handler.go",
+   "summary": "Go source file implementing the hotspot ConnectRPC handler — hotspot ConnectRPC handler logic for the polyglot backend. Exports GetDashboard.",
+   "tags": [
+    "api-handler",
+    "connectrpc",
+    "hotspot",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/system_report_handler.go:GetDashboard",
+   "type": "function",
+   "name": "GetDashboard",
+   "filePath": "internal/adapter/connect/hotspot/system_report_handler.go",
+   "lineRange": [
+    11,
+    30
+   ],
+   "summary": "Retrieves dashboard data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/usecase/billing/manage_plan.go",
+   "type": "file",
+   "name": "manage_plan.go",
+   "filePath": "internal/usecase/billing/manage_plan.go",
+   "summary": "Go source file implementing the use case orchestration — use case orchestration logic for the polyglot backend. Exports ManagePlan.",
+   "tags": [
+    "usecase",
+    "business-logic",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/usecase/billing/manage_plan.go:ManagePlan",
+   "type": "function",
+   "name": "ManagePlan",
+   "filePath": "internal/usecase/billing/manage_plan.go",
+   "lineRange": [
+    8,
+    10
+   ],
+   "summary": "Implements the ManagePlan logic (inputs: ctx) for this component.",
+   "tags": [
+    "function",
+    "usecase",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/profile_user_handler.go:ListProfiles",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/profile_user_handler.go:ListUsers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/profile_user_handler.go:GenerateVouchers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/profile_user_handler.go:ListProfiles",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/profile_user_handler.go:ListUsers",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/profile_user_handler.go:GenerateVouchers",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/comment_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/expire_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/profile_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/report_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/report.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/voucher_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:ListActiveSessions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:KickActiveSession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:ListDHCPLeases",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:BlockDHCPLease",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:ListActiveSessions",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:KickActiveSession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:ListDHCPLeases",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:BlockDHCPLease",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/system_report_handler.go:GetDashboard",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/system_report_handler.go:GetDashboard",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/usecase/billing/manage_plan.go",
+   "target": "function:internal/usecase/billing/manage_plan.go:ManagePlan",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/usecase/billing/manage_plan.go",
+   "target": "function:internal/usecase/billing/manage_plan.go:ManagePlan",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

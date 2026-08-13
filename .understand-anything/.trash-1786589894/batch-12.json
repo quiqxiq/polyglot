@@ -1,0 +1,178 @@
+{
+  "nodes": [
+    {
+      "id": "resource:.dockerignore",
+      "type": "resource",
+      "name": ".dockerignore",
+      "summary": ".md",
+      "tags": [],
+      "complexity": "simple",
+      "filePath": ".dockerignore"
+    },
+    {
+      "id": "config:.env.example",
+      "type": "config",
+      "name": ".env.example",
+      "summary": "# Polyglot — environment template # # Copy to .env and fill in real values. .env and .env.local are gitignored. # .env.local is for per-developer overrides and is loaded automatically if present.",
+      "tags": [],
+      "complexity": "moderate",
+      "filePath": ".env.example"
+    },
+    {
+      "id": "config:.golangci.yml",
+      "type": "config",
+      "name": ".golangci.yml",
+      "summary": "# \"standard\" sudah mencakup: errcheck, govet, ineffassign, staticcheck, # unused — tidak perlu didaftar ulang di \"enable\" di bawah.",
+      "tags": [
+        "yaml"
+      ],
+      "complexity": "simple",
+      "filePath": ".golangci.yml"
+    },
+    {
+      "id": "config:.mcp.json",
+      "type": "config",
+      "name": ".mcp.json",
+      "summary": ".mcp.json (13 lines)",
+      "tags": [],
+      "complexity": "simple",
+      "filePath": ".mcp.json"
+    },
+    {
+      "id": "document:AGENTS.md",
+      "type": "document",
+      "name": "AGENTS.md",
+      "summary": "<!-- code-review-graph MCP tools --> ## MCP Tools: code-review-graph",
+      "tags": [
+        "documentation"
+      ],
+      "complexity": "complex",
+      "filePath": "AGENTS.md"
+    },
+    {
+      "id": "document:CLAUDE.md",
+      "type": "document",
+      "name": "CLAUDE.md",
+      "summary": "# CLAUDE.md — Polyglot (Go Backend)",
+      "tags": [
+        "documentation"
+      ],
+      "complexity": "complex",
+      "filePath": "CLAUDE.md"
+    },
+    {
+      "id": "document:MIKROTIK-COMMAND.md",
+      "type": "document",
+      "name": "MIKROTIK-COMMAND.md",
+      "summary": "## 1. PPP Secret (User PPPoE)",
+      "tags": [
+        "documentation"
+      ],
+      "complexity": "complex",
+      "filePath": "MIKROTIK-COMMAND.md"
+    },
+    {
+      "id": "resource:Makefile",
+      "type": "resource",
+      "name": "Makefile",
+      "summary": "# ─── Ensure go install'd tools (migrate, golangci-lint, protoc-gen-*) are on PATH ───",
+      "tags": [],
+      "complexity": "moderate",
+      "filePath": "Makefile"
+    },
+    {
+      "id": "document:PANDUAN.md",
+      "type": "document",
+      "name": "PANDUAN.md",
+      "summary": "# Roadmap Strategis: NetOps & Hotspot Engine MVP (Polyglot)",
+      "tags": [
+        "documentation"
+      ],
+      "complexity": "moderate",
+      "filePath": "PANDUAN.md"
+    },
+    {
+      "id": "document:Polyglot-Architecture.md",
+      "type": "document",
+      "name": "Polyglot-Architecture.md",
+      "summary": "# Arsitektur NetOps + ISP Management Platform — Go Backend (Independen) + LibreChat",
+      "tags": [
+        "documentation"
+      ],
+      "complexity": "complex",
+      "filePath": "Polyglot-Architecture.md"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "summary": "# polyglot",
+      "tags": [
+        "documentation"
+      ],
+      "complexity": "moderate",
+      "filePath": "README.md"
+    },
+    {
+      "id": "document:SYSTEM-STRUCTURE-AND-ARCHITECTURE.md",
+      "type": "document",
+      "name": "SYSTEM-STRUCTURE-AND-ARCHITECTURE.md",
+      "summary": "# Struktur Folder & Arsitektur Sistem — Polyglot NetOps Engine",
+      "tags": [
+        "documentation"
+      ],
+      "complexity": "complex",
+      "filePath": "SYSTEM-STRUCTURE-AND-ARCHITECTURE.md"
+    },
+    {
+      "id": "document:TECH-STACK-DAN-PERSIAPAN.md",
+      "type": "document",
+      "name": "TECH-STACK-DAN-PERSIAPAN.md",
+      "summary": "# Persiapan & Tech Stack — NetOps Engine (Go)",
+      "tags": [
+        "documentation"
+      ],
+      "complexity": "moderate",
+      "filePath": "TECH-STACK-DAN-PERSIAPAN.md"
+    },
+    {
+      "id": "document:analisis-api-genieacs.md",
+      "type": "document",
+      "name": "analisis-api-genieacs.md",
+      "summary": "# Analisis API GenieACS (NBI — Northbound Interface)",
+      "tags": [
+        "documentation"
+      ],
+      "complexity": "complex",
+      "filePath": "analisis-api-genieacs.md"
+    },
+    {
+      "id": "config:go.mod",
+      "type": "config",
+      "name": "go.mod",
+      "summary": "go.mod (107 lines)",
+      "tags": [],
+      "complexity": "moderate",
+      "filePath": "go.mod"
+    },
+    {
+      "id": "config:go.sum",
+      "type": "config",
+      "name": "go.sum",
+      "summary": "go.sum (455 lines)",
+      "tags": [],
+      "complexity": "complex",
+      "filePath": "go.sum"
+    },
+    {
+      "id": "config:opencode.jsonc",
+      "type": "config",
+      "name": "opencode.jsonc",
+      "summary": "opencode.jsonc (15 lines)",
+      "tags": [],
+      "complexity": "simple",
+      "filePath": "opencode.jsonc"
+    }
+  ],
+  "edges": []
+}

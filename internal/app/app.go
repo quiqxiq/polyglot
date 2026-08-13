@@ -48,6 +48,7 @@ type App struct {
 	waManager  *whatsapp.SessionManager
 	pgStore    *postgres.Store
 	redisStore *redisAdapter.Store
+	sseHub     *wsAdapter.SSEHub
 }
 
 func New(ctx context.Context, cfg config.Config) (*App, error) {
@@ -194,6 +195,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		waManager:  waManager,
 		pgStore:    pgStore,
 		redisStore: redisStore,
+		sseHub:     sseHub,
 	}, nil
 }
 
@@ -208,12 +210,26 @@ func (a *App) Run() error {
 func (a *App) Shutdown(ctx context.Context) error {
 	log.Println("polyglot: shutting down server...")
 
+	// Putuskan semua koneksi SSE (EventSource) LEBIH DULU. Tanpa ini
+	// http.Server.Shutdown menunggu koneksi streaming yang tidak pernah
+	// selesai sampai context deadline habis (5 detik) lalu gagal dengan
+	// "context deadline exceeded". Setelah Close, stream tiap client berakhir
+	// (channel tertutup) sehingga koneksi jadi idle dan shutdown selesai cepat.
+	if a.sseHub != nil {
+		a.sseHub.Close()
+	}
+
 	if err := a.httpServer.Shutdown(ctx); err != nil {
 		log.Printf("[Warning] Error shutting down HTTP server: %v", err)
+		// Jaring pengaman: paksa tutup koneksi yang tersisa (mis. request LLM
+		// panjang yang masih jalan) supaya proses benar-benar bisa keluar.
+		_ = a.httpServer.Close()
 	}
 
 	if a.waManager != nil {
-		// Logically disconnect active WhatsApp sessions if needed
+		// Putuskan koneksi WhatsApp dengan rapi (pairing & session lokal
+		// dipertahankan — restore berikutnya tidak perlu scan ulang).
+		a.waManager.DisconnectAll()
 	}
 
 	if a.registry != nil {

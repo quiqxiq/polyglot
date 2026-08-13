@@ -1,0 +1,1918 @@
+{
+ "nodes": [
+  {
+   "id": "file:api/gen/v1/bot.pb.go",
+   "type": "file",
+   "name": "bot.pb.go",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "summary": "Go source file implementing the API specification — API specification logic for the polyglot backend. Exports ConversationMessage, Reset, String, ProtoMessage, ProtoReflect, Descriptor.",
+   "tags": [
+    "api-schema",
+    "openapi",
+    "documentation",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "function",
+   "name": "Reset",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    34,
+    39
+   ],
+   "summary": "Implements the Reset logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:String",
+   "type": "function",
+   "name": "String",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    41,
+    43
+   ],
+   "summary": "Implements the String logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "function",
+   "name": "ProtoMessage",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    45,
+    45
+   ],
+   "summary": "Implements the ProtoMessage logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "function",
+   "name": "ProtoReflect",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    47,
+    57
+   ],
+   "summary": "Implements the ProtoReflect logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "function",
+   "name": "Descriptor",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    60,
+    62
+   ],
+   "summary": "Implements the Descriptor logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "function",
+   "name": "GetId",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    64,
+    69
+   ],
+   "summary": "Retrieves id data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetSender",
+   "type": "function",
+   "name": "GetSender",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    71,
+    76
+   ],
+   "summary": "Retrieves sender data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetText",
+   "type": "function",
+   "name": "GetText",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    78,
+    83
+   ],
+   "summary": "Retrieves text data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetTimestamp",
+   "type": "function",
+   "name": "GetTimestamp",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    85,
+    90
+   ],
+   "summary": "Retrieves timestamp data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetSessionId",
+   "type": "function",
+   "name": "GetSessionId",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    143,
+    148
+   ],
+   "summary": "Retrieves sessionid data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetClientPhone",
+   "type": "function",
+   "name": "GetClientPhone",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    150,
+    155
+   ],
+   "summary": "Retrieves clientphone data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetClientName",
+   "type": "function",
+   "name": "GetClientName",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    157,
+    162
+   ],
+   "summary": "Retrieves clientname data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetStatus",
+   "type": "function",
+   "name": "GetStatus",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    164,
+    169
+   ],
+   "summary": "Retrieves status data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetAssignedTechnician",
+   "type": "function",
+   "name": "GetAssignedTechnician",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    171,
+    176
+   ],
+   "summary": "Retrieves assignedtechnician data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetMessages",
+   "type": "function",
+   "name": "GetMessages",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    178,
+    183
+   ],
+   "summary": "Retrieves messages data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetUpdatedAt",
+   "type": "function",
+   "name": "GetUpdatedAt",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    185,
+    190
+   ],
+   "summary": "Retrieves updatedat data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetConversations",
+   "type": "function",
+   "name": "GetConversations",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    273,
+    278
+   ],
+   "summary": "Retrieves conversations data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetConversation",
+   "type": "function",
+   "name": "GetConversation",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    361,
+    366
+   ],
+   "summary": "Retrieves conversation data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetTechnicianId",
+   "type": "function",
+   "name": "GetTechnicianId",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    413,
+    418
+   ],
+   "summary": "Retrieves technicianid data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:GetMessage",
+   "type": "function",
+   "name": "GetMessage",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    457,
+    462
+   ],
+   "summary": "Retrieves message data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/bot.pb.go:file_v1_bot_proto_init",
+   "type": "function",
+   "name": "file_v1_bot_proto_init",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    741,
+    762
+   ],
+   "summary": "Implements the file_v1_bot_proto_init logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/bot.pb.go:ConversationMessage",
+   "type": "class",
+   "name": "ConversationMessage",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    24,
+    32
+   ],
+   "summary": "ConversationMessage Go type with 9 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 7 field(s), defining the conversationmessage behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/bot.pb.go:Conversation",
+   "type": "class",
+   "name": "Conversation",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    92,
+    104
+   ],
+   "summary": "Conversation Go type with 13 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 11 field(s), defining the conversation behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/bot.pb.go:ListConversationsRequest",
+   "type": "class",
+   "name": "ListConversationsRequest",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    192,
+    197
+   ],
+   "summary": "ListConversationsRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the listconversationsrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/bot.pb.go:ListConversationsResponse",
+   "type": "class",
+   "name": "ListConversationsResponse",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    236,
+    241
+   ],
+   "summary": "ListConversationsResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the listconversationsresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/bot.pb.go:GetConversationRequest",
+   "type": "class",
+   "name": "GetConversationRequest",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    280,
+    285
+   ],
+   "summary": "GetConversationRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the getconversationrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/bot.pb.go:GetConversationResponse",
+   "type": "class",
+   "name": "GetConversationResponse",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    324,
+    329
+   ],
+   "summary": "GetConversationResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the getconversationresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/bot.pb.go:TakeOverConversationRequest",
+   "type": "class",
+   "name": "TakeOverConversationRequest",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    368,
+    374
+   ],
+   "summary": "TakeOverConversationRequest Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the takeoverconversationrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/bot.pb.go:TakeOverConversationResponse",
+   "type": "class",
+   "name": "TakeOverConversationResponse",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    420,
+    425
+   ],
+   "summary": "TakeOverConversationResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the takeoverconversationresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/bot.pb.go:ResetConversationBotRequest",
+   "type": "class",
+   "name": "ResetConversationBotRequest",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    464,
+    469
+   ],
+   "summary": "ResetConversationBotRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the resetconversationbotrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/bot.pb.go:ResetConversationBotResponse",
+   "type": "class",
+   "name": "ResetConversationBotResponse",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    508,
+    513
+   ],
+   "summary": "ResetConversationBotResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the resetconversationbotresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/bot.pb.go:CloseConversationRequest",
+   "type": "class",
+   "name": "CloseConversationRequest",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    552,
+    557
+   ],
+   "summary": "CloseConversationRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the closeconversationrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/bot.pb.go:CloseConversationResponse",
+   "type": "class",
+   "name": "CloseConversationResponse",
+   "filePath": "api/gen/v1/bot.pb.go",
+   "lineRange": [
+    596,
+    601
+   ],
+   "summary": "CloseConversationResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the closeconversationresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetSender",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetText",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetTimestamp",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetSessionId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetClientPhone",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetClientName",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetStatus",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetAssignedTechnician",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetMessages",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetUpdatedAt",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetSessionId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetConversations",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetConversation",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetTechnicianId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:file_v1_bot_proto_init",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:ConversationMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:Conversation",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:ListConversationsRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:ListConversationsResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:GetConversationRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:GetConversationResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:TakeOverConversationRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:TakeOverConversationResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:ResetConversationBotRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:ResetConversationBotResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:CloseConversationRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:CloseConversationResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:ConversationMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetSender",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetText",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetTimestamp",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:Conversation",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetSessionId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetClientPhone",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetClientName",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetStatus",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetAssignedTechnician",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetMessages",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetUpdatedAt",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:ListConversationsRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetSessionId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:ListConversationsResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetConversations",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:GetConversationRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:GetConversationResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetConversation",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:TakeOverConversationRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetTechnicianId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:TakeOverConversationResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:ResetConversationBotRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:ResetConversationBotResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:CloseConversationRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "class:api/gen/v1/bot.pb.go:CloseConversationResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/bot.pb.go",
+   "target": "function:api/gen/v1/bot.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

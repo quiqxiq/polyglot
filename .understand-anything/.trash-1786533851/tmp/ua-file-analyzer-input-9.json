@@ -1,0 +1,14 @@
+{
+  "projectRoot": "/home/quixiq/projects/polyground/polyglot",
+  "batchFiles": [
+    {
+      "path": "deployments/docker/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 38,
+      "fileCategory": "infra"
+    }
+  ],
+  "batchImportData": {
+    "deployments/docker/Dockerfile": []
+  }
+}

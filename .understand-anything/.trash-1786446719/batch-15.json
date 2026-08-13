@@ -1,0 +1,247 @@
+{
+ "nodes": [
+  {
+   "id": "document:internal/templates/footer.default.txt",
+   "type": "document",
+   "name": "footer.default.txt",
+   "filePath": "internal/templates/footer.default.txt",
+   "summary": "Documentation file — footer.default.txt. Covers the structure, design, and usage of the polyglot backend in detail.",
+   "tags": [
+    "go",
+    "backend"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/footer.small.txt",
+   "type": "document",
+   "name": "footer.small.txt",
+   "filePath": "internal/templates/footer.small.txt",
+   "summary": "Documentation file — footer.small.txt. Covers the structure, design, and usage of the polyglot backend in detail.",
+   "tags": [
+    "go",
+    "backend"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/footer.thermal.txt",
+   "type": "document",
+   "name": "footer.thermal.txt",
+   "filePath": "internal/templates/footer.thermal.txt",
+   "summary": "Documentation file — footer.thermal.txt. Covers the structure, design, and usage of the polyglot backend in detail.",
+   "tags": [
+    "go",
+    "backend"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/header.default.txt",
+   "type": "document",
+   "name": "header.default.txt",
+   "filePath": "internal/templates/header.default.txt",
+   "summary": "Documentation file — header.default.txt. Covers the structure, design, and usage of the polyglot backend in detail.",
+   "tags": [
+    "go",
+    "backend"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "document:internal/templates/header.small.txt",
+   "type": "document",
+   "name": "header.small.txt",
+   "filePath": "internal/templates/header.small.txt",
+   "summary": "Documentation file — header.small.txt. Covers the structure, design, and usage of the polyglot backend in detail.",
+   "tags": [
+    "go",
+    "backend"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/header.thermal.txt",
+   "type": "document",
+   "name": "header.thermal.txt",
+   "filePath": "internal/templates/header.thermal.txt",
+   "summary": "Documentation file — header.thermal.txt. Covers the structure, design, and usage of the polyglot backend in detail.",
+   "tags": [
+    "go",
+    "backend"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "document:internal/templates/row.default.txt",
+   "type": "document",
+   "name": "row.default.txt",
+   "filePath": "internal/templates/row.default.txt",
+   "summary": "Documentation file — row.default.txt. Covers the structure, design, and usage of the polyglot backend in detail.",
+   "tags": [
+    "go",
+    "backend"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/row.small.txt",
+   "type": "document",
+   "name": "row.small.txt",
+   "filePath": "internal/templates/row.small.txt",
+   "summary": "Documentation file — row.small.txt. Covers the structure, design, and usage of the polyglot backend in detail.",
+   "tags": [
+    "go",
+    "backend"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/row.thermal.txt",
+   "type": "document",
+   "name": "row.thermal.txt",
+   "filePath": "internal/templates/row.thermal.txt",
+   "summary": "Documentation file — row.thermal.txt. Covers the structure, design, and usage of the polyglot backend in detail.",
+   "tags": [
+    "go",
+    "backend"
+   ],
+   "complexity": "moderate"
+  }
+ ],
+ "edges": [
+  {
+   "source": "document:README.md",
+   "target": "file:cmd/server/main.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "document:Polyglot-Architecture.md",
+   "target": "file:internal/app/app.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "document:AGENTS.md",
+   "target": "file:cmd/server/main.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "document:TECH-STACK-DAN-PERSIAPAN.md",
+   "target": "file:go.mod",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "document:SYSTEM-STRUCTURE-AND-ARCHITECTURE.md",
+   "target": "file:internal/app/app.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "config:.env.example",
+   "target": "file:cmd/server/main.go",
+   "type": "configures",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "config:.env.example",
+   "target": "file:internal/config/config.go",
+   "type": "configures",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "service:deployments/docker/Dockerfile",
+   "target": "file:cmd/server/main.go",
+   "type": "deploys",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "service:deployments/docker-compose.yml",
+   "target": "service:deployments/docker/Dockerfile",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "service:deployments/docker-compose.yml",
+   "target": "file:cmd/server/main.go",
+   "type": "deploys",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "service:deployments/docker-compose.prod.yml",
+   "target": "service:deployments/docker/Dockerfile",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "service:deployments/docker-compose.prod.yml",
+   "target": "file:cmd/server/main.go",
+   "type": "deploys",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "pipeline:.github/workflows/ci.yml",
+   "target": "config:Makefile",
+   "type": "triggers",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "pipeline:.github/workflows/ci.yml",
+   "target": "file:cmd/server/main.go",
+   "type": "triggers",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "config:Makefile",
+   "target": "file:cmd/server/main.go",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "config:internal/config/rbac_model.conf",
+   "target": "file:internal/adapter/auth/casbin.go",
+   "type": "configures",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "document:internal/config/system_prompt.md",
+   "target": "file:internal/adapter/llm/provider.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "config:internal/platformdef/mikrotik_routeros.yaml",
+   "target": "file:internal/driver/genericssh/driver.go",
+   "type": "configures",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "endpoint:api/openapi.yaml",
+   "target": "file:cmd/server/main.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

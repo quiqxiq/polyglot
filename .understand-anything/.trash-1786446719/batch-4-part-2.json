@@ -1,0 +1,1203 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/driver/mikrotik/hotspot_active.go",
+   "type": "file",
+   "name": "hotspot_active.go",
+   "filePath": "internal/driver/mikrotik/hotspot_active.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports HotspotActiveSession, HotspotServer, NewPrintHotspotActiveCommand, NewStreamHotspotActiveCommand, NewDisconnectHotspotActiveCommand, NewPrintHotspotServersCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_active.go:NewPrintHotspotActiveCommand",
+   "type": "function",
+   "name": "NewPrintHotspotActiveCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_active.go",
+   "lineRange": [
+    64,
+    73
+   ],
+   "summary": "Constructor that creates and initializes a PrintHotspotActiveCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_active.go:NewStreamHotspotActiveCommand",
+   "type": "function",
+   "name": "NewStreamHotspotActiveCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_active.go",
+   "lineRange": [
+    85,
+    94
+   ],
+   "summary": "Constructor that creates and initializes a StreamHotspotActiveCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_active.go:NewDisconnectHotspotActiveCommand",
+   "type": "function",
+   "name": "NewDisconnectHotspotActiveCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_active.go",
+   "lineRange": [
+    100,
+    105
+   ],
+   "summary": "Constructor that creates and initializes a DisconnectHotspotActiveCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_active.go:NewPrintHotspotServersCommand",
+   "type": "function",
+   "name": "NewPrintHotspotServersCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_active.go",
+   "lineRange": [
+    110,
+    115
+   ],
+   "summary": "Constructor that creates and initializes a PrintHotspotServersCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_active.go:ParseHotspotActiveSessions",
+   "type": "function",
+   "name": "ParseHotspotActiveSessions",
+   "filePath": "internal/driver/mikrotik/hotspot_active.go",
+   "lineRange": [
+    120,
+    145
+   ],
+   "summary": "Implements the ParseHotspotActiveSessions logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_active.go:ParseHotspotServers",
+   "type": "function",
+   "name": "ParseHotspotServers",
+   "filePath": "internal/driver/mikrotik/hotspot_active.go",
+   "lineRange": [
+    149,
+    167
+   ],
+   "summary": "Implements the ParseHotspotServers logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_active.go:FilterInactiveHotspotUsers",
+   "type": "function",
+   "name": "FilterInactiveHotspotUsers",
+   "filePath": "internal/driver/mikrotik/hotspot_active.go",
+   "lineRange": [
+    173,
+    185
+   ],
+   "summary": "Implements the FilterInactiveHotspotUsers logic (inputs: users, active) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/hotspot_active.go:HotspotActiveSession",
+   "type": "class",
+   "name": "HotspotActiveSession",
+   "filePath": "internal/driver/mikrotik/hotspot_active.go",
+   "lineRange": [
+    27,
+    41
+   ],
+   "summary": "HotspotActiveSession Go type with 0 method(s) [—] and 13 field(s), defining the hotspotactivesession behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/hotspot_active.go:HotspotServer",
+   "type": "class",
+   "name": "HotspotServer",
+   "filePath": "internal/driver/mikrotik/hotspot_active.go",
+   "lineRange": [
+    50,
+    57
+   ],
+   "summary": "HotspotServer Go type with 0 method(s) [—] and 6 field(s), defining the hotspotserver behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "type": "file",
+   "name": "hotspot_profile.go",
+   "filePath": "internal/driver/mikrotik/hotspot_profile.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports HotspotUserProfileParams, HotspotUserProfile, NewPrintHotspotUserProfilesCommand, NewAddHotspotUserProfileCommand, NewSetHotspotUserProfileCommand, NewRemoveHotspotUserProfileCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_profile.go:NewPrintHotspotUserProfilesCommand",
+   "type": "function",
+   "name": "NewPrintHotspotUserProfilesCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_profile.go",
+   "lineRange": [
+    59,
+    68
+   ],
+   "summary": "Constructor that creates and initializes a PrintHotspotUserProfilesCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_profile.go:NewAddHotspotUserProfileCommand",
+   "type": "function",
+   "name": "NewAddHotspotUserProfileCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_profile.go",
+   "lineRange": [
+    72,
+    83
+   ],
+   "summary": "Constructor that creates and initializes a AddHotspotUserProfileCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_profile.go:NewSetHotspotUserProfileCommand",
+   "type": "function",
+   "name": "NewSetHotspotUserProfileCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_profile.go",
+   "lineRange": [
+    91,
+    103
+   ],
+   "summary": "Constructor that creates and initializes a SetHotspotUserProfileCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_profile.go:NewRemoveHotspotUserProfileCommand",
+   "type": "function",
+   "name": "NewRemoveHotspotUserProfileCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_profile.go",
+   "lineRange": [
+    107,
+    112
+   ],
+   "summary": "Constructor that creates and initializes a RemoveHotspotUserProfileCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_profile.go:ParseHotspotUserProfiles",
+   "type": "function",
+   "name": "ParseHotspotUserProfiles",
+   "filePath": "internal/driver/mikrotik/hotspot_profile.go",
+   "lineRange": [
+    117,
+    139
+   ],
+   "summary": "Implements the ParseHotspotUserProfiles logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_profile.go:FindHotspotUserProfileRosID",
+   "type": "function",
+   "name": "FindHotspotUserProfileRosID",
+   "filePath": "internal/driver/mikrotik/hotspot_profile.go",
+   "lineRange": [
+    143,
+    150
+   ],
+   "summary": "Retrieves hotspotuserprofilerosid data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/hotspot_profile.go:HotspotUserProfileParams",
+   "type": "class",
+   "name": "HotspotUserProfileParams",
+   "filePath": "internal/driver/mikrotik/hotspot_profile.go",
+   "lineRange": [
+    29,
+    39
+   ],
+   "summary": "HotspotUserProfileParams Go type with 0 method(s) [—] and 9 field(s), defining the hotspotuserprofileparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/hotspot_profile.go:HotspotUserProfile",
+   "type": "class",
+   "name": "HotspotUserProfile",
+   "filePath": "internal/driver/mikrotik/hotspot_profile.go",
+   "lineRange": [
+    43,
+    54
+   ],
+   "summary": "HotspotUserProfile Go type with 0 method(s) [—] and 10 field(s), defining the hotspotuserprofile behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/hotspot_user.go",
+   "type": "file",
+   "name": "hotspot_user.go",
+   "filePath": "internal/driver/mikrotik/hotspot_user.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports HotspotUserParams, HotspotUser, NewPrintHotspotUsersCommand, NewStreamHotspotUsersCommand, NewAddHotspotUserCommand, NewSetHotspotUserCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_user.go:NewPrintHotspotUsersCommand",
+   "type": "function",
+   "name": "NewPrintHotspotUsersCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_user.go",
+   "lineRange": [
+    65,
+    74
+   ],
+   "summary": "Constructor that creates and initializes a PrintHotspotUsersCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_user.go:NewStreamHotspotUsersCommand",
+   "type": "function",
+   "name": "NewStreamHotspotUsersCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_user.go",
+   "lineRange": [
+    78,
+    89
+   ],
+   "summary": "Constructor that creates and initializes a StreamHotspotUsersCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_user.go:NewAddHotspotUserCommand",
+   "type": "function",
+   "name": "NewAddHotspotUserCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_user.go",
+   "lineRange": [
+    92,
+    109
+   ],
+   "summary": "Constructor that creates and initializes a AddHotspotUserCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_user.go:NewSetHotspotUserCommand",
+   "type": "function",
+   "name": "NewSetHotspotUserCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_user.go",
+   "lineRange": [
+    117,
+    130
+   ],
+   "summary": "Constructor that creates and initializes a SetHotspotUserCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_user.go:NewRemoveHotspotUserCommand",
+   "type": "function",
+   "name": "NewRemoveHotspotUserCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_user.go",
+   "lineRange": [
+    134,
+    139
+   ],
+   "summary": "Constructor that creates and initializes a RemoveHotspotUserCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_user.go:NewResetHotspotUserCountersCommand",
+   "type": "function",
+   "name": "NewResetHotspotUserCountersCommand",
+   "filePath": "internal/driver/mikrotik/hotspot_user.go",
+   "lineRange": [
+    143,
+    148
+   ],
+   "summary": "Constructor that creates and initializes a ResetHotspotUserCountersCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot_user.go:ParseHotspotUsers",
+   "type": "function",
+   "name": "ParseHotspotUsers",
+   "filePath": "internal/driver/mikrotik/hotspot_user.go",
+   "lineRange": [
+    153,
+    177
+   ],
+   "summary": "Implements the ParseHotspotUsers logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/hotspot_user.go:HotspotUserParams",
+   "type": "class",
+   "name": "HotspotUserParams",
+   "filePath": "internal/driver/mikrotik/hotspot_user.go",
+   "lineRange": [
+    29,
+    41
+   ],
+   "summary": "HotspotUserParams Go type with 0 method(s) [—] and 11 field(s), defining the hotspotuserparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/hotspot_user.go:HotspotUser",
+   "type": "class",
+   "name": "HotspotUser",
+   "filePath": "internal/driver/mikrotik/hotspot_user.go",
+   "lineRange": [
+    48,
+    61
+   ],
+   "summary": "HotspotUser Go type with 0 method(s) [—] and 12 field(s), defining the hotspotuser behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/iface.go",
+   "type": "file",
+   "name": "iface.go",
+   "filePath": "internal/driver/mikrotik/iface.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports Interface, InterfaceTrafficStats, NewPrintInterfacesCommand, NewMonitorTrafficOnceCommand, NewMonitorTrafficStreamCommand, NewEnableInterfaceCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/iface.go:NewPrintInterfacesCommand",
+   "type": "function",
+   "name": "NewPrintInterfacesCommand",
+   "filePath": "internal/driver/mikrotik/iface.go",
+   "lineRange": [
+    61,
+    70
+   ],
+   "summary": "Constructor that creates and initializes a PrintInterfacesCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/iface.go:NewMonitorTrafficOnceCommand",
+   "type": "function",
+   "name": "NewMonitorTrafficOnceCommand",
+   "filePath": "internal/driver/mikrotik/iface.go",
+   "lineRange": [
+    77,
+    85
+   ],
+   "summary": "Constructor that creates and initializes a MonitorTrafficOnceCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/iface.go:NewMonitorTrafficStreamCommand",
+   "type": "function",
+   "name": "NewMonitorTrafficStreamCommand",
+   "filePath": "internal/driver/mikrotik/iface.go",
+   "lineRange": [
+    92,
+    100
+   ],
+   "summary": "Constructor that creates and initializes a MonitorTrafficStreamCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/iface.go:NewEnableInterfaceCommand",
+   "type": "function",
+   "name": "NewEnableInterfaceCommand",
+   "filePath": "internal/driver/mikrotik/iface.go",
+   "lineRange": [
+    104,
+    109
+   ],
+   "summary": "Constructor that creates and initializes a EnableInterfaceCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/iface.go:NewDisableInterfaceCommand",
+   "type": "function",
+   "name": "NewDisableInterfaceCommand",
+   "filePath": "internal/driver/mikrotik/iface.go",
+   "lineRange": [
+    113,
+    118
+   ],
+   "summary": "Constructor that creates and initializes a DisableInterfaceCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/iface.go:ParseInterfaces",
+   "type": "function",
+   "name": "ParseInterfaces",
+   "filePath": "internal/driver/mikrotik/iface.go",
+   "lineRange": [
+    126,
+    152
+   ],
+   "summary": "Implements the ParseInterfaces logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/iface.go:ParseInterfaceTrafficStats",
+   "type": "function",
+   "name": "ParseInterfaceTrafficStats",
+   "filePath": "internal/driver/mikrotik/iface.go",
+   "lineRange": [
+    166,
+    181
+   ],
+   "summary": "Implements the ParseInterfaceTrafficStats logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/iface.go:Interface",
+   "type": "class",
+   "name": "Interface",
+   "filePath": "internal/driver/mikrotik/iface.go",
+   "lineRange": [
+    26,
+    41
+   ],
+   "summary": "Interface Go type with 0 method(s) [—] and 14 field(s), defining the interface behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/iface.go:InterfaceTrafficStats",
+   "type": "class",
+   "name": "InterfaceTrafficStats",
+   "filePath": "internal/driver/mikrotik/iface.go",
+   "lineRange": [
+    48,
+    57
+   ],
+   "summary": "InterfaceTrafficStats Go type with 0 method(s) [—] and 8 field(s), defining the interfacetrafficstats behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:NewPrintHotspotActiveCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:NewStreamHotspotActiveCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:NewDisconnectHotspotActiveCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:NewPrintHotspotServersCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:ParseHotspotActiveSessions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:ParseHotspotServers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:FilterInactiveHotspotUsers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "class:internal/driver/mikrotik/hotspot_active.go:HotspotActiveSession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "class:internal/driver/mikrotik/hotspot_active.go:HotspotServer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "class:internal/driver/mikrotik/hotspot_active.go:HotspotActiveSession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "class:internal/driver/mikrotik/hotspot_active.go:HotspotServer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:NewPrintHotspotActiveCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:NewStreamHotspotActiveCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:NewDisconnectHotspotActiveCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:NewPrintHotspotServersCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:ParseHotspotActiveSessions",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:ParseHotspotServers",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "function:internal/driver/mikrotik/hotspot_active.go:FilterInactiveHotspotUsers",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_active.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot_profile.go:NewPrintHotspotUserProfilesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot_profile.go:NewAddHotspotUserProfileCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot_profile.go:NewSetHotspotUserProfileCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot_profile.go:NewRemoveHotspotUserProfileCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot_profile.go:ParseHotspotUserProfiles",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot_profile.go:FindHotspotUserProfileRosID",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "class:internal/driver/mikrotik/hotspot_profile.go:HotspotUserProfileParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "class:internal/driver/mikrotik/hotspot_profile.go:HotspotUserProfile",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "class:internal/driver/mikrotik/hotspot_profile.go:HotspotUserProfileParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "class:internal/driver/mikrotik/hotspot_profile.go:HotspotUserProfile",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot_profile.go:NewPrintHotspotUserProfilesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot_profile.go:NewAddHotspotUserProfileCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot_profile.go:NewSetHotspotUserProfileCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot_profile.go:NewRemoveHotspotUserProfileCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot_profile.go:ParseHotspotUserProfiles",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot_profile.go:FindHotspotUserProfileRosID",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:NewPrintHotspotUsersCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:NewStreamHotspotUsersCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:NewAddHotspotUserCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:NewSetHotspotUserCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:NewRemoveHotspotUserCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:NewResetHotspotUserCountersCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:ParseHotspotUsers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "class:internal/driver/mikrotik/hotspot_user.go:HotspotUserParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "class:internal/driver/mikrotik/hotspot_user.go:HotspotUser",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "class:internal/driver/mikrotik/hotspot_user.go:HotspotUserParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "class:internal/driver/mikrotik/hotspot_user.go:HotspotUser",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:NewPrintHotspotUsersCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:NewStreamHotspotUsersCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:NewAddHotspotUserCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:NewSetHotspotUserCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:NewRemoveHotspotUserCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:NewResetHotspotUserCountersCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "function:internal/driver/mikrotik/hotspot_user.go:ParseHotspotUsers",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot_user.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:NewPrintInterfacesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:NewMonitorTrafficOnceCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:NewMonitorTrafficStreamCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:NewEnableInterfaceCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:NewDisableInterfaceCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:ParseInterfaces",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:ParseInterfaceTrafficStats",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "class:internal/driver/mikrotik/iface.go:Interface",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "class:internal/driver/mikrotik/iface.go:InterfaceTrafficStats",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "class:internal/driver/mikrotik/iface.go:Interface",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "class:internal/driver/mikrotik/iface.go:InterfaceTrafficStats",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:NewPrintInterfacesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:NewMonitorTrafficOnceCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:NewMonitorTrafficStreamCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:NewEnableInterfaceCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:NewDisableInterfaceCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:ParseInterfaces",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "function:internal/driver/mikrotik/iface.go:ParseInterfaceTrafficStats",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/iface.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

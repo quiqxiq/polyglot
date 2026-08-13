@@ -1,0 +1,53 @@
+{
+  "nodes": [
+    {
+      "id": "document:docs/adr/0001-pilih-gin-daripada-echo.md",
+      "type": "document",
+      "name": "0001-pilih-gin-daripada-echo.md",
+      "summary": "# 0001 — Pilih Gin daripada Echo",
+      "tags": [
+        "docs",
+        "documentation"
+      ],
+      "complexity": "simple",
+      "filePath": "docs/adr/0001-pilih-gin-daripada-echo.md"
+    },
+    {
+      "id": "document:docs/adr/0002-devicedriver-tanpa-session-terpisah.md",
+      "type": "document",
+      "name": "0002-devicedriver-tanpa-session-terpisah.md",
+      "summary": "# 0002 — port.DeviceDriver Tanpa Tipe Session Terpisah",
+      "tags": [
+        "docs",
+        "documentation"
+      ],
+      "complexity": "simple",
+      "filePath": "docs/adr/0002-devicedriver-tanpa-session-terpisah.md"
+    },
+    {
+      "id": "document:docs/adr/0003-mikrotik-dual-connection-streaming.md",
+      "type": "document",
+      "name": "0003-mikrotik-dual-connection-streaming.md",
+      "summary": "# 0003 — Mikrotik: Dua Koneksi Persisten (Exec + Stream), Bukan Satu",
+      "tags": [
+        "docs",
+        "documentation"
+      ],
+      "complexity": "moderate",
+      "filePath": "docs/adr/0003-mikrotik-dual-connection-streaming.md"
+    },
+    {
+      "id": "document:docs/adr/0004-generic-cli-driver-scrapligo.md",
+      "type": "document",
+      "name": "0004-generic-cli-driver-scrapligo.md",
+      "summary": "# 0004 — genericssh & generictelnet Berbagi Satu Mesin scrapligo",
+      "tags": [
+        "docs",
+        "documentation"
+      ],
+      "complexity": "moderate",
+      "filePath": "docs/adr/0004-generic-cli-driver-scrapligo.md"
+    }
+  ],
+  "edges": []
+}

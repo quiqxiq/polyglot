@@ -7,16 +7,27 @@ import (
 )
 
 // UserModel is the GORM database model for users.
+// TableName eksplisit ke `users` (migrasi 000002) — tanpa ini GORM memakai
+// `user_models` (AutoMigrate dev), divergen dari migrasi (prod).
 type UserModel struct {
-	ID           uint   `gorm:"primaryKey"`
-	Username     string `gorm:"uniqueIndex;not null"`
-	Email        string `gorm:"uniqueIndex;not null"`
-	PasswordHash string `gorm:"not null"`
-	Role         string `gorm:"not null;default:agent"`
-	TenantID     string `gorm:"not null;default:tenant-default"`
+	ID uint `gorm:"primaryKey"`
+	// Tipe eksplisit = migrasi 000002 (`username VARCHAR(100) UNIQUE`, dst.).
+	// Tanpa `type:` GORM memetakan string -> `text` dan AutoMigrate mengubah
+	// kolom dari migrasi (dev schema divergen dari prod). `unique` (bukan
+	// `uniqueIndex`) karena migrasi memakai UNIQUE constraint per-kolom —
+	// dengan `uniqueIndex` GORM membaca columnType.Unique()=true tapi
+	// field.Unique=false → AutoMigrate crash saat DROP CONSTRAINT `uni_*`.
+	Username     string `gorm:"type:varchar(100);unique;not null"`
+	Email        string `gorm:"type:varchar(255);unique;not null"`
+	PasswordHash string `gorm:"type:varchar(255);not null"`
+	Role         string `gorm:"type:varchar(50);not null;default:agent"`
+	TenantID     string `gorm:"type:varchar(100);not null;default:tenant-default"`
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 }
+
+// TableName maps UserModel ke tabel migrasi `users`.
+func (UserModel) TableName() string { return "users" }
 
 func (m *UserModel) ToDomain() *customer.User {
 	if m == nil {

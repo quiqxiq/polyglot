@@ -49,6 +49,49 @@ func (s *Store) UpsertMessage(msg *bot.WAMessage) (bool, error) {
 	return res.RowsAffected > 0, res.Error
 }
 
+// UpsertMessagesBatch writes many message mirror rows in a single multi-row
+// INSERT ... ON CONFLICT DO NOTHING statement. Idempotent per
+// (session_id, wa_message_id) — rows that already exist are left untouched.
+// Returns the number of rows actually inserted. Dipakai oleh sinkronisasi
+// history sync yang bisa membawa ribuan pesan per blob.
+func (s *Store) UpsertMessagesBatch(msgs []*bot.WAMessage) (int, error) {
+	if len(msgs) == 0 {
+		return 0, nil
+	}
+	mList := make([]models.WAMessageModel, 0, len(msgs))
+	for _, m := range msgs {
+		if mm := models.WAMessageModelFromDomain(m); mm != nil {
+			mList = append(mList, *mm)
+		}
+	}
+	if len(mList) == 0 {
+		return 0, nil
+	}
+	res := s.db.Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "session_id"}, {Name: "wa_message_id"}},
+		DoNothing: true,
+	}).Create(&mList)
+	if res.Error != nil {
+		// PostgreSQL meng-abort SELURUH statement multi-row jika SATU baris
+		// melanggar constraint (mis. content melebihi panjang kolom). Fallback
+		// per-baris mengembalikan perilaku lama (satu pesan bermasalah hanya
+		// menjatuhkan pesan itu, bukan seluruh chunk). Jalur ini jarang —
+		// hanya dieksekusi saat statement batch gagal.
+		inserted := 0
+		for _, m := range msgs {
+			ok, err := s.UpsertMessage(m)
+			if err != nil {
+				return inserted, err
+			}
+			if ok {
+				inserted++
+			}
+		}
+		return inserted, nil
+	}
+	return int(res.RowsAffected), res.Error
+}
+
 // IncrementUnread bumps the unread counter of one chat (incoming message).
 func (s *Store) IncrementUnread(sessionID uint, chatJID string) error {
 	return s.db.Model(&models.WAChatModel{}).
@@ -61,6 +104,15 @@ func (s *Store) MarkChatRead(sessionID uint, chatJID string) error {
 	return s.db.Model(&models.WAChatModel{}).
 		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		UpdateColumn("unread_count", 0).Error
+}
+
+// SetChatUnread sets the unread counter of one chat to an exact value. Dipakai
+// saat sinkronisasi history sync agar angka unread dari perangkat tercermin
+// di Inbox (IncrementUnread hanya bisa menaikkan, tidak menetapkan).
+func (s *Store) SetChatUnread(sessionID uint, chatJID string, count uint32) error {
+	return s.db.Model(&models.WAChatModel{}).
+		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
+		UpdateColumn("unread_count", count).Error
 }
 
 // ListChats returns the chat mirror list ordered by most recent activity.

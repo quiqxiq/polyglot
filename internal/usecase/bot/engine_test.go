@@ -167,10 +167,12 @@ func newFakeChatRepo() *fakeChatRepo {
 	return &fakeChatRepo{botEnabled: make(map[string]bool)}
 }
 
-func (f *fakeChatRepo) UpsertChat(*bot.WAChat) error               { return nil }
-func (f *fakeChatRepo) UpsertMessage(*bot.WAMessage) (bool, error) { return true, nil }
-func (f *fakeChatRepo) IncrementUnread(uint, string) error         { return nil }
-func (f *fakeChatRepo) MarkChatRead(uint, string) error            { return nil }
+func (f *fakeChatRepo) UpsertChat(*bot.WAChat) error                           { return nil }
+func (f *fakeChatRepo) UpsertMessage(*bot.WAMessage) (bool, error)             { return true, nil }
+func (f *fakeChatRepo) UpsertMessagesBatch(msgs []*bot.WAMessage) (int, error) { return len(msgs), nil }
+func (f *fakeChatRepo) IncrementUnread(uint, string) error                     { return nil }
+func (f *fakeChatRepo) MarkChatRead(uint, string) error                        { return nil }
+func (f *fakeChatRepo) SetChatUnread(uint, string, uint32) error               { return nil }
 func (f *fakeChatRepo) ListChats(uint, int, int, string) ([]bot.WAChat, error) {
 	return nil, nil
 }

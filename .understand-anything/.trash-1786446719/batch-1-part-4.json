@@ -1,0 +1,1056 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/adapter/postgres/user_repository.go",
+   "type": "file",
+   "name": "user_repository.go",
+   "filePath": "internal/adapter/postgres/user_repository.go",
+   "summary": "Go source file implementing the Postgres repository adapter — Postgres repository adapter logic for the polyglot backend. Exports CreateUser, FindUserByID, FindUserByUsername, FindUserByEmail, CountUsers.",
+   "tags": [
+    "repository",
+    "postgres",
+    "gorm",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/postgres/user_repository.go:CreateUser",
+   "type": "function",
+   "name": "CreateUser",
+   "filePath": "internal/adapter/postgres/user_repository.go",
+   "lineRange": [
+    12,
+    19
+   ],
+   "summary": "Creates a new user record or resource.",
+   "tags": [
+    "function",
+    "repository",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/postgres/user_repository.go:FindUserByID",
+   "type": "function",
+   "name": "FindUserByID",
+   "filePath": "internal/adapter/postgres/user_repository.go",
+   "lineRange": [
+    21,
+    30
+   ],
+   "summary": "Retrieves userbyid data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "repository",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/postgres/user_repository.go:FindUserByUsername",
+   "type": "function",
+   "name": "FindUserByUsername",
+   "filePath": "internal/adapter/postgres/user_repository.go",
+   "lineRange": [
+    32,
+    41
+   ],
+   "summary": "Retrieves userbyusername data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "repository",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/postgres/user_repository.go:FindUserByEmail",
+   "type": "function",
+   "name": "FindUserByEmail",
+   "filePath": "internal/adapter/postgres/user_repository.go",
+   "lineRange": [
+    43,
+    52
+   ],
+   "summary": "Retrieves userbyemail data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "repository",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/postgres/user_repository.go:CountUsers",
+   "type": "function",
+   "name": "CountUsers",
+   "filePath": "internal/adapter/postgres/user_repository.go",
+   "lineRange": [
+    54,
+    58
+   ],
+   "summary": "Implements the CountUsers logic for this component.",
+   "tags": [
+    "function",
+    "repository",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/redis/store.go",
+   "type": "file",
+   "name": "store.go",
+   "filePath": "internal/adapter/redis/store.go",
+   "summary": "Go source file implementing the Redis cache adapter — Redis cache adapter logic for the polyglot backend. Exports Store, NewStore, Get, Set, Delete, SaveSessionMessages.",
+   "tags": [
+    "cache",
+    "redis",
+    "adapter",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:NewStore",
+   "type": "function",
+   "name": "NewStore",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    18,
+    33
+   ],
+   "summary": "Constructor that creates and initializes a Store instance with the provided configuration.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:Get",
+   "type": "function",
+   "name": "Get",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    35,
+    37
+   ],
+   "summary": "Retrieves get data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:Set",
+   "type": "function",
+   "name": "Set",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    39,
+    41
+   ],
+   "summary": "Updates set state with the given inputs.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:Delete",
+   "type": "function",
+   "name": "Delete",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    43,
+    45
+   ],
+   "summary": "Removes delete from the system.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:SaveSessionMessages",
+   "type": "function",
+   "name": "SaveSessionMessages",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    55,
+    61
+   ],
+   "summary": "Creates a new sessionmessages record or resource.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:GetSessionMessages",
+   "type": "function",
+   "name": "GetSessionMessages",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    63,
+    77
+   ],
+   "summary": "Retrieves sessionmessages data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:DeleteSession",
+   "type": "function",
+   "name": "DeleteSession",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    79,
+    85
+   ],
+   "summary": "Removes session from the system.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:SetSessionSummary",
+   "type": "function",
+   "name": "SetSessionSummary",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    87,
+    89
+   ],
+   "summary": "Updates sessionsummary state with the given inputs.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:GetSessionSummary",
+   "type": "function",
+   "name": "GetSessionSummary",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    91,
+    100
+   ],
+   "summary": "Retrieves sessionsummary data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:RefreshSessionTTL",
+   "type": "function",
+   "name": "RefreshSessionTTL",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    102,
+    108
+   ],
+   "summary": "Implements the RefreshSessionTTL logic (inputs: ctx, customerNumber, ttl) for this component.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:IncrementRateLimit",
+   "type": "function",
+   "name": "IncrementRateLimit",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    122,
+    132
+   ],
+   "summary": "Implements the IncrementRateLimit logic (inputs: ctx, customerNumber, window, ttl) for this component.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:GetRateLimitCount",
+   "type": "function",
+   "name": "GetRateLimitCount",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    134,
+    143
+   ],
+   "summary": "Retrieves ratelimitcount data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:MuteNumber",
+   "type": "function",
+   "name": "MuteNumber",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    145,
+    147
+   ],
+   "summary": "Implements the MuteNumber logic (inputs: ctx, customerNumber, duration) for this component.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:IsMuted",
+   "type": "function",
+   "name": "IsMuted",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    149,
+    155
+   ],
+   "summary": "Implements the IsMuted logic (inputs: ctx, customerNumber) for this component.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:UnmuteNumber",
+   "type": "function",
+   "name": "UnmuteNumber",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    157,
+    159
+   ],
+   "summary": "Implements the UnmuteNumber logic (inputs: ctx, customerNumber) for this component.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/redis/store.go:RecordMessageForSpamDetection",
+   "type": "function",
+   "name": "RecordMessageForSpamDetection",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    161,
+    176
+   ],
+   "summary": "Implements the RecordMessageForSpamDetection logic (inputs: ctx, customerNumber, messageHash) for this component.",
+   "tags": [
+    "function",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/redis/store.go:Store",
+   "type": "class",
+   "name": "Store",
+   "filePath": "internal/adapter/redis/store.go",
+   "lineRange": [
+    14,
+    16
+   ],
+   "summary": "Store Go type with 15 method(s) [Get, Set, Delete, SaveSessionMessages, GetSessionMessages, …] and 1 field(s), defining the store behavior of this component.",
+   "tags": [
+    "class",
+    "cache",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/domain/bot/conversation.go",
+   "type": "file",
+   "name": "conversation.go",
+   "filePath": "internal/domain/bot/conversation.go",
+   "summary": "Go source file implementing the domain model — domain model logic for the polyglot backend. Exports Conversation.",
+   "tags": [
+    "domain",
+    "model",
+    "entity",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/domain/bot/conversation.go:Conversation",
+   "type": "class",
+   "name": "Conversation",
+   "filePath": "internal/domain/bot/conversation.go",
+   "lineRange": [
+    15,
+    26
+   ],
+   "summary": "Conversation Go type with 0 method(s) [—] and 9 field(s), defining the conversation behavior of this component.",
+   "tags": [
+    "class",
+    "domain",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/domain/bot/message.go",
+   "type": "file",
+   "name": "message.go",
+   "filePath": "internal/domain/bot/message.go",
+   "summary": "Go source file implementing the domain model — domain model logic for the polyglot backend. Exports Message.",
+   "tags": [
+    "domain",
+    "model",
+    "entity",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/domain/bot/message.go:Message",
+   "type": "class",
+   "name": "Message",
+   "filePath": "internal/domain/bot/message.go",
+   "lineRange": [
+    15,
+    24
+   ],
+   "summary": "Message Go type with 0 method(s) [—] and 8 field(s), defining the message behavior of this component.",
+   "tags": [
+    "class",
+    "domain",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/domain/bot/session.go",
+   "type": "file",
+   "name": "session.go",
+   "filePath": "internal/domain/bot/session.go",
+   "summary": "Go source file implementing the domain model — domain model logic for the polyglot backend. Exports WASession.",
+   "tags": [
+    "domain",
+    "model",
+    "entity",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/domain/bot/session.go:WASession",
+   "type": "class",
+   "name": "WASession",
+   "filePath": "internal/domain/bot/session.go",
+   "lineRange": [
+    15,
+    25
+   ],
+   "summary": "WASession Go type with 0 method(s) [—] and 9 field(s), defining the wasession behavior of this component.",
+   "tags": [
+    "class",
+    "domain",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/domain/customer/customer.go",
+   "type": "file",
+   "name": "customer.go",
+   "filePath": "internal/domain/customer/customer.go",
+   "summary": "Go source file implementing the domain model — domain model logic for the polyglot backend. Exports Customer, Subscription.",
+   "tags": [
+    "domain",
+    "model",
+    "entity",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/domain/customer/customer.go:Customer",
+   "type": "class",
+   "name": "Customer",
+   "filePath": "internal/domain/customer/customer.go",
+   "lineRange": [
+    6,
+    16
+   ],
+   "summary": "Customer Go type with 0 method(s) [—] and 9 field(s), defining the customer behavior of this component.",
+   "tags": [
+    "class",
+    "domain",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/domain/customer/customer.go:Subscription",
+   "type": "class",
+   "name": "Subscription",
+   "filePath": "internal/domain/customer/customer.go",
+   "lineRange": [
+    19,
+    27
+   ],
+   "summary": "Subscription Go type with 0 method(s) [—] and 7 field(s), defining the subscription behavior of this component.",
+   "tags": [
+    "class",
+    "domain",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/domain/customer/technician.go",
+   "type": "file",
+   "name": "technician.go",
+   "filePath": "internal/domain/customer/technician.go",
+   "summary": "Go source file implementing the domain model — domain model logic for the polyglot backend. Exports Technician.",
+   "tags": [
+    "domain",
+    "model",
+    "entity",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/domain/customer/technician.go:Technician",
+   "type": "class",
+   "name": "Technician",
+   "filePath": "internal/domain/customer/technician.go",
+   "lineRange": [
+    6,
+    15
+   ],
+   "summary": "Technician Go type with 0 method(s) [—] and 8 field(s), defining the technician behavior of this component.",
+   "tags": [
+    "class",
+    "domain",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "function:internal/adapter/postgres/user_repository.go:CreateUser",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "function:internal/adapter/postgres/user_repository.go:FindUserByID",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "function:internal/adapter/postgres/user_repository.go:FindUserByUsername",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "function:internal/adapter/postgres/user_repository.go:FindUserByEmail",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "function:internal/adapter/postgres/user_repository.go:CountUsers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "function:internal/adapter/postgres/user_repository.go:CreateUser",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "function:internal/adapter/postgres/user_repository.go:FindUserByID",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "function:internal/adapter/postgres/user_repository.go:FindUserByUsername",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "function:internal/adapter/postgres/user_repository.go:FindUserByEmail",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "function:internal/adapter/postgres/user_repository.go:CountUsers",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "file:internal/adapter/postgres/models/conversation_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "file:internal/adapter/postgres/models/device_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "file:internal/adapter/postgres/models/knowledge_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "file:internal/adapter/postgres/models/llm_config_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "file:internal/adapter/postgres/models/session_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "file:internal/adapter/postgres/models/technician_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "file:internal/adapter/postgres/models/user_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "file:internal/domain/customer/customer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "file:internal/domain/customer/technician.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/postgres/user_repository.go",
+   "target": "file:internal/domain/customer/user.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:NewStore",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:Get",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:Set",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:Delete",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:SaveSessionMessages",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:GetSessionMessages",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:DeleteSession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:SetSessionSummary",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:GetSessionSummary",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:RefreshSessionTTL",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:IncrementRateLimit",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:GetRateLimitCount",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:MuteNumber",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:IsMuted",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:UnmuteNumber",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:RecordMessageForSpamDetection",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "class:internal/adapter/redis/store.go:Store",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "class:internal/adapter/redis/store.go:Store",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:NewStore",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:Get",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:Set",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:Delete",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:SaveSessionMessages",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:GetSessionMessages",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:DeleteSession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:SetSessionSummary",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:GetSessionSummary",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:RefreshSessionTTL",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:IncrementRateLimit",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:GetRateLimitCount",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:MuteNumber",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:IsMuted",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:UnmuteNumber",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "function:internal/adapter/redis/store.go:RecordMessageForSpamDetection",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "file:internal/domain/llm/llm_config.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/redis/store.go",
+   "target": "file:internal/domain/llm/llm_pricing.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/domain/bot/conversation.go",
+   "target": "class:internal/domain/bot/conversation.go:Conversation",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/conversation.go",
+   "target": "class:internal/domain/bot/conversation.go:Conversation",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/domain/bot/message.go",
+   "target": "class:internal/domain/bot/message.go:Message",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/message.go",
+   "target": "class:internal/domain/bot/message.go:Message",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/domain/bot/session.go",
+   "target": "class:internal/domain/bot/session.go:WASession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/bot/session.go",
+   "target": "class:internal/domain/bot/session.go:WASession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/domain/customer/customer.go",
+   "target": "class:internal/domain/customer/customer.go:Customer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/customer.go",
+   "target": "class:internal/domain/customer/customer.go:Subscription",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/customer.go",
+   "target": "class:internal/domain/customer/customer.go:Customer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/domain/customer/customer.go",
+   "target": "class:internal/domain/customer/customer.go:Subscription",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/domain/customer/technician.go",
+   "target": "class:internal/domain/customer/technician.go:Technician",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/customer/technician.go",
+   "target": "class:internal/domain/customer/technician.go:Technician",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

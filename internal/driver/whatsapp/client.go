@@ -444,6 +444,11 @@ func (c *Client) handleEvent(evt any) {
 		if c.onStatus != nil {
 			c.onStatus(c.SessionID, "offline", "", "", "")
 		}
+	case *events.HistorySync:
+		// Mirror semua chat + pesan (termasuk grup) dari HP ke Inbox agar
+		// halaman Chats menampilkan seluruh percakapan, bukan cuma yang
+		// menerima pesan live setelah terhubung.
+		c.handleHistorySync(v)
 	case *events.LoggedOut:
 		log.Printf("[WhatsApp Client %d] Remote LoggedOut event received from phone", c.SessionID)
 		// Remote logout (device di-unlink dari HP): hapus session lokal supaya

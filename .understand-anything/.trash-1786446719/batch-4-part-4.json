@@ -1,0 +1,1143 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "type": "file",
+   "name": "ppp_active_test.go",
+   "filePath": "internal/driver/mikrotik/ppp_active_test.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports TestNewPrintPPPActiveCommand, TestNewStreamPPPActiveCommand, TestNewKickPPPActiveCommand, TestParsePPPActiveSessions, TestNewAddPPPProfileCommand, TestNewSetPPPProfileCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go",
+    "test"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewPrintPPPActiveCommand",
+   "type": "function",
+   "name": "TestNewPrintPPPActiveCommand",
+   "filePath": "internal/driver/mikrotik/ppp_active_test.go",
+   "lineRange": [
+    14,
+    26
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewStreamPPPActiveCommand",
+   "type": "function",
+   "name": "TestNewStreamPPPActiveCommand",
+   "filePath": "internal/driver/mikrotik/ppp_active_test.go",
+   "lineRange": [
+    28,
+    42
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewKickPPPActiveCommand",
+   "type": "function",
+   "name": "TestNewKickPPPActiveCommand",
+   "filePath": "internal/driver/mikrotik/ppp_active_test.go",
+   "lineRange": [
+    44,
+    48
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active_test.go:TestParsePPPActiveSessions",
+   "type": "function",
+   "name": "TestParsePPPActiveSessions",
+   "filePath": "internal/driver/mikrotik/ppp_active_test.go",
+   "lineRange": [
+    52,
+    94
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewAddPPPProfileCommand",
+   "type": "function",
+   "name": "TestNewAddPPPProfileCommand",
+   "filePath": "internal/driver/mikrotik/ppp_active_test.go",
+   "lineRange": [
+    98,
+    119
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewSetPPPProfileCommand",
+   "type": "function",
+   "name": "TestNewSetPPPProfileCommand",
+   "filePath": "internal/driver/mikrotik/ppp_active_test.go",
+   "lineRange": [
+    121,
+    127
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewRemovePPPProfileCommand",
+   "type": "function",
+   "name": "TestNewRemovePPPProfileCommand",
+   "filePath": "internal/driver/mikrotik/ppp_active_test.go",
+   "lineRange": [
+    129,
+    133
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active_test.go:TestParsePPPProfiles",
+   "type": "function",
+   "name": "TestParsePPPProfiles",
+   "filePath": "internal/driver/mikrotik/ppp_active_test.go",
+   "lineRange": [
+    135,
+    147
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_active_test.go:TestFilterInactivePPPoESecrets",
+   "type": "function",
+   "name": "TestFilterInactivePPPoESecrets",
+   "filePath": "internal/driver/mikrotik/ppp_active_test.go",
+   "lineRange": [
+    149,
+    165
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/ppp_profile.go",
+   "type": "file",
+   "name": "ppp_profile.go",
+   "filePath": "internal/driver/mikrotik/ppp_profile.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports PPPProfileParams, PPPProfile, IsolirProfileParams, NewPrintPPPProfilesCommand, NewAddPPPProfileCommand, NewSetPPPProfileCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_profile.go:IsolirProfileParams",
+   "type": "function",
+   "name": "IsolirProfileParams",
+   "filePath": "internal/driver/mikrotik/ppp_profile.go",
+   "lineRange": [
+    78,
+    87
+   ],
+   "summary": "Implements the IsolirProfileParams logic for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_profile.go:NewPrintPPPProfilesCommand",
+   "type": "function",
+   "name": "NewPrintPPPProfilesCommand",
+   "filePath": "internal/driver/mikrotik/ppp_profile.go",
+   "lineRange": [
+    91,
+    100
+   ],
+   "summary": "Constructor that creates and initializes a PrintPPPProfilesCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_profile.go:NewAddPPPProfileCommand",
+   "type": "function",
+   "name": "NewAddPPPProfileCommand",
+   "filePath": "internal/driver/mikrotik/ppp_profile.go",
+   "lineRange": [
+    105,
+    124
+   ],
+   "summary": "Constructor that creates and initializes a AddPPPProfileCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_profile.go:NewSetPPPProfileCommand",
+   "type": "function",
+   "name": "NewSetPPPProfileCommand",
+   "filePath": "internal/driver/mikrotik/ppp_profile.go",
+   "lineRange": [
+    129,
+    147
+   ],
+   "summary": "Constructor that creates and initializes a SetPPPProfileCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_profile.go:NewRemovePPPProfileCommand",
+   "type": "function",
+   "name": "NewRemovePPPProfileCommand",
+   "filePath": "internal/driver/mikrotik/ppp_profile.go",
+   "lineRange": [
+    150,
+    155
+   ],
+   "summary": "Constructor that creates and initializes a RemovePPPProfileCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_profile.go:ParsePPPProfiles",
+   "type": "function",
+   "name": "ParsePPPProfiles",
+   "filePath": "internal/driver/mikrotik/ppp_profile.go",
+   "lineRange": [
+    159,
+    187
+   ],
+   "summary": "Implements the ParsePPPProfiles logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/ppp_profile.go:PPPProfileParams",
+   "type": "class",
+   "name": "PPPProfileParams",
+   "filePath": "internal/driver/mikrotik/ppp_profile.go",
+   "lineRange": [
+    31,
+    47
+   ],
+   "summary": "PPPProfileParams Go type with 0 method(s) [—] and 15 field(s), defining the pppprofileparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/ppp_profile.go:PPPProfile",
+   "type": "class",
+   "name": "PPPProfile",
+   "filePath": "internal/driver/mikrotik/ppp_profile.go",
+   "lineRange": [
+    53,
+    70
+   ],
+   "summary": "PPPProfile Go type with 0 method(s) [—] and 16 field(s), defining the pppprofile behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/ppp_test.go",
+   "type": "file",
+   "name": "ppp_test.go",
+   "filePath": "internal/driver/mikrotik/ppp_test.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports TestNewAddPPPoESecretCommand, TestNewSetPPPoESecretCommand, TestNewRemovePPPoESecretCommand, TestNewPrintPPPoESecretsCommand, TestParsePPPoESecrets, TestFindPPPoESecretRosID.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go",
+    "test"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_test.go:TestNewAddPPPoESecretCommand",
+   "type": "function",
+   "name": "TestNewAddPPPoESecretCommand",
+   "filePath": "internal/driver/mikrotik/ppp_test.go",
+   "lineRange": [
+    14,
+    58
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_test.go:TestNewSetPPPoESecretCommand",
+   "type": "function",
+   "name": "TestNewSetPPPoESecretCommand",
+   "filePath": "internal/driver/mikrotik/ppp_test.go",
+   "lineRange": [
+    60,
+    70
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_test.go:TestNewRemovePPPoESecretCommand",
+   "type": "function",
+   "name": "TestNewRemovePPPoESecretCommand",
+   "filePath": "internal/driver/mikrotik/ppp_test.go",
+   "lineRange": [
+    72,
+    76
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_test.go:TestNewPrintPPPoESecretsCommand",
+   "type": "function",
+   "name": "TestNewPrintPPPoESecretsCommand",
+   "filePath": "internal/driver/mikrotik/ppp_test.go",
+   "lineRange": [
+    78,
+    91
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_test.go:TestParsePPPoESecrets",
+   "type": "function",
+   "name": "TestParsePPPoESecrets",
+   "filePath": "internal/driver/mikrotik/ppp_test.go",
+   "lineRange": [
+    95,
+    148
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/ppp_test.go:TestFindPPPoESecretRosID",
+   "type": "function",
+   "name": "TestFindPPPoESecretRosID",
+   "filePath": "internal/driver/mikrotik/ppp_test.go",
+   "lineRange": [
+    150,
+    166
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/queue.go",
+   "type": "file",
+   "name": "queue.go",
+   "filePath": "internal/driver/mikrotik/queue.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports SimpleQueueParams, SimpleQueue, SuspendQueueParams, NewPrintSimpleQueuesCommand, NewPrintParentQueuesCommand, QueueStreamParams.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/queue.go:SuspendQueueParams",
+   "type": "function",
+   "name": "SuspendQueueParams",
+   "filePath": "internal/driver/mikrotik/queue.go",
+   "lineRange": [
+    78,
+    92
+   ],
+   "summary": "Implements the SuspendQueueParams logic (inputs: targetIP, reason, throttleSpeed) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/queue.go:NewPrintSimpleQueuesCommand",
+   "type": "function",
+   "name": "NewPrintSimpleQueuesCommand",
+   "filePath": "internal/driver/mikrotik/queue.go",
+   "lineRange": [
+    96,
+    105
+   ],
+   "summary": "Constructor that creates and initializes a PrintSimpleQueuesCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/queue.go:NewPrintParentQueuesCommand",
+   "type": "function",
+   "name": "NewPrintParentQueuesCommand",
+   "filePath": "internal/driver/mikrotik/queue.go",
+   "lineRange": [
+    110,
+    115
+   ],
+   "summary": "Constructor that creates and initializes a PrintParentQueuesCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/queue.go:NewStreamQueueStatsCommand",
+   "type": "function",
+   "name": "NewStreamQueueStatsCommand",
+   "filePath": "internal/driver/mikrotik/queue.go",
+   "lineRange": [
+    128,
+    150
+   ],
+   "summary": "Constructor that creates and initializes a StreamQueueStatsCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/queue.go:NewAddSimpleQueueCommand",
+   "type": "function",
+   "name": "NewAddSimpleQueueCommand",
+   "filePath": "internal/driver/mikrotik/queue.go",
+   "lineRange": [
+    153,
+    172
+   ],
+   "summary": "Constructor that creates and initializes a AddSimpleQueueCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/queue.go:NewRemoveSimpleQueueCommand",
+   "type": "function",
+   "name": "NewRemoveSimpleQueueCommand",
+   "filePath": "internal/driver/mikrotik/queue.go",
+   "lineRange": [
+    176,
+    181
+   ],
+   "summary": "Constructor that creates and initializes a RemoveSimpleQueueCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/queue.go:ParseSimpleQueues",
+   "type": "function",
+   "name": "ParseSimpleQueues",
+   "filePath": "internal/driver/mikrotik/queue.go",
+   "lineRange": [
+    185,
+    215
+   ],
+   "summary": "Implements the ParseSimpleQueues logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/queue.go:SimpleQueueParams",
+   "type": "class",
+   "name": "SimpleQueueParams",
+   "filePath": "internal/driver/mikrotik/queue.go",
+   "lineRange": [
+    32,
+    44
+   ],
+   "summary": "SimpleQueueParams Go type with 0 method(s) [—] and 11 field(s), defining the simplequeueparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/queue.go:SimpleQueue",
+   "type": "class",
+   "name": "SimpleQueue",
+   "filePath": "internal/driver/mikrotik/queue.go",
+   "lineRange": [
+    50,
+    69
+   ],
+   "summary": "SimpleQueue Go type with 0 method(s) [—] and 18 field(s), defining the simplequeue behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/queue.go:QueueStreamParams",
+   "type": "class",
+   "name": "QueueStreamParams",
+   "filePath": "internal/driver/mikrotik/queue.go",
+   "lineRange": [
+    118,
+    123
+   ],
+   "summary": "QueueStreamParams Go type with 0 method(s) [—] and 4 field(s), defining the queuestreamparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewPrintPPPActiveCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewStreamPPPActiveCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewKickPPPActiveCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestParsePPPActiveSessions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewAddPPPProfileCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewSetPPPProfileCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewRemovePPPProfileCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestParsePPPProfiles",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestFilterInactivePPPoESecrets",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewPrintPPPActiveCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewStreamPPPActiveCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewKickPPPActiveCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestParsePPPActiveSessions",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewAddPPPProfileCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewSetPPPProfileCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestNewRemovePPPProfileCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestParsePPPProfiles",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_active_test.go:TestFilterInactivePPPoESecrets",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "function:internal/driver/mikrotik/ppp_profile.go:IsolirProfileParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "function:internal/driver/mikrotik/ppp_profile.go:NewPrintPPPProfilesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "function:internal/driver/mikrotik/ppp_profile.go:NewAddPPPProfileCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "function:internal/driver/mikrotik/ppp_profile.go:NewSetPPPProfileCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "function:internal/driver/mikrotik/ppp_profile.go:NewRemovePPPProfileCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "function:internal/driver/mikrotik/ppp_profile.go:ParsePPPProfiles",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "class:internal/driver/mikrotik/ppp_profile.go:PPPProfileParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "class:internal/driver/mikrotik/ppp_profile.go:PPPProfile",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "class:internal/driver/mikrotik/ppp_profile.go:PPPProfileParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "class:internal/driver/mikrotik/ppp_profile.go:PPPProfile",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "function:internal/driver/mikrotik/ppp_profile.go:IsolirProfileParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "function:internal/driver/mikrotik/ppp_profile.go:NewPrintPPPProfilesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "function:internal/driver/mikrotik/ppp_profile.go:NewAddPPPProfileCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "function:internal/driver/mikrotik/ppp_profile.go:NewSetPPPProfileCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "function:internal/driver/mikrotik/ppp_profile.go:NewRemovePPPProfileCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "function:internal/driver/mikrotik/ppp_profile.go:ParsePPPProfiles",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_profile.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_test.go:TestNewAddPPPoESecretCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_test.go:TestNewSetPPPoESecretCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_test.go:TestNewRemovePPPoESecretCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_test.go:TestNewPrintPPPoESecretsCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_test.go:TestParsePPPoESecrets",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_test.go:TestFindPPPoESecretRosID",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_test.go:TestNewAddPPPoESecretCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_test.go:TestNewSetPPPoESecretCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_test.go:TestNewRemovePPPoESecretCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_test.go:TestNewPrintPPPoESecretsCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_test.go:TestParsePPPoESecrets",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "function:internal/driver/mikrotik/ppp_test.go:TestFindPPPoESecretRosID",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/ppp_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:SuspendQueueParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:NewPrintSimpleQueuesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:NewPrintParentQueuesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:NewStreamQueueStatsCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:NewAddSimpleQueueCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:NewRemoveSimpleQueueCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:ParseSimpleQueues",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "class:internal/driver/mikrotik/queue.go:SimpleQueueParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "class:internal/driver/mikrotik/queue.go:SimpleQueue",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "class:internal/driver/mikrotik/queue.go:QueueStreamParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "class:internal/driver/mikrotik/queue.go:SimpleQueueParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "class:internal/driver/mikrotik/queue.go:SimpleQueue",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:SuspendQueueParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:NewPrintSimpleQueuesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:NewPrintParentQueuesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "class:internal/driver/mikrotik/queue.go:QueueStreamParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:NewStreamQueueStatsCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:NewAddSimpleQueueCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:NewRemoveSimpleQueueCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "function:internal/driver/mikrotik/queue.go:ParseSimpleQueues",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/queue.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

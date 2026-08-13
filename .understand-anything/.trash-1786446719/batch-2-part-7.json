@@ -1,0 +1,1172 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/driver/whatsapp/session_manager.go",
+   "type": "file",
+   "name": "session_manager.go",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports SessionManager, NewSessionManager, ConnectWithContext, Connect, Disconnect, Logout.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:NewSessionManager",
+   "type": "function",
+   "name": "NewSessionManager",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    28,
+    42
+   ],
+   "summary": "Constructor that creates and initializes a SessionManager instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:ConnectWithContext",
+   "type": "function",
+   "name": "ConnectWithContext",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    44,
+    101
+   ],
+   "summary": "Implements the ConnectWithContext logic (inputs: ctx, session) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:Connect",
+   "type": "function",
+   "name": "Connect",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    103,
+    105
+   ],
+   "summary": "Implements the Connect logic (inputs: session) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:Disconnect",
+   "type": "function",
+   "name": "Disconnect",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    107,
+    122
+   ],
+   "summary": "Implements the Disconnect logic (inputs: sessionID) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:Logout",
+   "type": "function",
+   "name": "Logout",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    124,
+    139
+   ],
+   "summary": "Implements the Logout logic (inputs: sessionID) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:Reconnect",
+   "type": "function",
+   "name": "Reconnect",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    141,
+    154
+   ],
+   "summary": "Implements the Reconnect logic (inputs: sessionID) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:SendMessage",
+   "type": "function",
+   "name": "SendMessage",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    156,
+    158
+   ],
+   "summary": "Implements the SendMessage logic (inputs: sessionID, to, content) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:SendMessageContext",
+   "type": "function",
+   "name": "SendMessageContext",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    160,
+    173
+   ],
+   "summary": "Implements the SendMessageContext logic (inputs: ctx, sessionID, to, content) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:SendDocument",
+   "type": "function",
+   "name": "SendDocument",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    175,
+    188
+   ],
+   "summary": "Implements the SendDocument logic (inputs: ctx, sessionID, to, fileBytes, fileName, contentType, caption) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:SendImage",
+   "type": "function",
+   "name": "SendImage",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    190,
+    203
+   ],
+   "summary": "Implements the SendImage logic (inputs: ctx, sessionID, to, imageBytes, contentType, caption) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:GetStatus",
+   "type": "function",
+   "name": "GetStatus",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    205,
+    217
+   ],
+   "summary": "Retrieves status data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:GetQRCode",
+   "type": "function",
+   "name": "GetQRCode",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    219,
+    231
+   ],
+   "summary": "Retrieves qrcode data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:GetPairingCode",
+   "type": "function",
+   "name": "GetPairingCode",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    233,
+    246
+   ],
+   "summary": "Retrieves pairingcode data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/whatsapp/session_manager.go:RestoreAllSessions",
+   "type": "function",
+   "name": "RestoreAllSessions",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    248,
+    262
+   ],
+   "summary": "Implements the RestoreAllSessions logic (inputs: sessions) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/whatsapp/session_manager.go:SessionManager",
+   "type": "class",
+   "name": "SessionManager",
+   "filePath": "internal/driver/whatsapp/session_manager.go",
+   "lineRange": [
+    18,
+    24
+   ],
+   "summary": "SessionManager Go type with 13 method(s) [ConnectWithContext, Connect, Disconnect, Logout, Reconnect, …] and 5 field(s), defining the sessionmanager behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/zteolt/snmp.go",
+   "type": "file",
+   "name": "snmp.go",
+   "filePath": "internal/driver/zteolt/snmp.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports SNMPClient, NewSNMPClient, Get, Close.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/zteolt/snmp.go:NewSNMPClient",
+   "type": "function",
+   "name": "NewSNMPClient",
+   "filePath": "internal/driver/zteolt/snmp.go",
+   "lineRange": [
+    16,
+    18
+   ],
+   "summary": "Constructor that creates and initializes a SNMPClient instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/zteolt/snmp.go:Get",
+   "type": "function",
+   "name": "Get",
+   "filePath": "internal/driver/zteolt/snmp.go",
+   "lineRange": [
+    21,
+    23
+   ],
+   "summary": "Retrieves get data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/zteolt/snmp.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/zteolt/snmp.go",
+   "lineRange": [
+    26,
+    28
+   ],
+   "summary": "Releases resources held by this component (connections, goroutines).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/zteolt/snmp.go:SNMPClient",
+   "type": "class",
+   "name": "SNMPClient",
+   "filePath": "internal/driver/zteolt/snmp.go",
+   "lineRange": [
+    11,
+    11
+   ],
+   "summary": "SNMPClient Go type with 2 method(s) [Get, Close] and 0 field(s), defining the snmpclient behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/zteolt/telnet.go",
+   "type": "file",
+   "name": "telnet.go",
+   "filePath": "internal/driver/zteolt/telnet.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports Driver, NewDriver, Execute, Classify, Translate, Close.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/zteolt/telnet.go:NewDriver",
+   "type": "function",
+   "name": "NewDriver",
+   "filePath": "internal/driver/zteolt/telnet.go",
+   "lineRange": [
+    36,
+    44
+   ],
+   "summary": "Constructor that creates and initializes a Driver instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/zteolt/telnet.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/driver/zteolt/telnet.go",
+   "lineRange": [
+    47,
+    49
+   ],
+   "summary": "Runs the execute operation to completion (or streaming, when applicable).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/zteolt/telnet.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/zteolt/telnet.go",
+   "lineRange": [
+    52,
+    54
+   ],
+   "summary": "Classifies a command as destructive or read-only based on vendor conventions.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/zteolt/telnet.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/zteolt/telnet.go",
+   "lineRange": [
+    62,
+    64
+   ],
+   "summary": "Translates an abstract operation into a vendor-native command.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/zteolt/telnet.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/zteolt/telnet.go",
+   "lineRange": [
+    67,
+    72
+   ],
+   "summary": "Releases resources held by this component (connections, goroutines).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/zteolt/telnet.go:Driver",
+   "type": "class",
+   "name": "Driver",
+   "filePath": "internal/driver/zteolt/telnet.go",
+   "lineRange": [
+    26,
+    29
+   ],
+   "summary": "Driver Go type with 4 method(s) [Execute, Classify, Translate, Close] and 2 field(s), defining the driver behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/port/audit_writer.go",
+   "type": "file",
+   "name": "audit_writer.go",
+   "filePath": "internal/port/audit_writer.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports AuditEvent, AuditWriter.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/audit_writer.go:AuditEvent",
+   "type": "class",
+   "name": "AuditEvent",
+   "filePath": "internal/port/audit_writer.go",
+   "lineRange": [
+    13,
+    19
+   ],
+   "summary": "AuditEvent Go type with 0 method(s) [—] and 5 field(s), defining the auditevent behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/audit_writer.go:AuditWriter",
+   "type": "class",
+   "name": "AuditWriter",
+   "filePath": "internal/port/audit_writer.go",
+   "lineRange": [
+    25,
+    27
+   ],
+   "summary": "AuditWriter Go type with 1 method(s) [Write] and 0 field(s), defining the auditwriter behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:NewSessionManager",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:ConnectWithContext",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Connect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Disconnect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Logout",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Reconnect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SendMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SendMessageContext",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SendDocument",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SendImage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:GetStatus",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:GetQRCode",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:GetPairingCode",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:RestoreAllSessions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "class:internal/driver/whatsapp/session_manager.go:SessionManager",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "class:internal/driver/whatsapp/session_manager.go:SessionManager",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:NewSessionManager",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:ConnectWithContext",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Connect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Disconnect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Logout",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:Reconnect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SendMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SendMessageContext",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SendDocument",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:SendImage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:GetStatus",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:GetQRCode",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:GetPairingCode",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "function:internal/driver/whatsapp/session_manager.go:RestoreAllSessions",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/domain/bot/conversation.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/domain/bot/message.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/domain/bot/session.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/audit_writer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/knowledge_retriever.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/whatsapp/session_manager.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "function:internal/driver/zteolt/snmp.go:NewSNMPClient",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "function:internal/driver/zteolt/snmp.go:Get",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "function:internal/driver/zteolt/snmp.go:Close",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "class:internal/driver/zteolt/snmp.go:SNMPClient",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "class:internal/driver/zteolt/snmp.go:SNMPClient",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "function:internal/driver/zteolt/snmp.go:NewSNMPClient",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "function:internal/driver/zteolt/snmp.go:Get",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "function:internal/driver/zteolt/snmp.go:Close",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/snmp.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "function:internal/driver/zteolt/telnet.go:NewDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "function:internal/driver/zteolt/telnet.go:Execute",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "function:internal/driver/zteolt/telnet.go:Classify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "function:internal/driver/zteolt/telnet.go:Translate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "function:internal/driver/zteolt/telnet.go:Close",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "class:internal/driver/zteolt/telnet.go:Driver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "class:internal/driver/zteolt/telnet.go:Driver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "function:internal/driver/zteolt/telnet.go:NewDriver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "function:internal/driver/zteolt/telnet.go:Execute",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "function:internal/driver/zteolt/telnet.go:Classify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "function:internal/driver/zteolt/telnet.go:Translate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "function:internal/driver/zteolt/telnet.go:Close",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/audit_writer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/knowledge_retriever.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/zteolt/telnet.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/audit_writer.go",
+   "target": "class:internal/port/audit_writer.go:AuditEvent",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/audit_writer.go",
+   "target": "class:internal/port/audit_writer.go:AuditWriter",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/audit_writer.go",
+   "target": "class:internal/port/audit_writer.go:AuditEvent",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/audit_writer.go",
+   "target": "class:internal/port/audit_writer.go:AuditWriter",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

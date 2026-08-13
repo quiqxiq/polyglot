@@ -15,7 +15,11 @@ type customerRepository struct {
 
 // NewCustomerRepository returns a port.CustomerRepository backed by GORM/Postgres.
 func NewCustomerRepository(db *gorm.DB) port.CustomerRepository {
-	_ = db.AutoMigrate(&customer.Customer{}, &customer.Subscription{})
+	// Hanya customer.Customer — tabel subscriptions dikelola oleh
+	// subscription.Subscription (subscription_repository.go) yang punya gorm
+	// tags lengkap. Meng-AutoMigrate dua tipe ke tabel yang sama (customer
+	// .Subscription tanpa tags) membuat GORM bolak-balik ALTER tiap startup.
+	_ = db.AutoMigrate(&customer.Customer{})
 	return &customerRepository{db: db}
 }
 

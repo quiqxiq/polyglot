@@ -1,0 +1,364 @@
+{
+ "nodes": [
+  {
+   "id": "document:api/mcp-tools.md",
+   "type": "document",
+   "name": "mcp-tools.md",
+   "filePath": "api/mcp-tools.md",
+   "summary": "Documentation: mcp-tools.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "config:api/openapi.yaml",
+   "type": "config",
+   "name": "openapi.yaml",
+   "filePath": "api/openapi.yaml",
+   "summary": "Configuration file openapi.yaml",
+   "tags": [
+    "config",
+    "yaml"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "service:deployments/docker-compose.prod.yml",
+   "type": "service",
+   "name": "docker-compose.prod.yml",
+   "filePath": "deployments/docker-compose.prod.yml",
+   "summary": "Docker Compose deployment manifest",
+   "tags": [
+    "service",
+    "yaml"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "service:deployments/docker-compose.yml",
+   "type": "service",
+   "name": "docker-compose.yml",
+   "filePath": "deployments/docker-compose.yml",
+   "summary": "Docker Compose deployment manifest",
+   "tags": [
+    "service",
+    "yaml"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:docs/BACKEND-MIGRATION-ROADMAP.md",
+   "type": "document",
+   "name": "BACKEND-MIGRATION-ROADMAP.md",
+   "filePath": "docs/BACKEND-MIGRATION-ROADMAP.md",
+   "summary": "Documentation: BACKEND-MIGRATION-ROADMAP.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/vault/aes_vault.go",
+   "type": "file",
+   "name": "aes_vault.go",
+   "filePath": "internal/adapter/vault/aes_vault.go",
+   "summary": "internal/adapter/vault/aes_vault.go — code file in internal/adapter/vault, exports: NewAESVault",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/vault/aes_vault.go:NewAESVault",
+   "type": "function",
+   "name": "NewAESVault",
+   "filePath": "internal/adapter/vault/aes_vault.go",
+   "lineRange": [
+    6,
+    8
+   ],
+   "summary": "NewAESVault() in aes_vault.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/audit/writer.go",
+   "type": "file",
+   "name": "writer.go",
+   "filePath": "internal/audit/writer.go",
+   "summary": "internal/audit/writer.go — code file in internal/audit, exports: NewWriter",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/audit/writer.go:NewWriter",
+   "type": "function",
+   "name": "NewWriter",
+   "filePath": "internal/audit/writer.go",
+   "lineRange": [
+    7,
+    9
+   ],
+   "summary": "NewWriter() in writer.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/config/rbac_model.conf",
+   "type": "file",
+   "name": "rbac_model.conf",
+   "filePath": "internal/config/rbac_model.conf",
+   "summary": "internal/config/rbac_model.conf — code file in internal/config",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/config/system_prompt.md",
+   "type": "document",
+   "name": "system_prompt.md",
+   "filePath": "internal/config/system_prompt.md",
+   "summary": "Documentation: system_prompt.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/domain/plan/plan.go",
+   "type": "file",
+   "name": "plan.go",
+   "filePath": "internal/domain/plan/plan.go",
+   "summary": "internal/domain/plan/plan.go — code file in internal/domain/plan, exports: New",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/domain/plan/plan.go:New",
+   "type": "function",
+   "name": "New",
+   "filePath": "internal/domain/plan/plan.go",
+   "lineRange": [
+    12,
+    14
+   ],
+   "summary": "New() in plan.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/domain/session/session.go",
+   "type": "file",
+   "name": "session.go",
+   "filePath": "internal/domain/session/session.go",
+   "summary": "internal/domain/session/session.go — code file in internal/domain/session, exports: New",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/domain/session/session.go:New",
+   "type": "function",
+   "name": "New",
+   "filePath": "internal/domain/session/session.go",
+   "lineRange": [
+    16,
+    18
+   ],
+   "summary": "New() in session.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "config:internal/platformdef/mikrotik_routeros.yaml",
+   "type": "config",
+   "name": "mikrotik_routeros.yaml",
+   "filePath": "internal/platformdef/mikrotik_routeros.yaml",
+   "summary": "Configuration file mikrotik_routeros.yaml",
+   "tags": [
+    "config",
+    "yaml"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/platformdef/README.md",
+   "type": "document",
+   "name": "README.md",
+   "filePath": "internal/platformdef/README.md",
+   "summary": "Documentation: README.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/templates/embed.go",
+   "type": "file",
+   "name": "embed.go",
+   "filePath": "internal/templates/embed.go",
+   "summary": "internal/templates/embed.go — code file in internal/templates",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:pkg/retry/retry.go",
+   "type": "file",
+   "name": "retry.go",
+   "filePath": "pkg/retry/retry.go",
+   "summary": "pkg/retry/retry.go — code file in pkg/retry, exports: Do",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:pkg/retry/retry.go:Do",
+   "type": "function",
+   "name": "Do",
+   "filePath": "pkg/retry/retry.go",
+   "lineRange": [
+    6,
+    8
+   ],
+   "summary": "Do() in retry.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "service:deployments/docker-compose.prod.yml",
+   "target": "service:deployments/docker/Dockerfile",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "service:deployments/docker-compose.yml",
+   "target": "service:deployments/docker/Dockerfile",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "document:docs/BACKEND-MIGRATION-ROADMAP.md",
+   "target": "file:internal/app/app.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/vault/aes_vault.go",
+   "target": "function:internal/adapter/vault/aes_vault.go:NewAESVault",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/vault/aes_vault.go",
+   "target": "function:internal/adapter/vault/aes_vault.go:NewAESVault",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/audit/writer.go",
+   "target": "function:internal/audit/writer.go:NewWriter",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/audit/writer.go",
+   "target": "function:internal/audit/writer.go:NewWriter",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/domain/plan/plan.go",
+   "target": "function:internal/domain/plan/plan.go:New",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/plan/plan.go",
+   "target": "function:internal/domain/plan/plan.go:New",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/domain/session/session.go",
+   "target": "function:internal/domain/session/session.go:New",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/domain/session/session.go",
+   "target": "function:internal/domain/session/session.go:New",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "document:internal/platformdef/README.md",
+   "target": "file:cmd/server/main.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:pkg/retry/retry.go",
+   "target": "function:pkg/retry/retry.go:Do",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:pkg/retry/retry.go",
+   "target": "function:pkg/retry/retry.go:Do",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

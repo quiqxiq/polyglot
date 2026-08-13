@@ -1,0 +1,1544 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/driver/genieacs/client_test.go",
+   "type": "file",
+   "name": "client_test.go",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports TestNewDriver_MissingDeviceID, TestNewDriver_UnreachableNBI, TestNewDriver_ReachableDefaultsFields, TestNewDriver_CustomPollInterval, TestExecute_GetDevice, TestExecute_GetDevice_NotFound.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go",
+    "test"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "function",
+   "name": "newTestDriver",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    27,
+    38
+   ],
+   "summary": "Implements the newTestDriver logic (inputs: t, srv, deviceID) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestNewDriver_MissingDeviceID",
+   "type": "function",
+   "name": "TestNewDriver_MissingDeviceID",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    58,
+    61
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestNewDriver_UnreachableNBI",
+   "type": "function",
+   "name": "TestNewDriver_UnreachableNBI",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    63,
+    72
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestNewDriver_ReachableDefaultsFields",
+   "type": "function",
+   "name": "TestNewDriver_ReachableDefaultsFields",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    82,
+    99
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestNewDriver_CustomPollInterval",
+   "type": "function",
+   "name": "TestNewDriver_CustomPollInterval",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    101,
+    115
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice",
+   "type": "function",
+   "name": "TestExecute_GetDevice",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    117,
+    132
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice_NotFound",
+   "type": "function",
+   "name": "TestExecute_GetDevice_NotFound",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    134,
+    144
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_UnsupportedTaskType",
+   "type": "function",
+   "name": "TestExecute_UnsupportedTaskType",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    146,
+    155
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_200",
+   "type": "function",
+   "name": "TestExecute_Reboot_200",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    157,
+    175
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_202_PollThenDone",
+   "type": "function",
+   "name": "TestExecute_Reboot_202_PollThenDone",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    177,
+    204
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_202_CtxTimeout",
+   "type": "function",
+   "name": "TestExecute_202_CtxTimeout",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    206,
+    227
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_TaskFault",
+   "type": "function",
+   "name": "TestExecute_TaskFault",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    229,
+    247
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_GetParameterValues_200",
+   "type": "function",
+   "name": "TestExecute_GetParameterValues_200",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    249,
+    276
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_ConnectionRequestFlag",
+   "type": "function",
+   "name": "TestExecute_ConnectionRequestFlag",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    278,
+    302
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestExecute_AuthHeader",
+   "type": "function",
+   "name": "TestExecute_AuthHeader",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    304,
+    323
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/client_test.go:TestClose_ReleasesIdleConnections",
+   "type": "function",
+   "name": "TestClose_ReleasesIdleConnections",
+   "filePath": "internal/driver/genieacs/client_test.go",
+   "lineRange": [
+    325,
+    336
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/huaweiolt/driver.go",
+   "type": "file",
+   "name": "driver.go",
+   "filePath": "internal/driver/huaweiolt/driver.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports Driver, NewDriver, Execute, Classify, Translate, Close.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/huaweiolt/driver.go:NewDriver",
+   "type": "function",
+   "name": "NewDriver",
+   "filePath": "internal/driver/huaweiolt/driver.go",
+   "lineRange": [
+    25,
+    27
+   ],
+   "summary": "Constructor that creates and initializes a Driver instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/huaweiolt/driver.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/driver/huaweiolt/driver.go",
+   "lineRange": [
+    30,
+    32
+   ],
+   "summary": "Runs the execute operation to completion (or streaming, when applicable).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/huaweiolt/driver.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/huaweiolt/driver.go",
+   "lineRange": [
+    35,
+    37
+   ],
+   "summary": "Classifies a command as destructive or read-only based on vendor conventions.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/huaweiolt/driver.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/huaweiolt/driver.go",
+   "lineRange": [
+    40,
+    42
+   ],
+   "summary": "Translates an abstract operation into a vendor-native command.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/huaweiolt/driver.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/huaweiolt/driver.go",
+   "lineRange": [
+    45,
+    47
+   ],
+   "summary": "Releases resources held by this component (connections, goroutines).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/huaweiolt/driver.go:Driver",
+   "type": "class",
+   "name": "Driver",
+   "filePath": "internal/driver/huaweiolt/driver.go",
+   "lineRange": [
+    18,
+    18
+   ],
+   "summary": "Driver Go type with 4 method(s) [Execute, Classify, Translate, Close] and 0 field(s), defining the driver behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/driver.go",
+   "type": "file",
+   "name": "driver.go",
+   "filePath": "internal/driver/mikrotik/driver.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports Driver, NewDriver, Execute, Classify, Translate, Close.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/driver.go:NewDriver",
+   "type": "function",
+   "name": "NewDriver",
+   "filePath": "internal/driver/mikrotik/driver.go",
+   "lineRange": [
+    76,
+    103
+   ],
+   "summary": "Constructor that creates and initializes a Driver instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/driver.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/driver/mikrotik/driver.go",
+   "lineRange": [
+    122,
+    160
+   ],
+   "summary": "Runs the execute operation to completion (or streaming, when applicable).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/driver.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/mikrotik/driver.go",
+   "lineRange": [
+    163,
+    165
+   ],
+   "summary": "Classifies a command as destructive or read-only based on vendor conventions.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/driver.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/mikrotik/driver.go",
+   "lineRange": [
+    168,
+    170
+   ],
+   "summary": "Translates an abstract operation into a vendor-native command.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/driver.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/mikrotik/driver.go",
+   "lineRange": [
+    177,
+    203
+   ],
+   "summary": "Releases resources held by this component (connections, goroutines).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/driver.go:Driver",
+   "type": "class",
+   "name": "Driver",
+   "filePath": "internal/driver/mikrotik/driver.go",
+   "lineRange": [
+    37,
+    60
+   ],
+   "summary": "Driver Go type with 6 method(s) [Execute, Classify, Translate, Close, registerStream, …] and 11 field(s), defining the driver behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/netconf/driver.go",
+   "type": "file",
+   "name": "driver.go",
+   "filePath": "internal/driver/netconf/driver.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports Driver, NewDriver, Execute, Classify, Translate, Close.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/netconf/driver.go:NewDriver",
+   "type": "function",
+   "name": "NewDriver",
+   "filePath": "internal/driver/netconf/driver.go",
+   "lineRange": [
+    23,
+    25
+   ],
+   "summary": "Constructor that creates and initializes a Driver instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/netconf/driver.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/driver/netconf/driver.go",
+   "lineRange": [
+    28,
+    30
+   ],
+   "summary": "Runs the execute operation to completion (or streaming, when applicable).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/netconf/driver.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/netconf/driver.go",
+   "lineRange": [
+    33,
+    35
+   ],
+   "summary": "Classifies a command as destructive or read-only based on vendor conventions.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/netconf/driver.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/netconf/driver.go",
+   "lineRange": [
+    38,
+    40
+   ],
+   "summary": "Translates an abstract operation into a vendor-native command.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/netconf/driver.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/driver/netconf/driver.go",
+   "lineRange": [
+    43,
+    45
+   ],
+   "summary": "Releases resources held by this component (connections, goroutines).",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/netconf/driver.go:Driver",
+   "type": "class",
+   "name": "Driver",
+   "filePath": "internal/driver/netconf/driver.go",
+   "lineRange": [
+    14,
+    14
+   ],
+   "summary": "Driver Go type with 4 method(s) [Execute, Classify, Translate, Close] and 0 field(s), defining the driver behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:newTestDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestNewDriver_MissingDeviceID",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestNewDriver_UnreachableNBI",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestNewDriver_ReachableDefaultsFields",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestNewDriver_CustomPollInterval",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice_NotFound",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_UnsupportedTaskType",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_200",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_202_PollThenDone",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_202_CtxTimeout",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_TaskFault",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_GetParameterValues_200",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_ConnectionRequestFlag",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_AuthHeader",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestClose_ReleasesIdleConnections",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestNewDriver_MissingDeviceID",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestNewDriver_UnreachableNBI",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestNewDriver_ReachableDefaultsFields",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestNewDriver_CustomPollInterval",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_GetDevice_NotFound",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_UnsupportedTaskType",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_200",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_Reboot_202_PollThenDone",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_202_CtxTimeout",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_TaskFault",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_GetParameterValues_200",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_ConnectionRequestFlag",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestExecute_AuthHeader",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "function:internal/driver/genieacs/client_test.go:TestClose_ReleasesIdleConnections",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/client_test.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "function:internal/driver/huaweiolt/driver.go:NewDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "function:internal/driver/huaweiolt/driver.go:Execute",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "function:internal/driver/huaweiolt/driver.go:Classify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "function:internal/driver/huaweiolt/driver.go:Translate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "function:internal/driver/huaweiolt/driver.go:Close",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "class:internal/driver/huaweiolt/driver.go:Driver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "class:internal/driver/huaweiolt/driver.go:Driver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "function:internal/driver/huaweiolt/driver.go:NewDriver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "function:internal/driver/huaweiolt/driver.go:Execute",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "function:internal/driver/huaweiolt/driver.go:Classify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "function:internal/driver/huaweiolt/driver.go:Translate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "function:internal/driver/huaweiolt/driver.go:Close",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/audit_writer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/knowledge_retriever.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/driver.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "function:internal/driver/mikrotik/driver.go:NewDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "function:internal/driver/mikrotik/driver.go:Execute",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "function:internal/driver/mikrotik/driver.go:Classify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "function:internal/driver/mikrotik/driver.go:Translate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "function:internal/driver/mikrotik/driver.go:Close",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "class:internal/driver/mikrotik/driver.go:Driver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "class:internal/driver/mikrotik/driver.go:Driver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "function:internal/driver/mikrotik/driver.go:NewDriver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "function:internal/driver/mikrotik/driver.go:Execute",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "function:internal/driver/mikrotik/driver.go:Classify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "function:internal/driver/mikrotik/driver.go:Translate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "function:internal/driver/mikrotik/driver.go:Close",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/audit_writer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/knowledge_retriever.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/driver.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "function:internal/driver/netconf/driver.go:NewDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "function:internal/driver/netconf/driver.go:Execute",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "function:internal/driver/netconf/driver.go:Classify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "function:internal/driver/netconf/driver.go:Translate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "function:internal/driver/netconf/driver.go:Close",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "class:internal/driver/netconf/driver.go:Driver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "class:internal/driver/netconf/driver.go:Driver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "function:internal/driver/netconf/driver.go:NewDriver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "function:internal/driver/netconf/driver.go:Execute",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "function:internal/driver/netconf/driver.go:Classify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "function:internal/driver/netconf/driver.go:Translate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "function:internal/driver/netconf/driver.go:Close",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/audit_writer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/knowledge_retriever.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/netconf/driver.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

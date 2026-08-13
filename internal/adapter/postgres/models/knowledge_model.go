@@ -7,6 +7,8 @@ import (
 )
 
 // KnowledgeEntryModel is the GORM database model for Knowledge Base entries.
+// TableName eksplisit ke `knowledge_entries` (migrasi 000002) — tanpa ini GORM
+// memakai `knowledge_entry_models`, divergen dari migrasi (prod).
 type KnowledgeEntryModel struct {
 	ID        uint   `gorm:"primaryKey"`
 	Title     string `gorm:"not null"`
@@ -15,6 +17,9 @@ type KnowledgeEntryModel struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+// TableName maps KnowledgeEntryModel ke tabel migrasi `knowledge_entries`.
+func (KnowledgeEntryModel) TableName() string { return "knowledge_entries" }
 
 func (m *KnowledgeEntryModel) ToDomain() *knowledge.KnowledgeEntry {
 	if m == nil {

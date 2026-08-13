@@ -1,0 +1,741 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "type": "file",
+   "name": "expire.go",
+   "filePath": "internal/driver/mikrotik/hotspot/expire.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports BuildExpireMonitorScript, NewSetupMikhmonExpireMonitorCommand, NewUpdateMikhmonExpireMonitorCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/expire.go:BuildExpireMonitorScript",
+   "type": "function",
+   "name": "BuildExpireMonitorScript",
+   "filePath": "internal/driver/mikrotik/hotspot/expire.go",
+   "lineRange": [
+    22,
+    73
+   ],
+   "summary": "Implements the BuildExpireMonitorScript logic for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/expire.go:NewSetupMikhmonExpireMonitorCommand",
+   "type": "function",
+   "name": "NewSetupMikhmonExpireMonitorCommand",
+   "filePath": "internal/driver/mikrotik/hotspot/expire.go",
+   "lineRange": [
+    78,
+    91
+   ],
+   "summary": "Constructor that creates and initializes a SetupMikhmonExpireMonitorCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/expire.go:NewUpdateMikhmonExpireMonitorCommand",
+   "type": "function",
+   "name": "NewUpdateMikhmonExpireMonitorCommand",
+   "filePath": "internal/driver/mikrotik/hotspot/expire.go",
+   "lineRange": [
+    95,
+    106
+   ],
+   "summary": "Constructor that creates and initializes a UpdateMikhmonExpireMonitorCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/hotspot/expire_test.go",
+   "type": "file",
+   "name": "expire_test.go",
+   "filePath": "internal/driver/mikrotik/hotspot/expire_test.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports TestBuildExpireMonitorScript, TestNewSetupMikhmonExpireMonitorCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go",
+    "test"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/expire_test.go:TestBuildExpireMonitorScript",
+   "type": "function",
+   "name": "TestBuildExpireMonitorScript",
+   "filePath": "internal/driver/mikrotik/hotspot/expire_test.go",
+   "lineRange": [
+    9,
+    21
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/expire_test.go:TestNewSetupMikhmonExpireMonitorCommand",
+   "type": "function",
+   "name": "TestNewSetupMikhmonExpireMonitorCommand",
+   "filePath": "internal/driver/mikrotik/hotspot/expire_test.go",
+   "lineRange": [
+    23,
+    31
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "type": "file",
+   "name": "profile.go",
+   "filePath": "internal/driver/mikrotik/hotspot/profile.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports MikhmonProfileParams, BuildOnLoginScript, NewAddMikhmonProfileCommand, NewSetMikhmonProfileCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/profile.go:BuildOnLoginScript",
+   "type": "function",
+   "name": "BuildOnLoginScript",
+   "filePath": "internal/driver/mikrotik/hotspot/profile.go",
+   "lineRange": [
+    42,
+    124
+   ],
+   "summary": "Implements the BuildOnLoginScript logic (inputs: p) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/profile.go:NewAddMikhmonProfileCommand",
+   "type": "function",
+   "name": "NewAddMikhmonProfileCommand",
+   "filePath": "internal/driver/mikrotik/hotspot/profile.go",
+   "lineRange": [
+    128,
+    145
+   ],
+   "summary": "Constructor that creates and initializes a AddMikhmonProfileCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/profile.go:NewSetMikhmonProfileCommand",
+   "type": "function",
+   "name": "NewSetMikhmonProfileCommand",
+   "filePath": "internal/driver/mikrotik/hotspot/profile.go",
+   "lineRange": [
+    149,
+    161
+   ],
+   "summary": "Constructor that creates and initializes a SetMikhmonProfileCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/hotspot/profile.go:MikhmonProfileParams",
+   "type": "class",
+   "name": "MikhmonProfileParams",
+   "filePath": "internal/driver/mikrotik/hotspot/profile.go",
+   "lineRange": [
+    24,
+    38
+   ],
+   "summary": "MikhmonProfileParams Go type with 0 method(s) [—] and 13 field(s), defining the mikhmonprofileparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/hotspot/profile_test.go",
+   "type": "file",
+   "name": "profile_test.go",
+   "filePath": "internal/driver/mikrotik/hotspot/profile_test.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports TestBuildOnLoginScript, TestNewAddMikhmonProfileCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go",
+    "test"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/profile_test.go:TestBuildOnLoginScript",
+   "type": "function",
+   "name": "TestBuildOnLoginScript",
+   "filePath": "internal/driver/mikrotik/hotspot/profile_test.go",
+   "lineRange": [
+    9,
+    45
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/profile_test.go:TestNewAddMikhmonProfileCommand",
+   "type": "function",
+   "name": "TestNewAddMikhmonProfileCommand",
+   "filePath": "internal/driver/mikrotik/hotspot/profile_test.go",
+   "lineRange": [
+    47,
+    62
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "function:internal/driver/mikrotik/hotspot/expire.go:BuildExpireMonitorScript",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "function:internal/driver/mikrotik/hotspot/expire.go:NewSetupMikhmonExpireMonitorCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "function:internal/driver/mikrotik/hotspot/expire.go:NewUpdateMikhmonExpireMonitorCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "function:internal/driver/mikrotik/hotspot/expire.go:BuildExpireMonitorScript",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "function:internal/driver/mikrotik/hotspot/expire.go:NewSetupMikhmonExpireMonitorCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "function:internal/driver/mikrotik/hotspot/expire.go:NewUpdateMikhmonExpireMonitorCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/commands.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/connect.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/dhcp.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/drivers_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/firewall.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/hotspot_active.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/hotspot_user.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/iface.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/ip.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/pool.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/ppp_active.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/ppp_profile.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/ppp_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/ppp.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/queue.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/stream.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "target": "file:internal/driver/mikrotik/system.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/expire_test.go:TestBuildExpireMonitorScript",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/expire_test.go:TestNewSetupMikhmonExpireMonitorCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/expire_test.go:TestBuildExpireMonitorScript",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/expire_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/expire_test.go:TestNewSetupMikhmonExpireMonitorCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot/profile.go:BuildOnLoginScript",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot/profile.go:NewAddMikhmonProfileCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot/profile.go:NewSetMikhmonProfileCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "class:internal/driver/mikrotik/hotspot/profile.go:MikhmonProfileParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "class:internal/driver/mikrotik/hotspot/profile.go:MikhmonProfileParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot/profile.go:BuildOnLoginScript",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot/profile.go:NewAddMikhmonProfileCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "function:internal/driver/mikrotik/hotspot/profile.go:NewSetMikhmonProfileCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/commands.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/connect.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/dhcp.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/drivers_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/firewall.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/hotspot_active.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/hotspot_profile.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/hotspot_user.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/iface.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/ip.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/pool.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/ppp_active_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/ppp_active.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/ppp_profile.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/ppp_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/ppp.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/queue.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/stream.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "target": "file:internal/driver/mikrotik/system.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/profile_test.go:TestBuildOnLoginScript",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/profile_test.go:TestNewAddMikhmonProfileCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/profile_test.go:TestBuildOnLoginScript",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/profile_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/profile_test.go:TestNewAddMikhmonProfileCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

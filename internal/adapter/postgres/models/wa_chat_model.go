@@ -7,16 +7,21 @@ import (
 )
 
 // WAChatModel is the GORM database model for the WhatsApp chat mirror.
+// Catatan: kolom yang memuat akronim diberi tag `column:` eksplisit karena
+// NamingStrategy GORM mengubah `ChatJID` menjadi `chat_j_id` (akronim J + ID
+// dipecah jadi dua kata), sementara migrasi 000004 dan query raw repo
+// memakai `chat_jid`. Tanpa tag ini skema AutoMigrate (dev) divergen dari
+// migrasi (prod) dan query memakai kolom `chat_jid` akan gagal.
 type WAChatModel struct {
 	ID                 uint   `gorm:"primaryKey"`
 	SessionID          uint   `gorm:"uniqueIndex:uq_wa_chats_session_jid"`
-	ChatJID            string `gorm:"uniqueIndex:uq_wa_chats_session_jid"`
+	ChatJID            string `gorm:"column:chat_jid;uniqueIndex:uq_wa_chats_session_jid"`
 	DisplayName        string
 	IsGroup            bool
 	LastMessageID      string
 	LastMessagePreview string `gorm:"type:text"`
 	LastMessageTime    time.Time
-	UnreadCount        int `gorm:"default:0"`
+	UnreadCount        int  `gorm:"default:0"`
 	BotEnabled         bool `gorm:"default:true"`
 	CreatedAt          time.Time
 	UpdatedAt          time.Time
@@ -66,12 +71,14 @@ func WAChatModelFromDomain(c *bot.WAChat) *WAChatModel {
 }
 
 // WAMessageModel is the GORM database model for the WhatsApp message mirror.
+// Sama seperti WAChatModel: `ChatJID`/`SenderJID` perlu tag `column:` eksplisit
+// agar sesuai dengan migrasi 000004 (`chat_jid`, `sender_jid`).
 type WAMessageModel struct {
 	ID          uint   `gorm:"primaryKey"`
 	SessionID   uint   `gorm:"uniqueIndex:uq_wa_messages_session_wa_id"`
-	ChatJID     string `gorm:"index:idx_wa_messages_session_chat_time"`
+	ChatJID     string `gorm:"column:chat_jid;index:idx_wa_messages_session_chat_time"`
 	WAMessageID string `gorm:"uniqueIndex:uq_wa_messages_session_wa_id"`
-	SenderJID   string
+	SenderJID   string `gorm:"column:sender_jid"`
 	SenderName  string
 	Content     string `gorm:"type:text"`
 	MediaType   string `gorm:"default:text"`
