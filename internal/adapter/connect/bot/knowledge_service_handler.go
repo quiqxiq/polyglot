@@ -5,17 +5,21 @@ import (
 
 	"connectrpc.com/connect"
 
+	knowledgeuc "github.com/quixiq/polyglot/internal/usecase/knowledge"
+
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 )
 
-type KnowledgeConnectHandler struct{}
-
-func NewKnowledgeConnectHandler() *KnowledgeConnectHandler {
-	return &KnowledgeConnectHandler{}
+type KnowledgeConnectHandler struct {
+	documents *knowledgeuc.DocumentManager
 }
 
-func NewKnowledgeServiceHandler() (string, http.Handler) {
-	handler := NewKnowledgeConnectHandler()
+func NewKnowledgeConnectHandler(documents *knowledgeuc.DocumentManager) *KnowledgeConnectHandler {
+	return &KnowledgeConnectHandler{documents: documents}
+}
+
+func NewKnowledgeServiceHandler(documents *knowledgeuc.DocumentManager) (string, http.Handler) {
+	handler := NewKnowledgeConnectHandler(documents)
 	mux := http.NewServeMux()
 	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
@@ -43,6 +47,11 @@ func NewKnowledgeServiceHandler() (string, http.Handler) {
 	mux.Handle("/"+serviceName+"/DeleteKnowledge", connect.NewUnaryHandler(
 		"/"+serviceName+"/DeleteKnowledge",
 		handler.DeleteKnowledge,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/RetryEmbed", connect.NewUnaryHandler(
+		"/"+serviceName+"/RetryEmbed",
+		handler.RetryEmbed,
 		codecOpt,
 	))
 	mux.Handle("/"+serviceName+"/ListLLMConfigs", connect.NewUnaryHandler(

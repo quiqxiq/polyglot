@@ -142,6 +142,11 @@ func (s *Store) GetRateLimitCount(ctx context.Context, customerNumber string, wi
 	return count, nil
 }
 
+// ResetRateLimit clears a rate-limit counter (e.g. after a successful login).
+func (s *Store) ResetRateLimit(ctx context.Context, customerNumber string, window string) error {
+	return s.client.Del(ctx, rateLimitKey(customerNumber, window)).Err()
+}
+
 func (s *Store) MuteNumber(ctx context.Context, customerNumber string, duration time.Duration) error {
 	return s.client.Set(ctx, muteKey(customerNumber), "1", duration).Err()
 }

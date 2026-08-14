@@ -27,7 +27,7 @@ func (s *Store) FindKnowledgeEntryByID(id uint) (*knowledge.KnowledgeEntry, erro
 	var m models.KnowledgeEntryModel
 	if err := s.db.First(&m, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, ErrNotFound
+			return nil, knowledge.ErrNotFound
 		}
 		return nil, err
 	}

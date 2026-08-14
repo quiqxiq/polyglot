@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/quixiq/polyglot/internal/adapter/auth"
@@ -17,6 +18,7 @@ import (
 	deviceConnect "github.com/quixiq/polyglot/internal/adapter/connect/device"
 	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
+	knowledgeadapter "github.com/quixiq/polyglot/internal/adapter/knowledge"
 	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
@@ -68,9 +70,31 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	jwtService := auth.NewJWTService(cfg.JWTSecret, cfg.JWTExpiryHours)
 
+	// Refresh token opaque di Redis: rotasi tiap refresh, revoke di logout.
+	// Redis wajib ada untuk fitur ini (refresh token tidak bisa di-fallback
+	// ke memory store lintas restart). Kalau Redis mati, pakai access token
+	// yang masih valid sampai kedaluwarsa — login baru tetap jalan.
+	var refreshSvc *auth.RefreshTokenService
+	if redisStore != nil {
+		refreshSvc = auth.NewRefreshTokenService(redisStore, time.Duration(cfg.RefreshTokenTTLHours)*time.Hour)
+	}
+
 	casbinEnforcer, err := auth.NewCasbinEnforcer(ctx, pgStore.DB())
 	if err != nil {
 		log.Printf("[Warning] Failed to initialize Casbin enforcer: %v", err)
+	} else {
+		// Seed policy format baru (resource:action) + sync role assignment
+		// dari tabel users. Idempotent — aman dipanggil setiap startup.
+		auth.SeedSystemPolicies(casbinEnforcer)
+		if users, err := pgStore.FindAllUsers(); err == nil {
+			refs := make([]*auth.UserRef, 0, len(users))
+			for _, u := range users {
+				refs = append(refs, &auth.UserRef{ID: fmt.Sprintf("%d", u.ID), Role: u.Role})
+			}
+			auth.EnsureUserRoleAssignments(casbinEnforcer, refs)
+		} else {
+			log.Printf("[Warning] Failed to load users for role assignment sync: %v", err)
+		}
 	}
 
 	sseHub := wsAdapter.NewSSEHub()
@@ -86,12 +110,65 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	// Broadcast SSE `conversation_status` tiap kali status percakapan berubah
 	// (take-over/return bot/close/escalation) — dikonsumsi useWARealtimeStream.
 	convService.SetPublisher(sseHub)
-	knowledgeRetriever := knowledgeUC.NewKeywordRetriever(pgStore)
+	// Retriever pengetahuan = HYBRID: keyword retriever (tabel knowledge
+	// Postgres, untuk dokumen lokal yang tidak di-embed) + vector retriever
+	// AnythingLLM (untuk dokumen dengan embed_to_llm = true). Hybrid dipakai
+	// karena dengan embed per-dokumen, either/or akan membuat dokumen lokal
+	// tidak pernah ter-retrieve saat AnythingLLM aktif.
+	keywordRetriever := knowledgeUC.NewKeywordRetriever(pgStore)
+	retrievers := []port.KnowledgeRetriever{keywordRetriever}
+	// Manager tulis ke AnythingLLM (raw-text/remove-documents) untuk fitur
+	// admin knowledge. Nil kalau API key tidak di-set — dokumen tetap bisa
+	// dikelola sebagai knowledge lokal (embed_to_llm = false).
+	var knowledgeDocManager port.KnowledgeDocumentManager
+	if cfg.AnythingLLMAPIKey != "" {
+		anyRetriever, err := knowledgeadapter.NewRetriever(
+			cfg.AnythingLLMBaseURL,
+			cfg.AnythingLLMAPIKey,
+			cfg.AnythingLLMWorkspace,
+			cfg.AnythingLLMTopN,
+		)
+		if err != nil {
+			log.Printf("[Warning] AnythingLLM retriever disabled (%v).", err)
+		} else {
+			retrievers = append(retrievers, anyRetriever)
+			log.Printf("[Knowledge] AnythingLLM retriever aktif untuk workspace %q (%s)", cfg.AnythingLLMWorkspace, cfg.AnythingLLMBaseURL)
+		}
+		if anyManager, err := knowledgeadapter.NewManager(
+			cfg.AnythingLLMBaseURL,
+			cfg.AnythingLLMAPIKey,
+			cfg.AnythingLLMWorkspace,
+		); err != nil {
+			log.Printf("[Warning] AnythingLLM document manager disabled (%v). Embed dari admin tidak tersedia.", err)
+		} else {
+			knowledgeDocManager = anyManager
+			log.Printf("[Knowledge] AnythingLLM document manager aktif — embed per-dokumen dari admin tersedia")
+		}
+	}
+	knowledgeRetriever := knowledgeUC.NewHybridRetriever(retrievers...)
+	knowledgeRepo := postgres.NewKnowledgeRepository(pgStore)
+	knowledgeDocUC := knowledgeUC.NewDocumentManager(knowledgeRepo, knowledgeDocManager)
+	// Chat AnythingLLM = otak utama bot (RAG + LLM + history dalam satu
+	// panggilan). Nil kalau API key tidak di-set → engine otomatis memakai
+	// LLM lokal proyek (llm_configs) sebagai satu-satunya path.
+	var knowledgeChat port.KnowledgeChat
+	if cfg.AnythingLLMAPIKey != "" {
+		if anyChat, err := knowledgeadapter.NewChatClient(
+			cfg.AnythingLLMBaseURL,
+			cfg.AnythingLLMAPIKey,
+			cfg.AnythingLLMWorkspace,
+		); err != nil {
+			log.Printf("[Warning] AnythingLLM chat client disabled (%v) — bot pakai LLM lokal.", err)
+		} else {
+			knowledgeChat = anyChat
+			log.Printf("[Bot] AnythingLLM chat aktif sebagai primary LLM (workspace %q); fallback ke LLM lokal bila down", cfg.AnythingLLMWorkspace)
+		}
+	}
 	// Factory LLM di-inject agar usecase/bot tetap bersih dari adapter layer.
 	llmFactory := func(c *domainllm.LLMConfig) (port.LLMProvider, error) {
 		return llmadapter.NewProvider(c, cfg.EncryptionKey)
 	}
-	botEngine := botUC.NewEngine(cfg, redisStore, waManager, convService, knowledgeRetriever, pgStore, pgStore, sseHub, llmFactory)
+	botEngine := botUC.NewEngine(cfg, redisStore, waManager, convService, knowledgeRetriever, knowledgeChat, pgStore, pgStore, sseHub, llmFactory)
 
 	if waManager != nil {
 		// Hubungkan pesan masuk WhatsApp ke engine bot. Dilakukan setelah engine
@@ -143,6 +220,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	connectGroup := r.Group("/")
 	connectGroup.Use(middleware.AuthenticateJWT(jwtService))
+	connectGroup.Use(middleware.AuthorizeProcedure(casbinEnforcer))
 
 	connectPath, connectHandler := deviceConnect.NewDeviceServiceHandler(devUC, connectDriverProvider)
 	connectGroup.Any(connectPath+"*action", gin.WrapH(connectHandler))
@@ -151,7 +229,14 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	connectGroup.Any(custConnectPath+"*action", gin.WrapH(custConnectHandler))
 
 	// Auth service remains public
-	authConnectPath, authConnectHandler := authConnect.NewAuthServiceHandler(pgStore, jwtService)
+	authConnectPath, authConnectHandler := authConnect.NewAuthServiceHandler(
+		pgStore,
+		jwtService,
+		refreshSvc,
+		redisStore,
+		casbinEnforcer,
+		cfg.AppEnv == "production",
+	)
 	r.Any(authConnectPath+"*action", gin.WrapH(authConnectHandler))
 
 	rbacConnectPath, rbacConnectHandler := authConnect.NewRBACServiceHandler(casbinEnforcer)
@@ -174,7 +259,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	botConnectPath, botConnectHandler := botConnect.NewBotServiceHandler(convService, botEngine)
 	connectGroup.Any(botConnectPath+"*action", gin.WrapH(botConnectHandler))
 
-	knwConnectPath, knwConnectHandler := botConnect.NewKnowledgeServiceHandler()
+	knwConnectPath, knwConnectHandler := botConnect.NewKnowledgeServiceHandler(knowledgeDocUC)
 	connectGroup.Any(knwConnectPath+"*action", gin.WrapH(knwConnectHandler))
 
 	probeConnectPath, probeConnectHandler := deviceConnect.NewProbeServiceHandler()

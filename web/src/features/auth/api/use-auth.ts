@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { authClient } from '@/lib/api-client'
-import { authKeys } from './keys'
 import { type LoginRequest, type RefreshTokenRequest } from '@/gen/v1/auth_pb'
 import { useAuthStore } from '@/stores/auth-store'
+import { authClient } from '@/lib/api-client'
+import { authKeys } from './keys'
 
 export function useLoginMutation() {
   const setAccessToken = useAuthStore((s) => s.auth.setAccessToken)
@@ -38,6 +38,20 @@ export function useRefreshTokenMutation() {
       if (res.token) {
         setAccessToken(res.token)
       }
+      return res
+    },
+  })
+}
+
+// Logout: revoke refresh token di server (cookie httpOnly dibersihkan via
+// Set-Cookie expired), lalu reset state lokal.
+export function useLogoutMutation() {
+  const reset = useAuthStore((s) => s.auth.reset)
+
+  return useMutation({
+    mutationFn: async () => {
+      const res = await authClient.logout({})
+      reset()
       return res
     },
   })

@@ -52,19 +52,19 @@ func (ce *CasbinEnforcer) Enforce(sub, obj, act string) (bool, error) {
 }
 
 // AddPolicy dynamically adds a new policy rule.
-func (ce *CasbinEnforcer) AddPolicy(role, path, method string) (bool, error) {
-	ok, err := ce.enforcer.AddPolicy(role, path, method)
+func (ce *CasbinEnforcer) AddPolicy(role, obj, act string) (bool, error) {
+	ok, err := ce.enforcer.AddPolicy(role, obj, act)
 	if err == nil && ok {
-		_ = ce.enforcer.SavePolicy()
+		ce.persist()
 	}
 	return ok, err
 }
 
 // RemovePolicy dynamically removes an existing policy rule.
-func (ce *CasbinEnforcer) RemovePolicy(role, path, method string) (bool, error) {
-	ok, err := ce.enforcer.RemovePolicy(role, path, method)
+func (ce *CasbinEnforcer) RemovePolicy(role, obj, act string) (bool, error) {
+	ok, err := ce.enforcer.RemovePolicy(role, obj, act)
 	if err == nil && ok {
-		_ = ce.enforcer.SavePolicy()
+		ce.persist()
 	}
 	return ok, err
 }
@@ -78,7 +78,7 @@ func (ce *CasbinEnforcer) GetPolicies() ([][]string, error) {
 func (ce *CasbinEnforcer) AddRoleForUser(user, role string) (bool, error) {
 	ok, err := ce.enforcer.AddRoleForUser(user, role)
 	if err == nil && ok {
-		_ = ce.enforcer.SavePolicy()
+		ce.persist()
 	}
 	return ok, err
 }
@@ -87,9 +87,18 @@ func (ce *CasbinEnforcer) AddRoleForUser(user, role string) (bool, error) {
 func (ce *CasbinEnforcer) DeleteRoleForUser(user, role string) (bool, error) {
 	ok, err := ce.enforcer.DeleteRoleForUser(user, role)
 	if err == nil && ok {
-		_ = ce.enforcer.SavePolicy()
+		ce.persist()
 	}
 	return ok, err
+}
+
+// persist flushes the policy to the backing adapter (gorm in production).
+// Safe no-op for in-memory enforcers (unit tests) where GetAdapter() is nil.
+func (ce *CasbinEnforcer) persist() {
+	if ce == nil || ce.enforcer.GetAdapter() == nil {
+		return
+	}
+	_ = ce.enforcer.SavePolicy()
 }
 
 // GetRolesForUser returns all roles assigned to a user.

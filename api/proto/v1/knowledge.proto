@@ -10,6 +10,9 @@ service KnowledgeService {
   rpc CreateKnowledge (CreateKnowledgeRequest) returns (CreateKnowledgeResponse);
   rpc UpdateKnowledge (UpdateKnowledgeRequest) returns (UpdateKnowledgeResponse);
   rpc DeleteKnowledge (DeleteKnowledgeRequest) returns (DeleteKnowledgeResponse);
+  // RetryEmbed menjalankan ulang sinkronisasi embed ke AnythingLLM untuk
+  // satu dokumen (tombol Retry di UI untuk entry berstatus failed).
+  rpc RetryEmbed (RetryEmbedRequest) returns (RetryEmbedResponse);
 
   rpc ListLLMConfigs (ListLLMConfigsRequest) returns (ListLLMConfigsResponse);
   rpc CreateLLMConfig (CreateLLMConfigRequest) returns (CreateLLMConfigResponse);
@@ -33,6 +36,16 @@ message KnowledgeItem {
   repeated string tags = 5;
   string created_at = 6;
   string updated_at = 7;
+  // embed_to_llm menandakan dokumen ikut di-sync ke AnythingLLM (vector
+  // store). False = dokumen murni lokal (admin dashboard saja).
+  bool embed_to_llm = 8;
+  // embed_status: none | pending | embedded | failed.
+  string embed_status = 9;
+  // anythingllm_doc_name adalah nama file dokumen JSON di AnythingLLM yang
+  // terakhir berhasil di-embed (mis. "custom-documents/raw-xxx.json").
+  // Kosong kalau dokumen lokal (embed_to_llm = false) atau belum pernah
+  // ter-embed. Dipakai untuk delete/re-embed dan tampil di UI admin.
+  string anythingllm_doc_name = 10;
 }
 
 message ListKnowledgeRequest {
@@ -55,6 +68,7 @@ message CreateKnowledgeRequest {
   string content = 2;
   string category = 3;
   repeated string tags = 4;
+  bool embed_to_llm = 5;
 }
 message CreateKnowledgeResponse {
   KnowledgeItem item = 1;
@@ -66,6 +80,7 @@ message UpdateKnowledgeRequest {
   string content = 3;
   string category = 4;
   repeated string tags = 5;
+  bool embed_to_llm = 6;
 }
 message UpdateKnowledgeResponse {
   KnowledgeItem item = 1;
@@ -76,6 +91,13 @@ message DeleteKnowledgeRequest {
 }
 message DeleteKnowledgeResponse {
   string message = 1;
+}
+
+message RetryEmbedRequest {
+  string id = 1;
+}
+message RetryEmbedResponse {
+  KnowledgeItem item = 1;
 }
 
 message LLMConfig {

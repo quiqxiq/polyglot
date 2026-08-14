@@ -24,6 +24,7 @@ const (
 	KnowledgeService_CreateKnowledge_FullMethodName        = "/polyglot.v1.KnowledgeService/CreateKnowledge"
 	KnowledgeService_UpdateKnowledge_FullMethodName        = "/polyglot.v1.KnowledgeService/UpdateKnowledge"
 	KnowledgeService_DeleteKnowledge_FullMethodName        = "/polyglot.v1.KnowledgeService/DeleteKnowledge"
+	KnowledgeService_RetryEmbed_FullMethodName             = "/polyglot.v1.KnowledgeService/RetryEmbed"
 	KnowledgeService_ListLLMConfigs_FullMethodName         = "/polyglot.v1.KnowledgeService/ListLLMConfigs"
 	KnowledgeService_CreateLLMConfig_FullMethodName        = "/polyglot.v1.KnowledgeService/CreateLLMConfig"
 	KnowledgeService_UpdateLLMConfig_FullMethodName        = "/polyglot.v1.KnowledgeService/UpdateLLMConfig"
@@ -46,6 +47,9 @@ type KnowledgeServiceClient interface {
 	CreateKnowledge(ctx context.Context, in *CreateKnowledgeRequest, opts ...grpc.CallOption) (*CreateKnowledgeResponse, error)
 	UpdateKnowledge(ctx context.Context, in *UpdateKnowledgeRequest, opts ...grpc.CallOption) (*UpdateKnowledgeResponse, error)
 	DeleteKnowledge(ctx context.Context, in *DeleteKnowledgeRequest, opts ...grpc.CallOption) (*DeleteKnowledgeResponse, error)
+	// RetryEmbed menjalankan ulang sinkronisasi embed ke AnythingLLM untuk
+	// satu dokumen (tombol Retry di UI untuk entry berstatus failed).
+	RetryEmbed(ctx context.Context, in *RetryEmbedRequest, opts ...grpc.CallOption) (*RetryEmbedResponse, error)
 	ListLLMConfigs(ctx context.Context, in *ListLLMConfigsRequest, opts ...grpc.CallOption) (*ListLLMConfigsResponse, error)
 	CreateLLMConfig(ctx context.Context, in *CreateLLMConfigRequest, opts ...grpc.CallOption) (*CreateLLMConfigResponse, error)
 	UpdateLLMConfig(ctx context.Context, in *UpdateLLMConfigRequest, opts ...grpc.CallOption) (*UpdateLLMConfigResponse, error)
@@ -111,6 +115,16 @@ func (c *knowledgeServiceClient) DeleteKnowledge(ctx context.Context, in *Delete
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteKnowledgeResponse)
 	err := c.cc.Invoke(ctx, KnowledgeService_DeleteKnowledge_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *knowledgeServiceClient) RetryEmbed(ctx context.Context, in *RetryEmbedRequest, opts ...grpc.CallOption) (*RetryEmbedResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RetryEmbedResponse)
+	err := c.cc.Invoke(ctx, KnowledgeService_RetryEmbed_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -236,6 +250,9 @@ type KnowledgeServiceServer interface {
 	CreateKnowledge(context.Context, *CreateKnowledgeRequest) (*CreateKnowledgeResponse, error)
 	UpdateKnowledge(context.Context, *UpdateKnowledgeRequest) (*UpdateKnowledgeResponse, error)
 	DeleteKnowledge(context.Context, *DeleteKnowledgeRequest) (*DeleteKnowledgeResponse, error)
+	// RetryEmbed menjalankan ulang sinkronisasi embed ke AnythingLLM untuk
+	// satu dokumen (tombol Retry di UI untuk entry berstatus failed).
+	RetryEmbed(context.Context, *RetryEmbedRequest) (*RetryEmbedResponse, error)
 	ListLLMConfigs(context.Context, *ListLLMConfigsRequest) (*ListLLMConfigsResponse, error)
 	CreateLLMConfig(context.Context, *CreateLLMConfigRequest) (*CreateLLMConfigResponse, error)
 	UpdateLLMConfig(context.Context, *UpdateLLMConfigRequest) (*UpdateLLMConfigResponse, error)
@@ -271,6 +288,9 @@ func (UnimplementedKnowledgeServiceServer) UpdateKnowledge(context.Context, *Upd
 }
 func (UnimplementedKnowledgeServiceServer) DeleteKnowledge(context.Context, *DeleteKnowledgeRequest) (*DeleteKnowledgeResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteKnowledge not implemented")
+}
+func (UnimplementedKnowledgeServiceServer) RetryEmbed(context.Context, *RetryEmbedRequest) (*RetryEmbedResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RetryEmbed not implemented")
 }
 func (UnimplementedKnowledgeServiceServer) ListLLMConfigs(context.Context, *ListLLMConfigsRequest) (*ListLLMConfigsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListLLMConfigs not implemented")
@@ -412,6 +432,24 @@ func _KnowledgeService_DeleteKnowledge_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(KnowledgeServiceServer).DeleteKnowledge(ctx, req.(*DeleteKnowledgeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _KnowledgeService_RetryEmbed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetryEmbedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KnowledgeServiceServer).RetryEmbed(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: KnowledgeService_RetryEmbed_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KnowledgeServiceServer).RetryEmbed(ctx, req.(*RetryEmbedRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -640,6 +678,10 @@ var KnowledgeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteKnowledge",
 			Handler:    _KnowledgeService_DeleteKnowledge_Handler,
+		},
+		{
+			MethodName: "RetryEmbed",
+			Handler:    _KnowledgeService_RetryEmbed_Handler,
 		},
 		{
 			MethodName: "ListLLMConfigs",

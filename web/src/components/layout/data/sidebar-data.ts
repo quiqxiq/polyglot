@@ -18,6 +18,7 @@ import {
   UserX,
   Users,
   MessagesSquare,
+  BookOpen,
   ShieldCheck,
   AudioWaveform,
   Command,
@@ -83,6 +84,11 @@ export const sidebarData: SidebarData = {
           title: 'WhatsApp Devices',
           url: '/whatsapp',
           icon: MessageCircleMore,
+        },
+        {
+          title: 'Knowledge',
+          url: '/knowledge',
+          icon: BookOpen,
         },
         {
           title: 'Users',

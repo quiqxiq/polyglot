@@ -1,20 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  type CreateKnowledgeRequest,
+  type UpdateKnowledgeRequest,
+  type DeleteKnowledgeRequest,
+  type RetryEmbedRequest,
+  type CreateLLMConfigRequest,
+  type UpdateLLMConfigRequest,
+  type ActivateLLMConfigRequest,
+  type TestLLMConfigRequest,
+  type DeleteLLMConfigRequest,
+  type CreateTechnicianRequest,
+  type UpdateTechnicianRequest,
+  type ToggleTechnicianActiveRequest,
+  type DeleteTechnicianRequest,
+} from '@/gen/v1/knowledge_pb'
 import { knowledgeClient } from '@/lib/api-client'
 import { knowledgeKeys } from './keys'
-import {
-  CreateKnowledgeRequest,
-  UpdateKnowledgeRequest,
-  DeleteKnowledgeRequest,
-  CreateLLMConfigRequest,
-  UpdateLLMConfigRequest,
-  ActivateLLMConfigRequest,
-  TestLLMConfigRequest,
-  DeleteLLMConfigRequest,
-  CreateTechnicianRequest,
-  UpdateTechnicianRequest,
-  ToggleTechnicianActiveRequest,
-  DeleteTechnicianRequest,
-} from '@/gen/v1/knowledge_pb'
 
 // Knowledge Items
 export function useKnowledgeListQuery(category = '', searchQuery = '') {
@@ -24,6 +25,17 @@ export function useKnowledgeListQuery(category = '', searchQuery = '') {
       const res = await knowledgeClient.listKnowledge({ category, searchQuery })
       return res.items
     },
+  })
+}
+
+export function useGetKnowledgeQuery(id?: string) {
+  return useQuery({
+    queryKey: knowledgeKeys.item(id),
+    queryFn: async () => {
+      const res = await knowledgeClient.getKnowledge({ id: id ?? '' })
+      return res.item
+    },
+    enabled: Boolean(id),
   })
 }
 
@@ -59,6 +71,19 @@ export function useDeleteKnowledgeMutation() {
   return useMutation({
     mutationFn: async (req: DeleteKnowledgeRequest) => {
       return await knowledgeClient.deleteKnowledge(req)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: knowledgeKeys.items() })
+    },
+  })
+}
+
+export function useRetryEmbedMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: RetryEmbedRequest) => {
+      return await knowledgeClient.retryEmbed(req)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: knowledgeKeys.items() })

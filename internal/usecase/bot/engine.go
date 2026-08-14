@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/bot"
@@ -30,12 +31,18 @@ type ProviderFactory func(cfg *llm.LLMConfig) (port.LLMProvider, error)
 // incoming messages, applies rate limits and guardrails, retrieves knowledge,
 // calls the active LLM provider, sends the reply via the WhatsApp gateway and
 // persists both sides of the conversation.
+//
+// Alur LLM: jika chat (AnythingLLM workspace) terkonfigurasi, engine memakai
+// AnythingLLM sebagai otak utama (RAG + LLM + rolling history dalam satu
+// panggilan). Bila chat gagal/unavailable, engine fallback ke LLM lokal
+// proyek (retriever + llm_configs + provider).
 type Engine struct {
 	cfg           config.Config
 	cache         port.CacheStore
 	waGateway     port.WhatsAppGateway
 	convService   *convUC.ConversationService
 	retriever     port.KnowledgeRetriever
+	chat          port.KnowledgeChat
 	llmConfigRepo port.LLMConfigRepository
 	chatRepo      port.ChatRepository
 	rateLimiter   *RateLimiter
@@ -51,6 +58,7 @@ func NewEngine(
 	waGateway port.WhatsAppGateway,
 	convService *convUC.ConversationService,
 	retriever port.KnowledgeRetriever,
+	chat port.KnowledgeChat,
 	llmConfigRepo port.LLMConfigRepository,
 	chatRepo port.ChatRepository,
 	publisher port.EventPublisher,
@@ -62,6 +70,7 @@ func NewEngine(
 		waGateway:     waGateway,
 		convService:   convService,
 		retriever:     retriever,
+		chat:          chat,
 		llmConfigRepo: llmConfigRepo,
 		chatRepo:      chatRepo,
 		rateLimiter:   NewRateLimiter(cache, cfg),
@@ -132,6 +141,25 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	if !e.guardrail.IsTopicAllowed(messageContent) {
 		offTopicReply := e.guardrail.FormatOffTopicResponse()
 		return e.sendBotReply(conv.ID, sessionID, customerNumber, offTopicReply, 0, 0, nil)
+	}
+
+	// ── Primary: AnythingLLM sebagai otak (RAG + LLM + history) ─────
+	// Satu panggilan workspace chat; sessionID = conversation ID supaya
+	// AnythingLLM menjaga rolling history per percakapan. Kegagalan apa pun
+	// (down, 4xx/5xx, jawaban kosong) → fallback ke LLM lokal di bawah.
+	if e.chat != nil {
+		chatResult, chatErr := e.chat.Chat(ctx, messageContent, fmt.Sprintf("conv-%d", conv.ID))
+		if chatErr == nil && strings.TrimSpace(chatResult.Content) != "" {
+			reply := e.guardrail.SanitizeResponse(chatResult.Content)
+			if reply != "" {
+				if err := e.sendBotReply(conv.ID, sessionID, customerNumber, reply, chatResult.TokenIn, chatResult.TokenOut, nil); err != nil {
+					return err
+				}
+				_ = e.contextMgr.SaveMessageToSession(ctx, conv.ID, messageContent, reply)
+				return nil
+			}
+		}
+		log.Printf("[BotEngine] AnythingLLM chat failed/unavailable for conversation %d: %v — falling back to local LLM", conv.ID, chatErr)
 	}
 
 	relEntries, _ := e.retriever.Retrieve(ctx, messageContent)

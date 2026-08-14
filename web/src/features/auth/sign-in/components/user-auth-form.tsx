@@ -3,10 +3,10 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useNavigate } from '@tanstack/react-router'
+import { LoginRequest } from '@/gen/v1/auth_pb'
 import { Loader2, LogIn } from 'lucide-react'
 import { toast } from 'sonner'
 import { useAuthStore } from '@/stores/auth-store'
-import { useLoginMutation } from '@/features/auth/api/use-auth'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/password-input'
-import { LoginRequest } from '@/gen/v1/auth_pb'
+import { useLoginMutation } from '@/features/auth/api/use-auth'
 
 const formSchema = z.object({
   username: z.string().min(1, 'Please enter your username.'),
@@ -64,7 +64,7 @@ export function UserAuthForm({
         auth.setUser({
           accountNo: res.user.id,
           email: res.user.email,
-          role: [res.user.role],
+          role: res.user.roles.length ? res.user.roles : [res.user.role],
           exp: Number(res.expiresAtUnix) * 1000,
         })
       }
@@ -73,7 +73,10 @@ export function UserAuthForm({
       const targetPath = redirectTo || '/'
       navigate({ to: targetPath, replace: true })
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Login failed. Please check your credentials.'
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : 'Login failed. Please check your credentials.'
       toast.error(errorMessage)
     } finally {
       setIsLoading(false)

@@ -73,6 +73,11 @@ export class UserProfile extends Message<UserProfile> {
    */
   role = "";
 
+  /**
+   * @generated from field: repeated string roles = 5;
+   */
+  roles: string[] = [];
+
   constructor(data?: PartialMessage<UserProfile>) {
     super();
     proto3.util.initPartial(data, this);
@@ -85,6 +90,7 @@ export class UserProfile extends Message<UserProfile> {
     { no: 2, name: "username", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "email", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "role", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "roles", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UserProfile {
@@ -222,6 +228,10 @@ export class GetMeResponse extends Message<GetMeResponse> {
 }
 
 /**
+ * RefreshTokenRequest: refresh token diambil dari cookie httpOnly
+ * (polyglot_refresh) secara otomatis; field refresh_token hanya fallback
+ * untuk client non-browser.
+ *
  * @generated from message polyglot.v1.RefreshTokenRequest
  */
 export class RefreshTokenRequest extends Message<RefreshTokenRequest> {
@@ -272,6 +282,11 @@ export class RefreshTokenResponse extends Message<RefreshTokenResponse> {
    */
   expiresAtUnix = protoInt64.zero;
 
+  /**
+   * @generated from field: int64 refresh_expires_at_unix = 3;
+   */
+  refreshExpiresAtUnix = protoInt64.zero;
+
   constructor(data?: PartialMessage<RefreshTokenResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -282,6 +297,7 @@ export class RefreshTokenResponse extends Message<RefreshTokenResponse> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "token", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "expires_at_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 3, name: "refresh_expires_at_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RefreshTokenResponse {
@@ -298,6 +314,74 @@ export class RefreshTokenResponse extends Message<RefreshTokenResponse> {
 
   static equals(a: RefreshTokenResponse | PlainMessage<RefreshTokenResponse> | undefined, b: RefreshTokenResponse | PlainMessage<RefreshTokenResponse> | undefined): boolean {
     return proto3.util.equals(RefreshTokenResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.LogoutRequest
+ */
+export class LogoutRequest extends Message<LogoutRequest> {
+  constructor(data?: PartialMessage<LogoutRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.LogoutRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LogoutRequest {
+    return new LogoutRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): LogoutRequest {
+    return new LogoutRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): LogoutRequest {
+    return new LogoutRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: LogoutRequest | PlainMessage<LogoutRequest> | undefined, b: LogoutRequest | PlainMessage<LogoutRequest> | undefined): boolean {
+    return proto3.util.equals(LogoutRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.LogoutResponse
+ */
+export class LogoutResponse extends Message<LogoutResponse> {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success = false;
+
+  constructor(data?: PartialMessage<LogoutResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.LogoutResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): LogoutResponse {
+    return new LogoutResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): LogoutResponse {
+    return new LogoutResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): LogoutResponse {
+    return new LogoutResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: LogoutResponse | PlainMessage<LogoutResponse> | undefined, b: LogoutResponse | PlainMessage<LogoutResponse> | undefined): boolean {
+    return proto3.util.equals(LogoutResponse, a, b);
   }
 }
 

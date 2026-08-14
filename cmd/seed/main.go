@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 
@@ -135,6 +136,18 @@ func seedCasbin(ctx context.Context, pgStore *postgres.Store) {
 
 	auth.SeedSystemPolicies(enforcer)
 	log.Println("Seeded full Polyglot system Casbin RBAC policies into Postgres database")
+
+	users, err := pgStore.FindAllUsers()
+	if err != nil {
+		log.Printf("Failed to load users for role assignment sync: %v", err)
+		return
+	}
+	refs := make([]*auth.UserRef, 0, len(users))
+	for _, u := range users {
+		refs = append(refs, &auth.UserRef{ID: fmt.Sprintf("%d", u.ID), Role: u.Role})
+	}
+	auth.EnsureUserRoleAssignments(enforcer, refs)
+	log.Println("Synced user role assignments into Casbin grouping policies")
 }
 
 func seedKnowledge(pgStore *postgres.Store) {

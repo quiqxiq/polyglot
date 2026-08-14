@@ -1,7 +1,4 @@
 import { create } from 'zustand'
-import { getCookie, setCookie, removeCookie } from '@/lib/cookies'
-
-const ACCESS_TOKEN = 'thisisjustarandomstring'
 
 interface AuthUser {
   accountNo: string
@@ -21,33 +18,26 @@ interface AuthState {
   }
 }
 
-export const useAuthStore = create<AuthState>()((set) => {
-  const cookieState = getCookie(ACCESS_TOKEN)
-  const initToken = cookieState ? JSON.parse(cookieState) : ''
-  return {
-    auth: {
-      user: null,
-      setUser: (user) =>
-        set((state) => ({ ...state, auth: { ...state.auth, user } })),
-      accessToken: initToken,
-      setAccessToken: (accessToken) =>
-        set((state) => {
-          setCookie(ACCESS_TOKEN, JSON.stringify(accessToken))
-          return { ...state, auth: { ...state.auth, accessToken } }
-        }),
-      resetAccessToken: () =>
-        set((state) => {
-          removeCookie(ACCESS_TOKEN)
-          return { ...state, auth: { ...state.auth, accessToken: '' } }
-        }),
-      reset: () =>
-        set((state) => {
-          removeCookie(ACCESS_TOKEN)
-          return {
-            ...state,
-            auth: { ...state.auth, user: null, accessToken: '' },
-          }
-        }),
-    },
-  }
-})
+// Access token disimpan DI MEMORY saja (bukan cookie) — short-lived (default
+// 1 jam) dan hilang saat reload halaman. Sesi bertahan lewat refresh token
+// httpOnly (cookie `polyglot_refresh` yang di-set server): request membawa
+// cookie otomatis (credentials: include), dan interceptor/api-client akan
+// silent-refresh ketika token tidak ada / expired. Menyimpan token di cookie
+// yang bisa dibaca JS adalah celah XSS token-theft — itulah yang dihindari.
+export const useAuthStore = create<AuthState>()((set) => ({
+  auth: {
+    user: null,
+    setUser: (user) =>
+      set((state) => ({ ...state, auth: { ...state.auth, user } })),
+    accessToken: '',
+    setAccessToken: (accessToken) =>
+      set((state) => ({ ...state, auth: { ...state.auth, accessToken } })),
+    resetAccessToken: () =>
+      set((state) => ({ ...state, auth: { ...state.auth, accessToken: '' } })),
+    reset: () =>
+      set((state) => ({
+        ...state,
+        auth: { ...state.auth, user: null, accessToken: '' },
+      })),
+  },
+}))

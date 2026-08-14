@@ -14,6 +14,7 @@ message UserProfile {
   string username = 2;
   string email = 3;
   string role = 4;
+  repeated string roles = 5;
 }
 
 message LoginResponse {
@@ -28,6 +29,9 @@ message GetMeResponse {
   UserProfile user = 1;
 }
 
+// RefreshTokenRequest: refresh token diambil dari cookie httpOnly
+// (polyglot_refresh) secara otomatis; field refresh_token hanya fallback
+// untuk client non-browser.
 message RefreshTokenRequest {
   string refresh_token = 1;
 }
@@ -35,10 +39,18 @@ message RefreshTokenRequest {
 message RefreshTokenResponse {
   string token = 1;
   int64 expires_at_unix = 2;
+  int64 refresh_expires_at_unix = 3;
+}
+
+message LogoutRequest {}
+
+message LogoutResponse {
+  bool success = 1;
 }
 
 service AuthService {
   rpc Login(LoginRequest) returns (LoginResponse);
   rpc GetMe(GetMeRequest) returns (GetMeResponse);
   rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
 }

@@ -79,6 +79,7 @@ type UserProfile struct {
 	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
 	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
 	Role          string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
+	Roles         []string               `protobuf:"bytes,5,rep,name=roles,proto3" json:"roles,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -139,6 +140,13 @@ func (x *UserProfile) GetRole() string {
 		return x.Role
 	}
 	return ""
+}
+
+func (x *UserProfile) GetRoles() []string {
+	if x != nil {
+		return x.Roles
+	}
+	return nil
 }
 
 type LoginResponse struct {
@@ -281,6 +289,9 @@ func (x *GetMeResponse) GetUser() *UserProfile {
 	return nil
 }
 
+// RefreshTokenRequest: refresh token diambil dari cookie httpOnly
+// (polyglot_refresh) secara otomatis; field refresh_token hanya fallback
+// untuk client non-browser.
 type RefreshTokenRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RefreshToken  string                 `protobuf:"bytes,1,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
@@ -326,11 +337,12 @@ func (x *RefreshTokenRequest) GetRefreshToken() string {
 }
 
 type RefreshTokenResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	ExpiresAtUnix int64                  `protobuf:"varint,2,opt,name=expires_at_unix,json=expiresAtUnix,proto3" json:"expires_at_unix,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Token                string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	ExpiresAtUnix        int64                  `protobuf:"varint,2,opt,name=expires_at_unix,json=expiresAtUnix,proto3" json:"expires_at_unix,omitempty"`
+	RefreshExpiresAtUnix int64                  `protobuf:"varint,3,opt,name=refresh_expires_at_unix,json=refreshExpiresAtUnix,proto3" json:"refresh_expires_at_unix,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *RefreshTokenResponse) Reset() {
@@ -377,6 +389,93 @@ func (x *RefreshTokenResponse) GetExpiresAtUnix() int64 {
 	return 0
 }
 
+func (x *RefreshTokenResponse) GetRefreshExpiresAtUnix() int64 {
+	if x != nil {
+		return x.RefreshExpiresAtUnix
+	}
+	return 0
+}
+
+type LogoutRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LogoutRequest) Reset() {
+	*x = LogoutRequest{}
+	mi := &file_v1_auth_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LogoutRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LogoutRequest) ProtoMessage() {}
+
+func (x *LogoutRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_auth_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LogoutRequest.ProtoReflect.Descriptor instead.
+func (*LogoutRequest) Descriptor() ([]byte, []int) {
+	return file_v1_auth_proto_rawDescGZIP(), []int{7}
+}
+
+type LogoutResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LogoutResponse) Reset() {
+	*x = LogoutResponse{}
+	mi := &file_v1_auth_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LogoutResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LogoutResponse) ProtoMessage() {}
+
+func (x *LogoutResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_auth_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LogoutResponse.ProtoReflect.Descriptor instead.
+func (*LogoutResponse) Descriptor() ([]byte, []int) {
+	return file_v1_auth_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *LogoutResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
 var File_v1_auth_proto protoreflect.FileDescriptor
 
 const file_v1_auth_proto_rawDesc = "" +
@@ -384,12 +483,13 @@ const file_v1_auth_proto_rawDesc = "" +
 	"\rv1/auth.proto\x12\vpolyglot.v1\"F\n" +
 	"\fLoginRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"c\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"y\n" +
 	"\vUserProfile\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12\x12\n" +
-	"\x04role\x18\x04 \x01(\tR\x04role\"{\n" +
+	"\x04role\x18\x04 \x01(\tR\x04role\x12\x14\n" +
+	"\x05roles\x18\x05 \x03(\tR\x05roles\"{\n" +
 	"\rLoginResponse\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12,\n" +
 	"\x04user\x18\x02 \x01(\v2\x18.polyglot.v1.UserProfileR\x04user\x12&\n" +
@@ -398,14 +498,19 @@ const file_v1_auth_proto_rawDesc = "" +
 	"\rGetMeResponse\x12,\n" +
 	"\x04user\x18\x01 \x01(\v2\x18.polyglot.v1.UserProfileR\x04user\":\n" +
 	"\x13RefreshTokenRequest\x12#\n" +
-	"\rrefresh_token\x18\x01 \x01(\tR\frefreshToken\"T\n" +
+	"\rrefresh_token\x18\x01 \x01(\tR\frefreshToken\"\x8b\x01\n" +
 	"\x14RefreshTokenResponse\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12&\n" +
-	"\x0fexpires_at_unix\x18\x02 \x01(\x03R\rexpiresAtUnix2\xe2\x01\n" +
+	"\x0fexpires_at_unix\x18\x02 \x01(\x03R\rexpiresAtUnix\x125\n" +
+	"\x17refresh_expires_at_unix\x18\x03 \x01(\x03R\x14refreshExpiresAtUnix\"\x0f\n" +
+	"\rLogoutRequest\"*\n" +
+	"\x0eLogoutResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\xa5\x02\n" +
 	"\vAuthService\x12>\n" +
 	"\x05Login\x12\x19.polyglot.v1.LoginRequest\x1a\x1a.polyglot.v1.LoginResponse\x12>\n" +
 	"\x05GetMe\x12\x19.polyglot.v1.GetMeRequest\x1a\x1a.polyglot.v1.GetMeResponse\x12S\n" +
-	"\fRefreshToken\x12 .polyglot.v1.RefreshTokenRequest\x1a!.polyglot.v1.RefreshTokenResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\fRefreshToken\x12 .polyglot.v1.RefreshTokenRequest\x1a!.polyglot.v1.RefreshTokenResponse\x12A\n" +
+	"\x06Logout\x12\x1a.polyglot.v1.LogoutRequest\x1a\x1b.polyglot.v1.LogoutResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_auth_proto_rawDescOnce sync.Once
@@ -419,7 +524,7 @@ func file_v1_auth_proto_rawDescGZIP() []byte {
 	return file_v1_auth_proto_rawDescData
 }
 
-var file_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_v1_auth_proto_goTypes = []any{
 	(*LoginRequest)(nil),         // 0: polyglot.v1.LoginRequest
 	(*UserProfile)(nil),          // 1: polyglot.v1.UserProfile
@@ -428,6 +533,8 @@ var file_v1_auth_proto_goTypes = []any{
 	(*GetMeResponse)(nil),        // 4: polyglot.v1.GetMeResponse
 	(*RefreshTokenRequest)(nil),  // 5: polyglot.v1.RefreshTokenRequest
 	(*RefreshTokenResponse)(nil), // 6: polyglot.v1.RefreshTokenResponse
+	(*LogoutRequest)(nil),        // 7: polyglot.v1.LogoutRequest
+	(*LogoutResponse)(nil),       // 8: polyglot.v1.LogoutResponse
 }
 var file_v1_auth_proto_depIdxs = []int32{
 	1, // 0: polyglot.v1.LoginResponse.user:type_name -> polyglot.v1.UserProfile
@@ -435,11 +542,13 @@ var file_v1_auth_proto_depIdxs = []int32{
 	0, // 2: polyglot.v1.AuthService.Login:input_type -> polyglot.v1.LoginRequest
 	3, // 3: polyglot.v1.AuthService.GetMe:input_type -> polyglot.v1.GetMeRequest
 	5, // 4: polyglot.v1.AuthService.RefreshToken:input_type -> polyglot.v1.RefreshTokenRequest
-	2, // 5: polyglot.v1.AuthService.Login:output_type -> polyglot.v1.LoginResponse
-	4, // 6: polyglot.v1.AuthService.GetMe:output_type -> polyglot.v1.GetMeResponse
-	6, // 7: polyglot.v1.AuthService.RefreshToken:output_type -> polyglot.v1.RefreshTokenResponse
-	5, // [5:8] is the sub-list for method output_type
-	2, // [2:5] is the sub-list for method input_type
+	7, // 5: polyglot.v1.AuthService.Logout:input_type -> polyglot.v1.LogoutRequest
+	2, // 6: polyglot.v1.AuthService.Login:output_type -> polyglot.v1.LoginResponse
+	4, // 7: polyglot.v1.AuthService.GetMe:output_type -> polyglot.v1.GetMeResponse
+	6, // 8: polyglot.v1.AuthService.RefreshToken:output_type -> polyglot.v1.RefreshTokenResponse
+	8, // 9: polyglot.v1.AuthService.Logout:output_type -> polyglot.v1.LogoutResponse
+	6, // [6:10] is the sub-list for method output_type
+	2, // [2:6] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
 	2, // [2:2] is the sub-list for extension extendee
 	0, // [0:2] is the sub-list for field type_name
@@ -456,7 +565,7 @@ func file_v1_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_auth_proto_rawDesc), len(file_v1_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -22,16 +22,26 @@ const (
 )
 
 type KnowledgeItem struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
-	Category      string                 `protobuf:"bytes,4,opt,name=category,proto3" json:"category,omitempty"`
-	Tags          []string               `protobuf:"bytes,5,rep,name=tags,proto3" json:"tags,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	Id        string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Title     string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Content   string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
+	Category  string                 `protobuf:"bytes,4,opt,name=category,proto3" json:"category,omitempty"`
+	Tags      []string               `protobuf:"bytes,5,rep,name=tags,proto3" json:"tags,omitempty"`
+	CreatedAt string                 `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt string                 `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	// embed_to_llm menandakan dokumen ikut di-sync ke AnythingLLM (vector
+	// store). False = dokumen murni lokal (admin dashboard saja).
+	EmbedToLlm bool `protobuf:"varint,8,opt,name=embed_to_llm,json=embedToLlm,proto3" json:"embed_to_llm,omitempty"`
+	// embed_status: none | pending | embedded | failed.
+	EmbedStatus string `protobuf:"bytes,9,opt,name=embed_status,json=embedStatus,proto3" json:"embed_status,omitempty"`
+	// anythingllm_doc_name adalah nama file dokumen JSON di AnythingLLM yang
+	// terakhir berhasil di-embed (mis. "custom-documents/raw-xxx.json").
+	// Kosong kalau dokumen lokal (embed_to_llm = false) atau belum pernah
+	// ter-embed. Dipakai untuk delete/re-embed dan tampil di UI admin.
+	AnythingllmDocName string `protobuf:"bytes,10,opt,name=anythingllm_doc_name,json=anythingllmDocName,proto3" json:"anythingllm_doc_name,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *KnowledgeItem) Reset() {
@@ -109,6 +119,27 @@ func (x *KnowledgeItem) GetCreatedAt() string {
 func (x *KnowledgeItem) GetUpdatedAt() string {
 	if x != nil {
 		return x.UpdatedAt
+	}
+	return ""
+}
+
+func (x *KnowledgeItem) GetEmbedToLlm() bool {
+	if x != nil {
+		return x.EmbedToLlm
+	}
+	return false
+}
+
+func (x *KnowledgeItem) GetEmbedStatus() string {
+	if x != nil {
+		return x.EmbedStatus
+	}
+	return ""
+}
+
+func (x *KnowledgeItem) GetAnythingllmDocName() string {
+	if x != nil {
+		return x.AnythingllmDocName
 	}
 	return ""
 }
@@ -303,6 +334,7 @@ type CreateKnowledgeRequest struct {
 	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
 	Category      string                 `protobuf:"bytes,3,opt,name=category,proto3" json:"category,omitempty"`
 	Tags          []string               `protobuf:"bytes,4,rep,name=tags,proto3" json:"tags,omitempty"`
+	EmbedToLlm    bool                   `protobuf:"varint,5,opt,name=embed_to_llm,json=embedToLlm,proto3" json:"embed_to_llm,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -365,6 +397,13 @@ func (x *CreateKnowledgeRequest) GetTags() []string {
 	return nil
 }
 
+func (x *CreateKnowledgeRequest) GetEmbedToLlm() bool {
+	if x != nil {
+		return x.EmbedToLlm
+	}
+	return false
+}
+
 type CreateKnowledgeResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Item          *KnowledgeItem         `protobuf:"bytes,1,opt,name=item,proto3" json:"item,omitempty"`
@@ -416,6 +455,7 @@ type UpdateKnowledgeRequest struct {
 	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
 	Category      string                 `protobuf:"bytes,4,opt,name=category,proto3" json:"category,omitempty"`
 	Tags          []string               `protobuf:"bytes,5,rep,name=tags,proto3" json:"tags,omitempty"`
+	EmbedToLlm    bool                   `protobuf:"varint,6,opt,name=embed_to_llm,json=embedToLlm,proto3" json:"embed_to_llm,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -483,6 +523,13 @@ func (x *UpdateKnowledgeRequest) GetTags() []string {
 		return x.Tags
 	}
 	return nil
+}
+
+func (x *UpdateKnowledgeRequest) GetEmbedToLlm() bool {
+	if x != nil {
+		return x.EmbedToLlm
+	}
+	return false
 }
 
 type UpdateKnowledgeResponse struct {
@@ -617,6 +664,94 @@ func (x *DeleteKnowledgeResponse) GetMessage() string {
 	return ""
 }
 
+type RetryEmbedRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryEmbedRequest) Reset() {
+	*x = RetryEmbedRequest{}
+	mi := &file_v1_knowledge_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryEmbedRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryEmbedRequest) ProtoMessage() {}
+
+func (x *RetryEmbedRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_knowledge_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryEmbedRequest.ProtoReflect.Descriptor instead.
+func (*RetryEmbedRequest) Descriptor() ([]byte, []int) {
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *RetryEmbedRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type RetryEmbedResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Item          *KnowledgeItem         `protobuf:"bytes,1,opt,name=item,proto3" json:"item,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryEmbedResponse) Reset() {
+	*x = RetryEmbedResponse{}
+	mi := &file_v1_knowledge_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryEmbedResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryEmbedResponse) ProtoMessage() {}
+
+func (x *RetryEmbedResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_knowledge_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryEmbedResponse.ProtoReflect.Descriptor instead.
+func (*RetryEmbedResponse) Descriptor() ([]byte, []int) {
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *RetryEmbedResponse) GetItem() *KnowledgeItem {
+	if x != nil {
+		return x.Item
+	}
+	return nil
+}
+
 type LLMConfig struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -634,7 +769,7 @@ type LLMConfig struct {
 
 func (x *LLMConfig) Reset() {
 	*x = LLMConfig{}
-	mi := &file_v1_knowledge_proto_msgTypes[11]
+	mi := &file_v1_knowledge_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -646,7 +781,7 @@ func (x *LLMConfig) String() string {
 func (*LLMConfig) ProtoMessage() {}
 
 func (x *LLMConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[11]
+	mi := &file_v1_knowledge_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -659,7 +794,7 @@ func (x *LLMConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LLMConfig.ProtoReflect.Descriptor instead.
 func (*LLMConfig) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{11}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *LLMConfig) GetId() string {
@@ -733,7 +868,7 @@ type ListLLMConfigsRequest struct {
 
 func (x *ListLLMConfigsRequest) Reset() {
 	*x = ListLLMConfigsRequest{}
-	mi := &file_v1_knowledge_proto_msgTypes[12]
+	mi := &file_v1_knowledge_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -745,7 +880,7 @@ func (x *ListLLMConfigsRequest) String() string {
 func (*ListLLMConfigsRequest) ProtoMessage() {}
 
 func (x *ListLLMConfigsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[12]
+	mi := &file_v1_knowledge_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -758,7 +893,7 @@ func (x *ListLLMConfigsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListLLMConfigsRequest.ProtoReflect.Descriptor instead.
 func (*ListLLMConfigsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{12}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{14}
 }
 
 type ListLLMConfigsResponse struct {
@@ -770,7 +905,7 @@ type ListLLMConfigsResponse struct {
 
 func (x *ListLLMConfigsResponse) Reset() {
 	*x = ListLLMConfigsResponse{}
-	mi := &file_v1_knowledge_proto_msgTypes[13]
+	mi := &file_v1_knowledge_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -782,7 +917,7 @@ func (x *ListLLMConfigsResponse) String() string {
 func (*ListLLMConfigsResponse) ProtoMessage() {}
 
 func (x *ListLLMConfigsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[13]
+	mi := &file_v1_knowledge_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -795,7 +930,7 @@ func (x *ListLLMConfigsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListLLMConfigsResponse.ProtoReflect.Descriptor instead.
 func (*ListLLMConfigsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{13}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ListLLMConfigsResponse) GetConfigs() []*LLMConfig {
@@ -820,7 +955,7 @@ type CreateLLMConfigRequest struct {
 
 func (x *CreateLLMConfigRequest) Reset() {
 	*x = CreateLLMConfigRequest{}
-	mi := &file_v1_knowledge_proto_msgTypes[14]
+	mi := &file_v1_knowledge_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -832,7 +967,7 @@ func (x *CreateLLMConfigRequest) String() string {
 func (*CreateLLMConfigRequest) ProtoMessage() {}
 
 func (x *CreateLLMConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[14]
+	mi := &file_v1_knowledge_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -845,7 +980,7 @@ func (x *CreateLLMConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateLLMConfigRequest.ProtoReflect.Descriptor instead.
 func (*CreateLLMConfigRequest) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{14}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *CreateLLMConfigRequest) GetProvider() string {
@@ -906,7 +1041,7 @@ type CreateLLMConfigResponse struct {
 
 func (x *CreateLLMConfigResponse) Reset() {
 	*x = CreateLLMConfigResponse{}
-	mi := &file_v1_knowledge_proto_msgTypes[15]
+	mi := &file_v1_knowledge_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -918,7 +1053,7 @@ func (x *CreateLLMConfigResponse) String() string {
 func (*CreateLLMConfigResponse) ProtoMessage() {}
 
 func (x *CreateLLMConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[15]
+	mi := &file_v1_knowledge_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -931,7 +1066,7 @@ func (x *CreateLLMConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateLLMConfigResponse.ProtoReflect.Descriptor instead.
 func (*CreateLLMConfigResponse) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{15}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *CreateLLMConfigResponse) GetConfig() *LLMConfig {
@@ -957,7 +1092,7 @@ type UpdateLLMConfigRequest struct {
 
 func (x *UpdateLLMConfigRequest) Reset() {
 	*x = UpdateLLMConfigRequest{}
-	mi := &file_v1_knowledge_proto_msgTypes[16]
+	mi := &file_v1_knowledge_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -969,7 +1104,7 @@ func (x *UpdateLLMConfigRequest) String() string {
 func (*UpdateLLMConfigRequest) ProtoMessage() {}
 
 func (x *UpdateLLMConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[16]
+	mi := &file_v1_knowledge_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -982,7 +1117,7 @@ func (x *UpdateLLMConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLLMConfigRequest.ProtoReflect.Descriptor instead.
 func (*UpdateLLMConfigRequest) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{16}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *UpdateLLMConfigRequest) GetId() string {
@@ -1050,7 +1185,7 @@ type UpdateLLMConfigResponse struct {
 
 func (x *UpdateLLMConfigResponse) Reset() {
 	*x = UpdateLLMConfigResponse{}
-	mi := &file_v1_knowledge_proto_msgTypes[17]
+	mi := &file_v1_knowledge_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1062,7 +1197,7 @@ func (x *UpdateLLMConfigResponse) String() string {
 func (*UpdateLLMConfigResponse) ProtoMessage() {}
 
 func (x *UpdateLLMConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[17]
+	mi := &file_v1_knowledge_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1075,7 +1210,7 @@ func (x *UpdateLLMConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLLMConfigResponse.ProtoReflect.Descriptor instead.
 func (*UpdateLLMConfigResponse) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{17}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *UpdateLLMConfigResponse) GetConfig() *LLMConfig {
@@ -1094,7 +1229,7 @@ type ActivateLLMConfigRequest struct {
 
 func (x *ActivateLLMConfigRequest) Reset() {
 	*x = ActivateLLMConfigRequest{}
-	mi := &file_v1_knowledge_proto_msgTypes[18]
+	mi := &file_v1_knowledge_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1106,7 +1241,7 @@ func (x *ActivateLLMConfigRequest) String() string {
 func (*ActivateLLMConfigRequest) ProtoMessage() {}
 
 func (x *ActivateLLMConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[18]
+	mi := &file_v1_knowledge_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1119,7 +1254,7 @@ func (x *ActivateLLMConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivateLLMConfigRequest.ProtoReflect.Descriptor instead.
 func (*ActivateLLMConfigRequest) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{18}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *ActivateLLMConfigRequest) GetId() string {
@@ -1138,7 +1273,7 @@ type ActivateLLMConfigResponse struct {
 
 func (x *ActivateLLMConfigResponse) Reset() {
 	*x = ActivateLLMConfigResponse{}
-	mi := &file_v1_knowledge_proto_msgTypes[19]
+	mi := &file_v1_knowledge_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1150,7 +1285,7 @@ func (x *ActivateLLMConfigResponse) String() string {
 func (*ActivateLLMConfigResponse) ProtoMessage() {}
 
 func (x *ActivateLLMConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[19]
+	mi := &file_v1_knowledge_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1163,7 +1298,7 @@ func (x *ActivateLLMConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivateLLMConfigResponse.ProtoReflect.Descriptor instead.
 func (*ActivateLLMConfigResponse) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{19}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ActivateLLMConfigResponse) GetMessage() string {
@@ -1183,7 +1318,7 @@ type TestLLMConfigRequest struct {
 
 func (x *TestLLMConfigRequest) Reset() {
 	*x = TestLLMConfigRequest{}
-	mi := &file_v1_knowledge_proto_msgTypes[20]
+	mi := &file_v1_knowledge_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1195,7 +1330,7 @@ func (x *TestLLMConfigRequest) String() string {
 func (*TestLLMConfigRequest) ProtoMessage() {}
 
 func (x *TestLLMConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[20]
+	mi := &file_v1_knowledge_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1208,7 +1343,7 @@ func (x *TestLLMConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TestLLMConfigRequest.ProtoReflect.Descriptor instead.
 func (*TestLLMConfigRequest) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{20}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *TestLLMConfigRequest) GetId() string {
@@ -1236,7 +1371,7 @@ type TestLLMConfigResponse struct {
 
 func (x *TestLLMConfigResponse) Reset() {
 	*x = TestLLMConfigResponse{}
-	mi := &file_v1_knowledge_proto_msgTypes[21]
+	mi := &file_v1_knowledge_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1248,7 +1383,7 @@ func (x *TestLLMConfigResponse) String() string {
 func (*TestLLMConfigResponse) ProtoMessage() {}
 
 func (x *TestLLMConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[21]
+	mi := &file_v1_knowledge_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1261,7 +1396,7 @@ func (x *TestLLMConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TestLLMConfigResponse.ProtoReflect.Descriptor instead.
 func (*TestLLMConfigResponse) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{21}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *TestLLMConfigResponse) GetSuccess() bool {
@@ -1294,7 +1429,7 @@ type DeleteLLMConfigRequest struct {
 
 func (x *DeleteLLMConfigRequest) Reset() {
 	*x = DeleteLLMConfigRequest{}
-	mi := &file_v1_knowledge_proto_msgTypes[22]
+	mi := &file_v1_knowledge_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1306,7 +1441,7 @@ func (x *DeleteLLMConfigRequest) String() string {
 func (*DeleteLLMConfigRequest) ProtoMessage() {}
 
 func (x *DeleteLLMConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[22]
+	mi := &file_v1_knowledge_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1319,7 +1454,7 @@ func (x *DeleteLLMConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteLLMConfigRequest.ProtoReflect.Descriptor instead.
 func (*DeleteLLMConfigRequest) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{22}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *DeleteLLMConfigRequest) GetId() string {
@@ -1338,7 +1473,7 @@ type DeleteLLMConfigResponse struct {
 
 func (x *DeleteLLMConfigResponse) Reset() {
 	*x = DeleteLLMConfigResponse{}
-	mi := &file_v1_knowledge_proto_msgTypes[23]
+	mi := &file_v1_knowledge_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1350,7 +1485,7 @@ func (x *DeleteLLMConfigResponse) String() string {
 func (*DeleteLLMConfigResponse) ProtoMessage() {}
 
 func (x *DeleteLLMConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[23]
+	mi := &file_v1_knowledge_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1363,7 +1498,7 @@ func (x *DeleteLLMConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteLLMConfigResponse.ProtoReflect.Descriptor instead.
 func (*DeleteLLMConfigResponse) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{23}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *DeleteLLMConfigResponse) GetMessage() string {
@@ -1387,7 +1522,7 @@ type Technician struct {
 
 func (x *Technician) Reset() {
 	*x = Technician{}
-	mi := &file_v1_knowledge_proto_msgTypes[24]
+	mi := &file_v1_knowledge_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1399,7 +1534,7 @@ func (x *Technician) String() string {
 func (*Technician) ProtoMessage() {}
 
 func (x *Technician) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[24]
+	mi := &file_v1_knowledge_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1412,7 +1547,7 @@ func (x *Technician) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Technician.ProtoReflect.Descriptor instead.
 func (*Technician) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{24}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *Technician) GetId() string {
@@ -1465,7 +1600,7 @@ type ListTechniciansRequest struct {
 
 func (x *ListTechniciansRequest) Reset() {
 	*x = ListTechniciansRequest{}
-	mi := &file_v1_knowledge_proto_msgTypes[25]
+	mi := &file_v1_knowledge_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1477,7 +1612,7 @@ func (x *ListTechniciansRequest) String() string {
 func (*ListTechniciansRequest) ProtoMessage() {}
 
 func (x *ListTechniciansRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[25]
+	mi := &file_v1_knowledge_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1490,7 +1625,7 @@ func (x *ListTechniciansRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTechniciansRequest.ProtoReflect.Descriptor instead.
 func (*ListTechniciansRequest) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{25}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{27}
 }
 
 type ListTechniciansResponse struct {
@@ -1502,7 +1637,7 @@ type ListTechniciansResponse struct {
 
 func (x *ListTechniciansResponse) Reset() {
 	*x = ListTechniciansResponse{}
-	mi := &file_v1_knowledge_proto_msgTypes[26]
+	mi := &file_v1_knowledge_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1514,7 +1649,7 @@ func (x *ListTechniciansResponse) String() string {
 func (*ListTechniciansResponse) ProtoMessage() {}
 
 func (x *ListTechniciansResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[26]
+	mi := &file_v1_knowledge_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1527,7 +1662,7 @@ func (x *ListTechniciansResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTechniciansResponse.ProtoReflect.Descriptor instead.
 func (*ListTechniciansResponse) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{26}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *ListTechniciansResponse) GetTechnicians() []*Technician {
@@ -1548,7 +1683,7 @@ type CreateTechnicianRequest struct {
 
 func (x *CreateTechnicianRequest) Reset() {
 	*x = CreateTechnicianRequest{}
-	mi := &file_v1_knowledge_proto_msgTypes[27]
+	mi := &file_v1_knowledge_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1560,7 +1695,7 @@ func (x *CreateTechnicianRequest) String() string {
 func (*CreateTechnicianRequest) ProtoMessage() {}
 
 func (x *CreateTechnicianRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[27]
+	mi := &file_v1_knowledge_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1573,7 +1708,7 @@ func (x *CreateTechnicianRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateTechnicianRequest.ProtoReflect.Descriptor instead.
 func (*CreateTechnicianRequest) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{27}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *CreateTechnicianRequest) GetName() string {
@@ -1606,7 +1741,7 @@ type CreateTechnicianResponse struct {
 
 func (x *CreateTechnicianResponse) Reset() {
 	*x = CreateTechnicianResponse{}
-	mi := &file_v1_knowledge_proto_msgTypes[28]
+	mi := &file_v1_knowledge_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1618,7 +1753,7 @@ func (x *CreateTechnicianResponse) String() string {
 func (*CreateTechnicianResponse) ProtoMessage() {}
 
 func (x *CreateTechnicianResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[28]
+	mi := &file_v1_knowledge_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1631,7 +1766,7 @@ func (x *CreateTechnicianResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateTechnicianResponse.ProtoReflect.Descriptor instead.
 func (*CreateTechnicianResponse) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{28}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *CreateTechnicianResponse) GetTechnician() *Technician {
@@ -1653,7 +1788,7 @@ type UpdateTechnicianRequest struct {
 
 func (x *UpdateTechnicianRequest) Reset() {
 	*x = UpdateTechnicianRequest{}
-	mi := &file_v1_knowledge_proto_msgTypes[29]
+	mi := &file_v1_knowledge_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1665,7 +1800,7 @@ func (x *UpdateTechnicianRequest) String() string {
 func (*UpdateTechnicianRequest) ProtoMessage() {}
 
 func (x *UpdateTechnicianRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[29]
+	mi := &file_v1_knowledge_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1678,7 +1813,7 @@ func (x *UpdateTechnicianRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateTechnicianRequest.ProtoReflect.Descriptor instead.
 func (*UpdateTechnicianRequest) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{29}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *UpdateTechnicianRequest) GetId() string {
@@ -1718,7 +1853,7 @@ type UpdateTechnicianResponse struct {
 
 func (x *UpdateTechnicianResponse) Reset() {
 	*x = UpdateTechnicianResponse{}
-	mi := &file_v1_knowledge_proto_msgTypes[30]
+	mi := &file_v1_knowledge_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1730,7 +1865,7 @@ func (x *UpdateTechnicianResponse) String() string {
 func (*UpdateTechnicianResponse) ProtoMessage() {}
 
 func (x *UpdateTechnicianResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[30]
+	mi := &file_v1_knowledge_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1743,7 +1878,7 @@ func (x *UpdateTechnicianResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateTechnicianResponse.ProtoReflect.Descriptor instead.
 func (*UpdateTechnicianResponse) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{30}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *UpdateTechnicianResponse) GetTechnician() *Technician {
@@ -1763,7 +1898,7 @@ type ToggleTechnicianActiveRequest struct {
 
 func (x *ToggleTechnicianActiveRequest) Reset() {
 	*x = ToggleTechnicianActiveRequest{}
-	mi := &file_v1_knowledge_proto_msgTypes[31]
+	mi := &file_v1_knowledge_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1775,7 +1910,7 @@ func (x *ToggleTechnicianActiveRequest) String() string {
 func (*ToggleTechnicianActiveRequest) ProtoMessage() {}
 
 func (x *ToggleTechnicianActiveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[31]
+	mi := &file_v1_knowledge_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1788,7 +1923,7 @@ func (x *ToggleTechnicianActiveRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToggleTechnicianActiveRequest.ProtoReflect.Descriptor instead.
 func (*ToggleTechnicianActiveRequest) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{31}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *ToggleTechnicianActiveRequest) GetId() string {
@@ -1815,7 +1950,7 @@ type ToggleTechnicianActiveResponse struct {
 
 func (x *ToggleTechnicianActiveResponse) Reset() {
 	*x = ToggleTechnicianActiveResponse{}
-	mi := &file_v1_knowledge_proto_msgTypes[32]
+	mi := &file_v1_knowledge_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1827,7 +1962,7 @@ func (x *ToggleTechnicianActiveResponse) String() string {
 func (*ToggleTechnicianActiveResponse) ProtoMessage() {}
 
 func (x *ToggleTechnicianActiveResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[32]
+	mi := &file_v1_knowledge_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1840,7 +1975,7 @@ func (x *ToggleTechnicianActiveResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToggleTechnicianActiveResponse.ProtoReflect.Descriptor instead.
 func (*ToggleTechnicianActiveResponse) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{32}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *ToggleTechnicianActiveResponse) GetMessage() string {
@@ -1866,7 +2001,7 @@ type DeleteTechnicianRequest struct {
 
 func (x *DeleteTechnicianRequest) Reset() {
 	*x = DeleteTechnicianRequest{}
-	mi := &file_v1_knowledge_proto_msgTypes[33]
+	mi := &file_v1_knowledge_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1878,7 +2013,7 @@ func (x *DeleteTechnicianRequest) String() string {
 func (*DeleteTechnicianRequest) ProtoMessage() {}
 
 func (x *DeleteTechnicianRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[33]
+	mi := &file_v1_knowledge_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1891,7 +2026,7 @@ func (x *DeleteTechnicianRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteTechnicianRequest.ProtoReflect.Descriptor instead.
 func (*DeleteTechnicianRequest) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{33}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *DeleteTechnicianRequest) GetId() string {
@@ -1910,7 +2045,7 @@ type DeleteTechnicianResponse struct {
 
 func (x *DeleteTechnicianResponse) Reset() {
 	*x = DeleteTechnicianResponse{}
-	mi := &file_v1_knowledge_proto_msgTypes[34]
+	mi := &file_v1_knowledge_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1922,7 +2057,7 @@ func (x *DeleteTechnicianResponse) String() string {
 func (*DeleteTechnicianResponse) ProtoMessage() {}
 
 func (x *DeleteTechnicianResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_knowledge_proto_msgTypes[34]
+	mi := &file_v1_knowledge_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1935,7 +2070,7 @@ func (x *DeleteTechnicianResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteTechnicianResponse.ProtoReflect.Descriptor instead.
 func (*DeleteTechnicianResponse) Descriptor() ([]byte, []int) {
-	return file_v1_knowledge_proto_rawDescGZIP(), []int{34}
+	return file_v1_knowledge_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *DeleteTechnicianResponse) GetMessage() string {
@@ -1949,7 +2084,7 @@ var File_v1_knowledge_proto protoreflect.FileDescriptor
 
 const file_v1_knowledge_proto_rawDesc = "" +
 	"\n" +
-	"\x12v1/knowledge.proto\x12\vpolyglot.v1\"\xbd\x01\n" +
+	"\x12v1/knowledge.proto\x12\vpolyglot.v1\"\xb4\x02\n" +
 	"\rKnowledgeItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x18\n" +
@@ -1959,7 +2094,12 @@ const file_v1_knowledge_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x06 \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\a \x01(\tR\tupdatedAt\"U\n" +
+	"updated_at\x18\a \x01(\tR\tupdatedAt\x12 \n" +
+	"\fembed_to_llm\x18\b \x01(\bR\n" +
+	"embedToLlm\x12!\n" +
+	"\fembed_status\x18\t \x01(\tR\vembedStatus\x120\n" +
+	"\x14anythingllm_doc_name\x18\n" +
+	" \x01(\tR\x12anythingllmDocName\"U\n" +
 	"\x14ListKnowledgeRequest\x12\x1a\n" +
 	"\bcategory\x18\x01 \x01(\tR\bcategory\x12!\n" +
 	"\fsearch_query\x18\x02 \x01(\tR\vsearchQuery\"I\n" +
@@ -1968,26 +2108,34 @@ const file_v1_knowledge_proto_rawDesc = "" +
 	"\x13GetKnowledgeRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"F\n" +
 	"\x14GetKnowledgeResponse\x12.\n" +
-	"\x04item\x18\x01 \x01(\v2\x1a.polyglot.v1.KnowledgeItemR\x04item\"x\n" +
+	"\x04item\x18\x01 \x01(\v2\x1a.polyglot.v1.KnowledgeItemR\x04item\"\x9a\x01\n" +
 	"\x16CreateKnowledgeRequest\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x18\n" +
 	"\acontent\x18\x02 \x01(\tR\acontent\x12\x1a\n" +
 	"\bcategory\x18\x03 \x01(\tR\bcategory\x12\x12\n" +
-	"\x04tags\x18\x04 \x03(\tR\x04tags\"I\n" +
+	"\x04tags\x18\x04 \x03(\tR\x04tags\x12 \n" +
+	"\fembed_to_llm\x18\x05 \x01(\bR\n" +
+	"embedToLlm\"I\n" +
 	"\x17CreateKnowledgeResponse\x12.\n" +
-	"\x04item\x18\x01 \x01(\v2\x1a.polyglot.v1.KnowledgeItemR\x04item\"\x88\x01\n" +
+	"\x04item\x18\x01 \x01(\v2\x1a.polyglot.v1.KnowledgeItemR\x04item\"\xaa\x01\n" +
 	"\x16UpdateKnowledgeRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05title\x18\x02 \x01(\tR\x05title\x12\x18\n" +
 	"\acontent\x18\x03 \x01(\tR\acontent\x12\x1a\n" +
 	"\bcategory\x18\x04 \x01(\tR\bcategory\x12\x12\n" +
-	"\x04tags\x18\x05 \x03(\tR\x04tags\"I\n" +
+	"\x04tags\x18\x05 \x03(\tR\x04tags\x12 \n" +
+	"\fembed_to_llm\x18\x06 \x01(\bR\n" +
+	"embedToLlm\"I\n" +
 	"\x17UpdateKnowledgeResponse\x12.\n" +
 	"\x04item\x18\x01 \x01(\v2\x1a.polyglot.v1.KnowledgeItemR\x04item\"(\n" +
 	"\x16DeleteKnowledgeRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"3\n" +
 	"\x17DeleteKnowledgeResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"\x9a\x02\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"#\n" +
+	"\x11RetryEmbedRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"D\n" +
+	"\x12RetryEmbedResponse\x12.\n" +
+	"\x04item\x18\x01 \x01(\v2\x1a.polyglot.v1.KnowledgeItemR\x04item\"\x9a\x02\n" +
 	"\tLLMConfig\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
 	"\bprovider\x18\x02 \x01(\tR\bprovider\x12\x1d\n" +
@@ -2081,13 +2229,15 @@ const file_v1_knowledge_proto_rawDesc = "" +
 	"\x17DeleteTechnicianRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"4\n" +
 	"\x18DeleteTechnicianResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\xfe\v\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\xcd\f\n" +
 	"\x10KnowledgeService\x12V\n" +
 	"\rListKnowledge\x12!.polyglot.v1.ListKnowledgeRequest\x1a\".polyglot.v1.ListKnowledgeResponse\x12S\n" +
 	"\fGetKnowledge\x12 .polyglot.v1.GetKnowledgeRequest\x1a!.polyglot.v1.GetKnowledgeResponse\x12\\\n" +
 	"\x0fCreateKnowledge\x12#.polyglot.v1.CreateKnowledgeRequest\x1a$.polyglot.v1.CreateKnowledgeResponse\x12\\\n" +
 	"\x0fUpdateKnowledge\x12#.polyglot.v1.UpdateKnowledgeRequest\x1a$.polyglot.v1.UpdateKnowledgeResponse\x12\\\n" +
-	"\x0fDeleteKnowledge\x12#.polyglot.v1.DeleteKnowledgeRequest\x1a$.polyglot.v1.DeleteKnowledgeResponse\x12Y\n" +
+	"\x0fDeleteKnowledge\x12#.polyglot.v1.DeleteKnowledgeRequest\x1a$.polyglot.v1.DeleteKnowledgeResponse\x12M\n" +
+	"\n" +
+	"RetryEmbed\x12\x1e.polyglot.v1.RetryEmbedRequest\x1a\x1f.polyglot.v1.RetryEmbedResponse\x12Y\n" +
 	"\x0eListLLMConfigs\x12\".polyglot.v1.ListLLMConfigsRequest\x1a#.polyglot.v1.ListLLMConfigsResponse\x12\\\n" +
 	"\x0fCreateLLMConfig\x12#.polyglot.v1.CreateLLMConfigRequest\x1a$.polyglot.v1.CreateLLMConfigResponse\x12\\\n" +
 	"\x0fUpdateLLMConfig\x12#.polyglot.v1.UpdateLLMConfigRequest\x1a$.polyglot.v1.UpdateLLMConfigResponse\x12b\n" +
@@ -2112,7 +2262,7 @@ func file_v1_knowledge_proto_rawDescGZIP() []byte {
 	return file_v1_knowledge_proto_rawDescData
 }
 
-var file_v1_knowledge_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
+var file_v1_knowledge_proto_msgTypes = make([]protoimpl.MessageInfo, 37)
 var file_v1_knowledge_proto_goTypes = []any{
 	(*KnowledgeItem)(nil),                  // 0: polyglot.v1.KnowledgeItem
 	(*ListKnowledgeRequest)(nil),           // 1: polyglot.v1.ListKnowledgeRequest
@@ -2125,79 +2275,84 @@ var file_v1_knowledge_proto_goTypes = []any{
 	(*UpdateKnowledgeResponse)(nil),        // 8: polyglot.v1.UpdateKnowledgeResponse
 	(*DeleteKnowledgeRequest)(nil),         // 9: polyglot.v1.DeleteKnowledgeRequest
 	(*DeleteKnowledgeResponse)(nil),        // 10: polyglot.v1.DeleteKnowledgeResponse
-	(*LLMConfig)(nil),                      // 11: polyglot.v1.LLMConfig
-	(*ListLLMConfigsRequest)(nil),          // 12: polyglot.v1.ListLLMConfigsRequest
-	(*ListLLMConfigsResponse)(nil),         // 13: polyglot.v1.ListLLMConfigsResponse
-	(*CreateLLMConfigRequest)(nil),         // 14: polyglot.v1.CreateLLMConfigRequest
-	(*CreateLLMConfigResponse)(nil),        // 15: polyglot.v1.CreateLLMConfigResponse
-	(*UpdateLLMConfigRequest)(nil),         // 16: polyglot.v1.UpdateLLMConfigRequest
-	(*UpdateLLMConfigResponse)(nil),        // 17: polyglot.v1.UpdateLLMConfigResponse
-	(*ActivateLLMConfigRequest)(nil),       // 18: polyglot.v1.ActivateLLMConfigRequest
-	(*ActivateLLMConfigResponse)(nil),      // 19: polyglot.v1.ActivateLLMConfigResponse
-	(*TestLLMConfigRequest)(nil),           // 20: polyglot.v1.TestLLMConfigRequest
-	(*TestLLMConfigResponse)(nil),          // 21: polyglot.v1.TestLLMConfigResponse
-	(*DeleteLLMConfigRequest)(nil),         // 22: polyglot.v1.DeleteLLMConfigRequest
-	(*DeleteLLMConfigResponse)(nil),        // 23: polyglot.v1.DeleteLLMConfigResponse
-	(*Technician)(nil),                     // 24: polyglot.v1.Technician
-	(*ListTechniciansRequest)(nil),         // 25: polyglot.v1.ListTechniciansRequest
-	(*ListTechniciansResponse)(nil),        // 26: polyglot.v1.ListTechniciansResponse
-	(*CreateTechnicianRequest)(nil),        // 27: polyglot.v1.CreateTechnicianRequest
-	(*CreateTechnicianResponse)(nil),       // 28: polyglot.v1.CreateTechnicianResponse
-	(*UpdateTechnicianRequest)(nil),        // 29: polyglot.v1.UpdateTechnicianRequest
-	(*UpdateTechnicianResponse)(nil),       // 30: polyglot.v1.UpdateTechnicianResponse
-	(*ToggleTechnicianActiveRequest)(nil),  // 31: polyglot.v1.ToggleTechnicianActiveRequest
-	(*ToggleTechnicianActiveResponse)(nil), // 32: polyglot.v1.ToggleTechnicianActiveResponse
-	(*DeleteTechnicianRequest)(nil),        // 33: polyglot.v1.DeleteTechnicianRequest
-	(*DeleteTechnicianResponse)(nil),       // 34: polyglot.v1.DeleteTechnicianResponse
+	(*RetryEmbedRequest)(nil),              // 11: polyglot.v1.RetryEmbedRequest
+	(*RetryEmbedResponse)(nil),             // 12: polyglot.v1.RetryEmbedResponse
+	(*LLMConfig)(nil),                      // 13: polyglot.v1.LLMConfig
+	(*ListLLMConfigsRequest)(nil),          // 14: polyglot.v1.ListLLMConfigsRequest
+	(*ListLLMConfigsResponse)(nil),         // 15: polyglot.v1.ListLLMConfigsResponse
+	(*CreateLLMConfigRequest)(nil),         // 16: polyglot.v1.CreateLLMConfigRequest
+	(*CreateLLMConfigResponse)(nil),        // 17: polyglot.v1.CreateLLMConfigResponse
+	(*UpdateLLMConfigRequest)(nil),         // 18: polyglot.v1.UpdateLLMConfigRequest
+	(*UpdateLLMConfigResponse)(nil),        // 19: polyglot.v1.UpdateLLMConfigResponse
+	(*ActivateLLMConfigRequest)(nil),       // 20: polyglot.v1.ActivateLLMConfigRequest
+	(*ActivateLLMConfigResponse)(nil),      // 21: polyglot.v1.ActivateLLMConfigResponse
+	(*TestLLMConfigRequest)(nil),           // 22: polyglot.v1.TestLLMConfigRequest
+	(*TestLLMConfigResponse)(nil),          // 23: polyglot.v1.TestLLMConfigResponse
+	(*DeleteLLMConfigRequest)(nil),         // 24: polyglot.v1.DeleteLLMConfigRequest
+	(*DeleteLLMConfigResponse)(nil),        // 25: polyglot.v1.DeleteLLMConfigResponse
+	(*Technician)(nil),                     // 26: polyglot.v1.Technician
+	(*ListTechniciansRequest)(nil),         // 27: polyglot.v1.ListTechniciansRequest
+	(*ListTechniciansResponse)(nil),        // 28: polyglot.v1.ListTechniciansResponse
+	(*CreateTechnicianRequest)(nil),        // 29: polyglot.v1.CreateTechnicianRequest
+	(*CreateTechnicianResponse)(nil),       // 30: polyglot.v1.CreateTechnicianResponse
+	(*UpdateTechnicianRequest)(nil),        // 31: polyglot.v1.UpdateTechnicianRequest
+	(*UpdateTechnicianResponse)(nil),       // 32: polyglot.v1.UpdateTechnicianResponse
+	(*ToggleTechnicianActiveRequest)(nil),  // 33: polyglot.v1.ToggleTechnicianActiveRequest
+	(*ToggleTechnicianActiveResponse)(nil), // 34: polyglot.v1.ToggleTechnicianActiveResponse
+	(*DeleteTechnicianRequest)(nil),        // 35: polyglot.v1.DeleteTechnicianRequest
+	(*DeleteTechnicianResponse)(nil),       // 36: polyglot.v1.DeleteTechnicianResponse
 }
 var file_v1_knowledge_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.ListKnowledgeResponse.items:type_name -> polyglot.v1.KnowledgeItem
 	0,  // 1: polyglot.v1.GetKnowledgeResponse.item:type_name -> polyglot.v1.KnowledgeItem
 	0,  // 2: polyglot.v1.CreateKnowledgeResponse.item:type_name -> polyglot.v1.KnowledgeItem
 	0,  // 3: polyglot.v1.UpdateKnowledgeResponse.item:type_name -> polyglot.v1.KnowledgeItem
-	11, // 4: polyglot.v1.ListLLMConfigsResponse.configs:type_name -> polyglot.v1.LLMConfig
-	11, // 5: polyglot.v1.CreateLLMConfigResponse.config:type_name -> polyglot.v1.LLMConfig
-	11, // 6: polyglot.v1.UpdateLLMConfigResponse.config:type_name -> polyglot.v1.LLMConfig
-	24, // 7: polyglot.v1.ListTechniciansResponse.technicians:type_name -> polyglot.v1.Technician
-	24, // 8: polyglot.v1.CreateTechnicianResponse.technician:type_name -> polyglot.v1.Technician
-	24, // 9: polyglot.v1.UpdateTechnicianResponse.technician:type_name -> polyglot.v1.Technician
-	1,  // 10: polyglot.v1.KnowledgeService.ListKnowledge:input_type -> polyglot.v1.ListKnowledgeRequest
-	3,  // 11: polyglot.v1.KnowledgeService.GetKnowledge:input_type -> polyglot.v1.GetKnowledgeRequest
-	5,  // 12: polyglot.v1.KnowledgeService.CreateKnowledge:input_type -> polyglot.v1.CreateKnowledgeRequest
-	7,  // 13: polyglot.v1.KnowledgeService.UpdateKnowledge:input_type -> polyglot.v1.UpdateKnowledgeRequest
-	9,  // 14: polyglot.v1.KnowledgeService.DeleteKnowledge:input_type -> polyglot.v1.DeleteKnowledgeRequest
-	12, // 15: polyglot.v1.KnowledgeService.ListLLMConfigs:input_type -> polyglot.v1.ListLLMConfigsRequest
-	14, // 16: polyglot.v1.KnowledgeService.CreateLLMConfig:input_type -> polyglot.v1.CreateLLMConfigRequest
-	16, // 17: polyglot.v1.KnowledgeService.UpdateLLMConfig:input_type -> polyglot.v1.UpdateLLMConfigRequest
-	18, // 18: polyglot.v1.KnowledgeService.ActivateLLMConfig:input_type -> polyglot.v1.ActivateLLMConfigRequest
-	20, // 19: polyglot.v1.KnowledgeService.TestLLMConfig:input_type -> polyglot.v1.TestLLMConfigRequest
-	22, // 20: polyglot.v1.KnowledgeService.DeleteLLMConfig:input_type -> polyglot.v1.DeleteLLMConfigRequest
-	25, // 21: polyglot.v1.KnowledgeService.ListTechnicians:input_type -> polyglot.v1.ListTechniciansRequest
-	27, // 22: polyglot.v1.KnowledgeService.CreateTechnician:input_type -> polyglot.v1.CreateTechnicianRequest
-	29, // 23: polyglot.v1.KnowledgeService.UpdateTechnician:input_type -> polyglot.v1.UpdateTechnicianRequest
-	31, // 24: polyglot.v1.KnowledgeService.ToggleTechnicianActive:input_type -> polyglot.v1.ToggleTechnicianActiveRequest
-	33, // 25: polyglot.v1.KnowledgeService.DeleteTechnician:input_type -> polyglot.v1.DeleteTechnicianRequest
-	2,  // 26: polyglot.v1.KnowledgeService.ListKnowledge:output_type -> polyglot.v1.ListKnowledgeResponse
-	4,  // 27: polyglot.v1.KnowledgeService.GetKnowledge:output_type -> polyglot.v1.GetKnowledgeResponse
-	6,  // 28: polyglot.v1.KnowledgeService.CreateKnowledge:output_type -> polyglot.v1.CreateKnowledgeResponse
-	8,  // 29: polyglot.v1.KnowledgeService.UpdateKnowledge:output_type -> polyglot.v1.UpdateKnowledgeResponse
-	10, // 30: polyglot.v1.KnowledgeService.DeleteKnowledge:output_type -> polyglot.v1.DeleteKnowledgeResponse
-	13, // 31: polyglot.v1.KnowledgeService.ListLLMConfigs:output_type -> polyglot.v1.ListLLMConfigsResponse
-	15, // 32: polyglot.v1.KnowledgeService.CreateLLMConfig:output_type -> polyglot.v1.CreateLLMConfigResponse
-	17, // 33: polyglot.v1.KnowledgeService.UpdateLLMConfig:output_type -> polyglot.v1.UpdateLLMConfigResponse
-	19, // 34: polyglot.v1.KnowledgeService.ActivateLLMConfig:output_type -> polyglot.v1.ActivateLLMConfigResponse
-	21, // 35: polyglot.v1.KnowledgeService.TestLLMConfig:output_type -> polyglot.v1.TestLLMConfigResponse
-	23, // 36: polyglot.v1.KnowledgeService.DeleteLLMConfig:output_type -> polyglot.v1.DeleteLLMConfigResponse
-	26, // 37: polyglot.v1.KnowledgeService.ListTechnicians:output_type -> polyglot.v1.ListTechniciansResponse
-	28, // 38: polyglot.v1.KnowledgeService.CreateTechnician:output_type -> polyglot.v1.CreateTechnicianResponse
-	30, // 39: polyglot.v1.KnowledgeService.UpdateTechnician:output_type -> polyglot.v1.UpdateTechnicianResponse
-	32, // 40: polyglot.v1.KnowledgeService.ToggleTechnicianActive:output_type -> polyglot.v1.ToggleTechnicianActiveResponse
-	34, // 41: polyglot.v1.KnowledgeService.DeleteTechnician:output_type -> polyglot.v1.DeleteTechnicianResponse
-	26, // [26:42] is the sub-list for method output_type
-	10, // [10:26] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	0,  // 4: polyglot.v1.RetryEmbedResponse.item:type_name -> polyglot.v1.KnowledgeItem
+	13, // 5: polyglot.v1.ListLLMConfigsResponse.configs:type_name -> polyglot.v1.LLMConfig
+	13, // 6: polyglot.v1.CreateLLMConfigResponse.config:type_name -> polyglot.v1.LLMConfig
+	13, // 7: polyglot.v1.UpdateLLMConfigResponse.config:type_name -> polyglot.v1.LLMConfig
+	26, // 8: polyglot.v1.ListTechniciansResponse.technicians:type_name -> polyglot.v1.Technician
+	26, // 9: polyglot.v1.CreateTechnicianResponse.technician:type_name -> polyglot.v1.Technician
+	26, // 10: polyglot.v1.UpdateTechnicianResponse.technician:type_name -> polyglot.v1.Technician
+	1,  // 11: polyglot.v1.KnowledgeService.ListKnowledge:input_type -> polyglot.v1.ListKnowledgeRequest
+	3,  // 12: polyglot.v1.KnowledgeService.GetKnowledge:input_type -> polyglot.v1.GetKnowledgeRequest
+	5,  // 13: polyglot.v1.KnowledgeService.CreateKnowledge:input_type -> polyglot.v1.CreateKnowledgeRequest
+	7,  // 14: polyglot.v1.KnowledgeService.UpdateKnowledge:input_type -> polyglot.v1.UpdateKnowledgeRequest
+	9,  // 15: polyglot.v1.KnowledgeService.DeleteKnowledge:input_type -> polyglot.v1.DeleteKnowledgeRequest
+	11, // 16: polyglot.v1.KnowledgeService.RetryEmbed:input_type -> polyglot.v1.RetryEmbedRequest
+	14, // 17: polyglot.v1.KnowledgeService.ListLLMConfigs:input_type -> polyglot.v1.ListLLMConfigsRequest
+	16, // 18: polyglot.v1.KnowledgeService.CreateLLMConfig:input_type -> polyglot.v1.CreateLLMConfigRequest
+	18, // 19: polyglot.v1.KnowledgeService.UpdateLLMConfig:input_type -> polyglot.v1.UpdateLLMConfigRequest
+	20, // 20: polyglot.v1.KnowledgeService.ActivateLLMConfig:input_type -> polyglot.v1.ActivateLLMConfigRequest
+	22, // 21: polyglot.v1.KnowledgeService.TestLLMConfig:input_type -> polyglot.v1.TestLLMConfigRequest
+	24, // 22: polyglot.v1.KnowledgeService.DeleteLLMConfig:input_type -> polyglot.v1.DeleteLLMConfigRequest
+	27, // 23: polyglot.v1.KnowledgeService.ListTechnicians:input_type -> polyglot.v1.ListTechniciansRequest
+	29, // 24: polyglot.v1.KnowledgeService.CreateTechnician:input_type -> polyglot.v1.CreateTechnicianRequest
+	31, // 25: polyglot.v1.KnowledgeService.UpdateTechnician:input_type -> polyglot.v1.UpdateTechnicianRequest
+	33, // 26: polyglot.v1.KnowledgeService.ToggleTechnicianActive:input_type -> polyglot.v1.ToggleTechnicianActiveRequest
+	35, // 27: polyglot.v1.KnowledgeService.DeleteTechnician:input_type -> polyglot.v1.DeleteTechnicianRequest
+	2,  // 28: polyglot.v1.KnowledgeService.ListKnowledge:output_type -> polyglot.v1.ListKnowledgeResponse
+	4,  // 29: polyglot.v1.KnowledgeService.GetKnowledge:output_type -> polyglot.v1.GetKnowledgeResponse
+	6,  // 30: polyglot.v1.KnowledgeService.CreateKnowledge:output_type -> polyglot.v1.CreateKnowledgeResponse
+	8,  // 31: polyglot.v1.KnowledgeService.UpdateKnowledge:output_type -> polyglot.v1.UpdateKnowledgeResponse
+	10, // 32: polyglot.v1.KnowledgeService.DeleteKnowledge:output_type -> polyglot.v1.DeleteKnowledgeResponse
+	12, // 33: polyglot.v1.KnowledgeService.RetryEmbed:output_type -> polyglot.v1.RetryEmbedResponse
+	15, // 34: polyglot.v1.KnowledgeService.ListLLMConfigs:output_type -> polyglot.v1.ListLLMConfigsResponse
+	17, // 35: polyglot.v1.KnowledgeService.CreateLLMConfig:output_type -> polyglot.v1.CreateLLMConfigResponse
+	19, // 36: polyglot.v1.KnowledgeService.UpdateLLMConfig:output_type -> polyglot.v1.UpdateLLMConfigResponse
+	21, // 37: polyglot.v1.KnowledgeService.ActivateLLMConfig:output_type -> polyglot.v1.ActivateLLMConfigResponse
+	23, // 38: polyglot.v1.KnowledgeService.TestLLMConfig:output_type -> polyglot.v1.TestLLMConfigResponse
+	25, // 39: polyglot.v1.KnowledgeService.DeleteLLMConfig:output_type -> polyglot.v1.DeleteLLMConfigResponse
+	28, // 40: polyglot.v1.KnowledgeService.ListTechnicians:output_type -> polyglot.v1.ListTechniciansResponse
+	30, // 41: polyglot.v1.KnowledgeService.CreateTechnician:output_type -> polyglot.v1.CreateTechnicianResponse
+	32, // 42: polyglot.v1.KnowledgeService.UpdateTechnician:output_type -> polyglot.v1.UpdateTechnicianResponse
+	34, // 43: polyglot.v1.KnowledgeService.ToggleTechnicianActive:output_type -> polyglot.v1.ToggleTechnicianActiveResponse
+	36, // 44: polyglot.v1.KnowledgeService.DeleteTechnician:output_type -> polyglot.v1.DeleteTechnicianResponse
+	28, // [28:45] is the sub-list for method output_type
+	11, // [11:28] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_v1_knowledge_proto_init() }
@@ -2211,7 +2366,7 @@ func file_v1_knowledge_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_knowledge_proto_rawDesc), len(file_v1_knowledge_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   35,
+			NumMessages:   37,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

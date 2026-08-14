@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { GetMeRequest, GetMeResponse, LoginRequest, LoginResponse, RefreshTokenRequest, RefreshTokenResponse } from "./auth_pb.js";
+import { GetMeRequest, GetMeResponse, LoginRequest, LoginResponse, LogoutRequest, LogoutResponse, RefreshTokenRequest, RefreshTokenResponse } from "./auth_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -37,6 +37,15 @@ export const AuthService = {
       name: "RefreshToken",
       I: RefreshTokenRequest,
       O: RefreshTokenResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.AuthService.Logout
+     */
+    logout: {
+      name: "Logout",
+      I: LogoutRequest,
+      O: LogoutResponse,
       kind: MethodKind.Unary,
     },
   }

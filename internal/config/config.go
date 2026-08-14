@@ -28,6 +28,10 @@ type Config struct {
 	JWTSecret      string
 	JWTExpiryHours int
 
+	// RefreshTokenTTLHours controls how long an opaque refresh token stays
+	// valid in Redis (rotated on use). Default 7 days.
+	RefreshTokenTTLHours int
+
 	SessionTimeoutMinutes int
 	SlidingWindowSize     int
 
@@ -42,6 +46,11 @@ type Config struct {
 	WAStoreDir string
 
 	CORSOrigins []string
+
+	AnythingLLMBaseURL   string
+	AnythingLLMAPIKey    string
+	AnythingLLMWorkspace string
+	AnythingLLMTopN      int
 }
 
 func Load() Config {
@@ -60,7 +69,9 @@ func Load() Config {
 
 		EncryptionKey:  getEnv("ENCRYPTION_KEY", ""),
 		JWTSecret:      getEnv("JWT_SECRET", ""),
-		JWTExpiryHours: getEnvInt("JWT_EXPIRY_HOURS", 24),
+		JWTExpiryHours: getEnvInt("JWT_EXPIRY_HOURS", 1),
+
+		RefreshTokenTTLHours: getEnvInt("REFRESH_TOKEN_TTL_HOURS", 24*7),
 
 		SessionTimeoutMinutes: getEnvInt("SESSION_TIMEOUT_MINUTES", 30),
 		SlidingWindowSize:     getEnvInt("SLIDING_WINDOW_SIZE", 10),
@@ -81,6 +92,11 @@ func Load() Config {
 		WAStoreDir: getEnv("WA_STORE_DIR", "./wa_stores"),
 
 		CORSOrigins: getEnvSlice("CORS_ORIGINS", []string{"http://localhost:5173", "http://localhost:3000"}),
+
+		AnythingLLMBaseURL:   getEnv("ANYTHINGLLM_BASE_URL", "http://localhost:3001"),
+		AnythingLLMAPIKey:    getEnv("ANYTHINGLLM_API_KEY", ""),
+		AnythingLLMWorkspace: getEnv("ANYTHINGLLM_WORKSPACE", "netops"),
+		AnythingLLMTopN:      getEnvInt("ANYTHINGLLM_TOP_N", 6),
 	}
 }
 

@@ -45,6 +45,31 @@ export class KnowledgeItem extends Message<KnowledgeItem> {
    */
   updatedAt = "";
 
+  /**
+   * embed_to_llm menandakan dokumen ikut di-sync ke AnythingLLM (vector
+   * store). False = dokumen murni lokal (admin dashboard saja).
+   *
+   * @generated from field: bool embed_to_llm = 8;
+   */
+  embedToLlm = false;
+
+  /**
+   * embed_status: none | pending | embedded | failed.
+   *
+   * @generated from field: string embed_status = 9;
+   */
+  embedStatus = "";
+
+  /**
+   * anythingllm_doc_name adalah nama file dokumen JSON di AnythingLLM yang
+   * terakhir berhasil di-embed (mis. "custom-documents/raw-xxx.json").
+   * Kosong kalau dokumen lokal (embed_to_llm = false) atau belum pernah
+   * ter-embed. Dipakai untuk delete/re-embed dan tampil di UI admin.
+   *
+   * @generated from field: string anythingllm_doc_name = 10;
+   */
+  anythingllmDocName = "";
+
   constructor(data?: PartialMessage<KnowledgeItem>) {
     super();
     proto3.util.initPartial(data, this);
@@ -60,6 +85,9 @@ export class KnowledgeItem extends Message<KnowledgeItem> {
     { no: 5, name: "tags", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 6, name: "created_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "embed_to_llm", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 9, name: "embed_status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 10, name: "anythingllm_doc_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): KnowledgeItem {
@@ -257,6 +285,11 @@ export class CreateKnowledgeRequest extends Message<CreateKnowledgeRequest> {
    */
   tags: string[] = [];
 
+  /**
+   * @generated from field: bool embed_to_llm = 5;
+   */
+  embedToLlm = false;
+
   constructor(data?: PartialMessage<CreateKnowledgeRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -269,6 +302,7 @@ export class CreateKnowledgeRequest extends Message<CreateKnowledgeRequest> {
     { no: 2, name: "content", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "category", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "tags", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 5, name: "embed_to_llm", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateKnowledgeRequest {
@@ -354,6 +388,11 @@ export class UpdateKnowledgeRequest extends Message<UpdateKnowledgeRequest> {
    */
   tags: string[] = [];
 
+  /**
+   * @generated from field: bool embed_to_llm = 6;
+   */
+  embedToLlm = false;
+
   constructor(data?: PartialMessage<UpdateKnowledgeRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -367,6 +406,7 @@ export class UpdateKnowledgeRequest extends Message<UpdateKnowledgeRequest> {
     { no: 3, name: "content", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "category", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 5, name: "tags", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 6, name: "embed_to_llm", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateKnowledgeRequest {
@@ -494,6 +534,80 @@ export class DeleteKnowledgeResponse extends Message<DeleteKnowledgeResponse> {
 
   static equals(a: DeleteKnowledgeResponse | PlainMessage<DeleteKnowledgeResponse> | undefined, b: DeleteKnowledgeResponse | PlainMessage<DeleteKnowledgeResponse> | undefined): boolean {
     return proto3.util.equals(DeleteKnowledgeResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.RetryEmbedRequest
+ */
+export class RetryEmbedRequest extends Message<RetryEmbedRequest> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  constructor(data?: PartialMessage<RetryEmbedRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.RetryEmbedRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RetryEmbedRequest {
+    return new RetryEmbedRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RetryEmbedRequest {
+    return new RetryEmbedRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RetryEmbedRequest {
+    return new RetryEmbedRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RetryEmbedRequest | PlainMessage<RetryEmbedRequest> | undefined, b: RetryEmbedRequest | PlainMessage<RetryEmbedRequest> | undefined): boolean {
+    return proto3.util.equals(RetryEmbedRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.RetryEmbedResponse
+ */
+export class RetryEmbedResponse extends Message<RetryEmbedResponse> {
+  /**
+   * @generated from field: polyglot.v1.KnowledgeItem item = 1;
+   */
+  item?: KnowledgeItem;
+
+  constructor(data?: PartialMessage<RetryEmbedResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.RetryEmbedResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "item", kind: "message", T: KnowledgeItem },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RetryEmbedResponse {
+    return new RetryEmbedResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RetryEmbedResponse {
+    return new RetryEmbedResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RetryEmbedResponse {
+    return new RetryEmbedResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RetryEmbedResponse | PlainMessage<RetryEmbedResponse> | undefined, b: RetryEmbedResponse | PlainMessage<RetryEmbedResponse> | undefined): boolean {
+    return proto3.util.equals(RetryEmbedResponse, a, b);
   }
 }
 

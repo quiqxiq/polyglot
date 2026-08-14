@@ -5,12 +5,18 @@ import { SignOutDialog } from './sign-out-dialog'
 
 const navigate = vi.fn()
 const reset = vi.fn()
+const mutateAsync = vi.fn().mockResolvedValue({ success: true })
 
 const MOCK_HREF = 'https://app.test/dashboard?tab=1'
 
 vi.mock('@/stores/auth-store', () => ({
-  useAuthStore: () => ({
-    auth: { reset },
+  useAuthStore: (selector?: (state: unknown) => unknown) =>
+    selector ? selector({ auth: { reset } }) : { auth: { reset } },
+}))
+
+vi.mock('@/features/auth/api/use-auth', () => ({
+  useLogoutMutation: () => ({
+    mutateAsync,
   }),
 }))
 
@@ -28,7 +34,24 @@ describe('SignOutDialog', () => {
     vi.clearAllMocks()
   })
 
-  it('calls auth.reset and navigates to sign-in with current location as redirect', async () => {
+  it('calls the Logout RPC, resets auth, and navigates to sign-in with redirect', async () => {
+    const { getByRole } = await render(
+      <SignOutDialog open onOpenChange={vi.fn()} />
+    )
+
+    await userEvent.click(getByRole('button', { name: /^Sign out$/i }))
+
+    expect(mutateAsync).toHaveBeenCalledOnce()
+    expect(reset).toHaveBeenCalledOnce()
+    expect(navigate).toHaveBeenCalledWith({
+      to: '/sign-in',
+      search: { redirect: MOCK_HREF },
+      replace: true,
+    })
+  })
+
+  it('still resets and navigates when the Logout RPC fails', async () => {
+    mutateAsync.mockRejectedValueOnce(new Error('network down'))
     const { getByRole } = await render(
       <SignOutDialog open onOpenChange={vi.fn()} />
     )

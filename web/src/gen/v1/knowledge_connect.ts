@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ActivateLLMConfigRequest, ActivateLLMConfigResponse, CreateKnowledgeRequest, CreateKnowledgeResponse, CreateLLMConfigRequest, CreateLLMConfigResponse, CreateTechnicianRequest, CreateTechnicianResponse, DeleteKnowledgeRequest, DeleteKnowledgeResponse, DeleteLLMConfigRequest, DeleteLLMConfigResponse, DeleteTechnicianRequest, DeleteTechnicianResponse, GetKnowledgeRequest, GetKnowledgeResponse, ListKnowledgeRequest, ListKnowledgeResponse, ListLLMConfigsRequest, ListLLMConfigsResponse, ListTechniciansRequest, ListTechniciansResponse, TestLLMConfigRequest, TestLLMConfigResponse, ToggleTechnicianActiveRequest, ToggleTechnicianActiveResponse, UpdateKnowledgeRequest, UpdateKnowledgeResponse, UpdateLLMConfigRequest, UpdateLLMConfigResponse, UpdateTechnicianRequest, UpdateTechnicianResponse } from "./knowledge_pb.js";
+import { ActivateLLMConfigRequest, ActivateLLMConfigResponse, CreateKnowledgeRequest, CreateKnowledgeResponse, CreateLLMConfigRequest, CreateLLMConfigResponse, CreateTechnicianRequest, CreateTechnicianResponse, DeleteKnowledgeRequest, DeleteKnowledgeResponse, DeleteLLMConfigRequest, DeleteLLMConfigResponse, DeleteTechnicianRequest, DeleteTechnicianResponse, GetKnowledgeRequest, GetKnowledgeResponse, ListKnowledgeRequest, ListKnowledgeResponse, ListLLMConfigsRequest, ListLLMConfigsResponse, ListTechniciansRequest, ListTechniciansResponse, RetryEmbedRequest, RetryEmbedResponse, TestLLMConfigRequest, TestLLMConfigResponse, ToggleTechnicianActiveRequest, ToggleTechnicianActiveResponse, UpdateKnowledgeRequest, UpdateKnowledgeResponse, UpdateLLMConfigRequest, UpdateLLMConfigResponse, UpdateTechnicianRequest, UpdateTechnicianResponse } from "./knowledge_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -55,6 +55,18 @@ export const KnowledgeService = {
       name: "DeleteKnowledge",
       I: DeleteKnowledgeRequest,
       O: DeleteKnowledgeResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * RetryEmbed menjalankan ulang sinkronisasi embed ke AnythingLLM untuk
+     * satu dokumen (tombol Retry di UI untuk entry berstatus failed).
+     *
+     * @generated from rpc polyglot.v1.KnowledgeService.RetryEmbed
+     */
+    retryEmbed: {
+      name: "RetryEmbed",
+      I: RetryEmbedRequest,
+      O: RetryEmbedResponse,
       kind: MethodKind.Unary,
     },
     /**

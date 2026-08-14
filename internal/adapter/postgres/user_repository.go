@@ -56,3 +56,17 @@ func (s *Store) CountUsers() (int64, error) {
 	err := s.db.Model(&models.UserModel{}).Count(&count).Error
 	return count, err
 }
+
+// FindAllUsers returns all registered users, ordered by ID. Used by
+// EnsureUserRoleAssignments to sync Casbin role assignments.
+func (s *Store) FindAllUsers() ([]*customer.User, error) {
+	var ms []models.UserModel
+	if err := s.db.Order("id ASC").Find(&ms).Error; err != nil {
+		return nil, err
+	}
+	users := make([]*customer.User, 0, len(ms))
+	for i := range ms {
+		users = append(users, ms[i].ToDomain())
+	}
+	return users, nil
+}
