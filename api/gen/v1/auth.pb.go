@@ -74,12 +74,15 @@ func (x *LoginRequest) GetPassword() string {
 }
 
 type UserProfile struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
-	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	Role          string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
-	Roles         []string               `protobuf:"bytes,5,rep,name=roles,proto3" json:"roles,omitempty"`
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	Id       string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Username string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	Email    string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	Role     string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
+	Roles    []string               `protobuf:"bytes,5,rep,name=roles,proto3" json:"roles,omitempty"`
+	// Permissions efektif user (dari Casbin, termasuk warisan role group),
+	// diflatten ke format "resource:action" (wildcard regex, mis. "user:.*:*").
+	Permissions   []string `protobuf:"bytes,6,rep,name=permissions,proto3" json:"permissions,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -145,6 +148,13 @@ func (x *UserProfile) GetRole() string {
 func (x *UserProfile) GetRoles() []string {
 	if x != nil {
 		return x.Roles
+	}
+	return nil
+}
+
+func (x *UserProfile) GetPermissions() []string {
+	if x != nil {
+		return x.Permissions
 	}
 	return nil
 }
@@ -483,13 +493,14 @@ const file_v1_auth_proto_rawDesc = "" +
 	"\rv1/auth.proto\x12\vpolyglot.v1\"F\n" +
 	"\fLoginRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"y\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"\x9b\x01\n" +
 	"\vUserProfile\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12\x12\n" +
 	"\x04role\x18\x04 \x01(\tR\x04role\x12\x14\n" +
-	"\x05roles\x18\x05 \x03(\tR\x05roles\"{\n" +
+	"\x05roles\x18\x05 \x03(\tR\x05roles\x12 \n" +
+	"\vpermissions\x18\x06 \x03(\tR\vpermissions\"{\n" +
 	"\rLoginResponse\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12,\n" +
 	"\x04user\x18\x02 \x01(\v2\x18.polyglot.v1.UserProfileR\x04user\x12&\n" +

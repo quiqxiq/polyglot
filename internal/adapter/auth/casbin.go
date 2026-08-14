@@ -92,6 +92,16 @@ func (ce *CasbinEnforcer) DeleteRoleForUser(user, role string) (bool, error) {
 	return ok, err
 }
 
+// DeleteRolesForUser removes ALL role assignments of a user. Used when the
+// user itself is deleted — no orphan role mapping may remain.
+func (ce *CasbinEnforcer) DeleteRolesForUser(user string) (bool, error) {
+	ok, err := ce.enforcer.DeleteRolesForUser(user)
+	if err == nil && ok {
+		ce.persist()
+	}
+	return ok, err
+}
+
 // persist flushes the policy to the backing adapter (gorm in production).
 // Safe no-op for in-memory enforcers (unit tests) where GetAdapter() is nil.
 func (ce *CasbinEnforcer) persist() {
@@ -104,6 +114,26 @@ func (ce *CasbinEnforcer) persist() {
 // GetRolesForUser returns all roles assigned to a user.
 func (ce *CasbinEnforcer) GetRolesForUser(user string) ([]string, error) {
 	return ce.enforcer.GetRolesForUser(user)
+}
+
+// GetImplicitPermissionsForUser returns all effective permissions of a user,
+// including those inherited through role groups, flattened to "resource:action"
+// strings (e.g. "user:.*:*"). Callers match the resource part as a regex —
+// that mirrors how AuthorizeProcedure enforces policies (regexMatch).
+func (ce *CasbinEnforcer) GetImplicitPermissionsForUser(user string) ([]string, error) {
+	rows, err := ce.enforcer.GetImplicitPermissionsForUser(user)
+	if err != nil {
+		return nil, err
+	}
+	perms := make([]string, 0, len(rows))
+	for _, row := range rows {
+		// row = [role, resource, action]
+		if len(row) < 3 {
+			continue
+		}
+		perms = append(perms, row[1]+":"+row[2])
+	}
+	return perms, nil
 }
 
 // GetGroupingPolicies returns all user-role mappings.

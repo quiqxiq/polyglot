@@ -235,12 +235,19 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		refreshSvc,
 		redisStore,
 		casbinEnforcer,
+		casbinEnforcer,
 		cfg.AppEnv == "production",
 	)
 	r.Any(authConnectPath+"*action", gin.WrapH(authConnectHandler))
 
 	rbacConnectPath, rbacConnectHandler := authConnect.NewRBACServiceHandler(casbinEnforcer)
 	connectGroup.Any(rbacConnectPath+"*action", gin.WrapH(rbacConnectHandler))
+
+	// UserService — manajemen user (CRUD, reset password, aktif/nonaktif).
+	// user:read/user:manage, admin ke atas. jwtService dipakai self-guard
+	// (tidak bisa delete/deactivate/demote diri sendiri).
+	userConnectPath, userConnectHandler := authConnect.NewUserServiceHandler(pgStore, casbinEnforcer, jwtService)
+	connectGroup.Any(userConnectPath+"*action", gin.WrapH(userConnectHandler))
 
 	invRepo := postgres.NewInvoiceRepository(pgStore.DB())
 	subRepo := postgres.NewSubscriptionRepository(pgStore.DB())

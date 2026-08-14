@@ -15,6 +15,9 @@ message UserProfile {
   string email = 3;
   string role = 4;
   repeated string roles = 5;
+  // Permissions efektif user (dari Casbin, termasuk warisan role group),
+  // diflatten ke format "resource:action" (wildcard regex, mis. "user:.*:*").
+  repeated string permissions = 6;
 }
 
 message LoginResponse {

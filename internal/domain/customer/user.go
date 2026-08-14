@@ -8,9 +8,9 @@ type User struct {
 	Username     string    `json:"username"`
 	Email        string    `json:"email"`
 	PasswordHash string    `json:"-"`
-	Role         string    `json:"role"` // admin, agent
+	Role         string    `json:"role"` // role utama: owner, admin, agent, teknisi
+	IsActive     bool      `json:"is_active"`
 	TenantID     string    `json:"tenant_id"`
 	CreatedAt    time.Time `json:"created_at"`
 	UpdatedAt    time.Time `json:"updated_at"`
 }
-

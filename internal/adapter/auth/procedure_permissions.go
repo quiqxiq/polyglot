@@ -88,6 +88,15 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.HotspotService/StreamResource":       "hotspot:read",
 	"/polyglot.v1.HotspotService/StreamActiveSessions": "hotspot:read",
 
+	// UserService — manajemen user (CRUD, reset password, aktif/nonaktif).
+	// user:read untuk melihat daftar, user:manage untuk mutasi.
+	"/polyglot.v1.UserService/ListUsers":     "user:read",
+	"/polyglot.v1.UserService/CreateUser":    "user:manage",
+	"/polyglot.v1.UserService/UpdateUser":    "user:manage",
+	"/polyglot.v1.UserService/ResetPassword": "user:manage",
+	"/polyglot.v1.UserService/ToggleActive":  "user:manage",
+	"/polyglot.v1.UserService/DeleteUser":    "user:manage",
+
 	// RBACService — manajemen policy & role assignment, owner-only (rbac:manage)
 	"/polyglot.v1.RBACService/ListPolicies":        "rbac:manage",
 	"/polyglot.v1.RBACService/AddPolicy":           "rbac:manage",

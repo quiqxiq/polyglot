@@ -1,89 +1,65 @@
 'use client'
 
-import { useState } from 'react'
-import { AlertTriangle } from 'lucide-react'
-import { showSubmittedData } from '@/lib/show-submitted-data'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { ConfirmDialog } from '@/components/confirm-dialog'
-import { type User } from '../data/schema'
+import { DeleteUserRequest, type User } from '@/gen/v1/users_pb'
+import { toast } from 'sonner'
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
+import { useDeleteUserMutation } from '../api/use-users'
 
-type UserDeleteDialogProps = {
+type UsersDeleteDialogProps = {
+  user?: User | null
   open: boolean
   onOpenChange: (open: boolean) => void
-  currentRow: User
 }
 
 export function UsersDeleteDialog({
+  user,
   open,
   onOpenChange,
-  currentRow,
-}: UserDeleteDialogProps) {
-  const [value, setValue] = useState('')
+}: UsersDeleteDialogProps) {
+  const deleteMutation = useDeleteUserMutation()
 
-  const handleDelete = () => {
-    if (value.trim() !== currentRow.username) return
-
-    onOpenChange(false)
-    showSubmittedData(currentRow, 'The following user has been deleted:')
+  async function onDelete() {
+    if (!user) return
+    try {
+      await deleteMutation.mutateAsync(new DeleteUserRequest({ id: user.id }))
+      toast.success(`User ${user.username} deleted`)
+      onOpenChange(false)
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : 'Failed to delete user')
+    }
   }
 
   return (
-    <ConfirmDialog
-      open={open}
-      onOpenChange={onOpenChange}
-      form='users-delete-form'
-      disabled={value.trim() !== currentRow.username}
-      title={
-        <span className='text-destructive'>
-          <AlertTriangle
-            className='me-1 inline-block stroke-destructive'
-            size={18}
-          />{' '}
-          Delete User
-        </span>
-      }
-      desc={
-        <form
-          id='users-delete-form'
-          onSubmit={(e) => {
-            e.preventDefault()
-            handleDelete()
-          }}
-          className='space-y-4'
-        >
-          <p className='mb-2'>
-            Are you sure you want to delete{' '}
-            <span className='font-bold'>{currentRow.username}</span>?
-            <br />
-            This action will permanently remove the user with the role of{' '}
-            <span className='font-bold'>
-              {currentRow.role.toUpperCase()}
-            </span>{' '}
-            from the system. This cannot be undone.
-          </p>
-
-          <Label className='my-2'>
-            Username:
-            <Input
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              placeholder='Enter username to confirm deletion.'
-              autoFocus
-            />
-          </Label>
-
-          <Alert variant='destructive'>
-            <AlertTitle>Warning!</AlertTitle>
-            <AlertDescription>
-              Please be careful, this operation can not be rolled back.
-            </AlertDescription>
-          </Alert>
-        </form>
-      }
-      confirmText='Delete'
-      destructive
-    />
+    <AlertDialog open={open} onOpenChange={(v) => !v && onOpenChange(false)}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. The account{' '}
+            <strong>{user?.username}</strong> ({user?.email}) will be deleted
+            permanently, along with its role assignments.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <Button
+            variant='destructive'
+            onClick={onDelete}
+            disabled={deleteMutation.isPending}
+          >
+            {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }

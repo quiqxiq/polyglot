@@ -38,12 +38,19 @@ type RoleResolver interface {
 	GetRolesForUser(user string) ([]string, error)
 }
 
+// PermissionResolver resolves the effective permissions of a user from Casbin
+// (including role-group inheritance), flattened to "resource:action" strings.
+type PermissionResolver interface {
+	GetImplicitPermissionsForUser(user string) ([]string, error)
+}
+
 type AuthConnectHandler struct {
 	pgStore    *postgres.Store
 	jwtService *auth.JWTService
 	refreshSvc *auth.RefreshTokenService
 	rateLimit  LoginRateLimiter
 	roles      RoleResolver
+	perms      PermissionResolver
 	secure     bool
 }
 
@@ -53,6 +60,7 @@ func NewAuthConnectHandler(
 	refreshSvc *auth.RefreshTokenService,
 	rateLimit LoginRateLimiter,
 	roles RoleResolver,
+	perms PermissionResolver,
 	secure bool,
 ) *AuthConnectHandler {
 	return &AuthConnectHandler{
@@ -61,6 +69,7 @@ func NewAuthConnectHandler(
 		refreshSvc: refreshSvc,
 		rateLimit:  rateLimit,
 		roles:      roles,
+		perms:      perms,
 		secure:     secure,
 	}
 }
@@ -96,6 +105,12 @@ func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[dev
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
+	// Akun nonaktif tidak boleh login (di-disable via UserService.ToggleActive).
+	if !user.IsActive {
+		h.recordFailedLogin(ctx, rlScope)
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("account is disabled"))
+	}
+
 	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(req.Msg.Password)); err != nil {
 		h.recordFailedLogin(ctx, rlScope)
 		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid username or password"))
@@ -109,6 +124,7 @@ func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[dev
 	// Roles dari Casbin g (multi-role, source of truth); fallback ke kolom
 	// role tunggal bila user belum punya assignment grup.
 	roles := h.resolveRoles(user.ID, user.Role)
+	permissions := h.resolvePermissions(user.ID)
 
 	accessToken, err := h.jwtService.GenerateToken(user.ID, user.Email, roles, user.TenantID)
 	if err != nil {
@@ -132,11 +148,12 @@ func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[dev
 	res := connect.NewResponse(&devicepb.LoginResponse{
 		Token: accessToken,
 		User: &devicepb.UserProfile{
-			Id:       fmt.Sprintf("%d", user.ID),
-			Username: user.Username,
-			Email:    user.Email,
-			Role:     user.Role,
-			Roles:    roles,
+			Id:          fmt.Sprintf("%d", user.ID),
+			Username:    user.Username,
+			Email:       user.Email,
+			Role:        user.Role,
+			Roles:       roles,
+			Permissions: permissions,
 		},
 		ExpiresAtUnix: time.Now().Add(h.jwtService.ExpiryDuration()).Unix(),
 	})
@@ -162,16 +179,19 @@ func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[dev
 		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("unauthorized: %w", err))
 	}
 
+	permissions := h.resolvePermissions(claims.UserID)
+
 	if h.pgStore != nil {
 		user, err := h.pgStore.FindUserByID(claims.UserID)
 		if err == nil && user != nil {
 			return connect.NewResponse(&devicepb.GetMeResponse{
 				User: &devicepb.UserProfile{
-					Id:       fmt.Sprintf("%d", user.ID),
-					Username: user.Username,
-					Email:    user.Email,
-					Role:     user.Role,
-					Roles:    claims.Roles,
+					Id:          fmt.Sprintf("%d", user.ID),
+					Username:    user.Username,
+					Email:       user.Email,
+					Role:        user.Role,
+					Roles:       claims.Roles,
+					Permissions: permissions,
 				},
 			}), nil
 		}
@@ -179,11 +199,12 @@ func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[dev
 
 	return connect.NewResponse(&devicepb.GetMeResponse{
 		User: &devicepb.UserProfile{
-			Id:       fmt.Sprintf("%d", claims.UserID),
-			Username: claims.Email,
-			Email:    claims.Email,
-			Role:     claims.Role,
-			Roles:    claims.Roles,
+			Id:          fmt.Sprintf("%d", claims.UserID),
+			Username:    claims.Email,
+			Email:       claims.Email,
+			Role:        claims.Role,
+			Roles:       claims.Roles,
+			Permissions: permissions,
 		},
 	}), nil
 }
@@ -249,6 +270,16 @@ func (h *AuthConnectHandler) resolveRoles(userID uint, fallbackRole string) []st
 	return nil
 }
 
+func (h *AuthConnectHandler) resolvePermissions(userID uint) []string {
+	if h.perms == nil {
+		return nil
+	}
+	if perms, err := h.perms.GetImplicitPermissionsForUser(auth.UserIDToRef(userID)); err == nil {
+		return perms
+	}
+	return nil
+}
+
 func clientIPFromRequest(req *connect.Request[devicepb.LoginRequest]) string {
 	xff := req.Header().Get("X-Forwarded-For")
 	if xff != "" {
@@ -274,9 +305,10 @@ func NewAuthServiceHandler(
 	refreshSvc *auth.RefreshTokenService,
 	rateLimit LoginRateLimiter,
 	roles RoleResolver,
+	perms PermissionResolver,
 	secure bool,
 ) (string, http.Handler) {
-	handler := NewAuthConnectHandler(pgStore, jwtService, refreshSvc, rateLimit, roles, secure)
+	handler := NewAuthConnectHandler(pgStore, jwtService, refreshSvc, rateLimit, roles, perms, secure)
 	mux := http.NewServeMux()
 	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 

@@ -16,6 +16,7 @@ async function trySilentRefresh(): Promise<boolean> {
         accountNo: me.user.id,
         email: me.user.email,
         role: me.user.roles.length ? me.user.roles : [me.user.role],
+        permissions: me.user.permissions,
         exp: Number(res.expiresAtUnix) * 1000,
       })
     }

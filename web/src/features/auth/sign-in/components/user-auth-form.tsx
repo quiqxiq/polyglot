@@ -65,6 +65,7 @@ export function UserAuthForm({
           accountNo: res.user.id,
           email: res.user.email,
           role: res.user.roles.length ? res.user.roles : [res.user.role],
+          permissions: res.user.permissions,
           exp: Number(res.expiresAtUnix) * 1000,
         })
       }

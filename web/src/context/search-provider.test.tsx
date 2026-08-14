@@ -22,6 +22,31 @@ vi.mock('@/context/theme-provider', () => ({
   useTheme: () => ({ setTheme: mocks.setTheme }),
 }))
 
+// Sidebar asli sudah dibersihkan dari item demo (Settings, Clerk, dsb) dan
+// sekarang semua item flat. Fixture ini menguji perilaku CommandMenu secara
+// deterministik — termasuk jalur nested (collapsible group) yang tetap
+// didukung tipe & komponen, tanpa bergantung data sidebar produksi.
+vi.mock('@/components/layout/data/sidebar-data', () => ({
+  sidebarData: {
+    user: { name: 'Test', email: 'test@polyglot.local', avatar: '' },
+    teams: [],
+    navGroups: [
+      {
+        title: 'General',
+        items: [
+          { title: 'Dashboard', url: '/', icon: () => null },
+          { title: 'Tasks', url: '/tasks', icon: () => null },
+          {
+            title: 'Settings',
+            icon: () => null,
+            items: [{ title: 'Account', url: '/settings/account' }],
+          },
+        ],
+      },
+    ],
+  },
+}))
+
 type ShortcutModifier = 'Control' | 'Meta'
 
 async function renderWithSearchProvider() {

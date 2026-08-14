@@ -16,6 +16,9 @@ type BaseNavItem = {
   title: string
   badge?: string
   icon?: React.ElementType
+  // Permission Casbin yang dibutuhkan (mis. "user:read"). Item tanpa
+  // permission selalu tampil untuk user yang sudah login.
+  permission?: string
 }
 
 type NavLink = BaseNavItem & {

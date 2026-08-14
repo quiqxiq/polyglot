@@ -7,6 +7,7 @@ import { HotspotService } from '@/gen/v1/hotspot_connect'
 import { KnowledgeService } from '@/gen/v1/knowledge_connect'
 import { ProbeService } from '@/gen/v1/probe_connect'
 import { RBACService } from '@/gen/v1/rbac_connect'
+import { UserService } from '@/gen/v1/users_connect'
 import { WhatsAppService } from '@/gen/v1/whatsapp_connect'
 import { createPromiseClient, Code, ConnectError } from '@connectrpc/connect'
 import { createConnectTransport } from '@connectrpc/connect-web'
@@ -100,4 +101,5 @@ export const hotspotClient = createPromiseClient(HotspotService, transport)
 export const knowledgeClient = createPromiseClient(KnowledgeService, transport)
 export const probeClient = createPromiseClient(ProbeService, transport)
 export const rbacClient = createPromiseClient(RBACService, transport)
+export const userClient = createPromiseClient(UserService, transport)
 export const whatsappClient = createPromiseClient(WhatsAppService, transport)

@@ -21,6 +21,7 @@ type UserModel struct {
 	Email        string `gorm:"type:varchar(255);unique;not null"`
 	PasswordHash string `gorm:"type:varchar(255);not null"`
 	Role         string `gorm:"type:varchar(50);not null;default:agent"`
+	IsActive     bool   `gorm:"type:boolean;not null;default:true"`
 	TenantID     string `gorm:"type:varchar(100);not null;default:tenant-default"`
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
@@ -39,6 +40,7 @@ func (m *UserModel) ToDomain() *customer.User {
 		Email:        m.Email,
 		PasswordHash: m.PasswordHash,
 		Role:         m.Role,
+		IsActive:     m.IsActive,
 		TenantID:     m.TenantID,
 		CreatedAt:    m.CreatedAt,
 		UpdatedAt:    m.UpdatedAt,
@@ -55,6 +57,7 @@ func UserModelFromDomain(u *customer.User) *UserModel {
 		Email:        u.Email,
 		PasswordHash: u.PasswordHash,
 		Role:         u.Role,
+		IsActive:     u.IsActive,
 		TenantID:     u.TenantID,
 		CreatedAt:    u.CreatedAt,
 		UpdatedAt:    u.UpdatedAt,

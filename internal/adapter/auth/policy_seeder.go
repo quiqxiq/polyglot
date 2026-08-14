@@ -41,6 +41,7 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"admin", "llmconfig:.*", "*"},
 		{"admin", "technician:.*", "*"},
 		{"admin", "hotspot:.*", "*"},
+		{"admin", "user:.*", "*"},
 
 		// Agent / CS — customer service & knowledge lookup.
 		{"agent", "conversation:.*", "*"},

@@ -39,6 +39,7 @@ func main() {
 
 	ctx := context.Background()
 	seedUsers(pgStore)
+	ensureOwnerExists(pgStore)
 	seedKnowledge(pgStore)
 	seedLLMConfig(pgStore, cfg)
 	seedCasbin(ctx, pgStore)
@@ -125,6 +126,34 @@ func seedUsers(pgStore *postgres.Store) {
 			log.Printf("Created user: %s [Email: %s] (%s)", u.username, u.email, u.role)
 		}
 	}
+}
+
+// ensureOwnerExists menjamin minimal ada satu user ber-role owner — satu-
+// satunya role yang bisa mengelola RBAC (rbac:manage). Kalau belum ada
+// owner dan ada user admin, admin pertama (ID terkecil) otomatis dinaikkan
+// jadi owner. Idempotent: kalau owner sudah ada, tidak melakukan apa-apa.
+func ensureOwnerExists(pgStore *postgres.Store) {
+	users, err := pgStore.FindAllUsers()
+	if err != nil || len(users) == 0 {
+		return
+	}
+	for _, u := range users {
+		if u.Role == "owner" {
+			return
+		}
+	}
+	for _, u := range users {
+		if u.Role == "admin" {
+			u.Role = "owner"
+			if err := pgStore.UpdateUser(u); err != nil {
+				log.Printf("Failed to promote first admin to owner: %v", err)
+			} else {
+				log.Printf("Promoted user %q (id=%d) to owner — first admin becomes owner", u.Username, u.ID)
+			}
+			return
+		}
+	}
+	log.Println("No admin user found to promote to owner — create an owner manually to manage RBAC")
 }
 
 func seedCasbin(ctx context.Context, pgStore *postgres.Store) {

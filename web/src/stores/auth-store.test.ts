@@ -5,6 +5,7 @@ const sampleUser = {
   accountNo: 'ACC-1',
   email: 'user@example.com',
   role: ['user'],
+  permissions: ['knowledge:read:*'],
   exp: 1_700_000_000,
 }
 
