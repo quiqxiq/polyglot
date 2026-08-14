@@ -2,7 +2,7 @@
 /dist/
 /server
 server.exe
-# *.env
+*.env
 .env.local
 wa_stores/
 .ref-wa-multidevice/
