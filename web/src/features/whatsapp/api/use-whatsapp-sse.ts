@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { GetWASessionQRResponse, type WASession } from '@/gen/v1/whatsapp_pb'
+import type { WARealtimeStatus } from '@/lib/realtime'
 import { botKeys } from '@/features/chats/api/keys'
 import { waDeviceKeys } from './keys'
-import type { WARealtimeStatus } from '@/lib/realtime'
 
 // Endpoint /events ter-register publik di backend (tanpa guard JWT), sehingga
 // EventSource native bisa dipakai tanpa header Authorization.
@@ -28,6 +28,81 @@ interface ConversationStatusPayload {
   session_id: number
   customer_number: string
   status: string
+}
+
+export interface ChatPresencePayload {
+  session_id: number
+  chat_jid: string
+  sender_jid: string
+  state: string // "composing" | "paused"
+  media: string // "" | "audio"
+  is_group: boolean
+}
+
+// State typing/recording satu chat — dipakai indikator "mengetik…" di Inbox.
+export interface ChatPresence {
+  state: 'composing' | 'paused'
+  media: string
+  senderJid: string
+  isGroup: boolean
+  // Expiry epoch ms — fallback bila event "paused" terlewat (WhatsApp tidak
+  // menjamin event penutup tiba; pruner interval menghapus entri kadaluarsa).
+  until: number
+}
+
+export type WARealtimeState = {
+  status: WARealtimeStatus
+  typing: Record<string, ChatPresence>
+}
+
+// Key entri typing: `${session_id}:${chat_jid}` — sama di semua halaman.
+export function typingKey(sessionId: string | number, chatJid: string): string {
+  return `${sessionId}:${chatJid}`
+}
+
+// Masa aktif satu indikator typing — fallback bila event "paused" terlewat.
+export const TYPING_TTL_MS = 8000
+
+// Pure reducer state typing: menerapkan satu event chat_presence ke map.
+// "composing" menambah/me-refresh entri; "paused" menghapusnya. Diekstrak
+// agar logika bisa diuji unit tanpa browser/EventSource.
+export function applyChatPresence(
+  prev: Record<string, ChatPresence>,
+  payload: ChatPresencePayload,
+  now: number
+): Record<string, ChatPresence> {
+  const key = typingKey(payload.session_id, payload.chat_jid)
+  if (payload.state === 'composing') {
+    return {
+      ...prev,
+      [key]: {
+        state: 'composing',
+        media: payload.media || '',
+        senderJid: payload.sender_jid || '',
+        isGroup: Boolean(payload.is_group),
+        until: now + TYPING_TTL_MS,
+      },
+    }
+  }
+  if (!(key in prev)) return prev
+  const next = { ...prev }
+  delete next[key]
+  return next
+}
+
+// Pure reducer: hapus entri typing yang kadaluarsa (indikator tidak boleh
+// menempel selamanya bila event penutup tidak pernah tiba).
+export function pruneTyping(
+  prev: Record<string, ChatPresence>,
+  now: number
+): Record<string, ChatPresence> {
+  let changed = false
+  const next: Record<string, ChatPresence> = {}
+  for (const [k, v] of Object.entries(prev)) {
+    if (v.until > now) next[k] = v
+    else changed = true
+  }
+  return changed ? next : prev
 }
 
 // Query key sessions dipakai di dua fitur dengan key space berbeda:
@@ -61,9 +136,10 @@ const BOT_CONTEXT_PREFIX = ['bot', 'conversation-context'] as const
  * EventSource), query di-invalidate sekali agar state tersinkron dengan event
  * yang mungkin terlewat.
  */
-export function useWARealtimeStream(): WARealtimeStatus {
+export function useWARealtimeStream(): WARealtimeState {
   const queryClient = useQueryClient()
   const [sseStatus, setSseStatus] = useState<WARealtimeStatus>('connecting')
+  const [typing, setTyping] = useState<Record<string, ChatPresence>>({})
 
   useEffect(() => {
     const es = new EventSource(`${SSE_BASE}/events`)
@@ -85,7 +161,7 @@ export function useWARealtimeStream(): WARealtimeStatus {
       if (payload.qr_code) {
         queryClient.setQueryData(
           waDeviceKeys.qr(sessionId),
-          new GetWASessionQRResponse({ qrCodeBase64: payload.qr_code }),
+          new GetWASessionQRResponse({ qrCodeBase64: payload.qr_code })
         )
       }
 
@@ -121,8 +197,12 @@ export function useWARealtimeStream(): WARealtimeStatus {
       // sedang dipilih (key lengkap hanya match query yang aktif) + daftar
       // percakapan bot + konteks percakapan yang sedang dibuka.
       queryClient.invalidateQueries({ queryKey: botKeys.chats(sessionId) })
-      queryClient.invalidateQueries({ queryKey: botKeys.chatMessages(sessionId, chatJid) })
-      queryClient.invalidateQueries({ queryKey: botKeys.conversations(sessionId) })
+      queryClient.invalidateQueries({
+        queryKey: botKeys.chatMessages(sessionId, chatJid),
+      })
+      queryClient.invalidateQueries({
+        queryKey: botKeys.conversations(sessionId),
+      })
       queryClient.invalidateQueries({ queryKey: BOT_CONTEXT_PREFIX })
     }
 
@@ -139,21 +219,47 @@ export function useWARealtimeStream(): WARealtimeStatus {
       // Daftar percakapan session tsb + konteks percakapan yang sedang dibuka
       // (bar status/tombol ambil alih di kanan) refresh instan — termasuk bila
       // perubahan status dilakukan dari perangkat/tab lain.
-      queryClient.invalidateQueries({ queryKey: botKeys.conversations(sessionId) })
+      queryClient.invalidateQueries({
+        queryKey: botKeys.conversations(sessionId),
+      })
       if (convId && convId !== '0') {
-        queryClient.invalidateQueries({ queryKey: botKeys.conversation(convId) })
-        queryClient.invalidateQueries({ queryKey: botKeys.conversationContext(convId) })
+        queryClient.invalidateQueries({
+          queryKey: botKeys.conversation(convId),
+        })
+        queryClient.invalidateQueries({
+          queryKey: botKeys.conversationContext(convId),
+        })
       }
       queryClient.invalidateQueries({ queryKey: BOT_CONTEXT_PREFIX })
     }
 
     const handleSessionStatus = (e: MessageEvent) => applyStatus(e.data)
     const handleChatUpdate = (e: MessageEvent) => applyChatUpdate(e.data)
-    const handleConversationStatus = (e: MessageEvent) => applyConversationStatus(e.data)
+    const handleConversationStatus = (e: MessageEvent) =>
+      applyConversationStatus(e.data)
+
+    // `chat_presence` (typing/recording dari kontak) → map typing per chat.
+    const handleChatPresence = (e: MessageEvent) => {
+      let payload: ChatPresencePayload
+      try {
+        payload = JSON.parse(e.data) as ChatPresencePayload
+      } catch {
+        return
+      }
+      if (!payload.chat_jid) return
+      setTyping((prev) => applyChatPresence(prev, payload, Date.now()))
+    }
+
+    // Pruner: hapus entri typing yang kadaluarsa (fallback bila "paused"
+    // tidak pernah tiba, mis. kontak berhenti mengetik tanpa event penutup).
+    const pruner = setInterval(() => {
+      setTyping((prev) => pruneTyping(prev, Date.now()))
+    }, 1000)
 
     es.addEventListener('session_status', handleSessionStatus)
     es.addEventListener('chat_update', handleChatUpdate)
     es.addEventListener('conversation_status', handleConversationStatus)
+    es.addEventListener('chat_presence', handleChatPresence)
     es.onopen = () => {
       setSseStatus('open')
       // Open pertama: query awal sudah fetch saat mount. Namun bila fetch awal
@@ -183,7 +289,7 @@ export function useWARealtimeStream(): WARealtimeStatus {
           ? 'closed'
           : hasConnectedOnce
             ? 'reconnecting'
-            : 'connecting',
+            : 'connecting'
       )
     }
 
@@ -191,9 +297,11 @@ export function useWARealtimeStream(): WARealtimeStatus {
       es.removeEventListener('session_status', handleSessionStatus)
       es.removeEventListener('chat_update', handleChatUpdate)
       es.removeEventListener('conversation_status', handleConversationStatus)
+      es.removeEventListener('chat_presence', handleChatPresence)
+      clearInterval(pruner)
       es.close()
     }
   }, [queryClient])
 
-  return sseStatus
+  return { status: sseStatus, typing }
 }

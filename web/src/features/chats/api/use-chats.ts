@@ -1,6 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { botClient, whatsappClient } from '@/lib/api-client'
-import { botKeys } from './keys'
 import type {
   TakeOverConversationRequest,
   ResetConversationBotRequest,
@@ -13,6 +11,8 @@ import type {
   ToggleChatBotRequest,
   ToggleWABotRequest,
 } from '@/gen/v1/whatsapp_pb'
+import { botClient, whatsappClient } from '@/lib/api-client'
+import { botKeys } from './keys'
 
 export function useConversationsQuery(sessionId = '') {
   return useQuery({
@@ -54,9 +54,13 @@ export function useTakeOverConversationMutation() {
       return await botClient.takeOverConversation(req)
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: botKeys.conversation(variables.id) })
+      queryClient.invalidateQueries({
+        queryKey: botKeys.conversation(variables.id),
+      })
       queryClient.invalidateQueries({ queryKey: botKeys.conversations() })
-      queryClient.invalidateQueries({ queryKey: botKeys.conversationContext(variables.id) })
+      queryClient.invalidateQueries({
+        queryKey: botKeys.conversationContext(variables.id),
+      })
     },
   })
 }
@@ -69,9 +73,13 @@ export function useResetConversationBotMutation() {
       return await botClient.resetConversationBot(req)
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: botKeys.conversation(variables.id) })
+      queryClient.invalidateQueries({
+        queryKey: botKeys.conversation(variables.id),
+      })
       queryClient.invalidateQueries({ queryKey: botKeys.conversations() })
-      queryClient.invalidateQueries({ queryKey: botKeys.conversationContext(variables.id) })
+      queryClient.invalidateQueries({
+        queryKey: botKeys.conversationContext(variables.id),
+      })
     },
   })
 }
@@ -84,9 +92,13 @@ export function useCloseConversationMutation() {
       return await botClient.closeConversation(req)
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: botKeys.conversation(variables.id) })
+      queryClient.invalidateQueries({
+        queryKey: botKeys.conversation(variables.id),
+      })
       queryClient.invalidateQueries({ queryKey: botKeys.conversations() })
-      queryClient.invalidateQueries({ queryKey: botKeys.conversationContext(variables.id) })
+      queryClient.invalidateQueries({
+        queryKey: botKeys.conversationContext(variables.id),
+      })
     },
   })
 }
@@ -148,10 +160,15 @@ export function useSendWATextMessageMutation() {
     },
     onSuccess: (_, variables) => {
       // Refresh both the chat list (preview/order) and the conversation pane.
-      queryClient.invalidateQueries({ queryKey: botKeys.chats(variables.sessionId) })
+      queryClient.invalidateQueries({
+        queryKey: botKeys.chats(variables.sessionId),
+      })
       if (variables.recipientPhone) {
         queryClient.invalidateQueries({
-          queryKey: botKeys.chatMessages(variables.sessionId, variables.recipientPhone),
+          queryKey: botKeys.chatMessages(
+            variables.sessionId,
+            variables.recipientPhone
+          ),
         })
       }
     },
@@ -164,18 +181,34 @@ export function useListChatsQuery(sessionId: string, search = '') {
   return useQuery({
     queryKey: botKeys.chats(sessionId, search),
     queryFn: async () => {
-      const res = await whatsappClient.listChats({ sessionId, search, limit: 50, offset: 0 })
+      // Limit dinaikkan (200) supaya filter tab (unread/read/group/new) yang
+      // diterapkan client-side tidak kehilangan chat di luar 50 terbaru.
+      const res = await whatsappClient.listChats({
+        sessionId,
+        search,
+        limit: 200,
+        offset: 0,
+      })
       return res.chats
     },
     enabled: Boolean(sessionId),
   })
 }
 
-export function useGetChatMessagesQuery(sessionId: string, chatJid: string, enabled = true) {
+export function useGetChatMessagesQuery(
+  sessionId: string,
+  chatJid: string,
+  enabled = true
+) {
   return useQuery({
     queryKey: botKeys.chatMessages(sessionId, chatJid),
     queryFn: async () => {
-      const res = await whatsappClient.getChatMessages({ sessionId, chatJid, limit: 200, offset: 0 })
+      const res = await whatsappClient.getChatMessages({
+        sessionId,
+        chatJid,
+        limit: 200,
+        offset: 0,
+      })
       return res.messages
     },
     enabled: Boolean(sessionId) && Boolean(chatJid) && enabled,
@@ -190,7 +223,9 @@ export function useMarkChatReadMutation() {
       return await whatsappClient.markChatRead(req)
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: botKeys.chats(variables.sessionId) })
+      queryClient.invalidateQueries({
+        queryKey: botKeys.chats(variables.sessionId),
+      })
     },
   })
 }
@@ -203,8 +238,9 @@ export function useToggleChatBotMutation() {
       return await whatsappClient.toggleChatBot(req)
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: botKeys.chats(variables.sessionId) })
+      queryClient.invalidateQueries({
+        queryKey: botKeys.chats(variables.sessionId),
+      })
     },
   })
 }
-

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import type { WASession } from '@/gen/v1/whatsapp_pb'
 import {
   MessageCircleMore,
   Plus,
@@ -9,17 +10,8 @@ import {
   Smartphone,
   LoaderCircle,
 } from 'lucide-react'
+import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
-import { Separator } from '@/components/ui/separator'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,9 +22,17 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { toast } from 'sonner'
-import { CreateDeviceDialog } from './components/create-device-dialog'
-import { QRModal } from './components/qr-modal'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { ConfigDrawer } from '@/components/config-drawer'
+import { Header } from '@/components/layout/header'
+import { Main } from '@/components/layout/main'
+import { ProfileDropdown } from '@/components/profile-dropdown'
+import { Search } from '@/components/search'
+import { SSEIndicator } from '@/components/sse-indicator'
+import { ThemeSwitch } from '@/components/theme-switch'
 import {
   useWASessionsQuery,
   useReconnectWASessionMutation,
@@ -40,10 +40,14 @@ import {
   usePurgeWASessionMutation,
 } from './api/use-whatsapp'
 import { useWARealtimeStream } from './api/use-whatsapp-sse'
-import { SSEIndicator } from '@/components/sse-indicator'
-import type { WASession } from '@/gen/v1/whatsapp_pb'
+import { CreateDeviceDialog } from './components/create-device-dialog'
+import { QRModal } from './components/qr-modal'
 
-function statusMeta(status: string): { label: string; className: string; dot: string } {
+function statusMeta(status: string): {
+  label: string
+  className: string
+  dot: string
+} {
   switch (status) {
     case 'online':
       return {
@@ -80,7 +84,7 @@ function formatJid(jid: string): string {
 export function WhatsAppDevices() {
   // Status device & QR ter-update instan via SSE, bukan polling.
   // Status koneksi untuk indikator header.
-  const sseStatus = useWARealtimeStream()
+  const { status: sseStatus } = useWARealtimeStream()
 
   const [createOpen, setCreateOpen] = useState(false)
   // Modal QR memakai ID + flag snapshot (bukan objek session) supaya status
@@ -95,13 +99,15 @@ export function WhatsAppDevices() {
 
   // Session live dari query cache (status ter-update via SSE) untuk modal QR.
   const qrSession = useMemo(
-    () => (qrSessionId ? sessions.find((s) => s.id === qrSessionId) ?? null : null),
-    [sessions, qrSessionId],
+    () =>
+      qrSessionId ? (sessions.find((s) => s.id === qrSessionId) ?? null) : null,
+    [sessions, qrSessionId]
   )
   // Auto-close: modal di-render tertutup (session null) saat device yang tadinya
   // offline berubah jadi online via SSE. Modal yang dibuka untuk device
   // sudah-online (qrOpenedOnline) tetap menampilkan state "sudah terhubung".
-  const qrAutoClosed = qrSession !== null && !qrOpenedOnline && qrSession.status === 'online'
+  const qrAutoClosed =
+    qrSession !== null && !qrOpenedOnline && qrSession.status === 'online'
 
   const autoCloseNotifiedRef = useRef(false)
   useEffect(() => {
@@ -123,28 +129,38 @@ export function WhatsAppDevices() {
   const purgeMutation = usePurgeWASessionMutation()
 
   const handleReconnect = (s: WASession) => {
-    reconnectMutation.mutate({ sessionId: s.id }, {
-      onSuccess: () => toast.success(`Reconnect ${s.name} dimulai`),
-      onError: (err) => toast.error(`Reconnect gagal: ${err.message}`),
-    })
+    reconnectMutation.mutate(
+      { sessionId: s.id },
+      {
+        onSuccess: () => toast.success(`Reconnect ${s.name} dimulai`),
+        onError: (err) => toast.error(`Reconnect gagal: ${err.message}`),
+      }
+    )
   }
 
   const handleLogout = (s: WASession) => {
-    logoutMutation.mutate({ sessionId: s.id }, {
-      onSuccess: () => toast.success(`${s.name} di-logout (slot tetap, bisa di-pair ulang)`),
-      onError: (err) => toast.error(`Logout gagal: ${err.message}`),
-    })
+    logoutMutation.mutate(
+      { sessionId: s.id },
+      {
+        onSuccess: () =>
+          toast.success(`${s.name} di-logout (slot tetap, bisa di-pair ulang)`),
+        onError: (err) => toast.error(`Logout gagal: ${err.message}`),
+      }
+    )
   }
 
   const handlePurge = () => {
     if (!purgeTarget) return
-    purgeMutation.mutate({ sessionId: purgeTarget.id }, {
-      onSuccess: () => {
-        toast.success(`${purgeTarget.name} dihapus permanen`)
-        setPurgeTarget(null)
-      },
-      onError: (err) => toast.error(`Hapus gagal: ${err.message}`),
-    })
+    purgeMutation.mutate(
+      { sessionId: purgeTarget.id },
+      {
+        onSuccess: () => {
+          toast.success(`${purgeTarget.name} dihapus permanen`)
+          setPurgeTarget(null)
+        },
+        onError: (err) => toast.error(`Hapus gagal: ${err.message}`),
+      }
+    )
   }
 
   const pendingPurge = purgeMutation.isPending && purgeTarget !== null
@@ -167,7 +183,8 @@ export function WhatsAppDevices() {
               WhatsApp Devices
             </h1>
             <p className='text-sm text-muted-foreground'>
-              Hubungkan, scan QR, atau pairing code untuk setiap perangkat WhatsApp.
+              Hubungkan, scan QR, atau pairing code untuk setiap perangkat
+              WhatsApp.
             </p>
           </div>
           <Button onClick={() => setCreateOpen(true)} className='gap-1.5'>
@@ -189,7 +206,8 @@ export function WhatsAppDevices() {
             <div>
               <h2 className='text-lg font-semibold'>Belum ada perangkat</h2>
               <p className='text-sm text-muted-foreground'>
-                Tambah perangkat lalu scan QR atau gunakan pairing code untuk menghubungkan.
+                Tambah perangkat lalu scan QR atau gunakan pairing code untuk
+                menghubungkan.
               </p>
             </div>
             <Button onClick={() => setCreateOpen(true)} className='gap-1.5'>
@@ -202,13 +220,19 @@ export function WhatsAppDevices() {
               const meta = statusMeta(s.status)
               const isOnline = s.status === 'online'
               return (
-                <Card key={s.id} className='overflow-hidden transition-shadow hover:shadow-md'>
+                <Card
+                  key={s.id}
+                  className='overflow-hidden transition-shadow hover:shadow-md'
+                >
                   <CardHeader className='flex-row items-center justify-between space-y-0'>
                     <CardTitle className='flex items-center gap-2 text-base'>
                       <Smartphone className='size-4 text-muted-foreground' />
                       <span className='truncate'>{s.name || 'Tanpa nama'}</span>
                     </CardTitle>
-                    <Badge variant='outline' className={cn('gap-1.5', meta.className)}>
+                    <Badge
+                      variant='outline'
+                      className={cn('gap-1.5', meta.className)}
+                    >
                       <span className={cn('size-2 rounded-full', meta.dot)} />
                       {meta.label}
                     </Badge>
@@ -233,7 +257,9 @@ export function WhatsAppDevices() {
                       </div>
                       {s.connectedAt && (
                         <div className='flex items-center justify-between'>
-                          <span className='text-muted-foreground'>Terhubung sejak</span>
+                          <span className='text-muted-foreground'>
+                            Terhubung sejak
+                          </span>
                           <span className='font-medium'>{s.connectedAt}</span>
                         </div>
                       )}
@@ -264,7 +290,9 @@ export function WhatsAppDevices() {
                         onClick={() => handleOpenQr(s)}
                       >
                         <QrCode size={14} />
-                        {s.status === 'needs_rescan' ? 'Scan QR' : 'QR / Pairing'}
+                        {s.status === 'needs_rescan'
+                          ? 'Scan QR'
+                          : 'QR / Pairing'}
                       </Button>
                       <Button
                         size='sm'
@@ -308,9 +336,9 @@ export function WhatsAppDevices() {
           <AlertDialogHeader>
             <AlertDialogTitle>Hapus perangkat permanen?</AlertDialogTitle>
             <AlertDialogDescription>
-              {purgeTarget?.name} akan di-unlink dari WhatsApp dan semua data session
-              (termasuk riwayat chat mirror) dihapus dari database. Tindakan ini tidak dapat
-              dibatalkan.
+              {purgeTarget?.name} akan di-unlink dari WhatsApp dan semua data
+              session (termasuk riwayat chat mirror) dihapus dari database.
+              Tindakan ini tidak dapat dibatalkan.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
