@@ -93,6 +93,18 @@ func (f *fakeHistoryRepo) MarkMessagesStatus(_ uint, chatJID string, messageIDs 
 	return nil
 }
 
+func (f *fakeHistoryRepo) MergeChatLID(_ uint, lidJID, pnJID string) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	// Pindahkan pesan @lid ke PN, hapus baris chat @lid.
+	if msgs := f.messages[lidJID]; msgs != nil {
+		f.messages[pnJID] = append(f.messages[pnJID], msgs...)
+		delete(f.messages, lidJID)
+	}
+	delete(f.chats, lidJID)
+	return nil
+}
+
 var _ port.ChatRepository = (*fakeHistoryRepo)(nil)
 
 func TestHandleHistorySyncMirrorsConversations(t *testing.T) {

@@ -329,20 +329,22 @@ export function Chats() {
         onSuccess: () => setDraft(''),
       }
     )
-  }
+  }  // Pesan dari API ascending (terlama→terbaru). Container chat memakai
+  // flex-col-reverse (item pertama dirender di bawah), jadi array dibalik
+  // supaya pesan terbaru berada di BAWAH dan scroll menempel di bawah —
+  // tanpa pembalikan ini urutan tampil terbalik (terbaru di atas).
+  const orderedMessages = useMemo(() => [...messages].reverse(), [messages])
 
   const groupedMessages = useMemo(() => {
     const groups = new Map<string, WAChatMessage[]>()
-    for (const msg of messages) {
-      const key = msg.timestamp
-        ? format(new Date(msg.timestamp), 'd MMM yyyy')
-        : '—'
+    for (const msg of orderedMessages) {
+      const key = msg.timestamp ? format(new Date(msg.timestamp), 'd MMM yyyy') : '—'
       const list = groups.get(key) ?? []
       list.push(msg)
       groups.set(key, list)
     }
     return [...groups.entries()]
-  }, [messages])
+  }, [orderedMessages])
 
   return (
     <>

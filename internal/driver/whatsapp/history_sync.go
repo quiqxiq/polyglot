@@ -82,6 +82,10 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 		jid = normalizeJIDFromLID(context.Background(), jid, c.waClient)
 		chatJID := jid.String()
 
+		// Baris chat @lid basi (dari sync sebelum LID map tersedia) digabung
+		// ke baris nomor HP-nya — mencegah chat dobel yang tidak cocok dengan HP.
+		c.reconcileLIDChat(context.Background(), jid)
+
 		// Fase 1: sistem JID (story & channel) tidak masuk mirror Inbox.
 		if isSkippedJID(chatJID) {
 			continue
@@ -126,9 +130,10 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 
 			body := extractMessageBody(info.GetMessage())
 			mediaType := extractMediaType(info.GetMessage())
-			// Pesan sistem (stub) / reaction tanpa konten & tanpa media tak
-			// perlu di-mirror — hanya memenuhi daftar chat dengan noise.
-			if body == "" && mediaType == "unknown" {
+			// Pesan sistem (stub) / reaction / protocol tanpa konten & tanpa media
+			// tak perlu di-mirror — hanya memenuhi daftar chat dengan noise
+			// (termasuk "[media]" yang tidak ada di HP).
+			if body == "" && (mediaType == "unknown" || mediaType == "reaction" || mediaType == "system") {
 				continue
 			}
 
@@ -250,6 +255,8 @@ func (c *Client) processHistoryPushNames(data *waHistorySync.HistorySync) {
 		// baris chat yang di-update match dengan chat 1:1 (yang sudah
 		// dinormalisasi) — bukan baris @lid yang tidak pernah ada.
 		jid = normalizeJIDFromLID(context.Background(), jid, c.waClient)
+		// Baris chat @lid basi untuk kontak ini juga digabung ke nomor HP.
+		c.reconcileLIDChat(context.Background(), jid)
 		chat := &bot.WAChat{
 			SessionID:   c.SessionID,
 			ChatJID:     jid.String(),

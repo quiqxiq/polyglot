@@ -299,6 +299,39 @@ func (c *Client) Reconnect(ctx context.Context) error {
 	return c.Connect(ctx)
 }
 
+// sendPresenceAvailable menandai device online ke server WhatsApp. Dipanggil
+// saat Connected dan AppStateSyncComplete — kehadiran presence membuat HP
+// mengalirkan history sync (chat lama) ke perangkat tertaut, sehingga Inbox
+// tidak hanya berisi beberapa chat terbaru.
+func (c *Client) sendPresenceAvailable() {
+	if c.waClient == nil || !c.waClient.IsConnected() || c.waClient.Store == nil || c.waClient.Store.ID == nil {
+		return
+	}
+	if err := c.waClient.SendPresence(context.Background(), types.PresenceAvailable); err != nil {
+		log.Printf("[WhatsApp Client %d] failed to send presence: %v", c.SessionID, err)
+		return
+	}
+	log.Printf("[WhatsApp Client %d] presence available sent (history sync trigger)", c.SessionID)
+}
+
+// reconcileLIDChat mencegah chat @lid basi mendobel chat nomor HP-nya.
+// WhatsApp bisa mengirim history sync berformat @lid sebelum LID map tersedia
+// (app state); baris @lid yang tersimpan lalu tidak pernah terpakai lagi dan
+// tampil sebagai nomor LID yang tidak dikenal di Inbox — tidak sama dengan HP.
+// Dipanggil setiap kali sebuah chat 1:1 di-normalisasi ke nomor HP.
+func (c *Client) reconcileLIDChat(ctx context.Context, resolved types.JID) {
+	if c.chatRepo == nil || c.waClient == nil || c.waClient.Store == nil || c.waClient.Store.LIDs == nil {
+		return
+	}
+	lid, err := c.waClient.Store.LIDs.GetLIDForPN(ctx, resolved)
+	if err != nil || lid.IsEmpty() || lid.Server != "lid" {
+		return
+	}
+	if err := c.chatRepo.MergeChatLID(c.SessionID, lid.String(), resolved.String()); err != nil {
+		log.Printf("[WhatsApp Client %d] failed to merge stale LID chat %s → %s: %v", c.SessionID, lid.String(), resolved.String(), err)
+	}
+}
+
 func (c *Client) GetQRCode() string {
 	c.qrMutex.RLock()
 	defer c.qrMutex.RUnlock()
@@ -465,6 +498,15 @@ func (c *Client) handleEvent(evt any) {
 		if c.onStatus != nil && c.waClient.Store.ID != nil {
 			c.onStatus(c.SessionID, "online", "", c.waClient.Store.ID.String(), c.waClient.Store.ID.User)
 		}
+		// Tandai device online — tanpa presence, HP menganggap perangkat idle
+		// dan hanya mengirim history sync terbatas.
+		c.sendPresenceAvailable()
+	case *events.AppStateSyncComplete:
+		// App state selesai di-resync (tepat setelah connect/pair) — kirim
+		// presence available agar HP mulai mengalirkan history sync lengkap.
+		// whatsmeow tidak mengirim presence otomatis; pola yang sama dipakai
+		// referensi go-whatsapp-web-multidevice (presence pulse berkala).
+		c.sendPresenceAvailable()
 	case *events.Disconnected:
 		log.Printf("[WhatsApp Client %d] Disconnected (Auto-reconnect will retry)", c.SessionID)
 		if c.onStatus != nil {
@@ -564,6 +606,16 @@ func extractMediaType(msg *waE2E.Message) string {
 		return "location"
 	case msg.ContactMessage != nil || msg.ContactsArrayMessage != nil:
 		return "contact"
+	// Catatan nama field: proto waE2E menamai field call log "CallLogMesssage"
+	// (typo tiga huruf s) dan "BcallMessage" (c kecil) — ikuti nama field Go.
+	case msg.Call != nil || msg.CallLogMesssage != nil || msg.BcallMessage != nil || msg.ScheduledCallCreationMessage != nil || msg.ScheduledCallEditMessage != nil:
+		return "call"
+	case msg.ReactionMessage != nil || msg.EncReactionMessage != nil:
+		return "reaction"
+	case msg.PollCreationMessage != nil || msg.PollUpdateMessage != nil || msg.PollResultSnapshotMessage != nil || msg.PollAddOptionMessage != nil:
+		return "poll"
+	case msg.ProtocolMessage != nil || msg.PinInChatMessage != nil || msg.KeepInChatMessage != nil:
+		return "system"
 	default:
 		return "unknown"
 	}
@@ -631,6 +683,15 @@ func (c *Client) persistMirrorMessage(evt *events.Message) {
 
 	content := extractMessageBody(evt.Message)
 	mediaType := extractMediaType(evt.Message)
+
+	// Pesan tanpa isi & tanpa media yang dikenali — reaction, protocol
+	// (delete/edit/pin), placeholder, envelope internal, pesan tak terdekripsi
+	// — bukan pesan percakapan yang bisa dirender. Tanpa guard ini UI dipenuhi
+	// bubble "[media]" yang tidak ada di HP (mis. kontak me-react pesan kita
+	// muncul seolah "balasan media"). Aturan sama dengan history sync.
+	if evt.Message == nil || (content == "" && (mediaType == "unknown" || mediaType == "reaction" || mediaType == "system")) {
+		return
+	}
 
 	// Fase 4: normalisasi LID → nomor HP agar senderJID tidak tampil sebagai
 	// "12345@lid" yang tidak dapat dikenali pengguna.

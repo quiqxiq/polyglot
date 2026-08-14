@@ -34,6 +34,11 @@ type ChatRepository interface {
 	// dari handler events.Receipt whatsmeow. Pesan yang statusnya "read"
 	// otomatis ditandai is_read = true.
 	MarkMessagesStatus(sessionID uint, chatJID string, messageIDs []string, status string) error
+	// MergeChatLID menggabungkan baris chat @lid basi ke baris nomor HP-nya:
+	// pesan @lid dipindah ke PN (abaikan yang sudah ada), lalu baris chat @lid
+	// dihapus. Dipakai agar chat hasil sync sebelum LID map tersedia tidak
+	// mendobel / tampil sebagai nomor LID yang tidak dikenal di Inbox.
+	MergeChatLID(sessionID uint, lidJID, pnJID string) error
 	// SetChatBotEnabled mengubah status bot auto-reply per chat.
 	SetChatBotEnabled(sessionID uint, chatJID string, enabled bool) error
 	// IsChatBotEnabled melaporkan status bot auto-reply per chat. Chat yang

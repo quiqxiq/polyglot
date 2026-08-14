@@ -143,6 +143,34 @@ func (s *Store) MarkMessagesStatus(sessionID uint, chatJID string, messageIDs []
 		Updates(updates).Error
 }
 
+// MergeChatLID menggabungkan baris chat @lid basi ke baris nomor HP-nya dalam
+// satu transaksi: pesan @lid dipindah ke PN (ON CONFLICT DO NOTHING — pesan
+// yang sudah ada di PN tidak digandakan), pesan @lid dihapus, baris chat @lid
+// dihapus. Dipanggil driver setiap kali chat 1:1 di-normalisasi LID → PN.
+func (s *Store) MergeChatLID(sessionID uint, lidJID, pnJID string) error {
+	if lidJID == "" || pnJID == "" || lidJID == pnJID {
+		return nil
+	}
+	return s.db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Exec(`
+			INSERT INTO wa_messages
+				(session_id, chat_jid, wa_message_id, sender_jid, sender_name, content,
+				 media_type, is_from_me, is_read, status, timestamp, created_at)
+			SELECT session_id, ?, wa_message_id, sender_jid, sender_name, content,
+			       media_type, is_from_me, is_read, status, timestamp, COALESCE(created_at, now())
+			FROM wa_messages
+			WHERE session_id = ? AND chat_jid = ?
+			ON CONFLICT (session_id, wa_message_id) DO NOTHING`,
+			pnJID, sessionID, lidJID).Error; err != nil {
+			return err
+		}
+		if err := tx.Exec(`DELETE FROM wa_messages WHERE session_id = ? AND chat_jid = ?`, sessionID, lidJID).Error; err != nil {
+			return err
+		}
+		return tx.Exec(`DELETE FROM wa_chats WHERE session_id = ? AND chat_jid = ?`, sessionID, lidJID).Error
+	})
+}
+
 // ListChats returns the chat mirror list ordered by most recent activity.
 func (s *Store) ListChats(sessionID uint, limit, offset int, search string) ([]bot.WAChat, error) {
 	if limit <= 0 || limit > maxChatListLimit {
