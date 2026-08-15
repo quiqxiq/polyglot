@@ -1,52 +1,51 @@
 package middleware
 
 import (
-	"log"
+	"fmt"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
-
 	"github.com/quixiq/polyglot/internal/adapter/auth"
+	"github.com/quixiq/polyglot/pkg/logger"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
-func AuthorizeCasbin(enforcer *auth.CasbinEnforcer) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		roleVal, exists := c.Get("user_role")
-		if !exists {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "User role missing in request context"})
-			c.Abort()
-			return
-		}
+// AuthorizeCasbin evaluates RBAC permissions against Casbin policies.
+func AuthorizeCasbin(enforcer *auth.CasbinEnforcer) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if enforcer == nil {
+				next.ServeHTTP(w, r)
+				return
+			}
 
-		role, ok := roleVal.(string)
-		if !ok || role == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user role"})
-			c.Abort()
-			return
-		}
+			role := UserRoleFromContext(r.Context())
+			if role == "" {
+				response.Fail(w, http.StatusUnauthorized, "UNAUTHORIZED", "User role missing in request context", "")
+				return
+			}
 
-		path := c.Request.URL.Path
-		method := c.Request.Method
+			path := r.URL.Path
+			method := r.Method
 
-		allowed, err := enforcer.Enforce(role, path, method)
-		if err != nil {
-			log.Printf("[RBAC Middleware] Error evaluating policy for role '%s' path '%s' method '%s': %v", role, path, method, err)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to evaluate authorization policy"})
-			c.Abort()
-			return
-		}
+			allowed, err := enforcer.Enforce(role, path, method)
+			if err != nil {
+				logger.FromContext(r.Context()).WithFields(logger.Fields{
+					"role":   role,
+					"path":   path,
+					"method": method,
+					"error":  err,
+				}).Error("Error evaluating RBAC policy")
+				response.Fail(w, http.StatusInternalServerError, "INTERNAL_ERROR", "Failed to evaluate authorization policy", "")
+				return
+			}
 
-		if !allowed {
-			c.JSON(http.StatusForbidden, gin.H{
-				"error":   "Access denied. You do not have permission to perform this action.",
-				"role":    role,
-				"resource": path,
-				"action":  method,
-			})
-			c.Abort()
-			return
-		}
+			if !allowed {
+				response.Fail(w, http.StatusForbidden, "FORBIDDEN",
+					fmt.Sprintf("Access denied for role %q on %s %s", role, method, path), "")
+				return
+			}
 
-		c.Next()
+			next.ServeHTTP(w, r)
+		})
 	}
 }

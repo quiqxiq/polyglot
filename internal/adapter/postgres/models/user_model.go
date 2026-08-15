@@ -3,7 +3,7 @@ package models
 import (
 	"time"
 
-	"github.com/quixiq/polyglot/internal/domain/customer"
+	"github.com/quixiq/polyglot/internal/domain/auth"
 )
 
 // UserModel is the GORM database model for users.
@@ -17,11 +17,11 @@ type UserModel struct {
 	UpdatedAt    time.Time
 }
 
-func (m *UserModel) ToDomain() *customer.User {
+func (m *UserModel) ToDomain() *auth.User {
 	if m == nil {
 		return nil
 	}
-	return &customer.User{
+	return &auth.User{
 		ID:           m.ID,
 		Email:        m.Email,
 		PasswordHash: m.PasswordHash,
@@ -32,7 +32,7 @@ func (m *UserModel) ToDomain() *customer.User {
 	}
 }
 
-func UserModelFromDomain(u *customer.User) *UserModel {
+func UserModelFromDomain(u *auth.User) *UserModel {
 	if u == nil {
 		return nil
 	}

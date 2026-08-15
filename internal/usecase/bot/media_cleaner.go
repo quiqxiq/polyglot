@@ -3,11 +3,12 @@ package bot
 import (
 	"context"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 // MediaCleanerConfig configures the temporary file cleanup worker.
@@ -61,7 +62,10 @@ func (w *MediaCleanerWorker) CleanOnce(_ context.Context) (int, error) {
 				if removeErr := os.Remove(path); removeErr == nil {
 					cleanedCount++
 				} else {
-					log.Printf("[MediaCleaner] Failed to remove %s: %v", path, removeErr)
+					logger.WithFields(logger.Fields{
+						"path":  path,
+						"error": removeErr,
+					}).Warn("[MediaCleaner] Failed to remove expired file")
 				}
 			}
 		}
@@ -87,9 +91,9 @@ func (w *MediaCleanerWorker) Start(ctx context.Context) {
 			return
 		case <-ticker.C:
 			if n, err := w.CleanOnce(ctx); err != nil {
-				log.Printf("[MediaCleaner] Error during cleanup: %v", err)
+				logger.WithError(err).Error("[MediaCleaner] Error during cleanup pass")
 			} else if n > 0 {
-				log.Printf("[MediaCleaner] Cleaned %d expired media files", n)
+				logger.WithField("count", n).Info("[MediaCleaner] Cleaned expired media files")
 			}
 		}
 	}

@@ -2,12 +2,12 @@ package postgres
 
 import (
 	"fmt"
-	"log"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 // Store holds the GORM database connection and implements repository interfaces.
@@ -24,6 +24,8 @@ func NewStore(dsn string) (*Store, error) {
 
 	if err := db.AutoMigrate(
 		&models.UserModel{},
+		&models.CustomerModel{},
+		&models.SubscriptionModel{},
 		&models.WASessionModel{},
 		&models.LLMConfigModel{},
 		&models.ConversationModel{},
@@ -36,7 +38,7 @@ func NewStore(dsn string) (*Store, error) {
 		return nil, fmt.Errorf("failed to auto-migrate: %w", err)
 	}
 
-	log.Println("[Postgres Adapter] Database connected and migrated successfully")
+	logger.Info("Postgres database connected and migrated successfully")
 	return &Store{db: db}, nil
 }
 

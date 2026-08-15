@@ -9,10 +9,13 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/proto/v1"
+	"github.com/quixiq/polyglot/internal/adapter/connect/codec"
 )
 
+// BillingConnectHandler handles ConnectRPC procedures for billing, invoices, and subscriptions.
 type BillingConnectHandler struct{}
 
+// NewBillingConnectHandler constructs a new BillingConnectHandler.
 func NewBillingConnectHandler() *BillingConnectHandler {
 	return &BillingConnectHandler{}
 }
@@ -98,7 +101,7 @@ func (h *BillingConnectHandler) ListSubscriptions(ctx context.Context, req *conn
 			PlanId:        "plan-home-50mbps",
 			Status:        "ACTIVE",
 			StartDateUnix: now.AddDate(0, -1, 0).Unix(),
-			EndDateUnix:   now.AddDate(0, 11, 0).Unix(),
+			EndDateUnix:   now.AddDate(0, 0, 30).Unix(),
 			Price:         250000.0,
 		},
 	}
@@ -117,7 +120,7 @@ func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *con
 		PlanId:        req.Msg.PlanId,
 		Status:        "ACTIVE",
 		StartDateUnix: now.Unix(),
-		EndDateUnix:   now.AddDate(1, 0, 0).Unix(),
+		EndDateUnix:   now.AddDate(0, 1, 0).Unix(),
 		Price:         req.Msg.Price,
 	}
 
@@ -129,27 +132,16 @@ func (h *BillingConnectHandler) CancelSubscription(ctx context.Context, req *con
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("subscription id is required"))
 	}
 
-	now := time.Now()
-	sub := &devicepb.Subscription{
-		Id:            req.Msg.Id,
-		CustomerId:    "cust-1",
-		PlanId:        "plan-home-50mbps",
-		Status:        "CANCELLED",
-		StartDateUnix: now.AddDate(0, -1, 0).Unix(),
-		EndDateUnix:   now.Unix(),
-		Price:         250000.0,
-	}
-
 	return connect.NewResponse(&devicepb.CancelSubscriptionResponse{
-		Subscription: sub,
-		Message:      "Subscription cancelled successfully",
+		Message: "subscription cancelled successfully",
 	}), nil
 }
 
+// NewBillingServiceHandler creates the Connect http.Handler and registers procedures.
 func NewBillingServiceHandler() (string, http.Handler) {
 	handler := NewBillingConnectHandler()
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := codec.Option()
 
 	serviceName := "polyglot.v1.BillingService"
 	mux.Handle("/"+serviceName+"/ListInvoices", connect.NewUnaryHandler("/"+serviceName+"/ListInvoices", handler.ListInvoices, codecOpt))

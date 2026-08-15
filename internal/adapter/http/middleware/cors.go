@@ -3,48 +3,49 @@ package middleware
 import (
 	"net/http"
 	"strings"
-
-	"github.com/gin-gonic/gin"
 )
 
-func CORS(allowedOrigins []string) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		origin := c.Request.Header.Get("Origin")
-		allow := false
+// CORS returns a standard HTTP middleware for Cross-Origin Resource Sharing.
+func CORS(allowedOrigins []string) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			origin := r.Header.Get("Origin")
+			allow := false
 
-		if origin != "" {
-			if strings.HasPrefix(origin, "http://localhost:") ||
-				strings.HasPrefix(origin, "http://127.0.0.1:") ||
-				origin == "http://localhost" ||
-				origin == "http://127.0.0.1" {
-				allow = true
-			} else {
-				for _, o := range allowedOrigins {
-					if o == "*" || o == origin {
-						allow = true
-						break
+			if origin != "" {
+				if strings.HasPrefix(origin, "http://localhost:") ||
+					strings.HasPrefix(origin, "http://127.0.0.1:") ||
+					origin == "http://localhost" ||
+					origin == "http://127.0.0.1" {
+					allow = true
+				} else {
+					for _, o := range allowedOrigins {
+						if o == "*" || o == origin {
+							allow = true
+							break
+						}
 					}
 				}
 			}
-		}
 
-		if allow {
-			c.Header("Access-Control-Allow-Origin", origin)
-		} else if origin != "" {
-			c.Header("Access-Control-Allow-Origin", origin)
-		} else if len(allowedOrigins) > 0 {
-			c.Header("Access-Control-Allow-Origin", allowedOrigins[0])
-		}
+			if allow && origin != "" {
+				w.Header().Set("Access-Control-Allow-Origin", origin)
+			} else if origin != "" {
+				w.Header().Set("Access-Control-Allow-Origin", origin)
+			} else if len(allowedOrigins) > 0 {
+				w.Header().Set("Access-Control-Allow-Origin", allowedOrigins[0])
+			}
 
-		c.Header("Access-Control-Allow-Credentials", "true")
-		c.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-		c.Header("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE, PATCH")
+			w.Header().Set("Access-Control-Allow-Credentials", "true")
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, Connect-Protocol-Version")
+			w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE, PATCH")
 
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(http.StatusNoContent)
-			return
-		}
+			if r.Method == http.MethodOptions {
+				w.WriteHeader(http.StatusNoContent)
+				return
+			}
 
-		c.Next()
+			next.ServeHTTP(w, r)
+		})
 	}
 }

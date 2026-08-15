@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"log"
 
 	"golang.org/x/crypto/bcrypt"
 
@@ -11,15 +10,16 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/customer"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 func main() {
 	cfg := config.Load()
 
-	log.Printf("[Seeder] Connecting to PostgreSQL database...")
+	logger.Info("[Seeder] Connecting to PostgreSQL database...")
 	pgStore, err := postgres.NewStore(cfg.DatabaseURL)
 	if err != nil {
-		log.Fatalf("[Seeder Error] Failed to connect to DB: %v", err)
+		logger.WithError(err).Fatal("[Seeder Error] Failed to connect to DB")
 	}
 
 	db := pgStore.DB()
@@ -33,7 +33,7 @@ func main() {
 	if err != nil {
 		hash, err := bcrypt.GenerateFromPassword([]byte(adminPassword), bcrypt.DefaultCost)
 		if err != nil {
-			log.Fatalf("[Seeder Error] Failed to hash password: %v", err)
+			logger.WithError(err).Fatal("[Seeder Error] Failed to hash password")
 		}
 
 		adminUser := &customer.User{
@@ -44,23 +44,23 @@ func main() {
 		}
 
 		if err := pgStore.CreateUser(adminUser); err != nil {
-			log.Fatalf("[Seeder Error] Failed to create admin user: %v", err)
+			logger.WithError(err).Fatal("[Seeder Error] Failed to create admin user")
 		}
-		log.Printf("[Seeder] Created default Admin user: %s (Password: %s)", adminEmail, adminPassword)
+		logger.Infof("[Seeder] Created default Admin user: %s (Password: %s)", adminEmail, adminPassword)
 	} else {
-		log.Printf("[Seeder] Admin user %s already exists in database.", adminEmail)
+		logger.Infof("[Seeder] Admin user %s already exists in database.", adminEmail)
 	}
 
 	// 2. Initialize Casbin Enforcer & Seed System RBAC Policies
 	ctx := context.Background()
 	enforcer, err := auth.NewCasbinEnforcer(ctx, db)
 	if err != nil {
-		log.Printf("[Seeder Warning] Failed to initialize Casbin enforcer: %v", err)
+		logger.WithError(err).Warn("[Seeder Warning] Failed to initialize Casbin enforcer")
 	} else {
 		auth.SeedSystemPolicies(enforcer)
 		_, _ = enforcer.AddRoleForUser(adminEmail, "admin")
-		log.Printf("[Seeder] Assigned role 'admin' to user %s in Casbin", adminEmail)
+		logger.Infof("[Seeder] Assigned role 'admin' to user %s in Casbin", adminEmail)
 	}
 
-	log.Println("[Seeder] Database seeding completed successfully!")
+	logger.Info("[Seeder] Database seeding completed successfully!")
 }

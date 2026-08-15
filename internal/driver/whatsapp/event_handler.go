@@ -2,11 +2,11 @@ package whatsapp
 
 import (
 	"context"
-	"log"
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/adapter/ws"
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 type EventHandler struct {
@@ -58,7 +58,11 @@ func (eh *EventHandler) MakeMessageCallback(engineHandler func(ctx context.Conte
 		go func() {
 			ctx := context.Background()
 			if err := engineHandler(ctx, sessionID, customerNumber, content); err != nil {
-				log.Printf("[EventHandler] Error processing message from %s: %v", customerNumber, err)
+				logger.WithFields(logger.Fields{
+					"customer_number": customerNumber,
+					"session_id":      sessionID,
+					"error":           err,
+				}).Error("[EventHandler] Error processing message")
 			}
 		}()
 	}

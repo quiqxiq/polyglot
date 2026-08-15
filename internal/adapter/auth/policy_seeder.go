@@ -1,6 +1,8 @@
 package auth
 
-import "log"
+import (
+	"github.com/quixiq/polyglot/pkg/logger"
+)
 
 // SeedSystemPolicies seeds default RBAC policies for all Polyglot NetOps Engine modules:
 // - Network Devices & Mikhmon Hotspot Administration
@@ -45,6 +47,6 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 	}
 
 	if added > 0 {
-		log.Printf("[PolicySeeder] Seeded %d new RBAC system policies into PostgreSQL store", added)
+		logger.WithField("count", added).Info("[PolicySeeder] Seeded new RBAC system policies into PostgreSQL store")
 	}
 }

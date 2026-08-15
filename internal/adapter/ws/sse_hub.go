@@ -3,11 +3,10 @@ package ws
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"log"
+	"net/http"
 	"sync"
 
-	"github.com/gin-gonic/gin"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 type SSEEvent struct {
@@ -26,11 +25,17 @@ func NewSSEHub() *SSEHub {
 	}
 }
 
-func (h *SSEHub) RegisterClient(c *gin.Context) {
-	c.Header("Content-Type", "text/event-stream")
-	c.Header("Cache-Control", "no-cache")
-	c.Header("Connection", "keep-alive")
-	c.Header("Access-Control-Allow-Origin", "*")
+func (h *SSEHub) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	flusher, ok := w.(http.Flusher)
+	if !ok {
+		http.Error(w, "Streaming unsupported", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/event-stream")
+	w.Header().Set("Cache-Control", "no-cache")
+	w.Header().Set("Connection", "keep-alive")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	clientChan := make(chan SSEEvent, 10)
 
@@ -43,42 +48,52 @@ func (h *SSEHub) RegisterClient(c *gin.Context) {
 		delete(h.clients, clientChan)
 		close(clientChan)
 		h.mutex.Unlock()
-		log.Println("[SSEHub] Client disconnected")
+		logger.FromContext(r.Context()).Info("SSE client disconnected")
 	}()
 
-	log.Println("[SSEHub] New client connected")
+	logger.FromContext(r.Context()).Info("New SSE client connected")
 
-	c.Stream(func(w io.Writer) bool {
+	// Send initial ping to establish connection
+	fmt.Fprintf(w, ": ping\n\n")
+	flusher.Flush()
+
+	ctx := r.Context()
+	for {
 		select {
+		case <-ctx.Done():
+			return
 		case event, ok := <-clientChan:
 			if !ok {
-				return false
+				return
 			}
 			dataBytes, err := json.Marshal(event.Data)
 			if err != nil {
-				return true
+				continue
 			}
-			fmt.Fprintf(w, "event: %s\ndata: %s\n\n", event.Event, string(dataBytes))
-			return true
-		case <-c.Request.Context().Done():
-			return false
+			if event.Event != "" {
+				fmt.Fprintf(w, "event: %s\n", event.Event)
+			}
+			fmt.Fprintf(w, "data: %s\n\n", string(dataBytes))
+			flusher.Flush()
 		}
-	})
+	}
 }
 
-func (h *SSEHub) Broadcast(eventName string, data interface{}) {
+// Broadcast sends an event payload to all connected clients.
+func (h *SSEHub) Broadcast(event string, data interface{}) {
 	h.mutex.RLock()
 	defer h.mutex.RUnlock()
 
-	event := SSEEvent{
-		Event: eventName,
+	payload := SSEEvent{
+		Event: event,
 		Data:  data,
 	}
 
 	for clientChan := range h.clients {
 		select {
-		case clientChan <- event:
+		case clientChan <- payload:
 		default:
+			logger.WithField("event", event).Warn("SSE client buffer full, dropping event")
 		}
 	}
 }

@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"connectrpc.com/connect"
+
+	"github.com/quixiq/polyglot/internal/adapter/connect/codec"
 )
 
 type KnowledgeConnectHandler struct{}
@@ -15,7 +17,7 @@ func NewKnowledgeConnectHandler() *KnowledgeConnectHandler {
 func NewKnowledgeServiceHandler() (string, http.Handler) {
 	handler := NewKnowledgeConnectHandler()
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := codec.Option()
 
 	serviceName := "polyglot.v1.KnowledgeService"
 	mux.Handle("/"+serviceName+"/ListKnowledge", connect.NewUnaryHandler(
@@ -81,16 +83,6 @@ func NewKnowledgeServiceHandler() (string, http.Handler) {
 	mux.Handle("/"+serviceName+"/CreateTechnician", connect.NewUnaryHandler(
 		"/"+serviceName+"/CreateTechnician",
 		handler.CreateTechnician,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/UpdateTechnician", connect.NewUnaryHandler(
-		"/"+serviceName+"/UpdateTechnician",
-		handler.UpdateTechnician,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/ToggleTechnicianActive", connect.NewUnaryHandler(
-		"/"+serviceName+"/ToggleTechnicianActive",
-		handler.ToggleTechnicianActive,
 		codecOpt,
 	))
 	mux.Handle("/"+serviceName+"/DeleteTechnician", connect.NewUnaryHandler(

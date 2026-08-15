@@ -3,7 +3,6 @@ package bot
 import (
 	"context"
 	"fmt"
-	"log"
 
 	llmprovider "github.com/quixiq/polyglot/internal/adapter/llm"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
@@ -13,6 +12,7 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/business"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 type Engine struct {
@@ -52,7 +52,11 @@ func NewEngine(
 }
 
 func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, customerNumber string, messageContent string) error {
-	log.Printf("[BotEngine] Processing message from %s (Session %d): %s", customerNumber, sessionID, messageContent)
+	logger.WithFields(logger.Fields{
+		"customer_number": customerNumber,
+		"session_id":      sessionID,
+		"content":         messageContent,
+	}).Info("[BotEngine] Processing incoming message")
 
 	session, err := e.pgStore.FindSessionByID(sessionID)
 	if err != nil {
@@ -70,21 +74,27 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, cust
 	}
 
 	if !session.IsBotEnabled || conv.Status == bot.StatusEscalation {
-		log.Printf("[BotEngine] Bot disabled for session %d or conversation %d is in escalation mode. Message recorded without auto-reply.", sessionID, conv.ID)
+		logger.WithFields(logger.Fields{
+			"session_id":      sessionID,
+			"conversation_id": conv.ID,
+		}).Info("[BotEngine] Bot disabled or in escalation mode. Message recorded.")
 		return nil
 	}
 
 	rateResult, err := e.rateLimiter.Check(ctx, customerNumber, messageContent)
 	if err != nil {
-		log.Printf("[BotEngine] Rate limit check error: %v", err)
+		logger.WithError(err).Warn("[BotEngine] Rate limit check error")
 	}
 
 	switch rateResult.Status {
 	case StatusMuted, StatusBlocked:
-		log.Printf("[BotEngine] Number %s is %v. Ignoring message to save tokens.", customerNumber, rateResult.Status)
+		logger.WithFields(logger.Fields{
+			"customer_number": customerNumber,
+			"status":          rateResult.Status,
+		}).Info("[BotEngine] Number blocked/muted. Skipping response.")
 		return nil
 	case StatusWarned:
-		log.Printf("[BotEngine] Number %s hit rate limit warning.", customerNumber)
+		logger.WithField("customer_number", customerNumber).Warn("[BotEngine] Rate limit warning triggered")
 		_ = e.waGateway.SendMessage(sessionID, customerNumber, rateResult.Message)
 		botMsg, _ := e.convService.AddMessage(conv.ID, "bot", rateResult.Message, 0, 0)
 		if e.sseHub != nil && botMsg != nil {
@@ -107,7 +117,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, cust
 
 	llmCfg, err := e.pgStore.FindActiveLLMConfig()
 	if err != nil {
-		log.Printf("[BotEngine] No active LLM config found! Escalating conversation %d", conv.ID)
+		logger.WithField("conversation_id", conv.ID).Warn("[BotEngine] No active LLM config found! Escalating conversation.")
 		_ = e.convService.Escalate(conv.ID)
 		fallbackReply := "Maaf, sistem AI kami sedang dalam pemeliharaan. Pesan Anda telah diteruskan ke tim admin."
 		_ = e.waGateway.SendMessage(sessionID, customerNumber, fallbackReply)
@@ -135,7 +145,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, cust
 
 	resp, err := provider.Chat(ctx, systemPrompt, history, maxTokens)
 	if err != nil {
-		log.Printf("[BotEngine] LLM Call failed: %v. Escalating conversation.", err)
+		logger.WithError(err).Error("[BotEngine] LLM Call failed, escalating conversation")
 		_ = e.convService.Escalate(conv.ID)
 		fallbackReply := "Maaf, kami kesulitan memproses pesan Anda. Pesan telah kami teruskan ke admin kami."
 		_ = e.waGateway.SendMessage(sessionID, customerNumber, fallbackReply)
@@ -149,7 +159,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, cust
 	botReply := e.guardrail.SanitizeResponse(resp.Content)
 
 	if err := e.waGateway.SendMessage(sessionID, customerNumber, botReply); err != nil {
-		log.Printf("[BotEngine] Failed to send WA reply: %v", err)
+		logger.WithError(err).Error("[BotEngine] Failed to send WA reply")
 	}
 
 	botMsg, err := e.convService.AddMessageWithConfig(conv.ID, "bot", botReply, resp.TokenIn, resp.TokenOut, &llmCfg.ID)
@@ -160,6 +170,11 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, cust
 	_ = e.contextMgr.SaveMessageToSession(ctx, customerNumber, messageContent, botReply)
 	_ = e.contextMgr.SummarizeSessionIfLong(ctx, customerNumber, provider)
 
-	log.Printf("[BotEngine] Successfully replied to %s (Tokens In: %d, Out: %d)", customerNumber, resp.TokenIn, resp.TokenOut)
+	logger.WithFields(logger.Fields{
+		"customer_number": customerNumber,
+		"tokens_in":       resp.TokenIn,
+		"tokens_out":      resp.TokenOut,
+	}).Info("[BotEngine] Successfully processed and replied to message")
+
 	return nil
 }

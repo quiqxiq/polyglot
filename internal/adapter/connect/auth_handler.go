@@ -2,71 +2,46 @@ package connectadapter
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"net/http"
 	"time"
 
 	"connectrpc.com/connect"
-	"golang.org/x/crypto/bcrypt"
 
 	devicepb "github.com/quixiq/polyglot/api/proto/v1"
-	"github.com/quixiq/polyglot/internal/adapter/auth"
-	"github.com/quixiq/polyglot/internal/adapter/postgres"
+	"github.com/quixiq/polyglot/internal/adapter/connect/codec"
+	"github.com/quixiq/polyglot/internal/adapter/connect/mapper"
+	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
+// AuthConnectHandler handles ConnectRPC procedures for user authentication and session tokens.
 type AuthConnectHandler struct {
-	pgStore    *postgres.Store
-	jwtService *auth.JWTService
+	authUseCase *authUC.AuthUseCase
 }
 
-func NewAuthConnectHandler(pgStore *postgres.Store, jwtService *auth.JWTService) *AuthConnectHandler {
+// NewAuthConnectHandler constructs a new AuthConnectHandler.
+func NewAuthConnectHandler(uc *authUC.AuthUseCase) *AuthConnectHandler {
 	return &AuthConnectHandler{
-		pgStore:    pgStore,
-		jwtService: jwtService,
+		authUseCase: uc,
 	}
 }
 
+// Login authenticates a user and returns a signed JWT token.
 func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[devicepb.LoginRequest]) (*connect.Response[devicepb.LoginResponse], error) {
 	if req.Msg.Username == "" || req.Msg.Password == "" {
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("username and password are required"))
 	}
 
-	if h.pgStore == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("database store unavailable"))
-	}
-
-	user, err := h.pgStore.FindUserByEmail(req.Msg.Username)
+	result, err := h.authUseCase.Login(ctx, req.Msg.Username, req.Msg.Password)
 	if err != nil {
-		if errors.Is(err, postgres.ErrNotFound) {
-			return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid username or password"))
-		}
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.ToConnectError(err)
 	}
 
-	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(req.Msg.Password)); err != nil {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid username or password"))
-	}
-
-	tokenStr, err := h.jwtService.GenerateToken(user.ID, user.Email, user.Role, user.TenantID)
-	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to generate auth token"))
-	}
-
-	exp := time.Now().Add(24 * time.Hour).Unix()
-
-	return connect.NewResponse(&devicepb.LoginResponse{
-		Token: tokenStr,
-		User: &devicepb.UserProfile{
-			Id:       fmt.Sprintf("%d", user.ID),
-			Username: user.Email,
-			Email:    user.Email,
-			Role:     user.Role,
-		},
-		ExpiresAtUnix: exp,
-	}), nil
+	return connect.NewResponse(mapper.LoginResultToProto(result)), nil
 }
 
+// GetMe returns the authenticated user profile.
 func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[devicepb.GetMeRequest]) (*connect.Response[devicepb.GetMeResponse], error) {
 	return connect.NewResponse(&devicepb.GetMeResponse{
 		User: &devicepb.UserProfile{
@@ -78,6 +53,7 @@ func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[dev
 	}), nil
 }
 
+// RefreshToken issues a refreshed session token.
 func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Request[devicepb.RefreshTokenRequest]) (*connect.Response[devicepb.RefreshTokenResponse], error) {
 	if req.Msg.RefreshToken == "" {
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("refresh token is required"))
@@ -90,27 +66,16 @@ func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Requ
 	}), nil
 }
 
-func NewAuthServiceHandler(pgStore *postgres.Store, jwtService *auth.JWTService) (string, http.Handler) {
-	handler := NewAuthConnectHandler(pgStore, jwtService)
+// NewAuthServiceHandler creates the Connect http.Handler and registers procedures.
+func NewAuthServiceHandler(uc *authUC.AuthUseCase) (string, http.Handler) {
+	handler := NewAuthConnectHandler(uc)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := codec.Option()
 
 	serviceName := "polyglot.v1.AuthService"
-	mux.Handle("/"+serviceName+"/Login", connect.NewUnaryHandler(
-		"/"+serviceName+"/Login",
-		handler.Login,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/GetMe", connect.NewUnaryHandler(
-		"/"+serviceName+"/GetMe",
-		handler.GetMe,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/RefreshToken", connect.NewUnaryHandler(
-		"/"+serviceName+"/RefreshToken",
-		handler.RefreshToken,
-		codecOpt,
-	))
+	mux.Handle("/"+serviceName+"/Login", connect.NewUnaryHandler("/"+serviceName+"/Login", handler.Login, codecOpt))
+	mux.Handle("/"+serviceName+"/GetMe", connect.NewUnaryHandler("/"+serviceName+"/GetMe", handler.GetMe, codecOpt))
+	mux.Handle("/"+serviceName+"/RefreshToken", connect.NewUnaryHandler("/"+serviceName+"/RefreshToken", handler.RefreshToken, codecOpt))
 
 	return "/" + serviceName + "/", mux
 }

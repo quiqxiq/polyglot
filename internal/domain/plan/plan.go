@@ -1,14 +1,15 @@
 package plan
 
-import "context"
+import "time"
 
-// New creates a placeholder Plan entity (ISP service plan).
-// Named New, not NewPlan — CLAUDE.md §2.1 (avoid package name stutter).
-// The package itself is named "plan", not "package" — "package" is a
-// reserved Go keyword. See CLAUDE.md §1.1 catatan penamaan and
-// Polyglot-Architecture.md §7.2 (table named `plans`, not `packages`, for
-// the same reason).
-// TODO: implement per Polyglot-Architecture.md business domain rules.
-func New(ctx context.Context) error {
-	return nil
+// Plan represents an ISP internet service plan product.
+type Plan struct {
+	ID          string    `json:"id"`
+	Name        string    `json:"name"`
+	RateLimit   string    `json:"rate_limit"` // e.g. "50M/50M"
+	MonthlyFee  float64   `json:"monthly_fee"`
+	Description string    `json:"description"`
+	Enabled     bool      `json:"enabled"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }

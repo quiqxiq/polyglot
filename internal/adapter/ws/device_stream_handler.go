@@ -6,9 +6,10 @@ import (
 	"net/http"
 
 	"github.com/coder/websocket"
-	"github.com/gin-gonic/gin"
 
 	"github.com/quixiq/polyglot/internal/usecase/network"
+	"github.com/quixiq/polyglot/pkg/logger"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 type TerminalMessage struct {
@@ -28,22 +29,23 @@ func NewTerminalHandler(openTermUC *network.OpenTerminalUseCase) *TerminalHandle
 	}
 }
 
-func (h *TerminalHandler) ServeHTTP(c *gin.Context) {
-	deviceID := c.Param("id")
+func (h *TerminalHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	deviceID := r.PathValue("id")
 	if deviceID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "device id is required"})
+		response.Fail(w, http.StatusBadRequest, "BAD_REQUEST", "Device ID is required in URL path", "")
 		return
 	}
 
-	conn, err := websocket.Accept(c.Writer, c.Request, &websocket.AcceptOptions{
+	conn, err := websocket.Accept(w, r, &websocket.AcceptOptions{
 		InsecureSkipVerify: true,
 	})
 	if err != nil {
+		logger.FromContext(r.Context()).WithError(err).Warn("WebSocket handshake failed")
 		return
 	}
 	defer conn.CloseNow()
 
-	ctx := c.Request.Context()
+	ctx := r.Context()
 
 	if h.openTermUC == nil {
 		_ = conn.Write(ctx, websocket.MessageText, []byte("\r\n\x1b[31m[Polyglot Terminal Error]: Terminal usecase is not initialized.\x1b[0m\r\n"))
@@ -100,14 +102,13 @@ func (h *TerminalHandler) ServeHTTP(c *gin.Context) {
 				if msg.Cols > 0 && msg.Rows > 0 {
 					_ = termSession.Resize(msg.Cols, msg.Rows)
 				}
-			} else {
-				_, _ = stdin.Write(msgBytes)
 			}
 		}
 	}()
 
 	select {
 	case <-ctx.Done():
-	case <-errChan:
+	case err := <-errChan:
+		logger.FromContext(ctx).WithError(err).Debug("Terminal WebSocket session closed")
 	}
 }

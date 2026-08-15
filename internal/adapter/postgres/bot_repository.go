@@ -7,23 +7,34 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 var ErrNotFound = errors.New("record not found")
 
-// WASessionRepository implementation
-func (s *Store) CreateSession(session *bot.WASession) error {
+type waSessionRepository struct {
+	db *gorm.DB
+}
+
+var _ port.WASessionRepository = (*waSessionRepository)(nil)
+
+// NewWASessionRepository returns a port.WASessionRepository implementation.
+func NewWASessionRepository(db *gorm.DB) port.WASessionRepository {
+	return &waSessionRepository{db: db}
+}
+
+func (r *waSessionRepository) Create(session *bot.WASession) error {
 	m := models.WASessionModelFromDomain(session)
-	if err := s.db.Create(m).Error; err != nil {
+	if err := r.db.Create(m).Error; err != nil {
 		return err
 	}
 	session.ID = m.ID
 	return nil
 }
 
-func (s *Store) FindSessionByID(id uint) (*bot.WASession, error) {
+func (r *waSessionRepository) FindByID(id uint) (*bot.WASession, error) {
 	var m models.WASessionModel
-	if err := s.db.First(&m, id).Error; err != nil {
+	if err := r.db.First(&m, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
 		}
@@ -32,9 +43,9 @@ func (s *Store) FindSessionByID(id uint) (*bot.WASession, error) {
 	return m.ToDomain(), nil
 }
 
-func (s *Store) FindAllSessions() ([]bot.WASession, error) {
+func (r *waSessionRepository) FindAll() ([]bot.WASession, error) {
 	var mList []models.WASessionModel
-	if err := s.db.Order("created_at DESC").Find(&mList).Error; err != nil {
+	if err := r.db.Order("created_at DESC").Find(&mList).Error; err != nil {
 		return nil, err
 	}
 	var res []bot.WASession
@@ -46,13 +57,34 @@ func (s *Store) FindAllSessions() ([]bot.WASession, error) {
 	return res, nil
 }
 
-func (s *Store) UpdateSession(session *bot.WASession) error {
+func (r *waSessionRepository) Update(session *bot.WASession) error {
 	m := models.WASessionModelFromDomain(session)
-	return s.db.Save(m).Error
+	return r.db.Save(m).Error
+}
+
+func (r *waSessionRepository) Delete(id uint) error {
+	return r.db.Delete(&models.WASessionModel{}, id).Error
+}
+
+// Store backward-compatible delegations
+func (s *Store) CreateSession(session *bot.WASession) error {
+	return NewWASessionRepository(s.db).Create(session)
+}
+
+func (s *Store) FindSessionByID(id uint) (*bot.WASession, error) {
+	return NewWASessionRepository(s.db).FindByID(id)
+}
+
+func (s *Store) FindAllSessions() ([]bot.WASession, error) {
+	return NewWASessionRepository(s.db).FindAll()
+}
+
+func (s *Store) UpdateSession(session *bot.WASession) error {
+	return NewWASessionRepository(s.db).Update(session)
 }
 
 func (s *Store) DeleteSession(id uint) error {
-	return s.db.Delete(&models.WASessionModel{}, id).Error
+	return NewWASessionRepository(s.db).Delete(id)
 }
 
 // ConversationRepository implementation
@@ -133,10 +165,17 @@ func (s *Store) FindAllConversations() ([]bot.Conversation, error) {
 
 func (s *Store) FindActiveConversationByCustomer(sessionID uint, customerNumber string) (*bot.Conversation, error) {
 	var m models.ConversationModel
-	if err := s.db.Where("session_id = ? AND customer_wa_number = ? AND status IN ('bot', 'escalation')", sessionID, customerNumber).
-		Order("updated_at DESC").First(&m).Error; err != nil {
+	activeStatuses := []string{
+		string(bot.StatusBot),
+		string(bot.StatusEscalation),
+	}
+	err := s.db.Where("session_id = ? AND customer_number = ? AND status IN ?", sessionID, customerNumber, activeStatuses).
+		Order("created_at DESC").
+		First(&m).Error
+
+	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, ErrNotFound
+			return nil, nil
 		}
 		return nil, err
 	}
@@ -155,8 +194,6 @@ func (s *Store) CreateMessage(msg *bot.Message) error {
 		return err
 	}
 	msg.ID = m.ID
-
-	_ = s.db.Model(&models.ConversationModel{}).Where("id = ?", msg.ConversationID).Update("updated_at", msg.CreatedAt)
 	return nil
 }
 

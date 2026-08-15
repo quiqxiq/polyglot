@@ -3,7 +3,6 @@ package whatsapp
 import (
 	"context"
 	"fmt"
-	"log"
 	"sync"
 
 	_ "github.com/lib/pq"
@@ -13,6 +12,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 type SessionManager struct {
@@ -242,12 +242,16 @@ func (sm *SessionManager) RestoreAllSessions(sessions []bot.WASession) error {
 	if sm == nil {
 		return nil
 	}
-	log.Printf("[SessionManager] Restoring %d WhatsApp sessions...", len(sessions))
+	logger.Infof("[SessionManager] Restoring %d WhatsApp sessions...", len(sessions))
 	for i := range sessions {
 		sess := &sessions[i]
 		if sess.Status == bot.StatusOnline || sess.IsBotEnabled {
 			if err := sm.Connect(sess); err != nil {
-				log.Printf("[SessionManager] Warning: Failed to connect session %d (%s): %v", sess.ID, sess.DeviceName, err)
+				logger.WithFields(logger.Fields{
+					"session_id":  sess.ID,
+					"device_name": sess.DeviceName,
+					"error":       err,
+				}).Warn("[SessionManager] Failed to connect session")
 			}
 		}
 	}

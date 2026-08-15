@@ -4,13 +4,14 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"time"
 
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/proto/v1"
+	"github.com/quixiq/polyglot/internal/adapter/connect/codec"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 type ProbeConnectHandler struct{}
@@ -24,7 +25,11 @@ func (h *ProbeConnectHandler) ReportStatus(ctx context.Context, req *connect.Req
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("probe_id is required"))
 	}
 
-	log.Printf("[ProbeServer] Received heartbeat from Probe %s (Version: %s, Uptime: %ds)", req.Msg.ProbeId, req.Msg.Version, req.Msg.UptimeSeconds)
+	logger.FromContext(ctx).WithFields(logger.Fields{
+		"probe_id":   req.Msg.ProbeId,
+		"version":    req.Msg.Version,
+		"uptime_sec": req.Msg.UptimeSeconds,
+	}).Info("Received heartbeat from probe")
 
 	return connect.NewResponse(&devicepb.ProbeStatusResponse{
 		Acknowledged:   true,
@@ -42,15 +47,19 @@ func (h *ProbeConnectHandler) StreamTelemetry(ctx context.Context, stream *conne
 			return err
 		}
 
-		log.Printf("[ProbeServer] Telemetry from probe %s: Target=%s Latency=%dms Alive=%v",
-			msg.ProbeId, msg.TargetIp, msg.LatencyMs, msg.IsAlive)
+		logger.FromContext(ctx).WithFields(logger.Fields{
+			"probe_id":   msg.ProbeId,
+			"target_ip":  msg.TargetIp,
+			"latency_ms": msg.LatencyMs,
+			"alive":      msg.IsAlive,
+		}).Debug("Telemetry received from probe")
 	}
 }
 
 func NewProbeServiceHandler() (string, http.Handler) {
 	handler := NewProbeConnectHandler()
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(connectJSONCodec{})
+	codecOpt := codec.Option()
 
 	serviceName := "polyglot.v1.ProbeService"
 	mux.Handle("/"+serviceName+"/ReportStatus", connect.NewUnaryHandler(

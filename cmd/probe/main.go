@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -13,6 +12,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/proto/v1"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 func main() {
@@ -22,8 +22,10 @@ func main() {
 	serverURL := envOr("PROBE_SERVER_URL", "http://localhost:8080")
 	probeID := envOr("PROBE_ID", "pop-remote-01")
 
-	log.Printf("[POP Remote Probe Agent] Starting lightweight probe agent %s...", probeID)
-	log.Printf("[POP Remote Probe Agent] Target server: %s", serverURL)
+	logger.WithFields(logger.Fields{
+		"probe_id":   probeID,
+		"server_url": serverURL,
+	}).Info("[POP Remote Probe Agent] Starting lightweight probe agent...")
 
 	client := newJSONConnectClient(serverURL)
 
@@ -34,7 +36,7 @@ func main() {
 	go runTelemetryLoop(ctx, client, probeID)
 
 	<-ctx.Done()
-	log.Println("[POP Remote Probe Agent] Shutting down probe agent...")
+	logger.Info("[POP Remote Probe Agent] Shutting down probe agent...")
 }
 
 func runHeartbeatLoop(ctx context.Context, client *probeClient, probeID string) {
@@ -56,9 +58,12 @@ func runHeartbeatLoop(ctx context.Context, client *probeClient, probeID string) 
 			})
 			resp, err := client.ReportStatus(ctx, req)
 			if err != nil {
-				log.Printf("[Probe Heartbeat Warning] Failed to report status: %v", err)
+				logger.WithError(err).Warn("[Probe Heartbeat Warning] Failed to report status")
 			} else {
-				log.Printf("[Probe Heartbeat OK] Server ack=%v (Server Time: %d)", resp.Msg.Acknowledged, resp.Msg.ServerTimeUnix)
+				logger.WithFields(logger.Fields{
+					"ack":         resp.Msg.Acknowledged,
+					"server_time": resp.Msg.ServerTimeUnix,
+				}).Info("[Probe Heartbeat OK] Server ack received")
 			}
 		}
 	}
@@ -81,7 +86,11 @@ func runTelemetryLoop(ctx context.Context, client *probeClient, probeID string) 
 
 			// Simulate ICMP Ping measurement
 			latency := int64(5 + (idx * 3) % 25)
-			log.Printf("[Probe Telemetry] Polled target %s: Latency %dms (Alive=true)", target, latency)
+			logger.WithFields(logger.Fields{
+				"target":     target,
+				"latency_ms": latency,
+				"alive":      true,
+			}).Info("[Probe Telemetry] Polled target")
 		}
 	}
 }

@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"log"
 
 	"github.com/joho/godotenv"
 	"golang.org/x/crypto/bcrypt"
@@ -10,25 +9,26 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/config"
-	"github.com/quixiq/polyglot/internal/domain/customer"
+	domainAuth "github.com/quixiq/polyglot/internal/domain/auth"
 	"github.com/quixiq/polyglot/internal/domain/knowledge"
 	"github.com/quixiq/polyglot/internal/domain/llm"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 func main() {
 	if err := godotenv.Load(); err != nil {
-		log.Println("No .env file found, using default environment variables")
+		logger.Warn("No .env file found, using default environment variables")
 	}
 
 	cfg := config.Load()
-	log.Println("Connecting to database for seeding...")
+	logger.Info("Connecting to database for seeding...")
 
 	pgStore, err := postgres.NewStore(cfg.DatabaseURL)
 	if err != nil {
-		log.Fatalf("Database connection failed: %v", err)
+		logger.WithError(err).Fatal("Database connection failed")
 	}
 
-	log.Println("Seeding database data...")
+	logger.Info("Seeding database data...")
 
 	ctx := context.Background()
 	seedUsers(pgStore)
@@ -36,7 +36,7 @@ func main() {
 	seedLLMConfig(pgStore, cfg)
 	seedCasbin(ctx, pgStore)
 
-	log.Println("✅ Database seeding completed successfully!")
+	logger.Info("Database seeding completed successfully!")
 }
 
 func seedUsers(pgStore *postgres.Store) {
@@ -52,26 +52,26 @@ func seedUsers(pgStore *postgres.Store) {
 	for _, u := range users {
 		existing, err := pgStore.FindUserByEmail(u.email)
 		if err == nil && existing != nil {
-			log.Printf("User %s already exists, skipping.", u.email)
+			logger.Infof("User %s already exists, skipping.", u.email)
 			continue
 		}
 
 		hash, err := bcrypt.GenerateFromPassword([]byte(u.password), bcrypt.DefaultCost)
 		if err != nil {
-			log.Printf("Failed to hash password for %s: %v", u.email, err)
+			logger.WithError(err).Errorf("Failed to hash password for %s", u.email)
 			continue
 		}
 
-		user := &customer.User{
+		user := &domainAuth.User{
 			Email:        u.email,
 			PasswordHash: string(hash),
 			Role:         u.role,
 		}
 
 		if err := pgStore.CreateUser(user); err != nil {
-			log.Printf("Failed to create user %s: %v", u.email, err)
+			logger.WithError(err).Errorf("Failed to create user %s", u.email)
 		} else {
-			log.Printf("Created user: %s (%s) [Password: %s]", u.email, u.role, u.password)
+			logger.Infof("Created user: %s (%s) [Password: %s]", u.email, u.role, u.password)
 		}
 	}
 }
@@ -79,12 +79,12 @@ func seedUsers(pgStore *postgres.Store) {
 func seedCasbin(ctx context.Context, pgStore *postgres.Store) {
 	enforcer, err := auth.NewCasbinEnforcer(ctx, pgStore.DB())
 	if err != nil {
-		log.Printf("Failed to initialize Casbin enforcer for seeding: %v", err)
+		logger.WithError(err).Warn("Failed to initialize Casbin enforcer for seeding")
 		return
 	}
 
 	auth.SeedSystemPolicies(enforcer)
-	log.Println("Seeded full Polyglot system Casbin RBAC policies into Postgres database")
+	logger.Info("Seeded full Polyglot system Casbin RBAC policies into Postgres database")
 }
 
 func seedKnowledge(pgStore *postgres.Store) {
@@ -137,16 +137,16 @@ func seedKnowledge(pgStore *postgres.Store) {
 
 	existingEntries, _ := pgStore.FindAllKnowledgeEntries()
 	if len(existingEntries) > 0 {
-		log.Printf("Knowledge base already has %d entries, skipping.", len(existingEntries))
+		logger.Infof("Knowledge base already has %d entries, skipping.", len(existingEntries))
 		return
 	}
 
 	for i := range entries {
 		entry := &entries[i]
 		if err := pgStore.CreateKnowledgeEntry(entry); err != nil {
-			log.Printf("Failed to seed knowledge entry '%s': %v", entry.Title, err)
+			logger.WithError(err).Errorf("Failed to seed knowledge entry '%s'", entry.Title)
 		} else {
-			log.Printf("Created knowledge entry: %s", entry.Title)
+			logger.Infof("Created knowledge entry: %s", entry.Title)
 		}
 	}
 }
@@ -154,13 +154,13 @@ func seedKnowledge(pgStore *postgres.Store) {
 func seedLLMConfig(pgStore *postgres.Store, cfg config.Config) {
 	configs, _ := pgStore.FindAllLLMConfigs()
 	if len(configs) > 0 {
-		log.Printf("LLM configs already exist, skipping.")
+		logger.Info("LLM configs already exist, skipping.")
 		return
 	}
 
 	encryptedPlaceholder, err := config.Encrypt("REPLACE_WITH_YOUR_GEMINI_API_KEY", cfg.EncryptionKey)
 	if err != nil {
-		log.Printf("Failed to encrypt default API key: %v", err)
+		logger.WithError(err).Error("Failed to encrypt default API key")
 		return
 	}
 
@@ -173,8 +173,8 @@ func seedLLMConfig(pgStore *postgres.Store, cfg config.Config) {
 	}
 
 	if err := pgStore.CreateLLMConfig(defaultConfig); err != nil {
-		log.Printf("Failed to seed LLM config: %v", err)
+		logger.WithError(err).Error("Failed to seed LLM config")
 	} else {
-		log.Printf("Created default LLM Config (Google Gemini 2.0 Flash - Active)")
+		logger.Info("Created default LLM Config (Google Gemini 2.0 Flash - Active)")
 	}
 }

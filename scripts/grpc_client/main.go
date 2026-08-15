@@ -2,19 +2,18 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"io"
-	"log"
 	"time"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
 	devicepb "github.com/quixiq/polyglot/api/proto/v1"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 func main() {
-	log.Println("🚀 STARTING gRPC INTEGRATION TEST CLIENT...")
+	logger.Info("🚀 STARTING gRPC INTEGRATION TEST CLIENT...")
 
 	target := "localhost:50051"
 	conn, err := grpc.NewClient(
@@ -23,7 +22,7 @@ func main() {
 		grpc.WithDefaultCallOptions(grpc.CallContentSubtype("json")),
 	)
 	if err != nil {
-		log.Fatalf("Failed to connect to gRPC server at %s: %v", target, err)
+		logger.WithError(err).Fatalf("Failed to connect to gRPC server at %s", target)
 	}
 	defer conn.Close()
 
@@ -32,28 +31,28 @@ func main() {
 	defer cancel()
 
 	// 1. Test ListDevices RPC
-	log.Println("\n1️⃣  Executing ListDevices gRPC RPC...")
+	logger.Info("1️⃣  Executing ListDevices gRPC RPC...")
 	listRes, err := client.ListDevices(ctx, &devicepb.ListDevicesRequest{})
 	if err != nil {
-		log.Fatalf("ListDevices failed: %v", err)
+		logger.WithError(err).Fatal("ListDevices failed")
 	}
-	log.Printf("   ListDevices Success! Found %d devices:", len(listRes.Devices))
+	logger.Infof("   ListDevices Success! Found %d devices:", len(listRes.Devices))
 	for _, d := range listRes.Devices {
-		log.Printf("   - [%s] %s (%s:%d) Vendor: %s | Enabled: %v", d.Id, d.Name, d.Host, d.Port, d.Vendor, d.Enabled)
+		logger.Infof("   - [%s] %s (%s:%d) Vendor: %s | Enabled: %v", d.Id, d.Name, d.Host, d.Port, d.Vendor, d.Enabled)
 	}
 
 	// 2. Test GetDevice RPC
 	if len(listRes.Devices) > 0 {
 		targetID := listRes.Devices[0].Id
-		log.Printf("\n2️⃣  Executing GetDevice gRPC RPC for ID %q...", targetID)
+		logger.Infof("2️⃣  Executing GetDevice gRPC RPC for ID %q...", targetID)
 		getRes, err := client.GetDevice(ctx, &devicepb.GetDeviceRequest{Id: targetID})
 		if err != nil {
-			log.Fatalf("GetDevice failed: %v", err)
+			logger.WithError(err).Fatal("GetDevice failed")
 		}
-		log.Printf("   GetDevice Success! Device: %+v", getRes.Device)
+		logger.Infof("   GetDevice Success! Device: %+v", getRes.Device)
 
 		// 3. Test UpdateDevice RPC
-		log.Printf("\n3️⃣  Executing UpdateDevice gRPC RPC for ID %q...", targetID)
+		logger.Infof("3️⃣  Executing UpdateDevice gRPC RPC for ID %q...", targetID)
 		updateReq := &devicepb.UpdateDeviceRequest{
 			Device: &devicepb.Device{
 				Id:         getRes.Device.Id,
@@ -71,19 +70,19 @@ func main() {
 		}
 		updateRes, err := client.UpdateDevice(ctx, updateReq)
 		if err != nil {
-			log.Fatalf("UpdateDevice failed: %v", err)
+			logger.WithError(err).Fatal("UpdateDevice failed")
 		}
-		log.Printf("   UpdateDevice Success! Message: %s | New Name: %s", updateRes.Message, updateRes.Device.Name)
+		logger.Infof("   UpdateDevice Success! Message: %s | New Name: %s", updateRes.Message, updateRes.Device.Name)
 	}
 
 	// 4. Test StreamDeviceStatus RPC
-	log.Println("\n4️⃣  Subscribing to StreamDeviceStatus gRPC Server Streaming RPC...")
+	logger.Info("4️⃣  Subscribing to StreamDeviceStatus gRPC Server Streaming RPC...")
 	streamCtx, streamCancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer streamCancel()
 
 	stream, err := client.StreamDeviceStatus(streamCtx, &devicepb.StreamDeviceStatusRequest{})
 	if err != nil {
-		log.Fatalf("StreamDeviceStatus failed: %v", err)
+		logger.WithError(err).Fatal("StreamDeviceStatus failed")
 	}
 
 	frameCount := 0
@@ -93,18 +92,18 @@ func main() {
 			break
 		}
 		if err != nil {
-			log.Printf("   Stream receive ended: %v", err)
+			logger.WithError(err).Warn("   Stream receive ended")
 			break
 		}
 		frameCount++
-		log.Printf("   📩 [gRPC Frame #%d] Device: %s | Status: %s | Uptime: %s | Msg: %s",
+		logger.Infof("   📩 [gRPC Frame #%d] Device: %s | Status: %s | Uptime: %s | Msg: %s",
 			frameCount, frame.Device.Name, frame.Test.Status, frame.Test.Uptime, frame.Test.Message)
 		if frameCount >= 3 {
 			break
 		}
 	}
 
-	fmt.Println("\n======================================================================")
-	fmt.Println("  ✅ ALL gRPC CLIENT & SERVER PROCEDURES VERIFIED SUCCESSFULLY!")
-	fmt.Println("======================================================================")
+	logger.Info("======================================================================")
+	logger.Info("  ✅ ALL gRPC CLIENT & SERVER PROCEDURES VERIFIED SUCCESSFULLY!")
+	logger.Info("======================================================================")
 }

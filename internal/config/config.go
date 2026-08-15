@@ -2,12 +2,12 @@ package config
 
 import (
 	_ "embed"
-	"log"
 	"os"
 	"strconv"
 	"strings"
 
 	"github.com/joho/godotenv"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 //go:embed rbac_model.conf
@@ -45,7 +45,7 @@ type Config struct {
 
 func Load() Config {
 	if err := godotenv.Load(); err != nil {
-		log.Println("[Config] No .env file found or error loading, using environment/default values")
+		logger.Warn("[Config] No .env file found or error loading, using environment/default values")
 	}
 
 	return Config{
