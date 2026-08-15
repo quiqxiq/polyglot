@@ -9,7 +9,7 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
 	"github.com/quixiq/polyglot/internal/config"
-	"github.com/quixiq/polyglot/internal/domain/customer"
+	domainAuth "github.com/quixiq/polyglot/internal/domain/auth"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
 
@@ -36,7 +36,7 @@ func main() {
 			logger.WithError(err).Fatal("[Seeder Error] Failed to hash password")
 		}
 
-		adminUser := &customer.User{
+		adminUser := &domainAuth.User{
 			Email:        adminEmail,
 			PasswordHash: string(hash),
 			Role:         "admin",
