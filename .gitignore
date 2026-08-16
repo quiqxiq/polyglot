@@ -39,5 +39,3 @@ lerna-debug.log*
 *.sw?
 # .understand-anything/
 .ref
-.agents/
-.agents
