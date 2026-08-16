@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // PPPoESecretParams holds the parameters needed to create or update a
@@ -16,18 +17,18 @@ import (
 //   - Name     : PPPoE username — must be unique on the router.
 //   - Password : PPPoE password (plaintext in RouterOS, stored as-is).
 //   - Profile  : name of an existing /ppp/profile entry (e.g. "10Mbps").
-//                Defaults to "default" if empty.
+//     Defaults to "default" if empty.
 //   - Service  : which PPP service type this secret is valid for.
-//                RouterOS accepts: "any", "async", "l2tp", "ovpn", "pppoe",
-//                "pptp", "sstp", "pppoe,l2tp" (comma-separated). For ISP
-//                PPPoE-only deployments, use "pppoe".
+//     RouterOS accepts: "any", "async", "l2tp", "ovpn", "pppoe",
+//     "pptp", "sstp", "pppoe,l2tp" (comma-separated). For ISP
+//     PPPoE-only deployments, use "pppoe".
 //   - LocalAddress  : IP address assigned to the router end of the PPP link.
-//                     Leave empty to inherit from the profile.
+//     Leave empty to inherit from the profile.
 //   - RemoteAddress : IP address assigned to the subscriber's CPE.
-//                     Leave empty to inherit from the profile (usually a
-//                     pool reference).
+//     Leave empty to inherit from the profile (usually a
+//     pool reference).
 //   - Comment  : free-text label. Convention: prefix with "polyglot:<subID>"
-//                to enable reconciliation queries later.
+//     to enable reconciliation queries later.
 //   - Disabled : when true, the secret exists but the subscriber cannot log in.
 type PPPoESecretParams struct {
 	Name          string
@@ -40,36 +41,9 @@ type PPPoESecretParams struct {
 	Disabled      bool
 }
 
-// PPPoESecret represents one row returned by /ppp/secret/print. Only fields
-// that are stable across RouterOS versions and genuinely useful to the
-// usecase layer are mapped — the raw Rows map is still available from
-// command.Result if callers need something obscure.
-//
-// Field notes (from RouterOS /ppp/secret/print output):
-//   - RosID         : internal RouterOS ID (e.g. "*1", "*2"). Required for
-//                     /ppp/secret/set and /ppp/secret/remove [find .id=<ID>].
-//   - Name          : PPPoE username.
-//   - Profile       : active profile name.
-//   - Service       : service type string.
-//   - LocalAddress  : configured local IP (empty = inherited from profile).
-//   - RemoteAddress : configured remote IP (empty = pool/inherited).
-//   - Comment       : free-text comment.
-//   - Disabled      : true when the secret is administratively disabled.
-//   - LastLoggedOut : last disconnect timestamp as a RouterOS time string
-//                     (e.g. "jan/02/2006 15:04:05"). Empty if never connected.
-//   - CallerID      : MAC address or other caller-id of the last connection.
-type PPPoESecret struct {
-	RosID         string // RouterOS internal .id, needed for set/remove
-	Name          string
-	Profile       string
-	Service       string
-	LocalAddress  string
-	RemoteAddress string
-	Comment       string
-	Disabled      bool
-	LastLoggedOut string
-	CallerID      string
-}
+// PPPoESecret is the vendor-neutral PPPoE secret row.
+// Canonical definition lives in internal/port (see port.PPPoESecret docs).
+type PPPoESecret = port.PPPoESecret
 
 // NewAddPPPoESecretCommand builds the command.Command for /ppp/secret/add
 // from typed params. The returned Command is ready to pass to Driver.Execute —

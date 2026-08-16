@@ -9,18 +9,20 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // CharSet defines character set types used for generating voucher usernames and passwords.
-type CharSet string
+// Canonical definition lives in internal/port (see port.CharSet).
+type CharSet = port.CharSet
 
 const (
-	CharSetNumeric  CharSet = "numeric"   // "1234567890"
-	CharSetLower    CharSet = "lower"     // "abcdefghijklmnopqrstuvwxyz"
-	CharSetUpper    CharSet = "upper"     // "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	CharSetLowerNum CharSet = "lowernum"  // "abcdefghijklmnopqrstuvwxyz1234567890"
-	CharSetUpperNum CharSet = "uppernum"  // "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-	CharSetMixed    CharSet = "mixed"     // "aBcDeFgHiJkLmNoPqRsTuVwXyZ1234567890"
+	CharSetNumeric  CharSet = "numeric"  // "1234567890"
+	CharSetLower    CharSet = "lower"    // "abcdefghijklmnopqrstuvwxyz"
+	CharSetUpper    CharSet = "upper"    // "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	CharSetLowerNum CharSet = "lowernum" // "abcdefghijklmnopqrstuvwxyz1234567890"
+	CharSetUpperNum CharSet = "uppernum" // "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+	CharSetMixed    CharSet = "mixed"    // "aBcDeFgHiJkLmNoPqRsTuVwXyZ1234567890"
 )
 
 var charSetMap = map[CharSet]string{
@@ -32,18 +34,9 @@ var charSetMap = map[CharSet]string{
 	CharSetMixed:    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
 }
 
-// VoucherGenerateParams holds parameters for mass-generating Mikhmon vouchers.
-type VoucherGenerateParams struct {
-	Server      string  // Hotspot server name (empty = "all")
-	Profile     string  // Hotspot user profile name (required)
-	Prefix      string  // Code prefix (e.g. "vc")
-	UserLength  int     // Length of generated username
-	PassLength  int     // Length of generated password (0 = username is password)
-	CharSet     CharSet // Character set to use
-	LimitUptime string  // Time limit (e.g. "1d", "3h")
-	LimitBytes  string  // Data quota in bytes
-	CommentTag  string  // Label tag in comment
-}
+// VoucherGenerateParams is the vendor-neutral voucher generation parameter set.
+// Canonical definition lives in internal/port (see port.VoucherGenerateParams docs).
+type VoucherGenerateParams = port.VoucherGenerateParams
 
 // GeneratedVoucher holds the details of one generated voucher.
 type GeneratedVoucher struct {
@@ -186,4 +179,3 @@ func NewGenerateVoucherBatchCommands(p VoucherGenerateParams, count int) Voucher
 
 	return batch
 }
-

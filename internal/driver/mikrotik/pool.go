@@ -2,16 +2,12 @@ package mikrotik
 
 import (
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
-// IPPool represents one row returned by /ip/pool/print.
-type IPPool struct {
-	RosID    string
-	Name     string
-	Ranges   string
-	NextPool string
-	Comment  string
-}
+// IPPool is the vendor-neutral IP pool row.
+// Canonical definition lives in internal/port (see port.IPPool docs).
+type IPPool = port.IPPool
 
 // NewPrintIPPoolsCommand builds the command.Command for /ip/pool/print.
 // Pass a non-empty nameFilter to look up one IP pool by name.

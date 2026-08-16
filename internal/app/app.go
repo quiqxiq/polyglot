@@ -28,6 +28,7 @@ import (
 	"github.com/quixiq/polyglot/internal/driver/genericssh"
 	"github.com/quixiq/polyglot/internal/driver/genieacs"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 	"github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
@@ -194,8 +195,17 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	reg := registry.New(repo, vault, factories)
 
-	devUC := deviceUC.NewManageDeviceUseCase(repo, vault, reg)
-	hotUC := hotspotUC.New("internal/templates")
+	// Fase 4 port seam: usecases depend only on port interfaces; vendor-native
+	// command knowledge stays behind the gateways in the driver layer. The
+	// executor is the policy-gated network.ExecuteCommand so destructive
+	// commands keep requiring approval.
+	exec := networkUC.ExecuteCommand
+	hotGateway := mikhmon.NewGateway(exec)
+	sessionGateway := mikrotik.NewGateway(exec) // implements SessionGateway + DeviceDiagnostics
+
+	devUC := deviceUC.NewManageDeviceUseCase(repo, vault, reg, sessionGateway)
+	hotUC := hotspotUC.New("internal/template", hotGateway)
+	activeSessionsUC := networkUC.NewActiveSessionsUseCase(sessionGateway)
 	openTermUC := networkUC.NewOpenTerminalUseCase(repo, vault, genericssh.DialSSHPty)
 
 	customerRepo := postgres.NewCustomerRepository(pgStore.DB())
@@ -256,7 +266,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	billingPath, billingHandler := billingConnect.NewBillingServiceHandler(invUC, subUC)
 	registerProtected(billingPath, billingHandler)
 
-	mikhmonPath, mikhmonHandler := hotspotConnect.NewHotspotServiceHandler(hotUC, connectDriverProvider)
+	mikhmonPath, mikhmonHandler := hotspotConnect.NewHotspotServiceHandler(hotUC, activeSessionsUC, connectDriverProvider)
 	registerProtected(mikhmonPath, mikhmonHandler)
 
 	waPath, waHandler := botConnect.NewWhatsAppServiceHandler(pgStore, waManager, chatService)

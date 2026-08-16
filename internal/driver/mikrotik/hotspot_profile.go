@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // HotspotUserProfileParams holds the parameters for creating or updating a
@@ -12,15 +13,15 @@ import (
 // Field notes (from RouterOS /ip/hotspot/user/profile reference):
 //   - Name           : unique profile name.
 //   - RateLimit      : bandwidth limit in RouterOS format ("rx/tx", e.g. "5M/5M").
-//                      Send empty string to clear (unlimited).
+//     Send empty string to clear (unlimited).
 //   - SessionTimeout : max single-session duration (RouterOS duration, e.g. "1h").
-//                      Send empty to clear.
+//     Send empty to clear.
 //   - IdleTimeout    : disconnect after idle for this long. Send empty to clear.
 //   - SharedUsers    : max simultaneous logins with this profile.
 //   - ParentQueue    : parent queue name for shaping hierarchy.
 //   - AddressPool    : IP pool name for clients — this is the correct field
-//                      for /ip/hotspot/user/profile (unlike /ppp/profile which
-//                      uses remote-address). See MIKROTIK-COMMAND.md §6 note.
+//     for /ip/hotspot/user/profile (unlike /ppp/profile which
+//     uses remote-address). See MIKROTIK-COMMAND.md §6 note.
 //   - Comment        : free-text label.
 //
 // ⚠️ Fields local-address, remote-address, dns-server, address-list are NOT
@@ -38,20 +39,9 @@ type HotspotUserProfileParams struct {
 	OnLogin        string
 }
 
-// HotspotUserProfile represents one row returned by
-// /ip/hotspot/user/profile/print.
-type HotspotUserProfile struct {
-	RosID          string
-	Name           string
-	RateLimit      string
-	SessionTimeout string
-	IdleTimeout    string
-	SharedUsers    string
-	ParentQueue    string
-	AddressPool    string
-	Comment        string
-	OnLogin        string
-}
+// HotspotUserProfile is the vendor-neutral hotspot user profile row.
+// Canonical definition lives in internal/port (see port.HotspotUserProfile docs).
+type HotspotUserProfile = port.HotspotUserProfile
 
 // NewPrintHotspotUserProfilesCommand builds the command.Command for
 // /ip/hotspot/user/profile/print. Pass a non-empty nameFilter to look up

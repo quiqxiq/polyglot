@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 )
 
 type mikhmonKickSessionArgs struct {
@@ -30,14 +29,13 @@ func (s *Server) mikhmonKickSession(ctx context.Context, _ *mcp.CallToolRequest,
 		return toolError(mikhmonKickSessionOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
 	}
 
-	uc := s.mikhmonUC
-	if uc == nil {
-		uc = hotspotUC.New("")
+	if s.mikhmonUC == nil {
+		return toolError(mikhmonKickSessionOutput{DeviceID: args.DeviceID, Status: "error", Summary: "mikhmon use case not configured"})
 	}
 
 	targetRosID := args.SessionID
 	if targetRosID == "" && args.User != "" {
-		activeSessions, err := uc.GetActiveSessions(ctx, driver)
+		activeSessions, err := s.mikhmonUC.GetActiveSessions(ctx, driver)
 		if err != nil {
 			return toolError(mikhmonKickSessionOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
 		}
@@ -52,7 +50,7 @@ func (s *Server) mikhmonKickSession(ctx context.Context, _ *mcp.CallToolRequest,
 		}
 	}
 
-	res, err := uc.RemoveActiveSession(ctx, driver, targetRosID)
+	res, err := s.mikhmonUC.RemoveActiveSession(ctx, driver, targetRosID)
 	if err != nil {
 		return toolError(mikhmonKickSessionOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
 	}

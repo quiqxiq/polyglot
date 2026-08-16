@@ -5,40 +5,17 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // ErrInvalidMikhmonComment indicates a comment string could not be parsed
 // into a valid Mikhmon pre-login or post-login metadata comment structure.
 var ErrInvalidMikhmonComment = errors.New("mikhmon: invalid comment format")
 
-// MikhmonComment represents parsed metadata stored in a MikroTik Hotspot user comment
-// by Mikhmon v4. Mikhmon uses two comment formats:
-//
-// 1. Pre-login (created during voucher generation):
-//    "<type>-<code>-<date>-<tag>" e.g. "vc-A3X-08.03.26-Voucher_1_Hari"
-//    - Type : "vc" (voucher) or "up" (username/password user)
-//    - Code : 3-4 character random string generated during creation
-//    - CreatedDate : creation date formatted as MM.DD.YY
-//    - Tag  : optional user/batch label
-//
-// 2. Post-login (updated automatically by profile on-login script on first login):
-//    "DD/MM/YYYY HH:MM:SS <mode> <old-comment>" e.g. "03/08/2026 15:30:00 N vc-A3X-08.03.26-Voucher_1_Hari"
-//    - ExpireDate : expiry date string (DD/MM/YYYY)
-//    - ExpireTime : expiry time string (HH:MM:SS)
-//    - ExpireMode : "N" (Notify / set limit-uptime=1s) or "X" (Remove / delete user)
-//    - IsActivated: true when post-login expiry date is present
-type MikhmonComment struct {
-	Type        string // "vc" or "up"
-	Code        string // e.g. "A3X"
-	CreatedDate string // MM.DD.YY
-	Tag         string // e.g. "Voucher_1_Hari"
-
-	IsActivated bool
-	ExpireDate  string // DD/MM/YYYY
-	ExpireTime  string // HH:MM:SS
-	ExpireMode  string // "N" (Notify) or "X" (Remove)
-	RawComment  string
-}
+// MikhmonComment is the vendor-neutral parsed Mikhmon comment metadata.
+// Canonical definition lives in internal/port (see port.MikhmonComment docs).
+type MikhmonComment = port.MikhmonComment
 
 // FormatPreLoginComment formats the initial comment string when creating a new voucher.
 // Format: "<type>-<code>-<date>-<tag>" e.g. "vc-A3X-08.03.26-MyTag"

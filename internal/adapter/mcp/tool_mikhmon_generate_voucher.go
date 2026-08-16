@@ -5,8 +5,7 @@ import (
 	"fmt"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
-	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 )
 
 type mikhmonGenerateVoucherArgs struct {
@@ -34,12 +33,12 @@ func (s *Server) mikhmonGenerateVoucher(ctx context.Context, _ *mcp.CallToolRequ
 		return toolError(mikhmonGenerateVoucherOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
 	}
 
-	uc := s.mikhmonUC
-	if uc == nil {
-		uc = hotspotUC.New("")
+	if s.mikhmonUC == nil {
+		return toolError(mikhmonGenerateVoucherOutput{DeviceID: args.DeviceID, Status: "error", Summary: "mikhmon use case not configured"})
 	}
+	uc := s.mikhmonUC
 
-	params := mikhmon.VoucherGenerateParams{
+	params := hotspot.VoucherGenerateParams{
 		Profile:     args.Profile,
 		LimitUptime: args.Validity,
 	}

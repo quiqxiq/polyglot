@@ -6,6 +6,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	"github.com/quixiq/polyglot/internal/port"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -34,7 +35,13 @@ func (m *mockDriver) Close() error {
 }
 
 func TestHotspotUseCase(t *testing.T) {
-	uc := New("")
+	// Real driver gateway bound to a policy-bypassing executor: the test
+	// asserts command construction/parsing through the full seam without
+	// needing the policy gate (mock driver classifies everything read-only).
+	exec := func(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
+		return driver.Execute(ctx, cmd)
+	}
+	uc := New("", mikhmon.NewGateway(exec))
 	ctx := context.Background()
 
 	t.Run("CreateProfile", func(t *testing.T) {

@@ -2,12 +2,12 @@ package device
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strconv"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/device"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -46,19 +46,27 @@ type DriverEvicter interface {
 	Evict(deviceID string) error
 }
 
+// ErrDiagnosticsUnconfigured indicates TestConnection was called without a
+// port.DeviceDiagnostics gateway — inventory CRUD still works without it.
+var ErrDiagnosticsUnconfigured = errors.New("device: diagnostics gateway not configured")
+
 // ManageDeviceUseCase manages device inventory CRUD and live connectivity testing.
 type ManageDeviceUseCase struct {
 	repo    port.DeviceRepository
 	vault   port.CredentialVault
 	evicter DriverEvicter
+	diag    port.DeviceDiagnostics
 }
 
-// NewManageDeviceUseCase constructs a new ManageDeviceUseCase.
-func NewManageDeviceUseCase(repo port.DeviceRepository, vault port.CredentialVault, evicter DriverEvicter) *ManageDeviceUseCase {
+// NewManageDeviceUseCase constructs a new ManageDeviceUseCase. diag may be
+// nil when only inventory CRUD is needed; TestConnection then returns
+// ErrDiagnosticsUnconfigured instead of panicking.
+func NewManageDeviceUseCase(repo port.DeviceRepository, vault port.CredentialVault, evicter DriverEvicter, diag port.DeviceDiagnostics) *ManageDeviceUseCase {
 	return &ManageDeviceUseCase{
 		repo:    repo,
 		vault:   vault,
 		evicter: evicter,
+		diag:    diag,
 	}
 }
 
@@ -74,7 +82,7 @@ func (uc *ManageDeviceUseCase) CreateDevice(ctx context.Context, d device.Device
 		return fmt.Errorf("failed to save credentials: %w", err)
 	}
 	if uc.evicter != nil {
-		_ = uc.evicter.Evict(d.ID)
+		_ = uc.evicter.Evict(d.ID) // best-effort: driver cache dibersihkan; kegagalan evict tidak membatalkan penyimpanan
 	}
 	return nil
 }
@@ -112,7 +120,7 @@ func (uc *ManageDeviceUseCase) UpdateDevice(ctx context.Context, d device.Device
 		}
 	}
 	if uc.evicter != nil {
-		_ = uc.evicter.Evict(d.ID)
+		_ = uc.evicter.Evict(d.ID) // best-effort: driver cache dibersihkan; kegagalan evict tidak membatalkan update
 	}
 	return nil
 }
@@ -123,18 +131,20 @@ func (uc *ManageDeviceUseCase) DeleteDevice(ctx context.Context, id string) erro
 		return err
 	}
 	if uc.evicter != nil {
-		_ = uc.evicter.Evict(id)
+		_ = uc.evicter.Evict(id) // best-effort: driver cache dibersihkan; kegagalan evict tidak membatalkan penghapusan
 	}
 	return nil
 }
 
 // TestConnection executes diagnostic checks against a live driver instance to verify connectivity and latency.
 func (uc *ManageDeviceUseCase) TestConnection(ctx context.Context, driver port.DeviceDriver, deviceID string, selectedIface string) (DeviceTestResult, error) {
+	if uc.diag == nil {
+		return DeviceTestResult{}, ErrDiagnosticsUnconfigured
+	}
 	start := time.Now()
 
 	// Execute /system/resource/print to test device response
-	cmd := mikrotik.NewPrintSystemResourceCommand()
-	res, err := driver.Execute(ctx, cmd)
+	sysRes, err := uc.diag.GetSystemResource(ctx, driver)
 	latency := time.Since(start).Milliseconds()
 
 	if err != nil {
@@ -146,7 +156,6 @@ func (uc *ManageDeviceUseCase) TestConnection(ctx context.Context, driver port.D
 		}, nil
 	}
 
-	sysRes := mikrotik.ParseSystemResource(res)
 	freeMem, _ := strconv.ParseInt(sysRes.FreeMemory, 10, 64)
 	totalMem, _ := strconv.ParseInt(sysRes.TotalMemory, 10, 64)
 
@@ -164,15 +173,12 @@ func (uc *ManageDeviceUseCase) TestConnection(ctx context.Context, driver port.D
 	}
 
 	// Try fetching system identity if available
-	identCmd := mikrotik.NewPrintSystemIdentityCommand()
-	if identRes, err := driver.Execute(ctx, identCmd); err == nil && len(identRes.Rows) > 0 {
-		result.Identity = identRes.Rows[0]["name"]
+	if ident, err := uc.diag.GetSystemIdentity(ctx, driver); err == nil {
+		result.Identity = ident
 	}
 
 	// Fetch interface list if available
-	ifaceCmd := mikrotik.NewPrintInterfacesCommand("")
-	if ifaceRes, err := driver.Execute(ctx, ifaceCmd); err == nil {
-		ifaces := mikrotik.ParseInterfaces(ifaceRes)
+	if ifaces, err := uc.diag.ListInterfaces(ctx, driver); err == nil {
 		for _, ifc := range ifaces {
 			result.Interfaces = append(result.Interfaces, ifc.Name)
 			result.InterfaceDetails = append(result.InterfaceDetails, DeviceInterfaceDetail{
@@ -187,9 +193,7 @@ func (uc *ManageDeviceUseCase) TestConnection(ctx context.Context, driver port.D
 
 	// Fetch selected interface traffic rates if specified
 	if selectedIface != "" && selectedIface != "default" {
-		monCmd := mikrotik.NewMonitorTrafficOnceCommand(selectedIface)
-		if monRes, err := driver.Execute(ctx, monCmd); err == nil {
-			stats := mikrotik.ParseInterfaceTrafficStats(monRes)
+		if stats, err := uc.diag.MonitorTrafficOnce(ctx, driver, selectedIface); err == nil {
 			rx, _ := strconv.ParseInt(stats.RxBitsPerSecond, 10, 64)
 			tx, _ := strconv.ParseInt(stats.TxBitsPerSecond, 10, 64)
 			result.RxBps = rx

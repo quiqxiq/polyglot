@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 )
 
 type mikhmonGetDashboardArgs struct {
@@ -36,12 +35,11 @@ func (s *Server) mikhmonGetDashboard(ctx context.Context, _ *mcp.CallToolRequest
 		return toolError(mikhmonDashboardOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
 	}
 
-	uc := s.mikhmonUC
-	if uc == nil {
-		uc = hotspotUC.New("")
+	if s.mikhmonUC == nil {
+		return toolError(mikhmonDashboardOutput{DeviceID: args.DeviceID, Status: "error", Summary: "mikhmon use case not configured"})
 	}
 
-	summary, err := uc.GetDashboardSummary(ctx, driver)
+	summary, err := s.mikhmonUC.GetDashboardSummary(ctx, driver)
 	if err != nil {
 		return toolError(mikhmonDashboardOutput{DeviceID: args.DeviceID, Status: "error", Summary: err.Error()})
 	}

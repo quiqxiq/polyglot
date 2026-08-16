@@ -4,28 +4,13 @@ import (
 	"strconv"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
-// SystemResource holds the parsed data from /system/resource/print.
-type SystemResource struct {
-	CPULoad       int
-	CPUCount      int
-	CPUFrequency  string // MHz
-	FreeMemory    string // bytes
-	TotalMemory   string // bytes
-	FreeHDDSpace  string // bytes
-	TotalHDDSpace string // bytes
-	Architecture  string
-	Model         string
-	SerialNumber  string
-	FirmwareType  string
-	Voltage       string // millivolts, may be empty
-	Temperature   string // Celsius, may be empty
-	BadBlocks     string
-	Uptime        string
-	Version       string
-	BoardName     string
-}
+// SystemResource is the vendor-neutral router system resource snapshot.
+// Canonical definition lives in internal/port; the alias keeps this driver
+// package's API stable for adapter code that legitimately uses it.
+type SystemResource = port.SystemResource
 
 // NewPrintSystemResourceCommand builds the command.Command for /system/resource/print.
 func NewPrintSystemResourceCommand() command.Command {

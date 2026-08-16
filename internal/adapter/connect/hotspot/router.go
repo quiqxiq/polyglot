@@ -6,11 +6,12 @@ import (
 	"connectrpc.com/connect"
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
+	"github.com/quixiq/polyglot/internal/usecase/network"
 )
 
 // NewHotspotServiceHandler creates the Connect http.Handler for HotspotService.
-func NewHotspotServiceHandler(uc *hotspotUC.UseCase, provider ConnectDriverProvider) (string, http.Handler) {
-	handler := NewHotspotConnectHandler(uc, provider)
+func NewHotspotServiceHandler(uc *hotspotUC.UseCase, activeUC *network.ActiveSessionsUseCase, provider ConnectDriverProvider) (string, http.Handler) {
+	handler := NewHotspotConnectHandler(uc, activeUC, provider)
 	mux := http.NewServeMux()
 	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 

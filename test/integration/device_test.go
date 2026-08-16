@@ -8,8 +8,10 @@ import (
 	"testing"
 	"time"
 
+	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/port"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -42,7 +44,10 @@ func TestDeviceIntegration_TestConnection(t *testing.T) {
 	require.NoError(t, err, "Gagal terkoneksi ke MikroTik live")
 	defer driver.Close()
 
-	uc := deviceUC.NewManageDeviceUseCase(nil, nil, nil)
+	exec := func(ctx context.Context, d port.DeviceDriver, cmd command.Command) (command.Result, error) {
+		return d.Execute(ctx, cmd)
+	}
+	uc := deviceUC.NewManageDeviceUseCase(nil, nil, nil, mikrotik.NewGateway(exec))
 	result, err := uc.TestConnection(ctx, driver, "dev-integration", "")
 	require.NoError(t, err)
 

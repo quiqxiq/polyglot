@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // SimpleQueueParams holds the parameters for creating a RouterOS simple queue
@@ -13,60 +14,39 @@ import (
 //
 // Field notes (from RouterOS /queue/simple reference):
 //   - Name        : queue name. Convention: use "sub-<username>" for subscriber
-//                   queues and "suspended_<ip_underscored>" for suspend queues.
+//     queues and "suspended_<ip_underscored>" for suspend queues.
 //   - Target      : IP address, subnet, or PPPoE interface targeted by this queue.
-//                   For PPPoE subscribers this is typically the username
-//                   (RouterOS matches the PPP interface automatically).
+//     For PPPoE subscribers this is typically the username
+//     (RouterOS matches the PPP interface automatically).
 //   - MaxLimit    : maximum allowed rate in RouterOS format "rx/tx"
-//                   (e.g. "10M/10M", "1k/1k" for suspend). This is the hard cap.
+//     (e.g. "10M/10M", "1k/1k" for suspend). This is the hard cap.
 //   - LimitAt     : CIR (Committed Information Rate) — guaranteed minimum rate.
-//                   Leave empty to match MaxLimit. Format same as MaxLimit.
+//     Leave empty to match MaxLimit. Format same as MaxLimit.
 //   - BurstLimit  : burst ceiling rate, e.g. "20M/20M". Empty = no burst.
 //   - BurstThreshold: traffic level at which burst kicks in, e.g. "8M/8M".
 //   - BurstTime   : burst duration window, e.g. "8s". RouterOS default is "8s".
 //   - Priority    : 1–8 (1 = highest). Leave empty for default (8).
 //   - Parent      : parent queue name for hierarchical (PCQ) shaping.
 //   - Comment     : free-text label. Convention for suspend queues:
-//                   "SUSPENDED - <reason> - <timestamp>".
+//     "SUSPENDED - <reason> - <timestamp>".
 //   - Disabled    : when true the queue entry exists but does not shape traffic.
 type SimpleQueueParams struct {
-	Name            string
-	Target          string
-	MaxLimit        string
-	LimitAt         string
-	BurstLimit      string
-	BurstThreshold  string
-	BurstTime       string
-	Priority        string
-	Parent          string
-	Comment         string
-	Disabled        bool
-}
-
-// SimpleQueue represents one row returned by /queue/simple/print.
-//
-// Counter fields (Bytes, Packets, Dropped, Rate, PacketRate) are runtime
-// statistics — they reset on reboot and are useful for monitoring dashboards.
-type SimpleQueue struct {
-	RosID          string
 	Name           string
 	Target         string
-	Parent         string
 	MaxLimit       string
 	LimitAt        string
 	BurstLimit     string
 	BurstThreshold string
 	BurstTime      string
 	Priority       string
-	Queue          string // queue type: pfifo, fq_codel, etc.
-	Bytes          string // cumulative bytes "rx/tx"
-	Packets        string
-	Dropped        string
-	Rate           string // current rate bps "rx/tx"
-	PacketRate     string
+	Parent         string
 	Comment        string
 	Disabled       bool
 }
+
+// SimpleQueue is the vendor-neutral simple queue row.
+// Canonical definition lives in internal/port (see port.SimpleQueue docs).
+type SimpleQueue = port.SimpleQueue
 
 // SuspendQueueParams returns a pre-filled SimpleQueueParams for soft-suspension
 // of a subscriber via a near-zero rate limit. The subscriber keeps network

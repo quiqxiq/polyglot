@@ -6,6 +6,8 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/port"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -101,7 +103,10 @@ func (m *mockDriver) Close() error {
 func TestManageDeviceUseCase(t *testing.T) {
 	repo := newMockDeviceRepo()
 	vault := newMockVault()
-	uc := NewManageDeviceUseCase(repo, vault, nil)
+	exec := func(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
+		return driver.Execute(ctx, cmd)
+	}
+	uc := NewManageDeviceUseCase(repo, vault, nil, mikrotik.NewGateway(exec))
 	ctx := context.Background()
 
 	t.Run("Create and Get Device", func(t *testing.T) {
