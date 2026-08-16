@@ -22,9 +22,9 @@ func (h *BotConnectHandler) ListConversations(ctx context.Context, req *connect.
 	if req.Msg.SessionId != "" {
 		var sessionID uint
 		_, _ = fmt.Sscanf(req.Msg.SessionId, "%d", &sessionID)
-		convs, err = h.convService.ListConversationsBySession(sessionID)
+		convs, err = h.convService.ListConversationsBySession(ctx, sessionID)
 	} else {
-		convs, err = h.convService.ListConversations("")
+		convs, err = h.convService.ListConversations(ctx, "")
 	}
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
@@ -51,7 +51,7 @@ func (h *BotConnectHandler) GetConversation(ctx context.Context, req *connect.Re
 	var convID uint
 	_, _ = fmt.Sscanf(req.Msg.Id, "%d", &convID)
 
-	c, err := h.convService.GetConversationWithMessages(convID)
+	c, err := h.convService.GetConversationWithMessages(ctx, convID)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeNotFound, err)
 	}
@@ -123,7 +123,7 @@ func (h *BotConnectHandler) TakeOverConversation(ctx context.Context, req *conne
 	if h.convService != nil {
 		var convID uint
 		_, _ = fmt.Sscanf(req.Msg.Id, "%d", &convID)
-		_ = h.convService.TakeOver(convID, 1)
+		_ = h.convService.TakeOver(ctx, convID, 1)
 	}
 	return connect.NewResponse(&devicepb.TakeOverConversationResponse{
 		Message: "conversation taken over by technician",
@@ -134,7 +134,7 @@ func (h *BotConnectHandler) ResetConversationBot(ctx context.Context, req *conne
 	if h.convService != nil {
 		var convID uint
 		_, _ = fmt.Sscanf(req.Msg.Id, "%d", &convID)
-		_ = h.convService.ResetBot(convID)
+		_ = h.convService.ResetBot(ctx, convID)
 	}
 	return connect.NewResponse(&devicepb.ResetConversationBotResponse{
 		Message: "conversation bot control reset to automatic",
@@ -145,7 +145,7 @@ func (h *BotConnectHandler) CloseConversation(ctx context.Context, req *connect.
 	if h.convService != nil {
 		var convID uint
 		_, _ = fmt.Sscanf(req.Msg.Id, "%d", &convID)
-		_ = h.convService.CloseConversation(convID)
+		_ = h.convService.CloseConversation(ctx, convID)
 	}
 	return connect.NewResponse(&devicepb.CloseConversationResponse{
 		Message: "conversation closed",

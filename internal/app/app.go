@@ -3,13 +3,11 @@ package app
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	authConnect "github.com/quixiq/polyglot/internal/adapter/connect/auth"
 	billingConnect "github.com/quixiq/polyglot/internal/adapter/connect/billing"
@@ -27,11 +25,13 @@ import (
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	domainllm "github.com/quixiq/polyglot/internal/domain/llm"
+	"github.com/quixiq/polyglot/internal/driver/genericssh"
 	"github.com/quixiq/polyglot/internal/driver/genieacs"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
+	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
 	chatUC "github.com/quixiq/polyglot/internal/usecase/chat"
@@ -41,6 +41,8 @@ import (
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	knowledgeUC "github.com/quixiq/polyglot/internal/usecase/knowledge"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
+	userUC "github.com/quixiq/polyglot/internal/usecase/user"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 type App struct {
@@ -54,7 +56,8 @@ type App struct {
 }
 
 func New(ctx context.Context, cfg config.Config) (*App, error) {
-	log.Println("[Polyglot Engine] Initializing application container...")
+	logger.Init(cfg.LogLevel, cfg.AppEnv)
+	logger.WithComponent("Polyglot").Info("initializing application container...")
 
 	dbURL := strings.TrimSpace(cfg.DatabaseURL)
 	pgStore, err := postgres.NewStore(dbURL)
@@ -65,15 +68,11 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	redisURL := strings.TrimSpace(cfg.RedisURL)
 	redisStore, err := redisAdapter.NewStore(redisURL)
 	if err != nil {
-		log.Printf("[Warning] Failed to connect to Redis (%v). Falling back to in-memory cache.", err)
+		logger.WithComponent("Polyglot").Warnf("failed to connect to Redis (%v). Falling back to in-memory cache.", err)
 	}
 
 	jwtService := auth.NewJWTService(cfg.JWTSecret, cfg.JWTExpiryHours)
 
-	// Refresh token opaque di Redis: rotasi tiap refresh, revoke di logout.
-	// Redis wajib ada untuk fitur ini (refresh token tidak bisa di-fallback
-	// ke memory store lintas restart). Kalau Redis mati, pakai access token
-	// yang masih valid sampai kedaluwarsa — login baru tetap jalan.
 	var refreshSvc *auth.RefreshTokenService
 	if redisStore != nil {
 		refreshSvc = auth.NewRefreshTokenService(redisStore, time.Duration(cfg.RefreshTokenTTLHours)*time.Hour)
@@ -81,19 +80,17 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	casbinEnforcer, err := auth.NewCasbinEnforcer(ctx, pgStore.DB())
 	if err != nil {
-		log.Printf("[Warning] Failed to initialize Casbin enforcer: %v", err)
+		logger.WithComponent("Polyglot").Warnf("failed to initialize Casbin enforcer: %v", err)
 	} else {
-		// Seed policy format baru (resource:action) + sync role assignment
-		// dari tabel users. Idempotent — aman dipanggil setiap startup.
 		auth.SeedSystemPolicies(casbinEnforcer)
-		if users, err := pgStore.FindAllUsers(); err == nil {
+		if users, err := pgStore.FindAllUsers(ctx); err == nil {
 			refs := make([]*auth.UserRef, 0, len(users))
 			for _, u := range users {
 				refs = append(refs, &auth.UserRef{ID: fmt.Sprintf("%d", u.ID), Role: u.Role})
 			}
 			auth.EnsureUserRoleAssignments(casbinEnforcer, refs)
 		} else {
-			log.Printf("[Warning] Failed to load users for role assignment sync: %v", err)
+			logger.WithComponent("Polyglot").Warnf("failed to load users for role assignment sync: %v", err)
 		}
 	}
 
@@ -103,23 +100,15 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	chatService := chatUC.NewChatService(pgStore)
 	waManager, err := whatsapp.NewSessionManager(cfg.DatabaseURL, pgStore, nil, eventHandler.MakeStatusCallback())
 	if err != nil {
-		log.Printf("[Warning] Failed to initialize WhatsApp SessionManager: %v", err)
+		logger.WithComponent("Polyglot").Warnf("failed to initialize WhatsApp SessionManager: %v", err)
 	}
 
 	convService := convUC.NewConversationService(pgStore)
-	// Broadcast SSE `conversation_status` tiap kali status percakapan berubah
-	// (take-over/return bot/close/escalation) — dikonsumsi useWARealtimeStream.
 	convService.SetPublisher(sseHub)
-	// Retriever pengetahuan = HYBRID: keyword retriever (tabel knowledge
-	// Postgres, untuk dokumen lokal yang tidak di-embed) + vector retriever
-	// AnythingLLM (untuk dokumen dengan embed_to_llm = true). Hybrid dipakai
-	// karena dengan embed per-dokumen, either/or akan membuat dokumen lokal
-	// tidak pernah ter-retrieve saat AnythingLLM aktif.
+
 	keywordRetriever := knowledgeUC.NewKeywordRetriever(pgStore)
 	retrievers := []port.KnowledgeRetriever{keywordRetriever}
-	// Manager tulis ke AnythingLLM (raw-text/remove-documents) untuk fitur
-	// admin knowledge. Nil kalau API key tidak di-set — dokumen tetap bisa
-	// dikelola sebagai knowledge lokal (embed_to_llm = false).
+
 	var knowledgeDocManager port.KnowledgeDocumentManager
 	if cfg.AnythingLLMAPIKey != "" {
 		anyRetriever, err := knowledgeadapter.NewRetriever(
@@ -129,28 +118,26 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 			cfg.AnythingLLMTopN,
 		)
 		if err != nil {
-			log.Printf("[Warning] AnythingLLM retriever disabled (%v).", err)
+			logger.WithComponent("Knowledge").Warnf("AnythingLLM retriever disabled (%v)", err)
 		} else {
 			retrievers = append(retrievers, anyRetriever)
-			log.Printf("[Knowledge] AnythingLLM retriever aktif untuk workspace %q (%s)", cfg.AnythingLLMWorkspace, cfg.AnythingLLMBaseURL)
+			logger.WithComponent("Knowledge").Infof("AnythingLLM retriever active for workspace %q", cfg.AnythingLLMWorkspace)
 		}
 		if anyManager, err := knowledgeadapter.NewManager(
 			cfg.AnythingLLMBaseURL,
 			cfg.AnythingLLMAPIKey,
 			cfg.AnythingLLMWorkspace,
 		); err != nil {
-			log.Printf("[Warning] AnythingLLM document manager disabled (%v). Embed dari admin tidak tersedia.", err)
+			logger.WithComponent("Knowledge").Warnf("AnythingLLM document manager disabled (%v)", err)
 		} else {
 			knowledgeDocManager = anyManager
-			log.Printf("[Knowledge] AnythingLLM document manager aktif — embed per-dokumen dari admin tersedia")
+			logger.WithComponent("Knowledge").Info("AnythingLLM document manager active")
 		}
 	}
 	knowledgeRetriever := knowledgeUC.NewHybridRetriever(retrievers...)
 	knowledgeRepo := postgres.NewKnowledgeRepository(pgStore)
 	knowledgeDocUC := knowledgeUC.NewDocumentManager(knowledgeRepo, knowledgeDocManager)
-	// Chat AnythingLLM = otak utama bot (RAG + LLM + history dalam satu
-	// panggilan). Nil kalau API key tidak di-set → engine otomatis memakai
-	// LLM lokal proyek (llm_configs) sebagai satu-satunya path.
+
 	var knowledgeChat port.KnowledgeChat
 	if cfg.AnythingLLMAPIKey != "" {
 		if anyChat, err := knowledgeadapter.NewChatClient(
@@ -158,28 +145,38 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 			cfg.AnythingLLMAPIKey,
 			cfg.AnythingLLMWorkspace,
 		); err != nil {
-			log.Printf("[Warning] AnythingLLM chat client disabled (%v) — bot pakai LLM lokal.", err)
+			logger.WithComponent("Bot").Warnf("AnythingLLM chat client disabled (%v)", err)
 		} else {
 			knowledgeChat = anyChat
-			log.Printf("[Bot] AnythingLLM chat aktif sebagai primary LLM (workspace %q); fallback ke LLM lokal bila down", cfg.AnythingLLMWorkspace)
+			logger.WithComponent("Bot").Infof("AnythingLLM chat active for workspace %q", cfg.AnythingLLMWorkspace)
 		}
 	}
-	// Factory LLM di-inject agar usecase/bot tetap bersih dari adapter layer.
-	llmFactory := func(c *domainllm.LLMConfig) (port.LLMProvider, error) {
+
+	llmFactory := func(c *domainllm.Config) (port.LLMProvider, error) {
 		return llmadapter.NewProvider(c, cfg.EncryptionKey)
 	}
-	botEngine := botUC.NewEngine(cfg, redisStore, waManager, convService, knowledgeRetriever, knowledgeChat, pgStore, pgStore, sseHub, llmFactory)
+	botEngine := botUC.NewEngine(
+		botUC.Config{
+			SystemPrompt:       cfg.SystemPrompt,
+			AllowedTopics:      cfg.AllowedTopics,
+			LLMMaxOutputTokens: cfg.LLMMaxOutputTokens,
+		},
+		redisStore,
+		waManager,
+		convService,
+		knowledgeRetriever,
+		knowledgeChat,
+		pgStore,
+		pgStore,
+		sseHub,
+		llmFactory,
+	)
 
 	if waManager != nil {
-		// Hubungkan pesan masuk WhatsApp ke engine bot. Dilakukan setelah engine
-		// dibangun (bukan saat NewSessionManager) karena ada circular dependency.
 		waManager.SetMessageCallback(eventHandler.MakeMessageCallback(botEngine.HandleIncomingMessage))
-		// Broadcast SSE `chat_update` setiap kali mirror chat berubah, supaya
-		// Inbox frontend ter-update instan (lihat useWARealtimeStream).
 		waManager.SetChatUpdateCallback(eventHandler.MakeChatUpdateCallback())
-		// Broadcast SSE `chat_presence` (typing/recording indicator) ke frontend.
 		waManager.SetChatPresenceCallback(eventHandler.MakeChatPresenceCallback())
-		sessions, err := pgStore.FindAllSessions()
+		sessions, err := pgStore.FindAllSessions(context.Background())
 		if err == nil && len(sessions) > 0 {
 			_ = waManager.RestoreAllSessions(sessions)
 		}
@@ -198,79 +195,108 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	reg := registry.New(repo, vault, factories)
 
 	devUC := deviceUC.NewManageDeviceUseCase(repo, vault, reg)
-	hotUC := hotspotUC.NewHotspotUseCase("internal/templates")
+	hotUC := hotspotUC.New("internal/templates")
+	openTermUC := networkUC.NewOpenTerminalUseCase(repo, vault, genericssh.DialSSHPty)
 
 	customerRepo := postgres.NewCustomerRepository(pgStore.DB())
 	custUC := customerUC.NewManageCustomerUseCase(customerRepo)
 
-	r := gin.Default()
-	r.Use(middleware.CORS(cfg.CORSOrigins, cfg.AppEnv))
+	userRepo := postgres.NewUserRepository(pgStore.DB())
+	authUseCase := authUC.NewAuthUseCase(userRepo, jwtService, refreshSvc, redisStore, casbinEnforcer)
+	refreshUseCase := authUC.NewRefreshTokenUseCase(userRepo, jwtService, refreshSvc, casbinEnforcer)
+	manageUserUseCase := userUC.NewManageUserUseCase(userRepo, casbinEnforcer)
 
 	connectDriverProvider := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
 		return reg.Get(ctx, deviceID)
 	}
 
+	rootMux := http.NewServeMux()
+
+	// 1. Register Public Routes
+	authPath, authHandler := authConnect.NewAuthServiceHandler(
+		authUseCase,
+		refreshUseCase,
+		manageUserUseCase,
+		cfg.AppEnv == "production",
+	)
+	rootMux.Handle(authPath, authHandler)
+
 	mcpServer := mcp.New(reg, nil).
 		WithMikhmonUseCase(hotUC).
 		WithCustomerRepository(customerRepo)
-	r.Any("/mcp", gin.WrapH(mcpServer.HTTPHandler()))
+	rootMux.Handle("/mcp", mcpServer.HTTPHandler())
 
-	openTermUC := networkUC.NewOpenTerminalUseCase(repo, vault)
-	wsAdapter.RegisterEventRoutes(r, sseHub, openTermUC)
+	wsAdapter.RegisterEventRoutes(rootMux, sseHub, openTermUC)
 
-	connectGroup := r.Group("/")
-	connectGroup.Use(middleware.AuthenticateJWT(jwtService))
-	connectGroup.Use(middleware.AuthorizeProcedure(casbinEnforcer))
+	// 2. Register Protected ConnectRPC Services onto a Protected Sub-Mux
+	protectedMux := http.NewServeMux()
 
-	connectPath, connectHandler := deviceConnect.NewDeviceServiceHandler(devUC, connectDriverProvider)
-	connectGroup.Any(connectPath+"*action", gin.WrapH(connectHandler))
+	registerProtected := func(servicePath string, handler http.Handler) {
+		protectedMux.Handle(servicePath, handler)
+		// Mount pattern on rootMux forwarding through auth+rbac middlewares
+	}
 
-	custConnectPath, custConnectHandler := customerConnect.NewCustomerServiceHandler(custUC)
-	connectGroup.Any(custConnectPath+"*action", gin.WrapH(custConnectHandler))
+	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(devUC, openTermUC, connectDriverProvider)
+	registerProtected(devPath, devHandler)
 
-	// Auth service remains public
-	authConnectPath, authConnectHandler := authConnect.NewAuthServiceHandler(
-		pgStore,
-		jwtService,
-		refreshSvc,
-		redisStore,
-		casbinEnforcer,
-		casbinEnforcer,
-		cfg.AppEnv == "production",
-	)
-	r.Any(authConnectPath+"*action", gin.WrapH(authConnectHandler))
+	custPath, custHandler := customerConnect.NewCustomerServiceHandler(custUC)
+	registerProtected(custPath, custHandler)
 
-	rbacConnectPath, rbacConnectHandler := authConnect.NewRBACServiceHandler(casbinEnforcer)
-	connectGroup.Any(rbacConnectPath+"*action", gin.WrapH(rbacConnectHandler))
+	rbacPath, rbacHandler := authConnect.NewRBACServiceHandler(casbinEnforcer)
+	registerProtected(rbacPath, rbacHandler)
 
-	// UserService — manajemen user (CRUD, reset password, aktif/nonaktif).
-	// user:read/user:manage, admin ke atas. jwtService dipakai self-guard
-	// (tidak bisa delete/deactivate/demote diri sendiri).
-	userConnectPath, userConnectHandler := authConnect.NewUserServiceHandler(pgStore, casbinEnforcer, jwtService)
-	connectGroup.Any(userConnectPath+"*action", gin.WrapH(userConnectHandler))
+	userPath, userHandler := authConnect.NewUserServiceHandler(manageUserUseCase)
+	registerProtected(userPath, userHandler)
 
 	invRepo := postgres.NewInvoiceRepository(pgStore.DB())
 	subRepo := postgres.NewSubscriptionRepository(pgStore.DB())
-	invUC := billingUC.NewInvoiceUsecase(invRepo)
-	subUC := billingUC.NewSubscriptionUsecase(subRepo)
+	invUC := billingUC.NewInvoiceUseCase(invRepo)
+	subUC := billingUC.NewSubscriptionUseCase(subRepo)
 
-	billingConnectPath, billingConnectHandler := billingConnect.NewBillingServiceHandler(invUC, subUC)
-	connectGroup.Any(billingConnectPath+"*action", gin.WrapH(billingConnectHandler))
+	billingPath, billingHandler := billingConnect.NewBillingServiceHandler(invUC, subUC)
+	registerProtected(billingPath, billingHandler)
 
-	mikhmonConnectPath, mikhmonConnectHandler := hotspotConnect.NewHotspotServiceHandler(hotUC, connectDriverProvider)
-	connectGroup.Any(mikhmonConnectPath+"*action", gin.WrapH(mikhmonConnectHandler))
+	mikhmonPath, mikhmonHandler := hotspotConnect.NewHotspotServiceHandler(hotUC, connectDriverProvider)
+	registerProtected(mikhmonPath, mikhmonHandler)
 
-	waConnectPath, waConnectHandler := botConnect.NewWhatsAppServiceHandler(pgStore, waManager, chatService)
-	connectGroup.Any(waConnectPath+"*action", gin.WrapH(waConnectHandler))
+	waPath, waHandler := botConnect.NewWhatsAppServiceHandler(pgStore, waManager, chatService)
+	registerProtected(waPath, waHandler)
 
-	botConnectPath, botConnectHandler := botConnect.NewBotServiceHandler(convService, botEngine)
-	connectGroup.Any(botConnectPath+"*action", gin.WrapH(botConnectHandler))
+	botPath, botHandler := botConnect.NewBotServiceHandler(convService, botEngine)
+	registerProtected(botPath, botHandler)
 
-	knwConnectPath, knwConnectHandler := botConnect.NewKnowledgeServiceHandler(knowledgeDocUC)
-	connectGroup.Any(knwConnectPath+"*action", gin.WrapH(knwConnectHandler))
+	knwPath, knwHandler := botConnect.NewKnowledgeServiceHandler(knowledgeDocUC)
+	registerProtected(knwPath, knwHandler)
 
-	probeConnectPath, probeConnectHandler := deviceConnect.NewProbeServiceHandler()
-	connectGroup.Any(probeConnectPath+"*action", gin.WrapH(probeConnectHandler))
+	probePath, probeHandler := deviceConnect.NewProbeServiceHandler()
+	registerProtected(probePath, probeHandler)
+
+	// Wrap protected services with JWT and RBAC enforcement
+	protectedHandler := middleware.Chain(
+		protectedMux,
+		middleware.AuthenticateJWT(jwtService),
+		middleware.AuthorizeProcedure(casbinEnforcer),
+	)
+
+	// Mount protected handler for all protected service paths
+	rootMux.Handle(devPath, protectedHandler)
+	rootMux.Handle(custPath, protectedHandler)
+	rootMux.Handle(rbacPath, protectedHandler)
+	rootMux.Handle(userPath, protectedHandler)
+	rootMux.Handle(billingPath, protectedHandler)
+	rootMux.Handle(mikhmonPath, protectedHandler)
+	rootMux.Handle(waPath, protectedHandler)
+	rootMux.Handle(botPath, protectedHandler)
+	rootMux.Handle(knwPath, protectedHandler)
+	rootMux.Handle(probePath, protectedHandler)
+
+	// 3. Wrap root handler with Global Middlewares (CORS, Logger, Recovery)
+	finalHandler := middleware.Chain(
+		rootMux,
+		middleware.Recovery(),
+		middleware.RequestLogger(),
+		middleware.CORS(cfg.CORSOrigins, cfg.AppEnv),
+	)
 
 	httpAddr := envOr("PORT", ":"+cfg.Port)
 	if httpAddr[0] != ':' {
@@ -279,7 +305,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	httpSrv := &http.Server{
 		Addr:    httpAddr,
-		Handler: r,
+		Handler: finalHandler,
 	}
 
 	return &App{
@@ -294,7 +320,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 }
 
 func (a *App) Run() error {
-	log.Printf("polyglot: Engine starting on http://localhost%s (REST, ConnectRPC, WebSockets, WhatsApp Gateway & MCP)", a.httpServer.Addr)
+	logger.WithComponent("Polyglot").Infof("engine starting on http://localhost%s (net/http ServeMux, ConnectRPC, SSE, WebSockets, WhatsApp Gateway & MCP)", a.httpServer.Addr)
 	if err := a.httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		return fmt.Errorf("http server failed: %w", err)
 	}
@@ -302,27 +328,18 @@ func (a *App) Run() error {
 }
 
 func (a *App) Shutdown(ctx context.Context) error {
-	log.Println("polyglot: shutting down server...")
+	logger.WithComponent("Polyglot").Info("shutting down server...")
 
-	// Putuskan semua koneksi SSE (EventSource) LEBIH DULU. Tanpa ini
-	// http.Server.Shutdown menunggu koneksi streaming yang tidak pernah
-	// selesai sampai context deadline habis (5 detik) lalu gagal dengan
-	// "context deadline exceeded". Setelah Close, stream tiap client berakhir
-	// (channel tertutup) sehingga koneksi jadi idle dan shutdown selesai cepat.
 	if a.sseHub != nil {
 		a.sseHub.Close()
 	}
 
 	if err := a.httpServer.Shutdown(ctx); err != nil {
-		log.Printf("[Warning] Error shutting down HTTP server: %v", err)
-		// Jaring pengaman: paksa tutup koneksi yang tersisa (mis. request LLM
-		// panjang yang masih jalan) supaya proses benar-benar bisa keluar.
+		logger.WithComponent("Polyglot").Warnf("error shutting down HTTP server: %v", err)
 		_ = a.httpServer.Close()
 	}
 
 	if a.waManager != nil {
-		// Putuskan koneksi WhatsApp dengan rapi (pairing & session lokal
-		// dipertahankan — restore berikutnya tidak perlu scan ulang).
 		a.waManager.DisconnectAll()
 	}
 
@@ -330,7 +347,7 @@ func (a *App) Shutdown(ctx context.Context) error {
 		_ = a.registry.Close()
 	}
 
-	log.Println("polyglot: shutdown complete")
+	logger.WithComponent("Polyglot").Info("shutdown complete")
 	return nil
 }
 

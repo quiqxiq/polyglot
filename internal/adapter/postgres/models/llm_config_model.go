@@ -28,11 +28,11 @@ type LLMConfigModel struct {
 // TableName maps LLMConfigModel ke tabel migrasi `llm_configs`.
 func (LLMConfigModel) TableName() string { return "llm_configs" }
 
-func (m *LLMConfigModel) ToDomain() *llm.LLMConfig {
+func (m *LLMConfigModel) ToDomain() *llm.Config {
 	if m == nil {
 		return nil
 	}
-	return &llm.LLMConfig{
+	return &llm.Config{
 		ID:              m.ID,
 		Provider:        m.Provider,
 		Model:           m.Model,
@@ -47,7 +47,7 @@ func (m *LLMConfigModel) ToDomain() *llm.LLMConfig {
 	}
 }
 
-func LLMConfigModelFromDomain(c *llm.LLMConfig) *LLMConfigModel {
+func LLMConfigModelFromDomain(c *llm.Config) *LLMConfigModel {
 	if c == nil {
 		return nil
 	}

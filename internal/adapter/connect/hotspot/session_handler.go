@@ -20,21 +20,9 @@ func (h *HotspotConnectHandler) ListActiveSessions(ctx context.Context, req *con
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	pbSessions := make([]*devicepb.HotspotActiveSession, len(sessions))
-	for i, s := range sessions {
-		pbSessions[i] = &devicepb.HotspotActiveSession{
-			Id:         s.RosID,
-			Server:     s.Server,
-			User:       s.User,
-			Address:    s.Address,
-			MacAddress: s.MACAddress,
-			Uptime:     s.Uptime,
-			BytesIn:    s.BytesIn,
-			BytesOut:   s.BytesOut,
-		}
-	}
-
-	return connect.NewResponse(&devicepb.ListHotspotActiveSessionsResponse{Sessions: pbSessions}), nil
+	return connect.NewResponse(&devicepb.ListHotspotActiveSessionsResponse{
+		Sessions: ToProtoActiveSessions(sessions),
+	}), nil
 }
 
 func (h *HotspotConnectHandler) KickActiveSession(ctx context.Context, req *connect.Request[devicepb.KickHotspotSessionRequest]) (*connect.Response[devicepb.KickHotspotSessionResponse], error) {
@@ -68,20 +56,9 @@ func (h *HotspotConnectHandler) ListDHCPLeases(ctx context.Context, req *connect
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	pbLeases := make([]*devicepb.DHCPLease, len(leases))
-	for i, l := range leases {
-		pbLeases[i] = &devicepb.DHCPLease{
-			Id:         l.RosID,
-			Address:    l.Address,
-			MacAddress: l.MACAddress,
-			HostName:   l.HostName,
-			Status:     l.Status,
-			Blocked:    l.Blocked,
-			Comment:    l.Comment,
-		}
-	}
-
-	return connect.NewResponse(&devicepb.ListDHCPLeasesResponse{Leases: pbLeases}), nil
+	return connect.NewResponse(&devicepb.ListDHCPLeasesResponse{
+		Leases: ToProtoDHCPLeases(leases),
+	}), nil
 }
 
 func (h *HotspotConnectHandler) BlockDHCPLease(ctx context.Context, req *connect.Request[devicepb.BlockDHCPLeaseRequest]) (*connect.Response[devicepb.BlockDHCPLeaseResponse], error) {

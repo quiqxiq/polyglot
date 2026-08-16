@@ -3,7 +3,7 @@ package whatsapp
 import (
 	"context"
 	"fmt"
-	"log"
+	"github.com/quixiq/polyglot/pkg/logger"
 	"sync"
 
 	_ "github.com/lib/pq"
@@ -311,7 +311,7 @@ func (sm *SessionManager) RestoreAllSessions(sessions []bot.WASession) error {
 	if sm == nil {
 		return nil
 	}
-	log.Printf("[SessionManager] Restoring %d WhatsApp sessions...", len(sessions))
+	logger.WithComponent("SessionManager").Infof("Restoring %d WhatsApp sessions...", len(sessions))
 	for i := range sessions {
 		sess := &sessions[i]
 		// Hanya session yang pernah online/logged-in yang di-restore otomatis.
@@ -319,7 +319,7 @@ func (sm *SessionManager) RestoreAllSessions(sessions []bot.WASession) error {
 		// menunggu scan manual dari UI.
 		if sess.Status == bot.StatusOnline || sess.JID != "" {
 			if err := sm.Connect(sess); err != nil {
-				log.Printf("[SessionManager] Warning: Failed to connect session %d (%s): %v", sess.ID, sess.DeviceName, err)
+				logger.WithComponent("SessionManager").Warnf("Failed to connect session %d (%s): %v", sess.ID, sess.DeviceName, err)
 			}
 		}
 	}

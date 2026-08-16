@@ -12,10 +12,7 @@ import (
 var _ port.KnowledgeRepository = (*KnowledgeRepositoryAdapter)(nil)
 
 // KnowledgeRepositoryAdapter memenuhi port.KnowledgeRepository dengan nama
-// method yang tidak bentrok dengan method domain lain di Store. Store sendiri
-// tidak bisa mengimplement interface ini langsung karena method generic
-// (`Create`, `FindByID`, `Update`, `Delete`) sudah dipakai domain lain
-// (mis. `Create(*llm.LLMConfig)`), dan Go tidak punya overloading.
+// method yang tidak bentrok dengan method domain lain di Store.
 type KnowledgeRepositoryAdapter struct {
 	store *Store
 }
@@ -25,33 +22,34 @@ func NewKnowledgeRepository(store *Store) *KnowledgeRepositoryAdapter {
 	return &KnowledgeRepositoryAdapter{store: store}
 }
 
-func (a *KnowledgeRepositoryAdapter) Create(entry *knowledge.KnowledgeEntry) error {
-	return a.store.CreateKnowledgeEntry(entry)
+func (a *KnowledgeRepositoryAdapter) Create(ctx context.Context, entry *knowledge.Entry) error {
+	return a.store.CreateKnowledgeEntry(ctx, entry)
 }
 
-func (a *KnowledgeRepositoryAdapter) FindByID(id uint) (*knowledge.KnowledgeEntry, error) {
-	return a.store.FindKnowledgeEntryByID(id)
+func (a *KnowledgeRepositoryAdapter) FindByID(ctx context.Context, id uint) (*knowledge.Entry, error) {
+	return a.store.FindKnowledgeEntryByID(ctx, id)
 }
 
-func (a *KnowledgeRepositoryAdapter) FindAll() ([]knowledge.KnowledgeEntry, error) {
-	return a.store.FindAllKnowledgeEntries()
+func (a *KnowledgeRepositoryAdapter) FindAll(ctx context.Context) ([]knowledge.Entry, error) {
+	return a.store.FindAllKnowledgeEntries(ctx)
 }
 
-func (a *KnowledgeRepositoryAdapter) Update(entry *knowledge.KnowledgeEntry) error {
-	return a.store.UpdateKnowledgeEntry(entry)
+func (a *KnowledgeRepositoryAdapter) Update(ctx context.Context, entry *knowledge.Entry) error {
+	return a.store.UpdateKnowledgeEntry(ctx, entry)
 }
 
-func (a *KnowledgeRepositoryAdapter) Delete(id uint) error {
-	return a.store.DeleteKnowledgeEntry(id)
+func (a *KnowledgeRepositoryAdapter) Delete(ctx context.Context, id uint) error {
+	return a.store.DeleteKnowledgeEntry(ctx, id)
 }
 
-func (a *KnowledgeRepositoryAdapter) SearchByTags(tags []string) ([]knowledge.KnowledgeEntry, error) {
-	return a.store.SearchKnowledgeByTags(tags)
+func (a *KnowledgeRepositoryAdapter) SearchByTags(ctx context.Context, tags []string) ([]knowledge.Entry, error) {
+	return a.store.SearchKnowledgeByTags(ctx, tags)
 }
 
 // Retrieve memenuhi port.KnowledgeRetriever untuk keyword retriever (dokumen
 // lokal Postgres). Pencarian keyword sebenarnya dilakukan filter di caller —
 // di sini semua entry dikembalikan, konsisten dengan perilaku lama Store.
-func (a *KnowledgeRepositoryAdapter) Retrieve(ctx context.Context, _ string) ([]knowledge.KnowledgeEntry, error) {
-	return a.store.FindAllKnowledgeEntries()
+func (a *KnowledgeRepositoryAdapter) Retrieve(ctx context.Context, _ string) ([]knowledge.Entry, error) {
+	return a.store.FindAllKnowledgeEntries(ctx)
 }
+

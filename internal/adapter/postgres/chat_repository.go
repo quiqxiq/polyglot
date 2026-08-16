@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"context"
 	"errors"
 	"strings"
 
@@ -17,12 +18,7 @@ const (
 )
 
 // UpsertChat writes or updates one WhatsApp chat mirror row.
-// Catatan: kolom conflict-update TIDAK menyertakan bot_enabled — toggle bot
-// per-chat milik agen tidak boleh ter-reset oleh penulisan pesan berikutnya.
-// display_name hanya di-update bila non-kosong — sehingga nama grup yang sudah
-// benar dari history sync tidak ketimpa nama pengirim saat pesan live masuk,
-// dan nama kustom agen tetap bertahan.
-func (s *Store) UpsertChat(chat *bot.WAChat) error {
+func (s *Store) UpsertChat(ctx context.Context, chat *bot.WAChat) error {
 	m := models.WAChatModelFromDomain(chat)
 	if m == nil {
 		return nil
@@ -37,22 +33,19 @@ func (s *Store) UpsertChat(chat *bot.WAChat) error {
 	if m.DisplayName != "" {
 		updates["display_name"] = m.DisplayName
 	}
-	return s.db.Clauses(clause.OnConflict{
+	return s.db.WithContext(ctx).Clauses(clause.OnConflict{
 		Columns:   []clause.Column{{Name: "session_id"}, {Name: "chat_jid"}},
 		DoUpdates: clause.Assignments(updates),
 	}).Create(m).Error
 }
 
-// UpsertMessage writes one WhatsApp message mirror row. The write is idempotent
-// per (session_id, wa_message_id): when the row already exists it is left
-// untouched (DoNothing) and the boolean result reports that nothing new was
-// inserted — callers use that to avoid double-counting unread on replayed events.
-func (s *Store) UpsertMessage(msg *bot.WAMessage) (bool, error) {
+// UpsertMessage writes one WhatsApp message mirror row.
+func (s *Store) UpsertMessage(ctx context.Context, msg *bot.WAMessage) (bool, error) {
 	m := models.WAMessageModelFromDomain(msg)
 	if m == nil {
 		return false, nil
 	}
-	res := s.db.Clauses(clause.OnConflict{
+	res := s.db.WithContext(ctx).Clauses(clause.OnConflict{
 		Columns:   []clause.Column{{Name: "session_id"}, {Name: "wa_message_id"}},
 		DoNothing: true,
 	}).Create(m)
@@ -60,11 +53,8 @@ func (s *Store) UpsertMessage(msg *bot.WAMessage) (bool, error) {
 }
 
 // UpsertMessagesBatch writes many message mirror rows in a single multi-row
-// INSERT ... ON CONFLICT DO NOTHING statement. Idempotent per
-// (session_id, wa_message_id) — rows that already exist are left untouched.
-// Returns the number of rows actually inserted. Dipakai oleh sinkronisasi
-// history sync yang bisa membawa ribuan pesan per blob.
-func (s *Store) UpsertMessagesBatch(msgs []*bot.WAMessage) (int, error) {
+// INSERT ... ON CONFLICT DO NOTHING statement.
+func (s *Store) UpsertMessagesBatch(ctx context.Context, msgs []*bot.WAMessage) (int, error) {
 	if len(msgs) == 0 {
 		return 0, nil
 	}
@@ -77,19 +67,14 @@ func (s *Store) UpsertMessagesBatch(msgs []*bot.WAMessage) (int, error) {
 	if len(mList) == 0 {
 		return 0, nil
 	}
-	res := s.db.Clauses(clause.OnConflict{
+	res := s.db.WithContext(ctx).Clauses(clause.OnConflict{
 		Columns:   []clause.Column{{Name: "session_id"}, {Name: "wa_message_id"}},
 		DoNothing: true,
 	}).Create(&mList)
 	if res.Error != nil {
-		// PostgreSQL meng-abort SELURUH statement multi-row jika SATU baris
-		// melanggar constraint (mis. content melebihi panjang kolom). Fallback
-		// per-baris mengembalikan perilaku lama (satu pesan bermasalah hanya
-		// menjatuhkan pesan itu, bukan seluruh chunk). Jalur ini jarang —
-		// hanya dieksekusi saat statement batch gagal.
 		inserted := 0
 		for _, m := range msgs {
-			ok, err := s.UpsertMessage(m)
+			ok, err := s.UpsertMessage(ctx, m)
 			if err != nil {
 				return inserted, err
 			}
@@ -103,34 +88,28 @@ func (s *Store) UpsertMessagesBatch(msgs []*bot.WAMessage) (int, error) {
 }
 
 // IncrementUnread bumps the unread counter of one chat (incoming message).
-func (s *Store) IncrementUnread(sessionID uint, chatJID string) error {
-	return s.db.Model(&models.WAChatModel{}).
+func (s *Store) IncrementUnread(ctx context.Context, sessionID uint, chatJID string) error {
+	return s.db.WithContext(ctx).Model(&models.WAChatModel{}).
 		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		UpdateColumn("unread_count", gorm.Expr("unread_count + 1")).Error
 }
 
 // MarkChatRead resets the unread counter of one chat.
-func (s *Store) MarkChatRead(sessionID uint, chatJID string) error {
-	return s.db.Model(&models.WAChatModel{}).
+func (s *Store) MarkChatRead(ctx context.Context, sessionID uint, chatJID string) error {
+	return s.db.WithContext(ctx).Model(&models.WAChatModel{}).
 		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		UpdateColumn("unread_count", 0).Error
 }
 
-// SetChatUnread sets the unread counter of one chat to an exact value. Dipakai
-// saat sinkronisasi history sync agar angka unread dari perangkat tercermin
-// di Inbox (IncrementUnread hanya bisa menaikkan, tidak menetapkan).
-func (s *Store) SetChatUnread(sessionID uint, chatJID string, count uint32) error {
-	return s.db.Model(&models.WAChatModel{}).
+// SetChatUnread sets the unread counter of one chat to an exact value.
+func (s *Store) SetChatUnread(ctx context.Context, sessionID uint, chatJID string, count uint32) error {
+	return s.db.WithContext(ctx).Model(&models.WAChatModel{}).
 		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		UpdateColumn("unread_count", count).Error
 }
 
-// MarkMessagesStatus memperbarui status pengiriman pesan keluar
-// ("sent" → "delivered" → "read") untuk wa_message_id tertentu dalam satu
-// chat. Status "read" otomatis menandai is_read = true (✓✓ biru di UI).
-// Dipanggil dari handler events.Receipt whatsmeow (dikirim saat pesan
-// diterima device penerima / dibaca).
-func (s *Store) MarkMessagesStatus(sessionID uint, chatJID string, messageIDs []string, status string) error {
+// MarkMessagesStatus memperbarui status pengiriman pesan keluar.
+func (s *Store) MarkMessagesStatus(ctx context.Context, sessionID uint, chatJID string, messageIDs []string, status string) error {
 	if len(messageIDs) == 0 {
 		return nil
 	}
@@ -138,20 +117,17 @@ func (s *Store) MarkMessagesStatus(sessionID uint, chatJID string, messageIDs []
 	if status == "read" {
 		updates["is_read"] = true
 	}
-	return s.db.Model(&models.WAMessageModel{}).
+	return s.db.WithContext(ctx).Model(&models.WAMessageModel{}).
 		Where("session_id = ? AND chat_jid = ? AND wa_message_id IN ?", sessionID, chatJID, messageIDs).
 		Updates(updates).Error
 }
 
-// MergeChatLID menggabungkan baris chat @lid basi ke baris nomor HP-nya dalam
-// satu transaksi: pesan @lid dipindah ke PN (ON CONFLICT DO NOTHING — pesan
-// yang sudah ada di PN tidak digandakan), pesan @lid dihapus, baris chat @lid
-// dihapus. Dipanggil driver setiap kali chat 1:1 di-normalisasi LID → PN.
-func (s *Store) MergeChatLID(sessionID uint, lidJID, pnJID string) error {
+// MergeChatLID menggabungkan baris chat @lid basi ke baris nomor HP-nya dalam satu transaksi.
+func (s *Store) MergeChatLID(ctx context.Context, sessionID uint, lidJID, pnJID string) error {
 	if lidJID == "" || pnJID == "" || lidJID == pnJID {
 		return nil
 	}
-	return s.db.Transaction(func(tx *gorm.DB) error {
+	return s.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		if err := tx.Exec(`
 			INSERT INTO wa_messages
 				(session_id, chat_jid, wa_message_id, sender_jid, sender_name, content,
@@ -172,14 +148,12 @@ func (s *Store) MergeChatLID(sessionID uint, lidJID, pnJID string) error {
 }
 
 // ListChats returns the chat mirror list ordered by most recent activity.
-func (s *Store) ListChats(sessionID uint, limit, offset int, search string) ([]bot.WAChat, error) {
+func (s *Store) ListChats(ctx context.Context, sessionID uint, limit, offset int, search string) ([]bot.WAChat, error) {
 	if limit <= 0 || limit > maxChatListLimit {
 		limit = defaultChatListLimit
 	}
 
-	q := s.db.Where("session_id = ?", sessionID)
-	// Safety-net: sistem JID (story & channel) tidak boleh tampil di Inbox
-	// bahkan jika row sudah terlanjur ada di DB sebelum fix layer driver.
+	q := s.db.WithContext(ctx).Where("session_id = ?", sessionID)
 	q = q.Where("chat_jid NOT IN (?, ?) AND chat_jid NOT LIKE ?",
 		"status@broadcast", "0@s.whatsapp.net", "%@newsletter")
 	search = strings.TrimSpace(search)
@@ -203,17 +177,16 @@ func (s *Store) ListChats(sessionID uint, limit, offset int, search string) ([]b
 }
 
 // SetChatBotEnabled toggles the per-chat bot auto-reply flag.
-func (s *Store) SetChatBotEnabled(sessionID uint, chatJID string, enabled bool) error {
-	return s.db.Model(&models.WAChatModel{}).
+func (s *Store) SetChatBotEnabled(ctx context.Context, sessionID uint, chatJID string, enabled bool) error {
+	return s.db.WithContext(ctx).Model(&models.WAChatModel{}).
 		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		Update("bot_enabled", enabled).Error
 }
 
-// IsChatBotEnabled reports the per-chat bot auto-reply flag. Chats that do
-// not exist yet (no message mirrored) default to enabled.
-func (s *Store) IsChatBotEnabled(sessionID uint, chatJID string) (bool, error) {
+// IsChatBotEnabled reports the per-chat bot auto-reply flag.
+func (s *Store) IsChatBotEnabled(ctx context.Context, sessionID uint, chatJID string) (bool, error) {
 	var m models.WAChatModel
-	err := s.db.Select("bot_enabled").
+	err := s.db.WithContext(ctx).Select("bot_enabled").
 		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		First(&m).Error
 	if err != nil {
@@ -226,13 +199,13 @@ func (s *Store) IsChatBotEnabled(sessionID uint, chatJID string) (bool, error) {
 }
 
 // ListChatMessages returns the messages of one chat in ascending order.
-func (s *Store) ListChatMessages(sessionID uint, chatJID string, limit, offset int) ([]bot.WAMessage, error) {
+func (s *Store) ListChatMessages(ctx context.Context, sessionID uint, chatJID string, limit, offset int) ([]bot.WAMessage, error) {
 	if limit <= 0 || limit > maxChatListLimit {
 		limit = defaultChatListLimit
 	}
 
 	var mList []models.WAMessageModel
-	if err := s.db.Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
+	if err := s.db.WithContext(ctx).Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		Order("timestamp ASC").Limit(limit).Offset(offset).Find(&mList).Error; err != nil {
 		return nil, err
 	}
@@ -245,3 +218,4 @@ func (s *Store) ListChatMessages(sessionID uint, chatJID string, limit, offset i
 	}
 	return res, nil
 }
+

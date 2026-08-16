@@ -2,7 +2,7 @@ package postgres
 
 import (
 	"fmt"
-	"log"
+	"github.com/quixiq/polyglot/pkg/logger"
 	"os"
 	"strings"
 
@@ -38,15 +38,19 @@ func NewStore(dsn string) (*Store, error) {
 			&models.CredentialModel{},
 			&models.WAChatModel{},
 			&models.WAMessageModel{},
+			&models.CustomerModel{},
+			&models.SubscriptionModel{},
+			&models.InvoiceModel{},
+			&models.PlanModel{},
 		); err != nil {
 			return nil, fmt.Errorf("failed to auto-migrate: %w", err)
 		}
-		log.Println("[Postgres Adapter] Auto-migration executed in development mode")
+		logger.WithComponent("PostgresAdapter").Info("Auto-migration executed in development mode")
 	} else {
-		log.Println("[Postgres Adapter] Skipping AutoMigrate in production; relying on SQL migrations")
+		logger.WithComponent("PostgresAdapter").Info("Skipping AutoMigrate in production; relying on SQL migrations")
 	}
 
-	log.Println("[Postgres Adapter] Database connected successfully")
+	logger.WithComponent("PostgresAdapter").Info("Database connected successfully")
 	return &Store{db: db}, nil
 }
 

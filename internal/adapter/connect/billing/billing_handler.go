@@ -3,16 +3,14 @@ package billing
 import (
 	"context"
 	"fmt"
-	"net/http"
 	"time"
 
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
-	billingUsecase "github.com/quixiq/polyglot/internal/usecase/billing"
+	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 )
 
 const (
@@ -23,67 +21,50 @@ const (
 )
 
 type BillingConnectHandler struct {
-	invoiceUsecase      *billingUsecase.InvoiceUsecase
-	subscriptionUsecase *billingUsecase.SubscriptionUsecase
+	invoiceUC      *billingUC.InvoiceUseCase
+	subscriptionUC *billingUC.SubscriptionUseCase
 }
 
 func NewBillingConnectHandler(
-	invUsecase *billingUsecase.InvoiceUsecase,
-	subUsecase *billingUsecase.SubscriptionUsecase,
+	invUC *billingUC.InvoiceUseCase,
+	subUC *billingUC.SubscriptionUseCase,
 ) *BillingConnectHandler {
 	return &BillingConnectHandler{
-		invoiceUsecase:      invUsecase,
-		subscriptionUsecase: subUsecase,
+		invoiceUC:      invUC,
+		subscriptionUC: subUC,
 	}
 }
 
 func (h *BillingConnectHandler) ListInvoices(ctx context.Context, req *connect.Request[devicepb.ListInvoicesRequest]) (*connect.Response[devicepb.ListInvoicesResponse], error) {
-	if h.invoiceUsecase == nil {
+	if h.invoiceUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("invoice usecase unavailable"))
 	}
 
-	invoices, err := h.invoiceUsecase.ListInvoices(ctx, req.Msg.CustomerId)
+	invoices, err := h.invoiceUC.ListInvoices(ctx, req.Msg.CustomerId)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	pbInvoices := make([]*devicepb.Invoice, len(invoices))
-	for i, inv := range invoices {
-		pbInvoices[i] = &devicepb.Invoice{
-			Id:            inv.ID,
-			CustomerId:    inv.CustomerID,
-			Amount:        inv.Amount,
-			Status:        inv.Status,
-			DueDateUnix:   inv.DueDate.Unix(),
-			CreatedAtUnix: inv.CreatedAt.Unix(),
-		}
-	}
-
-	return connect.NewResponse(&devicepb.ListInvoicesResponse{Invoices: pbInvoices}), nil
+	return connect.NewResponse(&devicepb.ListInvoicesResponse{
+		Invoices: toProtoInvoiceList(invoices),
+	}), nil
 }
 
 func (h *BillingConnectHandler) GetInvoice(ctx context.Context, req *connect.Request[devicepb.GetInvoiceRequest]) (*connect.Response[devicepb.GetInvoiceResponse], error) {
 	if req.Msg.Id == "" {
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invoice id is required"))
 	}
-	if h.invoiceUsecase == nil {
+	if h.invoiceUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("invoice usecase unavailable"))
 	}
 
-	inv, err := h.invoiceUsecase.GetInvoice(ctx, req.Msg.Id)
+	inv, err := h.invoiceUC.GetInvoice(ctx, req.Msg.Id)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeNotFound, err)
 	}
 
 	return connect.NewResponse(&devicepb.GetInvoiceResponse{
-		Invoice: &devicepb.Invoice{
-			Id:            inv.ID,
-			CustomerId:    inv.CustomerID,
-			Amount:        inv.Amount,
-			Status:        inv.Status,
-			DueDateUnix:   inv.DueDate.Unix(),
-			CreatedAtUnix: inv.CreatedAt.Unix(),
-		},
+		Invoice: toProtoInvoice(&inv),
 	}), nil
 }
 
@@ -91,7 +72,7 @@ func (h *BillingConnectHandler) CreateInvoice(ctx context.Context, req *connect.
 	if req.Msg.CustomerId == "" || req.Msg.Amount <= 0 {
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("customer_id and valid amount are required"))
 	}
-	if h.invoiceUsecase == nil {
+	if h.invoiceUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("invoice usecase unavailable"))
 	}
 
@@ -112,20 +93,13 @@ func (h *BillingConnectHandler) CreateInvoice(ctx context.Context, req *connect.
 		UpdatedAt:  now,
 	}
 
-	created, err := h.invoiceUsecase.CreateInvoice(ctx, newInv)
+	created, err := h.invoiceUC.CreateInvoice(ctx, newInv)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	return connect.NewResponse(&devicepb.CreateInvoiceResponse{
-		Invoice: &devicepb.Invoice{
-			Id:            created.ID,
-			CustomerId:    created.CustomerID,
-			Amount:        created.Amount,
-			Status:        created.Status,
-			DueDateUnix:   created.DueDate.Unix(),
-			CreatedAtUnix: created.CreatedAt.Unix(),
-		},
+		Invoice: toProtoInvoice(&created),
 	}), nil
 }
 
@@ -133,59 +107,41 @@ func (h *BillingConnectHandler) PayInvoice(ctx context.Context, req *connect.Req
 	if req.Msg.Id == "" {
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invoice id is required"))
 	}
-	if h.invoiceUsecase == nil {
+	if h.invoiceUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("invoice usecase unavailable"))
 	}
 
-	paid, err := h.invoiceUsecase.PayInvoice(ctx, req.Msg.Id)
+	paid, err := h.invoiceUC.PayInvoice(ctx, req.Msg.Id)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	return connect.NewResponse(&devicepb.PayInvoiceResponse{
-		Invoice: &devicepb.Invoice{
-			Id:            paid.ID,
-			CustomerId:    paid.CustomerID,
-			Amount:        paid.Amount,
-			Status:        paid.Status,
-			DueDateUnix:   paid.DueDate.Unix(),
-			CreatedAtUnix: paid.CreatedAt.Unix(),
-		},
+		Invoice: toProtoInvoice(&paid),
 		Message: "Payment successful",
 	}), nil
 }
 
 func (h *BillingConnectHandler) ListSubscriptions(ctx context.Context, req *connect.Request[devicepb.ListSubscriptionsRequest]) (*connect.Response[devicepb.ListSubscriptionsResponse], error) {
-	if h.subscriptionUsecase == nil {
+	if h.subscriptionUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription usecase unavailable"))
 	}
 
-	subs, err := h.subscriptionUsecase.ListSubscriptions(ctx, req.Msg.CustomerId)
+	subs, err := h.subscriptionUC.ListSubscriptions(ctx, req.Msg.CustomerId)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	pbSubs := make([]*devicepb.Subscription, len(subs))
-	for i, sub := range subs {
-		pbSubs[i] = &devicepb.Subscription{
-			Id:            sub.ID,
-			CustomerId:    sub.CustomerID,
-			PlanId:        sub.PlanID,
-			Status:        sub.Status,
-			StartDateUnix: sub.StartDate.Unix(),
-			EndDateUnix:   sub.EndDate.Unix(),
-			Price:         sub.Price,
-		}
-	}
-
-	return connect.NewResponse(&devicepb.ListSubscriptionsResponse{Subscriptions: pbSubs}), nil
+	return connect.NewResponse(&devicepb.ListSubscriptionsResponse{
+		Subscriptions: toProtoSubscriptionList(subs),
+	}), nil
 }
 
 func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *connect.Request[devicepb.CreateSubscriptionRequest]) (*connect.Response[devicepb.CreateSubscriptionResponse], error) {
 	if req.Msg.CustomerId == "" || req.Msg.PlanId == "" {
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("customer_id and plan_id are required"))
 	}
-	if h.subscriptionUsecase == nil {
+	if h.subscriptionUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription usecase unavailable"))
 	}
 
@@ -203,21 +159,13 @@ func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *con
 		UpdatedAt:  now,
 	}
 
-	created, err := h.subscriptionUsecase.CreateSubscription(ctx, newSub)
+	created, err := h.subscriptionUC.CreateSubscription(ctx, newSub)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	return connect.NewResponse(&devicepb.CreateSubscriptionResponse{
-		Subscription: &devicepb.Subscription{
-			Id:            created.ID,
-			CustomerId:    created.CustomerID,
-			PlanId:        created.PlanID,
-			Status:        created.Status,
-			StartDateUnix: created.StartDate.Unix(),
-			EndDateUnix:   created.EndDate.Unix(),
-			Price:         created.Price,
-		},
+		Subscription: toProtoSubscription(&created),
 	}), nil
 }
 
@@ -225,45 +173,17 @@ func (h *BillingConnectHandler) CancelSubscription(ctx context.Context, req *con
 	if req.Msg.Id == "" {
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("subscription id is required"))
 	}
-	if h.subscriptionUsecase == nil {
+	if h.subscriptionUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription usecase unavailable"))
 	}
 
-	cancelled, err := h.subscriptionUsecase.CancelSubscription(ctx, req.Msg.Id)
+	cancelled, err := h.subscriptionUC.CancelSubscription(ctx, req.Msg.Id)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
 	return connect.NewResponse(&devicepb.CancelSubscriptionResponse{
-		Subscription: &devicepb.Subscription{
-			Id:            cancelled.ID,
-			CustomerId:    cancelled.CustomerID,
-			PlanId:        cancelled.PlanID,
-			Status:        cancelled.Status,
-			StartDateUnix: cancelled.StartDate.Unix(),
-			EndDateUnix:   cancelled.EndDate.Unix(),
-			Price:         cancelled.Price,
-		},
-		Message: "Subscription cancelled successfully",
+		Subscription: toProtoSubscription(&cancelled),
+		Message:      "Subscription cancelled successfully",
 	}), nil
-}
-
-func NewBillingServiceHandler(
-	invUsecase *billingUsecase.InvoiceUsecase,
-	subUsecase *billingUsecase.SubscriptionUsecase,
-) (string, http.Handler) {
-	handler := NewBillingConnectHandler(invUsecase, subUsecase)
-	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
-
-	serviceName := "polyglot.v1.BillingService"
-	mux.Handle("/"+serviceName+"/ListInvoices", connect.NewUnaryHandler("/"+serviceName+"/ListInvoices", handler.ListInvoices, codecOpt))
-	mux.Handle("/"+serviceName+"/GetInvoice", connect.NewUnaryHandler("/"+serviceName+"/GetInvoice", handler.GetInvoice, codecOpt))
-	mux.Handle("/"+serviceName+"/CreateInvoice", connect.NewUnaryHandler("/"+serviceName+"/CreateInvoice", handler.CreateInvoice, codecOpt))
-	mux.Handle("/"+serviceName+"/PayInvoice", connect.NewUnaryHandler("/"+serviceName+"/PayInvoice", handler.PayInvoice, codecOpt))
-	mux.Handle("/"+serviceName+"/ListSubscriptions", connect.NewUnaryHandler("/"+serviceName+"/ListSubscriptions", handler.ListSubscriptions, codecOpt))
-	mux.Handle("/"+serviceName+"/CreateSubscription", connect.NewUnaryHandler("/"+serviceName+"/CreateSubscription", handler.CreateSubscription, codecOpt))
-	mux.Handle("/"+serviceName+"/CancelSubscription", connect.NewUnaryHandler("/"+serviceName+"/CancelSubscription", handler.CancelSubscription, codecOpt))
-
-	return "/" + serviceName + "/", mux
 }

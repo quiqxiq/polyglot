@@ -17,15 +17,15 @@ import (
 // per-ID, FindByID mengembalikan copy) tanpa database nyata.
 type fakeRepo struct {
 	mu      sync.Mutex
-	entries map[uint]*knowledge.KnowledgeEntry
+	entries map[uint]*knowledge.Entry
 	nextID  uint
 }
 
 func newFakeRepo() *fakeRepo {
-	return &fakeRepo{entries: map[uint]*knowledge.KnowledgeEntry{}, nextID: 1}
+	return &fakeRepo{entries: map[uint]*knowledge.Entry{}, nextID: 1}
 }
 
-func (f *fakeRepo) Create(e *knowledge.KnowledgeEntry) error {
+func (f *fakeRepo) Create(_ context.Context, e *knowledge.Entry) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	e.ID = f.nextID
@@ -35,7 +35,7 @@ func (f *fakeRepo) Create(e *knowledge.KnowledgeEntry) error {
 	return nil
 }
 
-func (f *fakeRepo) FindByID(id uint) (*knowledge.KnowledgeEntry, error) {
+func (f *fakeRepo) FindByID(_ context.Context, id uint) (*knowledge.Entry, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	e, ok := f.entries[id]
@@ -46,17 +46,19 @@ func (f *fakeRepo) FindByID(id uint) (*knowledge.KnowledgeEntry, error) {
 	return &cp, nil
 }
 
-func (f *fakeRepo) FindAll() ([]knowledge.KnowledgeEntry, error) {
+func (f *fakeRepo) FindAll(_ context.Context) ([]knowledge.Entry, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
-	res := make([]knowledge.KnowledgeEntry, 0, len(f.entries))
-	for _, e := range f.entries {
-		res = append(res, *e)
+	res := make([]knowledge.Entry, 0, len(f.entries))
+	for i := uint(1); i < f.nextID; i++ {
+		if e, ok := f.entries[i]; ok {
+			res = append(res, *e)
+		}
 	}
 	return res, nil
 }
 
-func (f *fakeRepo) Update(e *knowledge.KnowledgeEntry) error {
+func (f *fakeRepo) Update(_ context.Context, e *knowledge.Entry) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	if _, ok := f.entries[e.ID]; !ok {
@@ -67,7 +69,7 @@ func (f *fakeRepo) Update(e *knowledge.KnowledgeEntry) error {
 	return nil
 }
 
-func (f *fakeRepo) Delete(id uint) error {
+func (f *fakeRepo) Delete(_ context.Context, id uint) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	if _, ok := f.entries[id]; !ok {
@@ -77,8 +79,8 @@ func (f *fakeRepo) Delete(id uint) error {
 	return nil
 }
 
-func (f *fakeRepo) SearchByTags([]string) ([]knowledge.KnowledgeEntry, error) {
-	return f.FindAll()
+func (f *fakeRepo) SearchByTags(ctx context.Context, _ []string) ([]knowledge.Entry, error) {
+	return f.FindAll(ctx)
 }
 
 type upsertCall struct {
@@ -113,7 +115,7 @@ func (f *fakeManager) DeleteDocument(_ context.Context, docName string) error {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 
-func mustCreate(t *testing.T, m *DocumentManager, p CreateParams) *knowledge.KnowledgeEntry {
+func mustCreate(t *testing.T, m *DocumentManager, p CreateParams) *knowledge.Entry {
 	t.Helper()
 	e, err := m.CreateDocument(context.Background(), p)
 	require.NoError(t, err)
@@ -177,7 +179,7 @@ func TestCreateDocumentEmbed(t *testing.T) {
 	require.Equal(t, "20 Mbps Rp250.000", call.markdown)
 
 	// state ter-persist di repo, bukan cuma di memori
-	stored, err := repo.FindByID(entry.ID)
+	stored, err := repo.FindByID(context.Background(), entry.ID)
 	require.NoError(t, err)
 	require.Equal(t, knowledge.EmbedStatusEmbedded, stored.EmbedStatus)
 }
@@ -194,7 +196,7 @@ func TestCreateDocumentEmbedFailureKeepsEntry(t *testing.T) {
 	require.NotNil(t, entry, "entry tetap tersimpan walau embed gagal")
 	require.Equal(t, knowledge.EmbedStatusFailed, entry.EmbedStatus)
 
-	stored, err := repo.FindByID(entry.ID)
+	stored, err := repo.FindByID(context.Background(), entry.ID)
 	require.NoError(t, err)
 	require.Equal(t, knowledge.EmbedStatusFailed, stored.EmbedStatus, "status failed harus tersimpan untuk tombol retry")
 }
@@ -315,7 +317,7 @@ func TestDeleteDocumentLocal(t *testing.T) {
 	entry := mustCreate(t, m, CreateParams{Title: "Judul", Content: "isi"})
 
 	require.NoError(t, m.DeleteDocument(context.Background(), entry.ID))
-	_, err := repo.FindByID(entry.ID)
+	_, err := repo.FindByID(context.Background(), entry.ID)
 	require.ErrorIs(t, err, knowledge.ErrNotFound, "entry harus terhapus dari repo")
 	require.Empty(t, mgr.deleteCalls, "dokumen lokal tidak punya doc AnythingLLM")
 }
@@ -328,7 +330,7 @@ func TestDeleteDocumentEmbedded(t *testing.T) {
 
 	require.NoError(t, m.DeleteDocument(context.Background(), entry.ID))
 	require.Equal(t, []string{"custom-documents/raw-doc-1.json"}, mgr.deleteCalls)
-	_, err := repo.FindByID(entry.ID)
+	_, err := repo.FindByID(context.Background(), entry.ID)
 	require.ErrorIs(t, err, knowledge.ErrNotFound)
 }
 
@@ -340,7 +342,7 @@ func TestDeleteDocumentEmbeddedDeleteFailsIsOrphan(t *testing.T) {
 
 	err := m.DeleteDocument(context.Background(), entry.ID)
 	require.ErrorIs(t, err, ErrEmbedSync, "entry terhapus tapi sisa di AnythingLLM — kabarkan sebagai orphan")
-	_, repoErr := repo.FindByID(entry.ID)
+	_, repoErr := repo.FindByID(context.Background(), entry.ID)
 	require.ErrorIs(t, repoErr, knowledge.ErrNotFound, "entry tetap terhapus dari Postgres")
 }
 

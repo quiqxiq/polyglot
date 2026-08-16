@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/quixiq/polyglot/internal/domain/customer"
+	"github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -50,6 +51,7 @@ func (uc *ManageCustomerUseCase) DeleteCustomer(ctx context.Context, id string) 
 	return uc.repo.Delete(ctx, id)
 }
 
-func (uc *ManageCustomerUseCase) ListSubscriptions(ctx context.Context, customerID string) ([]customer.Subscription, error) {
+func (uc *ManageCustomerUseCase) ListSubscriptions(ctx context.Context, customerID string) ([]subscription.Subscription, error) {
 	return uc.repo.FindSubscriptions(ctx, customerID)
 }
+

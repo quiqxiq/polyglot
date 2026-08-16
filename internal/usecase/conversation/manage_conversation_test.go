@@ -1,10 +1,12 @@
 package conversation
 
 import (
+	"context"
 	"errors"
 	"testing"
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 type fakeRepo struct {
@@ -15,6 +17,8 @@ type fakeRepo struct {
 	createErr error
 }
 
+var _ port.ConversationRepository = (*fakeRepo)(nil)
+
 func newFakeRepo() *fakeRepo {
 	return &fakeRepo{
 		convs:    make(map[uint]*bot.Conversation),
@@ -24,7 +28,7 @@ func newFakeRepo() *fakeRepo {
 	}
 }
 
-func (f *fakeRepo) FindActiveConversationByCustomer(sessionID uint, customerNumber string) (*bot.Conversation, error) {
+func (f *fakeRepo) FindActiveConversationByCustomer(ctx context.Context, sessionID uint, customerNumber string) (*bot.Conversation, error) {
 	for _, c := range f.convs {
 		if c.SessionID == sessionID && c.CustomerWANumber == customerNumber && (c.Status == bot.StatusBot || c.Status == bot.StatusEscalation) {
 			return c, nil
@@ -33,14 +37,14 @@ func (f *fakeRepo) FindActiveConversationByCustomer(sessionID uint, customerNumb
 	return nil, ErrNotFound
 }
 
-func (f *fakeRepo) CreateConversation(conv *bot.Conversation) error {
+func (f *fakeRepo) CreateConversation(ctx context.Context, conv *bot.Conversation) error {
 	conv.ID = f.nextConv
 	f.nextConv++
 	f.convs[conv.ID] = conv
 	return nil
 }
 
-func (f *fakeRepo) FindConversationByID(id uint) (*bot.Conversation, error) {
+func (f *fakeRepo) FindConversationByID(ctx context.Context, id uint) (*bot.Conversation, error) {
 	c, ok := f.convs[id]
 	if !ok {
 		return nil, ErrNotFound
@@ -48,7 +52,7 @@ func (f *fakeRepo) FindConversationByID(id uint) (*bot.Conversation, error) {
 	return c, nil
 }
 
-func (f *fakeRepo) FindConversationByIDWithMessages(id uint) (*bot.Conversation, error) {
+func (f *fakeRepo) FindConversationByIDWithMessages(ctx context.Context, id uint) (*bot.Conversation, error) {
 	c, ok := f.convs[id]
 	if !ok {
 		return nil, ErrNotFound
@@ -57,7 +61,7 @@ func (f *fakeRepo) FindConversationByIDWithMessages(id uint) (*bot.Conversation,
 	return c, nil
 }
 
-func (f *fakeRepo) FindConversationsByStatus(status bot.ConversationStatus) ([]bot.Conversation, error) {
+func (f *fakeRepo) FindConversationsByStatus(ctx context.Context, status bot.ConversationStatus) ([]bot.Conversation, error) {
 	var res []bot.Conversation
 	for _, c := range f.convs {
 		if c.Status == status {
@@ -67,7 +71,7 @@ func (f *fakeRepo) FindConversationsByStatus(status bot.ConversationStatus) ([]b
 	return res, nil
 }
 
-func (f *fakeRepo) FindConversationsBySessionID(sessionID uint) ([]bot.Conversation, error) {
+func (f *fakeRepo) FindConversationsBySessionID(ctx context.Context, sessionID uint) ([]bot.Conversation, error) {
 	var res []bot.Conversation
 	for _, c := range f.convs {
 		if c.SessionID == sessionID {
@@ -77,7 +81,7 @@ func (f *fakeRepo) FindConversationsBySessionID(sessionID uint) ([]bot.Conversat
 	return res, nil
 }
 
-func (f *fakeRepo) FindAllConversations() ([]bot.Conversation, error) {
+func (f *fakeRepo) FindAllConversations(ctx context.Context) ([]bot.Conversation, error) {
 	var res []bot.Conversation
 	for _, c := range f.convs {
 		res = append(res, *c)
@@ -85,12 +89,12 @@ func (f *fakeRepo) FindAllConversations() ([]bot.Conversation, error) {
 	return res, nil
 }
 
-func (f *fakeRepo) UpdateConversation(conv *bot.Conversation) error {
+func (f *fakeRepo) UpdateConversation(ctx context.Context, conv *bot.Conversation) error {
 	f.convs[conv.ID] = conv
 	return nil
 }
 
-func (f *fakeRepo) CreateMessage(msg *bot.Message) error {
+func (f *fakeRepo) CreateMessage(ctx context.Context, msg *bot.Message) error {
 	if f.createErr != nil {
 		return f.createErr
 	}
@@ -100,7 +104,11 @@ func (f *fakeRepo) CreateMessage(msg *bot.Message) error {
 	return nil
 }
 
-func (f *fakeRepo) FindRecentMessages(conversationID uint, limit int) ([]bot.Message, error) {
+func (f *fakeRepo) FindMessagesByConversationID(ctx context.Context, conversationID uint) ([]bot.Message, error) {
+	return f.msgs[conversationID], nil
+}
+
+func (f *fakeRepo) FindRecentMessages(ctx context.Context, conversationID uint, limit int) ([]bot.Message, error) {
 	all := f.msgs[conversationID]
 	if len(all) <= limit {
 		return all, nil
@@ -109,10 +117,11 @@ func (f *fakeRepo) FindRecentMessages(conversationID uint, limit int) ([]bot.Mes
 }
 
 func TestAddMessageWithConfigPersists(t *testing.T) {
+	ctx := context.Background()
 	repo := newFakeRepo()
 	svc := NewConversationService(repo)
 
-	conv, err := svc.GetOrCreateConversation(1, "628123456789")
+	conv, err := svc.GetOrCreateConversation(ctx, 1, "628123456789")
 	if err != nil {
 		t.Fatalf("GetOrCreateConversation: %v", err)
 	}
@@ -120,7 +129,7 @@ func TestAddMessageWithConfigPersists(t *testing.T) {
 		t.Fatal("expected conversation to get an ID from repo")
 	}
 
-	msg, err := svc.AddMessageWithConfig(conv.ID, "customer", "berapa harga paket?", 0, 0, nil)
+	msg, err := svc.AddMessageWithConfig(ctx, conv.ID, "customer", "berapa harga paket?", 0, 0, nil)
 	if err != nil {
 		t.Fatalf("AddMessageWithConfig: %v", err)
 	}
@@ -141,7 +150,7 @@ func TestAddMessageWithConfigPersists(t *testing.T) {
 
 	// Dengan token + llmConfigID.
 	llmID := uint(7)
-	botMsg, err := svc.AddMessageWithConfig(conv.ID, "bot", "Mulai 150rb.", 42, 12, &llmID)
+	botMsg, err := svc.AddMessageWithConfig(ctx, conv.ID, "bot", "Mulai 150rb.", 42, 12, &llmID)
 	if err != nil {
 		t.Fatalf("AddMessageWithConfig(bot): %v", err)
 	}
@@ -154,32 +163,34 @@ func TestAddMessageWithConfigPersists(t *testing.T) {
 }
 
 func TestAddMessageWithConfigValidation(t *testing.T) {
+	ctx := context.Background()
 	svc := NewConversationService(newFakeRepo())
 
-	if _, err := svc.AddMessageWithConfig(0, "customer", "halo", 0, 0, nil); err == nil {
+	if _, err := svc.AddMessageWithConfig(ctx, 0, "customer", "halo", 0, 0, nil); err == nil {
 		t.Fatal("expected error for convID == 0")
 	}
 
 	repo := newFakeRepo()
 	repo.createErr = errors.New("db down")
 	failing := NewConversationService(repo)
-	if _, err := failing.AddMessageWithConfig(1, "customer", "halo", 0, 0, nil); err == nil {
+	if _, err := failing.AddMessageWithConfig(ctx, 1, "customer", "halo", 0, 0, nil); err == nil {
 		t.Fatal("expected repo error to propagate")
 	}
 }
 
 func TestGetRecentHistory(t *testing.T) {
+	ctx := context.Background()
 	repo := newFakeRepo()
 	svc := NewConversationService(repo)
 
-	conv, _ := svc.GetOrCreateConversation(1, "628123456789")
+	conv, _ := svc.GetOrCreateConversation(ctx, 1, "628123456789")
 	for i := 0; i < 5; i++ {
-		if _, err := svc.AddMessageWithConfig(conv.ID, "customer", "msg", 0, 0, nil); err != nil {
+		if _, err := svc.AddMessageWithConfig(ctx, conv.ID, "customer", "msg", 0, 0, nil); err != nil {
 			t.Fatalf("add msg %d: %v", i, err)
 		}
 	}
 
-	recent, err := svc.GetRecentHistory(conv.ID, 3)
+	recent, err := svc.GetRecentHistory(ctx, conv.ID, 3)
 	if err != nil {
 		t.Fatalf("GetRecentHistory: %v", err)
 	}
@@ -190,3 +201,4 @@ func TestGetRecentHistory(t *testing.T) {
 		t.Fatal("expected ascending chronological order")
 	}
 }
+

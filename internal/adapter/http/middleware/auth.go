@@ -1,45 +1,51 @@
 package middleware
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
-
-	"github.com/gin-gonic/gin"
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 )
 
 const BearerScheme = "Bearer"
 
-func AuthenticateJWT(jwtService *auth.JWTService) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		authHeader := c.GetHeader("Authorization")
-		if authHeader == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header missing"})
-			c.Abort()
-			return
-		}
+// AuthenticateJWT returns a standard HTTP middleware that verifies JWT bearer tokens.
+func AuthenticateJWT(jwtService *auth.JWTService) Middleware {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			authHeader := r.Header.Get("Authorization")
+			if authHeader == "" {
+				writeJSONError(w, http.StatusUnauthorized, "Authorization header missing")
+				return
+			}
 
-		parts := strings.SplitN(authHeader, " ", 2)
-		if len(parts) != 2 || !strings.EqualFold(parts[0], BearerScheme) {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid Authorization header format. Expected 'Bearer <token>'"})
-			c.Abort()
-			return
-		}
+			parts := strings.SplitN(authHeader, " ", 2)
+			if len(parts) != 2 || !strings.EqualFold(parts[0], BearerScheme) {
+				writeJSONError(w, http.StatusUnauthorized, "Invalid Authorization header format. Expected 'Bearer <token>'")
+				return
+			}
 
-		tokenStr := parts[1]
-		claims, err := jwtService.ValidateToken(tokenStr)
-		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired authentication token"})
-			c.Abort()
-			return
-		}
+			tokenStr := parts[1]
+			claims, err := jwtService.ValidateToken(tokenStr)
+			if err != nil {
+				writeJSONError(w, http.StatusUnauthorized, "Invalid or expired authentication token")
+				return
+			}
 
-		c.Set("user_id", claims.UserID)
-		c.Set("user_email", claims.Email)
-		c.Set("user_role", claims.Role)
-		c.Set("tenant_id", claims.TenantID)
+			roles := claims.Roles
+			if len(roles) == 0 && claims.Role != "" {
+				roles = []string{claims.Role}
+			}
 
-		c.Next()
+			ctx := auth.WithIdentity(r.Context(), claims.UserID, roles)
+			next.ServeHTTP(w, r.WithContext(ctx))
+		})
 	}
+}
+
+func writeJSONError(w http.ResponseWriter, status int, msg string) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+	_ = json.NewEncoder(w).Encode(map[string]string{"error": msg})
 }

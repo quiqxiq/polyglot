@@ -7,6 +7,7 @@ import (
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/quixiq/polyglot/internal/domain/customer"
+	"github.com/quixiq/polyglot/internal/domain/subscription"
 )
 
 type customerLookupArgs struct {
@@ -16,13 +17,13 @@ type customerLookupArgs struct {
 }
 
 type customerDetail struct {
-	ID            string                  `json:"id"`
-	Name          string                  `json:"name"`
-	Email         string                  `json:"email"`
-	Phone         string                  `json:"phone"`
-	Address       string                  `json:"address"`
-	Status        string                  `json:"status"`
-	Subscriptions []customer.Subscription `json:"subscriptions,omitempty"`
+	ID            string                      `json:"id"`
+	Name          string                      `json:"name"`
+	Email         string                      `json:"email"`
+	Phone         string                      `json:"phone"`
+	Address       string                      `json:"address"`
+	Status        string                      `json:"status"`
+	Subscriptions []subscription.Subscription `json:"subscriptions,omitempty"`
 }
 
 type customerLookupOutput struct {

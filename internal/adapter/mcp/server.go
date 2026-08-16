@@ -17,7 +17,7 @@ type Server struct {
 	mcpServer          *mcp.Server
 	registry           *registry.Registry
 	audit              port.AuditWriter
-	mikhmonUC          *hotspotUC.HotspotUseCase
+	mikhmonUC          *hotspotUC.UseCase
 	customerRepo       port.CustomerRepository
 	knowledgeRetriever port.KnowledgeRetriever
 }
@@ -34,7 +34,7 @@ func New(reg *registry.Registry, audit port.AuditWriter) *Server {
 }
 
 // WithMikhmonUseCase sets the MikhmonUseCase dependency.
-func (s *Server) WithMikhmonUseCase(uc *hotspotUC.HotspotUseCase) *Server {
+func (s *Server) WithMikhmonUseCase(uc *hotspotUC.UseCase) *Server {
 	s.mikhmonUC = uc
 	return s
 }

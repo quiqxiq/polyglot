@@ -6,19 +6,19 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"time"
 
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/knowledge"
 	knowledgeuc "github.com/quixiq/polyglot/internal/usecase/knowledge"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 func (h *KnowledgeConnectHandler) ListKnowledge(ctx context.Context, req *connect.Request[devicepb.ListKnowledgeRequest]) (*connect.Response[devicepb.ListKnowledgeResponse], error) {
 	entries, err := h.documents.ListDocuments(ctx)
 	if err != nil {
-		return nil, mapKnowledgeError(err)
+		return nil, response.MapDomainError(err)
 	}
 
 	category := strings.TrimSpace(req.Msg.GetCategory())
@@ -44,7 +44,7 @@ func (h *KnowledgeConnectHandler) GetKnowledge(ctx context.Context, req *connect
 	}
 	entry, err := h.documents.GetDocument(ctx, id)
 	if err != nil {
-		return nil, mapKnowledgeError(err)
+		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.GetKnowledgeResponse{Item: toKnowledgeItem(entry)}), nil
 }
@@ -61,7 +61,7 @@ func (h *KnowledgeConnectHandler) CreateKnowledge(ctx context.Context, req *conn
 		// ErrEmbedSync = dokumen TERSIMPAN dengan status failed — kembalikan
 		// item supaya UI menampilkan badge failed + tombol retry.
 		if !errors.Is(err, knowledgeuc.ErrEmbedSync) {
-			return nil, mapKnowledgeError(err)
+			return nil, response.MapDomainError(err)
 		}
 	}
 	return connect.NewResponse(&devicepb.CreateKnowledgeResponse{Item: toKnowledgeItem(entry)}), nil
@@ -82,7 +82,7 @@ func (h *KnowledgeConnectHandler) UpdateKnowledge(ctx context.Context, req *conn
 	})
 	if err != nil {
 		if !errors.Is(err, knowledgeuc.ErrEmbedSync) {
-			return nil, mapKnowledgeError(err)
+			return nil, response.MapDomainError(err)
 		}
 	}
 	return connect.NewResponse(&devicepb.UpdateKnowledgeResponse{Item: toKnowledgeItem(entry)}), nil
@@ -102,7 +102,7 @@ func (h *KnowledgeConnectHandler) DeleteKnowledge(ctx context.Context, req *conn
 				Message: "knowledge item deleted; note: document may still exist in AnythingLLM",
 			}), nil
 		}
-		return nil, mapKnowledgeError(err)
+		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.DeleteKnowledgeResponse{
 		Message: "knowledge item deleted successfully",
@@ -117,7 +117,7 @@ func (h *KnowledgeConnectHandler) RetryEmbed(ctx context.Context, req *connect.R
 	entry, err := h.documents.RetryEmbed(ctx, id)
 	if err != nil {
 		if !errors.Is(err, knowledgeuc.ErrEmbedSync) {
-			return nil, mapKnowledgeError(err)
+			return nil, response.MapDomainError(err)
 		}
 	}
 	return connect.NewResponse(&devicepb.RetryEmbedResponse{Item: toKnowledgeItem(entry)}), nil
@@ -133,43 +133,14 @@ func parseKnowledgeID(raw string) (uint, error) {
 	return uint(id), nil
 }
 
-func toKnowledgeItem(e *knowledge.KnowledgeEntry) *devicepb.KnowledgeItem {
-	if e == nil {
-		return &devicepb.KnowledgeItem{}
-	}
-	return &devicepb.KnowledgeItem{
-		Id:                 strconv.FormatUint(uint64(e.ID), 10),
-		Title:              e.Title,
-		Content:            e.Content,
-		Category:           e.Category,
-		Tags:               splitTags(e.Tags),
-		CreatedAt:          e.CreatedAt.Format(time.RFC3339),
-		UpdatedAt:          e.UpdatedAt.Format(time.RFC3339),
-		EmbedToLlm:         e.EmbedToLLM,
-		EmbedStatus:        e.EmbedStatus,
-		AnythingllmDocName: e.AnythingLLMDocName,
-	}
+func toKnowledgeItem(e *knowledge.Entry) *devicepb.KnowledgeItem {
+	return toProtoKnowledgeItem(e)
 }
 
-// splitTags memecah tags yang disimpan comma-separated di Postgres menjadi
-// slice untuk proto, membuang elemen kosong.
-func splitTags(raw string) []string {
-	if strings.TrimSpace(raw) == "" {
-		return []string{}
-	}
-	parts := strings.Split(raw, ",")
-	out := make([]string, 0, len(parts))
-	for _, p := range parts {
-		if p = strings.TrimSpace(p); p != "" {
-			out = append(out, p)
-		}
-	}
-	return out
-}
 
 // entryMatchesQuery mencocokkan query (sudah lowercase) terhadap title,
 // content, category, dan tags entry.
-func entryMatchesQuery(e *knowledge.KnowledgeEntry, query string) bool {
+func entryMatchesQuery(e *knowledge.Entry, query string) bool {
 	haystacks := []string{
 		strings.ToLower(e.Title),
 		strings.ToLower(e.Content),
@@ -184,18 +155,3 @@ func entryMatchesQuery(e *knowledge.KnowledgeEntry, query string) bool {
 	return false
 }
 
-// mapKnowledgeError memetakan error usecase/domain ke connect error code
-// yang bisa dipakai frontend untuk menampilkan pesan yang tepat.
-func mapKnowledgeError(err error) error {
-	switch {
-	case errors.Is(err, knowledgeuc.ErrInvalidTitle),
-		errors.Is(err, knowledgeuc.ErrEmptyContent):
-		return connect.NewError(connect.CodeInvalidArgument, err)
-	case errors.Is(err, knowledgeuc.ErrEmbedNotConfigured):
-		return connect.NewError(connect.CodeFailedPrecondition, err)
-	case errors.Is(err, knowledge.ErrNotFound):
-		return connect.NewError(connect.CodeNotFound, err)
-	default:
-		return connect.NewError(connect.CodeInternal, err)
-	}
-}

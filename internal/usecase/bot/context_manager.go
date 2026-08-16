@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/domain/knowledge"
 	"github.com/quixiq/polyglot/internal/domain/llm"
@@ -32,14 +31,14 @@ var summarizePrompt = "Anda adalah peringkas percakapan layanan pelanggan intern
 // Cache keys are per-conversation, bukan per nomor telepon, sehingga dua
 // percakapan berbeda dari kontak yang sama tidak saling mencampur konteks.
 type ContextManager struct {
-	cache port.CacheStore
-	cfg   config.Config
+	cache        port.CacheStore
+	systemPrompt string
 }
 
-func NewContextManager(cache port.CacheStore, cfg config.Config) *ContextManager {
+func NewContextManager(cache port.CacheStore, systemPrompt string) *ContextManager {
 	return &ContextManager{
-		cache: cache,
-		cfg:   cfg,
+		cache:        cache,
+		systemPrompt: systemPrompt,
 	}
 }
 
@@ -50,10 +49,11 @@ func (cm *ContextManager) BuildPromptContext(
 	ctx context.Context,
 	convID uint,
 	history []bot.Message,
-	knowledgeEntries []knowledge.KnowledgeEntry,
+	knowledgeEntries []knowledge.Entry,
 ) (systemPrompt string, messages []llm.ChatMessage, err error) {
 	var sb strings.Builder
-	sb.WriteString(cm.cfg.SystemPrompt)
+	sb.WriteString(cm.systemPrompt)
+
 	sb.WriteString("\n\n")
 
 	if len(knowledgeEntries) > 0 {

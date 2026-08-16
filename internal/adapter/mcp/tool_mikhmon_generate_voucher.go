@@ -36,7 +36,7 @@ func (s *Server) mikhmonGenerateVoucher(ctx context.Context, _ *mcp.CallToolRequ
 
 	uc := s.mikhmonUC
 	if uc == nil {
-		uc = hotspotUC.NewHotspotUseCase("")
+		uc = hotspotUC.New("")
 	}
 
 	params := mikhmon.VoucherGenerateParams{

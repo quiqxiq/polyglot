@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"context"
 	"errors"
 
 	"gorm.io/gorm"
@@ -9,18 +10,18 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/customer"
 )
 
-func (s *Store) CreateTechnician(tech *customer.Technician) error {
+func (s *Store) CreateTechnician(ctx context.Context, tech *customer.Technician) error {
 	m := models.TechnicianModelFromDomain(tech)
-	if err := s.db.Create(m).Error; err != nil {
+	if err := s.db.WithContext(ctx).Create(m).Error; err != nil {
 		return err
 	}
 	tech.ID = m.ID
 	return nil
 }
 
-func (s *Store) FindAllTechnicians() ([]customer.Technician, error) {
+func (s *Store) FindAllTechnicians(ctx context.Context) ([]customer.Technician, error) {
 	var mList []models.TechnicianModel
-	if err := s.db.Order("created_at DESC").Find(&mList).Error; err != nil {
+	if err := s.db.WithContext(ctx).Order("created_at DESC").Find(&mList).Error; err != nil {
 		return nil, err
 	}
 	var res []customer.Technician
@@ -32,9 +33,9 @@ func (s *Store) FindAllTechnicians() ([]customer.Technician, error) {
 	return res, nil
 }
 
-func (s *Store) FindActiveTechnicians() ([]customer.Technician, error) {
+func (s *Store) FindActiveTechnicians(ctx context.Context) ([]customer.Technician, error) {
 	var mList []models.TechnicianModel
-	if err := s.db.Where("is_active = ?", true).Order("full_name ASC").Find(&mList).Error; err != nil {
+	if err := s.db.WithContext(ctx).Where("is_active = ?", true).Order("full_name ASC").Find(&mList).Error; err != nil {
 		return nil, err
 	}
 	var res []customer.Technician
@@ -46,9 +47,9 @@ func (s *Store) FindActiveTechnicians() ([]customer.Technician, error) {
 	return res, nil
 }
 
-func (s *Store) FindTechnicianByID(id uint) (*customer.Technician, error) {
+func (s *Store) FindTechnicianByID(ctx context.Context, id uint) (*customer.Technician, error) {
 	var m models.TechnicianModel
-	if err := s.db.First(&m, id).Error; err != nil {
+	if err := s.db.WithContext(ctx).First(&m, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
 		}
@@ -57,11 +58,11 @@ func (s *Store) FindTechnicianByID(id uint) (*customer.Technician, error) {
 	return m.ToDomain(), nil
 }
 
-func (s *Store) UpdateTechnician(tech *customer.Technician) error {
+func (s *Store) UpdateTechnician(ctx context.Context, tech *customer.Technician) error {
 	m := models.TechnicianModelFromDomain(tech)
-	return s.db.Save(m).Error
+	return s.db.WithContext(ctx).Save(m).Error
 }
 
-func (s *Store) DeleteTechnician(id uint) error {
-	return s.db.Delete(&models.TechnicianModel{}, id).Error
+func (s *Store) DeleteTechnician(ctx context.Context, id uint) error {
+	return s.db.WithContext(ctx).Delete(&models.TechnicianModel{}, id).Error
 }

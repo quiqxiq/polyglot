@@ -8,15 +8,15 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-type InvoiceUsecase struct {
+type InvoiceUseCase struct {
 	repo port.InvoiceRepository
 }
 
-func NewInvoiceUsecase(repo port.InvoiceRepository) *InvoiceUsecase {
-	return &InvoiceUsecase{repo: repo}
+func NewInvoiceUseCase(repo port.InvoiceRepository) *InvoiceUseCase {
+	return &InvoiceUseCase{repo: repo}
 }
 
-func (u *InvoiceUsecase) ListInvoices(ctx context.Context, customerID string) ([]domainBilling.Invoice, error) {
+func (u *InvoiceUseCase) ListInvoices(ctx context.Context, customerID string) ([]domainBilling.Invoice, error) {
 	if u.repo == nil {
 		return nil, fmt.Errorf("invoice repository unavailable")
 	}
@@ -26,14 +26,14 @@ func (u *InvoiceUsecase) ListInvoices(ctx context.Context, customerID string) ([
 	return u.repo.FindAll(ctx)
 }
 
-func (u *InvoiceUsecase) GetInvoice(ctx context.Context, id string) (domainBilling.Invoice, error) {
+func (u *InvoiceUseCase) GetInvoice(ctx context.Context, id string) (domainBilling.Invoice, error) {
 	if u.repo == nil {
 		return domainBilling.Invoice{}, fmt.Errorf("invoice repository unavailable")
 	}
 	return u.repo.FindByID(ctx, id)
 }
 
-func (u *InvoiceUsecase) CreateInvoice(ctx context.Context, inv domainBilling.Invoice) (domainBilling.Invoice, error) {
+func (u *InvoiceUseCase) CreateInvoice(ctx context.Context, inv domainBilling.Invoice) (domainBilling.Invoice, error) {
 	if u.repo == nil {
 		return domainBilling.Invoice{}, fmt.Errorf("invoice repository unavailable")
 	}
@@ -49,7 +49,7 @@ func (u *InvoiceUsecase) CreateInvoice(ctx context.Context, inv domainBilling.In
 	return inv, nil
 }
 
-func (u *InvoiceUsecase) PayInvoice(ctx context.Context, id string) (domainBilling.Invoice, error) {
+func (u *InvoiceUseCase) PayInvoice(ctx context.Context, id string) (domainBilling.Invoice, error) {
 	if u.repo == nil {
 		return domainBilling.Invoice{}, fmt.Errorf("invoice repository unavailable")
 	}

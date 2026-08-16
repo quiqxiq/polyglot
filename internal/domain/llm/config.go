@@ -2,8 +2,8 @@ package llm
 
 import "time"
 
-// LLMConfig represents a configured LLM provider with its settings.
-type LLMConfig struct {
+// Config represents a configured LLM provider with its settings.
+type Config struct {
 	ID              uint      `json:"id"`
 	Provider        string    `json:"provider"`
 	Model           string    `json:"model"`

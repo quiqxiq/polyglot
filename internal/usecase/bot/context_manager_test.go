@@ -7,7 +7,6 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/domain/knowledge"
 	"github.com/quixiq/polyglot/internal/domain/llm"
@@ -45,7 +44,10 @@ func (f *fakeCache) Delete(_ context.Context, key string) error {
 	defer f.mu.Unlock()
 	delete(f.data, key)
 	return nil
-} // fakeProvider implements port.LLMProvider with scripted replies.
+}
+
+func (f *fakeCache) Close() error { return nil }
+
 type fakeProvider struct {
 	reply             string
 	tokenIn, tokenOut int
@@ -67,17 +69,12 @@ func (f *fakeProvider) Chat(_ context.Context, systemPrompt string, messages []l
 
 func (f *fakeProvider) TestConnection(context.Context) error { return nil }
 
-func testCfg() config.Config {
-	return config.Config{
-		SystemPrompt:       "Kamu adalah asisten layanan GNET.",
-		LLMMaxOutputTokens: 512,
-		AllowedTopics:      []string{"internet", "paket", "harga"},
-	}
-}
+const testSystemPrompt = "Kamu adalah asisten layanan GNET."
 
 func TestBuildPromptContextRolesAndSummary(t *testing.T) {
 	cache := newFakeCache()
-	cm := NewContextManager(cache, testCfg())
+	cm := NewContextManager(cache, testSystemPrompt)
+
 	ctx := context.Background()
 
 	// Siapkan summary per-conversation.
@@ -91,7 +88,7 @@ func TestBuildPromptContextRolesAndSummary(t *testing.T) {
 		{ID: 3, ConversationID: 5, SenderType: bot.SenderAgent, Content: "Ini dari admin."},
 	}
 
-	systemPrompt, messages, err := cm.BuildPromptContext(ctx, 5, history, []knowledge.KnowledgeEntry{
+	systemPrompt, messages, err := cm.BuildPromptContext(ctx, 5, history, []knowledge.Entry{
 		{Title: "Paket", Content: "Paket mulai 150rb."},
 	})
 	if err != nil {
@@ -127,7 +124,7 @@ func TestBuildPromptContextRolesAndSummary(t *testing.T) {
 
 func TestSaveMessageToSessionAppendsAndTrims(t *testing.T) {
 	cache := newFakeCache()
-	cm := NewContextManager(cache, testCfg())
+	cm := NewContextManager(cache, testSystemPrompt)
 	ctx := context.Background()
 
 	// Setiap save menyimpan 2 pesan (user + bot). 25 turn = 50 pesan >
@@ -157,7 +154,7 @@ func TestSaveMessageToSessionAppendsAndTrims(t *testing.T) {
 
 func TestSummarizeSessionIfLong(t *testing.T) {
 	cache := newFakeCache()
-	cm := NewContextManager(cache, testCfg())
+	cm := NewContextManager(cache, testSystemPrompt)
 	ctx := context.Background()
 	prov := &fakeProvider{reply: "Ringkasan percakapan."}
 

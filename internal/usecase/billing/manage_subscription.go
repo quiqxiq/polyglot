@@ -8,15 +8,15 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-type SubscriptionUsecase struct {
+type SubscriptionUseCase struct {
 	repo port.SubscriptionRepository
 }
 
-func NewSubscriptionUsecase(repo port.SubscriptionRepository) *SubscriptionUsecase {
-	return &SubscriptionUsecase{repo: repo}
+func NewSubscriptionUseCase(repo port.SubscriptionRepository) *SubscriptionUseCase {
+	return &SubscriptionUseCase{repo: repo}
 }
 
-func (u *SubscriptionUsecase) ListSubscriptions(ctx context.Context, customerID string) ([]domainSub.Subscription, error) {
+func (u *SubscriptionUseCase) ListSubscriptions(ctx context.Context, customerID string) ([]domainSub.Subscription, error) {
 	if u.repo == nil {
 		return nil, fmt.Errorf("subscription repository unavailable")
 	}
@@ -26,14 +26,14 @@ func (u *SubscriptionUsecase) ListSubscriptions(ctx context.Context, customerID 
 	return u.repo.FindAll(ctx)
 }
 
-func (u *SubscriptionUsecase) GetSubscription(ctx context.Context, id string) (domainSub.Subscription, error) {
+func (u *SubscriptionUseCase) GetSubscription(ctx context.Context, id string) (domainSub.Subscription, error) {
 	if u.repo == nil {
 		return domainSub.Subscription{}, fmt.Errorf("subscription repository unavailable")
 	}
 	return u.repo.FindByID(ctx, id)
 }
 
-func (u *SubscriptionUsecase) CreateSubscription(ctx context.Context, sub domainSub.Subscription) (domainSub.Subscription, error) {
+func (u *SubscriptionUseCase) CreateSubscription(ctx context.Context, sub domainSub.Subscription) (domainSub.Subscription, error) {
 	if u.repo == nil {
 		return domainSub.Subscription{}, fmt.Errorf("subscription repository unavailable")
 	}
@@ -49,7 +49,7 @@ func (u *SubscriptionUsecase) CreateSubscription(ctx context.Context, sub domain
 	return sub, nil
 }
 
-func (u *SubscriptionUsecase) CancelSubscription(ctx context.Context, id string) (domainSub.Subscription, error) {
+func (u *SubscriptionUseCase) CancelSubscription(ctx context.Context, id string) (domainSub.Subscription, error) {
 	if u.repo == nil {
 		return domainSub.Subscription{}, fmt.Errorf("subscription repository unavailable")
 	}

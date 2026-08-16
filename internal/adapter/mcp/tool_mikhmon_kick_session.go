@@ -32,7 +32,7 @@ func (s *Server) mikhmonKickSession(ctx context.Context, _ *mcp.CallToolRequest,
 
 	uc := s.mikhmonUC
 	if uc == nil {
-		uc = hotspotUC.NewHotspotUseCase("")
+		uc = hotspotUC.New("")
 	}
 
 	targetRosID := args.SessionID

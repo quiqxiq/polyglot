@@ -35,7 +35,7 @@ func (h *WhatsAppConnectHandler) ListChats(ctx context.Context, req *connect.Req
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
-	chats, err := h.chatService.ListChats(sessionID, int(req.Msg.Limit), int(req.Msg.Offset), req.Msg.Search)
+	chats, err := h.chatService.ListChats(ctx, sessionID, int(req.Msg.Limit), int(req.Msg.Offset), req.Msg.Search)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
@@ -73,7 +73,7 @@ func (h *WhatsAppConnectHandler) GetChatMessages(ctx context.Context, req *conne
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
-	msgs, err := h.chatService.GetChatMessages(sessionID, req.Msg.ChatJid, int(req.Msg.Limit), int(req.Msg.Offset))
+	msgs, err := h.chatService.GetChatMessages(ctx, sessionID, req.Msg.ChatJid, int(req.Msg.Limit), int(req.Msg.Offset))
 	if err != nil {
 		if errors.Is(err, chatUC.ErrEmptyChatJID) {
 			return nil, connect.NewError(connect.CodeInvalidArgument, err)
@@ -114,7 +114,7 @@ func (h *WhatsAppConnectHandler) ToggleChatBot(ctx context.Context, req *connect
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
-	if err := h.chatService.ToggleChatBot(sessionID, req.Msg.ChatJid, req.Msg.IsActive); err != nil {
+	if err := h.chatService.ToggleChatBot(ctx, sessionID, req.Msg.ChatJid, req.Msg.IsActive); err != nil {
 		if errors.Is(err, chatUC.ErrEmptyChatJID) {
 			return nil, connect.NewError(connect.CodeInvalidArgument, err)
 		}
@@ -137,7 +137,7 @@ func (h *WhatsAppConnectHandler) MarkChatRead(ctx context.Context, req *connect.
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
-	if err := h.chatService.MarkRead(sessionID, req.Msg.ChatJid); err != nil {
+	if err := h.chatService.MarkRead(ctx, sessionID, req.Msg.ChatJid); err != nil {
 		if errors.Is(err, chatUC.ErrEmptyChatJID) {
 			return nil, connect.NewError(connect.CodeInvalidArgument, err)
 		}

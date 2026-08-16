@@ -58,7 +58,7 @@ type UpdateParams struct {
 // CreateDocument menyimpan entry baru ke Postgres lalu, kalau EmbedToLLM,
 // meng-embed isinya ke AnythingLLM. Error ErrEmbedSync berarti dokumen
 // tersimpan tapi sync gagal (status failed).
-func (m *DocumentManager) CreateDocument(ctx context.Context, p CreateParams) (*knowledge.KnowledgeEntry, error) {
+func (m *DocumentManager) CreateDocument(ctx context.Context, p CreateParams) (*knowledge.Entry, error) {
 	if strings.TrimSpace(p.Title) == "" {
 		return nil, ErrInvalidTitle
 	}
@@ -71,7 +71,7 @@ func (m *DocumentManager) CreateDocument(ctx context.Context, p CreateParams) (*
 		}
 	}
 
-	entry := &knowledge.KnowledgeEntry{
+	entry := &knowledge.Entry{
 		Title:       strings.TrimSpace(p.Title),
 		Content:     p.Content,
 		Category:    normalizeCategory(p.Category),
@@ -82,7 +82,7 @@ func (m *DocumentManager) CreateDocument(ctx context.Context, p CreateParams) (*
 	if p.EmbedToLLM {
 		entry.EmbedStatus = knowledge.EmbedStatusPending
 	}
-	if err := m.repo.Create(entry); err != nil {
+	if err := m.repo.Create(ctx, entry); err != nil {
 		return nil, fmt.Errorf("knowledge: create entry: %w", err)
 	}
 
@@ -103,7 +103,7 @@ func (m *DocumentManager) CreateDocument(ctx context.Context, p CreateParams) (*
 //
 // Error ErrEmbedSync berarti update tersimpan tapi sync gagal (status failed,
 // bisa RetryEmbed).
-func (m *DocumentManager) UpdateDocument(ctx context.Context, p UpdateParams) (*knowledge.KnowledgeEntry, error) {
+func (m *DocumentManager) UpdateDocument(ctx context.Context, p UpdateParams) (*knowledge.Entry, error) {
 	if strings.TrimSpace(p.Title) == "" {
 		return nil, ErrInvalidTitle
 	}
@@ -116,7 +116,7 @@ func (m *DocumentManager) UpdateDocument(ctx context.Context, p UpdateParams) (*
 		}
 	}
 
-	entry, err := m.repo.FindByID(p.ID)
+	entry, err := m.repo.FindByID(ctx, p.ID)
 	if err != nil {
 		if errors.Is(err, knowledge.ErrNotFound) {
 			return nil, knowledge.ErrNotFound
@@ -136,7 +136,7 @@ func (m *DocumentManager) UpdateDocument(ctx context.Context, p UpdateParams) (*
 	switch {
 	case p.EmbedToLLM:
 		entry.EmbedStatus = knowledge.EmbedStatusPending
-		if err := m.repo.Update(entry); err != nil {
+		if err := m.repo.Update(ctx, entry); err != nil {
 			return nil, fmt.Errorf("knowledge: update entry: %w", err)
 		}
 		if !wasEmbedded || contentChanged {
@@ -145,7 +145,7 @@ func (m *DocumentManager) UpdateDocument(ctx context.Context, p UpdateParams) (*
 			}
 		} else {
 			entry.EmbedStatus = knowledge.EmbedStatusEmbedded
-			if err := m.repo.Update(entry); err != nil {
+			if err := m.repo.Update(ctx, entry); err != nil {
 				return nil, fmt.Errorf("knowledge: save embed state: %w", err)
 			}
 		}
@@ -153,7 +153,7 @@ func (m *DocumentManager) UpdateDocument(ctx context.Context, p UpdateParams) (*
 	case wasEmbedded:
 		// Toggle embed off: hapus dari AnythingLLM.
 		entry.EmbedStatus = knowledge.EmbedStatusPending
-		if err := m.repo.Update(entry); err != nil {
+		if err := m.repo.Update(ctx, entry); err != nil {
 			return nil, fmt.Errorf("knowledge: update entry: %w", err)
 		}
 		if err := m.syncUnembed(ctx, entry); err != nil {
@@ -162,7 +162,7 @@ func (m *DocumentManager) UpdateDocument(ctx context.Context, p UpdateParams) (*
 
 	default:
 		entry.EmbedStatus = knowledge.EmbedStatusNone
-		if err := m.repo.Update(entry); err != nil {
+		if err := m.repo.Update(ctx, entry); err != nil {
 			return nil, fmt.Errorf("knowledge: update entry: %w", err)
 		}
 	}
@@ -174,7 +174,7 @@ func (m *DocumentManager) UpdateDocument(ctx context.Context, p UpdateParams) (*
 // entry sudah terhapus tapi sisa dokumen jadi orphan — dikabarkan lewat
 // ErrEmbedSync supaya bisa dibersihkan manual.
 func (m *DocumentManager) DeleteDocument(ctx context.Context, id uint) error {
-	entry, err := m.repo.FindByID(id)
+	entry, err := m.repo.FindByID(ctx, id)
 	if err != nil {
 		if errors.Is(err, knowledge.ErrNotFound) {
 			return knowledge.ErrNotFound
@@ -182,7 +182,7 @@ func (m *DocumentManager) DeleteDocument(ctx context.Context, id uint) error {
 		return fmt.Errorf("knowledge: find entry %d: %w", id, err)
 	}
 
-	if err := m.repo.Delete(id); err != nil {
+	if err := m.repo.Delete(ctx, id); err != nil {
 		return fmt.Errorf("knowledge: delete entry %d: %w", id, err)
 	}
 
@@ -202,11 +202,11 @@ func (m *DocumentManager) DeleteDocument(ctx context.Context, id uint) error {
 //	embed off + tanpa doc → reset status none
 //
 // Ini tombol "Retry" di UI untuk entry berstatus failed.
-func (m *DocumentManager) RetryEmbed(ctx context.Context, id uint) (*knowledge.KnowledgeEntry, error) {
+func (m *DocumentManager) RetryEmbed(ctx context.Context, id uint) (*knowledge.Entry, error) {
 	if m.manager == nil {
 		return nil, ErrEmbedNotConfigured
 	}
-	entry, err := m.repo.FindByID(id)
+	entry, err := m.repo.FindByID(ctx, id)
 	if err != nil {
 		if errors.Is(err, knowledge.ErrNotFound) {
 			return nil, knowledge.ErrNotFound
@@ -217,7 +217,7 @@ func (m *DocumentManager) RetryEmbed(ctx context.Context, id uint) (*knowledge.K
 	switch {
 	case entry.EmbedToLLM:
 		entry.EmbedStatus = knowledge.EmbedStatusPending
-		if err := m.repo.Update(entry); err != nil {
+		if err := m.repo.Update(ctx, entry); err != nil {
 			return nil, fmt.Errorf("knowledge: update entry: %w", err)
 		}
 		if err := m.syncEmbed(ctx, entry, entry.AnythingLLMDocName); err != nil {
@@ -229,7 +229,7 @@ func (m *DocumentManager) RetryEmbed(ctx context.Context, id uint) (*knowledge.K
 		}
 	default:
 		entry.EmbedStatus = knowledge.EmbedStatusNone
-		if err := m.repo.Update(entry); err != nil {
+		if err := m.repo.Update(ctx, entry); err != nil {
 			return nil, fmt.Errorf("knowledge: reset embed status: %w", err)
 		}
 	}
@@ -237,8 +237,8 @@ func (m *DocumentManager) RetryEmbed(ctx context.Context, id uint) (*knowledge.K
 }
 
 // ListDocuments mengembalikan semua entry knowledge (admin dashboard).
-func (m *DocumentManager) ListDocuments(ctx context.Context) ([]knowledge.KnowledgeEntry, error) {
-	entries, err := m.repo.FindAll()
+func (m *DocumentManager) ListDocuments(ctx context.Context) ([]knowledge.Entry, error) {
+	entries, err := m.repo.FindAll(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("knowledge: list entries: %w", err)
 	}
@@ -246,8 +246,8 @@ func (m *DocumentManager) ListDocuments(ctx context.Context) ([]knowledge.Knowle
 }
 
 // GetDocument mengembalikan satu entry knowledge berdasarkan ID.
-func (m *DocumentManager) GetDocument(ctx context.Context, id uint) (*knowledge.KnowledgeEntry, error) {
-	entry, err := m.repo.FindByID(id)
+func (m *DocumentManager) GetDocument(ctx context.Context, id uint) (*knowledge.Entry, error) {
+	entry, err := m.repo.FindByID(ctx, id)
 	if err != nil {
 		if errors.Is(err, knowledge.ErrNotFound) {
 			return nil, knowledge.ErrNotFound
@@ -260,11 +260,11 @@ func (m *DocumentManager) GetDocument(ctx context.Context, id uint) (*knowledge.
 // syncEmbed meng-upload/re-embed dokumen ke AnythingLLM dan mencatat hasilnya
 // ke entry. oldDocName = doc name JSON yang sudah ada ("" kalau belum pernah).
 // Gagal → status failed (bisa retry); sukses → embedded + doc name terbaru.
-func (m *DocumentManager) syncEmbed(ctx context.Context, entry *knowledge.KnowledgeEntry, oldDocName string) error {
+func (m *DocumentManager) syncEmbed(ctx context.Context, entry *knowledge.Entry, oldDocName string) error {
 	newDocName, err := m.manager.UpsertDocument(ctx, oldDocName, entry.Title, entry.Content)
 	if err != nil {
 		entry.EmbedStatus = knowledge.EmbedStatusFailed
-		if repoErr := m.repo.Update(entry); repoErr != nil {
+		if repoErr := m.repo.Update(ctx, entry); repoErr != nil {
 			return fmt.Errorf("knowledge: record embed failure: %w", repoErr)
 		}
 		return fmt.Errorf("%w: %v", ErrEmbedSync, err)
@@ -272,7 +272,7 @@ func (m *DocumentManager) syncEmbed(ctx context.Context, entry *knowledge.Knowle
 	entry.EmbedToLLM = true
 	entry.EmbedStatus = knowledge.EmbedStatusEmbedded
 	entry.AnythingLLMDocName = newDocName
-	if err := m.repo.Update(entry); err != nil {
+	if err := m.repo.Update(ctx, entry); err != nil {
 		return fmt.Errorf("knowledge: save embed state: %w", err)
 	}
 	return nil
@@ -280,15 +280,15 @@ func (m *DocumentManager) syncEmbed(ctx context.Context, entry *knowledge.Knowle
 
 // syncUnembed menghapus dokumen dari AnythingLLM (toggle embed off). Gagal →
 // status failed + doc name dipertahankan (RetryEmbed masih bisa membersihkan).
-func (m *DocumentManager) syncUnembed(ctx context.Context, entry *knowledge.KnowledgeEntry) error {
+func (m *DocumentManager) syncUnembed(ctx context.Context, entry *knowledge.Entry) error {
 	if entry.AnythingLLMDocName == "" {
 		entry.EmbedStatus = knowledge.EmbedStatusNone
 		entry.EmbedToLLM = false
-		return m.repo.Update(entry)
+		return m.repo.Update(ctx, entry)
 	}
 	if err := m.manager.DeleteDocument(ctx, entry.AnythingLLMDocName); err != nil {
 		entry.EmbedStatus = knowledge.EmbedStatusFailed
-		if repoErr := m.repo.Update(entry); repoErr != nil {
+		if repoErr := m.repo.Update(ctx, entry); repoErr != nil {
 			return fmt.Errorf("knowledge: record unembed failure: %w", repoErr)
 		}
 		return fmt.Errorf("%w: %v", ErrEmbedSync, err)
@@ -296,7 +296,7 @@ func (m *DocumentManager) syncUnembed(ctx context.Context, entry *knowledge.Know
 	entry.EmbedStatus = knowledge.EmbedStatusNone
 	entry.AnythingLLMDocName = ""
 	entry.EmbedToLLM = false
-	if err := m.repo.Update(entry); err != nil {
+	if err := m.repo.Update(ctx, entry); err != nil {
 		return fmt.Errorf("knowledge: save unembed state: %w", err)
 	}
 	return nil

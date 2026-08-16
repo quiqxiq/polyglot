@@ -6,9 +6,9 @@ import (
 	"net/http"
 
 	"github.com/coder/websocket"
-	"github.com/gin-gonic/gin"
 
 	"github.com/quixiq/polyglot/internal/usecase/network"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 type TerminalMessage struct {
@@ -28,22 +28,23 @@ func NewTerminalHandler(openTermUC *network.OpenTerminalUseCase) *TerminalHandle
 	}
 }
 
-func (h *TerminalHandler) ServeHTTP(c *gin.Context) {
-	deviceID := c.Param("id")
+func (h *TerminalHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	deviceID := r.PathValue("id")
 	if deviceID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "device id is required"})
+		http.Error(w, `{"error":"device id is required"}`, http.StatusBadRequest)
 		return
 	}
 
-	conn, err := websocket.Accept(c.Writer, c.Request, &websocket.AcceptOptions{
+	conn, err := websocket.Accept(w, r, &websocket.AcceptOptions{
 		InsecureSkipVerify: true,
 	})
 	if err != nil {
+		logger.WithComponent("TerminalWS").Errorf("websocket accept failed: %v", err)
 		return
 	}
 	defer conn.CloseNow()
 
-	ctx := c.Request.Context()
+	ctx := r.Context()
 
 	if h.openTermUC == nil {
 		_ = conn.Write(ctx, websocket.MessageText, []byte("\r\n\x1b[31m[Polyglot Terminal Error]: Terminal usecase is not initialized.\x1b[0m\r\n"))
@@ -63,7 +64,7 @@ func (h *TerminalHandler) ServeHTTP(c *gin.Context) {
 
 	errChan := make(chan error, 2)
 
-	// Goroutine 1: Read stdout from real SSH PTY -> Write directly to WebSocket (xterm.js)
+	// Goroutine 1: Read stdout from real SSH PTY -> Write directly to WebSocket
 	go func() {
 		buf := make([]byte, 4096)
 		stdout := termSession.Stdout()
@@ -82,7 +83,7 @@ func (h *TerminalHandler) ServeHTTP(c *gin.Context) {
 		}
 	}()
 
-	// Goroutine 2: Read raw keystrokes from WebSocket (xterm.js) -> Write directly to SSH PTY stdin
+	// Goroutine 2: Read raw keystrokes from WebSocket -> Write directly to SSH PTY stdin
 	go func() {
 		stdin := termSession.Stdin()
 		for {

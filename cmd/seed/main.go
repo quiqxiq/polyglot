@@ -38,16 +38,16 @@ func main() {
 	log.Println("Seeding database data...")
 
 	ctx := context.Background()
-	seedUsers(pgStore)
-	ensureOwnerExists(pgStore)
-	seedKnowledge(pgStore)
-	seedLLMConfig(pgStore, cfg)
+	seedUsers(ctx, pgStore)
+	ensureOwnerExists(ctx, pgStore)
+	seedKnowledge(ctx, pgStore)
+	seedLLMConfig(ctx, pgStore, cfg)
 	seedCasbin(ctx, pgStore)
 
 	log.Println("✅ Database seeding completed successfully!")
 }
 
-func seedUsers(pgStore *postgres.Store) {
+func seedUsers(ctx context.Context, pgStore *postgres.Store) {
 	adminPassword := os.Getenv("SEED_ADMIN_PASSWORD")
 	if adminPassword == "" {
 		log.Println("SEED_ADMIN_PASSWORD not set, skipping admin user seeding.")
@@ -97,7 +97,7 @@ func seedUsers(pgStore *postgres.Store) {
 	}
 
 	for _, u := range users {
-		existing, err := pgStore.FindUserByUsername(u.username)
+		existing, err := pgStore.FindUserByUsername(ctx, u.username)
 		hash, errHash := bcrypt.GenerateFromPassword([]byte(u.password), bcrypt.DefaultCost)
 		if errHash != nil {
 			log.Printf("Failed to hash password for %s: %v", u.username, errHash)
@@ -105,7 +105,7 @@ func seedUsers(pgStore *postgres.Store) {
 		}
 
 		if err == nil && existing != nil {
-			if err := pgStore.DB().Model(&models.UserModel{}).Where("username = ?", u.username).Update("password_hash", string(hash)).Error; err != nil {
+			if err := pgStore.DB().WithContext(ctx).Model(&models.UserModel{}).Where("username = ?", u.username).Update("password_hash", string(hash)).Error; err != nil {
 				log.Printf("Failed to update password for existing user %s: %v", u.username, err)
 			} else {
 				log.Printf("Updated password for existing user: %s", u.username)
@@ -120,7 +120,7 @@ func seedUsers(pgStore *postgres.Store) {
 			Role:         u.role,
 		}
 
-		if err := pgStore.CreateUser(user); err != nil {
+		if err := pgStore.CreateUser(ctx, user); err != nil {
 			log.Printf("Failed to create user %s: %v", u.username, err)
 		} else {
 			log.Printf("Created user: %s [Email: %s] (%s)", u.username, u.email, u.role)
@@ -132,8 +132,8 @@ func seedUsers(pgStore *postgres.Store) {
 // satunya role yang bisa mengelola RBAC (rbac:manage). Kalau belum ada
 // owner dan ada user admin, admin pertama (ID terkecil) otomatis dinaikkan
 // jadi owner. Idempotent: kalau owner sudah ada, tidak melakukan apa-apa.
-func ensureOwnerExists(pgStore *postgres.Store) {
-	users, err := pgStore.FindAllUsers()
+func ensureOwnerExists(ctx context.Context, pgStore *postgres.Store) {
+	users, err := pgStore.FindAllUsers(ctx)
 	if err != nil || len(users) == 0 {
 		return
 	}
@@ -145,7 +145,7 @@ func ensureOwnerExists(pgStore *postgres.Store) {
 	for _, u := range users {
 		if u.Role == "admin" {
 			u.Role = "owner"
-			if err := pgStore.UpdateUser(u); err != nil {
+			if err := pgStore.UpdateUser(ctx, u); err != nil {
 				log.Printf("Failed to promote first admin to owner: %v", err)
 			} else {
 				log.Printf("Promoted user %q (id=%d) to owner — first admin becomes owner", u.Username, u.ID)
@@ -166,7 +166,7 @@ func seedCasbin(ctx context.Context, pgStore *postgres.Store) {
 	auth.SeedSystemPolicies(enforcer)
 	log.Println("Seeded full Polyglot system Casbin RBAC policies into Postgres database")
 
-	users, err := pgStore.FindAllUsers()
+	users, err := pgStore.FindAllUsers(ctx)
 	if err != nil {
 		log.Printf("Failed to load users for role assignment sync: %v", err)
 		return
@@ -179,8 +179,8 @@ func seedCasbin(ctx context.Context, pgStore *postgres.Store) {
 	log.Println("Synced user role assignments into Casbin grouping policies")
 }
 
-func seedKnowledge(pgStore *postgres.Store) {
-	entries := []knowledge.KnowledgeEntry{
+func seedKnowledge(ctx context.Context, pgStore *postgres.Store) {
+	entries := []knowledge.Entry{
 		{
 			Title: "Paket & Harga Internet GNET Home",
 			Content: "PT Ghaib Network (GNET) menyediakan paket internet rumah unmetered unlimited tanpa FUP:\n" +
@@ -223,7 +223,7 @@ func seedKnowledge(pgStore *postgres.Store) {
 		},
 	}
 
-	existingEntries, _ := pgStore.FindAllKnowledgeEntries()
+	existingEntries, _ := pgStore.FindAllKnowledgeEntries(ctx)
 	if len(existingEntries) > 0 {
 		log.Printf("Knowledge base already has %d entries, skipping.", len(existingEntries))
 		return
@@ -231,7 +231,7 @@ func seedKnowledge(pgStore *postgres.Store) {
 
 	for i := range entries {
 		entry := &entries[i]
-		if err := pgStore.CreateKnowledgeEntry(entry); err != nil {
+		if err := pgStore.CreateKnowledgeEntry(ctx, entry); err != nil {
 			log.Printf("Failed to seed knowledge entry '%s': %v", entry.Title, err)
 		} else {
 			log.Printf("Created knowledge entry: %s", entry.Title)
@@ -239,8 +239,8 @@ func seedKnowledge(pgStore *postgres.Store) {
 	}
 }
 
-func seedLLMConfig(pgStore *postgres.Store, cfg config.Config) {
-	configs, _ := pgStore.FindAllLLMConfigs()
+func seedLLMConfig(ctx context.Context, pgStore *postgres.Store, cfg config.Config) {
+	configs, _ := pgStore.FindAll(ctx)
 	if len(configs) > 0 {
 		log.Printf("LLM configs already exist, skipping.")
 		return
@@ -252,7 +252,7 @@ func seedLLMConfig(pgStore *postgres.Store, cfg config.Config) {
 		return
 	}
 
-	defaultConfig := &llm.LLMConfig{
+	defaultConfig := &llm.Config{
 		Provider:        "gemini",
 		Model:           "gemini-2.0-flash",
 		APIKeyEncrypted: encryptedPlaceholder,
@@ -260,7 +260,7 @@ func seedLLMConfig(pgStore *postgres.Store, cfg config.Config) {
 		IsActive:        true,
 	}
 
-	if err := pgStore.CreateLLMConfig(defaultConfig); err != nil {
+	if err := pgStore.Create(ctx, defaultConfig); err != nil {
 		log.Printf("Failed to seed LLM config: %v", err)
 	} else {
 		log.Printf("Created default LLM Config (Google Gemini 2.0 Flash - Active)")

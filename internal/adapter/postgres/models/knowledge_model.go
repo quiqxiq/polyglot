@@ -30,11 +30,11 @@ type KnowledgeEntryModel struct {
 // TableName maps KnowledgeEntryModel ke tabel migrasi `knowledge_entries`.
 func (KnowledgeEntryModel) TableName() string { return "knowledge_entries" }
 
-func (m *KnowledgeEntryModel) ToDomain() *knowledge.KnowledgeEntry {
+func (m *KnowledgeEntryModel) ToDomain() *knowledge.Entry {
 	if m == nil {
 		return nil
 	}
-	return &knowledge.KnowledgeEntry{
+	return &knowledge.Entry{
 		ID:                 m.ID,
 		Title:              m.Title,
 		Content:            m.Content,
@@ -48,7 +48,7 @@ func (m *KnowledgeEntryModel) ToDomain() *knowledge.KnowledgeEntry {
 	}
 }
 
-func KnowledgeEntryModelFromDomain(k *knowledge.KnowledgeEntry) *KnowledgeEntryModel {
+func KnowledgeEntryModelFromDomain(k *knowledge.Entry) *KnowledgeEntryModel {
 	if k == nil {
 		return nil
 	}

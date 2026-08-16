@@ -1,21 +1,19 @@
 package ws
 
 import (
-	"github.com/gin-gonic/gin"
+	"net/http"
 
 	"github.com/quixiq/polyglot/internal/usecase/network"
 )
 
-// RegisterEventRoutes registers the realtime SSE & WebSocket terminal endpoints.
+// RegisterEventRoutes registers the realtime SSE & WebSocket terminal endpoints onto a standard http.ServeMux.
 func RegisterEventRoutes(
-	r *gin.Engine,
+	mux *http.ServeMux,
 	sseHub *SSEHub,
 	openTermUC *network.OpenTerminalUseCase,
 ) {
-	r.GET("/events", sseHub.RegisterClient)
+	mux.HandleFunc("GET /events", sseHub.ServeHTTP)
 
 	termHandler := NewTerminalHandler(openTermUC)
-	r.GET("/ws/devices/:id/terminal", func(c *gin.Context) {
-		termHandler.ServeHTTP(c)
-	})
+	mux.HandleFunc("GET /ws/devices/{id}/terminal", termHandler.ServeHTTP)
 }

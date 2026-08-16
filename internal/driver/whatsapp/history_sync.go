@@ -2,7 +2,7 @@ package whatsapp
 
 import (
 	"context"
-	"log"
+	"github.com/quixiq/polyglot/pkg/logger"
 	"time"
 
 	"go.mau.fi/whatsmeow/proto/waHistorySync"
@@ -32,7 +32,7 @@ func (c *Client) handleHistorySync(evt *events.HistorySync) {
 		// dan dicatat saja.
 		defer func() {
 			if r := recover(); r != nil {
-				log.Printf("[WhatsApp Client %d] panic during history sync mirror: %v", c.SessionID, r)
+				logger.WithComponent("HistorySync").Errorf("Panic during history sync mirror (session %d): %v", c.SessionID, r)
 			}
 		}()
 		switch evt.Data.GetSyncType() {
@@ -59,7 +59,7 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 	if len(conversations) == 0 {
 		return
 	}
-	log.Printf("[WhatsApp Client %d] History sync: mirroring %d conversations", c.SessionID, len(conversations))
+	logger.WithComponent("HistorySync").Infof("Session %d: mirroring %d conversations", c.SessionID, len(conversations))
 
 	selfJID := ""
 	if c.waClient != nil && c.waClient.Store != nil && c.waClient.Store.ID != nil {
@@ -73,7 +73,7 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 		}
 		jid, err := types.ParseJID(rawJID)
 		if err != nil {
-			log.Printf("[WhatsApp Client %d] History sync: skip chat %q (invalid JID): %v", c.SessionID, rawJID, err)
+			logger.WithComponent("HistorySync").Warnf("Session %d: skip chat %q (invalid JID): %v", c.SessionID, rawJID, err)
 			continue
 		}
 		// Fase 1: normalisasi LID → nomor HP untuk CHAT JID (bukan hanya sender).
@@ -107,8 +107,8 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 			if len(batch) == 0 {
 				return
 			}
-			if _, err := c.chatRepo.UpsertMessagesBatch(batch); err != nil {
-				log.Printf("[WhatsApp Client %d] History sync: failed to mirror %d messages of %s: %v", c.SessionID, len(batch), chatJID, err)
+			if _, err := c.chatRepo.UpsertMessagesBatch(context.Background(), batch); err != nil {
+				logger.WithComponent("HistorySync").Errorf("Session %d: failed to mirror %d messages of %s: %v", c.SessionID, len(batch), chatJID, err)
 			}
 			batch = batch[:0]
 		}
@@ -210,14 +210,14 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 			LastMessagePreview: latestPreview,
 			LastMessageTime:    latest,
 		}
-		if err := c.chatRepo.UpsertChat(chat); err != nil {
-			log.Printf("[WhatsApp Client %d] History sync: failed to mirror chat %s: %v", c.SessionID, chatJID, err)
+		if err := c.chatRepo.UpsertChat(context.Background(), chat); err != nil {
+			logger.WithComponent("HistorySync").Errorf("Session %d: failed to mirror chat %s: %v", c.SessionID, chatJID, err)
 		} else {
 			// History sync otoritatif untuk unread — set selalu (termasuk 0)
 			// agar angka di DB tidak menyimpan nilai basi dari sinkronisasi
 			// sebelumnya.
-			if err := c.chatRepo.SetChatUnread(c.SessionID, chatJID, conv.GetUnreadCount()); err != nil {
-				log.Printf("[WhatsApp Client %d] History sync: failed to set unread for %s: %v", c.SessionID, chatJID, err)
+			if err := c.chatRepo.SetChatUnread(context.Background(), c.SessionID, chatJID, conv.GetUnreadCount()); err != nil {
+				logger.WithComponent("HistorySync").Warnf("Session %d: failed to set unread for %s: %v", c.SessionID, chatJID, err)
 			}
 		}
 		// Beri tahu UI (via SSE) bahwa mirror chat berubah — Inbox refresh.
@@ -262,8 +262,8 @@ func (c *Client) processHistoryPushNames(data *waHistorySync.HistorySync) {
 			ChatJID:     jid.String(),
 			DisplayName: name,
 		}
-		if err := c.chatRepo.UpsertChat(chat); err != nil {
-			log.Printf("[WhatsApp Client %d] History sync: failed to save push name for %s: %v", c.SessionID, rawJID, err)
+		if err := c.chatRepo.UpsertChat(context.Background(), chat); err != nil {
+			logger.WithComponent("HistorySync").Warnf("Session %d: failed to save push name for %s: %v", c.SessionID, rawJID, err)
 		}
 	}
 }

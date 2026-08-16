@@ -3,9 +3,11 @@ package auth
 import (
 	"errors"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 var (
@@ -25,6 +27,8 @@ type JWTService struct {
 	secretKey []byte
 	expiry    time.Duration
 }
+
+var _ port.TokenService = (*JWTService)(nil)
 
 func NewJWTService(secret string, expiryHours int) *JWTService {
 	if expiryHours <= 0 {
@@ -62,6 +66,19 @@ func (s *JWTService) GenerateToken(userID uint, email string, roles []string, te
 	}
 
 	return tokenStr, nil
+}
+
+func (s *JWTService) GenerateAccessToken(userID, username, role string) (string, error) {
+	uid, _ := strconv.ParseUint(userID, 10, 64)
+	return s.GenerateToken(uint(uid), username, []string{role}, "")
+}
+
+func (s *JWTService) ValidateAccessToken(tokenString string) (string, string, string, error) {
+	claims, err := s.ValidateToken(tokenString)
+	if err != nil {
+		return "", "", "", err
+	}
+	return fmt.Sprintf("%d", claims.UserID), claims.Email, claims.Role, nil
 }
 
 func (s *JWTService) ExpiryDuration() time.Duration {

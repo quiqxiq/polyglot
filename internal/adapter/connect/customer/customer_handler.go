@@ -3,12 +3,10 @@ package customer
 import (
 	"context"
 	"fmt"
-	"net/http"
 
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 )
 
@@ -26,21 +24,9 @@ func (h *CustomerConnectHandler) ListCustomers(ctx context.Context, req *connect
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	pbCustomers := make([]*devicepb.Customer, len(customers))
-	for i, c := range customers {
-		pbCustomers[i] = &devicepb.Customer{
-			Id:            c.ID,
-			TenantId:      c.TenantID,
-			Name:          c.Name,
-			Email:         c.Email,
-			Phone:         c.Phone,
-			Address:       c.Address,
-			Status:        c.Status,
-			CreatedAtUnix: c.CreatedAt.Unix(),
-		}
-	}
-
-	return connect.NewResponse(&devicepb.ListCustomersResponse{Customers: pbCustomers}), nil
+	return connect.NewResponse(&devicepb.ListCustomersResponse{
+		Customers: toProtoCustomerList(customers),
+	}), nil
 }
 
 func (h *CustomerConnectHandler) GetCustomer(ctx context.Context, req *connect.Request[devicepb.GetCustomerRequest]) (*connect.Response[devicepb.GetCustomerResponse], error) {
@@ -54,35 +40,6 @@ func (h *CustomerConnectHandler) GetCustomer(ctx context.Context, req *connect.R
 	}
 
 	return connect.NewResponse(&devicepb.GetCustomerResponse{
-		Customer: &devicepb.Customer{
-			Id:            c.ID,
-			TenantId:      c.TenantID,
-			Name:          c.Name,
-			Email:         c.Email,
-			Phone:         c.Phone,
-			Address:       c.Address,
-			Status:        c.Status,
-			CreatedAtUnix: c.CreatedAt.Unix(),
-		},
+		Customer: toProtoCustomer(&c),
 	}), nil
-}
-
-func NewCustomerServiceHandler(uc *customerUC.ManageCustomerUseCase) (string, http.Handler) {
-	handler := NewCustomerConnectHandler(uc)
-	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
-
-	serviceName := "polyglot.v1.CustomerService"
-	mux.Handle("/"+serviceName+"/ListCustomers", connect.NewUnaryHandler(
-		"/"+serviceName+"/ListCustomers",
-		handler.ListCustomers,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/GetCustomer", connect.NewUnaryHandler(
-		"/"+serviceName+"/GetCustomer",
-		handler.GetCustomer,
-		codecOpt,
-	))
-
-	return "/" + serviceName + "/", mux
 }

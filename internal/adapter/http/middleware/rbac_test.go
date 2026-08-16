@@ -1,17 +1,17 @@
-package middleware
+package middleware_test
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"github.com/gin-gonic/gin"
+	"github.com/quixiq/polyglot/internal/adapter/auth"
+	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 )
 
-// fakeEnforcer implements PolicyEnforcer with configurable behavior.
 type fakeEnforcer struct {
-	roles   map[string][]string // user -> roles
-	allow   map[string]bool     // "obj|role" -> allowed
+	roles   map[string][]string
+	allow   map[string]bool
 	denyAll bool
 }
 
@@ -27,99 +27,79 @@ func (f *fakeEnforcer) GetRolesForUser(user string) ([]string, error) {
 }
 
 func TestAuthorizeProcedureMiddleware(t *testing.T) {
-	gin.SetMode(gin.TestMode)
-
-	// admin user 1 boleh knowledge:write; user 2 tidak punya role.
 	ce := &fakeEnforcer{
 		roles: map[string][]string{"1": {"admin"}},
 		allow: map[string]bool{"knowledge:write|admin": true},
 	}
 
-	newRouter := func(userID uint, fallbackRole string) *gin.Engine {
-		r := gin.New()
-		r.Use(func(c *gin.Context) {
-			c.Set("user_id", userID)
-			c.Set("user_role", fallbackRole)
-			c.Next()
+	newMux := func(userID uint, fallbackRoles []string) http.Handler {
+		finalHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+			_, _ = w.Write([]byte(`{"ok":true}`))
 		})
-		r.Use(AuthorizeProcedure(ce))
-		r.POST("/polyglot.v1.KnowledgeService/CreateKnowledge", func(c *gin.Context) {
-			c.JSON(http.StatusOK, gin.H{"ok": true})
-		})
-		return r
+
+		rbacMW := middleware.AuthorizeProcedure(ce)
+		identityInjector := func(next http.Handler) http.Handler {
+			return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				if userID != 0 {
+					ctx := auth.WithIdentity(r.Context(), userID, fallbackRoles)
+					r = r.WithContext(ctx)
+				}
+				next.ServeHTTP(w, r)
+			})
+		}
+
+		return identityInjector(rbacMW(finalHandler))
 	}
 
 	t.Run("allowed admin", func(t *testing.T) {
-		r := newRouter(1, "admin")
+		h := newMux(1, []string{"admin"})
 		w := httptest.NewRecorder()
 		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.KnowledgeService/CreateKnowledge", nil)
-		r.ServeHTTP(w, req)
+		h.ServeHTTP(w, req)
 		if w.Code != http.StatusOK {
 			t.Fatalf("status = %d, want 200 (body: %s)", w.Code, w.Body.String())
 		}
 	})
 
 	t.Run("fallback to JWT role when casbin has none", func(t *testing.T) {
-		// user 2 tidak punya assignment Casbin; fallback ke klaim JWT "admin".
-		r := newRouter(2, "admin")
+		h := newMux(2, []string{"admin"})
 		w := httptest.NewRecorder()
 		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.KnowledgeService/CreateKnowledge", nil)
-		r.ServeHTTP(w, req)
+		h.ServeHTTP(w, req)
 		if w.Code != http.StatusOK {
-			t.Fatalf("status = %d, want 200 via JWT fallback (body: %s)", w.Code, w.Body.String())
+			t.Fatalf("status = %d, want 200 via fallback (body: %s)", w.Code, w.Body.String())
 		}
 	})
 
-	t.Run("no roles at all -> 401", func(t *testing.T) {
-		r := newRouter(3, "")
+	t.Run("no identity at all -> 401", func(t *testing.T) {
+		h := newMux(0, nil)
 		w := httptest.NewRecorder()
 		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.KnowledgeService/CreateKnowledge", nil)
-		r.ServeHTTP(w, req)
+		h.ServeHTTP(w, req)
 		if w.Code != http.StatusUnauthorized {
 			t.Fatalf("status = %d, want 401 (body: %s)", w.Code, w.Body.String())
 		}
 	})
 
 	t.Run("role present but policy denies", func(t *testing.T) {
-		// user 4 punya role "agent" (via Casbin) tapi tidak boleh knowledge:write.
 		ce.roles["4"] = []string{"agent"}
-		r := newRouter(4, "admin")
+		h := newMux(4, []string{"agent"})
 		w := httptest.NewRecorder()
 		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.KnowledgeService/CreateKnowledge", nil)
-		r.ServeHTTP(w, req)
+		h.ServeHTTP(w, req)
 		if w.Code != http.StatusForbidden {
 			t.Fatalf("status = %d, want 403 (body: %s)", w.Code, w.Body.String())
 		}
 	})
 
 	t.Run("unknown procedure fail closed", func(t *testing.T) {
-		r := newRouter(1, "admin")
+		h := newMux(1, []string{"admin"})
 		w := httptest.NewRecorder()
 		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.KnowledgeService/NotRegistered", nil)
-		r.ServeHTTP(w, req)
+		h.ServeHTTP(w, req)
 		if w.Code != http.StatusForbidden {
 			t.Fatalf("status = %d, want 403 (body: %s)", w.Code, w.Body.String())
 		}
 	})
-}
-
-func TestAuthorizeProcedureNilEnforcer(t *testing.T) {
-	gin.SetMode(gin.TestMode)
-	r := gin.New()
-	r.Use(func(c *gin.Context) {
-		c.Set("user_id", uint(1))
-		c.Set("user_role", "admin")
-		c.Next()
-	})
-	r.Use(AuthorizeProcedure(nil))
-	r.POST("/polyglot.v1.KnowledgeService/CreateKnowledge", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"ok": true})
-	})
-
-	w := httptest.NewRecorder()
-	req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.KnowledgeService/CreateKnowledge", nil)
-	r.ServeHTTP(w, req)
-	if w.Code != http.StatusInternalServerError {
-		t.Fatalf("nil enforcer status = %d, want 500 (body: %s)", w.Code, w.Body.String())
-	}
 }

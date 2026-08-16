@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"log"
+	"github.com/quixiq/polyglot/pkg/logger"
 	"strings"
 )
 
@@ -70,7 +70,7 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 	}
 
 	if added > 0 {
-		log.Printf("[PolicySeeder] Seeded %d new RBAC system policies (resource:action format)", added)
+		logger.WithComponent("PolicySeeder").Infof("Seeded %d new RBAC system policies (resource:action format)", added)
 	}
 }
 
@@ -92,7 +92,7 @@ func removeLegacyPathPolicies(ce *CasbinEnforcer) {
 		}
 	}
 	if removed > 0 {
-		log.Printf("[PolicySeeder] Removed %d legacy path-based RBAC policies", removed)
+		logger.WithComponent("PolicySeeder").Infof("Removed %d legacy path-based RBAC policies", removed)
 	}
 }
 
@@ -113,7 +113,7 @@ func EnsureUserRoleAssignments(ce *CasbinEnforcer, users []*UserRef) {
 		}
 	}
 	if added > 0 {
-		log.Printf("[PolicySeeder] Assigned roles to %d user(s) in Casbin", added)
+		logger.WithComponent("PolicySeeder").Infof("Assigned roles to %d user(s) in Casbin", added)
 	}
 }
 

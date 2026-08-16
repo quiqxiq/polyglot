@@ -86,7 +86,7 @@ type vectorSearchResult struct {
 // Retrieve queries the AnythingLLM workspace vector store and maps the top
 // matching chunks into knowledge entries: Title = nama dokumen sumber,
 // Content = isi chunk. Query kosong → tidak ada yang di-retrieve.
-func (r *Retriever) Retrieve(ctx context.Context, query string) ([]knowledge.KnowledgeEntry, error) {
+func (r *Retriever) Retrieve(ctx context.Context, query string) ([]knowledge.Entry, error) {
 	if strings.TrimSpace(query) == "" {
 		return nil, nil
 	}
@@ -128,7 +128,7 @@ func (r *Retriever) Retrieve(ctx context.Context, query string) ([]knowledge.Kno
 		return nil, fmt.Errorf("anythingllm: parse response: %w", err)
 	}
 
-	entries := make([]knowledge.KnowledgeEntry, 0, len(searchResp.Results))
+	entries := make([]knowledge.Entry, 0, len(searchResp.Results))
 	for _, result := range searchResp.Results {
 		if strings.TrimSpace(result.Text) == "" {
 			continue
@@ -140,7 +140,7 @@ func (r *Retriever) Retrieve(ctx context.Context, query string) ([]knowledge.Kno
 		if title == "" {
 			title = result.Metadata.URL
 		}
-		entries = append(entries, knowledge.KnowledgeEntry{
+		entries = append(entries, knowledge.Entry{
 			Title:   title,
 			Content: result.Text,
 		})

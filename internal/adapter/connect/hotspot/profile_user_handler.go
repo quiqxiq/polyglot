@@ -2,6 +2,7 @@ package hotspot
 
 import (
 	"context"
+	"fmt"
 
 	"connectrpc.com/connect"
 
@@ -20,20 +21,9 @@ func (h *HotspotConnectHandler) ListProfiles(ctx context.Context, req *connect.R
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	pbProfiles := make([]*devicepb.HotspotProfile, len(profiles))
-	for i, p := range profiles {
-		pbProfiles[i] = &devicepb.HotspotProfile{
-			Id:          p.RosID,
-			Name:        p.Name,
-			SharedUsers: p.SharedUsers,
-			RateLimit:   p.RateLimit,
-			ModeExpire:  p.OnLogin,
-			ParentQueue: p.ParentQueue,
-			Comment:     p.Comment,
-		}
-	}
-
-	return connect.NewResponse(&devicepb.ListHotspotProfilesResponse{Profiles: pbProfiles}), nil
+	return connect.NewResponse(&devicepb.ListHotspotProfilesResponse{
+		Profiles: ToProtoHotspotProfiles(profiles),
+	}), nil
 }
 
 func (h *HotspotConnectHandler) ListUsers(ctx context.Context, req *connect.Request[devicepb.ListHotspotUsersRequest]) (*connect.Response[devicepb.ListHotspotUsersResponse], error) {
@@ -47,21 +37,9 @@ func (h *HotspotConnectHandler) ListUsers(ctx context.Context, req *connect.Requ
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
-	pbUsers := make([]*devicepb.HotspotUser, len(users))
-	for i, u := range users {
-		pbUsers[i] = &devicepb.HotspotUser{
-			Id:          u.RosID,
-			Name:        u.Name,
-			Password:    u.Password,
-			Profile:     u.Profile,
-			LimitUptime: u.LimitUptime,
-			LimitBytes:  u.LimitBytesIn,
-			Comment:     u.Comment,
-			Disabled:    u.Disabled,
-		}
-	}
-
-	return connect.NewResponse(&devicepb.ListHotspotUsersResponse{Users: pbUsers}), nil
+	return connect.NewResponse(&devicepb.ListHotspotUsersResponse{
+		Users: ToProtoHotspotUsers(users),
+	}), nil
 }
 
 func (h *HotspotConnectHandler) GenerateVouchers(ctx context.Context, req *connect.Request[devicepb.GenerateVouchersRequest]) (*connect.Response[devicepb.GenerateVouchersResponse], error) {
@@ -99,6 +77,6 @@ func (h *HotspotConnectHandler) GenerateVouchers(ctx context.Context, req *conne
 
 	return connect.NewResponse(&devicepb.GenerateVouchersResponse{
 		Vouchers: pbVouchers,
-		Message:  "vouchers generated successfully via ConnectRPC",
+		Message:  fmt.Sprintf("successfully generated %d vouchers", len(pbVouchers)),
 	}), nil
 }

@@ -3,7 +3,6 @@ package bot
 import (
 	"context"
 
-	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -23,12 +22,12 @@ type RateLimitResult struct {
 
 type RateLimiter struct {
 	cache port.CacheStore
-	cfg   config.Config
 }
 
-func NewRateLimiter(cache port.CacheStore, cfg config.Config) *RateLimiter {
-	return &RateLimiter{cache: cache, cfg: cfg}
+func NewRateLimiter(cache port.CacheStore) *RateLimiter {
+	return &RateLimiter{cache: cache}
 }
+
 
 func (r *RateLimiter) Check(ctx context.Context, customerNumber string, messageContent string) (RateLimitResult, error) {
 	if r.cache == nil {

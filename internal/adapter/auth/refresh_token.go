@@ -19,9 +19,10 @@ import (
 // expired, or malformed — the caller should treat the session as invalid.
 var ErrInvalidRefreshToken = errors.New("invalid or expired refresh token")
 
-// RefreshTokenCookieName is the httpOnly cookie carrying the opaque refresh
-// token. SameSite=Lax because the SPA (:5173) and API (:8080) are same-site
-// (same registrable domain) — the browser sends it on API calls automatically.
+// RefreshTokenLifetime is the default 7-day TTL.
+const RefreshTokenLifetime = 7 * 24 * time.Hour
+
+// RefreshTokenCookieName is the httpOnly cookie carrying the opaque refresh token.
 const RefreshTokenCookieName = "polyglot_refresh"
 
 // RefreshClaims is the payload bound to an issued refresh token.
@@ -32,21 +33,44 @@ type RefreshClaims struct {
 	IssuedAt int64    `json:"issued_at"`
 }
 
-// RefreshTokenService issues, validates, rotates and revokes opaque refresh
-// tokens stored in a port.RefreshTokenStore (Redis). Tokens are single-use:
-// every refresh deletes the old token and issues a new one (rotation), so a
-// stolen token is useless once the legitimate client refreshes.
+// RefreshTokenService issues, validates, rotates and revokes opaque refresh tokens.
 type RefreshTokenService struct {
 	store port.RefreshTokenStore
 	ttl   time.Duration
 }
 
+var _ port.RefreshTokenManager = (*RefreshTokenService)(nil)
+
 // NewRefreshTokenService creates the service with the given store and TTL.
 func NewRefreshTokenService(store port.RefreshTokenStore, ttl time.Duration) *RefreshTokenService {
 	if ttl <= 0 {
-		ttl = 7 * 24 * time.Hour
+		ttl = RefreshTokenLifetime
 	}
 	return &RefreshTokenService{store: store, ttl: ttl}
+}
+
+// IssueToken implements port.RefreshTokenManager.
+func (s *RefreshTokenService) IssueToken(ctx context.Context, userID uint, roles []string, tenantID string) (string, error) {
+	return s.Issue(ctx, RefreshClaims{
+		UserID:   userID,
+		Roles:    roles,
+		TenantID: tenantID,
+		IssuedAt: time.Now().Unix(),
+	})
+}
+
+// RotateToken implements port.RefreshTokenManager.
+func (s *RefreshTokenService) RotateToken(ctx context.Context, oldToken string) (string, uint, []string, string, error) {
+	newToken, claims, err := s.Rotate(ctx, oldToken)
+	if err != nil {
+		return "", 0, nil, "", err
+	}
+	return newToken, claims.UserID, claims.Roles, claims.TenantID, nil
+}
+
+// RevokeToken implements port.RefreshTokenManager.
+func (s *RefreshTokenService) RevokeToken(ctx context.Context, token string) error {
+	return s.Revoke(ctx, token)
 }
 
 // Issue creates a new opaque refresh token bound to the given identity.
@@ -84,8 +108,7 @@ func (s *RefreshTokenService) Validate(ctx context.Context, token string) (Refre
 	return claims, nil
 }
 
-// Rotate validates the old token, revokes it, and issues a fresh one with the
-// same identity — the standard sliding-session rotation.
+// Rotate validates the old token, revokes it, and issues a fresh one with the same identity.
 func (s *RefreshTokenService) Rotate(ctx context.Context, oldToken string) (string, RefreshClaims, error) {
 	claims, err := s.Validate(ctx, oldToken)
 	if err != nil {
@@ -126,14 +149,27 @@ func randomToken() (string, error) {
 	return hex.EncodeToString(b), nil
 }
 
-// SetRefreshCookieWriter writes the httpOnly refresh cookie on a response
-// writer (plain HTTP handlers).
+// SetRefreshTokenCookie sets the refresh token cookie in http.Header.
+func SetRefreshTokenCookie(h http.Header, token string, ttl time.Duration, secure bool) {
+	SetRefreshCookieHeader(h, token, ttl, secure)
+}
+
+// ClearRefreshTokenCookie clears the refresh token cookie in http.Header.
+func ClearRefreshTokenCookie(h http.Header, secure bool) {
+	ClearRefreshCookieHeader(h, secure)
+}
+
+// ExtractRefreshTokenCookie extracts the refresh token from http.Header.
+func ExtractRefreshTokenCookie(h http.Header) string {
+	return ReadRefreshToken(h, "")
+}
+
+// SetRefreshCookieWriter writes the httpOnly refresh cookie on a response writer.
 func SetRefreshCookieWriter(w http.ResponseWriter, token string, ttl time.Duration, secure bool) {
 	http.SetCookie(w, refreshCookie(token, ttl, secure))
 }
 
-// SetRefreshCookieHeader adds the httpOnly refresh cookie to a response
-// header map (ConnectRPC responses expose Header()).
+// SetRefreshCookieHeader adds the httpOnly refresh cookie to a response header map.
 func SetRefreshCookieHeader(h http.Header, token string, ttl time.Duration, secure bool) {
 	if c := refreshCookie(token, ttl, secure); c != nil {
 		h.Add("Set-Cookie", c.String())
@@ -146,7 +182,7 @@ func ClearRefreshCookieWriter(w http.ResponseWriter) {
 }
 
 // ClearRefreshCookieHeader adds an expired refresh cookie to a header map.
-func ClearRefreshCookieHeader(h http.Header) {
+func ClearRefreshCookieHeader(h http.Header, secure bool) {
 	if c := expiredRefreshCookie(); c != nil {
 		h.Add("Set-Cookie", c.String())
 	}
@@ -175,9 +211,7 @@ func expiredRefreshCookie() *http.Cookie {
 	}
 }
 
-// ReadRefreshToken extracts the refresh token from the httpOnly cookie
-// (via the request Cookie header), falling back to a body-provided value
-// for non-browser clients.
+// ReadRefreshToken extracts the refresh token from the httpOnly cookie.
 func ReadRefreshToken(h http.Header, bodyValue string) string {
 	if cookieHeader := h.Get("Cookie"); cookieHeader != "" {
 		if cookies, err := http.ParseCookie(cookieHeader); err == nil {

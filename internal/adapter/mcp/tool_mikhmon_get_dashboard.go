@@ -38,7 +38,7 @@ func (s *Server) mikhmonGetDashboard(ctx context.Context, _ *mcp.CallToolRequest
 
 	uc := s.mikhmonUC
 	if uc == nil {
-		uc = hotspotUC.NewHotspotUseCase("")
+		uc = hotspotUC.New("")
 	}
 
 	summary, err := uc.GetDashboardSummary(ctx, driver)

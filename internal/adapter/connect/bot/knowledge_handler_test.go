@@ -16,15 +16,15 @@ import (
 // ─── Fakes (ringkas, single-threaded) ─────────────────────────────────────
 
 type fakeKnowledgeRepo struct {
-	entries map[uint]*knowledge.KnowledgeEntry
+	entries map[uint]*knowledge.Entry
 	nextID  uint
 }
 
 func newFakeKnowledgeRepo() *fakeKnowledgeRepo {
-	return &fakeKnowledgeRepo{entries: map[uint]*knowledge.KnowledgeEntry{}, nextID: 1}
+	return &fakeKnowledgeRepo{entries: map[uint]*knowledge.Entry{}, nextID: 1}
 }
 
-func (f *fakeKnowledgeRepo) Create(e *knowledge.KnowledgeEntry) error {
+func (f *fakeKnowledgeRepo) Create(_ context.Context, e *knowledge.Entry) error {
 	e.ID = f.nextID
 	f.nextID++
 	cp := *e
@@ -32,7 +32,7 @@ func (f *fakeKnowledgeRepo) Create(e *knowledge.KnowledgeEntry) error {
 	return nil
 }
 
-func (f *fakeKnowledgeRepo) FindByID(id uint) (*knowledge.KnowledgeEntry, error) {
+func (f *fakeKnowledgeRepo) FindByID(_ context.Context, id uint) (*knowledge.Entry, error) {
 	e, ok := f.entries[id]
 	if !ok {
 		return nil, knowledge.ErrNotFound
@@ -41,15 +41,17 @@ func (f *fakeKnowledgeRepo) FindByID(id uint) (*knowledge.KnowledgeEntry, error)
 	return &cp, nil
 }
 
-func (f *fakeKnowledgeRepo) FindAll() ([]knowledge.KnowledgeEntry, error) {
-	res := make([]knowledge.KnowledgeEntry, 0, len(f.entries))
-	for _, e := range f.entries {
-		res = append(res, *e)
+func (f *fakeKnowledgeRepo) FindAll(_ context.Context) ([]knowledge.Entry, error) {
+	res := make([]knowledge.Entry, 0, len(f.entries))
+	for i := uint(1); i < f.nextID; i++ {
+		if e, ok := f.entries[i]; ok {
+			res = append(res, *e)
+		}
 	}
 	return res, nil
 }
 
-func (f *fakeKnowledgeRepo) Update(e *knowledge.KnowledgeEntry) error {
+func (f *fakeKnowledgeRepo) Update(_ context.Context, e *knowledge.Entry) error {
 	if _, ok := f.entries[e.ID]; !ok {
 		return knowledge.ErrNotFound
 	}
@@ -58,7 +60,7 @@ func (f *fakeKnowledgeRepo) Update(e *knowledge.KnowledgeEntry) error {
 	return nil
 }
 
-func (f *fakeKnowledgeRepo) Delete(id uint) error {
+func (f *fakeKnowledgeRepo) Delete(_ context.Context, id uint) error {
 	if _, ok := f.entries[id]; !ok {
 		return knowledge.ErrNotFound
 	}
@@ -66,8 +68,8 @@ func (f *fakeKnowledgeRepo) Delete(id uint) error {
 	return nil
 }
 
-func (f *fakeKnowledgeRepo) SearchByTags([]string) ([]knowledge.KnowledgeEntry, error) {
-	return f.FindAll()
+func (f *fakeKnowledgeRepo) SearchByTags(ctx context.Context, _ []string) ([]knowledge.Entry, error) {
+	return f.FindAll(ctx)
 }
 
 type fakeKnowledgeManager struct {

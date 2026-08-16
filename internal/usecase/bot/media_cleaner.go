@@ -3,7 +3,7 @@ package bot
 import (
 	"context"
 	"fmt"
-	"log"
+	"github.com/quixiq/polyglot/pkg/logger"
 	"os"
 	"path/filepath"
 	"strings"
@@ -61,7 +61,7 @@ func (w *MediaCleanerWorker) CleanOnce(_ context.Context) (int, error) {
 				if removeErr := os.Remove(path); removeErr == nil {
 					cleanedCount++
 				} else {
-					log.Printf("[MediaCleaner] Failed to remove %s: %v", path, removeErr)
+					logger.WithComponent("MediaCleaner").Warnf("Failed to remove %s: %v", path, removeErr)
 				}
 			}
 		}
@@ -87,9 +87,9 @@ func (w *MediaCleanerWorker) Start(ctx context.Context) {
 			return
 		case <-ticker.C:
 			if n, err := w.CleanOnce(ctx); err != nil {
-				log.Printf("[MediaCleaner] Error during cleanup: %v", err)
+				logger.WithComponent("MediaCleaner").Errorf("Error during cleanup: %v", err)
 			} else if n > 0 {
-				log.Printf("[MediaCleaner] Cleaned %d expired media files", n)
+				logger.WithComponent("MediaCleaner").Infof("Cleaned %d expired media files", n)
 			}
 		}
 	}

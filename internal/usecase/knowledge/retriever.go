@@ -15,7 +15,7 @@ func NewKeywordRetriever(retriever port.KnowledgeRetriever) *KeywordRetriever {
 	return &KeywordRetriever{retriever: retriever}
 }
 
-func (r *KeywordRetriever) Retrieve(ctx context.Context, query string) ([]knowledge.KnowledgeEntry, error) {
+func (r *KeywordRetriever) Retrieve(ctx context.Context, query string) ([]knowledge.Entry, error) {
 	if r.retriever != nil {
 		return r.retriever.Retrieve(ctx, query)
 	}

@@ -20,8 +20,8 @@ const (
 	EmbedStatusFailed = "failed"
 )
 
-// KnowledgeEntry represents a single FAQ/procedure entry in the knowledge base.
-type KnowledgeEntry struct {
+// Entry represents a single FAQ/procedure entry in the knowledge base.
+type Entry struct {
 	ID       uint   `json:"id"`
 	Title    string `json:"title"`
 	Content  string `json:"content"`

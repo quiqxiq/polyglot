@@ -1,6 +1,7 @@
 package whatsapp
 
 import (
+	"context"
 	"sync"
 	"testing"
 	"time"
@@ -45,14 +46,14 @@ func newFakeHistoryRepo() *fakeHistoryRepo {
 	}
 }
 
-func (f *fakeHistoryRepo) UpsertChat(c *bot.WAChat) error {
+func (f *fakeHistoryRepo) UpsertChat(_ context.Context, c *bot.WAChat) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.chats[c.ChatJID] = c
 	return nil
 }
 
-func (f *fakeHistoryRepo) UpsertMessage(m *bot.WAMessage) (bool, error) {
+func (f *fakeHistoryRepo) UpsertMessage(_ context.Context, m *bot.WAMessage) (bool, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.singleCalls++
@@ -60,7 +61,7 @@ func (f *fakeHistoryRepo) UpsertMessage(m *bot.WAMessage) (bool, error) {
 	return true, nil
 }
 
-func (f *fakeHistoryRepo) UpsertMessagesBatch(msgs []*bot.WAMessage) (int, error) {
+func (f *fakeHistoryRepo) UpsertMessagesBatch(_ context.Context, msgs []*bot.WAMessage) (int, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.batchCalls++
@@ -70,30 +71,30 @@ func (f *fakeHistoryRepo) UpsertMessagesBatch(msgs []*bot.WAMessage) (int, error
 	return len(msgs), nil
 }
 
-func (f *fakeHistoryRepo) IncrementUnread(_ uint, chatJID string) error { return nil }
-func (f *fakeHistoryRepo) MarkChatRead(_ uint, _ string) error          { return nil }
-func (f *fakeHistoryRepo) SetChatUnread(_ uint, chatJID string, count uint32) error {
+func (f *fakeHistoryRepo) IncrementUnread(_ context.Context, _ uint, _ string) error { return nil }
+func (f *fakeHistoryRepo) MarkChatRead(_ context.Context, _ uint, _ string) error          { return nil }
+func (f *fakeHistoryRepo) SetChatUnread(_ context.Context, _ uint, chatJID string, count uint32) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.unread[chatJID] = count
 	return nil
 }
-func (f *fakeHistoryRepo) ListChats(_ uint, _, _ int, _ string) ([]bot.WAChat, error) {
+func (f *fakeHistoryRepo) ListChats(_ context.Context, _ uint, _, _ int, _ string) ([]bot.WAChat, error) {
 	return nil, nil
 }
-func (f *fakeHistoryRepo) ListChatMessages(_ uint, _ string, _, _ int) ([]bot.WAMessage, error) {
+func (f *fakeHistoryRepo) ListChatMessages(_ context.Context, _ uint, _ string, _, _ int) ([]bot.WAMessage, error) {
 	return nil, nil
 }
-func (f *fakeHistoryRepo) SetChatBotEnabled(_ uint, _ string, _ bool) error { return nil }
-func (f *fakeHistoryRepo) IsChatBotEnabled(_ uint, _ string) (bool, error)  { return true, nil }
-func (f *fakeHistoryRepo) MarkMessagesStatus(_ uint, chatJID string, messageIDs []string, status string) error {
+func (f *fakeHistoryRepo) SetChatBotEnabled(_ context.Context, _ uint, _ string, _ bool) error { return nil }
+func (f *fakeHistoryRepo) IsChatBotEnabled(_ context.Context, _ uint, _ string) (bool, error)  { return true, nil }
+func (f *fakeHistoryRepo) MarkMessagesStatus(_ context.Context, _ uint, chatJID string, messageIDs []string, status string) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	f.statusUpdates = append(f.statusUpdates, statusUpdate{chatJID: chatJID, messageIDs: messageIDs, status: status})
 	return nil
 }
 
-func (f *fakeHistoryRepo) MergeChatLID(_ uint, lidJID, pnJID string) error {
+func (f *fakeHistoryRepo) MergeChatLID(_ context.Context, _ uint, lidJID, pnJID string) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	// Pindahkan pesan @lid ke PN, hapus baris chat @lid.

@@ -6,27 +6,27 @@ import (
 	"connectrpc.com/connect"
 
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
-	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/port"
 	chatUC "github.com/quixiq/polyglot/internal/usecase/chat"
 )
 
 type WhatsAppConnectHandler struct {
-	pgStore     *postgres.Store
+	sessionRepo port.WASessionRepository
 	waGateway   port.WhatsAppGateway
 	chatService *chatUC.ChatService
 }
 
-func NewWhatsAppConnectHandler(pgStore *postgres.Store, waGateway port.WhatsAppGateway, chatService *chatUC.ChatService) *WhatsAppConnectHandler {
+func NewWhatsAppConnectHandler(sessionRepo port.WASessionRepository, waGateway port.WhatsAppGateway, chatService *chatUC.ChatService) *WhatsAppConnectHandler {
 	return &WhatsAppConnectHandler{
-		pgStore:     pgStore,
+		sessionRepo: sessionRepo,
 		waGateway:   waGateway,
 		chatService: chatService,
 	}
 }
 
-func NewWhatsAppServiceHandler(pgStore *postgres.Store, waGateway port.WhatsAppGateway, chatService *chatUC.ChatService) (string, http.Handler) {
-	handler := NewWhatsAppConnectHandler(pgStore, waGateway, chatService)
+func NewWhatsAppServiceHandler(sessionRepo port.WASessionRepository, waGateway port.WhatsAppGateway, chatService *chatUC.ChatService) (string, http.Handler) {
+	handler := NewWhatsAppConnectHandler(sessionRepo, waGateway, chatService)
+
 	mux := http.NewServeMux()
 	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 

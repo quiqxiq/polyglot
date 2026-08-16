@@ -13,7 +13,7 @@ import (
 )
 
 // NewProvider creates the appropriate LLMProvider based on the given config.
-func NewProvider(cfg *llm.LLMConfig, encryptionKey string) (port.LLMProvider, error) {
+func NewProvider(cfg *llm.Config, encryptionKey string) (port.LLMProvider, error) {
 	apiKey, err := config.Decrypt(cfg.APIKeyEncrypted, encryptionKey)
 	if err != nil {
 		return nil, fmt.Errorf("failed to decrypt API key: %w", err)

@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"context"
 	"errors"
 
 	"gorm.io/gorm"
@@ -12,18 +13,18 @@ import (
 var ErrNotFound = errors.New("record not found")
 
 // WASessionRepository implementation
-func (s *Store) CreateSession(session *bot.WASession) error {
+func (s *Store) CreateSession(ctx context.Context, session *bot.WASession) error {
 	m := models.WASessionModelFromDomain(session)
-	if err := s.db.Create(m).Error; err != nil {
+	if err := s.db.WithContext(ctx).Create(m).Error; err != nil {
 		return err
 	}
 	session.ID = m.ID
 	return nil
 }
 
-func (s *Store) FindSessionByID(id uint) (*bot.WASession, error) {
+func (s *Store) FindSessionByID(ctx context.Context, id uint) (*bot.WASession, error) {
 	var m models.WASessionModel
-	if err := s.db.First(&m, id).Error; err != nil {
+	if err := s.db.WithContext(ctx).First(&m, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
 		}
@@ -32,9 +33,9 @@ func (s *Store) FindSessionByID(id uint) (*bot.WASession, error) {
 	return m.ToDomain(), nil
 }
 
-func (s *Store) FindAllSessions() ([]bot.WASession, error) {
+func (s *Store) FindAllSessions(ctx context.Context) ([]bot.WASession, error) {
 	var mList []models.WASessionModel
-	if err := s.db.Order("created_at DESC").Find(&mList).Error; err != nil {
+	if err := s.db.WithContext(ctx).Order("created_at DESC").Find(&mList).Error; err != nil {
 		return nil, err
 	}
 	var res []bot.WASession
@@ -46,28 +47,28 @@ func (s *Store) FindAllSessions() ([]bot.WASession, error) {
 	return res, nil
 }
 
-func (s *Store) UpdateSession(session *bot.WASession) error {
+func (s *Store) UpdateSession(ctx context.Context, session *bot.WASession) error {
 	m := models.WASessionModelFromDomain(session)
-	return s.db.Save(m).Error
+	return s.db.WithContext(ctx).Save(m).Error
 }
 
-func (s *Store) DeleteSession(id uint) error {
-	return s.db.Delete(&models.WASessionModel{}, id).Error
+func (s *Store) DeleteSession(ctx context.Context, id uint) error {
+	return s.db.WithContext(ctx).Delete(&models.WASessionModel{}, id).Error
 }
 
 // ConversationRepository implementation
-func (s *Store) CreateConversation(conv *bot.Conversation) error {
+func (s *Store) CreateConversation(ctx context.Context, conv *bot.Conversation) error {
 	m := models.ConversationModelFromDomain(conv)
-	if err := s.db.Create(m).Error; err != nil {
+	if err := s.db.WithContext(ctx).Create(m).Error; err != nil {
 		return err
 	}
 	conv.ID = m.ID
 	return nil
 }
 
-func (s *Store) FindConversationByID(id uint) (*bot.Conversation, error) {
+func (s *Store) FindConversationByID(ctx context.Context, id uint) (*bot.Conversation, error) {
 	var m models.ConversationModel
-	if err := s.db.First(&m, id).Error; err != nil {
+	if err := s.db.WithContext(ctx).First(&m, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
 		}
@@ -76,9 +77,9 @@ func (s *Store) FindConversationByID(id uint) (*bot.Conversation, error) {
 	return m.ToDomain(), nil
 }
 
-func (s *Store) FindConversationByIDWithMessages(id uint) (*bot.Conversation, error) {
+func (s *Store) FindConversationByIDWithMessages(ctx context.Context, id uint) (*bot.Conversation, error) {
 	var m models.ConversationModel
-	if err := s.db.Preload("Messages", func(db *gorm.DB) *gorm.DB {
+	if err := s.db.WithContext(ctx).Preload("Messages", func(db *gorm.DB) *gorm.DB {
 		return db.Order("created_at ASC")
 	}).First(&m, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -89,9 +90,9 @@ func (s *Store) FindConversationByIDWithMessages(id uint) (*bot.Conversation, er
 	return m.ToDomain(), nil
 }
 
-func (s *Store) FindConversationsBySessionID(sessionID uint) ([]bot.Conversation, error) {
+func (s *Store) FindConversationsBySessionID(ctx context.Context, sessionID uint) ([]bot.Conversation, error) {
 	var mList []models.ConversationModel
-	if err := s.db.Where("session_id = ?", sessionID).Order("updated_at DESC").Find(&mList).Error; err != nil {
+	if err := s.db.WithContext(ctx).Where("session_id = ?", sessionID).Order("updated_at DESC").Find(&mList).Error; err != nil {
 		return nil, err
 	}
 	var res []bot.Conversation
@@ -103,9 +104,9 @@ func (s *Store) FindConversationsBySessionID(sessionID uint) ([]bot.Conversation
 	return res, nil
 }
 
-func (s *Store) FindConversationsByStatus(status bot.ConversationStatus) ([]bot.Conversation, error) {
+func (s *Store) FindConversationsByStatus(ctx context.Context, status bot.ConversationStatus) ([]bot.Conversation, error) {
 	var mList []models.ConversationModel
-	if err := s.db.Where("status = ?", string(status)).Order("updated_at DESC").Find(&mList).Error; err != nil {
+	if err := s.db.WithContext(ctx).Where("status = ?", string(status)).Order("updated_at DESC").Find(&mList).Error; err != nil {
 		return nil, err
 	}
 	var res []bot.Conversation
@@ -117,9 +118,9 @@ func (s *Store) FindConversationsByStatus(status bot.ConversationStatus) ([]bot.
 	return res, nil
 }
 
-func (s *Store) FindAllConversations() ([]bot.Conversation, error) {
+func (s *Store) FindAllConversations(ctx context.Context) ([]bot.Conversation, error) {
 	var mList []models.ConversationModel
-	if err := s.db.Order("updated_at DESC").Find(&mList).Error; err != nil {
+	if err := s.db.WithContext(ctx).Order("updated_at DESC").Find(&mList).Error; err != nil {
 		return nil, err
 	}
 	var res []bot.Conversation
@@ -131,9 +132,9 @@ func (s *Store) FindAllConversations() ([]bot.Conversation, error) {
 	return res, nil
 }
 
-func (s *Store) FindActiveConversationByCustomer(sessionID uint, customerNumber string) (*bot.Conversation, error) {
+func (s *Store) FindActiveConversationByCustomer(ctx context.Context, sessionID uint, customerNumber string) (*bot.Conversation, error) {
 	var m models.ConversationModel
-	if err := s.db.Where("session_id = ? AND customer_wa_number = ? AND status IN ('bot', 'escalation')", sessionID, customerNumber).
+	if err := s.db.WithContext(ctx).Where("session_id = ? AND customer_wa_number = ? AND status IN ('bot', 'escalation')", sessionID, customerNumber).
 		Order("updated_at DESC").First(&m).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
@@ -143,26 +144,26 @@ func (s *Store) FindActiveConversationByCustomer(sessionID uint, customerNumber 
 	return m.ToDomain(), nil
 }
 
-func (s *Store) UpdateConversation(conv *bot.Conversation) error {
+func (s *Store) UpdateConversation(ctx context.Context, conv *bot.Conversation) error {
 	m := models.ConversationModelFromDomain(conv)
-	return s.db.Save(m).Error
+	return s.db.WithContext(ctx).Save(m).Error
 }
 
 // MessageRepository implementation
-func (s *Store) CreateMessage(msg *bot.Message) error {
+func (s *Store) CreateMessage(ctx context.Context, msg *bot.Message) error {
 	m := models.MessageModelFromDomain(msg)
-	if err := s.db.Create(m).Error; err != nil {
+	if err := s.db.WithContext(ctx).Create(m).Error; err != nil {
 		return err
 	}
 	msg.ID = m.ID
 
-	_ = s.db.Model(&models.ConversationModel{}).Where("id = ?", msg.ConversationID).Update("updated_at", msg.CreatedAt)
+	_ = s.db.WithContext(ctx).Model(&models.ConversationModel{}).Where("id = ?", msg.ConversationID).Update("updated_at", msg.CreatedAt)
 	return nil
 }
 
-func (s *Store) FindMessagesByConversationID(conversationID uint) ([]bot.Message, error) {
+func (s *Store) FindMessagesByConversationID(ctx context.Context, conversationID uint) ([]bot.Message, error) {
 	var mList []models.MessageModel
-	if err := s.db.Where("conversation_id = ?", conversationID).Order("created_at ASC").Find(&mList).Error; err != nil {
+	if err := s.db.WithContext(ctx).Where("conversation_id = ?", conversationID).Order("created_at ASC").Find(&mList).Error; err != nil {
 		return nil, err
 	}
 	var res []bot.Message
@@ -174,9 +175,9 @@ func (s *Store) FindMessagesByConversationID(conversationID uint) ([]bot.Message
 	return res, nil
 }
 
-func (s *Store) FindRecentMessages(conversationID uint, limit int) ([]bot.Message, error) {
+func (s *Store) FindRecentMessages(ctx context.Context, conversationID uint, limit int) ([]bot.Message, error) {
 	var mList []models.MessageModel
-	if err := s.db.Where("conversation_id = ?", conversationID).Order("created_at DESC").Limit(limit).Find(&mList).Error; err != nil {
+	if err := s.db.WithContext(ctx).Where("conversation_id = ?", conversationID).Order("created_at DESC").Limit(limit).Find(&mList).Error; err != nil {
 		return nil, err
 	}
 	var res []bot.Message
@@ -187,3 +188,4 @@ func (s *Store) FindRecentMessages(conversationID uint, limit int) ([]bot.Messag
 	}
 	return res, nil
 }
+

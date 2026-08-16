@@ -1,117 +1,92 @@
 package middleware
 
 import (
+	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
-
 	"github.com/quixiq/polyglot/internal/adapter/auth"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
-// PolicyEnforcer is the subset of auth.CasbinEnforcer the RBAC middleware
-// needs. Declared here (not in port/) because this is a gin-specific concern;
-// auth.CasbinEnforcer satisfies it.
+// PolicyEnforcer is the subset of auth.CasbinEnforcer the RBAC middleware needs.
 type PolicyEnforcer interface {
 	Enforce(sub, obj, act string) (bool, error)
 	GetRolesForUser(user string) ([]string, error)
 }
 
-// AuthorizeProcedure enforces Casbin RBAC on ConnectRPC procedures. The URL
-// path IS the procedure (e.g. /polyglot.v1.KnowledgeService/CreateKnowledge),
-// which the registry maps to a "resource:action" object. Roles are resolved
-// from the Casbin group assignments for the authenticated user (set by
-// AuthenticateJWT); the single-role JWT claim is only a fallback.
-//
-// On success it also propagates the identity (userID + roles) into the
-// request context so downstream ConnectRPC handlers can read it via
-// req.HTTP().Context() (see auth.IdentityFromContext).
-func AuthorizeProcedure(enforcer PolicyEnforcer) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		// Fail-closed: tanpa enforcer, authorization tidak bisa dievaluasi —
-		// tolak semua daripada membiarkan akses tanpa kontrol.
-		if enforcer == nil {
-			log.Printf("[RBAC] Enforcer tidak tersedia — menolak %q (fail closed)", c.Request.URL.Path)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Authorization service unavailable"})
-			c.Abort()
-			return
-		}
-
-		obj, ok := auth.PermissionFor(c.Request.URL.Path)
-		if !ok {
-			log.Printf("[RBAC] Unknown procedure %q — denying (fail closed)", c.Request.URL.Path)
-			c.JSON(http.StatusForbidden, gin.H{
-				"error":  "Access denied. Unknown resource.",
-				"object": c.Request.URL.Path,
-			})
-			c.Abort()
-			return
-		}
-
-		userIDVal, exists := c.Get("user_id")
-		if !exists {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "User identity missing in request context"})
-			c.Abort()
-			return
-		}
-		userID, ok := userIDVal.(uint)
-		if !ok || userID == 0 {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid user identity"})
-			c.Abort()
-			return
-		}
-
-		// Roles = Casbin group assignments (multi-role, source of truth).
-		// Fallback ke klaim JWT tunggal kalau user belum di-assign ke grup.
-		roles := rolesForUser(enforcer, fmt.Sprintf("%d", userID), c.GetString("user_role"))
-		if len(roles) == 0 {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "User has no roles assigned"})
-			c.Abort()
-			return
-		}
-
-		allowed := false
-		for _, role := range roles {
-			ok, err := enforcer.Enforce(role, obj, "*")
-			if err != nil {
-				log.Printf("[RBAC] Error evaluating policy for role '%s' object '%s': %v", role, obj, err)
-				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to evaluate authorization policy"})
-				c.Abort()
+// AuthorizeProcedure enforces Casbin RBAC on ConnectRPC procedures using standard http.Handler.
+func AuthorizeProcedure(enforcer PolicyEnforcer) Middleware {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if enforcer == nil {
+				logger.WithComponent("RBAC").Warnf("enforcer unavailable — denying %q (fail closed)", r.URL.Path)
+				writeJSONError(w, http.StatusInternalServerError, "Authorization service unavailable")
 				return
 			}
-			if ok {
-				allowed = true
-				break
+
+			obj, ok := auth.PermissionFor(r.URL.Path)
+			if !ok {
+				logger.WithComponent("RBAC").Warnf("unknown procedure %q — denying (fail closed)", r.URL.Path)
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusForbidden)
+				_ = json.NewEncoder(w).Encode(map[string]string{
+					"error":  "Access denied. Unknown resource.",
+					"object": r.URL.Path,
+				})
+				return
 			}
-		}
 
-		if !allowed {
-			c.JSON(http.StatusForbidden, gin.H{
-				"error":  "Access denied. You do not have permission to perform this action.",
-				"role":   roles,
-				"object": obj,
-			})
-			c.Abort()
-			return
-		}
+			userID, roles, exists := auth.IdentityFromContext(r.Context())
+			if !exists || userID == 0 {
+				writeJSONError(w, http.StatusUnauthorized, "User identity missing in request context")
+				return
+			}
 
-		// Propagate identity ke connect handler lewat request context.
-		c.Request = c.Request.WithContext(auth.WithIdentity(c.Request.Context(), userID, roles))
-		c.Next()
+			effectiveRoles := rolesForUser(enforcer, fmt.Sprintf("%d", userID), roles)
+			if len(effectiveRoles) == 0 {
+				writeJSONError(w, http.StatusUnauthorized, "User has no roles assigned")
+				return
+			}
+
+			allowed := false
+			for _, role := range effectiveRoles {
+				ok, err := enforcer.Enforce(role, obj, "*")
+				if err != nil {
+					logger.WithComponent("RBAC").Errorf("error evaluating policy for role '%s' object '%s': %v", role, obj, err)
+					writeJSONError(w, http.StatusInternalServerError, "Failed to evaluate authorization policy")
+					return
+				}
+				if ok {
+					allowed = true
+					break
+				}
+			}
+
+			if !allowed {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusForbidden)
+				_ = json.NewEncoder(w).Encode(map[string]any{
+					"error":  "Access denied. You do not have permission to perform this action.",
+					"roles":  effectiveRoles,
+					"object": obj,
+				})
+				return
+			}
+
+			ctx := auth.WithIdentity(r.Context(), userID, effectiveRoles)
+			next.ServeHTTP(w, r.WithContext(ctx))
+		})
 	}
 }
 
-// rolesForUser resolves roles dari Casbin group (multi-role), fallback ke
-// klaim JWT tunggal bila belum ada assignment.
-func rolesForUser(enforcer PolicyEnforcer, userID string, fallbackRole string) []string {
-	if enforcer != nil {
-		if roles, err := enforcer.GetRolesForUser(userID); err == nil && len(roles) > 0 {
-			return roles
-		}
+func rolesForUser(enforcer PolicyEnforcer, userIDStr string, fallbackRoles []string) []string {
+	if enforcer == nil {
+		return fallbackRoles
 	}
-	if fallbackRole != "" {
-		return []string{fallbackRole}
+	roles, err := enforcer.GetRolesForUser(userIDStr)
+	if err != nil || len(roles) == 0 {
+		return fallbackRoles
 	}
-	return nil
+	return roles
 }

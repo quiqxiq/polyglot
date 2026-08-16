@@ -2,19 +2,18 @@ package bot
 
 import (
 	"strings"
-
-	"github.com/quixiq/polyglot/internal/config"
 )
 
 type Guardrail struct {
 	allowedTopics []string
 }
 
-func NewGuardrail(cfg config.Config) *Guardrail {
+func NewGuardrail(allowedTopics []string) *Guardrail {
 	return &Guardrail{
-		allowedTopics: cfg.AllowedTopics,
+		allowedTopics: allowedTopics,
 	}
 }
+
 
 func (g *Guardrail) IsTopicAllowed(message string) bool {
 	msgLower := strings.ToLower(strings.TrimSpace(message))

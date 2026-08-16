@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"log"
+	"github.com/quixiq/polyglot/pkg/logger"
 	"net/http"
 	"time"
 
@@ -25,7 +25,7 @@ func (h *ProbeConnectHandler) ReportStatus(ctx context.Context, req *connect.Req
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("probe_id is required"))
 	}
 
-	log.Printf("[ProbeServer] Received heartbeat from Probe %s (Version: %s, Uptime: %ds)", req.Msg.ProbeId, req.Msg.Version, req.Msg.UptimeSeconds)
+	logger.WithComponent("ProbeServer").Infof("Received heartbeat from Probe %s (Version: %s, Uptime: %ds)", req.Msg.ProbeId, req.Msg.Version, req.Msg.UptimeSeconds)
 
 	return connect.NewResponse(&devicepb.ProbeStatusResponse{
 		Acknowledged:   true,
@@ -43,7 +43,7 @@ func (h *ProbeConnectHandler) StreamTelemetry(ctx context.Context, stream *conne
 			return err
 		}
 
-		log.Printf("[ProbeServer] Telemetry from probe %s: Target=%s Latency=%dms Alive=%v",
+		logger.WithComponent("ProbeServer").Infof("Telemetry from probe %s: Target=%s Latency=%dms Alive=%v",
 			msg.ProbeId, msg.TargetIp, msg.LatencyMs, msg.IsAlive)
 	}
 }

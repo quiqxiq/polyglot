@@ -3,33 +3,30 @@ package hotspot
 import (
 	"context"
 	"fmt"
-	"net/http"
 	"strconv"
 	"time"
 
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	"github.com/quixiq/polyglot/internal/usecase/network"
 )
 
-
 // ConnectDriverProvider signature to obtain a port.DeviceDriver for a given deviceId.
 type ConnectDriverProvider func(ctx context.Context, deviceID string) (port.DeviceDriver, error)
 
 // HotspotConnectHandler orchestrates Hotspot ConnectRPC procedures across modular handler files.
 type HotspotConnectHandler struct {
-	useCase               *hotspotUC.HotspotUseCase
+	useCase               *hotspotUC.UseCase
 	activeSessionsUseCase *network.ActiveSessionsUseCase
 	driverProvider        ConnectDriverProvider
 }
 
 // NewHotspotConnectHandler constructs a new HotspotConnectHandler.
-func NewHotspotConnectHandler(uc *hotspotUC.HotspotUseCase, provider ConnectDriverProvider) *HotspotConnectHandler {
+func NewHotspotConnectHandler(uc *hotspotUC.UseCase, provider ConnectDriverProvider) *HotspotConnectHandler {
 	return &HotspotConnectHandler{
 		useCase:               uc,
 		activeSessionsUseCase: network.NewActiveSessionsUseCase(),
@@ -103,32 +100,24 @@ func (h *HotspotConnectHandler) StreamResource(ctx context.Context, req *connect
 		return err
 	}
 
-	sd, ok := driver.(port.StreamingDeviceDriver)
-	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
-	}
-
-	cmd := mikrotik.NewStreamSystemResourceCommand("1s")
-	handle, err := sd.Stream(ctx, cmd)
-	if err != nil {
-		return connect.NewError(connect.CodeInternal, err)
-	}
-	defer handle.Cancel()
+	ticker := time.NewTicker(2 * time.Second)
+	defer ticker.Stop()
 
 	for {
 		select {
 		case <-ctx.Done():
 			return nil
-		case res, ok := <-handle.Chan():
-			if !ok {
-				return handle.Err()
+		case <-ticker.C:
+			res, err := h.useCase.GetSystemResource(ctx, driver)
+			if err != nil {
+				continue
 			}
-			sysRes := mikrotik.ParseSystemResource(res)
-			err := stream.Send(&devicepb.ResourceStreamData{
+
+			err = stream.Send(&devicepb.ResourceStreamData{
 				DeviceId:      req.Msg.DeviceId,
-				CpuLoad:       int32(sysRes.CPULoad),
-				FreeMemory:    sysRes.FreeMemory,
-				Uptime:        sysRes.Uptime,
+				CpuLoad:       int32(res.CPULoad),
+				FreeMemory:    res.FreeMemory,
+				Uptime:        res.Uptime,
 				TimestampUnix: time.Now().Unix(),
 			})
 			if err != nil {
@@ -144,7 +133,7 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 		return err
 	}
 
-	ticker := time.NewTicker(3 * time.Second)
+	ticker := time.NewTicker(2 * time.Second)
 	defer ticker.Stop()
 
 	for {
@@ -156,19 +145,8 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 			if err != nil {
 				continue
 			}
-			pbSessions := make([]*devicepb.HotspotActiveSession, len(sessions))
-			for i, s := range sessions {
-				pbSessions[i] = &devicepb.HotspotActiveSession{
-					Id:         s.RosID,
-					Server:     s.Server,
-					User:       s.User,
-					Address:    s.Address,
-					MacAddress: s.MACAddress,
-					Uptime:     s.Uptime,
-					BytesIn:    s.BytesIn,
-					BytesOut:   s.BytesOut,
-				}
-			}
+
+			pbSessions := ToProtoActiveSessions(sessions)
 			err = stream.Send(&devicepb.ActiveSessionsStreamData{
 				DeviceId:      req.Msg.DeviceId,
 				Sessions:      pbSessions,
@@ -179,70 +157,4 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 			}
 		}
 	}
-}
-
-// NewHotspotServiceHandler creates the Connect http.Handler and registers procedures.
-func NewHotspotServiceHandler(uc *hotspotUC.HotspotUseCase, provider ConnectDriverProvider) (string, http.Handler) {
-	handler := NewHotspotConnectHandler(uc, provider)
-	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
-
-	serviceName := "polyglot.v1.HotspotService"
-	mux.Handle("/"+serviceName+"/GetDashboard", connect.NewUnaryHandler(
-		"/"+serviceName+"/GetDashboard",
-		handler.GetDashboard,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/ListProfiles", connect.NewUnaryHandler(
-		"/"+serviceName+"/ListProfiles",
-		handler.ListProfiles,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/ListUsers", connect.NewUnaryHandler(
-		"/"+serviceName+"/ListUsers",
-		handler.ListUsers,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/ListActiveSessions", connect.NewUnaryHandler(
-		"/"+serviceName+"/ListActiveSessions",
-		handler.ListActiveSessions,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/KickActiveSession", connect.NewUnaryHandler(
-		"/"+serviceName+"/KickActiveSession",
-		handler.KickActiveSession,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/ListDHCPLeases", connect.NewUnaryHandler(
-		"/"+serviceName+"/ListDHCPLeases",
-		handler.ListDHCPLeases,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/BlockDHCPLease", connect.NewUnaryHandler(
-		"/"+serviceName+"/BlockDHCPLease",
-		handler.BlockDHCPLease,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/GenerateVouchers", connect.NewUnaryHandler(
-		"/"+serviceName+"/GenerateVouchers",
-		handler.GenerateVouchers,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/StreamTraffic", connect.NewServerStreamHandler(
-		"/"+serviceName+"/StreamTraffic",
-		handler.StreamTraffic,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/StreamResource", connect.NewServerStreamHandler(
-		"/"+serviceName+"/StreamResource",
-		handler.StreamResource,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/StreamActiveSessions", connect.NewServerStreamHandler(
-		"/"+serviceName+"/StreamActiveSessions",
-		handler.StreamActiveSessions,
-		codecOpt,
-	))
-
-	return "/" + serviceName + "/", mux
 }

@@ -3,7 +3,7 @@ package bot
 import (
 	"context"
 	"fmt"
-	"log"
+	"github.com/quixiq/polyglot/pkg/logger"
 	"strconv"
 	"time"
 
@@ -22,11 +22,11 @@ func formatTime(t time.Time) string {
 }
 
 func (h *WhatsAppConnectHandler) ListSessions(ctx context.Context, req *connect.Request[devicepb.ListWASessionsRequest]) (*connect.Response[devicepb.ListWASessionsResponse], error) {
-	if h.pgStore == nil {
+	if h.sessionRepo == nil {
 		return connect.NewResponse(&devicepb.ListWASessionsResponse{Sessions: []*devicepb.WASession{}}), nil
 	}
 
-	sessions, err := h.pgStore.FindAllSessions()
+	sessions, err := h.sessionRepo.FindAllSessions(ctx)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
@@ -58,8 +58,8 @@ func (h *WhatsAppConnectHandler) ListSessions(ctx context.Context, req *connect.
 }
 
 func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect.Request[devicepb.CreateWASessionRequest]) (*connect.Response[devicepb.CreateWASessionResponse], error) {
-	if h.pgStore == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("postgres store not initialized"))
+	if h.sessionRepo == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("session repo not initialized"))
 	}
 
 	sess := &bot.WASession{
@@ -69,7 +69,7 @@ func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect
 		IsBotEnabled: true,
 	}
 
-	if err := h.pgStore.CreateSession(sess); err != nil {
+	if err := h.sessionRepo.CreateSession(ctx, sess); err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 
@@ -77,10 +77,10 @@ func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect
 	// flow; frontend langsung membuka modal QR setelah create.
 	if h.waGateway != nil {
 		if err := h.waGateway.Connect(sess); err != nil {
-			log.Printf("[WhatsApp] CreateSession %d: connect failed (QR flow): %v", sess.ID, err)
+			logger.WithComponent("WhatsApp").Warnf("CreateSession %d: connect failed (QR flow): %v", sess.ID, err)
 		}
 		sess.Status = bot.StatusConnecting
-		_ = h.pgStore.UpdateSession(sess)
+		_ = h.sessionRepo.UpdateSession(ctx, sess)
 	}
 
 	return connect.NewResponse(&devicepb.CreateWASessionResponse{
@@ -110,8 +110,8 @@ func (h *WhatsAppConnectHandler) GetQRCode(ctx context.Context, req *connect.Req
 	// Jika client belum connect (mis. baru dibuat / reconnect diminta), trigger
 	// koneksi dulu supaya QR flow aktif dan QR bisa dibaca dari cache.
 	status, _ := h.waGateway.GetStatus(sessionID)
-	if status != string(bot.StatusOnline) {
-		sess, findErr := h.pgStore.FindSessionByID(sessionID)
+	if status != string(bot.StatusOnline) && h.sessionRepo != nil {
+		sess, findErr := h.sessionRepo.FindSessionByID(ctx, sessionID)
 		if findErr == nil {
 			_ = h.waGateway.Connect(sess)
 		}
@@ -146,8 +146,8 @@ func (h *WhatsAppConnectHandler) GetPairingCode(ctx context.Context, req *connec
 
 	// Pairing code memerlukan client yang terhubung — pastikan connect dulu.
 	status, _ := h.waGateway.GetStatus(sessionID)
-	if status != string(bot.StatusOnline) {
-		sess, findErr := h.pgStore.FindSessionByID(sessionID)
+	if status != string(bot.StatusOnline) && h.sessionRepo != nil {
+		sess, findErr := h.sessionRepo.FindSessionByID(ctx, sessionID)
 		if findErr == nil {
 			_ = h.waGateway.Connect(sess)
 		}
@@ -214,8 +214,8 @@ func (h *WhatsAppConnectHandler) PurgeSession(ctx context.Context, req *connect.
 			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("purge session: %w", err))
 		}
 	}
-	if h.pgStore != nil {
-		if err := h.pgStore.DeleteSession(uint(idUint)); err != nil {
+	if h.sessionRepo != nil {
+		if err := h.sessionRepo.DeleteSession(ctx, uint(idUint)); err != nil {
 			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("delete session record: %w", err))
 		}
 	}

@@ -2,7 +2,7 @@ package whatsapp
 
 import (
 	"context"
-	"log"
+	"github.com/quixiq/polyglot/pkg/logger"
 	"strings"
 
 	"go.mau.fi/whatsmeow"
@@ -80,12 +80,12 @@ func normalizeJIDFromLID(ctx context.Context, jid types.JID, client *whatsmeow.C
 		return jid
 	}
 	if client == nil || client.Store == nil || client.Store.LIDs == nil {
-		log.Printf("[JID] Cannot resolve LID %s: client not available", jid.String())
+		logger.WithComponent("JIDFilter").Warnf("Cannot resolve LID %s: client not available", jid.String())
 		return jid
 	}
 	pn, err := client.Store.LIDs.GetPNForLID(ctx, jid)
 	if err != nil {
-		log.Printf("[JID] Failed to resolve LID %s: %v", jid.String(), err)
+		logger.WithComponent("JIDFilter").Warnf("Failed to resolve LID %s: %v", jid.String(), err)
 		return jid
 	}
 	if pn.IsEmpty() {

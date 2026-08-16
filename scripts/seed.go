@@ -45,6 +45,8 @@ func main() {
 		log.Fatalf("[Seeder Error] Failed to hash password: %v", errHash)
 	}
 
+	ctx := context.Background()
+
 	err = db.Where("username = ?", adminUsername).First(&existing).Error
 	if err != nil {
 		adminUser := &customer.User{
@@ -55,7 +57,7 @@ func main() {
 			TenantID:     "tenant-default",
 		}
 
-		if err := pgStore.CreateUser(adminUser); err != nil {
+		if err := pgStore.CreateUser(ctx, adminUser); err != nil {
 			log.Fatalf("[Seeder Error] Failed to create admin user: %v", err)
 		}
 		log.Printf("[Seeder] Created default Admin user: %s", adminUsername)
@@ -65,7 +67,6 @@ func main() {
 	}
 
 	// 2. Initialize Casbin Enforcer & Seed System RBAC Policies
-	ctx := context.Background()
 	enforcer, err := auth.NewCasbinEnforcer(ctx, db)
 	if err != nil {
 		log.Printf("[Seeder Warning] Failed to initialize Casbin enforcer: %v", err)

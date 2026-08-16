@@ -34,7 +34,7 @@ func (m *mockDriver) Close() error {
 }
 
 func TestHotspotUseCase(t *testing.T) {
-	uc := NewHotspotUseCase("")
+	uc := New("")
 	ctx := context.Background()
 
 	t.Run("CreateProfile", func(t *testing.T) {

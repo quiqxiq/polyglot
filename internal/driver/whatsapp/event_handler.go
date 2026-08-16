@@ -2,23 +2,23 @@ package whatsapp
 
 import (
 	"context"
-	"log"
 	"time"
 
-	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/adapter/ws"
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 type EventHandler struct {
-	pgStore *postgres.Store
-	sseHub  *ws.SSEHub
+	sessionRepo port.WASessionRepository
+	sseHub      *ws.SSEHub
 }
 
-func NewEventHandler(pgStore *postgres.Store, sseHub *ws.SSEHub) *EventHandler {
+func NewEventHandler(sessionRepo port.WASessionRepository, sseHub *ws.SSEHub) *EventHandler {
 	return &EventHandler{
-		pgStore: pgStore,
-		sseHub:  sseHub,
+		sessionRepo: sessionRepo,
+		sseHub:      sseHub,
 	}
 }
 
@@ -63,11 +63,12 @@ func (eh *EventHandler) MakeChatPresenceCallback() ChatPresenceCallback {
 }
 
 func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode string, jid string, phoneNumber string) {
-	if eh.pgStore == nil {
+	if eh.sessionRepo == nil {
 		return
 	}
 
-	sess, err := eh.pgStore.FindSessionByID(sessionID)
+	ctx := context.Background()
+	sess, err := eh.sessionRepo.FindSessionByID(ctx, sessionID)
 	if err == nil {
 		sess.Status = bot.WASessionStatus(status)
 		if status == string(bot.StatusOnline) {
@@ -79,7 +80,7 @@ func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode
 		if phoneNumber != "" {
 			sess.PhoneNumber = phoneNumber
 		}
-		_ = eh.pgStore.UpdateSession(sess)
+		_ = eh.sessionRepo.UpdateSession(ctx, sess)
 	}
 
 	if eh.sseHub != nil {
@@ -99,7 +100,7 @@ func (eh *EventHandler) MakeMessageCallback(engineHandler func(ctx context.Conte
 		go func() {
 			ctx := context.Background()
 			if err := engineHandler(ctx, sessionID, chatJID, customerNumber, content); err != nil {
-				log.Printf("[EventHandler] Error processing message from %s: %v", customerNumber, err)
+				logger.WithComponent("EventHandler").Errorf("Error processing message from %s: %v", customerNumber, err)
 			}
 		}()
 	}

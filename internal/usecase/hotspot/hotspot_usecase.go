@@ -12,11 +12,10 @@ import (
 	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/network"
-	"github.com/quixiq/polyglot/pkg/voucher"
 )
 
-// HotspotDashboardSummary holds aggregated statistics for the Hotspot dashboard.
-type HotspotDashboardSummary struct {
+// DashboardSummary holds aggregated statistics for the Hotspot dashboard.
+type DashboardSummary struct {
 	Uptime      string `json:"uptime"`
 	Version     string `json:"version"`
 	CPULoad     int    `json:"cpu_load"`
@@ -27,28 +26,37 @@ type HotspotDashboardSummary struct {
 	TodayIncome int64  `json:"today_income"`
 }
 
-// HotspotUseCase orchestrates all Hotspot and Voucher operations.
-type HotspotUseCase struct {
-	// TemplateDir is the path to the directory containing voucher template files.
+// UseCase orchestrates all Hotspot and Voucher operations.
+type UseCase struct {
 	TemplateDir string
 }
 
-// NewHotspotUseCase creates a new HotspotUseCase instance.
-func NewHotspotUseCase(templateDir string) *HotspotUseCase {
+// New creates a new UseCase instance.
+func New(templateDir string) *UseCase {
 	if templateDir == "" {
 		templateDir = "internal/templates"
 	}
-	return &HotspotUseCase{TemplateDir: templateDir}
+	return &UseCase{TemplateDir: templateDir}
+}
+
+// GetSystemResource retrieves system resource metrics from the device.
+func (u *UseCase) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (mikrotik.SystemResource, error) {
+	cmd := mikrotik.NewPrintSystemResourceCommand()
+	res, err := network.ExecuteCommand(ctx, driver, cmd)
+	if err != nil {
+		return mikrotik.SystemResource{}, err
+	}
+	return mikrotik.ParseSystemResource(res), nil
 }
 
 // CreateProfile builds and executes the /ip/hotspot/user/profile/add command
-func (u *HotspotUseCase) CreateProfile(ctx context.Context, driver port.DeviceDriver, p mikhmon.MikhmonProfileParams) (command.Result, error) {
+func (u *UseCase) CreateProfile(ctx context.Context, driver port.DeviceDriver, p mikhmon.MikhmonProfileParams) (command.Result, error) {
 	cmd := mikhmon.NewAddMikhmonProfileCommand(p)
 	return network.ExecuteCommand(ctx, driver, cmd)
 }
 
 // GetProfiles fetches all Hotspot User Profiles.
-func (u *HotspotUseCase) GetProfiles(ctx context.Context, driver port.DeviceDriver) ([]mikrotik.HotspotUserProfile, error) {
+func (u *UseCase) GetProfiles(ctx context.Context, driver port.DeviceDriver) ([]mikrotik.HotspotUserProfile, error) {
 	cmd := mikrotik.NewPrintHotspotUserProfilesCommand("")
 	res, err := network.ExecuteCommand(ctx, driver, cmd)
 	if err != nil {
@@ -58,7 +66,7 @@ func (u *HotspotUseCase) GetProfiles(ctx context.Context, driver port.DeviceDriv
 }
 
 // GenerateVouchers generates a batch of count vouchers and executes their creation commands.
-func (u *HotspotUseCase) GenerateVouchers(ctx context.Context, driver port.DeviceDriver, p mikhmon.VoucherGenerateParams, count int) (mikhmon.VoucherBatch, error) {
+func (u *UseCase) GenerateVouchers(ctx context.Context, driver port.DeviceDriver, p mikhmon.VoucherGenerateParams, count int) (mikhmon.VoucherBatch, error) {
 	batch := mikhmon.NewGenerateVoucherBatchCommands(p, count)
 	for _, cmd := range batch.Commands {
 		if _, err := network.ExecuteCommand(ctx, driver, cmd); err != nil {
@@ -69,7 +77,7 @@ func (u *HotspotUseCase) GenerateVouchers(ctx context.Context, driver port.Devic
 }
 
 // GetUsers lists hotspot users, optionally filtered by profile.
-func (u *HotspotUseCase) GetUsers(ctx context.Context, driver port.DeviceDriver, profileFilter string) ([]mikrotik.HotspotUser, error) {
+func (u *UseCase) GetUsers(ctx context.Context, driver port.DeviceDriver, profileFilter string) ([]mikrotik.HotspotUser, error) {
 	cmd := mikrotik.NewPrintHotspotUsersCommand(profileFilter)
 	res, err := network.ExecuteCommand(ctx, driver, cmd)
 	if err != nil {
@@ -79,7 +87,7 @@ func (u *HotspotUseCase) GetUsers(ctx context.Context, driver port.DeviceDriver,
 }
 
 // GetUser fetches a single hotspot user by RouterOS .id.
-func (u *HotspotUseCase) GetUser(ctx context.Context, driver port.DeviceDriver, rosID string) (mikrotik.HotspotUser, error) {
+func (u *UseCase) GetUser(ctx context.Context, driver port.DeviceDriver, rosID string) (mikrotik.HotspotUser, error) {
 	cmd := command.Command{
 		Raw:  "/ip/hotspot/user/print",
 		Args: map[string]string{"?.id": rosID},
@@ -96,19 +104,19 @@ func (u *HotspotUseCase) GetUser(ctx context.Context, driver port.DeviceDriver, 
 }
 
 // RemoveUser deletes a hotspot user by RouterOS .id.
-func (u *HotspotUseCase) RemoveUser(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
+func (u *UseCase) RemoveUser(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	cmd := mikrotik.NewRemoveHotspotUserCommand(rosID)
 	return network.ExecuteCommand(ctx, driver, cmd)
 }
 
 // ResetUserCounters resets byte/time counters for a hotspot user by RouterOS .id.
-func (u *HotspotUseCase) ResetUserCounters(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
+func (u *UseCase) ResetUserCounters(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	cmd := mikrotik.NewResetHotspotUserCountersCommand(rosID)
 	return network.ExecuteCommand(ctx, driver, cmd)
 }
 
 // GetActiveSessions fetches all currently connected hotspot active sessions.
-func (u *HotspotUseCase) GetActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]mikrotik.HotspotActiveSession, error) {
+func (u *UseCase) GetActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]mikrotik.HotspotActiveSession, error) {
 	cmd := mikrotik.NewPrintHotspotActiveCommand("")
 	res, err := network.ExecuteCommand(ctx, driver, cmd)
 	if err != nil {
@@ -118,7 +126,7 @@ func (u *HotspotUseCase) GetActiveSessions(ctx context.Context, driver port.Devi
 }
 
 // RemoveActiveSession kicks an active session by its RouterOS .id.
-func (u *HotspotUseCase) RemoveActiveSession(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
+func (u *UseCase) RemoveActiveSession(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	cmd := command.Command{
 		Raw:  "/ip/hotspot/active/remove",
 		Args: map[string]string{".id": rosID},
@@ -127,7 +135,7 @@ func (u *HotspotUseCase) RemoveActiveSession(ctx context.Context, driver port.De
 }
 
 // GetHosts fetches all /ip/hotspot/host entries.
-func (u *HotspotUseCase) GetHosts(ctx context.Context, driver port.DeviceDriver) ([]map[string]string, error) {
+func (u *UseCase) GetHosts(ctx context.Context, driver port.DeviceDriver) ([]map[string]string, error) {
 	cmd := command.Command{Raw: "/ip/hotspot/host/print"}
 	res, err := network.ExecuteCommand(ctx, driver, cmd)
 	if err != nil {
@@ -137,7 +145,7 @@ func (u *HotspotUseCase) GetHosts(ctx context.Context, driver port.DeviceDriver)
 }
 
 // RemoveHost deletes a hotspot host entry by RouterOS .id.
-func (u *HotspotUseCase) RemoveHost(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
+func (u *UseCase) RemoveHost(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	cmd := command.Command{
 		Raw:  "/ip/hotspot/host/remove",
 		Args: map[string]string{".id": rosID},
@@ -146,7 +154,7 @@ func (u *HotspotUseCase) RemoveHost(ctx context.Context, driver port.DeviceDrive
 }
 
 // GetHotspotServers fetches all /ip/hotspot/print entries.
-func (u *HotspotUseCase) GetHotspotServers(ctx context.Context, driver port.DeviceDriver) ([]map[string]string, error) {
+func (u *UseCase) GetHotspotServers(ctx context.Context, driver port.DeviceDriver) ([]map[string]string, error) {
 	cmd := command.Command{Raw: "/ip/hotspot/print"}
 	res, err := network.ExecuteCommand(ctx, driver, cmd)
 	if err != nil {
@@ -156,7 +164,7 @@ func (u *HotspotUseCase) GetHotspotServers(ctx context.Context, driver port.Devi
 }
 
 // GetIPPools fetches all /ip/pool entries.
-func (u *HotspotUseCase) GetIPPools(ctx context.Context, driver port.DeviceDriver) ([]mikrotik.IPPool, error) {
+func (u *UseCase) GetIPPools(ctx context.Context, driver port.DeviceDriver) ([]mikrotik.IPPool, error) {
 	cmd := mikrotik.NewPrintIPPoolsCommand("")
 	res, err := network.ExecuteCommand(ctx, driver, cmd)
 	if err != nil {
@@ -166,7 +174,7 @@ func (u *HotspotUseCase) GetIPPools(ctx context.Context, driver port.DeviceDrive
 }
 
 // GetParentQueues fetches all parent /queue/simple entries.
-func (u *HotspotUseCase) GetParentQueues(ctx context.Context, driver port.DeviceDriver) ([]mikrotik.SimpleQueue, error) {
+func (u *UseCase) GetParentQueues(ctx context.Context, driver port.DeviceDriver) ([]mikrotik.SimpleQueue, error) {
 	cmd := mikrotik.NewPrintSimpleQueuesCommand("")
 	res, err := network.ExecuteCommand(ctx, driver, cmd)
 	if err != nil {
@@ -183,7 +191,7 @@ func (u *HotspotUseCase) GetParentQueues(ctx context.Context, driver port.Device
 }
 
 // GetNATRules fetches all /ip/firewall/nat entries.
-func (u *HotspotUseCase) GetNATRules(ctx context.Context, driver port.DeviceDriver) ([]map[string]string, error) {
+func (u *UseCase) GetNATRules(ctx context.Context, driver port.DeviceDriver) ([]map[string]string, error) {
 	cmd := command.Command{Raw: "/ip/firewall/nat/print"}
 	res, err := network.ExecuteCommand(ctx, driver, cmd)
 	if err != nil {
@@ -193,7 +201,7 @@ func (u *HotspotUseCase) GetNATRules(ctx context.Context, driver port.DeviceDriv
 }
 
 // SetupExpireMonitor adds or updates the Mikhmon expire-monitor scheduler.
-func (u *HotspotUseCase) SetupExpireMonitor(ctx context.Context, driver port.DeviceDriver, interval string) (command.Result, error) {
+func (u *UseCase) SetupExpireMonitor(ctx context.Context, driver port.DeviceDriver, interval string) (command.Result, error) {
 	if interval == "" {
 		interval = "00:05:00"
 	}
@@ -215,7 +223,7 @@ func (u *HotspotUseCase) SetupExpireMonitor(ctx context.Context, driver port.Dev
 }
 
 // GetReports fetches all report records from /system/script/job or /log.
-func (u *HotspotUseCase) GetReports(ctx context.Context, driver port.DeviceDriver) ([]mikhmon.MikhmonTransaction, error) {
+func (u *UseCase) GetReports(ctx context.Context, driver port.DeviceDriver) ([]mikhmon.MikhmonTransaction, error) {
 	cmd := command.Command{
 		Raw:  "/system/script/print",
 		Args: map[string]string{"?owner": "mikhmon-report"},
@@ -228,7 +236,7 @@ func (u *HotspotUseCase) GetReports(ctx context.Context, driver port.DeviceDrive
 }
 
 // DeleteReport deletes a report script record by RouterOS .id.
-func (u *HotspotUseCase) DeleteReport(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
+func (u *UseCase) DeleteReport(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	cmd := command.Command{
 		Raw:  "/system/script/remove",
 		Args: map[string]string{".id": rosID},
@@ -237,7 +245,7 @@ func (u *HotspotUseCase) DeleteReport(ctx context.Context, driver port.DeviceDri
 }
 
 // GetTodayIncome calculates total income from report entries matching today's date.
-func (u *HotspotUseCase) GetTodayIncome(ctx context.Context, driver port.DeviceDriver) (int64, error) {
+func (u *UseCase) GetTodayIncome(ctx context.Context, driver port.DeviceDriver) (int64, error) {
 	reports, err := u.GetReports(ctx, driver)
 	if err != nil {
 		return 0, err
@@ -257,13 +265,13 @@ func (u *HotspotUseCase) GetTodayIncome(ctx context.Context, driver port.DeviceD
 }
 
 // UpdateProfile updates an existing profile by RouterOS .id.
-func (u *HotspotUseCase) UpdateProfile(ctx context.Context, driver port.DeviceDriver, rosID string, p mikhmon.MikhmonProfileParams) (command.Result, error) {
+func (u *UseCase) UpdateProfile(ctx context.Context, driver port.DeviceDriver, rosID string, p mikhmon.MikhmonProfileParams) (command.Result, error) {
 	cmd := mikhmon.NewSetMikhmonProfileCommand(rosID, p)
 	return network.ExecuteCommand(ctx, driver, cmd)
 }
 
 // DeleteProfile removes a user profile by RouterOS .id.
-func (u *HotspotUseCase) DeleteProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
+func (u *UseCase) DeleteProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	cmd := command.Command{
 		Raw:  "/ip/hotspot/user/profile/remove",
 		Args: map[string]string{".id": rosID},
@@ -272,7 +280,7 @@ func (u *HotspotUseCase) DeleteProfile(ctx context.Context, driver port.DeviceDr
 }
 
 // AddUser creates a new hotspot user directly (non-batch).
-func (u *HotspotUseCase) AddUser(ctx context.Context, driver port.DeviceDriver, p mikrotik.HotspotUserParams) (command.Result, error) {
+func (u *UseCase) AddUser(ctx context.Context, driver port.DeviceDriver, p mikrotik.HotspotUserParams) (command.Result, error) {
 	cmd := mikrotik.NewAddHotspotUserCommand(p)
 	res, err := network.ExecuteCommand(ctx, driver, cmd)
 	if err != nil {
@@ -285,13 +293,13 @@ func (u *HotspotUseCase) AddUser(ctx context.Context, driver port.DeviceDriver, 
 }
 
 // UpdateUser modifies an existing hotspot user by RouterOS .id.
-func (u *HotspotUseCase) UpdateUser(ctx context.Context, driver port.DeviceDriver, rosID string, p mikrotik.HotspotUserParams) (command.Result, error) {
+func (u *UseCase) UpdateUser(ctx context.Context, driver port.DeviceDriver, rosID string, p mikrotik.HotspotUserParams) (command.Result, error) {
 	cmd := mikrotik.NewSetHotspotUserCommand(rosID, p)
 	return network.ExecuteCommand(ctx, driver, cmd)
 }
 
 // GetUsersByTag fetches all hotspot users whose comment contains tag.
-func (u *HotspotUseCase) GetUsersByTag(ctx context.Context, driver port.DeviceDriver, tag string) ([]mikrotik.HotspotUser, error) {
+func (u *UseCase) GetUsersByTag(ctx context.Context, driver port.DeviceDriver, tag string) ([]mikrotik.HotspotUser, error) {
 	users, err := u.GetUsers(ctx, driver, "")
 	if err != nil {
 		return nil, err
@@ -314,7 +322,7 @@ func (u *HotspotUseCase) GetUsersByTag(ctx context.Context, driver port.DeviceDr
 }
 
 // GetReportsByFilter filters transaction reports by date (e.g. "jan/15/2025"), month ("jan"), or year ("2025").
-func (u *HotspotUseCase) GetReportsByFilter(ctx context.Context, driver port.DeviceDriver, date, month, year string) ([]mikhmon.MikhmonTransaction, error) {
+func (u *UseCase) GetReportsByFilter(ctx context.Context, driver port.DeviceDriver, date, month, year string) ([]mikhmon.MikhmonTransaction, error) {
 	all, err := u.GetReports(ctx, driver)
 	if err != nil {
 		return nil, err
@@ -339,8 +347,8 @@ func (u *HotspotUseCase) GetReportsByFilter(ctx context.Context, driver port.Dev
 }
 
 // GetDashboardSummary aggregates system info, active users, total users, and today's income.
-func (u *HotspotUseCase) GetDashboardSummary(ctx context.Context, driver port.DeviceDriver) (HotspotDashboardSummary, error) {
-	summary := HotspotDashboardSummary{}
+func (u *UseCase) GetDashboardSummary(ctx context.Context, driver port.DeviceDriver) (DashboardSummary, error) {
+	summary := DashboardSummary{}
 
 	// System Resource
 	resCmd := mikrotik.NewPrintSystemResourceCommand()
@@ -358,52 +366,24 @@ func (u *HotspotUseCase) GetDashboardSummary(ctx context.Context, driver port.De
 		summary.Identity = res.Rows[0]["name"]
 	}
 
-	// Total Users Count
-	usersCmd := mikrotik.NewPrintHotspotUsersCommand("")
-	if res, err := network.ExecuteCommand(ctx, driver, usersCmd); err == nil {
-		summary.TotalUsers = len(res.Rows)
+	// Active Hotspot Users
+	actCmd := mikrotik.NewPrintHotspotActiveCommand("")
+	if res, err := network.ExecuteCommand(ctx, driver, actCmd); err == nil {
+		activeUsers := mikrotik.ParseHotspotActiveSessions(res)
+		summary.ActiveUsers = len(activeUsers)
 	}
 
-	// Active Users Count
-	activeCmd := mikrotik.NewPrintHotspotActiveCommand("")
-	if res, err := network.ExecuteCommand(ctx, driver, activeCmd); err == nil {
-		summary.ActiveUsers = len(res.Rows)
+	// Total Hotspot Users
+	usrCmd := mikrotik.NewPrintHotspotUsersCommand("")
+	if res, err := network.ExecuteCommand(ctx, driver, usrCmd); err == nil {
+		users := mikrotik.ParseHotspotUsers(res)
+		summary.TotalUsers = len(users)
 	}
 
-	// Today Income
-	if todayIncome, err := u.GetTodayIncome(ctx, driver); err == nil {
-		summary.TodayIncome = todayIncome
+	// Today's Income
+	if inc, err := u.GetTodayIncome(ctx, driver); err == nil {
+		summary.TodayIncome = inc
 	}
 
 	return summary, nil
-}
-
-// RenderVoucherHTML converts a generated VoucherBatch into a printable HTML page
-func (u *HotspotUseCase) RenderVoucherHTML(batch mikhmon.VoucherBatch, layout, hotspotName, dnsName, logo string) (string, error) {
-	vouchers := make([]voucher.VoucherData, 0, len(batch.Vouchers))
-	for i, v := range batch.Vouchers {
-		cardValidity := ""
-		if parsed, err := mikhmon.ParseMikhmonComment(v.Comment); err == nil {
-			cardValidity = parsed.Tag
-		}
-		vouchers = append(vouchers, voucher.VoucherData{
-			Username:    v.Username,
-			Password:    v.Password,
-			Comment:     v.Comment,
-			Validity:    cardValidity,
-			HotspotName: hotspotName,
-			DNSName:     dnsName,
-			Logo:        logo,
-			Number:      i + 1,
-		})
-	}
-	return voucher.Render(vouchers, voucher.Layout(layout), u.TemplateDir)
-}
-
-// Type aliases for backwards compatibility during migration
-type MikhmonUseCase = HotspotUseCase
-type MikhmonDashboardSummary = HotspotDashboardSummary
-
-func NewMikhmonUseCase(templateDir string) *HotspotUseCase {
-	return NewHotspotUseCase(templateDir)
 }

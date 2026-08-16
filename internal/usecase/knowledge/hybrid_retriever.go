@@ -37,12 +37,12 @@ func NewHybridRetriever(retrievers ...port.KnowledgeRetriever) *HybridRetriever 
 // Retrieve memanggil semua retriever dan menggabungkan hasilnya. Satu
 // retriever error TIDAK menggagalkan retrieval (fail-open) — hasil yang
 // berhasil tetap dipakai.
-func (h *HybridRetriever) Retrieve(ctx context.Context, query string) ([]knowledge.KnowledgeEntry, error) {
+func (h *HybridRetriever) Retrieve(ctx context.Context, query string) ([]knowledge.Entry, error) {
 	if strings.TrimSpace(query) == "" {
 		return nil, nil
 	}
 
-	var out []knowledge.KnowledgeEntry
+	var out []knowledge.Entry
 	seen := make(map[string]bool)
 	for _, r := range h.retrievers {
 		entries, err := r.Retrieve(ctx, query)

@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"context"
 	"errors"
 	"strings"
 
@@ -8,24 +9,36 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
 	"github.com/quixiq/polyglot/internal/domain/customer"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // ErrInvalidArgument is returned when a store mutation is called with
 // missing/invalid required values (empty ID, empty password hash, ...).
 var ErrInvalidArgument = errors.New("invalid argument")
 
-func (s *Store) CreateUser(user *customer.User) error {
+type UserRepository struct {
+	db *gorm.DB
+}
+
+var _ port.UserRepository = (*UserRepository)(nil)
+
+// NewUserRepository returns an implementation of port.UserRepository.
+func NewUserRepository(db *gorm.DB) *UserRepository {
+	return &UserRepository{db: db}
+}
+
+func (r *UserRepository) Create(ctx context.Context, user *customer.User) error {
 	m := models.UserModelFromDomain(user)
-	if err := s.db.Create(m).Error; err != nil {
+	if err := r.db.WithContext(ctx).Create(m).Error; err != nil {
 		return err
 	}
 	user.ID = m.ID
 	return nil
 }
 
-func (s *Store) FindUserByID(id uint) (*customer.User, error) {
+func (r *UserRepository) FindByID(ctx context.Context, id uint) (*customer.User, error) {
 	var m models.UserModel
-	if err := s.db.First(&m, id).Error; err != nil {
+	if err := r.db.WithContext(ctx).First(&m, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
 		}
@@ -34,9 +47,9 @@ func (s *Store) FindUserByID(id uint) (*customer.User, error) {
 	return m.ToDomain(), nil
 }
 
-func (s *Store) FindUserByUsername(username string) (*customer.User, error) {
+func (r *UserRepository) FindByUsername(ctx context.Context, username string) (*customer.User, error) {
 	var m models.UserModel
-	if err := s.db.Where("username = ?", username).First(&m).Error; err != nil {
+	if err := r.db.WithContext(ctx).Where("username = ?", username).First(&m).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
 		}
@@ -45,9 +58,9 @@ func (s *Store) FindUserByUsername(username string) (*customer.User, error) {
 	return m.ToDomain(), nil
 }
 
-func (s *Store) FindUserByEmail(email string) (*customer.User, error) {
+func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*customer.User, error) {
 	var m models.UserModel
-	if err := s.db.Where("email = ?", email).First(&m).Error; err != nil {
+	if err := r.db.WithContext(ctx).Where("email = ?", email).First(&m).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
 		}
@@ -56,17 +69,15 @@ func (s *Store) FindUserByEmail(email string) (*customer.User, error) {
 	return m.ToDomain(), nil
 }
 
-func (s *Store) CountUsers() (int64, error) {
+func (r *UserRepository) Count(ctx context.Context) (int64, error) {
 	var count int64
-	err := s.db.Model(&models.UserModel{}).Count(&count).Error
+	err := r.db.WithContext(ctx).Model(&models.UserModel{}).Count(&count).Error
 	return count, err
 }
 
-// FindAllUsers returns all registered users, ordered by ID. Used by
-// EnsureUserRoleAssignments to sync Casbin role assignments.
-func (s *Store) FindAllUsers() ([]*customer.User, error) {
+func (r *UserRepository) FindAll(ctx context.Context) ([]*customer.User, error) {
 	var ms []models.UserModel
-	if err := s.db.Order("id ASC").Find(&ms).Error; err != nil {
+	if err := r.db.WithContext(ctx).Order("id ASC").Find(&ms).Error; err != nil {
 		return nil, err
 	}
 	users := make([]*customer.User, 0, len(ms))
@@ -76,10 +87,7 @@ func (s *Store) FindAllUsers() ([]*customer.User, error) {
 	return users, nil
 }
 
-// ListUsers returns a page of users ordered by ID ascending, with an optional
-// case-insensitive search on username/email. Returns the users plus the total
-// count matching the filter (before pagination).
-func (s *Store) ListUsers(page, pageSize int, search string) ([]*customer.User, int64, error) {
+func (r *UserRepository) List(ctx context.Context, page, pageSize int, search string) ([]*customer.User, int64, error) {
 	if page < 1 {
 		page = 1
 	}
@@ -87,7 +95,7 @@ func (s *Store) ListUsers(page, pageSize int, search string) ([]*customer.User, 
 		pageSize = 20
 	}
 
-	q := s.db.Model(&models.UserModel{})
+	q := r.db.WithContext(ctx).Model(&models.UserModel{})
 	if s := strings.TrimSpace(search); s != "" {
 		like := "%" + s + "%"
 		q = q.Where("username ILIKE ? OR email ILIKE ?", like, like)
@@ -113,14 +121,11 @@ func (s *Store) ListUsers(page, pageSize int, search string) ([]*customer.User, 
 	return users, total, nil
 }
 
-// UpdateUser persists the mutable fields (username, email, role) of an
-// existing user. PasswordHash/IsActive tidak diubah di sini — gunakan
-// SetPasswordHash/SetUserActive.
-func (s *Store) UpdateUser(u *customer.User) error {
+func (r *UserRepository) Update(ctx context.Context, u *customer.User) error {
 	if u == nil || u.ID == 0 {
 		return ErrInvalidArgument
 	}
-	res := s.db.Model(&models.UserModel{}).Where("id = ?", u.ID).Updates(map[string]interface{}{
+	res := r.db.WithContext(ctx).Model(&models.UserModel{}).Where("id = ?", u.ID).Updates(map[string]any{
 		"username": u.Username,
 		"email":    u.Email,
 		"role":     u.Role,
@@ -134,9 +139,8 @@ func (s *Store) UpdateUser(u *customer.User) error {
 	return nil
 }
 
-// DeleteUser removes a user row entirely.
-func (s *Store) DeleteUser(id uint) error {
-	res := s.db.Delete(&models.UserModel{}, id)
+func (r *UserRepository) Delete(ctx context.Context, id uint) error {
+	res := r.db.WithContext(ctx).Delete(&models.UserModel{}, id)
 	if res.Error != nil {
 		return res.Error
 	}
@@ -146,12 +150,11 @@ func (s *Store) DeleteUser(id uint) error {
 	return nil
 }
 
-// SetPasswordHash overwrites the bcrypt hash of a user's password.
-func (s *Store) SetPasswordHash(id uint, hash string) error {
+func (r *UserRepository) UpdatePassword(ctx context.Context, id uint, hash string) error {
 	if id == 0 || hash == "" {
 		return ErrInvalidArgument
 	}
-	res := s.db.Model(&models.UserModel{}).Where("id = ?", id).Update("password_hash", hash)
+	res := r.db.WithContext(ctx).Model(&models.UserModel{}).Where("id = ?", id).Update("password_hash", hash)
 	if res.Error != nil {
 		return res.Error
 	}
@@ -161,12 +164,11 @@ func (s *Store) SetPasswordHash(id uint, hash string) error {
 	return nil
 }
 
-// SetUserActive flips the is_active flag of a user.
-func (s *Store) SetUserActive(id uint, active bool) error {
+func (r *UserRepository) UpdateStatus(ctx context.Context, id uint, active bool) error {
 	if id == 0 {
 		return ErrInvalidArgument
 	}
-	res := s.db.Model(&models.UserModel{}).Where("id = ?", id).Update("is_active", active)
+	res := r.db.WithContext(ctx).Model(&models.UserModel{}).Where("id = ?", id).Update("is_active", active)
 	if res.Error != nil {
 		return res.Error
 	}
@@ -174,4 +176,49 @@ func (s *Store) SetUserActive(id uint, active bool) error {
 		return ErrNotFound
 	}
 	return nil
+}
+
+// Backward compatibility methods on Store delegating to UserRepository
+func (s *Store) CreateUser(ctx context.Context, user *customer.User) error {
+	return NewUserRepository(s.db).Create(ctx, user)
+}
+
+func (s *Store) FindUserByID(ctx context.Context, id uint) (*customer.User, error) {
+	return NewUserRepository(s.db).FindByID(ctx, id)
+}
+
+func (s *Store) FindUserByUsername(ctx context.Context, username string) (*customer.User, error) {
+	return NewUserRepository(s.db).FindByUsername(ctx, username)
+}
+
+func (s *Store) FindUserByEmail(ctx context.Context, email string) (*customer.User, error) {
+	return NewUserRepository(s.db).FindByEmail(ctx, email)
+}
+
+func (s *Store) CountUsers(ctx context.Context) (int64, error) {
+	return NewUserRepository(s.db).Count(ctx)
+}
+
+func (s *Store) FindAllUsers(ctx context.Context) ([]*customer.User, error) {
+	return NewUserRepository(s.db).FindAll(ctx)
+}
+
+func (s *Store) ListUsers(ctx context.Context, page, pageSize int, search string) ([]*customer.User, int64, error) {
+	return NewUserRepository(s.db).List(ctx, page, pageSize, search)
+}
+
+func (s *Store) UpdateUser(ctx context.Context, u *customer.User) error {
+	return NewUserRepository(s.db).Update(ctx, u)
+}
+
+func (s *Store) DeleteUser(ctx context.Context, id uint) error {
+	return NewUserRepository(s.db).Delete(ctx, id)
+}
+
+func (s *Store) SetPasswordHash(ctx context.Context, id uint, hash string) error {
+	return NewUserRepository(s.db).UpdatePassword(ctx, id, hash)
+}
+
+func (s *Store) SetUserActive(ctx context.Context, id uint, active bool) error {
+	return NewUserRepository(s.db).UpdateStatus(ctx, id, active)
 }

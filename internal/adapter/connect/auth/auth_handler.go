@@ -4,73 +4,38 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"net/http"
 	"strings"
 	"time"
 
 	"connectrpc.com/connect"
-	"golang.org/x/crypto/bcrypt"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/adapter/auth"
-	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
-	"github.com/quixiq/polyglot/internal/adapter/postgres"
+	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
+	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
+	userUC "github.com/quixiq/polyglot/internal/usecase/user"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 const BearerScheme = "Bearer"
 
-// MaxLoginAttemptsPerWindow caps failed login attempts before lockout.
-const MaxLoginAttemptsPerWindow = 5
-
-// LoginRateLimitWindow is the sliding window for login attempts.
-const LoginRateLimitWindow = "15m"
-
-// LoginRateLimiter is the subset of the Redis store used for login throttling.
-type LoginRateLimiter interface {
-	IncrementRateLimit(ctx context.Context, scope, window string, ttl time.Duration) (int64, error)
-	GetRateLimitCount(ctx context.Context, scope, window string) (int64, error)
-	ResetRateLimit(ctx context.Context, scope, window string) error
-}
-
-// RoleResolver resolves the roles of a user from Casbin (multi-role), falling
-// back to the single role column for users without group assignments.
-type RoleResolver interface {
-	GetRolesForUser(user string) ([]string, error)
-}
-
-// PermissionResolver resolves the effective permissions of a user from Casbin
-// (including role-group inheritance), flattened to "resource:action" strings.
-type PermissionResolver interface {
-	GetImplicitPermissionsForUser(user string) ([]string, error)
-}
-
 type AuthConnectHandler struct {
-	pgStore    *postgres.Store
-	jwtService *auth.JWTService
-	refreshSvc *auth.RefreshTokenService
-	rateLimit  LoginRateLimiter
-	roles      RoleResolver
-	perms      PermissionResolver
-	secure     bool
+	authUC    *authUC.AuthUseCase
+	refreshUC *authUC.RefreshTokenUseCase
+	userUC    *userUC.ManageUserUseCase
+	secure    bool
 }
 
 func NewAuthConnectHandler(
-	pgStore *postgres.Store,
-	jwtService *auth.JWTService,
-	refreshSvc *auth.RefreshTokenService,
-	rateLimit LoginRateLimiter,
-	roles RoleResolver,
-	perms PermissionResolver,
+	authUC *authUC.AuthUseCase,
+	refreshUC *authUC.RefreshTokenUseCase,
+	userUC *userUC.ManageUserUseCase,
 	secure bool,
 ) *AuthConnectHandler {
 	return &AuthConnectHandler{
-		pgStore:    pgStore,
-		jwtService: jwtService,
-		refreshSvc: refreshSvc,
-		rateLimit:  rateLimit,
-		roles:      roles,
-		perms:      perms,
-		secure:     secure,
+		authUC:    authUC,
+		refreshUC: refreshUC,
+		userUC:    userUC,
+		secure:    secure,
 	}
 }
 
@@ -79,260 +44,123 @@ func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[dev
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("username and password are required"))
 	}
 
-	if h.pgStore == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("database store unavailable"))
-	}
-
-	// Rate limit: 5 percobaan / 15 menit per username+IP. Dilakukan SEBELUM
-	// bcrypt supaya attacker tidak bisa memakai endpoint ini sebagai oracle
-	// timing/cost (doS). Scope memakai username supaya lockout mengikuti akun,
-	// bukan sekadar IP yang bisa berganti-ganti.
 	clientIP := clientIPFromRequest(req)
-	rlScope := "login:" + req.Msg.Username + ":" + clientIP
-	if h.rateLimit != nil {
-		attempts, err := h.rateLimit.GetRateLimitCount(ctx, rlScope, LoginRateLimitWindow)
-		if err == nil && attempts >= MaxLoginAttemptsPerWindow {
-			return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("too many login attempts, try again later"))
-		}
-	}
-
-	user, err := h.pgStore.FindUserByUsername(req.Msg.Username)
+	res, err := h.authUC.Login(ctx, req.Msg.Username, req.Msg.Password, clientIP)
 	if err != nil {
-		if errors.Is(err, postgres.ErrNotFound) {
-			h.recordFailedLogin(ctx, rlScope)
-			return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid username or password"))
+		if errors.Is(err, authUC.ErrTooManyAttempts) {
+			return nil, connect.NewError(connect.CodeResourceExhausted, err)
 		}
-		return nil, connect.NewError(connect.CodeInternal, err)
-	}
-
-	// Akun nonaktif tidak boleh login (di-disable via UserService.ToggleActive).
-	if !user.IsActive {
-		h.recordFailedLogin(ctx, rlScope)
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("account is disabled"))
-	}
-
-	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(req.Msg.Password)); err != nil {
-		h.recordFailedLogin(ctx, rlScope)
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid username or password"))
-	}
-
-	// Login sukses → reset counter.
-	if h.rateLimit != nil {
-		_ = h.rateLimit.ResetRateLimit(ctx, rlScope, LoginRateLimitWindow)
-	}
-
-	// Roles dari Casbin g (multi-role, source of truth); fallback ke kolom
-	// role tunggal bila user belum punya assignment grup.
-	roles := h.resolveRoles(user.ID, user.Role)
-	permissions := h.resolvePermissions(user.ID)
-
-	accessToken, err := h.jwtService.GenerateToken(user.ID, user.Email, roles, user.TenantID)
-	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to generate auth token"))
-	}
-
-	// Issue refresh token + set cookie httpOnly. Cookie dikirim via response
-	// header (browser otomatis mengirimnya di request berikutnya).
-	var refreshToken string
-	if h.refreshSvc != nil {
-		refreshToken, err = h.refreshSvc.Issue(ctx, auth.RefreshClaims{
-			UserID:   user.ID,
-			Roles:    roles,
-			TenantID: user.TenantID,
-		})
-		if err != nil {
-			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to issue refresh token"))
+		if errors.Is(err, authUC.ErrInvalidCredentials) {
+			return nil, connect.NewError(connect.CodeUnauthenticated, err)
 		}
+		if errors.Is(err, authUC.ErrAccountInactive) {
+			return nil, connect.NewError(connect.CodePermissionDenied, err)
+		}
+		return nil, response.MapDomainError(err)
 	}
 
-	res := connect.NewResponse(&devicepb.LoginResponse{
-		Token: accessToken,
-		User: &devicepb.UserProfile{
-			Id:          fmt.Sprintf("%d", user.ID),
-			Username:    user.Username,
-			Email:       user.Email,
-			Role:        user.Role,
-			Roles:       roles,
-			Permissions: permissions,
-		},
-		ExpiresAtUnix: time.Now().Add(h.jwtService.ExpiryDuration()).Unix(),
+	profile := DomainUserToProfile(res.User, res.Roles, res.Permissions)
+	now := time.Now()
+
+	resp := connect.NewResponse(&devicepb.LoginResponse{
+		Token:         res.AccessToken,
+		User:          profile,
+		ExpiresAtUnix: now.Add(24 * time.Hour).Unix(),
 	})
-	if h.refreshSvc != nil && refreshToken != "" {
-		auth.SetRefreshCookieHeader(res.Header(), refreshToken, h.refreshSvc.TTL(), h.secure)
+
+	if res.RefreshToken != "" {
+		iauth.SetRefreshTokenCookie(resp.Header(), res.RefreshToken, iauth.RefreshTokenLifetime, h.secure)
 	}
-	return res, nil
+
+	return resp, nil
 }
 
 func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[devicepb.GetMeRequest]) (*connect.Response[devicepb.GetMeResponse], error) {
 	authHeader := req.Header().Get("Authorization")
 	if authHeader == "" {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("unauthorized: missing authorization header"))
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("authorization header missing"))
 	}
 
 	parts := strings.SplitN(authHeader, " ", 2)
 	if len(parts) != 2 || !strings.EqualFold(parts[0], BearerScheme) {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("unauthorized: invalid authorization header format"))
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid authorization header format"))
 	}
 
-	claims, err := h.jwtService.ValidateToken(parts[1])
+	tokenStr := parts[1]
+	userIDStr, _, _, err := h.authUC.TokenService().ValidateAccessToken(tokenStr)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("unauthorized: %w", err))
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid or expired token"))
 	}
 
-	permissions := h.resolvePermissions(claims.UserID)
+	var uid uint
+	fmt.Sscanf(userIDStr, "%d", &uid)
 
-	if h.pgStore != nil {
-		user, err := h.pgStore.FindUserByID(claims.UserID)
-		if err == nil && user != nil {
-			return connect.NewResponse(&devicepb.GetMeResponse{
-				User: &devicepb.UserProfile{
-					Id:          fmt.Sprintf("%d", user.ID),
-					Username:    user.Username,
-					Email:       user.Email,
-					Role:        user.Role,
-					Roles:       claims.Roles,
-					Permissions: permissions,
-				},
-			}), nil
-		}
+	user, err := h.userUC.GetUser(ctx, uid)
+	if err != nil {
+		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("user not found"))
 	}
 
-	return connect.NewResponse(&devicepb.GetMeResponse{
-		User: &devicepb.UserProfile{
-			Id:          fmt.Sprintf("%d", claims.UserID),
-			Username:    claims.Email,
-			Email:       claims.Email,
-			Role:        claims.Role,
-			Roles:       claims.Roles,
-			Permissions: permissions,
-		},
-	}), nil
+	roles, _ := h.userUC.GetRoles(ctx, uid)
+	perms, _ := h.userUC.GetPermissions(ctx, uid)
+
+	profile := DomainUserToProfile(user, roles, perms)
+	return connect.NewResponse(&devicepb.GetMeResponse{User: profile}), nil
 }
 
 func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Request[devicepb.RefreshTokenRequest]) (*connect.Response[devicepb.RefreshTokenResponse], error) {
-	if h.refreshSvc == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("refresh token service unavailable"))
+	rawToken := req.Msg.RefreshToken
+	if rawToken == "" {
+		rawToken = iauth.ExtractRefreshTokenCookie(req.Header())
+	}
+	if rawToken == "" {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("refresh token is required"))
 	}
 
-	// Refresh token diambil dari cookie httpOnly (browser) atau body (non-browser).
-	oldToken := auth.ReadRefreshToken(req.Header(), req.Msg.RefreshToken)
-	if oldToken == "" {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("missing refresh token"))
-	}
-
-	newToken, claims, err := h.refreshSvc.Rotate(ctx, oldToken)
+	res, err := h.refreshUC.Refresh(ctx, rawToken)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid or expired refresh token"))
+		if errors.Is(err, authUC.ErrInvalidRefreshToken) {
+			return nil, connect.NewError(connect.CodeUnauthenticated, err)
+		}
+		return nil, response.MapDomainError(err)
 	}
 
-	// Rotasi: identity diambil dari refresh claims (bukan dari token lama yang
-	// bisa di-forge), akses token baru di-generate.
-	accessToken, err := h.jwtService.GenerateToken(claims.UserID, "", claims.Roles, claims.TenantID)
-	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to generate auth token"))
-	}
-
-	res := connect.NewResponse(&devicepb.RefreshTokenResponse{
-		Token:                accessToken,
-		ExpiresAtUnix:        time.Now().Add(h.jwtService.ExpiryDuration()).Unix(),
-		RefreshExpiresAtUnix: time.Now().Add(h.refreshSvc.TTL()).Unix(),
+	now := time.Now()
+	resp := connect.NewResponse(&devicepb.RefreshTokenResponse{
+		Token:                res.AccessToken,
+		ExpiresAtUnix:        now.Add(24 * time.Hour).Unix(),
+		RefreshExpiresAtUnix: now.Add(iauth.RefreshTokenLifetime).Unix(),
 	})
-	auth.SetRefreshCookieHeader(res.Header(), newToken, h.refreshSvc.TTL(), h.secure)
-	return res, nil
+
+	if res.RefreshToken != "" {
+		iauth.SetRefreshTokenCookie(resp.Header(), res.RefreshToken, iauth.RefreshTokenLifetime, h.secure)
+	}
+
+	return resp, nil
 }
 
 func (h *AuthConnectHandler) Logout(ctx context.Context, req *connect.Request[devicepb.LogoutRequest]) (*connect.Response[devicepb.LogoutResponse], error) {
-	if h.refreshSvc != nil {
-		token := auth.ReadRefreshToken(req.Header(), "")
-		_ = h.refreshSvc.Revoke(ctx, token)
+	rawToken := iauth.ExtractRefreshTokenCookie(req.Header())
+	if rawToken != "" && h.refreshUC != nil {
+		_ = h.refreshUC.Revoke(ctx, rawToken)
 	}
-	res := connect.NewResponse(&devicepb.LogoutResponse{Success: true})
-	auth.ClearRefreshCookieHeader(res.Header())
-	return res, nil
+
+	resp := connect.NewResponse(&devicepb.LogoutResponse{
+		Success: true,
+	})
+	iauth.ClearRefreshTokenCookie(resp.Header(), h.secure)
+
+	return resp, nil
 }
 
-func (h *AuthConnectHandler) recordFailedLogin(ctx context.Context, scope string) {
-	if h.rateLimit == nil {
-		return
-	}
-	_, _ = h.rateLimit.IncrementRateLimit(ctx, scope, LoginRateLimitWindow, 15*time.Minute)
-}
-
-func (h *AuthConnectHandler) resolveRoles(userID uint, fallbackRole string) []string {
-	if h.roles != nil {
-		if roles, err := h.roles.GetRolesForUser(auth.UserIDToRef(userID)); err == nil && len(roles) > 0 {
-			return roles
+func clientIPFromRequest[T any](req *connect.Request[T]) string {
+	if xff := req.Header().Get("X-Forwarded-For"); xff != "" {
+		parts := strings.Split(xff, ",")
+		if len(parts) > 0 && strings.TrimSpace(parts[0]) != "" {
+			return strings.TrimSpace(parts[0])
 		}
 	}
-	if fallbackRole != "" {
-		return []string{fallbackRole}
+	if xri := req.Header().Get("X-Real-IP"); xri != "" {
+		return strings.TrimSpace(xri)
 	}
-	return nil
-}
-
-func (h *AuthConnectHandler) resolvePermissions(userID uint) []string {
-	if h.perms == nil {
-		return nil
-	}
-	if perms, err := h.perms.GetImplicitPermissionsForUser(auth.UserIDToRef(userID)); err == nil {
-		return perms
-	}
-	return nil
-}
-
-func clientIPFromRequest(req *connect.Request[devicepb.LoginRequest]) string {
-	xff := req.Header().Get("X-Forwarded-For")
-	if xff != "" {
-		first := strings.Split(xff, ",")[0]
-		if ip := strings.TrimSpace(first); ip != "" {
-			return ip
-		}
-	}
-	host := req.Peer().Addr
-	if host == "" {
-		host = "unknown"
-	}
-	// strip port
-	if idx := strings.LastIndex(host, ":"); idx > 0 {
-		host = host[:idx]
-	}
-	return host
-}
-
-func NewAuthServiceHandler(
-	pgStore *postgres.Store,
-	jwtService *auth.JWTService,
-	refreshSvc *auth.RefreshTokenService,
-	rateLimit LoginRateLimiter,
-	roles RoleResolver,
-	perms PermissionResolver,
-	secure bool,
-) (string, http.Handler) {
-	handler := NewAuthConnectHandler(pgStore, jwtService, refreshSvc, rateLimit, roles, perms, secure)
-	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
-
-	serviceName := "polyglot.v1.AuthService"
-	mux.Handle("/"+serviceName+"/Login", connect.NewUnaryHandler(
-		"/"+serviceName+"/Login",
-		handler.Login,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/GetMe", connect.NewUnaryHandler(
-		"/"+serviceName+"/GetMe",
-		handler.GetMe,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/RefreshToken", connect.NewUnaryHandler(
-		"/"+serviceName+"/RefreshToken",
-		handler.RefreshToken,
-		codecOpt,
-	))
-	mux.Handle("/"+serviceName+"/Logout", connect.NewUnaryHandler(
-		"/"+serviceName+"/Logout",
-		handler.Logout,
-		codecOpt,
-	))
-
-	return "/" + serviceName + "/", mux
+	return "unknown"
 }

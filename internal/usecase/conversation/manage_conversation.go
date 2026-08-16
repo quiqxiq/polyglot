@@ -1,6 +1,7 @@
 package conversation
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"time"
@@ -11,35 +12,20 @@ import (
 
 var ErrNotFound = errors.New("conversation not found")
 
-type ConversationRepository interface {
-	FindActiveConversationByCustomer(sessionID uint, customerNumber string) (*bot.Conversation, error)
-	CreateConversation(conv *bot.Conversation) error
-	FindConversationByID(id uint) (*bot.Conversation, error)
-	FindConversationByIDWithMessages(id uint) (*bot.Conversation, error)
-	FindConversationsByStatus(status bot.ConversationStatus) ([]bot.Conversation, error)
-	FindConversationsBySessionID(sessionID uint) ([]bot.Conversation, error)
-	FindAllConversations() ([]bot.Conversation, error)
-	UpdateConversation(conv *bot.Conversation) error
-	CreateMessage(msg *bot.Message) error
-	FindRecentMessages(conversationID uint, limit int) ([]bot.Message, error)
-}
-
 type ConversationService struct {
-	repo      ConversationRepository
+	repo      port.ConversationRepository
 	publisher port.EventPublisher
 }
 
 // SetPublisher wires the realtime broadcaster (SSE hub) so conversation
 // status changes (take-over, bot reset, close, escalation) are pushed to the
-// frontend immediately. Di-set setelah konstruksi karena SSE hub dibangun
-// sebelum usecase di app wiring.
+// frontend immediately.
 func (s *ConversationService) SetPublisher(p port.EventPublisher) {
 	s.publisher = p
 }
 
 // ConversationStatusEvent is the SSE payload broadcast on every conversation
-// status change — dikonsumsi useWARealtimeStream di frontend untuk refresh
-// daftar percakapan & bar status konteks tanpa polling.
+// status change.
 type ConversationStatusEvent struct {
 	ConversationID uint   `json:"conversation_id"`
 	SessionID      uint   `json:"session_id"`
@@ -61,16 +47,16 @@ func (s *ConversationService) publishStatusChange(conv *bot.Conversation) {
 
 type Service = ConversationService
 
-func NewConversationService(repo ConversationRepository) *ConversationService {
+func NewConversationService(repo port.ConversationRepository) *ConversationService {
 	return &ConversationService{repo: repo}
 }
 
-func NewService(repo ConversationRepository) *ConversationService {
+func NewService(repo port.ConversationRepository) *ConversationService {
 	return NewConversationService(repo)
 }
 
-func (s *ConversationService) GetOrCreateConversation(sessionID uint, customerNumber string) (*bot.Conversation, error) {
-	conv, err := s.repo.FindActiveConversationByCustomer(sessionID, customerNumber)
+func (s *ConversationService) GetOrCreateConversation(ctx context.Context, sessionID uint, customerNumber string) (*bot.Conversation, error) {
+	conv, err := s.repo.FindActiveConversationByCustomer(ctx, sessionID, customerNumber)
 	if err == nil {
 		return conv, nil
 	}
@@ -81,13 +67,13 @@ func (s *ConversationService) GetOrCreateConversation(sessionID uint, customerNu
 		Status:           bot.StatusBot,
 		StartedAt:        time.Now(),
 	}
-	if err := s.repo.CreateConversation(newConv); err != nil {
+	if err := s.repo.CreateConversation(ctx, newConv); err != nil {
 		return nil, err
 	}
 	return newConv, nil
 }
 
-func (s *ConversationService) AddMessageWithConfig(convID uint, senderType string, content string, tokenIn, tokenOut int, llmConfigID *uint) (*bot.Message, error) {
+func (s *ConversationService) AddMessageWithConfig(ctx context.Context, convID uint, senderType string, content string, tokenIn, tokenOut int, llmConfigID *uint) (*bot.Message, error) {
 	if convID == 0 {
 		return nil, errors.New("conversation id is required")
 	}
@@ -100,18 +86,18 @@ func (s *ConversationService) AddMessageWithConfig(convID uint, senderType strin
 		LLMConfigID:    llmConfigID,
 		CreatedAt:      time.Now(),
 	}
-	if err := s.repo.CreateMessage(msg); err != nil {
+	if err := s.repo.CreateMessage(ctx, msg); err != nil {
 		return nil, fmt.Errorf("persist message: %w", err)
 	}
 	return msg, nil
 }
 
-func (s *ConversationService) AddMessage(convID uint, senderType, content string, tokenIn, tokenOut int) (*bot.Message, error) {
-	return s.AddMessageWithConfig(convID, senderType, content, tokenIn, tokenOut, nil)
+func (s *ConversationService) AddMessage(ctx context.Context, convID uint, senderType, content string, tokenIn, tokenOut int) (*bot.Message, error) {
+	return s.AddMessageWithConfig(ctx, convID, senderType, content, tokenIn, tokenOut, nil)
 }
 
-func (s *ConversationService) GetHistory(convID uint, limit int) ([]bot.Message, error) {
-	conv, err := s.repo.FindConversationByIDWithMessages(convID)
+func (s *ConversationService) GetHistory(ctx context.Context, convID uint, limit int) ([]bot.Message, error) {
+	conv, err := s.repo.FindConversationByIDWithMessages(ctx, convID)
 	if err != nil {
 		return nil, err
 	}
@@ -120,84 +106,85 @@ func (s *ConversationService) GetHistory(convID uint, limit int) ([]bot.Message,
 
 // GetRecentHistory returns the most recent N messages of a conversation in
 // ascending (chronological) order — used to build the LLM prompt context.
-func (s *ConversationService) GetRecentHistory(convID uint, limit int) ([]bot.Message, error) {
+func (s *ConversationService) GetRecentHistory(ctx context.Context, convID uint, limit int) ([]bot.Message, error) {
 	if limit <= 0 {
 		limit = 20
 	}
-	return s.repo.FindRecentMessages(convID, limit)
+	return s.repo.FindRecentMessages(ctx, convID, limit)
 }
 
-func (s *ConversationService) Escalate(convID uint) error {
-	conv, err := s.repo.FindConversationByID(convID)
+func (s *ConversationService) Escalate(ctx context.Context, convID uint) error {
+	conv, err := s.repo.FindConversationByID(ctx, convID)
 	if err != nil {
 		return err
 	}
 	conv.Status = bot.StatusEscalation
-	if err := s.repo.UpdateConversation(conv); err != nil {
+	if err := s.repo.UpdateConversation(ctx, conv); err != nil {
 		return err
 	}
 	s.publishStatusChange(conv)
 	return nil
 }
 
-func (s *ConversationService) ResetBot(convID uint) error {
-	conv, err := s.repo.FindConversationByID(convID)
+func (s *ConversationService) ResetBot(ctx context.Context, convID uint) error {
+	conv, err := s.repo.FindConversationByID(ctx, convID)
 	if err != nil {
 		return err
 	}
 	conv.Status = bot.StatusBot
 	conv.AssignedAgentID = nil
-	if err := s.repo.UpdateConversation(conv); err != nil {
+	if err := s.repo.UpdateConversation(ctx, conv); err != nil {
 		return err
 	}
 	s.publishStatusChange(conv)
 	return nil
 }
 
-func (s *ConversationService) TakeOver(convID uint, agentID uint) error {
-	conv, err := s.repo.FindConversationByID(convID)
+func (s *ConversationService) TakeOver(ctx context.Context, convID uint, agentID uint) error {
+	conv, err := s.repo.FindConversationByID(ctx, convID)
 	if err != nil {
 		return err
 	}
 	conv.Status = bot.StatusEscalation
 	conv.AssignedAgentID = &agentID
-	if err := s.repo.UpdateConversation(conv); err != nil {
+	if err := s.repo.UpdateConversation(ctx, conv); err != nil {
 		return err
 	}
 	s.publishStatusChange(conv)
 	return nil
 }
 
-func (s *ConversationService) CloseConversation(convID uint) error {
-	conv, err := s.repo.FindConversationByID(convID)
+func (s *ConversationService) CloseConversation(ctx context.Context, convID uint) error {
+	conv, err := s.repo.FindConversationByID(ctx, convID)
 	if err != nil {
 		return err
 	}
 	conv.Status = bot.StatusDone
-	if err := s.repo.UpdateConversation(conv); err != nil {
+	if err := s.repo.UpdateConversation(ctx, conv); err != nil {
 		return err
 	}
 	s.publishStatusChange(conv)
 	return nil
 }
 
-func (s *ConversationService) GetConversation(id uint) (*bot.Conversation, error) {
-	return s.repo.FindConversationByID(id)
+func (s *ConversationService) GetConversation(ctx context.Context, id uint) (*bot.Conversation, error) {
+	return s.repo.FindConversationByID(ctx, id)
 }
 
-func (s *ConversationService) GetConversationWithMessages(id uint) (*bot.Conversation, error) {
-	return s.repo.FindConversationByIDWithMessages(id)
+func (s *ConversationService) GetConversationWithMessages(ctx context.Context, id uint) (*bot.Conversation, error) {
+	return s.repo.FindConversationByIDWithMessages(ctx, id)
 }
 
-func (s *ConversationService) ListConversations(status string) ([]bot.Conversation, error) {
+func (s *ConversationService) ListConversations(ctx context.Context, status string) ([]bot.Conversation, error) {
 	if status != "" {
-		return s.repo.FindConversationsByStatus(bot.ConversationStatus(status))
+		return s.repo.FindConversationsByStatus(ctx, bot.ConversationStatus(status))
 	}
-	return s.repo.FindAllConversations()
+	return s.repo.FindAllConversations(ctx)
 }
 
 // ListConversationsBySession returns all conversations belonging to one WA
 // session (perangkat), terbaru lebih dulu.
-func (s *ConversationService) ListConversationsBySession(sessionID uint) ([]bot.Conversation, error) {
-	return s.repo.FindConversationsBySessionID(sessionID)
+func (s *ConversationService) ListConversationsBySession(ctx context.Context, sessionID uint) ([]bot.Conversation, error) {
+	return s.repo.FindConversationsBySessionID(ctx, sessionID)
 }
+

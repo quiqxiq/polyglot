@@ -1,13 +1,18 @@
 package postgres
 
 import (
+	"context"
 	"errors"
 
 	"gorm.io/gorm"
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
 	"github.com/quixiq/polyglot/internal/domain/llm"
+	"github.com/quixiq/polyglot/internal/port"
 )
+
+// Ensure Store satisfies port.LLMConfigRepository at compile time.
+var _ port.LLMConfigRepository = (*Store)(nil)
 
 type tokenStats struct {
 	TotalIn  int64
@@ -15,44 +20,16 @@ type tokenStats struct {
 	Count    int64
 }
 
-func (s *Store) Create(config *llm.LLMConfig) error {
-	return s.CreateLLMConfig(config)
-}
-
-func (s *Store) FindByID(id uint) (*llm.LLMConfig, error) {
-	return s.FindLLMConfigByID(id)
-}
-
-func (s *Store) FindActive() (*llm.LLMConfig, error) {
-	return s.FindActiveLLMConfig()
-}
-
-func (s *Store) FindAll() ([]llm.LLMConfig, error) {
-	return s.FindAllLLMConfigs()
-}
-
-func (s *Store) Update(config *llm.LLMConfig) error {
-	return s.UpdateLLMConfig(config)
-}
-
-func (s *Store) SetActive(id uint) error {
-	return s.SetActiveLLMConfig(id)
-}
-
-func (s *Store) Delete(id uint) error {
-	return s.DeleteLLMConfig(id)
-}
-
-func (s *Store) CreateLLMConfig(config *llm.LLMConfig) error {
+func (s *Store) Create(ctx context.Context, config *llm.Config) error {
 	m := models.LLMConfigModelFromDomain(config)
-	if err := s.db.Create(m).Error; err != nil {
+	if err := s.db.WithContext(ctx).Create(m).Error; err != nil {
 		return err
 	}
 	config.ID = m.ID
 	return nil
 }
 
-func (s *Store) PopulateLLMConfigAnalytics(config *llm.LLMConfig) {
+func (s *Store) PopulateLLMConfigAnalytics(ctx context.Context, config *llm.Config) {
 	if config == nil {
 		return
 	}
@@ -63,7 +40,7 @@ func (s *Store) PopulateLLMConfigAnalytics(config *llm.LLMConfig) {
 		costInRate, costOutRate = llm.GetDefaultModelPricing(config.Provider, config.Model)
 		config.CostPer1MInput = costInRate
 		config.CostPer1MOutput = costOutRate
-		_ = s.db.Model(&models.LLMConfigModel{}).Where("id = ?", config.ID).
+		_ = s.db.WithContext(ctx).Model(&models.LLMConfigModel{}).Where("id = ?", config.ID).
 			Updates(map[string]any{
 				"cost_per_1m_input":  costInRate,
 				"cost_per_1m_output": costOutRate,
@@ -71,7 +48,7 @@ func (s *Store) PopulateLLMConfigAnalytics(config *llm.LLMConfig) {
 	}
 
 	var stats tokenStats
-	err := s.db.Model(&models.MessageModel{}).
+	err := s.db.WithContext(ctx).Model(&models.MessageModel{}).
 		Select("COALESCE(SUM(token_in), 0) as total_in, COALESCE(SUM(token_out), 0) as total_out, COUNT(*) as count").
 		Where("llm_config_id = ? OR (llm_config_id IS NULL AND sender_type = 'bot')", config.ID).
 		Scan(&stats).Error
@@ -89,55 +66,55 @@ func (s *Store) PopulateLLMConfigAnalytics(config *llm.LLMConfig) {
 	}
 }
 
-func (s *Store) FindLLMConfigByID(id uint) (*llm.LLMConfig, error) {
+func (s *Store) FindByID(ctx context.Context, id uint) (*llm.Config, error) {
 	var m models.LLMConfigModel
-	if err := s.db.First(&m, id).Error; err != nil {
+	if err := s.db.WithContext(ctx).First(&m, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
 		}
 		return nil, err
 	}
 	cfg := m.ToDomain()
-	s.PopulateLLMConfigAnalytics(cfg)
+	s.PopulateLLMConfigAnalytics(ctx, cfg)
 	return cfg, nil
 }
 
-func (s *Store) FindActiveLLMConfig() (*llm.LLMConfig, error) {
+func (s *Store) FindActive(ctx context.Context) (*llm.Config, error) {
 	var m models.LLMConfigModel
-	if err := s.db.Where("is_active = ?", true).First(&m).Error; err != nil {
+	if err := s.db.WithContext(ctx).Where("is_active = ?", true).First(&m).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
 		}
 		return nil, err
 	}
 	cfg := m.ToDomain()
-	s.PopulateLLMConfigAnalytics(cfg)
+	s.PopulateLLMConfigAnalytics(ctx, cfg)
 	return cfg, nil
 }
 
-func (s *Store) FindAllLLMConfigs() ([]llm.LLMConfig, error) {
+func (s *Store) FindAll(ctx context.Context) ([]llm.Config, error) {
 	var mList []models.LLMConfigModel
-	if err := s.db.Order("created_at DESC").Find(&mList).Error; err != nil {
+	if err := s.db.WithContext(ctx).Order("created_at DESC").Find(&mList).Error; err != nil {
 		return nil, err
 	}
-	var res []llm.LLMConfig
+	var res []llm.Config
 	for _, m := range mList {
 		cfg := m.ToDomain()
 		if cfg != nil {
-			s.PopulateLLMConfigAnalytics(cfg)
+			s.PopulateLLMConfigAnalytics(ctx, cfg)
 			res = append(res, *cfg)
 		}
 	}
 	return res, nil
 }
 
-func (s *Store) UpdateLLMConfig(config *llm.LLMConfig) error {
+func (s *Store) Update(ctx context.Context, config *llm.Config) error {
 	m := models.LLMConfigModelFromDomain(config)
-	return s.db.Save(m).Error
+	return s.db.WithContext(ctx).Save(m).Error
 }
 
-func (s *Store) SetActiveLLMConfig(id uint) error {
-	return s.db.Transaction(func(tx *gorm.DB) error {
+func (s *Store) SetActive(ctx context.Context, id uint) error {
+	return s.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		if err := tx.Model(&models.LLMConfigModel{}).Where("is_active = ?", true).Update("is_active", false).Error; err != nil {
 			return err
 		}
@@ -152,6 +129,8 @@ func (s *Store) SetActiveLLMConfig(id uint) error {
 	})
 }
 
-func (s *Store) DeleteLLMConfig(id uint) error {
-	return s.db.Delete(&models.LLMConfigModel{}, id).Error
+func (s *Store) Delete(ctx context.Context, id uint) error {
+	return s.db.WithContext(ctx).Delete(&models.LLMConfigModel{}, id).Error
 }
+
+

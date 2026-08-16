@@ -40,27 +40,27 @@ func (f *fakeGateway) RestoreAllSessions([]bot.WASession) error    { return nil 
 
 type fakeRetriever struct{}
 
-func (f *fakeRetriever) Retrieve(context.Context, string) ([]knowledge.KnowledgeEntry, error) {
+func (f *fakeRetriever) Retrieve(context.Context, string) ([]knowledge.Entry, error) {
 	return nil, nil
 }
 
 type fakeLLMConfigRepo struct {
-	active *llm.LLMConfig
+	active *llm.Config
 	err    error
 }
 
-func (f *fakeLLMConfigRepo) Create(*llm.LLMConfig) error           { return nil }
-func (f *fakeLLMConfigRepo) FindByID(uint) (*llm.LLMConfig, error) { return f.active, nil }
-func (f *fakeLLMConfigRepo) FindActive() (*llm.LLMConfig, error) {
+func (f *fakeLLMConfigRepo) Create(context.Context, *llm.Config) error           { return nil }
+func (f *fakeLLMConfigRepo) FindByID(context.Context, uint) (*llm.Config, error) { return f.active, nil }
+func (f *fakeLLMConfigRepo) FindActive(context.Context) (*llm.Config, error) {
 	if f.err != nil {
 		return nil, f.err
 	}
 	return f.active, nil
 }
-func (f *fakeLLMConfigRepo) FindAll() ([]llm.LLMConfig, error) { return nil, nil }
-func (f *fakeLLMConfigRepo) Update(*llm.LLMConfig) error       { return nil }
-func (f *fakeLLMConfigRepo) SetActive(uint) error              { return nil }
-func (f *fakeLLMConfigRepo) Delete(uint) error                 { return nil }
+func (f *fakeLLMConfigRepo) FindAll(context.Context) ([]llm.Config, error) { return nil, nil }
+func (f *fakeLLMConfigRepo) Update(context.Context, *llm.Config) error       { return nil }
+func (f *fakeLLMConfigRepo) SetActive(context.Context, uint) error           { return nil }
+func (f *fakeLLMConfigRepo) Delete(context.Context, uint) error              { return nil }
 
 type fakePublisher struct {
 	events []string
@@ -70,7 +70,7 @@ func (f *fakePublisher) PublishEvent(eventType string, _ any) {
 	f.events = append(f.events, eventType)
 }
 
-// fakeConvRepo implements conversation.ConversationRepository in memory.
+// fakeConvRepo implements port.ConversationRepository in memory.
 type fakeConvRepo struct {
 	convs    map[uint]*bot.Conversation
 	msgs     map[uint][]bot.Message
@@ -87,7 +87,7 @@ func newFakeConvRepo() *fakeConvRepo {
 	}
 }
 
-func (f *fakeConvRepo) FindActiveConversationByCustomer(sessionID uint, customerNumber string) (*bot.Conversation, error) {
+func (f *fakeConvRepo) FindActiveConversationByCustomer(_ context.Context, sessionID uint, customerNumber string) (*bot.Conversation, error) {
 	for _, c := range f.convs {
 		if c.SessionID == sessionID && c.CustomerWANumber == customerNumber && (c.Status == bot.StatusBot || c.Status == bot.StatusEscalation) {
 			return c, nil
@@ -96,14 +96,14 @@ func (f *fakeConvRepo) FindActiveConversationByCustomer(sessionID uint, customer
 	return nil, convUC.ErrNotFound
 }
 
-func (f *fakeConvRepo) CreateConversation(conv *bot.Conversation) error {
+func (f *fakeConvRepo) CreateConversation(_ context.Context, conv *bot.Conversation) error {
 	conv.ID = f.nextConv
 	f.nextConv++
 	f.convs[conv.ID] = conv
 	return nil
 }
 
-func (f *fakeConvRepo) FindConversationByID(id uint) (*bot.Conversation, error) {
+func (f *fakeConvRepo) FindConversationByID(_ context.Context, id uint) (*bot.Conversation, error) {
 	c, ok := f.convs[id]
 	if !ok {
 		return nil, convUC.ErrNotFound
@@ -111,7 +111,7 @@ func (f *fakeConvRepo) FindConversationByID(id uint) (*bot.Conversation, error) 
 	return c, nil
 }
 
-func (f *fakeConvRepo) FindConversationByIDWithMessages(id uint) (*bot.Conversation, error) {
+func (f *fakeConvRepo) FindConversationByIDWithMessages(_ context.Context, id uint) (*bot.Conversation, error) {
 	c, ok := f.convs[id]
 	if !ok {
 		return nil, convUC.ErrNotFound
@@ -120,11 +120,11 @@ func (f *fakeConvRepo) FindConversationByIDWithMessages(id uint) (*bot.Conversat
 	return c, nil
 }
 
-func (f *fakeConvRepo) FindConversationsByStatus(bot.ConversationStatus) ([]bot.Conversation, error) {
+func (f *fakeConvRepo) FindConversationsByStatus(context.Context, bot.ConversationStatus) ([]bot.Conversation, error) {
 	return nil, nil
 }
 
-func (f *fakeConvRepo) FindConversationsBySessionID(sessionID uint) ([]bot.Conversation, error) {
+func (f *fakeConvRepo) FindConversationsBySessionID(_ context.Context, sessionID uint) ([]bot.Conversation, error) {
 	var res []bot.Conversation
 	for _, c := range f.convs {
 		if c.SessionID == sessionID {
@@ -134,28 +134,32 @@ func (f *fakeConvRepo) FindConversationsBySessionID(sessionID uint) ([]bot.Conve
 	return res, nil
 }
 
-func (f *fakeConvRepo) FindAllConversations() ([]bot.Conversation, error) {
+func (f *fakeConvRepo) FindAllConversations(context.Context) ([]bot.Conversation, error) {
 	return nil, nil
 }
 
-func (f *fakeConvRepo) UpdateConversation(conv *bot.Conversation) error {
+func (f *fakeConvRepo) UpdateConversation(_ context.Context, conv *bot.Conversation) error {
 	f.convs[conv.ID] = conv
 	return nil
 }
 
-func (f *fakeConvRepo) CreateMessage(msg *bot.Message) error {
+func (f *fakeConvRepo) CreateMessage(_ context.Context, msg *bot.Message) error {
 	msg.ID = f.nextMsg
 	f.nextMsg++
 	f.msgs[msg.ConversationID] = append(f.msgs[msg.ConversationID], *msg)
 	return nil
 }
 
-func (f *fakeConvRepo) FindRecentMessages(conversationID uint, limit int) ([]bot.Message, error) {
+func (f *fakeConvRepo) FindRecentMessages(_ context.Context, conversationID uint, limit int) ([]bot.Message, error) {
 	all := f.msgs[conversationID]
 	if len(all) <= limit {
 		return all, nil
 	}
 	return all[len(all)-limit:], nil
+}
+
+func (f *fakeConvRepo) FindMessagesByConversationID(_ context.Context, conversationID uint) ([]bot.Message, error) {
+	return f.msgs[conversationID], nil
 }
 
 // fakeChatRepo implements port.ChatRepository with a per-chat bot toggle.
@@ -167,30 +171,38 @@ func newFakeChatRepo() *fakeChatRepo {
 	return &fakeChatRepo{botEnabled: make(map[string]bool)}
 }
 
-func (f *fakeChatRepo) UpsertChat(*bot.WAChat) error                           { return nil }
-func (f *fakeChatRepo) UpsertMessage(*bot.WAMessage) (bool, error)             { return true, nil }
-func (f *fakeChatRepo) UpsertMessagesBatch(msgs []*bot.WAMessage) (int, error) { return len(msgs), nil }
-func (f *fakeChatRepo) IncrementUnread(uint, string) error                     { return nil }
-func (f *fakeChatRepo) MarkChatRead(uint, string) error                        { return nil }
-func (f *fakeChatRepo) SetChatUnread(uint, string, uint32) error               { return nil }
-func (f *fakeChatRepo) ListChats(uint, int, int, string) ([]bot.WAChat, error) {
+func (f *fakeChatRepo) UpsertChat(context.Context, *bot.WAChat) error                           { return nil }
+func (f *fakeChatRepo) UpsertMessage(context.Context, *bot.WAMessage) (bool, error)             { return true, nil }
+func (f *fakeChatRepo) UpsertMessagesBatch(context.Context, []*bot.WAMessage) (int, error)     { return len(f.botEnabled), nil }
+func (f *fakeChatRepo) IncrementUnread(context.Context, uint, string) error                     { return nil }
+func (f *fakeChatRepo) MarkChatRead(context.Context, uint, string) error                        { return nil }
+func (f *fakeChatRepo) SetChatUnread(context.Context, uint, string, uint32) error               { return nil }
+func (f *fakeChatRepo) ListChats(context.Context, uint, int, int, string) ([]bot.WAChat, error) {
 	return nil, nil
 }
-func (f *fakeChatRepo) ListChatMessages(uint, string, int, int) ([]bot.WAMessage, error) {
+func (f *fakeChatRepo) ListChatMessages(context.Context, uint, string, int, int) ([]bot.WAMessage, error) {
 	return nil, nil
 }
-func (f *fakeChatRepo) SetChatBotEnabled(_ uint, chatJID string, enabled bool) error {
+func (f *fakeChatRepo) SetChatBotEnabled(_ context.Context, _ uint, chatJID string, enabled bool) error {
 	f.botEnabled[chatJID] = enabled
 	return nil
 }
-func (f *fakeChatRepo) IsChatBotEnabled(_ uint, chatJID string) (bool, error) {
+func (f *fakeChatRepo) IsChatBotEnabled(_ context.Context, _ uint, chatJID string) (bool, error) {
 	if enabled, ok := f.botEnabled[chatJID]; ok {
 		return enabled, nil
 	}
 	return true, nil // default aktif
 }
-func (f *fakeChatRepo) MarkMessagesStatus(_ uint, _ string, _ []string, _ string) error { return nil }
-func (f *fakeChatRepo) MergeChatLID(_ uint, _, _ string) error                          { return nil }
+func (f *fakeChatRepo) MarkMessagesStatus(context.Context, uint, string, []string, string) error { return nil }
+func (f *fakeChatRepo) MergeChatLID(context.Context, uint, string, string) error                          { return nil }
+
+func testBotConfig() Config {
+	return Config{
+		SystemPrompt:       "Kamu adalah asisten layanan GNET.",
+		LLMMaxOutputTokens: 512,
+		AllowedTopics:      []string{"internet", "paket", "harga"},
+	}
+}
 
 func newTestEngine(cache port.CacheStore, gw *fakeGateway, llmRepo *fakeLLMConfigRepo, prov *fakeProvider, convRepo *fakeConvRepo) *Engine {
 	return newTestEngineWithChatRepoAndChat(cache, gw, llmRepo, prov, convRepo, newFakeChatRepo(), nil)
@@ -203,7 +215,7 @@ func newTestEngineWithChatRepo(cache port.CacheStore, gw *fakeGateway, llmRepo *
 func newTestEngineWithChatRepoAndChat(cache port.CacheStore, gw *fakeGateway, llmRepo *fakeLLMConfigRepo, prov *fakeProvider, convRepo *fakeConvRepo, chatRepo *fakeChatRepo, chat port.KnowledgeChat) *Engine {
 	svc := convUC.NewConversationService(convRepo)
 	return NewEngine(
-		testCfg(),
+		testBotConfig(),
 		cache,
 		gw,
 		svc,
@@ -212,7 +224,7 @@ func newTestEngineWithChatRepoAndChat(cache port.CacheStore, gw *fakeGateway, ll
 		llmRepo,
 		chatRepo,
 		&fakePublisher{},
-		func(*llm.LLMConfig) (port.LLMProvider, error) { return prov, nil },
+		func(*llm.Config) (port.LLMProvider, error) { return prov, nil },
 	)
 }
 
@@ -220,7 +232,7 @@ func TestEngineHappyPath(t *testing.T) {
 	cache := newFakeCache()
 	gw := &fakeGateway{}
 	prov := &fakeProvider{reply: "Harga paket mulai Rp150.000/bulan.", tokenIn: 42, tokenOut: 12}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.LLMConfig{ID: 1, Provider: "openai", Model: "gpt-4o", MaxOutputTokens: 256}}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1, Provider: "openai", Model: "gpt-4o", MaxOutputTokens: 256}}
 	convRepo := newFakeConvRepo()
 
 	e := newTestEngine(cache, gw, llmRepo, prov, convRepo)
@@ -287,7 +299,7 @@ func TestEngineAnythingLLMPrimary(t *testing.T) {
 	cache := newFakeCache()
 	gw := &fakeGateway{}
 	prov := &fakeProvider{reply: "seharusnya tidak dipanggil", tokenIn: 1, tokenOut: 1}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.LLMConfig{ID: 1}}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
 	convRepo := newFakeConvRepo()
 	chat := &fakeKnowledgeChat{result: port.KnowledgeChatResult{Content: "Jawaban dari AnythingLLM.", TokenIn: 10, TokenOut: 5}}
 
@@ -313,7 +325,7 @@ func TestEngineAnythingLLMFallback(t *testing.T) {
 	cache := newFakeCache()
 	gw := &fakeGateway{}
 	prov := &fakeProvider{reply: "Jawaban fallback lokal.", tokenIn: 7, tokenOut: 3}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.LLMConfig{ID: 1}}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
 	convRepo := newFakeConvRepo()
 	chat := &fakeKnowledgeChat{err: errors.New("anythingllm down")}
 
@@ -336,7 +348,7 @@ func TestEngineAnythingLLMEmptyFallback(t *testing.T) {
 	cache := newFakeCache()
 	gw := &fakeGateway{}
 	prov := &fakeProvider{reply: "Jawaban fallback."}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.LLMConfig{ID: 1}}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
 	convRepo := newFakeConvRepo()
 	chat := &fakeKnowledgeChat{result: port.KnowledgeChatResult{Content: "   "}}
 
@@ -353,15 +365,15 @@ func TestEngineEscalationMode(t *testing.T) {
 	cache := newFakeCache()
 	gw := &fakeGateway{}
 	prov := &fakeProvider{reply: "balasan"}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.LLMConfig{ID: 1}}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
 	convRepo := newFakeConvRepo()
 	svc := convUC.NewConversationService(convRepo)
 
-	conv, err := svc.GetOrCreateConversation(1, "628123456789")
+	conv, err := svc.GetOrCreateConversation(context.Background(), 1, "628123456789")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := svc.Escalate(conv.ID); err != nil {
+	if err := svc.Escalate(context.Background(), conv.ID); err != nil {
 		t.Fatal(err)
 	}
 
@@ -418,19 +430,19 @@ func TestEngineGetConversationContext(t *testing.T) {
 	cache := newFakeCache()
 	gw := &fakeGateway{}
 	prov := &fakeProvider{reply: "oke"}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.LLMConfig{ID: 1}}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
 	convRepo := newFakeConvRepo()
 	svc := convUC.NewConversationService(convRepo)
 
-	conv, err := svc.GetOrCreateConversation(1, "628123456789")
+	conv, err := svc.GetOrCreateConversation(context.Background(), 1, "628123456789")
 	if err != nil {
 		t.Fatal(err)
 	}
 	llmID := uint(1)
-	_, _ = svc.AddMessageWithConfig(conv.ID, "customer", "halo", 0, 0, nil)
-	_, _ = svc.AddMessageWithConfig(conv.ID, "bot", "hai", 10, 5, &llmID)
-	_, _ = svc.AddMessageWithConfig(conv.ID, "customer", "harga?", 0, 0, nil)
-	_, _ = svc.AddMessageWithConfig(conv.ID, "bot", "150rb", 20, 8, &llmID)
+	_, _ = svc.AddMessageWithConfig(context.Background(), conv.ID, "customer", "halo", 0, 0, nil)
+	_, _ = svc.AddMessageWithConfig(context.Background(), conv.ID, "bot", "hai", 10, 5, &llmID)
+	_, _ = svc.AddMessageWithConfig(context.Background(), conv.ID, "customer", "harga?", 0, 0, nil)
+	_, _ = svc.AddMessageWithConfig(context.Background(), conv.ID, "bot", "150rb", 20, 8, &llmID)
 	_ = cache.Set(context.Background(), fmt.Sprintf("summary:conv:%d", conv.ID), "Pelanggan tanya harga.", 60)
 
 	e := newTestEngine(cache, gw, llmRepo, prov, convRepo)
@@ -464,7 +476,7 @@ func TestEngineLLMError(t *testing.T) {
 	cache := newFakeCache()
 	gw := &fakeGateway{}
 	prov := &fakeProvider{err: errors.New("upstream down")}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.LLMConfig{ID: 1}}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
 	convRepo := newFakeConvRepo()
 
 	e := newTestEngine(cache, gw, llmRepo, prov, convRepo)
@@ -493,7 +505,7 @@ func TestEngineOffTopic(t *testing.T) {
 	cache := newFakeCache()
 	gw := &fakeGateway{}
 	prov := &fakeProvider{reply: "balasan"}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.LLMConfig{ID: 1}}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
 	convRepo := newFakeConvRepo()
 
 	e := newTestEngine(cache, gw, llmRepo, prov, convRepo)
@@ -513,7 +525,7 @@ func TestEngineChatBotDisabled(t *testing.T) {
 	cache := newFakeCache()
 	gw := &fakeGateway{}
 	prov := &fakeProvider{reply: "balasan"}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.LLMConfig{ID: 1}}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
 	convRepo := newFakeConvRepo()
 	chatRepo := newFakeChatRepo()
 	chatRepo.botEnabled["628123456789@s.whatsapp.net"] = false // agen matikan bot di chat ini
@@ -544,4 +556,4 @@ var _ port.KnowledgeRetriever = (*fakeRetriever)(nil)
 var _ port.LLMConfigRepository = (*fakeLLMConfigRepo)(nil)
 var _ port.EventPublisher = (*fakePublisher)(nil)
 var _ port.ChatRepository = (*fakeChatRepo)(nil)
-var _ convUC.ConversationRepository = (*fakeConvRepo)(nil)
+var _ port.ConversationRepository = (*fakeConvRepo)(nil)

@@ -18,8 +18,11 @@ type CasbinEnforcer struct {
 	enforcer *casbin.Enforcer
 }
 
-// Compile-time assertion that *CasbinEnforcer implements port.Authorizer
-var _ port.Authorizer = (*CasbinEnforcer)(nil)
+// Compile-time assertion that *CasbinEnforcer implements port.Authorizer and port.RoleAuthorizer
+var (
+	_ port.Authorizer     = (*CasbinEnforcer)(nil)
+	_ port.RoleAuthorizer = (*CasbinEnforcer)(nil)
+)
 
 // NewCasbinEnforcer initializes the Casbin Enforcer with GORM PostgreSQL storage.
 func NewCasbinEnforcer(ctx context.Context, db *gorm.DB) (*CasbinEnforcer, error) {
@@ -48,11 +51,17 @@ func NewCasbinEnforcer(ctx context.Context, db *gorm.DB) (*CasbinEnforcer, error
 
 // Enforce evaluates if a (subject, object, action) request is allowed.
 func (ce *CasbinEnforcer) Enforce(sub, obj, act string) (bool, error) {
+	if ce == nil || ce.enforcer == nil {
+		return false, nil
+	}
 	return ce.enforcer.Enforce(sub, obj, act)
 }
 
 // AddPolicy dynamically adds a new policy rule.
 func (ce *CasbinEnforcer) AddPolicy(role, obj, act string) (bool, error) {
+	if ce == nil || ce.enforcer == nil {
+		return false, fmt.Errorf("enforcer unavailable")
+	}
 	ok, err := ce.enforcer.AddPolicy(role, obj, act)
 	if err == nil && ok {
 		ce.persist()
@@ -62,6 +71,9 @@ func (ce *CasbinEnforcer) AddPolicy(role, obj, act string) (bool, error) {
 
 // RemovePolicy dynamically removes an existing policy rule.
 func (ce *CasbinEnforcer) RemovePolicy(role, obj, act string) (bool, error) {
+	if ce == nil || ce.enforcer == nil {
+		return false, fmt.Errorf("enforcer unavailable")
+	}
 	ok, err := ce.enforcer.RemovePolicy(role, obj, act)
 	if err == nil && ok {
 		ce.persist()
@@ -71,11 +83,25 @@ func (ce *CasbinEnforcer) RemovePolicy(role, obj, act string) (bool, error) {
 
 // GetPolicies retrieves all policy rules.
 func (ce *CasbinEnforcer) GetPolicies() ([][]string, error) {
+	if ce == nil || ce.enforcer == nil {
+		return nil, nil
+	}
 	return ce.enforcer.GetPolicy()
+}
+
+// GetGroupingPolicies retrieves all role assignments (g policies).
+func (ce *CasbinEnforcer) GetGroupingPolicies() ([][]string, error) {
+	if ce == nil || ce.enforcer == nil {
+		return nil, nil
+	}
+	return ce.enforcer.GetGroupingPolicy()
 }
 
 // AddRoleForUser assigns a role to a user.
 func (ce *CasbinEnforcer) AddRoleForUser(user, role string) (bool, error) {
+	if ce == nil || ce.enforcer == nil {
+		return false, fmt.Errorf("enforcer unavailable")
+	}
 	ok, err := ce.enforcer.AddRoleForUser(user, role)
 	if err == nil && ok {
 		ce.persist()
@@ -85,6 +111,9 @@ func (ce *CasbinEnforcer) AddRoleForUser(user, role string) (bool, error) {
 
 // DeleteRoleForUser revokes a role from a user.
 func (ce *CasbinEnforcer) DeleteRoleForUser(user, role string) (bool, error) {
+	if ce == nil || ce.enforcer == nil {
+		return false, fmt.Errorf("enforcer unavailable")
+	}
 	ok, err := ce.enforcer.DeleteRoleForUser(user, role)
 	if err == nil && ok {
 		ce.persist()
@@ -92,9 +121,11 @@ func (ce *CasbinEnforcer) DeleteRoleForUser(user, role string) (bool, error) {
 	return ok, err
 }
 
-// DeleteRolesForUser removes ALL role assignments of a user. Used when the
-// user itself is deleted — no orphan role mapping may remain.
+// DeleteRolesForUser removes ALL role assignments of a user.
 func (ce *CasbinEnforcer) DeleteRolesForUser(user string) (bool, error) {
+	if ce == nil || ce.enforcer == nil {
+		return false, fmt.Errorf("enforcer unavailable")
+	}
 	ok, err := ce.enforcer.DeleteRolesForUser(user)
 	if err == nil && ok {
 		ce.persist()
@@ -102,41 +133,35 @@ func (ce *CasbinEnforcer) DeleteRolesForUser(user string) (bool, error) {
 	return ok, err
 }
 
-// persist flushes the policy to the backing adapter (gorm in production).
-// Safe no-op for in-memory enforcers (unit tests) where GetAdapter() is nil.
-func (ce *CasbinEnforcer) persist() {
-	if ce == nil || ce.enforcer.GetAdapter() == nil {
-		return
-	}
-	_ = ce.enforcer.SavePolicy()
-}
-
-// GetRolesForUser returns all roles assigned to a user.
+// GetRolesForUser retrieves all roles assigned to a user.
 func (ce *CasbinEnforcer) GetRolesForUser(user string) ([]string, error) {
+	if ce == nil || ce.enforcer == nil {
+		return nil, nil
+	}
 	return ce.enforcer.GetRolesForUser(user)
 }
 
-// GetImplicitPermissionsForUser returns all effective permissions of a user,
-// including those inherited through role groups, flattened to "resource:action"
-// strings (e.g. "user:.*:*"). Callers match the resource part as a regex —
-// that mirrors how AuthorizeProcedure enforces policies (regexMatch).
+// GetImplicitPermissionsForUser returns all permissions effective for the user.
 func (ce *CasbinEnforcer) GetImplicitPermissionsForUser(user string) ([]string, error) {
-	rows, err := ce.enforcer.GetImplicitPermissionsForUser(user)
+	if ce == nil || ce.enforcer == nil {
+		return nil, nil
+	}
+	rules, err := ce.enforcer.GetImplicitPermissionsForUser(user)
 	if err != nil {
 		return nil, err
 	}
-	perms := make([]string, 0, len(rows))
-	for _, row := range rows {
-		// row = [role, resource, action]
-		if len(row) < 3 {
-			continue
+	perms := make([]string, 0, len(rules))
+	for _, r := range rules {
+		if len(r) >= 3 {
+			perms = append(perms, r[1]+":"+r[2])
 		}
-		perms = append(perms, row[1]+":"+row[2])
 	}
 	return perms, nil
 }
 
-// GetGroupingPolicies returns all user-role mappings.
-func (ce *CasbinEnforcer) GetGroupingPolicies() ([][]string, error) {
-	return ce.enforcer.GetGroupingPolicy()
+// persist safely saves changes to the persistent database store if an adapter exists.
+func (ce *CasbinEnforcer) persist() {
+	if ce != nil && ce.enforcer != nil && ce.enforcer.GetAdapter() != nil {
+		_ = ce.enforcer.SavePolicy()
+	}
 }
