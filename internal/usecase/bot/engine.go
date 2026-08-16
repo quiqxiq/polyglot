@@ -271,4 +271,3 @@ func (e *Engine) escalateWithFallback(ctx context.Context, convID uint, sessionI
 	}
 	return e.sendBotReply(ctx, convID, sessionID, customerNumber, reply, 0, 0, nil)
 }
-

@@ -12,6 +12,7 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/ping"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 func (h *DeviceConnectHandler) StreamDeviceStatus(
@@ -25,7 +26,7 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 
 	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
 	if err != nil {
-		return connect.NewError(connect.CodeNotFound, err)
+		return response.MapDomainError(err)
 	}
 
 	frame := &devicepb.DeviceStatusFrame{
@@ -81,7 +82,7 @@ func (h *DeviceConnectHandler) StreamPing(
 
 	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
 	if err != nil {
-		return connect.NewError(connect.CodeNotFound, err)
+		return response.MapDomainError(err)
 	}
 
 	if !dev.Enabled || h.driverGetter == nil {
@@ -110,7 +111,7 @@ func (h *DeviceConnectHandler) StreamPing(
 	pingCmd := mikrotik.NewPingStreamCommand(pingTarget)
 	pingHandle, err := sDrv.Stream(ctx, pingCmd)
 	if err != nil {
-		return connect.NewError(connect.CodeInternal, fmt.Errorf("failed to start ping stream: %w", err))
+		return response.MapDomainError(fmt.Errorf("failed to start ping stream: %w", err))
 	}
 	defer pingHandle.Cancel()
 
@@ -150,7 +151,7 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 
 	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
 	if err != nil {
-		return connect.NewError(connect.CodeNotFound, err)
+		return response.MapDomainError(err)
 	}
 
 	if !dev.Enabled || h.driverGetter == nil {
@@ -176,7 +177,7 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 	trafficCmd := mikrotik.NewMonitorTrafficStreamCommand(ifaceName)
 	trafficHandle, err := sDrv.Stream(ctx, trafficCmd)
 	if err != nil {
-		return connect.NewError(connect.CodeInternal, fmt.Errorf("failed to start traffic stream: %w", err))
+		return response.MapDomainError(fmt.Errorf("failed to start traffic stream: %w", err))
 	}
 	defer trafficHandle.Cancel()
 
@@ -278,6 +279,7 @@ func (h *DeviceConnectHandler) StreamTerminal(
 				}
 			}
 			if req.Cols > 0 && req.Rows > 0 {
+				// best-effort: gagal resize tidak menghentikan aliran data terminal.
 				_ = session.Resize(int(req.Cols), int(req.Rows))
 			}
 		}

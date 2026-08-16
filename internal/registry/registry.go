@@ -107,6 +107,7 @@ func (r *Registry) Evict(deviceID string) error {
 	r.mu.Unlock()
 
 	if ok && driver != nil {
+		// best-effort: close di background supaya Evict tidak memblok; kegagalan close tidak mempengaruhi hasil.
 		go func() {
 			_ = driver.Close()
 		}()

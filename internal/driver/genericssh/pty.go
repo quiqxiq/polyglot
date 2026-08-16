@@ -2,6 +2,7 @@ package genericssh
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"net"
@@ -57,7 +58,7 @@ func (s *SSHPtySession) Close() error {
 		}
 	})
 	if len(errs) > 0 {
-		return fmt.Errorf("genericssh: close ssh pty session: %v", errs)
+		return fmt.Errorf("genericssh: close ssh pty session: %w", errors.Join(errs...))
 	}
 	return nil
 }

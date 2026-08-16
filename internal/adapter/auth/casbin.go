@@ -162,6 +162,7 @@ func (ce *CasbinEnforcer) GetImplicitPermissionsForUser(user string) ([]string, 
 // persist safely saves changes to the persistent database store if an adapter exists.
 func (ce *CasbinEnforcer) persist() {
 	if ce != nil && ce.enforcer != nil && ce.enforcer.GetAdapter() != nil {
+		// best-effort: kegagalan persist policy ke DB tidak mengubah hasil operasi di memori.
 		_ = ce.enforcer.SavePolicy()
 	}
 }

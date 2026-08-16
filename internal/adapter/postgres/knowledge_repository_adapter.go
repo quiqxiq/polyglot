@@ -52,4 +52,3 @@ func (a *KnowledgeRepositoryAdapter) SearchByTags(ctx context.Context, tags []st
 func (a *KnowledgeRepositoryAdapter) Retrieve(ctx context.Context, _ string) ([]knowledge.Entry, error) {
 	return a.store.FindAllKnowledgeEntries(ctx)
 }
-

@@ -10,6 +10,7 @@ import (
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 type RBACConnectHandler struct {
@@ -27,7 +28,7 @@ func (h *RBACConnectHandler) ListPolicies(ctx context.Context, req *connect.Requ
 
 	rawPolicies, err := h.enforcer.GetPolicies()
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	policies := make([]*devicepb.Policy, 0, len(rawPolicies))
@@ -55,7 +56,7 @@ func (h *RBACConnectHandler) AddPolicy(ctx context.Context, req *connect.Request
 
 	ok, err := h.enforcer.AddPolicy(req.Msg.Policy.Sub, req.Msg.Policy.Obj, req.Msg.Policy.Act)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.AddPolicyResponse{Success: ok}), nil
@@ -72,7 +73,7 @@ func (h *RBACConnectHandler) RemovePolicy(ctx context.Context, req *connect.Requ
 
 	ok, err := h.enforcer.RemovePolicy(req.Msg.Policy.Sub, req.Msg.Policy.Obj, req.Msg.Policy.Act)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.RemovePolicyResponse{Success: ok}), nil
@@ -85,7 +86,7 @@ func (h *RBACConnectHandler) ListRoleAssignments(ctx context.Context, req *conne
 
 	rawRoles, err := h.enforcer.GetGroupingPolicies()
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	assignments := make([]*devicepb.RoleAssignment, 0, len(rawRoles))
@@ -112,7 +113,7 @@ func (h *RBACConnectHandler) AssignRole(ctx context.Context, req *connect.Reques
 
 	ok, err := h.enforcer.AddRoleForUser(req.Msg.Assignment.User, req.Msg.Assignment.Role)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.AssignRoleResponse{Success: ok}), nil
@@ -129,7 +130,7 @@ func (h *RBACConnectHandler) UnassignRole(ctx context.Context, req *connect.Requ
 
 	ok, err := h.enforcer.DeleteRoleForUser(req.Msg.Assignment.User, req.Msg.Assignment.Role)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.UnassignRoleResponse{Success: ok}), nil

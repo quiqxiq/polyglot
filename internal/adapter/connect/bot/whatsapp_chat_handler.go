@@ -11,6 +11,7 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	chatUC "github.com/quixiq/polyglot/internal/usecase/chat"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // parseSessionID memvalidasi session_id dari request; kosong diizinkan (0).
@@ -37,7 +38,7 @@ func (h *WhatsAppConnectHandler) ListChats(ctx context.Context, req *connect.Req
 
 	chats, err := h.chatService.ListChats(ctx, sessionID, int(req.Msg.Limit), int(req.Msg.Offset), req.Msg.Search)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	pbChats := make([]*devicepb.WAChat, len(chats))
@@ -78,7 +79,7 @@ func (h *WhatsAppConnectHandler) GetChatMessages(ctx context.Context, req *conne
 		if errors.Is(err, chatUC.ErrEmptyChatJID) {
 			return nil, connect.NewError(connect.CodeInvalidArgument, err)
 		}
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	pbMsgs := make([]*devicepb.WAChatMessage, len(msgs))
@@ -118,7 +119,7 @@ func (h *WhatsAppConnectHandler) ToggleChatBot(ctx context.Context, req *connect
 		if errors.Is(err, chatUC.ErrEmptyChatJID) {
 			return nil, connect.NewError(connect.CodeInvalidArgument, err)
 		}
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.ToggleChatBotResponse{
@@ -141,7 +142,7 @@ func (h *WhatsAppConnectHandler) MarkChatRead(ctx context.Context, req *connect.
 		if errors.Is(err, chatUC.ErrEmptyChatJID) {
 			return nil, connect.NewError(connect.CodeInvalidArgument, err)
 		}
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.MarkChatReadResponse{Message: "chat marked as read"}), nil

@@ -188,7 +188,7 @@ func (m *DocumentManager) DeleteDocument(ctx context.Context, id uint) error {
 
 	if entry.AnythingLLMDocName != "" && m.manager != nil {
 		if err := m.manager.DeleteDocument(ctx, entry.AnythingLLMDocName); err != nil {
-			return fmt.Errorf("%w: %v", ErrEmbedSync, err)
+			return fmt.Errorf("%w: %w", ErrEmbedSync, err)
 		}
 	}
 	return nil
@@ -267,7 +267,7 @@ func (m *DocumentManager) syncEmbed(ctx context.Context, entry *knowledge.Entry,
 		if repoErr := m.repo.Update(ctx, entry); repoErr != nil {
 			return fmt.Errorf("knowledge: record embed failure: %w", repoErr)
 		}
-		return fmt.Errorf("%w: %v", ErrEmbedSync, err)
+		return fmt.Errorf("%w: %w", ErrEmbedSync, err)
 	}
 	entry.EmbedToLLM = true
 	entry.EmbedStatus = knowledge.EmbedStatusEmbedded
@@ -291,7 +291,7 @@ func (m *DocumentManager) syncUnembed(ctx context.Context, entry *knowledge.Entr
 		if repoErr := m.repo.Update(ctx, entry); repoErr != nil {
 			return fmt.Errorf("knowledge: record unembed failure: %w", repoErr)
 		}
-		return fmt.Errorf("%w: %v", ErrEmbedSync, err)
+		return fmt.Errorf("%w: %w", ErrEmbedSync, err)
 	}
 	entry.EmbedStatus = knowledge.EmbedStatusNone
 	entry.AnythingLLMDocName = ""

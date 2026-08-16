@@ -9,7 +9,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
-	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
+	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 )
 
 // Store holds the GORM database connection and implements repository interfaces.
@@ -27,21 +27,21 @@ func NewStore(dsn string) (*Store, error) {
 	appEnv := strings.ToLower(os.Getenv("APP_ENV"))
 	if appEnv == "development" || appEnv == "" || os.Getenv("AUTO_MIGRATE") == "true" {
 		if err := db.AutoMigrate(
-			&models.UserModel{},
-			&models.WASessionModel{},
-			&models.LLMConfigModel{},
-			&models.ConversationModel{},
-			&models.MessageModel{},
-			&models.KnowledgeEntryModel{},
-			&models.TechnicianModel{},
-			&models.DeviceModel{},
-			&models.CredentialModel{},
-			&models.WAChatModel{},
-			&models.WAMessageModel{},
-			&models.CustomerModel{},
-			&models.SubscriptionModel{},
-			&models.InvoiceModel{},
-			&models.PlanModel{},
+			&model.UserModel{},
+			&model.WASessionModel{},
+			&model.LLMConfigModel{},
+			&model.ConversationModel{},
+			&model.MessageModel{},
+			&model.KnowledgeEntryModel{},
+			&model.TechnicianModel{},
+			&model.DeviceModel{},
+			&model.CredentialModel{},
+			&model.WAChatModel{},
+			&model.WAMessageModel{},
+			&model.CustomerModel{},
+			&model.SubscriptionModel{},
+			&model.InvoiceModel{},
+			&model.PlanModel{},
 		); err != nil {
 			return nil, fmt.Errorf("failed to auto-migrate: %w", err)
 		}

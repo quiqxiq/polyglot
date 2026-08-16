@@ -11,7 +11,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
-	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
+	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/knowledge"
@@ -105,7 +105,7 @@ func seedUsers(ctx context.Context, pgStore *postgres.Store) {
 		}
 
 		if err == nil && existing != nil {
-			if err := pgStore.DB().WithContext(ctx).Model(&models.UserModel{}).Where("username = ?", u.username).Update("password_hash", string(hash)).Error; err != nil {
+			if err := pgStore.DB().WithContext(ctx).Model(&model.UserModel{}).Where("username = ?", u.username).Update("password_hash", string(hash)).Error; err != nil {
 				log.Printf("Failed to update password for existing user %s: %v", u.username, err)
 			} else {
 				log.Printf("Updated password for existing user: %s", u.username)

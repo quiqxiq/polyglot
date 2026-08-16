@@ -1,6 +1,6 @@
 // Package voucher provides a template-based HTML renderer for Mikhmon-style
 // hotspot voucher print sheets. It reads the header/row/footer templates from
-// the internal/templates directory and fills each voucher row with the supplied
+// the internal/template directory and fills each voucher row with the supplied
 // data, including an inline base64-encoded QR code image.
 //
 // Supported layouts: "default", "small", "thermal".
@@ -109,7 +109,7 @@ func renderRow(rowTemplate string, v VoucherData, num int) string {
 // Render assembles a complete printable HTML page for the given vouchers.
 // layout selects which set of template files to use ("default", "small", "thermal").
 // templateDir is the path to the directory containing the *.txt template files
-// (e.g. "internal/templates"). An absolute path or a path relative to the
+// (e.g. "internal/template"). An absolute path or a path relative to the
 // working directory are both accepted.
 //
 // The returned string is a self-contained HTML document ready to be sent as

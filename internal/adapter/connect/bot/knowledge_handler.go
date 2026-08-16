@@ -137,7 +137,6 @@ func toKnowledgeItem(e *knowledge.Entry) *devicepb.KnowledgeItem {
 	return toProtoKnowledgeItem(e)
 }
 
-
 // entryMatchesQuery mencocokkan query (sudah lowercase) terhadap title,
 // content, category, dan tags entry.
 func entryMatchesQuery(e *knowledge.Entry, query string) bool {
@@ -154,4 +153,3 @@ func entryMatchesQuery(e *knowledge.Entry, query string) bool {
 	}
 	return false
 }
-

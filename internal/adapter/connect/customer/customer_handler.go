@@ -8,6 +8,7 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 type CustomerConnectHandler struct {
@@ -21,7 +22,7 @@ func NewCustomerConnectHandler(uc *customerUC.ManageCustomerUseCase) *CustomerCo
 func (h *CustomerConnectHandler) ListCustomers(ctx context.Context, req *connect.Request[devicepb.ListCustomersRequest]) (*connect.Response[devicepb.ListCustomersResponse], error) {
 	customers, err := h.useCase.ListCustomers(ctx)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.ListCustomersResponse{
@@ -36,7 +37,7 @@ func (h *CustomerConnectHandler) GetCustomer(ctx context.Context, req *connect.R
 
 	c, err := h.useCase.GetCustomer(ctx, req.Msg.Id)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeNotFound, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.GetCustomerResponse{

@@ -11,6 +11,7 @@ import (
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 const (
@@ -42,7 +43,7 @@ func (h *BillingConnectHandler) ListInvoices(ctx context.Context, req *connect.R
 
 	invoices, err := h.invoiceUC.ListInvoices(ctx, req.Msg.CustomerId)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.ListInvoicesResponse{
@@ -60,7 +61,7 @@ func (h *BillingConnectHandler) GetInvoice(ctx context.Context, req *connect.Req
 
 	inv, err := h.invoiceUC.GetInvoice(ctx, req.Msg.Id)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeNotFound, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.GetInvoiceResponse{
@@ -95,7 +96,7 @@ func (h *BillingConnectHandler) CreateInvoice(ctx context.Context, req *connect.
 
 	created, err := h.invoiceUC.CreateInvoice(ctx, newInv)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.CreateInvoiceResponse{
@@ -113,7 +114,7 @@ func (h *BillingConnectHandler) PayInvoice(ctx context.Context, req *connect.Req
 
 	paid, err := h.invoiceUC.PayInvoice(ctx, req.Msg.Id)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.PayInvoiceResponse{
@@ -129,7 +130,7 @@ func (h *BillingConnectHandler) ListSubscriptions(ctx context.Context, req *conn
 
 	subs, err := h.subscriptionUC.ListSubscriptions(ctx, req.Msg.CustomerId)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.ListSubscriptionsResponse{
@@ -161,7 +162,7 @@ func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *con
 
 	created, err := h.subscriptionUC.CreateSubscription(ctx, newSub)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.CreateSubscriptionResponse{
@@ -179,7 +180,7 @@ func (h *BillingConnectHandler) CancelSubscription(ctx context.Context, req *con
 
 	cancelled, err := h.subscriptionUC.CancelSubscription(ctx, req.Msg.Id)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.CancelSubscriptionResponse{

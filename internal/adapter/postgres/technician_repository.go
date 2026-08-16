@@ -6,12 +6,12 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
+	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 )
 
 func (s *Store) CreateTechnician(ctx context.Context, tech *customer.Technician) error {
-	m := models.TechnicianModelFromDomain(tech)
+	m := model.TechnicianModelFromDomain(tech)
 	if err := s.db.WithContext(ctx).Create(m).Error; err != nil {
 		return err
 	}
@@ -20,7 +20,7 @@ func (s *Store) CreateTechnician(ctx context.Context, tech *customer.Technician)
 }
 
 func (s *Store) FindAllTechnicians(ctx context.Context) ([]customer.Technician, error) {
-	var mList []models.TechnicianModel
+	var mList []model.TechnicianModel
 	if err := s.db.WithContext(ctx).Order("created_at DESC").Find(&mList).Error; err != nil {
 		return nil, err
 	}
@@ -34,7 +34,7 @@ func (s *Store) FindAllTechnicians(ctx context.Context) ([]customer.Technician, 
 }
 
 func (s *Store) FindActiveTechnicians(ctx context.Context) ([]customer.Technician, error) {
-	var mList []models.TechnicianModel
+	var mList []model.TechnicianModel
 	if err := s.db.WithContext(ctx).Where("is_active = ?", true).Order("full_name ASC").Find(&mList).Error; err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func (s *Store) FindActiveTechnicians(ctx context.Context) ([]customer.Technicia
 }
 
 func (s *Store) FindTechnicianByID(ctx context.Context, id uint) (*customer.Technician, error) {
-	var m models.TechnicianModel
+	var m model.TechnicianModel
 	if err := s.db.WithContext(ctx).First(&m, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
@@ -59,10 +59,10 @@ func (s *Store) FindTechnicianByID(ctx context.Context, id uint) (*customer.Tech
 }
 
 func (s *Store) UpdateTechnician(ctx context.Context, tech *customer.Technician) error {
-	m := models.TechnicianModelFromDomain(tech)
+	m := model.TechnicianModelFromDomain(tech)
 	return s.db.WithContext(ctx).Save(m).Error
 }
 
 func (s *Store) DeleteTechnician(ctx context.Context, id uint) error {
-	return s.db.WithContext(ctx).Delete(&models.TechnicianModel{}, id).Error
+	return s.db.WithContext(ctx).Delete(&model.TechnicianModel{}, id).Error
 }

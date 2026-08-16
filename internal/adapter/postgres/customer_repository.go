@@ -5,7 +5,7 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
+	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
@@ -20,23 +20,23 @@ type CustomerRepository struct {
 
 // NewCustomerRepository returns a port.CustomerRepository backed by GORM/Postgres.
 func NewCustomerRepository(db *gorm.DB) *CustomerRepository {
-	_ = db.AutoMigrate(&models.CustomerModel{})
+	_ = db.AutoMigrate(&model.CustomerModel{})
 	return &CustomerRepository{db: db}
 }
 
 func (r *CustomerRepository) Save(ctx context.Context, c customer.Customer) error {
-	m := models.CustomerModelFromDomain(c)
+	m := model.CustomerModelFromDomain(c)
 	return r.db.WithContext(ctx).Save(m).Error
 }
 
 func (r *CustomerRepository) FindByID(ctx context.Context, id string) (customer.Customer, error) {
-	var m models.CustomerModel
+	var m model.CustomerModel
 	err := r.db.WithContext(ctx).First(&m, "id = ?", id).Error
 	return m.ToDomain(), err
 }
 
 func (r *CustomerRepository) FindAll(ctx context.Context) ([]customer.Customer, error) {
-	var mList []models.CustomerModel
+	var mList []model.CustomerModel
 	err := r.db.WithContext(ctx).Find(&mList).Error
 	if err != nil {
 		return nil, err
@@ -49,11 +49,11 @@ func (r *CustomerRepository) FindAll(ctx context.Context) ([]customer.Customer, 
 }
 
 func (r *CustomerRepository) Delete(ctx context.Context, id string) error {
-	return r.db.WithContext(ctx).Delete(&models.CustomerModel{}, "id = ?", id).Error
+	return r.db.WithContext(ctx).Delete(&model.CustomerModel{}, "id = ?", id).Error
 }
 
 func (r *CustomerRepository) FindSubscriptions(ctx context.Context, customerID string) ([]subscription.Subscription, error) {
-	var mList []models.SubscriptionModel
+	var mList []model.SubscriptionModel
 	err := r.db.WithContext(ctx).Find(&mList, "customer_id = ?", customerID).Error
 	if err != nil {
 		return nil, err
@@ -64,4 +64,3 @@ func (r *CustomerRepository) FindSubscriptions(ctx context.Context, customerID s
 	}
 	return subs, nil
 }
-

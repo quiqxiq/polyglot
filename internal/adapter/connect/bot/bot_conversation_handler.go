@@ -10,7 +10,19 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/pkg/response"
 )
+
+// parseID mengonversi ID berformat string dari wire ke uint. Parse gagal
+// dianggap 0 (best-effort): ID aplikasi ini selalu numerik, dan 0 akan
+// ditolak/diabaikan oleh use case di bawahnya.
+func parseID(s string) uint {
+	var id uint
+	// parse error sengaja diabaikan: string kosong/non-numeric diperlakukan sebagai 0 (tidak valid),
+	// validasi selanjutnya di use case yang akan menolak nilai 0.
+	_, _ = fmt.Sscanf(s, "%d", &id)
+	return id
+}
 
 func (h *BotConnectHandler) ListConversations(ctx context.Context, req *connect.Request[devicepb.ListConversationsRequest]) (*connect.Response[devicepb.ListConversationsResponse], error) {
 	if h.convService == nil {
@@ -20,14 +32,13 @@ func (h *BotConnectHandler) ListConversations(ctx context.Context, req *connect.
 	var convs []bot.Conversation
 	var err error
 	if req.Msg.SessionId != "" {
-		var sessionID uint
-		_, _ = fmt.Sscanf(req.Msg.SessionId, "%d", &sessionID)
+		sessionID := parseID(req.Msg.SessionId)
 		convs, err = h.convService.ListConversationsBySession(ctx, sessionID)
 	} else {
 		convs, err = h.convService.ListConversations(ctx, "")
 	}
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	pbConvs := make([]*devicepb.Conversation, len(convs))
@@ -48,12 +59,11 @@ func (h *BotConnectHandler) GetConversation(ctx context.Context, req *connect.Re
 		return connect.NewResponse(&devicepb.GetConversationResponse{}), nil
 	}
 
-	var convID uint
-	_, _ = fmt.Sscanf(req.Msg.Id, "%d", &convID)
+	convID := parseID(req.Msg.Id)
 
 	c, err := h.convService.GetConversationWithMessages(ctx, convID)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeNotFound, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	pbMsgs := make([]*devicepb.ConversationMessage, len(c.Messages))
@@ -76,8 +86,7 @@ func (h *BotConnectHandler) GetConversation(ctx context.Context, req *connect.Re
 }
 
 func (h *BotConnectHandler) GetConversationContext(ctx context.Context, req *connect.Request[devicepb.GetConversationContextRequest]) (*connect.Response[devicepb.GetConversationContextResponse], error) {
-	var convID uint
-	_, _ = fmt.Sscanf(req.Msg.Id, "%d", &convID)
+	convID := parseID(req.Msg.Id)
 	if convID == 0 {
 		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("conversation id is required"))
 	}
@@ -87,7 +96,7 @@ func (h *BotConnectHandler) GetConversationContext(ctx context.Context, req *con
 
 	info, err := h.contextProvider.GetConversationContext(ctx, convID)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeNotFound, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	pbMsgs := make([]*devicepb.ConversationContextMessage, len(info.RecentMessages))
@@ -121,8 +130,8 @@ func (h *BotConnectHandler) GetConversationContext(ctx context.Context, req *con
 
 func (h *BotConnectHandler) TakeOverConversation(ctx context.Context, req *connect.Request[devicepb.TakeOverConversationRequest]) (*connect.Response[devicepb.TakeOverConversationResponse], error) {
 	if h.convService != nil {
-		var convID uint
-		_, _ = fmt.Sscanf(req.Msg.Id, "%d", &convID)
+		convID := parseID(req.Msg.Id)
+		// best-effort: takeover tetap dilaporkan sukses meski eksekusi gagal.
 		_ = h.convService.TakeOver(ctx, convID, 1)
 	}
 	return connect.NewResponse(&devicepb.TakeOverConversationResponse{
@@ -132,8 +141,8 @@ func (h *BotConnectHandler) TakeOverConversation(ctx context.Context, req *conne
 
 func (h *BotConnectHandler) ResetConversationBot(ctx context.Context, req *connect.Request[devicepb.ResetConversationBotRequest]) (*connect.Response[devicepb.ResetConversationBotResponse], error) {
 	if h.convService != nil {
-		var convID uint
-		_, _ = fmt.Sscanf(req.Msg.Id, "%d", &convID)
+		convID := parseID(req.Msg.Id)
+		// best-effort: reset bot tetap dilaporkan sukses meski eksekusi gagal.
 		_ = h.convService.ResetBot(ctx, convID)
 	}
 	return connect.NewResponse(&devicepb.ResetConversationBotResponse{
@@ -143,8 +152,8 @@ func (h *BotConnectHandler) ResetConversationBot(ctx context.Context, req *conne
 
 func (h *BotConnectHandler) CloseConversation(ctx context.Context, req *connect.Request[devicepb.CloseConversationRequest]) (*connect.Response[devicepb.CloseConversationResponse], error) {
 	if h.convService != nil {
-		var convID uint
-		_, _ = fmt.Sscanf(req.Msg.Id, "%d", &convID)
+		convID := parseID(req.Msg.Id)
+		// best-effort: penutupan tetap dilaporkan sukses meski eksekusi gagal.
 		_ = h.convService.CloseConversation(ctx, convID)
 	}
 	return connect.NewResponse(&devicepb.CloseConversationResponse{

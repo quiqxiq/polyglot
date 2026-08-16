@@ -9,7 +9,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
-	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
+	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 )
@@ -39,7 +39,7 @@ func main() {
 		log.Fatalf("[Seeder Error] SEED_ADMIN_PASSWORD must be at least 8 characters long")
 	}
 
-	var existing models.UserModel
+	var existing model.UserModel
 	hash, errHash := bcrypt.GenerateFromPassword([]byte(adminPassword), bcrypt.DefaultCost)
 	if errHash != nil {
 		log.Fatalf("[Seeder Error] Failed to hash password: %v", errHash)
@@ -62,7 +62,7 @@ func main() {
 		}
 		log.Printf("[Seeder] Created default Admin user: %s", adminUsername)
 	} else {
-		db.Model(&models.UserModel{}).Where("username = ?", adminUsername).Update("password_hash", string(hash))
+		db.Model(&model.UserModel{}).Where("username = ?", adminUsername).Update("password_hash", string(hash))
 		log.Printf("[Seeder] Updated password for existing Admin user: %s", adminUsername)
 	}
 

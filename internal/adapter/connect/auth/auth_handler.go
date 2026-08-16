@@ -141,6 +141,7 @@ func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Requ
 func (h *AuthConnectHandler) Logout(ctx context.Context, req *connect.Request[devicepb.LogoutRequest]) (*connect.Response[devicepb.LogoutResponse], error) {
 	rawToken := iauth.ExtractRefreshTokenCookie(req.Header())
 	if rawToken != "" && h.refreshUC != nil {
+		// best-effort: logout tetap mengembalikan sukses meski revoke refresh token gagal.
 		_ = h.refreshUC.Revoke(ctx, rawToken)
 	}
 

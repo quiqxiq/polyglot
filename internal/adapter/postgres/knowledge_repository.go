@@ -6,12 +6,12 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
+	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/domain/knowledge"
 )
 
 func (s *Store) CreateKnowledgeEntry(ctx context.Context, entry *knowledge.Entry) error {
-	m := models.KnowledgeEntryModelFromDomain(entry)
+	m := model.KnowledgeEntryModelFromDomain(entry)
 	if err := s.db.WithContext(ctx).Create(m).Error; err != nil {
 		return err
 	}
@@ -24,7 +24,7 @@ func (s *Store) CreateKnowledge(ctx context.Context, entry *knowledge.Entry) err
 }
 
 func (s *Store) FindKnowledgeEntryByID(ctx context.Context, id uint) (*knowledge.Entry, error) {
-	var m models.KnowledgeEntryModel
+	var m model.KnowledgeEntryModel
 	if err := s.db.WithContext(ctx).First(&m, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, knowledge.ErrNotFound
@@ -35,7 +35,7 @@ func (s *Store) FindKnowledgeEntryByID(ctx context.Context, id uint) (*knowledge
 }
 
 func (s *Store) FindAllKnowledgeEntries(ctx context.Context) ([]knowledge.Entry, error) {
-	var mList []models.KnowledgeEntryModel
+	var mList []model.KnowledgeEntryModel
 	if err := s.db.WithContext(ctx).Order("created_at DESC").Find(&mList).Error; err != nil {
 		return nil, err
 	}
@@ -65,12 +65,12 @@ func (s *Store) DeleteKnowledge(ctx context.Context, id uint) error {
 }
 
 func (s *Store) UpdateKnowledgeEntry(ctx context.Context, entry *knowledge.Entry) error {
-	m := models.KnowledgeEntryModelFromDomain(entry)
+	m := model.KnowledgeEntryModelFromDomain(entry)
 	return s.db.WithContext(ctx).Save(m).Error
 }
 
 func (s *Store) DeleteKnowledgeEntry(ctx context.Context, id uint) error {
-	return s.db.WithContext(ctx).Delete(&models.KnowledgeEntryModel{}, id).Error
+	return s.db.WithContext(ctx).Delete(&model.KnowledgeEntryModel{}, id).Error
 }
 
 func (s *Store) SearchKnowledgeByTags(ctx context.Context, tags []string) ([]knowledge.Entry, error) {
@@ -83,7 +83,7 @@ func (s *Store) SearchKnowledgeByTags(ctx context.Context, tags []string) ([]kno
 		query = query.Or("LOWER(tags) LIKE ?", "%"+tag+"%")
 	}
 
-	var mList []models.KnowledgeEntryModel
+	var mList []model.KnowledgeEntryModel
 	if err := query.Find(&mList).Error; err != nil {
 		return nil, err
 	}
@@ -100,4 +100,3 @@ func (s *Store) SearchKnowledgeByTags(ctx context.Context, tags []string) ([]kno
 func (s *Store) Retrieve(ctx context.Context, query string) ([]knowledge.Entry, error) {
 	return s.FindAllKnowledgeEntries(ctx)
 }
-

@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
-	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
+	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/domain/bot"
 )
 
@@ -19,7 +19,7 @@ const (
 
 // UpsertChat writes or updates one WhatsApp chat mirror row.
 func (s *Store) UpsertChat(ctx context.Context, chat *bot.WAChat) error {
-	m := models.WAChatModelFromDomain(chat)
+	m := model.WAChatModelFromDomain(chat)
 	if m == nil {
 		return nil
 	}
@@ -41,7 +41,7 @@ func (s *Store) UpsertChat(ctx context.Context, chat *bot.WAChat) error {
 
 // UpsertMessage writes one WhatsApp message mirror row.
 func (s *Store) UpsertMessage(ctx context.Context, msg *bot.WAMessage) (bool, error) {
-	m := models.WAMessageModelFromDomain(msg)
+	m := model.WAMessageModelFromDomain(msg)
 	if m == nil {
 		return false, nil
 	}
@@ -58,9 +58,9 @@ func (s *Store) UpsertMessagesBatch(ctx context.Context, msgs []*bot.WAMessage) 
 	if len(msgs) == 0 {
 		return 0, nil
 	}
-	mList := make([]models.WAMessageModel, 0, len(msgs))
+	mList := make([]model.WAMessageModel, 0, len(msgs))
 	for _, m := range msgs {
-		if mm := models.WAMessageModelFromDomain(m); mm != nil {
+		if mm := model.WAMessageModelFromDomain(m); mm != nil {
 			mList = append(mList, *mm)
 		}
 	}
@@ -89,21 +89,21 @@ func (s *Store) UpsertMessagesBatch(ctx context.Context, msgs []*bot.WAMessage) 
 
 // IncrementUnread bumps the unread counter of one chat (incoming message).
 func (s *Store) IncrementUnread(ctx context.Context, sessionID uint, chatJID string) error {
-	return s.db.WithContext(ctx).Model(&models.WAChatModel{}).
+	return s.db.WithContext(ctx).Model(&model.WAChatModel{}).
 		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		UpdateColumn("unread_count", gorm.Expr("unread_count + 1")).Error
 }
 
 // MarkChatRead resets the unread counter of one chat.
 func (s *Store) MarkChatRead(ctx context.Context, sessionID uint, chatJID string) error {
-	return s.db.WithContext(ctx).Model(&models.WAChatModel{}).
+	return s.db.WithContext(ctx).Model(&model.WAChatModel{}).
 		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		UpdateColumn("unread_count", 0).Error
 }
 
 // SetChatUnread sets the unread counter of one chat to an exact value.
 func (s *Store) SetChatUnread(ctx context.Context, sessionID uint, chatJID string, count uint32) error {
-	return s.db.WithContext(ctx).Model(&models.WAChatModel{}).
+	return s.db.WithContext(ctx).Model(&model.WAChatModel{}).
 		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		UpdateColumn("unread_count", count).Error
 }
@@ -117,7 +117,7 @@ func (s *Store) MarkMessagesStatus(ctx context.Context, sessionID uint, chatJID 
 	if status == "read" {
 		updates["is_read"] = true
 	}
-	return s.db.WithContext(ctx).Model(&models.WAMessageModel{}).
+	return s.db.WithContext(ctx).Model(&model.WAMessageModel{}).
 		Where("session_id = ? AND chat_jid = ? AND wa_message_id IN ?", sessionID, chatJID, messageIDs).
 		Updates(updates).Error
 }
@@ -162,7 +162,7 @@ func (s *Store) ListChats(ctx context.Context, sessionID uint, limit, offset int
 		q = q.Where("display_name ILIKE ? OR chat_jid ILIKE ?", like, like)
 	}
 
-	var mList []models.WAChatModel
+	var mList []model.WAChatModel
 	if err := q.Order("last_message_time DESC NULLS LAST").Limit(limit).Offset(offset).Find(&mList).Error; err != nil {
 		return nil, err
 	}
@@ -178,14 +178,14 @@ func (s *Store) ListChats(ctx context.Context, sessionID uint, limit, offset int
 
 // SetChatBotEnabled toggles the per-chat bot auto-reply flag.
 func (s *Store) SetChatBotEnabled(ctx context.Context, sessionID uint, chatJID string, enabled bool) error {
-	return s.db.WithContext(ctx).Model(&models.WAChatModel{}).
+	return s.db.WithContext(ctx).Model(&model.WAChatModel{}).
 		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		Update("bot_enabled", enabled).Error
 }
 
 // IsChatBotEnabled reports the per-chat bot auto-reply flag.
 func (s *Store) IsChatBotEnabled(ctx context.Context, sessionID uint, chatJID string) (bool, error) {
-	var m models.WAChatModel
+	var m model.WAChatModel
 	err := s.db.WithContext(ctx).Select("bot_enabled").
 		Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		First(&m).Error
@@ -204,7 +204,7 @@ func (s *Store) ListChatMessages(ctx context.Context, sessionID uint, chatJID st
 		limit = defaultChatListLimit
 	}
 
-	var mList []models.WAMessageModel
+	var mList []model.WAMessageModel
 	if err := s.db.WithContext(ctx).Where("session_id = ? AND chat_jid = ?", sessionID, chatJID).
 		Order("timestamp ASC").Limit(limit).Offset(offset).Find(&mList).Error; err != nil {
 		return nil, err
@@ -218,4 +218,3 @@ func (s *Store) ListChatMessages(ctx context.Context, sessionID uint, chatJID st
 	}
 	return res, nil
 }
-

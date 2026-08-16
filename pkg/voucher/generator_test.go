@@ -11,14 +11,14 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// templateDir returns the absolute path to internal/templates relative to this
-// test file's location (pkg/voucher/ → ../../internal/templates).
+// templateDir returns the absolute path to internal/template relative to this
+// test file's location (pkg/voucher/ → ../../internal/template).
 func templateDir(t *testing.T) string {
 	t.Helper()
-	// Resolve from pkg/voucher to project root then into internal/templates.
+	// Resolve from pkg/voucher to project root then into internal/template.
 	cwd, err := os.Getwd()
 	require.NoError(t, err)
-	return filepath.Join(cwd, "..", "..", "internal", "templates")
+	return filepath.Join(cwd, "..", "..", "internal", "template")
 }
 
 func sampleVoucher(n int) voucher.VoucherData {

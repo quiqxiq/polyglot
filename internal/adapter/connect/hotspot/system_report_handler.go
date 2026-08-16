@@ -6,6 +6,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 func (h *HotspotConnectHandler) GetDashboard(ctx context.Context, req *connect.Request[devicepb.GetHotspotDashboardRequest]) (*connect.Response[devicepb.GetHotspotDashboardResponse], error) {
@@ -16,7 +17,7 @@ func (h *HotspotConnectHandler) GetDashboard(ctx context.Context, req *connect.R
 
 	summary, err := h.useCase.GetDashboardSummary(ctx, driver)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.GetHotspotDashboardResponse{

@@ -7,7 +7,7 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
+	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -28,7 +28,7 @@ func NewUserRepository(db *gorm.DB) *UserRepository {
 }
 
 func (r *UserRepository) Create(ctx context.Context, user *customer.User) error {
-	m := models.UserModelFromDomain(user)
+	m := model.UserModelFromDomain(user)
 	if err := r.db.WithContext(ctx).Create(m).Error; err != nil {
 		return err
 	}
@@ -37,7 +37,7 @@ func (r *UserRepository) Create(ctx context.Context, user *customer.User) error 
 }
 
 func (r *UserRepository) FindByID(ctx context.Context, id uint) (*customer.User, error) {
-	var m models.UserModel
+	var m model.UserModel
 	if err := r.db.WithContext(ctx).First(&m, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
@@ -48,7 +48,7 @@ func (r *UserRepository) FindByID(ctx context.Context, id uint) (*customer.User,
 }
 
 func (r *UserRepository) FindByUsername(ctx context.Context, username string) (*customer.User, error) {
-	var m models.UserModel
+	var m model.UserModel
 	if err := r.db.WithContext(ctx).Where("username = ?", username).First(&m).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
@@ -59,7 +59,7 @@ func (r *UserRepository) FindByUsername(ctx context.Context, username string) (*
 }
 
 func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*customer.User, error) {
-	var m models.UserModel
+	var m model.UserModel
 	if err := r.db.WithContext(ctx).Where("email = ?", email).First(&m).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
@@ -71,12 +71,12 @@ func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*custom
 
 func (r *UserRepository) Count(ctx context.Context) (int64, error) {
 	var count int64
-	err := r.db.WithContext(ctx).Model(&models.UserModel{}).Count(&count).Error
+	err := r.db.WithContext(ctx).Model(&model.UserModel{}).Count(&count).Error
 	return count, err
 }
 
 func (r *UserRepository) FindAll(ctx context.Context) ([]*customer.User, error) {
-	var ms []models.UserModel
+	var ms []model.UserModel
 	if err := r.db.WithContext(ctx).Order("id ASC").Find(&ms).Error; err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (r *UserRepository) List(ctx context.Context, page, pageSize int, search st
 		pageSize = 20
 	}
 
-	q := r.db.WithContext(ctx).Model(&models.UserModel{})
+	q := r.db.WithContext(ctx).Model(&model.UserModel{})
 	if s := strings.TrimSpace(search); s != "" {
 		like := "%" + s + "%"
 		q = q.Where("username ILIKE ? OR email ILIKE ?", like, like)
@@ -106,7 +106,7 @@ func (r *UserRepository) List(ctx context.Context, page, pageSize int, search st
 		return nil, 0, err
 	}
 
-	var ms []models.UserModel
+	var ms []model.UserModel
 	if err := q.Order("id ASC").
 		Offset((page - 1) * pageSize).
 		Limit(pageSize).
@@ -125,7 +125,7 @@ func (r *UserRepository) Update(ctx context.Context, u *customer.User) error {
 	if u == nil || u.ID == 0 {
 		return ErrInvalidArgument
 	}
-	res := r.db.WithContext(ctx).Model(&models.UserModel{}).Where("id = ?", u.ID).Updates(map[string]any{
+	res := r.db.WithContext(ctx).Model(&model.UserModel{}).Where("id = ?", u.ID).Updates(map[string]any{
 		"username": u.Username,
 		"email":    u.Email,
 		"role":     u.Role,
@@ -140,7 +140,7 @@ func (r *UserRepository) Update(ctx context.Context, u *customer.User) error {
 }
 
 func (r *UserRepository) Delete(ctx context.Context, id uint) error {
-	res := r.db.WithContext(ctx).Delete(&models.UserModel{}, id)
+	res := r.db.WithContext(ctx).Delete(&model.UserModel{}, id)
 	if res.Error != nil {
 		return res.Error
 	}
@@ -154,7 +154,7 @@ func (r *UserRepository) UpdatePassword(ctx context.Context, id uint, hash strin
 	if id == 0 || hash == "" {
 		return ErrInvalidArgument
 	}
-	res := r.db.WithContext(ctx).Model(&models.UserModel{}).Where("id = ?", id).Update("password_hash", hash)
+	res := r.db.WithContext(ctx).Model(&model.UserModel{}).Where("id = ?", id).Update("password_hash", hash)
 	if res.Error != nil {
 		return res.Error
 	}
@@ -168,7 +168,7 @@ func (r *UserRepository) UpdateStatus(ctx context.Context, id uint, active bool)
 	if id == 0 {
 		return ErrInvalidArgument
 	}
-	res := r.db.WithContext(ctx).Model(&models.UserModel{}).Where("id = ?", id).Update("is_active", active)
+	res := r.db.WithContext(ctx).Model(&model.UserModel{}).Where("id = ?", id).Update("is_active", active)
 	if res.Error != nil {
 		return res.Error
 	}

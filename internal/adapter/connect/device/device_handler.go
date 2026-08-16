@@ -12,6 +12,7 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	"github.com/quixiq/polyglot/internal/usecase/network"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // DriverGetter fetches a connected port.DeviceDriver by device ID.
@@ -34,7 +35,7 @@ func NewDeviceConnectHandler(uc *deviceUC.ManageDeviceUseCase, openTermUC *netwo
 func (h *DeviceConnectHandler) ListDevices(ctx context.Context, req *connect.Request[devicepb.ListDevicesRequest]) (*connect.Response[devicepb.ListDevicesResponse], error) {
 	devices, err := h.useCase.ListDevices(ctx)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	pbDevices := make([]*devicepb.Device, len(devices))
@@ -52,7 +53,7 @@ func (h *DeviceConnectHandler) GetDevice(ctx context.Context, req *connect.Reque
 
 	d, err := h.useCase.GetDevice(ctx, req.Msg.Id)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeNotFound, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.GetDeviceResponse{Device: DomainToPb(d)}), nil
@@ -77,11 +78,11 @@ func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Re
 
 	if isNew {
 		if err := h.useCase.CreateDevice(ctx, d, c); err != nil {
-			return nil, connect.NewError(connect.CodeInternal, err)
+			return nil, response.MapDomainError(err)
 		}
 	} else {
 		if err := h.useCase.UpdateDevice(ctx, d, c); err != nil {
-			return nil, connect.NewError(connect.CodeInternal, err)
+			return nil, response.MapDomainError(err)
 		}
 	}
 
@@ -107,7 +108,7 @@ func (h *DeviceConnectHandler) DeleteDevice(ctx context.Context, req *connect.Re
 	}
 
 	if err := h.useCase.DeleteDevice(ctx, req.Msg.Id); err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.DeleteDeviceResponse{

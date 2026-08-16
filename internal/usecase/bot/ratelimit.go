@@ -28,7 +28,6 @@ func NewRateLimiter(cache port.CacheStore) *RateLimiter {
 	return &RateLimiter{cache: cache}
 }
 
-
 func (r *RateLimiter) Check(ctx context.Context, customerNumber string, messageContent string) (RateLimitResult, error) {
 	if r.cache == nil {
 		return RateLimitResult{Status: StatusAllowed}, nil

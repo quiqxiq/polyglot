@@ -7,7 +7,8 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 func (h *HotspotConnectHandler) ListProfiles(ctx context.Context, req *connect.Request[devicepb.ListHotspotProfilesRequest]) (*connect.Response[devicepb.ListHotspotProfilesResponse], error) {
@@ -18,7 +19,7 @@ func (h *HotspotConnectHandler) ListProfiles(ctx context.Context, req *connect.R
 
 	profiles, err := h.useCase.GetProfiles(ctx, driver)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.ListHotspotProfilesResponse{
@@ -34,7 +35,7 @@ func (h *HotspotConnectHandler) ListUsers(ctx context.Context, req *connect.Requ
 
 	users, err := h.useCase.GetUsers(ctx, driver, req.Msg.Profile)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.ListHotspotUsersResponse{
@@ -53,16 +54,16 @@ func (h *HotspotConnectHandler) GenerateVouchers(ctx context.Context, req *conne
 		count = 1
 	}
 
-	params := mikhmon.VoucherGenerateParams{
+	params := hotspot.VoucherGenerateParams{
 		Profile:    req.Msg.Profile,
 		Prefix:     req.Msg.Prefix,
 		UserLength: int(req.Msg.UserLength),
-		CharSet:    mikhmon.CharSet(req.Msg.CharacterSet),
+		CharSet:    hotspot.CharSet(req.Msg.CharacterSet),
 	}
 
 	batch, err := h.useCase.GenerateVouchers(ctx, driver, params, count)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	pbVouchers := make([]*devicepb.HotspotUser, len(batch.Vouchers))

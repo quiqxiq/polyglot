@@ -7,6 +7,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 func (h *HotspotConnectHandler) ListActiveSessions(ctx context.Context, req *connect.Request[devicepb.ListHotspotActiveSessionsRequest]) (*connect.Response[devicepb.ListHotspotActiveSessionsResponse], error) {
@@ -17,7 +18,7 @@ func (h *HotspotConnectHandler) ListActiveSessions(ctx context.Context, req *con
 
 	sessions, err := h.useCase.GetActiveSessions(ctx, driver)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.ListHotspotActiveSessionsResponse{
@@ -37,7 +38,7 @@ func (h *HotspotConnectHandler) KickActiveSession(ctx context.Context, req *conn
 
 	res, err := h.useCase.RemoveActiveSession(ctx, driver, req.Msg.RosId)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.KickHotspotSessionResponse{
@@ -53,7 +54,7 @@ func (h *HotspotConnectHandler) ListDHCPLeases(ctx context.Context, req *connect
 
 	leases, err := h.activeSessionsUseCase.GetDHCPLeases(ctx, driver, req.Msg.MacFilter)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.ListDHCPLeasesResponse{
@@ -69,7 +70,7 @@ func (h *HotspotConnectHandler) BlockDHCPLease(ctx context.Context, req *connect
 
 	res, err := h.activeSessionsUseCase.SetDHCPLeaseBlock(ctx, driver, req.Msg.RosId, req.Msg.Blocked, req.Msg.Comment)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.BlockDHCPLeaseResponse{

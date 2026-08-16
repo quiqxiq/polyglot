@@ -3,8 +3,8 @@ package device
 import (
 	"context"
 	"fmt"
-	"io"
 	"github.com/quixiq/polyglot/pkg/logger"
+	"io"
 	"net/http"
 	"time"
 

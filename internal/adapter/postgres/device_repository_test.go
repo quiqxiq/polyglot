@@ -4,13 +4,13 @@ import (
 	"context"
 	"testing"
 
+	"github.com/glebarez/sqlite"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
-	"github.com/quixiq/polyglot/internal/adapter/postgres/models"
+	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/domain/device"
 )
 
@@ -37,7 +37,7 @@ func setupTestDB(t *testing.T) *gorm.DB {
 	)`).Error
 	require.NoError(t, err)
 
-	err = db.AutoMigrate(&models.CredentialModel{})
+	err = db.AutoMigrate(&model.CredentialModel{})
 	require.NoError(t, err)
 
 	return db
@@ -59,7 +59,7 @@ func TestDeviceModel_Conversion(t *testing.T) {
 		Enabled:        true,
 	}
 
-	model := models.DeviceModelFromDomain(dev)
+	model := model.DeviceModelFromDomain(dev)
 	assert.Equal(t, "router-1", model.ID)
 	assert.Equal(t, "Core MikroTik Router", model.Name)
 
@@ -78,7 +78,7 @@ func TestCredentialModel_Conversion(t *testing.T) {
 		Extra:    map[string]string{"api_key": "xyz123"},
 	}
 
-	model, err := models.CredentialModelFromDomain("router-1", creds, "")
+	model, err := model.CredentialModelFromDomain("router-1", creds, "")
 	require.NoError(t, err)
 	assert.Equal(t, "router-1", model.DeviceID)
 	assert.NotEmpty(t, model.Ciphertext)

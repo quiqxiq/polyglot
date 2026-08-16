@@ -3,7 +3,6 @@ package bot
 import (
 	"context"
 	"fmt"
-	"github.com/quixiq/polyglot/pkg/logger"
 	"strconv"
 	"time"
 
@@ -11,6 +10,8 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/pkg/logger"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // formatTime renders a time value as a compact local timestamp; empty for zero values.
@@ -28,7 +29,7 @@ func (h *WhatsAppConnectHandler) ListSessions(ctx context.Context, req *connect.
 
 	sessions, err := h.sessionRepo.FindAllSessions(ctx)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	pbSessions := make([]*devicepb.WASession, len(sessions))
@@ -70,7 +71,7 @@ func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect
 	}
 
 	if err := h.sessionRepo.CreateSession(ctx, sess); err != nil {
-		return nil, connect.NewError(connect.CodeInternal, err)
+		return nil, response.MapDomainError(err)
 	}
 
 	// Langsung connect — untuk session baru (belum ter-pair) ini memicu QR
@@ -80,6 +81,7 @@ func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect
 			logger.WithComponent("WhatsApp").Warnf("CreateSession %d: connect failed (QR flow): %v", sess.ID, err)
 		}
 		sess.Status = bot.StatusConnecting
+		// best-effort: update status best-effort; response tetap berdasarkan sess di memori.
 		_ = h.sessionRepo.UpdateSession(ctx, sess)
 	}
 
@@ -113,13 +115,14 @@ func (h *WhatsAppConnectHandler) GetQRCode(ctx context.Context, req *connect.Req
 	if status != string(bot.StatusOnline) && h.sessionRepo != nil {
 		sess, findErr := h.sessionRepo.FindSessionByID(ctx, sessionID)
 		if findErr == nil {
+			// best-effort: connect ulang hanya pemicu QR flow; QR dibaca dari cache setelahnya.
 			_ = h.waGateway.Connect(sess)
 		}
 	}
 
 	qrBase64, qrErr := h.waGateway.GetQRCode(sessionID)
 	if qrErr != nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("get QR code: %w", qrErr))
+		return nil, response.MapDomainError(fmt.Errorf("get QR code: %w", qrErr))
 	}
 
 	return connect.NewResponse(&devicepb.GetWASessionQRResponse{
@@ -149,13 +152,14 @@ func (h *WhatsAppConnectHandler) GetPairingCode(ctx context.Context, req *connec
 	if status != string(bot.StatusOnline) && h.sessionRepo != nil {
 		sess, findErr := h.sessionRepo.FindSessionByID(ctx, sessionID)
 		if findErr == nil {
+			// best-effort: connect ulang hanya pemicu; pairing code dihasilkan oleh client yang terhubung.
 			_ = h.waGateway.Connect(sess)
 		}
 	}
 
 	code, err := h.waGateway.GetPairingCode(sessionID, req.Msg.PhoneNumber)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("get pairing code: %w", err))
+		return nil, response.MapDomainError(fmt.Errorf("get pairing code: %w", err))
 	}
 	return connect.NewResponse(&devicepb.GetWASessionPairingResponse{PairingCode: code}), nil
 }

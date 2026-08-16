@@ -14,7 +14,6 @@ func NewGuardrail(allowedTopics []string) *Guardrail {
 	}
 }
 
-
 func (g *Guardrail) IsTopicAllowed(message string) bool {
 	msgLower := strings.ToLower(strings.TrimSpace(message))
 	if msgLower == "" {

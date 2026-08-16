@@ -51,6 +51,8 @@ func NewChatClient(baseURL, apiKey, workspaceSlug string) (*ChatClient, error) {
 // chatRequest mirrors the body of POST /api/v1/workspace/:slug/chat.
 // Mode "chat" dipilih: pakai LLM + custom embeddings + rolling history
 // (berbeda dengan "query" yang tidak mengingat riwayat percakapan).
+// DEVIASI: tag JSON "sessionId" (camelCase) sengaja mengikuti wire format
+// API AnythingLLM, bukan konvensi snake_case project ini.
 type chatRequest struct {
 	Message   string `json:"message"`
 	Mode      string `json:"mode"`
