@@ -160,52 +160,44 @@ func TestNewStreamInterfacesCommand(t *testing.T) {
 	})
 }
 
-// ─── Interval variants (full-snapshot streaming) ─────────────────────────
+// ─── Follow streaming commands (real-time events) ─────────────────────────
 
-func TestNewStreamHotspotUsersIntervalCommand(t *testing.T) {
-	t.Run("default interval 1s", func(t *testing.T) {
-		cmd := NewStreamHotspotUsersIntervalCommand("", "")
+func TestNewStreamHotspotUsersCommand(t *testing.T) {
+	t.Run("tanpa filter", func(t *testing.T) {
+		cmd := NewStreamHotspotUsersCommand("")
 		assert.Equal(t, "/ip/hotspot/user/print", cmd.Raw)
-		assert.Equal(t, "1s", cmd.Args["interval"])
-		assert.NotContains(t, cmd.Args, "follow")
+		assert.Contains(t, cmd.Args, "follow")
 		assert.True(t, isStreamingCommand(cmd))
 	})
 	t.Run("filter profile", func(t *testing.T) {
-		cmd := NewStreamHotspotUsersIntervalCommand("vip", "2s")
+		cmd := NewStreamHotspotUsersCommand("vip")
+		assert.Equal(t, "/ip/hotspot/user/print", cmd.Raw)
 		assert.Equal(t, "vip", cmd.Args["?profile"])
-		assert.Equal(t, "2s", cmd.Args["interval"])
+		assert.Contains(t, cmd.Args, "follow")
 		assert.True(t, isStreamingCommand(cmd))
 	})
 }
 
-func TestNewStreamHotspotActiveIntervalCommand(t *testing.T) {
-	t.Run("default interval 1s", func(t *testing.T) {
-		cmd := NewStreamHotspotActiveIntervalCommand("", "")
+func TestNewStreamHotspotActiveCommand(t *testing.T) {
+	t.Run("tanpa filter", func(t *testing.T) {
+		cmd := NewStreamHotspotActiveCommand("")
 		assert.Equal(t, "/ip/hotspot/active/print", cmd.Raw)
-		assert.Equal(t, "1s", cmd.Args["interval"])
+		assert.Contains(t, cmd.Args, "follow")
 		assert.True(t, isStreamingCommand(cmd))
 	})
 	t.Run("filter user", func(t *testing.T) {
-		cmd := NewStreamHotspotActiveIntervalCommand("budi", "3s")
+		cmd := NewStreamHotspotActiveCommand("budi")
+		assert.Equal(t, "/ip/hotspot/active/print", cmd.Raw)
 		assert.Equal(t, "budi", cmd.Args["?user"])
-		assert.Equal(t, "3s", cmd.Args["interval"])
+		assert.Contains(t, cmd.Args, "follow")
 		assert.True(t, isStreamingCommand(cmd))
 	})
 }
 
-func TestNewStreamPPPoESecretsIntervalCommand(t *testing.T) {
-	cmd := NewStreamPPPoESecretsIntervalCommand("budi", "")
+func TestNewStreamPPPoESecretsCommand(t *testing.T) {
+	cmd := NewStreamPPPoESecretsCommand("budi")
 	assert.Equal(t, "/ppp/secret/print", cmd.Raw)
-	assert.Equal(t, "1s", cmd.Args["interval"])
 	assert.Equal(t, "budi", cmd.Args["?name"])
-	assert.NotContains(t, cmd.Args, "follow")
-	assert.True(t, isStreamingCommand(cmd))
-}
-
-func TestNewStreamPPPActiveIntervalCommand(t *testing.T) {
-	cmd := NewStreamPPPActiveIntervalCommand("", "2s")
-	assert.Equal(t, "/ppp/active/print", cmd.Raw)
-	assert.Equal(t, "2s", cmd.Args["interval"])
-	assert.NotContains(t, cmd.Args, "follow")
+	assert.Contains(t, cmd.Args, "follow")
 	assert.True(t, isStreamingCommand(cmd))
 }

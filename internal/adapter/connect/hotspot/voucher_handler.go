@@ -72,12 +72,31 @@ func (h *HotspotConnectHandler) GetVoucherBatch(ctx context.Context, req *connec
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("comment (batch tag) required"))
 	}
 
+	comment := req.Msg.Comment
 	users, err := h.useCase.GetUsers(ctx, driver, port.ListUsersFilter{
-		Comment:    sanitizeBatchTag(req.Msg.Comment),
-		OnlyUnused: true,
+		Comment: comment,
 	})
 	if err != nil {
 		return nil, response.MapDomainError(err)
+	}
+	if len(users) == 0 && sanitizeBatchTag(comment) != comment {
+		users, err = h.useCase.GetUsers(ctx, driver, port.ListUsersFilter{
+			Comment: sanitizeBatchTag(comment),
+		})
+		if err != nil {
+			return nil, response.MapDomainError(err)
+		}
+	}
+	if len(users) == 0 {
+		allUsers, err := h.useCase.GetUsers(ctx, driver, port.ListUsersFilter{})
+		if err == nil {
+			tag := strings.TrimSpace(comment)
+			for _, u := range allUsers {
+				if u.Comment == tag || strings.Contains(u.Comment, tag) {
+					users = append(users, u)
+				}
+			}
+		}
 	}
 
 	return connect.NewResponse(&devicepb.GetVoucherBatchResponse{

@@ -1,5 +1,6 @@
 import {
   BookOpen,
+  FileText,
   LayoutDashboard,
   ListTodo,
   MessageCircleMore,
@@ -7,6 +8,7 @@ import {
   Monitor,
   ShieldCheck,
   Users,
+  Wifi,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
@@ -37,6 +39,18 @@ export const sidebarData: SidebarData = {
           url: '/devices',
           icon: Monitor,
           permission: 'device:read',
+        },
+        {
+          title: 'Hotspot',
+          url: '/hotspot',
+          icon: Wifi,
+          permission: 'hotspot:read',
+        },
+        {
+          title: 'Sales Report',
+          url: '/reports',
+          icon: FileText,
+          permission: 'hotspot:read',
         },
         {
           title: 'Tasks',

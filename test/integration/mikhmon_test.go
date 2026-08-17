@@ -5,6 +5,7 @@ package integration
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -14,8 +15,13 @@ import (
 )
 
 func TestMikhmonIntegration_FullWorkflow(t *testing.T) {
-	drv := newTestDriver(t)
-	ctx := context.Background()
+	target := mikrotikTestTarget(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
+
+	drv, err := mikrotik.NewDriver(ctx, target)
+	require.NoError(t, err, "gagal konek ke Mikrotik test")
+	defer func() { assert.NoError(t, drv.Close()) }()
 
 	const testProfileName = "polyglot-mikhmon-profile"
 	const testVoucherPrefix = "testvc_"
@@ -57,7 +63,7 @@ func TestMikhmonIntegration_FullWorkflow(t *testing.T) {
 		LockUser:        true,
 		EnableRecording: true,
 	})
-	_, err := drv.Execute(ctx, profileCmd)
+	_, err = drv.Execute(ctx, profileCmd)
 	require.NoError(t, err, "gagal create mikhmon profile")
 
 	// Verify profile creation & on-login script
@@ -105,7 +111,17 @@ func TestMikhmonIntegration_FullWorkflow(t *testing.T) {
 	assert.Equal(t, "IntegrationTest", parsedComment.Tag)
 	assert.False(t, parsedComment.IsActivated)
 
-	// 3. Setup Mikhmon Expire Monitor Scheduler
+	// 3. Verify Inactive Hotspot Users comparison
+	activeCmd := mikrotik.NewPrintHotspotActiveCommand("")
+	activeRes, err := drv.Execute(ctx, activeCmd)
+	require.NoError(t, err)
+	activeSessions := mikrotik.ParseHotspotActiveSessions(activeRes)
+
+	inactiveUsers := mikrotik.FilterInactiveHotspotUsers(allUsers, activeSessions)
+	require.NotEmpty(t, inactiveUsers, "karena tidak ada sesi aktif, semua user harus terdeteksi inactive")
+	t.Logf("Total registered users: %d, active: %d, inactive: %d", len(allUsers), len(activeSessions), len(inactiveUsers))
+
+	// 4. Setup Mikhmon Expire Monitor Scheduler
 	// Pre-cleanup if exists
 	printSch, err := drv.Execute(ctx, mikrotik.NewPrintSystemSchedulersCommand(mikhmon.MikhmonExpireMonitorName))
 	if err == nil {

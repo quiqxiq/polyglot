@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	"strconv"
+	"strings"
 
 	"connectrpc.com/connect"
 
@@ -78,7 +79,7 @@ func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect
 		return nil, err
 	}
 
-	// Gather voucher users: single by .id or batch by comment tag (unused only).
+	// Gather voucher users: single by .id or batch by comment tag.
 	var users []port.HotspotUser
 	if req.Msg.UserId != "" {
 		u, err := h.useCase.GetUser(ctx, driver, req.Msg.UserId)
@@ -87,12 +88,34 @@ func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect
 		}
 		users = []port.HotspotUser{u}
 	} else {
+		// In legacy Mikhmon, comment filtering matches against the comment or batch tag.
+		// Try first with exact comment / tag. We don't force OnlyUnused if it limits existing vouchers.
 		users, err = h.useCase.GetUsers(ctx, driver, port.ListUsersFilter{
-			Comment:    sanitizeBatchTag(req.Msg.Comment),
-			OnlyUnused: true,
+			Comment: req.Msg.Comment,
 		})
 		if err != nil {
 			return nil, response.MapDomainError(err)
+		}
+		// Fallback: if no users found with raw comment, try sanitized comment
+		if len(users) == 0 && sanitizeBatchTag(req.Msg.Comment) != req.Msg.Comment {
+			users, err = h.useCase.GetUsers(ctx, driver, port.ListUsersFilter{
+				Comment: sanitizeBatchTag(req.Msg.Comment),
+			})
+			if err != nil {
+				return nil, response.MapDomainError(err)
+			}
+		}
+		// Fallback 2: if still not found, search all users and match comments in memory (partial / sub-tag match)
+		if len(users) == 0 {
+			allUsers, err := h.useCase.GetUsers(ctx, driver, port.ListUsersFilter{})
+			if err == nil {
+				tag := strings.TrimSpace(req.Msg.Comment)
+				for _, u := range allUsers {
+					if u.Comment == tag || strings.Contains(u.Comment, tag) {
+						users = append(users, u)
+					}
+				}
+			}
 		}
 	}
 	if len(users) == 0 {

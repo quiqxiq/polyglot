@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 
@@ -72,8 +73,16 @@ func main() {
 		log.Printf("[Seeder Warning] Failed to initialize Casbin enforcer: %v", err)
 	} else {
 		auth.SeedSystemPolicies(enforcer)
-		_, _ = enforcer.AddRoleForUser(adminEmail, "admin")
-		log.Printf("[Seeder] Assigned role 'admin' to user %s in Casbin", adminEmail)
+		users, err := pgStore.FindAllUsers(ctx)
+		if err != nil {
+			log.Printf("[Seeder Warning] Failed to load users for role assignment: %v", err)
+		} else {
+			refs := make([]*auth.UserRef, 0, len(users))
+			for _, u := range users {
+				refs = append(refs, &auth.UserRef{ID: fmt.Sprintf("%d", u.ID), Role: u.Role})
+			}
+			auth.EnsureUserRoleAssignments(enforcer, refs)
+		}
 	}
 
 	log.Println("[Seeder] Database seeding completed successfully!")

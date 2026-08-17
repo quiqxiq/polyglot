@@ -43,7 +43,7 @@ services:
   #     - server
 
   postgres:
-    image: postgres:16-alpine
+    image: docker.io/library/postgres:16-alpine
     container_name: polyglot-postgres
     environment:
       POSTGRES_USER: postgres
@@ -60,7 +60,7 @@ services:
       retries: 5
 
   redis:
-    image: redis:7-alpine
+    image: docker.io/library/redis:7-alpine
     container_name: polyglot-redis
     ports:
       - "6379:6379"
@@ -76,27 +76,27 @@ services:
   # port.KnowledgeRetriever. Dokumen dikelola lewat UI admin-nya
   # (http://localhost:3001) — buat API key di Settings > Developer API,
   # lalu set ANYTHINGLLM_API_KEY + ANYTHINGLLM_WORKSPACE di .env.
-  anythingllm:
-    image: mintplexlabs/anythingllm:latest
-    container_name: polyglot-anythingllm
-    ports:
-      - "3001:3001"
-    volumes:
-      - anythingllm-data:/app/server/storage
-    environment:
-      - SERVER_PORT=3001
-      # STORAGE_DIR wajib — tanpa ini image AnythingLLM terkini crash saat
-      # startup (ERR_INVALID_ARG_TYPE di collector/utils/files) dan data tidak
-      # persisten. Nilai ini harus sama dengan mount volume di bawah.
-      - STORAGE_DIR=/app/server/storage
-      - DISABLE_TELEMETRY=true
-    healthcheck:
-      test: ["CMD", "node", "-e", "fetch('http://localhost:3001/api/ping').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+  # anythingllm:
+  #   image: mintplexlabs/anythingllm:latest
+  #   container_name: polyglot-anythingllm
+  #   ports:
+  #     - "3001:3001"
+  #   volumes:
+  #     - anythingllm-data:/app/server/storage
+  #   environment:
+  #     - SERVER_PORT=3001
+  #     # STORAGE_DIR wajib — tanpa ini image AnythingLLM terkini crash saat
+  #     # startup (ERR_INVALID_ARG_TYPE di collector/utils/files) dan data tidak
+  #     # persisten. Nilai ini harus sama dengan mount volume di bawah.
+  #     - STORAGE_DIR=/app/server/storage
+  #     - DISABLE_TELEMETRY=true
+  #   healthcheck:
+  #     test: ["CMD", "node", "-e", "fetch('http://localhost:3001/api/ping').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
 
 volumes:
   pgdata:
   redisdata:
-  anythingllm-data:
+  # anythingllm-data:
