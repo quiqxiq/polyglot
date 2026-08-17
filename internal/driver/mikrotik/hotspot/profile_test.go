@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestBuildOnLoginScript(t *testing.T) {
@@ -42,6 +43,48 @@ func TestBuildOnLoginScript(t *testing.T) {
 		assert.Contains(t, script, ",,50000,,0,noexp,Enable,Disable,")
 		assert.Contains(t, script, `/ip hotspot user set mac-address=$mac`)
 	})
+}
+
+func TestParseOnLoginScript(t *testing.T) {
+	t.Run("format standar (remc)", func(t *testing.T) {
+		script := `:put (",remc,3000,1h,3500,,Enable,Disable,");`
+		meta, err := ParseOnLoginScript(script)
+		require.NoError(t, err)
+		assert.Equal(t, "remc", meta.ExpireMode)
+		assert.Equal(t, 3000.0, meta.Price)
+		assert.Equal(t, "1h", meta.Validity)
+		assert.Equal(t, 3500.0, meta.SellingPrice)
+		assert.Equal(t, "Enable", meta.LockUser)
+		assert.Equal(t, "Disable", meta.LockServer)
+	})
+
+	t.Run("format noexp", func(t *testing.T) {
+		script := `:put (",,50000,,0,noexp,Enable,Disable,");`
+		meta, err := ParseOnLoginScript(script)
+		require.NoError(t, err)
+		assert.Equal(t, "0", meta.ExpireMode)
+		assert.Equal(t, 50000.0, meta.Price)
+		assert.Equal(t, "", meta.Validity)
+		assert.Equal(t, 0.0, meta.SellingPrice)
+		assert.Equal(t, "Enable", meta.LockUser)
+	})
+
+	t.Run("script kosong -> metadata kosong tanpa error", func(t *testing.T) {
+		meta, err := ParseOnLoginScript("")
+		require.NoError(t, err)
+		assert.Equal(t, ProfileMeta{}, meta)
+	})
+
+	t.Run("bukan payload mikhmon -> error", func(t *testing.T) {
+		_, err := ParseOnLoginScript("/system script add name=test")
+		require.Error(t, err)
+	})
+}
+
+func TestNormalizeProfileName(t *testing.T) {
+	assert.Equal(t, "1Day_10K", NormalizeProfileName("1Day_10K"))
+	assert.Equal(t, "Paket-1-Hari", NormalizeProfileName("Paket 1 Hari"))
+	assert.Equal(t, "A-B", NormalizeProfileName("A   B"))
 }
 
 func TestNewAddMikhmonProfileCommand(t *testing.T) {

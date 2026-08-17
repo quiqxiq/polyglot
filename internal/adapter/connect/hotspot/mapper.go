@@ -5,37 +5,11 @@ import (
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 )
 
-// ToProtoHotspotProfiles converts mikrotik profile list to proto list.
-func ToProtoHotspotProfiles(profiles []mikrotik.HotspotUserProfile) []*devicepb.HotspotProfile {
-	pbProfiles := make([]*devicepb.HotspotProfile, len(profiles))
-	for i, p := range profiles {
-		pbProfiles[i] = &devicepb.HotspotProfile{
-			Id:          p.RosID,
-			Name:        p.Name,
-			SharedUsers: p.SharedUsers,
-			RateLimit:   p.RateLimit,
-			ModeExpire:  p.OnLogin,
-			ParentQueue: p.ParentQueue,
-			Comment:     p.Comment,
-		}
-	}
-	return pbProfiles
-}
-
 // ToProtoHotspotUsers converts mikrotik user list to proto list.
 func ToProtoHotspotUsers(users []mikrotik.HotspotUser) []*devicepb.HotspotUser {
 	pbUsers := make([]*devicepb.HotspotUser, len(users))
 	for i, u := range users {
-		pbUsers[i] = &devicepb.HotspotUser{
-			Id:          u.RosID,
-			Name:        u.Name,
-			Password:    u.Password,
-			Profile:     u.Profile,
-			LimitUptime: u.LimitUptime,
-			LimitBytes:  u.LimitBytesIn,
-			Comment:     u.Comment,
-			Disabled:    u.Disabled,
-		}
+		pbUsers[i] = ToProtoHotspotUser(u)
 	}
 	return pbUsers
 }

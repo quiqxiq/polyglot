@@ -28,6 +28,23 @@ func (w *responseWriterWrapper) Write(b []byte) (int, error) {
 	return n, err
 }
 
+// Flush forwards to the underlying writer so streaming handlers (SSE)
+// keep seeing an http.Flusher through this wrapper.
+func (w *responseWriterWrapper) Flush() {
+	if f, ok := w.ResponseWriter.(http.Flusher); ok {
+		f.Flush()
+	}
+}
+
+// Unwrap exposes the original ResponseWriter so http.ResponseController and
+// libraries that follow Unwrap (e.g. coder/websocket for Hijack) can reach
+// the underlying optional interfaces.
+func (w *responseWriterWrapper) Unwrap() http.ResponseWriter {
+	return w.ResponseWriter
+}
+
+var _ http.Flusher = (*responseWriterWrapper)(nil)
+
 // RequestLogger returns a standard net/http middleware logging all HTTP requests via Logrus.
 func RequestLogger() Middleware {
 	return func(next http.Handler) http.Handler {

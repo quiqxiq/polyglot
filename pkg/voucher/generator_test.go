@@ -126,6 +126,47 @@ func TestRender_InvalidTemplateDir_ReturnsError(t *testing.T) {
 	assert.Error(t, err)
 }
 
+func TestQRContent_CredentialsMode(t *testing.T) {
+	v := voucher.VoucherData{Username: "user123", Password: "pass456"}
+	assert.Equal(t, "user123\npass456", voucher.QRContent(v, voucher.QRModeCredentials))
+
+	// Password same as username → single line (existing behavior).
+	same := voucher.VoucherData{Username: "a1b2c3", Password: "a1b2c3"}
+	assert.Equal(t, "a1b2c3", voucher.QRContent(same, voucher.QRModeCredentials))
+}
+
+func TestQRContent_LoginURLMode(t *testing.T) {
+	v := voucher.VoucherData{Username: "user 1", Password: "p@ss", DNSName: "192.168.1.1"}
+	got := voucher.QRContent(v, voucher.QRModeLoginURL)
+	assert.Equal(t, "http://192.168.1.1/login?username=user+1&password=p%40ss", got)
+}
+
+func TestRenderWithOptions_LoginURLQR(t *testing.T) {
+	tdir := templateDir(t)
+	v := sampleVoucher(1)
+	v.DNSName = "192.168.1.1"
+
+	html, err := voucher.RenderWithOptions([]voucher.VoucherData{v}, voucher.LayoutDefault, tdir, voucher.Options{QRMode: voucher.QRModeLoginURL})
+	require.NoError(t, err)
+
+	assert.Contains(t, html, "data:image/png;base64,", "QR code should still be embedded as base64")
+	assert.Contains(t, html, "192.168.1.1", "DNS name used for the login URL should appear in HTML")
+}
+
+func TestListTemplates(t *testing.T) {
+	infos := voucher.ListTemplates()
+	require.Len(t, infos, 3)
+	assert.Equal(t, "default", infos[0].Name)
+	assert.Equal(t, []string{"header", "row", "footer"}, infos[0].Sections)
+	assert.Equal(t, "small", infos[1].Name)
+	assert.Equal(t, "thermal", infos[2].Name)
+}
+
+func TestTemplateFile(t *testing.T) {
+	assert.Equal(t, "header.default.txt", voucher.TemplateFile("default", "header"))
+	assert.Equal(t, "footer.thermal.txt", voucher.TemplateFile("thermal", "footer"))
+}
+
 func TestRender_SequentialNumbers(t *testing.T) {
 	tdir := templateDir(t)
 	vouchers := []voucher.VoucherData{

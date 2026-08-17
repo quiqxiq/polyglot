@@ -49,6 +49,32 @@ func NewPrintSystemClockCommand() command.Command {
 	}
 }
 
+// NewStreamSystemClockCommand builds the command.Command for streaming
+// /system/clock/print interval=<n>, which makes RouterOS re-send the row
+// periodically. interval defaults to "1s".
+func NewStreamSystemClockCommand(interval string) command.Command {
+	if interval == "" {
+		interval = "1s"
+	}
+	return command.Command{
+		Raw:  "/system/clock/print",
+		Args: map[string]string{"interval": interval},
+	}
+}
+
+// NewStreamSystemIdentityCommand builds the command.Command for streaming
+// /system/identity/print interval=<n>, which makes RouterOS re-send the row
+// periodically. interval defaults to "1s".
+func NewStreamSystemIdentityCommand(interval string) command.Command {
+	if interval == "" {
+		interval = "1s"
+	}
+	return command.Command{
+		Raw:  "/system/identity/print",
+		Args: map[string]string{"interval": interval},
+	}
+}
+
 // ParseSystemClock converts a command.Result from /system/clock/print into a SystemClock struct.
 func ParseSystemClock(result command.Result) SystemClock {
 	if len(result.Rows) == 0 {

@@ -5,10 +5,45 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // MikhmonExpireMonitorName is the standard RouterOS scheduler name used by Mikhmon.
 const MikhmonExpireMonitorName = "Mikhmon-Expire-Monitor"
+
+// mikhmonExpireScriptName and mikhmonExpireSchedulerName are the names used
+// by the gateway's two-step expire-monitor setup (script + scheduler).
+const (
+	mikhmonExpireScriptName    = "mikhmon-expire-monitor"
+	mikhmonExpireSchedulerName = "mikhmon-expire-scheduler"
+)
+
+// ExpireMonitorSchedulerNames lists the scheduler names recognised as the
+// Mikhmon expire monitor — the legacy single-step form and the gateway
+// two-step form (Fase 6 decision A).
+var ExpireMonitorSchedulerNames = []string{
+	MikhmonExpireMonitorName,
+	mikhmonExpireSchedulerName,
+}
+
+// classifyExpireMonitorSchedulers maps raw scheduler rows to an
+// ExpireMonitorStatus, preferring the legacy scheduler when both forms are
+// present. Returns zero status (not installed) when no name matches.
+func classifyExpireMonitorSchedulers(schedulers []mikrotik.SystemScheduler) port.ExpireMonitorStatus {
+	for _, s := range schedulers {
+		for _, name := range ExpireMonitorSchedulerNames {
+			if s.Name == name {
+				return port.ExpireMonitorStatus{
+					IsInstalled:   true,
+					IsEnabled:     !s.Disabled,
+					SchedulerID:   s.RosID,
+					SchedulerName: s.Name,
+				}
+			}
+		}
+	}
+	return port.ExpireMonitorStatus{}
+}
 
 // BuildExpireMonitorScript generates the RouterOS script source for Mikhmon v4's
 // automated expire monitor. When executed periodically (e.g. every 1 minute via scheduler),

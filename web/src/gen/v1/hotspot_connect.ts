@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ActiveSessionsStreamData, BlockDHCPLeaseRequest, BlockDHCPLeaseResponse, GenerateVouchersRequest, GenerateVouchersResponse, GetHotspotDashboardRequest, GetHotspotDashboardResponse, KickHotspotSessionRequest, KickHotspotSessionResponse, ListDHCPLeasesRequest, ListDHCPLeasesResponse, ListHotspotActiveSessionsRequest, ListHotspotActiveSessionsResponse, ListHotspotProfilesRequest, ListHotspotProfilesResponse, ListHotspotUsersRequest, ListHotspotUsersResponse, ResourceStreamData, StreamActiveSessionsRequest, StreamResourceRequest, StreamTrafficRequest, TrafficStreamData } from "./hotspot_pb.js";
+import { ActiveSessionsStreamData, BlockDHCPLeaseRequest, BlockDHCPLeaseResponse, CreateHotspotProfileRequest, CreateHotspotProfileResponse, CreateHotspotUserRequest, CreateHotspotUserResponse, DeleteHotspotProfileRequest, DeleteHotspotProfileResponse, DeleteHotspotReportRequest, DeleteHotspotReportResponse, DeleteHotspotUserRequest, DeleteHotspotUserResponse, DisableExpireMonitorRequest, DisableExpireMonitorResponse, ExpireMonitorStatusResponse, GenerateVouchersRequest, GenerateVouchersResponse, GetExpireMonitorStatusRequest, GetHotspotUserRequest, GetHotspotUserResponse, GetTemplateSectionRequest, GetTemplateSectionResponse, GetVoucherBatchRequest, GetVoucherBatchResponse, HotspotInactiveFrame, InterfaceEthernetFrame, KickHotspotSessionRequest, KickHotspotSessionResponse, ListDHCPLeasesRequest, ListDHCPLeasesResponse, ListHotspotActiveSessionsRequest, ListHotspotActiveSessionsResponse, ListHotspotHostsRequest, ListHotspotHostsResponse, ListHotspotProfilesRequest, ListHotspotProfilesResponse, ListHotspotReportsRequest, ListHotspotReportsResponse, ListHotspotServersRequest, ListHotspotServersResponse, ListHotspotUsersRequest, ListHotspotUsersResponse, ListTemplatesRequest, ListTemplatesResponse, LogsStreamFrame, PPPActiveFrame, PPPInactiveFrame, QueueStatsFrame, RemoveExpireMonitorRequest, RemoveExpireMonitorResponse, RemoveHotspotHostRequest, RemoveHotspotHostResponse, RenderVouchersRequest, RenderVouchersResponse, ResetHotspotUserCountersRequest, ResetHotspotUserCountersResponse, ResourceStreamData, SetupExpireMonitorRequest, SetupExpireMonitorResponse, StreamActiveSessionsRequest, StreamHotspotInactiveRequest, StreamInterfaceEthernetRequest, StreamLogsRequest, StreamPPPActiveRequest, StreamPPPInactiveRequest, StreamQueueStatsRequest, StreamResourceRequest, StreamSystemSnapshotRequest, StreamTrafficRequest, SystemSnapshotFrame, TrafficStreamData, UpdateHotspotProfileRequest, UpdateHotspotProfileResponse, UpdateHotspotUserRequest, UpdateHotspotUserResponse } from "./hotspot_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -12,15 +12,6 @@ import { MethodKind } from "@bufbuild/protobuf";
 export const HotspotService = {
   typeName: "polyglot.v1.HotspotService",
   methods: {
-    /**
-     * @generated from rpc polyglot.v1.HotspotService.GetDashboard
-     */
-    getDashboard: {
-      name: "GetDashboard",
-      I: GetHotspotDashboardRequest,
-      O: GetHotspotDashboardResponse,
-      kind: MethodKind.Unary,
-    },
     /**
      * @generated from rpc polyglot.v1.HotspotService.ListProfiles
      */
@@ -85,6 +76,114 @@ export const HotspotService = {
       kind: MethodKind.Unary,
     },
     /**
+     * @generated from rpc polyglot.v1.HotspotService.GetVoucherBatch
+     */
+    getVoucherBatch: {
+      name: "GetVoucherBatch",
+      I: GetVoucherBatchRequest,
+      O: GetVoucherBatchResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.GetUser
+     */
+    getUser: {
+      name: "GetUser",
+      I: GetHotspotUserRequest,
+      O: GetHotspotUserResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.CreateUser
+     */
+    createUser: {
+      name: "CreateUser",
+      I: CreateHotspotUserRequest,
+      O: CreateHotspotUserResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.UpdateUser
+     */
+    updateUser: {
+      name: "UpdateUser",
+      I: UpdateHotspotUserRequest,
+      O: UpdateHotspotUserResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.ResetUserCounters
+     */
+    resetUserCounters: {
+      name: "ResetUserCounters",
+      I: ResetHotspotUserCountersRequest,
+      O: ResetHotspotUserCountersResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.DeleteUser
+     */
+    deleteUser: {
+      name: "DeleteUser",
+      I: DeleteHotspotUserRequest,
+      O: DeleteHotspotUserResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.CreateProfile
+     */
+    createProfile: {
+      name: "CreateProfile",
+      I: CreateHotspotProfileRequest,
+      O: CreateHotspotProfileResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.UpdateProfile
+     */
+    updateProfile: {
+      name: "UpdateProfile",
+      I: UpdateHotspotProfileRequest,
+      O: UpdateHotspotProfileResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.DeleteProfile
+     */
+    deleteProfile: {
+      name: "DeleteProfile",
+      I: DeleteHotspotProfileRequest,
+      O: DeleteHotspotProfileResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.ListHosts
+     */
+    listHosts: {
+      name: "ListHosts",
+      I: ListHotspotHostsRequest,
+      O: ListHotspotHostsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.RemoveHost
+     */
+    removeHost: {
+      name: "RemoveHost",
+      I: RemoveHotspotHostRequest,
+      O: RemoveHotspotHostResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.ListHotspotServers
+     */
+    listHotspotServers: {
+      name: "ListHotspotServers",
+      I: ListHotspotServersRequest,
+      O: ListHotspotServersResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
      * @generated from rpc polyglot.v1.HotspotService.StreamTraffic
      */
     streamTraffic: {
@@ -110,6 +209,150 @@ export const HotspotService = {
       I: StreamActiveSessionsRequest,
       O: ActiveSessionsStreamData,
       kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.StreamSystemSnapshot
+     */
+    streamSystemSnapshot: {
+      name: "StreamSystemSnapshot",
+      I: StreamSystemSnapshotRequest,
+      O: SystemSnapshotFrame,
+      kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.StreamInterfaceEthernet
+     */
+    streamInterfaceEthernet: {
+      name: "StreamInterfaceEthernet",
+      I: StreamInterfaceEthernetRequest,
+      O: InterfaceEthernetFrame,
+      kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.StreamQueueStats
+     */
+    streamQueueStats: {
+      name: "StreamQueueStats",
+      I: StreamQueueStatsRequest,
+      O: QueueStatsFrame,
+      kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.StreamLogs
+     */
+    streamLogs: {
+      name: "StreamLogs",
+      I: StreamLogsRequest,
+      O: LogsStreamFrame,
+      kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.StreamHotspotInactive
+     */
+    streamHotspotInactive: {
+      name: "StreamHotspotInactive",
+      I: StreamHotspotInactiveRequest,
+      O: HotspotInactiveFrame,
+      kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.StreamPPPActive
+     */
+    streamPPPActive: {
+      name: "StreamPPPActive",
+      I: StreamPPPActiveRequest,
+      O: PPPActiveFrame,
+      kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.StreamPPPInactive
+     */
+    streamPPPInactive: {
+      name: "StreamPPPInactive",
+      I: StreamPPPInactiveRequest,
+      O: PPPInactiveFrame,
+      kind: MethodKind.ServerStreaming,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.ListReports
+     */
+    listReports: {
+      name: "ListReports",
+      I: ListHotspotReportsRequest,
+      O: ListHotspotReportsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.DeleteReport
+     */
+    deleteReport: {
+      name: "DeleteReport",
+      I: DeleteHotspotReportRequest,
+      O: DeleteHotspotReportResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.GetExpireMonitorStatus
+     */
+    getExpireMonitorStatus: {
+      name: "GetExpireMonitorStatus",
+      I: GetExpireMonitorStatusRequest,
+      O: ExpireMonitorStatusResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.SetupExpireMonitor
+     */
+    setupExpireMonitor: {
+      name: "SetupExpireMonitor",
+      I: SetupExpireMonitorRequest,
+      O: SetupExpireMonitorResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.DisableExpireMonitor
+     */
+    disableExpireMonitor: {
+      name: "DisableExpireMonitor",
+      I: DisableExpireMonitorRequest,
+      O: DisableExpireMonitorResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.RemoveExpireMonitor
+     */
+    removeExpireMonitor: {
+      name: "RemoveExpireMonitor",
+      I: RemoveExpireMonitorRequest,
+      O: RemoveExpireMonitorResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.ListTemplates
+     */
+    listTemplates: {
+      name: "ListTemplates",
+      I: ListTemplatesRequest,
+      O: ListTemplatesResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.GetTemplateSection
+     */
+    getTemplateSection: {
+      name: "GetTemplateSection",
+      I: GetTemplateSectionRequest,
+      O: GetTemplateSectionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.RenderVouchers
+     */
+    renderVouchers: {
+      name: "RenderVouchers",
+      I: RenderVouchersRequest,
+      O: RenderVouchersResponse,
+      kind: MethodKind.Unary,
     },
   }
 } as const;

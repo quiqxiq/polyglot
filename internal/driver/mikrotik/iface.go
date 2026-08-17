@@ -28,6 +28,23 @@ func NewPrintInterfacesCommand(nameFilter string) command.Command {
 	}
 }
 
+// NewStreamInterfacesCommand builds the command.Command for streaming
+// /interface/ethernet/print interval=<n>, which makes RouterOS re-send the
+// FULL list of interfaces periodically. interval defaults to "1s".
+func NewStreamInterfacesCommand(nameFilter, interval string) command.Command {
+	if interval == "" {
+		interval = "1s"
+	}
+	args := map[string]string{"interval": interval}
+	if nameFilter != "" {
+		args["?name"] = nameFilter
+	}
+	return command.Command{
+		Raw:  "/interface/ethernet/print",
+		Args: args,
+	}
+}
+
 // NewMonitorTrafficOnceCommand builds the command.Command for
 // /interface/monitor-traffic with the "once" flag, which returns a single
 // snapshot of current traffic rates and then finishes (RouterOS sends one

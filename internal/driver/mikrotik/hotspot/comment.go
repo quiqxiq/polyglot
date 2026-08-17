@@ -30,6 +30,48 @@ func FormatPreLoginComment(vcType, code, tag string, t time.Time) string {
 	return fmt.Sprintf("%s-%s-%s", vcType, code, dateStr)
 }
 
+// BuildCreateUserComment returns the initial comment for a newly created
+// hotspot user, mirroring legacy Mikhmon post_add_user.php: when comment is
+// empty the type prefix is "vc" when name == password, "up" otherwise, and a
+// full pre-login comment ("vc/up-<code>-<date>[-tag]") is built. Non-empty
+// comments are returned unchanged.
+func BuildCreateUserComment(name, password, comment string, now time.Time) string {
+	if comment == "" {
+		vcType := "up"
+		if name == password {
+			vcType = "vc"
+		}
+		code := GenerateVoucherCode(3, CharSetUpperNum)
+		comment = FormatPreLoginComment(vcType, code, "", now)
+	}
+	return comment
+}
+
+// BuildUpdatedComment rebuilds a hotspot user comment when updating a user via
+// the Mikhmon admin UI, mirroring legacy post_update_user.php rules:
+//   - expireDate == "" && userCode == "" → newComment returned unchanged.
+//   - expireDate == "" && userCode != "" → keep the legacy prefix ("vc"/"up"/
+//     "X") and rebuild with a fresh code and today's date.
+//   - expireDate != "" && userCode == "" → "<expireDate> <newComment>"
+//     (persists the expiry date inside the comment).
+func BuildUpdatedComment(expireDate, userCode, newComment string, now time.Time) string {
+	if expireDate != "" && userCode == "" {
+		return expireDate + " " + newComment
+	}
+	if expireDate == "" && userCode != "" {
+		vcType := "up"
+		switch {
+		case strings.HasPrefix(userCode, "vc"):
+			vcType = "vc"
+		case strings.HasPrefix(userCode, "X"):
+			vcType = "X"
+		}
+		code := GenerateVoucherCode(3, CharSetUpperNum)
+		return FormatPreLoginComment(vcType, code, newComment, now)
+	}
+	return newComment
+}
+
 // ParseMikhmonComment parses a MikroTik Hotspot user comment string into a typed
 // MikhmonComment struct. It detects whether the comment is in pre-login or post-login format.
 func ParseMikhmonComment(commentStr string) (MikhmonComment, error) {

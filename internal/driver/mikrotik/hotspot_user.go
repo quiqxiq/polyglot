@@ -43,6 +43,26 @@ func NewStreamHotspotUsersCommand(profileFilter string) command.Command {
 	}
 }
 
+// NewStreamHotspotUsersIntervalCommand builds the command.Command for
+// streaming /ip/hotspot/user/print interval=<n>, which makes RouterOS
+// re-send the FULL list of hotspot users periodically — unlike follow,
+// which only pushes per-row deltas. Use this when the consumer needs a
+// complete snapshot per frame (e.g. computing inactive users). interval
+// defaults to "1s".
+func NewStreamHotspotUsersIntervalCommand(profileFilter, interval string) command.Command {
+	if interval == "" {
+		interval = "1s"
+	}
+	args := map[string]string{"interval": interval}
+	if profileFilter != "" {
+		args["?profile"] = profileFilter
+	}
+	return command.Command{
+		Raw:  "/ip/hotspot/user/print",
+		Args: args,
+	}
+}
+
 // NewAddHotspotUserCommand builds the command.Command for /ip/hotspot/user/add.
 func NewAddHotspotUserCommand(p HotspotUserParams) command.Command {
 	args := map[string]string{
@@ -73,6 +93,8 @@ func NewSetHotspotUserCommand(rosID string, p HotspotUserParams) command.Command
 	args := map[string]string{
 		"numbers": rosID, // intentional: hotspot/user/set uses numbers, not .id
 	}
+	setIfNonEmpty(args, "name", p.Name)
+	setIfNonEmpty(args, "server", p.Server)
 	setIfNonEmpty(args, "password", p.Password)
 	setIfNonEmpty(args, "profile", p.Profile)
 	setIfNonEmpty(args, "mac-address", p.MACAddress)

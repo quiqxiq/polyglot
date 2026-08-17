@@ -28,8 +28,8 @@ type HotspotGateway interface {
 	// GenerateVouchers generates a batch of count vouchers and executes their
 	// creation commands, returning the generated voucher metadata.
 	GenerateVouchers(ctx context.Context, driver DeviceDriver, p VoucherGenerateParams, count int) (VoucherBatch, error)
-	// ListUsers lists hotspot users, optionally filtered by profile.
-	ListUsers(ctx context.Context, driver DeviceDriver, profileFilter string) ([]HotspotUser, error)
+	// ListUsers lists hotspot users, optionally filtered (profile/comment/name/only_unused).
+	ListUsers(ctx context.Context, driver DeviceDriver, f ListUsersFilter) ([]HotspotUser, error)
 	// GetUser fetches a single hotspot user by RouterOS .id.
 	GetUser(ctx context.Context, driver DeviceDriver, rosID string) (HotspotUser, error)
 	// AddUser creates a new hotspot user directly (non-batch).
@@ -57,9 +57,19 @@ type HotspotGateway interface {
 	// ListNATRules fetches all /ip/firewall/nat entries.
 	ListNATRules(ctx context.Context, driver DeviceDriver) ([]map[string]string, error)
 	// SetupExpireMonitor adds or updates the Mikhmon expire-monitor scheduler.
+	// It is idempotent and recognises both the legacy single-step scheduler
+	// (Mikhmon-Expire-Monitor) and the gateway two-step form.
 	SetupExpireMonitor(ctx context.Context, driver DeviceDriver, interval string) (command.Result, error)
-	// ListReports fetches all report records from /system/script.
-	ListReports(ctx context.Context, driver DeviceDriver) ([]MikhmonTransaction, error)
+	// GetExpireMonitorStatus reports the state of the expire-monitor scheduler
+	// (recognises both the legacy "Mikhmon-Expire-Monitor" and the gateway
+	// "mikhmon-expire-scheduler" names).
+	GetExpireMonitorStatus(ctx context.Context, driver DeviceDriver) (ExpireMonitorStatus, error)
+	// SetExpireMonitorDisabled toggles the scheduler disabled flag by RouterOS .id.
+	SetExpireMonitorDisabled(ctx context.Context, driver DeviceDriver, rosID string, disabled bool) (command.Result, error)
+	// RemoveExpireMonitor deletes the expire-monitor scheduler by RouterOS .id.
+	RemoveExpireMonitor(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
+	// ListReports fetches report records from /system/script filtered by f.
+	ListReports(ctx context.Context, driver DeviceDriver, f ReportFilter) ([]MikhmonTransaction, error)
 	// DeleteReport deletes a report script record by RouterOS .id.
 	DeleteReport(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
 	// ParseUserComment parses a Mikhmon-formatted user comment. Pure parse —

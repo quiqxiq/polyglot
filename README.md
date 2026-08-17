@@ -10,6 +10,8 @@ dan WebSocket/SSE untuk multi-vendor network automation.
 - `Polyglot-Architecture.md` — arsitektur dan alur kerja sistem.
 - `SYSTEM-STRUCTURE-AND-ARCHITECTURE.md` — dokumentasi struktur folder definitif dan diagram arsitektur sistem.
 - `TECH-STACK-DAN-PERSIAPAN.md` — pemilihan teknologi dan versi library.
+- `docs/database-schema.md` — **skema database ISP management** (pelanggan, subscription PPPoE/Hotspot, plan, invoice, pembayaran & token QR, payment gateway, kas, laporan, monitoring).
+- `docs/BACKEND-MIGRATION-ROADMAP.md` — peta jalan migrasi backend ke transport target.
 
 ## ADR (Architectural Decision Records)
 

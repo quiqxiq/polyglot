@@ -19,24 +19,50 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	HotspotService_GetDashboard_FullMethodName         = "/polyglot.v1.HotspotService/GetDashboard"
-	HotspotService_ListProfiles_FullMethodName         = "/polyglot.v1.HotspotService/ListProfiles"
-	HotspotService_ListUsers_FullMethodName            = "/polyglot.v1.HotspotService/ListUsers"
-	HotspotService_ListActiveSessions_FullMethodName   = "/polyglot.v1.HotspotService/ListActiveSessions"
-	HotspotService_KickActiveSession_FullMethodName    = "/polyglot.v1.HotspotService/KickActiveSession"
-	HotspotService_ListDHCPLeases_FullMethodName       = "/polyglot.v1.HotspotService/ListDHCPLeases"
-	HotspotService_BlockDHCPLease_FullMethodName       = "/polyglot.v1.HotspotService/BlockDHCPLease"
-	HotspotService_GenerateVouchers_FullMethodName     = "/polyglot.v1.HotspotService/GenerateVouchers"
-	HotspotService_StreamTraffic_FullMethodName        = "/polyglot.v1.HotspotService/StreamTraffic"
-	HotspotService_StreamResource_FullMethodName       = "/polyglot.v1.HotspotService/StreamResource"
-	HotspotService_StreamActiveSessions_FullMethodName = "/polyglot.v1.HotspotService/StreamActiveSessions"
+	HotspotService_ListProfiles_FullMethodName            = "/polyglot.v1.HotspotService/ListProfiles"
+	HotspotService_ListUsers_FullMethodName               = "/polyglot.v1.HotspotService/ListUsers"
+	HotspotService_ListActiveSessions_FullMethodName      = "/polyglot.v1.HotspotService/ListActiveSessions"
+	HotspotService_KickActiveSession_FullMethodName       = "/polyglot.v1.HotspotService/KickActiveSession"
+	HotspotService_ListDHCPLeases_FullMethodName          = "/polyglot.v1.HotspotService/ListDHCPLeases"
+	HotspotService_BlockDHCPLease_FullMethodName          = "/polyglot.v1.HotspotService/BlockDHCPLease"
+	HotspotService_GenerateVouchers_FullMethodName        = "/polyglot.v1.HotspotService/GenerateVouchers"
+	HotspotService_GetVoucherBatch_FullMethodName         = "/polyglot.v1.HotspotService/GetVoucherBatch"
+	HotspotService_GetUser_FullMethodName                 = "/polyglot.v1.HotspotService/GetUser"
+	HotspotService_CreateUser_FullMethodName              = "/polyglot.v1.HotspotService/CreateUser"
+	HotspotService_UpdateUser_FullMethodName              = "/polyglot.v1.HotspotService/UpdateUser"
+	HotspotService_ResetUserCounters_FullMethodName       = "/polyglot.v1.HotspotService/ResetUserCounters"
+	HotspotService_DeleteUser_FullMethodName              = "/polyglot.v1.HotspotService/DeleteUser"
+	HotspotService_CreateProfile_FullMethodName           = "/polyglot.v1.HotspotService/CreateProfile"
+	HotspotService_UpdateProfile_FullMethodName           = "/polyglot.v1.HotspotService/UpdateProfile"
+	HotspotService_DeleteProfile_FullMethodName           = "/polyglot.v1.HotspotService/DeleteProfile"
+	HotspotService_ListHosts_FullMethodName               = "/polyglot.v1.HotspotService/ListHosts"
+	HotspotService_RemoveHost_FullMethodName              = "/polyglot.v1.HotspotService/RemoveHost"
+	HotspotService_ListHotspotServers_FullMethodName      = "/polyglot.v1.HotspotService/ListHotspotServers"
+	HotspotService_StreamTraffic_FullMethodName           = "/polyglot.v1.HotspotService/StreamTraffic"
+	HotspotService_StreamResource_FullMethodName          = "/polyglot.v1.HotspotService/StreamResource"
+	HotspotService_StreamActiveSessions_FullMethodName    = "/polyglot.v1.HotspotService/StreamActiveSessions"
+	HotspotService_StreamSystemSnapshot_FullMethodName    = "/polyglot.v1.HotspotService/StreamSystemSnapshot"
+	HotspotService_StreamInterfaceEthernet_FullMethodName = "/polyglot.v1.HotspotService/StreamInterfaceEthernet"
+	HotspotService_StreamQueueStats_FullMethodName        = "/polyglot.v1.HotspotService/StreamQueueStats"
+	HotspotService_StreamLogs_FullMethodName              = "/polyglot.v1.HotspotService/StreamLogs"
+	HotspotService_StreamHotspotInactive_FullMethodName   = "/polyglot.v1.HotspotService/StreamHotspotInactive"
+	HotspotService_StreamPPPActive_FullMethodName         = "/polyglot.v1.HotspotService/StreamPPPActive"
+	HotspotService_StreamPPPInactive_FullMethodName       = "/polyglot.v1.HotspotService/StreamPPPInactive"
+	HotspotService_ListReports_FullMethodName             = "/polyglot.v1.HotspotService/ListReports"
+	HotspotService_DeleteReport_FullMethodName            = "/polyglot.v1.HotspotService/DeleteReport"
+	HotspotService_GetExpireMonitorStatus_FullMethodName  = "/polyglot.v1.HotspotService/GetExpireMonitorStatus"
+	HotspotService_SetupExpireMonitor_FullMethodName      = "/polyglot.v1.HotspotService/SetupExpireMonitor"
+	HotspotService_DisableExpireMonitor_FullMethodName    = "/polyglot.v1.HotspotService/DisableExpireMonitor"
+	HotspotService_RemoveExpireMonitor_FullMethodName     = "/polyglot.v1.HotspotService/RemoveExpireMonitor"
+	HotspotService_ListTemplates_FullMethodName           = "/polyglot.v1.HotspotService/ListTemplates"
+	HotspotService_GetTemplateSection_FullMethodName      = "/polyglot.v1.HotspotService/GetTemplateSection"
+	HotspotService_RenderVouchers_FullMethodName          = "/polyglot.v1.HotspotService/RenderVouchers"
 )
 
 // HotspotServiceClient is the client API for HotspotService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type HotspotServiceClient interface {
-	GetDashboard(ctx context.Context, in *GetHotspotDashboardRequest, opts ...grpc.CallOption) (*GetHotspotDashboardResponse, error)
 	ListProfiles(ctx context.Context, in *ListHotspotProfilesRequest, opts ...grpc.CallOption) (*ListHotspotProfilesResponse, error)
 	ListUsers(ctx context.Context, in *ListHotspotUsersRequest, opts ...grpc.CallOption) (*ListHotspotUsersResponse, error)
 	ListActiveSessions(ctx context.Context, in *ListHotspotActiveSessionsRequest, opts ...grpc.CallOption) (*ListHotspotActiveSessionsResponse, error)
@@ -44,9 +70,37 @@ type HotspotServiceClient interface {
 	ListDHCPLeases(ctx context.Context, in *ListDHCPLeasesRequest, opts ...grpc.CallOption) (*ListDHCPLeasesResponse, error)
 	BlockDHCPLease(ctx context.Context, in *BlockDHCPLeaseRequest, opts ...grpc.CallOption) (*BlockDHCPLeaseResponse, error)
 	GenerateVouchers(ctx context.Context, in *GenerateVouchersRequest, opts ...grpc.CallOption) (*GenerateVouchersResponse, error)
+	GetVoucherBatch(ctx context.Context, in *GetVoucherBatchRequest, opts ...grpc.CallOption) (*GetVoucherBatchResponse, error)
+	GetUser(ctx context.Context, in *GetHotspotUserRequest, opts ...grpc.CallOption) (*GetHotspotUserResponse, error)
+	CreateUser(ctx context.Context, in *CreateHotspotUserRequest, opts ...grpc.CallOption) (*CreateHotspotUserResponse, error)
+	UpdateUser(ctx context.Context, in *UpdateHotspotUserRequest, opts ...grpc.CallOption) (*UpdateHotspotUserResponse, error)
+	ResetUserCounters(ctx context.Context, in *ResetHotspotUserCountersRequest, opts ...grpc.CallOption) (*ResetHotspotUserCountersResponse, error)
+	DeleteUser(ctx context.Context, in *DeleteHotspotUserRequest, opts ...grpc.CallOption) (*DeleteHotspotUserResponse, error)
+	CreateProfile(ctx context.Context, in *CreateHotspotProfileRequest, opts ...grpc.CallOption) (*CreateHotspotProfileResponse, error)
+	UpdateProfile(ctx context.Context, in *UpdateHotspotProfileRequest, opts ...grpc.CallOption) (*UpdateHotspotProfileResponse, error)
+	DeleteProfile(ctx context.Context, in *DeleteHotspotProfileRequest, opts ...grpc.CallOption) (*DeleteHotspotProfileResponse, error)
+	ListHosts(ctx context.Context, in *ListHotspotHostsRequest, opts ...grpc.CallOption) (*ListHotspotHostsResponse, error)
+	RemoveHost(ctx context.Context, in *RemoveHotspotHostRequest, opts ...grpc.CallOption) (*RemoveHotspotHostResponse, error)
+	ListHotspotServers(ctx context.Context, in *ListHotspotServersRequest, opts ...grpc.CallOption) (*ListHotspotServersResponse, error)
 	StreamTraffic(ctx context.Context, in *StreamTrafficRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[TrafficStreamData], error)
 	StreamResource(ctx context.Context, in *StreamResourceRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ResourceStreamData], error)
 	StreamActiveSessions(ctx context.Context, in *StreamActiveSessionsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ActiveSessionsStreamData], error)
+	StreamSystemSnapshot(ctx context.Context, in *StreamSystemSnapshotRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SystemSnapshotFrame], error)
+	StreamInterfaceEthernet(ctx context.Context, in *StreamInterfaceEthernetRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[InterfaceEthernetFrame], error)
+	StreamQueueStats(ctx context.Context, in *StreamQueueStatsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[QueueStatsFrame], error)
+	StreamLogs(ctx context.Context, in *StreamLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[LogsStreamFrame], error)
+	StreamHotspotInactive(ctx context.Context, in *StreamHotspotInactiveRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[HotspotInactiveFrame], error)
+	StreamPPPActive(ctx context.Context, in *StreamPPPActiveRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PPPActiveFrame], error)
+	StreamPPPInactive(ctx context.Context, in *StreamPPPInactiveRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PPPInactiveFrame], error)
+	ListReports(ctx context.Context, in *ListHotspotReportsRequest, opts ...grpc.CallOption) (*ListHotspotReportsResponse, error)
+	DeleteReport(ctx context.Context, in *DeleteHotspotReportRequest, opts ...grpc.CallOption) (*DeleteHotspotReportResponse, error)
+	GetExpireMonitorStatus(ctx context.Context, in *GetExpireMonitorStatusRequest, opts ...grpc.CallOption) (*ExpireMonitorStatusResponse, error)
+	SetupExpireMonitor(ctx context.Context, in *SetupExpireMonitorRequest, opts ...grpc.CallOption) (*SetupExpireMonitorResponse, error)
+	DisableExpireMonitor(ctx context.Context, in *DisableExpireMonitorRequest, opts ...grpc.CallOption) (*DisableExpireMonitorResponse, error)
+	RemoveExpireMonitor(ctx context.Context, in *RemoveExpireMonitorRequest, opts ...grpc.CallOption) (*RemoveExpireMonitorResponse, error)
+	ListTemplates(ctx context.Context, in *ListTemplatesRequest, opts ...grpc.CallOption) (*ListTemplatesResponse, error)
+	GetTemplateSection(ctx context.Context, in *GetTemplateSectionRequest, opts ...grpc.CallOption) (*GetTemplateSectionResponse, error)
+	RenderVouchers(ctx context.Context, in *RenderVouchersRequest, opts ...grpc.CallOption) (*RenderVouchersResponse, error)
 }
 
 type hotspotServiceClient struct {
@@ -55,16 +109,6 @@ type hotspotServiceClient struct {
 
 func NewHotspotServiceClient(cc grpc.ClientConnInterface) HotspotServiceClient {
 	return &hotspotServiceClient{cc}
-}
-
-func (c *hotspotServiceClient) GetDashboard(ctx context.Context, in *GetHotspotDashboardRequest, opts ...grpc.CallOption) (*GetHotspotDashboardResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetHotspotDashboardResponse)
-	err := c.cc.Invoke(ctx, HotspotService_GetDashboard_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *hotspotServiceClient) ListProfiles(ctx context.Context, in *ListHotspotProfilesRequest, opts ...grpc.CallOption) (*ListHotspotProfilesResponse, error) {
@@ -137,6 +181,126 @@ func (c *hotspotServiceClient) GenerateVouchers(ctx context.Context, in *Generat
 	return out, nil
 }
 
+func (c *hotspotServiceClient) GetVoucherBatch(ctx context.Context, in *GetVoucherBatchRequest, opts ...grpc.CallOption) (*GetVoucherBatchResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetVoucherBatchResponse)
+	err := c.cc.Invoke(ctx, HotspotService_GetVoucherBatch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) GetUser(ctx context.Context, in *GetHotspotUserRequest, opts ...grpc.CallOption) (*GetHotspotUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetHotspotUserResponse)
+	err := c.cc.Invoke(ctx, HotspotService_GetUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) CreateUser(ctx context.Context, in *CreateHotspotUserRequest, opts ...grpc.CallOption) (*CreateHotspotUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateHotspotUserResponse)
+	err := c.cc.Invoke(ctx, HotspotService_CreateUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) UpdateUser(ctx context.Context, in *UpdateHotspotUserRequest, opts ...grpc.CallOption) (*UpdateHotspotUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateHotspotUserResponse)
+	err := c.cc.Invoke(ctx, HotspotService_UpdateUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) ResetUserCounters(ctx context.Context, in *ResetHotspotUserCountersRequest, opts ...grpc.CallOption) (*ResetHotspotUserCountersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResetHotspotUserCountersResponse)
+	err := c.cc.Invoke(ctx, HotspotService_ResetUserCounters_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) DeleteUser(ctx context.Context, in *DeleteHotspotUserRequest, opts ...grpc.CallOption) (*DeleteHotspotUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteHotspotUserResponse)
+	err := c.cc.Invoke(ctx, HotspotService_DeleteUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) CreateProfile(ctx context.Context, in *CreateHotspotProfileRequest, opts ...grpc.CallOption) (*CreateHotspotProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateHotspotProfileResponse)
+	err := c.cc.Invoke(ctx, HotspotService_CreateProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) UpdateProfile(ctx context.Context, in *UpdateHotspotProfileRequest, opts ...grpc.CallOption) (*UpdateHotspotProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateHotspotProfileResponse)
+	err := c.cc.Invoke(ctx, HotspotService_UpdateProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) DeleteProfile(ctx context.Context, in *DeleteHotspotProfileRequest, opts ...grpc.CallOption) (*DeleteHotspotProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteHotspotProfileResponse)
+	err := c.cc.Invoke(ctx, HotspotService_DeleteProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) ListHosts(ctx context.Context, in *ListHotspotHostsRequest, opts ...grpc.CallOption) (*ListHotspotHostsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListHotspotHostsResponse)
+	err := c.cc.Invoke(ctx, HotspotService_ListHosts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) RemoveHost(ctx context.Context, in *RemoveHotspotHostRequest, opts ...grpc.CallOption) (*RemoveHotspotHostResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RemoveHotspotHostResponse)
+	err := c.cc.Invoke(ctx, HotspotService_RemoveHost_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) ListHotspotServers(ctx context.Context, in *ListHotspotServersRequest, opts ...grpc.CallOption) (*ListHotspotServersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListHotspotServersResponse)
+	err := c.cc.Invoke(ctx, HotspotService_ListHotspotServers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *hotspotServiceClient) StreamTraffic(ctx context.Context, in *StreamTrafficRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[TrafficStreamData], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[0], HotspotService_StreamTraffic_FullMethodName, cOpts...)
@@ -194,11 +358,233 @@ func (c *hotspotServiceClient) StreamActiveSessions(ctx context.Context, in *Str
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type HotspotService_StreamActiveSessionsClient = grpc.ServerStreamingClient[ActiveSessionsStreamData]
 
+func (c *hotspotServiceClient) StreamSystemSnapshot(ctx context.Context, in *StreamSystemSnapshotRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SystemSnapshotFrame], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[3], HotspotService_StreamSystemSnapshot_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamSystemSnapshotRequest, SystemSnapshotFrame]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamSystemSnapshotClient = grpc.ServerStreamingClient[SystemSnapshotFrame]
+
+func (c *hotspotServiceClient) StreamInterfaceEthernet(ctx context.Context, in *StreamInterfaceEthernetRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[InterfaceEthernetFrame], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[4], HotspotService_StreamInterfaceEthernet_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamInterfaceEthernetRequest, InterfaceEthernetFrame]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamInterfaceEthernetClient = grpc.ServerStreamingClient[InterfaceEthernetFrame]
+
+func (c *hotspotServiceClient) StreamQueueStats(ctx context.Context, in *StreamQueueStatsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[QueueStatsFrame], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[5], HotspotService_StreamQueueStats_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamQueueStatsRequest, QueueStatsFrame]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamQueueStatsClient = grpc.ServerStreamingClient[QueueStatsFrame]
+
+func (c *hotspotServiceClient) StreamLogs(ctx context.Context, in *StreamLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[LogsStreamFrame], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[6], HotspotService_StreamLogs_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamLogsRequest, LogsStreamFrame]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamLogsClient = grpc.ServerStreamingClient[LogsStreamFrame]
+
+func (c *hotspotServiceClient) StreamHotspotInactive(ctx context.Context, in *StreamHotspotInactiveRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[HotspotInactiveFrame], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[7], HotspotService_StreamHotspotInactive_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamHotspotInactiveRequest, HotspotInactiveFrame]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamHotspotInactiveClient = grpc.ServerStreamingClient[HotspotInactiveFrame]
+
+func (c *hotspotServiceClient) StreamPPPActive(ctx context.Context, in *StreamPPPActiveRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PPPActiveFrame], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[8], HotspotService_StreamPPPActive_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamPPPActiveRequest, PPPActiveFrame]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamPPPActiveClient = grpc.ServerStreamingClient[PPPActiveFrame]
+
+func (c *hotspotServiceClient) StreamPPPInactive(ctx context.Context, in *StreamPPPInactiveRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PPPInactiveFrame], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[9], HotspotService_StreamPPPInactive_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamPPPInactiveRequest, PPPInactiveFrame]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamPPPInactiveClient = grpc.ServerStreamingClient[PPPInactiveFrame]
+
+func (c *hotspotServiceClient) ListReports(ctx context.Context, in *ListHotspotReportsRequest, opts ...grpc.CallOption) (*ListHotspotReportsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListHotspotReportsResponse)
+	err := c.cc.Invoke(ctx, HotspotService_ListReports_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) DeleteReport(ctx context.Context, in *DeleteHotspotReportRequest, opts ...grpc.CallOption) (*DeleteHotspotReportResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteHotspotReportResponse)
+	err := c.cc.Invoke(ctx, HotspotService_DeleteReport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) GetExpireMonitorStatus(ctx context.Context, in *GetExpireMonitorStatusRequest, opts ...grpc.CallOption) (*ExpireMonitorStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExpireMonitorStatusResponse)
+	err := c.cc.Invoke(ctx, HotspotService_GetExpireMonitorStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) SetupExpireMonitor(ctx context.Context, in *SetupExpireMonitorRequest, opts ...grpc.CallOption) (*SetupExpireMonitorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetupExpireMonitorResponse)
+	err := c.cc.Invoke(ctx, HotspotService_SetupExpireMonitor_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) DisableExpireMonitor(ctx context.Context, in *DisableExpireMonitorRequest, opts ...grpc.CallOption) (*DisableExpireMonitorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DisableExpireMonitorResponse)
+	err := c.cc.Invoke(ctx, HotspotService_DisableExpireMonitor_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) RemoveExpireMonitor(ctx context.Context, in *RemoveExpireMonitorRequest, opts ...grpc.CallOption) (*RemoveExpireMonitorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RemoveExpireMonitorResponse)
+	err := c.cc.Invoke(ctx, HotspotService_RemoveExpireMonitor_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) ListTemplates(ctx context.Context, in *ListTemplatesRequest, opts ...grpc.CallOption) (*ListTemplatesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListTemplatesResponse)
+	err := c.cc.Invoke(ctx, HotspotService_ListTemplates_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) GetTemplateSection(ctx context.Context, in *GetTemplateSectionRequest, opts ...grpc.CallOption) (*GetTemplateSectionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetTemplateSectionResponse)
+	err := c.cc.Invoke(ctx, HotspotService_GetTemplateSection_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) RenderVouchers(ctx context.Context, in *RenderVouchersRequest, opts ...grpc.CallOption) (*RenderVouchersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RenderVouchersResponse)
+	err := c.cc.Invoke(ctx, HotspotService_RenderVouchers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HotspotServiceServer is the server API for HotspotService service.
 // All implementations must embed UnimplementedHotspotServiceServer
 // for forward compatibility.
 type HotspotServiceServer interface {
-	GetDashboard(context.Context, *GetHotspotDashboardRequest) (*GetHotspotDashboardResponse, error)
 	ListProfiles(context.Context, *ListHotspotProfilesRequest) (*ListHotspotProfilesResponse, error)
 	ListUsers(context.Context, *ListHotspotUsersRequest) (*ListHotspotUsersResponse, error)
 	ListActiveSessions(context.Context, *ListHotspotActiveSessionsRequest) (*ListHotspotActiveSessionsResponse, error)
@@ -206,9 +592,37 @@ type HotspotServiceServer interface {
 	ListDHCPLeases(context.Context, *ListDHCPLeasesRequest) (*ListDHCPLeasesResponse, error)
 	BlockDHCPLease(context.Context, *BlockDHCPLeaseRequest) (*BlockDHCPLeaseResponse, error)
 	GenerateVouchers(context.Context, *GenerateVouchersRequest) (*GenerateVouchersResponse, error)
+	GetVoucherBatch(context.Context, *GetVoucherBatchRequest) (*GetVoucherBatchResponse, error)
+	GetUser(context.Context, *GetHotspotUserRequest) (*GetHotspotUserResponse, error)
+	CreateUser(context.Context, *CreateHotspotUserRequest) (*CreateHotspotUserResponse, error)
+	UpdateUser(context.Context, *UpdateHotspotUserRequest) (*UpdateHotspotUserResponse, error)
+	ResetUserCounters(context.Context, *ResetHotspotUserCountersRequest) (*ResetHotspotUserCountersResponse, error)
+	DeleteUser(context.Context, *DeleteHotspotUserRequest) (*DeleteHotspotUserResponse, error)
+	CreateProfile(context.Context, *CreateHotspotProfileRequest) (*CreateHotspotProfileResponse, error)
+	UpdateProfile(context.Context, *UpdateHotspotProfileRequest) (*UpdateHotspotProfileResponse, error)
+	DeleteProfile(context.Context, *DeleteHotspotProfileRequest) (*DeleteHotspotProfileResponse, error)
+	ListHosts(context.Context, *ListHotspotHostsRequest) (*ListHotspotHostsResponse, error)
+	RemoveHost(context.Context, *RemoveHotspotHostRequest) (*RemoveHotspotHostResponse, error)
+	ListHotspotServers(context.Context, *ListHotspotServersRequest) (*ListHotspotServersResponse, error)
 	StreamTraffic(*StreamTrafficRequest, grpc.ServerStreamingServer[TrafficStreamData]) error
 	StreamResource(*StreamResourceRequest, grpc.ServerStreamingServer[ResourceStreamData]) error
 	StreamActiveSessions(*StreamActiveSessionsRequest, grpc.ServerStreamingServer[ActiveSessionsStreamData]) error
+	StreamSystemSnapshot(*StreamSystemSnapshotRequest, grpc.ServerStreamingServer[SystemSnapshotFrame]) error
+	StreamInterfaceEthernet(*StreamInterfaceEthernetRequest, grpc.ServerStreamingServer[InterfaceEthernetFrame]) error
+	StreamQueueStats(*StreamQueueStatsRequest, grpc.ServerStreamingServer[QueueStatsFrame]) error
+	StreamLogs(*StreamLogsRequest, grpc.ServerStreamingServer[LogsStreamFrame]) error
+	StreamHotspotInactive(*StreamHotspotInactiveRequest, grpc.ServerStreamingServer[HotspotInactiveFrame]) error
+	StreamPPPActive(*StreamPPPActiveRequest, grpc.ServerStreamingServer[PPPActiveFrame]) error
+	StreamPPPInactive(*StreamPPPInactiveRequest, grpc.ServerStreamingServer[PPPInactiveFrame]) error
+	ListReports(context.Context, *ListHotspotReportsRequest) (*ListHotspotReportsResponse, error)
+	DeleteReport(context.Context, *DeleteHotspotReportRequest) (*DeleteHotspotReportResponse, error)
+	GetExpireMonitorStatus(context.Context, *GetExpireMonitorStatusRequest) (*ExpireMonitorStatusResponse, error)
+	SetupExpireMonitor(context.Context, *SetupExpireMonitorRequest) (*SetupExpireMonitorResponse, error)
+	DisableExpireMonitor(context.Context, *DisableExpireMonitorRequest) (*DisableExpireMonitorResponse, error)
+	RemoveExpireMonitor(context.Context, *RemoveExpireMonitorRequest) (*RemoveExpireMonitorResponse, error)
+	ListTemplates(context.Context, *ListTemplatesRequest) (*ListTemplatesResponse, error)
+	GetTemplateSection(context.Context, *GetTemplateSectionRequest) (*GetTemplateSectionResponse, error)
+	RenderVouchers(context.Context, *RenderVouchersRequest) (*RenderVouchersResponse, error)
 	mustEmbedUnimplementedHotspotServiceServer()
 }
 
@@ -219,9 +633,6 @@ type HotspotServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedHotspotServiceServer struct{}
 
-func (UnimplementedHotspotServiceServer) GetDashboard(context.Context, *GetHotspotDashboardRequest) (*GetHotspotDashboardResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetDashboard not implemented")
-}
 func (UnimplementedHotspotServiceServer) ListProfiles(context.Context, *ListHotspotProfilesRequest) (*ListHotspotProfilesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListProfiles not implemented")
 }
@@ -243,6 +654,42 @@ func (UnimplementedHotspotServiceServer) BlockDHCPLease(context.Context, *BlockD
 func (UnimplementedHotspotServiceServer) GenerateVouchers(context.Context, *GenerateVouchersRequest) (*GenerateVouchersResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GenerateVouchers not implemented")
 }
+func (UnimplementedHotspotServiceServer) GetVoucherBatch(context.Context, *GetVoucherBatchRequest) (*GetVoucherBatchResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetVoucherBatch not implemented")
+}
+func (UnimplementedHotspotServiceServer) GetUser(context.Context, *GetHotspotUserRequest) (*GetHotspotUserResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetUser not implemented")
+}
+func (UnimplementedHotspotServiceServer) CreateUser(context.Context, *CreateHotspotUserRequest) (*CreateHotspotUserResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateUser not implemented")
+}
+func (UnimplementedHotspotServiceServer) UpdateUser(context.Context, *UpdateHotspotUserRequest) (*UpdateHotspotUserResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateUser not implemented")
+}
+func (UnimplementedHotspotServiceServer) ResetUserCounters(context.Context, *ResetHotspotUserCountersRequest) (*ResetHotspotUserCountersResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ResetUserCounters not implemented")
+}
+func (UnimplementedHotspotServiceServer) DeleteUser(context.Context, *DeleteHotspotUserRequest) (*DeleteHotspotUserResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteUser not implemented")
+}
+func (UnimplementedHotspotServiceServer) CreateProfile(context.Context, *CreateHotspotProfileRequest) (*CreateHotspotProfileResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateProfile not implemented")
+}
+func (UnimplementedHotspotServiceServer) UpdateProfile(context.Context, *UpdateHotspotProfileRequest) (*UpdateHotspotProfileResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateProfile not implemented")
+}
+func (UnimplementedHotspotServiceServer) DeleteProfile(context.Context, *DeleteHotspotProfileRequest) (*DeleteHotspotProfileResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteProfile not implemented")
+}
+func (UnimplementedHotspotServiceServer) ListHosts(context.Context, *ListHotspotHostsRequest) (*ListHotspotHostsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListHosts not implemented")
+}
+func (UnimplementedHotspotServiceServer) RemoveHost(context.Context, *RemoveHotspotHostRequest) (*RemoveHotspotHostResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RemoveHost not implemented")
+}
+func (UnimplementedHotspotServiceServer) ListHotspotServers(context.Context, *ListHotspotServersRequest) (*ListHotspotServersResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListHotspotServers not implemented")
+}
 func (UnimplementedHotspotServiceServer) StreamTraffic(*StreamTrafficRequest, grpc.ServerStreamingServer[TrafficStreamData]) error {
 	return status.Error(codes.Unimplemented, "method StreamTraffic not implemented")
 }
@@ -251,6 +698,54 @@ func (UnimplementedHotspotServiceServer) StreamResource(*StreamResourceRequest, 
 }
 func (UnimplementedHotspotServiceServer) StreamActiveSessions(*StreamActiveSessionsRequest, grpc.ServerStreamingServer[ActiveSessionsStreamData]) error {
 	return status.Error(codes.Unimplemented, "method StreamActiveSessions not implemented")
+}
+func (UnimplementedHotspotServiceServer) StreamSystemSnapshot(*StreamSystemSnapshotRequest, grpc.ServerStreamingServer[SystemSnapshotFrame]) error {
+	return status.Error(codes.Unimplemented, "method StreamSystemSnapshot not implemented")
+}
+func (UnimplementedHotspotServiceServer) StreamInterfaceEthernet(*StreamInterfaceEthernetRequest, grpc.ServerStreamingServer[InterfaceEthernetFrame]) error {
+	return status.Error(codes.Unimplemented, "method StreamInterfaceEthernet not implemented")
+}
+func (UnimplementedHotspotServiceServer) StreamQueueStats(*StreamQueueStatsRequest, grpc.ServerStreamingServer[QueueStatsFrame]) error {
+	return status.Error(codes.Unimplemented, "method StreamQueueStats not implemented")
+}
+func (UnimplementedHotspotServiceServer) StreamLogs(*StreamLogsRequest, grpc.ServerStreamingServer[LogsStreamFrame]) error {
+	return status.Error(codes.Unimplemented, "method StreamLogs not implemented")
+}
+func (UnimplementedHotspotServiceServer) StreamHotspotInactive(*StreamHotspotInactiveRequest, grpc.ServerStreamingServer[HotspotInactiveFrame]) error {
+	return status.Error(codes.Unimplemented, "method StreamHotspotInactive not implemented")
+}
+func (UnimplementedHotspotServiceServer) StreamPPPActive(*StreamPPPActiveRequest, grpc.ServerStreamingServer[PPPActiveFrame]) error {
+	return status.Error(codes.Unimplemented, "method StreamPPPActive not implemented")
+}
+func (UnimplementedHotspotServiceServer) StreamPPPInactive(*StreamPPPInactiveRequest, grpc.ServerStreamingServer[PPPInactiveFrame]) error {
+	return status.Error(codes.Unimplemented, "method StreamPPPInactive not implemented")
+}
+func (UnimplementedHotspotServiceServer) ListReports(context.Context, *ListHotspotReportsRequest) (*ListHotspotReportsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListReports not implemented")
+}
+func (UnimplementedHotspotServiceServer) DeleteReport(context.Context, *DeleteHotspotReportRequest) (*DeleteHotspotReportResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteReport not implemented")
+}
+func (UnimplementedHotspotServiceServer) GetExpireMonitorStatus(context.Context, *GetExpireMonitorStatusRequest) (*ExpireMonitorStatusResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetExpireMonitorStatus not implemented")
+}
+func (UnimplementedHotspotServiceServer) SetupExpireMonitor(context.Context, *SetupExpireMonitorRequest) (*SetupExpireMonitorResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SetupExpireMonitor not implemented")
+}
+func (UnimplementedHotspotServiceServer) DisableExpireMonitor(context.Context, *DisableExpireMonitorRequest) (*DisableExpireMonitorResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DisableExpireMonitor not implemented")
+}
+func (UnimplementedHotspotServiceServer) RemoveExpireMonitor(context.Context, *RemoveExpireMonitorRequest) (*RemoveExpireMonitorResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RemoveExpireMonitor not implemented")
+}
+func (UnimplementedHotspotServiceServer) ListTemplates(context.Context, *ListTemplatesRequest) (*ListTemplatesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListTemplates not implemented")
+}
+func (UnimplementedHotspotServiceServer) GetTemplateSection(context.Context, *GetTemplateSectionRequest) (*GetTemplateSectionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetTemplateSection not implemented")
+}
+func (UnimplementedHotspotServiceServer) RenderVouchers(context.Context, *RenderVouchersRequest) (*RenderVouchersResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RenderVouchers not implemented")
 }
 func (UnimplementedHotspotServiceServer) mustEmbedUnimplementedHotspotServiceServer() {}
 func (UnimplementedHotspotServiceServer) testEmbeddedByValue()                        {}
@@ -271,24 +766,6 @@ func RegisterHotspotServiceServer(s grpc.ServiceRegistrar, srv HotspotServiceSer
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&HotspotService_ServiceDesc, srv)
-}
-
-func _HotspotService_GetDashboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetHotspotDashboardRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(HotspotServiceServer).GetDashboard(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: HotspotService_GetDashboard_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HotspotServiceServer).GetDashboard(ctx, req.(*GetHotspotDashboardRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _HotspotService_ListProfiles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -417,6 +894,222 @@ func _HotspotService_GenerateVouchers_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HotspotService_GetVoucherBatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVoucherBatchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).GetVoucherBatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_GetVoucherBatch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).GetVoucherBatch(ctx, req.(*GetVoucherBatchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetHotspotUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).GetUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_GetUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).GetUser(ctx, req.(*GetHotspotUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateHotspotUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).CreateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_CreateUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).CreateUser(ctx, req.(*CreateHotspotUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateHotspotUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).UpdateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_UpdateUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).UpdateUser(ctx, req.(*UpdateHotspotUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_ResetUserCounters_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetHotspotUserCountersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).ResetUserCounters(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_ResetUserCounters_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).ResetUserCounters(ctx, req.(*ResetHotspotUserCountersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteHotspotUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).DeleteUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_DeleteUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).DeleteUser(ctx, req.(*DeleteHotspotUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_CreateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateHotspotProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).CreateProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_CreateProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).CreateProfile(ctx, req.(*CreateHotspotProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_UpdateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateHotspotProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).UpdateProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_UpdateProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).UpdateProfile(ctx, req.(*UpdateHotspotProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_DeleteProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteHotspotProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).DeleteProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_DeleteProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).DeleteProfile(ctx, req.(*DeleteHotspotProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_ListHosts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListHotspotHostsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).ListHosts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_ListHosts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).ListHosts(ctx, req.(*ListHotspotHostsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_RemoveHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveHotspotHostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).RemoveHost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_RemoveHost_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).RemoveHost(ctx, req.(*RemoveHotspotHostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_ListHotspotServers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListHotspotServersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).ListHotspotServers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_ListHotspotServers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).ListHotspotServers(ctx, req.(*ListHotspotServersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _HotspotService_StreamTraffic_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(StreamTrafficRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -450,6 +1143,245 @@ func _HotspotService_StreamActiveSessions_Handler(srv interface{}, stream grpc.S
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type HotspotService_StreamActiveSessionsServer = grpc.ServerStreamingServer[ActiveSessionsStreamData]
 
+func _HotspotService_StreamSystemSnapshot_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamSystemSnapshotRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HotspotServiceServer).StreamSystemSnapshot(m, &grpc.GenericServerStream[StreamSystemSnapshotRequest, SystemSnapshotFrame]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamSystemSnapshotServer = grpc.ServerStreamingServer[SystemSnapshotFrame]
+
+func _HotspotService_StreamInterfaceEthernet_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamInterfaceEthernetRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HotspotServiceServer).StreamInterfaceEthernet(m, &grpc.GenericServerStream[StreamInterfaceEthernetRequest, InterfaceEthernetFrame]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamInterfaceEthernetServer = grpc.ServerStreamingServer[InterfaceEthernetFrame]
+
+func _HotspotService_StreamQueueStats_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamQueueStatsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HotspotServiceServer).StreamQueueStats(m, &grpc.GenericServerStream[StreamQueueStatsRequest, QueueStatsFrame]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamQueueStatsServer = grpc.ServerStreamingServer[QueueStatsFrame]
+
+func _HotspotService_StreamLogs_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamLogsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HotspotServiceServer).StreamLogs(m, &grpc.GenericServerStream[StreamLogsRequest, LogsStreamFrame]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamLogsServer = grpc.ServerStreamingServer[LogsStreamFrame]
+
+func _HotspotService_StreamHotspotInactive_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamHotspotInactiveRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HotspotServiceServer).StreamHotspotInactive(m, &grpc.GenericServerStream[StreamHotspotInactiveRequest, HotspotInactiveFrame]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamHotspotInactiveServer = grpc.ServerStreamingServer[HotspotInactiveFrame]
+
+func _HotspotService_StreamPPPActive_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamPPPActiveRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HotspotServiceServer).StreamPPPActive(m, &grpc.GenericServerStream[StreamPPPActiveRequest, PPPActiveFrame]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamPPPActiveServer = grpc.ServerStreamingServer[PPPActiveFrame]
+
+func _HotspotService_StreamPPPInactive_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamPPPInactiveRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HotspotServiceServer).StreamPPPInactive(m, &grpc.GenericServerStream[StreamPPPInactiveRequest, PPPInactiveFrame]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamPPPInactiveServer = grpc.ServerStreamingServer[PPPInactiveFrame]
+
+func _HotspotService_ListReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListHotspotReportsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).ListReports(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_ListReports_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).ListReports(ctx, req.(*ListHotspotReportsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_DeleteReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteHotspotReportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).DeleteReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_DeleteReport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).DeleteReport(ctx, req.(*DeleteHotspotReportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_GetExpireMonitorStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetExpireMonitorStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).GetExpireMonitorStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_GetExpireMonitorStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).GetExpireMonitorStatus(ctx, req.(*GetExpireMonitorStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_SetupExpireMonitor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetupExpireMonitorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).SetupExpireMonitor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_SetupExpireMonitor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).SetupExpireMonitor(ctx, req.(*SetupExpireMonitorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_DisableExpireMonitor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DisableExpireMonitorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).DisableExpireMonitor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_DisableExpireMonitor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).DisableExpireMonitor(ctx, req.(*DisableExpireMonitorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_RemoveExpireMonitor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveExpireMonitorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).RemoveExpireMonitor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_RemoveExpireMonitor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).RemoveExpireMonitor(ctx, req.(*RemoveExpireMonitorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_ListTemplates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTemplatesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).ListTemplates(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_ListTemplates_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).ListTemplates(ctx, req.(*ListTemplatesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_GetTemplateSection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTemplateSectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).GetTemplateSection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_GetTemplateSection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).GetTemplateSection(ctx, req.(*GetTemplateSectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_RenderVouchers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RenderVouchersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).RenderVouchers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_RenderVouchers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).RenderVouchers(ctx, req.(*RenderVouchersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HotspotService_ServiceDesc is the grpc.ServiceDesc for HotspotService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -457,10 +1389,6 @@ var HotspotService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "polyglot.v1.HotspotService",
 	HandlerType: (*HotspotServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetDashboard",
-			Handler:    _HotspotService_GetDashboard_Handler,
-		},
 		{
 			MethodName: "ListProfiles",
 			Handler:    _HotspotService_ListProfiles_Handler,
@@ -489,6 +1417,90 @@ var HotspotService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "GenerateVouchers",
 			Handler:    _HotspotService_GenerateVouchers_Handler,
 		},
+		{
+			MethodName: "GetVoucherBatch",
+			Handler:    _HotspotService_GetVoucherBatch_Handler,
+		},
+		{
+			MethodName: "GetUser",
+			Handler:    _HotspotService_GetUser_Handler,
+		},
+		{
+			MethodName: "CreateUser",
+			Handler:    _HotspotService_CreateUser_Handler,
+		},
+		{
+			MethodName: "UpdateUser",
+			Handler:    _HotspotService_UpdateUser_Handler,
+		},
+		{
+			MethodName: "ResetUserCounters",
+			Handler:    _HotspotService_ResetUserCounters_Handler,
+		},
+		{
+			MethodName: "DeleteUser",
+			Handler:    _HotspotService_DeleteUser_Handler,
+		},
+		{
+			MethodName: "CreateProfile",
+			Handler:    _HotspotService_CreateProfile_Handler,
+		},
+		{
+			MethodName: "UpdateProfile",
+			Handler:    _HotspotService_UpdateProfile_Handler,
+		},
+		{
+			MethodName: "DeleteProfile",
+			Handler:    _HotspotService_DeleteProfile_Handler,
+		},
+		{
+			MethodName: "ListHosts",
+			Handler:    _HotspotService_ListHosts_Handler,
+		},
+		{
+			MethodName: "RemoveHost",
+			Handler:    _HotspotService_RemoveHost_Handler,
+		},
+		{
+			MethodName: "ListHotspotServers",
+			Handler:    _HotspotService_ListHotspotServers_Handler,
+		},
+		{
+			MethodName: "ListReports",
+			Handler:    _HotspotService_ListReports_Handler,
+		},
+		{
+			MethodName: "DeleteReport",
+			Handler:    _HotspotService_DeleteReport_Handler,
+		},
+		{
+			MethodName: "GetExpireMonitorStatus",
+			Handler:    _HotspotService_GetExpireMonitorStatus_Handler,
+		},
+		{
+			MethodName: "SetupExpireMonitor",
+			Handler:    _HotspotService_SetupExpireMonitor_Handler,
+		},
+		{
+			MethodName: "DisableExpireMonitor",
+			Handler:    _HotspotService_DisableExpireMonitor_Handler,
+		},
+		{
+			MethodName: "RemoveExpireMonitor",
+			Handler:    _HotspotService_RemoveExpireMonitor_Handler,
+		},
+		{
+			MethodName: "ListTemplates",
+			Handler:    _HotspotService_ListTemplates_Handler,
+		},
+		{
+			MethodName: "GetTemplateSection",
+			Handler:    _HotspotService_GetTemplateSection_Handler,
+		},
+		{
+			MethodName: "RenderVouchers",
+			Handler:    _HotspotService_RenderVouchers_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
@@ -504,6 +1516,41 @@ var HotspotService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "StreamActiveSessions",
 			Handler:       _HotspotService_StreamActiveSessions_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamSystemSnapshot",
+			Handler:       _HotspotService_StreamSystemSnapshot_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamInterfaceEthernet",
+			Handler:       _HotspotService_StreamInterfaceEthernet_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamQueueStats",
+			Handler:       _HotspotService_StreamQueueStats_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamLogs",
+			Handler:       _HotspotService_StreamLogs_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamHotspotInactive",
+			Handler:       _HotspotService_StreamHotspotInactive_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamPPPActive",
+			Handler:       _HotspotService_StreamPPPActive_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamPPPInactive",
+			Handler:       _HotspotService_StreamPPPInactive_Handler,
 			ServerStreams: true,
 		},
 	},

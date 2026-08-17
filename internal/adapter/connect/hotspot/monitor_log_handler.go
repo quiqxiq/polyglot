@@ -1,0 +1,65 @@
+package hotspot
+
+import (
+	"context"
+	"fmt"
+	"time"
+
+	"connectrpc.com/connect"
+
+	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/pkg/response"
+)
+
+// StreamLogs streams /log/print follow natively from RouterOS — each new log
+// line is pushed as it is written. Optional topics filter (?topics~=).
+// Replaces legacy get_log which polled every 10 seconds.
+func (h *HotspotConnectHandler) StreamLogs(ctx context.Context, req *connect.Request[devicepb.StreamLogsRequest], stream *connect.ServerStream[devicepb.LogsStreamFrame]) error {
+	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
+	if err != nil {
+		return err
+	}
+
+	sd, ok := driver.(port.StreamingDeviceDriver)
+	if !ok {
+		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+	}
+
+	handle, err := sd.Stream(ctx, mikrotik.NewStreamLogsCommand(req.Msg.Topics))
+	if err != nil {
+		return response.MapDomainError(err)
+	}
+	defer handle.Cancel()
+
+	for {
+		select {
+		case <-ctx.Done():
+			return nil
+		case res, ok := <-handle.Chan():
+			if !ok {
+				return handle.Err()
+			}
+			logs := mikrotik.ParseLogs(res)
+			items := make([]*devicepb.LogEntryItem, 0, len(logs))
+			for _, l := range logs {
+				items = append(items, &devicepb.LogEntryItem{
+					Id:      l.RosID,
+					Time:    l.Time,
+					Topics:  l.Topics,
+					Message: l.Message,
+				})
+			}
+
+			err := stream.Send(&devicepb.LogsStreamFrame{
+				DeviceId:      req.Msg.DeviceId,
+				TimestampUnix: time.Now().Unix(),
+				Logs:          items,
+			})
+			if err != nil {
+				return err
+			}
+		}
+	}
+}

@@ -50,6 +50,25 @@ func NewStreamPPPActiveCommand(nameFilter string) command.Command {
 	}
 }
 
+// NewStreamPPPActiveIntervalCommand builds the command.Command for streaming
+// /ppp/active/print interval=<n>, which makes RouterOS re-send the FULL list
+// of active PPPoE sessions periodically — unlike follow, which only pushes
+// per-row deltas. Use this when the consumer needs a complete snapshot per
+// frame (e.g. computing inactive subscribers). interval defaults to "1s".
+func NewStreamPPPActiveIntervalCommand(nameFilter, interval string) command.Command {
+	if interval == "" {
+		interval = "1s"
+	}
+	args := map[string]string{"interval": interval}
+	if nameFilter != "" {
+		args["?name"] = nameFilter
+	}
+	return command.Command{
+		Raw:  "/ppp/active/print",
+		Args: args,
+	}
+}
+
 // NewKickPPPActiveCommand builds the command.Command for /ppp/active/remove,
 // which forcibly disconnects an active PPPoE session identified by its
 // RouterOS session ID. The session ID must come from a prior /ppp/active/print

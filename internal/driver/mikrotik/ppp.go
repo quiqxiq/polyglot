@@ -173,6 +173,25 @@ func NewStreamPPPoESecretsCommand(nameFilter string) command.Command {
 	}
 }
 
+// NewStreamPPPoESecretsIntervalCommand builds the command.Command for
+// streaming /ppp/secret/print interval=<n>, which makes RouterOS re-send the
+// FULL list of PPPoE secrets periodically — unlike follow, which only pushes
+// per-row deltas. Use this when the consumer needs a complete snapshot per
+// frame (e.g. computing inactive subscribers). interval defaults to "1s".
+func NewStreamPPPoESecretsIntervalCommand(nameFilter, interval string) command.Command {
+	if interval == "" {
+		interval = "1s"
+	}
+	args := map[string]string{"interval": interval}
+	if nameFilter != "" {
+		args["?name"] = nameFilter
+	}
+	return command.Command{
+		Raw:  "/ppp/secret/print",
+		Args: args,
+	}
+}
+
 // ParsePPPoESecrets converts command.Result rows (from Driver.Execute on a
 // /ppp/secret/print command) into typed PPPoESecret values. Rows that are
 // missing the mandatory ".id" or "name" fields are silently skipped — this

@@ -29,6 +29,20 @@ func NewPrintLogCommand(topicsFilter string) command.Command {
 	return NewPrintLogsCommand(topicsFilter)
 }
 
+// NewStreamLogsCommand builds the command.Command for streaming /log/print
+// follow, which makes RouterOS push each new log line as it is written.
+// topicsFilter is optional (?topics~=).
+func NewStreamLogsCommand(topicsFilter string) command.Command {
+	args := map[string]string{"follow": ""}
+	if topicsFilter != "" {
+		args["?topics~"] = topicsFilter
+	}
+	return command.Command{
+		Raw:  "/log/print",
+		Args: args,
+	}
+}
+
 // ParseLogs converts command.Result rows from /log/print into a slice of LogEntry.
 func ParseLogs(result command.Result) []LogEntry {
 	logs := make([]LogEntry, 0, len(result.Rows))

@@ -2,6 +2,7 @@ package hotspot
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
@@ -130,6 +131,68 @@ func NewAddMikhmonProfileCommand(p MikhmonProfileParams) command.Command {
 		Comment:     p.Comment,
 		OnLogin:     onLoginScript,
 	})
+}
+
+// ProfileMeta holds the structured Mikhmon metadata embedded in a profile's
+// on-login script CSV payload (the ":put (\",...\")" string built by
+// BuildOnLoginScript). Legacy Mikhmon parses this CSV on every edit screen;
+// this is the Go equivalent.
+type ProfileMeta struct {
+	ExpireMode   string  // "0" (noexp), "ntf", "ntfc", "rem", "remc"
+	Price        float64 // index [2] — selling price
+	Validity     string  // index [3] — e.g. "1h", "1d" (empty for noexp)
+	SellingPrice float64 // index [4] — cost price
+	LockUser     string  // index [6] — "Enable" | "Disable"
+	LockServer   string  // index [7] — "Enable" | "Disable"
+}
+
+// ParseOnLoginScript extracts structured ProfileMeta from a profile's on-login
+// script. Both layouts produced by BuildOnLoginScript are recognised:
+//
+//	standard: :put (",<mode>,<price>,<validity>,<sprice>,,<lockUser>,<lockServer>,")
+//	noexp   : :put (",,<price>,,<sprice>,noexp,<lockUser>,<lockServer>,")
+//
+// An empty script (noexp with zero price) returns zero metadata without error;
+// a script without a ":put (\",...\")" payload returns an error.
+func ParseOnLoginScript(onLogin string) (ProfileMeta, error) {
+	meta := ProfileMeta{}
+	if strings.TrimSpace(onLogin) == "" {
+		return meta, nil
+	}
+
+	start := strings.Index(onLogin, ":put (")
+	if start < 0 {
+		return meta, fmt.Errorf("parse on-login: no :put payload")
+	}
+	rest := onLogin[start+len(":put ("):]
+	end := strings.Index(rest, ")")
+	if end < 0 {
+		return meta, fmt.Errorf("parse on-login: unterminated :put payload")
+	}
+	payload := strings.Trim(rest[:end], `"`)
+	tokens := strings.Split(payload, ",")
+	if len(tokens) < 8 {
+		return meta, fmt.Errorf("parse on-login: unexpected payload %q", payload)
+	}
+
+	meta.ExpireMode = tokens[1]
+	// noexp layout puts the "noexp" marker at index 5 with mode empty.
+	if meta.ExpireMode == "" && tokens[5] == "noexp" {
+		meta.ExpireMode = "0"
+	}
+	meta.Price, _ = strconv.ParseFloat(tokens[2], 64)
+	meta.Validity = tokens[3]
+	meta.SellingPrice, _ = strconv.ParseFloat(tokens[4], 64)
+	meta.LockUser = tokens[6]
+	meta.LockServer = tokens[7]
+	return meta, nil
+}
+
+// NormalizeProfileName replaces every whitespace run with "-", mirroring the
+// legacy preg_replace('/\s+/','-') applied to profile names before they are
+// embedded in report script names (report names are split by "-|-").
+func NormalizeProfileName(name string) string {
+	return strings.Join(strings.Fields(name), "-")
 }
 
 // NewSetMikhmonProfileCommand builds the command.Command for /ip/hotspot/user/profile/set

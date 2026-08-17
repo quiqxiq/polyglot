@@ -1,22 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { hotspotClient } from '@/lib/api-client'
 import { hotspotKeys } from './keys'
-import {
+import type {
   GenerateVouchersRequest,
   KickHotspotSessionRequest,
   BlockDHCPLeaseRequest,
 } from '@/gen/v1/hotspot_pb'
-
-export function useHotspotDashboardQuery(deviceId: string, enabled = true) {
-  return useQuery({
-    queryKey: hotspotKeys.dashboard(deviceId),
-    queryFn: async () => {
-      const res = await hotspotClient.getDashboard({ deviceId })
-      return res.summary
-    },
-    enabled: Boolean(deviceId) && enabled,
-  })
-}
 
 export function useHotspotProfilesQuery(deviceId: string, enabled = true) {
   return useQuery({

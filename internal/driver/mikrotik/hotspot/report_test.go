@@ -46,3 +46,32 @@ func TestNewPrintMikhmonReportsCommand(t *testing.T) {
 	assert.Equal(t, "/system/script/print", cmd.Raw)
 	assert.Equal(t, "mikhmon", cmd.Args["?comment"])
 }
+
+func TestParseMikhmonTransactions_BrokenRecords(t *testing.T) {
+	result := command.Result{Rows: []map[string]string{
+		{
+			".id":     "*1",
+			"name":    "aug/17/2026-|-14:20:00-|-VIP123", // partial — hanya 3 segmen
+			"comment": "mikhmon",
+		},
+		{
+			".id":     "*2",
+			"name":    "bukan-laporan", // tanpa delimiter -|-
+			"comment": "mikhmon",
+		},
+		{
+			".id":     "*3",
+			"name":    "aug/17/2026-|-14:25:00-|-VIP456-|-3000-|-192.168.88.51-|-AA:BB:CC:00:11:22-|-1h-|-1Jam-3K-|-vc-A1B-08.17.26",
+			"comment": "mikhmon",
+		},
+	}}
+
+	records := ParseMikhmonTransactions(result)
+	require.Len(t, records, 2, "record partial tetap di-parse; non-delimiter dilewati")
+
+	assert.Equal(t, "VIP123", records[0].Username, "username dari record partial harus terbaca")
+	assert.Empty(t, records[0].Price, "price kosong pada record partial")
+
+	assert.Equal(t, "3000", records[1].Price)
+	assert.Equal(t, "1Jam-3K", records[1].Profile)
+}

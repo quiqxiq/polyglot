@@ -40,38 +40,32 @@ async function runMikhmonConnectRPCVerification() {
   console.log('🚀 STARTING MIKHMON ConnectRPC INTEGRATION TEST (over HTTP :8080)...');
   console.log('   Target Router ID:', TARGET_DEVICE_ID);
 
-  // 1. GetDashboard
-  console.log('\n1️⃣  Testing GetDashboard ConnectRPC...');
-  const dashRes = await makeConnectRequest('GetDashboard', { device_id: TARGET_DEVICE_ID });
-  console.log('   Status:', dashRes.status);
-  console.log('   Dashboard Summary:', JSON.stringify(dashRes.data, null, 2));
-
-  // 2. ListProfiles
-  console.log('\n2️⃣  Testing ListProfiles ConnectRPC...');
+  // 1. ListProfiles
+  console.log('\n1️⃣  Testing ListProfiles ConnectRPC...');
   const profRes = await makeConnectRequest('ListProfiles', { device_id: TARGET_DEVICE_ID });
   console.log('   Status:', profRes.status);
   console.log('   Profiles Count:', profRes.data?.profiles?.length || 0);
 
-  // 3. ListUsers
-  console.log('\n3️⃣  Testing ListUsers ConnectRPC...');
+  // 2. ListUsers
+  console.log('\n2️⃣  Testing ListUsers ConnectRPC...');
   const usersRes = await makeConnectRequest('ListUsers', { device_id: TARGET_DEVICE_ID });
   console.log('   Status:', usersRes.status);
   console.log('   Users Count:', usersRes.data?.users?.length || 0);
 
-  // 4. ListActiveSessions
-  console.log('\n4️⃣  Testing ListActiveSessions ConnectRPC...');
+  // 3. ListActiveSessions
+  console.log('\n3️⃣  Testing ListActiveSessions ConnectRPC...');
   const actRes = await makeConnectRequest('ListActiveSessions', { device_id: TARGET_DEVICE_ID });
   console.log('   Status:', actRes.status);
   console.log('   Active Sessions Count:', actRes.data?.sessions?.length || 0);
 
-  // 5. ListDHCPLeases
-  console.log('\n5️⃣  Testing ListDHCPLeases ConnectRPC...');
+  // 4. ListDHCPLeases
+  console.log('\n4️⃣  Testing ListDHCPLeases ConnectRPC...');
   const dhcpRes = await makeConnectRequest('ListDHCPLeases', { device_id: TARGET_DEVICE_ID });
   console.log('   Status:', dhcpRes.status);
   console.log('   DHCP Leases Count:', dhcpRes.data?.leases?.length || 0);
 
-  // 6. GenerateVouchers
-  console.log('\n6️⃣  Testing GenerateVouchers ConnectRPC...');
+  // 5. GenerateVouchers
+  console.log('\n5️⃣  Testing GenerateVouchers ConnectRPC...');
   const genRes = await makeConnectRequest('GenerateVouchers', {
     device_id: TARGET_DEVICE_ID,
     profile: 'default',

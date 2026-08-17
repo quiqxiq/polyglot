@@ -1,6 +1,7 @@
 package hotspot
 
 import (
+	"strings"
 	"testing"
 	"time"
 
@@ -24,6 +25,52 @@ func TestFormatPreLoginComment(t *testing.T) {
 	t.Run("type default vc", func(t *testing.T) {
 		formatted := FormatPreLoginComment("", "C9Z", "Tag", tm)
 		assert.Equal(t, "vc-C9Z-08.03.26-Tag", formatted)
+	})
+}
+
+func TestBuildCreateUserComment(t *testing.T) {
+	now := time.Date(2026, 8, 17, 10, 0, 0, 0, time.UTC)
+
+	t.Run("comment kosong + name==password -> vc prefix", func(t *testing.T) {
+		c := BuildCreateUserComment("mikhmon1234", "mikhmon1234", "", now)
+		assert.True(t, strings.HasPrefix(c, "vc-"), "want vc- prefix, got %q", c)
+		parsed, err := ParseMikhmonComment(c)
+		require.NoError(t, err)
+		assert.Equal(t, "vc", parsed.Type)
+		assert.Equal(t, "08.17.26", parsed.CreatedDate)
+	})
+
+	t.Run("comment kosong + name != password -> up prefix", func(t *testing.T) {
+		c := BuildCreateUserComment("admin1", "rahasia", "", now)
+		assert.True(t, strings.HasPrefix(c, "up-"), "want up- prefix, got %q", c)
+	})
+
+	t.Run("comment terisi -> dikembalikan apa adanya", func(t *testing.T) {
+		c := BuildCreateUserComment("admin1", "rahasia", "pelanggan-utama", now)
+		assert.Equal(t, "pelanggan-utama", c)
+	})
+}
+
+func TestBuildUpdatedComment(t *testing.T) {
+	now := time.Date(2026, 8, 17, 10, 0, 0, 0, time.UTC)
+
+	t.Run("expire & user_code kosong -> comment apa adanya", func(t *testing.T) {
+		assert.Equal(t, "catatan baru", BuildUpdatedComment("", "", "catatan baru", now))
+	})
+
+	t.Run("user_code vc -> rebuild dengan prefix vc", func(t *testing.T) {
+		c := BuildUpdatedComment("", "vc-A1B-08.17.26", "BatchBaru", now)
+		assert.True(t, strings.HasPrefix(c, "vc-"), "want vc- prefix, got %q", c)
+		assert.Contains(t, c, "-BatchBaru")
+	})
+
+	t.Run("user_code X -> rebuild dengan prefix X", func(t *testing.T) {
+		c := BuildUpdatedComment("", "X-9Z", "tagX", now)
+		assert.True(t, strings.HasPrefix(c, "X-"), "want X- prefix, got %q", c)
+	})
+
+	t.Run("expire_date terisi -> <expire> <comment>", func(t *testing.T) {
+		assert.Equal(t, "03/08/2026 catatan", BuildUpdatedComment("03/08/2026", "", "catatan", now))
 	})
 }
 

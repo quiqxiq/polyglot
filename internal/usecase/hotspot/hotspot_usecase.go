@@ -2,6 +2,7 @@ package hotspot
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -43,6 +44,11 @@ func (u *UseCase) GetSystemResource(ctx context.Context, driver port.DeviceDrive
 	return u.gateway.GetSystemResource(ctx, driver)
 }
 
+// GetSystemIdentity retrieves the router's configured identity (name).
+func (u *UseCase) GetSystemIdentity(ctx context.Context, driver port.DeviceDriver) (string, error) {
+	return u.gateway.GetSystemIdentity(ctx, driver)
+}
+
 // CreateProfile builds and executes the /ip/hotspot/user/profile/add command
 func (u *UseCase) CreateProfile(ctx context.Context, driver port.DeviceDriver, p port.MikhmonProfileParams) (command.Result, error) {
 	return u.gateway.CreateUserProfile(ctx, driver, p)
@@ -58,9 +64,11 @@ func (u *UseCase) GenerateVouchers(ctx context.Context, driver port.DeviceDriver
 	return u.gateway.GenerateVouchers(ctx, driver, p, count)
 }
 
-// GetUsers lists hotspot users, optionally filtered by profile.
-func (u *UseCase) GetUsers(ctx context.Context, driver port.DeviceDriver, profileFilter string) ([]port.HotspotUser, error) {
-	return u.gateway.ListUsers(ctx, driver, profileFilter)
+// GetUsers lists hotspot users, optionally filtered (profile, comment batch
+// tag, exact name, only-unused). Pass zero-value port.ListUsersFilter to
+// list all users.
+func (u *UseCase) GetUsers(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error) {
+	return u.gateway.ListUsers(ctx, driver, f)
 }
 
 // GetUser fetches a single hotspot user by RouterOS .id.
@@ -123,9 +131,41 @@ func (u *UseCase) SetupExpireMonitor(ctx context.Context, driver port.DeviceDriv
 	return u.gateway.SetupExpireMonitor(ctx, driver, interval)
 }
 
-// GetReports fetches all report records from /system/script/job or /log.
+// GetExpireMonitorStatus reports the install/enabled state of the expire
+// monitor scheduler.
+func (u *UseCase) GetExpireMonitorStatus(ctx context.Context, driver port.DeviceDriver) (port.ExpireMonitorStatus, error) {
+	return u.gateway.GetExpireMonitorStatus(ctx, driver)
+}
+
+// DisableExpireMonitor disables the found expire-monitor scheduler. It fails
+// when the monitor is not installed.
+func (u *UseCase) DisableExpireMonitor(ctx context.Context, driver port.DeviceDriver, disabled bool) (command.Result, error) {
+	status, err := u.gateway.GetExpireMonitorStatus(ctx, driver)
+	if err != nil {
+		return command.Result{}, err
+	}
+	if !status.IsInstalled {
+		return command.Result{}, fmt.Errorf("expire monitor is not installed")
+	}
+	return u.gateway.SetExpireMonitorDisabled(ctx, driver, status.SchedulerID, disabled)
+}
+
+// RemoveExpireMonitor deletes the found expire-monitor scheduler (the script
+// is left behind). It fails when the monitor is not installed.
+func (u *UseCase) RemoveExpireMonitor(ctx context.Context, driver port.DeviceDriver) (command.Result, error) {
+	status, err := u.gateway.GetExpireMonitorStatus(ctx, driver)
+	if err != nil {
+		return command.Result{}, err
+	}
+	if !status.IsInstalled {
+		return command.Result{}, fmt.Errorf("expire monitor is not installed")
+	}
+	return u.gateway.RemoveExpireMonitor(ctx, driver, status.SchedulerID)
+}
+
+// GetReports fetches all Mikhmon report records from /system/script.
 func (u *UseCase) GetReports(ctx context.Context, driver port.DeviceDriver) ([]port.MikhmonTransaction, error) {
-	return u.gateway.ListReports(ctx, driver)
+	return u.gateway.ListReports(ctx, driver, port.ReportFilter{})
 }
 
 // DeleteReport deletes a report script record by RouterOS .id.
@@ -182,7 +222,7 @@ func (u *UseCase) UpdateUser(ctx context.Context, driver port.DeviceDriver, rosI
 
 // GetUsersByTag fetches all hotspot users whose comment contains tag.
 func (u *UseCase) GetUsersByTag(ctx context.Context, driver port.DeviceDriver, tag string) ([]port.HotspotUser, error) {
-	users, err := u.GetUsers(ctx, driver, "")
+	users, err := u.GetUsers(ctx, driver, port.ListUsersFilter{})
 	if err != nil {
 		return nil, err
 	}
@@ -203,29 +243,15 @@ func (u *UseCase) GetUsersByTag(ctx context.Context, driver port.DeviceDriver, t
 	return filtered, nil
 }
 
-// GetReportsByFilter filters transaction reports by date (e.g. "jan/15/2025"), month ("jan"), or year ("2025").
+// GetReportsByFilter delegates report filtering to the gateway using legacy
+// Mikhmon semantics: date → ?source=, month (owner "aug2026") → ?owner=,
+// year → date-suffix post-filter. All three empty returns every mikhmon record.
 func (u *UseCase) GetReportsByFilter(ctx context.Context, driver port.DeviceDriver, date, month, year string) ([]port.MikhmonTransaction, error) {
-	all, err := u.GetReports(ctx, driver)
-	if err != nil {
-		return nil, err
-	}
-	if date == "" && month == "" && year == "" {
-		return all, nil
-	}
-	filtered := make([]port.MikhmonTransaction, 0)
-	for _, r := range all {
-		if date != "" && !strings.HasPrefix(r.Date, date) {
-			continue
-		}
-		if month != "" && !strings.Contains(strings.ToLower(r.Date), strings.ToLower(month)) {
-			continue
-		}
-		if year != "" && !strings.HasSuffix(r.Date, year) {
-			continue
-		}
-		filtered = append(filtered, r)
-	}
-	return filtered, nil
+	return u.gateway.ListReports(ctx, driver, port.ReportFilter{
+		Day:   date,
+		Month: month,
+		Year:  year,
+	})
 }
 
 // GetDashboardSummary aggregates system info, active users, total users, and today's income.
@@ -251,7 +277,7 @@ func (u *UseCase) GetDashboardSummary(ctx context.Context, driver port.DeviceDri
 	}
 
 	// Total Hotspot Users
-	if users, err := u.gateway.ListUsers(ctx, driver, ""); err == nil {
+	if users, err := u.gateway.ListUsers(ctx, driver, port.ListUsersFilter{}); err == nil {
 		summary.TotalUsers = len(users)
 	}
 

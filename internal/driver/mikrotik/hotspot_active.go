@@ -64,6 +64,26 @@ func NewStreamHotspotActiveCommand(userFilter string) command.Command {
 	}
 }
 
+// NewStreamHotspotActiveIntervalCommand builds the command.Command for
+// streaming /ip/hotspot/active/print interval=<n>, which makes RouterOS
+// re-send the FULL list of active sessions periodically — unlike follow,
+// which only pushes per-row deltas. Use this when the consumer needs a
+// complete snapshot per frame (e.g. computing inactive users). interval
+// defaults to "1s".
+func NewStreamHotspotActiveIntervalCommand(userFilter, interval string) command.Command {
+	if interval == "" {
+		interval = "1s"
+	}
+	args := map[string]string{"interval": interval}
+	if userFilter != "" {
+		args["?user"] = userFilter
+	}
+	return command.Command{
+		Raw:  "/ip/hotspot/active/print",
+		Args: args,
+	}
+}
+
 // NewDisconnectHotspotActiveCommand builds the command.Command for
 // /ip/hotspot/active/remove, which forcibly disconnects one active hotspot
 // session. The session ID must come from a prior /ip/hotspot/active/print
