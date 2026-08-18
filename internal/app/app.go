@@ -301,6 +301,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	rootMux.Handle(userPath, protectedHandler)
 	rootMux.Handle(billingPath, protectedHandler)
 	rootMux.Handle(mikhmonPath, protectedHandler)
+	rootMux.Handle(pppPath, protectedHandler)
 	rootMux.Handle(waPath, protectedHandler)
 	rootMux.Handle(botPath, protectedHandler)
 	rootMux.Handle(knwPath, protectedHandler)

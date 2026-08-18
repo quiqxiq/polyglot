@@ -112,3 +112,19 @@ export function useDeleteHotspotUserMutation() {
     },
   })
 }
+
+export function useDeleteHotspotUsersMutation() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (params: { deviceId: string; mode: string; value?: string }) => {
+      return await hotspotClient.deleteHotspotUsers({
+        deviceId: params.deviceId,
+        mode: params.mode,
+        value: params.value || '',
+      })
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: hotspotKeys.users(variables.deviceId) })
+    },
+  })
+}

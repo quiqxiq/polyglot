@@ -649,6 +649,126 @@ message PPPInactiveFrame {
   repeated PPPSecretItem secrets = 3;
 }
 
+// ── Modul 11: Bulk Cleaner, IP Bindings, Cookies & Voucher Checker ───
+
+message DeleteHotspotUsersRequest {
+  string device_id = 1;
+  string mode = 2; // "profile" | "comment" | "expired"
+  string value = 3; // nama profile atau batch comment
+}
+
+message DeleteHotspotUsersResponse {
+  int32 deleted_count = 1;
+  string message = 2;
+}
+
+message HotspotIPBinding {
+  string id = 1;
+  string mac_address = 2;
+  string address = 3;
+  string to_address = 4;
+  string server = 5;
+  string type = 6; // "bypassed" | "blocked" | "regular"
+  string comment = 7;
+  bool disabled = 8;
+}
+
+message ListHotspotIPBindingsRequest {
+  string device_id = 1;
+}
+
+message ListHotspotIPBindingsResponse {
+  repeated HotspotIPBinding bindings = 1;
+}
+
+message CreateHotspotIPBindingRequest {
+  string device_id = 1;
+  string mac_address = 2;
+  string address = 3;
+  string to_address = 4;
+  string server = 5;
+  string type = 6;
+  string comment = 7;
+  bool disabled = 8;
+}
+
+message CreateHotspotIPBindingResponse {
+  HotspotIPBinding binding = 1;
+  string message = 2;
+}
+
+message UpdateHotspotIPBindingRequest {
+  string device_id = 1;
+  string ros_id = 2;
+  string mac_address = 3;
+  string address = 4;
+  string to_address = 5;
+  string server = 6;
+  string type = 7;
+  string comment = 8;
+  bool disabled = 9;
+}
+
+message UpdateHotspotIPBindingResponse {
+  HotspotIPBinding binding = 1;
+  string message = 2;
+}
+
+message DeleteHotspotIPBindingRequest {
+  string device_id = 1;
+  string ros_id = 2;
+}
+
+message DeleteHotspotIPBindingResponse {
+  string message = 1;
+}
+
+message HotspotCookie {
+  string id = 1;
+  string user = 2;
+  string mac_address = 3;
+  string expires_in = 4;
+  string domain = 5;
+}
+
+message ListHotspotCookiesRequest {
+  string device_id = 1;
+}
+
+message ListHotspotCookiesResponse {
+  repeated HotspotCookie cookies = 1;
+}
+
+message DeleteHotspotCookieRequest {
+  string device_id = 1;
+  string ros_id = 2; // jika "all" atau kosong, hapus semua cookie
+}
+
+message DeleteHotspotCookieResponse {
+  string message = 1;
+}
+
+message CheckVoucherStatusRequest {
+  string device_id = 1;
+  string username = 2;
+}
+
+message CheckVoucherStatusResponse {
+  bool found = 1;
+  HotspotUser user = 2;
+  HotspotProfile profile = 3;
+  bool is_online = 4;
+  HotspotActiveSession active_session = 5;
+  bool has_cookie = 6;
+  HotspotCookie cookie = 7;
+  string status = 8; // "active" | "expired" | "unused" | "disabled" | "not_found"
+  string sisa_waktu = 9;
+  string sisa_kuota = 10;
+  string expire_date = 11;
+  string mac_locked = 12;
+  string message = 13;
+}
+
 service HotspotService {
   rpc ListProfiles(ListHotspotProfilesRequest) returns (ListHotspotProfilesResponse);
   rpc ListUsers(ListHotspotUsersRequest) returns (ListHotspotUsersResponse);
@@ -663,12 +783,20 @@ service HotspotService {
   rpc UpdateUser(UpdateHotspotUserRequest) returns (UpdateHotspotUserResponse);
   rpc ResetUserCounters(ResetHotspotUserCountersRequest) returns (ResetHotspotUserCountersResponse);
   rpc DeleteUser(DeleteHotspotUserRequest) returns (DeleteHotspotUserResponse);
+  rpc DeleteHotspotUsers(DeleteHotspotUsersRequest) returns (DeleteHotspotUsersResponse);
   rpc CreateProfile(CreateHotspotProfileRequest) returns (CreateHotspotProfileResponse);
   rpc UpdateProfile(UpdateHotspotProfileRequest) returns (UpdateHotspotProfileResponse);
   rpc DeleteProfile(DeleteHotspotProfileRequest) returns (DeleteHotspotProfileResponse);
   rpc ListHosts(ListHotspotHostsRequest) returns (ListHotspotHostsResponse);
   rpc RemoveHost(RemoveHotspotHostRequest) returns (RemoveHotspotHostResponse);
   rpc ListHotspotServers(ListHotspotServersRequest) returns (ListHotspotServersResponse);
+  rpc ListHotspotIPBindings(ListHotspotIPBindingsRequest) returns (ListHotspotIPBindingsResponse);
+  rpc CreateHotspotIPBinding(CreateHotspotIPBindingRequest) returns (CreateHotspotIPBindingResponse);
+  rpc UpdateHotspotIPBinding(UpdateHotspotIPBindingRequest) returns (UpdateHotspotIPBindingResponse);
+  rpc DeleteHotspotIPBinding(DeleteHotspotIPBindingRequest) returns (DeleteHotspotIPBindingResponse);
+  rpc ListHotspotCookies(ListHotspotCookiesRequest) returns (ListHotspotCookiesResponse);
+  rpc DeleteHotspotCookie(DeleteHotspotCookieRequest) returns (DeleteHotspotCookieResponse);
+  rpc CheckVoucherStatus(CheckVoucherStatusRequest) returns (CheckVoucherStatusResponse);
   rpc StreamTraffic(StreamTrafficRequest) returns (stream TrafficStreamData);
   rpc StreamResource(StreamResourceRequest) returns (stream ResourceStreamData);
   rpc StreamActiveSessions(StreamActiveSessionsRequest) returns (stream ActiveSessionsStreamData);

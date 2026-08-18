@@ -56,6 +56,20 @@ type HotspotGateway interface {
 	ListParentQueues(ctx context.Context, driver DeviceDriver) ([]SimpleQueue, error)
 	// ListNATRules fetches all /ip/firewall/nat entries.
 	ListNATRules(ctx context.Context, driver DeviceDriver) ([]map[string]string, error)
+	// DeleteUsersByFilter deletes hotspot users matching filter mode (by_profile, by_comment, expired).
+	DeleteUsersByFilter(ctx context.Context, driver DeviceDriver, mode, value string) (int, error)
+	// ListIPBindings fetches all /ip/hotspot/ip-binding entries.
+	ListIPBindings(ctx context.Context, driver DeviceDriver) ([]HotspotIPBinding, error)
+	// CreateIPBinding creates a new /ip/hotspot/ip-binding entry.
+	CreateIPBinding(ctx context.Context, driver DeviceDriver, p HotspotIPBindingParams) (command.Result, error)
+	// UpdateIPBinding updates an existing /ip/hotspot/ip-binding entry.
+	UpdateIPBinding(ctx context.Context, driver DeviceDriver, rosID string, p HotspotIPBindingParams) (command.Result, error)
+	// DeleteIPBinding removes an /ip/hotspot/ip-binding entry by RouterOS .id.
+	DeleteIPBinding(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
+	// ListCookies fetches all /ip/hotspot/cookie entries.
+	ListCookies(ctx context.Context, driver DeviceDriver) ([]HotspotCookie, error)
+	// DeleteCookie removes a cookie by RouterOS .id (or all cookies if rosID is empty or "all").
+	DeleteCookie(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
 	// SetupExpireMonitor adds or updates the Mikhmon expire-monitor scheduler.
 	// It is idempotent and recognises both the legacy single-step scheduler
 	// (Mikhmon-Expire-Monitor) and the gateway two-step form.

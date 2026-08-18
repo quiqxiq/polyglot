@@ -1,4 +1,4 @@
-import { Plus, Ticket, Clock, UserPlus } from 'lucide-react'
+import { Plus, Ticket, Clock, UserPlus, Search, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useHotspot } from '../context/hotspot-context'
 import { useDeviceStore } from '@/stores/device-store'
@@ -26,8 +26,40 @@ export function HotspotPrimaryButtons() {
     setOpen('expire-monitor')
   }
 
+  const handleQuickChecker = () => {
+    setOpen('quick-voucher-checker')
+  }
+
+  const handleBulkCleaner = () => {
+    setOpen('user-bulk-cleaner')
+  }
+
   return (
     <div className='flex flex-wrap items-center gap-2'>
+      <Button
+        variant='outline'
+        size='sm'
+        onClick={handleQuickChecker}
+        disabled={!selectedDeviceId}
+        className='gap-1.5 h-9'
+        title='Inspect voucher validity and live status'
+      >
+        <Search className='size-4 text-sky-500' />
+        Check Voucher
+      </Button>
+
+      <Button
+        variant='outline'
+        size='sm'
+        onClick={handleBulkCleaner}
+        disabled={!selectedDeviceId}
+        className='gap-1.5 h-9 text-destructive border-destructive/30 hover:bg-destructive/10'
+        title='Bulk purge users by profile, batch tag, or expiration'
+      >
+        <Trash2 className='size-4' />
+        Bulk Cleaner
+      </Button>
+
       <Button
         variant='outline'
         size='sm'

@@ -52,3 +52,15 @@ export const expireSetupSchema = z.object({
 })
 
 export type ExpireSetupValues = z.infer<typeof expireSetupSchema>
+
+export const bindingFormSchema = z.object({
+  macAddress: z.string(),
+  address: z.string(),
+  toAddress: z.string(),
+  server: z.string(),
+  type: z.enum(['bypassed', 'blocked', 'regular']),
+  comment: z.string(),
+  disabled: z.boolean(),
+})
+
+export type BindingFormValues = z.infer<typeof bindingFormSchema>

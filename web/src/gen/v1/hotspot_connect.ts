@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ActiveSessionsStreamData, BlockDHCPLeaseRequest, BlockDHCPLeaseResponse, CreateHotspotProfileRequest, CreateHotspotProfileResponse, CreateHotspotUserRequest, CreateHotspotUserResponse, DeleteHotspotProfileRequest, DeleteHotspotProfileResponse, DeleteHotspotReportRequest, DeleteHotspotReportResponse, DeleteHotspotUserRequest, DeleteHotspotUserResponse, DisableExpireMonitorRequest, DisableExpireMonitorResponse, ExpireMonitorStatusResponse, GenerateVouchersRequest, GenerateVouchersResponse, GetExpireMonitorStatusRequest, GetHotspotUserRequest, GetHotspotUserResponse, GetTemplateSectionRequest, GetTemplateSectionResponse, GetVoucherBatchRequest, GetVoucherBatchResponse, HotspotInactiveFrame, InterfaceEthernetFrame, KickHotspotSessionRequest, KickHotspotSessionResponse, ListDHCPLeasesRequest, ListDHCPLeasesResponse, ListHotspotActiveSessionsRequest, ListHotspotActiveSessionsResponse, ListHotspotHostsRequest, ListHotspotHostsResponse, ListHotspotProfilesRequest, ListHotspotProfilesResponse, ListHotspotReportsRequest, ListHotspotReportsResponse, ListHotspotServersRequest, ListHotspotServersResponse, ListHotspotUsersRequest, ListHotspotUsersResponse, ListTemplatesRequest, ListTemplatesResponse, LogsStreamFrame, PPPActiveFrame, PPPInactiveFrame, QueueStatsFrame, RemoveExpireMonitorRequest, RemoveExpireMonitorResponse, RemoveHotspotHostRequest, RemoveHotspotHostResponse, RenderVouchersRequest, RenderVouchersResponse, ResetHotspotUserCountersRequest, ResetHotspotUserCountersResponse, ResourceStreamData, SetupExpireMonitorRequest, SetupExpireMonitorResponse, StreamActiveSessionsRequest, StreamHotspotInactiveRequest, StreamInterfaceEthernetRequest, StreamLogsRequest, StreamPPPActiveRequest, StreamPPPInactiveRequest, StreamQueueStatsRequest, StreamResourceRequest, StreamSystemSnapshotRequest, StreamTrafficRequest, SystemSnapshotFrame, TrafficStreamData, UpdateHotspotProfileRequest, UpdateHotspotProfileResponse, UpdateHotspotUserRequest, UpdateHotspotUserResponse } from "./hotspot_pb.js";
+import { ActiveSessionsStreamData, BlockDHCPLeaseRequest, BlockDHCPLeaseResponse, CheckVoucherStatusRequest, CheckVoucherStatusResponse, CreateHotspotIPBindingRequest, CreateHotspotIPBindingResponse, CreateHotspotProfileRequest, CreateHotspotProfileResponse, CreateHotspotUserRequest, CreateHotspotUserResponse, DeleteHotspotCookieRequest, DeleteHotspotCookieResponse, DeleteHotspotIPBindingRequest, DeleteHotspotIPBindingResponse, DeleteHotspotProfileRequest, DeleteHotspotProfileResponse, DeleteHotspotReportRequest, DeleteHotspotReportResponse, DeleteHotspotUserRequest, DeleteHotspotUserResponse, DeleteHotspotUsersRequest, DeleteHotspotUsersResponse, DisableExpireMonitorRequest, DisableExpireMonitorResponse, ExpireMonitorStatusResponse, GenerateVouchersRequest, GenerateVouchersResponse, GetExpireMonitorStatusRequest, GetHotspotUserRequest, GetHotspotUserResponse, GetTemplateSectionRequest, GetTemplateSectionResponse, GetVoucherBatchRequest, GetVoucherBatchResponse, HotspotInactiveFrame, InterfaceEthernetFrame, KickHotspotSessionRequest, KickHotspotSessionResponse, ListDHCPLeasesRequest, ListDHCPLeasesResponse, ListHotspotActiveSessionsRequest, ListHotspotActiveSessionsResponse, ListHotspotCookiesRequest, ListHotspotCookiesResponse, ListHotspotHostsRequest, ListHotspotHostsResponse, ListHotspotIPBindingsRequest, ListHotspotIPBindingsResponse, ListHotspotProfilesRequest, ListHotspotProfilesResponse, ListHotspotReportsRequest, ListHotspotReportsResponse, ListHotspotServersRequest, ListHotspotServersResponse, ListHotspotUsersRequest, ListHotspotUsersResponse, ListTemplatesRequest, ListTemplatesResponse, LogsStreamFrame, PPPActiveFrame, PPPInactiveFrame, QueueStatsFrame, RemoveExpireMonitorRequest, RemoveExpireMonitorResponse, RemoveHotspotHostRequest, RemoveHotspotHostResponse, RenderVouchersRequest, RenderVouchersResponse, ResetHotspotUserCountersRequest, ResetHotspotUserCountersResponse, ResourceStreamData, SetupExpireMonitorRequest, SetupExpireMonitorResponse, StreamActiveSessionsRequest, StreamHotspotInactiveRequest, StreamInterfaceEthernetRequest, StreamLogsRequest, StreamPPPActiveRequest, StreamPPPInactiveRequest, StreamQueueStatsRequest, StreamResourceRequest, StreamSystemSnapshotRequest, StreamTrafficRequest, SystemSnapshotFrame, TrafficStreamData, UpdateHotspotIPBindingRequest, UpdateHotspotIPBindingResponse, UpdateHotspotProfileRequest, UpdateHotspotProfileResponse, UpdateHotspotUserRequest, UpdateHotspotUserResponse } from "./hotspot_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -130,6 +130,15 @@ export const HotspotService = {
       kind: MethodKind.Unary,
     },
     /**
+     * @generated from rpc polyglot.v1.HotspotService.DeleteHotspotUsers
+     */
+    deleteHotspotUsers: {
+      name: "DeleteHotspotUsers",
+      I: DeleteHotspotUsersRequest,
+      O: DeleteHotspotUsersResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
      * @generated from rpc polyglot.v1.HotspotService.CreateProfile
      */
     createProfile: {
@@ -181,6 +190,69 @@ export const HotspotService = {
       name: "ListHotspotServers",
       I: ListHotspotServersRequest,
       O: ListHotspotServersResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.ListHotspotIPBindings
+     */
+    listHotspotIPBindings: {
+      name: "ListHotspotIPBindings",
+      I: ListHotspotIPBindingsRequest,
+      O: ListHotspotIPBindingsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.CreateHotspotIPBinding
+     */
+    createHotspotIPBinding: {
+      name: "CreateHotspotIPBinding",
+      I: CreateHotspotIPBindingRequest,
+      O: CreateHotspotIPBindingResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.UpdateHotspotIPBinding
+     */
+    updateHotspotIPBinding: {
+      name: "UpdateHotspotIPBinding",
+      I: UpdateHotspotIPBindingRequest,
+      O: UpdateHotspotIPBindingResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.DeleteHotspotIPBinding
+     */
+    deleteHotspotIPBinding: {
+      name: "DeleteHotspotIPBinding",
+      I: DeleteHotspotIPBindingRequest,
+      O: DeleteHotspotIPBindingResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.ListHotspotCookies
+     */
+    listHotspotCookies: {
+      name: "ListHotspotCookies",
+      I: ListHotspotCookiesRequest,
+      O: ListHotspotCookiesResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.DeleteHotspotCookie
+     */
+    deleteHotspotCookie: {
+      name: "DeleteHotspotCookie",
+      I: DeleteHotspotCookieRequest,
+      O: DeleteHotspotCookieResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.HotspotService.CheckVoucherStatus
+     */
+    checkVoucherStatus: {
+      name: "CheckVoucherStatus",
+      I: CheckVoucherStatusRequest,
+      O: CheckVoucherStatusResponse,
       kind: MethodKind.Unary,
     },
     /**

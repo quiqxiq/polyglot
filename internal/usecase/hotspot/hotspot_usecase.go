@@ -288,3 +288,134 @@ func (u *UseCase) GetDashboardSummary(ctx context.Context, driver port.DeviceDri
 
 	return summary, nil
 }
+
+// DeleteUsersByFilter deletes hotspot users matching mode (by_profile, by_comment, expired).
+func (u *UseCase) DeleteUsersByFilter(ctx context.Context, driver port.DeviceDriver, mode, value string) (int, error) {
+	return u.gateway.DeleteUsersByFilter(ctx, driver, mode, value)
+}
+
+// GetIPBindings fetches all /ip/hotspot/ip-binding entries.
+func (u *UseCase) GetIPBindings(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotIPBinding, error) {
+	return u.gateway.ListIPBindings(ctx, driver)
+}
+
+// CreateIPBinding creates a new /ip/hotspot/ip-binding entry.
+func (u *UseCase) CreateIPBinding(ctx context.Context, driver port.DeviceDriver, p port.HotspotIPBindingParams) (command.Result, error) {
+	return u.gateway.CreateIPBinding(ctx, driver, p)
+}
+
+// UpdateIPBinding updates an existing /ip/hotspot/ip-binding entry.
+func (u *UseCase) UpdateIPBinding(ctx context.Context, driver port.DeviceDriver, rosID string, p port.HotspotIPBindingParams) (command.Result, error) {
+	return u.gateway.UpdateIPBinding(ctx, driver, rosID, p)
+}
+
+// DeleteIPBinding removes an /ip/hotspot/ip-binding entry by RouterOS .id.
+func (u *UseCase) DeleteIPBinding(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
+	return u.gateway.DeleteIPBinding(ctx, driver, rosID)
+}
+
+// GetCookies fetches all /ip/hotspot/cookie entries.
+func (u *UseCase) GetCookies(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotCookie, error) {
+	return u.gateway.ListCookies(ctx, driver)
+}
+
+// DeleteCookie removes a cookie by RouterOS .id (or all cookies if rosID is empty or "all").
+func (u *UseCase) DeleteCookie(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
+	return u.gateway.DeleteCookie(ctx, driver, rosID)
+}
+
+// CheckVoucherStatus inspects a voucher username and aggregates all relevant status.
+func (u *UseCase) CheckVoucherStatus(ctx context.Context, driver port.DeviceDriver, username string) (*port.VoucherStatusDetails, error) {
+	if strings.TrimSpace(username) == "" {
+		return nil, fmt.Errorf("username is required")
+	}
+
+	users, err := u.gateway.ListUsers(ctx, driver, port.ListUsersFilter{Name: username})
+	if err != nil {
+		return nil, fmt.Errorf("lookup user %q: %w", username, err)
+	}
+	if len(users) == 0 {
+		return &port.VoucherStatusDetails{
+			Found:   false,
+			Status:  "not_found",
+			Message: fmt.Sprintf("Voucher %q not found on router", username),
+		}, nil
+	}
+
+	user := users[0]
+	details := &port.VoucherStatusDetails{
+		Found:   true,
+		User:    &user,
+		Status:  "unused",
+		Message: "Voucher valid",
+	}
+
+	if user.Disabled {
+		details.Status = "disabled"
+		details.Message = "User is currently disabled"
+	}
+
+	// 1. Fetch Profile info
+	if user.Profile != "" {
+		if profiles, err := u.gateway.GetUserProfiles(ctx, driver); err == nil {
+			for _, p := range profiles {
+				if p.Name == user.Profile {
+					profileCopy := p
+					details.Profile = &profileCopy
+					break
+				}
+			}
+		}
+	}
+
+	// 2. Check Active Sessions (Online status)
+	if activeSessions, err := u.gateway.ListActiveSessions(ctx, driver); err == nil {
+		for _, s := range activeSessions {
+			if s.User == username {
+				sessionCopy := s
+				details.IsOnline = true
+				details.ActiveSession = &sessionCopy
+				details.Status = "active"
+				break
+			}
+		}
+	}
+
+	// 3. Check Cookies
+	if cookies, err := u.gateway.ListCookies(ctx, driver); err == nil {
+		for _, c := range cookies {
+			if c.User == username {
+				cookieCopy := c
+				details.HasCookie = true
+				details.Cookie = &cookieCopy
+				break
+			}
+		}
+	}
+
+	// 4. Parse Comment for Validity and Expire info
+	if user.Comment != "" {
+		if mc, err := u.gateway.ParseUserComment(user.Comment); err == nil {
+			if mc.ExpireDate != "" {
+				details.ExpireDate = mc.ExpireDate
+			}
+		}
+		if strings.Contains(strings.ToLower(user.Comment), "expired") || user.LimitUptime == "1s" {
+			details.Status = "expired"
+			details.Message = "Voucher has expired"
+		}
+	}
+
+	// 5. Calculate remaining uptime & bytes
+	if user.LimitUptime != "" {
+		details.SisaWaktu = user.LimitUptime
+	}
+	if user.LimitBytesIn != "" || user.LimitBytesOut != "" {
+		details.SisaKuota = user.LimitBytesIn + "/" + user.LimitBytesOut
+	}
+	if user.MACAddress != "" {
+		details.MACLocked = user.MACAddress
+	}
+
+	return details, nil
+}

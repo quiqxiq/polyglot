@@ -3,6 +3,7 @@ package hotspot
 import (
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // ToProtoHotspotUsers converts mikrotik user list to proto list.
@@ -14,20 +15,25 @@ func ToProtoHotspotUsers(users []mikrotik.HotspotUser) []*devicepb.HotspotUser {
 	return pbUsers
 }
 
+// ToProtoHotspotActiveSession converts a single active session to proto.
+func ToProtoHotspotActiveSession(s port.HotspotActiveSession) *devicepb.HotspotActiveSession {
+	return &devicepb.HotspotActiveSession{
+		Id:         s.RosID,
+		Server:     s.Server,
+		User:       s.User,
+		Address:    s.Address,
+		MacAddress: s.MACAddress,
+		Uptime:     s.Uptime,
+		BytesIn:    s.BytesIn,
+		BytesOut:   s.BytesOut,
+	}
+}
+
 // ToProtoActiveSessions converts mikrotik active sessions to proto list.
 func ToProtoActiveSessions(sessions []mikrotik.HotspotActiveSession) []*devicepb.HotspotActiveSession {
 	pbSessions := make([]*devicepb.HotspotActiveSession, len(sessions))
 	for i, s := range sessions {
-		pbSessions[i] = &devicepb.HotspotActiveSession{
-			Id:         s.RosID,
-			Server:     s.Server,
-			User:       s.User,
-			Address:    s.Address,
-			MacAddress: s.MACAddress,
-			Uptime:     s.Uptime,
-			BytesIn:    s.BytesIn,
-			BytesOut:   s.BytesOut,
-		}
+		pbSessions[i] = ToProtoHotspotActiveSession(s)
 	}
 	return pbSessions
 }

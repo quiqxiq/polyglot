@@ -13,6 +13,10 @@ export const hotspotKeys = {
     [...hotspotKeys.all, 'servers', deviceId] as const,
   dhcpLeases: (deviceId: string, mac?: string) =>
     [...hotspotKeys.all, 'dhcp-leases', deviceId, mac || 'all'] as const,
+  ipBindings: (deviceId: string) =>
+    [...hotspotKeys.all, 'ip-bindings', deviceId] as const,
+  cookies: (deviceId: string) =>
+    [...hotspotKeys.all, 'cookies', deviceId] as const,
   voucherBatch: (deviceId: string, comment: string) =>
     [...hotspotKeys.all, 'voucher-batch', deviceId, comment] as const,
   expireMonitorStatus: (deviceId: string) =>

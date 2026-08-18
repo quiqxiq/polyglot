@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Wifi, Users, PieChart, Activity, Radio, Laptop, AlertCircle } from 'lucide-react'
+import { Wifi, Users, PieChart, Activity, Radio, Laptop, ShieldCheck, Cookie, AlertCircle } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
@@ -15,10 +15,12 @@ import { ProfilesTab } from './components/profiles/profiles-tab'
 import { ActiveTab } from './components/active/active-tab'
 import { InactiveTab } from './components/inactive/inactive-tab'
 import { HostsTab } from './components/hosts/hosts-tab'
+import { BindingsTab } from './components/bindings/bindings-tab'
+import { CookiesTab } from './components/cookies/cookies-tab'
 import { useDeviceStore } from '@/stores/device-store'
 import { useDevicesQuery } from '@/features/devices/api/use-devices'
 
-type HotspotTabType = 'users' | 'profiles' | 'active' | 'inactive' | 'hosts'
+type HotspotTabType = 'users' | 'profiles' | 'active' | 'inactive' | 'hosts' | 'bindings' | 'cookies'
 
 function HotspotContent() {
   const [currentTab, setCurrentTab] = useState<HotspotTabType>('users')
@@ -98,6 +100,14 @@ function HotspotContent() {
                   <Laptop className='size-4' />
                   Hosts
                 </TabsTrigger>
+                <TabsTrigger value='bindings' className='gap-2'>
+                  <ShieldCheck className='size-4 text-emerald-500' />
+                  IP Bindings
+                </TabsTrigger>
+                <TabsTrigger value='cookies' className='gap-2'>
+                  <Cookie className='size-4 text-amber-500' />
+                  Cookies
+                </TabsTrigger>
               </TabsList>
             </div>
 
@@ -119,6 +129,14 @@ function HotspotContent() {
 
             <TabsContent value='hosts' className='flex flex-1 flex-col gap-4 m-0'>
               <HostsTab />
+            </TabsContent>
+
+            <TabsContent value='bindings' className='flex flex-1 flex-col gap-4 m-0'>
+              <BindingsTab />
+            </TabsContent>
+
+            <TabsContent value='cookies' className='flex flex-1 flex-col gap-4 m-0'>
+              <CookiesTab />
             </TabsContent>
           </Tabs>
         )}

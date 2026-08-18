@@ -5096,3 +5096,955 @@ export class PPPInactiveFrame extends Message<PPPInactiveFrame> {
   }
 }
 
+/**
+ * @generated from message polyglot.v1.DeleteHotspotUsersRequest
+ */
+export class DeleteHotspotUsersRequest extends Message<DeleteHotspotUsersRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * "profile" | "comment" | "expired"
+   *
+   * @generated from field: string mode = 2;
+   */
+  mode = "";
+
+  /**
+   * nama profile atau batch comment
+   *
+   * @generated from field: string value = 3;
+   */
+  value = "";
+
+  constructor(data?: PartialMessage<DeleteHotspotUsersRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.DeleteHotspotUsersRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "mode", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteHotspotUsersRequest {
+    return new DeleteHotspotUsersRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteHotspotUsersRequest {
+    return new DeleteHotspotUsersRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteHotspotUsersRequest {
+    return new DeleteHotspotUsersRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteHotspotUsersRequest | PlainMessage<DeleteHotspotUsersRequest> | undefined, b: DeleteHotspotUsersRequest | PlainMessage<DeleteHotspotUsersRequest> | undefined): boolean {
+    return proto3.util.equals(DeleteHotspotUsersRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.DeleteHotspotUsersResponse
+ */
+export class DeleteHotspotUsersResponse extends Message<DeleteHotspotUsersResponse> {
+  /**
+   * @generated from field: int32 deleted_count = 1;
+   */
+  deletedCount = 0;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<DeleteHotspotUsersResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.DeleteHotspotUsersResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "deleted_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteHotspotUsersResponse {
+    return new DeleteHotspotUsersResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteHotspotUsersResponse {
+    return new DeleteHotspotUsersResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteHotspotUsersResponse {
+    return new DeleteHotspotUsersResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteHotspotUsersResponse | PlainMessage<DeleteHotspotUsersResponse> | undefined, b: DeleteHotspotUsersResponse | PlainMessage<DeleteHotspotUsersResponse> | undefined): boolean {
+    return proto3.util.equals(DeleteHotspotUsersResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.HotspotIPBinding
+ */
+export class HotspotIPBinding extends Message<HotspotIPBinding> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string mac_address = 2;
+   */
+  macAddress = "";
+
+  /**
+   * @generated from field: string address = 3;
+   */
+  address = "";
+
+  /**
+   * @generated from field: string to_address = 4;
+   */
+  toAddress = "";
+
+  /**
+   * @generated from field: string server = 5;
+   */
+  server = "";
+
+  /**
+   * "bypassed" | "blocked" | "regular"
+   *
+   * @generated from field: string type = 6;
+   */
+  type = "";
+
+  /**
+   * @generated from field: string comment = 7;
+   */
+  comment = "";
+
+  /**
+   * @generated from field: bool disabled = 8;
+   */
+  disabled = false;
+
+  constructor(data?: PartialMessage<HotspotIPBinding>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.HotspotIPBinding";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "mac_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "to_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "server", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "comment", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "disabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): HotspotIPBinding {
+    return new HotspotIPBinding().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): HotspotIPBinding {
+    return new HotspotIPBinding().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): HotspotIPBinding {
+    return new HotspotIPBinding().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: HotspotIPBinding | PlainMessage<HotspotIPBinding> | undefined, b: HotspotIPBinding | PlainMessage<HotspotIPBinding> | undefined): boolean {
+    return proto3.util.equals(HotspotIPBinding, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListHotspotIPBindingsRequest
+ */
+export class ListHotspotIPBindingsRequest extends Message<ListHotspotIPBindingsRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  constructor(data?: PartialMessage<ListHotspotIPBindingsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListHotspotIPBindingsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListHotspotIPBindingsRequest {
+    return new ListHotspotIPBindingsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListHotspotIPBindingsRequest {
+    return new ListHotspotIPBindingsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListHotspotIPBindingsRequest {
+    return new ListHotspotIPBindingsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListHotspotIPBindingsRequest | PlainMessage<ListHotspotIPBindingsRequest> | undefined, b: ListHotspotIPBindingsRequest | PlainMessage<ListHotspotIPBindingsRequest> | undefined): boolean {
+    return proto3.util.equals(ListHotspotIPBindingsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListHotspotIPBindingsResponse
+ */
+export class ListHotspotIPBindingsResponse extends Message<ListHotspotIPBindingsResponse> {
+  /**
+   * @generated from field: repeated polyglot.v1.HotspotIPBinding bindings = 1;
+   */
+  bindings: HotspotIPBinding[] = [];
+
+  constructor(data?: PartialMessage<ListHotspotIPBindingsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListHotspotIPBindingsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "bindings", kind: "message", T: HotspotIPBinding, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListHotspotIPBindingsResponse {
+    return new ListHotspotIPBindingsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListHotspotIPBindingsResponse {
+    return new ListHotspotIPBindingsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListHotspotIPBindingsResponse {
+    return new ListHotspotIPBindingsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListHotspotIPBindingsResponse | PlainMessage<ListHotspotIPBindingsResponse> | undefined, b: ListHotspotIPBindingsResponse | PlainMessage<ListHotspotIPBindingsResponse> | undefined): boolean {
+    return proto3.util.equals(ListHotspotIPBindingsResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CreateHotspotIPBindingRequest
+ */
+export class CreateHotspotIPBindingRequest extends Message<CreateHotspotIPBindingRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string mac_address = 2;
+   */
+  macAddress = "";
+
+  /**
+   * @generated from field: string address = 3;
+   */
+  address = "";
+
+  /**
+   * @generated from field: string to_address = 4;
+   */
+  toAddress = "";
+
+  /**
+   * @generated from field: string server = 5;
+   */
+  server = "";
+
+  /**
+   * @generated from field: string type = 6;
+   */
+  type = "";
+
+  /**
+   * @generated from field: string comment = 7;
+   */
+  comment = "";
+
+  /**
+   * @generated from field: bool disabled = 8;
+   */
+  disabled = false;
+
+  constructor(data?: PartialMessage<CreateHotspotIPBindingRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CreateHotspotIPBindingRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "mac_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "to_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "server", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "comment", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "disabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateHotspotIPBindingRequest {
+    return new CreateHotspotIPBindingRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateHotspotIPBindingRequest {
+    return new CreateHotspotIPBindingRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateHotspotIPBindingRequest {
+    return new CreateHotspotIPBindingRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateHotspotIPBindingRequest | PlainMessage<CreateHotspotIPBindingRequest> | undefined, b: CreateHotspotIPBindingRequest | PlainMessage<CreateHotspotIPBindingRequest> | undefined): boolean {
+    return proto3.util.equals(CreateHotspotIPBindingRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CreateHotspotIPBindingResponse
+ */
+export class CreateHotspotIPBindingResponse extends Message<CreateHotspotIPBindingResponse> {
+  /**
+   * @generated from field: polyglot.v1.HotspotIPBinding binding = 1;
+   */
+  binding?: HotspotIPBinding;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<CreateHotspotIPBindingResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CreateHotspotIPBindingResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "binding", kind: "message", T: HotspotIPBinding },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateHotspotIPBindingResponse {
+    return new CreateHotspotIPBindingResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateHotspotIPBindingResponse {
+    return new CreateHotspotIPBindingResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateHotspotIPBindingResponse {
+    return new CreateHotspotIPBindingResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateHotspotIPBindingResponse | PlainMessage<CreateHotspotIPBindingResponse> | undefined, b: CreateHotspotIPBindingResponse | PlainMessage<CreateHotspotIPBindingResponse> | undefined): boolean {
+    return proto3.util.equals(CreateHotspotIPBindingResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.UpdateHotspotIPBindingRequest
+ */
+export class UpdateHotspotIPBindingRequest extends Message<UpdateHotspotIPBindingRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string ros_id = 2;
+   */
+  rosId = "";
+
+  /**
+   * @generated from field: string mac_address = 3;
+   */
+  macAddress = "";
+
+  /**
+   * @generated from field: string address = 4;
+   */
+  address = "";
+
+  /**
+   * @generated from field: string to_address = 5;
+   */
+  toAddress = "";
+
+  /**
+   * @generated from field: string server = 6;
+   */
+  server = "";
+
+  /**
+   * @generated from field: string type = 7;
+   */
+  type = "";
+
+  /**
+   * @generated from field: string comment = 8;
+   */
+  comment = "";
+
+  /**
+   * @generated from field: bool disabled = 9;
+   */
+  disabled = false;
+
+  constructor(data?: PartialMessage<UpdateHotspotIPBindingRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.UpdateHotspotIPBindingRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "ros_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "mac_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "to_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "server", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "comment", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "disabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateHotspotIPBindingRequest {
+    return new UpdateHotspotIPBindingRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateHotspotIPBindingRequest {
+    return new UpdateHotspotIPBindingRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateHotspotIPBindingRequest {
+    return new UpdateHotspotIPBindingRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateHotspotIPBindingRequest | PlainMessage<UpdateHotspotIPBindingRequest> | undefined, b: UpdateHotspotIPBindingRequest | PlainMessage<UpdateHotspotIPBindingRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateHotspotIPBindingRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.UpdateHotspotIPBindingResponse
+ */
+export class UpdateHotspotIPBindingResponse extends Message<UpdateHotspotIPBindingResponse> {
+  /**
+   * @generated from field: polyglot.v1.HotspotIPBinding binding = 1;
+   */
+  binding?: HotspotIPBinding;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<UpdateHotspotIPBindingResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.UpdateHotspotIPBindingResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "binding", kind: "message", T: HotspotIPBinding },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateHotspotIPBindingResponse {
+    return new UpdateHotspotIPBindingResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateHotspotIPBindingResponse {
+    return new UpdateHotspotIPBindingResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateHotspotIPBindingResponse {
+    return new UpdateHotspotIPBindingResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateHotspotIPBindingResponse | PlainMessage<UpdateHotspotIPBindingResponse> | undefined, b: UpdateHotspotIPBindingResponse | PlainMessage<UpdateHotspotIPBindingResponse> | undefined): boolean {
+    return proto3.util.equals(UpdateHotspotIPBindingResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.DeleteHotspotIPBindingRequest
+ */
+export class DeleteHotspotIPBindingRequest extends Message<DeleteHotspotIPBindingRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string ros_id = 2;
+   */
+  rosId = "";
+
+  constructor(data?: PartialMessage<DeleteHotspotIPBindingRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.DeleteHotspotIPBindingRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "ros_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteHotspotIPBindingRequest {
+    return new DeleteHotspotIPBindingRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteHotspotIPBindingRequest {
+    return new DeleteHotspotIPBindingRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteHotspotIPBindingRequest {
+    return new DeleteHotspotIPBindingRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteHotspotIPBindingRequest | PlainMessage<DeleteHotspotIPBindingRequest> | undefined, b: DeleteHotspotIPBindingRequest | PlainMessage<DeleteHotspotIPBindingRequest> | undefined): boolean {
+    return proto3.util.equals(DeleteHotspotIPBindingRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.DeleteHotspotIPBindingResponse
+ */
+export class DeleteHotspotIPBindingResponse extends Message<DeleteHotspotIPBindingResponse> {
+  /**
+   * @generated from field: string message = 1;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<DeleteHotspotIPBindingResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.DeleteHotspotIPBindingResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteHotspotIPBindingResponse {
+    return new DeleteHotspotIPBindingResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteHotspotIPBindingResponse {
+    return new DeleteHotspotIPBindingResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteHotspotIPBindingResponse {
+    return new DeleteHotspotIPBindingResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteHotspotIPBindingResponse | PlainMessage<DeleteHotspotIPBindingResponse> | undefined, b: DeleteHotspotIPBindingResponse | PlainMessage<DeleteHotspotIPBindingResponse> | undefined): boolean {
+    return proto3.util.equals(DeleteHotspotIPBindingResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.HotspotCookie
+ */
+export class HotspotCookie extends Message<HotspotCookie> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string user = 2;
+   */
+  user = "";
+
+  /**
+   * @generated from field: string mac_address = 3;
+   */
+  macAddress = "";
+
+  /**
+   * @generated from field: string expires_in = 4;
+   */
+  expiresIn = "";
+
+  /**
+   * @generated from field: string domain = 5;
+   */
+  domain = "";
+
+  constructor(data?: PartialMessage<HotspotCookie>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.HotspotCookie";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "user", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "mac_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "expires_in", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "domain", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): HotspotCookie {
+    return new HotspotCookie().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): HotspotCookie {
+    return new HotspotCookie().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): HotspotCookie {
+    return new HotspotCookie().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: HotspotCookie | PlainMessage<HotspotCookie> | undefined, b: HotspotCookie | PlainMessage<HotspotCookie> | undefined): boolean {
+    return proto3.util.equals(HotspotCookie, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListHotspotCookiesRequest
+ */
+export class ListHotspotCookiesRequest extends Message<ListHotspotCookiesRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  constructor(data?: PartialMessage<ListHotspotCookiesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListHotspotCookiesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListHotspotCookiesRequest {
+    return new ListHotspotCookiesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListHotspotCookiesRequest {
+    return new ListHotspotCookiesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListHotspotCookiesRequest {
+    return new ListHotspotCookiesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListHotspotCookiesRequest | PlainMessage<ListHotspotCookiesRequest> | undefined, b: ListHotspotCookiesRequest | PlainMessage<ListHotspotCookiesRequest> | undefined): boolean {
+    return proto3.util.equals(ListHotspotCookiesRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListHotspotCookiesResponse
+ */
+export class ListHotspotCookiesResponse extends Message<ListHotspotCookiesResponse> {
+  /**
+   * @generated from field: repeated polyglot.v1.HotspotCookie cookies = 1;
+   */
+  cookies: HotspotCookie[] = [];
+
+  constructor(data?: PartialMessage<ListHotspotCookiesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListHotspotCookiesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "cookies", kind: "message", T: HotspotCookie, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListHotspotCookiesResponse {
+    return new ListHotspotCookiesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListHotspotCookiesResponse {
+    return new ListHotspotCookiesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListHotspotCookiesResponse {
+    return new ListHotspotCookiesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListHotspotCookiesResponse | PlainMessage<ListHotspotCookiesResponse> | undefined, b: ListHotspotCookiesResponse | PlainMessage<ListHotspotCookiesResponse> | undefined): boolean {
+    return proto3.util.equals(ListHotspotCookiesResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.DeleteHotspotCookieRequest
+ */
+export class DeleteHotspotCookieRequest extends Message<DeleteHotspotCookieRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * jika "all" atau kosong, hapus semua cookie
+   *
+   * @generated from field: string ros_id = 2;
+   */
+  rosId = "";
+
+  constructor(data?: PartialMessage<DeleteHotspotCookieRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.DeleteHotspotCookieRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "ros_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteHotspotCookieRequest {
+    return new DeleteHotspotCookieRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteHotspotCookieRequest {
+    return new DeleteHotspotCookieRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteHotspotCookieRequest {
+    return new DeleteHotspotCookieRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteHotspotCookieRequest | PlainMessage<DeleteHotspotCookieRequest> | undefined, b: DeleteHotspotCookieRequest | PlainMessage<DeleteHotspotCookieRequest> | undefined): boolean {
+    return proto3.util.equals(DeleteHotspotCookieRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.DeleteHotspotCookieResponse
+ */
+export class DeleteHotspotCookieResponse extends Message<DeleteHotspotCookieResponse> {
+  /**
+   * @generated from field: string message = 1;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<DeleteHotspotCookieResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.DeleteHotspotCookieResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteHotspotCookieResponse {
+    return new DeleteHotspotCookieResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteHotspotCookieResponse {
+    return new DeleteHotspotCookieResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteHotspotCookieResponse {
+    return new DeleteHotspotCookieResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteHotspotCookieResponse | PlainMessage<DeleteHotspotCookieResponse> | undefined, b: DeleteHotspotCookieResponse | PlainMessage<DeleteHotspotCookieResponse> | undefined): boolean {
+    return proto3.util.equals(DeleteHotspotCookieResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CheckVoucherStatusRequest
+ */
+export class CheckVoucherStatusRequest extends Message<CheckVoucherStatusRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string username = 2;
+   */
+  username = "";
+
+  constructor(data?: PartialMessage<CheckVoucherStatusRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CheckVoucherStatusRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "username", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CheckVoucherStatusRequest {
+    return new CheckVoucherStatusRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CheckVoucherStatusRequest {
+    return new CheckVoucherStatusRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CheckVoucherStatusRequest {
+    return new CheckVoucherStatusRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CheckVoucherStatusRequest | PlainMessage<CheckVoucherStatusRequest> | undefined, b: CheckVoucherStatusRequest | PlainMessage<CheckVoucherStatusRequest> | undefined): boolean {
+    return proto3.util.equals(CheckVoucherStatusRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CheckVoucherStatusResponse
+ */
+export class CheckVoucherStatusResponse extends Message<CheckVoucherStatusResponse> {
+  /**
+   * @generated from field: bool found = 1;
+   */
+  found = false;
+
+  /**
+   * @generated from field: polyglot.v1.HotspotUser user = 2;
+   */
+  user?: HotspotUser;
+
+  /**
+   * @generated from field: polyglot.v1.HotspotProfile profile = 3;
+   */
+  profile?: HotspotProfile;
+
+  /**
+   * @generated from field: bool is_online = 4;
+   */
+  isOnline = false;
+
+  /**
+   * @generated from field: polyglot.v1.HotspotActiveSession active_session = 5;
+   */
+  activeSession?: HotspotActiveSession;
+
+  /**
+   * @generated from field: bool has_cookie = 6;
+   */
+  hasCookie = false;
+
+  /**
+   * @generated from field: polyglot.v1.HotspotCookie cookie = 7;
+   */
+  cookie?: HotspotCookie;
+
+  /**
+   * "active" | "expired" | "unused" | "disabled" | "not_found"
+   *
+   * @generated from field: string status = 8;
+   */
+  status = "";
+
+  /**
+   * @generated from field: string sisa_waktu = 9;
+   */
+  sisaWaktu = "";
+
+  /**
+   * @generated from field: string sisa_kuota = 10;
+   */
+  sisaKuota = "";
+
+  /**
+   * @generated from field: string expire_date = 11;
+   */
+  expireDate = "";
+
+  /**
+   * @generated from field: string mac_locked = 12;
+   */
+  macLocked = "";
+
+  /**
+   * @generated from field: string message = 13;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<CheckVoucherStatusResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CheckVoucherStatusResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "found", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "user", kind: "message", T: HotspotUser },
+    { no: 3, name: "profile", kind: "message", T: HotspotProfile },
+    { no: 4, name: "is_online", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 5, name: "active_session", kind: "message", T: HotspotActiveSession },
+    { no: 6, name: "has_cookie", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 7, name: "cookie", kind: "message", T: HotspotCookie },
+    { no: 8, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "sisa_waktu", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 10, name: "sisa_kuota", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 11, name: "expire_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 12, name: "mac_locked", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 13, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CheckVoucherStatusResponse {
+    return new CheckVoucherStatusResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CheckVoucherStatusResponse {
+    return new CheckVoucherStatusResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CheckVoucherStatusResponse {
+    return new CheckVoucherStatusResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CheckVoucherStatusResponse | PlainMessage<CheckVoucherStatusResponse> | undefined, b: CheckVoucherStatusResponse | PlainMessage<CheckVoucherStatusResponse> | undefined): boolean {
+    return proto3.util.equals(CheckVoucherStatusResponse, a, b);
+  }
+}
+

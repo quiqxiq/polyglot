@@ -5,6 +5,8 @@ import type {
   HotspotProfile,
   HotspotActiveSession,
   HotspotHost,
+  HotspotIPBinding,
+  HotspotCookie,
 } from '@/gen/v1/hotspot_pb'
 
 export type HotspotDialogType =
@@ -12,6 +14,7 @@ export type HotspotDialogType =
   | 'user-update'
   | 'user-delete'
   | 'user-reset'
+  | 'user-bulk-cleaner'
   | 'profile-create'
   | 'profile-update'
   | 'profile-delete'
@@ -19,6 +22,12 @@ export type HotspotDialogType =
   | 'host-delete'
   | 'voucher-generate'
   | 'voucher-print'
+  | 'quick-voucher-checker'
+  | 'binding-create'
+  | 'binding-update'
+  | 'binding-delete'
+  | 'cookie-delete'
+  | 'cookie-clear-all'
   | 'expire-monitor'
 
 type HotspotContextType = {
@@ -32,6 +41,12 @@ type HotspotContextType = {
   setCurrentSession: React.Dispatch<React.SetStateAction<HotspotActiveSession | null>>
   currentHost: HotspotHost | null
   setCurrentHost: React.Dispatch<React.SetStateAction<HotspotHost | null>>
+  currentBinding: HotspotIPBinding | null
+  setCurrentBinding: React.Dispatch<React.SetStateAction<HotspotIPBinding | null>>
+  currentCookie: HotspotCookie | null
+  setCurrentCookie: React.Dispatch<React.SetStateAction<HotspotCookie | null>>
+  prefillBinding: { macAddress?: string; address?: string; server?: string } | null
+  setPrefillBinding: React.Dispatch<React.SetStateAction<{ macAddress?: string; address?: string; server?: string } | null>>
   printBatchComment: string
   setPrintBatchComment: React.Dispatch<React.SetStateAction<string>>
   printSingleUserId: string
@@ -46,6 +61,9 @@ export function HotspotProvider({ children }: { children: React.ReactNode }) {
   const [currentProfile, setCurrentProfile] = useState<HotspotProfile | null>(null)
   const [currentSession, setCurrentSession] = useState<HotspotActiveSession | null>(null)
   const [currentHost, setCurrentHost] = useState<HotspotHost | null>(null)
+  const [currentBinding, setCurrentBinding] = useState<HotspotIPBinding | null>(null)
+  const [currentCookie, setCurrentCookie] = useState<HotspotCookie | null>(null)
+  const [prefillBinding, setPrefillBinding] = useState<{ macAddress?: string; address?: string; server?: string } | null>(null)
   const [printBatchComment, setPrintBatchComment] = useState<string>('')
   const [printSingleUserId, setPrintSingleUserId] = useState<string>('')
 
@@ -62,6 +80,12 @@ export function HotspotProvider({ children }: { children: React.ReactNode }) {
         setCurrentSession,
         currentHost,
         setCurrentHost,
+        currentBinding,
+        setCurrentBinding,
+        currentCookie,
+        setCurrentCookie,
+        prefillBinding,
+        setPrefillBinding,
         printBatchComment,
         setPrintBatchComment,
         printSingleUserId,

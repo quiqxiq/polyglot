@@ -136,3 +136,73 @@ func (h *HotspotConnectHandler) DeleteUser(ctx context.Context, req *connect.Req
 		Message: fmt.Sprintf("user deleted: output=%s", res.Output),
 	}), nil
 }
+
+// DeleteHotspotUsers deletes users matching filter mode ("profile", "comment", "expired").
+func (h *HotspotConnectHandler) DeleteHotspotUsers(ctx context.Context, req *connect.Request[devicepb.DeleteHotspotUsersRequest]) (*connect.Response[devicepb.DeleteHotspotUsersResponse], error) {
+	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
+	if err != nil {
+		return nil, err
+	}
+	if req.Msg.Mode == "" {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("mode is required (profile, comment, or expired)"))
+	}
+
+	count, err := h.useCase.DeleteUsersByFilter(ctx, driver, req.Msg.Mode, req.Msg.Value)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
+	return connect.NewResponse(&devicepb.DeleteHotspotUsersResponse{
+		DeletedCount: int32(count),
+		Message:      fmt.Sprintf("%d users deleted successfully", count),
+	}), nil
+}
+
+// CheckVoucherStatus inspects a voucher username and aggregates all relevant status.
+func (h *HotspotConnectHandler) CheckVoucherStatus(ctx context.Context, req *connect.Request[devicepb.CheckVoucherStatusRequest]) (*connect.Response[devicepb.CheckVoucherStatusResponse], error) {
+	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
+	if err != nil {
+		return nil, err
+	}
+	if req.Msg.Username == "" {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("username is required"))
+	}
+
+	details, err := h.useCase.CheckVoucherStatus(ctx, driver, req.Msg.Username)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
+	resp := &devicepb.CheckVoucherStatusResponse{
+		Found:      details.Found,
+		IsOnline:   details.IsOnline,
+		HasCookie:  details.HasCookie,
+		Status:     details.Status,
+		SisaWaktu:  details.SisaWaktu,
+		SisaKuota:  details.SisaKuota,
+		ExpireDate: details.ExpireDate,
+		MacLocked:  details.MACLocked,
+		Message:    details.Message,
+	}
+
+	if details.User != nil {
+		resp.User = ToProtoHotspotUser(*details.User)
+	}
+	if details.Profile != nil {
+		resp.Profile = ToProtoHotspotProfile(*details.Profile)
+	}
+	if details.ActiveSession != nil {
+		resp.ActiveSession = ToProtoHotspotActiveSession(*details.ActiveSession)
+	}
+	if details.Cookie != nil {
+		resp.Cookie = &devicepb.HotspotCookie{
+			Id:         details.Cookie.RosID,
+			User:       details.Cookie.User,
+			MacAddress: details.Cookie.MACAddress,
+			ExpiresIn:  details.Cookie.ExpiresIn,
+			Domain:     details.Cookie.Domain,
+		}
+	}
+
+	return connect.NewResponse(resp), nil
+}
