@@ -45,3 +45,56 @@ type PPPoESecret struct {
 	LastLoggedOut string
 	CallerID      string
 }
+
+// PPPoESecretParams holds parameters for creating or updating a PPPoE secret.
+type PPPoESecretParams struct {
+	Name          string
+	Password      string
+	Profile       string
+	Service       string
+	LocalAddress  string
+	RemoteAddress string
+	Comment       string
+	Disabled      bool
+	CallerID      string
+}
+
+// PPPProfile represents one row returned by /ppp/profile/print.
+type PPPProfile struct {
+	RosID          string
+	Name           string
+	RateLimit      string
+	LocalAddress   string
+	RemoteAddress  string
+	DNSServer      string
+	ParentQueue    string
+	AddressList    string
+	Comment        string
+	SharedUsers    string
+	OnlyOne        string
+	UseMPLS        string
+	UseCompression string
+	UseEncryption  string
+	ChangeTCPMSS   string
+	BridgeLearning string
+}
+
+// PPPProfileParams holds parameters for creating or updating a PPP profile.
+type PPPProfileParams struct {
+	Name           string
+	RateLimit      string
+	LocalAddress   string
+	RemoteAddress  string
+	DNSServer      string
+	ParentQueue    string
+	AddressList    string
+	Comment        string
+	SharedUsers    string
+	OnlyOne        string
+	UseMPLS        string
+	UseCompression string
+	UseEncryption  string
+	ChangeTCPMSS   string
+	BridgeLearning string
+}
+

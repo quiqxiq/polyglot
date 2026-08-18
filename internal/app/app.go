@@ -15,6 +15,7 @@ import (
 	customerConnect "github.com/quixiq/polyglot/internal/adapter/connect/customer"
 	deviceConnect "github.com/quixiq/polyglot/internal/adapter/connect/device"
 	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
+	pppConnect "github.com/quixiq/polyglot/internal/adapter/connect/ppp"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 	knowledgeadapter "github.com/quixiq/polyglot/internal/adapter/knowledge"
 	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
@@ -42,6 +43,7 @@ import (
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	knowledgeUC "github.com/quixiq/polyglot/internal/usecase/knowledge"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
+	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
@@ -268,6 +270,10 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	mikhmonPath, mikhmonHandler := hotspotConnect.NewHotspotServiceHandler(hotUC, activeSessionsUC, connectDriverProvider)
 	registerProtected(mikhmonPath, mikhmonHandler)
+
+	pppUseCase := pppUC.New(sessionGateway)
+	pppPath, pppHandler := pppConnect.NewPPPServiceHandler(pppUseCase, connectDriverProvider)
+	registerProtected(pppPath, pppHandler)
 
 	waPath, waHandler := botConnect.NewWhatsAppServiceHandler(pgStore, waManager, chatService)
 	registerProtected(waPath, waHandler)

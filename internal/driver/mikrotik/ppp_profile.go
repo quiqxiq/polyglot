@@ -2,72 +2,14 @@ package mikrotik
 
 import (
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
-// PPPProfileParams holds the parameters for creating or updating a RouterOS
-// PPP profile (/ppp/profile/add or /ppp/profile/set). Fields left empty
-// are not sent to the router — RouterOS keeps the existing or default value.
-//
-// Field notes (from RouterOS /ppp/profile reference):
-//   - Name          : unique profile name (e.g. "10Mbps", "20Mbps", "isolir").
-//   - RateLimit     : bandwidth limit string in RouterOS format: "rx/tx" where
-//                     each side is a number with optional suffix k/M/G
-//                     (e.g. "10M/10M", "512k/256k"). Empty means no limit.
-//   - LocalAddress  : IP assigned to the router end of the PPP link.
-//   - RemoteAddress : IP or pool name assigned to the subscriber's CPE.
-//   - DNSServer     : comma-separated DNS IPs pushed to the client.
-//   - ParentQueue   : name of a parent queue for hierarchical shaping.
-//   - AddressList   : address-list name where the client IP is auto-registered.
-//   - Comment       : free-text label.
-//   - SharedUsers   : max concurrent sessions with this profile (0 = unlimited).
-//                     Set to 1 to enforce one-session-per-user.
-//   - OnlyOne       : RouterOS flag ("yes"/"no"/"default") — if "yes", RouterOS
-//                     itself enforces one session per username at PPP level.
-//   - UseMPLS       : RouterOS flag ("yes"/"no"/"default").
-//   - UseCompression: RouterOS flag ("yes"/"no"/"default").
-//   - UseEncryption : RouterOS flag ("yes"/"no"/"default").
-//   - ChangeTCPMSS  : RouterOS flag ("yes"/"no"/"default").
-//   - BridgeLearning: RouterOS flag ("yes"/"no"/"default").
-type PPPProfileParams struct {
-	Name           string
-	RateLimit      string
-	LocalAddress   string
-	RemoteAddress  string
-	DNSServer      string
-	ParentQueue    string
-	AddressList    string
-	Comment        string
-	SharedUsers    string // numeric string, e.g. "1"
-	OnlyOne        string // "yes" | "no" | "default" | ""
-	UseMPLS        string
-	UseCompression string
-	UseEncryption  string
-	ChangeTCPMSS   string
-	BridgeLearning string
-}
+// PPPProfileParams holds the parameters for creating or updating a RouterOS PPP profile.
+type PPPProfileParams = port.PPPProfileParams
 
 // PPPProfile represents one row returned by /ppp/profile/print.
-//
-// Field notes:
-//   - RosID : internal RouterOS ID — required for set and remove.
-type PPPProfile struct {
-	RosID          string
-	Name           string
-	RateLimit      string
-	LocalAddress   string
-	RemoteAddress  string
-	DNSServer      string
-	ParentQueue    string
-	AddressList    string
-	Comment        string
-	SharedUsers    string
-	OnlyOne        string
-	UseMPLS        string
-	UseCompression string
-	UseEncryption  string
-	ChangeTCPMSS   string
-	BridgeLearning string
-}
+type PPPProfile = port.PPPProfile
 
 // IsolirProfileParams returns a pre-filled PPPProfileParams for the standard
 // "isolir" (suspension) profile used in ISP billing. The isolir profile gives

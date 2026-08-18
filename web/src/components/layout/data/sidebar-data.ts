@@ -6,6 +6,7 @@ import {
   MessageCircleMore,
   MessagesSquare,
   Monitor,
+  Network,
   ShieldCheck,
   Users,
   Wifi,
@@ -45,6 +46,12 @@ export const sidebarData: SidebarData = {
           url: '/hotspot',
           icon: Wifi,
           permission: 'hotspot:read',
+        },
+        {
+          title: 'PPPoE / PPP',
+          url: '/ppp',
+          icon: Network,
+          permission: 'ppp:read',
         },
         {
           title: 'Sales Report',

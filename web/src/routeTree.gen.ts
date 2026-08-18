@@ -28,6 +28,7 @@ import { Route as AuthenticatedTasksIndexRouteImport } from './routes/_authentic
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
 import { Route as AuthenticatedReportsIndexRouteImport } from './routes/_authenticated/reports/index'
 import { Route as AuthenticatedRbacIndexRouteImport } from './routes/_authenticated/rbac/index'
+import { Route as AuthenticatedPppIndexRouteImport } from './routes/_authenticated/ppp/index'
 import { Route as AuthenticatedKnowledgeIndexRouteImport } from './routes/_authenticated/knowledge/index'
 import { Route as AuthenticatedHotspotIndexRouteImport } from './routes/_authenticated/hotspot/index'
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
@@ -140,6 +141,11 @@ const AuthenticatedRbacIndexRoute = AuthenticatedRbacIndexRouteImport.update({
   path: '/rbac/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPppIndexRoute = AuthenticatedPppIndexRouteImport.update({
+  id: '/ppp/',
+  path: '/ppp/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedKnowledgeIndexRoute =
   AuthenticatedKnowledgeIndexRouteImport.update({
     id: '/knowledge/',
@@ -242,6 +248,7 @@ export interface FileRoutesByFullPath {
   '/help-center/': typeof AuthenticatedHelpCenterIndexRoute
   '/hotspot/': typeof AuthenticatedHotspotIndexRoute
   '/knowledge/': typeof AuthenticatedKnowledgeIndexRoute
+  '/ppp/': typeof AuthenticatedPppIndexRoute
   '/rbac/': typeof AuthenticatedRbacIndexRoute
   '/reports/': typeof AuthenticatedReportsIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
@@ -274,6 +281,7 @@ export interface FileRoutesByTo {
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
   '/hotspot': typeof AuthenticatedHotspotIndexRoute
   '/knowledge': typeof AuthenticatedKnowledgeIndexRoute
+  '/ppp': typeof AuthenticatedPppIndexRoute
   '/rbac': typeof AuthenticatedRbacIndexRoute
   '/reports': typeof AuthenticatedReportsIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
@@ -309,6 +317,7 @@ export interface FileRoutesById {
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
   '/_authenticated/hotspot/': typeof AuthenticatedHotspotIndexRoute
   '/_authenticated/knowledge/': typeof AuthenticatedKnowledgeIndexRoute
+  '/_authenticated/ppp/': typeof AuthenticatedPppIndexRoute
   '/_authenticated/rbac/': typeof AuthenticatedRbacIndexRoute
   '/_authenticated/reports/': typeof AuthenticatedReportsIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
@@ -344,6 +353,7 @@ export interface FileRouteTypes {
     | '/help-center/'
     | '/hotspot/'
     | '/knowledge/'
+    | '/ppp/'
     | '/rbac/'
     | '/reports/'
     | '/settings/'
@@ -376,6 +386,7 @@ export interface FileRouteTypes {
     | '/help-center'
     | '/hotspot'
     | '/knowledge'
+    | '/ppp'
     | '/rbac'
     | '/reports'
     | '/settings'
@@ -410,6 +421,7 @@ export interface FileRouteTypes {
     | '/_authenticated/help-center/'
     | '/_authenticated/hotspot/'
     | '/_authenticated/knowledge/'
+    | '/_authenticated/ppp/'
     | '/_authenticated/rbac/'
     | '/_authenticated/reports/'
     | '/_authenticated/settings/'
@@ -568,6 +580,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRbacIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/ppp/': {
+      id: '/_authenticated/ppp/'
+      path: '/ppp'
+      fullPath: '/ppp/'
+      preLoaderRoute: typeof AuthenticatedPppIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/knowledge/': {
       id: '/_authenticated/knowledge/'
       path: '/knowledge'
@@ -696,6 +715,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
   AuthenticatedHotspotIndexRoute: typeof AuthenticatedHotspotIndexRoute
   AuthenticatedKnowledgeIndexRoute: typeof AuthenticatedKnowledgeIndexRoute
+  AuthenticatedPppIndexRoute: typeof AuthenticatedPppIndexRoute
   AuthenticatedRbacIndexRoute: typeof AuthenticatedRbacIndexRoute
   AuthenticatedReportsIndexRoute: typeof AuthenticatedReportsIndexRoute
   AuthenticatedTasksIndexRoute: typeof AuthenticatedTasksIndexRoute
@@ -715,6 +735,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
   AuthenticatedHotspotIndexRoute: AuthenticatedHotspotIndexRoute,
   AuthenticatedKnowledgeIndexRoute: AuthenticatedKnowledgeIndexRoute,
+  AuthenticatedPppIndexRoute: AuthenticatedPppIndexRoute,
   AuthenticatedRbacIndexRoute: AuthenticatedRbacIndexRoute,
   AuthenticatedReportsIndexRoute: AuthenticatedReportsIndexRoute,
   AuthenticatedTasksIndexRoute: AuthenticatedTasksIndexRoute,

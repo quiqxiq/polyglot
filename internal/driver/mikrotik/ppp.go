@@ -8,38 +8,8 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-// PPPoESecretParams holds the parameters needed to create or update a
-// RouterOS PPPoE secret (/ppp/secret/add or /ppp/secret/set). All RouterOS
-// attribute name knowledge is confined here — callers (usecase layer) work
-// only with this struct, never with raw RouterOS attribute strings.
-//
-// Field notes (from RouterOS /ppp/secret/add reference):
-//   - Name     : PPPoE username — must be unique on the router.
-//   - Password : PPPoE password (plaintext in RouterOS, stored as-is).
-//   - Profile  : name of an existing /ppp/profile entry (e.g. "10Mbps").
-//     Defaults to "default" if empty.
-//   - Service  : which PPP service type this secret is valid for.
-//     RouterOS accepts: "any", "async", "l2tp", "ovpn", "pppoe",
-//     "pptp", "sstp", "pppoe,l2tp" (comma-separated). For ISP
-//     PPPoE-only deployments, use "pppoe".
-//   - LocalAddress  : IP address assigned to the router end of the PPP link.
-//     Leave empty to inherit from the profile.
-//   - RemoteAddress : IP address assigned to the subscriber's CPE.
-//     Leave empty to inherit from the profile (usually a
-//     pool reference).
-//   - Comment  : free-text label. Convention: prefix with "polyglot:<subID>"
-//     to enable reconciliation queries later.
-//   - Disabled : when true, the secret exists but the subscriber cannot log in.
-type PPPoESecretParams struct {
-	Name          string
-	Password      string
-	Profile       string
-	Service       string
-	LocalAddress  string
-	RemoteAddress string
-	Comment       string
-	Disabled      bool
-}
+// PPPoESecretParams holds the parameters needed to create or update a PPPoE secret.
+type PPPoESecretParams = port.PPPoESecretParams
 
 // PPPoESecret is the vendor-neutral PPPoE secret row.
 // Canonical definition lives in internal/port (see port.PPPoESecret docs).

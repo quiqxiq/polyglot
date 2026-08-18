@@ -115,6 +115,25 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.HotspotService/GetTemplateSection":     "hotspot:read",
 	"/polyglot.v1.HotspotService/RenderVouchers":         "hotspot:read",
 
+	// PPPService — manajemen PPPoE / PPP secrets, profiles, active/inactive sessions.
+	"/polyglot.v1.PPPService/ListSecrets":           "ppp:read",
+	"/polyglot.v1.PPPService/GetSecret":             "ppp:read",
+	"/polyglot.v1.PPPService/CreateSecret":          "ppp:manage",
+	"/polyglot.v1.PPPService/UpdateSecret":          "ppp:manage",
+	"/polyglot.v1.PPPService/DeleteSecret":          "ppp:manage",
+	"/polyglot.v1.PPPService/SetSecretDisabled":     "ppp:manage",
+	"/polyglot.v1.PPPService/ListProfiles":          "ppp:read",
+	"/polyglot.v1.PPPService/GetProfile":            "ppp:read",
+	"/polyglot.v1.PPPService/CreateProfile":         "ppp:manage",
+	"/polyglot.v1.PPPService/UpdateProfile":         "ppp:manage",
+	"/polyglot.v1.PPPService/DeleteProfile":         "ppp:manage",
+	"/polyglot.v1.PPPService/ListActiveSessions":    "ppp:read",
+	"/polyglot.v1.PPPService/KickActiveSession":     "ppp:manage",
+	"/polyglot.v1.PPPService/KickActiveSessions":    "ppp:manage",
+	"/polyglot.v1.PPPService/ListInactiveSecrets":   "ppp:read",
+	"/polyglot.v1.PPPService/StreamActiveSessions":  "ppp:read",
+	"/polyglot.v1.PPPService/StreamInactiveSecrets": "ppp:read",
+
 	// UserService — manajemen user (CRUD, reset password, aktif/nonaktif).
 	// user:read untuk melihat daftar, user:manage untuk mutasi.
 	"/polyglot.v1.UserService/ListUsers":     "user:read",

@@ -5,6 +5,7 @@ import { CustomerService } from '@/gen/v1/customer_connect'
 import { DeviceService } from '@/gen/v1/device_connect'
 import { HotspotService } from '@/gen/v1/hotspot_connect'
 import { KnowledgeService } from '@/gen/v1/knowledge_connect'
+import { PPPService } from '@/gen/v1/ppp_connect'
 import { ProbeService } from '@/gen/v1/probe_connect'
 import { RBACService } from '@/gen/v1/rbac_connect'
 import { UserService } from '@/gen/v1/users_connect'
@@ -99,6 +100,7 @@ export const customerClient = createPromiseClient(CustomerService, transport)
 export const deviceClient = createPromiseClient(DeviceService, transport)
 export const hotspotClient = createPromiseClient(HotspotService, transport)
 export const knowledgeClient = createPromiseClient(KnowledgeService, transport)
+export const pppClient = createPromiseClient(PPPService, transport)
 export const probeClient = createPromiseClient(ProbeService, transport)
 export const rbacClient = createPromiseClient(RBACService, transport)
 export const userClient = createPromiseClient(UserService, transport)
