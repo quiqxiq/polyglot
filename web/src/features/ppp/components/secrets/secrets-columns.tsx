@@ -3,7 +3,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from '@/components/data-table'
 import type { PPPSecret } from '@/gen/v1/ppp_pb'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Server, Shield, User } from 'lucide-react'
+import { Server, User } from 'lucide-react'
 import { SecretsRowActions } from './secrets-row-actions'
 
 export const secretsColumns: ColumnDef<PPPSecret>[] = [
@@ -58,7 +58,6 @@ export const secretsColumns: ColumnDef<PPPSecret>[] = [
       const profile = row.getValue('profile') as string
       return (
         <Badge variant="outline" className="font-mono text-xs">
-          <Shield className="mr-1 h-3 w-3 text-muted-foreground" />
           {profile || 'default'}
         </Badge>
       )

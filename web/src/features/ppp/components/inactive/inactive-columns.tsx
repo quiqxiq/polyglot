@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/badge'
 import { DataTableColumnHeader } from '@/components/data-table'
 import type { PPPSecret } from '@/gen/v1/ppp_pb'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Network, Shield, UserX } from 'lucide-react'
+import { Network, UserX } from 'lucide-react'
 import { InactiveRowActions } from './inactive-row-actions'
 
 export const inactiveColumns: ColumnDef<PPPSecret>[] = [
@@ -64,7 +64,6 @@ export const inactiveColumns: ColumnDef<PPPSecret>[] = [
       const profile = row.getValue('profile') as string
       return (
         <Badge variant="outline" className="font-mono text-xs">
-          <Shield className="mr-1 h-3 w-3 text-muted-foreground" />
           {profile || 'default'}
         </Badge>
       )

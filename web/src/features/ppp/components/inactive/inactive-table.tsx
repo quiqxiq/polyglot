@@ -25,6 +25,7 @@ import {
   DataTableToolbar,
 } from '@/components/data-table'
 import type { PPPSecret } from '@/gen/v1/ppp_pb'
+import { InactiveCard } from './inactive-card'
 import { inactiveColumns } from './inactive-columns'
 
 interface InactiveTableProps {
@@ -97,7 +98,23 @@ export function InactiveTable({ data, isLoading }: InactiveTableProps) {
         ]}
       />
 
-      <div className="rounded-md border">
+      {/* 1. Mobile Card List View (< md screen) */}
+      <div className="space-y-2.5 block md:hidden">
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => (
+            <InactiveCard key={row.id} secret={row.original} />
+          ))
+        ) : (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            {isLoading
+              ? 'Loading offline subscribers...'
+              : 'All subscribers are currently connected and active!'}
+          </div>
+        )}
+      </div>
+
+      {/* 2. Desktop Table View (>= md screen) */}
+      <div className="rounded-md border hidden md:block">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
