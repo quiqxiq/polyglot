@@ -106,6 +106,7 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.HotspotService/StreamTraffic":        "hotspot:read",
 	"/polyglot.v1.HotspotService/StreamResource":       "hotspot:read",
 	"/polyglot.v1.HotspotService/StreamActiveSessions": "hotspot:read",
+	"/polyglot.v1.HotspotService/StreamActiveStats":    "hotspot:read",
 	"/polyglot.v1.HotspotService/StreamSystemSnapshot":   "hotspot:read",
 	"/polyglot.v1.HotspotService/StreamInterfaceEthernet": "hotspot:read",
 	"/polyglot.v1.HotspotService/StreamQueueStats":        "hotspot:read",
@@ -140,6 +141,7 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.PPPService/KickActiveSessions":    "ppp:manage",
 	"/polyglot.v1.PPPService/ListInactiveSecrets":   "ppp:read",
 	"/polyglot.v1.PPPService/StreamActiveSessions":  "ppp:read",
+	"/polyglot.v1.PPPService/StreamActiveStats":     "ppp:read",
 	"/polyglot.v1.PPPService/StreamInactiveSecrets": "ppp:read",
 
 	// UserService — manajemen user (CRUD, reset password, aktif/nonaktif).
