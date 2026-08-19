@@ -46,6 +46,7 @@ func NewHotspotServiceHandler(uc *hotspotUC.UseCase, activeUC *network.ActiveSes
 	mux.Handle("/"+serviceName+"/StreamTraffic", connect.NewServerStreamHandler("/"+serviceName+"/StreamTraffic", handler.StreamTraffic, codecOpt))
 	mux.Handle("/"+serviceName+"/StreamResource", connect.NewServerStreamHandler("/"+serviceName+"/StreamResource", handler.StreamResource, codecOpt))
 	mux.Handle("/"+serviceName+"/StreamActiveSessions", connect.NewServerStreamHandler("/"+serviceName+"/StreamActiveSessions", handler.StreamActiveSessions, codecOpt))
+	mux.Handle("/"+serviceName+"/StreamActiveStats", connect.NewServerStreamHandler("/"+serviceName+"/StreamActiveStats", handler.StreamActiveStats, codecOpt))
 	mux.Handle("/"+serviceName+"/StreamSystemSnapshot", connect.NewServerStreamHandler("/"+serviceName+"/StreamSystemSnapshot", handler.StreamSystemSnapshot, codecOpt))
 	mux.Handle("/"+serviceName+"/StreamInterfaceEthernet", connect.NewServerStreamHandler("/"+serviceName+"/StreamInterfaceEthernet", handler.StreamInterfaceEthernet, codecOpt))
 	mux.Handle("/"+serviceName+"/StreamQueueStats", connect.NewServerStreamHandler("/"+serviceName+"/StreamQueueStats", handler.StreamQueueStats, codecOpt))
