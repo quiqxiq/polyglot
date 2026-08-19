@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/table'
 import { flexRender } from '@tanstack/react-table'
 import type { HotspotIPBinding } from '@/gen/v1/hotspot_pb'
+import { BindingsCard } from './bindings-card'
 import { bindingsColumns } from './bindings-columns'
 
 type BindingsTableProps = {
@@ -76,7 +77,25 @@ export function BindingsTable({ data, isLoading }: BindingsTableProps) {
         ]}
       />
 
-      <div className='rounded-md border'>
+      {/* ===== 1. Mobile Card List View (< md screen) ===== */}
+      <div className="space-y-2.5 block md:hidden">
+        {isLoading ? (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            Loading IP Bindings...
+          </div>
+        ) : table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => (
+            <BindingsCard key={row.id} row={row} />
+          ))
+        ) : (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            No IP Bindings found.
+          </div>
+        )}
+      </div>
+
+      {/* ===== 2. Desktop Table View (>= md screen) ===== */}
+      <div className='rounded-md border hidden md:block'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -109,6 +128,7 @@ export function BindingsTable({ data, isLoading }: BindingsTableProps) {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  className={row.original.disabled ? 'opacity-60 bg-muted/30 text-muted-foreground' : ''}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

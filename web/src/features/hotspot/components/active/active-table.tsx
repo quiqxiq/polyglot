@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/table'
 import { DataTablePagination } from '@/components/data-table'
 import type { HotspotActiveSession } from '@/gen/v1/hotspot_pb'
+import { ActiveCard } from './active-card'
 import { activeColumns as columns } from './active-columns'
 
 interface ActiveTableProps {
@@ -86,7 +87,25 @@ export function ActiveTable({ data, isLoading }: ActiveTableProps) {
         </div>
       </div>
 
-      <div className='overflow-hidden rounded-md border bg-card'>
+      {/* ===== 1. Mobile Card List View (< md screen) ===== */}
+      <div className="space-y-2.5 block md:hidden">
+        {isLoading ? (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            Connecting real-time active sessions stream...
+          </div>
+        ) : table.getRowModel().rows.length ? (
+          table.getRowModel().rows.map((row) => (
+            <ActiveCard key={row.id} session={row.original} />
+          ))
+        ) : (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            No active hotspot sessions online right now.
+          </div>
+        )}
+      </div>
+
+      {/* ===== 2. Desktop Table View (>= md screen) ===== */}
+      <div className='overflow-hidden rounded-md border bg-card hidden md:block'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

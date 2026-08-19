@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/badge'
 import { DataTableColumnHeader } from '@/components/data-table'
 import type { PPPProfile } from '@/gen/v1/ppp_pb'
 import type { ColumnDef } from '@tanstack/react-table'
-import { ArrowUpDown, Globe, Shield, Users } from 'lucide-react'
+import { Globe, Layers, Users } from 'lucide-react'
 import { ProfilesRowActions } from './profiles-row-actions'
 
 export const profilesColumns: ColumnDef<PPPProfile>[] = [
@@ -16,7 +16,7 @@ export const profilesColumns: ColumnDef<PPPProfile>[] = [
       return (
         <div className="flex items-center gap-2 font-medium">
           <div className="flex h-7 w-7 items-center justify-center rounded bg-primary/10 text-primary">
-            <Shield className="h-3.5 w-3.5" />
+            <Layers className="h-3.5 w-3.5" />
           </div>
           <span className="font-mono text-sm font-semibold">{name}</span>
         </div>
@@ -39,7 +39,6 @@ export const profilesColumns: ColumnDef<PPPProfile>[] = [
           variant="outline"
           className="border-primary/30 bg-primary/5 text-primary font-mono text-xs font-semibold"
         >
-          <ArrowUpDown className="mr-1 h-3 w-3" />
           {rateLimit}
         </Badge>
       )

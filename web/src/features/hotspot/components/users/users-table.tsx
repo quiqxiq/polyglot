@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/table'
 import { DataTablePagination, DataTableToolbar } from '@/components/data-table'
 import type { HotspotUser, HotspotProfile } from '@/gen/v1/hotspot_pb'
+import { UsersCard } from './users-card'
 import { usersColumns as columns } from './users-columns'
 import { UsersBulkActions } from './users-bulk-actions'
 import { useHotspot } from '../../context/hotspot-context'
@@ -167,8 +168,25 @@ export function UsersTable({
         )}
       </div>
 
-      {/* ===== Table ===== */}
-      <div className='overflow-hidden rounded-md border bg-card'>
+      {/* ===== 1. Mobile Card List View (< md screen) ===== */}
+      <div className="space-y-2.5 block md:hidden">
+        {isLoading ? (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            Loading hotspot users from MikroTik...
+          </div>
+        ) : table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => (
+            <UsersCard key={row.id} user={row.original} />
+          ))
+        ) : (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            No hotspot users found.
+          </div>
+        )}
+      </div>
+
+      {/* ===== 2. Desktop Table View (>= md screen) ===== */}
+      <div className='overflow-hidden rounded-md border bg-card hidden md:block'>
         <Table className='min-w-xl'>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -208,6 +226,7 @@ export function UsersTable({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  className={row.original.disabled ? 'opacity-60 bg-muted/30 text-muted-foreground' : ''}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell

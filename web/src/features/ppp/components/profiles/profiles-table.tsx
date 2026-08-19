@@ -25,6 +25,7 @@ import {
   DataTableToolbar,
 } from '@/components/data-table'
 import type { PPPProfile } from '@/gen/v1/ppp_pb'
+import { ProfilesCard } from './profiles-card'
 import { profilesColumns } from './profiles-columns'
 
 interface ProfilesTableProps {
@@ -77,7 +78,23 @@ export function ProfilesTable({ data, isLoading }: ProfilesTableProps) {
         searchPlaceholder="Search profile name, bandwidth rate limit, or comment..."
       />
 
-      <div className="rounded-md border">
+      {/* 1. Mobile Card List View (< md screen) */}
+      <div className="space-y-2.5 block md:hidden">
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => (
+            <ProfilesCard key={row.id} profile={row.original} />
+          ))
+        ) : (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            {isLoading
+              ? 'Loading PPP profiles...'
+              : 'No PPP profiles found.'}
+          </div>
+        )}
+      </div>
+
+      {/* 2. Desktop Table View (>= md screen) */}
+      <div className="rounded-md border hidden md:block">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

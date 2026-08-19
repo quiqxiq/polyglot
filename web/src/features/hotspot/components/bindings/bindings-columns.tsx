@@ -107,25 +107,6 @@ export const bindingsColumns: ColumnDef<HotspotIPBinding>[] = [
     },
   },
   {
-    accessorKey: 'disabled',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Status' />
-    ),
-    cell: ({ row }) => {
-      const disabled = row.getValue('disabled') as boolean
-      return (
-        <Badge
-          variant={disabled ? 'outline' : 'secondary'}
-          className={`text-[10px] font-medium ${
-            disabled ? 'text-muted-foreground' : 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950/30'
-          }`}
-        >
-          {disabled ? 'Disabled' : 'Enabled'}
-        </Badge>
-      )
-    },
-  },
-  {
     id: 'actions',
     cell: ({ row }) => <BindingsRowActions row={row} />,
   },

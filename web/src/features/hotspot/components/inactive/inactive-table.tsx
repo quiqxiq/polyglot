@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/table'
 import { DataTablePagination } from '@/components/data-table'
 import type { HotspotUser } from '@/gen/v1/hotspot_pb'
+import { InactiveCard } from './inactive-card'
 import { inactiveColumns as columns } from './inactive-columns'
 
 interface InactiveTableProps {
@@ -86,7 +87,25 @@ export function InactiveTable({ data, isLoading }: InactiveTableProps) {
         </div>
       </div>
 
-      <div className='overflow-hidden rounded-md border bg-card'>
+      {/* ===== 1. Mobile Card List View (< md screen) ===== */}
+      <div className="space-y-2.5 block md:hidden">
+        {isLoading ? (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            Connecting real-time inactive users stream...
+          </div>
+        ) : table.getRowModel().rows.length ? (
+          table.getRowModel().rows.map((row) => (
+            <InactiveCard key={row.id} user={row.original} />
+          ))
+        ) : (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            No inactive users found.
+          </div>
+        )}
+      </div>
+
+      {/* ===== 2. Desktop Table View (>= md screen) ===== */}
+      <div className='overflow-hidden rounded-md border bg-card hidden md:block'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -110,7 +129,10 @@ export function InactiveTable({ data, isLoading }: InactiveTableProps) {
               </TableRow>
             ) : table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow
+                  key={row.id}
+                  className={row.original.disabled ? 'opacity-60 bg-muted/30 text-muted-foreground' : ''}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/table'
 import { DataTablePagination } from '@/components/data-table'
 import type { HotspotProfile } from '@/gen/v1/hotspot_pb'
+import { ProfilesCard } from './profiles-card'
 import { profilesColumns as columns } from './profiles-columns'
 
 interface ProfilesTableProps {
@@ -77,7 +78,25 @@ export function ProfilesTable({ data, isLoading }: ProfilesTableProps) {
         </div>
       </div>
 
-      <div className='overflow-hidden rounded-md border bg-card'>
+      {/* ===== 1. Mobile Card List View (< md screen) ===== */}
+      <div className="space-y-2.5 block md:hidden">
+        {isLoading ? (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            Loading user profiles from MikroTik...
+          </div>
+        ) : table.getRowModel().rows.length ? (
+          table.getRowModel().rows.map((row) => (
+            <ProfilesCard key={row.id} profile={row.original} />
+          ))
+        ) : (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            No user profiles found.
+          </div>
+        )}
+      </div>
+
+      {/* ===== 2. Desktop Table View (>= md screen) ===== */}
+      <div className='overflow-hidden rounded-md border bg-card hidden md:block'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

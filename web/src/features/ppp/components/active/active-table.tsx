@@ -25,8 +25,9 @@ import {
   DataTableToolbar,
 } from '@/components/data-table'
 import type { PPPActiveSession } from '@/gen/v1/ppp_pb'
-import { activeColumns } from './active-columns'
 import { ActiveBulkActions } from './active-bulk-actions'
+import { ActiveCard } from './active-card'
+import { activeColumns } from './active-columns'
 
 interface ActiveTableProps {
   data: PPPActiveSession[]
@@ -104,7 +105,23 @@ export function ActiveTable({ data, isLoading }: ActiveTableProps) {
         ]}
       />
 
-      <div className="rounded-md border">
+      {/* 1. Mobile Card List View (< md screen) */}
+      <div className="space-y-2.5 block md:hidden">
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => (
+            <ActiveCard key={row.id} session={row.original} />
+          ))
+        ) : (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            {isLoading
+              ? 'Loading active PPPoE sessions...'
+              : 'No active sessions currently connected.'}
+          </div>
+        )}
+      </div>
+
+      {/* 2. Desktop Table View (>= md screen) */}
+      <div className="rounded-md border hidden md:block">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

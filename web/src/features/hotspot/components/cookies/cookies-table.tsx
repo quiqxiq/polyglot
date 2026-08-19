@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/table'
 import { flexRender } from '@tanstack/react-table'
 import type { HotspotCookie } from '@/gen/v1/hotspot_pb'
+import { CookiesCard } from './cookies-card'
 import { cookiesColumns } from './cookies-columns'
 
 type CookiesTableProps = {
@@ -65,7 +66,25 @@ export function CookiesTable({ data, isLoading }: CookiesTableProps) {
         searchKey='user'
       />
 
-      <div className='rounded-md border'>
+      {/* ===== 1. Mobile Card List View (< md screen) ===== */}
+      <div className="space-y-2.5 block md:hidden">
+        {isLoading ? (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            Loading Cookies...
+          </div>
+        ) : table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => (
+            <CookiesCard key={row.id} cookie={row.original} />
+          ))
+        ) : (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            No Hotspot Cookies found.
+          </div>
+        )}
+      </div>
+
+      {/* ===== 2. Desktop Table View (>= md screen) ===== */}
+      <div className='rounded-md border hidden md:block'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

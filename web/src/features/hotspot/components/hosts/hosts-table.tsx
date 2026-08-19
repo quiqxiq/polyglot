@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/table'
 import { DataTablePagination } from '@/components/data-table'
 import type { HotspotHost } from '@/gen/v1/hotspot_pb'
+import { HostsCard } from './hosts-card'
 import { hostsColumns as columns } from './hosts-columns'
 
 interface HostsTableProps {
@@ -116,7 +117,25 @@ export function HostsTable({ data, isLoading }: HostsTableProps) {
         </div>
       </div>
 
-      <div className='overflow-hidden rounded-md border bg-card'>
+      {/* ===== 1. Mobile Card List View (< md screen) ===== */}
+      <div className="space-y-2.5 block md:hidden">
+        {isLoading ? (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            Loading hotspot hosts from MikroTik...
+          </div>
+        ) : table.getRowModel().rows.length ? (
+          table.getRowModel().rows.map((row) => (
+            <HostsCard key={row.id} host={row.original} />
+          ))
+        ) : (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            No hotspot host entries found.
+          </div>
+        )}
+      </div>
+
+      {/* ===== 2. Desktop Table View (>= md screen) ===== */}
+      <div className='overflow-hidden rounded-md border bg-card hidden md:block'>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

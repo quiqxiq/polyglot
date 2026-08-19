@@ -27,6 +27,7 @@ import {
 import type { PPPSecret } from '@/gen/v1/ppp_pb'
 import { secretsColumns } from './secrets-columns'
 import { SecretsBulkActions } from './secrets-bulk-actions'
+import { SecretsCard } from './secrets-card'
 
 interface SecretsTableProps {
   data: PPPSecret[]
@@ -144,7 +145,21 @@ export function SecretsTable({ data, isLoading }: SecretsTableProps) {
         ]}
       />
 
-      <div className="rounded-md border">
+      {/* 1. Mobile Card List View (< md screen) */}
+      <div className="space-y-2.5 block md:hidden">
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => (
+            <SecretsCard key={row.id} secret={row.original} />
+          ))
+        ) : (
+          <div className="rounded-lg border border-dashed p-8 text-center text-xs text-muted-foreground">
+            {isLoading ? 'Loading PPPoE secrets...' : 'No secrets found.'}
+          </div>
+        )}
+      </div>
+
+      {/* 2. Desktop Table View (>= md screen) */}
+      <div className="rounded-md border hidden md:block">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
