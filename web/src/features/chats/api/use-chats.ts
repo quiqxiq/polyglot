@@ -3,6 +3,7 @@ import type {
   TakeOverConversationRequest,
   ResetConversationBotRequest,
   CloseConversationRequest,
+  ResetRateLimitRequest,
 } from '@/gen/v1/bot_pb'
 import type {
   CreateWASessionRequest,
@@ -244,3 +245,30 @@ export function useToggleChatBotMutation() {
     },
   })
 }
+
+export function useRateLimitStatusQuery(phoneNumber: string, enabled = true) {
+  return useQuery({
+    queryKey: botKeys.rateLimitStatus(phoneNumber),
+    queryFn: async () => {
+      return await botClient.getRateLimitStatus({ phoneNumber })
+    },
+    enabled: Boolean(phoneNumber) && enabled,
+    refetchInterval: 10000,
+  })
+}
+
+export function useResetRateLimitMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: ResetRateLimitRequest) => {
+      return await botClient.resetRateLimit(req)
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: botKeys.rateLimitStatus(variables.phoneNumber),
+      })
+    },
+  })
+}
+

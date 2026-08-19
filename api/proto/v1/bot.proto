@@ -11,6 +11,8 @@ service BotService {
   rpc TakeOverConversation (TakeOverConversationRequest) returns (TakeOverConversationResponse);
   rpc ResetConversationBot (ResetConversationBotRequest) returns (ResetConversationBotResponse);
   rpc CloseConversation (CloseConversationRequest) returns (CloseConversationResponse);
+  rpc ResetRateLimit (ResetRateLimitRequest) returns (ResetRateLimitResponse);
+  rpc GetRateLimitStatus (GetRateLimitStatusRequest) returns (GetRateLimitStatusResponse);
 }
 
 message ConversationMessage {
@@ -94,3 +96,26 @@ message GetConversationContextResponse {
   int64 total_llm_calls = 8;
   string updated_at = 9;
 }
+
+message ResetRateLimitRequest {
+  string phone_number = 1;
+}
+
+message ResetRateLimitResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GetRateLimitStatusRequest {
+  string phone_number = 1;
+}
+
+message GetRateLimitStatusResponse {
+  string phone_number = 1;
+  bool is_muted = 2;
+  int64 mute_remaining_seconds = 3;
+  int32 daily_chat_count = 4;
+  int32 daily_quota_limit = 5;
+  bool is_whitelisted = 6;
+}
+

@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CloseConversationRequest, CloseConversationResponse, GetConversationContextRequest, GetConversationContextResponse, GetConversationRequest, GetConversationResponse, ListConversationsRequest, ListConversationsResponse, ResetConversationBotRequest, ResetConversationBotResponse, TakeOverConversationRequest, TakeOverConversationResponse } from "./bot_pb.js";
+import { CloseConversationRequest, CloseConversationResponse, GetConversationContextRequest, GetConversationContextResponse, GetConversationRequest, GetConversationResponse, GetRateLimitStatusRequest, GetRateLimitStatusResponse, ListConversationsRequest, ListConversationsResponse, ResetConversationBotRequest, ResetConversationBotResponse, ResetRateLimitRequest, ResetRateLimitResponse, TakeOverConversationRequest, TakeOverConversationResponse } from "./bot_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -64,6 +64,24 @@ export const BotService = {
       name: "CloseConversation",
       I: CloseConversationRequest,
       O: CloseConversationResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.ResetRateLimit
+     */
+    resetRateLimit: {
+      name: "ResetRateLimit",
+      I: ResetRateLimitRequest,
+      O: ResetRateLimitResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.GetRateLimitStatus
+     */
+    getRateLimitStatus: {
+      name: "GetRateLimitStatus",
+      I: GetRateLimitStatusRequest,
+      O: GetRateLimitStatusResponse,
       kind: MethodKind.Unary,
     },
   }

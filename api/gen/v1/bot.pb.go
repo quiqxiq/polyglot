@@ -883,6 +883,230 @@ func (x *GetConversationContextResponse) GetUpdatedAt() string {
 	return ""
 }
 
+type ResetRateLimitRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PhoneNumber   string                 `protobuf:"bytes,1,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResetRateLimitRequest) Reset() {
+	*x = ResetRateLimitRequest{}
+	mi := &file_v1_bot_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResetRateLimitRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResetRateLimitRequest) ProtoMessage() {}
+
+func (x *ResetRateLimitRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResetRateLimitRequest.ProtoReflect.Descriptor instead.
+func (*ResetRateLimitRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ResetRateLimitRequest) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
+	}
+	return ""
+}
+
+type ResetRateLimitResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResetRateLimitResponse) Reset() {
+	*x = ResetRateLimitResponse{}
+	mi := &file_v1_bot_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResetRateLimitResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResetRateLimitResponse) ProtoMessage() {}
+
+func (x *ResetRateLimitResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResetRateLimitResponse.ProtoReflect.Descriptor instead.
+func (*ResetRateLimitResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *ResetRateLimitResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *ResetRateLimitResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type GetRateLimitStatusRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PhoneNumber   string                 `protobuf:"bytes,1,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRateLimitStatusRequest) Reset() {
+	*x = GetRateLimitStatusRequest{}
+	mi := &file_v1_bot_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRateLimitStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRateLimitStatusRequest) ProtoMessage() {}
+
+func (x *GetRateLimitStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRateLimitStatusRequest.ProtoReflect.Descriptor instead.
+func (*GetRateLimitStatusRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GetRateLimitStatusRequest) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
+	}
+	return ""
+}
+
+type GetRateLimitStatusResponse struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	PhoneNumber          string                 `protobuf:"bytes,1,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	IsMuted              bool                   `protobuf:"varint,2,opt,name=is_muted,json=isMuted,proto3" json:"is_muted,omitempty"`
+	MuteRemainingSeconds int64                  `protobuf:"varint,3,opt,name=mute_remaining_seconds,json=muteRemainingSeconds,proto3" json:"mute_remaining_seconds,omitempty"`
+	DailyChatCount       int32                  `protobuf:"varint,4,opt,name=daily_chat_count,json=dailyChatCount,proto3" json:"daily_chat_count,omitempty"`
+	DailyQuotaLimit      int32                  `protobuf:"varint,5,opt,name=daily_quota_limit,json=dailyQuotaLimit,proto3" json:"daily_quota_limit,omitempty"`
+	IsWhitelisted        bool                   `protobuf:"varint,6,opt,name=is_whitelisted,json=isWhitelisted,proto3" json:"is_whitelisted,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *GetRateLimitStatusResponse) Reset() {
+	*x = GetRateLimitStatusResponse{}
+	mi := &file_v1_bot_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRateLimitStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRateLimitStatusResponse) ProtoMessage() {}
+
+func (x *GetRateLimitStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRateLimitStatusResponse.ProtoReflect.Descriptor instead.
+func (*GetRateLimitStatusResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *GetRateLimitStatusResponse) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
+	}
+	return ""
+}
+
+func (x *GetRateLimitStatusResponse) GetIsMuted() bool {
+	if x != nil {
+		return x.IsMuted
+	}
+	return false
+}
+
+func (x *GetRateLimitStatusResponse) GetMuteRemainingSeconds() int64 {
+	if x != nil {
+		return x.MuteRemainingSeconds
+	}
+	return 0
+}
+
+func (x *GetRateLimitStatusResponse) GetDailyChatCount() int32 {
+	if x != nil {
+		return x.DailyChatCount
+	}
+	return 0
+}
+
+func (x *GetRateLimitStatusResponse) GetDailyQuotaLimit() int32 {
+	if x != nil {
+		return x.DailyQuotaLimit
+	}
+	return 0
+}
+
+func (x *GetRateLimitStatusResponse) GetIsWhitelisted() bool {
+	if x != nil {
+		return x.IsWhitelisted
+	}
+	return false
+}
+
 var File_v1_bot_proto protoreflect.FileDescriptor
 
 const file_v1_bot_proto_rawDesc = "" +
@@ -947,7 +1171,21 @@ const file_v1_bot_proto_rawDesc = "" +
 	"\x0ftotal_token_out\x18\a \x01(\x03R\rtotalTokenOut\x12&\n" +
 	"\x0ftotal_llm_calls\x18\b \x01(\x03R\rtotalLlmCalls\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\t \x01(\tR\tupdatedAt2\xff\x04\n" +
+	"updated_at\x18\t \x01(\tR\tupdatedAt\":\n" +
+	"\x15ResetRateLimitRequest\x12!\n" +
+	"\fphone_number\x18\x01 \x01(\tR\vphoneNumber\"L\n" +
+	"\x16ResetRateLimitResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\">\n" +
+	"\x19GetRateLimitStatusRequest\x12!\n" +
+	"\fphone_number\x18\x01 \x01(\tR\vphoneNumber\"\x8d\x02\n" +
+	"\x1aGetRateLimitStatusResponse\x12!\n" +
+	"\fphone_number\x18\x01 \x01(\tR\vphoneNumber\x12\x19\n" +
+	"\bis_muted\x18\x02 \x01(\bR\aisMuted\x124\n" +
+	"\x16mute_remaining_seconds\x18\x03 \x01(\x03R\x14muteRemainingSeconds\x12(\n" +
+	"\x10daily_chat_count\x18\x04 \x01(\x05R\x0edailyChatCount\x12*\n" +
+	"\x11daily_quota_limit\x18\x05 \x01(\x05R\x0fdailyQuotaLimit\x12%\n" +
+	"\x0eis_whitelisted\x18\x06 \x01(\bR\risWhitelisted2\xc1\x06\n" +
 	"\n" +
 	"BotService\x12b\n" +
 	"\x11ListConversations\x12%.polyglot.v1.ListConversationsRequest\x1a&.polyglot.v1.ListConversationsResponse\x12\\\n" +
@@ -955,7 +1193,9 @@ const file_v1_bot_proto_rawDesc = "" +
 	"\x16GetConversationContext\x12*.polyglot.v1.GetConversationContextRequest\x1a+.polyglot.v1.GetConversationContextResponse\x12k\n" +
 	"\x14TakeOverConversation\x12(.polyglot.v1.TakeOverConversationRequest\x1a).polyglot.v1.TakeOverConversationResponse\x12k\n" +
 	"\x14ResetConversationBot\x12(.polyglot.v1.ResetConversationBotRequest\x1a).polyglot.v1.ResetConversationBotResponse\x12b\n" +
-	"\x11CloseConversation\x12%.polyglot.v1.CloseConversationRequest\x1a&.polyglot.v1.CloseConversationResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x11CloseConversation\x12%.polyglot.v1.CloseConversationRequest\x1a&.polyglot.v1.CloseConversationResponse\x12Y\n" +
+	"\x0eResetRateLimit\x12\".polyglot.v1.ResetRateLimitRequest\x1a#.polyglot.v1.ResetRateLimitResponse\x12e\n" +
+	"\x12GetRateLimitStatus\x12&.polyglot.v1.GetRateLimitStatusRequest\x1a'.polyglot.v1.GetRateLimitStatusResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_bot_proto_rawDescOnce sync.Once
@@ -969,7 +1209,7 @@ func file_v1_bot_proto_rawDescGZIP() []byte {
 	return file_v1_bot_proto_rawDescData
 }
 
-var file_v1_bot_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_v1_bot_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_v1_bot_proto_goTypes = []any{
 	(*ConversationMessage)(nil),            // 0: polyglot.v1.ConversationMessage
 	(*Conversation)(nil),                   // 1: polyglot.v1.Conversation
@@ -986,6 +1226,10 @@ var file_v1_bot_proto_goTypes = []any{
 	(*ConversationContextMessage)(nil),     // 12: polyglot.v1.ConversationContextMessage
 	(*GetConversationContextRequest)(nil),  // 13: polyglot.v1.GetConversationContextRequest
 	(*GetConversationContextResponse)(nil), // 14: polyglot.v1.GetConversationContextResponse
+	(*ResetRateLimitRequest)(nil),          // 15: polyglot.v1.ResetRateLimitRequest
+	(*ResetRateLimitResponse)(nil),         // 16: polyglot.v1.ResetRateLimitResponse
+	(*GetRateLimitStatusRequest)(nil),      // 17: polyglot.v1.GetRateLimitStatusRequest
+	(*GetRateLimitStatusResponse)(nil),     // 18: polyglot.v1.GetRateLimitStatusResponse
 }
 var file_v1_bot_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.Conversation.messages:type_name -> polyglot.v1.ConversationMessage
@@ -998,14 +1242,18 @@ var file_v1_bot_proto_depIdxs = []int32{
 	6,  // 7: polyglot.v1.BotService.TakeOverConversation:input_type -> polyglot.v1.TakeOverConversationRequest
 	8,  // 8: polyglot.v1.BotService.ResetConversationBot:input_type -> polyglot.v1.ResetConversationBotRequest
 	10, // 9: polyglot.v1.BotService.CloseConversation:input_type -> polyglot.v1.CloseConversationRequest
-	3,  // 10: polyglot.v1.BotService.ListConversations:output_type -> polyglot.v1.ListConversationsResponse
-	5,  // 11: polyglot.v1.BotService.GetConversation:output_type -> polyglot.v1.GetConversationResponse
-	14, // 12: polyglot.v1.BotService.GetConversationContext:output_type -> polyglot.v1.GetConversationContextResponse
-	7,  // 13: polyglot.v1.BotService.TakeOverConversation:output_type -> polyglot.v1.TakeOverConversationResponse
-	9,  // 14: polyglot.v1.BotService.ResetConversationBot:output_type -> polyglot.v1.ResetConversationBotResponse
-	11, // 15: polyglot.v1.BotService.CloseConversation:output_type -> polyglot.v1.CloseConversationResponse
-	10, // [10:16] is the sub-list for method output_type
-	4,  // [4:10] is the sub-list for method input_type
+	15, // 10: polyglot.v1.BotService.ResetRateLimit:input_type -> polyglot.v1.ResetRateLimitRequest
+	17, // 11: polyglot.v1.BotService.GetRateLimitStatus:input_type -> polyglot.v1.GetRateLimitStatusRequest
+	3,  // 12: polyglot.v1.BotService.ListConversations:output_type -> polyglot.v1.ListConversationsResponse
+	5,  // 13: polyglot.v1.BotService.GetConversation:output_type -> polyglot.v1.GetConversationResponse
+	14, // 14: polyglot.v1.BotService.GetConversationContext:output_type -> polyglot.v1.GetConversationContextResponse
+	7,  // 15: polyglot.v1.BotService.TakeOverConversation:output_type -> polyglot.v1.TakeOverConversationResponse
+	9,  // 16: polyglot.v1.BotService.ResetConversationBot:output_type -> polyglot.v1.ResetConversationBotResponse
+	11, // 17: polyglot.v1.BotService.CloseConversation:output_type -> polyglot.v1.CloseConversationResponse
+	16, // 18: polyglot.v1.BotService.ResetRateLimit:output_type -> polyglot.v1.ResetRateLimitResponse
+	18, // 19: polyglot.v1.BotService.GetRateLimitStatus:output_type -> polyglot.v1.GetRateLimitStatusResponse
+	12, // [12:20] is the sub-list for method output_type
+	4,  // [4:12] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
 	4,  // [4:4] is the sub-list for extension extendee
 	0,  // [0:4] is the sub-list for field type_name
@@ -1022,7 +1270,7 @@ func file_v1_bot_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_bot_proto_rawDesc), len(file_v1_bot_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

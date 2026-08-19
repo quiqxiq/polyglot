@@ -50,6 +50,14 @@ type Config struct {
 	AnythingLLMAPIKey    string
 	AnythingLLMWorkspace string
 	AnythingLLMTopN      int
+
+	// WhatsApp Bot Multi-Tier Rate Limiter
+	BotBurstLimit        int
+	BotBurstWindowSecs   int
+	BotMute1HourSecs     int
+	BotBan24HourSecs     int
+	BotDailyChatLimit    int
+	BotWhitelistPhones   []string
 }
 
 func Load() Config {
@@ -76,6 +84,15 @@ func Load() Config {
 		}
 	}
 
+	whitelistRaw := os.Getenv("BOT_WHITELIST_PHONES")
+	var whitelist []string
+	for _, p := range strings.Split(whitelistRaw, ",") {
+		trimmed := strings.TrimSpace(p)
+		if trimmed != "" {
+			whitelist = append(whitelist, trimmed)
+		}
+	}
+
 	return Config{
 		Port:                  getEnv("PORT", "8080"),
 		AppEnv:                getEnv("APP_ENV", "development"),
@@ -99,6 +116,12 @@ func Load() Config {
 		AnythingLLMAPIKey:     os.Getenv("ANYTHINGLLM_API_KEY"),
 		AnythingLLMWorkspace:  getEnv("ANYTHINGLLM_WORKSPACE", "polyglot"),
 		AnythingLLMTopN:       getEnvAsInt("ANYTHINGLLM_TOP_N", 4),
+		BotBurstLimit:         getEnvAsInt("BOT_BURST_LIMIT", 3),
+		BotBurstWindowSecs:    getEnvAsInt("BOT_BURST_WINDOW_SECS", 5),
+		BotMute1HourSecs:      getEnvAsInt("BOT_MUTE_1H_SECS", 3600),
+		BotBan24HourSecs:      getEnvAsInt("BOT_BAN_24H_SECS", 86400),
+		BotDailyChatLimit:     getEnvAsInt("BOT_DAILY_CHAT_LIMIT", 10),
+		BotWhitelistPhones:    whitelist,
 	}
 }
 

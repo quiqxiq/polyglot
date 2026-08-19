@@ -2,7 +2,6 @@ import {
   BookOpen,
   FileText,
   LayoutDashboard,
-  ListTodo,
   MessageCircleMore,
   MessagesSquare,
   Monitor,
@@ -58,11 +57,6 @@ export const sidebarData: SidebarData = {
           url: '/reports',
           icon: FileText,
           permission: 'hotspot:read',
-        },
-        {
-          title: 'Tasks',
-          url: '/tasks',
-          icon: ListTodo,
         },
         {
           title: 'Chats',

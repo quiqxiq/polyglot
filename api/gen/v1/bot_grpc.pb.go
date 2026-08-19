@@ -25,6 +25,8 @@ const (
 	BotService_TakeOverConversation_FullMethodName   = "/polyglot.v1.BotService/TakeOverConversation"
 	BotService_ResetConversationBot_FullMethodName   = "/polyglot.v1.BotService/ResetConversationBot"
 	BotService_CloseConversation_FullMethodName      = "/polyglot.v1.BotService/CloseConversation"
+	BotService_ResetRateLimit_FullMethodName         = "/polyglot.v1.BotService/ResetRateLimit"
+	BotService_GetRateLimitStatus_FullMethodName     = "/polyglot.v1.BotService/GetRateLimitStatus"
 )
 
 // BotServiceClient is the client API for BotService service.
@@ -37,6 +39,8 @@ type BotServiceClient interface {
 	TakeOverConversation(ctx context.Context, in *TakeOverConversationRequest, opts ...grpc.CallOption) (*TakeOverConversationResponse, error)
 	ResetConversationBot(ctx context.Context, in *ResetConversationBotRequest, opts ...grpc.CallOption) (*ResetConversationBotResponse, error)
 	CloseConversation(ctx context.Context, in *CloseConversationRequest, opts ...grpc.CallOption) (*CloseConversationResponse, error)
+	ResetRateLimit(ctx context.Context, in *ResetRateLimitRequest, opts ...grpc.CallOption) (*ResetRateLimitResponse, error)
+	GetRateLimitStatus(ctx context.Context, in *GetRateLimitStatusRequest, opts ...grpc.CallOption) (*GetRateLimitStatusResponse, error)
 }
 
 type botServiceClient struct {
@@ -107,6 +111,26 @@ func (c *botServiceClient) CloseConversation(ctx context.Context, in *CloseConve
 	return out, nil
 }
 
+func (c *botServiceClient) ResetRateLimit(ctx context.Context, in *ResetRateLimitRequest, opts ...grpc.CallOption) (*ResetRateLimitResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResetRateLimitResponse)
+	err := c.cc.Invoke(ctx, BotService_ResetRateLimit_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) GetRateLimitStatus(ctx context.Context, in *GetRateLimitStatusRequest, opts ...grpc.CallOption) (*GetRateLimitStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRateLimitStatusResponse)
+	err := c.cc.Invoke(ctx, BotService_GetRateLimitStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BotServiceServer is the server API for BotService service.
 // All implementations must embed UnimplementedBotServiceServer
 // for forward compatibility.
@@ -117,6 +141,8 @@ type BotServiceServer interface {
 	TakeOverConversation(context.Context, *TakeOverConversationRequest) (*TakeOverConversationResponse, error)
 	ResetConversationBot(context.Context, *ResetConversationBotRequest) (*ResetConversationBotResponse, error)
 	CloseConversation(context.Context, *CloseConversationRequest) (*CloseConversationResponse, error)
+	ResetRateLimit(context.Context, *ResetRateLimitRequest) (*ResetRateLimitResponse, error)
+	GetRateLimitStatus(context.Context, *GetRateLimitStatusRequest) (*GetRateLimitStatusResponse, error)
 	mustEmbedUnimplementedBotServiceServer()
 }
 
@@ -144,6 +170,12 @@ func (UnimplementedBotServiceServer) ResetConversationBot(context.Context, *Rese
 }
 func (UnimplementedBotServiceServer) CloseConversation(context.Context, *CloseConversationRequest) (*CloseConversationResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CloseConversation not implemented")
+}
+func (UnimplementedBotServiceServer) ResetRateLimit(context.Context, *ResetRateLimitRequest) (*ResetRateLimitResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ResetRateLimit not implemented")
+}
+func (UnimplementedBotServiceServer) GetRateLimitStatus(context.Context, *GetRateLimitStatusRequest) (*GetRateLimitStatusResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetRateLimitStatus not implemented")
 }
 func (UnimplementedBotServiceServer) mustEmbedUnimplementedBotServiceServer() {}
 func (UnimplementedBotServiceServer) testEmbeddedByValue()                    {}
@@ -274,6 +306,42 @@ func _BotService_CloseConversation_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BotService_ResetRateLimit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetRateLimitRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).ResetRateLimit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_ResetRateLimit_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).ResetRateLimit(ctx, req.(*ResetRateLimitRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_GetRateLimitStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRateLimitStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).GetRateLimitStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_GetRateLimitStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).GetRateLimitStatus(ctx, req.(*GetRateLimitStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BotService_ServiceDesc is the grpc.ServiceDesc for BotService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -304,6 +372,14 @@ var BotService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CloseConversation",
 			Handler:    _BotService_CloseConversation_Handler,
+		},
+		{
+			MethodName: "ResetRateLimit",
+			Handler:    _BotService_ResetRateLimit_Handler,
+		},
+		{
+			MethodName: "GetRateLimitStatus",
+			Handler:    _BotService_GetRateLimitStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

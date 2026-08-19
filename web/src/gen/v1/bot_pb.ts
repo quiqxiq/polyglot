@@ -718,3 +718,187 @@ export class GetConversationContextResponse extends Message<GetConversationConte
   }
 }
 
+/**
+ * @generated from message polyglot.v1.ResetRateLimitRequest
+ */
+export class ResetRateLimitRequest extends Message<ResetRateLimitRequest> {
+  /**
+   * @generated from field: string phone_number = 1;
+   */
+  phoneNumber = "";
+
+  constructor(data?: PartialMessage<ResetRateLimitRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ResetRateLimitRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "phone_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ResetRateLimitRequest {
+    return new ResetRateLimitRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ResetRateLimitRequest {
+    return new ResetRateLimitRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ResetRateLimitRequest {
+    return new ResetRateLimitRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ResetRateLimitRequest | PlainMessage<ResetRateLimitRequest> | undefined, b: ResetRateLimitRequest | PlainMessage<ResetRateLimitRequest> | undefined): boolean {
+    return proto3.util.equals(ResetRateLimitRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ResetRateLimitResponse
+ */
+export class ResetRateLimitResponse extends Message<ResetRateLimitResponse> {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success = false;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<ResetRateLimitResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ResetRateLimitResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ResetRateLimitResponse {
+    return new ResetRateLimitResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ResetRateLimitResponse {
+    return new ResetRateLimitResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ResetRateLimitResponse {
+    return new ResetRateLimitResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ResetRateLimitResponse | PlainMessage<ResetRateLimitResponse> | undefined, b: ResetRateLimitResponse | PlainMessage<ResetRateLimitResponse> | undefined): boolean {
+    return proto3.util.equals(ResetRateLimitResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetRateLimitStatusRequest
+ */
+export class GetRateLimitStatusRequest extends Message<GetRateLimitStatusRequest> {
+  /**
+   * @generated from field: string phone_number = 1;
+   */
+  phoneNumber = "";
+
+  constructor(data?: PartialMessage<GetRateLimitStatusRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetRateLimitStatusRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "phone_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetRateLimitStatusRequest {
+    return new GetRateLimitStatusRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetRateLimitStatusRequest {
+    return new GetRateLimitStatusRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetRateLimitStatusRequest {
+    return new GetRateLimitStatusRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetRateLimitStatusRequest | PlainMessage<GetRateLimitStatusRequest> | undefined, b: GetRateLimitStatusRequest | PlainMessage<GetRateLimitStatusRequest> | undefined): boolean {
+    return proto3.util.equals(GetRateLimitStatusRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetRateLimitStatusResponse
+ */
+export class GetRateLimitStatusResponse extends Message<GetRateLimitStatusResponse> {
+  /**
+   * @generated from field: string phone_number = 1;
+   */
+  phoneNumber = "";
+
+  /**
+   * @generated from field: bool is_muted = 2;
+   */
+  isMuted = false;
+
+  /**
+   * @generated from field: int64 mute_remaining_seconds = 3;
+   */
+  muteRemainingSeconds = protoInt64.zero;
+
+  /**
+   * @generated from field: int32 daily_chat_count = 4;
+   */
+  dailyChatCount = 0;
+
+  /**
+   * @generated from field: int32 daily_quota_limit = 5;
+   */
+  dailyQuotaLimit = 0;
+
+  /**
+   * @generated from field: bool is_whitelisted = 6;
+   */
+  isWhitelisted = false;
+
+  constructor(data?: PartialMessage<GetRateLimitStatusResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetRateLimitStatusResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "phone_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "is_muted", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 3, name: "mute_remaining_seconds", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 4, name: "daily_chat_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "daily_quota_limit", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 6, name: "is_whitelisted", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetRateLimitStatusResponse {
+    return new GetRateLimitStatusResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetRateLimitStatusResponse {
+    return new GetRateLimitStatusResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetRateLimitStatusResponse {
+    return new GetRateLimitStatusResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetRateLimitStatusResponse | PlainMessage<GetRateLimitStatusResponse> | undefined, b: GetRateLimitStatusResponse | PlainMessage<GetRateLimitStatusResponse> | undefined): boolean {
+    return proto3.util.equals(GetRateLimitStatusResponse, a, b);
+  }
+}
+

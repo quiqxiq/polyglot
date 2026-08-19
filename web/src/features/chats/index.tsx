@@ -1,9 +1,11 @@
 import { Fragment, useMemo, useState } from 'react'
 import { format, isSameDay } from 'date-fns'
+import { toast } from 'sonner'
 import {
   TakeOverConversationRequest,
   ResetConversationBotRequest,
   CloseConversationRequest,
+  ResetRateLimitRequest,
 } from '@/gen/v1/bot_pb'
 import {
   MarkChatReadRequest,
@@ -23,6 +25,8 @@ import {
   Send,
   Search as SearchIcon,
   MessagesSquare,
+  RotateCcw,
+  ShieldAlert,
   Smartphone,
   UserCheck,
 } from 'lucide-react'
@@ -62,6 +66,8 @@ import {
   useTakeOverConversationMutation,
   useResetConversationBotMutation,
   useCloseConversationMutation,
+  useRateLimitStatusQuery,
+  useResetRateLimitMutation,
 } from './api/use-chats'
 import { NewChat } from './components/new-chat'
 
@@ -256,12 +262,40 @@ export function Chats() {
   )
   const convContext = contextQuery.data
 
+  const selectedPhone = useMemo(() => {
+    if (!selectedChat || selectedChat.isGroup) return ''
+    return formatJid(selectedChat.chatJid)
+  }, [selectedChat])
+
+  const rateLimitQuery = useRateLimitStatusQuery(
+    selectedPhone,
+    Boolean(selectedPhone)
+  )
+  const rateLimitStatus = rateLimitQuery.data
+  const resetRateLimitMutation = useResetRateLimitMutation()
+
   const markReadMutation = useMarkChatReadMutation()
   const sendMutation = useSendWATextMessageMutation()
   const toggleChatBotMutation = useToggleChatBotMutation()
   const takeOverMutation = useTakeOverConversationMutation()
   const resetBotMutation = useResetConversationBotMutation()
   const closeConvMutation = useCloseConversationMutation()
+
+  const handleResetRateLimit = async () => {
+    if (!selectedPhone) return
+    try {
+      await resetRateLimitMutation.mutateAsync(
+        new ResetRateLimitRequest({ phoneNumber: selectedPhone })
+      )
+      toast.success(
+        `Rate limit dan kuota harian nomor ${selectedPhone} berhasil direset`
+      )
+    } catch (err: unknown) {
+      const errorMsg =
+        err instanceof Error ? err.message : 'Terjadi kesalahan'
+      toast.error(`Gagal reset rate limit: ${errorMsg}`)
+    }
+  }
 
   const handleSelectChat = (chat: WAChat) => {
     setSelectedChat(chat)
@@ -612,33 +646,70 @@ export function Chats() {
                 </div>
               </div>
 
-              {convContext && (
+              {(convContext || (selectedPhone && rateLimitStatus && (rateLimitStatus.isMuted || rateLimitStatus.dailyChatCount > 0))) && (
                 <div className='flex flex-none flex-wrap items-center gap-x-3 gap-y-1 border-b bg-card px-4 py-2 text-xs'>
-                  <span
-                    className={cn(
-                      'rounded-full px-2 py-0.5 font-medium',
-                      statusStyles[convContext.status] ??
-                        'bg-muted text-muted-foreground'
+                  {convContext && (
+                    <span
+                      className={cn(
+                        'rounded-full px-2 py-0.5 font-medium',
+                        statusStyles[convContext.status] ??
+                          'bg-muted text-muted-foreground'
+                      )}
+                    >
+                      {statusLabel(convContext.status)}
+                    </span>
+                  )}
+                  {rateLimitStatus?.isMuted && (
+                    <span className='inline-flex items-center gap-1 rounded-full bg-destructive/15 px-2 py-0.5 font-medium text-destructive'>
+                      <ShieldAlert size={12} /> Rate Limited (Muted)
+                    </span>
+                  )}
+                  {rateLimitStatus &&
+                    rateLimitStatus.dailyChatCount >=
+                      rateLimitStatus.dailyQuotaLimit &&
+                    rateLimitStatus.dailyQuotaLimit > 0 && (
+                      <span className='inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 font-medium text-amber-700 dark:text-amber-300'>
+                        <ShieldAlert size={12} /> Kuota AI Habis (
+                        {rateLimitStatus.dailyChatCount}/
+                        {rateLimitStatus.dailyQuotaLimit})
+                      </span>
                     )}
-                  >
-                    {statusLabel(convContext.status)}
-                  </span>
-                  <span className='text-muted-foreground'>
-                    Tokens:{' '}
-                    <span className='font-medium text-foreground'>
-                      {convContext.totalTokenIn.toLocaleString('id-ID')}
-                    </span>{' '}
-                    in /{' '}
-                    <span className='font-medium text-foreground'>
-                      {convContext.totalTokenOut.toLocaleString('id-ID')}
-                    </span>{' '}
-                    out
-                  </span>
-                  <span className='text-muted-foreground'>
-                    {convContext.totalLlmCalls.toLocaleString('id-ID')} balasan
-                    LLM
-                  </span>
-                  {convContext.summary && (
+                  {rateLimitStatus?.isWhitelisted && (
+                    <span className='inline-flex items-center gap-1 rounded-full bg-blue-500/15 px-2 py-0.5 font-medium text-blue-700 dark:text-blue-300'>
+                      ⭐ Whitelist
+                    </span>
+                  )}
+                  {rateLimitStatus &&
+                    !rateLimitStatus.isMuted &&
+                    !rateLimitStatus.isWhitelisted && (
+                      <span className='text-muted-foreground'>
+                        Kuota AI:{' '}
+                        <span className='font-medium text-foreground'>
+                          {rateLimitStatus.dailyChatCount}
+                        </span>
+                        /{rateLimitStatus.dailyQuotaLimit}
+                      </span>
+                    )}
+                  {convContext && (
+                    <>
+                      <span className='text-muted-foreground'>
+                        Tokens:{' '}
+                        <span className='font-medium text-foreground'>
+                          {convContext.totalTokenIn.toLocaleString('id-ID')}
+                        </span>{' '}
+                        in /{' '}
+                        <span className='font-medium text-foreground'>
+                          {convContext.totalTokenOut.toLocaleString('id-ID')}
+                        </span>{' '}
+                        out
+                      </span>
+                      <span className='text-muted-foreground'>
+                        {convContext.totalLlmCalls.toLocaleString('id-ID')}{' '}
+                        balasan LLM
+                      </span>
+                    </>
+                  )}
+                  {convContext?.summary && (
                     <p
                       className='w-full truncate text-muted-foreground'
                       title={convContext.summary}
@@ -650,7 +721,21 @@ export function Chats() {
                     </p>
                   )}
                   <div className='ms-auto flex items-center gap-2'>
-                    {convContext.status === 'bot' && (
+                    {rateLimitStatus &&
+                      (rateLimitStatus.isMuted ||
+                        rateLimitStatus.dailyChatCount > 0) && (
+                        <Button
+                          size='sm'
+                          variant='outline'
+                          className='gap-1.5 border-amber-300 text-amber-700 hover:bg-amber-50 dark:border-amber-700 dark:text-amber-300 dark:hover:bg-amber-950/50'
+                          disabled={resetRateLimitMutation.isPending}
+                          onClick={handleResetRateLimit}
+                          title='Reset pembatasan spam dan kuota percakapan AI nomor ini'
+                        >
+                          <RotateCcw size={13} /> Reset Limit
+                        </Button>
+                      )}
+                    {convContext?.status === 'bot' && (
                       <Button
                         size='sm'
                         variant='outline'
@@ -661,7 +746,7 @@ export function Chats() {
                         <UserCheck size={14} /> Ambil alih
                       </Button>
                     )}
-                    {convContext.status === 'escalation' && (
+                    {convContext?.status === 'escalation' && (
                       <Button
                         size='sm'
                         variant='outline'
@@ -672,14 +757,14 @@ export function Chats() {
                         <Bot size={14} /> Kembalikan ke bot
                       </Button>
                     )}
-                    {convContext.status !== 'done' && (
+                    {convContext && convContext.status !== 'done' && (
                       <Button
                         size='sm'
                         variant='ghost'
                         disabled={closeConvMutation.isPending}
                         onClick={handleCloseConversation}
                       >
-                        Selesai
+                        Tutup
                       </Button>
                     )}
                   </div>

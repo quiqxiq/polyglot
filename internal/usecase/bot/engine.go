@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/port"
@@ -26,6 +27,12 @@ type Config struct {
 	SystemPrompt       string
 	AllowedTopics      []string
 	LLMMaxOutputTokens int
+	BurstLimit         int
+	BurstWindowSeconds int
+	Mute1HourSeconds   int
+	Ban24HourSeconds   int
+	DailyChatLimit     int
+	WhitelistPhones    []string
 }
 
 // ProviderFactory creates an LLM provider from a stored LLM configuration.
@@ -69,7 +76,14 @@ func NewEngine(
 		chat:          chat,
 		llmConfigRepo: llmConfigRepo,
 		chatRepo:      chatRepo,
-		rateLimiter:   NewRateLimiter(cache),
+		rateLimiter: NewRateLimiter(cache, config.Config{
+			BotBurstLimit:      cfg.BurstLimit,
+			BotBurstWindowSecs: cfg.BurstWindowSeconds,
+			BotMute1HourSecs:   cfg.Mute1HourSeconds,
+			BotBan24HourSecs:   cfg.Ban24HourSeconds,
+			BotDailyChatLimit:  cfg.DailyChatLimit,
+			BotWhitelistPhones: cfg.WhitelistPhones,
+		}),
 		guardrail:     NewGuardrail(cfg.AllowedTopics),
 		contextMgr:    NewContextManager(cache, cfg.SystemPrompt),
 		publisher:     publisher,
@@ -83,30 +97,33 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		return errors.New("bot engine: whatsapp gateway not initialized")
 	}
 
-	logger.WithComponent("BotEngine").Infof("Processing message from %s (Session %d): %s", customerNumber, sessionID, messageContent)
+	if e.convService == nil {
+		return errors.New("bot engine: conversation service not initialized")
+	}
 
 	conv, err := e.convService.GetOrCreateConversation(ctx, sessionID, customerNumber)
 	if err != nil {
 		return fmt.Errorf("failed to get/create conversation: %w", err)
 	}
 
-	custMsg, err := e.convService.AddMessageWithConfig(ctx, conv.ID, SenderCustomer, messageContent, 0, 0, nil)
+	msg, err := e.convService.AddMessage(ctx, conv.ID, SenderCustomer, messageContent, 0, 0)
 	if err != nil {
-		logger.WithComponent("BotEngine").Warnf("Failed to persist customer message: %v", err)
+		logger.WithComponent("BotEngine").Warnf("Failed to persist incoming customer message: %v", err)
 	}
-	if err == nil && e.publisher != nil {
-		e.publisher.PublishEvent("new_message", custMsg)
+	if e.publisher != nil && msg != nil {
+		e.publisher.PublishEvent("new_message", msg)
 	}
 
 	if conv.Status == bot.StatusEscalation {
-		logger.WithComponent("BotEngine").Infof("Conversation %d is in escalation mode. Message recorded without auto-reply.", conv.ID)
+		logger.WithComponent("BotEngine").Infof("Conversation %d is in escalation mode. Skipping automated bot reply.", conv.ID)
 		return nil
 	}
 
 	if e.chatRepo != nil {
 		enabled, err := e.chatRepo.IsChatBotEnabled(ctx, sessionID, chatJID)
 		if err != nil {
-			logger.WithComponent("BotEngine").Warnf("Failed to check bot_enabled for %s: %v", chatJID, err)
+			logger.WithComponent("BotEngine").Warnf("Failed to query bot_enabled for chat %s: %v — assuming enabled", chatJID, err)
+			enabled = true
 		}
 		if !enabled {
 			logger.WithComponent("BotEngine").Infof("Bot nonaktif untuk chat %s. Pesan dicatat tanpa auto-reply.", chatJID)
@@ -123,8 +140,8 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	case StatusMuted, StatusBlocked:
 		logger.WithComponent("BotEngine").Infof("Number %s is %v. Ignoring message to save tokens.", customerNumber, rateResult.Status)
 		return nil
-	case StatusWarned:
-		logger.WithComponent("BotEngine").Warnf("Number %s hit rate limit warning.", customerNumber)
+	case StatusWarned, StatusDailyQuotaExceeded:
+		logger.WithComponent("BotEngine").Warnf("Number %s rate limit notification (%v).", customerNumber, rateResult.Status)
 		return e.sendBotReply(ctx, conv.ID, sessionID, customerNumber, rateResult.Message, 0, 0, nil)
 	}
 
@@ -141,6 +158,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 				if err := e.sendBotReply(ctx, conv.ID, sessionID, customerNumber, reply, chatResult.TokenIn, chatResult.TokenOut, nil); err != nil {
 					return err
 				}
+				_ = e.rateLimiter.IncrementDailyQuota(ctx, customerNumber)
 				_ = e.contextMgr.SaveMessageToSession(ctx, conv.ID, messageContent, reply)
 				return nil
 			}
@@ -208,10 +226,27 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		return err
 	}
 
+	_ = e.rateLimiter.IncrementDailyQuota(ctx, customerNumber)
 	_ = e.contextMgr.SaveMessageToSession(ctx, conv.ID, messageContent, reply)
 	_ = e.contextMgr.SummarizeSessionIfLong(ctx, conv.ID, provider)
 
 	return nil
+}
+
+// ResetRateLimit resets all rate limit and daily quota counters for a customer phone number.
+func (e *Engine) ResetRateLimit(ctx context.Context, customerNumber string) error {
+	if e.rateLimiter == nil {
+		return nil
+	}
+	return e.rateLimiter.ResetRateLimit(ctx, customerNumber)
+}
+
+// GetRateLimitStatus queries the rate limit and daily quota state for a customer phone number.
+func (e *Engine) GetRateLimitStatus(ctx context.Context, customerNumber string) (*RateLimitStatusInfo, error) {
+	if e.rateLimiter == nil {
+		return &RateLimitStatusInfo{PhoneNumber: customerNumber}, nil
+	}
+	return e.rateLimiter.GetRateLimitStatus(ctx, customerNumber)
 }
 
 // GetConversationContext aggregates the LLM-facing state of a conversation.

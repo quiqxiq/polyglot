@@ -7,4 +7,6 @@ export const botKeys = {
   waQR: (sessionId: string) => [...botKeys.all, 'wa-qr', sessionId] as const,
   chats: (sessionId: string, search = '') => [...botKeys.all, 'chats', sessionId, search] as const,
   chatMessages: (sessionId: string, chatJid: string) => [...botKeys.all, 'chat-messages', sessionId, chatJid] as const,
+  rateLimitStatus: (phoneNumber: string) => [...botKeys.all, 'rate-limit-status', phoneNumber] as const,
 }
+

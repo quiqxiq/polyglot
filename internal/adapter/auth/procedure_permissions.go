@@ -48,13 +48,15 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.WhatsAppService/MarkChatRead":     "whatsapp:write",
 	"/polyglot.v1.WhatsAppService/ToggleChatBot":    "whatsapp:write",
 
-	// BotService (conversations)
+	// BotService (conversations & rate limits)
 	"/polyglot.v1.BotService/ListConversations":      "conversation:read",
 	"/polyglot.v1.BotService/GetConversation":        "conversation:read",
 	"/polyglot.v1.BotService/GetConversationContext": "conversation:read",
 	"/polyglot.v1.BotService/TakeOverConversation":   "conversation:write",
 	"/polyglot.v1.BotService/ResetConversationBot":   "conversation:write",
 	"/polyglot.v1.BotService/CloseConversation":      "conversation:write",
+	"/polyglot.v1.BotService/ResetRateLimit":          "conversation:write",
+	"/polyglot.v1.BotService/GetRateLimitStatus":      "conversation:read",
 
 	// KnowledgeService
 	"/polyglot.v1.KnowledgeService/ListKnowledge":          "knowledge:read",

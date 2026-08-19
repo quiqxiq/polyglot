@@ -24,7 +24,6 @@ import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-p
 import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authenticated/settings/route'
 import { Route as AuthenticatedWhatsappIndexRouteImport } from './routes/_authenticated/whatsapp/index'
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
-import { Route as AuthenticatedTasksIndexRouteImport } from './routes/_authenticated/tasks/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
 import { Route as AuthenticatedReportsIndexRouteImport } from './routes/_authenticated/reports/index'
 import { Route as AuthenticatedRbacIndexRouteImport } from './routes/_authenticated/rbac/index'
@@ -117,11 +116,6 @@ const AuthenticatedWhatsappIndexRoute =
 const AuthenticatedUsersIndexRoute = AuthenticatedUsersIndexRouteImport.update({
   id: '/users/',
   path: '/users/',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedTasksIndexRoute = AuthenticatedTasksIndexRouteImport.update({
-  id: '/tasks/',
-  path: '/tasks/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedSettingsIndexRoute =
@@ -252,7 +246,6 @@ export interface FileRoutesByFullPath {
   '/rbac/': typeof AuthenticatedRbacIndexRoute
   '/reports/': typeof AuthenticatedReportsIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/tasks/': typeof AuthenticatedTasksIndexRoute
   '/users/': typeof AuthenticatedUsersIndexRoute
   '/whatsapp/': typeof AuthenticatedWhatsappIndexRoute
   '/knowledge/$id/edit': typeof AuthenticatedKnowledgeIdEditRoute
@@ -285,7 +278,6 @@ export interface FileRoutesByTo {
   '/rbac': typeof AuthenticatedRbacIndexRoute
   '/reports': typeof AuthenticatedReportsIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
-  '/tasks': typeof AuthenticatedTasksIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
   '/whatsapp': typeof AuthenticatedWhatsappIndexRoute
   '/knowledge/$id/edit': typeof AuthenticatedKnowledgeIdEditRoute
@@ -321,7 +313,6 @@ export interface FileRoutesById {
   '/_authenticated/rbac/': typeof AuthenticatedRbacIndexRoute
   '/_authenticated/reports/': typeof AuthenticatedReportsIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/_authenticated/tasks/': typeof AuthenticatedTasksIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
   '/_authenticated/whatsapp/': typeof AuthenticatedWhatsappIndexRoute
   '/_authenticated/knowledge/$id/edit': typeof AuthenticatedKnowledgeIdEditRoute
@@ -357,7 +348,6 @@ export interface FileRouteTypes {
     | '/rbac/'
     | '/reports/'
     | '/settings/'
-    | '/tasks/'
     | '/users/'
     | '/whatsapp/'
     | '/knowledge/$id/edit'
@@ -390,7 +380,6 @@ export interface FileRouteTypes {
     | '/rbac'
     | '/reports'
     | '/settings'
-    | '/tasks'
     | '/users'
     | '/whatsapp'
     | '/knowledge/$id/edit'
@@ -425,7 +414,6 @@ export interface FileRouteTypes {
     | '/_authenticated/rbac/'
     | '/_authenticated/reports/'
     | '/_authenticated/settings/'
-    | '/_authenticated/tasks/'
     | '/_authenticated/users/'
     | '/_authenticated/whatsapp/'
     | '/_authenticated/knowledge/$id/edit'
@@ -550,13 +538,6 @@ declare module '@tanstack/react-router' {
       path: '/users'
       fullPath: '/users/'
       preLoaderRoute: typeof AuthenticatedUsersIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/tasks/': {
-      id: '/_authenticated/tasks/'
-      path: '/tasks'
-      fullPath: '/tasks/'
-      preLoaderRoute: typeof AuthenticatedTasksIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/settings/': {
@@ -718,7 +699,6 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPppIndexRoute: typeof AuthenticatedPppIndexRoute
   AuthenticatedRbacIndexRoute: typeof AuthenticatedRbacIndexRoute
   AuthenticatedReportsIndexRoute: typeof AuthenticatedReportsIndexRoute
-  AuthenticatedTasksIndexRoute: typeof AuthenticatedTasksIndexRoute
   AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
   AuthenticatedWhatsappIndexRoute: typeof AuthenticatedWhatsappIndexRoute
   AuthenticatedKnowledgeIdEditRoute: typeof AuthenticatedKnowledgeIdEditRoute
@@ -738,7 +718,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPppIndexRoute: AuthenticatedPppIndexRoute,
   AuthenticatedRbacIndexRoute: AuthenticatedRbacIndexRoute,
   AuthenticatedReportsIndexRoute: AuthenticatedReportsIndexRoute,
-  AuthenticatedTasksIndexRoute: AuthenticatedTasksIndexRoute,
   AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
   AuthenticatedWhatsappIndexRoute: AuthenticatedWhatsappIndexRoute,
   AuthenticatedKnowledgeIdEditRoute: AuthenticatedKnowledgeIdEditRoute,

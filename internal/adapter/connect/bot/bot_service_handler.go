@@ -8,15 +8,16 @@ import (
 
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 )
 
 // ConversationContextProvider abstracts the engine's ability to aggregate the
-// LLM-facing state of a conversation (history + summary + token usage).
-// Diimplementasikan oleh *usecase/bot.Engine; dipisah sebagai interface agar
-// adapter tidak bergantung langsung ke struct engine.
+// LLM-facing state of a conversation (history + summary + token usage) and manage rate limits.
 type ConversationContextProvider interface {
 	GetConversationContext(ctx context.Context, convID uint) (*bot.ConversationContext, error)
+	ResetRateLimit(ctx context.Context, customerNumber string) error
+	GetRateLimitStatus(ctx context.Context, customerNumber string) (*botUC.RateLimitStatusInfo, error)
 }
 
 type BotConnectHandler struct {
@@ -65,6 +66,16 @@ func NewBotServiceHandler(convService *convUC.ConversationService, contextProvid
 	mux.Handle("/"+serviceName+"/CloseConversation", connect.NewUnaryHandler(
 		"/"+serviceName+"/CloseConversation",
 		handler.CloseConversation,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/ResetRateLimit", connect.NewUnaryHandler(
+		"/"+serviceName+"/ResetRateLimit",
+		handler.ResetRateLimit,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/GetRateLimitStatus", connect.NewUnaryHandler(
+		"/"+serviceName+"/GetRateLimitStatus",
+		handler.GetRateLimitStatus,
 		codecOpt,
 	))
 

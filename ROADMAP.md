@@ -134,6 +134,10 @@ gantt
     Keluhan   : "Lampu LOS merah sejak siang"
     Tindakan  : Silakan buka Live Chat Polyglot untuk ambil alih.
     ```
+- [ ] **Tiered AI Chat Quota (Pembedaan Kuota Pelanggan vs Tamu Publik)**:
+  - Pelanggan aktif terdaftar di database `customers`: Kuota prioritas lebih longgar (misal **25 percakapan AI/hari**).
+  - Nomor tamu publik non-pelanggan: Kuota standar hemat token (**10 percakapan AI/hari**).
+  - Integrasi dengan modul Customer Lifecycle untuk pengenalan nomor otomatis.
 - [ ] **Interactive Customer Self-Care Bot**:
   - Menu interaktif di WhatsApp: *Ketik "1" untuk Cek Tagihan, "2" untuk Lapor Gangguan, "3" untuk Beli Voucher Hotspot*.
   - Pembuatan link pembayaran QRIS langsung di dalam chat WhatsApp.
