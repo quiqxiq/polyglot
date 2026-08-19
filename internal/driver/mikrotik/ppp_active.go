@@ -31,13 +31,8 @@ func NewPrintPPPActiveCommand(nameFilter string) command.Command {
 // PPPActiveStat is the vendor-neutral PPP active session telemetry stats row.
 type PPPActiveStat = port.PPPActiveStat
 
-// NewStreamPPPActiveCommand builds the command.Command for
-// /ppp/active/print follow, which causes RouterOS to push a new row
-// every time a PPPoE session changes state (login, logout, IP change).
-// Use with Driver.Stream — isStreamingCommand returns true because
-// "follow" is present. No polling needed: the driver notifies on change.
-//
-// Only static session identity fields are requested via .proplist to minimize overhead.
+// NewStreamPPPActiveCommand builds the command.Command for /ppp/active/print
+// follow, filtering only identity/state fields to minimize RouterOS CPU overhead.
 func NewStreamPPPActiveCommand(nameFilter string) command.Command {
 	args := map[string]string{
 		"follow":    "",
@@ -54,6 +49,7 @@ func NewStreamPPPActiveCommand(nameFilter string) command.Command {
 
 // NewStreamPPPActiveStatsCommand builds the command.Command for
 // /ppp/active/print stats interval=<interval>.
+// It requests only dynamic counter fields via .proplist to minimize RouterOS CPU.
 func NewStreamPPPActiveStatsCommand(interval string) command.Command {
 	if interval == "" {
 		interval = "1s"
@@ -61,8 +57,9 @@ func NewStreamPPPActiveStatsCommand(interval string) command.Command {
 	return command.Command{
 		Raw: "/ppp/active/print",
 		Args: map[string]string{
-			"stats":    "",
-			"interval": interval,
+			"stats":     "",
+			"interval":  interval,
+			".proplist": ".id,uptime,limit-bytes-in,limit-bytes-out",
 		},
 	}
 }
@@ -118,68 +115,11 @@ func ParsePPPActiveStats(result command.Result) []PPPActiveStat {
 		if id == "" {
 			continue
 		}
-
-		bytesIn := row["bytes-in"]
-		if bytesIn == "" {
-			bytesIn = row["rx-byte"]
-		}
-		if bytesIn == "" {
-			bytesIn = row["rx-bytes"]
-		}
-
-		bytesOut := row["bytes-out"]
-		if bytesOut == "" {
-			bytesOut = row["tx-byte"]
-		}
-		if bytesOut == "" {
-			bytesOut = row["tx-bytes"]
-		}
-
-		if bytesIn == "" && bytesOut == "" && row["bytes"] != "" {
-			parts := strings.Split(row["bytes"], "/")
-			if len(parts) == 2 {
-				bytesIn = parts[0]
-				bytesOut = parts[1]
-			} else if len(parts) == 1 {
-				bytesIn = parts[0]
-			}
-		}
-
-		packetsIn := row["packets-in"]
-		if packetsIn == "" {
-			packetsIn = row["rx-packet"]
-		}
-		if packetsIn == "" {
-			packetsIn = row["rx-packets"]
-		}
-
-		packetsOut := row["packets-out"]
-		if packetsOut == "" {
-			packetsOut = row["tx-packet"]
-		}
-		if packetsOut == "" {
-			packetsOut = row["tx-packets"]
-		}
-
-		if packetsIn == "" && packetsOut == "" && row["packets"] != "" {
-			parts := strings.Split(row["packets"], "/")
-			if len(parts) == 2 {
-				packetsIn = parts[0]
-				packetsOut = parts[1]
-			} else if len(parts) == 1 {
-				packetsIn = parts[0]
-			}
-		}
-
 		stats = append(stats, PPPActiveStat{
 			RosID:         id,
 			Uptime:        row["uptime"],
 			LimitBytesIn:  row["limit-bytes-in"],
 			LimitBytesOut: row["limit-bytes-out"],
-			BytesIn:       bytesIn,
-			BytesOut:      bytesOut,
-			PacketsIn:     packetsIn,
-			PacketsOut:    packetsOut,
 		})
 	}
 	return stats

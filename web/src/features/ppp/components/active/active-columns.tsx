@@ -6,15 +6,6 @@ import type { ColumnDef } from '@tanstack/react-table'
 import { Activity, Clock, Globe, Network } from 'lucide-react'
 import { ActiveRowActions } from './active-row-actions'
 
-function formatBytes(bytesStr?: string): string {
-  const bytes = Number(bytesStr || 0)
-  if (isNaN(bytes) || bytes === 0) return '0 B'
-  const k = 1024
-  const sizes = ['B', 'KB', 'MB', 'GB', 'TB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`
-}
-
 export const activeColumns: ColumnDef<EnrichedPPPActiveSession>[] = [
   {
     id: 'select',
@@ -110,27 +101,24 @@ export const activeColumns: ColumnDef<EnrichedPPPActiveSession>[] = [
     enableSorting: true,
   },
   {
-    accessorKey: 'bytesOut',
+    accessorKey: 'service',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Traffic (In / Out)" />
+      <DataTableColumnHeader column={column} title="Service" />
     ),
     cell: ({ row }) => {
+      const service = row.original.service || 'pppoe'
       return (
-        <div className="flex flex-col text-xs font-mono">
-          <span className="text-emerald-600 dark:text-emerald-400">
-            ↓ {formatBytes(row.original.bytesOut)}
-          </span>
-          <span className="text-sky-600 dark:text-sky-400">
-            ↑ {formatBytes(row.original.bytesIn)}
-          </span>
-        </div>
+        <Badge variant="secondary" className="font-mono text-xs uppercase">
+          {service}
+        </Badge>
       )
     },
+    enableSorting: true,
   },
   {
     accessorKey: 'callerId',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="MAC Address" />
+      <DataTableColumnHeader column={column} title="MAC Address / Caller ID" />
     ),
     cell: ({ row }) => {
       const callerId = row.getValue('callerId') as string

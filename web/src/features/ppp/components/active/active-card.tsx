@@ -1,19 +1,10 @@
 import { Badge } from '@/components/ui/badge'
 import type { EnrichedPPPActiveSession } from '../../api/use-ppp-stream'
-import { ArrowDown, ArrowUp, Clock, Globe, Network, UserCheck } from 'lucide-react'
+import { Clock, Globe, Network, UserCheck } from 'lucide-react'
 import { ActiveRowActions } from './active-row-actions'
 
 interface ActiveCardProps {
   session: EnrichedPPPActiveSession
-}
-
-function formatBytes(bytesStr?: string): string {
-  const bytes = Number(bytesStr || 0)
-  if (isNaN(bytes) || bytes === 0) return '0 B'
-  const k = 1024
-  const sizes = ['B', 'KB', 'MB', 'GB', 'TB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`
 }
 
 export function ActiveCard({ session }: ActiveCardProps) {
@@ -21,10 +12,11 @@ export function ActiveCard({ session }: ActiveCardProps) {
   const ip = session.address || '-'
   const uptime = session.uptime || '-'
   const mac = session.callerId || '-'
+  const service = session.service || 'pppoe'
 
   return (
     <div className="rounded-lg border bg-card p-3.5 shadow-sm space-y-2.5 transition-colors hover:border-primary/40">
-      {/* Header: User with online indicator, Profile badge below name, and Actions on right */}
+      {/* Header: User with online indicator, Profile & Service badges below name, and Actions on right */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
@@ -38,9 +30,12 @@ export function ActiveCard({ session }: ActiveCardProps) {
             <div className="font-mono text-sm font-semibold truncate">
               {session.name}
             </div>
-            <div>
+            <div className="flex items-center gap-1.5">
               <Badge variant="outline" className="font-mono text-[10px] px-1.5 py-0 h-4 font-normal">
                 {profile}
+              </Badge>
+              <Badge variant="secondary" className="font-mono text-[10px] px-1.5 py-0 h-4 font-normal uppercase">
+                {service}
               </Badge>
             </div>
           </div>
@@ -51,7 +46,7 @@ export function ActiveCard({ session }: ActiveCardProps) {
         </div>
       </div>
 
-      {/* Grid: IP Address, Uptime, MAC Address, Traffic */}
+      {/* Grid: IP Address, Uptime, MAC Address */}
       <div className="grid grid-cols-2 gap-2 pt-1 border-t border-border/50 text-xs">
         <div className="space-y-0.5">
           <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
@@ -73,29 +68,13 @@ export function ActiveCard({ session }: ActiveCardProps) {
           </div>
         </div>
 
-        <div className="space-y-0.5">
+        <div className="col-span-2 space-y-0.5">
           <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
-            MAC Address
+            MAC Address / Caller ID
           </span>
           <div className="flex items-center gap-1.5 font-mono text-muted-foreground">
             <Network className="h-3.5 w-3.5 shrink-0" />
             <span className="truncate">{mac}</span>
-          </div>
-        </div>
-
-        <div className="space-y-0.5">
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
-            Traffic (In / Out)
-          </span>
-          <div className="flex items-center gap-2 font-mono text-muted-foreground">
-            <span className="flex items-center gap-0.5 text-emerald-600 dark:text-emerald-400">
-              <ArrowDown className="h-3 w-3" />
-              {formatBytes(session.bytesOut)}
-            </span>
-            <span className="flex items-center gap-0.5 text-sky-600 dark:text-sky-400">
-              <ArrowUp className="h-3 w-3" />
-              {formatBytes(session.bytesIn)}
-            </span>
           </div>
         </div>
       </div>

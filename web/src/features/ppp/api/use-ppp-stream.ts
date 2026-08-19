@@ -6,10 +6,6 @@ export type EnrichedPPPActiveSession = PPPActiveSession & {
   uptime?: string
   limitBytesIn?: string
   limitBytesOut?: string
-  bytesIn?: string
-  bytesOut?: string
-  packetsIn?: string
-  packetsOut?: string
 }
 
 export function useStreamPPPActiveSessions(
@@ -50,10 +46,6 @@ export function useStreamPPPActiveSessions(
               uptime: existing?.uptime || '',
               limitBytesIn: existing?.limitBytesIn || '',
               limitBytesOut: existing?.limitBytesOut || '',
-              bytesIn: existing?.bytesIn || '',
-              bytesOut: existing?.bytesOut || '',
-              packetsIn: existing?.packetsIn || '',
-              packetsOut: existing?.packetsOut || '',
             }) as EnrichedPPPActiveSession
             newMap.set(s.id, enriched)
           }
@@ -87,10 +79,6 @@ export function useStreamPPPActiveSessions(
                 uptime: st.uptime || sess.uptime,
                 limitBytesIn: st.limitBytesIn || sess.limitBytesIn,
                 limitBytesOut: st.limitBytesOut || sess.limitBytesOut,
-                bytesIn: st.bytesIn || sess.bytesIn,
-                bytesOut: st.bytesOut || sess.bytesOut,
-                packetsIn: st.packetsIn || sess.packetsIn,
-                packetsOut: st.packetsOut || sess.packetsOut,
               }) as EnrichedPPPActiveSession
               sessionsMapRef.current.set(st.id, updated)
               changed = true

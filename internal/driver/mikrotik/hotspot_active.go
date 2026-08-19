@@ -48,16 +48,12 @@ type HotspotActiveStat = port.HotspotActiveStat
 
 // NewStreamHotspotActiveCommand builds the command.Command for
 // /ip/hotspot/active/print follow, which causes RouterOS to push a new row
-// every time a hotspot session changes state (login, logout, expiry).
-// Use with Driver.Stream — isStreamingCommand returns true because
-// "follow" is present.
-//
-// Only static session identity fields are requested via .proplist to minimize overhead.
-// userFilter: limit to one username (empty = all sessions).
+// every time an active hotspot session changes state (login, logout, IP change).
+// Use with Driver.Stream.
 func NewStreamHotspotActiveCommand(userFilter string) command.Command {
 	args := map[string]string{
 		"follow":    "",
-		".proplist": ".id,server,user,domain,address,mac-address,login-by",
+		".proplist": ".id,server,user,address,mac-address,login-by",
 	}
 	if userFilter != "" {
 		args["?user"] = userFilter
@@ -70,6 +66,7 @@ func NewStreamHotspotActiveCommand(userFilter string) command.Command {
 
 // NewStreamHotspotActiveStatsCommand builds the command.Command for
 // /ip/hotspot/active/print stats interval=<interval>.
+// It requests only dynamic counter fields via .proplist to minimize RouterOS CPU.
 func NewStreamHotspotActiveStatsCommand(interval string) command.Command {
 	if interval == "" {
 		interval = "1s"
@@ -77,8 +74,9 @@ func NewStreamHotspotActiveStatsCommand(interval string) command.Command {
 	return command.Command{
 		Raw: "/ip/hotspot/active/print",
 		Args: map[string]string{
-			"stats":    "",
-			"interval": interval,
+			"stats":     "",
+			"interval":  interval,
+			".proplist": ".id,uptime,session-time-left,idle-time,bytes-in,bytes-out,packets-in,packets-out",
 		},
 	}
 }
@@ -136,64 +134,15 @@ func ParseHotspotActiveStats(result command.Result) []HotspotActiveStat {
 		if id == "" {
 			continue
 		}
-
-		bytesIn := row["bytes-in"]
-		if bytesIn == "" {
-			bytesIn = row["rx-byte"]
-		}
-		if bytesIn == "" {
-			bytesIn = row["rx-bytes"]
-		}
-
-		bytesOut := row["bytes-out"]
-		if bytesOut == "" {
-			bytesOut = row["tx-byte"]
-		}
-		if bytesOut == "" {
-			bytesOut = row["tx-bytes"]
-		}
-
-		if bytesIn == "" && bytesOut == "" && row["bytes"] != "" {
-			parts := strings.Split(row["bytes"], "/")
-			if len(parts) == 2 {
-				bytesIn = parts[0]
-				bytesOut = parts[1]
-			}
-		}
-
-		packetsIn := row["packets-in"]
-		if packetsIn == "" {
-			packetsIn = row["rx-packet"]
-		}
-		if packetsIn == "" {
-			packetsIn = row["rx-packets"]
-		}
-
-		packetsOut := row["packets-out"]
-		if packetsOut == "" {
-			packetsOut = row["tx-packet"]
-		}
-		if packetsOut == "" {
-			packetsOut = row["tx-packets"]
-		}
-
-		if packetsIn == "" && packetsOut == "" && row["packets"] != "" {
-			parts := strings.Split(row["packets"], "/")
-			if len(parts) == 2 {
-				packetsIn = parts[0]
-				packetsOut = parts[1]
-			}
-		}
-
 		stats = append(stats, HotspotActiveStat{
 			RosID:           id,
 			Uptime:          row["uptime"],
 			SessionTimeLeft: row["session-time-left"],
 			IdleTime:        row["idle-time"],
-			BytesIn:         bytesIn,
-			BytesOut:        bytesOut,
-			PacketsIn:       packetsIn,
-			PacketsOut:      packetsOut,
+			BytesIn:         row["bytes-in"],
+			BytesOut:        row["bytes-out"],
+			PacketsIn:       row["packets-in"],
+			PacketsOut:      row["packets-out"],
 		})
 	}
 	return stats

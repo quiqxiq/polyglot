@@ -82,8 +82,6 @@ func TestParsePPPActiveSessions(t *testing.T) {
 			{
 				".id": "*A1", "uptime": "3h25m10s",
 				"limit-bytes-in": "1000", "limit-bytes-out": "2000",
-				"bytes-in": "5000", "bytes-out": "6000",
-				"packets-in": "50", "packets-out": "60",
 			},
 		}}
 		stats := ParsePPPActiveStats(result)
@@ -93,8 +91,6 @@ func TestParsePPPActiveSessions(t *testing.T) {
 		assert.Equal(t, "3h25m10s", st.Uptime)
 		assert.Equal(t, "1000", st.LimitBytesIn)
 		assert.Equal(t, "2000", st.LimitBytesOut)
-		assert.Equal(t, "5000", st.BytesIn)
-		assert.Equal(t, "6000", st.BytesOut)
 	})
 
 	t.Run("baris tanpa .id dilewati", func(t *testing.T) {
