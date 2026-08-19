@@ -23,9 +23,6 @@ func ToProtoHotspotActiveSession(s port.HotspotActiveSession) *devicepb.HotspotA
 		User:       s.User,
 		Address:    s.Address,
 		MacAddress: s.MACAddress,
-		Uptime:     s.Uptime,
-		BytesIn:    s.BytesIn,
-		BytesOut:   s.BytesOut,
 	}
 }
 

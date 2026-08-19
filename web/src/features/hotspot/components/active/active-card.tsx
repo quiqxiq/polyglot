@@ -1,13 +1,13 @@
 import { Badge } from '@/components/ui/badge'
-import type { HotspotActiveSession } from '@/gen/v1/hotspot_pb'
+import type { EnrichedHotspotActiveSession } from '../../api/use-hotspot-stream'
 import { ArrowDown, ArrowUp, Clock, Globe, Network, UserCheck } from 'lucide-react'
 import { ActiveRowActions } from './active-row-actions'
 
 interface ActiveCardProps {
-  session: HotspotActiveSession
+  session: EnrichedHotspotActiveSession
 }
 
-function formatBytes(bytesStr: string): string {
+function formatBytes(bytesStr?: string): string {
   const bytes = Number(bytesStr || 0)
   if (isNaN(bytes) || bytes === 0) return '0 B'
   const k = 1024

@@ -65,18 +65,15 @@ func ToProtoPPPProfiles(profiles []port.PPPProfile) []*devicepb.PPPProfile {
 // ToProtoPPPActiveSession converts a domain port.PPPActiveSession to protobuf PPPActiveSession.
 func ToProtoPPPActiveSession(s port.PPPActiveSession) *devicepb.PPPActiveSession {
 	return &devicepb.PPPActiveSession{
-		Id:            s.RosID,
-		Name:          s.Name,
-		Service:       s.Service,
-		CallerId:      s.CallerID,
-		Address:       s.Address,
-		Uptime:        s.Uptime,
-		Encoding:      s.Encoding,
-		SessionId:     s.SessionID,
-		LimitBytesIn:  s.LimitBytesIn,
-		LimitBytesOut: s.LimitBytesOut,
-		Radius:        s.Radius,
-		Profile:       s.Profile,
+		Id:        s.RosID,
+		Name:      s.Name,
+		Service:   s.Service,
+		CallerId:  s.CallerID,
+		Address:   s.Address,
+		Encoding:  s.Encoding,
+		SessionId: s.SessionID,
+		Radius:    s.Radius,
+		Profile:   s.Profile,
 	}
 }
 

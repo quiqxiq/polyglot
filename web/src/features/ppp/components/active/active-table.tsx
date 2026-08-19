@@ -24,13 +24,13 @@ import {
   DataTablePagination,
   DataTableToolbar,
 } from '@/components/data-table'
-import type { PPPActiveSession } from '@/gen/v1/ppp_pb'
+import type { EnrichedPPPActiveSession } from '../../api/use-ppp-stream'
 import { ActiveBulkActions } from './active-bulk-actions'
 import { ActiveCard } from './active-card'
 import { activeColumns } from './active-columns'
 
 interface ActiveTableProps {
-  data: PPPActiveSession[]
+  data: EnrichedPPPActiveSession[]
   isLoading?: boolean
 }
 

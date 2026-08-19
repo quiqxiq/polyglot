@@ -42,17 +42,14 @@ func (h *HotspotConnectHandler) StreamPPPActive(ctx context.Context, req *connec
 	initialItems := make([]*devicepb.PPPActiveSessionItem, 0, len(activeMap))
 	for _, s := range activeMap {
 		initialItems = append(initialItems, &devicepb.PPPActiveSessionItem{
-			Id:            s.RosID,
-			Name:          s.Name,
-			Service:       s.Service,
-			CallerId:      s.CallerID,
-			Address:       s.Address,
-			Uptime:        s.Uptime,
-			Encoding:      s.Encoding,
-			SessionId:     s.SessionID,
-			LimitBytesIn:  s.LimitBytesIn,
-			LimitBytesOut: s.LimitBytesOut,
-			Radius:        s.Radius,
+			Id:        s.RosID,
+			Name:      s.Name,
+			Service:   s.Service,
+			CallerId:  s.CallerID,
+			Address:   s.Address,
+			Encoding:  s.Encoding,
+			SessionId: s.SessionID,
+			Radius:    s.Radius,
 		})
 	}
 
@@ -91,34 +88,28 @@ func (h *HotspotConnectHandler) StreamPPPActive(ctx context.Context, req *connec
 					continue
 				}
 				activeMap[id] = mikrotik.PPPActiveSession{
-					RosID:         id,
-					Name:          name,
-					Service:       row["service"],
-					CallerID:      row["caller-id"],
-					Address:       row["address"],
-					Uptime:        row["uptime"],
-					Encoding:      row["encoding"],
-					SessionID:     row["session-id"],
-					LimitBytesIn:  row["limit-bytes-in"],
-					LimitBytesOut: row["limit-bytes-out"],
-					Radius:        strings.EqualFold(row["radius"], "true"),
+					RosID:     id,
+					Name:      name,
+					Service:   row["service"],
+					CallerID:  row["caller-id"],
+					Address:   row["address"],
+					Encoding:  row["encoding"],
+					SessionID: row["session-id"],
+					Radius:    strings.EqualFold(row["radius"], "true"),
 				}
 			}
 
 			items := make([]*devicepb.PPPActiveSessionItem, 0, len(activeMap))
 			for _, s := range activeMap {
 				items = append(items, &devicepb.PPPActiveSessionItem{
-					Id:            s.RosID,
-					Name:          s.Name,
-					Service:       s.Service,
-					CallerId:      s.CallerID,
-					Address:       s.Address,
-					Uptime:        s.Uptime,
-					Encoding:      s.Encoding,
-					SessionId:     s.SessionID,
-					LimitBytesIn:  s.LimitBytesIn,
-					LimitBytesOut: s.LimitBytesOut,
-					Radius:        s.Radius,
+					Id:        s.RosID,
+					Name:      s.Name,
+					Service:   s.Service,
+					CallerId:  s.CallerID,
+					Address:   s.Address,
+					Encoding:  s.Encoding,
+					SessionId: s.SessionID,
+					Radius:    s.Radius,
 				})
 			}
 
@@ -194,17 +185,14 @@ func (s *pppSessionState) updateActive(row map[string]string) {
 		return
 	}
 	s.activeMap[id] = mikrotik.PPPActiveSession{
-		RosID:         id,
-		Name:          name,
-		Service:       row["service"],
-		CallerID:      row["caller-id"],
-		Address:       row["address"],
-		Uptime:        row["uptime"],
-		Encoding:      row["encoding"],
-		SessionID:     row["session-id"],
-		LimitBytesIn:  row["limit-bytes-in"],
-		LimitBytesOut: row["limit-bytes-out"],
-		Radius:        strings.EqualFold(row["radius"], "true"),
+		RosID:     id,
+		Name:      name,
+		Service:   row["service"],
+		CallerID:  row["caller-id"],
+		Address:   row["address"],
+		Encoding:  row["encoding"],
+		SessionID: row["session-id"],
+		Radius:    strings.EqualFold(row["radius"], "true"),
 	}
 }
 

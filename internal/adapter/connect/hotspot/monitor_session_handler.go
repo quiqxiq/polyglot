@@ -215,19 +215,12 @@ func (s *hotspotSessionState) updateActive(row map[string]string) {
 		return
 	}
 	s.activeMap[id] = mikrotik.HotspotActiveSession{
-		RosID:           id,
-		Server:          row["server"],
-		User:            user,
-		Address:         row["address"],
-		MACAddress:      row["mac-address"],
-		LoginBy:         row["login-by"],
-		Uptime:          row["uptime"],
-		SessionTimeLeft: row["session-time-left"],
-		IdleTime:        row["idle-time"],
-		BytesIn:         row["bytes-in"],
-		BytesOut:        row["bytes-out"],
-		PacketsIn:       row["packets-in"],
-		PacketsOut:      row["packets-out"],
+		RosID:      id,
+		Server:     row["server"],
+		User:       user,
+		Address:    row["address"],
+		MACAddress: row["mac-address"],
+		LoginBy:    row["login-by"],
 	}
 }
 

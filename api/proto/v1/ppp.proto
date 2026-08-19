@@ -45,13 +45,10 @@ message PPPActiveSession {
   string service = 3;
   string caller_id = 4;
   string address = 5;
-  string uptime = 6;
-  string encoding = 7;
-  string session_id = 8;
-  string limit_bytes_in = 9;
-  string limit_bytes_out = 10;
-  bool radius = 11;
-  string profile = 12;
+  string encoding = 6;
+  string session_id = 7;
+  bool radius = 8;
+  string profile = 9;
 }
 
 // ── Secret Messages ───────────────────────────────────────────────────

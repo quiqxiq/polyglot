@@ -248,22 +248,7 @@ export class HotspotActiveSession extends Message<HotspotActiveSession> {
   macAddress = "";
 
   /**
-   * @generated from field: string uptime = 6;
-   */
-  uptime = "";
-
-  /**
-   * @generated from field: string bytes_in = 7;
-   */
-  bytesIn = "";
-
-  /**
-   * @generated from field: string bytes_out = 8;
-   */
-  bytesOut = "";
-
-  /**
-   * @generated from field: string comment = 9;
+   * @generated from field: string comment = 6;
    */
   comment = "";
 
@@ -280,10 +265,7 @@ export class HotspotActiveSession extends Message<HotspotActiveSession> {
     { no: 3, name: "user", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 5, name: "mac_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 6, name: "uptime", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 7, name: "bytes_in", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 8, name: "bytes_out", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 9, name: "comment", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "comment", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): HotspotActiveSession {

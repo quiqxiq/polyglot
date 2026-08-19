@@ -17,18 +17,15 @@ package port
 //   - LimitBytesOut  : byte limit for outgoing traffic (empty = unlimited).
 //   - Radius         : "true" if the session is authenticated via RADIUS.
 type PPPActiveSession struct {
-	RosID         string
-	Name          string
-	Service       string
-	CallerID      string
-	Address       string
-	Uptime        string
-	Encoding      string
-	SessionID     string
-	LimitBytesIn  string
-	LimitBytesOut string
-	Radius        bool
-	Profile       string
+	RosID     string
+	Name      string
+	Service   string
+	CallerID  string
+	Address   string
+	Encoding  string
+	SessionID string
+	Radius    bool
+	Profile   string
 }
 
 // PPPActiveStat represents real-time telemetry metrics returned by

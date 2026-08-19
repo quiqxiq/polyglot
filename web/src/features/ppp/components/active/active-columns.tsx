@@ -1,12 +1,12 @@
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from '@/components/data-table'
-import type { PPPActiveSession } from '@/gen/v1/ppp_pb'
+import type { EnrichedPPPActiveSession } from '../../api/use-ppp-stream'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Activity, Clock, Globe, Network } from 'lucide-react'
 import { ActiveRowActions } from './active-row-actions'
 
-export const activeColumns: ColumnDef<PPPActiveSession>[] = [
+export const activeColumns: ColumnDef<EnrichedPPPActiveSession>[] = [
   {
     id: 'select',
     header: ({ table }) => (

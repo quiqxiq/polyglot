@@ -260,37 +260,22 @@ export class PPPActiveSession extends Message<PPPActiveSession> {
   address = "";
 
   /**
-   * @generated from field: string uptime = 6;
-   */
-  uptime = "";
-
-  /**
-   * @generated from field: string encoding = 7;
+   * @generated from field: string encoding = 6;
    */
   encoding = "";
 
   /**
-   * @generated from field: string session_id = 8;
+   * @generated from field: string session_id = 7;
    */
   sessionId = "";
 
   /**
-   * @generated from field: string limit_bytes_in = 9;
-   */
-  limitBytesIn = "";
-
-  /**
-   * @generated from field: string limit_bytes_out = 10;
-   */
-  limitBytesOut = "";
-
-  /**
-   * @generated from field: bool radius = 11;
+   * @generated from field: bool radius = 8;
    */
   radius = false;
 
   /**
-   * @generated from field: string profile = 12;
+   * @generated from field: string profile = 9;
    */
   profile = "";
 
@@ -307,13 +292,10 @@ export class PPPActiveSession extends Message<PPPActiveSession> {
     { no: 3, name: "service", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "caller_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 5, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 6, name: "uptime", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 7, name: "encoding", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 8, name: "session_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 9, name: "limit_bytes_in", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 10, name: "limit_bytes_out", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 11, name: "radius", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 12, name: "profile", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "encoding", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "session_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "radius", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 9, name: "profile", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PPPActiveSession {

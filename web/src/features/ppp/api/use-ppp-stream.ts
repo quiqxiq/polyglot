@@ -2,15 +2,25 @@ import { useEffect, useRef, useState } from 'react'
 import { pppClient } from '@/lib/api-client'
 import type { PPPActiveSession, PPPSecret } from '@/gen/v1/ppp_pb'
 
+export type EnrichedPPPActiveSession = PPPActiveSession & {
+  uptime?: string
+  limitBytesIn?: string
+  limitBytesOut?: string
+  bytesIn?: string
+  bytesOut?: string
+  packetsIn?: string
+  packetsOut?: string
+}
+
 export function useStreamPPPActiveSessions(
   deviceId?: string,
   enabled = true,
   interval = '1s'
 ) {
-  const [sessions, setSessions] = useState<PPPActiveSession[]>([])
+  const [sessions, setSessions] = useState<EnrichedPPPActiveSession[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
-  const sessionsMapRef = useRef<Map<string, PPPActiveSession>>(new Map())
+  const sessionsMapRef = useRef<Map<string, EnrichedPPPActiveSession>>(new Map())
 
   useEffect(() => {
     if (!deviceId || !enabled) {
@@ -33,16 +43,19 @@ export function useStreamPPPActiveSessions(
         )
         for await (const frame of stream) {
           if (abortController.signal.aborted) break
-          const newMap = new Map<string, PPPActiveSession>()
+          const newMap = new Map<string, EnrichedPPPActiveSession>()
           for (const s of frame.sessions) {
             const existing = sessionsMapRef.current.get(s.id)
-            if (existing) {
-              // Preserve dynamic telemetry stats if already updated
-              s.uptime = existing.uptime || s.uptime
-              s.limitBytesIn = existing.limitBytesIn || s.limitBytesIn
-              s.limitBytesOut = existing.limitBytesOut || s.limitBytesOut
-            }
-            newMap.set(s.id, s)
+            const enriched = Object.assign(s, {
+              uptime: existing?.uptime || '',
+              limitBytesIn: existing?.limitBytesIn || '',
+              limitBytesOut: existing?.limitBytesOut || '',
+              bytesIn: existing?.bytesIn || '',
+              bytesOut: existing?.bytesOut || '',
+              packetsIn: existing?.packetsIn || '',
+              packetsOut: existing?.packetsOut || '',
+            }) as EnrichedPPPActiveSession
+            newMap.set(s.id, enriched)
           }
           sessionsMapRef.current = newMap
           setSessions(Array.from(newMap.values()))
@@ -73,6 +86,10 @@ export function useStreamPPPActiveSessions(
               sess.uptime = st.uptime
               sess.limitBytesIn = st.limitBytesIn
               sess.limitBytesOut = st.limitBytesOut
+              sess.bytesIn = st.bytesIn
+              sess.bytesOut = st.bytesOut
+              sess.packetsIn = st.packetsIn
+              sess.packetsOut = st.packetsOut
               changed = true
             }
           }

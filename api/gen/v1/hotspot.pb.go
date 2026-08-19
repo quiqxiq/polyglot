@@ -300,10 +300,7 @@ type HotspotActiveSession struct {
 	User          string                 `protobuf:"bytes,3,opt,name=user,proto3" json:"user,omitempty"`
 	Address       string                 `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
 	MacAddress    string                 `protobuf:"bytes,5,opt,name=mac_address,json=macAddress,proto3" json:"mac_address,omitempty"`
-	Uptime        string                 `protobuf:"bytes,6,opt,name=uptime,proto3" json:"uptime,omitempty"`
-	BytesIn       string                 `protobuf:"bytes,7,opt,name=bytes_in,json=bytesIn,proto3" json:"bytes_in,omitempty"`
-	BytesOut      string                 `protobuf:"bytes,8,opt,name=bytes_out,json=bytesOut,proto3" json:"bytes_out,omitempty"`
-	Comment       string                 `protobuf:"bytes,9,opt,name=comment,proto3" json:"comment,omitempty"`
+	Comment       string                 `protobuf:"bytes,6,opt,name=comment,proto3" json:"comment,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -369,27 +366,6 @@ func (x *HotspotActiveSession) GetAddress() string {
 func (x *HotspotActiveSession) GetMacAddress() string {
 	if x != nil {
 		return x.MacAddress
-	}
-	return ""
-}
-
-func (x *HotspotActiveSession) GetUptime() string {
-	if x != nil {
-		return x.Uptime
-	}
-	return ""
-}
-
-func (x *HotspotActiveSession) GetBytesIn() string {
-	if x != nil {
-		return x.BytesIn
-	}
-	return ""
-}
-
-func (x *HotspotActiveSession) GetBytesOut() string {
-	if x != nil {
-		return x.BytesOut
 	}
 	return ""
 }
@@ -7610,18 +7586,15 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\acomment\x18\n" +
 	" \x01(\tR\acomment\x12\x1a\n" +
 	"\bdisabled\x18\v \x01(\bR\bdisabled\x12\x16\n" +
-	"\x06server\x18\f \x01(\tR\x06server\"\xf7\x01\n" +
+	"\x06server\x18\f \x01(\tR\x06server\"\xa7\x01\n" +
 	"\x14HotspotActiveSession\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
 	"\x06server\x18\x02 \x01(\tR\x06server\x12\x12\n" +
 	"\x04user\x18\x03 \x01(\tR\x04user\x12\x18\n" +
 	"\aaddress\x18\x04 \x01(\tR\aaddress\x12\x1f\n" +
 	"\vmac_address\x18\x05 \x01(\tR\n" +
-	"macAddress\x12\x16\n" +
-	"\x06uptime\x18\x06 \x01(\tR\x06uptime\x12\x19\n" +
-	"\bbytes_in\x18\a \x01(\tR\abytesIn\x12\x1b\n" +
-	"\tbytes_out\x18\b \x01(\tR\bbytesOut\x12\x18\n" +
-	"\acomment\x18\t \x01(\tR\acomment\"\xbf\x01\n" +
+	"macAddress\x12\x18\n" +
+	"\acomment\x18\x06 \x01(\tR\acomment\"\xbf\x01\n" +
 	"\tDHCPLease\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
 	"\aaddress\x18\x02 \x01(\tR\aaddress\x12\x1f\n" +

@@ -1,10 +1,10 @@
 import { Badge } from '@/components/ui/badge'
-import type { PPPActiveSession } from '@/gen/v1/ppp_pb'
+import type { EnrichedPPPActiveSession } from '../../api/use-ppp-stream'
 import { Clock, Globe, Network, UserCheck } from 'lucide-react'
 import { ActiveRowActions } from './active-row-actions'
 
 interface ActiveCardProps {
-  session: PPPActiveSession
+  session: EnrichedPPPActiveSession
 }
 
 export function ActiveCard({ session }: ActiveCardProps) {

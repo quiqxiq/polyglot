@@ -75,18 +75,15 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 					continue
 				}
 				activeMap[id] = port.PPPActiveSession{
-					RosID:         id,
-					Name:          name,
-					Service:       row["service"],
-					CallerID:      row["caller-id"],
-					Address:       row["address"],
-					Uptime:        row["uptime"],
-					Encoding:      row["encoding"],
-					SessionID:     row["session-id"],
-					LimitBytesIn:  row["limit-bytes-in"],
-					LimitBytesOut: row["limit-bytes-out"],
-					Radius:        strings.EqualFold(row["radius"], "true"),
-					Profile:       row["profile"],
+					RosID:     id,
+					Name:      name,
+					Service:   row["service"],
+					CallerID:  row["caller-id"],
+					Address:   row["address"],
+					Encoding:  row["encoding"],
+					SessionID: row["session-id"],
+					Radius:    strings.EqualFold(row["radius"], "true"),
+					Profile:   row["profile"],
 				}
 			}
 

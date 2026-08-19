@@ -1,9 +1,9 @@
 import { type ColumnDef } from '@tanstack/react-table'
 import { DataTableColumnHeader } from '@/components/data-table'
-import type { HotspotActiveSession } from '@/gen/v1/hotspot_pb'
+import type { EnrichedHotspotActiveSession } from '../../api/use-hotspot-stream'
 import { ActiveRowActions } from './active-row-actions'
 
-function formatBytes(bytesStr: string): string {
+function formatBytes(bytesStr?: string): string {
   const bytes = Number(bytesStr || 0)
   if (isNaN(bytes) || bytes === 0) return '0 B'
   const k = 1024
@@ -12,7 +12,7 @@ function formatBytes(bytesStr: string): string {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`
 }
 
-export const activeColumns: ColumnDef<HotspotActiveSession>[] = [
+export const activeColumns: ColumnDef<EnrichedHotspotActiveSession>[] = [
   {
     accessorKey: 'server',
     header: ({ column }) => (

@@ -24,12 +24,12 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { DataTablePagination } from '@/components/data-table'
-import type { HotspotActiveSession } from '@/gen/v1/hotspot_pb'
+import type { EnrichedHotspotActiveSession } from '../../api/use-hotspot-stream'
 import { ActiveCard } from './active-card'
 import { activeColumns as columns } from './active-columns'
 
 interface ActiveTableProps {
-  data: HotspotActiveSession[]
+  data: EnrichedHotspotActiveSession[]
   isLoading?: boolean
 }
 

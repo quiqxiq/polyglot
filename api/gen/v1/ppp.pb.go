@@ -316,13 +316,10 @@ type PPPActiveSession struct {
 	Service       string                 `protobuf:"bytes,3,opt,name=service,proto3" json:"service,omitempty"`
 	CallerId      string                 `protobuf:"bytes,4,opt,name=caller_id,json=callerId,proto3" json:"caller_id,omitempty"`
 	Address       string                 `protobuf:"bytes,5,opt,name=address,proto3" json:"address,omitempty"`
-	Uptime        string                 `protobuf:"bytes,6,opt,name=uptime,proto3" json:"uptime,omitempty"`
-	Encoding      string                 `protobuf:"bytes,7,opt,name=encoding,proto3" json:"encoding,omitempty"`
-	SessionId     string                 `protobuf:"bytes,8,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
-	LimitBytesIn  string                 `protobuf:"bytes,9,opt,name=limit_bytes_in,json=limitBytesIn,proto3" json:"limit_bytes_in,omitempty"`
-	LimitBytesOut string                 `protobuf:"bytes,10,opt,name=limit_bytes_out,json=limitBytesOut,proto3" json:"limit_bytes_out,omitempty"`
-	Radius        bool                   `protobuf:"varint,11,opt,name=radius,proto3" json:"radius,omitempty"`
-	Profile       string                 `protobuf:"bytes,12,opt,name=profile,proto3" json:"profile,omitempty"`
+	Encoding      string                 `protobuf:"bytes,6,opt,name=encoding,proto3" json:"encoding,omitempty"`
+	SessionId     string                 `protobuf:"bytes,7,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	Radius        bool                   `protobuf:"varint,8,opt,name=radius,proto3" json:"radius,omitempty"`
+	Profile       string                 `protobuf:"bytes,9,opt,name=profile,proto3" json:"profile,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -392,13 +389,6 @@ func (x *PPPActiveSession) GetAddress() string {
 	return ""
 }
 
-func (x *PPPActiveSession) GetUptime() string {
-	if x != nil {
-		return x.Uptime
-	}
-	return ""
-}
-
 func (x *PPPActiveSession) GetEncoding() string {
 	if x != nil {
 		return x.Encoding
@@ -409,20 +399,6 @@ func (x *PPPActiveSession) GetEncoding() string {
 func (x *PPPActiveSession) GetSessionId() string {
 	if x != nil {
 		return x.SessionId
-	}
-	return ""
-}
-
-func (x *PPPActiveSession) GetLimitBytesIn() string {
-	if x != nil {
-		return x.LimitBytesIn
-	}
-	return ""
-}
-
-func (x *PPPActiveSession) GetLimitBytesOut() string {
-	if x != nil {
-		return x.LimitBytesOut
 	}
 	return ""
 }
@@ -2747,22 +2723,18 @@ const file_v1_ppp_proto_rawDesc = "" +
 	"\x0fuse_compression\x18\r \x01(\tR\x0euseCompression\x12%\n" +
 	"\x0euse_encryption\x18\x0e \x01(\tR\ruseEncryption\x12$\n" +
 	"\x0echange_tcp_mss\x18\x0f \x01(\tR\fchangeTcpMss\x12'\n" +
-	"\x0fbridge_learning\x18\x10 \x01(\tR\x0ebridgeLearning\"\xda\x02\n" +
+	"\x0fbridge_learning\x18\x10 \x01(\tR\x0ebridgeLearning\"\xf4\x01\n" +
 	"\x10PPPActiveSession\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x18\n" +
 	"\aservice\x18\x03 \x01(\tR\aservice\x12\x1b\n" +
 	"\tcaller_id\x18\x04 \x01(\tR\bcallerId\x12\x18\n" +
-	"\aaddress\x18\x05 \x01(\tR\aaddress\x12\x16\n" +
-	"\x06uptime\x18\x06 \x01(\tR\x06uptime\x12\x1a\n" +
-	"\bencoding\x18\a \x01(\tR\bencoding\x12\x1d\n" +
+	"\aaddress\x18\x05 \x01(\tR\aaddress\x12\x1a\n" +
+	"\bencoding\x18\x06 \x01(\tR\bencoding\x12\x1d\n" +
 	"\n" +
-	"session_id\x18\b \x01(\tR\tsessionId\x12$\n" +
-	"\x0elimit_bytes_in\x18\t \x01(\tR\flimitBytesIn\x12&\n" +
-	"\x0flimit_bytes_out\x18\n" +
-	" \x01(\tR\rlimitBytesOut\x12\x16\n" +
-	"\x06radius\x18\v \x01(\bR\x06radius\x12\x18\n" +
-	"\aprofile\x18\f \x01(\tR\aprofile\"U\n" +
+	"session_id\x18\a \x01(\tR\tsessionId\x12\x16\n" +
+	"\x06radius\x18\b \x01(\bR\x06radius\x12\x18\n" +
+	"\aprofile\x18\t \x01(\tR\aprofile\"U\n" +
 	"\x15ListPPPSecretsRequest\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x1f\n" +
 	"\vname_filter\x18\x02 \x01(\tR\n" +

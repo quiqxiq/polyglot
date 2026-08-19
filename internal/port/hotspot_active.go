@@ -19,19 +19,12 @@ package port
 //   - PacketsIn      : packets received from client.
 //   - PacketsOut     : packets sent to client.
 type HotspotActiveSession struct {
-	RosID           string
-	Server          string
-	User            string
-	Address         string
-	MACAddress      string
-	LoginBy         string
-	Uptime          string
-	SessionTimeLeft string
-	IdleTime        string
-	BytesIn         string
-	BytesOut        string
-	PacketsIn       string
-	PacketsOut      string
+	RosID      string
+	Server     string
+	User       string
+	Address    string
+	MACAddress string
+	LoginBy    string
 }
 
 // HotspotActiveStat represents dynamic real-time telemetry metrics returned by

@@ -67,7 +67,6 @@ func TestParsePPPActiveSessions(t *testing.T) {
 		assert.Equal(t, "pppoe", s.Service)
 		assert.Equal(t, "AA:BB:CC:DD:EE:FF", s.CallerID)
 		assert.Equal(t, "10.10.0.5", s.Address)
-		assert.Equal(t, "3h25m10s", s.Uptime)
 		assert.False(t, s.Radius)
 	})
 
@@ -76,6 +75,26 @@ func TestParsePPPActiveSessions(t *testing.T) {
 			{".id": "*1", "name": "x", "radius": "true"},
 		}}
 		assert.True(t, ParsePPPActiveSessions(result)[0].Radius)
+	})
+
+	t.Run("parse ppp active stats", func(t *testing.T) {
+		result := command.Result{Rows: []map[string]string{
+			{
+				".id": "*A1", "uptime": "3h25m10s",
+				"limit-bytes-in": "1000", "limit-bytes-out": "2000",
+				"bytes-in": "5000", "bytes-out": "6000",
+				"packets-in": "50", "packets-out": "60",
+			},
+		}}
+		stats := ParsePPPActiveStats(result)
+		require.Len(t, stats, 1)
+		st := stats[0]
+		assert.Equal(t, "*A1", st.RosID)
+		assert.Equal(t, "3h25m10s", st.Uptime)
+		assert.Equal(t, "1000", st.LimitBytesIn)
+		assert.Equal(t, "2000", st.LimitBytesOut)
+		assert.Equal(t, "5000", st.BytesIn)
+		assert.Equal(t, "6000", st.BytesOut)
 	})
 
 	t.Run("baris tanpa .id dilewati", func(t *testing.T) {
