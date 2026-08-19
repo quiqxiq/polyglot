@@ -40,31 +40,17 @@ export function ActiveTable({ data, isLoading }: ActiveTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = useState('')
 
-  // Derive unique services from active data
-  const serviceOptions = useMemo(() => {
+  // Derive unique profiles from active data
+  const profileOptions = useMemo(() => {
     const map = new Map<string, number>()
     data.forEach((s) => {
-      const srv = (s.service || 'pppoe').toLowerCase()
-      map.set(srv, (map.get(srv) || 0) + 1)
+      const p = s.profile || 'default'
+      map.set(p, (map.get(p) || 0) + 1)
     })
     return Array.from(map.entries()).map(([value, count]) => ({
-      label: `${value.toUpperCase()} (${count})`,
+      label: `${value} (${count})`,
       value,
     }))
-  }, [data])
-
-  // Derive auth types
-  const authOptions = useMemo(() => {
-    let radius = 0
-    let local = 0
-    data.forEach((s) => {
-      if (s.radius) radius++
-      else local++
-    })
-    return [
-      { label: `Local (${local})`, value: 'local' },
-      { label: `RADIUS (${radius})`, value: 'radius' },
-    ]
   }, [data])
 
   const table = useReactTable({
@@ -88,12 +74,12 @@ export function ActiveTable({ data, isLoading }: ActiveTableProps) {
       const name = (row.original.name || '').toLowerCase()
       const address = (row.original.address || '').toLowerCase()
       const callerId = (row.original.callerId || '').toLowerCase()
-      const service = (row.original.service || '').toLowerCase()
+      const profile = (row.original.profile || '').toLowerCase()
       return (
         name.includes(search) ||
         address.includes(search) ||
         callerId.includes(search) ||
-        service.includes(search)
+        profile.includes(search)
       )
     },
     getCoreRowModel: getCoreRowModel(),
@@ -111,14 +97,9 @@ export function ActiveTable({ data, isLoading }: ActiveTableProps) {
         searchPlaceholder="Search active session username, IP, or MAC..."
         filters={[
           {
-            columnId: 'service',
-            title: 'Service',
-            options: serviceOptions,
-          },
-          {
-            columnId: 'radius',
-            title: 'Auth',
-            options: authOptions,
+            columnId: 'profile',
+            title: 'Profile',
+            options: profileOptions,
           },
         ]}
       />

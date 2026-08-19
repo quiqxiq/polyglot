@@ -89,6 +89,7 @@ func ParsePPPActiveSessions(result command.Result) []PPPActiveSession {
 			LimitBytesIn:  row["limit-bytes-in"],
 			LimitBytesOut: row["limit-bytes-out"],
 			Radius:        strings.EqualFold(row["radius"], "true"),
+			Profile:       row["profile"],
 		})
 	}
 	return sessions

@@ -289,6 +289,11 @@ export class PPPActiveSession extends Message<PPPActiveSession> {
    */
   radius = false;
 
+  /**
+   * @generated from field: string profile = 12;
+   */
+  profile = "";
+
   constructor(data?: PartialMessage<PPPActiveSession>) {
     super();
     proto3.util.initPartial(data, this);
@@ -308,6 +313,7 @@ export class PPPActiveSession extends Message<PPPActiveSession> {
     { no: 9, name: "limit_bytes_in", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 10, name: "limit_bytes_out", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 11, name: "radius", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 12, name: "profile", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PPPActiveSession {

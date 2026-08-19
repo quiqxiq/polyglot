@@ -83,3 +83,47 @@ func ParsePingLatency(row map[string]string) (int64, string) {
 
 	return 1, status
 }
+
+// ParseDurationMs parses a duration string (e.g. "23ms", "1ms200us", "42ms") to int64 milliseconds.
+func ParseDurationMs(timeStr string) int64 {
+	timeStr = strings.TrimSpace(timeStr)
+	if timeStr == "" {
+		return 0
+	}
+	timeStr = strings.TrimPrefix(timeStr, "<")
+	timeStr = strings.TrimPrefix(timeStr, ">")
+
+	if d, err := time.ParseDuration(timeStr); err == nil {
+		ms := float64(d) / float64(time.Millisecond)
+		if ms > 0 && ms < 1.0 {
+			return 1
+		}
+		return int64(math.Round(ms))
+	}
+
+	cleanStr := strings.TrimSuffix(timeStr, "ms")
+	cleanStr = strings.TrimSuffix(cleanStr, "s")
+	cleanStr = strings.TrimSpace(cleanStr)
+
+	if f, err := strconv.ParseFloat(cleanStr, 64); err == nil {
+		if f > 0 && f < 1.0 {
+			return 1
+		}
+		return int64(math.Round(f))
+	}
+
+	return 0
+}
+
+// ParsePacketLoss parses packet loss percentage strings (e.g. "0%", "5%", "10") to int32.
+func ParsePacketLoss(lossStr string) int32 {
+	lossStr = strings.TrimSpace(lossStr)
+	lossStr = strings.TrimSuffix(lossStr, "%")
+	if lossStr == "" {
+		return 0
+	}
+	if v, err := strconv.ParseInt(lossStr, 10, 32); err == nil {
+		return int32(v)
+	}
+	return 0
+}

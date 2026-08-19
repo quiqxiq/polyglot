@@ -136,6 +136,15 @@ message StreamDevicePingFrame {
   string address = 2;
   int64 latency_ms = 3;
   string status = 4;
+  int32 seq = 5;
+  int32 ttl = 6;
+  int32 size = 7;
+  int32 sent = 8;
+  int32 received = 9;
+  int32 packet_loss = 10;
+  int64 min_rtt_ms = 11;
+  int64 avg_rtt_ms = 12;
+  int64 max_rtt_ms = 13;
 }
 
 // StreamDeviceTraffic requests continuous interface traffic monitoring.

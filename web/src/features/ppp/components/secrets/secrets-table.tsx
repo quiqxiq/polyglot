@@ -66,19 +66,6 @@ export function SecretsTable({ data, isLoading }: SecretsTableProps) {
     }))
   }, [data])
 
-  // Derive status options
-  const statusOptions = useMemo(() => {
-    let active = 0
-    let disabled = 0
-    data.forEach((s) => {
-      if (s.disabled) disabled++
-      else active++
-    })
-    return [
-      { label: `Active (${active})`, value: 'active' },
-      { label: `Disabled (${disabled})`, value: 'disabled' },
-    ]
-  }, [data])
 
   // Derive unique comments / batch tags for faceted filtering
   const commentOptions = useMemo(() => {
@@ -150,11 +137,6 @@ export function SecretsTable({ data, isLoading }: SecretsTableProps) {
             options: serviceOptions,
           },
           {
-            columnId: 'status',
-            title: 'Status',
-            options: statusOptions,
-          },
-          {
             columnId: 'comment',
             title: 'Comment / Batch',
             options: commentOptions,
@@ -186,6 +168,7 @@ export function SecretsTable({ data, isLoading }: SecretsTableProps) {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  className={row.original.disabled ? 'opacity-60 bg-muted/30 text-muted-foreground' : ''}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

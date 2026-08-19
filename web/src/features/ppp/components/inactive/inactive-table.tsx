@@ -51,33 +51,6 @@ export function InactiveTable({ data, isLoading }: InactiveTableProps) {
     }))
   }, [data])
 
-  // Derive unique services
-  const serviceOptions = useMemo(() => {
-    const map = new Map<string, number>()
-    data.forEach((s) => {
-      const srv = (s.service || 'any').toLowerCase()
-      map.set(srv, (map.get(srv) || 0) + 1)
-    })
-    return Array.from(map.entries()).map(([value, count]) => ({
-      label: `${value.toUpperCase()} (${count})`,
-      value,
-    }))
-  }, [data])
-
-  // Derive status
-  const statusOptions = useMemo(() => {
-    let offline = 0
-    let disabled = 0
-    data.forEach((s) => {
-      if (s.disabled) disabled++
-      else offline++
-    })
-    return [
-      { label: `Offline (${offline})`, value: 'offline' },
-      { label: `Disabled (${disabled})`, value: 'disabled' },
-    ]
-  }, [data])
-
   const table = useReactTable({
     data,
     columns: inactiveColumns,
@@ -94,11 +67,11 @@ export function InactiveTable({ data, isLoading }: InactiveTableProps) {
     globalFilterFn: (row, _, filterValue: string) => {
       const search = filterValue.toLowerCase()
       const name = (row.original.name || '').toLowerCase()
-      const comment = (row.original.comment || '').toLowerCase()
+      const callerId = (row.original.callerId || '').toLowerCase()
       const profile = (row.original.profile || '').toLowerCase()
       return (
         name.includes(search) ||
-        comment.includes(search) ||
+        callerId.includes(search) ||
         profile.includes(search)
       )
     },
@@ -114,22 +87,12 @@ export function InactiveTable({ data, isLoading }: InactiveTableProps) {
     <div className="space-y-4">
       <DataTableToolbar
         table={table}
-        searchPlaceholder="Search offline subscriber username, profile, or comment..."
+        searchPlaceholder="Search offline subscriber username, MAC, or profile..."
         filters={[
           {
             columnId: 'profile',
             title: 'Profile',
             options: profileOptions,
-          },
-          {
-            columnId: 'service',
-            title: 'Service',
-            options: serviceOptions,
-          },
-          {
-            columnId: 'status',
-            title: 'Status',
-            options: statusOptions,
           },
         ]}
       />
@@ -155,7 +118,10 @@ export function InactiveTable({ data, isLoading }: InactiveTableProps) {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow
+                  key={row.id}
+                  className={row.original.disabled ? 'opacity-60 bg-muted/30 text-muted-foreground' : ''}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(

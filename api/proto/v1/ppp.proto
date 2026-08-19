@@ -51,6 +51,7 @@ message PPPActiveSession {
   string limit_bytes_in = 9;
   string limit_bytes_out = 10;
   bool radius = 11;
+  string profile = 12;
 }
 
 // ── Secret Messages ───────────────────────────────────────────────────

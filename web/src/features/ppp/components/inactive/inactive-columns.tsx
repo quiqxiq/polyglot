@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/badge'
 import { DataTableColumnHeader } from '@/components/data-table'
 import type { PPPSecret } from '@/gen/v1/ppp_pb'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Server, Shield, UserX } from 'lucide-react'
+import { Network, Shield, UserX } from 'lucide-react'
 import { InactiveRowActions } from './inactive-row-actions'
 
 export const inactiveColumns: ColumnDef<PPPSecret>[] = [
@@ -19,6 +19,37 @@ export const inactiveColumns: ColumnDef<PPPSecret>[] = [
             <UserX className="h-3.5 w-3.5" />
           </div>
           <span className="font-mono text-sm">{name}</span>
+        </div>
+      )
+    },
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'lastLoggedOut',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Last Logged Out" />
+    ),
+    cell: ({ row }) => {
+      const last = row.getValue('lastLoggedOut') as string
+      return (
+        <span className="text-xs text-muted-foreground font-mono">
+          {last || 'Never'}
+        </span>
+      )
+    },
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'callerId',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="MAC Address" />
+    ),
+    cell: ({ row }) => {
+      const callerId = row.getValue('callerId') as string
+      return (
+        <div className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
+          <Network className="h-3.5 w-3.5" />
+          <span>{callerId || '-'}</span>
         </div>
       )
     },
@@ -42,97 +73,11 @@ export const inactiveColumns: ColumnDef<PPPSecret>[] = [
       const profile = (row.getValue(id) as string) || 'default'
       return value.includes(profile)
     },
-  },
-  {
-    accessorKey: 'service',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Service" />
-    ),
-    cell: ({ row }) => {
-      const service = row.getValue('service') as string
-      return (
-        <Badge variant="secondary" className="uppercase font-mono text-[10px]">
-          <Server className="mr-1 h-3 w-3" />
-          {service || 'any'}
-        </Badge>
-      )
-    },
-    filterFn: (row, id, value: string[]) => {
-      const service = ((row.getValue(id) as string) || 'any').toLowerCase()
-      return value.includes(service)
-    },
-  },
-  {
-    id: 'address',
-    header: 'Assigned IP',
-    cell: ({ row }) => {
-      const remote = row.original.remoteAddress
-      return (
-        <span className="text-xs font-mono text-muted-foreground">
-          {remote || 'Profile default'}
-        </span>
-      )
-    },
-  },
-  {
-    accessorKey: 'comment',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Comment" />
-    ),
-    cell: ({ row }) => {
-      const comment = row.getValue('comment') as string
-      if (!comment) return <span className="text-xs text-muted-foreground">-</span>
-      return (
-        <span className="max-w-[180px] truncate text-xs text-muted-foreground">
-          {comment}
-        </span>
-      )
-    },
-    filterFn: (row, id, value: string[]) => {
-      const comment = (row.getValue(id) as string) || ''
-      return value.includes(comment)
-    },
-  },
-  {
-    accessorKey: 'disabled',
-    id: 'status',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
-    ),
-    cell: ({ row }) => {
-      const disabled = row.original.disabled
-      return disabled ? (
-        <Badge variant="destructive" className="text-[10px]">
-          Disabled
-        </Badge>
-      ) : (
-        <Badge variant="secondary" className="text-[10px] text-muted-foreground">
-          Offline
-        </Badge>
-      )
-    },
-    filterFn: (row, _id, value: string[]) => {
-      const disabled = row.original.disabled
-      const status = disabled ? 'disabled' : 'offline'
-      return value.includes(status)
-    },
-  },
-  {
-    accessorKey: 'lastLoggedOut',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Last Logout" />
-    ),
-    cell: ({ row }) => {
-      const last = row.getValue('lastLoggedOut') as string
-      return (
-        <span className="text-xs text-muted-foreground font-mono">
-          {last || 'Never'}
-        </span>
-      )
-    },
+    enableSorting: true,
   },
   {
     id: 'actions',
+    header: () => <div className="text-right pr-2">Actions</div>,
     cell: ({ row }) => <InactiveRowActions row={row.original} />,
   },
 ]

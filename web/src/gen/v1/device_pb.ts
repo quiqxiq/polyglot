@@ -1011,6 +1011,51 @@ export class StreamDevicePingFrame extends Message<StreamDevicePingFrame> {
    */
   status = "";
 
+  /**
+   * @generated from field: int32 seq = 5;
+   */
+  seq = 0;
+
+  /**
+   * @generated from field: int32 ttl = 6;
+   */
+  ttl = 0;
+
+  /**
+   * @generated from field: int32 size = 7;
+   */
+  size = 0;
+
+  /**
+   * @generated from field: int32 sent = 8;
+   */
+  sent = 0;
+
+  /**
+   * @generated from field: int32 received = 9;
+   */
+  received = 0;
+
+  /**
+   * @generated from field: int32 packet_loss = 10;
+   */
+  packetLoss = 0;
+
+  /**
+   * @generated from field: int64 min_rtt_ms = 11;
+   */
+  minRttMs = protoInt64.zero;
+
+  /**
+   * @generated from field: int64 avg_rtt_ms = 12;
+   */
+  avgRttMs = protoInt64.zero;
+
+  /**
+   * @generated from field: int64 max_rtt_ms = 13;
+   */
+  maxRttMs = protoInt64.zero;
+
   constructor(data?: PartialMessage<StreamDevicePingFrame>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1023,6 +1068,15 @@ export class StreamDevicePingFrame extends Message<StreamDevicePingFrame> {
     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "latency_ms", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
     { no: 4, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "seq", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 6, name: "ttl", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 7, name: "size", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 8, name: "sent", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 9, name: "received", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 10, name: "packet_loss", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 11, name: "min_rtt_ms", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 12, name: "avg_rtt_ms", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 13, name: "max_rtt_ms", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StreamDevicePingFrame {

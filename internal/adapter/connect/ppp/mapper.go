@@ -76,6 +76,7 @@ func ToProtoPPPActiveSession(s port.PPPActiveSession) *devicepb.PPPActiveSession
 		LimitBytesIn:  s.LimitBytesIn,
 		LimitBytesOut: s.LimitBytesOut,
 		Radius:        s.Radius,
+		Profile:       s.Profile,
 	}
 }
 

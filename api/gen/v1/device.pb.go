@@ -1241,6 +1241,15 @@ type StreamDevicePingFrame struct {
 	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
 	LatencyMs     int64                  `protobuf:"varint,3,opt,name=latency_ms,json=latencyMs,proto3" json:"latency_ms,omitempty"`
 	Status        string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
+	Seq           int32                  `protobuf:"varint,5,opt,name=seq,proto3" json:"seq,omitempty"`
+	Ttl           int32                  `protobuf:"varint,6,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	Size          int32                  `protobuf:"varint,7,opt,name=size,proto3" json:"size,omitempty"`
+	Sent          int32                  `protobuf:"varint,8,opt,name=sent,proto3" json:"sent,omitempty"`
+	Received      int32                  `protobuf:"varint,9,opt,name=received,proto3" json:"received,omitempty"`
+	PacketLoss    int32                  `protobuf:"varint,10,opt,name=packet_loss,json=packetLoss,proto3" json:"packet_loss,omitempty"`
+	MinRttMs      int64                  `protobuf:"varint,11,opt,name=min_rtt_ms,json=minRttMs,proto3" json:"min_rtt_ms,omitempty"`
+	AvgRttMs      int64                  `protobuf:"varint,12,opt,name=avg_rtt_ms,json=avgRttMs,proto3" json:"avg_rtt_ms,omitempty"`
+	MaxRttMs      int64                  `protobuf:"varint,13,opt,name=max_rtt_ms,json=maxRttMs,proto3" json:"max_rtt_ms,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1301,6 +1310,69 @@ func (x *StreamDevicePingFrame) GetStatus() string {
 		return x.Status
 	}
 	return ""
+}
+
+func (x *StreamDevicePingFrame) GetSeq() int32 {
+	if x != nil {
+		return x.Seq
+	}
+	return 0
+}
+
+func (x *StreamDevicePingFrame) GetTtl() int32 {
+	if x != nil {
+		return x.Ttl
+	}
+	return 0
+}
+
+func (x *StreamDevicePingFrame) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *StreamDevicePingFrame) GetSent() int32 {
+	if x != nil {
+		return x.Sent
+	}
+	return 0
+}
+
+func (x *StreamDevicePingFrame) GetReceived() int32 {
+	if x != nil {
+		return x.Received
+	}
+	return 0
+}
+
+func (x *StreamDevicePingFrame) GetPacketLoss() int32 {
+	if x != nil {
+		return x.PacketLoss
+	}
+	return 0
+}
+
+func (x *StreamDevicePingFrame) GetMinRttMs() int64 {
+	if x != nil {
+		return x.MinRttMs
+	}
+	return 0
+}
+
+func (x *StreamDevicePingFrame) GetAvgRttMs() int64 {
+	if x != nil {
+		return x.AvgRttMs
+	}
+	return 0
+}
+
+func (x *StreamDevicePingFrame) GetMaxRttMs() int64 {
+	if x != nil {
+		return x.MaxRttMs
+	}
+	return 0
 }
 
 // StreamDeviceTraffic requests continuous interface traffic monitoring.
@@ -1538,13 +1610,27 @@ const file_v1_device_proto_rawDesc = "" +
 	"\x06tx_bps\x18\x11 \x01(\x03R\x05txBps\"C\n" +
 	"\x17StreamDevicePingRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
-	"\aaddress\x18\x02 \x01(\tR\aaddress\"\x85\x01\n" +
+	"\aaddress\x18\x02 \x01(\tR\aaddress\"\xe8\x02\n" +
 	"\x15StreamDevicePingFrame\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x18\n" +
 	"\aaddress\x18\x02 \x01(\tR\aaddress\x12\x1d\n" +
 	"\n" +
 	"latency_ms\x18\x03 \x01(\x03R\tlatencyMs\x12\x16\n" +
-	"\x06status\x18\x04 \x01(\tR\x06status\"S\n" +
+	"\x06status\x18\x04 \x01(\tR\x06status\x12\x10\n" +
+	"\x03seq\x18\x05 \x01(\x05R\x03seq\x12\x10\n" +
+	"\x03ttl\x18\x06 \x01(\x05R\x03ttl\x12\x12\n" +
+	"\x04size\x18\a \x01(\x05R\x04size\x12\x12\n" +
+	"\x04sent\x18\b \x01(\x05R\x04sent\x12\x1a\n" +
+	"\breceived\x18\t \x01(\x05R\breceived\x12\x1f\n" +
+	"\vpacket_loss\x18\n" +
+	" \x01(\x05R\n" +
+	"packetLoss\x12\x1c\n" +
+	"\n" +
+	"min_rtt_ms\x18\v \x01(\x03R\bminRttMs\x12\x1c\n" +
+	"\n" +
+	"avg_rtt_ms\x18\f \x01(\x03R\bavgRttMs\x12\x1c\n" +
+	"\n" +
+	"max_rtt_ms\x18\r \x01(\x03R\bmaxRttMs\"S\n" +
 	"\x1aStreamDeviceTrafficRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12%\n" +
 	"\x0einterface_name\x18\x02 \x01(\tR\rinterfaceName\"\x8c\x01\n" +

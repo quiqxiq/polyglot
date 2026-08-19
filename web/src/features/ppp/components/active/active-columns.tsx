@@ -3,7 +3,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from '@/components/data-table'
 import type { PPPActiveSession } from '@/gen/v1/ppp_pb'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Activity, Clock, Globe, Network, Server } from 'lucide-react'
+import { Activity, Clock, Globe, Network, Shield } from 'lucide-react'
 import { ActiveRowActions } from './active-row-actions'
 
 export const activeColumns: ColumnDef<PPPActiveSession>[] = [
@@ -50,23 +50,24 @@ export const activeColumns: ColumnDef<PPPActiveSession>[] = [
     enableSorting: true,
   },
   {
-    accessorKey: 'service',
+    accessorKey: 'profile',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Service" />
+      <DataTableColumnHeader column={column} title="Profile" />
     ),
     cell: ({ row }) => {
-      const service = row.getValue('service') as string
+      const profile = row.original.profile || 'default'
       return (
-        <Badge variant="secondary" className="uppercase font-mono text-[10px]">
-          <Server className="mr-1 h-3 w-3" />
-          {service || 'pppoe'}
+        <Badge variant="outline" className="font-mono text-xs">
+          <Shield className="mr-1 h-3 w-3 text-muted-foreground" />
+          {profile}
         </Badge>
       )
     },
-    filterFn: (row, id, value: string[]) => {
-      const service = ((row.getValue(id) as string) || 'pppoe').toLowerCase()
-      return value.includes(service)
+    filterFn: (row, _id, value: string[]) => {
+      const profile = row.original.profile || 'default'
+      return value.includes(profile)
     },
+    enableSorting: true,
   },
   {
     accessorKey: 'address',
@@ -82,21 +83,7 @@ export const activeColumns: ColumnDef<PPPActiveSession>[] = [
         </div>
       )
     },
-  },
-  {
-    accessorKey: 'callerId',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Caller ID (MAC)" />
-    ),
-    cell: ({ row }) => {
-      const callerId = row.getValue('callerId') as string
-      return (
-        <div className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
-          <Network className="h-3.5 w-3.5" />
-          <span>{callerId || '-'}</span>
-        </div>
-      )
-    },
+    enableSorting: true,
   },
   {
     accessorKey: 'uptime',
@@ -112,49 +99,27 @@ export const activeColumns: ColumnDef<PPPActiveSession>[] = [
         </div>
       )
     },
+    enableSorting: true,
   },
   {
-    id: 'traffic',
-    header: 'Traffic In / Out',
+    accessorKey: 'callerId',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="MAC Address" />
+    ),
     cell: ({ row }) => {
-      const inBytes = row.original.limitBytesIn
-      const outBytes = row.original.limitBytesOut
-      if (!inBytes && !outBytes) {
-        return <span className="text-xs text-muted-foreground font-mono">Unlimited</span>
-      }
+      const callerId = row.getValue('callerId') as string
       return (
-        <div className="flex flex-col text-[11px] font-mono text-muted-foreground">
-          {inBytes && <span>↓ {inBytes}</span>}
-          {outBytes && <span>↑ {outBytes}</span>}
+        <div className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
+          <Network className="h-3.5 w-3.5" />
+          <span>{callerId || '-'}</span>
         </div>
       )
     },
-  },
-  {
-    accessorKey: 'radius',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Auth" />
-    ),
-    cell: ({ row }) => {
-      const radius = row.getValue('radius') as boolean
-      return radius ? (
-        <Badge variant="outline" className="text-[10px] border-sky-500/30 bg-sky-500/10 text-sky-600">
-          RADIUS
-        </Badge>
-      ) : (
-        <Badge variant="outline" className="text-[10px] text-muted-foreground">
-          Local
-        </Badge>
-      )
-    },
-    filterFn: (row, id, value: string[]) => {
-      const radius = row.getValue(id) as boolean
-      const authType = radius ? 'radius' : 'local'
-      return value.includes(authType)
-    },
+    enableSorting: true,
   },
   {
     id: 'actions',
+    header: () => <div className="text-right pr-2">Actions</div>,
     cell: ({ row }) => <ActiveRowActions row={row.original} />,
   },
 ]

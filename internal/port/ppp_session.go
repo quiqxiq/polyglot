@@ -28,6 +28,7 @@ type PPPActiveSession struct {
 	LimitBytesIn  string
 	LimitBytesOut string
 	Radius        bool
+	Profile       string
 }
 
 // PPPoESecret represents one row returned by /ppp/secret/print. Only fields

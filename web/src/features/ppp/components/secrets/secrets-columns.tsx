@@ -124,33 +124,6 @@ export const secretsColumns: ColumnDef<PPPSecret>[] = [
     },
   },
   {
-    accessorKey: 'disabled',
-    id: 'status',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
-    ),
-    cell: ({ row }) => {
-      const disabled = row.original.disabled
-      return disabled ? (
-        <Badge variant="destructive" className="text-[10px]">
-          Disabled
-        </Badge>
-      ) : (
-        <Badge
-          variant="outline"
-          className="border-emerald-500/30 bg-emerald-500/10 text-emerald-600 text-[10px] dark:text-emerald-400"
-        >
-          Active
-        </Badge>
-      )
-    },
-    filterFn: (row, _id, value: string[]) => {
-      const disabled = row.original.disabled
-      const status = disabled ? 'disabled' : 'active'
-      return value.includes(status)
-    },
-  },
-  {
     accessorKey: 'lastLoggedOut',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Last Logout" />

@@ -57,3 +57,43 @@ func TestParsePingLatency(t *testing.T) {
 		})
 	}
 }
+
+func TestParseDurationMs(t *testing.T) {
+	tests := []struct {
+		input string
+		want  int64
+	}{
+		{"23ms", 23},
+		{"1ms200us", 1},
+		{"00:00:00.042000", 0},
+		{"42ms", 42},
+		{"", 0},
+	}
+
+	for _, tt := range tests {
+		got := ping.ParseDurationMs(tt.input)
+		if got != tt.want {
+			t.Errorf("ParseDurationMs(%q) = %v, want %v", tt.input, got, tt.want)
+		}
+	}
+}
+
+func TestParsePacketLoss(t *testing.T) {
+	tests := []struct {
+		input string
+		want  int32
+	}{
+		{"0%", 0},
+		{"5%", 5},
+		{"100%", 100},
+		{"15", 15},
+		{"", 0},
+	}
+
+	for _, tt := range tests {
+		got := ping.ParsePacketLoss(tt.input)
+		if got != tt.want {
+			t.Errorf("ParsePacketLoss(%q) = %v, want %v", tt.input, got, tt.want)
+		}
+	}
+}

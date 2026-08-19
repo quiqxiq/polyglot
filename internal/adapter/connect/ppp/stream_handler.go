@@ -86,6 +86,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 					LimitBytesIn:  row["limit-bytes-in"],
 					LimitBytesOut: row["limit-bytes-out"],
 					Radius:        strings.EqualFold(row["radius"], "true"),
+					Profile:       row["profile"],
 				}
 			}
 

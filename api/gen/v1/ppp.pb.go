@@ -322,6 +322,7 @@ type PPPActiveSession struct {
 	LimitBytesIn  string                 `protobuf:"bytes,9,opt,name=limit_bytes_in,json=limitBytesIn,proto3" json:"limit_bytes_in,omitempty"`
 	LimitBytesOut string                 `protobuf:"bytes,10,opt,name=limit_bytes_out,json=limitBytesOut,proto3" json:"limit_bytes_out,omitempty"`
 	Radius        bool                   `protobuf:"varint,11,opt,name=radius,proto3" json:"radius,omitempty"`
+	Profile       string                 `protobuf:"bytes,12,opt,name=profile,proto3" json:"profile,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -431,6 +432,13 @@ func (x *PPPActiveSession) GetRadius() bool {
 		return x.Radius
 	}
 	return false
+}
+
+func (x *PPPActiveSession) GetProfile() string {
+	if x != nil {
+		return x.Profile
+	}
+	return ""
 }
 
 type ListPPPSecretsRequest struct {
@@ -2527,7 +2535,7 @@ const file_v1_ppp_proto_rawDesc = "" +
 	"\x0fuse_compression\x18\r \x01(\tR\x0euseCompression\x12%\n" +
 	"\x0euse_encryption\x18\x0e \x01(\tR\ruseEncryption\x12$\n" +
 	"\x0echange_tcp_mss\x18\x0f \x01(\tR\fchangeTcpMss\x12'\n" +
-	"\x0fbridge_learning\x18\x10 \x01(\tR\x0ebridgeLearning\"\xc0\x02\n" +
+	"\x0fbridge_learning\x18\x10 \x01(\tR\x0ebridgeLearning\"\xda\x02\n" +
 	"\x10PPPActiveSession\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x18\n" +
@@ -2541,7 +2549,8 @@ const file_v1_ppp_proto_rawDesc = "" +
 	"\x0elimit_bytes_in\x18\t \x01(\tR\flimitBytesIn\x12&\n" +
 	"\x0flimit_bytes_out\x18\n" +
 	" \x01(\tR\rlimitBytesOut\x12\x16\n" +
-	"\x06radius\x18\v \x01(\bR\x06radius\"U\n" +
+	"\x06radius\x18\v \x01(\bR\x06radius\x12\x18\n" +
+	"\aprofile\x18\f \x01(\tR\aprofile\"U\n" +
 	"\x15ListPPPSecretsRequest\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x1f\n" +
 	"\vname_filter\x18\x02 \x01(\tR\n" +

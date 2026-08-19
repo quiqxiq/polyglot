@@ -126,11 +126,30 @@ func (h *DeviceConnectHandler) StreamPing(
 			if len(res.Rows) > 0 {
 				row := res.Rows[0]
 				latency, status := ping.ParsePingLatency(row)
+				seq, _ := strconv.ParseInt(row["seq"], 10, 32)
+				ttl, _ := strconv.ParseInt(row["ttl"], 10, 32)
+				size, _ := strconv.ParseInt(row["size"], 10, 32)
+				sent, _ := strconv.ParseInt(row["sent"], 10, 32)
+				recv, _ := strconv.ParseInt(row["received"], 10, 32)
+				loss := ping.ParsePacketLoss(row["packet-loss"])
+				minRTT := ping.ParseDurationMs(row["min-rtt"])
+				avgRTT := ping.ParseDurationMs(row["avg-rtt"])
+				maxRTT := ping.ParseDurationMs(row["max-rtt"])
+
 				frame := &devicepb.StreamDevicePingFrame{
-					DeviceId:  dev.ID,
-					Address:   pingTarget,
-					LatencyMs: latency,
-					Status:    status,
+					DeviceId:   dev.ID,
+					Address:    pingTarget,
+					LatencyMs:  latency,
+					Status:     status,
+					Seq:        int32(seq),
+					Ttl:        int32(ttl),
+					Size:       int32(size),
+					Sent:       int32(sent),
+					Received:   int32(recv),
+					PacketLoss: loss,
+					MinRttMs:   minRTT,
+					AvgRttMs:   avgRTT,
+					MaxRttMs:   maxRTT,
 				}
 				if err := stream.Send(frame); err != nil {
 					return err

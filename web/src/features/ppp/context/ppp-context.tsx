@@ -12,6 +12,7 @@ type DialogType =
   | 'profile-delete'
   | 'active-kick'
   | 'active-multi-kick'
+  | 'active-ping'
 
 interface PPPContextType {
   open: DialogType | null
