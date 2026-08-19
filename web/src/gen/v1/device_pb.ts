@@ -364,6 +364,16 @@ export class StreamDeviceStatusRequest extends Message<StreamDeviceStatusRequest
    */
   pingAddress = "";
 
+  /**
+   * @generated from field: string interface_type_filter = 4;
+   */
+  interfaceTypeFilter = "";
+
+  /**
+   * @generated from field: string interface_name_filter = 5;
+   */
+  interfaceNameFilter = "";
+
   constructor(data?: PartialMessage<StreamDeviceStatusRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -375,6 +385,8 @@ export class StreamDeviceStatusRequest extends Message<StreamDeviceStatusRequest
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "selected_interface", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "ping_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "interface_type_filter", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "interface_name_filter", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StreamDeviceStatusRequest {
@@ -780,6 +792,16 @@ export class TestDeviceConnectionRequest extends Message<TestDeviceConnectionReq
    */
   selectedInterface = "";
 
+  /**
+   * @generated from field: string interface_type_filter = 3;
+   */
+  interfaceTypeFilter = "";
+
+  /**
+   * @generated from field: string interface_name_filter = 4;
+   */
+  interfaceNameFilter = "";
+
   constructor(data?: PartialMessage<TestDeviceConnectionRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -790,6 +812,8 @@ export class TestDeviceConnectionRequest extends Message<TestDeviceConnectionReq
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "selected_interface", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "interface_type_filter", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "interface_name_filter", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TestDeviceConnectionRequest {

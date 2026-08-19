@@ -19,12 +19,14 @@ import { AssignmentDialog } from './assignment-dialog'
 interface AssignmentsTableProps {
   users: User[]
   assignments: RoleAssignmentProto[]
+  availableRoles?: string[]
   isLoading?: boolean
 }
 
 export function AssignmentsTable({
   users,
   assignments,
+  availableRoles = [],
   isLoading,
 }: AssignmentsTableProps) {
   const [editing, setEditing] = useState<User | null>(null)
@@ -75,7 +77,7 @@ export function AssignmentsTable({
                           <Badge
                             key={role}
                             variant='outline'
-                            className={cn('capitalize', roleClassName(role))}
+                            className={cn('capitalize font-mono', roleClassName(role))}
                           >
                             {roleLabel(role)}
                           </Badge>
@@ -109,6 +111,7 @@ export function AssignmentsTable({
       <AssignmentDialog
         user={editing}
         currentRoles={editing ? rolesFor(editing) : []}
+        availableRoles={availableRoles}
         open={!!editing}
         onOpenChange={(v) => !v && setEditing(null)}
       />

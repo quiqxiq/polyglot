@@ -135,7 +135,14 @@ func (h *DeviceConnectHandler) TestDeviceConnection(ctx context.Context, req *co
 		drv = d
 	}
 
-	res, err := h.useCase.TestConnection(ctx, drv, req.Msg.Id, req.Msg.SelectedInterface)
+	res, err := h.useCase.TestConnection(
+		ctx,
+		drv,
+		req.Msg.Id,
+		req.Msg.SelectedInterface,
+		req.Msg.InterfaceTypeFilter,
+		req.Msg.InterfaceNameFilter,
+	)
 	if err != nil {
 		return connect.NewResponse(&devicepb.TestDeviceConnectionResponse{
 			DeviceId: req.Msg.Id,

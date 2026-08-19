@@ -136,6 +136,47 @@ func (h *RBACConnectHandler) UnassignRole(ctx context.Context, req *connect.Requ
 	return connect.NewResponse(&devicepb.UnassignRoleResponse{Success: ok}), nil
 }
 
+func (h *RBACConnectHandler) SyncRolePermissions(ctx context.Context, req *connect.Request[devicepb.SyncRolePermissionsRequest]) (*connect.Response[devicepb.SyncRolePermissionsResponse], error) {
+	if req.Msg.Role == "" {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("role is required"))
+	}
+
+	if h.enforcer == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
+	}
+
+	if err := h.enforcer.SyncRolePermissions(req.Msg.Role, req.Msg.Permissions); err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
+	return connect.NewResponse(&devicepb.SyncRolePermissionsResponse{
+		Success: true,
+		Message: fmt.Sprintf("permissions synced for role %s", req.Msg.Role),
+	}), nil
+}
+
+func (h *RBACConnectHandler) DeleteRole(ctx context.Context, req *connect.Request[devicepb.DeleteRoleRequest]) (*connect.Response[devicepb.DeleteRoleResponse], error) {
+	if req.Msg.Role == "" {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("role is required"))
+	}
+	if req.Msg.Role == "owner" {
+		return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("role owner cannot be deleted"))
+	}
+
+	if h.enforcer == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
+	}
+
+	if err := h.enforcer.DeleteRole(req.Msg.Role); err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
+	return connect.NewResponse(&devicepb.DeleteRoleResponse{
+		Success: true,
+		Message: fmt.Sprintf("role %s deleted successfully", req.Msg.Role),
+	}), nil
+}
+
 func NewRBACServiceHandler(enforcer *auth.CasbinEnforcer) (string, http.Handler) {
 	handler := NewRBACConnectHandler(enforcer)
 	mux := http.NewServeMux()
@@ -148,6 +189,8 @@ func NewRBACServiceHandler(enforcer *auth.CasbinEnforcer) (string, http.Handler)
 	mux.Handle("/"+serviceName+"/ListRoleAssignments", connect.NewUnaryHandler("/"+serviceName+"/ListRoleAssignments", handler.ListRoleAssignments, codecOpt))
 	mux.Handle("/"+serviceName+"/AssignRole", connect.NewUnaryHandler("/"+serviceName+"/AssignRole", handler.AssignRole, codecOpt))
 	mux.Handle("/"+serviceName+"/UnassignRole", connect.NewUnaryHandler("/"+serviceName+"/UnassignRole", handler.UnassignRole, codecOpt))
+	mux.Handle("/"+serviceName+"/SyncRolePermissions", connect.NewUnaryHandler("/"+serviceName+"/SyncRolePermissions", handler.SyncRolePermissions, codecOpt))
+	mux.Handle("/"+serviceName+"/DeleteRole", connect.NewUnaryHandler("/"+serviceName+"/DeleteRole", handler.DeleteRole, codecOpt))
 
 	return "/" + serviceName + "/", mux
 }

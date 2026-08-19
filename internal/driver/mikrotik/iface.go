@@ -16,31 +16,44 @@ type Interface = port.Interface
 type InterfaceTrafficStats = port.InterfaceTrafficStats
 
 // NewPrintInterfacesCommand builds the command.Command for /interface/print.
+// Pass typeFilter to filter by interface type (e.g. "ether", "bridge", "vlan", "pppoe-in", or empty for all).
 // Pass a non-empty nameFilter to look up one interface by name.
-func NewPrintInterfacesCommand(nameFilter string) command.Command {
-	args := map[string]string{}
+func NewPrintInterfacesCommand(typeFilter, nameFilter string) command.Command {
+	args := map[string]string{
+		".proplist": ".id,name,type,mac-address,running,disabled",
+	}
+	if typeFilter != "" {
+		args["?type"] = typeFilter
+	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
 	}
 	return command.Command{
-		Raw:  "/interface/ethernet/print",
+		Raw:  "/interface/print",
 		Args: args,
 	}
 }
 
 // NewStreamInterfacesCommand builds the command.Command for streaming
-// /interface/ethernet/print interval=<n>, which makes RouterOS re-send the
-// FULL list of interfaces periodically. interval defaults to "1s".
-func NewStreamInterfacesCommand(nameFilter, interval string) command.Command {
+// /interface/print interval=<n>, which makes RouterOS re-send the
+// list of interfaces periodically. interval defaults to "1s".
+// Pass typeFilter and nameFilter to filter interfaces.
+func NewStreamInterfacesCommand(typeFilter, nameFilter, interval string) command.Command {
 	if interval == "" {
 		interval = "1s"
 	}
-	args := map[string]string{"interval": interval}
+	args := map[string]string{
+		"interval":  interval,
+		".proplist": ".id,name,type,mac-address,running,disabled",
+	}
+	if typeFilter != "" {
+		args["?type"] = typeFilter
+	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
 	}
 	return command.Command{
-		Raw:  "/interface/ethernet/print",
+		Raw:  "/interface/print",
 		Args: args,
 	}
 }
@@ -56,6 +69,7 @@ func NewMonitorTrafficOnceCommand(ifaceName string) command.Command {
 		Args: map[string]string{
 			"interface": ifaceName,
 			"once":      "",
+			".proplist": "name,rx-bits-per-second,tx-bits-per-second,rx-packets-per-second,tx-packets-per-second",
 		},
 	}
 }
@@ -70,7 +84,7 @@ func NewMonitorTrafficStreamCommand(ifaceName string) command.Command {
 		Raw: "/interface/monitor-traffic",
 		Args: map[string]string{
 			"interface": ifaceName,
-			// deliberately no "once" — streaming mode
+			".proplist": "name,rx-bits-per-second,tx-bits-per-second,rx-packets-per-second,tx-packets-per-second",
 		},
 	}
 }

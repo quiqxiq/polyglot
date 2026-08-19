@@ -5568,6 +5568,8 @@ type StreamInterfaceEthernetRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
 	Interval      string                 `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"` // default "1s"
+	TypeFilter    string                 `protobuf:"bytes,3,opt,name=type_filter,json=typeFilter,proto3" json:"type_filter,omitempty"`
+	NameFilter    string                 `protobuf:"bytes,4,opt,name=name_filter,json=nameFilter,proto3" json:"name_filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -5612,6 +5614,20 @@ func (x *StreamInterfaceEthernetRequest) GetDeviceId() string {
 func (x *StreamInterfaceEthernetRequest) GetInterval() string {
 	if x != nil {
 		return x.Interval
+	}
+	return ""
+}
+
+func (x *StreamInterfaceEthernetRequest) GetTypeFilter() string {
+	if x != nil {
+		return x.TypeFilter
+	}
+	return ""
+}
+
+func (x *StreamInterfaceEthernetRequest) GetNameFilter() string {
+	if x != nil {
+		return x.NameFilter
 	}
 	return ""
 }
@@ -7991,10 +8007,14 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\x0fLogsStreamFrame\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
 	"\x0etimestamp_unix\x18\x02 \x01(\x03R\rtimestampUnix\x12-\n" +
-	"\x04logs\x18\x03 \x03(\v2\x19.polyglot.v1.LogEntryItemR\x04logs\"Y\n" +
+	"\x04logs\x18\x03 \x03(\v2\x19.polyglot.v1.LogEntryItemR\x04logs\"\x9b\x01\n" +
 	"\x1eStreamInterfaceEthernetRequest\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x1a\n" +
-	"\binterval\x18\x02 \x01(\tR\binterval\"\xbe\x02\n" +
+	"\binterval\x18\x02 \x01(\tR\binterval\x12\x1f\n" +
+	"\vtype_filter\x18\x03 \x01(\tR\n" +
+	"typeFilter\x12\x1f\n" +
+	"\vname_filter\x18\x04 \x01(\tR\n" +
+	"nameFilter\"\xbe\x02\n" +
 	"\x15InterfaceEthernetItem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +

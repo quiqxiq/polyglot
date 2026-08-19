@@ -645,6 +645,206 @@ func (x *UnassignRoleResponse) GetSuccess() bool {
 	return false
 }
 
+type SyncRolePermissionsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Role          string                 `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
+	Permissions   []string               `protobuf:"bytes,2,rep,name=permissions,proto3" json:"permissions,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncRolePermissionsRequest) Reset() {
+	*x = SyncRolePermissionsRequest{}
+	mi := &file_v1_rbac_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncRolePermissionsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncRolePermissionsRequest) ProtoMessage() {}
+
+func (x *SyncRolePermissionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_rbac_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncRolePermissionsRequest.ProtoReflect.Descriptor instead.
+func (*SyncRolePermissionsRequest) Descriptor() ([]byte, []int) {
+	return file_v1_rbac_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *SyncRolePermissionsRequest) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
+func (x *SyncRolePermissionsRequest) GetPermissions() []string {
+	if x != nil {
+		return x.Permissions
+	}
+	return nil
+}
+
+type SyncRolePermissionsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncRolePermissionsResponse) Reset() {
+	*x = SyncRolePermissionsResponse{}
+	mi := &file_v1_rbac_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncRolePermissionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncRolePermissionsResponse) ProtoMessage() {}
+
+func (x *SyncRolePermissionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_rbac_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncRolePermissionsResponse.ProtoReflect.Descriptor instead.
+func (*SyncRolePermissionsResponse) Descriptor() ([]byte, []int) {
+	return file_v1_rbac_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *SyncRolePermissionsResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *SyncRolePermissionsResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type DeleteRoleRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Role          string                 `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteRoleRequest) Reset() {
+	*x = DeleteRoleRequest{}
+	mi := &file_v1_rbac_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteRoleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteRoleRequest) ProtoMessage() {}
+
+func (x *DeleteRoleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_rbac_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteRoleRequest.ProtoReflect.Descriptor instead.
+func (*DeleteRoleRequest) Descriptor() ([]byte, []int) {
+	return file_v1_rbac_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *DeleteRoleRequest) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
+type DeleteRoleResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteRoleResponse) Reset() {
+	*x = DeleteRoleResponse{}
+	mi := &file_v1_rbac_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteRoleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteRoleResponse) ProtoMessage() {}
+
+func (x *DeleteRoleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_rbac_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteRoleResponse.ProtoReflect.Descriptor instead.
+func (*DeleteRoleResponse) Descriptor() ([]byte, []int) {
+	return file_v1_rbac_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *DeleteRoleResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *DeleteRoleResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_v1_rbac_proto protoreflect.FileDescriptor
 
 const file_v1_rbac_proto_rawDesc = "" +
@@ -682,7 +882,18 @@ const file_v1_rbac_proto_rawDesc = "" +
 	"assignment\x18\x01 \x01(\v2\x1b.polyglot.v1.RoleAssignmentR\n" +
 	"assignment\"0\n" +
 	"\x14UnassignRoleResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\x91\x04\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"R\n" +
+	"\x1aSyncRolePermissionsRequest\x12\x12\n" +
+	"\x04role\x18\x01 \x01(\tR\x04role\x12 \n" +
+	"\vpermissions\x18\x02 \x03(\tR\vpermissions\"Q\n" +
+	"\x1bSyncRolePermissionsResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"'\n" +
+	"\x11DeleteRoleRequest\x12\x12\n" +
+	"\x04role\x18\x01 \x01(\tR\x04role\"H\n" +
+	"\x12DeleteRoleResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage2\xca\x05\n" +
 	"\vRBACService\x12S\n" +
 	"\fListPolicies\x12 .polyglot.v1.ListPoliciesRequest\x1a!.polyglot.v1.ListPoliciesResponse\x12J\n" +
 	"\tAddPolicy\x12\x1d.polyglot.v1.AddPolicyRequest\x1a\x1e.polyglot.v1.AddPolicyResponse\x12S\n" +
@@ -690,7 +901,10 @@ const file_v1_rbac_proto_rawDesc = "" +
 	"\x13ListRoleAssignments\x12'.polyglot.v1.ListRoleAssignmentsRequest\x1a(.polyglot.v1.ListRoleAssignmentsResponse\x12M\n" +
 	"\n" +
 	"AssignRole\x12\x1e.polyglot.v1.AssignRoleRequest\x1a\x1f.polyglot.v1.AssignRoleResponse\x12S\n" +
-	"\fUnassignRole\x12 .polyglot.v1.UnassignRoleRequest\x1a!.polyglot.v1.UnassignRoleResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\fUnassignRole\x12 .polyglot.v1.UnassignRoleRequest\x1a!.polyglot.v1.UnassignRoleResponse\x12h\n" +
+	"\x13SyncRolePermissions\x12'.polyglot.v1.SyncRolePermissionsRequest\x1a(.polyglot.v1.SyncRolePermissionsResponse\x12M\n" +
+	"\n" +
+	"DeleteRole\x12\x1e.polyglot.v1.DeleteRoleRequest\x1a\x1f.polyglot.v1.DeleteRoleResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_rbac_proto_rawDescOnce sync.Once
@@ -704,7 +918,7 @@ func file_v1_rbac_proto_rawDescGZIP() []byte {
 	return file_v1_rbac_proto_rawDescData
 }
 
-var file_v1_rbac_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_v1_rbac_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_v1_rbac_proto_goTypes = []any{
 	(*Policy)(nil),                      // 0: polyglot.v1.Policy
 	(*RoleAssignment)(nil),              // 1: polyglot.v1.RoleAssignment
@@ -720,6 +934,10 @@ var file_v1_rbac_proto_goTypes = []any{
 	(*AssignRoleResponse)(nil),          // 11: polyglot.v1.AssignRoleResponse
 	(*UnassignRoleRequest)(nil),         // 12: polyglot.v1.UnassignRoleRequest
 	(*UnassignRoleResponse)(nil),        // 13: polyglot.v1.UnassignRoleResponse
+	(*SyncRolePermissionsRequest)(nil),  // 14: polyglot.v1.SyncRolePermissionsRequest
+	(*SyncRolePermissionsResponse)(nil), // 15: polyglot.v1.SyncRolePermissionsResponse
+	(*DeleteRoleRequest)(nil),           // 16: polyglot.v1.DeleteRoleRequest
+	(*DeleteRoleResponse)(nil),          // 17: polyglot.v1.DeleteRoleResponse
 }
 var file_v1_rbac_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.ListPoliciesResponse.policies:type_name -> polyglot.v1.Policy
@@ -734,14 +952,18 @@ var file_v1_rbac_proto_depIdxs = []int32{
 	8,  // 9: polyglot.v1.RBACService.ListRoleAssignments:input_type -> polyglot.v1.ListRoleAssignmentsRequest
 	10, // 10: polyglot.v1.RBACService.AssignRole:input_type -> polyglot.v1.AssignRoleRequest
 	12, // 11: polyglot.v1.RBACService.UnassignRole:input_type -> polyglot.v1.UnassignRoleRequest
-	3,  // 12: polyglot.v1.RBACService.ListPolicies:output_type -> polyglot.v1.ListPoliciesResponse
-	5,  // 13: polyglot.v1.RBACService.AddPolicy:output_type -> polyglot.v1.AddPolicyResponse
-	7,  // 14: polyglot.v1.RBACService.RemovePolicy:output_type -> polyglot.v1.RemovePolicyResponse
-	9,  // 15: polyglot.v1.RBACService.ListRoleAssignments:output_type -> polyglot.v1.ListRoleAssignmentsResponse
-	11, // 16: polyglot.v1.RBACService.AssignRole:output_type -> polyglot.v1.AssignRoleResponse
-	13, // 17: polyglot.v1.RBACService.UnassignRole:output_type -> polyglot.v1.UnassignRoleResponse
-	12, // [12:18] is the sub-list for method output_type
-	6,  // [6:12] is the sub-list for method input_type
+	14, // 12: polyglot.v1.RBACService.SyncRolePermissions:input_type -> polyglot.v1.SyncRolePermissionsRequest
+	16, // 13: polyglot.v1.RBACService.DeleteRole:input_type -> polyglot.v1.DeleteRoleRequest
+	3,  // 14: polyglot.v1.RBACService.ListPolicies:output_type -> polyglot.v1.ListPoliciesResponse
+	5,  // 15: polyglot.v1.RBACService.AddPolicy:output_type -> polyglot.v1.AddPolicyResponse
+	7,  // 16: polyglot.v1.RBACService.RemovePolicy:output_type -> polyglot.v1.RemovePolicyResponse
+	9,  // 17: polyglot.v1.RBACService.ListRoleAssignments:output_type -> polyglot.v1.ListRoleAssignmentsResponse
+	11, // 18: polyglot.v1.RBACService.AssignRole:output_type -> polyglot.v1.AssignRoleResponse
+	13, // 19: polyglot.v1.RBACService.UnassignRole:output_type -> polyglot.v1.UnassignRoleResponse
+	15, // 20: polyglot.v1.RBACService.SyncRolePermissions:output_type -> polyglot.v1.SyncRolePermissionsResponse
+	17, // 21: polyglot.v1.RBACService.DeleteRole:output_type -> polyglot.v1.DeleteRoleResponse
+	14, // [14:22] is the sub-list for method output_type
+	6,  // [6:14] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name
 	6,  // [6:6] is the sub-list for extension extendee
 	0,  // [0:6] is the sub-list for field type_name
@@ -758,7 +980,7 @@ func file_v1_rbac_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_rbac_proto_rawDesc), len(file_v1_rbac_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

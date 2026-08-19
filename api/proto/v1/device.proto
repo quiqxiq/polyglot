@@ -49,6 +49,8 @@ message StreamDeviceStatusRequest {
   string id = 1;
   string selected_interface = 2;
   string ping_address = 3;
+  string interface_type_filter = 4;
+  string interface_name_filter = 5;
 }
 
 message DeviceInterfaceInfo {
@@ -103,6 +105,8 @@ message DeleteDeviceResponse {
 message TestDeviceConnectionRequest {
   string id = 1;
   string selected_interface = 2;
+  string interface_type_filter = 3;
+  string interface_name_filter = 4;
 }
 
 message TestDeviceConnectionResponse {

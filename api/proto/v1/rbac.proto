@@ -53,6 +53,25 @@ message UnassignRoleResponse {
   bool success = 1;
 }
 
+message SyncRolePermissionsRequest {
+  string role = 1;
+  repeated string permissions = 2;
+}
+
+message SyncRolePermissionsResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message DeleteRoleRequest {
+  string role = 1;
+}
+
+message DeleteRoleResponse {
+  bool success = 1;
+  string message = 2;
+}
+
 service RBACService {
   rpc ListPolicies(ListPoliciesRequest) returns (ListPoliciesResponse);
   rpc AddPolicy(AddPolicyRequest) returns (AddPolicyResponse);
@@ -60,4 +79,6 @@ service RBACService {
   rpc ListRoleAssignments(ListRoleAssignmentsRequest) returns (ListRoleAssignmentsResponse);
   rpc AssignRole(AssignRoleRequest) returns (AssignRoleResponse);
   rpc UnassignRole(UnassignRoleRequest) returns (UnassignRoleResponse);
+  rpc SyncRolePermissions(SyncRolePermissionsRequest) returns (SyncRolePermissionsResponse);
+  rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse);
 }

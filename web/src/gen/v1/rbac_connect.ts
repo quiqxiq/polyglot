@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { AddPolicyRequest, AddPolicyResponse, AssignRoleRequest, AssignRoleResponse, ListPoliciesRequest, ListPoliciesResponse, ListRoleAssignmentsRequest, ListRoleAssignmentsResponse, RemovePolicyRequest, RemovePolicyResponse, UnassignRoleRequest, UnassignRoleResponse } from "./rbac_pb.js";
+import { AddPolicyRequest, AddPolicyResponse, AssignRoleRequest, AssignRoleResponse, DeleteRoleRequest, DeleteRoleResponse, ListPoliciesRequest, ListPoliciesResponse, ListRoleAssignmentsRequest, ListRoleAssignmentsResponse, RemovePolicyRequest, RemovePolicyResponse, SyncRolePermissionsRequest, SyncRolePermissionsResponse, UnassignRoleRequest, UnassignRoleResponse } from "./rbac_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -64,6 +64,24 @@ export const RBACService = {
       name: "UnassignRole",
       I: UnassignRoleRequest,
       O: UnassignRoleResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.RBACService.SyncRolePermissions
+     */
+    syncRolePermissions: {
+      name: "SyncRolePermissions",
+      I: SyncRolePermissionsRequest,
+      O: SyncRolePermissionsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.RBACService.DeleteRole
+     */
+    deleteRole: {
+      name: "DeleteRole",
+      I: DeleteRoleRequest,
+      O: DeleteRoleResponse,
       kind: MethodKind.Unary,
     },
   }

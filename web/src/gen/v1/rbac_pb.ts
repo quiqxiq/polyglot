@@ -530,3 +530,169 @@ export class UnassignRoleResponse extends Message<UnassignRoleResponse> {
   }
 }
 
+/**
+ * @generated from message polyglot.v1.SyncRolePermissionsRequest
+ */
+export class SyncRolePermissionsRequest extends Message<SyncRolePermissionsRequest> {
+  /**
+   * @generated from field: string role = 1;
+   */
+  role = "";
+
+  /**
+   * @generated from field: repeated string permissions = 2;
+   */
+  permissions: string[] = [];
+
+  constructor(data?: PartialMessage<SyncRolePermissionsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.SyncRolePermissionsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "role", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "permissions", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SyncRolePermissionsRequest {
+    return new SyncRolePermissionsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SyncRolePermissionsRequest {
+    return new SyncRolePermissionsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SyncRolePermissionsRequest {
+    return new SyncRolePermissionsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SyncRolePermissionsRequest | PlainMessage<SyncRolePermissionsRequest> | undefined, b: SyncRolePermissionsRequest | PlainMessage<SyncRolePermissionsRequest> | undefined): boolean {
+    return proto3.util.equals(SyncRolePermissionsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.SyncRolePermissionsResponse
+ */
+export class SyncRolePermissionsResponse extends Message<SyncRolePermissionsResponse> {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success = false;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<SyncRolePermissionsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.SyncRolePermissionsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): SyncRolePermissionsResponse {
+    return new SyncRolePermissionsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): SyncRolePermissionsResponse {
+    return new SyncRolePermissionsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): SyncRolePermissionsResponse {
+    return new SyncRolePermissionsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: SyncRolePermissionsResponse | PlainMessage<SyncRolePermissionsResponse> | undefined, b: SyncRolePermissionsResponse | PlainMessage<SyncRolePermissionsResponse> | undefined): boolean {
+    return proto3.util.equals(SyncRolePermissionsResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.DeleteRoleRequest
+ */
+export class DeleteRoleRequest extends Message<DeleteRoleRequest> {
+  /**
+   * @generated from field: string role = 1;
+   */
+  role = "";
+
+  constructor(data?: PartialMessage<DeleteRoleRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.DeleteRoleRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "role", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteRoleRequest {
+    return new DeleteRoleRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteRoleRequest {
+    return new DeleteRoleRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteRoleRequest {
+    return new DeleteRoleRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteRoleRequest | PlainMessage<DeleteRoleRequest> | undefined, b: DeleteRoleRequest | PlainMessage<DeleteRoleRequest> | undefined): boolean {
+    return proto3.util.equals(DeleteRoleRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.DeleteRoleResponse
+ */
+export class DeleteRoleResponse extends Message<DeleteRoleResponse> {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success = false;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<DeleteRoleResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.DeleteRoleResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteRoleResponse {
+    return new DeleteRoleResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteRoleResponse {
+    return new DeleteRoleResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteRoleResponse {
+    return new DeleteRoleResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteRoleResponse | PlainMessage<DeleteRoleResponse> | undefined, b: DeleteRoleResponse | PlainMessage<DeleteRoleResponse> | undefined): boolean {
+    return proto3.util.equals(DeleteRoleResponse, a, b);
+  }
+}
+

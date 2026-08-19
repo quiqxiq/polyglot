@@ -154,12 +154,14 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.UserService/DeleteUser":    "user:manage",
 
 	// RBACService — manajemen policy & role assignment, owner-only (rbac:manage)
-	"/polyglot.v1.RBACService/ListPolicies":        "rbac:manage",
-	"/polyglot.v1.RBACService/AddPolicy":           "rbac:manage",
-	"/polyglot.v1.RBACService/RemovePolicy":        "rbac:manage",
-	"/polyglot.v1.RBACService/ListRoleAssignments": "rbac:manage",
-	"/polyglot.v1.RBACService/AssignRole":          "rbac:manage",
-	"/polyglot.v1.RBACService/UnassignRole":        "rbac:manage",
+	"/polyglot.v1.RBACService/ListPolicies":          "rbac:manage",
+	"/polyglot.v1.RBACService/AddPolicy":             "rbac:manage",
+	"/polyglot.v1.RBACService/RemovePolicy":          "rbac:manage",
+	"/polyglot.v1.RBACService/ListRoleAssignments":   "rbac:manage",
+	"/polyglot.v1.RBACService/AssignRole":            "rbac:manage",
+	"/polyglot.v1.RBACService/UnassignRole":          "rbac:manage",
+	"/polyglot.v1.RBACService/SyncRolePermissions":   "rbac:manage",
+	"/polyglot.v1.RBACService/DeleteRole":            "rbac:manage",
 }
 
 // PermissionFor returns the resource:action object for a ConnectRPC procedure.

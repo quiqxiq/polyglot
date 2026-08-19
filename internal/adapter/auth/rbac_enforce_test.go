@@ -129,3 +129,60 @@ func TestWildcardRegexMatching(t *testing.T) {
 		})
 	}
 }
+
+func TestSyncRolePermissions(t *testing.T) {
+	ce := newTestEnforcer(t, [][]string{
+		{"billing_staff", "customer:read", "*"},
+		{"billing_staff", "old_permission:read", "*"},
+	}, nil)
+
+	// Sync new permissions for billing_staff
+	newPerms := []string{"billing:read", "billing:write", "customer:read"}
+	if err := ce.SyncRolePermissions("billing_staff", newPerms); err != nil {
+		t.Fatalf("SyncRolePermissions failed: %v", err)
+	}
+
+	// Verify new permissions are allowed
+	for _, p := range newPerms {
+		allowed, err := ce.Enforce("billing_staff", p, "*")
+		if err != nil || !allowed {
+			t.Errorf("expected billing_staff to have %s, allowed=%v, err=%v", p, allowed, err)
+		}
+	}
+
+	// Verify old removed permission is now denied
+	allowed, err := ce.Enforce("billing_staff", "old_permission:read", "*")
+	if err != nil || allowed {
+		t.Errorf("expected old_permission:read to be denied for billing_staff, allowed=%v", allowed)
+	}
+}
+
+func TestDeleteRole(t *testing.T) {
+	ce := newTestEnforcer(t, [][]string{
+		{"custom_role", "device:read", "*"},
+	}, [][]string{
+		{"2001", "custom_role"},
+	})
+
+	// Deleting owner should fail
+	if err := ce.DeleteRole("owner"); err == nil {
+		t.Errorf("expected error when deleting owner role, got nil")
+	}
+
+	// Delete custom_role
+	if err := ce.DeleteRole("custom_role"); err != nil {
+		t.Fatalf("DeleteRole failed: %v", err)
+	}
+
+	// Verify permissions and user assignment are removed
+	allowed, _ := ce.Enforce("custom_role", "device:read", "*")
+	if allowed {
+		t.Errorf("expected custom_role to have no permissions after deletion")
+	}
+
+	userAllowed, _ := ce.Enforce("2001", "device:read", "*")
+	if userAllowed {
+		t.Errorf("expected user 2001 to lose custom_role permissions after deletion")
+	}
+}
+

@@ -97,6 +97,57 @@ func (ce *CasbinEnforcer) GetGroupingPolicies() ([][]string, error) {
 	return ce.enforcer.GetGroupingPolicy()
 }
 
+// SyncRolePermissions removes all existing permissions for a role and adds the provided list atomically.
+func (ce *CasbinEnforcer) SyncRolePermissions(role string, permissions []string) error {
+	if ce == nil || ce.enforcer == nil {
+		return fmt.Errorf("enforcer unavailable")
+	}
+	if role == "" {
+		return fmt.Errorf("role cannot be empty")
+	}
+
+	// Remove all previous policies for this role (field 0 is sub/role)
+	if _, err := ce.enforcer.RemoveFilteredPolicy(0, role); err != nil {
+		return fmt.Errorf("failed to clear old policies for role %s: %w", role, err)
+	}
+
+	// Add new policies
+	rules := make([][]string, 0, len(permissions))
+	for _, perm := range permissions {
+		if perm != "" {
+			rules = append(rules, []string{role, perm, "*"})
+		}
+	}
+	if len(rules) > 0 {
+		if _, err := ce.enforcer.AddPolicies(rules); err != nil {
+			return fmt.Errorf("failed to add new policies for role %s: %w", role, err)
+		}
+	}
+
+	ce.persist()
+	return nil
+}
+
+// DeleteRole removes all policies and user assignments for the specified role.
+func (ce *CasbinEnforcer) DeleteRole(role string) error {
+	if ce == nil || ce.enforcer == nil {
+		return fmt.Errorf("enforcer unavailable")
+	}
+	if role == "" || role == "owner" {
+		return fmt.Errorf("cannot delete role %q", role)
+	}
+
+	if _, err := ce.enforcer.RemoveFilteredPolicy(0, role); err != nil {
+		return fmt.Errorf("failed to remove policies for role %s: %w", role, err)
+	}
+	if _, err := ce.enforcer.RemoveFilteredGroupingPolicy(1, role); err != nil {
+		return fmt.Errorf("failed to remove role assignments for role %s: %w", role, err)
+	}
+
+	ce.persist()
+	return nil
+}
+
 // AddRoleForUser assigns a role to a user.
 func (ce *CasbinEnforcer) AddRoleForUser(user, role string) (bool, error) {
 	if ce == nil || ce.enforcer == nil {

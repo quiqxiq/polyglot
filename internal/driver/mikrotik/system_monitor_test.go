@@ -147,16 +147,35 @@ func TestParseLogs(t *testing.T) {
 
 func TestNewStreamInterfacesCommand(t *testing.T) {
 	t.Run("full list interval", func(t *testing.T) {
-		cmd := NewStreamInterfacesCommand("", "")
-		assert.Equal(t, "/interface/ethernet/print", cmd.Raw)
+		cmd := NewStreamInterfacesCommand("", "", "")
+		assert.Equal(t, "/interface/print", cmd.Raw)
 		assert.Equal(t, "1s", cmd.Args["interval"])
+		assert.Equal(t, ".id,name,type,mac-address,running,disabled", cmd.Args[".proplist"])
 		assert.True(t, isStreamingCommand(cmd))
 	})
-	t.Run("filter nama", func(t *testing.T) {
-		cmd := NewStreamInterfacesCommand("ether1", "2s")
+	t.Run("filter tipe dan nama", func(t *testing.T) {
+		cmd := NewStreamInterfacesCommand("ether", "ether1", "2s")
+		assert.Equal(t, "/interface/print", cmd.Raw)
+		assert.Equal(t, "ether", cmd.Args["?type"])
 		assert.Equal(t, "ether1", cmd.Args["?name"])
 		assert.Equal(t, "2s", cmd.Args["interval"])
+		assert.Equal(t, ".id,name,type,mac-address,running,disabled", cmd.Args[".proplist"])
 		assert.True(t, isStreamingCommand(cmd))
+	})
+}
+
+func TestNewPrintInterfacesCommand(t *testing.T) {
+	t.Run("tanpa filter", func(t *testing.T) {
+		cmd := NewPrintInterfacesCommand("", "")
+		assert.Equal(t, "/interface/print", cmd.Raw)
+		assert.Equal(t, ".id,name,type,mac-address,running,disabled", cmd.Args[".proplist"])
+	})
+	t.Run("dengan filter tipe dan nama", func(t *testing.T) {
+		cmd := NewPrintInterfacesCommand("bridge", "bridge-hotspot")
+		assert.Equal(t, "/interface/print", cmd.Raw)
+		assert.Equal(t, "bridge", cmd.Args["?type"])
+		assert.Equal(t, "bridge-hotspot", cmd.Args["?name"])
+		assert.Equal(t, ".id,name,type,mac-address,running,disabled", cmd.Args[".proplist"])
 	})
 }
 

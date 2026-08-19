@@ -90,7 +90,7 @@ func TestMikrotikBuilders_Interfaces(t *testing.T) {
 	ctx := context.Background()
 
 	// List interfaces
-	result, err := drv.Execute(ctx, mikrotik.NewPrintInterfacesCommand(""))
+	result, err := drv.Execute(ctx, mikrotik.NewPrintInterfacesCommand("", ""))
 	require.NoError(t, err)
 
 	ifaces := mikrotik.ParseInterfaces(result)
@@ -306,7 +306,7 @@ func TestMikrotikBuilders_MonitorTrafficStream(t *testing.T) {
 	ctx := context.Background()
 
 	// Ambil interface pertama
-	ifaceResult, err := drv.Execute(ctx, mikrotik.NewPrintInterfacesCommand(""))
+	ifaceResult, err := drv.Execute(ctx, mikrotik.NewPrintInterfacesCommand("", ""))
 	require.NoError(t, err)
 	ifaces := mikrotik.ParseInterfaces(ifaceResult)
 	require.NotEmpty(t, ifaces)
@@ -352,7 +352,7 @@ func TestMikrotikBuilders_MonitorTrafficNonRunning(t *testing.T) {
 	drv := newTestDriver(t)
 	ctx := context.Background()
 
-	result, err := drv.Execute(ctx, mikrotik.NewPrintInterfacesCommand(""))
+	result, err := drv.Execute(ctx, mikrotik.NewPrintInterfacesCommand("", ""))
 	require.NoError(t, err)
 
 	ifaces := mikrotik.ParseInterfaces(result)

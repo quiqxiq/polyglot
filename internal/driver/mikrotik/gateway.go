@@ -242,8 +242,8 @@ func (g *Gateway) GetSystemIdentity(ctx context.Context, driver port.DeviceDrive
 }
 
 // ListInterfaces implements port.DeviceDiagnostics.
-func (g *Gateway) ListInterfaces(ctx context.Context, driver port.DeviceDriver) ([]port.Interface, error) {
-	res, err := g.exec(ctx, driver, NewPrintInterfacesCommand(""))
+func (g *Gateway) ListInterfaces(ctx context.Context, driver port.DeviceDriver, typeFilter, nameFilter string) ([]port.Interface, error) {
+	res, err := g.exec(ctx, driver, NewPrintInterfacesCommand(typeFilter, nameFilter))
 	if err != nil {
 		return nil, err
 	}

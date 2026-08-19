@@ -91,7 +91,11 @@ export function DeviceCard({ device }: DeviceCardProps) {
     async function startStatusStream() {
       try {
         const stream = deviceClient.streamDeviceStatus(
-          { id: device.id, selectedInterface: selectedIface },
+          {
+            id: device.id,
+            selectedInterface: selectedIface,
+            interfaceTypeFilter: 'ether',
+          },
           { signal: controller.signal }
         )
         for await (const frame of stream) {
@@ -495,52 +499,64 @@ export function DeviceCard({ device }: DeviceCardProps) {
         </div>
       </section>
 
-      {/* ===== Interface Dropdown Section ===== */}
-      <section className='py-2.5 border-b space-y-1.5'>
-        <div className='flex items-center justify-between text-xs'>
-          <span className='font-medium text-muted-foreground'>Ethernet Interface</span>
-          <span className='text-[10px] text-muted-foreground'>Select to monitor</span>
-        </div>
-        <Select value={selectedIface} onValueChange={(val) => {
-          console.log(`[UI Select] User selected interface from dropdown: "${val}"`)
-          setSelectedIface(val)
-        }}>
-          <SelectTrigger className='h-8 text-xs font-mono'>
-            <SelectValue placeholder='Select interface...' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel className='text-[11px] text-muted-foreground'>Enabled Interfaces</SelectLabel>
-              {interfaces
-                .filter((i) => !i.disabled)
-                .map((iface) => (
-                  <SelectItem key={iface.name} value={iface.name} className='text-xs font-mono'>
-                    <span className='flex items-center gap-1.5'>
-                      <span className={`h-1.5 w-1.5 rounded-full ${iface.running ? 'bg-emerald-500' : 'bg-slate-400'}`} />
-                      {iface.name}
-                    </span>
-                  </SelectItem>
-                ))}
-            </SelectGroup>
-            <SelectGroup>
-              <SelectLabel className='text-[11px] text-muted-foreground'>Disabled Interfaces</SelectLabel>
-              {interfaces
-                .filter((i) => i.disabled)
-                .map((iface) => (
-                  <SelectItem key={iface.name} value={iface.name} className='text-xs font-mono opacity-50'>
-                    {iface.name} (disabled)
-                  </SelectItem>
-                ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </section>
-
       {/* ===== Traffic Monitor Section ===== */}
       <section className='pt-2.5 space-y-2'>
-        <div className='flex items-center justify-between text-xs'>
-          <span className='font-medium flex items-center gap-1.5'>
-            Traffic <span className='font-mono text-emerald-600 dark:text-emerald-400'>{selectedIface}</span>
+        <div className='flex items-center justify-between gap-2 text-xs'>
+          <div className='flex items-center gap-1.5 min-w-0'>
+            <span className='font-medium text-muted-foreground shrink-0'>Traffic</span>
+            <Select
+              value={selectedIface}
+              onValueChange={(val) => {
+                console.log(`[UI Select] User selected interface from dropdown: "${val}"`)
+                setSelectedIface(val)
+              }}
+            >
+              <SelectTrigger className='h-7 px-2 text-xs font-mono w-auto min-w-[90px] max-w-[150px]'>
+                <SelectValue placeholder='Select interface...' />
+              </SelectTrigger>
+              <SelectContent>
+                {(() => {
+                  const enabled = interfaces.filter((i) => !i.disabled)
+                  const disabled = interfaces.filter((i) => i.disabled)
+
+                  return (
+                    <>
+                      {enabled.length > 0 && (
+                        <SelectGroup>
+                          {disabled.length > 0 && (
+                            <SelectLabel className='text-[11px] text-muted-foreground'>Enabled Interfaces</SelectLabel>
+                          )}
+                          {enabled.map((iface) => (
+                            <SelectItem key={iface.name} value={iface.name} className='text-xs font-mono'>
+                              <span className='flex items-center gap-1.5'>
+                                <span className={`h-1.5 w-1.5 rounded-full ${iface.running ? 'bg-emerald-500' : 'bg-slate-400'}`} />
+                                {iface.name}
+                                {!iface.running && <span className='text-[10px] text-muted-foreground ml-1'>(down)</span>}
+                              </span>
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      )}
+
+                      {disabled.length > 0 && (
+                        <SelectGroup>
+                          <SelectLabel className='text-[11px] text-muted-foreground'>Disabled Interfaces</SelectLabel>
+                          {disabled.map((iface) => (
+                            <SelectItem key={iface.name} value={iface.name} className='text-xs font-mono opacity-60'>
+                              <span className='flex items-center gap-1.5'>
+                                <span className='h-1.5 w-1.5 rounded-full bg-rose-400' />
+                                {iface.name}
+                                <span className='text-[10px] text-rose-500 ml-1'>(disabled)</span>
+                              </span>
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      )}
+                    </>
+                  )
+                })()}
+              </SelectContent>
+            </Select>
             {(() => {
               const ifc = interfaces.find((i) => i.name === selectedIface)
               if (!ifc) return null
@@ -548,12 +564,13 @@ export function DeviceCard({ device }: DeviceCardProps) {
                 return <span className='text-[10px] px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-500 font-medium'>(disabled)</span>
               }
               if (!ifc.running) {
-                return <span className='text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-500 font-medium'>(link down)</span>
+                return <span className='text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-500 font-medium'>(down)</span>
               }
               return null
             })()}
-          </span>
-          <div className='flex items-center gap-2 text-[11px] font-mono'>
+          </div>
+
+          <div className='flex items-center gap-2 text-[11px] font-mono shrink-0'>
             <span className='text-emerald-600 dark:text-emerald-400 font-medium'>
               RX <b>{formatBps(rxBps)}</b>
             </span>

@@ -41,7 +41,14 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 		}
 	}
 
-	initialRes, _ := h.useCase.TestConnection(ctx, drv, dev.ID, req.Msg.SelectedInterface)
+	initialRes, _ := h.useCase.TestConnection(
+		ctx,
+		drv,
+		dev.ID,
+		req.Msg.SelectedInterface,
+		req.Msg.InterfaceTypeFilter,
+		req.Msg.InterfaceNameFilter,
+	)
 	pbIfaces := ToProtoInterfaceDetails(initialRes.InterfaceDetails)
 
 	metrics := &devicepb.DeviceTestMetrics{

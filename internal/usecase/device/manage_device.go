@@ -137,7 +137,14 @@ func (uc *ManageDeviceUseCase) DeleteDevice(ctx context.Context, id string) erro
 }
 
 // TestConnection executes diagnostic checks against a live driver instance to verify connectivity and latency.
-func (uc *ManageDeviceUseCase) TestConnection(ctx context.Context, driver port.DeviceDriver, deviceID string, selectedIface string) (DeviceTestResult, error) {
+func (uc *ManageDeviceUseCase) TestConnection(
+	ctx context.Context,
+	driver port.DeviceDriver,
+	deviceID string,
+	selectedIface string,
+	typeFilter string,
+	nameFilter string,
+) (DeviceTestResult, error) {
 	if uc.diag == nil {
 		return DeviceTestResult{}, ErrDiagnosticsUnconfigured
 	}
@@ -178,7 +185,7 @@ func (uc *ManageDeviceUseCase) TestConnection(ctx context.Context, driver port.D
 	}
 
 	// Fetch interface list if available
-	if ifaces, err := uc.diag.ListInterfaces(ctx, driver); err == nil {
+	if ifaces, err := uc.diag.ListInterfaces(ctx, driver, typeFilter, nameFilter); err == nil {
 		for _, ifc := range ifaces {
 			result.Interfaces = append(result.Interfaces, ifc.Name)
 			result.InterfaceDetails = append(result.InterfaceDetails, DeviceInterfaceDetail{

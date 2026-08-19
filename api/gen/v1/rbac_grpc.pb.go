@@ -25,6 +25,8 @@ const (
 	RBACService_ListRoleAssignments_FullMethodName = "/polyglot.v1.RBACService/ListRoleAssignments"
 	RBACService_AssignRole_FullMethodName          = "/polyglot.v1.RBACService/AssignRole"
 	RBACService_UnassignRole_FullMethodName        = "/polyglot.v1.RBACService/UnassignRole"
+	RBACService_SyncRolePermissions_FullMethodName = "/polyglot.v1.RBACService/SyncRolePermissions"
+	RBACService_DeleteRole_FullMethodName          = "/polyglot.v1.RBACService/DeleteRole"
 )
 
 // RBACServiceClient is the client API for RBACService service.
@@ -37,6 +39,8 @@ type RBACServiceClient interface {
 	ListRoleAssignments(ctx context.Context, in *ListRoleAssignmentsRequest, opts ...grpc.CallOption) (*ListRoleAssignmentsResponse, error)
 	AssignRole(ctx context.Context, in *AssignRoleRequest, opts ...grpc.CallOption) (*AssignRoleResponse, error)
 	UnassignRole(ctx context.Context, in *UnassignRoleRequest, opts ...grpc.CallOption) (*UnassignRoleResponse, error)
+	SyncRolePermissions(ctx context.Context, in *SyncRolePermissionsRequest, opts ...grpc.CallOption) (*SyncRolePermissionsResponse, error)
+	DeleteRole(ctx context.Context, in *DeleteRoleRequest, opts ...grpc.CallOption) (*DeleteRoleResponse, error)
 }
 
 type rBACServiceClient struct {
@@ -107,6 +111,26 @@ func (c *rBACServiceClient) UnassignRole(ctx context.Context, in *UnassignRoleRe
 	return out, nil
 }
 
+func (c *rBACServiceClient) SyncRolePermissions(ctx context.Context, in *SyncRolePermissionsRequest, opts ...grpc.CallOption) (*SyncRolePermissionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SyncRolePermissionsResponse)
+	err := c.cc.Invoke(ctx, RBACService_SyncRolePermissions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rBACServiceClient) DeleteRole(ctx context.Context, in *DeleteRoleRequest, opts ...grpc.CallOption) (*DeleteRoleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteRoleResponse)
+	err := c.cc.Invoke(ctx, RBACService_DeleteRole_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RBACServiceServer is the server API for RBACService service.
 // All implementations must embed UnimplementedRBACServiceServer
 // for forward compatibility.
@@ -117,6 +141,8 @@ type RBACServiceServer interface {
 	ListRoleAssignments(context.Context, *ListRoleAssignmentsRequest) (*ListRoleAssignmentsResponse, error)
 	AssignRole(context.Context, *AssignRoleRequest) (*AssignRoleResponse, error)
 	UnassignRole(context.Context, *UnassignRoleRequest) (*UnassignRoleResponse, error)
+	SyncRolePermissions(context.Context, *SyncRolePermissionsRequest) (*SyncRolePermissionsResponse, error)
+	DeleteRole(context.Context, *DeleteRoleRequest) (*DeleteRoleResponse, error)
 	mustEmbedUnimplementedRBACServiceServer()
 }
 
@@ -144,6 +170,12 @@ func (UnimplementedRBACServiceServer) AssignRole(context.Context, *AssignRoleReq
 }
 func (UnimplementedRBACServiceServer) UnassignRole(context.Context, *UnassignRoleRequest) (*UnassignRoleResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method UnassignRole not implemented")
+}
+func (UnimplementedRBACServiceServer) SyncRolePermissions(context.Context, *SyncRolePermissionsRequest) (*SyncRolePermissionsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SyncRolePermissions not implemented")
+}
+func (UnimplementedRBACServiceServer) DeleteRole(context.Context, *DeleteRoleRequest) (*DeleteRoleResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteRole not implemented")
 }
 func (UnimplementedRBACServiceServer) mustEmbedUnimplementedRBACServiceServer() {}
 func (UnimplementedRBACServiceServer) testEmbeddedByValue()                     {}
@@ -274,6 +306,42 @@ func _RBACService_UnassignRole_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RBACService_SyncRolePermissions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SyncRolePermissionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RBACServiceServer).SyncRolePermissions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RBACService_SyncRolePermissions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RBACServiceServer).SyncRolePermissions(ctx, req.(*SyncRolePermissionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RBACService_DeleteRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRoleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RBACServiceServer).DeleteRole(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RBACService_DeleteRole_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RBACServiceServer).DeleteRole(ctx, req.(*DeleteRoleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RBACService_ServiceDesc is the grpc.ServiceDesc for RBACService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -304,6 +372,14 @@ var RBACService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UnassignRole",
 			Handler:    _RBACService_UnassignRole_Handler,
+		},
+		{
+			MethodName: "SyncRolePermissions",
+			Handler:    _RBACService_SyncRolePermissions_Handler,
+		},
+		{
+			MethodName: "DeleteRole",
+			Handler:    _RBACService_DeleteRole_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

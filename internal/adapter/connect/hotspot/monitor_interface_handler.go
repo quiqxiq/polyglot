@@ -84,7 +84,7 @@ func (h *HotspotConnectHandler) StreamInterfaceEthernet(ctx context.Context, req
 		interval = "1s"
 	}
 
-	handle, err := sd.Stream(ctx, mikrotik.NewStreamInterfacesCommand("", interval))
+	handle, err := sd.Stream(ctx, mikrotik.NewStreamInterfacesCommand(req.Msg.TypeFilter, req.Msg.NameFilter, interval))
 	if err != nil {
 		return response.MapDomainError(err)
 	}

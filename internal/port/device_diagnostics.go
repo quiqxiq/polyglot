@@ -13,8 +13,8 @@ type DeviceDiagnostics interface {
 	GetSystemResource(ctx context.Context, driver DeviceDriver) (SystemResource, error)
 	// GetSystemIdentity fetches the router's configured identity (name).
 	GetSystemIdentity(ctx context.Context, driver DeviceDriver) (string, error)
-	// ListInterfaces fetches all /interface/print entries.
-	ListInterfaces(ctx context.Context, driver DeviceDriver) ([]Interface, error)
+	// ListInterfaces fetches /interface/print entries with optional type and name filters.
+	ListInterfaces(ctx context.Context, driver DeviceDriver, typeFilter, nameFilter string) ([]Interface, error)
 	// MonitorTrafficOnce returns a single snapshot of current traffic rates
 	// for the given interface.
 	MonitorTrafficOnce(ctx context.Context, driver DeviceDriver, ifaceName string) (InterfaceTrafficStats, error)

@@ -435,12 +435,14 @@ func (x *UpdateDeviceResponse) GetMessage() string {
 }
 
 type StreamDeviceStatusRequest struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	Id                string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	SelectedInterface string                 `protobuf:"bytes,2,opt,name=selected_interface,json=selectedInterface,proto3" json:"selected_interface,omitempty"`
-	PingAddress       string                 `protobuf:"bytes,3,opt,name=ping_address,json=pingAddress,proto3" json:"ping_address,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Id                  string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	SelectedInterface   string                 `protobuf:"bytes,2,opt,name=selected_interface,json=selectedInterface,proto3" json:"selected_interface,omitempty"`
+	PingAddress         string                 `protobuf:"bytes,3,opt,name=ping_address,json=pingAddress,proto3" json:"ping_address,omitempty"`
+	InterfaceTypeFilter string                 `protobuf:"bytes,4,opt,name=interface_type_filter,json=interfaceTypeFilter,proto3" json:"interface_type_filter,omitempty"`
+	InterfaceNameFilter string                 `protobuf:"bytes,5,opt,name=interface_name_filter,json=interfaceNameFilter,proto3" json:"interface_name_filter,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *StreamDeviceStatusRequest) Reset() {
@@ -490,6 +492,20 @@ func (x *StreamDeviceStatusRequest) GetSelectedInterface() string {
 func (x *StreamDeviceStatusRequest) GetPingAddress() string {
 	if x != nil {
 		return x.PingAddress
+	}
+	return ""
+}
+
+func (x *StreamDeviceStatusRequest) GetInterfaceTypeFilter() string {
+	if x != nil {
+		return x.InterfaceTypeFilter
+	}
+	return ""
+}
+
+func (x *StreamDeviceStatusRequest) GetInterfaceNameFilter() string {
+	if x != nil {
+		return x.InterfaceNameFilter
 	}
 	return ""
 }
@@ -959,11 +975,13 @@ func (x *DeleteDeviceResponse) GetMessage() string {
 }
 
 type TestDeviceConnectionRequest struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	Id                string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	SelectedInterface string                 `protobuf:"bytes,2,opt,name=selected_interface,json=selectedInterface,proto3" json:"selected_interface,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Id                  string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	SelectedInterface   string                 `protobuf:"bytes,2,opt,name=selected_interface,json=selectedInterface,proto3" json:"selected_interface,omitempty"`
+	InterfaceTypeFilter string                 `protobuf:"bytes,3,opt,name=interface_type_filter,json=interfaceTypeFilter,proto3" json:"interface_type_filter,omitempty"`
+	InterfaceNameFilter string                 `protobuf:"bytes,4,opt,name=interface_name_filter,json=interfaceNameFilter,proto3" json:"interface_name_filter,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *TestDeviceConnectionRequest) Reset() {
@@ -1006,6 +1024,20 @@ func (x *TestDeviceConnectionRequest) GetId() string {
 func (x *TestDeviceConnectionRequest) GetSelectedInterface() string {
 	if x != nil {
 		return x.SelectedInterface
+	}
+	return ""
+}
+
+func (x *TestDeviceConnectionRequest) GetInterfaceTypeFilter() string {
+	if x != nil {
+		return x.InterfaceTypeFilter
+	}
+	return ""
+}
+
+func (x *TestDeviceConnectionRequest) GetInterfaceNameFilter() string {
+	if x != nil {
+		return x.InterfaceNameFilter
 	}
 	return ""
 }
@@ -1530,11 +1562,13 @@ const file_v1_device_proto_rawDesc = "" +
 	"\bpassword\x18\x03 \x01(\tR\bpassword\"]\n" +
 	"\x14UpdateDeviceResponse\x12+\n" +
 	"\x06device\x18\x01 \x01(\v2\x13.polyglot.v1.DeviceR\x06device\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"}\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\xe5\x01\n" +
 	"\x19StreamDeviceStatusRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12-\n" +
 	"\x12selected_interface\x18\x02 \x01(\tR\x11selectedInterface\x12!\n" +
-	"\fping_address\x18\x03 \x01(\tR\vpingAddress\"\xc2\x01\n" +
+	"\fping_address\x18\x03 \x01(\tR\vpingAddress\x122\n" +
+	"\x15interface_type_filter\x18\x04 \x01(\tR\x13interfaceTypeFilter\x122\n" +
+	"\x15interface_name_filter\x18\x05 \x01(\tR\x13interfaceNameFilter\"\xc2\x01\n" +
 	"\x13DeviceInterfaceInfo\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\tR\x04type\x12\x1a\n" +
@@ -1580,10 +1614,12 @@ const file_v1_device_proto_rawDesc = "" +
 	"\x13DeleteDeviceRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"0\n" +
 	"\x14DeleteDeviceResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"\\\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\xc4\x01\n" +
 	"\x1bTestDeviceConnectionRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12-\n" +
-	"\x12selected_interface\x18\x02 \x01(\tR\x11selectedInterface\"\xc3\x04\n" +
+	"\x12selected_interface\x18\x02 \x01(\tR\x11selectedInterface\x122\n" +
+	"\x15interface_type_filter\x18\x03 \x01(\tR\x13interfaceTypeFilter\x122\n" +
+	"\x15interface_name_filter\x18\x04 \x01(\tR\x13interfaceNameFilter\"\xc3\x04\n" +
 	"\x1cTestDeviceConnectionResponse\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status\x12\x18\n" +

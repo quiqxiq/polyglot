@@ -35,10 +35,6 @@ type PPPActiveStat struct {
 	Uptime        string
 	LimitBytesIn  string
 	LimitBytesOut string
-	BytesIn       string
-	BytesOut      string
-	PacketsIn     string
-	PacketsOut    string
 }
 
 // PPPoESecret represents one row returned by /ppp/secret/print. Only fields
@@ -108,4 +104,3 @@ type PPPProfileParams struct {
 	ChangeTCPMSS   string
 	BridgeLearning string
 }
-

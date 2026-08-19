@@ -4590,6 +4590,16 @@ export class StreamInterfaceEthernetRequest extends Message<StreamInterfaceEther
    */
   interval = "";
 
+  /**
+   * @generated from field: string type_filter = 3;
+   */
+  typeFilter = "";
+
+  /**
+   * @generated from field: string name_filter = 4;
+   */
+  nameFilter = "";
+
   constructor(data?: PartialMessage<StreamInterfaceEthernetRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -4600,6 +4610,8 @@ export class StreamInterfaceEthernetRequest extends Message<StreamInterfaceEther
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "interval", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "type_filter", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "name_filter", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StreamInterfaceEthernetRequest {

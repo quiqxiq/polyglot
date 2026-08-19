@@ -27,6 +27,7 @@ import { useAssignRoleMutation, useUnassignRoleMutation } from '../api/use-rbac'
 type AssignmentDialogProps = {
   user: User | null
   currentRoles: string[]
+  availableRoles?: string[]
   open: boolean
   onOpenChange: (open: boolean) => void
 }
@@ -34,6 +35,7 @@ type AssignmentDialogProps = {
 export function AssignmentDialog({
   user,
   currentRoles,
+  availableRoles = [],
   open,
   onOpenChange,
 }: AssignmentDialogProps) {
@@ -50,6 +52,14 @@ export function AssignmentDialog({
   }
 
   const primaryRole = user?.role ?? ''
+
+  const allRoles = Array.from(
+    new Set([
+      ...Object.keys(ROLE_META),
+      ...availableRoles,
+      ...(currentRoles ?? []),
+    ])
+  )
 
   function toggle(role: string, checked: boolean) {
     setSelected((prev) =>
@@ -96,8 +106,8 @@ export function AssignmentDialog({
             assigned or revoked.
           </DialogDescription>
         </DialogHeader>
-        <div className='space-y-3'>
-          {Object.keys(ROLE_META).map((role) => {
+        <div className='space-y-3 max-h-[50vh] overflow-y-auto pr-1'>
+          {allRoles.map((role) => {
             const isPrimary = role === primaryRole
             const checked = selected.includes(role) || isPrimary
             return (
@@ -114,7 +124,7 @@ export function AssignmentDialog({
                 >
                   <Badge
                     variant='outline'
-                    className={cn('capitalize', roleClassName(role))}
+                    className={cn('capitalize font-mono', roleClassName(role))}
                   >
                     {roleLabel(role)}
                   </Badge>

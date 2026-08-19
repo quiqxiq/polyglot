@@ -580,6 +580,8 @@ message LogsStreamFrame {
 message StreamInterfaceEthernetRequest {
   string device_id = 1;
   string interval = 2; // default "1s"
+  string type_filter = 3;
+  string name_filter = 4;
 }
 
 message InterfaceEthernetItem {

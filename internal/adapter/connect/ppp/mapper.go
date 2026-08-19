@@ -93,10 +93,6 @@ func ToProtoPPPActiveStat(s port.PPPActiveStat) *devicepb.PPPActiveStat {
 		Uptime:        s.Uptime,
 		LimitBytesIn:  s.LimitBytesIn,
 		LimitBytesOut: s.LimitBytesOut,
-		BytesIn:       s.BytesIn,
-		BytesOut:      s.BytesOut,
-		PacketsIn:     s.PacketsIn,
-		PacketsOut:    s.PacketsOut,
 	}
 }
 

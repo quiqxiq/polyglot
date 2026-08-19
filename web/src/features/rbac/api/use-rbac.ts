@@ -2,7 +2,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   AddPolicyRequest,
   AssignRoleRequest,
+  DeleteRoleRequest,
   RemovePolicyRequest,
+  SyncRolePermissionsRequest,
   UnassignRoleRequest,
   type Policy,
   type RoleAssignment,
@@ -79,6 +81,41 @@ export function useUnassignRoleMutation() {
       )
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: rbacKeys.assignments() })
+    },
+  })
+}
+
+export function useSyncRolePermissionsMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async ({
+      role,
+      permissions,
+    }: {
+      role: string
+      permissions: string[]
+    }) => {
+      return await rbacClient.syncRolePermissions(
+        new SyncRolePermissionsRequest({ role, permissions })
+      )
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: rbacKeys.policies() })
+    },
+  })
+}
+
+export function useDeleteRoleMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (role: string) => {
+      return await rbacClient.deleteRole(new DeleteRoleRequest({ role }))
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: rbacKeys.policies() })
       queryClient.invalidateQueries({ queryKey: rbacKeys.assignments() })
     },
   })
