@@ -196,6 +196,9 @@ func (s *hotspotSessionState) updateUser(row map[string]string) {
 		LimitBytesOut: row["limit-bytes-out"],
 		Comment:       row["comment"],
 		Disabled:      strings.EqualFold(row["disabled"], "true"),
+		Uptime:        row["uptime"],
+		BytesIn:       row["bytes-in"],
+		BytesOut:      row["bytes-out"],
 	}
 }
 

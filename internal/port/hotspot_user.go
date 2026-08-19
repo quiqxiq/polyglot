@@ -62,4 +62,7 @@ type HotspotUser struct {
 	LimitBytesOut string
 	Comment       string
 	Disabled      bool
+	Uptime        string
+	BytesIn       string
+	BytesOut      string
 }

@@ -127,6 +127,9 @@ func ParseHotspotUsers(result command.Result) []HotspotUser {
 			LimitBytesOut: row["limit-bytes-out"],
 			Comment:       row["comment"],
 			Disabled:      strings.EqualFold(row["disabled"], "true"),
+			Uptime:        row["uptime"],
+			BytesIn:       row["bytes-in"],
+			BytesOut:      row["bytes-out"],
 		})
 	}
 	return users

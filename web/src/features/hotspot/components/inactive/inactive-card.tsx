@@ -19,7 +19,6 @@ function formatBytes(bytesStr: string): string {
 export function InactiveCard({ user }: InactiveCardProps) {
   const isVoucher = user.name === user.password
   const profile = user.profile || 'default'
-  const uptime = user.uptime || '0s'
   const limitTime = user.limitUptime
   const limitBytes = user.limitBytes
   const server = user.server || 'all'
@@ -70,7 +69,9 @@ export function InactiveCard({ user }: InactiveCardProps) {
           </span>
           <div className="flex items-center gap-1.5 font-mono text-muted-foreground">
             <Clock className="h-3.5 w-3.5 text-primary/70 shrink-0" />
-            <span className="truncate">{uptime}</span>
+            <span className="truncate">
+              {user.uptime && user.uptime !== '0s' ? user.uptime : '- (Belum dipakai)'}
+            </span>
           </div>
         </div>
 

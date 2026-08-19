@@ -11,6 +11,10 @@ import (
 
 // ToProtoHotspotUser converts a single mikrotik user to proto.
 func ToProtoHotspotUser(u mikrotik.HotspotUser) *devicepb.HotspotUser {
+	limitBytes := u.LimitBytesOut
+	if limitBytes == "" {
+		limitBytes = u.LimitBytesIn
+	}
 	return &devicepb.HotspotUser{
 		Id:          u.RosID,
 		Name:        u.Name,
@@ -18,9 +22,12 @@ func ToProtoHotspotUser(u mikrotik.HotspotUser) *devicepb.HotspotUser {
 		Profile:     u.Profile,
 		Server:      u.Server,
 		LimitUptime: u.LimitUptime,
-		LimitBytes:  u.LimitBytesIn,
+		LimitBytes:  limitBytes,
 		Comment:     u.Comment,
 		Disabled:    u.Disabled,
+		Uptime:      u.Uptime,
+		BytesIn:     u.BytesIn,
+		BytesOut:    u.BytesOut,
 	}
 }
 

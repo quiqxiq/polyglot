@@ -81,11 +81,16 @@ export const inactiveColumns: ColumnDef<HotspotUser>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Used Uptime' />
     ),
-    cell: ({ row }) => (
-      <span className='font-mono text-xs text-muted-foreground'>
-        {row.original.uptime || '0s'}
-      </span>
-    ),
+    cell: ({ row }) => {
+      const uptime = row.original.uptime
+      const isUsed = Boolean(uptime && uptime !== '0s')
+      return (
+        <span className={`font-mono text-xs ${isUsed ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
+          {isUsed ? uptime : '- (Belum dipakai)'}
+        </span>
+      )
+    },
+    enableSorting: true,
   },
   {
     accessorKey: 'comment',
