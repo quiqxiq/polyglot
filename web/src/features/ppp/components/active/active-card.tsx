@@ -1,10 +1,19 @@
 import { Badge } from '@/components/ui/badge'
 import type { EnrichedPPPActiveSession } from '../../api/use-ppp-stream'
-import { Clock, Globe, Network, UserCheck } from 'lucide-react'
+import { ArrowDown, ArrowUp, Clock, Globe, Network, UserCheck } from 'lucide-react'
 import { ActiveRowActions } from './active-row-actions'
 
 interface ActiveCardProps {
   session: EnrichedPPPActiveSession
+}
+
+function formatBytes(bytesStr?: string): string {
+  const bytes = Number(bytesStr || 0)
+  if (isNaN(bytes) || bytes === 0) return '0 B'
+  const k = 1024
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`
 }
 
 export function ActiveCard({ session }: ActiveCardProps) {
@@ -42,7 +51,7 @@ export function ActiveCard({ session }: ActiveCardProps) {
         </div>
       </div>
 
-      {/* Grid: IP Address, Uptime & MAC Address */}
+      {/* Grid: IP Address, Uptime, MAC Address, Traffic */}
       <div className="grid grid-cols-2 gap-2 pt-1 border-t border-border/50 text-xs">
         <div className="space-y-0.5">
           <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
@@ -64,13 +73,29 @@ export function ActiveCard({ session }: ActiveCardProps) {
           </div>
         </div>
 
-        <div className="col-span-2 space-y-0.5">
+        <div className="space-y-0.5">
           <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
             MAC Address
           </span>
           <div className="flex items-center gap-1.5 font-mono text-muted-foreground">
             <Network className="h-3.5 w-3.5 shrink-0" />
             <span className="truncate">{mac}</span>
+          </div>
+        </div>
+
+        <div className="space-y-0.5">
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
+            Traffic (In / Out)
+          </span>
+          <div className="flex items-center gap-2 font-mono text-muted-foreground">
+            <span className="flex items-center gap-0.5 text-emerald-600 dark:text-emerald-400">
+              <ArrowDown className="h-3 w-3" />
+              {formatBytes(session.bytesOut)}
+            </span>
+            <span className="flex items-center gap-0.5 text-sky-600 dark:text-sky-400">
+              <ArrowUp className="h-3 w-3" />
+              {formatBytes(session.bytesIn)}
+            </span>
           </div>
         </div>
       </div>

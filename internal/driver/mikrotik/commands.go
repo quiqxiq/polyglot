@@ -63,7 +63,7 @@ var streamingBasePaths = map[string]bool{
 // (typically a /.../print) into a streaming one: RouterOS's "print follow",
 // "print follow-only", and "print interval=1s" (or any interval) all keep
 // the connection open and keep sending rows instead of returning once.
-var streamingFlagArgs = []string{"follow", "follow-only", "interval"}
+var streamingFlagArgs = []string{"follow", "follow-only", "interval", "stats"}
 
 // isStreamingCommand reports whether cmd must be run via Driver.Stream
 // (Listen — non-blocking, event-driven, no polling) rather than
@@ -108,7 +108,7 @@ func buildArgs(cmd command.Command) []string {
 	args = append(args, cmd.Raw)
 	for key, value := range cmd.Args {
 		switch key {
-		case "follow", "follow-only":
+		case "follow", "follow-only", "stats", "once", "count-only", "detail", "brief":
 			args = append(args, key)
 		default:
 			if strings.HasPrefix(key, "?") {

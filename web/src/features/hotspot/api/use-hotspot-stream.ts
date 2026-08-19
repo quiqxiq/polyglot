@@ -83,13 +83,16 @@ export function useStreamActiveSessions(
           for (const st of frame.stats) {
             const sess = sessionsMapRef.current.get(st.id)
             if (sess) {
-              sess.uptime = st.uptime
-              sess.sessionTimeLeft = st.sessionTimeLeft
-              sess.idleTime = st.idleTime
-              sess.bytesIn = st.bytesIn
-              sess.bytesOut = st.bytesOut
-              sess.packetsIn = st.packetsIn
-              sess.packetsOut = st.packetsOut
+              const updated: EnrichedHotspotActiveSession = Object.assign(sess.clone ? sess.clone() : { ...sess }, {
+                uptime: st.uptime || sess.uptime,
+                sessionTimeLeft: st.sessionTimeLeft || sess.sessionTimeLeft,
+                idleTime: st.idleTime || sess.idleTime,
+                bytesIn: st.bytesIn || sess.bytesIn,
+                bytesOut: st.bytesOut || sess.bytesOut,
+                packetsIn: st.packetsIn || sess.packetsIn,
+                packetsOut: st.packetsOut || sess.packetsOut,
+              }) as EnrichedHotspotActiveSession
+              sessionsMapRef.current.set(st.id, updated)
               changed = true
             }
           }
