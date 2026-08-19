@@ -28,25 +28,44 @@ func NewPrintPPPActiveCommand(nameFilter string) command.Command {
 	}
 }
 
+// PPPActiveStat is the vendor-neutral PPP active session telemetry stats row.
+type PPPActiveStat = port.PPPActiveStat
+
 // NewStreamPPPActiveCommand builds the command.Command for
 // /ppp/active/print follow, which causes RouterOS to push a new row
 // every time a PPPoE session changes state (login, logout, IP change).
 // Use with Driver.Stream — isStreamingCommand returns true because
 // "follow" is present. No polling needed: the driver notifies on change.
 //
-// Parse each command.Result from StreamHandle.Chan() with
-// ParsePPPActiveSessions. A result with zero rows means a session ended;
-// a result with one row means a session started or changed.
-//
-// nameFilter: limit to one username (empty = all sessions).
+// Only static session identity fields are requested via .proplist to minimize overhead.
 func NewStreamPPPActiveCommand(nameFilter string) command.Command {
-	args := map[string]string{"follow": ""}
+	args := map[string]string{
+		"follow":    "",
+		".proplist": ".id,name,service,caller-id,address,encoding,session-id,radius,profile",
+	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
 	}
 	return command.Command{
 		Raw:  "/ppp/active/print",
 		Args: args,
+	}
+}
+
+// NewStreamPPPActiveStatsCommand builds the command.Command for
+// /ppp/active/print stats interval=<interval>.
+// It requests only dynamic counter fields via .proplist to minimize RouterOS CPU.
+func NewStreamPPPActiveStatsCommand(interval string) command.Command {
+	if interval == "" {
+		interval = "1s"
+	}
+	return command.Command{
+		Raw: "/ppp/active/print",
+		Args: map[string]string{
+			"stats":     "",
+			"interval":  interval,
+			".proplist": ".id,uptime,limit-bytes-in,limit-bytes-out,bytes-in,bytes-out,packets-in,packets-out",
+		},
 	}
 }
 
@@ -93,6 +112,29 @@ func ParsePPPActiveSessions(result command.Result) []PPPActiveSession {
 		})
 	}
 	return sessions
+}
+
+// ParsePPPActiveStats converts command.Result rows from a
+// /ppp/active/print stats command into typed PPPActiveStat values.
+func ParsePPPActiveStats(result command.Result) []PPPActiveStat {
+	stats := make([]PPPActiveStat, 0, len(result.Rows))
+	for _, row := range result.Rows {
+		id := row[".id"]
+		if id == "" {
+			continue
+		}
+		stats = append(stats, PPPActiveStat{
+			RosID:         id,
+			Uptime:        row["uptime"],
+			LimitBytesIn:  row["limit-bytes-in"],
+			LimitBytesOut: row["limit-bytes-out"],
+			BytesIn:       row["bytes-in"],
+			BytesOut:      row["bytes-out"],
+			PacketsIn:     row["packets-in"],
+			PacketsOut:    row["packets-out"],
+		})
+	}
+	return stats
 }
 
 // FilterInactivePPPoESecrets compares all registered PPPoE secrets (from

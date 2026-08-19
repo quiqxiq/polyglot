@@ -18,7 +18,7 @@ import (
 
 // StreamActiveSessions streams /ip/hotspot/active/print follow natively
 // from RouterOS — maintains a local state map of active sessions updated
-// on each event and pushes the updated snapshot to the client.
+// on each lifecycle event and pushes the updated snapshot to the client.
 func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *connect.Request[devicepb.StreamActiveSessionsRequest], stream *connect.ServerStream[devicepb.ActiveSessionsStreamData]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
@@ -79,19 +79,12 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 					continue
 				}
 				activeMap[id] = mikrotik.HotspotActiveSession{
-					RosID:           id,
-					Server:          row["server"],
-					User:            user,
-					Address:         row["address"],
-					MACAddress:      row["mac-address"],
-					LoginBy:         row["login-by"],
-					Uptime:          row["uptime"],
-					SessionTimeLeft: row["session-time-left"],
-					IdleTime:        row["idle-time"],
-					BytesIn:         row["bytes-in"],
-					BytesOut:        row["bytes-out"],
-					PacketsIn:       row["packets-in"],
-					PacketsOut:      row["packets-out"],
+					RosID:      id,
+					Server:     row["server"],
+					User:       user,
+					Address:    row["address"],
+					MACAddress: row["mac-address"],
+					LoginBy:    row["login-by"],
 				}
 			}
 
@@ -106,6 +99,54 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 				TimestampUnix: time.Now().Unix(),
 			})
 			if err != nil {
+				return err
+			}
+		}
+	}
+}
+
+// StreamActiveStats streams /ip/hotspot/active/print stats interval=<interval> natively from RouterOS.
+// It pumps dynamic telemetry stats (uptime, session-time-left, idle-time, bytes-in/out, packets-in/out) per interval.
+func (h *HotspotConnectHandler) StreamActiveStats(ctx context.Context, req *connect.Request[devicepb.StreamActiveStatsRequest], stream *connect.ServerStream[devicepb.ActiveStatsStreamData]) error {
+	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
+	if err != nil {
+		return err
+	}
+
+	sd, ok := driver.(port.StreamingDeviceDriver)
+	if !ok {
+		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+	}
+
+	interval := req.Msg.Interval
+	if interval == "" {
+		interval = "1s"
+	}
+
+	handle, err := sd.Stream(ctx, mikrotik.NewStreamHotspotActiveStatsCommand(interval))
+	if err != nil {
+		return response.MapDomainError(err)
+	}
+	defer handle.Cancel()
+
+	for {
+		select {
+		case <-ctx.Done():
+			return nil
+		case res, ok := <-handle.Chan():
+			if !ok {
+				return handle.Err()
+			}
+			stats := mikrotik.ParseHotspotActiveStats(res)
+			if len(stats) == 0 {
+				continue
+			}
+
+			if err := stream.Send(&devicepb.ActiveStatsStreamData{
+				DeviceId:      req.Msg.DeviceId,
+				Stats:         ToProtoActiveStats(stats),
+				TimestampUnix: time.Now().Unix(),
+			}); err != nil {
 				return err
 			}
 		}

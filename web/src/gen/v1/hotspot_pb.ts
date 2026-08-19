@@ -2749,6 +2749,177 @@ export class ActiveSessionsStreamData extends Message<ActiveSessionsStreamData> 
 }
 
 /**
+ * @generated from message polyglot.v1.HotspotActiveStat
+ */
+export class HotspotActiveStat extends Message<HotspotActiveStat> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string uptime = 2;
+   */
+  uptime = "";
+
+  /**
+   * @generated from field: string session_time_left = 3;
+   */
+  sessionTimeLeft = "";
+
+  /**
+   * @generated from field: string idle_time = 4;
+   */
+  idleTime = "";
+
+  /**
+   * @generated from field: string bytes_in = 5;
+   */
+  bytesIn = "";
+
+  /**
+   * @generated from field: string bytes_out = 6;
+   */
+  bytesOut = "";
+
+  /**
+   * @generated from field: string packets_in = 7;
+   */
+  packetsIn = "";
+
+  /**
+   * @generated from field: string packets_out = 8;
+   */
+  packetsOut = "";
+
+  constructor(data?: PartialMessage<HotspotActiveStat>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.HotspotActiveStat";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "uptime", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "session_time_left", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "idle_time", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "bytes_in", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "bytes_out", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "packets_in", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "packets_out", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): HotspotActiveStat {
+    return new HotspotActiveStat().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): HotspotActiveStat {
+    return new HotspotActiveStat().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): HotspotActiveStat {
+    return new HotspotActiveStat().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: HotspotActiveStat | PlainMessage<HotspotActiveStat> | undefined, b: HotspotActiveStat | PlainMessage<HotspotActiveStat> | undefined): boolean {
+    return proto3.util.equals(HotspotActiveStat, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.StreamActiveStatsRequest
+ */
+export class StreamActiveStatsRequest extends Message<StreamActiveStatsRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string interval = 2;
+   */
+  interval = "";
+
+  constructor(data?: PartialMessage<StreamActiveStatsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.StreamActiveStatsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "interval", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StreamActiveStatsRequest {
+    return new StreamActiveStatsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StreamActiveStatsRequest {
+    return new StreamActiveStatsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StreamActiveStatsRequest {
+    return new StreamActiveStatsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: StreamActiveStatsRequest | PlainMessage<StreamActiveStatsRequest> | undefined, b: StreamActiveStatsRequest | PlainMessage<StreamActiveStatsRequest> | undefined): boolean {
+    return proto3.util.equals(StreamActiveStatsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ActiveStatsStreamData
+ */
+export class ActiveStatsStreamData extends Message<ActiveStatsStreamData> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: repeated polyglot.v1.HotspotActiveStat stats = 2;
+   */
+  stats: HotspotActiveStat[] = [];
+
+  /**
+   * @generated from field: int64 timestamp_unix = 3;
+   */
+  timestampUnix = protoInt64.zero;
+
+  constructor(data?: PartialMessage<ActiveStatsStreamData>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ActiveStatsStreamData";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "stats", kind: "message", T: HotspotActiveStat, repeated: true },
+    { no: 3, name: "timestamp_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ActiveStatsStreamData {
+    return new ActiveStatsStreamData().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ActiveStatsStreamData {
+    return new ActiveStatsStreamData().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ActiveStatsStreamData {
+    return new ActiveStatsStreamData().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ActiveStatsStreamData | PlainMessage<ActiveStatsStreamData> | undefined, b: ActiveStatsStreamData | PlainMessage<ActiveStatsStreamData> | undefined): boolean {
+    return proto3.util.equals(ActiveStatsStreamData, a, b);
+  }
+}
+
+/**
  * ── Modul 08: Sales Report ────────────────────────────────────────────
  *
  * @generated from message polyglot.v1.ListHotspotReportsRequest

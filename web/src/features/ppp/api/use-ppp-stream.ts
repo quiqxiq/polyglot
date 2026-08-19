@@ -1,15 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { pppClient } from '@/lib/api-client'
 import type { PPPActiveSession, PPPSecret } from '@/gen/v1/ppp_pb'
 
-export function useStreamPPPActiveSessions(deviceId?: string, enabled = true) {
+export function useStreamPPPActiveSessions(
+  deviceId?: string,
+  enabled = true,
+  interval = '1s'
+) {
   const [sessions, setSessions] = useState<PPPActiveSession[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
+  const sessionsMapRef = useRef<Map<string, PPPActiveSession>>(new Map())
 
   useEffect(() => {
     if (!deviceId || !enabled) {
       setSessions([])
+      sessionsMapRef.current.clear()
       setIsLoading(false)
       return
     }
@@ -18,7 +24,8 @@ export function useStreamPPPActiveSessions(deviceId?: string, enabled = true) {
     setIsLoading(true)
     setError(null)
 
-    async function startStream() {
+    // 1. Session Presence Stream (Lifecycle via follow)
+    async function startSessionStream() {
       try {
         const stream = pppClient.streamActiveSessions(
           { deviceId: deviceId!, nameFilter: '' },
@@ -26,7 +33,19 @@ export function useStreamPPPActiveSessions(deviceId?: string, enabled = true) {
         )
         for await (const frame of stream) {
           if (abortController.signal.aborted) break
-          setSessions(frame.sessions)
+          const newMap = new Map<string, PPPActiveSession>()
+          for (const s of frame.sessions) {
+            const existing = sessionsMapRef.current.get(s.id)
+            if (existing) {
+              // Preserve dynamic telemetry stats if already updated
+              s.uptime = existing.uptime || s.uptime
+              s.limitBytesIn = existing.limitBytesIn || s.limitBytesIn
+              s.limitBytesOut = existing.limitBytesOut || s.limitBytesOut
+            }
+            newMap.set(s.id, s)
+          }
+          sessionsMapRef.current = newMap
+          setSessions(Array.from(newMap.values()))
           setIsLoading(false)
         }
       } catch (err: unknown) {
@@ -37,12 +56,42 @@ export function useStreamPPPActiveSessions(deviceId?: string, enabled = true) {
       }
     }
 
-    startStream()
+    // 2. Realtime Telemetry Stats Stream (Dynamic counters via stats interval=1s)
+    async function startStatsStream() {
+      try {
+        const stream = pppClient.streamActiveStats(
+          { deviceId: deviceId!, interval },
+          { signal: abortController.signal }
+        )
+        for await (const frame of stream) {
+          if (abortController.signal.aborted) break
+          if (sessionsMapRef.current.size === 0) continue
+          let changed = false
+          for (const st of frame.stats) {
+            const sess = sessionsMapRef.current.get(st.id)
+            if (sess) {
+              sess.uptime = st.uptime
+              sess.limitBytesIn = st.limitBytesIn
+              sess.limitBytesOut = st.limitBytesOut
+              changed = true
+            }
+          }
+          if (changed) {
+            setSessions(Array.from(sessionsMapRef.current.values()))
+          }
+        }
+      } catch {
+        // Fall back gracefully if stats stream encounters network blip
+      }
+    }
+
+    startSessionStream()
+    startStatsStream()
 
     return () => {
       abortController.abort()
     }
-  }, [deviceId, enabled])
+  }, [deviceId, enabled, interval])
 
   return { sessions, isLoading, error }
 }

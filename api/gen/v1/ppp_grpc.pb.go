@@ -35,6 +35,7 @@ const (
 	PPPService_KickActiveSessions_FullMethodName    = "/polyglot.v1.PPPService/KickActiveSessions"
 	PPPService_ListInactiveSecrets_FullMethodName   = "/polyglot.v1.PPPService/ListInactiveSecrets"
 	PPPService_StreamActiveSessions_FullMethodName  = "/polyglot.v1.PPPService/StreamActiveSessions"
+	PPPService_StreamActiveStats_FullMethodName     = "/polyglot.v1.PPPService/StreamActiveStats"
 	PPPService_StreamInactiveSecrets_FullMethodName = "/polyglot.v1.PPPService/StreamInactiveSecrets"
 )
 
@@ -62,6 +63,7 @@ type PPPServiceClient interface {
 	ListInactiveSecrets(ctx context.Context, in *ListPPPInactiveSecretsRequest, opts ...grpc.CallOption) (*ListPPPInactiveSecretsResponse, error)
 	// Streaming Live Updates
 	StreamActiveSessions(ctx context.Context, in *StreamPPPActiveSessionsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PPPActiveSessionsFrame], error)
+	StreamActiveStats(ctx context.Context, in *StreamPPPActiveStatsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PPPActiveStatsFrame], error)
 	StreamInactiveSecrets(ctx context.Context, in *StreamPPPInactiveSecretsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PPPInactiveSecretsFrame], error)
 }
 
@@ -242,9 +244,28 @@ func (c *pPPServiceClient) StreamActiveSessions(ctx context.Context, in *StreamP
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type PPPService_StreamActiveSessionsClient = grpc.ServerStreamingClient[PPPActiveSessionsFrame]
 
+func (c *pPPServiceClient) StreamActiveStats(ctx context.Context, in *StreamPPPActiveStatsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PPPActiveStatsFrame], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &PPPService_ServiceDesc.Streams[1], PPPService_StreamActiveStats_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamPPPActiveStatsRequest, PPPActiveStatsFrame]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type PPPService_StreamActiveStatsClient = grpc.ServerStreamingClient[PPPActiveStatsFrame]
+
 func (c *pPPServiceClient) StreamInactiveSecrets(ctx context.Context, in *StreamPPPInactiveSecretsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PPPInactiveSecretsFrame], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &PPPService_ServiceDesc.Streams[1], PPPService_StreamInactiveSecrets_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &PPPService_ServiceDesc.Streams[2], PPPService_StreamInactiveSecrets_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -285,6 +306,7 @@ type PPPServiceServer interface {
 	ListInactiveSecrets(context.Context, *ListPPPInactiveSecretsRequest) (*ListPPPInactiveSecretsResponse, error)
 	// Streaming Live Updates
 	StreamActiveSessions(*StreamPPPActiveSessionsRequest, grpc.ServerStreamingServer[PPPActiveSessionsFrame]) error
+	StreamActiveStats(*StreamPPPActiveStatsRequest, grpc.ServerStreamingServer[PPPActiveStatsFrame]) error
 	StreamInactiveSecrets(*StreamPPPInactiveSecretsRequest, grpc.ServerStreamingServer[PPPInactiveSecretsFrame]) error
 	mustEmbedUnimplementedPPPServiceServer()
 }
@@ -343,6 +365,9 @@ func (UnimplementedPPPServiceServer) ListInactiveSecrets(context.Context, *ListP
 }
 func (UnimplementedPPPServiceServer) StreamActiveSessions(*StreamPPPActiveSessionsRequest, grpc.ServerStreamingServer[PPPActiveSessionsFrame]) error {
 	return status.Error(codes.Unimplemented, "method StreamActiveSessions not implemented")
+}
+func (UnimplementedPPPServiceServer) StreamActiveStats(*StreamPPPActiveStatsRequest, grpc.ServerStreamingServer[PPPActiveStatsFrame]) error {
+	return status.Error(codes.Unimplemented, "method StreamActiveStats not implemented")
 }
 func (UnimplementedPPPServiceServer) StreamInactiveSecrets(*StreamPPPInactiveSecretsRequest, grpc.ServerStreamingServer[PPPInactiveSecretsFrame]) error {
 	return status.Error(codes.Unimplemented, "method StreamInactiveSecrets not implemented")
@@ -649,6 +674,17 @@ func _PPPService_StreamActiveSessions_Handler(srv interface{}, stream grpc.Serve
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type PPPService_StreamActiveSessionsServer = grpc.ServerStreamingServer[PPPActiveSessionsFrame]
 
+func _PPPService_StreamActiveStats_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamPPPActiveStatsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(PPPServiceServer).StreamActiveStats(m, &grpc.GenericServerStream[StreamPPPActiveStatsRequest, PPPActiveStatsFrame]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type PPPService_StreamActiveStatsServer = grpc.ServerStreamingServer[PPPActiveStatsFrame]
+
 func _PPPService_StreamInactiveSecrets_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(StreamPPPInactiveSecretsRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -732,6 +768,11 @@ var PPPService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "StreamActiveSessions",
 			Handler:       _PPPService_StreamActiveSessions_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamActiveStats",
+			Handler:       _PPPService_StreamActiveStats_Handler,
 			ServerStreams: true,
 		},
 		{

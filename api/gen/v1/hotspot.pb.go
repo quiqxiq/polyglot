@@ -3369,6 +3369,218 @@ func (x *ActiveSessionsStreamData) GetTimestampUnix() int64 {
 	return 0
 }
 
+type HotspotActiveStat struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Uptime          string                 `protobuf:"bytes,2,opt,name=uptime,proto3" json:"uptime,omitempty"`
+	SessionTimeLeft string                 `protobuf:"bytes,3,opt,name=session_time_left,json=sessionTimeLeft,proto3" json:"session_time_left,omitempty"`
+	IdleTime        string                 `protobuf:"bytes,4,opt,name=idle_time,json=idleTime,proto3" json:"idle_time,omitempty"`
+	BytesIn         string                 `protobuf:"bytes,5,opt,name=bytes_in,json=bytesIn,proto3" json:"bytes_in,omitempty"`
+	BytesOut        string                 `protobuf:"bytes,6,opt,name=bytes_out,json=bytesOut,proto3" json:"bytes_out,omitempty"`
+	PacketsIn       string                 `protobuf:"bytes,7,opt,name=packets_in,json=packetsIn,proto3" json:"packets_in,omitempty"`
+	PacketsOut      string                 `protobuf:"bytes,8,opt,name=packets_out,json=packetsOut,proto3" json:"packets_out,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *HotspotActiveStat) Reset() {
+	*x = HotspotActiveStat{}
+	mi := &file_v1_hotspot_proto_msgTypes[52]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HotspotActiveStat) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HotspotActiveStat) ProtoMessage() {}
+
+func (x *HotspotActiveStat) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[52]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HotspotActiveStat.ProtoReflect.Descriptor instead.
+func (*HotspotActiveStat) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{52}
+}
+
+func (x *HotspotActiveStat) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *HotspotActiveStat) GetUptime() string {
+	if x != nil {
+		return x.Uptime
+	}
+	return ""
+}
+
+func (x *HotspotActiveStat) GetSessionTimeLeft() string {
+	if x != nil {
+		return x.SessionTimeLeft
+	}
+	return ""
+}
+
+func (x *HotspotActiveStat) GetIdleTime() string {
+	if x != nil {
+		return x.IdleTime
+	}
+	return ""
+}
+
+func (x *HotspotActiveStat) GetBytesIn() string {
+	if x != nil {
+		return x.BytesIn
+	}
+	return ""
+}
+
+func (x *HotspotActiveStat) GetBytesOut() string {
+	if x != nil {
+		return x.BytesOut
+	}
+	return ""
+}
+
+func (x *HotspotActiveStat) GetPacketsIn() string {
+	if x != nil {
+		return x.PacketsIn
+	}
+	return ""
+}
+
+func (x *HotspotActiveStat) GetPacketsOut() string {
+	if x != nil {
+		return x.PacketsOut
+	}
+	return ""
+}
+
+type StreamActiveStatsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Interval      string                 `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StreamActiveStatsRequest) Reset() {
+	*x = StreamActiveStatsRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[53]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StreamActiveStatsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StreamActiveStatsRequest) ProtoMessage() {}
+
+func (x *StreamActiveStatsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[53]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StreamActiveStatsRequest.ProtoReflect.Descriptor instead.
+func (*StreamActiveStatsRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{53}
+}
+
+func (x *StreamActiveStatsRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *StreamActiveStatsRequest) GetInterval() string {
+	if x != nil {
+		return x.Interval
+	}
+	return ""
+}
+
+type ActiveStatsStreamData struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Stats         []*HotspotActiveStat   `protobuf:"bytes,2,rep,name=stats,proto3" json:"stats,omitempty"`
+	TimestampUnix int64                  `protobuf:"varint,3,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ActiveStatsStreamData) Reset() {
+	*x = ActiveStatsStreamData{}
+	mi := &file_v1_hotspot_proto_msgTypes[54]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActiveStatsStreamData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActiveStatsStreamData) ProtoMessage() {}
+
+func (x *ActiveStatsStreamData) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[54]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActiveStatsStreamData.ProtoReflect.Descriptor instead.
+func (*ActiveStatsStreamData) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *ActiveStatsStreamData) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *ActiveStatsStreamData) GetStats() []*HotspotActiveStat {
+	if x != nil {
+		return x.Stats
+	}
+	return nil
+}
+
+func (x *ActiveStatsStreamData) GetTimestampUnix() int64 {
+	if x != nil {
+		return x.TimestampUnix
+	}
+	return 0
+}
+
 // ── Modul 08: Sales Report ────────────────────────────────────────────
 type ListHotspotReportsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -3383,7 +3595,7 @@ type ListHotspotReportsRequest struct {
 
 func (x *ListHotspotReportsRequest) Reset() {
 	*x = ListHotspotReportsRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[52]
+	mi := &file_v1_hotspot_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3395,7 +3607,7 @@ func (x *ListHotspotReportsRequest) String() string {
 func (*ListHotspotReportsRequest) ProtoMessage() {}
 
 func (x *ListHotspotReportsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[52]
+	mi := &file_v1_hotspot_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3408,7 +3620,7 @@ func (x *ListHotspotReportsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHotspotReportsRequest.ProtoReflect.Descriptor instead.
 func (*ListHotspotReportsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{52}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *ListHotspotReportsRequest) GetDeviceId() string {
@@ -3457,7 +3669,7 @@ type ListHotspotReportsResponse struct {
 
 func (x *ListHotspotReportsResponse) Reset() {
 	*x = ListHotspotReportsResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[53]
+	mi := &file_v1_hotspot_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3469,7 +3681,7 @@ func (x *ListHotspotReportsResponse) String() string {
 func (*ListHotspotReportsResponse) ProtoMessage() {}
 
 func (x *ListHotspotReportsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[53]
+	mi := &file_v1_hotspot_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3482,7 +3694,7 @@ func (x *ListHotspotReportsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHotspotReportsResponse.ProtoReflect.Descriptor instead.
 func (*ListHotspotReportsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{53}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *ListHotspotReportsResponse) GetReports() []*HotspotReport {
@@ -3516,7 +3728,7 @@ type DeleteHotspotReportRequest struct {
 
 func (x *DeleteHotspotReportRequest) Reset() {
 	*x = DeleteHotspotReportRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[54]
+	mi := &file_v1_hotspot_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3528,7 +3740,7 @@ func (x *DeleteHotspotReportRequest) String() string {
 func (*DeleteHotspotReportRequest) ProtoMessage() {}
 
 func (x *DeleteHotspotReportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[54]
+	mi := &file_v1_hotspot_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3541,7 +3753,7 @@ func (x *DeleteHotspotReportRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotReportRequest.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotReportRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{54}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *DeleteHotspotReportRequest) GetDeviceId() string {
@@ -3567,7 +3779,7 @@ type DeleteHotspotReportResponse struct {
 
 func (x *DeleteHotspotReportResponse) Reset() {
 	*x = DeleteHotspotReportResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[55]
+	mi := &file_v1_hotspot_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3579,7 +3791,7 @@ func (x *DeleteHotspotReportResponse) String() string {
 func (*DeleteHotspotReportResponse) ProtoMessage() {}
 
 func (x *DeleteHotspotReportResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[55]
+	mi := &file_v1_hotspot_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3592,7 +3804,7 @@ func (x *DeleteHotspotReportResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotReportResponse.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotReportResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{55}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *DeleteHotspotReportResponse) GetMessage() string {
@@ -3612,7 +3824,7 @@ type GetExpireMonitorStatusRequest struct {
 
 func (x *GetExpireMonitorStatusRequest) Reset() {
 	*x = GetExpireMonitorStatusRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[56]
+	mi := &file_v1_hotspot_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3624,7 +3836,7 @@ func (x *GetExpireMonitorStatusRequest) String() string {
 func (*GetExpireMonitorStatusRequest) ProtoMessage() {}
 
 func (x *GetExpireMonitorStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[56]
+	mi := &file_v1_hotspot_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3637,7 +3849,7 @@ func (x *GetExpireMonitorStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetExpireMonitorStatusRequest.ProtoReflect.Descriptor instead.
 func (*GetExpireMonitorStatusRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{56}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *GetExpireMonitorStatusRequest) GetDeviceId() string {
@@ -3659,7 +3871,7 @@ type ExpireMonitorStatusResponse struct {
 
 func (x *ExpireMonitorStatusResponse) Reset() {
 	*x = ExpireMonitorStatusResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[57]
+	mi := &file_v1_hotspot_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3671,7 +3883,7 @@ func (x *ExpireMonitorStatusResponse) String() string {
 func (*ExpireMonitorStatusResponse) ProtoMessage() {}
 
 func (x *ExpireMonitorStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[57]
+	mi := &file_v1_hotspot_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3684,7 +3896,7 @@ func (x *ExpireMonitorStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExpireMonitorStatusResponse.ProtoReflect.Descriptor instead.
 func (*ExpireMonitorStatusResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{57}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *ExpireMonitorStatusResponse) GetIsInstalled() bool {
@@ -3725,7 +3937,7 @@ type SetupExpireMonitorRequest struct {
 
 func (x *SetupExpireMonitorRequest) Reset() {
 	*x = SetupExpireMonitorRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[58]
+	mi := &file_v1_hotspot_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3737,7 +3949,7 @@ func (x *SetupExpireMonitorRequest) String() string {
 func (*SetupExpireMonitorRequest) ProtoMessage() {}
 
 func (x *SetupExpireMonitorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[58]
+	mi := &file_v1_hotspot_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3750,7 +3962,7 @@ func (x *SetupExpireMonitorRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetupExpireMonitorRequest.ProtoReflect.Descriptor instead.
 func (*SetupExpireMonitorRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{58}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{61}
 }
 
 func (x *SetupExpireMonitorRequest) GetDeviceId() string {
@@ -3776,7 +3988,7 @@ type SetupExpireMonitorResponse struct {
 
 func (x *SetupExpireMonitorResponse) Reset() {
 	*x = SetupExpireMonitorResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[59]
+	mi := &file_v1_hotspot_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3788,7 +4000,7 @@ func (x *SetupExpireMonitorResponse) String() string {
 func (*SetupExpireMonitorResponse) ProtoMessage() {}
 
 func (x *SetupExpireMonitorResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[59]
+	mi := &file_v1_hotspot_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3801,7 +4013,7 @@ func (x *SetupExpireMonitorResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetupExpireMonitorResponse.ProtoReflect.Descriptor instead.
 func (*SetupExpireMonitorResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{59}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *SetupExpireMonitorResponse) GetMessage() string {
@@ -3820,7 +4032,7 @@ type DisableExpireMonitorRequest struct {
 
 func (x *DisableExpireMonitorRequest) Reset() {
 	*x = DisableExpireMonitorRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[60]
+	mi := &file_v1_hotspot_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3832,7 +4044,7 @@ func (x *DisableExpireMonitorRequest) String() string {
 func (*DisableExpireMonitorRequest) ProtoMessage() {}
 
 func (x *DisableExpireMonitorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[60]
+	mi := &file_v1_hotspot_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3845,7 +4057,7 @@ func (x *DisableExpireMonitorRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DisableExpireMonitorRequest.ProtoReflect.Descriptor instead.
 func (*DisableExpireMonitorRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{60}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *DisableExpireMonitorRequest) GetDeviceId() string {
@@ -3864,7 +4076,7 @@ type DisableExpireMonitorResponse struct {
 
 func (x *DisableExpireMonitorResponse) Reset() {
 	*x = DisableExpireMonitorResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[61]
+	mi := &file_v1_hotspot_proto_msgTypes[64]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3876,7 +4088,7 @@ func (x *DisableExpireMonitorResponse) String() string {
 func (*DisableExpireMonitorResponse) ProtoMessage() {}
 
 func (x *DisableExpireMonitorResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[61]
+	mi := &file_v1_hotspot_proto_msgTypes[64]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3889,7 +4101,7 @@ func (x *DisableExpireMonitorResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DisableExpireMonitorResponse.ProtoReflect.Descriptor instead.
 func (*DisableExpireMonitorResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{61}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *DisableExpireMonitorResponse) GetMessage() string {
@@ -3908,7 +4120,7 @@ type RemoveExpireMonitorRequest struct {
 
 func (x *RemoveExpireMonitorRequest) Reset() {
 	*x = RemoveExpireMonitorRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[62]
+	mi := &file_v1_hotspot_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3920,7 +4132,7 @@ func (x *RemoveExpireMonitorRequest) String() string {
 func (*RemoveExpireMonitorRequest) ProtoMessage() {}
 
 func (x *RemoveExpireMonitorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[62]
+	mi := &file_v1_hotspot_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3933,7 +4145,7 @@ func (x *RemoveExpireMonitorRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveExpireMonitorRequest.ProtoReflect.Descriptor instead.
 func (*RemoveExpireMonitorRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{62}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *RemoveExpireMonitorRequest) GetDeviceId() string {
@@ -3952,7 +4164,7 @@ type RemoveExpireMonitorResponse struct {
 
 func (x *RemoveExpireMonitorResponse) Reset() {
 	*x = RemoveExpireMonitorResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[63]
+	mi := &file_v1_hotspot_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3964,7 +4176,7 @@ func (x *RemoveExpireMonitorResponse) String() string {
 func (*RemoveExpireMonitorResponse) ProtoMessage() {}
 
 func (x *RemoveExpireMonitorResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[63]
+	mi := &file_v1_hotspot_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3977,7 +4189,7 @@ func (x *RemoveExpireMonitorResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveExpireMonitorResponse.ProtoReflect.Descriptor instead.
 func (*RemoveExpireMonitorResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{63}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *RemoveExpireMonitorResponse) GetMessage() string {
@@ -3998,7 +4210,7 @@ type TemplateInfo struct {
 
 func (x *TemplateInfo) Reset() {
 	*x = TemplateInfo{}
-	mi := &file_v1_hotspot_proto_msgTypes[64]
+	mi := &file_v1_hotspot_proto_msgTypes[67]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4010,7 +4222,7 @@ func (x *TemplateInfo) String() string {
 func (*TemplateInfo) ProtoMessage() {}
 
 func (x *TemplateInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[64]
+	mi := &file_v1_hotspot_proto_msgTypes[67]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4023,7 +4235,7 @@ func (x *TemplateInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TemplateInfo.ProtoReflect.Descriptor instead.
 func (*TemplateInfo) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{64}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{67}
 }
 
 func (x *TemplateInfo) GetName() string {
@@ -4048,7 +4260,7 @@ type ListTemplatesRequest struct {
 
 func (x *ListTemplatesRequest) Reset() {
 	*x = ListTemplatesRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[65]
+	mi := &file_v1_hotspot_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4060,7 +4272,7 @@ func (x *ListTemplatesRequest) String() string {
 func (*ListTemplatesRequest) ProtoMessage() {}
 
 func (x *ListTemplatesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[65]
+	mi := &file_v1_hotspot_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4073,7 +4285,7 @@ func (x *ListTemplatesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTemplatesRequest.ProtoReflect.Descriptor instead.
 func (*ListTemplatesRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{65}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{68}
 }
 
 type ListTemplatesResponse struct {
@@ -4085,7 +4297,7 @@ type ListTemplatesResponse struct {
 
 func (x *ListTemplatesResponse) Reset() {
 	*x = ListTemplatesResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[66]
+	mi := &file_v1_hotspot_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4097,7 +4309,7 @@ func (x *ListTemplatesResponse) String() string {
 func (*ListTemplatesResponse) ProtoMessage() {}
 
 func (x *ListTemplatesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[66]
+	mi := &file_v1_hotspot_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4110,7 +4322,7 @@ func (x *ListTemplatesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTemplatesResponse.ProtoReflect.Descriptor instead.
 func (*ListTemplatesResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{66}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *ListTemplatesResponse) GetTemplates() []*TemplateInfo {
@@ -4130,7 +4342,7 @@ type GetTemplateSectionRequest struct {
 
 func (x *GetTemplateSectionRequest) Reset() {
 	*x = GetTemplateSectionRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[67]
+	mi := &file_v1_hotspot_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4142,7 +4354,7 @@ func (x *GetTemplateSectionRequest) String() string {
 func (*GetTemplateSectionRequest) ProtoMessage() {}
 
 func (x *GetTemplateSectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[67]
+	mi := &file_v1_hotspot_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4155,7 +4367,7 @@ func (x *GetTemplateSectionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTemplateSectionRequest.ProtoReflect.Descriptor instead.
 func (*GetTemplateSectionRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{67}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *GetTemplateSectionRequest) GetTemplateName() string {
@@ -4181,7 +4393,7 @@ type GetTemplateSectionResponse struct {
 
 func (x *GetTemplateSectionResponse) Reset() {
 	*x = GetTemplateSectionResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[68]
+	mi := &file_v1_hotspot_proto_msgTypes[71]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4193,7 +4405,7 @@ func (x *GetTemplateSectionResponse) String() string {
 func (*GetTemplateSectionResponse) ProtoMessage() {}
 
 func (x *GetTemplateSectionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[68]
+	mi := &file_v1_hotspot_proto_msgTypes[71]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4206,7 +4418,7 @@ func (x *GetTemplateSectionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTemplateSectionResponse.ProtoReflect.Descriptor instead.
 func (*GetTemplateSectionResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{68}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{71}
 }
 
 func (x *GetTemplateSectionResponse) GetContent() string {
@@ -4229,7 +4441,7 @@ type RenderVouchersRequest struct {
 
 func (x *RenderVouchersRequest) Reset() {
 	*x = RenderVouchersRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[69]
+	mi := &file_v1_hotspot_proto_msgTypes[72]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4241,7 +4453,7 @@ func (x *RenderVouchersRequest) String() string {
 func (*RenderVouchersRequest) ProtoMessage() {}
 
 func (x *RenderVouchersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[69]
+	mi := &file_v1_hotspot_proto_msgTypes[72]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4254,7 +4466,7 @@ func (x *RenderVouchersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RenderVouchersRequest.ProtoReflect.Descriptor instead.
 func (*RenderVouchersRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{69}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{72}
 }
 
 func (x *RenderVouchersRequest) GetDeviceId() string {
@@ -4302,7 +4514,7 @@ type RenderVouchersResponse struct {
 
 func (x *RenderVouchersResponse) Reset() {
 	*x = RenderVouchersResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[70]
+	mi := &file_v1_hotspot_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4314,7 +4526,7 @@ func (x *RenderVouchersResponse) String() string {
 func (*RenderVouchersResponse) ProtoMessage() {}
 
 func (x *RenderVouchersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[70]
+	mi := &file_v1_hotspot_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4327,7 +4539,7 @@ func (x *RenderVouchersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RenderVouchersResponse.ProtoReflect.Descriptor instead.
 func (*RenderVouchersResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{70}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{73}
 }
 
 func (x *RenderVouchersResponse) GetHtml() string {
@@ -4354,7 +4566,7 @@ type StreamSystemSnapshotRequest struct {
 
 func (x *StreamSystemSnapshotRequest) Reset() {
 	*x = StreamSystemSnapshotRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[71]
+	mi := &file_v1_hotspot_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4366,7 +4578,7 @@ func (x *StreamSystemSnapshotRequest) String() string {
 func (*StreamSystemSnapshotRequest) ProtoMessage() {}
 
 func (x *StreamSystemSnapshotRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[71]
+	mi := &file_v1_hotspot_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4379,7 +4591,7 @@ func (x *StreamSystemSnapshotRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamSystemSnapshotRequest.ProtoReflect.Descriptor instead.
 func (*StreamSystemSnapshotRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{71}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{74}
 }
 
 func (x *StreamSystemSnapshotRequest) GetDeviceId() string {
@@ -4408,7 +4620,7 @@ type SystemClockInfo struct {
 
 func (x *SystemClockInfo) Reset() {
 	*x = SystemClockInfo{}
-	mi := &file_v1_hotspot_proto_msgTypes[72]
+	mi := &file_v1_hotspot_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4420,7 +4632,7 @@ func (x *SystemClockInfo) String() string {
 func (*SystemClockInfo) ProtoMessage() {}
 
 func (x *SystemClockInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[72]
+	mi := &file_v1_hotspot_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4433,7 +4645,7 @@ func (x *SystemClockInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemClockInfo.ProtoReflect.Descriptor instead.
 func (*SystemClockInfo) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{72}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *SystemClockInfo) GetTime() string {
@@ -4489,7 +4701,7 @@ type SystemResourceInfo struct {
 
 func (x *SystemResourceInfo) Reset() {
 	*x = SystemResourceInfo{}
-	mi := &file_v1_hotspot_proto_msgTypes[73]
+	mi := &file_v1_hotspot_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4501,7 +4713,7 @@ func (x *SystemResourceInfo) String() string {
 func (*SystemResourceInfo) ProtoMessage() {}
 
 func (x *SystemResourceInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[73]
+	mi := &file_v1_hotspot_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4514,7 +4726,7 @@ func (x *SystemResourceInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemResourceInfo.ProtoReflect.Descriptor instead.
 func (*SystemResourceInfo) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{73}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *SystemResourceInfo) GetCpuLoad() int32 {
@@ -4651,7 +4863,7 @@ type SystemRouterboardInfo struct {
 
 func (x *SystemRouterboardInfo) Reset() {
 	*x = SystemRouterboardInfo{}
-	mi := &file_v1_hotspot_proto_msgTypes[74]
+	mi := &file_v1_hotspot_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4663,7 +4875,7 @@ func (x *SystemRouterboardInfo) String() string {
 func (*SystemRouterboardInfo) ProtoMessage() {}
 
 func (x *SystemRouterboardInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[74]
+	mi := &file_v1_hotspot_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4676,7 +4888,7 @@ func (x *SystemRouterboardInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemRouterboardInfo.ProtoReflect.Descriptor instead.
 func (*SystemRouterboardInfo) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{74}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *SystemRouterboardInfo) GetBoardName() string {
@@ -4744,7 +4956,7 @@ type SystemHealthInfo struct {
 
 func (x *SystemHealthInfo) Reset() {
 	*x = SystemHealthInfo{}
-	mi := &file_v1_hotspot_proto_msgTypes[75]
+	mi := &file_v1_hotspot_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4756,7 +4968,7 @@ func (x *SystemHealthInfo) String() string {
 func (*SystemHealthInfo) ProtoMessage() {}
 
 func (x *SystemHealthInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[75]
+	mi := &file_v1_hotspot_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4769,7 +4981,7 @@ func (x *SystemHealthInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemHealthInfo.ProtoReflect.Descriptor instead.
 func (*SystemHealthInfo) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{75}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{78}
 }
 
 func (x *SystemHealthInfo) GetVoltage() string {
@@ -4843,7 +5055,7 @@ type SystemSnapshotFrame struct {
 
 func (x *SystemSnapshotFrame) Reset() {
 	*x = SystemSnapshotFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[76]
+	mi := &file_v1_hotspot_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4855,7 +5067,7 @@ func (x *SystemSnapshotFrame) String() string {
 func (*SystemSnapshotFrame) ProtoMessage() {}
 
 func (x *SystemSnapshotFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[76]
+	mi := &file_v1_hotspot_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4868,7 +5080,7 @@ func (x *SystemSnapshotFrame) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SystemSnapshotFrame.ProtoReflect.Descriptor instead.
 func (*SystemSnapshotFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{76}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *SystemSnapshotFrame) GetDeviceId() string {
@@ -4933,7 +5145,7 @@ type StreamQueueStatsRequest struct {
 
 func (x *StreamQueueStatsRequest) Reset() {
 	*x = StreamQueueStatsRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[77]
+	mi := &file_v1_hotspot_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4945,7 +5157,7 @@ func (x *StreamQueueStatsRequest) String() string {
 func (*StreamQueueStatsRequest) ProtoMessage() {}
 
 func (x *StreamQueueStatsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[77]
+	mi := &file_v1_hotspot_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4958,7 +5170,7 @@ func (x *StreamQueueStatsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamQueueStatsRequest.ProtoReflect.Descriptor instead.
 func (*StreamQueueStatsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{77}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{80}
 }
 
 func (x *StreamQueueStatsRequest) GetDeviceId() string {
@@ -5017,7 +5229,7 @@ type QueueStatsItem struct {
 
 func (x *QueueStatsItem) Reset() {
 	*x = QueueStatsItem{}
-	mi := &file_v1_hotspot_proto_msgTypes[78]
+	mi := &file_v1_hotspot_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5029,7 +5241,7 @@ func (x *QueueStatsItem) String() string {
 func (*QueueStatsItem) ProtoMessage() {}
 
 func (x *QueueStatsItem) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[78]
+	mi := &file_v1_hotspot_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5042,7 +5254,7 @@ func (x *QueueStatsItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueueStatsItem.ProtoReflect.Descriptor instead.
 func (*QueueStatsItem) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{78}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *QueueStatsItem) GetId() string {
@@ -5147,7 +5359,7 @@ type QueueStatsFrame struct {
 
 func (x *QueueStatsFrame) Reset() {
 	*x = QueueStatsFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[79]
+	mi := &file_v1_hotspot_proto_msgTypes[82]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5159,7 +5371,7 @@ func (x *QueueStatsFrame) String() string {
 func (*QueueStatsFrame) ProtoMessage() {}
 
 func (x *QueueStatsFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[79]
+	mi := &file_v1_hotspot_proto_msgTypes[82]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5172,7 +5384,7 @@ func (x *QueueStatsFrame) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueueStatsFrame.ProtoReflect.Descriptor instead.
 func (*QueueStatsFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{79}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *QueueStatsFrame) GetDeviceId() string {
@@ -5206,7 +5418,7 @@ type StreamLogsRequest struct {
 
 func (x *StreamLogsRequest) Reset() {
 	*x = StreamLogsRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[80]
+	mi := &file_v1_hotspot_proto_msgTypes[83]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5218,7 +5430,7 @@ func (x *StreamLogsRequest) String() string {
 func (*StreamLogsRequest) ProtoMessage() {}
 
 func (x *StreamLogsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[80]
+	mi := &file_v1_hotspot_proto_msgTypes[83]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5231,7 +5443,7 @@ func (x *StreamLogsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamLogsRequest.ProtoReflect.Descriptor instead.
 func (*StreamLogsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{80}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{83}
 }
 
 func (x *StreamLogsRequest) GetDeviceId() string {
@@ -5260,7 +5472,7 @@ type LogEntryItem struct {
 
 func (x *LogEntryItem) Reset() {
 	*x = LogEntryItem{}
-	mi := &file_v1_hotspot_proto_msgTypes[81]
+	mi := &file_v1_hotspot_proto_msgTypes[84]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5272,7 +5484,7 @@ func (x *LogEntryItem) String() string {
 func (*LogEntryItem) ProtoMessage() {}
 
 func (x *LogEntryItem) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[81]
+	mi := &file_v1_hotspot_proto_msgTypes[84]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5285,7 +5497,7 @@ func (x *LogEntryItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogEntryItem.ProtoReflect.Descriptor instead.
 func (*LogEntryItem) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{81}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *LogEntryItem) GetId() string {
@@ -5327,7 +5539,7 @@ type LogsStreamFrame struct {
 
 func (x *LogsStreamFrame) Reset() {
 	*x = LogsStreamFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[82]
+	mi := &file_v1_hotspot_proto_msgTypes[85]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5339,7 +5551,7 @@ func (x *LogsStreamFrame) String() string {
 func (*LogsStreamFrame) ProtoMessage() {}
 
 func (x *LogsStreamFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[82]
+	mi := &file_v1_hotspot_proto_msgTypes[85]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5352,7 +5564,7 @@ func (x *LogsStreamFrame) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogsStreamFrame.ProtoReflect.Descriptor instead.
 func (*LogsStreamFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{82}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *LogsStreamFrame) GetDeviceId() string {
@@ -5386,7 +5598,7 @@ type StreamInterfaceEthernetRequest struct {
 
 func (x *StreamInterfaceEthernetRequest) Reset() {
 	*x = StreamInterfaceEthernetRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[83]
+	mi := &file_v1_hotspot_proto_msgTypes[86]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5398,7 +5610,7 @@ func (x *StreamInterfaceEthernetRequest) String() string {
 func (*StreamInterfaceEthernetRequest) ProtoMessage() {}
 
 func (x *StreamInterfaceEthernetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[83]
+	mi := &file_v1_hotspot_proto_msgTypes[86]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5411,7 +5623,7 @@ func (x *StreamInterfaceEthernetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamInterfaceEthernetRequest.ProtoReflect.Descriptor instead.
 func (*StreamInterfaceEthernetRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{83}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *StreamInterfaceEthernetRequest) GetDeviceId() string {
@@ -5448,7 +5660,7 @@ type InterfaceEthernetItem struct {
 
 func (x *InterfaceEthernetItem) Reset() {
 	*x = InterfaceEthernetItem{}
-	mi := &file_v1_hotspot_proto_msgTypes[84]
+	mi := &file_v1_hotspot_proto_msgTypes[87]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5460,7 +5672,7 @@ func (x *InterfaceEthernetItem) String() string {
 func (*InterfaceEthernetItem) ProtoMessage() {}
 
 func (x *InterfaceEthernetItem) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[84]
+	mi := &file_v1_hotspot_proto_msgTypes[87]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5473,7 +5685,7 @@ func (x *InterfaceEthernetItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InterfaceEthernetItem.ProtoReflect.Descriptor instead.
 func (*InterfaceEthernetItem) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{84}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{87}
 }
 
 func (x *InterfaceEthernetItem) GetId() string {
@@ -5571,7 +5783,7 @@ type InterfaceEthernetFrame struct {
 
 func (x *InterfaceEthernetFrame) Reset() {
 	*x = InterfaceEthernetFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[85]
+	mi := &file_v1_hotspot_proto_msgTypes[88]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5583,7 +5795,7 @@ func (x *InterfaceEthernetFrame) String() string {
 func (*InterfaceEthernetFrame) ProtoMessage() {}
 
 func (x *InterfaceEthernetFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[85]
+	mi := &file_v1_hotspot_proto_msgTypes[88]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5596,7 +5808,7 @@ func (x *InterfaceEthernetFrame) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InterfaceEthernetFrame.ProtoReflect.Descriptor instead.
 func (*InterfaceEthernetFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{85}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{88}
 }
 
 func (x *InterfaceEthernetFrame) GetDeviceId() string {
@@ -5632,7 +5844,7 @@ type StreamHotspotInactiveRequest struct {
 
 func (x *StreamHotspotInactiveRequest) Reset() {
 	*x = StreamHotspotInactiveRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[86]
+	mi := &file_v1_hotspot_proto_msgTypes[89]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5644,7 +5856,7 @@ func (x *StreamHotspotInactiveRequest) String() string {
 func (*StreamHotspotInactiveRequest) ProtoMessage() {}
 
 func (x *StreamHotspotInactiveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[86]
+	mi := &file_v1_hotspot_proto_msgTypes[89]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5657,7 +5869,7 @@ func (x *StreamHotspotInactiveRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamHotspotInactiveRequest.ProtoReflect.Descriptor instead.
 func (*StreamHotspotInactiveRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{86}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{89}
 }
 
 func (x *StreamHotspotInactiveRequest) GetDeviceId() string {
@@ -5685,7 +5897,7 @@ type HotspotInactiveFrame struct {
 
 func (x *HotspotInactiveFrame) Reset() {
 	*x = HotspotInactiveFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[87]
+	mi := &file_v1_hotspot_proto_msgTypes[90]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5697,7 +5909,7 @@ func (x *HotspotInactiveFrame) String() string {
 func (*HotspotInactiveFrame) ProtoMessage() {}
 
 func (x *HotspotInactiveFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[87]
+	mi := &file_v1_hotspot_proto_msgTypes[90]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5710,7 +5922,7 @@ func (x *HotspotInactiveFrame) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HotspotInactiveFrame.ProtoReflect.Descriptor instead.
 func (*HotspotInactiveFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{87}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{90}
 }
 
 func (x *HotspotInactiveFrame) GetDeviceId() string {
@@ -5745,7 +5957,7 @@ type StreamPPPActiveRequest struct {
 
 func (x *StreamPPPActiveRequest) Reset() {
 	*x = StreamPPPActiveRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[88]
+	mi := &file_v1_hotspot_proto_msgTypes[91]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5757,7 +5969,7 @@ func (x *StreamPPPActiveRequest) String() string {
 func (*StreamPPPActiveRequest) ProtoMessage() {}
 
 func (x *StreamPPPActiveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[88]
+	mi := &file_v1_hotspot_proto_msgTypes[91]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5770,7 +5982,7 @@ func (x *StreamPPPActiveRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamPPPActiveRequest.ProtoReflect.Descriptor instead.
 func (*StreamPPPActiveRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{88}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{91}
 }
 
 func (x *StreamPPPActiveRequest) GetDeviceId() string {
@@ -5806,7 +6018,7 @@ type PPPActiveSessionItem struct {
 
 func (x *PPPActiveSessionItem) Reset() {
 	*x = PPPActiveSessionItem{}
-	mi := &file_v1_hotspot_proto_msgTypes[89]
+	mi := &file_v1_hotspot_proto_msgTypes[92]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5818,7 +6030,7 @@ func (x *PPPActiveSessionItem) String() string {
 func (*PPPActiveSessionItem) ProtoMessage() {}
 
 func (x *PPPActiveSessionItem) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[89]
+	mi := &file_v1_hotspot_proto_msgTypes[92]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5831,7 +6043,7 @@ func (x *PPPActiveSessionItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PPPActiveSessionItem.ProtoReflect.Descriptor instead.
 func (*PPPActiveSessionItem) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{89}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{92}
 }
 
 func (x *PPPActiveSessionItem) GetId() string {
@@ -5922,7 +6134,7 @@ type PPPActiveFrame struct {
 
 func (x *PPPActiveFrame) Reset() {
 	*x = PPPActiveFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[90]
+	mi := &file_v1_hotspot_proto_msgTypes[93]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5934,7 +6146,7 @@ func (x *PPPActiveFrame) String() string {
 func (*PPPActiveFrame) ProtoMessage() {}
 
 func (x *PPPActiveFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[90]
+	mi := &file_v1_hotspot_proto_msgTypes[93]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5947,7 +6159,7 @@ func (x *PPPActiveFrame) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PPPActiveFrame.ProtoReflect.Descriptor instead.
 func (*PPPActiveFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{90}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{93}
 }
 
 func (x *PPPActiveFrame) GetDeviceId() string {
@@ -5983,7 +6195,7 @@ type StreamPPPInactiveRequest struct {
 
 func (x *StreamPPPInactiveRequest) Reset() {
 	*x = StreamPPPInactiveRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[91]
+	mi := &file_v1_hotspot_proto_msgTypes[94]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5995,7 +6207,7 @@ func (x *StreamPPPInactiveRequest) String() string {
 func (*StreamPPPInactiveRequest) ProtoMessage() {}
 
 func (x *StreamPPPInactiveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[91]
+	mi := &file_v1_hotspot_proto_msgTypes[94]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6008,7 +6220,7 @@ func (x *StreamPPPInactiveRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamPPPInactiveRequest.ProtoReflect.Descriptor instead.
 func (*StreamPPPInactiveRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{91}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{94}
 }
 
 func (x *StreamPPPInactiveRequest) GetDeviceId() string {
@@ -6043,7 +6255,7 @@ type PPPSecretItem struct {
 
 func (x *PPPSecretItem) Reset() {
 	*x = PPPSecretItem{}
-	mi := &file_v1_hotspot_proto_msgTypes[92]
+	mi := &file_v1_hotspot_proto_msgTypes[95]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6055,7 +6267,7 @@ func (x *PPPSecretItem) String() string {
 func (*PPPSecretItem) ProtoMessage() {}
 
 func (x *PPPSecretItem) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[92]
+	mi := &file_v1_hotspot_proto_msgTypes[95]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6068,7 +6280,7 @@ func (x *PPPSecretItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PPPSecretItem.ProtoReflect.Descriptor instead.
 func (*PPPSecretItem) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{92}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{95}
 }
 
 func (x *PPPSecretItem) GetId() string {
@@ -6152,7 +6364,7 @@ type PPPInactiveFrame struct {
 
 func (x *PPPInactiveFrame) Reset() {
 	*x = PPPInactiveFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[93]
+	mi := &file_v1_hotspot_proto_msgTypes[96]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6164,7 +6376,7 @@ func (x *PPPInactiveFrame) String() string {
 func (*PPPInactiveFrame) ProtoMessage() {}
 
 func (x *PPPInactiveFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[93]
+	mi := &file_v1_hotspot_proto_msgTypes[96]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6177,7 +6389,7 @@ func (x *PPPInactiveFrame) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PPPInactiveFrame.ProtoReflect.Descriptor instead.
 func (*PPPInactiveFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{93}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{96}
 }
 
 func (x *PPPInactiveFrame) GetDeviceId() string {
@@ -6212,7 +6424,7 @@ type DeleteHotspotUsersRequest struct {
 
 func (x *DeleteHotspotUsersRequest) Reset() {
 	*x = DeleteHotspotUsersRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[94]
+	mi := &file_v1_hotspot_proto_msgTypes[97]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6224,7 +6436,7 @@ func (x *DeleteHotspotUsersRequest) String() string {
 func (*DeleteHotspotUsersRequest) ProtoMessage() {}
 
 func (x *DeleteHotspotUsersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[94]
+	mi := &file_v1_hotspot_proto_msgTypes[97]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6237,7 +6449,7 @@ func (x *DeleteHotspotUsersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotUsersRequest.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotUsersRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{94}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{97}
 }
 
 func (x *DeleteHotspotUsersRequest) GetDeviceId() string {
@@ -6271,7 +6483,7 @@ type DeleteHotspotUsersResponse struct {
 
 func (x *DeleteHotspotUsersResponse) Reset() {
 	*x = DeleteHotspotUsersResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[95]
+	mi := &file_v1_hotspot_proto_msgTypes[98]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6283,7 +6495,7 @@ func (x *DeleteHotspotUsersResponse) String() string {
 func (*DeleteHotspotUsersResponse) ProtoMessage() {}
 
 func (x *DeleteHotspotUsersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[95]
+	mi := &file_v1_hotspot_proto_msgTypes[98]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6296,7 +6508,7 @@ func (x *DeleteHotspotUsersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotUsersResponse.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotUsersResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{95}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{98}
 }
 
 func (x *DeleteHotspotUsersResponse) GetDeletedCount() int32 {
@@ -6329,7 +6541,7 @@ type HotspotIPBinding struct {
 
 func (x *HotspotIPBinding) Reset() {
 	*x = HotspotIPBinding{}
-	mi := &file_v1_hotspot_proto_msgTypes[96]
+	mi := &file_v1_hotspot_proto_msgTypes[99]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6341,7 +6553,7 @@ func (x *HotspotIPBinding) String() string {
 func (*HotspotIPBinding) ProtoMessage() {}
 
 func (x *HotspotIPBinding) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[96]
+	mi := &file_v1_hotspot_proto_msgTypes[99]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6354,7 +6566,7 @@ func (x *HotspotIPBinding) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HotspotIPBinding.ProtoReflect.Descriptor instead.
 func (*HotspotIPBinding) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{96}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{99}
 }
 
 func (x *HotspotIPBinding) GetId() string {
@@ -6422,7 +6634,7 @@ type ListHotspotIPBindingsRequest struct {
 
 func (x *ListHotspotIPBindingsRequest) Reset() {
 	*x = ListHotspotIPBindingsRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[97]
+	mi := &file_v1_hotspot_proto_msgTypes[100]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6434,7 +6646,7 @@ func (x *ListHotspotIPBindingsRequest) String() string {
 func (*ListHotspotIPBindingsRequest) ProtoMessage() {}
 
 func (x *ListHotspotIPBindingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[97]
+	mi := &file_v1_hotspot_proto_msgTypes[100]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6447,7 +6659,7 @@ func (x *ListHotspotIPBindingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHotspotIPBindingsRequest.ProtoReflect.Descriptor instead.
 func (*ListHotspotIPBindingsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{97}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{100}
 }
 
 func (x *ListHotspotIPBindingsRequest) GetDeviceId() string {
@@ -6466,7 +6678,7 @@ type ListHotspotIPBindingsResponse struct {
 
 func (x *ListHotspotIPBindingsResponse) Reset() {
 	*x = ListHotspotIPBindingsResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[98]
+	mi := &file_v1_hotspot_proto_msgTypes[101]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6478,7 +6690,7 @@ func (x *ListHotspotIPBindingsResponse) String() string {
 func (*ListHotspotIPBindingsResponse) ProtoMessage() {}
 
 func (x *ListHotspotIPBindingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[98]
+	mi := &file_v1_hotspot_proto_msgTypes[101]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6491,7 +6703,7 @@ func (x *ListHotspotIPBindingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHotspotIPBindingsResponse.ProtoReflect.Descriptor instead.
 func (*ListHotspotIPBindingsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{98}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{101}
 }
 
 func (x *ListHotspotIPBindingsResponse) GetBindings() []*HotspotIPBinding {
@@ -6517,7 +6729,7 @@ type CreateHotspotIPBindingRequest struct {
 
 func (x *CreateHotspotIPBindingRequest) Reset() {
 	*x = CreateHotspotIPBindingRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[99]
+	mi := &file_v1_hotspot_proto_msgTypes[102]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6529,7 +6741,7 @@ func (x *CreateHotspotIPBindingRequest) String() string {
 func (*CreateHotspotIPBindingRequest) ProtoMessage() {}
 
 func (x *CreateHotspotIPBindingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[99]
+	mi := &file_v1_hotspot_proto_msgTypes[102]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6542,7 +6754,7 @@ func (x *CreateHotspotIPBindingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateHotspotIPBindingRequest.ProtoReflect.Descriptor instead.
 func (*CreateHotspotIPBindingRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{99}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{102}
 }
 
 func (x *CreateHotspotIPBindingRequest) GetDeviceId() string {
@@ -6611,7 +6823,7 @@ type CreateHotspotIPBindingResponse struct {
 
 func (x *CreateHotspotIPBindingResponse) Reset() {
 	*x = CreateHotspotIPBindingResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[100]
+	mi := &file_v1_hotspot_proto_msgTypes[103]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6623,7 +6835,7 @@ func (x *CreateHotspotIPBindingResponse) String() string {
 func (*CreateHotspotIPBindingResponse) ProtoMessage() {}
 
 func (x *CreateHotspotIPBindingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[100]
+	mi := &file_v1_hotspot_proto_msgTypes[103]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6636,7 +6848,7 @@ func (x *CreateHotspotIPBindingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateHotspotIPBindingResponse.ProtoReflect.Descriptor instead.
 func (*CreateHotspotIPBindingResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{100}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{103}
 }
 
 func (x *CreateHotspotIPBindingResponse) GetBinding() *HotspotIPBinding {
@@ -6670,7 +6882,7 @@ type UpdateHotspotIPBindingRequest struct {
 
 func (x *UpdateHotspotIPBindingRequest) Reset() {
 	*x = UpdateHotspotIPBindingRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[101]
+	mi := &file_v1_hotspot_proto_msgTypes[104]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6682,7 +6894,7 @@ func (x *UpdateHotspotIPBindingRequest) String() string {
 func (*UpdateHotspotIPBindingRequest) ProtoMessage() {}
 
 func (x *UpdateHotspotIPBindingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[101]
+	mi := &file_v1_hotspot_proto_msgTypes[104]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6695,7 +6907,7 @@ func (x *UpdateHotspotIPBindingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHotspotIPBindingRequest.ProtoReflect.Descriptor instead.
 func (*UpdateHotspotIPBindingRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{101}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{104}
 }
 
 func (x *UpdateHotspotIPBindingRequest) GetDeviceId() string {
@@ -6771,7 +6983,7 @@ type UpdateHotspotIPBindingResponse struct {
 
 func (x *UpdateHotspotIPBindingResponse) Reset() {
 	*x = UpdateHotspotIPBindingResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[102]
+	mi := &file_v1_hotspot_proto_msgTypes[105]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6783,7 +6995,7 @@ func (x *UpdateHotspotIPBindingResponse) String() string {
 func (*UpdateHotspotIPBindingResponse) ProtoMessage() {}
 
 func (x *UpdateHotspotIPBindingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[102]
+	mi := &file_v1_hotspot_proto_msgTypes[105]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6796,7 +7008,7 @@ func (x *UpdateHotspotIPBindingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHotspotIPBindingResponse.ProtoReflect.Descriptor instead.
 func (*UpdateHotspotIPBindingResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{102}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{105}
 }
 
 func (x *UpdateHotspotIPBindingResponse) GetBinding() *HotspotIPBinding {
@@ -6823,7 +7035,7 @@ type DeleteHotspotIPBindingRequest struct {
 
 func (x *DeleteHotspotIPBindingRequest) Reset() {
 	*x = DeleteHotspotIPBindingRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[103]
+	mi := &file_v1_hotspot_proto_msgTypes[106]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6835,7 +7047,7 @@ func (x *DeleteHotspotIPBindingRequest) String() string {
 func (*DeleteHotspotIPBindingRequest) ProtoMessage() {}
 
 func (x *DeleteHotspotIPBindingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[103]
+	mi := &file_v1_hotspot_proto_msgTypes[106]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6848,7 +7060,7 @@ func (x *DeleteHotspotIPBindingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotIPBindingRequest.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotIPBindingRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{103}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{106}
 }
 
 func (x *DeleteHotspotIPBindingRequest) GetDeviceId() string {
@@ -6874,7 +7086,7 @@ type DeleteHotspotIPBindingResponse struct {
 
 func (x *DeleteHotspotIPBindingResponse) Reset() {
 	*x = DeleteHotspotIPBindingResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[104]
+	mi := &file_v1_hotspot_proto_msgTypes[107]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6886,7 +7098,7 @@ func (x *DeleteHotspotIPBindingResponse) String() string {
 func (*DeleteHotspotIPBindingResponse) ProtoMessage() {}
 
 func (x *DeleteHotspotIPBindingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[104]
+	mi := &file_v1_hotspot_proto_msgTypes[107]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6899,7 +7111,7 @@ func (x *DeleteHotspotIPBindingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotIPBindingResponse.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotIPBindingResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{104}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{107}
 }
 
 func (x *DeleteHotspotIPBindingResponse) GetMessage() string {
@@ -6922,7 +7134,7 @@ type HotspotCookie struct {
 
 func (x *HotspotCookie) Reset() {
 	*x = HotspotCookie{}
-	mi := &file_v1_hotspot_proto_msgTypes[105]
+	mi := &file_v1_hotspot_proto_msgTypes[108]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6934,7 +7146,7 @@ func (x *HotspotCookie) String() string {
 func (*HotspotCookie) ProtoMessage() {}
 
 func (x *HotspotCookie) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[105]
+	mi := &file_v1_hotspot_proto_msgTypes[108]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6947,7 +7159,7 @@ func (x *HotspotCookie) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HotspotCookie.ProtoReflect.Descriptor instead.
 func (*HotspotCookie) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{105}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{108}
 }
 
 func (x *HotspotCookie) GetId() string {
@@ -6994,7 +7206,7 @@ type ListHotspotCookiesRequest struct {
 
 func (x *ListHotspotCookiesRequest) Reset() {
 	*x = ListHotspotCookiesRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[106]
+	mi := &file_v1_hotspot_proto_msgTypes[109]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7006,7 +7218,7 @@ func (x *ListHotspotCookiesRequest) String() string {
 func (*ListHotspotCookiesRequest) ProtoMessage() {}
 
 func (x *ListHotspotCookiesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[106]
+	mi := &file_v1_hotspot_proto_msgTypes[109]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7019,7 +7231,7 @@ func (x *ListHotspotCookiesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHotspotCookiesRequest.ProtoReflect.Descriptor instead.
 func (*ListHotspotCookiesRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{106}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{109}
 }
 
 func (x *ListHotspotCookiesRequest) GetDeviceId() string {
@@ -7038,7 +7250,7 @@ type ListHotspotCookiesResponse struct {
 
 func (x *ListHotspotCookiesResponse) Reset() {
 	*x = ListHotspotCookiesResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[107]
+	mi := &file_v1_hotspot_proto_msgTypes[110]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7050,7 +7262,7 @@ func (x *ListHotspotCookiesResponse) String() string {
 func (*ListHotspotCookiesResponse) ProtoMessage() {}
 
 func (x *ListHotspotCookiesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[107]
+	mi := &file_v1_hotspot_proto_msgTypes[110]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7063,7 +7275,7 @@ func (x *ListHotspotCookiesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHotspotCookiesResponse.ProtoReflect.Descriptor instead.
 func (*ListHotspotCookiesResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{107}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{110}
 }
 
 func (x *ListHotspotCookiesResponse) GetCookies() []*HotspotCookie {
@@ -7083,7 +7295,7 @@ type DeleteHotspotCookieRequest struct {
 
 func (x *DeleteHotspotCookieRequest) Reset() {
 	*x = DeleteHotspotCookieRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[108]
+	mi := &file_v1_hotspot_proto_msgTypes[111]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7095,7 +7307,7 @@ func (x *DeleteHotspotCookieRequest) String() string {
 func (*DeleteHotspotCookieRequest) ProtoMessage() {}
 
 func (x *DeleteHotspotCookieRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[108]
+	mi := &file_v1_hotspot_proto_msgTypes[111]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7108,7 +7320,7 @@ func (x *DeleteHotspotCookieRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotCookieRequest.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotCookieRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{108}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{111}
 }
 
 func (x *DeleteHotspotCookieRequest) GetDeviceId() string {
@@ -7134,7 +7346,7 @@ type DeleteHotspotCookieResponse struct {
 
 func (x *DeleteHotspotCookieResponse) Reset() {
 	*x = DeleteHotspotCookieResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[109]
+	mi := &file_v1_hotspot_proto_msgTypes[112]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7146,7 +7358,7 @@ func (x *DeleteHotspotCookieResponse) String() string {
 func (*DeleteHotspotCookieResponse) ProtoMessage() {}
 
 func (x *DeleteHotspotCookieResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[109]
+	mi := &file_v1_hotspot_proto_msgTypes[112]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7159,7 +7371,7 @@ func (x *DeleteHotspotCookieResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotCookieResponse.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotCookieResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{109}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{112}
 }
 
 func (x *DeleteHotspotCookieResponse) GetMessage() string {
@@ -7179,7 +7391,7 @@ type CheckVoucherStatusRequest struct {
 
 func (x *CheckVoucherStatusRequest) Reset() {
 	*x = CheckVoucherStatusRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[110]
+	mi := &file_v1_hotspot_proto_msgTypes[113]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7191,7 +7403,7 @@ func (x *CheckVoucherStatusRequest) String() string {
 func (*CheckVoucherStatusRequest) ProtoMessage() {}
 
 func (x *CheckVoucherStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[110]
+	mi := &file_v1_hotspot_proto_msgTypes[113]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7204,7 +7416,7 @@ func (x *CheckVoucherStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckVoucherStatusRequest.ProtoReflect.Descriptor instead.
 func (*CheckVoucherStatusRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{110}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{113}
 }
 
 func (x *CheckVoucherStatusRequest) GetDeviceId() string {
@@ -7242,7 +7454,7 @@ type CheckVoucherStatusResponse struct {
 
 func (x *CheckVoucherStatusResponse) Reset() {
 	*x = CheckVoucherStatusResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[111]
+	mi := &file_v1_hotspot_proto_msgTypes[114]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7254,7 +7466,7 @@ func (x *CheckVoucherStatusResponse) String() string {
 func (*CheckVoucherStatusResponse) ProtoMessage() {}
 
 func (x *CheckVoucherStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[111]
+	mi := &file_v1_hotspot_proto_msgTypes[114]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7267,7 +7479,7 @@ func (x *CheckVoucherStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckVoucherStatusResponse.ProtoReflect.Descriptor instead.
 func (*CheckVoucherStatusResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{111}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{114}
 }
 
 func (x *CheckVoucherStatusResponse) GetFound() bool {
@@ -7633,6 +7845,24 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\x18ActiveSessionsStreamData\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12=\n" +
 	"\bsessions\x18\x02 \x03(\v2!.polyglot.v1.HotspotActiveSessionR\bsessions\x12%\n" +
+	"\x0etimestamp_unix\x18\x03 \x01(\x03R\rtimestampUnix\"\xfc\x01\n" +
+	"\x11HotspotActiveStat\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
+	"\x06uptime\x18\x02 \x01(\tR\x06uptime\x12*\n" +
+	"\x11session_time_left\x18\x03 \x01(\tR\x0fsessionTimeLeft\x12\x1b\n" +
+	"\tidle_time\x18\x04 \x01(\tR\bidleTime\x12\x19\n" +
+	"\bbytes_in\x18\x05 \x01(\tR\abytesIn\x12\x1b\n" +
+	"\tbytes_out\x18\x06 \x01(\tR\bbytesOut\x12\x1d\n" +
+	"\n" +
+	"packets_in\x18\a \x01(\tR\tpacketsIn\x12\x1f\n" +
+	"\vpackets_out\x18\b \x01(\tR\n" +
+	"packetsOut\"S\n" +
+	"\x18StreamActiveStatsRequest\x12\x1b\n" +
+	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x1a\n" +
+	"\binterval\x18\x02 \x01(\tR\binterval\"\x91\x01\n" +
+	"\x15ActiveStatsStreamData\x12\x1b\n" +
+	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x124\n" +
+	"\x05stats\x18\x02 \x03(\v2\x1e.polyglot.v1.HotspotActiveStatR\x05stats\x12%\n" +
 	"\x0etimestamp_unix\x18\x03 \x01(\x03R\rtimestampUnix\"\x97\x01\n" +
 	"\x19ListHotspotReportsRequest\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x10\n" +
@@ -7955,7 +8185,7 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"expireDate\x12\x1d\n" +
 	"\n" +
 	"mac_locked\x18\f \x01(\tR\tmacLocked\x12\x18\n" +
-	"\amessage\x18\r \x01(\tR\amessage2\xf1#\n" +
+	"\amessage\x18\r \x01(\tR\amessage2\xd3$\n" +
 	"\x0eHotspotService\x12a\n" +
 	"\fListProfiles\x12'.polyglot.v1.ListHotspotProfilesRequest\x1a(.polyglot.v1.ListHotspotProfilesResponse\x12X\n" +
 	"\tListUsers\x12$.polyglot.v1.ListHotspotUsersRequest\x1a%.polyglot.v1.ListHotspotUsersResponse\x12s\n" +
@@ -7990,7 +8220,8 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\x12CheckVoucherStatus\x12&.polyglot.v1.CheckVoucherStatusRequest\x1a'.polyglot.v1.CheckVoucherStatusResponse\x12T\n" +
 	"\rStreamTraffic\x12!.polyglot.v1.StreamTrafficRequest\x1a\x1e.polyglot.v1.TrafficStreamData0\x01\x12W\n" +
 	"\x0eStreamResource\x12\".polyglot.v1.StreamResourceRequest\x1a\x1f.polyglot.v1.ResourceStreamData0\x01\x12i\n" +
-	"\x14StreamActiveSessions\x12(.polyglot.v1.StreamActiveSessionsRequest\x1a%.polyglot.v1.ActiveSessionsStreamData0\x01\x12d\n" +
+	"\x14StreamActiveSessions\x12(.polyglot.v1.StreamActiveSessionsRequest\x1a%.polyglot.v1.ActiveSessionsStreamData0\x01\x12`\n" +
+	"\x11StreamActiveStats\x12%.polyglot.v1.StreamActiveStatsRequest\x1a\".polyglot.v1.ActiveStatsStreamData0\x01\x12d\n" +
 	"\x14StreamSystemSnapshot\x12(.polyglot.v1.StreamSystemSnapshotRequest\x1a .polyglot.v1.SystemSnapshotFrame0\x01\x12m\n" +
 	"\x17StreamInterfaceEthernet\x12+.polyglot.v1.StreamInterfaceEthernetRequest\x1a#.polyglot.v1.InterfaceEthernetFrame0\x01\x12X\n" +
 	"\x10StreamQueueStats\x12$.polyglot.v1.StreamQueueStatsRequest\x1a\x1c.polyglot.v1.QueueStatsFrame0\x01\x12L\n" +
@@ -8021,7 +8252,7 @@ func file_v1_hotspot_proto_rawDescGZIP() []byte {
 	return file_v1_hotspot_proto_rawDescData
 }
 
-var file_v1_hotspot_proto_msgTypes = make([]protoimpl.MessageInfo, 112)
+var file_v1_hotspot_proto_msgTypes = make([]protoimpl.MessageInfo, 115)
 var file_v1_hotspot_proto_goTypes = []any{
 	(*HotspotProfile)(nil),                    // 0: polyglot.v1.HotspotProfile
 	(*HotspotUser)(nil),                       // 1: polyglot.v1.HotspotUser
@@ -8075,66 +8306,69 @@ var file_v1_hotspot_proto_goTypes = []any{
 	(*ResourceStreamData)(nil),                // 49: polyglot.v1.ResourceStreamData
 	(*StreamActiveSessionsRequest)(nil),       // 50: polyglot.v1.StreamActiveSessionsRequest
 	(*ActiveSessionsStreamData)(nil),          // 51: polyglot.v1.ActiveSessionsStreamData
-	(*ListHotspotReportsRequest)(nil),         // 52: polyglot.v1.ListHotspotReportsRequest
-	(*ListHotspotReportsResponse)(nil),        // 53: polyglot.v1.ListHotspotReportsResponse
-	(*DeleteHotspotReportRequest)(nil),        // 54: polyglot.v1.DeleteHotspotReportRequest
-	(*DeleteHotspotReportResponse)(nil),       // 55: polyglot.v1.DeleteHotspotReportResponse
-	(*GetExpireMonitorStatusRequest)(nil),     // 56: polyglot.v1.GetExpireMonitorStatusRequest
-	(*ExpireMonitorStatusResponse)(nil),       // 57: polyglot.v1.ExpireMonitorStatusResponse
-	(*SetupExpireMonitorRequest)(nil),         // 58: polyglot.v1.SetupExpireMonitorRequest
-	(*SetupExpireMonitorResponse)(nil),        // 59: polyglot.v1.SetupExpireMonitorResponse
-	(*DisableExpireMonitorRequest)(nil),       // 60: polyglot.v1.DisableExpireMonitorRequest
-	(*DisableExpireMonitorResponse)(nil),      // 61: polyglot.v1.DisableExpireMonitorResponse
-	(*RemoveExpireMonitorRequest)(nil),        // 62: polyglot.v1.RemoveExpireMonitorRequest
-	(*RemoveExpireMonitorResponse)(nil),       // 63: polyglot.v1.RemoveExpireMonitorResponse
-	(*TemplateInfo)(nil),                      // 64: polyglot.v1.TemplateInfo
-	(*ListTemplatesRequest)(nil),              // 65: polyglot.v1.ListTemplatesRequest
-	(*ListTemplatesResponse)(nil),             // 66: polyglot.v1.ListTemplatesResponse
-	(*GetTemplateSectionRequest)(nil),         // 67: polyglot.v1.GetTemplateSectionRequest
-	(*GetTemplateSectionResponse)(nil),        // 68: polyglot.v1.GetTemplateSectionResponse
-	(*RenderVouchersRequest)(nil),             // 69: polyglot.v1.RenderVouchersRequest
-	(*RenderVouchersResponse)(nil),            // 70: polyglot.v1.RenderVouchersResponse
-	(*StreamSystemSnapshotRequest)(nil),       // 71: polyglot.v1.StreamSystemSnapshotRequest
-	(*SystemClockInfo)(nil),                   // 72: polyglot.v1.SystemClockInfo
-	(*SystemResourceInfo)(nil),                // 73: polyglot.v1.SystemResourceInfo
-	(*SystemRouterboardInfo)(nil),             // 74: polyglot.v1.SystemRouterboardInfo
-	(*SystemHealthInfo)(nil),                  // 75: polyglot.v1.SystemHealthInfo
-	(*SystemSnapshotFrame)(nil),               // 76: polyglot.v1.SystemSnapshotFrame
-	(*StreamQueueStatsRequest)(nil),           // 77: polyglot.v1.StreamQueueStatsRequest
-	(*QueueStatsItem)(nil),                    // 78: polyglot.v1.QueueStatsItem
-	(*QueueStatsFrame)(nil),                   // 79: polyglot.v1.QueueStatsFrame
-	(*StreamLogsRequest)(nil),                 // 80: polyglot.v1.StreamLogsRequest
-	(*LogEntryItem)(nil),                      // 81: polyglot.v1.LogEntryItem
-	(*LogsStreamFrame)(nil),                   // 82: polyglot.v1.LogsStreamFrame
-	(*StreamInterfaceEthernetRequest)(nil),    // 83: polyglot.v1.StreamInterfaceEthernetRequest
-	(*InterfaceEthernetItem)(nil),             // 84: polyglot.v1.InterfaceEthernetItem
-	(*InterfaceEthernetFrame)(nil),            // 85: polyglot.v1.InterfaceEthernetFrame
-	(*StreamHotspotInactiveRequest)(nil),      // 86: polyglot.v1.StreamHotspotInactiveRequest
-	(*HotspotInactiveFrame)(nil),              // 87: polyglot.v1.HotspotInactiveFrame
-	(*StreamPPPActiveRequest)(nil),            // 88: polyglot.v1.StreamPPPActiveRequest
-	(*PPPActiveSessionItem)(nil),              // 89: polyglot.v1.PPPActiveSessionItem
-	(*PPPActiveFrame)(nil),                    // 90: polyglot.v1.PPPActiveFrame
-	(*StreamPPPInactiveRequest)(nil),          // 91: polyglot.v1.StreamPPPInactiveRequest
-	(*PPPSecretItem)(nil),                     // 92: polyglot.v1.PPPSecretItem
-	(*PPPInactiveFrame)(nil),                  // 93: polyglot.v1.PPPInactiveFrame
-	(*DeleteHotspotUsersRequest)(nil),         // 94: polyglot.v1.DeleteHotspotUsersRequest
-	(*DeleteHotspotUsersResponse)(nil),        // 95: polyglot.v1.DeleteHotspotUsersResponse
-	(*HotspotIPBinding)(nil),                  // 96: polyglot.v1.HotspotIPBinding
-	(*ListHotspotIPBindingsRequest)(nil),      // 97: polyglot.v1.ListHotspotIPBindingsRequest
-	(*ListHotspotIPBindingsResponse)(nil),     // 98: polyglot.v1.ListHotspotIPBindingsResponse
-	(*CreateHotspotIPBindingRequest)(nil),     // 99: polyglot.v1.CreateHotspotIPBindingRequest
-	(*CreateHotspotIPBindingResponse)(nil),    // 100: polyglot.v1.CreateHotspotIPBindingResponse
-	(*UpdateHotspotIPBindingRequest)(nil),     // 101: polyglot.v1.UpdateHotspotIPBindingRequest
-	(*UpdateHotspotIPBindingResponse)(nil),    // 102: polyglot.v1.UpdateHotspotIPBindingResponse
-	(*DeleteHotspotIPBindingRequest)(nil),     // 103: polyglot.v1.DeleteHotspotIPBindingRequest
-	(*DeleteHotspotIPBindingResponse)(nil),    // 104: polyglot.v1.DeleteHotspotIPBindingResponse
-	(*HotspotCookie)(nil),                     // 105: polyglot.v1.HotspotCookie
-	(*ListHotspotCookiesRequest)(nil),         // 106: polyglot.v1.ListHotspotCookiesRequest
-	(*ListHotspotCookiesResponse)(nil),        // 107: polyglot.v1.ListHotspotCookiesResponse
-	(*DeleteHotspotCookieRequest)(nil),        // 108: polyglot.v1.DeleteHotspotCookieRequest
-	(*DeleteHotspotCookieResponse)(nil),       // 109: polyglot.v1.DeleteHotspotCookieResponse
-	(*CheckVoucherStatusRequest)(nil),         // 110: polyglot.v1.CheckVoucherStatusRequest
-	(*CheckVoucherStatusResponse)(nil),        // 111: polyglot.v1.CheckVoucherStatusResponse
+	(*HotspotActiveStat)(nil),                 // 52: polyglot.v1.HotspotActiveStat
+	(*StreamActiveStatsRequest)(nil),          // 53: polyglot.v1.StreamActiveStatsRequest
+	(*ActiveStatsStreamData)(nil),             // 54: polyglot.v1.ActiveStatsStreamData
+	(*ListHotspotReportsRequest)(nil),         // 55: polyglot.v1.ListHotspotReportsRequest
+	(*ListHotspotReportsResponse)(nil),        // 56: polyglot.v1.ListHotspotReportsResponse
+	(*DeleteHotspotReportRequest)(nil),        // 57: polyglot.v1.DeleteHotspotReportRequest
+	(*DeleteHotspotReportResponse)(nil),       // 58: polyglot.v1.DeleteHotspotReportResponse
+	(*GetExpireMonitorStatusRequest)(nil),     // 59: polyglot.v1.GetExpireMonitorStatusRequest
+	(*ExpireMonitorStatusResponse)(nil),       // 60: polyglot.v1.ExpireMonitorStatusResponse
+	(*SetupExpireMonitorRequest)(nil),         // 61: polyglot.v1.SetupExpireMonitorRequest
+	(*SetupExpireMonitorResponse)(nil),        // 62: polyglot.v1.SetupExpireMonitorResponse
+	(*DisableExpireMonitorRequest)(nil),       // 63: polyglot.v1.DisableExpireMonitorRequest
+	(*DisableExpireMonitorResponse)(nil),      // 64: polyglot.v1.DisableExpireMonitorResponse
+	(*RemoveExpireMonitorRequest)(nil),        // 65: polyglot.v1.RemoveExpireMonitorRequest
+	(*RemoveExpireMonitorResponse)(nil),       // 66: polyglot.v1.RemoveExpireMonitorResponse
+	(*TemplateInfo)(nil),                      // 67: polyglot.v1.TemplateInfo
+	(*ListTemplatesRequest)(nil),              // 68: polyglot.v1.ListTemplatesRequest
+	(*ListTemplatesResponse)(nil),             // 69: polyglot.v1.ListTemplatesResponse
+	(*GetTemplateSectionRequest)(nil),         // 70: polyglot.v1.GetTemplateSectionRequest
+	(*GetTemplateSectionResponse)(nil),        // 71: polyglot.v1.GetTemplateSectionResponse
+	(*RenderVouchersRequest)(nil),             // 72: polyglot.v1.RenderVouchersRequest
+	(*RenderVouchersResponse)(nil),            // 73: polyglot.v1.RenderVouchersResponse
+	(*StreamSystemSnapshotRequest)(nil),       // 74: polyglot.v1.StreamSystemSnapshotRequest
+	(*SystemClockInfo)(nil),                   // 75: polyglot.v1.SystemClockInfo
+	(*SystemResourceInfo)(nil),                // 76: polyglot.v1.SystemResourceInfo
+	(*SystemRouterboardInfo)(nil),             // 77: polyglot.v1.SystemRouterboardInfo
+	(*SystemHealthInfo)(nil),                  // 78: polyglot.v1.SystemHealthInfo
+	(*SystemSnapshotFrame)(nil),               // 79: polyglot.v1.SystemSnapshotFrame
+	(*StreamQueueStatsRequest)(nil),           // 80: polyglot.v1.StreamQueueStatsRequest
+	(*QueueStatsItem)(nil),                    // 81: polyglot.v1.QueueStatsItem
+	(*QueueStatsFrame)(nil),                   // 82: polyglot.v1.QueueStatsFrame
+	(*StreamLogsRequest)(nil),                 // 83: polyglot.v1.StreamLogsRequest
+	(*LogEntryItem)(nil),                      // 84: polyglot.v1.LogEntryItem
+	(*LogsStreamFrame)(nil),                   // 85: polyglot.v1.LogsStreamFrame
+	(*StreamInterfaceEthernetRequest)(nil),    // 86: polyglot.v1.StreamInterfaceEthernetRequest
+	(*InterfaceEthernetItem)(nil),             // 87: polyglot.v1.InterfaceEthernetItem
+	(*InterfaceEthernetFrame)(nil),            // 88: polyglot.v1.InterfaceEthernetFrame
+	(*StreamHotspotInactiveRequest)(nil),      // 89: polyglot.v1.StreamHotspotInactiveRequest
+	(*HotspotInactiveFrame)(nil),              // 90: polyglot.v1.HotspotInactiveFrame
+	(*StreamPPPActiveRequest)(nil),            // 91: polyglot.v1.StreamPPPActiveRequest
+	(*PPPActiveSessionItem)(nil),              // 92: polyglot.v1.PPPActiveSessionItem
+	(*PPPActiveFrame)(nil),                    // 93: polyglot.v1.PPPActiveFrame
+	(*StreamPPPInactiveRequest)(nil),          // 94: polyglot.v1.StreamPPPInactiveRequest
+	(*PPPSecretItem)(nil),                     // 95: polyglot.v1.PPPSecretItem
+	(*PPPInactiveFrame)(nil),                  // 96: polyglot.v1.PPPInactiveFrame
+	(*DeleteHotspotUsersRequest)(nil),         // 97: polyglot.v1.DeleteHotspotUsersRequest
+	(*DeleteHotspotUsersResponse)(nil),        // 98: polyglot.v1.DeleteHotspotUsersResponse
+	(*HotspotIPBinding)(nil),                  // 99: polyglot.v1.HotspotIPBinding
+	(*ListHotspotIPBindingsRequest)(nil),      // 100: polyglot.v1.ListHotspotIPBindingsRequest
+	(*ListHotspotIPBindingsResponse)(nil),     // 101: polyglot.v1.ListHotspotIPBindingsResponse
+	(*CreateHotspotIPBindingRequest)(nil),     // 102: polyglot.v1.CreateHotspotIPBindingRequest
+	(*CreateHotspotIPBindingResponse)(nil),    // 103: polyglot.v1.CreateHotspotIPBindingResponse
+	(*UpdateHotspotIPBindingRequest)(nil),     // 104: polyglot.v1.UpdateHotspotIPBindingRequest
+	(*UpdateHotspotIPBindingResponse)(nil),    // 105: polyglot.v1.UpdateHotspotIPBindingResponse
+	(*DeleteHotspotIPBindingRequest)(nil),     // 106: polyglot.v1.DeleteHotspotIPBindingRequest
+	(*DeleteHotspotIPBindingResponse)(nil),    // 107: polyglot.v1.DeleteHotspotIPBindingResponse
+	(*HotspotCookie)(nil),                     // 108: polyglot.v1.HotspotCookie
+	(*ListHotspotCookiesRequest)(nil),         // 109: polyglot.v1.ListHotspotCookiesRequest
+	(*ListHotspotCookiesResponse)(nil),        // 110: polyglot.v1.ListHotspotCookiesResponse
+	(*DeleteHotspotCookieRequest)(nil),        // 111: polyglot.v1.DeleteHotspotCookieRequest
+	(*DeleteHotspotCookieResponse)(nil),       // 112: polyglot.v1.DeleteHotspotCookieResponse
+	(*CheckVoucherStatusRequest)(nil),         // 113: polyglot.v1.CheckVoucherStatusRequest
+	(*CheckVoucherStatusResponse)(nil),        // 114: polyglot.v1.CheckVoucherStatusResponse
 }
 var file_v1_hotspot_proto_depIdxs = []int32{
 	0,   // 0: polyglot.v1.ListHotspotProfilesResponse.profiles:type_name -> polyglot.v1.HotspotProfile
@@ -8153,123 +8387,126 @@ var file_v1_hotspot_proto_depIdxs = []int32{
 	41,  // 13: polyglot.v1.ListHotspotServersResponse.servers:type_name -> polyglot.v1.HotspotServerInfo
 	1,   // 14: polyglot.v1.GetVoucherBatchResponse.vouchers:type_name -> polyglot.v1.HotspotUser
 	2,   // 15: polyglot.v1.ActiveSessionsStreamData.sessions:type_name -> polyglot.v1.HotspotActiveSession
-	4,   // 16: polyglot.v1.ListHotspotReportsResponse.reports:type_name -> polyglot.v1.HotspotReport
-	64,  // 17: polyglot.v1.ListTemplatesResponse.templates:type_name -> polyglot.v1.TemplateInfo
-	72,  // 18: polyglot.v1.SystemSnapshotFrame.clock:type_name -> polyglot.v1.SystemClockInfo
-	73,  // 19: polyglot.v1.SystemSnapshotFrame.resource:type_name -> polyglot.v1.SystemResourceInfo
-	74,  // 20: polyglot.v1.SystemSnapshotFrame.routerboard:type_name -> polyglot.v1.SystemRouterboardInfo
-	75,  // 21: polyglot.v1.SystemSnapshotFrame.health:type_name -> polyglot.v1.SystemHealthInfo
-	78,  // 22: polyglot.v1.QueueStatsFrame.queues:type_name -> polyglot.v1.QueueStatsItem
-	81,  // 23: polyglot.v1.LogsStreamFrame.logs:type_name -> polyglot.v1.LogEntryItem
-	84,  // 24: polyglot.v1.InterfaceEthernetFrame.interfaces:type_name -> polyglot.v1.InterfaceEthernetItem
-	1,   // 25: polyglot.v1.HotspotInactiveFrame.users:type_name -> polyglot.v1.HotspotUser
-	89,  // 26: polyglot.v1.PPPActiveFrame.sessions:type_name -> polyglot.v1.PPPActiveSessionItem
-	92,  // 27: polyglot.v1.PPPInactiveFrame.secrets:type_name -> polyglot.v1.PPPSecretItem
-	96,  // 28: polyglot.v1.ListHotspotIPBindingsResponse.bindings:type_name -> polyglot.v1.HotspotIPBinding
-	96,  // 29: polyglot.v1.CreateHotspotIPBindingResponse.binding:type_name -> polyglot.v1.HotspotIPBinding
-	96,  // 30: polyglot.v1.UpdateHotspotIPBindingResponse.binding:type_name -> polyglot.v1.HotspotIPBinding
-	105, // 31: polyglot.v1.ListHotspotCookiesResponse.cookies:type_name -> polyglot.v1.HotspotCookie
-	1,   // 32: polyglot.v1.CheckVoucherStatusResponse.user:type_name -> polyglot.v1.HotspotUser
-	0,   // 33: polyglot.v1.CheckVoucherStatusResponse.profile:type_name -> polyglot.v1.HotspotProfile
-	2,   // 34: polyglot.v1.CheckVoucherStatusResponse.active_session:type_name -> polyglot.v1.HotspotActiveSession
-	105, // 35: polyglot.v1.CheckVoucherStatusResponse.cookie:type_name -> polyglot.v1.HotspotCookie
-	5,   // 36: polyglot.v1.HotspotService.ListProfiles:input_type -> polyglot.v1.ListHotspotProfilesRequest
-	7,   // 37: polyglot.v1.HotspotService.ListUsers:input_type -> polyglot.v1.ListHotspotUsersRequest
-	9,   // 38: polyglot.v1.HotspotService.ListActiveSessions:input_type -> polyglot.v1.ListHotspotActiveSessionsRequest
-	11,  // 39: polyglot.v1.HotspotService.KickActiveSession:input_type -> polyglot.v1.KickHotspotSessionRequest
-	13,  // 40: polyglot.v1.HotspotService.ListDHCPLeases:input_type -> polyglot.v1.ListDHCPLeasesRequest
-	15,  // 41: polyglot.v1.HotspotService.BlockDHCPLease:input_type -> polyglot.v1.BlockDHCPLeaseRequest
-	17,  // 42: polyglot.v1.HotspotService.GenerateVouchers:input_type -> polyglot.v1.GenerateVouchersRequest
-	44,  // 43: polyglot.v1.HotspotService.GetVoucherBatch:input_type -> polyglot.v1.GetVoucherBatchRequest
-	19,  // 44: polyglot.v1.HotspotService.GetUser:input_type -> polyglot.v1.GetHotspotUserRequest
-	21,  // 45: polyglot.v1.HotspotService.CreateUser:input_type -> polyglot.v1.CreateHotspotUserRequest
-	23,  // 46: polyglot.v1.HotspotService.UpdateUser:input_type -> polyglot.v1.UpdateHotspotUserRequest
-	25,  // 47: polyglot.v1.HotspotService.ResetUserCounters:input_type -> polyglot.v1.ResetHotspotUserCountersRequest
-	27,  // 48: polyglot.v1.HotspotService.DeleteUser:input_type -> polyglot.v1.DeleteHotspotUserRequest
-	94,  // 49: polyglot.v1.HotspotService.DeleteHotspotUsers:input_type -> polyglot.v1.DeleteHotspotUsersRequest
-	30,  // 50: polyglot.v1.HotspotService.CreateProfile:input_type -> polyglot.v1.CreateHotspotProfileRequest
-	32,  // 51: polyglot.v1.HotspotService.UpdateProfile:input_type -> polyglot.v1.UpdateHotspotProfileRequest
-	34,  // 52: polyglot.v1.HotspotService.DeleteProfile:input_type -> polyglot.v1.DeleteHotspotProfileRequest
-	37,  // 53: polyglot.v1.HotspotService.ListHosts:input_type -> polyglot.v1.ListHotspotHostsRequest
-	39,  // 54: polyglot.v1.HotspotService.RemoveHost:input_type -> polyglot.v1.RemoveHotspotHostRequest
-	42,  // 55: polyglot.v1.HotspotService.ListHotspotServers:input_type -> polyglot.v1.ListHotspotServersRequest
-	97,  // 56: polyglot.v1.HotspotService.ListHotspotIPBindings:input_type -> polyglot.v1.ListHotspotIPBindingsRequest
-	99,  // 57: polyglot.v1.HotspotService.CreateHotspotIPBinding:input_type -> polyglot.v1.CreateHotspotIPBindingRequest
-	101, // 58: polyglot.v1.HotspotService.UpdateHotspotIPBinding:input_type -> polyglot.v1.UpdateHotspotIPBindingRequest
-	103, // 59: polyglot.v1.HotspotService.DeleteHotspotIPBinding:input_type -> polyglot.v1.DeleteHotspotIPBindingRequest
-	106, // 60: polyglot.v1.HotspotService.ListHotspotCookies:input_type -> polyglot.v1.ListHotspotCookiesRequest
-	108, // 61: polyglot.v1.HotspotService.DeleteHotspotCookie:input_type -> polyglot.v1.DeleteHotspotCookieRequest
-	110, // 62: polyglot.v1.HotspotService.CheckVoucherStatus:input_type -> polyglot.v1.CheckVoucherStatusRequest
-	46,  // 63: polyglot.v1.HotspotService.StreamTraffic:input_type -> polyglot.v1.StreamTrafficRequest
-	48,  // 64: polyglot.v1.HotspotService.StreamResource:input_type -> polyglot.v1.StreamResourceRequest
-	50,  // 65: polyglot.v1.HotspotService.StreamActiveSessions:input_type -> polyglot.v1.StreamActiveSessionsRequest
-	71,  // 66: polyglot.v1.HotspotService.StreamSystemSnapshot:input_type -> polyglot.v1.StreamSystemSnapshotRequest
-	83,  // 67: polyglot.v1.HotspotService.StreamInterfaceEthernet:input_type -> polyglot.v1.StreamInterfaceEthernetRequest
-	77,  // 68: polyglot.v1.HotspotService.StreamQueueStats:input_type -> polyglot.v1.StreamQueueStatsRequest
-	80,  // 69: polyglot.v1.HotspotService.StreamLogs:input_type -> polyglot.v1.StreamLogsRequest
-	86,  // 70: polyglot.v1.HotspotService.StreamHotspotInactive:input_type -> polyglot.v1.StreamHotspotInactiveRequest
-	88,  // 71: polyglot.v1.HotspotService.StreamPPPActive:input_type -> polyglot.v1.StreamPPPActiveRequest
-	91,  // 72: polyglot.v1.HotspotService.StreamPPPInactive:input_type -> polyglot.v1.StreamPPPInactiveRequest
-	52,  // 73: polyglot.v1.HotspotService.ListReports:input_type -> polyglot.v1.ListHotspotReportsRequest
-	54,  // 74: polyglot.v1.HotspotService.DeleteReport:input_type -> polyglot.v1.DeleteHotspotReportRequest
-	56,  // 75: polyglot.v1.HotspotService.GetExpireMonitorStatus:input_type -> polyglot.v1.GetExpireMonitorStatusRequest
-	58,  // 76: polyglot.v1.HotspotService.SetupExpireMonitor:input_type -> polyglot.v1.SetupExpireMonitorRequest
-	60,  // 77: polyglot.v1.HotspotService.DisableExpireMonitor:input_type -> polyglot.v1.DisableExpireMonitorRequest
-	62,  // 78: polyglot.v1.HotspotService.RemoveExpireMonitor:input_type -> polyglot.v1.RemoveExpireMonitorRequest
-	65,  // 79: polyglot.v1.HotspotService.ListTemplates:input_type -> polyglot.v1.ListTemplatesRequest
-	67,  // 80: polyglot.v1.HotspotService.GetTemplateSection:input_type -> polyglot.v1.GetTemplateSectionRequest
-	69,  // 81: polyglot.v1.HotspotService.RenderVouchers:input_type -> polyglot.v1.RenderVouchersRequest
-	6,   // 82: polyglot.v1.HotspotService.ListProfiles:output_type -> polyglot.v1.ListHotspotProfilesResponse
-	8,   // 83: polyglot.v1.HotspotService.ListUsers:output_type -> polyglot.v1.ListHotspotUsersResponse
-	10,  // 84: polyglot.v1.HotspotService.ListActiveSessions:output_type -> polyglot.v1.ListHotspotActiveSessionsResponse
-	12,  // 85: polyglot.v1.HotspotService.KickActiveSession:output_type -> polyglot.v1.KickHotspotSessionResponse
-	14,  // 86: polyglot.v1.HotspotService.ListDHCPLeases:output_type -> polyglot.v1.ListDHCPLeasesResponse
-	16,  // 87: polyglot.v1.HotspotService.BlockDHCPLease:output_type -> polyglot.v1.BlockDHCPLeaseResponse
-	18,  // 88: polyglot.v1.HotspotService.GenerateVouchers:output_type -> polyglot.v1.GenerateVouchersResponse
-	45,  // 89: polyglot.v1.HotspotService.GetVoucherBatch:output_type -> polyglot.v1.GetVoucherBatchResponse
-	20,  // 90: polyglot.v1.HotspotService.GetUser:output_type -> polyglot.v1.GetHotspotUserResponse
-	22,  // 91: polyglot.v1.HotspotService.CreateUser:output_type -> polyglot.v1.CreateHotspotUserResponse
-	24,  // 92: polyglot.v1.HotspotService.UpdateUser:output_type -> polyglot.v1.UpdateHotspotUserResponse
-	26,  // 93: polyglot.v1.HotspotService.ResetUserCounters:output_type -> polyglot.v1.ResetHotspotUserCountersResponse
-	28,  // 94: polyglot.v1.HotspotService.DeleteUser:output_type -> polyglot.v1.DeleteHotspotUserResponse
-	95,  // 95: polyglot.v1.HotspotService.DeleteHotspotUsers:output_type -> polyglot.v1.DeleteHotspotUsersResponse
-	31,  // 96: polyglot.v1.HotspotService.CreateProfile:output_type -> polyglot.v1.CreateHotspotProfileResponse
-	33,  // 97: polyglot.v1.HotspotService.UpdateProfile:output_type -> polyglot.v1.UpdateHotspotProfileResponse
-	35,  // 98: polyglot.v1.HotspotService.DeleteProfile:output_type -> polyglot.v1.DeleteHotspotProfileResponse
-	38,  // 99: polyglot.v1.HotspotService.ListHosts:output_type -> polyglot.v1.ListHotspotHostsResponse
-	40,  // 100: polyglot.v1.HotspotService.RemoveHost:output_type -> polyglot.v1.RemoveHotspotHostResponse
-	43,  // 101: polyglot.v1.HotspotService.ListHotspotServers:output_type -> polyglot.v1.ListHotspotServersResponse
-	98,  // 102: polyglot.v1.HotspotService.ListHotspotIPBindings:output_type -> polyglot.v1.ListHotspotIPBindingsResponse
-	100, // 103: polyglot.v1.HotspotService.CreateHotspotIPBinding:output_type -> polyglot.v1.CreateHotspotIPBindingResponse
-	102, // 104: polyglot.v1.HotspotService.UpdateHotspotIPBinding:output_type -> polyglot.v1.UpdateHotspotIPBindingResponse
-	104, // 105: polyglot.v1.HotspotService.DeleteHotspotIPBinding:output_type -> polyglot.v1.DeleteHotspotIPBindingResponse
-	107, // 106: polyglot.v1.HotspotService.ListHotspotCookies:output_type -> polyglot.v1.ListHotspotCookiesResponse
-	109, // 107: polyglot.v1.HotspotService.DeleteHotspotCookie:output_type -> polyglot.v1.DeleteHotspotCookieResponse
-	111, // 108: polyglot.v1.HotspotService.CheckVoucherStatus:output_type -> polyglot.v1.CheckVoucherStatusResponse
-	47,  // 109: polyglot.v1.HotspotService.StreamTraffic:output_type -> polyglot.v1.TrafficStreamData
-	49,  // 110: polyglot.v1.HotspotService.StreamResource:output_type -> polyglot.v1.ResourceStreamData
-	51,  // 111: polyglot.v1.HotspotService.StreamActiveSessions:output_type -> polyglot.v1.ActiveSessionsStreamData
-	76,  // 112: polyglot.v1.HotspotService.StreamSystemSnapshot:output_type -> polyglot.v1.SystemSnapshotFrame
-	85,  // 113: polyglot.v1.HotspotService.StreamInterfaceEthernet:output_type -> polyglot.v1.InterfaceEthernetFrame
-	79,  // 114: polyglot.v1.HotspotService.StreamQueueStats:output_type -> polyglot.v1.QueueStatsFrame
-	82,  // 115: polyglot.v1.HotspotService.StreamLogs:output_type -> polyglot.v1.LogsStreamFrame
-	87,  // 116: polyglot.v1.HotspotService.StreamHotspotInactive:output_type -> polyglot.v1.HotspotInactiveFrame
-	90,  // 117: polyglot.v1.HotspotService.StreamPPPActive:output_type -> polyglot.v1.PPPActiveFrame
-	93,  // 118: polyglot.v1.HotspotService.StreamPPPInactive:output_type -> polyglot.v1.PPPInactiveFrame
-	53,  // 119: polyglot.v1.HotspotService.ListReports:output_type -> polyglot.v1.ListHotspotReportsResponse
-	55,  // 120: polyglot.v1.HotspotService.DeleteReport:output_type -> polyglot.v1.DeleteHotspotReportResponse
-	57,  // 121: polyglot.v1.HotspotService.GetExpireMonitorStatus:output_type -> polyglot.v1.ExpireMonitorStatusResponse
-	59,  // 122: polyglot.v1.HotspotService.SetupExpireMonitor:output_type -> polyglot.v1.SetupExpireMonitorResponse
-	61,  // 123: polyglot.v1.HotspotService.DisableExpireMonitor:output_type -> polyglot.v1.DisableExpireMonitorResponse
-	63,  // 124: polyglot.v1.HotspotService.RemoveExpireMonitor:output_type -> polyglot.v1.RemoveExpireMonitorResponse
-	66,  // 125: polyglot.v1.HotspotService.ListTemplates:output_type -> polyglot.v1.ListTemplatesResponse
-	68,  // 126: polyglot.v1.HotspotService.GetTemplateSection:output_type -> polyglot.v1.GetTemplateSectionResponse
-	70,  // 127: polyglot.v1.HotspotService.RenderVouchers:output_type -> polyglot.v1.RenderVouchersResponse
-	82,  // [82:128] is the sub-list for method output_type
-	36,  // [36:82] is the sub-list for method input_type
-	36,  // [36:36] is the sub-list for extension type_name
-	36,  // [36:36] is the sub-list for extension extendee
-	0,   // [0:36] is the sub-list for field type_name
+	52,  // 16: polyglot.v1.ActiveStatsStreamData.stats:type_name -> polyglot.v1.HotspotActiveStat
+	4,   // 17: polyglot.v1.ListHotspotReportsResponse.reports:type_name -> polyglot.v1.HotspotReport
+	67,  // 18: polyglot.v1.ListTemplatesResponse.templates:type_name -> polyglot.v1.TemplateInfo
+	75,  // 19: polyglot.v1.SystemSnapshotFrame.clock:type_name -> polyglot.v1.SystemClockInfo
+	76,  // 20: polyglot.v1.SystemSnapshotFrame.resource:type_name -> polyglot.v1.SystemResourceInfo
+	77,  // 21: polyglot.v1.SystemSnapshotFrame.routerboard:type_name -> polyglot.v1.SystemRouterboardInfo
+	78,  // 22: polyglot.v1.SystemSnapshotFrame.health:type_name -> polyglot.v1.SystemHealthInfo
+	81,  // 23: polyglot.v1.QueueStatsFrame.queues:type_name -> polyglot.v1.QueueStatsItem
+	84,  // 24: polyglot.v1.LogsStreamFrame.logs:type_name -> polyglot.v1.LogEntryItem
+	87,  // 25: polyglot.v1.InterfaceEthernetFrame.interfaces:type_name -> polyglot.v1.InterfaceEthernetItem
+	1,   // 26: polyglot.v1.HotspotInactiveFrame.users:type_name -> polyglot.v1.HotspotUser
+	92,  // 27: polyglot.v1.PPPActiveFrame.sessions:type_name -> polyglot.v1.PPPActiveSessionItem
+	95,  // 28: polyglot.v1.PPPInactiveFrame.secrets:type_name -> polyglot.v1.PPPSecretItem
+	99,  // 29: polyglot.v1.ListHotspotIPBindingsResponse.bindings:type_name -> polyglot.v1.HotspotIPBinding
+	99,  // 30: polyglot.v1.CreateHotspotIPBindingResponse.binding:type_name -> polyglot.v1.HotspotIPBinding
+	99,  // 31: polyglot.v1.UpdateHotspotIPBindingResponse.binding:type_name -> polyglot.v1.HotspotIPBinding
+	108, // 32: polyglot.v1.ListHotspotCookiesResponse.cookies:type_name -> polyglot.v1.HotspotCookie
+	1,   // 33: polyglot.v1.CheckVoucherStatusResponse.user:type_name -> polyglot.v1.HotspotUser
+	0,   // 34: polyglot.v1.CheckVoucherStatusResponse.profile:type_name -> polyglot.v1.HotspotProfile
+	2,   // 35: polyglot.v1.CheckVoucherStatusResponse.active_session:type_name -> polyglot.v1.HotspotActiveSession
+	108, // 36: polyglot.v1.CheckVoucherStatusResponse.cookie:type_name -> polyglot.v1.HotspotCookie
+	5,   // 37: polyglot.v1.HotspotService.ListProfiles:input_type -> polyglot.v1.ListHotspotProfilesRequest
+	7,   // 38: polyglot.v1.HotspotService.ListUsers:input_type -> polyglot.v1.ListHotspotUsersRequest
+	9,   // 39: polyglot.v1.HotspotService.ListActiveSessions:input_type -> polyglot.v1.ListHotspotActiveSessionsRequest
+	11,  // 40: polyglot.v1.HotspotService.KickActiveSession:input_type -> polyglot.v1.KickHotspotSessionRequest
+	13,  // 41: polyglot.v1.HotspotService.ListDHCPLeases:input_type -> polyglot.v1.ListDHCPLeasesRequest
+	15,  // 42: polyglot.v1.HotspotService.BlockDHCPLease:input_type -> polyglot.v1.BlockDHCPLeaseRequest
+	17,  // 43: polyglot.v1.HotspotService.GenerateVouchers:input_type -> polyglot.v1.GenerateVouchersRequest
+	44,  // 44: polyglot.v1.HotspotService.GetVoucherBatch:input_type -> polyglot.v1.GetVoucherBatchRequest
+	19,  // 45: polyglot.v1.HotspotService.GetUser:input_type -> polyglot.v1.GetHotspotUserRequest
+	21,  // 46: polyglot.v1.HotspotService.CreateUser:input_type -> polyglot.v1.CreateHotspotUserRequest
+	23,  // 47: polyglot.v1.HotspotService.UpdateUser:input_type -> polyglot.v1.UpdateHotspotUserRequest
+	25,  // 48: polyglot.v1.HotspotService.ResetUserCounters:input_type -> polyglot.v1.ResetHotspotUserCountersRequest
+	27,  // 49: polyglot.v1.HotspotService.DeleteUser:input_type -> polyglot.v1.DeleteHotspotUserRequest
+	97,  // 50: polyglot.v1.HotspotService.DeleteHotspotUsers:input_type -> polyglot.v1.DeleteHotspotUsersRequest
+	30,  // 51: polyglot.v1.HotspotService.CreateProfile:input_type -> polyglot.v1.CreateHotspotProfileRequest
+	32,  // 52: polyglot.v1.HotspotService.UpdateProfile:input_type -> polyglot.v1.UpdateHotspotProfileRequest
+	34,  // 53: polyglot.v1.HotspotService.DeleteProfile:input_type -> polyglot.v1.DeleteHotspotProfileRequest
+	37,  // 54: polyglot.v1.HotspotService.ListHosts:input_type -> polyglot.v1.ListHotspotHostsRequest
+	39,  // 55: polyglot.v1.HotspotService.RemoveHost:input_type -> polyglot.v1.RemoveHotspotHostRequest
+	42,  // 56: polyglot.v1.HotspotService.ListHotspotServers:input_type -> polyglot.v1.ListHotspotServersRequest
+	100, // 57: polyglot.v1.HotspotService.ListHotspotIPBindings:input_type -> polyglot.v1.ListHotspotIPBindingsRequest
+	102, // 58: polyglot.v1.HotspotService.CreateHotspotIPBinding:input_type -> polyglot.v1.CreateHotspotIPBindingRequest
+	104, // 59: polyglot.v1.HotspotService.UpdateHotspotIPBinding:input_type -> polyglot.v1.UpdateHotspotIPBindingRequest
+	106, // 60: polyglot.v1.HotspotService.DeleteHotspotIPBinding:input_type -> polyglot.v1.DeleteHotspotIPBindingRequest
+	109, // 61: polyglot.v1.HotspotService.ListHotspotCookies:input_type -> polyglot.v1.ListHotspotCookiesRequest
+	111, // 62: polyglot.v1.HotspotService.DeleteHotspotCookie:input_type -> polyglot.v1.DeleteHotspotCookieRequest
+	113, // 63: polyglot.v1.HotspotService.CheckVoucherStatus:input_type -> polyglot.v1.CheckVoucherStatusRequest
+	46,  // 64: polyglot.v1.HotspotService.StreamTraffic:input_type -> polyglot.v1.StreamTrafficRequest
+	48,  // 65: polyglot.v1.HotspotService.StreamResource:input_type -> polyglot.v1.StreamResourceRequest
+	50,  // 66: polyglot.v1.HotspotService.StreamActiveSessions:input_type -> polyglot.v1.StreamActiveSessionsRequest
+	53,  // 67: polyglot.v1.HotspotService.StreamActiveStats:input_type -> polyglot.v1.StreamActiveStatsRequest
+	74,  // 68: polyglot.v1.HotspotService.StreamSystemSnapshot:input_type -> polyglot.v1.StreamSystemSnapshotRequest
+	86,  // 69: polyglot.v1.HotspotService.StreamInterfaceEthernet:input_type -> polyglot.v1.StreamInterfaceEthernetRequest
+	80,  // 70: polyglot.v1.HotspotService.StreamQueueStats:input_type -> polyglot.v1.StreamQueueStatsRequest
+	83,  // 71: polyglot.v1.HotspotService.StreamLogs:input_type -> polyglot.v1.StreamLogsRequest
+	89,  // 72: polyglot.v1.HotspotService.StreamHotspotInactive:input_type -> polyglot.v1.StreamHotspotInactiveRequest
+	91,  // 73: polyglot.v1.HotspotService.StreamPPPActive:input_type -> polyglot.v1.StreamPPPActiveRequest
+	94,  // 74: polyglot.v1.HotspotService.StreamPPPInactive:input_type -> polyglot.v1.StreamPPPInactiveRequest
+	55,  // 75: polyglot.v1.HotspotService.ListReports:input_type -> polyglot.v1.ListHotspotReportsRequest
+	57,  // 76: polyglot.v1.HotspotService.DeleteReport:input_type -> polyglot.v1.DeleteHotspotReportRequest
+	59,  // 77: polyglot.v1.HotspotService.GetExpireMonitorStatus:input_type -> polyglot.v1.GetExpireMonitorStatusRequest
+	61,  // 78: polyglot.v1.HotspotService.SetupExpireMonitor:input_type -> polyglot.v1.SetupExpireMonitorRequest
+	63,  // 79: polyglot.v1.HotspotService.DisableExpireMonitor:input_type -> polyglot.v1.DisableExpireMonitorRequest
+	65,  // 80: polyglot.v1.HotspotService.RemoveExpireMonitor:input_type -> polyglot.v1.RemoveExpireMonitorRequest
+	68,  // 81: polyglot.v1.HotspotService.ListTemplates:input_type -> polyglot.v1.ListTemplatesRequest
+	70,  // 82: polyglot.v1.HotspotService.GetTemplateSection:input_type -> polyglot.v1.GetTemplateSectionRequest
+	72,  // 83: polyglot.v1.HotspotService.RenderVouchers:input_type -> polyglot.v1.RenderVouchersRequest
+	6,   // 84: polyglot.v1.HotspotService.ListProfiles:output_type -> polyglot.v1.ListHotspotProfilesResponse
+	8,   // 85: polyglot.v1.HotspotService.ListUsers:output_type -> polyglot.v1.ListHotspotUsersResponse
+	10,  // 86: polyglot.v1.HotspotService.ListActiveSessions:output_type -> polyglot.v1.ListHotspotActiveSessionsResponse
+	12,  // 87: polyglot.v1.HotspotService.KickActiveSession:output_type -> polyglot.v1.KickHotspotSessionResponse
+	14,  // 88: polyglot.v1.HotspotService.ListDHCPLeases:output_type -> polyglot.v1.ListDHCPLeasesResponse
+	16,  // 89: polyglot.v1.HotspotService.BlockDHCPLease:output_type -> polyglot.v1.BlockDHCPLeaseResponse
+	18,  // 90: polyglot.v1.HotspotService.GenerateVouchers:output_type -> polyglot.v1.GenerateVouchersResponse
+	45,  // 91: polyglot.v1.HotspotService.GetVoucherBatch:output_type -> polyglot.v1.GetVoucherBatchResponse
+	20,  // 92: polyglot.v1.HotspotService.GetUser:output_type -> polyglot.v1.GetHotspotUserResponse
+	22,  // 93: polyglot.v1.HotspotService.CreateUser:output_type -> polyglot.v1.CreateHotspotUserResponse
+	24,  // 94: polyglot.v1.HotspotService.UpdateUser:output_type -> polyglot.v1.UpdateHotspotUserResponse
+	26,  // 95: polyglot.v1.HotspotService.ResetUserCounters:output_type -> polyglot.v1.ResetHotspotUserCountersResponse
+	28,  // 96: polyglot.v1.HotspotService.DeleteUser:output_type -> polyglot.v1.DeleteHotspotUserResponse
+	98,  // 97: polyglot.v1.HotspotService.DeleteHotspotUsers:output_type -> polyglot.v1.DeleteHotspotUsersResponse
+	31,  // 98: polyglot.v1.HotspotService.CreateProfile:output_type -> polyglot.v1.CreateHotspotProfileResponse
+	33,  // 99: polyglot.v1.HotspotService.UpdateProfile:output_type -> polyglot.v1.UpdateHotspotProfileResponse
+	35,  // 100: polyglot.v1.HotspotService.DeleteProfile:output_type -> polyglot.v1.DeleteHotspotProfileResponse
+	38,  // 101: polyglot.v1.HotspotService.ListHosts:output_type -> polyglot.v1.ListHotspotHostsResponse
+	40,  // 102: polyglot.v1.HotspotService.RemoveHost:output_type -> polyglot.v1.RemoveHotspotHostResponse
+	43,  // 103: polyglot.v1.HotspotService.ListHotspotServers:output_type -> polyglot.v1.ListHotspotServersResponse
+	101, // 104: polyglot.v1.HotspotService.ListHotspotIPBindings:output_type -> polyglot.v1.ListHotspotIPBindingsResponse
+	103, // 105: polyglot.v1.HotspotService.CreateHotspotIPBinding:output_type -> polyglot.v1.CreateHotspotIPBindingResponse
+	105, // 106: polyglot.v1.HotspotService.UpdateHotspotIPBinding:output_type -> polyglot.v1.UpdateHotspotIPBindingResponse
+	107, // 107: polyglot.v1.HotspotService.DeleteHotspotIPBinding:output_type -> polyglot.v1.DeleteHotspotIPBindingResponse
+	110, // 108: polyglot.v1.HotspotService.ListHotspotCookies:output_type -> polyglot.v1.ListHotspotCookiesResponse
+	112, // 109: polyglot.v1.HotspotService.DeleteHotspotCookie:output_type -> polyglot.v1.DeleteHotspotCookieResponse
+	114, // 110: polyglot.v1.HotspotService.CheckVoucherStatus:output_type -> polyglot.v1.CheckVoucherStatusResponse
+	47,  // 111: polyglot.v1.HotspotService.StreamTraffic:output_type -> polyglot.v1.TrafficStreamData
+	49,  // 112: polyglot.v1.HotspotService.StreamResource:output_type -> polyglot.v1.ResourceStreamData
+	51,  // 113: polyglot.v1.HotspotService.StreamActiveSessions:output_type -> polyglot.v1.ActiveSessionsStreamData
+	54,  // 114: polyglot.v1.HotspotService.StreamActiveStats:output_type -> polyglot.v1.ActiveStatsStreamData
+	79,  // 115: polyglot.v1.HotspotService.StreamSystemSnapshot:output_type -> polyglot.v1.SystemSnapshotFrame
+	88,  // 116: polyglot.v1.HotspotService.StreamInterfaceEthernet:output_type -> polyglot.v1.InterfaceEthernetFrame
+	82,  // 117: polyglot.v1.HotspotService.StreamQueueStats:output_type -> polyglot.v1.QueueStatsFrame
+	85,  // 118: polyglot.v1.HotspotService.StreamLogs:output_type -> polyglot.v1.LogsStreamFrame
+	90,  // 119: polyglot.v1.HotspotService.StreamHotspotInactive:output_type -> polyglot.v1.HotspotInactiveFrame
+	93,  // 120: polyglot.v1.HotspotService.StreamPPPActive:output_type -> polyglot.v1.PPPActiveFrame
+	96,  // 121: polyglot.v1.HotspotService.StreamPPPInactive:output_type -> polyglot.v1.PPPInactiveFrame
+	56,  // 122: polyglot.v1.HotspotService.ListReports:output_type -> polyglot.v1.ListHotspotReportsResponse
+	58,  // 123: polyglot.v1.HotspotService.DeleteReport:output_type -> polyglot.v1.DeleteHotspotReportResponse
+	60,  // 124: polyglot.v1.HotspotService.GetExpireMonitorStatus:output_type -> polyglot.v1.ExpireMonitorStatusResponse
+	62,  // 125: polyglot.v1.HotspotService.SetupExpireMonitor:output_type -> polyglot.v1.SetupExpireMonitorResponse
+	64,  // 126: polyglot.v1.HotspotService.DisableExpireMonitor:output_type -> polyglot.v1.DisableExpireMonitorResponse
+	66,  // 127: polyglot.v1.HotspotService.RemoveExpireMonitor:output_type -> polyglot.v1.RemoveExpireMonitorResponse
+	69,  // 128: polyglot.v1.HotspotService.ListTemplates:output_type -> polyglot.v1.ListTemplatesResponse
+	71,  // 129: polyglot.v1.HotspotService.GetTemplateSection:output_type -> polyglot.v1.GetTemplateSectionResponse
+	73,  // 130: polyglot.v1.HotspotService.RenderVouchers:output_type -> polyglot.v1.RenderVouchersResponse
+	84,  // [84:131] is the sub-list for method output_type
+	37,  // [37:84] is the sub-list for method input_type
+	37,  // [37:37] is the sub-list for extension type_name
+	37,  // [37:37] is the sub-list for extension extendee
+	0,   // [0:37] is the sub-list for field type_name
 }
 
 func init() { file_v1_hotspot_proto_init() }
@@ -8283,7 +8520,7 @@ func file_v1_hotspot_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_hotspot_proto_rawDesc), len(file_v1_hotspot_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   112,
+			NumMessages:   115,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

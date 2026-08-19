@@ -31,6 +31,19 @@ type PPPActiveSession struct {
 	Profile       string
 }
 
+// PPPActiveStat represents real-time telemetry metrics returned by
+// /ppp/active/print stats interval=.
+type PPPActiveStat struct {
+	RosID         string
+	Uptime        string
+	LimitBytesIn  string
+	LimitBytesOut string
+	BytesIn       string
+	BytesOut      string
+	PacketsIn     string
+	PacketsOut    string
+}
+
 // PPPoESecret represents one row returned by /ppp/secret/print. Only fields
 // that are stable across RouterOS versions and genuinely useful to the
 // application are exposed.

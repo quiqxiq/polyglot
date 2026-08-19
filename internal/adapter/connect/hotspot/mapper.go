@@ -38,6 +38,29 @@ func ToProtoActiveSessions(sessions []mikrotik.HotspotActiveSession) []*devicepb
 	return pbSessions
 }
 
+// ToProtoHotspotActiveStat converts a single active stat to proto.
+func ToProtoHotspotActiveStat(s port.HotspotActiveStat) *devicepb.HotspotActiveStat {
+	return &devicepb.HotspotActiveStat{
+		Id:              s.RosID,
+		Uptime:          s.Uptime,
+		SessionTimeLeft: s.SessionTimeLeft,
+		IdleTime:        s.IdleTime,
+		BytesIn:         s.BytesIn,
+		BytesOut:        s.BytesOut,
+		PacketsIn:       s.PacketsIn,
+		PacketsOut:      s.PacketsOut,
+	}
+}
+
+// ToProtoActiveStats converts mikrotik active stats to proto list.
+func ToProtoActiveStats(stats []mikrotik.HotspotActiveStat) []*devicepb.HotspotActiveStat {
+	pbStats := make([]*devicepb.HotspotActiveStat, len(stats))
+	for i, s := range stats {
+		pbStats[i] = ToProtoHotspotActiveStat(s)
+	}
+	return pbStats
+}
+
 // ToProtoDHCPLeases converts mikrotik DHCP leases to proto list.
 func ToProtoDHCPLeases(leases []mikrotik.DHCPLease) []*devicepb.DHCPLease {
 	pbLeases := make([]*devicepb.DHCPLease, len(leases))

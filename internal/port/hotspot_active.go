@@ -33,3 +33,16 @@ type HotspotActiveSession struct {
 	PacketsIn       string
 	PacketsOut      string
 }
+
+// HotspotActiveStat represents dynamic real-time telemetry metrics returned by
+// /ip/hotspot/active/print stats interval=.
+type HotspotActiveStat struct {
+	RosID           string
+	Uptime          string
+	SessionTimeLeft string
+	IdleTime        string
+	BytesIn         string
+	BytesOut        string
+	PacketsIn       string
+	PacketsOut      string
+}

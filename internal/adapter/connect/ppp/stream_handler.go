@@ -106,6 +106,54 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 	}
 }
 
+// StreamActiveStats streams /ppp/active/print stats interval=<interval> natively from RouterOS.
+// It pumps dynamic telemetry stats (uptime, bytes-in/out, packets-in/out) per interval with minimal .proplist payload.
+func (h *PPPConnectHandler) StreamActiveStats(ctx context.Context, req *connect.Request[devicepb.StreamPPPActiveStatsRequest], stream *connect.ServerStream[devicepb.PPPActiveStatsFrame]) error {
+	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
+	if err != nil {
+		return err
+	}
+
+	sd, ok := driver.(port.StreamingDeviceDriver)
+	if !ok {
+		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+	}
+
+	interval := req.Msg.Interval
+	if interval == "" {
+		interval = "1s"
+	}
+
+	handle, err := sd.Stream(ctx, mikrotik.NewStreamPPPActiveStatsCommand(interval))
+	if err != nil {
+		return response.MapDomainError(err)
+	}
+	defer handle.Cancel()
+
+	for {
+		select {
+		case <-ctx.Done():
+			return nil
+		case res, ok := <-handle.Chan():
+			if !ok {
+				return handle.Err()
+			}
+			stats := mikrotik.ParsePPPActiveStats(res)
+			if len(stats) == 0 {
+				continue
+			}
+
+			if err := stream.Send(&devicepb.PPPActiveStatsFrame{
+				DeviceId:      req.Msg.DeviceId,
+				TimestampUnix: time.Now().Unix(),
+				Stats:         ToProtoPPPActiveStats(stats),
+			}); err != nil {
+				return err
+			}
+		}
+	}
+}
+
 // StreamInactiveSecrets streams offline subscribers via periodic push over ConnectRPC.
 func (h *PPPConnectHandler) StreamInactiveSecrets(ctx context.Context, req *connect.Request[devicepb.StreamPPPInactiveSecretsRequest], stream *connect.ServerStream[devicepb.PPPInactiveSecretsFrame]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)

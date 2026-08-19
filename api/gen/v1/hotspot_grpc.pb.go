@@ -49,6 +49,7 @@ const (
 	HotspotService_StreamTraffic_FullMethodName           = "/polyglot.v1.HotspotService/StreamTraffic"
 	HotspotService_StreamResource_FullMethodName          = "/polyglot.v1.HotspotService/StreamResource"
 	HotspotService_StreamActiveSessions_FullMethodName    = "/polyglot.v1.HotspotService/StreamActiveSessions"
+	HotspotService_StreamActiveStats_FullMethodName       = "/polyglot.v1.HotspotService/StreamActiveStats"
 	HotspotService_StreamSystemSnapshot_FullMethodName    = "/polyglot.v1.HotspotService/StreamSystemSnapshot"
 	HotspotService_StreamInterfaceEthernet_FullMethodName = "/polyglot.v1.HotspotService/StreamInterfaceEthernet"
 	HotspotService_StreamQueueStats_FullMethodName        = "/polyglot.v1.HotspotService/StreamQueueStats"
@@ -101,6 +102,7 @@ type HotspotServiceClient interface {
 	StreamTraffic(ctx context.Context, in *StreamTrafficRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[TrafficStreamData], error)
 	StreamResource(ctx context.Context, in *StreamResourceRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ResourceStreamData], error)
 	StreamActiveSessions(ctx context.Context, in *StreamActiveSessionsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ActiveSessionsStreamData], error)
+	StreamActiveStats(ctx context.Context, in *StreamActiveStatsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ActiveStatsStreamData], error)
 	StreamSystemSnapshot(ctx context.Context, in *StreamSystemSnapshotRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SystemSnapshotFrame], error)
 	StreamInterfaceEthernet(ctx context.Context, in *StreamInterfaceEthernetRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[InterfaceEthernetFrame], error)
 	StreamQueueStats(ctx context.Context, in *StreamQueueStatsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[QueueStatsFrame], error)
@@ -454,9 +456,28 @@ func (c *hotspotServiceClient) StreamActiveSessions(ctx context.Context, in *Str
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type HotspotService_StreamActiveSessionsClient = grpc.ServerStreamingClient[ActiveSessionsStreamData]
 
+func (c *hotspotServiceClient) StreamActiveStats(ctx context.Context, in *StreamActiveStatsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ActiveStatsStreamData], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[3], HotspotService_StreamActiveStats_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[StreamActiveStatsRequest, ActiveStatsStreamData]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamActiveStatsClient = grpc.ServerStreamingClient[ActiveStatsStreamData]
+
 func (c *hotspotServiceClient) StreamSystemSnapshot(ctx context.Context, in *StreamSystemSnapshotRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SystemSnapshotFrame], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[3], HotspotService_StreamSystemSnapshot_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[4], HotspotService_StreamSystemSnapshot_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -475,7 +496,7 @@ type HotspotService_StreamSystemSnapshotClient = grpc.ServerStreamingClient[Syst
 
 func (c *hotspotServiceClient) StreamInterfaceEthernet(ctx context.Context, in *StreamInterfaceEthernetRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[InterfaceEthernetFrame], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[4], HotspotService_StreamInterfaceEthernet_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[5], HotspotService_StreamInterfaceEthernet_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -494,7 +515,7 @@ type HotspotService_StreamInterfaceEthernetClient = grpc.ServerStreamingClient[I
 
 func (c *hotspotServiceClient) StreamQueueStats(ctx context.Context, in *StreamQueueStatsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[QueueStatsFrame], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[5], HotspotService_StreamQueueStats_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[6], HotspotService_StreamQueueStats_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -513,7 +534,7 @@ type HotspotService_StreamQueueStatsClient = grpc.ServerStreamingClient[QueueSta
 
 func (c *hotspotServiceClient) StreamLogs(ctx context.Context, in *StreamLogsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[LogsStreamFrame], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[6], HotspotService_StreamLogs_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[7], HotspotService_StreamLogs_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -532,7 +553,7 @@ type HotspotService_StreamLogsClient = grpc.ServerStreamingClient[LogsStreamFram
 
 func (c *hotspotServiceClient) StreamHotspotInactive(ctx context.Context, in *StreamHotspotInactiveRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[HotspotInactiveFrame], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[7], HotspotService_StreamHotspotInactive_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[8], HotspotService_StreamHotspotInactive_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -551,7 +572,7 @@ type HotspotService_StreamHotspotInactiveClient = grpc.ServerStreamingClient[Hot
 
 func (c *hotspotServiceClient) StreamPPPActive(ctx context.Context, in *StreamPPPActiveRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PPPActiveFrame], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[8], HotspotService_StreamPPPActive_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[9], HotspotService_StreamPPPActive_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -570,7 +591,7 @@ type HotspotService_StreamPPPActiveClient = grpc.ServerStreamingClient[PPPActive
 
 func (c *hotspotServiceClient) StreamPPPInactive(ctx context.Context, in *StreamPPPInactiveRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PPPInactiveFrame], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[9], HotspotService_StreamPPPInactive_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &HotspotService_ServiceDesc.Streams[10], HotspotService_StreamPPPInactive_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -711,6 +732,7 @@ type HotspotServiceServer interface {
 	StreamTraffic(*StreamTrafficRequest, grpc.ServerStreamingServer[TrafficStreamData]) error
 	StreamResource(*StreamResourceRequest, grpc.ServerStreamingServer[ResourceStreamData]) error
 	StreamActiveSessions(*StreamActiveSessionsRequest, grpc.ServerStreamingServer[ActiveSessionsStreamData]) error
+	StreamActiveStats(*StreamActiveStatsRequest, grpc.ServerStreamingServer[ActiveStatsStreamData]) error
 	StreamSystemSnapshot(*StreamSystemSnapshotRequest, grpc.ServerStreamingServer[SystemSnapshotFrame]) error
 	StreamInterfaceEthernet(*StreamInterfaceEthernetRequest, grpc.ServerStreamingServer[InterfaceEthernetFrame]) error
 	StreamQueueStats(*StreamQueueStatsRequest, grpc.ServerStreamingServer[QueueStatsFrame]) error
@@ -826,6 +848,9 @@ func (UnimplementedHotspotServiceServer) StreamResource(*StreamResourceRequest, 
 }
 func (UnimplementedHotspotServiceServer) StreamActiveSessions(*StreamActiveSessionsRequest, grpc.ServerStreamingServer[ActiveSessionsStreamData]) error {
 	return status.Error(codes.Unimplemented, "method StreamActiveSessions not implemented")
+}
+func (UnimplementedHotspotServiceServer) StreamActiveStats(*StreamActiveStatsRequest, grpc.ServerStreamingServer[ActiveStatsStreamData]) error {
+	return status.Error(codes.Unimplemented, "method StreamActiveStats not implemented")
 }
 func (UnimplementedHotspotServiceServer) StreamSystemSnapshot(*StreamSystemSnapshotRequest, grpc.ServerStreamingServer[SystemSnapshotFrame]) error {
 	return status.Error(codes.Unimplemented, "method StreamSystemSnapshot not implemented")
@@ -1415,6 +1440,17 @@ func _HotspotService_StreamActiveSessions_Handler(srv interface{}, stream grpc.S
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type HotspotService_StreamActiveSessionsServer = grpc.ServerStreamingServer[ActiveSessionsStreamData]
 
+func _HotspotService_StreamActiveStats_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamActiveStatsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HotspotServiceServer).StreamActiveStats(m, &grpc.GenericServerStream[StreamActiveStatsRequest, ActiveStatsStreamData]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type HotspotService_StreamActiveStatsServer = grpc.ServerStreamingServer[ActiveStatsStreamData]
+
 func _HotspotService_StreamSystemSnapshot_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(StreamSystemSnapshotRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -1820,6 +1856,11 @@ var HotspotService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "StreamActiveSessions",
 			Handler:       _HotspotService_StreamActiveSessions_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamActiveStats",
+			Handler:       _HotspotService_StreamActiveStats_Handler,
 			ServerStreams: true,
 		},
 		{

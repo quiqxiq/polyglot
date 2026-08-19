@@ -348,6 +348,28 @@ message ActiveSessionsStreamData {
   int64 timestamp_unix = 3;
 }
 
+message HotspotActiveStat {
+  string id = 1;
+  string uptime = 2;
+  string session_time_left = 3;
+  string idle_time = 4;
+  string bytes_in = 5;
+  string bytes_out = 6;
+  string packets_in = 7;
+  string packets_out = 8;
+}
+
+message StreamActiveStatsRequest {
+  string device_id = 1;
+  string interval = 2;
+}
+
+message ActiveStatsStreamData {
+  string device_id = 1;
+  repeated HotspotActiveStat stats = 2;
+  int64 timestamp_unix = 3;
+}
+
 // ── Modul 08: Sales Report ────────────────────────────────────────────
 message ListHotspotReportsRequest {
   string device_id = 1;
@@ -800,6 +822,7 @@ service HotspotService {
   rpc StreamTraffic(StreamTrafficRequest) returns (stream TrafficStreamData);
   rpc StreamResource(StreamResourceRequest) returns (stream ResourceStreamData);
   rpc StreamActiveSessions(StreamActiveSessionsRequest) returns (stream ActiveSessionsStreamData);
+  rpc StreamActiveStats(StreamActiveStatsRequest) returns (stream ActiveStatsStreamData);
   rpc StreamSystemSnapshot(StreamSystemSnapshotRequest) returns (stream SystemSnapshotFrame);
   rpc StreamInterfaceEthernet(StreamInterfaceEthernetRequest) returns (stream InterfaceEthernetFrame);
   rpc StreamQueueStats(StreamQueueStatsRequest) returns (stream QueueStatsFrame);

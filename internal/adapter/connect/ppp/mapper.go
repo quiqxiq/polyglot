@@ -89,6 +89,29 @@ func ToProtoPPPActiveSessions(sessions []port.PPPActiveSession) []*devicepb.PPPA
 	return res
 }
 
+// ToProtoPPPActiveStat converts a domain port.PPPActiveStat to protobuf PPPActiveStat.
+func ToProtoPPPActiveStat(s port.PPPActiveStat) *devicepb.PPPActiveStat {
+	return &devicepb.PPPActiveStat{
+		Id:            s.RosID,
+		Uptime:        s.Uptime,
+		LimitBytesIn:  s.LimitBytesIn,
+		LimitBytesOut: s.LimitBytesOut,
+		BytesIn:       s.BytesIn,
+		BytesOut:      s.BytesOut,
+		PacketsIn:     s.PacketsIn,
+		PacketsOut:    s.PacketsOut,
+	}
+}
+
+// ToProtoPPPActiveStats converts a slice of domain port.PPPActiveStat to protobuf PPPActiveStats.
+func ToProtoPPPActiveStats(stats []port.PPPActiveStat) []*devicepb.PPPActiveStat {
+	res := make([]*devicepb.PPPActiveStat, len(stats))
+	for i, s := range stats {
+		res[i] = ToProtoPPPActiveStat(s)
+	}
+	return res
+}
+
 // FromProtoCreateSecretRequest maps CreatePPPSecretRequest to domain port.PPPoESecretParams.
 func FromProtoCreateSecretRequest(req *devicepb.CreatePPPSecretRequest) port.PPPoESecretParams {
 	return port.PPPoESecretParams{

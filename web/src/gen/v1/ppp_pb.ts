@@ -1926,6 +1926,177 @@ export class PPPActiveSessionsFrame extends Message<PPPActiveSessionsFrame> {
 }
 
 /**
+ * @generated from message polyglot.v1.PPPActiveStat
+ */
+export class PPPActiveStat extends Message<PPPActiveStat> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string uptime = 2;
+   */
+  uptime = "";
+
+  /**
+   * @generated from field: string limit_bytes_in = 3;
+   */
+  limitBytesIn = "";
+
+  /**
+   * @generated from field: string limit_bytes_out = 4;
+   */
+  limitBytesOut = "";
+
+  /**
+   * @generated from field: string bytes_in = 5;
+   */
+  bytesIn = "";
+
+  /**
+   * @generated from field: string bytes_out = 6;
+   */
+  bytesOut = "";
+
+  /**
+   * @generated from field: string packets_in = 7;
+   */
+  packetsIn = "";
+
+  /**
+   * @generated from field: string packets_out = 8;
+   */
+  packetsOut = "";
+
+  constructor(data?: PartialMessage<PPPActiveStat>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PPPActiveStat";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "uptime", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "limit_bytes_in", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "limit_bytes_out", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "bytes_in", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "bytes_out", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "packets_in", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "packets_out", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PPPActiveStat {
+    return new PPPActiveStat().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PPPActiveStat {
+    return new PPPActiveStat().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PPPActiveStat {
+    return new PPPActiveStat().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PPPActiveStat | PlainMessage<PPPActiveStat> | undefined, b: PPPActiveStat | PlainMessage<PPPActiveStat> | undefined): boolean {
+    return proto3.util.equals(PPPActiveStat, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.StreamPPPActiveStatsRequest
+ */
+export class StreamPPPActiveStatsRequest extends Message<StreamPPPActiveStatsRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string interval = 2;
+   */
+  interval = "";
+
+  constructor(data?: PartialMessage<StreamPPPActiveStatsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.StreamPPPActiveStatsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "interval", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): StreamPPPActiveStatsRequest {
+    return new StreamPPPActiveStatsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): StreamPPPActiveStatsRequest {
+    return new StreamPPPActiveStatsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): StreamPPPActiveStatsRequest {
+    return new StreamPPPActiveStatsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: StreamPPPActiveStatsRequest | PlainMessage<StreamPPPActiveStatsRequest> | undefined, b: StreamPPPActiveStatsRequest | PlainMessage<StreamPPPActiveStatsRequest> | undefined): boolean {
+    return proto3.util.equals(StreamPPPActiveStatsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.PPPActiveStatsFrame
+ */
+export class PPPActiveStatsFrame extends Message<PPPActiveStatsFrame> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: int64 timestamp_unix = 2;
+   */
+  timestampUnix = protoInt64.zero;
+
+  /**
+   * @generated from field: repeated polyglot.v1.PPPActiveStat stats = 3;
+   */
+  stats: PPPActiveStat[] = [];
+
+  constructor(data?: PartialMessage<PPPActiveStatsFrame>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PPPActiveStatsFrame";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "timestamp_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 3, name: "stats", kind: "message", T: PPPActiveStat, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PPPActiveStatsFrame {
+    return new PPPActiveStatsFrame().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PPPActiveStatsFrame {
+    return new PPPActiveStatsFrame().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PPPActiveStatsFrame {
+    return new PPPActiveStatsFrame().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PPPActiveStatsFrame | PlainMessage<PPPActiveStatsFrame> | undefined, b: PPPActiveStatsFrame | PlainMessage<PPPActiveStatsFrame> | undefined): boolean {
+    return proto3.util.equals(PPPActiveStatsFrame, a, b);
+  }
+}
+
+/**
  * @generated from message polyglot.v1.StreamPPPInactiveSecretsRequest
  */
 export class StreamPPPInactiveSecretsRequest extends Message<StreamPPPInactiveSecretsRequest> {

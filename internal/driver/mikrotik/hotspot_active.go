@@ -43,24 +43,45 @@ func NewPrintHotspotActiveCommand(userFilter string) command.Command {
 	}
 }
 
+// HotspotActiveStat is the vendor-neutral hotspot active session telemetry stats row.
+type HotspotActiveStat = port.HotspotActiveStat
+
 // NewStreamHotspotActiveCommand builds the command.Command for
 // /ip/hotspot/active/print follow, which causes RouterOS to push a new row
 // every time a hotspot session changes state (login, logout, expiry).
 // Use with Driver.Stream — isStreamingCommand returns true because
 // "follow" is present.
 //
-// Parse each command.Result from StreamHandle.Chan() with
-// ParseHotspotActiveSessions.
-//
+// Only static session identity fields are requested via .proplist to minimize overhead.
 // userFilter: limit to one username (empty = all sessions).
 func NewStreamHotspotActiveCommand(userFilter string) command.Command {
-	args := map[string]string{"follow": ""}
+	args := map[string]string{
+		"follow":    "",
+		".proplist": ".id,server,user,domain,address,mac-address,login-by",
+	}
 	if userFilter != "" {
 		args["?user"] = userFilter
 	}
 	return command.Command{
 		Raw:  "/ip/hotspot/active/print",
 		Args: args,
+	}
+}
+
+// NewStreamHotspotActiveStatsCommand builds the command.Command for
+// /ip/hotspot/active/print stats interval=<interval>.
+// It requests only dynamic counter fields via .proplist to minimize RouterOS CPU.
+func NewStreamHotspotActiveStatsCommand(interval string) command.Command {
+	if interval == "" {
+		interval = "1s"
+	}
+	return command.Command{
+		Raw: "/ip/hotspot/active/print",
+		Args: map[string]string{
+			"stats":     "",
+			"interval":  interval,
+			".proplist": ".id,uptime,session-time-left,idle-time,bytes-in,bytes-out,packets-in,packets-out",
+		},
 	}
 }
 
@@ -113,6 +134,29 @@ func ParseHotspotActiveSessions(result command.Result) []HotspotActiveSession {
 		})
 	}
 	return sessions
+}
+
+// ParseHotspotActiveStats converts command.Result rows from
+// /ip/hotspot/active/print stats into typed HotspotActiveStat values.
+func ParseHotspotActiveStats(result command.Result) []HotspotActiveStat {
+	stats := make([]HotspotActiveStat, 0, len(result.Rows))
+	for _, row := range result.Rows {
+		id := row[".id"]
+		if id == "" {
+			continue
+		}
+		stats = append(stats, HotspotActiveStat{
+			RosID:           id,
+			Uptime:          row["uptime"],
+			SessionTimeLeft: row["session-time-left"],
+			IdleTime:        row["idle-time"],
+			BytesIn:         row["bytes-in"],
+			BytesOut:        row["bytes-out"],
+			PacketsIn:       row["packets-in"],
+			PacketsOut:      row["packets-out"],
+		})
+	}
+	return stats
 }
 
 // ParseHotspotServers converts command.Result rows from /ip/hotspot/print
