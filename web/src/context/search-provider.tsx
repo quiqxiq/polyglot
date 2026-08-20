@@ -34,13 +34,13 @@ export function SearchProvider({ children }: SearchProviderProps) {
   )
 }
 
+const defaultSearchContext: SearchContextType = {
+  open: false,
+  setOpen: () => {},
+}
+
 // eslint-disable-next-line react-refresh/only-export-components
 export const useSearch = () => {
   const searchContext = useContext(SearchContext)
-
-  if (!searchContext) {
-    throw new Error('useSearch has to be used within SearchProvider')
-  }
-
-  return searchContext
+  return searchContext || defaultSearchContext
 }
