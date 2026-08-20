@@ -71,7 +71,7 @@ func TestEngineEscalationMode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := svc.Escalate(context.Background(), conv.ID); err != nil {
+	if err := svc.TakeOver(context.Background(), conv.ID, 1); err != nil {
 		t.Fatal(err)
 	}
 

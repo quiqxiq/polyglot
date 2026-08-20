@@ -116,8 +116,15 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	}
 
 	if conv.Status == bot.StatusEscalation {
-		logger.WithComponent("BotEngine").Infof("Conversation %d is in escalation mode. Skipping automated bot reply.", conv.ID)
-		return nil
+		if conv.AssignedAgentID != nil {
+			logger.WithComponent("BotEngine").Infof("Conversation %d is assigned to human agent %d. Skipping automated bot reply.", conv.ID, *conv.AssignedAgentID)
+			return nil
+		}
+		// Percakapan dieskalasi otomatis oleh sistem karena error sementara (tanpa admin manusia).
+		// Pulihkan status ke 'bot' agar pesan baru dari pelanggan langsung dilayani kembali oleh AI.
+		logger.WithComponent("BotEngine").Infof("Conversation %d was unassigned escalation. Auto-recovering to bot mode.", conv.ID)
+		_ = e.convService.ResetBot(ctx, conv.ID)
+		conv.Status = bot.StatusBot
 	}
 
 	if e.chatRepo != nil {
