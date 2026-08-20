@@ -77,16 +77,49 @@ func TestRateLimiter_BurstSpam_Mutes1Hour(t *testing.T) {
 		assert.Equal(t, bot.StatusAllowed, res.Status)
 	}
 
-	// Pesan ke-4 melanggar burst limit (Maks 3 / 5s) -> Warning
+	// Pesan ke-4 melanggar burst limit (Maks 3 / 5s) -> Warning + Mute 1h
 	res, err := limiter.Check(ctx, "628123456789", "Spam 4")
 	require.NoError(t, err)
 	assert.Equal(t, bot.StatusWarned, res.Status)
-	assert.Contains(t, res.Message, "terlalu cepat")
+	assert.Contains(t, res.Message, "1 jam")
 
-	// Pesan ke-5 saat status cooldown aktif -> StatusWarned
+	// Pesan ke-5 saat status mute aktif -> StatusMuted
 	resMuted, err := limiter.Check(ctx, "628123456789", "Spam 5")
 	require.NoError(t, err)
-	assert.Equal(t, bot.StatusWarned, resMuted.Status)
+	assert.Equal(t, bot.StatusMuted, resMuted.Status)
+}
+
+func TestRateLimiter_EscalatesTo24HourBan(t *testing.T) {
+	cache := newMockCacheStore()
+	cfg := config.Config{
+		BotBurstLimit:      3,
+		BotBurstWindowSecs: 5,
+		BotMute1HourSecs:   3600,
+		BotBan24HourSecs:   86400,
+		BotDailyChatLimit:  10,
+	}
+	limiter := bot.NewRateLimiter(cache, cfg)
+	ctx := context.Background()
+
+	// Trigger burst mute
+	for i := 0; i < 4; i++ {
+		_, _ = limiter.Check(ctx, "628123456789", "Spam")
+	}
+
+	// Cek status mute awal: temp_1h
+	muteVal, _ := cache.Get(ctx, "mute:628123456789")
+	assert.Equal(t, "temp_1h", muteVal)
+
+	// Lakukan spam berulang saat sedang di-mute (3 strikes)
+	for i := 0; i < 3; i++ {
+		res, err := limiter.Check(ctx, "628123456789", "Spam while muted")
+		require.NoError(t, err)
+		assert.Equal(t, bot.StatusMuted, res.Status)
+	}
+
+	// Verifikasi penalti dinaikkan menjadi ban_24h
+	muteValEscalated, _ := cache.Get(ctx, "mute:628123456789")
+	assert.Equal(t, "ban_24h", muteValEscalated)
 }
 
 func TestRateLimiter_DailyQuotaExceeded(t *testing.T) {
@@ -158,7 +191,7 @@ func TestRateLimiter_ResetRateLimitAndStatus(t *testing.T) {
 	status, err := limiter.GetRateLimitStatus(ctx, phone)
 	require.NoError(t, err)
 	assert.True(t, status.IsMuted)
-	assert.Equal(t, "cooldown", status.MuteType)
+	assert.Equal(t, "temp_1h", status.MuteType)
 	assert.Equal(t, 1, status.DailyChatCount)
 
 	// Admin melakukan reset limit

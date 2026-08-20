@@ -112,9 +112,25 @@ func (r *RateLimiter) Check(ctx context.Context, customerNumber string, messageC
 	// 2. Active Mute / Ban Check (Tier 1 & 2)
 	muteVal, err := r.cache.Get(ctx, "mute:"+customerNumber)
 	if err == nil && muteVal != "" {
+		// Catat spam strike selama masa mute aktif
+		strikesKey := "spam_strikes:" + customerNumber
+		strikesStr, _ := r.cache.Get(ctx, strikesKey)
+		strikes, _ := strconv.Atoi(strikesStr)
+		strikes++
+		_ = r.cache.Set(ctx, strikesKey, strconv.Itoa(strikes), r.ban24hSecs)
+
+		// Jika terus melakukan spam (>= 3 strike) selama masa 1 jam, eskalasi ke ban 24 jam
+		if strikes >= 3 && muteVal != "ban_24h" {
+			_ = r.cache.Set(ctx, "mute:"+customerNumber, "ban_24h", r.ban24hSecs)
+			return RateLimitResult{
+				Status:  StatusMuted,
+				Message: "⚠️ Nomor Anda telah dinonaktifkan selama 24 jam karena aktivitas spam berulang. Silakan hubungi admin Customer Service kami.",
+			}, nil
+		}
+
 		return RateLimitResult{
-			Status:  StatusWarned,
-			Message: "⚠️ Mohon menunggu sebentar sebelum mengirim pesan baru. Asisten kami sedang memproses permintaan Anda.",
+			Status:  StatusMuted,
+			Message: "⚠️ Nomor Anda sedang dalam masa pembatasan sementara (1 jam). Mohon menunggu atau hubungi admin jika butuh bantuan segera.",
 		}, nil
 	}
 
@@ -126,11 +142,11 @@ func (r *RateLimiter) Check(ctx context.Context, customerNumber string, messageC
 	_ = r.cache.Set(ctx, burstKey, strconv.Itoa(burstCount), r.burstWindow)
 
 	if burstCount > r.burstLimit {
-		// Set short cooldown
-		_ = r.cache.Set(ctx, "mute:"+customerNumber, "cooldown", r.burstWindow*2)
+		// Terapkan penalti mute 1 jam (3600 detik)
+		_ = r.cache.Set(ctx, "mute:"+customerNumber, "temp_1h", r.mute1hSecs)
 		return RateLimitResult{
 			Status:  StatusWarned,
-			Message: "⚠️ Anda mengirim pesan terlalu cepat. Mohon tunggu beberapa detik sebelum mengirim pesan berikutnya.",
+			Message: "⚠️ Anda mengirim pesan terlalu cepat. Layanan asisten otomatis dinonaktifkan sementara untuk nomor Anda selama 1 jam.",
 		}, nil
 	}
 

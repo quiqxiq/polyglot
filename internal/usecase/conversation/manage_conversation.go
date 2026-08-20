@@ -55,6 +55,10 @@ func NewService(repo port.ConversationRepository) *ConversationService {
 	return NewConversationService(repo)
 }
 
+func (s *ConversationService) GetActiveConversationByCustomer(ctx context.Context, sessionID uint, customerNumber string) (*bot.Conversation, error) {
+	return s.repo.FindActiveConversationByCustomer(ctx, sessionID, customerNumber)
+}
+
 func (s *ConversationService) GetOrCreateConversation(ctx context.Context, sessionID uint, customerNumber string) (*bot.Conversation, error) {
 	conv, err := s.repo.FindActiveConversationByCustomer(ctx, sessionID, customerNumber)
 	if err == nil {

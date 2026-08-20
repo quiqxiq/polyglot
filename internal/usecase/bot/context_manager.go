@@ -68,6 +68,10 @@ func (cm *ContextManager) BuildPromptContext(
 		}
 	}
 
+	sb.WriteString("### ATURAN OUTPUT (WAJIB DIPATUHI):\n")
+	sb.WriteString("- JANGAN PERNAH menampilkan proses berpikir internal, tag <think>...</think>, nomor langkah perancangan, atau draf teks.\n")
+	sb.WriteString("- Berikan HANYA balasan akhir yang ramah, sopan, langsung dalam Bahasa Indonesia untuk pelanggan WhatsApp.\n\n")
+
 	systemPrompt = sb.String()
 
 	for _, m := range history {

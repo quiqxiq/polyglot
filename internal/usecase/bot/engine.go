@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/bot"
@@ -240,7 +241,33 @@ func (e *Engine) GetRateLimitStatus(ctx context.Context, customerNumber string) 
 	if e.rateLimiter == nil {
 		return &RateLimitStatusInfo{PhoneNumber: customerNumber}, nil
 	}
-	return e.rateLimiter.GetRateLimitStatus(ctx, customerNumber)
+	info, err := e.rateLimiter.GetRateLimitStatus(ctx, customerNumber)
+	if err != nil {
+		return nil, err
+	}
+
+	// Fallback to conversation DB history if redis quota is 0 or unlinked
+	if info.DailyChatCount == 0 && e.convService != nil {
+		cleaned := cleanPhoneNumber(customerNumber)
+		conv, err := e.convService.GetActiveConversationByCustomer(ctx, 1, cleaned)
+		if err == nil && conv != nil {
+			msgs, err := e.convService.GetHistory(ctx, conv.ID, 100)
+			if err == nil {
+				today := time.Now().Truncate(24 * time.Hour)
+				count := 0
+				for _, m := range msgs {
+					if m.SenderType == bot.SenderCustomer && m.CreatedAt.After(today) {
+						count++
+					}
+				}
+				if count > 0 {
+					info.DailyChatCount = count
+				}
+			}
+		}
+	}
+
+	return info, nil
 }
 
 // GetConversationContext aggregates the LLM-facing state of a conversation.
