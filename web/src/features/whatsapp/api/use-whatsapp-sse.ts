@@ -234,6 +234,9 @@ export function useWARealtimeStream(): WARealtimeState {
         })
       }
       queryClient.invalidateQueries({ queryKey: BOT_CONTEXT_PREFIX })
+      queryClient.invalidateQueries({
+        queryKey: [...botKeys.all, 'rate-limit-status'],
+      })
     }
 
     const handleSessionStatus = (e: MessageEvent) => applyStatus(e.data)

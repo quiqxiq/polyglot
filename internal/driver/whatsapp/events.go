@@ -62,7 +62,9 @@ func (c *Client) handleIncomingMessage(evt *events.Message) {
 	}
 
 	senderJID := evt.Info.Sender.User
-	if senderJID == "" {
+	if !evt.Info.IsGroup && evt.Info.Chat.User != "" {
+		senderJID = evt.Info.Chat.User
+	} else if senderJID == "" {
 		senderJID = evt.Info.Chat.User
 	}
 

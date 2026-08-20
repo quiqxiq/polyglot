@@ -17,8 +17,8 @@ const (
 	SenderCustomer = "customer"
 	SenderBot      = "bot"
 
-	// historyLimit is the number of recent messages fed to the LLM as context.
-	historyLimit = 20
+	// historyLimit is the number of recent messages fed to the LLM as context (max 6 to preserve tokens).
+	historyLimit = 6
 )
 
 // Config holds configuration parameters needed by the bot usecase.
@@ -168,15 +168,13 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	}
 
 	if e.llmConfigRepo == nil {
-		fallbackReply := "Maaf, kami kesulitan memproses pesan Anda. Pesan telah kami teruskan ke admin kami."
-		return e.escalateWithFallback(ctx, conv.ID, sessionID, chatJID, fallbackReply)
+		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Maaf, sistem AI kami saat ini tidak tersedia.", 0, 0, nil)
 	}
 
 	llmCfg, err := e.llmConfigRepo.FindActive(ctx)
 	if err != nil {
-		logger.WithComponent("BotEngine").Warnf("No active LLM config found! Escalating conversation %d", conv.ID)
-		fallbackReply := "Maaf, sistem AI kami sedang dalam pemeliharaan. Pesan Anda telah diteruskan ke tim admin."
-		return e.escalateWithFallback(ctx, conv.ID, sessionID, chatJID, fallbackReply)
+		logger.WithComponent("BotEngine").Warnf("No active LLM config found for conversation %d", conv.ID)
+		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Maaf, konfigurasi asisten AI belum aktif. Pesan Anda telah kami terima.", 0, 0, nil)
 	}
 
 	history, err := e.convService.GetRecentHistory(ctx, conv.ID, historyLimit)
@@ -195,13 +193,13 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	}
 
 	if e.providerF == nil {
-		return e.escalateWithFallback(ctx, conv.ID, sessionID, chatJID, "Maaf, sistem AI kami sedang tidak tersedia. Pesan Anda telah diteruskan ke tim admin.")
+		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Maaf, konfigurasi asisten AI belum aktif. Pesan Anda telah kami terima.", 0, 0, nil)
 	}
 
 	provider, err := e.providerF(llmCfg)
 	if err != nil {
 		logger.WithComponent("BotEngine").Errorf("Failed to build LLM provider for conversation %d: %v", conv.ID, err)
-		return e.escalateWithFallback(ctx, conv.ID, sessionID, chatJID, "Maaf, sistem AI kami sedang tidak tersedia. Pesan Anda telah diteruskan ke tim admin.")
+		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Maaf, sistem asisten AI sedang dalam pemeliharaan. Silakan coba kembali beberapa saat lagi.", 0, 0, nil)
 	}
 
 	maxTokens := llmCfg.MaxOutputTokens
@@ -212,7 +210,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	resp, err := provider.Chat(ctx, systemPrompt, chatMessages, maxTokens)
 	if err != nil {
 		logger.WithComponent("BotEngine").Errorf("LLM call failed for conversation %d: %v", conv.ID, err)
-		return e.escalateWithFallback(ctx, conv.ID, sessionID, chatJID, "Maaf, sistem AI kami sedang bermasalah. Pesan Anda telah diteruskan ke tim admin kami.")
+		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Mohon maaf, sistem AI kami sedang sibuk atau mengalami kendala koneksi. Silakan ulangi pesan Anda dalam beberapa saat.", 0, 0, nil)
 	}
 
 	reply := e.guardrail.SanitizeResponse(resp.Content)

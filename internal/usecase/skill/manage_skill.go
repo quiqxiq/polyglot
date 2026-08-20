@@ -293,7 +293,7 @@ func (u *ManageSkillUseCase) BuildCompositeSystemPrompt(ctx context.Context) (st
 	// 1. Base / Global System Prompt
 	basePrompt, _ := u.GetGlobalSystemPrompt(ctx)
 	if strings.TrimSpace(basePrompt) != "" {
-		sb.WriteString(basePrompt)
+		sb.WriteString(strings.TrimSpace(basePrompt))
 		sb.WriteString("\n\n")
 	}
 
@@ -314,15 +314,19 @@ func (u *ManageSkillUseCase) BuildCompositeSystemPrompt(ctx context.Context) (st
 				sb.WriteString(fmt.Sprintf("**Deskripsi Pemicu**: %s\n\n", sk.Description))
 			}
 
-			// Render isi berkas
+			// Render isi berkas (utamakan SKILL.md lalu berkas referensi)
 			for _, f := range sk.Files {
+				content := strings.TrimSpace(f.Content)
+				if content == "" {
+					continue
+				}
 				sb.WriteString(fmt.Sprintf("#### [BERKAS: %s]\n", f.FilePath))
-				sb.WriteString(f.Content)
+				sb.WriteString(content)
 				sb.WriteString("\n\n")
 			}
 			sb.WriteString("---\n\n")
 		}
 	}
 
-	return sb.String(), nil
+	return strings.TrimSpace(sb.String()), nil
 }

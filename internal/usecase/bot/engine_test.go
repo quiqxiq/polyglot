@@ -114,8 +114,8 @@ func TestEngineNoActiveConfig(t *testing.T) {
 	var convID uint
 	for id, c := range convRepo.convs {
 		convID = id
-		if c.Status != bot.StatusEscalation {
-			t.Fatalf("expected conversation escalated, got %s", c.Status)
+		if c.Status != bot.StatusBot {
+			t.Fatalf("expected conversation status bot, got %s", c.Status)
 		}
 	}
 	msgs := convRepo.msgs[convID]
@@ -182,15 +182,15 @@ func TestEngineLLMError(t *testing.T) {
 		t.Fatalf("HandleIncomingMessage: %v", err)
 	}
 
-	// LLM gagal → fallback dikirim + percakapan dinaikkan ke escalation.
+	// LLM gagal → fallback ramah dikirim dan status tetap 'bot' agar pesan berikutnya tidak terkunci.
 	if len(gw.sent) != 1 {
 		t.Fatalf("expected fallback reply, got %v", gw.sent)
 	}
 	var convID uint
 	for id, c := range convRepo.convs {
 		convID = id
-		if c.Status != bot.StatusEscalation {
-			t.Fatalf("expected conversation escalated after LLM error, got %s", c.Status)
+		if c.Status != bot.StatusBot {
+			t.Fatalf("expected conversation to remain in bot status after transient LLM error, got %s", c.Status)
 		}
 	}
 	msgs := convRepo.msgs[convID]
