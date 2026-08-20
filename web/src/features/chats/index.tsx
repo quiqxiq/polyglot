@@ -342,9 +342,10 @@ export function Chats() {
     if (selectedChat?.botEnabled) {
       handleToggleChatBot()
     }
-    if (selectedConv) {
+    const convId = selectedConv?.id != null ? String(selectedConv.id) : (convContext?.conversationId ? String(convContext.conversationId) : undefined)
+    if (convId) {
       takeOverMutation.mutate(
-        new TakeOverConversationRequest({ id: selectedConv.id })
+        new TakeOverConversationRequest({ id: convId })
       )
     }
     toast.success('Percakapan dialihkan ke agen CS manual (Bot dinonaktifkan)')
@@ -354,9 +355,10 @@ export function Chats() {
     if (selectedChat && !selectedChat.botEnabled) {
       handleToggleChatBot()
     }
-    if (selectedConv) {
+    const convId = selectedConv?.id != null ? String(selectedConv.id) : (convContext?.conversationId ? String(convContext.conversationId) : undefined)
+    if (convId) {
       resetBotMutation.mutate(
-        new ResetConversationBotRequest({ id: selectedConv.id })
+        new ResetConversationBotRequest({ id: convId })
       )
     }
     toast.success('Bot AI diaktifkan kembali untuk percakapan ini')
@@ -759,7 +761,7 @@ export function Chats() {
                     )}
 
                     {/* Tombol Ambil Alih CS vs Aktifkan AI */}
-                    {selectedChat?.botEnabled || convContext?.status === 'bot' ? (
+                    {selectedChat?.botEnabled && convContext?.status !== 'escalation' ? (
                       <Button
                         size='sm'
                         variant='outline'

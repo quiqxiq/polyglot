@@ -23,8 +23,6 @@ import {
   Cpu,
   Zap,
   DollarSign,
-  CheckCircle2,
-  AlertCircle,
   Plus,
   Loader2,
   Trash2,
@@ -277,7 +275,6 @@ export function LLMConfigDialog({ open, onOpenChange }: LLMConfigDialogProps) {
   const [customModelInput, setCustomModelInput] = useState('')
   const [apiKey, setApiKey] = useState('')
   const [maxTokens, setMaxTokens] = useState('1024')
-  const [testResult, setTestResult] = useState<{ success: boolean; message: string } | null>(null)
 
   // State untuk modal konfirmasi hapus LLM
   const [configToDelete, setConfigToDelete] = useState<any | null>(null)
@@ -301,7 +298,6 @@ export function LLMConfigDialog({ open, onOpenChange }: LLMConfigDialogProps) {
       setIsCustomModel(false)
       setCustomModelInput('')
     }
-    setTestResult(null)
   }
 
   const handleModelSelectChange = (val: string) => {
@@ -321,7 +317,6 @@ export function LLMConfigDialog({ open, onOpenChange }: LLMConfigDialogProps) {
     setCustomModelInput('')
     setApiKey('')
     setMaxTokens('1024')
-    setTestResult(null)
     setIsFormOpen(true)
   }
 
@@ -340,35 +335,23 @@ export function LLMConfigDialog({ open, onOpenChange }: LLMConfigDialogProps) {
     }
     setApiKey('')
     setMaxTokens(String(cfg.maxTokens || 1024))
-    setTestResult(null)
     setIsFormOpen(true)
   }
 
   const handleTestConnection = async (configId: string) => {
-    setTestResult(null)
     try {
       const req = new TestLLMConfigRequest({
         id: configId,
         testPrompt: 'ping',
       })
       const resp = await testMutation.mutateAsync(req)
-      setTestResult({
-        success: resp.success,
-        message: resp.success
-          ? resp.responseText || 'Koneksi Berhasil!'
-          : resp.errorMessage || 'Koneksi Gagal',
-      })
       if (resp.success) {
         toast.success('Koneksi AI Berhasil!')
       } else {
         toast.error(`Koneksi Gagal: ${resp.errorMessage}`)
       }
     } catch (err: any) {
-      setTestResult({
-        success: false,
-        message: err.message || 'Gagal menghubungi API provider',
-      })
-      toast.error('Uji koneksi gagal')
+      toast.error(`Uji koneksi gagal: ${err.message || 'Gagal menghubungi API'}`)
     }
   }
 
@@ -410,7 +393,6 @@ export function LLMConfigDialog({ open, onOpenChange }: LLMConfigDialogProps) {
       setIsFormOpen(false)
       setEditingId(null)
       setApiKey('')
-      setTestResult(null)
     } catch (err: any) {
       toast.error(`Gagal menyimpan konfigurasi: ${err.message}`)
     }

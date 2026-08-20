@@ -63,5 +63,10 @@ func (g *Guardrail) FormatOffTopicResponse() string {
 }
 
 func (g *Guardrail) SanitizeResponse(response string) string {
-	return strings.TrimSpace(response)
+	res := strings.TrimSpace(response)
+	// Strip <think>...</think> reasoning blocks from thinking models (DeepSeek R1, Qwen 2.5/3, etc.)
+	if idx := strings.Index(res, "</think>"); idx != -1 {
+		res = strings.TrimSpace(res[idx+len("</think>"):])
+	}
+	return res
 }
