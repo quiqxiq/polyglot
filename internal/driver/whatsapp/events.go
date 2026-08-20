@@ -57,22 +57,24 @@ func (c *Client) handleIncomingMessage(evt *events.Message) {
 		return
 	}
 
-	chatJID := normalizeJIDFromLID(context.Background(), evt.Info.Chat, c.waClient).String()
-	if chatJID == "" || isSkippedJID(chatJID) {
+	// Sesuai standar referensi go-whatsapp-web-multidevice (auto_reply.go):
+	// 1. Skip groups, incoming broadcast, dan broadcast sources
+	if evt.Info.IsGroup || evt.Info.IsIncomingBroadcast() || strings.Contains(evt.Info.SourceString(), "broadcast") {
 		return
 	}
 
-	// Jangan teruskan pesan grup, newsletter, atau broadcast ke bot engine auto-reply.
-	// Pesan tersebut tetap tersimpan di database mirror via persistMirrorMessage,
-	// tetapi tidak boleh memicu AI bot otomatis.
-	if evt.Info.IsGroup || evt.Info.Chat.Server == types.GroupServer || strings.HasSuffix(chatJID, "@g.us") || strings.HasSuffix(chatJID, "@broadcast") || strings.HasSuffix(chatJID, "@newsletter") {
+	// 2. Hanya proses server user direct 1:1 (types.DefaultUserServer "s.whatsapp.net" atau types.HiddenUserServer "lid")
+	if evt.Info.Chat.Server != types.DefaultUserServer && evt.Info.Chat.Server != types.HiddenUserServer {
+		return
+	}
+
+	chatJID := normalizeJIDFromLID(context.Background(), evt.Info.Chat, c.waClient).String()
+	if chatJID == "" || isSkippedJID(chatJID) || strings.HasSuffix(chatJID, "@g.us") || strings.HasSuffix(chatJID, "@broadcast") || strings.HasSuffix(chatJID, "@newsletter") || strings.HasPrefix(chatJID, "status@") {
 		return
 	}
 
 	senderJID := evt.Info.Sender.User
-	if !evt.Info.IsGroup && evt.Info.Chat.User != "" {
-		senderJID = evt.Info.Chat.User
-	} else if senderJID == "" {
+	if evt.Info.Chat.User != "" {
 		senderJID = evt.Info.Chat.User
 	}
 
