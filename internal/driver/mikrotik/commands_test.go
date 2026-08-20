@@ -3,8 +3,9 @@ package mikrotik
 import (
 	"testing"
 
-	"github.com/go-routeros/routeros/v3"
-	"github.com/go-routeros/routeros/v3/proto"
+	"github.com/quiqxiq/goros/v4"
+	"github.com/quiqxiq/goros/v4/proto"
+	"github.com/quiqxiq/goros/v4/transport"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -60,13 +61,15 @@ func TestIsStreamingCommand(t *testing.T) {
 		want bool
 	}{
 		{"ping is streaming", command.Command{Raw: "/ping", Args: map[string]string{"address": "10.0.0.1"}}, true},
-		{"monitor-traffic is streaming", command.Command{Raw: "/interface/monitor-traffic", Args: map[string]string{"interface": "ether1"}}, true},
+		{"monitor-traffic without once is streaming", command.Command{Raw: "/interface/monitor-traffic", Args: map[string]string{"interface": "ether1"}}, true},
+		{"monitor-traffic with once is NOT streaming", command.Command{Raw: "/interface/monitor-traffic", Args: map[string]string{"interface": "ether1", "once": ""}}, false},
 		{"plain print is not streaming", command.Command{Raw: "/interface/print"}, false},
 		{"print with follow is streaming", command.Command{Raw: "/interface/print", Args: map[string]string{"follow": ""}}, true},
 		{"print with follow-only is streaming", command.Command{Raw: "/log/print", Args: map[string]string{"follow-only": ""}}, true},
 		{"print with interval is streaming", command.Command{Raw: "/interface/print", Args: map[string]string{"interval": "1s"}}, true},
 		{"resource print is not streaming", command.Command{Raw: "/system/resource/print"}, false},
 		{"unrelated args do not trigger streaming", command.Command{Raw: "/interface/print", Args: map[string]string{"disabled": "no"}}, false},
+		{"scheduler add with interval is NOT streaming", command.Command{Raw: "/system/scheduler/add", Args: map[string]string{"name": "test", "interval": "00:01:00"}}, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -106,6 +109,11 @@ func TestBuildArgs(t *testing.T) {
 			cmd:  command.Command{Raw: "/interface/print", Args: map[string]string{"disabled": ""}},
 			want: []string{"/interface/print", "=disabled"},
 		},
+		{
+			name: "query word starting with ?",
+			cmd:  command.Command{Raw: "/ppp/secret/print", Args: map[string]string{"?name": "budi"}},
+			want: []string{"/ppp/secret/print", "?name=budi"},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -113,6 +121,61 @@ func TestBuildArgs(t *testing.T) {
 			// Args come from a map, so order beyond the first (Raw) element
 			// isn't guaranteed — compare as sets for cmds with >1 arg word.
 			assert.ElementsMatch(t, tt.want, got)
+		})
+	}
+}
+
+func TestToTransportCommand(t *testing.T) {
+	tests := []struct {
+		name string
+		cmd  command.Command
+		want *transport.Command
+	}{
+		{
+			name: "no args",
+			cmd:  command.Command{Raw: "/system/resource/print"},
+			want: &transport.Command{Path: "/system/resource", Verb: "print", Attributes: map[string]string{}},
+		},
+		{
+			name: "attribute with value",
+			cmd:  command.Command{Raw: "/ip/address/add", Args: map[string]string{"address": "10.0.0.1/24"}},
+			want: &transport.Command{Path: "/ip/address", Verb: "add", Attributes: map[string]string{"address": "10.0.0.1/24"}},
+		},
+		{
+			name: "root-level command",
+			cmd:  command.Command{Raw: "/ping", Args: map[string]string{"address": "10.0.0.1"}},
+			want: &transport.Command{Path: "", Verb: "ping", Attributes: map[string]string{"address": "10.0.0.1"}},
+		},
+		{
+			name: "query word with value",
+			cmd:  command.Command{Raw: "/ppp/secret/print", Args: map[string]string{"?name": "budi"}},
+			want: &transport.Command{Path: "/ppp/secret", Verb: "print", Queries: []string{"name=budi"}, Attributes: map[string]string{}},
+		},
+		{
+			name: "bare query word",
+			cmd:  command.Command{Raw: "/interface/print", Args: map[string]string{"?disabled": ""}},
+			want: &transport.Command{Path: "/interface", Verb: "print", Queries: []string{"disabled"}, Attributes: map[string]string{}},
+		},
+		{
+			name: "proplist projection",
+			cmd:  command.Command{Raw: "/interface/print", Args: map[string]string{".proplist": "name,rx-byte"}},
+			want: &transport.Command{Path: "/interface", Verb: "print", Proplist: []string{"name", "rx-byte"}, Attributes: map[string]string{}},
+		},
+		{
+			name: "mixed query and attribute",
+			cmd:  command.Command{Raw: "/ip/hotspot/user/print", Args: map[string]string{"?profile": "vip", "disabled": "no"}},
+			want: &transport.Command{Path: "/ip/hotspot/user", Verb: "print", Queries: []string{"profile=vip"}, Attributes: map[string]string{"disabled": "no"}},
+		},
+		{
+			name: "command without leading slash",
+			cmd:  command.Command{Raw: "system/resource/print"},
+			want: &transport.Command{Path: "system/resource", Verb: "print", Attributes: map[string]string{}},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := toTransportCommand(tt.cmd)
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }

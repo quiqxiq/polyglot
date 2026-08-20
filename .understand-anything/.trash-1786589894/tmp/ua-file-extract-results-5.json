@@ -1,0 +1,2853 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 29,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/port/audit_writer.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 27,
+      "nonEmptyLines": 24,
+      "classes": [
+        {
+          "name": "AuditEvent",
+          "startLine": 13,
+          "endLine": 19,
+          "methods": [],
+          "properties": [
+            "DeviceID",
+            "UserID",
+            "Command",
+            "Result",
+            "Timestamp"
+          ]
+        },
+        {
+          "name": "AuditWriter",
+          "startLine": 25,
+          "endLine": 27,
+          "methods": [
+            "Write"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AuditEvent",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "AuditWriter",
+          "line": 25,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/authorizer.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 14,
+      "classes": [
+        {
+          "name": "Authorizer",
+          "startLine": 6,
+          "endLine": 15,
+          "methods": [
+            "Enforce",
+            "AddPolicy",
+            "RemovePolicy",
+            "GetPolicies",
+            "AddRoleForUser",
+            "DeleteRoleForUser",
+            "GetRolesForUser",
+            "GetGroupingPolicies"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Authorizer",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/bot_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 33,
+      "nonEmptyLines": 29,
+      "classes": [
+        {
+          "name": "WASessionRepository",
+          "startLine": 8,
+          "endLine": 14,
+          "methods": [
+            "Create",
+            "FindByID",
+            "FindAll",
+            "Update",
+            "Delete"
+          ],
+          "properties": []
+        },
+        {
+          "name": "ConversationRepository",
+          "startLine": 17,
+          "endLine": 26,
+          "methods": [
+            "Create",
+            "FindByID",
+            "FindByIDWithMessages",
+            "FindBySessionID",
+            "FindByStatus",
+            "FindAll",
+            "FindActiveByCustomer",
+            "Update"
+          ],
+          "properties": []
+        },
+        {
+          "name": "MessageRepository",
+          "startLine": 29,
+          "endLine": 33,
+          "methods": [
+            "Create",
+            "FindByConversationID",
+            "FindRecent"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "WASessionRepository",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "ConversationRepository",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "MessageRepository",
+          "line": 29,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/port/cache_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 14,
+      "classes": [
+        {
+          "name": "CacheStore",
+          "startLine": 8,
+          "endLine": 12,
+          "methods": [
+            "Get",
+            "Set",
+            "Delete"
+          ],
+          "properties": []
+        },
+        {
+          "name": "EventPublisher",
+          "startLine": 15,
+          "endLine": 17,
+          "methods": [
+            "PublishEvent"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CacheStore",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "EventPublisher",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/credential_vault.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "CredentialVault",
+          "startLine": 16,
+          "endLine": 23,
+          "methods": [
+            "Get",
+            "Save"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CredentialVault",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/customer_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 13,
+      "classes": [
+        {
+          "name": "CustomerRepository",
+          "startLine": 10,
+          "endLine": 16,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindAll",
+            "Delete",
+            "FindSubscriptions"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CustomerRepository",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/device_driver.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 43,
+      "classes": [
+        {
+          "name": "DeviceDriver",
+          "startLine": 23,
+          "endLine": 35,
+          "methods": [
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": []
+        },
+        {
+          "name": "TerminalSession",
+          "startLine": 38,
+          "endLine": 43,
+          "methods": [
+            "Stdin",
+            "Stdout",
+            "Resize",
+            "Close"
+          ],
+          "properties": []
+        },
+        {
+          "name": "TerminalDeviceDriver",
+          "startLine": 46,
+          "endLine": 48,
+          "methods": [
+            "OpenTerminalSession"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "DeviceDriver",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "TerminalSession",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "TerminalDeviceDriver",
+          "line": 46,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/port/device_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 25,
+      "nonEmptyLines": 21,
+      "classes": [
+        {
+          "name": "DeviceRepository",
+          "startLine": 12,
+          "endLine": 24,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindAll",
+            "Update",
+            "Delete"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "DeviceRepository",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/invoice_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 13,
+      "classes": [
+        {
+          "name": "InvoiceRepository",
+          "startLine": 10,
+          "endLine": 16,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindByCustomerID",
+            "FindAll",
+            "UpdateStatus"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "InvoiceRepository",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/knowledge_retriever.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 18,
+      "classes": [
+        {
+          "name": "KnowledgeRepository",
+          "startLine": 10,
+          "endLine": 17,
+          "methods": [
+            "Create",
+            "FindByID",
+            "FindAll",
+            "Update",
+            "Delete",
+            "SearchByTags"
+          ],
+          "properties": []
+        },
+        {
+          "name": "KnowledgeRetriever",
+          "startLine": 20,
+          "endLine": 22,
+          "methods": [
+            "Retrieve"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "KnowledgeRepository",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "KnowledgeRetriever",
+          "line": 20,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/llm_provider.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 20,
+      "classes": [
+        {
+          "name": "LLMConfigRepository",
+          "startLine": 10,
+          "endLine": 18,
+          "methods": [
+            "Create",
+            "FindByID",
+            "FindActive",
+            "FindAll",
+            "Update",
+            "SetActive",
+            "Delete"
+          ],
+          "properties": []
+        },
+        {
+          "name": "LLMProvider",
+          "startLine": 21,
+          "endLine": 24,
+          "methods": [
+            "Chat",
+            "TestConnection"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "LLMConfigRepository",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "LLMProvider",
+          "line": 21,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/streaming_driver.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 60,
+      "nonEmptyLines": 53,
+      "classes": [
+        {
+          "name": "StreamHandle",
+          "startLine": 14,
+          "endLine": 30,
+          "methods": [
+            "Chan",
+            "Cancel",
+            "Err"
+          ],
+          "properties": []
+        },
+        {
+          "name": "StreamingDeviceDriver",
+          "startLine": 50,
+          "endLine": 60,
+          "methods": [
+            "Stream"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreamHandle",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "StreamingDeviceDriver",
+          "line": 50,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/port/subscription_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 13,
+      "classes": [
+        {
+          "name": "SubscriptionRepository",
+          "startLine": 10,
+          "endLine": 16,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindByCustomerID",
+            "FindAll",
+            "UpdateStatus"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SubscriptionRepository",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/validating_driver.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 30,
+      "classes": [
+        {
+          "name": "ValidatingDeviceDriver",
+          "startLine": 23,
+          "endLine": 34,
+          "methods": [
+            "Validate"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ValidatingDeviceDriver",
+          "line": 23,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/port/whatsapp_gateway.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "WhatsAppGateway",
+          "startLine": 10,
+          "endLine": 22,
+          "methods": [
+            "Connect",
+            "Disconnect",
+            "Logout",
+            "Reconnect",
+            "SendMessage",
+            "SendDocument",
+            "SendImage",
+            "GetStatus",
+            "GetQRCode",
+            "GetPairingCode",
+            "RestoreAllSessions"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "WhatsAppGateway",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/registry/registry.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 131,
+      "nonEmptyLines": 112,
+      "functions": [
+        {
+          "name": "New",
+          "startLine": 39,
+          "endLine": 46,
+          "params": [
+            "repo",
+            "vault",
+            "factories"
+          ]
+        },
+        {
+          "name": "Get",
+          "startLine": 54,
+          "endLine": 98,
+          "params": [
+            "ctx",
+            "deviceID"
+          ]
+        },
+        {
+          "name": "Evict",
+          "startLine": 101,
+          "endLine": 115,
+          "params": [
+            "deviceID"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 119,
+          "endLine": 131,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "Registry",
+          "startLine": 24,
+          "endLine": 31,
+          "methods": [
+            "Get",
+            "Evict",
+            "Close"
+          ],
+          "properties": [
+            "repo",
+            "vault",
+            "factories",
+            "mu",
+            "drivers"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Registry",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "New",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "Get",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "Evict",
+          "line": 101,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 119,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "New",
+          "callee": "make",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Get",
+          "callee": "r.mu.RLock",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Get",
+          "callee": "r.mu.RUnlock",
+          "lineNumber": 57
+        },
+        {
+          "caller": "Get",
+          "callee": "r.mu.Lock",
+          "lineNumber": 62
+        },
+        {
+          "caller": "Get",
+          "callee": "r.mu.Unlock",
+          "lineNumber": 63
+        },
+        {
+          "caller": "Get",
+          "callee": "r.repo.FindByID",
+          "lineNumber": 71
+        },
+        {
+          "caller": "Get",
+          "callee": "fmt.Errorf",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Get",
+          "callee": "fmt.Errorf",
+          "lineNumber": 77
+        },
+        {
+          "caller": "Get",
+          "callee": "r.vault.Get",
+          "lineNumber": 80
+        },
+        {
+          "caller": "Get",
+          "callee": "fmt.Errorf",
+          "lineNumber": 82
+        },
+        {
+          "caller": "Get",
+          "callee": "fmt.Errorf",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Get",
+          "callee": "dev.ToTarget",
+          "lineNumber": 90
+        },
+        {
+          "caller": "Get",
+          "callee": "factory",
+          "lineNumber": 91
+        },
+        {
+          "caller": "Get",
+          "callee": "fmt.Errorf",
+          "lineNumber": 93
+        },
+        {
+          "caller": "Evict",
+          "callee": "r.mu.Lock",
+          "lineNumber": 102
+        },
+        {
+          "caller": "Evict",
+          "callee": "delete",
+          "lineNumber": 105
+        },
+        {
+          "caller": "Evict",
+          "callee": "r.mu.Unlock",
+          "lineNumber": 107
+        },
+        {
+          "caller": "Evict",
+          "callee": "func() {\n\t\t\t_ = driver.Close()\n\t\t}",
+          "lineNumber": 110
+        },
+        {
+          "caller": "Evict",
+          "callee": "driver.Close",
+          "lineNumber": 111
+        },
+        {
+          "caller": "Close",
+          "callee": "r.mu.Lock",
+          "lineNumber": 120
+        },
+        {
+          "caller": "Close",
+          "callee": "r.mu.Unlock",
+          "lineNumber": 121
+        },
+        {
+          "caller": "Close",
+          "callee": "d.Close",
+          "lineNumber": 125
+        },
+        {
+          "caller": "Close",
+          "callee": "append",
+          "lineNumber": 126
+        },
+        {
+          "caller": "Close",
+          "callee": "fmt.Errorf",
+          "lineNumber": 126
+        },
+        {
+          "caller": "Close",
+          "callee": "make",
+          "lineNumber": 129
+        },
+        {
+          "caller": "Close",
+          "callee": "errors.Join",
+          "lineNumber": 130
+        }
+      ],
+      "metrics": {
+        "importCount": 18,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/registry/registry_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 179,
+      "nonEmptyLines": 154,
+      "functions": [
+        {
+          "name": "Execute",
+          "startLine": 22,
+          "endLine": 24,
+          "params": [
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 25,
+          "endLine": 25,
+          "params": [
+            "_"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 26,
+          "endLine": 31,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 32,
+          "endLine": 35,
+          "params": []
+        },
+        {
+          "name": "Save",
+          "startLine": 42,
+          "endLine": 45,
+          "params": [
+            "_",
+            "d"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 47,
+          "endLine": 53,
+          "params": [
+            "_",
+            "id"
+          ]
+        },
+        {
+          "name": "FindAll",
+          "startLine": 55,
+          "endLine": 61,
+          "params": [
+            "_"
+          ]
+        },
+        {
+          "name": "Update",
+          "startLine": 63,
+          "endLine": 65,
+          "params": [
+            "ctx",
+            "d"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 67,
+          "endLine": 70,
+          "params": [
+            "_",
+            "id"
+          ]
+        },
+        {
+          "name": "Get",
+          "startLine": 77,
+          "endLine": 83,
+          "params": [
+            "_",
+            "deviceID"
+          ]
+        },
+        {
+          "name": "Save",
+          "startLine": 85,
+          "endLine": 88,
+          "params": [
+            "_",
+            "deviceID",
+            "c"
+          ]
+        },
+        {
+          "name": "newTestRegistry",
+          "startLine": 90,
+          "endLine": 109,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRegistry_Get_CacheHit",
+          "startLine": 111,
+          "endLine": 121,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRegistry_Get_NotFound",
+          "startLine": 123,
+          "endLine": 130,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRegistry_Get_DisabledDevice",
+          "startLine": 132,
+          "endLine": 152,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRegistry_Get_UnknownDriverType",
+          "startLine": 154,
+          "endLine": 171,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRegistry_Close_ReleasesDrivers",
+          "startLine": 173,
+          "endLine": 179,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockDriver",
+          "startLine": 18,
+          "endLine": 20,
+          "methods": [
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": [
+            "closed"
+          ]
+        },
+        {
+          "name": "memRepo",
+          "startLine": 38,
+          "endLine": 40,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindAll",
+            "Update",
+            "Delete"
+          ],
+          "properties": [
+            "devices"
+          ]
+        },
+        {
+          "name": "memVault",
+          "startLine": 73,
+          "endLine": 75,
+          "methods": [
+            "Get",
+            "Save"
+          ],
+          "properties": [
+            "creds"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Execute",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "FindAll",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "Update",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "Get",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "TestRegistry_Get_CacheHit",
+          "line": 111,
+          "isDefault": false
+        },
+        {
+          "name": "TestRegistry_Get_NotFound",
+          "line": 123,
+          "isDefault": false
+        },
+        {
+          "name": "TestRegistry_Get_DisabledDevice",
+          "line": 132,
+          "isDefault": false
+        },
+        {
+          "name": "TestRegistry_Get_UnknownDriverType",
+          "line": 154,
+          "isDefault": false
+        },
+        {
+          "name": "TestRegistry_Close_ReleasesDrivers",
+          "line": 173,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Translate",
+          "callee": "errors.New",
+          "lineNumber": 30
+        },
+        {
+          "caller": "FindAll",
+          "callee": "make",
+          "lineNumber": 56
+        },
+        {
+          "caller": "FindAll",
+          "callee": "len",
+          "lineNumber": 56
+        },
+        {
+          "caller": "FindAll",
+          "callee": "append",
+          "lineNumber": 58
+        },
+        {
+          "caller": "Update",
+          "callee": "r.Save",
+          "lineNumber": 64
+        },
+        {
+          "caller": "Delete",
+          "callee": "delete",
+          "lineNumber": 68
+        },
+        {
+          "caller": "newTestRegistry",
+          "callee": "t.Helper",
+          "lineNumber": 91
+        },
+        {
+          "caller": "newTestRegistry",
+          "callee": "New",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestRegistry_Get_CacheHit",
+          "callee": "newTestRegistry",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestRegistry_Get_CacheHit",
+          "callee": "reg.Close",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestRegistry_Get_CacheHit",
+          "callee": "context.Background",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestRegistry_Get_CacheHit",
+          "callee": "reg.Get",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestRegistry_Get_CacheHit",
+          "callee": "require.NoError",
+          "lineNumber": 117
+        },
+        {
+          "caller": "TestRegistry_Get_CacheHit",
+          "callee": "reg.Get",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestRegistry_Get_CacheHit",
+          "callee": "require.NoError",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestRegistry_Get_CacheHit",
+          "callee": "assert.Same",
+          "lineNumber": 120
+        },
+        {
+          "caller": "TestRegistry_Get_NotFound",
+          "callee": "newTestRegistry",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestRegistry_Get_NotFound",
+          "callee": "reg.Close",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestRegistry_Get_NotFound",
+          "callee": "reg.Get",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestRegistry_Get_NotFound",
+          "callee": "context.Background",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestRegistry_Get_NotFound",
+          "callee": "require.Error",
+          "lineNumber": 128
+        },
+        {
+          "caller": "TestRegistry_Get_NotFound",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestRegistry_Get_DisabledDevice",
+          "callee": "New",
+          "lineNumber": 144
+        },
+        {
+          "caller": "TestRegistry_Get_DisabledDevice",
+          "callee": "reg.Close",
+          "lineNumber": 147
+        },
+        {
+          "caller": "TestRegistry_Get_DisabledDevice",
+          "callee": "reg.Get",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestRegistry_Get_DisabledDevice",
+          "callee": "context.Background",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestRegistry_Get_DisabledDevice",
+          "callee": "require.Error",
+          "lineNumber": 150
+        },
+        {
+          "caller": "TestRegistry_Get_DisabledDevice",
+          "callee": "assert.Contains",
+          "lineNumber": 151
+        },
+        {
+          "caller": "TestRegistry_Get_DisabledDevice",
+          "callee": "err.Error",
+          "lineNumber": 151
+        },
+        {
+          "caller": "TestRegistry_Get_UnknownDriverType",
+          "callee": "New",
+          "lineNumber": 165
+        },
+        {
+          "caller": "TestRegistry_Get_UnknownDriverType",
+          "callee": "reg.Close",
+          "lineNumber": 166
+        },
+        {
+          "caller": "TestRegistry_Get_UnknownDriverType",
+          "callee": "reg.Get",
+          "lineNumber": 168
+        },
+        {
+          "caller": "TestRegistry_Get_UnknownDriverType",
+          "callee": "context.Background",
+          "lineNumber": 168
+        },
+        {
+          "caller": "TestRegistry_Get_UnknownDriverType",
+          "callee": "require.Error",
+          "lineNumber": 169
+        },
+        {
+          "caller": "TestRegistry_Get_UnknownDriverType",
+          "callee": "assert.Contains",
+          "lineNumber": 170
+        },
+        {
+          "caller": "TestRegistry_Get_UnknownDriverType",
+          "callee": "err.Error",
+          "lineNumber": 170
+        },
+        {
+          "caller": "TestRegistry_Close_ReleasesDrivers",
+          "callee": "newTestRegistry",
+          "lineNumber": 174
+        },
+        {
+          "caller": "TestRegistry_Close_ReleasesDrivers",
+          "callee": "reg.Get",
+          "lineNumber": 176
+        },
+        {
+          "caller": "TestRegistry_Close_ReleasesDrivers",
+          "callee": "context.Background",
+          "lineNumber": 176
+        },
+        {
+          "caller": "TestRegistry_Close_ReleasesDrivers",
+          "callee": "require.NoError",
+          "lineNumber": 177
+        },
+        {
+          "caller": "TestRegistry_Close_ReleasesDrivers",
+          "callee": "reg.Close",
+          "lineNumber": 177
+        },
+        {
+          "caller": "TestRegistry_Close_ReleasesDrivers",
+          "callee": "assert.True",
+          "lineNumber": 178
+        }
+      ],
+      "metrics": {
+        "importCount": 20,
+        "exportCount": 16,
+        "functionCount": 17,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/usecase/billing/manage_invoice.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 65,
+      "nonEmptyLines": 57,
+      "functions": [
+        {
+          "name": "NewInvoiceUsecase",
+          "startLine": 15,
+          "endLine": 17,
+          "params": [
+            "repo"
+          ]
+        },
+        {
+          "name": "ListInvoices",
+          "startLine": 19,
+          "endLine": 27,
+          "params": [
+            "ctx",
+            "customerID"
+          ]
+        },
+        {
+          "name": "GetInvoice",
+          "startLine": 29,
+          "endLine": 34,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "CreateInvoice",
+          "startLine": 36,
+          "endLine": 50,
+          "params": [
+            "ctx",
+            "inv"
+          ]
+        },
+        {
+          "name": "PayInvoice",
+          "startLine": 52,
+          "endLine": 65,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "InvoiceUsecase",
+          "startLine": 11,
+          "endLine": 13,
+          "methods": [
+            "ListInvoices",
+            "GetInvoice",
+            "CreateInvoice",
+            "PayInvoice"
+          ],
+          "properties": [
+            "repo"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "InvoiceUsecase",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewInvoiceUsecase",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "ListInvoices",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "GetInvoice",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "CreateInvoice",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "PayInvoice",
+          "line": 52,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListInvoices",
+          "callee": "fmt.Errorf",
+          "lineNumber": 21
+        },
+        {
+          "caller": "ListInvoices",
+          "callee": "u.repo.FindByCustomerID",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ListInvoices",
+          "callee": "u.repo.FindAll",
+          "lineNumber": 26
+        },
+        {
+          "caller": "GetInvoice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 31
+        },
+        {
+          "caller": "GetInvoice",
+          "callee": "u.repo.FindByID",
+          "lineNumber": 33
+        },
+        {
+          "caller": "CreateInvoice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 38
+        },
+        {
+          "caller": "CreateInvoice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 41
+        },
+        {
+          "caller": "CreateInvoice",
+          "callee": "u.repo.Save",
+          "lineNumber": 46
+        },
+        {
+          "caller": "PayInvoice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 54
+        },
+        {
+          "caller": "PayInvoice",
+          "callee": "u.repo.FindByID",
+          "lineNumber": 56
+        },
+        {
+          "caller": "PayInvoice",
+          "callee": "u.repo.Save",
+          "lineNumber": 61
+        }
+      ],
+      "metrics": {
+        "importCount": 17,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/billing/manage_subscription.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 65,
+      "nonEmptyLines": 57,
+      "functions": [
+        {
+          "name": "NewSubscriptionUsecase",
+          "startLine": 15,
+          "endLine": 17,
+          "params": [
+            "repo"
+          ]
+        },
+        {
+          "name": "ListSubscriptions",
+          "startLine": 19,
+          "endLine": 27,
+          "params": [
+            "ctx",
+            "customerID"
+          ]
+        },
+        {
+          "name": "GetSubscription",
+          "startLine": 29,
+          "endLine": 34,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "CreateSubscription",
+          "startLine": 36,
+          "endLine": 50,
+          "params": [
+            "ctx",
+            "sub"
+          ]
+        },
+        {
+          "name": "CancelSubscription",
+          "startLine": 52,
+          "endLine": 65,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SubscriptionUsecase",
+          "startLine": 11,
+          "endLine": 13,
+          "methods": [
+            "ListSubscriptions",
+            "GetSubscription",
+            "CreateSubscription",
+            "CancelSubscription"
+          ],
+          "properties": [
+            "repo"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SubscriptionUsecase",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewSubscriptionUsecase",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "ListSubscriptions",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "GetSubscription",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "CreateSubscription",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "CancelSubscription",
+          "line": 52,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListSubscriptions",
+          "callee": "fmt.Errorf",
+          "lineNumber": 21
+        },
+        {
+          "caller": "ListSubscriptions",
+          "callee": "u.repo.FindByCustomerID",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ListSubscriptions",
+          "callee": "u.repo.FindAll",
+          "lineNumber": 26
+        },
+        {
+          "caller": "GetSubscription",
+          "callee": "fmt.Errorf",
+          "lineNumber": 31
+        },
+        {
+          "caller": "GetSubscription",
+          "callee": "u.repo.FindByID",
+          "lineNumber": 33
+        },
+        {
+          "caller": "CreateSubscription",
+          "callee": "fmt.Errorf",
+          "lineNumber": 38
+        },
+        {
+          "caller": "CreateSubscription",
+          "callee": "fmt.Errorf",
+          "lineNumber": 41
+        },
+        {
+          "caller": "CreateSubscription",
+          "callee": "u.repo.Save",
+          "lineNumber": 46
+        },
+        {
+          "caller": "CancelSubscription",
+          "callee": "fmt.Errorf",
+          "lineNumber": 54
+        },
+        {
+          "caller": "CancelSubscription",
+          "callee": "u.repo.FindByID",
+          "lineNumber": 56
+        },
+        {
+          "caller": "CancelSubscription",
+          "callee": "u.repo.Save",
+          "lineNumber": 61
+        }
+      ],
+      "metrics": {
+        "importCount": 16,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/bot/context_manager.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 82,
+      "nonEmptyLines": 70,
+      "functions": [
+        {
+          "name": "NewContextManager",
+          "startLine": 19,
+          "endLine": 24,
+          "params": [
+            "cache",
+            "cfg"
+          ]
+        },
+        {
+          "name": "BuildPromptContext",
+          "startLine": 26,
+          "endLine": 62,
+          "params": [
+            "ctx",
+            "customerNumber",
+            "userMessage",
+            "knowledgeEntries"
+          ]
+        },
+        {
+          "name": "SaveMessageToSession",
+          "startLine": 64,
+          "endLine": 74,
+          "params": [
+            "ctx",
+            "customerNumber",
+            "userMsg",
+            "botMsg"
+          ]
+        },
+        {
+          "name": "SummarizeSessionIfLong",
+          "startLine": 76,
+          "endLine": 82,
+          "params": [
+            "ctx",
+            "customerNumber",
+            "provider"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ContextManager",
+          "startLine": 14,
+          "endLine": 17,
+          "methods": [
+            "BuildPromptContext",
+            "SaveMessageToSession",
+            "SummarizeSessionIfLong"
+          ],
+          "properties": [
+            "cache",
+            "cfg"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ContextManager",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "NewContextManager",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "BuildPromptContext",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "SaveMessageToSession",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "SummarizeSessionIfLong",
+          "line": 76,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "BuildPromptContext",
+          "callee": "sb.WriteString",
+          "lineNumber": 33
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "sb.WriteString",
+          "lineNumber": 34
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "len",
+          "lineNumber": 36
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "sb.WriteString",
+          "lineNumber": 37
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "sb.WriteString",
+          "lineNumber": 38
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "sb.WriteString",
+          "lineNumber": 40
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 40
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "sb.WriteString",
+          "lineNumber": 42
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "cm.cache.Get",
+          "lineNumber": 46
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "sb.WriteString",
+          "lineNumber": 48
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "sb.WriteString",
+          "lineNumber": 49
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "sb.WriteString",
+          "lineNumber": 50
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "sb.String",
+          "lineNumber": 54
+        },
+        {
+          "caller": "BuildPromptContext",
+          "callee": "append",
+          "lineNumber": 56
+        },
+        {
+          "caller": "SaveMessageToSession",
+          "callee": "cm.cache.Set",
+          "lineNumber": 71
+        }
+      ],
+      "metrics": {
+        "importCount": 20,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/bot/engine.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 137,
+      "nonEmptyLines": 120,
+      "functions": [
+        {
+          "name": "NewEngine",
+          "startLine": 32,
+          "endLine": 53,
+          "params": [
+            "cfg",
+            "cache",
+            "waGateway",
+            "convService",
+            "retriever",
+            "llmConfigRepo",
+            "publisher"
+          ]
+        },
+        {
+          "name": "HandleIncomingMessage",
+          "startLine": 55,
+          "endLine": 137,
+          "params": [
+            "ctx",
+            "sessionID",
+            "customerNumber",
+            "messageContent"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Engine",
+          "startLine": 19,
+          "endLine": 30,
+          "methods": [
+            "HandleIncomingMessage"
+          ],
+          "properties": [
+            "cfg",
+            "cache",
+            "waGateway",
+            "convService",
+            "retriever",
+            "llmConfigRepo",
+            "rateLimiter",
+            "guardrail",
+            "contextMgr",
+            "publisher"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Engine",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "NewEngine",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "HandleIncomingMessage",
+          "line": 55,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewEngine",
+          "callee": "NewRateLimiter",
+          "lineNumber": 48
+        },
+        {
+          "caller": "NewEngine",
+          "callee": "NewGuardrail",
+          "lineNumber": 49
+        },
+        {
+          "caller": "NewEngine",
+          "callee": "NewContextManager",
+          "lineNumber": 50
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "log.Printf",
+          "lineNumber": 56
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.convService.GetOrCreateConversation",
+          "lineNumber": 58
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "fmt.Errorf",
+          "lineNumber": 60
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.convService.AddMessageWithConfig",
+          "lineNumber": 63
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.publisher.PublishEvent",
+          "lineNumber": 65
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "log.Printf",
+          "lineNumber": 69
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.rateLimiter.Check",
+          "lineNumber": 73
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "log.Printf",
+          "lineNumber": 75
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "log.Printf",
+          "lineNumber": 80
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "log.Printf",
+          "lineNumber": 83
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.waGateway.SendMessage",
+          "lineNumber": 84
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.convService.AddMessageWithConfig",
+          "lineNumber": 85
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.publisher.PublishEvent",
+          "lineNumber": 87
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.guardrail.IsTopicAllowed",
+          "lineNumber": 92
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.guardrail.FormatOffTopicResponse",
+          "lineNumber": 93
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.waGateway.SendMessage",
+          "lineNumber": 94
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.convService.AddMessageWithConfig",
+          "lineNumber": 95
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.publisher.PublishEvent",
+          "lineNumber": 97
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.retriever.Retrieve",
+          "lineNumber": 102
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.convService.Escalate",
+          "lineNumber": 105
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.waGateway.SendMessage",
+          "lineNumber": 107
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.convService.AddMessageWithConfig",
+          "lineNumber": 108
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.publisher.PublishEvent",
+          "lineNumber": 110
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.llmConfigRepo.FindActive",
+          "lineNumber": 115
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "log.Printf",
+          "lineNumber": 117
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.convService.Escalate",
+          "lineNumber": 118
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.waGateway.SendMessage",
+          "lineNumber": 120
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.convService.AddMessageWithConfig",
+          "lineNumber": 121
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.publisher.PublishEvent",
+          "lineNumber": 123
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "e.contextMgr.BuildPromptContext",
+          "lineNumber": 128
+        },
+        {
+          "caller": "HandleIncomingMessage",
+          "callee": "fmt.Errorf",
+          "lineNumber": 130
+        }
+      ],
+      "metrics": {
+        "importCount": 21,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/bot/ratelimit.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 45,
+      "nonEmptyLines": 37,
+      "functions": [
+        {
+          "name": "NewRateLimiter",
+          "startLine": 29,
+          "endLine": 31,
+          "params": [
+            "cache",
+            "cfg"
+          ]
+        },
+        {
+          "name": "Check",
+          "startLine": 33,
+          "endLine": 45,
+          "params": [
+            "ctx",
+            "customerNumber",
+            "messageContent"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "RateLimitResult",
+          "startLine": 19,
+          "endLine": 22,
+          "methods": [],
+          "properties": [
+            "Status",
+            "Message"
+          ]
+        },
+        {
+          "name": "RateLimiter",
+          "startLine": 24,
+          "endLine": 27,
+          "methods": [
+            "Check"
+          ],
+          "properties": [
+            "cache",
+            "cfg"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RateLimitResult",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "RateLimiter",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "NewRateLimiter",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "Check",
+          "line": 33,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Check",
+          "callee": "r.cache.Get",
+          "lineNumber": 37
+        }
+      ],
+      "metrics": {
+        "importCount": 17,
+        "exportCount": 4,
+        "functionCount": 2,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/usecase/customer/manage_customer.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 55,
+      "nonEmptyLines": 45,
+      "functions": [
+        {
+          "name": "NewManageCustomerUseCase",
+          "startLine": 17,
+          "endLine": 19,
+          "params": [
+            "repo"
+          ]
+        },
+        {
+          "name": "ListCustomers",
+          "startLine": 21,
+          "endLine": 23,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "GetCustomer",
+          "startLine": 25,
+          "endLine": 30,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "CreateCustomer",
+          "startLine": 32,
+          "endLine": 37,
+          "params": [
+            "ctx",
+            "c"
+          ]
+        },
+        {
+          "name": "UpdateCustomer",
+          "startLine": 39,
+          "endLine": 44,
+          "params": [
+            "ctx",
+            "c"
+          ]
+        },
+        {
+          "name": "DeleteCustomer",
+          "startLine": 46,
+          "endLine": 51,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "ListSubscriptions",
+          "startLine": 53,
+          "endLine": 55,
+          "params": [
+            "ctx",
+            "customerID"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ManageCustomerUseCase",
+          "startLine": 12,
+          "endLine": 14,
+          "methods": [
+            "ListCustomers",
+            "GetCustomer",
+            "CreateCustomer",
+            "UpdateCustomer",
+            "DeleteCustomer",
+            "ListSubscriptions"
+          ],
+          "properties": [
+            "repo"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ManageCustomerUseCase",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewManageCustomerUseCase",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "ListCustomers",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "GetCustomer",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "CreateCustomer",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateCustomer",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteCustomer",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "ListSubscriptions",
+          "line": 53,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ListCustomers",
+          "callee": "uc.repo.FindAll",
+          "lineNumber": 22
+        },
+        {
+          "caller": "GetCustomer",
+          "callee": "fmt.Errorf",
+          "lineNumber": 27
+        },
+        {
+          "caller": "GetCustomer",
+          "callee": "uc.repo.FindByID",
+          "lineNumber": 29
+        },
+        {
+          "caller": "CreateCustomer",
+          "callee": "fmt.Errorf",
+          "lineNumber": 34
+        },
+        {
+          "caller": "CreateCustomer",
+          "callee": "uc.repo.Save",
+          "lineNumber": 36
+        },
+        {
+          "caller": "UpdateCustomer",
+          "callee": "fmt.Errorf",
+          "lineNumber": 41
+        },
+        {
+          "caller": "UpdateCustomer",
+          "callee": "uc.repo.Save",
+          "lineNumber": 43
+        },
+        {
+          "caller": "DeleteCustomer",
+          "callee": "fmt.Errorf",
+          "lineNumber": 48
+        },
+        {
+          "caller": "DeleteCustomer",
+          "callee": "uc.repo.Delete",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ListSubscriptions",
+          "callee": "uc.repo.FindSubscriptions",
+          "lineNumber": 54
+        }
+      ],
+      "metrics": {
+        "importCount": 18,
+        "exportCount": 8,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/knowledge/retriever.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 18,
+      "functions": [
+        {
+          "name": "NewKeywordRetriever",
+          "startLine": 14,
+          "endLine": 16,
+          "params": [
+            "retriever"
+          ]
+        },
+        {
+          "name": "Retrieve",
+          "startLine": 18,
+          "endLine": 23,
+          "params": [
+            "ctx",
+            "query"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "KeywordRetriever",
+          "startLine": 10,
+          "endLine": 12,
+          "methods": [
+            "Retrieve"
+          ],
+          "properties": [
+            "retriever"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "KeywordRetriever",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "NewKeywordRetriever",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Retrieve",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Retrieve",
+          "callee": "r.retriever.Retrieve",
+          "lineNumber": 20
+        }
+      ],
+      "metrics": {
+        "importCount": 16,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/network/execute_command.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 66,
+      "nonEmptyLines": 59,
+      "functions": [
+        {
+          "name": "validateIfSupported",
+          "startLine": 32,
+          "endLine": 37,
+          "params": [
+            "ctx",
+            "driver",
+            "cmd"
+          ]
+        },
+        {
+          "name": "ExecuteCommand",
+          "startLine": 39,
+          "endLine": 50,
+          "params": [
+            "ctx",
+            "driver",
+            "cmd"
+          ]
+        },
+        {
+          "name": "ExecuteCommandPreApproved",
+          "startLine": 61,
+          "endLine": 66,
+          "params": [
+            "ctx",
+            "driver",
+            "cmd"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ExecuteCommand",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "ExecuteCommandPreApproved",
+          "line": 61,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "validateIfSupported",
+          "callee": "v.Validate",
+          "lineNumber": 34
+        },
+        {
+          "caller": "ExecuteCommand",
+          "callee": "validateIfSupported",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ExecuteCommand",
+          "callee": "command.Decide",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ExecuteCommand",
+          "callee": "driver.Classify",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ExecuteCommand",
+          "callee": "driver.Execute",
+          "lineNumber": 49
+        },
+        {
+          "caller": "ExecuteCommandPreApproved",
+          "callee": "command.Decide",
+          "lineNumber": 62
+        },
+        {
+          "caller": "ExecuteCommandPreApproved",
+          "callee": "driver.Classify",
+          "lineNumber": 62
+        },
+        {
+          "caller": "ExecuteCommandPreApproved",
+          "callee": "driver.Execute",
+          "lineNumber": 65
+        }
+      ],
+      "metrics": {
+        "importCount": 17,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/network/get_device_status.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 17,
+      "functions": [
+        {
+          "name": "GetDeviceStatus",
+          "startLine": 14,
+          "endLine": 20,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GetDeviceStatus",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetDeviceStatus",
+          "callee": "driver.Translate",
+          "lineNumber": 15
+        },
+        {
+          "caller": "GetDeviceStatus",
+          "callee": "ExecuteCommand",
+          "lineNumber": 19
+        }
+      ],
+      "metrics": {
+        "importCount": 17,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/network/open_terminal.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "NewOpenTerminalUseCase",
+          "startLine": 18,
+          "endLine": 23,
+          "params": [
+            "repo",
+            "vault"
+          ]
+        },
+        {
+          "name": "Execute",
+          "startLine": 26,
+          "endLine": 43,
+          "params": [
+            "ctx",
+            "deviceID",
+            "cols",
+            "rows"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "OpenTerminalUseCase",
+          "startLine": 12,
+          "endLine": 15,
+          "methods": [
+            "Execute"
+          ],
+          "properties": [
+            "repo",
+            "vault"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "OpenTerminalUseCase",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewOpenTerminalUseCase",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Execute",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 28
+        },
+        {
+          "caller": "Execute",
+          "callee": "u.repo.FindByID",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 33
+        },
+        {
+          "caller": "Execute",
+          "callee": "u.vault.Get",
+          "lineNumber": 36
+        },
+        {
+          "caller": "Execute",
+          "callee": "fmt.Errorf",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Execute",
+          "callee": "dev.ToTarget",
+          "lineNumber": 41
+        },
+        {
+          "caller": "Execute",
+          "callee": "genericssh.DialSSHPty",
+          "lineNumber": 42
+        }
+      ],
+      "metrics": {
+        "importCount": 18,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/network/push_config.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 13,
+      "functions": [
+        {
+          "name": "PushConfig",
+          "startLine": 14,
+          "endLine": 16,
+          "params": [
+            "ctx",
+            "driver",
+            "cmd"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PushConfig",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "PushConfig",
+          "callee": "ExecuteCommand",
+          "lineNumber": 15
+        }
+      ],
+      "metrics": {
+        "importCount": 17,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/network/stream_terminal.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 25,
+      "functions": [
+        {
+          "name": "NewStreamTerminalUseCase",
+          "startLine": 17,
+          "endLine": 22,
+          "params": [
+            "repo",
+            "vault"
+          ]
+        },
+        {
+          "name": "OpenTerminal",
+          "startLine": 25,
+          "endLine": 30,
+          "params": [
+            "ctx",
+            "driver",
+            "deviceID",
+            "cols",
+            "rows"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "StreamTerminalUseCase",
+          "startLine": 11,
+          "endLine": 14,
+          "methods": [
+            "OpenTerminal"
+          ],
+          "properties": [
+            "repo",
+            "vault"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreamTerminalUseCase",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamTerminalUseCase",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "OpenTerminal",
+          "line": 25,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "OpenTerminal",
+          "callee": "td.OpenTerminalSession",
+          "lineNumber": 27
+        },
+        {
+          "caller": "OpenTerminal",
+          "callee": "fmt.Errorf",
+          "lineNumber": 29
+        }
+      ],
+      "metrics": {
+        "importCount": 15,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    }
+  ]
+}

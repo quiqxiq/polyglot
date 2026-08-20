@@ -1,0 +1,796 @@
+{
+ "nodes": [
+  {
+   "id": "schema:api/proto/v1/auth.proto",
+   "type": "schema",
+   "name": "auth.proto",
+   "filePath": "api/proto/v1/auth.proto",
+   "summary": "Protobuf schema defining the auth gRPC/ConnectRPC service contract — messages and RPC endpoints for the auth domain.",
+   "tags": [
+    "protobuf",
+    "schema",
+    "rpc",
+    "connectrpc"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/auth.proto:AuthService.Login",
+   "type": "endpoint",
+   "name": "AuthService.Login",
+   "filePath": "api/proto/v1/auth.proto",
+   "lineRange": [
+    41,
+    41
+   ],
+   "summary": "RPC endpoint AuthService.Login exposed by the auth service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/auth.proto:AuthService.GetMe",
+   "type": "endpoint",
+   "name": "AuthService.GetMe",
+   "filePath": "api/proto/v1/auth.proto",
+   "lineRange": [
+    42,
+    42
+   ],
+   "summary": "RPC endpoint AuthService.GetMe exposed by the auth service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/auth.proto:AuthService.RefreshToken",
+   "type": "endpoint",
+   "name": "AuthService.RefreshToken",
+   "filePath": "api/proto/v1/auth.proto",
+   "lineRange": [
+    43,
+    43
+   ],
+   "summary": "RPC endpoint AuthService.RefreshToken exposed by the auth service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "schema:api/proto/v1/billing.proto",
+   "type": "schema",
+   "name": "billing.proto",
+   "filePath": "api/proto/v1/billing.proto",
+   "summary": "Protobuf schema defining the billing gRPC/ConnectRPC service contract — messages and RPC endpoints for the billing domain.",
+   "tags": [
+    "protobuf",
+    "schema",
+    "rpc",
+    "connectrpc"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.ListInvoices",
+   "type": "endpoint",
+   "name": "BillingService.ListInvoices",
+   "filePath": "api/proto/v1/billing.proto",
+   "lineRange": [
+    83,
+    83
+   ],
+   "summary": "RPC endpoint BillingService.ListInvoices exposed by the billing service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.GetInvoice",
+   "type": "endpoint",
+   "name": "BillingService.GetInvoice",
+   "filePath": "api/proto/v1/billing.proto",
+   "lineRange": [
+    84,
+    84
+   ],
+   "summary": "RPC endpoint BillingService.GetInvoice exposed by the billing service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.CreateInvoice",
+   "type": "endpoint",
+   "name": "BillingService.CreateInvoice",
+   "filePath": "api/proto/v1/billing.proto",
+   "lineRange": [
+    85,
+    85
+   ],
+   "summary": "RPC endpoint BillingService.CreateInvoice exposed by the billing service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.PayInvoice",
+   "type": "endpoint",
+   "name": "BillingService.PayInvoice",
+   "filePath": "api/proto/v1/billing.proto",
+   "lineRange": [
+    86,
+    86
+   ],
+   "summary": "RPC endpoint BillingService.PayInvoice exposed by the billing service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.ListSubscriptions",
+   "type": "endpoint",
+   "name": "BillingService.ListSubscriptions",
+   "filePath": "api/proto/v1/billing.proto",
+   "lineRange": [
+    87,
+    87
+   ],
+   "summary": "RPC endpoint BillingService.ListSubscriptions exposed by the billing service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.CreateSubscription",
+   "type": "endpoint",
+   "name": "BillingService.CreateSubscription",
+   "filePath": "api/proto/v1/billing.proto",
+   "lineRange": [
+    88,
+    88
+   ],
+   "summary": "RPC endpoint BillingService.CreateSubscription exposed by the billing service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/billing.proto:BillingService.CancelSubscription",
+   "type": "endpoint",
+   "name": "BillingService.CancelSubscription",
+   "filePath": "api/proto/v1/billing.proto",
+   "lineRange": [
+    89,
+    89
+   ],
+   "summary": "RPC endpoint BillingService.CancelSubscription exposed by the billing service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "schema:api/proto/v1/bot.proto",
+   "type": "schema",
+   "name": "bot.proto",
+   "filePath": "api/proto/v1/bot.proto",
+   "summary": "Protobuf schema defining the bot gRPC/ConnectRPC service contract — messages and RPC endpoints for the bot domain.",
+   "tags": [
+    "protobuf",
+    "schema",
+    "rpc",
+    "connectrpc"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.ListConversations",
+   "type": "endpoint",
+   "name": "BotService.ListConversations",
+   "filePath": "api/proto/v1/bot.proto",
+   "lineRange": [
+    8,
+    8
+   ],
+   "summary": "RPC endpoint BotService.ListConversations exposed by the bot service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.GetConversation",
+   "type": "endpoint",
+   "name": "BotService.GetConversation",
+   "filePath": "api/proto/v1/bot.proto",
+   "lineRange": [
+    9,
+    9
+   ],
+   "summary": "RPC endpoint BotService.GetConversation exposed by the bot service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.TakeOverConversation",
+   "type": "endpoint",
+   "name": "BotService.TakeOverConversation",
+   "filePath": "api/proto/v1/bot.proto",
+   "lineRange": [
+    10,
+    10
+   ],
+   "summary": "RPC endpoint BotService.TakeOverConversation exposed by the bot service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.ResetConversationBot",
+   "type": "endpoint",
+   "name": "BotService.ResetConversationBot",
+   "filePath": "api/proto/v1/bot.proto",
+   "lineRange": [
+    11,
+    11
+   ],
+   "summary": "RPC endpoint BotService.ResetConversationBot exposed by the bot service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/bot.proto:BotService.CloseConversation",
+   "type": "endpoint",
+   "name": "BotService.CloseConversation",
+   "filePath": "api/proto/v1/bot.proto",
+   "lineRange": [
+    12,
+    12
+   ],
+   "summary": "RPC endpoint BotService.CloseConversation exposed by the bot service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "schema:api/proto/v1/customer.proto",
+   "type": "schema",
+   "name": "customer.proto",
+   "filePath": "api/proto/v1/customer.proto",
+   "summary": "Protobuf schema defining the customer gRPC/ConnectRPC service contract — messages and RPC endpoints for the customer domain.",
+   "tags": [
+    "protobuf",
+    "schema",
+    "rpc",
+    "connectrpc"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.ListCustomers",
+   "type": "endpoint",
+   "name": "CustomerService.ListCustomers",
+   "filePath": "api/proto/v1/customer.proto",
+   "lineRange": [
+    61,
+    61
+   ],
+   "summary": "RPC endpoint CustomerService.ListCustomers exposed by the customer service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.GetCustomer",
+   "type": "endpoint",
+   "name": "CustomerService.GetCustomer",
+   "filePath": "api/proto/v1/customer.proto",
+   "lineRange": [
+    62,
+    62
+   ],
+   "summary": "RPC endpoint CustomerService.GetCustomer exposed by the customer service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.CreateCustomer",
+   "type": "endpoint",
+   "name": "CustomerService.CreateCustomer",
+   "filePath": "api/proto/v1/customer.proto",
+   "lineRange": [
+    63,
+    63
+   ],
+   "summary": "RPC endpoint CustomerService.CreateCustomer exposed by the customer service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.UpdateCustomer",
+   "type": "endpoint",
+   "name": "CustomerService.UpdateCustomer",
+   "filePath": "api/proto/v1/customer.proto",
+   "lineRange": [
+    64,
+    64
+   ],
+   "summary": "RPC endpoint CustomerService.UpdateCustomer exposed by the customer service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.DeleteCustomer",
+   "type": "endpoint",
+   "name": "CustomerService.DeleteCustomer",
+   "filePath": "api/proto/v1/customer.proto",
+   "lineRange": [
+    65,
+    65
+   ],
+   "summary": "RPC endpoint CustomerService.DeleteCustomer exposed by the customer service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/customer.proto:CustomerService.ListSubscriptions",
+   "type": "endpoint",
+   "name": "CustomerService.ListSubscriptions",
+   "filePath": "api/proto/v1/customer.proto",
+   "lineRange": [
+    66,
+    66
+   ],
+   "summary": "RPC endpoint CustomerService.ListSubscriptions exposed by the customer service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "schema:api/proto/v1/device.proto",
+   "type": "schema",
+   "name": "device.proto",
+   "filePath": "api/proto/v1/device.proto",
+   "summary": "Protobuf schema defining the device gRPC/ConnectRPC service contract — messages and RPC endpoints for the device domain.",
+   "tags": [
+    "protobuf",
+    "schema",
+    "rpc",
+    "connectrpc"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.ListDevices",
+   "type": "endpoint",
+   "name": "DeviceService.ListDevices",
+   "filePath": "api/proto/v1/device.proto",
+   "lineRange": [
+    156,
+    156
+   ],
+   "summary": "RPC endpoint DeviceService.ListDevices exposed by the device service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.GetDevice",
+   "type": "endpoint",
+   "name": "DeviceService.GetDevice",
+   "filePath": "api/proto/v1/device.proto",
+   "lineRange": [
+    157,
+    157
+   ],
+   "summary": "RPC endpoint DeviceService.GetDevice exposed by the device service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.UpdateDevice",
+   "type": "endpoint",
+   "name": "DeviceService.UpdateDevice",
+   "filePath": "api/proto/v1/device.proto",
+   "lineRange": [
+    158,
+    158
+   ],
+   "summary": "RPC endpoint DeviceService.UpdateDevice exposed by the device service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.DeleteDevice",
+   "type": "endpoint",
+   "name": "DeviceService.DeleteDevice",
+   "filePath": "api/proto/v1/device.proto",
+   "lineRange": [
+    159,
+    159
+   ],
+   "summary": "RPC endpoint DeviceService.DeleteDevice exposed by the device service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.TestDeviceConnection",
+   "type": "endpoint",
+   "name": "DeviceService.TestDeviceConnection",
+   "filePath": "api/proto/v1/device.proto",
+   "lineRange": [
+    160,
+    160
+   ],
+   "summary": "RPC endpoint DeviceService.TestDeviceConnection exposed by the device service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.StreamDeviceStatus",
+   "type": "endpoint",
+   "name": "DeviceService.StreamDeviceStatus",
+   "filePath": "api/proto/v1/device.proto",
+   "lineRange": [
+    161,
+    161
+   ],
+   "summary": "RPC endpoint DeviceService.StreamDeviceStatus exposed by the device service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.StreamPing",
+   "type": "endpoint",
+   "name": "DeviceService.StreamPing",
+   "filePath": "api/proto/v1/device.proto",
+   "lineRange": [
+    162,
+    162
+   ],
+   "summary": "RPC endpoint DeviceService.StreamPing exposed by the device service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.StreamInterfaceTraffic",
+   "type": "endpoint",
+   "name": "DeviceService.StreamInterfaceTraffic",
+   "filePath": "api/proto/v1/device.proto",
+   "lineRange": [
+    163,
+    163
+   ],
+   "summary": "RPC endpoint DeviceService.StreamInterfaceTraffic exposed by the device service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "endpoint:api/proto/v1/device.proto:DeviceService.StreamTerminal",
+   "type": "endpoint",
+   "name": "DeviceService.StreamTerminal",
+   "filePath": "api/proto/v1/device.proto",
+   "lineRange": [
+    164,
+    164
+   ],
+   "summary": "RPC endpoint DeviceService.StreamTerminal exposed by the device service.",
+   "tags": [
+    "rpc",
+    "endpoint",
+    "protobuf"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "schema:api/proto/v1/auth.proto",
+   "target": "endpoint:api/proto/v1/auth.proto:AuthService.Login",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/auth.proto",
+   "target": "endpoint:api/proto/v1/auth.proto:AuthService.GetMe",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/auth.proto",
+   "target": "endpoint:api/proto/v1/auth.proto:AuthService.RefreshToken",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.ListInvoices",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.GetInvoice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.CreateInvoice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.PayInvoice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.ListSubscriptions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.CreateSubscription",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/billing.proto",
+   "target": "endpoint:api/proto/v1/billing.proto:BillingService.CancelSubscription",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.ListConversations",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.GetConversation",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.TakeOverConversation",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.ResetConversationBot",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/bot.proto",
+   "target": "endpoint:api/proto/v1/bot.proto:BotService.CloseConversation",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.ListCustomers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.GetCustomer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.CreateCustomer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.UpdateCustomer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.DeleteCustomer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/customer.proto",
+   "target": "endpoint:api/proto/v1/customer.proto:CustomerService.ListSubscriptions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.ListDevices",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.GetDevice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.UpdateDevice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.DeleteDevice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.TestDeviceConnection",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.StreamDeviceStatus",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.StreamPing",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.StreamInterfaceTraffic",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "schema:api/proto/v1/device.proto",
+   "target": "endpoint:api/proto/v1/device.proto:DeviceService.StreamTerminal",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  }
+ ]
+}

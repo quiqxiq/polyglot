@@ -1,0 +1,70 @@
+{
+  "projectRoot": "/home/quixiq/projects/polyground/polyglot",
+  "batchFiles": [
+    {
+      "path": "internal/templates/footer.default.txt",
+      "language": "txt",
+      "sizeLines": 43,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/footer.small.txt",
+      "language": "txt",
+      "sizeLines": 25,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/footer.thermal.txt",
+      "language": "txt",
+      "sizeLines": 25,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/header.default.txt",
+      "language": "txt",
+      "sizeLines": 74,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/header.small.txt",
+      "language": "txt",
+      "sizeLines": 45,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/header.thermal.txt",
+      "language": "txt",
+      "sizeLines": 65,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/row.default.txt",
+      "language": "txt",
+      "sizeLines": 43,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/row.small.txt",
+      "language": "txt",
+      "sizeLines": 31,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "internal/templates/row.thermal.txt",
+      "language": "txt",
+      "sizeLines": 66,
+      "fileCategory": "docs"
+    }
+  ],
+  "batchImportData": {
+    "internal/templates/footer.default.txt": [],
+    "internal/templates/footer.small.txt": [],
+    "internal/templates/footer.thermal.txt": [],
+    "internal/templates/header.default.txt": [],
+    "internal/templates/header.small.txt": [],
+    "internal/templates/header.thermal.txt": [],
+    "internal/templates/row.default.txt": [],
+    "internal/templates/row.small.txt": [],
+    "internal/templates/row.thermal.txt": []
+  }
+}

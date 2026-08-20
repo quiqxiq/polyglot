@@ -1,0 +1,7940 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 29,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "internal/driver/mikrotik/hotspot/report.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 97,
+      "nonEmptyLines": 87,
+      "functions": [
+        {
+          "name": "NewPrintMikhmonReportsCommand",
+          "startLine": 41,
+          "endLine": 43,
+          "params": []
+        },
+        {
+          "name": "ParseMikhmonTransactions",
+          "startLine": 50,
+          "endLine": 97,
+          "params": [
+            "result"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "MikhmonTransaction",
+          "startLine": 24,
+          "endLine": 36,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Date",
+            "Time",
+            "Username",
+            "Price",
+            "Address",
+            "MAC",
+            "Validity",
+            "Profile",
+            "Comment",
+            "RawName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "MikhmonTransaction",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintMikhmonReportsCommand",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "ParseMikhmonTransactions",
+          "line": 50,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewPrintMikhmonReportsCommand",
+          "callee": "mikrotik.NewPrintSystemScriptsCommand",
+          "lineNumber": 42
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "mikrotik.ParseSystemScripts",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "make",
+          "lineNumber": 52
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "len",
+          "lineNumber": 52
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "strings.Contains",
+          "lineNumber": 55
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "strings.Split",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "len",
+          "lineNumber": 65
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "len",
+          "lineNumber": 68
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "len",
+          "lineNumber": 71
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "len",
+          "lineNumber": 74
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "len",
+          "lineNumber": 77
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "len",
+          "lineNumber": 80
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "len",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "len",
+          "lineNumber": 86
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "len",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ParseMikhmonTransactions",
+          "callee": "append",
+          "lineNumber": 93
+        }
+      ],
+      "metrics": {
+        "importCount": 24,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/report_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 41,
+      "functions": [
+        {
+          "name": "TestParseMikhmonTransactions",
+          "startLine": 12,
+          "endLine": 42,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewPrintMikhmonReportsCommand",
+          "startLine": 44,
+          "endLine": 48,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestParseMikhmonTransactions",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewPrintMikhmonReportsCommand",
+          "line": 44,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestParseMikhmonTransactions",
+          "callee": "ParseMikhmonTransactions",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestParseMikhmonTransactions",
+          "callee": "require.Len",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestParseMikhmonTransactions",
+          "callee": "assert.Equal",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestParseMikhmonTransactions",
+          "callee": "assert.Equal",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestParseMikhmonTransactions",
+          "callee": "assert.Equal",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestParseMikhmonTransactions",
+          "callee": "assert.Equal",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestParseMikhmonTransactions",
+          "callee": "assert.Equal",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestParseMikhmonTransactions",
+          "callee": "assert.Equal",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestParseMikhmonTransactions",
+          "callee": "assert.Equal",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestParseMikhmonTransactions",
+          "callee": "assert.Equal",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestParseMikhmonTransactions",
+          "callee": "assert.Equal",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestParseMikhmonTransactions",
+          "callee": "assert.Equal",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestNewPrintMikhmonReportsCommand",
+          "callee": "NewPrintMikhmonReportsCommand",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestNewPrintMikhmonReportsCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestNewPrintMikhmonReportsCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 47
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/voucher.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 189,
+      "nonEmptyLines": 166,
+      "functions": [
+        {
+          "name": "GenerateVoucherCode",
+          "startLine": 64,
+          "endLine": 84,
+          "params": [
+            "length",
+            "cs"
+          ]
+        },
+        {
+          "name": "ParseDataLimit",
+          "startLine": 88,
+          "endLine": 109,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "NewAddMikhmonVoucherCommand",
+          "startLine": 113,
+          "endLine": 132,
+          "params": [
+            "p",
+            "username",
+            "password"
+          ]
+        },
+        {
+          "name": "NewGenerateVoucherBatchCommands",
+          "startLine": 136,
+          "endLine": 188,
+          "params": [
+            "p",
+            "count"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "VoucherGenerateParams",
+          "startLine": 36,
+          "endLine": 46,
+          "methods": [],
+          "properties": [
+            "Server",
+            "Profile",
+            "Prefix",
+            "UserLength",
+            "PassLength",
+            "CharSet",
+            "LimitUptime",
+            "LimitBytes",
+            "CommentTag"
+          ]
+        },
+        {
+          "name": "GeneratedVoucher",
+          "startLine": 49,
+          "endLine": 54,
+          "methods": [],
+          "properties": [
+            "Username",
+            "Password",
+            "Comment",
+            "Command"
+          ]
+        },
+        {
+          "name": "VoucherBatch",
+          "startLine": 57,
+          "endLine": 60,
+          "methods": [],
+          "properties": [
+            "Vouchers",
+            "Commands"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "VoucherGenerateParams",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "GeneratedVoucher",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "VoucherBatch",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "GenerateVoucherCode",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "ParseDataLimit",
+          "line": 88,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddMikhmonVoucherCommand",
+          "line": 113,
+          "isDefault": false
+        },
+        {
+          "name": "NewGenerateVoucherBatchCommands",
+          "line": 136,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "make",
+          "lineNumber": 73
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "big.NewInt",
+          "lineNumber": 74
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "int64",
+          "lineNumber": 74
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "len",
+          "lineNumber": 74
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "rand.Int",
+          "lineNumber": 76
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "len",
+          "lineNumber": 78
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "n.Int64",
+          "lineNumber": 80
+        },
+        {
+          "caller": "GenerateVoucherCode",
+          "callee": "string",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ParseDataLimit",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ParseDataLimit",
+          "callee": "strings.ToLower",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ParseDataLimit",
+          "callee": "len",
+          "lineNumber": 93
+        },
+        {
+          "caller": "ParseDataLimit",
+          "callee": "len",
+          "lineNumber": 94
+        },
+        {
+          "caller": "ParseDataLimit",
+          "callee": "fmt.Sscanf",
+          "lineNumber": 107
+        },
+        {
+          "caller": "NewAddMikhmonVoucherCommand",
+          "callee": "GenerateVoucherCode",
+          "lineNumber": 114
+        },
+        {
+          "caller": "NewAddMikhmonVoucherCommand",
+          "callee": "FormatPreLoginComment",
+          "lineNumber": 115
+        },
+        {
+          "caller": "NewAddMikhmonVoucherCommand",
+          "callee": "time.Now",
+          "lineNumber": 115
+        },
+        {
+          "caller": "NewAddMikhmonVoucherCommand",
+          "callee": "ParseDataLimit",
+          "lineNumber": 118
+        },
+        {
+          "caller": "NewAddMikhmonVoucherCommand",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 119
+        },
+        {
+          "caller": "NewAddMikhmonVoucherCommand",
+          "callee": "mikrotik.NewAddHotspotUserCommand",
+          "lineNumber": 122
+        },
+        {
+          "caller": "NewGenerateVoucherBatchCommands",
+          "callee": "ParseDataLimit",
+          "lineNumber": 146
+        },
+        {
+          "caller": "NewGenerateVoucherBatchCommands",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 147
+        },
+        {
+          "caller": "NewGenerateVoucherBatchCommands",
+          "callee": "make",
+          "lineNumber": 151
+        },
+        {
+          "caller": "NewGenerateVoucherBatchCommands",
+          "callee": "make",
+          "lineNumber": 152
+        },
+        {
+          "caller": "NewGenerateVoucherBatchCommands",
+          "callee": "time.Now",
+          "lineNumber": 155
+        },
+        {
+          "caller": "NewGenerateVoucherBatchCommands",
+          "callee": "GenerateVoucherCode",
+          "lineNumber": 157
+        },
+        {
+          "caller": "NewGenerateVoucherBatchCommands",
+          "callee": "GenerateVoucherCode",
+          "lineNumber": 158
+        },
+        {
+          "caller": "NewGenerateVoucherBatchCommands",
+          "callee": "GenerateVoucherCode",
+          "lineNumber": 161
+        },
+        {
+          "caller": "NewGenerateVoucherBatchCommands",
+          "callee": "FormatPreLoginComment",
+          "lineNumber": 163
+        },
+        {
+          "caller": "NewGenerateVoucherBatchCommands",
+          "callee": "mikrotik.NewAddHotspotUserCommand",
+          "lineNumber": 165
+        },
+        {
+          "caller": "NewGenerateVoucherBatchCommands",
+          "callee": "append",
+          "lineNumber": 183
+        },
+        {
+          "caller": "NewGenerateVoucherBatchCommands",
+          "callee": "append",
+          "lineNumber": 184
+        }
+      ],
+      "metrics": {
+        "importCount": 24,
+        "exportCount": 7,
+        "functionCount": 4,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/voucher_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 64,
+      "nonEmptyLines": 55,
+      "functions": [
+        {
+          "name": "TestGenerateVoucherCode",
+          "startLine": 10,
+          "endLine": 26,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewAddMikhmonVoucherCommand",
+          "startLine": 28,
+          "endLine": 44,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewGenerateVoucherBatchCommands",
+          "startLine": 46,
+          "endLine": 64,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestGenerateVoucherCode",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewAddMikhmonVoucherCommand",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewGenerateVoucherBatchCommands",
+          "line": 46,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestGenerateVoucherCode",
+          "callee": "t.Run",
+          "lineNumber": 11
+        },
+        {
+          "caller": "TestGenerateVoucherCode",
+          "callee": "GenerateVoucherCode",
+          "lineNumber": 12
+        },
+        {
+          "caller": "TestGenerateVoucherCode",
+          "callee": "assert.Len",
+          "lineNumber": 13
+        },
+        {
+          "caller": "TestGenerateVoucherCode",
+          "callee": "assert.Contains",
+          "lineNumber": 15
+        },
+        {
+          "caller": "TestGenerateVoucherCode",
+          "callee": "string",
+          "lineNumber": 15
+        },
+        {
+          "caller": "TestGenerateVoucherCode",
+          "callee": "t.Run",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestGenerateVoucherCode",
+          "callee": "GenerateVoucherCode",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestGenerateVoucherCode",
+          "callee": "assert.Len",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestGenerateVoucherCode",
+          "callee": "assert.Contains",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestGenerateVoucherCode",
+          "callee": "string",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestNewAddMikhmonVoucherCommand",
+          "callee": "NewAddMikhmonVoucherCommand",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestNewAddMikhmonVoucherCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestNewAddMikhmonVoucherCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestNewAddMikhmonVoucherCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestNewAddMikhmonVoucherCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestNewAddMikhmonVoucherCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestNewAddMikhmonVoucherCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestNewAddMikhmonVoucherCommand",
+          "callee": "assert.Contains",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestNewAddMikhmonVoucherCommand",
+          "callee": "assert.Contains",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestNewGenerateVoucherBatchCommands",
+          "callee": "NewGenerateVoucherBatchCommands",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestNewGenerateVoucherBatchCommands",
+          "callee": "require.Len",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestNewGenerateVoucherBatchCommands",
+          "callee": "require.Len",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestNewGenerateVoucherBatchCommands",
+          "callee": "assert.Equal",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestNewGenerateVoucherBatchCommands",
+          "callee": "assert.Contains",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestNewGenerateVoucherBatchCommands",
+          "callee": "assert.Equal",
+          "lineNumber": 62
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot_active.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 186,
+      "nonEmptyLines": 174,
+      "functions": [
+        {
+          "name": "NewPrintHotspotActiveCommand",
+          "startLine": 64,
+          "endLine": 73,
+          "params": [
+            "userFilter"
+          ]
+        },
+        {
+          "name": "NewStreamHotspotActiveCommand",
+          "startLine": 85,
+          "endLine": 94,
+          "params": [
+            "userFilter"
+          ]
+        },
+        {
+          "name": "NewDisconnectHotspotActiveCommand",
+          "startLine": 100,
+          "endLine": 105,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "NewPrintHotspotServersCommand",
+          "startLine": 110,
+          "endLine": 115,
+          "params": []
+        },
+        {
+          "name": "ParseHotspotActiveSessions",
+          "startLine": 120,
+          "endLine": 145,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseHotspotServers",
+          "startLine": 149,
+          "endLine": 167,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "FilterInactiveHotspotUsers",
+          "startLine": 173,
+          "endLine": 185,
+          "params": [
+            "users",
+            "active"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "HotspotActiveSession",
+          "startLine": 27,
+          "endLine": 41,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Server",
+            "User",
+            "Address",
+            "MACAddress",
+            "LoginBy",
+            "Uptime",
+            "SessionTimeLeft",
+            "IdleTime",
+            "BytesIn",
+            "BytesOut",
+            "PacketsIn",
+            "PacketsOut"
+          ]
+        },
+        {
+          "name": "HotspotServer",
+          "startLine": 50,
+          "endLine": 57,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Interface",
+            "Profile",
+            "AddressPool",
+            "Disabled"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "HotspotActiveSession",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotServer",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintHotspotActiveCommand",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamHotspotActiveCommand",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "NewDisconnectHotspotActiveCommand",
+          "line": 100,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintHotspotServersCommand",
+          "line": 110,
+          "isDefault": false
+        },
+        {
+          "name": "ParseHotspotActiveSessions",
+          "line": 120,
+          "isDefault": false
+        },
+        {
+          "name": "ParseHotspotServers",
+          "line": 149,
+          "isDefault": false
+        },
+        {
+          "name": "FilterInactiveHotspotUsers",
+          "line": 173,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParseHotspotActiveSessions",
+          "callee": "make",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ParseHotspotActiveSessions",
+          "callee": "len",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ParseHotspotActiveSessions",
+          "callee": "append",
+          "lineNumber": 128
+        },
+        {
+          "caller": "ParseHotspotServers",
+          "callee": "make",
+          "lineNumber": 150
+        },
+        {
+          "caller": "ParseHotspotServers",
+          "callee": "len",
+          "lineNumber": 150
+        },
+        {
+          "caller": "ParseHotspotServers",
+          "callee": "append",
+          "lineNumber": 157
+        },
+        {
+          "caller": "ParseHotspotServers",
+          "callee": "strings.EqualFold",
+          "lineNumber": 163
+        },
+        {
+          "caller": "FilterInactiveHotspotUsers",
+          "callee": "make",
+          "lineNumber": 174
+        },
+        {
+          "caller": "FilterInactiveHotspotUsers",
+          "callee": "len",
+          "lineNumber": 174
+        },
+        {
+          "caller": "FilterInactiveHotspotUsers",
+          "callee": "make",
+          "lineNumber": 178
+        },
+        {
+          "caller": "FilterInactiveHotspotUsers",
+          "callee": "append",
+          "lineNumber": 181
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 9,
+        "functionCount": 7,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot_profile.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 150,
+      "nonEmptyLines": 140,
+      "functions": [
+        {
+          "name": "NewPrintHotspotUserProfilesCommand",
+          "startLine": 59,
+          "endLine": 68,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewAddHotspotUserProfileCommand",
+          "startLine": 72,
+          "endLine": 83,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewSetHotspotUserProfileCommand",
+          "startLine": 91,
+          "endLine": 103,
+          "params": [
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemoveHotspotUserProfileCommand",
+          "startLine": 107,
+          "endLine": 112,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "ParseHotspotUserProfiles",
+          "startLine": 117,
+          "endLine": 139,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "FindHotspotUserProfileRosID",
+          "startLine": 143,
+          "endLine": 150,
+          "params": [
+            "result",
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "HotspotUserProfileParams",
+          "startLine": 29,
+          "endLine": 39,
+          "methods": [],
+          "properties": [
+            "Name",
+            "RateLimit",
+            "SessionTimeout",
+            "IdleTimeout",
+            "SharedUsers",
+            "ParentQueue",
+            "AddressPool",
+            "Comment",
+            "OnLogin"
+          ]
+        },
+        {
+          "name": "HotspotUserProfile",
+          "startLine": 43,
+          "endLine": 54,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "RateLimit",
+            "SessionTimeout",
+            "IdleTimeout",
+            "SharedUsers",
+            "ParentQueue",
+            "AddressPool",
+            "Comment",
+            "OnLogin"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "HotspotUserProfileParams",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotUserProfile",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintHotspotUserProfilesCommand",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddHotspotUserProfileCommand",
+          "line": 72,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetHotspotUserProfileCommand",
+          "line": 91,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveHotspotUserProfileCommand",
+          "line": 107,
+          "isDefault": false
+        },
+        {
+          "name": "ParseHotspotUserProfiles",
+          "line": 117,
+          "isDefault": false
+        },
+        {
+          "name": "FindHotspotUserProfileRosID",
+          "line": 143,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewAddHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 74
+        },
+        {
+          "caller": "NewAddHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 75
+        },
+        {
+          "caller": "NewAddHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 76
+        },
+        {
+          "caller": "NewAddHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 77
+        },
+        {
+          "caller": "NewAddHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 78
+        },
+        {
+          "caller": "NewAddHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 79
+        },
+        {
+          "caller": "NewAddHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 80
+        },
+        {
+          "caller": "NewAddHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 81
+        },
+        {
+          "caller": "NewSetHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 93
+        },
+        {
+          "caller": "NewSetHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 94
+        },
+        {
+          "caller": "NewSetHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 95
+        },
+        {
+          "caller": "NewSetHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 96
+        },
+        {
+          "caller": "NewSetHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 97
+        },
+        {
+          "caller": "NewSetHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 98
+        },
+        {
+          "caller": "NewSetHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 99
+        },
+        {
+          "caller": "NewSetHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 100
+        },
+        {
+          "caller": "NewSetHotspotUserProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 101
+        },
+        {
+          "caller": "ParseHotspotUserProfiles",
+          "callee": "make",
+          "lineNumber": 118
+        },
+        {
+          "caller": "ParseHotspotUserProfiles",
+          "callee": "len",
+          "lineNumber": 118
+        },
+        {
+          "caller": "ParseHotspotUserProfiles",
+          "callee": "append",
+          "lineNumber": 125
+        },
+        {
+          "caller": "FindHotspotUserProfileRosID",
+          "callee": "ParseHotspotUserProfiles",
+          "lineNumber": 144
+        },
+        {
+          "caller": "FindHotspotUserProfileRosID",
+          "callee": "strings.EqualFold",
+          "lineNumber": 145
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 8,
+        "functionCount": 6,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot_user.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 177,
+      "nonEmptyLines": 165,
+      "functions": [
+        {
+          "name": "NewPrintHotspotUsersCommand",
+          "startLine": 65,
+          "endLine": 74,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewStreamHotspotUsersCommand",
+          "startLine": 78,
+          "endLine": 89,
+          "params": [
+            "profileFilter"
+          ]
+        },
+        {
+          "name": "NewAddHotspotUserCommand",
+          "startLine": 92,
+          "endLine": 109,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewSetHotspotUserCommand",
+          "startLine": 117,
+          "endLine": 130,
+          "params": [
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemoveHotspotUserCommand",
+          "startLine": 134,
+          "endLine": 139,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "NewResetHotspotUserCountersCommand",
+          "startLine": 143,
+          "endLine": 148,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "ParseHotspotUsers",
+          "startLine": 153,
+          "endLine": 177,
+          "params": [
+            "result"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "HotspotUserParams",
+          "startLine": 29,
+          "endLine": 41,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Password",
+            "Profile",
+            "Server",
+            "MACAddress",
+            "Address",
+            "LimitUptime",
+            "LimitBytesIn",
+            "LimitBytesOut",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "HotspotUser",
+          "startLine": 48,
+          "endLine": 61,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Password",
+            "Profile",
+            "Server",
+            "MACAddress",
+            "Address",
+            "LimitUptime",
+            "LimitBytesIn",
+            "LimitBytesOut",
+            "Comment",
+            "Disabled"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "HotspotUserParams",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotUser",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintHotspotUsersCommand",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamHotspotUsersCommand",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddHotspotUserCommand",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetHotspotUserCommand",
+          "line": 117,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveHotspotUserCommand",
+          "line": 134,
+          "isDefault": false
+        },
+        {
+          "name": "NewResetHotspotUserCountersCommand",
+          "line": 143,
+          "isDefault": false
+        },
+        {
+          "name": "ParseHotspotUsers",
+          "line": 153,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewAddHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 98
+        },
+        {
+          "caller": "NewAddHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 99
+        },
+        {
+          "caller": "NewAddHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 100
+        },
+        {
+          "caller": "NewAddHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 101
+        },
+        {
+          "caller": "NewAddHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 102
+        },
+        {
+          "caller": "NewAddHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 103
+        },
+        {
+          "caller": "NewAddHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 104
+        },
+        {
+          "caller": "NewSetHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 121
+        },
+        {
+          "caller": "NewSetHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 122
+        },
+        {
+          "caller": "NewSetHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 123
+        },
+        {
+          "caller": "NewSetHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 124
+        },
+        {
+          "caller": "NewSetHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 125
+        },
+        {
+          "caller": "NewSetHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 126
+        },
+        {
+          "caller": "NewSetHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 127
+        },
+        {
+          "caller": "NewSetHotspotUserCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 128
+        },
+        {
+          "caller": "ParseHotspotUsers",
+          "callee": "make",
+          "lineNumber": 154
+        },
+        {
+          "caller": "ParseHotspotUsers",
+          "callee": "len",
+          "lineNumber": 154
+        },
+        {
+          "caller": "ParseHotspotUsers",
+          "callee": "append",
+          "lineNumber": 161
+        },
+        {
+          "caller": "ParseHotspotUsers",
+          "callee": "strings.EqualFold",
+          "lineNumber": 173
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 9,
+        "functionCount": 7,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/iface.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 181,
+      "nonEmptyLines": 168,
+      "functions": [
+        {
+          "name": "NewPrintInterfacesCommand",
+          "startLine": 61,
+          "endLine": 70,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewMonitorTrafficOnceCommand",
+          "startLine": 77,
+          "endLine": 85,
+          "params": [
+            "ifaceName"
+          ]
+        },
+        {
+          "name": "NewMonitorTrafficStreamCommand",
+          "startLine": 92,
+          "endLine": 100,
+          "params": [
+            "ifaceName"
+          ]
+        },
+        {
+          "name": "NewEnableInterfaceCommand",
+          "startLine": 104,
+          "endLine": 109,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "NewDisableInterfaceCommand",
+          "startLine": 113,
+          "endLine": 118,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "parseRosBool",
+          "startLine": 120,
+          "endLine": 122,
+          "params": [
+            "val"
+          ]
+        },
+        {
+          "name": "ParseInterfaces",
+          "startLine": 126,
+          "endLine": 152,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "getRowField",
+          "startLine": 154,
+          "endLine": 161,
+          "params": [
+            "row"
+          ]
+        },
+        {
+          "name": "ParseInterfaceTrafficStats",
+          "startLine": 166,
+          "endLine": 181,
+          "params": [
+            "result"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Interface",
+          "startLine": 26,
+          "endLine": 41,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Type",
+            "MTU",
+            "ActualMTU",
+            "L2MTU",
+            "MACAddress",
+            "Running",
+            "Disabled",
+            "RxByte",
+            "TxByte",
+            "RxPacket",
+            "TxPacket",
+            "Comment"
+          ]
+        },
+        {
+          "name": "InterfaceTrafficStats",
+          "startLine": 48,
+          "endLine": 57,
+          "methods": [],
+          "properties": [
+            "RxBitsPerSecond",
+            "TxBitsPerSecond",
+            "RxPacketsPerSecond",
+            "TxPacketsPerSecond",
+            "RxDropsPerSecond",
+            "TxDropsPerSecond",
+            "RxErrorsPerSecond",
+            "TxErrorsPerSecond"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Interface",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "InterfaceTrafficStats",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintInterfacesCommand",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "NewMonitorTrafficOnceCommand",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "NewMonitorTrafficStreamCommand",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "NewEnableInterfaceCommand",
+          "line": 104,
+          "isDefault": false
+        },
+        {
+          "name": "NewDisableInterfaceCommand",
+          "line": 113,
+          "isDefault": false
+        },
+        {
+          "name": "ParseInterfaces",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "ParseInterfaceTrafficStats",
+          "line": 166,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "parseRosBool",
+          "callee": "strings.EqualFold",
+          "lineNumber": 121
+        },
+        {
+          "caller": "parseRosBool",
+          "callee": "strings.EqualFold",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ParseInterfaces",
+          "callee": "make",
+          "lineNumber": 127
+        },
+        {
+          "caller": "ParseInterfaces",
+          "callee": "len",
+          "lineNumber": 127
+        },
+        {
+          "caller": "ParseInterfaces",
+          "callee": "append",
+          "lineNumber": 134
+        },
+        {
+          "caller": "ParseInterfaces",
+          "callee": "parseRosBool",
+          "lineNumber": 142
+        },
+        {
+          "caller": "ParseInterfaces",
+          "callee": "parseRosBool",
+          "lineNumber": 143
+        },
+        {
+          "caller": "ParseInterfaceTrafficStats",
+          "callee": "len",
+          "lineNumber": 167
+        },
+        {
+          "caller": "ParseInterfaceTrafficStats",
+          "callee": "getRowField",
+          "lineNumber": 172
+        },
+        {
+          "caller": "ParseInterfaceTrafficStats",
+          "callee": "getRowField",
+          "lineNumber": 173
+        },
+        {
+          "caller": "ParseInterfaceTrafficStats",
+          "callee": "getRowField",
+          "lineNumber": 174
+        },
+        {
+          "caller": "ParseInterfaceTrafficStats",
+          "callee": "getRowField",
+          "lineNumber": 175
+        },
+        {
+          "caller": "ParseInterfaceTrafficStats",
+          "callee": "getRowField",
+          "lineNumber": 176
+        },
+        {
+          "caller": "ParseInterfaceTrafficStats",
+          "callee": "getRowField",
+          "lineNumber": 177
+        },
+        {
+          "caller": "ParseInterfaceTrafficStats",
+          "callee": "getRowField",
+          "lineNumber": 178
+        },
+        {
+          "caller": "ParseInterfaceTrafficStats",
+          "callee": "getRowField",
+          "lineNumber": 179
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 9,
+        "functionCount": 9,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/ip.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 176,
+      "nonEmptyLines": 163,
+      "functions": [
+        {
+          "name": "NewPrintIPAddressesCommand",
+          "startLine": 38,
+          "endLine": 46,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewAddIPAddressCommand",
+          "startLine": 50,
+          "endLine": 58,
+          "params": [
+            "iface",
+            "address"
+          ]
+        },
+        {
+          "name": "NewRemoveIPAddressCommand",
+          "startLine": 62,
+          "endLine": 67,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "ParseIPAddresses",
+          "startLine": 71,
+          "endLine": 90,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "NewPrintIPRoutesCommand",
+          "startLine": 116,
+          "endLine": 125,
+          "params": [
+            "dstFilter"
+          ]
+        },
+        {
+          "name": "NewAddIPRouteCommand",
+          "startLine": 129,
+          "endLine": 142,
+          "params": [
+            "dstAddress",
+            "gateway",
+            "distance"
+          ]
+        },
+        {
+          "name": "NewRemoveIPRouteCommand",
+          "startLine": 146,
+          "endLine": 151,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "ParseIPRoutes",
+          "startLine": 155,
+          "endLine": 176,
+          "params": [
+            "result"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "IPAddress",
+          "startLine": 20,
+          "endLine": 28,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Address",
+            "Network",
+            "Interface",
+            "Disabled",
+            "Dynamic",
+            "Comment"
+          ]
+        },
+        {
+          "name": "IPAddressPrintParams",
+          "startLine": 31,
+          "endLine": 34,
+          "methods": [],
+          "properties": [
+            "Interface",
+            "Address"
+          ]
+        },
+        {
+          "name": "IPRoute",
+          "startLine": 103,
+          "endLine": 112,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "DstAddress",
+            "Gateway",
+            "Distance",
+            "Active",
+            "Dynamic",
+            "Static",
+            "Comment"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "IPAddress",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "IPAddressPrintParams",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintIPAddressesCommand",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddIPAddressCommand",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveIPAddressCommand",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "ParseIPAddresses",
+          "line": 71,
+          "isDefault": false
+        },
+        {
+          "name": "IPRoute",
+          "line": 103,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintIPRoutesCommand",
+          "line": 116,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddIPRouteCommand",
+          "line": 129,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveIPRouteCommand",
+          "line": 146,
+          "isDefault": false
+        },
+        {
+          "name": "ParseIPRoutes",
+          "line": 155,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewPrintIPAddressesCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 40
+        },
+        {
+          "caller": "NewPrintIPAddressesCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ParseIPAddresses",
+          "callee": "make",
+          "lineNumber": 72
+        },
+        {
+          "caller": "ParseIPAddresses",
+          "callee": "len",
+          "lineNumber": 72
+        },
+        {
+          "caller": "ParseIPAddresses",
+          "callee": "append",
+          "lineNumber": 79
+        },
+        {
+          "caller": "ParseIPAddresses",
+          "callee": "strings.EqualFold",
+          "lineNumber": 84
+        },
+        {
+          "caller": "ParseIPAddresses",
+          "callee": "strings.EqualFold",
+          "lineNumber": 85
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "make",
+          "lineNumber": 156
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "len",
+          "lineNumber": 156
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "strconv.Atoi",
+          "lineNumber": 163
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "append",
+          "lineNumber": 164
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "strings.EqualFold",
+          "lineNumber": 169
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "strings.EqualFold",
+          "lineNumber": 170
+        },
+        {
+          "caller": "ParseIPRoutes",
+          "callee": "strings.EqualFold",
+          "lineNumber": 171
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 11,
+        "functionCount": 8,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/pool.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 44,
+      "functions": [
+        {
+          "name": "NewPrintIPPoolsCommand",
+          "startLine": 18,
+          "endLine": 27,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "ParseIPPools",
+          "startLine": 31,
+          "endLine": 48,
+          "params": [
+            "result"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "IPPool",
+          "startLine": 8,
+          "endLine": 14,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Ranges",
+            "NextPool",
+            "Comment"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "IPPool",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintIPPoolsCommand",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "ParseIPPools",
+          "line": 31,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParseIPPools",
+          "callee": "make",
+          "lineNumber": 32
+        },
+        {
+          "caller": "ParseIPPools",
+          "callee": "len",
+          "lineNumber": 32
+        },
+        {
+          "caller": "ParseIPPools",
+          "callee": "append",
+          "lineNumber": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 242,
+      "nonEmptyLines": 228,
+      "functions": [
+        {
+          "name": "NewAddPPPoESecretCommand",
+          "startLine": 80,
+          "endLine": 113,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewSetPPPoESecretCommand",
+          "startLine": 123,
+          "endLine": 153,
+          "params": [
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemovePPPoESecretCommand",
+          "startLine": 158,
+          "endLine": 163,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "NewPrintPPPoESecretsCommand",
+          "startLine": 173,
+          "endLine": 185,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewStreamPPPoESecretsCommand",
+          "startLine": 189,
+          "endLine": 200,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "ParsePPPoESecrets",
+          "startLine": 207,
+          "endLine": 229,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "FindPPPoESecretRosID",
+          "startLine": 235,
+          "endLine": 242,
+          "params": [
+            "result",
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PPPoESecretParams",
+          "startLine": 32,
+          "endLine": 41,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Password",
+            "Profile",
+            "Service",
+            "LocalAddress",
+            "RemoteAddress",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "PPPoESecret",
+          "startLine": 61,
+          "endLine": 72,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Profile",
+            "Service",
+            "LocalAddress",
+            "RemoteAddress",
+            "Comment",
+            "Disabled",
+            "LastLoggedOut",
+            "CallerID"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PPPoESecretParams",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "PPPoESecret",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddPPPoESecretCommand",
+          "line": 80,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetPPPoESecretCommand",
+          "line": 123,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemovePPPoESecretCommand",
+          "line": 158,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintPPPoESecretsCommand",
+          "line": 173,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamPPPoESecretsCommand",
+          "line": 189,
+          "isDefault": false
+        },
+        {
+          "name": "ParsePPPoESecrets",
+          "line": 207,
+          "isDefault": false
+        },
+        {
+          "name": "FindPPPoESecretRosID",
+          "line": 235,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParsePPPoESecrets",
+          "callee": "make",
+          "lineNumber": 208
+        },
+        {
+          "caller": "ParsePPPoESecrets",
+          "callee": "len",
+          "lineNumber": 208
+        },
+        {
+          "caller": "ParsePPPoESecrets",
+          "callee": "append",
+          "lineNumber": 215
+        },
+        {
+          "caller": "ParsePPPoESecrets",
+          "callee": "strings.EqualFold",
+          "lineNumber": 223
+        },
+        {
+          "caller": "FindPPPoESecretRosID",
+          "callee": "ParsePPPoESecrets",
+          "lineNumber": 236
+        },
+        {
+          "caller": "FindPPPoESecretRosID",
+          "callee": "fmt.Errorf",
+          "lineNumber": 241
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 9,
+        "functionCount": 7,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp_active.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 139,
+      "nonEmptyLines": 130,
+      "functions": [
+        {
+          "name": "NewPrintPPPActiveCommand",
+          "startLine": 45,
+          "endLine": 54,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewStreamPPPActiveCommand",
+          "startLine": 67,
+          "endLine": 76,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewKickPPPActiveCommand",
+          "startLine": 87,
+          "endLine": 92,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "ParsePPPActiveSessions",
+          "startLine": 97,
+          "endLine": 120,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "FilterInactivePPPoESecrets",
+          "startLine": 126,
+          "endLine": 138,
+          "params": [
+            "secrets",
+            "active"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PPPActiveSession",
+          "startLine": 25,
+          "endLine": 37,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Service",
+            "CallerID",
+            "Address",
+            "Uptime",
+            "Encoding",
+            "SessionID",
+            "LimitBytesIn",
+            "LimitBytesOut",
+            "Radius"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PPPActiveSession",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintPPPActiveCommand",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamPPPActiveCommand",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "NewKickPPPActiveCommand",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "ParsePPPActiveSessions",
+          "line": 97,
+          "isDefault": false
+        },
+        {
+          "name": "FilterInactivePPPoESecrets",
+          "line": 126,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParsePPPActiveSessions",
+          "callee": "make",
+          "lineNumber": 98
+        },
+        {
+          "caller": "ParsePPPActiveSessions",
+          "callee": "len",
+          "lineNumber": 98
+        },
+        {
+          "caller": "ParsePPPActiveSessions",
+          "callee": "append",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ParsePPPActiveSessions",
+          "callee": "strings.EqualFold",
+          "lineNumber": 116
+        },
+        {
+          "caller": "FilterInactivePPPoESecrets",
+          "callee": "make",
+          "lineNumber": 127
+        },
+        {
+          "caller": "FilterInactivePPPoESecrets",
+          "callee": "len",
+          "lineNumber": 127
+        },
+        {
+          "caller": "FilterInactivePPPoESecrets",
+          "callee": "make",
+          "lineNumber": 131
+        },
+        {
+          "caller": "FilterInactivePPPoESecrets",
+          "callee": "append",
+          "lineNumber": 134
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp_active_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 166,
+      "nonEmptyLines": 144,
+      "functions": [
+        {
+          "name": "TestNewPrintPPPActiveCommand",
+          "startLine": 14,
+          "endLine": 26,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewStreamPPPActiveCommand",
+          "startLine": 28,
+          "endLine": 42,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewKickPPPActiveCommand",
+          "startLine": 44,
+          "endLine": 48,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParsePPPActiveSessions",
+          "startLine": 52,
+          "endLine": 94,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewAddPPPProfileCommand",
+          "startLine": 98,
+          "endLine": 119,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewSetPPPProfileCommand",
+          "startLine": 121,
+          "endLine": 127,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewRemovePPPProfileCommand",
+          "startLine": 129,
+          "endLine": 133,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParsePPPProfiles",
+          "startLine": 135,
+          "endLine": 147,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestFilterInactivePPPoESecrets",
+          "startLine": 149,
+          "endLine": 165,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestNewPrintPPPActiveCommand",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewStreamPPPActiveCommand",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewKickPPPActiveCommand",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "TestParsePPPActiveSessions",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewAddPPPProfileCommand",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewSetPPPProfileCommand",
+          "line": 121,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewRemovePPPProfileCommand",
+          "line": 129,
+          "isDefault": false
+        },
+        {
+          "name": "TestParsePPPProfiles",
+          "line": 135,
+          "isDefault": false
+        },
+        {
+          "name": "TestFilterInactivePPPoESecrets",
+          "line": 149,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestNewPrintPPPActiveCommand",
+          "callee": "t.Run",
+          "lineNumber": 15
+        },
+        {
+          "caller": "TestNewPrintPPPActiveCommand",
+          "callee": "NewPrintPPPActiveCommand",
+          "lineNumber": 16
+        },
+        {
+          "caller": "TestNewPrintPPPActiveCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 17
+        },
+        {
+          "caller": "TestNewPrintPPPActiveCommand",
+          "callee": "assert.Empty",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestNewPrintPPPActiveCommand",
+          "callee": "assert.False",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestNewPrintPPPActiveCommand",
+          "callee": "isStreamingCommand",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestNewPrintPPPActiveCommand",
+          "callee": "t.Run",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestNewPrintPPPActiveCommand",
+          "callee": "NewPrintPPPActiveCommand",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestNewPrintPPPActiveCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestNewPrintPPPActiveCommand",
+          "callee": "assert.False",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestNewPrintPPPActiveCommand",
+          "callee": "isStreamingCommand",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestNewStreamPPPActiveCommand",
+          "callee": "t.Run",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestNewStreamPPPActiveCommand",
+          "callee": "NewStreamPPPActiveCommand",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestNewStreamPPPActiveCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestNewStreamPPPActiveCommand",
+          "callee": "assert.True",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestNewStreamPPPActiveCommand",
+          "callee": "assert.True",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestNewStreamPPPActiveCommand",
+          "callee": "isStreamingCommand",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestNewStreamPPPActiveCommand",
+          "callee": "assert.NotContains",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestNewStreamPPPActiveCommand",
+          "callee": "t.Run",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestNewStreamPPPActiveCommand",
+          "callee": "NewStreamPPPActiveCommand",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestNewStreamPPPActiveCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestNewStreamPPPActiveCommand",
+          "callee": "assert.True",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestNewStreamPPPActiveCommand",
+          "callee": "isStreamingCommand",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestNewKickPPPActiveCommand",
+          "callee": "NewKickPPPActiveCommand",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestNewKickPPPActiveCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestNewKickPPPActiveCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 47
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "t.Run",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "ParsePPPActiveSessions",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "require.Len",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "assert.Equal",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "assert.Equal",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "assert.Equal",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "assert.Equal",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "assert.Equal",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "assert.Equal",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "assert.False",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "t.Run",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "assert.True",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "ParsePPPActiveSessions",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "t.Run",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "ParsePPPActiveSessions",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "require.Len",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "assert.Equal",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "t.Run",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "assert.Empty",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestParsePPPActiveSessions",
+          "callee": "ParsePPPActiveSessions",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "t.Run",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "NewAddPPPProfileCommand",
+          "lineNumber": 100
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 101
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 103
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "assert.NotContains",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "t.Run",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "IsolirProfileParams",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 110
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 111
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "NewAddPPPProfileCommand",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestNewAddPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 117
+        },
+        {
+          "caller": "TestNewSetPPPProfileCommand",
+          "callee": "NewSetPPPProfileCommand",
+          "lineNumber": 122
+        },
+        {
+          "caller": "TestNewSetPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestNewSetPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestNewSetPPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestNewSetPPPProfileCommand",
+          "callee": "assert.NotContains",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestNewRemovePPPProfileCommand",
+          "callee": "NewRemovePPPProfileCommand",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestNewRemovePPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestNewRemovePPPProfileCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestParsePPPProfiles",
+          "callee": "ParsePPPProfiles",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestParsePPPProfiles",
+          "callee": "require.Len",
+          "lineNumber": 141
+        },
+        {
+          "caller": "TestParsePPPProfiles",
+          "callee": "assert.Equal",
+          "lineNumber": 143
+        },
+        {
+          "caller": "TestParsePPPProfiles",
+          "callee": "assert.Equal",
+          "lineNumber": 144
+        },
+        {
+          "caller": "TestParsePPPProfiles",
+          "callee": "assert.Equal",
+          "lineNumber": 145
+        },
+        {
+          "caller": "TestParsePPPProfiles",
+          "callee": "assert.Equal",
+          "lineNumber": 146
+        },
+        {
+          "caller": "TestFilterInactivePPPoESecrets",
+          "callee": "FilterInactivePPPoESecrets",
+          "lineNumber": 159
+        },
+        {
+          "caller": "TestFilterInactivePPPoESecrets",
+          "callee": "require.Len",
+          "lineNumber": 160
+        },
+        {
+          "caller": "TestFilterInactivePPPoESecrets",
+          "callee": "assert.Contains",
+          "lineNumber": 162
+        },
+        {
+          "caller": "TestFilterInactivePPPoESecrets",
+          "callee": "assert.Contains",
+          "lineNumber": 163
+        },
+        {
+          "caller": "TestFilterInactivePPPoESecrets",
+          "callee": "assert.NotContains",
+          "lineNumber": 164
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 9,
+        "functionCount": 9,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp_profile.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 196,
+      "nonEmptyLines": 186,
+      "functions": [
+        {
+          "name": "IsolirProfileParams",
+          "startLine": 78,
+          "endLine": 87,
+          "params": []
+        },
+        {
+          "name": "NewPrintPPPProfilesCommand",
+          "startLine": 91,
+          "endLine": 100,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewAddPPPProfileCommand",
+          "startLine": 105,
+          "endLine": 124,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewSetPPPProfileCommand",
+          "startLine": 129,
+          "endLine": 147,
+          "params": [
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemovePPPProfileCommand",
+          "startLine": 150,
+          "endLine": 155,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "ParsePPPProfiles",
+          "startLine": 159,
+          "endLine": 187,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "setIfNonEmpty",
+          "startLine": 192,
+          "endLine": 196,
+          "params": [
+            "args",
+            "key",
+            "value"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PPPProfileParams",
+          "startLine": 31,
+          "endLine": 47,
+          "methods": [],
+          "properties": [
+            "Name",
+            "RateLimit",
+            "LocalAddress",
+            "RemoteAddress",
+            "DNSServer",
+            "ParentQueue",
+            "AddressList",
+            "Comment",
+            "SharedUsers",
+            "OnlyOne",
+            "UseMPLS",
+            "UseCompression",
+            "UseEncryption",
+            "ChangeTCPMSS",
+            "BridgeLearning"
+          ]
+        },
+        {
+          "name": "PPPProfile",
+          "startLine": 53,
+          "endLine": 70,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "RateLimit",
+            "LocalAddress",
+            "RemoteAddress",
+            "DNSServer",
+            "ParentQueue",
+            "AddressList",
+            "Comment",
+            "SharedUsers",
+            "OnlyOne",
+            "UseMPLS",
+            "UseCompression",
+            "UseEncryption",
+            "ChangeTCPMSS",
+            "BridgeLearning"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PPPProfileParams",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "PPPProfile",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "IsolirProfileParams",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintPPPProfilesCommand",
+          "line": 91,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddPPPProfileCommand",
+          "line": 105,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetPPPProfileCommand",
+          "line": 129,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemovePPPProfileCommand",
+          "line": 150,
+          "isDefault": false
+        },
+        {
+          "name": "ParsePPPProfiles",
+          "line": 159,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 109
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 110
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 111
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 112
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 113
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 114
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 115
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 116
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 117
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 118
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 119
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 120
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 121
+        },
+        {
+          "caller": "NewAddPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 122
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 131
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 132
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 133
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 134
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 135
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 136
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 137
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 138
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 139
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 140
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 141
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 142
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 143
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 144
+        },
+        {
+          "caller": "NewSetPPPProfileCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 145
+        },
+        {
+          "caller": "ParsePPPProfiles",
+          "callee": "make",
+          "lineNumber": 160
+        },
+        {
+          "caller": "ParsePPPProfiles",
+          "callee": "len",
+          "lineNumber": 160
+        },
+        {
+          "caller": "ParsePPPProfiles",
+          "callee": "append",
+          "lineNumber": 167
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 8,
+        "functionCount": 7,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 166,
+      "nonEmptyLines": 146,
+      "functions": [
+        {
+          "name": "TestNewAddPPPoESecretCommand",
+          "startLine": 14,
+          "endLine": 58,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewSetPPPoESecretCommand",
+          "startLine": 60,
+          "endLine": 70,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewRemovePPPoESecretCommand",
+          "startLine": 72,
+          "endLine": 76,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestNewPrintPPPoESecretsCommand",
+          "startLine": 78,
+          "endLine": 91,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestParsePPPoESecrets",
+          "startLine": 95,
+          "endLine": 148,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestFindPPPoESecretRosID",
+          "startLine": 150,
+          "endLine": 166,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestNewAddPPPoESecretCommand",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewSetPPPoESecretCommand",
+          "line": 60,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewRemovePPPoESecretCommand",
+          "line": 72,
+          "isDefault": false
+        },
+        {
+          "name": "TestNewPrintPPPoESecretsCommand",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "TestParsePPPoESecrets",
+          "line": 95,
+          "isDefault": false
+        },
+        {
+          "name": "TestFindPPPoESecretRosID",
+          "line": 150,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "t.Run",
+          "lineNumber": 15
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "NewAddPPPoESecretCommand",
+          "lineNumber": 16
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 25
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.NotContains",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.NotContains",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.NotContains",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "t.Run",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "NewAddPPPoESecretCommand",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "t.Run",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "NewAddPPPoESecretCommand",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "t.Run",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "NewAddPPPoESecretCommand",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "assert.False",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestNewAddPPPoESecretCommand",
+          "callee": "isStreamingCommand",
+          "lineNumber": 56
+        },
+        {
+          "caller": "TestNewSetPPPoESecretCommand",
+          "callee": "NewSetPPPoESecretCommand",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestNewSetPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestNewSetPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestNewSetPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestNewSetPPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestNewSetPPPoESecretCommand",
+          "callee": "assert.NotContains",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestNewRemovePPPoESecretCommand",
+          "callee": "NewRemovePPPoESecretCommand",
+          "lineNumber": 73
+        },
+        {
+          "caller": "TestNewRemovePPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestNewRemovePPPoESecretCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestNewPrintPPPoESecretsCommand",
+          "callee": "t.Run",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestNewPrintPPPoESecretsCommand",
+          "callee": "NewPrintPPPoESecretsCommand",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestNewPrintPPPoESecretsCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestNewPrintPPPoESecretsCommand",
+          "callee": "assert.Empty",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestNewPrintPPPoESecretsCommand",
+          "callee": "t.Run",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestNewPrintPPPoESecretsCommand",
+          "callee": "NewPrintPPPoESecretsCommand",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestNewPrintPPPoESecretsCommand",
+          "callee": "assert.Equal",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestNewPrintPPPoESecretsCommand",
+          "callee": "t.Run",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestNewPrintPPPoESecretsCommand",
+          "callee": "assert.False",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestNewPrintPPPoESecretsCommand",
+          "callee": "isStreamingCommand",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestNewPrintPPPoESecretsCommand",
+          "callee": "NewPrintPPPoESecretsCommand",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "t.Run",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "ParsePPPoESecrets",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "require.Len",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.Equal",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.Equal",
+          "lineNumber": 110
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.Equal",
+          "lineNumber": 111
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.Equal",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.Equal",
+          "lineNumber": 113
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.Equal",
+          "lineNumber": 114
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.Equal",
+          "lineNumber": 115
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.False",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.Equal",
+          "lineNumber": 117
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.Equal",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "t.Run",
+          "lineNumber": 121
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "ParsePPPoESecrets",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "require.Len",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.Equal",
+          "lineNumber": 128
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "t.Run",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.Empty",
+          "lineNumber": 135
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "ParsePPPoESecrets",
+          "lineNumber": 135
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "t.Run",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.True",
+          "lineNumber": 142
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "ParsePPPoESecrets",
+          "lineNumber": 142
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "t.Run",
+          "lineNumber": 145
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "assert.Empty",
+          "lineNumber": 146
+        },
+        {
+          "caller": "TestParsePPPoESecrets",
+          "callee": "ParsePPPoESecrets",
+          "lineNumber": 146
+        },
+        {
+          "caller": "TestFindPPPoESecretRosID",
+          "callee": "t.Run",
+          "lineNumber": 156
+        },
+        {
+          "caller": "TestFindPPPoESecretRosID",
+          "callee": "FindPPPoESecretRosID",
+          "lineNumber": 157
+        },
+        {
+          "caller": "TestFindPPPoESecretRosID",
+          "callee": "require.NoError",
+          "lineNumber": 158
+        },
+        {
+          "caller": "TestFindPPPoESecretRosID",
+          "callee": "assert.Equal",
+          "lineNumber": 159
+        },
+        {
+          "caller": "TestFindPPPoESecretRosID",
+          "callee": "t.Run",
+          "lineNumber": 162
+        },
+        {
+          "caller": "TestFindPPPoESecretRosID",
+          "callee": "FindPPPoESecretRosID",
+          "lineNumber": 163
+        },
+        {
+          "caller": "TestFindPPPoESecretRosID",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 164
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/queue.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 215,
+      "nonEmptyLines": 203,
+      "functions": [
+        {
+          "name": "SuspendQueueParams",
+          "startLine": 78,
+          "endLine": 92,
+          "params": [
+            "targetIP",
+            "reason",
+            "throttleSpeed"
+          ]
+        },
+        {
+          "name": "NewPrintSimpleQueuesCommand",
+          "startLine": 96,
+          "endLine": 105,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewPrintParentQueuesCommand",
+          "startLine": 110,
+          "endLine": 115,
+          "params": []
+        },
+        {
+          "name": "NewStreamQueueStatsCommand",
+          "startLine": 128,
+          "endLine": 150,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewAddSimpleQueueCommand",
+          "startLine": 153,
+          "endLine": 172,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewRemoveSimpleQueueCommand",
+          "startLine": 176,
+          "endLine": 181,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "ParseSimpleQueues",
+          "startLine": 185,
+          "endLine": 215,
+          "params": [
+            "result"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SimpleQueueParams",
+          "startLine": 32,
+          "endLine": 44,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Target",
+            "MaxLimit",
+            "LimitAt",
+            "BurstLimit",
+            "BurstThreshold",
+            "BurstTime",
+            "Priority",
+            "Parent",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "SimpleQueue",
+          "startLine": 50,
+          "endLine": 69,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Target",
+            "Parent",
+            "MaxLimit",
+            "LimitAt",
+            "BurstLimit",
+            "BurstThreshold",
+            "BurstTime",
+            "Priority",
+            "Queue",
+            "Bytes",
+            "Packets",
+            "Dropped",
+            "Rate",
+            "PacketRate",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "QueueStreamParams",
+          "startLine": 118,
+          "endLine": 123,
+          "methods": [],
+          "properties": [
+            "NameFilter",
+            "ParentFilter",
+            "ParentsOnly",
+            "Interval"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SimpleQueueParams",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "SimpleQueue",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "SuspendQueueParams",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintSimpleQueuesCommand",
+          "line": 96,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintParentQueuesCommand",
+          "line": 110,
+          "isDefault": false
+        },
+        {
+          "name": "QueueStreamParams",
+          "line": 118,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamQueueStatsCommand",
+          "line": 128,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddSimpleQueueCommand",
+          "line": 153,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveSimpleQueueCommand",
+          "line": 176,
+          "isDefault": false
+        },
+        {
+          "name": "ParseSimpleQueues",
+          "line": 185,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SuspendQueueParams",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 84
+        },
+        {
+          "caller": "NewAddSimpleQueueCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 158
+        },
+        {
+          "caller": "NewAddSimpleQueueCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 159
+        },
+        {
+          "caller": "NewAddSimpleQueueCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 160
+        },
+        {
+          "caller": "NewAddSimpleQueueCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 161
+        },
+        {
+          "caller": "NewAddSimpleQueueCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 162
+        },
+        {
+          "caller": "NewAddSimpleQueueCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 163
+        },
+        {
+          "caller": "NewAddSimpleQueueCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 164
+        },
+        {
+          "caller": "NewAddSimpleQueueCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 165
+        },
+        {
+          "caller": "ParseSimpleQueues",
+          "callee": "make",
+          "lineNumber": 186
+        },
+        {
+          "caller": "ParseSimpleQueues",
+          "callee": "len",
+          "lineNumber": 186
+        },
+        {
+          "caller": "ParseSimpleQueues",
+          "callee": "append",
+          "lineNumber": 193
+        },
+        {
+          "caller": "ParseSimpleQueues",
+          "callee": "strings.EqualFold",
+          "lineNumber": 211
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 10,
+        "functionCount": 7,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/stream.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 147,
+      "nonEmptyLines": 127,
+      "functions": [
+        {
+          "name": "Stream",
+          "startLine": 37,
+          "endLine": 65,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "newStreamHandle",
+          "startLine": 82,
+          "endLine": 91,
+          "params": [
+            "listen"
+          ]
+        },
+        {
+          "name": "Chan",
+          "startLine": 96,
+          "endLine": 98,
+          "params": []
+        },
+        {
+          "name": "Cancel",
+          "startLine": 103,
+          "endLine": 118,
+          "params": []
+        },
+        {
+          "name": "Err",
+          "startLine": 122,
+          "endLine": 126,
+          "params": []
+        },
+        {
+          "name": "pump",
+          "startLine": 133,
+          "endLine": 147,
+          "params": [
+            "d"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "streamHandle",
+          "startLine": 71,
+          "endLine": 80,
+          "methods": [
+            "Chan",
+            "Cancel",
+            "Err",
+            "pump"
+          ],
+          "properties": [
+            "listen",
+            "out",
+            "doneCh",
+            "mu",
+            "err",
+            "closed"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Stream",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "Chan",
+          "line": 96,
+          "isDefault": false
+        },
+        {
+          "name": "Cancel",
+          "line": 103,
+          "isDefault": false
+        },
+        {
+          "name": "Err",
+          "line": 122,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Stream",
+          "callee": "isStreamingCommand",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Stream",
+          "callee": "fmt.Errorf",
+          "lineNumber": 39
+        },
+        {
+          "caller": "Stream",
+          "callee": "ctx.Done",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Stream",
+          "callee": "fmt.Errorf",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Stream",
+          "callee": "ctx.Err",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Stream",
+          "callee": "func() { <-d.streamSem }",
+          "lineNumber": 47
+        },
+        {
+          "caller": "Stream",
+          "callee": "d.stream.get",
+          "lineNumber": 49
+        },
+        {
+          "caller": "Stream",
+          "callee": "buildArgs",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Stream",
+          "callee": "client.ListenArgsContext",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Stream",
+          "callee": "context.Background",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Stream",
+          "callee": "fmt.Errorf",
+          "lineNumber": 57
+        },
+        {
+          "caller": "Stream",
+          "callee": "newStreamHandle",
+          "lineNumber": 60
+        },
+        {
+          "caller": "Stream",
+          "callee": "d.registerStream",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Stream",
+          "callee": "h.pump",
+          "lineNumber": 62
+        },
+        {
+          "caller": "newStreamHandle",
+          "callee": "make",
+          "lineNumber": 88
+        },
+        {
+          "caller": "newStreamHandle",
+          "callee": "make",
+          "lineNumber": 89
+        },
+        {
+          "caller": "Cancel",
+          "callee": "h.mu.Lock",
+          "lineNumber": 104
+        },
+        {
+          "caller": "Cancel",
+          "callee": "h.mu.Unlock",
+          "lineNumber": 106
+        },
+        {
+          "caller": "Cancel",
+          "callee": "h.mu.Unlock",
+          "lineNumber": 110
+        },
+        {
+          "caller": "Cancel",
+          "callee": "h.listen.CancelContext",
+          "lineNumber": 112
+        },
+        {
+          "caller": "Cancel",
+          "callee": "context.Background",
+          "lineNumber": 112
+        },
+        {
+          "caller": "Cancel",
+          "callee": "fmt.Errorf",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Err",
+          "callee": "h.mu.Lock",
+          "lineNumber": 123
+        },
+        {
+          "caller": "Err",
+          "callee": "h.mu.Unlock",
+          "lineNumber": 124
+        },
+        {
+          "caller": "pump",
+          "callee": "close",
+          "lineNumber": 134
+        },
+        {
+          "caller": "pump",
+          "callee": "close",
+          "lineNumber": 135
+        },
+        {
+          "caller": "pump",
+          "callee": "d.unregisterStream",
+          "lineNumber": 136
+        },
+        {
+          "caller": "pump",
+          "callee": "h.listen.Chan",
+          "lineNumber": 138
+        },
+        {
+          "caller": "pump",
+          "callee": "h.mu.Lock",
+          "lineNumber": 143
+        },
+        {
+          "caller": "pump",
+          "callee": "fmt.Errorf",
+          "lineNumber": 144
+        },
+        {
+          "caller": "pump",
+          "callee": "h.mu.Unlock",
+          "lineNumber": 145
+        }
+      ],
+      "metrics": {
+        "importCount": 17,
+        "exportCount": 4,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/mikrotik/system.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 451,
+      "nonEmptyLines": 416,
+      "functions": [
+        {
+          "name": "NewPrintSystemResourceCommand",
+          "startLine": 104,
+          "endLine": 109,
+          "params": []
+        },
+        {
+          "name": "NewStreamSystemResourceCommand",
+          "startLine": 115,
+          "endLine": 123,
+          "params": [
+            "interval"
+          ]
+        },
+        {
+          "name": "NewPrintSystemIdentityCommand",
+          "startLine": 128,
+          "endLine": 133,
+          "params": []
+        },
+        {
+          "name": "NewSetSystemIdentityCommand",
+          "startLine": 137,
+          "endLine": 142,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "NewPrintSystemClockCommand",
+          "startLine": 146,
+          "endLine": 151,
+          "params": []
+        },
+        {
+          "name": "NewPrintLogCommand",
+          "startLine": 157,
+          "endLine": 167,
+          "params": [
+            "topicsFilter"
+          ]
+        },
+        {
+          "name": "NewPingCommand",
+          "startLine": 175,
+          "endLine": 186,
+          "params": [
+            "host",
+            "count"
+          ]
+        },
+        {
+          "name": "NewPingStreamCommand",
+          "startLine": 191,
+          "endLine": 198,
+          "params": [
+            "host"
+          ]
+        },
+        {
+          "name": "ParseSystemResource",
+          "startLine": 202,
+          "endLine": 241,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseSystemIdentity",
+          "startLine": 244,
+          "endLine": 249,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseSystemClock",
+          "startLine": 252,
+          "endLine": 263,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParseLogEntries",
+          "startLine": 267,
+          "endLine": 282,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "ParsePingResults",
+          "startLine": 286,
+          "endLine": 307,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "NewPrintSystemSchedulersCommand",
+          "startLine": 343,
+          "endLine": 352,
+          "params": [
+            "nameFilter"
+          ]
+        },
+        {
+          "name": "NewAddSystemSchedulerCommand",
+          "startLine": 355,
+          "endLine": 370,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "NewSetSystemSchedulerCommand",
+          "startLine": 373,
+          "endLine": 382,
+          "params": [
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "ParseSystemSchedulers",
+          "startLine": 385,
+          "endLine": 406,
+          "params": [
+            "result"
+          ]
+        },
+        {
+          "name": "NewPrintSystemScriptsCommand",
+          "startLine": 410,
+          "endLine": 422,
+          "params": [
+            "ownerFilter",
+            "commentFilter"
+          ]
+        },
+        {
+          "name": "NewRemoveSystemScriptCommand",
+          "startLine": 425,
+          "endLine": 430,
+          "params": [
+            "rosID"
+          ]
+        },
+        {
+          "name": "ParseSystemScripts",
+          "startLine": 433,
+          "endLine": 450,
+          "params": [
+            "result"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SystemResource",
+          "startLine": 33,
+          "endLine": 51,
+          "methods": [],
+          "properties": [
+            "CPULoad",
+            "CPUCount",
+            "CPUFrequency",
+            "FreeMemory",
+            "TotalMemory",
+            "FreeHDDSpace",
+            "TotalHDDSpace",
+            "Architecture",
+            "Model",
+            "SerialNumber",
+            "FirmwareType",
+            "Voltage",
+            "Temperature",
+            "BadBlocks",
+            "Uptime",
+            "Version",
+            "BoardName"
+          ]
+        },
+        {
+          "name": "SystemIdentity",
+          "startLine": 54,
+          "endLine": 56,
+          "methods": [],
+          "properties": [
+            "Name"
+          ]
+        },
+        {
+          "name": "SystemClock",
+          "startLine": 59,
+          "endLine": 64,
+          "methods": [],
+          "properties": [
+            "Time",
+            "Date",
+            "TimeZoneName",
+            "GMTOffset"
+          ]
+        },
+        {
+          "name": "LogEntry",
+          "startLine": 69,
+          "endLine": 74,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Time",
+            "Topics",
+            "Message"
+          ]
+        },
+        {
+          "name": "PingResult",
+          "startLine": 89,
+          "endLine": 100,
+          "methods": [],
+          "properties": [
+            "Seq",
+            "Host",
+            "Sent",
+            "Received",
+            "PacketLoss",
+            "MinRTT",
+            "AvgRTT",
+            "MaxRTT",
+            "TTL",
+            "Time"
+          ]
+        },
+        {
+          "name": "SystemSchedulerParams",
+          "startLine": 310,
+          "endLine": 318,
+          "methods": [],
+          "properties": [
+            "Name",
+            "StartTime",
+            "StartDate",
+            "Interval",
+            "OnEvent",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "SystemScheduler",
+          "startLine": 321,
+          "endLine": 331,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "StartTime",
+            "StartDate",
+            "Interval",
+            "OnEvent",
+            "NextRun",
+            "Comment",
+            "Disabled"
+          ]
+        },
+        {
+          "name": "SystemScript",
+          "startLine": 334,
+          "endLine": 340,
+          "methods": [],
+          "properties": [
+            "RosID",
+            "Name",
+            "Owner",
+            "Source",
+            "Comment"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SystemResource",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "SystemIdentity",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "SystemClock",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "LogEntry",
+          "line": 69,
+          "isDefault": false
+        },
+        {
+          "name": "PingResult",
+          "line": 89,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintSystemResourceCommand",
+          "line": 104,
+          "isDefault": false
+        },
+        {
+          "name": "NewStreamSystemResourceCommand",
+          "line": 115,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintSystemIdentityCommand",
+          "line": 128,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetSystemIdentityCommand",
+          "line": 137,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintSystemClockCommand",
+          "line": 146,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintLogCommand",
+          "line": 157,
+          "isDefault": false
+        },
+        {
+          "name": "NewPingCommand",
+          "line": 175,
+          "isDefault": false
+        },
+        {
+          "name": "NewPingStreamCommand",
+          "line": 191,
+          "isDefault": false
+        },
+        {
+          "name": "ParseSystemResource",
+          "line": 202,
+          "isDefault": false
+        },
+        {
+          "name": "ParseSystemIdentity",
+          "line": 244,
+          "isDefault": false
+        },
+        {
+          "name": "ParseSystemClock",
+          "line": 252,
+          "isDefault": false
+        },
+        {
+          "name": "ParseLogEntries",
+          "line": 267,
+          "isDefault": false
+        },
+        {
+          "name": "ParsePingResults",
+          "line": 286,
+          "isDefault": false
+        },
+        {
+          "name": "SystemSchedulerParams",
+          "line": 310,
+          "isDefault": false
+        },
+        {
+          "name": "SystemScheduler",
+          "line": 321,
+          "isDefault": false
+        },
+        {
+          "name": "SystemScript",
+          "line": 334,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintSystemSchedulersCommand",
+          "line": 343,
+          "isDefault": false
+        },
+        {
+          "name": "NewAddSystemSchedulerCommand",
+          "line": 355,
+          "isDefault": false
+        },
+        {
+          "name": "NewSetSystemSchedulerCommand",
+          "line": 373,
+          "isDefault": false
+        },
+        {
+          "name": "ParseSystemSchedulers",
+          "line": 385,
+          "isDefault": false
+        },
+        {
+          "name": "NewPrintSystemScriptsCommand",
+          "line": 410,
+          "isDefault": false
+        },
+        {
+          "name": "NewRemoveSystemScriptCommand",
+          "line": 425,
+          "isDefault": false
+        },
+        {
+          "name": "ParseSystemScripts",
+          "line": 433,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ParseSystemResource",
+          "callee": "len",
+          "lineNumber": 203
+        },
+        {
+          "caller": "ParseSystemResource",
+          "callee": "strconv.Atoi",
+          "lineNumber": 208
+        },
+        {
+          "caller": "ParseSystemResource",
+          "callee": "strconv.Atoi",
+          "lineNumber": 209
+        },
+        {
+          "caller": "ParseSystemIdentity",
+          "callee": "len",
+          "lineNumber": 245
+        },
+        {
+          "caller": "ParseSystemClock",
+          "callee": "len",
+          "lineNumber": 253
+        },
+        {
+          "caller": "ParseLogEntries",
+          "callee": "make",
+          "lineNumber": 268
+        },
+        {
+          "caller": "ParseLogEntries",
+          "callee": "len",
+          "lineNumber": 268
+        },
+        {
+          "caller": "ParseLogEntries",
+          "callee": "append",
+          "lineNumber": 274
+        },
+        {
+          "caller": "ParsePingResults",
+          "callee": "make",
+          "lineNumber": 287
+        },
+        {
+          "caller": "ParsePingResults",
+          "callee": "len",
+          "lineNumber": 287
+        },
+        {
+          "caller": "ParsePingResults",
+          "callee": "strconv.Atoi",
+          "lineNumber": 289
+        },
+        {
+          "caller": "ParsePingResults",
+          "callee": "strconv.Atoi",
+          "lineNumber": 290
+        },
+        {
+          "caller": "ParsePingResults",
+          "callee": "strconv.Atoi",
+          "lineNumber": 291
+        },
+        {
+          "caller": "ParsePingResults",
+          "callee": "strconv.Atoi",
+          "lineNumber": 292
+        },
+        {
+          "caller": "ParsePingResults",
+          "callee": "strings.TrimSuffix",
+          "lineNumber": 292
+        },
+        {
+          "caller": "ParsePingResults",
+          "callee": "append",
+          "lineNumber": 293
+        },
+        {
+          "caller": "NewAddSystemSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 360
+        },
+        {
+          "caller": "NewAddSystemSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 361
+        },
+        {
+          "caller": "NewAddSystemSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 362
+        },
+        {
+          "caller": "NewAddSystemSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 363
+        },
+        {
+          "caller": "NewSetSystemSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 375
+        },
+        {
+          "caller": "NewSetSystemSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 376
+        },
+        {
+          "caller": "NewSetSystemSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 377
+        },
+        {
+          "caller": "NewSetSystemSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 378
+        },
+        {
+          "caller": "NewSetSystemSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 379
+        },
+        {
+          "caller": "NewSetSystemSchedulerCommand",
+          "callee": "setIfNonEmpty",
+          "lineNumber": 380
+        },
+        {
+          "caller": "ParseSystemSchedulers",
+          "callee": "make",
+          "lineNumber": 386
+        },
+        {
+          "caller": "ParseSystemSchedulers",
+          "callee": "len",
+          "lineNumber": 386
+        },
+        {
+          "caller": "ParseSystemSchedulers",
+          "callee": "append",
+          "lineNumber": 393
+        },
+        {
+          "caller": "ParseSystemSchedulers",
+          "callee": "strings.EqualFold",
+          "lineNumber": 402
+        },
+        {
+          "caller": "ParseSystemScripts",
+          "callee": "make",
+          "lineNumber": 434
+        },
+        {
+          "caller": "ParseSystemScripts",
+          "callee": "len",
+          "lineNumber": 434
+        },
+        {
+          "caller": "ParseSystemScripts",
+          "callee": "append",
+          "lineNumber": 441
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 28,
+        "functionCount": 20,
+        "classCount": 8
+      }
+    },
+    {
+      "path": "internal/driver/netconf/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 34,
+      "functions": [
+        {
+          "name": "Classify",
+          "startLine": 26,
+          "endLine": 31,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 34,
+          "endLine": 40,
+          "params": [
+            "op"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Classify",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 34,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Translate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 37
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/driver/zteolt/commands.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 32,
+      "functions": [
+        {
+          "name": "Classify",
+          "startLine": 24,
+          "endLine": 29,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 32,
+          "endLine": 38,
+          "params": [
+            "op"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Classify",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 32,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Translate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 35
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/usecase/device/manage_device.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 201,
+      "nonEmptyLines": 180,
+      "functions": [
+        {
+          "name": "NewManageDeviceUseCase",
+          "startLine": 57,
+          "endLine": 63,
+          "params": [
+            "repo",
+            "vault",
+            "evicter"
+          ]
+        },
+        {
+          "name": "CreateDevice",
+          "startLine": 66,
+          "endLine": 80,
+          "params": [
+            "ctx",
+            "d",
+            "c"
+          ]
+        },
+        {
+          "name": "GetDevice",
+          "startLine": 83,
+          "endLine": 85,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "ListDevices",
+          "startLine": 88,
+          "endLine": 90,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "UpdateDevice",
+          "startLine": 93,
+          "endLine": 118,
+          "params": [
+            "ctx",
+            "d",
+            "c"
+          ]
+        },
+        {
+          "name": "DeleteDevice",
+          "startLine": 121,
+          "endLine": 129,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "TestConnection",
+          "startLine": 132,
+          "endLine": 201,
+          "params": [
+            "ctx",
+            "driver",
+            "deviceID",
+            "selectedIface"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "DeviceInterfaceDetail",
+          "startLine": 15,
+          "endLine": 23,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Type",
+            "Disabled",
+            "Running",
+            "RxBps",
+            "TxBps",
+            "MACAddress"
+          ]
+        },
+        {
+          "name": "DeviceTestResult",
+          "startLine": 26,
+          "endLine": 42,
+          "methods": [],
+          "properties": [
+            "DeviceID",
+            "Status",
+            "LatencyMS",
+            "Uptime",
+            "Version",
+            "BoardName",
+            "Identity",
+            "CPULoad",
+            "FreeMemory",
+            "TotalMemory",
+            "Interfaces",
+            "InterfaceDetails",
+            "RxBps",
+            "TxBps",
+            "Message"
+          ]
+        },
+        {
+          "name": "DriverEvicter",
+          "startLine": 45,
+          "endLine": 47,
+          "methods": [
+            "Evict"
+          ],
+          "properties": []
+        },
+        {
+          "name": "ManageDeviceUseCase",
+          "startLine": 50,
+          "endLine": 54,
+          "methods": [
+            "CreateDevice",
+            "GetDevice",
+            "ListDevices",
+            "UpdateDevice",
+            "DeleteDevice",
+            "TestConnection"
+          ],
+          "properties": [
+            "repo",
+            "vault",
+            "evicter"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DeviceInterfaceDetail",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "DeviceTestResult",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "DriverEvicter",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "ManageDeviceUseCase",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "NewManageDeviceUseCase",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "CreateDevice",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "GetDevice",
+          "line": 83,
+          "isDefault": false
+        },
+        {
+          "name": "ListDevices",
+          "line": 88,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateDevice",
+          "line": 93,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteDevice",
+          "line": 121,
+          "isDefault": false
+        },
+        {
+          "name": "TestConnection",
+          "line": 132,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 68
+        },
+        {
+          "caller": "CreateDevice",
+          "callee": "uc.repo.Save",
+          "lineNumber": 70
+        },
+        {
+          "caller": "CreateDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 71
+        },
+        {
+          "caller": "CreateDevice",
+          "callee": "uc.vault.Save",
+          "lineNumber": 73
+        },
+        {
+          "caller": "CreateDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 74
+        },
+        {
+          "caller": "CreateDevice",
+          "callee": "uc.evicter.Evict",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GetDevice",
+          "callee": "uc.repo.FindByID",
+          "lineNumber": 84
+        },
+        {
+          "caller": "ListDevices",
+          "callee": "uc.repo.FindAll",
+          "lineNumber": 89
+        },
+        {
+          "caller": "UpdateDevice",
+          "callee": "uc.repo.Update",
+          "lineNumber": 94
+        },
+        {
+          "caller": "UpdateDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 95
+        },
+        {
+          "caller": "UpdateDevice",
+          "callee": "len",
+          "lineNumber": 97
+        },
+        {
+          "caller": "UpdateDevice",
+          "callee": "uc.vault.Get",
+          "lineNumber": 98
+        },
+        {
+          "caller": "UpdateDevice",
+          "callee": "uc.vault.Save",
+          "lineNumber": 110
+        },
+        {
+          "caller": "UpdateDevice",
+          "callee": "fmt.Errorf",
+          "lineNumber": 111
+        },
+        {
+          "caller": "UpdateDevice",
+          "callee": "uc.evicter.Evict",
+          "lineNumber": 115
+        },
+        {
+          "caller": "DeleteDevice",
+          "callee": "uc.repo.Delete",
+          "lineNumber": 122
+        },
+        {
+          "caller": "DeleteDevice",
+          "callee": "uc.evicter.Evict",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "time.Now",
+          "lineNumber": 133
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "mikrotik.NewPrintSystemResourceCommand",
+          "lineNumber": 136
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "driver.Execute",
+          "lineNumber": 137
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "time.Since(start).Milliseconds",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "time.Since",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "err.Error",
+          "lineNumber": 145
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "mikrotik.ParseSystemResource",
+          "lineNumber": 149
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 150
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 151
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "mikrotik.NewPrintSystemIdentityCommand",
+          "lineNumber": 167
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "driver.Execute",
+          "lineNumber": 168
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "len",
+          "lineNumber": 168
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "mikrotik.NewPrintInterfacesCommand",
+          "lineNumber": 173
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "driver.Execute",
+          "lineNumber": 174
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "mikrotik.ParseInterfaces",
+          "lineNumber": 175
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "append",
+          "lineNumber": 177
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "append",
+          "lineNumber": 178
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "mikrotik.NewMonitorTrafficOnceCommand",
+          "lineNumber": 190
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "driver.Execute",
+          "lineNumber": 191
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "mikrotik.ParseInterfaceTrafficStats",
+          "lineNumber": 192
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 193
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 194
+        }
+      ],
+      "metrics": {
+        "importCount": 40,
+        "exportCount": 11,
+        "functionCount": 7,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "internal/usecase/hotspot/hotspot_usecase.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 409,
+      "nonEmptyLines": 364,
+      "functions": [
+        {
+          "name": "NewHotspotUseCase",
+          "startLine": 37,
+          "endLine": 42,
+          "params": [
+            "templateDir"
+          ]
+        },
+        {
+          "name": "CreateProfile",
+          "startLine": 45,
+          "endLine": 48,
+          "params": [
+            "ctx",
+            "driver",
+            "p"
+          ]
+        },
+        {
+          "name": "GetProfiles",
+          "startLine": 51,
+          "endLine": 58,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "GenerateVouchers",
+          "startLine": 61,
+          "endLine": 69,
+          "params": [
+            "ctx",
+            "driver",
+            "p",
+            "count"
+          ]
+        },
+        {
+          "name": "GetUsers",
+          "startLine": 72,
+          "endLine": 79,
+          "params": [
+            "ctx",
+            "driver",
+            "profileFilter"
+          ]
+        },
+        {
+          "name": "GetUser",
+          "startLine": 82,
+          "endLine": 96,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "RemoveUser",
+          "startLine": 99,
+          "endLine": 102,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "ResetUserCounters",
+          "startLine": 105,
+          "endLine": 108,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "GetActiveSessions",
+          "startLine": 111,
+          "endLine": 118,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "RemoveActiveSession",
+          "startLine": 121,
+          "endLine": 127,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "GetHosts",
+          "startLine": 130,
+          "endLine": 137,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "RemoveHost",
+          "startLine": 140,
+          "endLine": 146,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "GetHotspotServers",
+          "startLine": 149,
+          "endLine": 156,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "GetIPPools",
+          "startLine": 159,
+          "endLine": 166,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "GetParentQueues",
+          "startLine": 169,
+          "endLine": 183,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "GetNATRules",
+          "startLine": 186,
+          "endLine": 193,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "SetupExpireMonitor",
+          "startLine": 196,
+          "endLine": 215,
+          "params": [
+            "ctx",
+            "driver",
+            "interval"
+          ]
+        },
+        {
+          "name": "GetReports",
+          "startLine": 218,
+          "endLine": 228,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "DeleteReport",
+          "startLine": 231,
+          "endLine": 237,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "GetTodayIncome",
+          "startLine": 240,
+          "endLine": 257,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "UpdateProfile",
+          "startLine": 260,
+          "endLine": 263,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "DeleteProfile",
+          "startLine": 266,
+          "endLine": 272,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "AddUser",
+          "startLine": 275,
+          "endLine": 285,
+          "params": [
+            "ctx",
+            "driver",
+            "p"
+          ]
+        },
+        {
+          "name": "UpdateUser",
+          "startLine": 288,
+          "endLine": 291,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "p"
+          ]
+        },
+        {
+          "name": "GetUsersByTag",
+          "startLine": 294,
+          "endLine": 314,
+          "params": [
+            "ctx",
+            "driver",
+            "tag"
+          ]
+        },
+        {
+          "name": "GetReportsByFilter",
+          "startLine": 317,
+          "endLine": 339,
+          "params": [
+            "ctx",
+            "driver",
+            "date",
+            "month",
+            "year"
+          ]
+        },
+        {
+          "name": "GetDashboardSummary",
+          "startLine": 342,
+          "endLine": 379,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "RenderVoucherHTML",
+          "startLine": 382,
+          "endLine": 401,
+          "params": [
+            "batch",
+            "layout",
+            "hotspotName",
+            "dnsName",
+            "logo"
+          ]
+        },
+        {
+          "name": "NewMikhmonUseCase",
+          "startLine": 407,
+          "endLine": 409,
+          "params": [
+            "templateDir"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "HotspotDashboardSummary",
+          "startLine": 19,
+          "endLine": 28,
+          "methods": [],
+          "properties": [
+            "Uptime",
+            "Version",
+            "CPULoad",
+            "BoardName",
+            "Identity",
+            "TotalUsers",
+            "ActiveUsers",
+            "TodayIncome"
+          ]
+        },
+        {
+          "name": "HotspotUseCase",
+          "startLine": 31,
+          "endLine": 34,
+          "methods": [
+            "CreateProfile",
+            "GetProfiles",
+            "GenerateVouchers",
+            "GetUsers",
+            "GetUser",
+            "RemoveUser",
+            "ResetUserCounters",
+            "GetActiveSessions",
+            "RemoveActiveSession",
+            "GetHosts",
+            "RemoveHost",
+            "GetHotspotServers",
+            "GetIPPools",
+            "GetParentQueues",
+            "GetNATRules",
+            "SetupExpireMonitor",
+            "GetReports",
+            "DeleteReport",
+            "GetTodayIncome",
+            "UpdateProfile",
+            "DeleteProfile",
+            "AddUser",
+            "UpdateUser",
+            "GetUsersByTag",
+            "GetReportsByFilter",
+            "GetDashboardSummary",
+            "RenderVoucherHTML"
+          ],
+          "properties": [
+            "TemplateDir"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "HotspotDashboardSummary",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "HotspotUseCase",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "NewHotspotUseCase",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "CreateProfile",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "GetProfiles",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "GenerateVouchers",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "GetUsers",
+          "line": 72,
+          "isDefault": false
+        },
+        {
+          "name": "GetUser",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveUser",
+          "line": 99,
+          "isDefault": false
+        },
+        {
+          "name": "ResetUserCounters",
+          "line": 105,
+          "isDefault": false
+        },
+        {
+          "name": "GetActiveSessions",
+          "line": 111,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveActiveSession",
+          "line": 121,
+          "isDefault": false
+        },
+        {
+          "name": "GetHosts",
+          "line": 130,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveHost",
+          "line": 140,
+          "isDefault": false
+        },
+        {
+          "name": "GetHotspotServers",
+          "line": 149,
+          "isDefault": false
+        },
+        {
+          "name": "GetIPPools",
+          "line": 159,
+          "isDefault": false
+        },
+        {
+          "name": "GetParentQueues",
+          "line": 169,
+          "isDefault": false
+        },
+        {
+          "name": "GetNATRules",
+          "line": 186,
+          "isDefault": false
+        },
+        {
+          "name": "SetupExpireMonitor",
+          "line": 196,
+          "isDefault": false
+        },
+        {
+          "name": "GetReports",
+          "line": 218,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteReport",
+          "line": 231,
+          "isDefault": false
+        },
+        {
+          "name": "GetTodayIncome",
+          "line": 240,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateProfile",
+          "line": 260,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteProfile",
+          "line": 266,
+          "isDefault": false
+        },
+        {
+          "name": "AddUser",
+          "line": 275,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateUser",
+          "line": 288,
+          "isDefault": false
+        },
+        {
+          "name": "GetUsersByTag",
+          "line": 294,
+          "isDefault": false
+        },
+        {
+          "name": "GetReportsByFilter",
+          "line": 317,
+          "isDefault": false
+        },
+        {
+          "name": "GetDashboardSummary",
+          "line": 342,
+          "isDefault": false
+        },
+        {
+          "name": "RenderVoucherHTML",
+          "line": 382,
+          "isDefault": false
+        },
+        {
+          "name": "NewMikhmonUseCase",
+          "line": 407,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateProfile",
+          "callee": "mikhmon.NewAddMikhmonProfileCommand",
+          "lineNumber": 46
+        },
+        {
+          "caller": "CreateProfile",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 47
+        },
+        {
+          "caller": "GetProfiles",
+          "callee": "mikrotik.NewPrintHotspotUserProfilesCommand",
+          "lineNumber": 52
+        },
+        {
+          "caller": "GetProfiles",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 53
+        },
+        {
+          "caller": "GetProfiles",
+          "callee": "mikrotik.ParseHotspotUserProfiles",
+          "lineNumber": 57
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "mikhmon.NewGenerateVoucherBatchCommands",
+          "lineNumber": 62
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 64
+        },
+        {
+          "caller": "GenerateVouchers",
+          "callee": "fmt.Errorf",
+          "lineNumber": 65
+        },
+        {
+          "caller": "GetUsers",
+          "callee": "mikrotik.NewPrintHotspotUsersCommand",
+          "lineNumber": 73
+        },
+        {
+          "caller": "GetUsers",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 74
+        },
+        {
+          "caller": "GetUsers",
+          "callee": "mikrotik.ParseHotspotUsers",
+          "lineNumber": 78
+        },
+        {
+          "caller": "GetUser",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 87
+        },
+        {
+          "caller": "GetUser",
+          "callee": "mikrotik.ParseHotspotUsers",
+          "lineNumber": 91
+        },
+        {
+          "caller": "GetUser",
+          "callee": "len",
+          "lineNumber": 92
+        },
+        {
+          "caller": "GetUser",
+          "callee": "fmt.Errorf",
+          "lineNumber": 93
+        },
+        {
+          "caller": "RemoveUser",
+          "callee": "mikrotik.NewRemoveHotspotUserCommand",
+          "lineNumber": 100
+        },
+        {
+          "caller": "RemoveUser",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 101
+        },
+        {
+          "caller": "ResetUserCounters",
+          "callee": "mikrotik.NewResetHotspotUserCountersCommand",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ResetUserCounters",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 107
+        },
+        {
+          "caller": "GetActiveSessions",
+          "callee": "mikrotik.NewPrintHotspotActiveCommand",
+          "lineNumber": 112
+        },
+        {
+          "caller": "GetActiveSessions",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 113
+        },
+        {
+          "caller": "GetActiveSessions",
+          "callee": "mikrotik.ParseHotspotActiveSessions",
+          "lineNumber": 117
+        },
+        {
+          "caller": "RemoveActiveSession",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 126
+        },
+        {
+          "caller": "GetHosts",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 132
+        },
+        {
+          "caller": "RemoveHost",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 145
+        },
+        {
+          "caller": "GetHotspotServers",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 151
+        },
+        {
+          "caller": "GetIPPools",
+          "callee": "mikrotik.NewPrintIPPoolsCommand",
+          "lineNumber": 160
+        },
+        {
+          "caller": "GetIPPools",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 161
+        },
+        {
+          "caller": "GetIPPools",
+          "callee": "mikrotik.ParseIPPools",
+          "lineNumber": 165
+        },
+        {
+          "caller": "GetParentQueues",
+          "callee": "mikrotik.NewPrintSimpleQueuesCommand",
+          "lineNumber": 170
+        },
+        {
+          "caller": "GetParentQueues",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 171
+        },
+        {
+          "caller": "GetParentQueues",
+          "callee": "mikrotik.ParseSimpleQueues",
+          "lineNumber": 175
+        },
+        {
+          "caller": "GetParentQueues",
+          "callee": "make",
+          "lineNumber": 176
+        },
+        {
+          "caller": "GetParentQueues",
+          "callee": "append",
+          "lineNumber": 179
+        },
+        {
+          "caller": "GetNATRules",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 188
+        },
+        {
+          "caller": "SetupExpireMonitor",
+          "callee": "mikhmon.BuildExpireMonitorScript",
+          "lineNumber": 200
+        },
+        {
+          "caller": "SetupExpireMonitor",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 206
+        },
+        {
+          "caller": "SetupExpireMonitor",
+          "callee": "fmt.Errorf",
+          "lineNumber": 207
+        },
+        {
+          "caller": "SetupExpireMonitor",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 214
+        },
+        {
+          "caller": "GetReports",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 223
+        },
+        {
+          "caller": "GetReports",
+          "callee": "mikhmon.ParseMikhmonTransactions",
+          "lineNumber": 227
+        },
+        {
+          "caller": "DeleteReport",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 236
+        },
+        {
+          "caller": "GetTodayIncome",
+          "callee": "u.GetReports",
+          "lineNumber": 241
+        },
+        {
+          "caller": "GetTodayIncome",
+          "callee": "time.Now().Format",
+          "lineNumber": 246
+        },
+        {
+          "caller": "GetTodayIncome",
+          "callee": "time.Now",
+          "lineNumber": 246
+        },
+        {
+          "caller": "GetTodayIncome",
+          "callee": "strings.ToLower",
+          "lineNumber": 247
+        },
+        {
+          "caller": "GetTodayIncome",
+          "callee": "strings.ToLower",
+          "lineNumber": 251
+        },
+        {
+          "caller": "GetTodayIncome",
+          "callee": "strconv.ParseInt",
+          "lineNumber": 252
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "mikhmon.NewSetMikhmonProfileCommand",
+          "lineNumber": 261
+        },
+        {
+          "caller": "UpdateProfile",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 262
+        },
+        {
+          "caller": "DeleteProfile",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 271
+        },
+        {
+          "caller": "AddUser",
+          "callee": "mikrotik.NewAddHotspotUserCommand",
+          "lineNumber": 276
+        },
+        {
+          "caller": "AddUser",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 277
+        },
+        {
+          "caller": "AddUser",
+          "callee": "mikhmon.ParseMikhmonComment",
+          "lineNumber": 282
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "mikrotik.NewSetHotspotUserCommand",
+          "lineNumber": 289
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 290
+        },
+        {
+          "caller": "GetUsersByTag",
+          "callee": "u.GetUsers",
+          "lineNumber": 295
+        },
+        {
+          "caller": "GetUsersByTag",
+          "callee": "make",
+          "lineNumber": 300
+        },
+        {
+          "caller": "GetUsersByTag",
+          "callee": "mikhmon.ParseMikhmonComment",
+          "lineNumber": 305
+        },
+        {
+          "caller": "GetUsersByTag",
+          "callee": "strings.EqualFold",
+          "lineNumber": 309
+        },
+        {
+          "caller": "GetUsersByTag",
+          "callee": "append",
+          "lineNumber": 310
+        },
+        {
+          "caller": "GetReportsByFilter",
+          "callee": "u.GetReports",
+          "lineNumber": 318
+        },
+        {
+          "caller": "GetReportsByFilter",
+          "callee": "make",
+          "lineNumber": 325
+        },
+        {
+          "caller": "GetReportsByFilter",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 327
+        },
+        {
+          "caller": "GetReportsByFilter",
+          "callee": "strings.Contains",
+          "lineNumber": 330
+        },
+        {
+          "caller": "GetReportsByFilter",
+          "callee": "strings.ToLower",
+          "lineNumber": 330
+        },
+        {
+          "caller": "GetReportsByFilter",
+          "callee": "strings.ToLower",
+          "lineNumber": 330
+        },
+        {
+          "caller": "GetReportsByFilter",
+          "callee": "strings.HasSuffix",
+          "lineNumber": 333
+        },
+        {
+          "caller": "GetReportsByFilter",
+          "callee": "append",
+          "lineNumber": 336
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "mikrotik.NewPrintSystemResourceCommand",
+          "lineNumber": 346
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 347
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "mikrotik.ParseSystemResource",
+          "lineNumber": 348
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "mikrotik.NewPrintSystemIdentityCommand",
+          "lineNumber": 356
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 357
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "len",
+          "lineNumber": 357
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "mikrotik.NewPrintHotspotUsersCommand",
+          "lineNumber": 362
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 363
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "len",
+          "lineNumber": 364
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "mikrotik.NewPrintHotspotActiveCommand",
+          "lineNumber": 368
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "network.ExecuteCommand",
+          "lineNumber": 369
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "len",
+          "lineNumber": 370
+        },
+        {
+          "caller": "GetDashboardSummary",
+          "callee": "u.GetTodayIncome",
+          "lineNumber": 374
+        },
+        {
+          "caller": "RenderVoucherHTML",
+          "callee": "make",
+          "lineNumber": 383
+        },
+        {
+          "caller": "RenderVoucherHTML",
+          "callee": "len",
+          "lineNumber": 383
+        },
+        {
+          "caller": "RenderVoucherHTML",
+          "callee": "mikhmon.ParseMikhmonComment",
+          "lineNumber": 386
+        },
+        {
+          "caller": "RenderVoucherHTML",
+          "callee": "append",
+          "lineNumber": 389
+        },
+        {
+          "caller": "RenderVoucherHTML",
+          "callee": "voucher.Render",
+          "lineNumber": 400
+        },
+        {
+          "caller": "RenderVoucherHTML",
+          "callee": "voucher.Layout",
+          "lineNumber": 400
+        },
+        {
+          "caller": "NewMikhmonUseCase",
+          "callee": "NewHotspotUseCase",
+          "lineNumber": 408
+        }
+      ],
+      "metrics": {
+        "importCount": 60,
+        "exportCount": 31,
+        "functionCount": 29,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/usecase/hotspot/hotspot_usecase_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 108,
+      "nonEmptyLines": 96,
+      "functions": [
+        {
+          "name": "Execute",
+          "startLine": 17,
+          "endLine": 22,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 24,
+          "endLine": 26,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 28,
+          "endLine": 30,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 32,
+          "endLine": 34,
+          "params": []
+        },
+        {
+          "name": "TestHotspotUseCase",
+          "startLine": 36,
+          "endLine": 108,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockDriver",
+          "startLine": 13,
+          "endLine": 15,
+          "methods": [
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": [
+            "executeFn"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Execute",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "TestHotspotUseCase",
+          "line": 36,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Execute",
+          "callee": "m.executeFn",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "NewHotspotUseCase",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "context.Background",
+          "lineNumber": 38
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "t.Run",
+          "lineNumber": 40
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "uc.CreateProfile",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "t.Run",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "uc.GenerateVouchers",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "assert.Len",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "t.Run",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "uc.GetDashboardSummary",
+          "lineNumber": 101
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 103
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 104
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestHotspotUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 106
+        }
+      ],
+      "metrics": {
+        "importCount": 12,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/network/execute_command_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 68,
+      "nonEmptyLines": 58,
+      "functions": [
+        {
+          "name": "Validate",
+          "startLine": 21,
+          "endLine": 26,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "TestExecuteCommandValidation",
+          "startLine": 28,
+          "endLine": 68,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "validatingMockDriver",
+          "startLine": 16,
+          "endLine": 19,
+          "methods": [
+            "Validate"
+          ],
+          "properties": [
+            "validateFn"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Validate",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "TestExecuteCommandValidation",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Validate",
+          "callee": "m.validateFn",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "context.Background",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "t.Run",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "errors.New",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "ExecuteCommand",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "require.Error",
+          "lineNumber": 44
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "assert.False",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "t.Run",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "ExecuteCommand",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "require.NoError",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "assert.True",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "t.Run",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "ExecuteCommand",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestExecuteCommandValidation",
+          "callee": "require.NoError",
+          "lineNumber": 66
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/network/get_active_sessions.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 109,
+      "nonEmptyLines": 93,
+      "functions": [
+        {
+          "name": "NewActiveSessionsUseCase",
+          "startLine": 18,
+          "endLine": 20,
+          "params": []
+        },
+        {
+          "name": "GetPPPActiveSessions",
+          "startLine": 23,
+          "endLine": 30,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "GetPPPInactiveSessions",
+          "startLine": 33,
+          "endLine": 49,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "KickPPPSession",
+          "startLine": 52,
+          "endLine": 55,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "GetHotspotActiveSessions",
+          "startLine": 58,
+          "endLine": 65,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "GetHotspotInactiveUsers",
+          "startLine": 68,
+          "endLine": 84,
+          "params": [
+            "ctx",
+            "driver"
+          ]
+        },
+        {
+          "name": "KickHotspotSession",
+          "startLine": 87,
+          "endLine": 90,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID"
+          ]
+        },
+        {
+          "name": "GetDHCPLeases",
+          "startLine": 93,
+          "endLine": 100,
+          "params": [
+            "ctx",
+            "driver",
+            "macFilter"
+          ]
+        },
+        {
+          "name": "SetDHCPLeaseBlock",
+          "startLine": 103,
+          "endLine": 109,
+          "params": [
+            "ctx",
+            "driver",
+            "rosID",
+            "blocked",
+            "comment"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ActiveSessionsUseCase",
+          "startLine": 15,
+          "endLine": 15,
+          "methods": [
+            "GetPPPActiveSessions",
+            "GetPPPInactiveSessions",
+            "KickPPPSession",
+            "GetHotspotActiveSessions",
+            "GetHotspotInactiveUsers",
+            "KickHotspotSession",
+            "GetDHCPLeases",
+            "SetDHCPLeaseBlock"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ActiveSessionsUseCase",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "NewActiveSessionsUseCase",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "GetPPPActiveSessions",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "GetPPPInactiveSessions",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "KickPPPSession",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "GetHotspotActiveSessions",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "GetHotspotInactiveUsers",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "KickHotspotSession",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "GetDHCPLeases",
+          "line": 93,
+          "isDefault": false
+        },
+        {
+          "name": "SetDHCPLeaseBlock",
+          "line": 103,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetPPPActiveSessions",
+          "callee": "mikrotik.NewPrintPPPActiveCommand",
+          "lineNumber": 24
+        },
+        {
+          "caller": "GetPPPActiveSessions",
+          "callee": "ExecuteCommand",
+          "lineNumber": 25
+        },
+        {
+          "caller": "GetPPPActiveSessions",
+          "callee": "mikrotik.ParsePPPActiveSessions",
+          "lineNumber": 29
+        },
+        {
+          "caller": "GetPPPInactiveSessions",
+          "callee": "mikrotik.NewPrintPPPoESecretsCommand",
+          "lineNumber": 34
+        },
+        {
+          "caller": "GetPPPInactiveSessions",
+          "callee": "ExecuteCommand",
+          "lineNumber": 35
+        },
+        {
+          "caller": "GetPPPInactiveSessions",
+          "callee": "mikrotik.ParsePPPoESecrets",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GetPPPInactiveSessions",
+          "callee": "mikrotik.NewPrintPPPActiveCommand",
+          "lineNumber": 41
+        },
+        {
+          "caller": "GetPPPInactiveSessions",
+          "callee": "ExecuteCommand",
+          "lineNumber": 42
+        },
+        {
+          "caller": "GetPPPInactiveSessions",
+          "callee": "mikrotik.ParsePPPActiveSessions",
+          "lineNumber": 46
+        },
+        {
+          "caller": "GetPPPInactiveSessions",
+          "callee": "mikrotik.FilterInactivePPPoESecrets",
+          "lineNumber": 48
+        },
+        {
+          "caller": "KickPPPSession",
+          "callee": "mikrotik.NewKickPPPActiveCommand",
+          "lineNumber": 53
+        },
+        {
+          "caller": "KickPPPSession",
+          "callee": "ExecuteCommand",
+          "lineNumber": 54
+        },
+        {
+          "caller": "GetHotspotActiveSessions",
+          "callee": "mikrotik.NewPrintHotspotActiveCommand",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GetHotspotActiveSessions",
+          "callee": "ExecuteCommand",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GetHotspotActiveSessions",
+          "callee": "mikrotik.ParseHotspotActiveSessions",
+          "lineNumber": 64
+        },
+        {
+          "caller": "GetHotspotInactiveUsers",
+          "callee": "mikrotik.NewPrintHotspotUsersCommand",
+          "lineNumber": 69
+        },
+        {
+          "caller": "GetHotspotInactiveUsers",
+          "callee": "ExecuteCommand",
+          "lineNumber": 70
+        },
+        {
+          "caller": "GetHotspotInactiveUsers",
+          "callee": "mikrotik.ParseHotspotUsers",
+          "lineNumber": 74
+        },
+        {
+          "caller": "GetHotspotInactiveUsers",
+          "callee": "mikrotik.NewPrintHotspotActiveCommand",
+          "lineNumber": 76
+        },
+        {
+          "caller": "GetHotspotInactiveUsers",
+          "callee": "ExecuteCommand",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GetHotspotInactiveUsers",
+          "callee": "mikrotik.ParseHotspotActiveSessions",
+          "lineNumber": 81
+        },
+        {
+          "caller": "GetHotspotInactiveUsers",
+          "callee": "mikrotik.FilterInactiveHotspotUsers",
+          "lineNumber": 83
+        },
+        {
+          "caller": "KickHotspotSession",
+          "callee": "mikrotik.NewDisconnectHotspotActiveCommand",
+          "lineNumber": 88
+        },
+        {
+          "caller": "KickHotspotSession",
+          "callee": "ExecuteCommand",
+          "lineNumber": 89
+        },
+        {
+          "caller": "GetDHCPLeases",
+          "callee": "mikrotik.NewPrintDHCPLeasesCommand",
+          "lineNumber": 94
+        },
+        {
+          "caller": "GetDHCPLeases",
+          "callee": "ExecuteCommand",
+          "lineNumber": 95
+        },
+        {
+          "caller": "GetDHCPLeases",
+          "callee": "mikrotik.ParseDHCPLeases",
+          "lineNumber": 99
+        },
+        {
+          "caller": "SetDHCPLeaseBlock",
+          "callee": "mikrotik.NewSetDHCPLeaseBlockCommand",
+          "lineNumber": 104
+        },
+        {
+          "caller": "SetDHCPLeaseBlock",
+          "callee": "ExecuteCommand",
+          "lineNumber": 108
+        }
+      ],
+      "metrics": {
+        "importCount": 39,
+        "exportCount": 10,
+        "functionCount": 9,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/network/get_active_sessions_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 137,
+      "nonEmptyLines": 124,
+      "functions": [
+        {
+          "name": "Execute",
+          "startLine": 16,
+          "endLine": 21,
+          "params": [
+            "ctx",
+            "cmd"
+          ]
+        },
+        {
+          "name": "Classify",
+          "startLine": 23,
+          "endLine": 25,
+          "params": [
+            "cmd"
+          ]
+        },
+        {
+          "name": "Translate",
+          "startLine": 27,
+          "endLine": 29,
+          "params": [
+            "op"
+          ]
+        },
+        {
+          "name": "Close",
+          "startLine": 31,
+          "endLine": 33,
+          "params": []
+        },
+        {
+          "name": "TestActiveSessionsUseCase",
+          "startLine": 35,
+          "endLine": 137,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "mockDriver",
+          "startLine": 12,
+          "endLine": 14,
+          "methods": [
+            "Execute",
+            "Classify",
+            "Translate",
+            "Close"
+          ],
+          "properties": [
+            "executeFn"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Execute",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Classify",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Translate",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Close",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "TestActiveSessionsUseCase",
+          "line": 35,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Execute",
+          "callee": "m.executeFn",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "NewActiveSessionsUseCase",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "context.Background",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "t.Run",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "uc.GetPPPActiveSessions",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.Len",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "t.Run",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "uc.GetPPPInactiveSessions",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 79
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.Len",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "t.Run",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "uc.GetHotspotInactiveUsers",
+          "lineNumber": 105
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 106
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.Len",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "t.Run",
+          "lineNumber": 111
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 122
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "uc.GetDHCPLeases",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.Len",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "assert.Equal",
+          "lineNumber": 132
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "uc.SetDHCPLeaseBlock",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestActiveSessionsUseCase",
+          "callee": "require.NoError",
+          "lineNumber": 135
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/network/stream_output.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 9,
+      "functions": [
+        {
+          "name": "StreamOutput",
+          "startLine": 9,
+          "endLine": 11,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreamOutput",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "pkg/voucher/generator.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 143,
+      "nonEmptyLines": 129,
+      "functions": [
+        {
+          "name": "generateQRBase64",
+          "startLine": 55,
+          "endLine": 65,
+          "params": [
+            "content"
+          ]
+        },
+        {
+          "name": "readTemplate",
+          "startLine": 69,
+          "endLine": 76,
+          "params": [
+            "templateDir",
+            "name"
+          ]
+        },
+        {
+          "name": "renderRow",
+          "startLine": 79,
+          "endLine": 107,
+          "params": [
+            "rowTemplate",
+            "v",
+            "num"
+          ]
+        },
+        {
+          "name": "Render",
+          "startLine": 117,
+          "endLine": 143,
+          "params": [
+            "vouchers",
+            "layout",
+            "templateDir"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "VoucherData",
+          "startLine": 34,
+          "endLine": 47,
+          "methods": [],
+          "properties": [
+            "Username",
+            "Password",
+            "Price",
+            "Validity",
+            "LimitUptime",
+            "LimitBytesTotal",
+            "HotspotName",
+            "DNSName",
+            "Logo",
+            "Comment",
+            "TimeStamp",
+            "Number"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "VoucherData",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "Render",
+          "line": 117,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "generateQRBase64",
+          "callee": "qrcode.Encode",
+          "lineNumber": 59
+        },
+        {
+          "caller": "generateQRBase64",
+          "callee": "base64.StdEncoding.EncodeToString",
+          "lineNumber": 63
+        },
+        {
+          "caller": "generateQRBase64",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 64
+        },
+        {
+          "caller": "readTemplate",
+          "callee": "filepath.Join",
+          "lineNumber": 70
+        },
+        {
+          "caller": "readTemplate",
+          "callee": "os.ReadFile",
+          "lineNumber": 71
+        },
+        {
+          "caller": "readTemplate",
+          "callee": "fmt.Errorf",
+          "lineNumber": 73
+        },
+        {
+          "caller": "readTemplate",
+          "callee": "string",
+          "lineNumber": 75
+        },
+        {
+          "caller": "renderRow",
+          "callee": "generateQRBase64",
+          "lineNumber": 85
+        },
+        {
+          "caller": "renderRow",
+          "callee": "time.Now().Format",
+          "lineNumber": 89
+        },
+        {
+          "caller": "renderRow",
+          "callee": "time.Now",
+          "lineNumber": 89
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 93
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 94
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 95
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 96
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 97
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 98
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 99
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 100
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 101
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 102
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 103
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 104
+        },
+        {
+          "caller": "renderRow",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 105
+        },
+        {
+          "caller": "renderRow",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 105
+        },
+        {
+          "caller": "Render",
+          "callee": "string",
+          "lineNumber": 121
+        },
+        {
+          "caller": "Render",
+          "callee": "readTemplate",
+          "lineNumber": 123
+        },
+        {
+          "caller": "Render",
+          "callee": "readTemplate",
+          "lineNumber": 127
+        },
+        {
+          "caller": "Render",
+          "callee": "readTemplate",
+          "lineNumber": 131
+        },
+        {
+          "caller": "Render",
+          "callee": "sb.WriteString",
+          "lineNumber": 137
+        },
+        {
+          "caller": "Render",
+          "callee": "sb.WriteString",
+          "lineNumber": 139
+        },
+        {
+          "caller": "Render",
+          "callee": "renderRow",
+          "lineNumber": 139
+        },
+        {
+          "caller": "Render",
+          "callee": "sb.WriteString",
+          "lineNumber": 141
+        },
+        {
+          "caller": "Render",
+          "callee": "sb.String",
+          "lineNumber": 142
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "pkg/voucher/generator_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 144,
+      "nonEmptyLines": 117,
+      "functions": [
+        {
+          "name": "templateDir",
+          "startLine": 16,
+          "endLine": 22,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "sampleVoucher",
+          "startLine": 24,
+          "endLine": 39,
+          "params": [
+            "n"
+          ]
+        },
+        {
+          "name": "TestRender_DefaultLayout",
+          "startLine": 41,
+          "endLine": 54,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRender_SmallLayout",
+          "startLine": 56,
+          "endLine": 65,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRender_ThermalLayout",
+          "startLine": 67,
+          "endLine": 77,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRender_MultiplVouchers",
+          "startLine": 79,
+          "endLine": 92,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRender_QRCodeEmbedded",
+          "startLine": 94,
+          "endLine": 104,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRender_EmptyLayout_FallsBackToDefault",
+          "startLine": 106,
+          "endLine": 113,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRender_InvalidLayout_ReturnsError",
+          "startLine": 115,
+          "endLine": 121,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRender_InvalidTemplateDir_ReturnsError",
+          "startLine": 123,
+          "endLine": 127,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRender_SequentialNumbers",
+          "startLine": 129,
+          "endLine": 144,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestRender_DefaultLayout",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "TestRender_SmallLayout",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "TestRender_ThermalLayout",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "TestRender_MultiplVouchers",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "TestRender_QRCodeEmbedded",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "TestRender_EmptyLayout_FallsBackToDefault",
+          "line": 106,
+          "isDefault": false
+        },
+        {
+          "name": "TestRender_InvalidLayout_ReturnsError",
+          "line": 115,
+          "isDefault": false
+        },
+        {
+          "name": "TestRender_InvalidTemplateDir_ReturnsError",
+          "line": 123,
+          "isDefault": false
+        },
+        {
+          "name": "TestRender_SequentialNumbers",
+          "line": 129,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "templateDir",
+          "callee": "t.Helper",
+          "lineNumber": 17
+        },
+        {
+          "caller": "templateDir",
+          "callee": "os.Getwd",
+          "lineNumber": 19
+        },
+        {
+          "caller": "templateDir",
+          "callee": "require.NoError",
+          "lineNumber": 20
+        },
+        {
+          "caller": "templateDir",
+          "callee": "filepath.Join",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestRender_DefaultLayout",
+          "callee": "templateDir",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestRender_DefaultLayout",
+          "callee": "sampleVoucher",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestRender_DefaultLayout",
+          "callee": "voucher.Render",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestRender_DefaultLayout",
+          "callee": "require.NoError",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestRender_DefaultLayout",
+          "callee": "assert.Contains",
+          "lineNumber": 48
+        },
+        {
+          "caller": "TestRender_DefaultLayout",
+          "callee": "assert.Contains",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestRender_DefaultLayout",
+          "callee": "assert.Contains",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestRender_DefaultLayout",
+          "callee": "assert.Contains",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestRender_DefaultLayout",
+          "callee": "assert.True",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestRender_DefaultLayout",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestRender_DefaultLayout",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestRender_DefaultLayout",
+          "callee": "assert.Contains",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestRender_SmallLayout",
+          "callee": "templateDir",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestRender_SmallLayout",
+          "callee": "sampleVoucher",
+          "lineNumber": 58
+        },
+        {
+          "caller": "TestRender_SmallLayout",
+          "callee": "voucher.Render",
+          "lineNumber": 60
+        },
+        {
+          "caller": "TestRender_SmallLayout",
+          "callee": "require.NoError",
+          "lineNumber": 61
+        },
+        {
+          "caller": "TestRender_SmallLayout",
+          "callee": "assert.Contains",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestRender_SmallLayout",
+          "callee": "assert.Contains",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestRender_ThermalLayout",
+          "callee": "templateDir",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestRender_ThermalLayout",
+          "callee": "sampleVoucher",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestRender_ThermalLayout",
+          "callee": "voucher.Render",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestRender_ThermalLayout",
+          "callee": "require.NoError",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestRender_ThermalLayout",
+          "callee": "assert.Contains",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestRender_ThermalLayout",
+          "callee": "assert.Contains",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestRender_ThermalLayout",
+          "callee": "assert.Contains",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestRender_MultiplVouchers",
+          "callee": "templateDir",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestRender_MultiplVouchers",
+          "callee": "voucher.Render",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestRender_MultiplVouchers",
+          "callee": "require.NoError",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestRender_MultiplVouchers",
+          "callee": "assert.Contains",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestRender_MultiplVouchers",
+          "callee": "assert.Contains",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestRender_MultiplVouchers",
+          "callee": "assert.Contains",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestRender_QRCodeEmbedded",
+          "callee": "templateDir",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestRender_QRCodeEmbedded",
+          "callee": "sampleVoucher",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestRender_QRCodeEmbedded",
+          "callee": "voucher.Render",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestRender_QRCodeEmbedded",
+          "callee": "require.NoError",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TestRender_QRCodeEmbedded",
+          "callee": "assert.Contains",
+          "lineNumber": 102
+        },
+        {
+          "caller": "TestRender_QRCodeEmbedded",
+          "callee": "assert.Contains",
+          "lineNumber": 103
+        },
+        {
+          "caller": "TestRender_EmptyLayout_FallsBackToDefault",
+          "callee": "templateDir",
+          "lineNumber": 107
+        },
+        {
+          "caller": "TestRender_EmptyLayout_FallsBackToDefault",
+          "callee": "sampleVoucher",
+          "lineNumber": 108
+        },
+        {
+          "caller": "TestRender_EmptyLayout_FallsBackToDefault",
+          "callee": "voucher.Render",
+          "lineNumber": 110
+        },
+        {
+          "caller": "TestRender_EmptyLayout_FallsBackToDefault",
+          "callee": "require.NoError",
+          "lineNumber": 111
+        },
+        {
+          "caller": "TestRender_EmptyLayout_FallsBackToDefault",
+          "callee": "assert.Contains",
+          "lineNumber": 112
+        },
+        {
+          "caller": "TestRender_InvalidLayout_ReturnsError",
+          "callee": "templateDir",
+          "lineNumber": 116
+        },
+        {
+          "caller": "TestRender_InvalidLayout_ReturnsError",
+          "callee": "sampleVoucher",
+          "lineNumber": 117
+        },
+        {
+          "caller": "TestRender_InvalidLayout_ReturnsError",
+          "callee": "voucher.Render",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestRender_InvalidLayout_ReturnsError",
+          "callee": "assert.Error",
+          "lineNumber": 120
+        },
+        {
+          "caller": "TestRender_InvalidTemplateDir_ReturnsError",
+          "callee": "sampleVoucher",
+          "lineNumber": 124
+        },
+        {
+          "caller": "TestRender_InvalidTemplateDir_ReturnsError",
+          "callee": "voucher.Render",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestRender_InvalidTemplateDir_ReturnsError",
+          "callee": "assert.Error",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestRender_SequentialNumbers",
+          "callee": "templateDir",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestRender_SequentialNumbers",
+          "callee": "voucher.Render",
+          "lineNumber": 137
+        },
+        {
+          "caller": "TestRender_SequentialNumbers",
+          "callee": "require.NoError",
+          "lineNumber": 138
+        },
+        {
+          "caller": "TestRender_SequentialNumbers",
+          "callee": "assert.Contains",
+          "lineNumber": 141
+        },
+        {
+          "caller": "TestRender_SequentialNumbers",
+          "callee": "assert.Contains",
+          "lineNumber": 142
+        },
+        {
+          "caller": "TestRender_SequentialNumbers",
+          "callee": "assert.Contains",
+          "lineNumber": 143
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 9,
+        "functionCount": 11,
+        "classCount": 0
+      }
+    }
+  ]
+}

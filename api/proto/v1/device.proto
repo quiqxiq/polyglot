@@ -1,0 +1,178 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// Device represents a network router/device inventory record.
+message Device {
+  string id = 1;
+  string tenant_id = 2;
+  string name = 3;
+  string vendor = 4;
+  string driver_type = 5;
+  string host = 6;
+  int32 port = 7;
+  int32 timeout_ms = 8;
+  int32 poll_interval_ms = 9;
+  repeated string tags = 10;
+  bool enabled = 11;
+  int32 ssh_port = 12;
+}
+
+message ListDevicesRequest {}
+
+message ListDevicesResponse {
+  repeated Device devices = 1;
+}
+
+message GetDeviceRequest {
+  string id = 1;
+}
+
+message GetDeviceResponse {
+  Device device = 1;
+}
+
+message UpdateDeviceRequest {
+  Device device = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message UpdateDeviceResponse {
+  Device device = 1;
+  string message = 2;
+}
+
+message StreamDeviceStatusRequest {
+  string id = 1;
+  string selected_interface = 2;
+  string ping_address = 3;
+  string interface_type_filter = 4;
+  string interface_name_filter = 5;
+}
+
+message DeviceInterfaceInfo {
+  string name = 1;
+  string type = 2;
+  bool disabled = 3;
+  bool running = 4;
+  int64 rx_bps = 5;
+  int64 tx_bps = 6;
+  string mac_address = 7;
+}
+
+message DeviceTestMetrics {
+  string device_id = 1;
+  string status = 2;
+  int64 latency_ms = 3;
+  string uptime = 4;
+  string version = 5;
+  string board_name = 6;
+  string identity = 7;
+  string message = 8;
+  int32 cpu_load = 9;
+  int64 free_memory = 10;
+  int64 total_memory = 11;
+  repeated string interfaces = 12;
+  repeated DeviceInterfaceInfo interface_list = 13;
+  int64 rx_bps = 14;
+  int64 tx_bps = 15;
+}
+
+message DeviceStatusFrame {
+  Device device = 1;
+  DeviceTestMetrics test = 2;
+}
+
+message TerminalFrame {
+  string device_id = 1;
+  bytes input_data = 2;
+  bytes output_data = 3;
+  int32 cols = 4;
+  int32 rows = 5;
+}
+
+message DeleteDeviceRequest {
+  string id = 1;
+}
+
+message DeleteDeviceResponse {
+  string message = 1;
+}
+
+message TestDeviceConnectionRequest {
+  string id = 1;
+  string selected_interface = 2;
+  string interface_type_filter = 3;
+  string interface_name_filter = 4;
+}
+
+message TestDeviceConnectionResponse {
+  string device_id = 1;
+  string status = 2;
+  string message = 3;
+  bool success = 4;
+  int64 latency_ms = 5;
+  string uptime = 6;
+  string version = 7;
+  string board_name = 8;
+  string identity = 9;
+  DeviceTestMetrics metrics = 10;
+  int32 cpu_load = 11;
+  int64 free_memory = 12;
+  int64 total_memory = 13;
+  repeated string interfaces = 14;
+  repeated DeviceInterfaceInfo interface_list = 15;
+  int64 rx_bps = 16;
+  int64 tx_bps = 17;
+}
+
+// StreamDevicePing requests continuous ping execution targeting address.
+message StreamDevicePingRequest {
+  string id = 1;
+  string address = 2;
+}
+
+message StreamDevicePingFrame {
+  string device_id = 1;
+  string address = 2;
+  int64 latency_ms = 3;
+  string status = 4;
+  int32 seq = 5;
+  int32 ttl = 6;
+  int32 size = 7;
+  int32 sent = 8;
+  int32 received = 9;
+  int32 packet_loss = 10;
+  int64 min_rtt_ms = 11;
+  int64 avg_rtt_ms = 12;
+  int64 max_rtt_ms = 13;
+}
+
+// StreamDeviceTraffic requests continuous interface traffic monitoring.
+message StreamDeviceTrafficRequest {
+  string id = 1;
+  string interface_name = 2;
+}
+
+message StreamDeviceTrafficFrame {
+  string device_id = 1;
+  string interface_name = 2;
+  int64 rx_bps = 3;
+  int64 tx_bps = 4;
+}
+
+// DeviceService defines gRPC procedures for network device inventory and streaming telemetry.
+service DeviceService {
+  rpc ListDevices(ListDevicesRequest) returns (ListDevicesResponse);
+  rpc GetDevice(GetDeviceRequest) returns (GetDeviceResponse);
+  rpc UpdateDevice(UpdateDeviceRequest) returns (UpdateDeviceResponse);
+  rpc DeleteDevice(DeleteDeviceRequest) returns (DeleteDeviceResponse);
+  rpc TestDeviceConnection(TestDeviceConnectionRequest) returns (TestDeviceConnectionResponse);
+  rpc StreamDeviceStatus(StreamDeviceStatusRequest) returns (stream DeviceStatusFrame);
+  rpc StreamPing(StreamDevicePingRequest) returns (stream StreamDevicePingFrame);
+  rpc StreamInterfaceTraffic(StreamDeviceTrafficRequest) returns (stream StreamDeviceTrafficFrame);
+  rpc StreamTerminal(stream TerminalFrame) returns (stream TerminalFrame);
+}

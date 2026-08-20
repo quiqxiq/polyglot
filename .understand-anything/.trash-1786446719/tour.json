@@ -1,0 +1,122 @@
+[
+ {
+  "order": 1,
+  "title": "Project Overview",
+  "description": "Start with the README to understand what polyglot is: a NetOps + ISP management backend exposing MCP, REST, and WebSocket/SSE for multi-vendor network automation. Then check go.mod to see the stack — Gin, GORM, ConnectRPC, whatsmeow, scrapligo, go-routeros.",
+  "nodeIds": [
+   "document:README.md",
+   "config:go.mod"
+  ]
+ },
+ {
+  "order": 2,
+  "title": "Application Entry Point",
+  "description": "cmd/server/main.go boots the server: it loads configuration, connects Postgres/Redis, wires the driver registry, and starts the Gin HTTP router, ConnectRPC services, and WebSocket streaming.",
+  "nodeIds": [
+   "file:cmd/server/main.go"
+  ]
+ },
+ {
+  "order": 3,
+  "title": "Composition Root & Configuration",
+  "description": "internal/app/app.go is the dependency-injection hub wiring every adapter and use case together. internal/config/config.go loads runtime settings from the environment (documented in .env.example).",
+  "nodeIds": [
+   "file:internal/app/app.go",
+   "file:internal/config/config.go",
+   "config:.env.example"
+  ]
+ },
+ {
+  "order": 4,
+  "title": "Port Contracts",
+  "description": "The port layer defines the interfaces everything else depends on — DeviceDriver (execute/classify/translate), repositories, credential vault, LLM provider, audit writer, and streaming drivers. Adapters and drivers implement these.",
+  "nodeIds": [
+   "file:internal/port/device_driver.go",
+   "file:internal/port/device_repository.go",
+   "file:internal/port/llm_provider.go"
+  ]
+ },
+ {
+  "order": 5,
+  "title": "Domain Model",
+  "description": "internal/domain holds pure business entities and rules — device, command, session, customer, subscription, plan, billing. command.Command and its policy define what can be executed and what needs approval.",
+  "nodeIds": [
+   "file:internal/domain/command/command.go",
+   "file:internal/domain/device/device.go"
+  ]
+ },
+ {
+  "order": 6,
+  "title": "Use Cases",
+  "description": "internal/usecase orchestrates single operations by calling ports — ExecuteCommand validates and runs a command through the driver, StreamOutput pipes live device output. Use cases never touch vendors directly.",
+  "nodeIds": [
+   "file:internal/usecase/network/execute_command.go",
+   "file:internal/usecase/network/stream_output.go"
+  ]
+ },
+ {
+  "order": 7,
+  "title": "Device Drivers",
+  "description": "internal/driver contains one folder per vendor. Mikrotik speaks the RouterOS API via go-routeros; genericssh/generictelnet share a scrapligo engine driven by YAML platform definitions. Commands are classified destructive vs read-only per vendor.",
+  "nodeIds": [
+   "file:internal/driver/mikrotik/driver.go",
+   "file:internal/driver/genericssh/driver.go",
+   "config:internal/platformdef/mikrotik_routeros.yaml"
+  ]
+ },
+ {
+  "order": 8,
+  "title": "Driver Registry",
+  "description": "internal/registry selects and caches the right driver per device based on vendor and driver type, handing out ready-to-use connections.",
+  "nodeIds": [
+   "file:internal/registry/registry.go"
+  ]
+ },
+ {
+  "order": 9,
+  "title": "Adapters — API Surface",
+  "description": "Handlers in adapter/connect expose ConnectRPC services, adapter/mcp exposes MCP tools for LLM agents (get_device_status, run_command, push_config), and adapter/ws streams device output over WebSocket. The proto files in api/proto define the wire contracts.",
+  "nodeIds": [
+   "file:internal/adapter/mcp/tool_run_command.go",
+   "file:internal/adapter/ws/device_stream_handler.go",
+   "schema:api/proto/v1/device.proto"
+  ]
+ },
+ {
+  "order": 10,
+  "title": "Adapters — Persistence, Auth, AI",
+  "description": "Postgres repositories implement the storage ports with GORM; Casbin + JWT enforce RBAC; LLM adapters (OpenAI, Claude, Gemini, Groq) back the assistant; Redis caches; the vault keeps device credentials encrypted.",
+  "nodeIds": [
+   "file:internal/adapter/postgres/device_repository.go",
+   "file:internal/adapter/auth/casbin.go",
+   "file:internal/adapter/llm/provider.go"
+  ]
+ },
+ {
+  "order": 11,
+  "title": "Data Layer",
+  "description": "Migrations create the schema — devices, bots, customers, and more. The devices table shows the columns the device model maps onto.",
+  "nodeIds": [
+   "table:migrations/000001_create_devices_table.up.sql:devices"
+  ]
+ },
+ {
+  "order": 12,
+  "title": "Deployment & CI",
+  "description": "deployments/docker/Dockerfile builds the server image; docker-compose orchestrates server, Postgres, Redis, and WhatsApp services; the GitHub Actions workflow runs lint and tests.",
+  "nodeIds": [
+   "service:deployments/docker/Dockerfile",
+   "service:deployments/docker-compose.yml",
+   "pipeline:.github/workflows/ci.yml"
+  ]
+ },
+ {
+  "order": 13,
+  "title": "Architecture Docs",
+  "description": "Finish with Polyglot-Architecture.md and the ADRs in docs/adr to understand the why behind the design — why Gin, why driver interfaces without sessions, dual streaming connections, and scrapligo as the generic CLI engine.",
+  "nodeIds": [
+   "document:Polyglot-Architecture.md",
+   "document:docs/adr/0004-generic-cli-driver-scrapligo.md"
+  ]
+ }
+]

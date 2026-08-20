@@ -1,0 +1,1912 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/adapter/auth/casbin.go",
+   "type": "file",
+   "name": "casbin.go",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "summary": "Go source file implementing the authentication/authorization adapter — authentication/authorization adapter logic for the polyglot backend. Exports CasbinEnforcer, NewCasbinEnforcer, Enforce, AddPolicy, RemovePolicy, GetPolicies.",
+   "tags": [
+    "authentication",
+    "authorization",
+    "security",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:NewCasbinEnforcer",
+   "type": "function",
+   "name": "NewCasbinEnforcer",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "lineRange": [
+    25,
+    47
+   ],
+   "summary": "Constructor that creates and initializes a CasbinEnforcer instance with the provided configuration.",
+   "tags": [
+    "function",
+    "authentication",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:Enforce",
+   "type": "function",
+   "name": "Enforce",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "lineRange": [
+    50,
+    52
+   ],
+   "summary": "Implements the Enforce logic (inputs: sub, obj, act) for this component.",
+   "tags": [
+    "function",
+    "authentication",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:AddPolicy",
+   "type": "function",
+   "name": "AddPolicy",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "lineRange": [
+    55,
+    61
+   ],
+   "summary": "Creates a new policy record or resource.",
+   "tags": [
+    "function",
+    "authentication",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:RemovePolicy",
+   "type": "function",
+   "name": "RemovePolicy",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "lineRange": [
+    64,
+    70
+   ],
+   "summary": "Removes policy from the system.",
+   "tags": [
+    "function",
+    "authentication",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:GetPolicies",
+   "type": "function",
+   "name": "GetPolicies",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "lineRange": [
+    73,
+    75
+   ],
+   "summary": "Retrieves policies data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "authentication",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:AddRoleForUser",
+   "type": "function",
+   "name": "AddRoleForUser",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "lineRange": [
+    78,
+    84
+   ],
+   "summary": "Creates a new roleforuser record or resource.",
+   "tags": [
+    "function",
+    "authentication",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:DeleteRoleForUser",
+   "type": "function",
+   "name": "DeleteRoleForUser",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "lineRange": [
+    87,
+    93
+   ],
+   "summary": "Removes roleforuser from the system.",
+   "tags": [
+    "function",
+    "authentication",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:GetRolesForUser",
+   "type": "function",
+   "name": "GetRolesForUser",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "lineRange": [
+    96,
+    98
+   ],
+   "summary": "Retrieves rolesforuser data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "authentication",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/auth/casbin.go:GetGroupingPolicies",
+   "type": "function",
+   "name": "GetGroupingPolicies",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "lineRange": [
+    101,
+    103
+   ],
+   "summary": "Retrieves groupingpolicies data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "authentication",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/auth/casbin.go:CasbinEnforcer",
+   "type": "class",
+   "name": "CasbinEnforcer",
+   "filePath": "internal/adapter/auth/casbin.go",
+   "lineRange": [
+    17,
+    19
+   ],
+   "summary": "CasbinEnforcer Go type with 8 method(s) [Enforce, AddPolicy, RemovePolicy, GetPolicies, AddRoleForUser, …] and 1 field(s), defining the casbinenforcer behavior of this component.",
+   "tags": [
+    "class",
+    "authentication",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "type": "file",
+   "name": "whatsapp_service_handler.go",
+   "filePath": "internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "summary": "Go source file implementing the ConnectRPC/REST handler adapter — ConnectRPC/REST handler adapter logic for the polyglot backend. Exports WhatsAppConnectHandler, NewWhatsAppConnectHandler, NewWhatsAppServiceHandler.",
+   "tags": [
+    "api-handler",
+    "connectrpc",
+    "adapter",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/whatsapp_service_handler.go:NewWhatsAppConnectHandler",
+   "type": "function",
+   "name": "NewWhatsAppConnectHandler",
+   "filePath": "internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "lineRange": [
+    18,
+    23
+   ],
+   "summary": "Constructor that creates and initializes a WhatsAppConnectHandler instance with the provided configuration.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/whatsapp_service_handler.go:NewWhatsAppServiceHandler",
+   "type": "function",
+   "name": "NewWhatsAppServiceHandler",
+   "filePath": "internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "lineRange": [
+    25,
+    78
+   ],
+   "summary": "Constructor that creates and initializes a WhatsAppServiceHandler instance with the provided configuration.",
+   "tags": [
+    "function",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "class:internal/adapter/connect/bot/whatsapp_service_handler.go:WhatsAppConnectHandler",
+   "type": "class",
+   "name": "WhatsAppConnectHandler",
+   "filePath": "internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "lineRange": [
+    13,
+    16
+   ],
+   "summary": "WhatsAppConnectHandler Go type with 0 method(s) [—] and 2 field(s), defining the whatsappconnecthandler behavior of this component.",
+   "tags": [
+    "class",
+    "api-handler",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/mcp/server.go",
+   "type": "file",
+   "name": "server.go",
+   "filePath": "internal/adapter/mcp/server.go",
+   "summary": "Go source file implementing the MCP tool adapter — MCP tool adapter logic for the polyglot backend. Exports Server, New, WithMikhmonUseCase, WithCustomerRepository, WithKnowledgeRetriever, HTTPHandler.",
+   "tags": [
+    "mcp",
+    "tool",
+    "llm",
+    "adapter",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server.go:New",
+   "type": "function",
+   "name": "New",
+   "filePath": "internal/adapter/mcp/server.go",
+   "lineRange": [
+    26,
+    34
+   ],
+   "summary": "Constructor that creates and initializes a New instance with the provided configuration.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server.go:WithMikhmonUseCase",
+   "type": "function",
+   "name": "WithMikhmonUseCase",
+   "filePath": "internal/adapter/mcp/server.go",
+   "lineRange": [
+    37,
+    40
+   ],
+   "summary": "Implements the WithMikhmonUseCase logic (inputs: uc) for this component.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server.go:WithCustomerRepository",
+   "type": "function",
+   "name": "WithCustomerRepository",
+   "filePath": "internal/adapter/mcp/server.go",
+   "lineRange": [
+    43,
+    46
+   ],
+   "summary": "Implements the WithCustomerRepository logic (inputs: repo) for this component.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server.go:WithKnowledgeRetriever",
+   "type": "function",
+   "name": "WithKnowledgeRetriever",
+   "filePath": "internal/adapter/mcp/server.go",
+   "lineRange": [
+    49,
+    52
+   ],
+   "summary": "Implements the WithKnowledgeRetriever logic (inputs: kr) for this component.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server.go:registerTools",
+   "type": "function",
+   "name": "registerTools",
+   "filePath": "internal/adapter/mcp/server.go",
+   "lineRange": [
+    54,
+    105
+   ],
+   "summary": "Implements the registerTools logic for this component.",
+   "tags": [
+    "function",
+    "mcp",
+    "method"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server.go:HTTPHandler",
+   "type": "function",
+   "name": "HTTPHandler",
+   "filePath": "internal/adapter/mcp/server.go",
+   "lineRange": [
+    112,
+    116
+   ],
+   "summary": "Implements the HTTPHandler logic for this component.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server.go:RunStdio",
+   "type": "function",
+   "name": "RunStdio",
+   "filePath": "internal/adapter/mcp/server.go",
+   "lineRange": [
+    121,
+    123
+   ],
+   "summary": "Runs the stdio operation to completion (or streaming, when applicable).",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/mcp/server.go:Server",
+   "type": "class",
+   "name": "Server",
+   "filePath": "internal/adapter/mcp/server.go",
+   "lineRange": [
+    16,
+    23
+   ],
+   "summary": "Server Go type with 6 method(s) [WithMikhmonUseCase, WithCustomerRepository, WithKnowledgeRetriever, registerTools, HTTPHandler, …] and 6 field(s), defining the server behavior of this component.",
+   "tags": [
+    "class",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/mcp/server_test.go",
+   "type": "file",
+   "name": "server_test.go",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "summary": "Go source file implementing the MCP tool adapter — MCP tool adapter logic for the polyglot backend. Exports Execute, Classify, Translate, Close, Save, FindByID.",
+   "tags": [
+    "mcp",
+    "tool",
+    "llm",
+    "adapter",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:Execute",
+   "type": "function",
+   "name": "Execute",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    27,
+    32
+   ],
+   "summary": "Runs the execute operation to completion (or streaming, when applicable).",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    34,
+    39
+   ],
+   "summary": "Classifies a command as destructive or read-only based on vendor conventions.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    41,
+    46
+   ],
+   "summary": "Translates an abstract operation into a vendor-native command.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    48,
+    51
+   ],
+   "summary": "Releases resources held by this component (connections, goroutines).",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:newTestServerWithDevice",
+   "type": "function",
+   "name": "newTestServerWithDevice",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    61,
+    78
+   ],
+   "summary": "Implements the newTestServerWithDevice logic (inputs: t, deviceID, drv) for this component.",
+   "tags": [
+    "function",
+    "mcp",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:Save",
+   "type": "function",
+   "name": "Save",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    86,
+    89
+   ],
+   "summary": "Creates a new save record or resource.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:FindByID",
+   "type": "function",
+   "name": "FindByID",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    91,
+    97
+   ],
+   "summary": "Retrieves byid data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:FindAll",
+   "type": "function",
+   "name": "FindAll",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    99,
+    105
+   ],
+   "summary": "Retrieves all data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:Update",
+   "type": "function",
+   "name": "Update",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    107,
+    109
+   ],
+   "summary": "Updates update state with the given inputs.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:Delete",
+   "type": "function",
+   "name": "Delete",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    111,
+    114
+   ],
+   "summary": "Removes delete from the system.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:Get",
+   "type": "function",
+   "name": "Get",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    120,
+    126
+   ],
+   "summary": "Retrieves get data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:callToolViaInMemoryTransport",
+   "type": "function",
+   "name": "callToolViaInMemoryTransport",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    139,
+    156
+   ],
+   "summary": "Implements the callToolViaInMemoryTransport logic (inputs: t, s, toolName, args) for this component.",
+   "tags": [
+    "function",
+    "mcp",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:TestMCP_ListTools",
+   "type": "function",
+   "name": "TestMCP_ListTools",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    158,
+    184
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:TestMCP_GetDeviceStatus_E2E",
+   "type": "function",
+   "name": "TestMCP_GetDeviceStatus_E2E",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    186,
+    209
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:TestMCP_GetDeviceStatus_NotFound_E2E",
+   "type": "function",
+   "name": "TestMCP_GetDeviceStatus_NotFound_E2E",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    211,
+    223
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:TestMCP_RunCommand_E2E",
+   "type": "function",
+   "name": "TestMCP_RunCommand_E2E",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    225,
+    250
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:TestMCP_PushConfig_E2E",
+   "type": "function",
+   "name": "TestMCP_PushConfig_E2E",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    252,
+    272
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/mcp/server_test.go:TestMCP_RunCommand_Error_E2E",
+   "type": "function",
+   "name": "TestMCP_RunCommand_Error_E2E",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    274,
+    291
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "mcp",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/mcp/server_test.go:testDriver",
+   "type": "class",
+   "name": "testDriver",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    21,
+    25
+   ],
+   "summary": "testDriver Go type with 4 method(s) [Execute, Classify, Translate, Close] and 3 field(s), defining the testdriver behavior of this component.",
+   "tags": [
+    "class",
+    "mcp",
+    "internal"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/mcp/server_test.go:memDeviceRepo",
+   "type": "class",
+   "name": "memDeviceRepo",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    82,
+    84
+   ],
+   "summary": "memDeviceRepo Go type with 5 method(s) [Save, FindByID, FindAll, Update, Delete] and 1 field(s), defining the memdevicerepo behavior of this component.",
+   "tags": [
+    "class",
+    "mcp",
+    "internal"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/mcp/server_test.go:memCredVault",
+   "type": "class",
+   "name": "memCredVault",
+   "filePath": "internal/adapter/mcp/server_test.go",
+   "lineRange": [
+    116,
+    118
+   ],
+   "summary": "memCredVault Go type with 2 method(s) [Get, Save] and 1 field(s), defining the memcredvault behavior of this component.",
+   "tags": [
+    "class",
+    "mcp",
+    "internal"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:NewCasbinEnforcer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:Enforce",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:AddPolicy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:RemovePolicy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:GetPolicies",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:AddRoleForUser",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:DeleteRoleForUser",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:GetRolesForUser",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:GetGroupingPolicies",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "class:internal/adapter/auth/casbin.go:CasbinEnforcer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "class:internal/adapter/auth/casbin.go:CasbinEnforcer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:NewCasbinEnforcer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:Enforce",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:AddPolicy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:RemovePolicy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:GetPolicies",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:AddRoleForUser",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:DeleteRoleForUser",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:GetRolesForUser",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "function:internal/adapter/auth/casbin.go:GetGroupingPolicies",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/config/config.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/config/crypto.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/audit_writer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/knowledge_retriever.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/auth/casbin.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_service_handler.go:NewWhatsAppConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_service_handler.go:NewWhatsAppServiceHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "class:internal/adapter/connect/bot/whatsapp_service_handler.go:WhatsAppConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "class:internal/adapter/connect/bot/whatsapp_service_handler.go:WhatsAppConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_service_handler.go:NewWhatsAppConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_service_handler.go:NewWhatsAppServiceHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/connect/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/postgres/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/postgres/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/postgres/device_repository_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/postgres/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/postgres/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/postgres/knowledge_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/postgres/store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/postgres/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/postgres/technician_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/adapter/postgres/user_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/audit_writer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/knowledge_retriever.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:New",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:WithMikhmonUseCase",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:WithCustomerRepository",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:WithKnowledgeRetriever",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:registerTools",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:HTTPHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:RunStdio",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "class:internal/adapter/mcp/server.go:Server",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "class:internal/adapter/mcp/server.go:Server",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:New",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:WithMikhmonUseCase",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:WithCustomerRepository",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:WithKnowledgeRetriever",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:HTTPHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "function:internal/adapter/mcp/server.go:RunStdio",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/audit_writer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/knowledge_retriever.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/registry/registry_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/registry/registry.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/usecase/hotspot/hotspot_usecase_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server.go",
+   "target": "file:internal/usecase/hotspot/hotspot_usecase.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Execute",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Classify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Translate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Close",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:newTestServerWithDevice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Save",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:FindByID",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:FindAll",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Update",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Delete",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Get",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Save",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:callToolViaInMemoryTransport",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:TestMCP_ListTools",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:TestMCP_GetDeviceStatus_E2E",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:TestMCP_GetDeviceStatus_NotFound_E2E",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:TestMCP_RunCommand_E2E",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:TestMCP_PushConfig_E2E",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:TestMCP_RunCommand_Error_E2E",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "class:internal/adapter/mcp/server_test.go:testDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "class:internal/adapter/mcp/server_test.go:memDeviceRepo",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "class:internal/adapter/mcp/server_test.go:memCredVault",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Execute",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Classify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Translate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Close",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Save",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:FindByID",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:FindAll",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Update",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Delete",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Get",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:Save",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:TestMCP_ListTools",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:TestMCP_GetDeviceStatus_E2E",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:TestMCP_GetDeviceStatus_NotFound_E2E",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:TestMCP_RunCommand_E2E",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:TestMCP_PushConfig_E2E",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "function:internal/adapter/mcp/server_test.go:TestMCP_RunCommand_Error_E2E",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/audit_writer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/knowledge_retriever.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/registry/registry_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/server_test.go",
+   "target": "file:internal/registry/registry.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

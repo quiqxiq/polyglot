@@ -1,0 +1,113 @@
+{
+ "nodes": [
+  {
+   "id": "document:internal/templates/footer.default.txt",
+   "type": "document",
+   "name": "footer.default.txt",
+   "filePath": "internal/templates/footer.default.txt",
+   "summary": "Documentation: footer.default.txt",
+   "tags": [
+    "document",
+    "txt"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/footer.small.txt",
+   "type": "document",
+   "name": "footer.small.txt",
+   "filePath": "internal/templates/footer.small.txt",
+   "summary": "Documentation: footer.small.txt",
+   "tags": [
+    "document",
+    "txt"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/footer.thermal.txt",
+   "type": "document",
+   "name": "footer.thermal.txt",
+   "filePath": "internal/templates/footer.thermal.txt",
+   "summary": "Documentation: footer.thermal.txt",
+   "tags": [
+    "document",
+    "txt"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/header.default.txt",
+   "type": "document",
+   "name": "header.default.txt",
+   "filePath": "internal/templates/header.default.txt",
+   "summary": "Documentation: header.default.txt",
+   "tags": [
+    "document",
+    "txt"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/header.small.txt",
+   "type": "document",
+   "name": "header.small.txt",
+   "filePath": "internal/templates/header.small.txt",
+   "summary": "Documentation: header.small.txt",
+   "tags": [
+    "document",
+    "txt"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/header.thermal.txt",
+   "type": "document",
+   "name": "header.thermal.txt",
+   "filePath": "internal/templates/header.thermal.txt",
+   "summary": "Documentation: header.thermal.txt",
+   "tags": [
+    "document",
+    "txt"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/row.default.txt",
+   "type": "document",
+   "name": "row.default.txt",
+   "filePath": "internal/templates/row.default.txt",
+   "summary": "Documentation: row.default.txt",
+   "tags": [
+    "document",
+    "txt"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/row.small.txt",
+   "type": "document",
+   "name": "row.small.txt",
+   "filePath": "internal/templates/row.small.txt",
+   "summary": "Documentation: row.small.txt",
+   "tags": [
+    "document",
+    "txt"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:internal/templates/row.thermal.txt",
+   "type": "document",
+   "name": "row.thermal.txt",
+   "filePath": "internal/templates/row.thermal.txt",
+   "summary": "Documentation: row.thermal.txt",
+   "tags": [
+    "document",
+    "txt"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": []
+}

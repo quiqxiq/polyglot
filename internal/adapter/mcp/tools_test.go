@@ -56,3 +56,8 @@ func TestFormatStatus_MultipleRows_UsesFirstForSummary(t *testing.T) {
 	assert.Contains(t, out.Summary, "1d")
 	assert.Len(t, out.Rows, 2)
 }
+
+func TestServer_RegisterTools(t *testing.T) {
+	s := New(nil, nil)
+	assert.NotNil(t, s.mcpServer)
+}

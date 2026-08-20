@@ -1,0 +1,471 @@
+{
+  "projectRoot": "/home/quixiq/projects/polyground/polyglot",
+  "batchFiles": [
+    {
+      "path": "internal/driver/mikrotik/hotspot/report.go",
+      "language": "go",
+      "sizeLines": 97,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/report_test.go",
+      "language": "go",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/voucher.go",
+      "language": "go",
+      "sizeLines": 189,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot/voucher_test.go",
+      "language": "go",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot_active.go",
+      "language": "go",
+      "sizeLines": 186,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot_profile.go",
+      "language": "go",
+      "sizeLines": 150,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/hotspot_user.go",
+      "language": "go",
+      "sizeLines": 177,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/iface.go",
+      "language": "go",
+      "sizeLines": 181,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/ip.go",
+      "language": "go",
+      "sizeLines": 176,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/pool.go",
+      "language": "go",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp.go",
+      "language": "go",
+      "sizeLines": 242,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp_active.go",
+      "language": "go",
+      "sizeLines": 139,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp_active_test.go",
+      "language": "go",
+      "sizeLines": 166,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp_profile.go",
+      "language": "go",
+      "sizeLines": 196,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/ppp_test.go",
+      "language": "go",
+      "sizeLines": 166,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/queue.go",
+      "language": "go",
+      "sizeLines": 215,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/stream.go",
+      "language": "go",
+      "sizeLines": 147,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/mikrotik/system.go",
+      "language": "go",
+      "sizeLines": 451,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/netconf/commands.go",
+      "language": "go",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/driver/zteolt/commands.go",
+      "language": "go",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/device/manage_device.go",
+      "language": "go",
+      "sizeLines": 201,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/device/manage_device_test.go",
+      "language": "go",
+      "sizeLines": 170,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/hotspot/hotspot_usecase.go",
+      "language": "go",
+      "sizeLines": 409,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/hotspot/hotspot_usecase_test.go",
+      "language": "go",
+      "sizeLines": 108,
+      "fileCategory": "code"
+    },
+    {
+      "path": "internal/usecase/network/get_active_sessions.go",
+      "language": "go",
+      "sizeLines": 109,
+      "fileCategory": "code"
+    },
+    {
+      "path": "pkg/voucher/generator.go",
+      "language": "go",
+      "sizeLines": 143,
+      "fileCategory": "code"
+    },
+    {
+      "path": "pkg/voucher/generator_test.go",
+      "language": "go",
+      "sizeLines": 144,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "internal/driver/mikrotik/hotspot/report.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go",
+      "internal/driver/mikrotik/commands_test.go",
+      "internal/driver/mikrotik/commands.go",
+      "internal/driver/mikrotik/connect.go",
+      "internal/driver/mikrotik/dhcp.go",
+      "internal/driver/mikrotik/driver.go",
+      "internal/driver/mikrotik/drivers_test.go",
+      "internal/driver/mikrotik/errors.go",
+      "internal/driver/mikrotik/firewall.go",
+      "internal/driver/mikrotik/hotspot_active.go",
+      "internal/driver/mikrotik/hotspot_profile.go",
+      "internal/driver/mikrotik/hotspot_user.go",
+      "internal/driver/mikrotik/iface.go",
+      "internal/driver/mikrotik/ip.go",
+      "internal/driver/mikrotik/pool.go",
+      "internal/driver/mikrotik/ppp_active_test.go",
+      "internal/driver/mikrotik/ppp_active.go",
+      "internal/driver/mikrotik/ppp_profile.go",
+      "internal/driver/mikrotik/ppp_test.go",
+      "internal/driver/mikrotik/ppp.go",
+      "internal/driver/mikrotik/queue.go",
+      "internal/driver/mikrotik/stream.go",
+      "internal/driver/mikrotik/system.go"
+    ],
+    "internal/driver/mikrotik/hotspot/report_test.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/hotspot/voucher.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go",
+      "internal/driver/mikrotik/commands_test.go",
+      "internal/driver/mikrotik/commands.go",
+      "internal/driver/mikrotik/connect.go",
+      "internal/driver/mikrotik/dhcp.go",
+      "internal/driver/mikrotik/driver.go",
+      "internal/driver/mikrotik/drivers_test.go",
+      "internal/driver/mikrotik/errors.go",
+      "internal/driver/mikrotik/firewall.go",
+      "internal/driver/mikrotik/hotspot_active.go",
+      "internal/driver/mikrotik/hotspot_profile.go",
+      "internal/driver/mikrotik/hotspot_user.go",
+      "internal/driver/mikrotik/iface.go",
+      "internal/driver/mikrotik/ip.go",
+      "internal/driver/mikrotik/pool.go",
+      "internal/driver/mikrotik/ppp_active_test.go",
+      "internal/driver/mikrotik/ppp_active.go",
+      "internal/driver/mikrotik/ppp_profile.go",
+      "internal/driver/mikrotik/ppp_test.go",
+      "internal/driver/mikrotik/ppp.go",
+      "internal/driver/mikrotik/queue.go",
+      "internal/driver/mikrotik/stream.go",
+      "internal/driver/mikrotik/system.go"
+    ],
+    "internal/driver/mikrotik/hotspot/voucher_test.go": [],
+    "internal/driver/mikrotik/hotspot_active.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/hotspot_profile.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/hotspot_user.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/iface.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/ip.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/pool.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/ppp.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/ppp_active.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/ppp_active_test.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/ppp_profile.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/ppp_test.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/queue.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/mikrotik/stream.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go",
+      "internal/port/audit_writer.go",
+      "internal/port/authorizer.go",
+      "internal/port/bot_repository.go",
+      "internal/port/cache_store.go",
+      "internal/port/credential_vault.go",
+      "internal/port/customer_repository.go",
+      "internal/port/device_driver.go",
+      "internal/port/device_repository.go",
+      "internal/port/invoice_repository.go",
+      "internal/port/knowledge_retriever.go",
+      "internal/port/llm_provider.go",
+      "internal/port/streaming_driver.go",
+      "internal/port/subscription_repository.go",
+      "internal/port/whatsapp_gateway.go"
+    ],
+    "internal/driver/mikrotik/system.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/netconf/commands.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/driver/zteolt/commands.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go"
+    ],
+    "internal/usecase/device/manage_device.go": [
+      "internal/domain/device/credentials.go",
+      "internal/domain/device/device.go",
+      "internal/domain/device/errors.go",
+      "internal/driver/mikrotik/commands_test.go",
+      "internal/driver/mikrotik/commands.go",
+      "internal/driver/mikrotik/connect.go",
+      "internal/driver/mikrotik/dhcp.go",
+      "internal/driver/mikrotik/driver.go",
+      "internal/driver/mikrotik/drivers_test.go",
+      "internal/driver/mikrotik/errors.go",
+      "internal/driver/mikrotik/firewall.go",
+      "internal/driver/mikrotik/hotspot_active.go",
+      "internal/driver/mikrotik/hotspot_profile.go",
+      "internal/driver/mikrotik/hotspot_user.go",
+      "internal/driver/mikrotik/iface.go",
+      "internal/driver/mikrotik/ip.go",
+      "internal/driver/mikrotik/pool.go",
+      "internal/driver/mikrotik/ppp_active_test.go",
+      "internal/driver/mikrotik/ppp_active.go",
+      "internal/driver/mikrotik/ppp_profile.go",
+      "internal/driver/mikrotik/ppp_test.go",
+      "internal/driver/mikrotik/ppp.go",
+      "internal/driver/mikrotik/queue.go",
+      "internal/driver/mikrotik/stream.go",
+      "internal/driver/mikrotik/system.go",
+      "internal/port/audit_writer.go",
+      "internal/port/authorizer.go",
+      "internal/port/bot_repository.go",
+      "internal/port/cache_store.go",
+      "internal/port/credential_vault.go",
+      "internal/port/customer_repository.go",
+      "internal/port/device_driver.go",
+      "internal/port/device_repository.go",
+      "internal/port/invoice_repository.go",
+      "internal/port/knowledge_retriever.go",
+      "internal/port/llm_provider.go",
+      "internal/port/streaming_driver.go",
+      "internal/port/subscription_repository.go",
+      "internal/port/whatsapp_gateway.go"
+    ],
+    "internal/usecase/device/manage_device_test.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go",
+      "internal/domain/device/credentials.go",
+      "internal/domain/device/device.go",
+      "internal/domain/device/errors.go"
+    ],
+    "internal/usecase/hotspot/hotspot_usecase.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go",
+      "internal/driver/mikrotik/commands_test.go",
+      "internal/driver/mikrotik/commands.go",
+      "internal/driver/mikrotik/connect.go",
+      "internal/driver/mikrotik/dhcp.go",
+      "internal/driver/mikrotik/driver.go",
+      "internal/driver/mikrotik/drivers_test.go",
+      "internal/driver/mikrotik/errors.go",
+      "internal/driver/mikrotik/firewall.go",
+      "internal/driver/mikrotik/hotspot_active.go",
+      "internal/driver/mikrotik/hotspot_profile.go",
+      "internal/driver/mikrotik/hotspot_user.go",
+      "internal/driver/mikrotik/hotspot/comment_test.go",
+      "internal/driver/mikrotik/hotspot/comment.go",
+      "internal/driver/mikrotik/hotspot/expire_test.go",
+      "internal/driver/mikrotik/hotspot/expire.go",
+      "internal/driver/mikrotik/hotspot/profile_test.go",
+      "internal/driver/mikrotik/hotspot/profile.go",
+      "internal/driver/mikrotik/hotspot/report_test.go",
+      "internal/driver/mikrotik/hotspot/report.go",
+      "internal/driver/mikrotik/hotspot/voucher_test.go",
+      "internal/driver/mikrotik/hotspot/voucher.go",
+      "internal/driver/mikrotik/iface.go",
+      "internal/driver/mikrotik/ip.go",
+      "internal/driver/mikrotik/pool.go",
+      "internal/driver/mikrotik/ppp_active_test.go",
+      "internal/driver/mikrotik/ppp_active.go",
+      "internal/driver/mikrotik/ppp_profile.go",
+      "internal/driver/mikrotik/ppp_test.go",
+      "internal/driver/mikrotik/ppp.go",
+      "internal/driver/mikrotik/queue.go",
+      "internal/driver/mikrotik/stream.go",
+      "internal/driver/mikrotik/system.go",
+      "internal/port/audit_writer.go",
+      "internal/port/authorizer.go",
+      "internal/port/bot_repository.go",
+      "internal/port/cache_store.go",
+      "internal/port/credential_vault.go",
+      "internal/port/customer_repository.go",
+      "internal/port/device_driver.go",
+      "internal/port/device_repository.go",
+      "internal/port/invoice_repository.go",
+      "internal/port/knowledge_retriever.go",
+      "internal/port/llm_provider.go",
+      "internal/port/streaming_driver.go",
+      "internal/port/subscription_repository.go",
+      "internal/port/whatsapp_gateway.go",
+      "internal/usecase/network/execute_command.go",
+      "internal/usecase/network/get_active_sessions_test.go",
+      "internal/usecase/network/get_active_sessions.go",
+      "internal/usecase/network/get_device_status.go",
+      "internal/usecase/network/open_terminal.go",
+      "internal/usecase/network/push_config.go",
+      "internal/usecase/network/stream_output.go",
+      "internal/usecase/network/stream_terminal.go",
+      "pkg/voucher/generator_test.go",
+      "pkg/voucher/generator.go"
+    ],
+    "internal/usecase/hotspot/hotspot_usecase_test.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go",
+      "internal/driver/mikrotik/hotspot/comment_test.go",
+      "internal/driver/mikrotik/hotspot/comment.go",
+      "internal/driver/mikrotik/hotspot/expire_test.go",
+      "internal/driver/mikrotik/hotspot/expire.go",
+      "internal/driver/mikrotik/hotspot/profile_test.go",
+      "internal/driver/mikrotik/hotspot/profile.go",
+      "internal/driver/mikrotik/hotspot/report_test.go",
+      "internal/driver/mikrotik/hotspot/report.go",
+      "internal/driver/mikrotik/hotspot/voucher_test.go",
+      "internal/driver/mikrotik/hotspot/voucher.go"
+    ],
+    "internal/usecase/network/get_active_sessions.go": [
+      "internal/domain/command/command.go",
+      "internal/domain/command/policy.go",
+      "internal/driver/mikrotik/commands_test.go",
+      "internal/driver/mikrotik/commands.go",
+      "internal/driver/mikrotik/connect.go",
+      "internal/driver/mikrotik/dhcp.go",
+      "internal/driver/mikrotik/driver.go",
+      "internal/driver/mikrotik/drivers_test.go",
+      "internal/driver/mikrotik/errors.go",
+      "internal/driver/mikrotik/firewall.go",
+      "internal/driver/mikrotik/hotspot_active.go",
+      "internal/driver/mikrotik/hotspot_profile.go",
+      "internal/driver/mikrotik/hotspot_user.go",
+      "internal/driver/mikrotik/iface.go",
+      "internal/driver/mikrotik/ip.go",
+      "internal/driver/mikrotik/pool.go",
+      "internal/driver/mikrotik/ppp_active_test.go",
+      "internal/driver/mikrotik/ppp_active.go",
+      "internal/driver/mikrotik/ppp_profile.go",
+      "internal/driver/mikrotik/ppp_test.go",
+      "internal/driver/mikrotik/ppp.go",
+      "internal/driver/mikrotik/queue.go",
+      "internal/driver/mikrotik/stream.go",
+      "internal/driver/mikrotik/system.go",
+      "internal/port/audit_writer.go",
+      "internal/port/authorizer.go",
+      "internal/port/bot_repository.go",
+      "internal/port/cache_store.go",
+      "internal/port/credential_vault.go",
+      "internal/port/customer_repository.go",
+      "internal/port/device_driver.go",
+      "internal/port/device_repository.go",
+      "internal/port/invoice_repository.go",
+      "internal/port/knowledge_retriever.go",
+      "internal/port/llm_provider.go",
+      "internal/port/streaming_driver.go",
+      "internal/port/subscription_repository.go",
+      "internal/port/whatsapp_gateway.go"
+    ],
+    "pkg/voucher/generator.go": [],
+    "pkg/voucher/generator_test.go": [
+      "pkg/voucher/generator_test.go",
+      "pkg/voucher/generator.go"
+    ]
+  }
+}

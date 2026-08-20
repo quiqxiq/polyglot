@@ -17,3 +17,11 @@ var ErrStreamingCommand = errors.New("mikrotik: command requires Stream, not Exe
 // ErrNotStreamingCommand indicates Stream was called with a command that
 // is not recognized as streaming — use Execute instead.
 var ErrNotStreamingCommand = errors.New("mikrotik: command is not a streaming command, use Execute")
+
+// ErrSecretNotFound indicates a /ppp/secret lookup by name returned no
+// matching entry on the device — used by FindPPPoESecretRosID in ppp.go.
+var ErrSecretNotFound = errors.New("mikrotik: ppp secret not found")
+
+// ErrProfileNotFound indicates a profile lookup by name returned no matching
+// entry on the device — used by FindHotspotUserProfileRosID in hotspot_profile.go.
+var ErrProfileNotFound = errors.New("mikrotik: profile not found")

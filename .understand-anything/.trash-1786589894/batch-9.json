@@ -1,0 +1,17 @@
+{
+  "nodes": [
+    {
+      "id": "resource:deployments/docker/Dockerfile",
+      "type": "resource",
+      "name": "Dockerfile",
+      "summary": "# syntax=docker/dockerfile:1 # ─── Multi-Stage Dockerfile for Polyglot NetOps Engine ───",
+      "tags": [
+        "deployments",
+        "infra"
+      ],
+      "complexity": "simple",
+      "filePath": "deployments/docker/Dockerfile"
+    }
+  ],
+  "edges": []
+}

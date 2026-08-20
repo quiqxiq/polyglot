@@ -1,0 +1,1217 @@
+{
+ "nodes": [
+  {
+   "id": "file:cmd/seed/main.go",
+   "type": "file",
+   "name": "main.go",
+   "filePath": "cmd/seed/main.go",
+   "summary": "Seeding binary that populates the database with initial devices, plans, and customers for development.",
+   "tags": [
+    "entry-point",
+    "seed",
+    "database",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:cmd/seed/main.go:main",
+   "type": "function",
+   "name": "main",
+   "filePath": "cmd/seed/main.go",
+   "lineRange": [
+    20,
+    46
+   ],
+   "summary": "Implements the main logic for this component.",
+   "tags": [
+    "function",
+    "entry-point",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:cmd/seed/main.go:seedUsers",
+   "type": "function",
+   "name": "seedUsers",
+   "filePath": "cmd/seed/main.go",
+   "lineRange": [
+    48,
+    127
+   ],
+   "summary": "Implements the seedUsers logic (inputs: pgStore) for this component.",
+   "tags": [
+    "function",
+    "entry-point",
+    "method"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:cmd/seed/main.go:seedCasbin",
+   "type": "function",
+   "name": "seedCasbin",
+   "filePath": "cmd/seed/main.go",
+   "lineRange": [
+    129,
+    138
+   ],
+   "summary": "Implements the seedCasbin logic (inputs: ctx, pgStore) for this component.",
+   "tags": [
+    "function",
+    "entry-point",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:cmd/seed/main.go:seedKnowledge",
+   "type": "function",
+   "name": "seedKnowledge",
+   "filePath": "cmd/seed/main.go",
+   "lineRange": [
+    140,
+    198
+   ],
+   "summary": "Implements the seedKnowledge logic (inputs: pgStore) for this component.",
+   "tags": [
+    "function",
+    "entry-point",
+    "method"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:cmd/seed/main.go:seedLLMConfig",
+   "type": "function",
+   "name": "seedLLMConfig",
+   "filePath": "cmd/seed/main.go",
+   "lineRange": [
+    200,
+    226
+   ],
+   "summary": "Implements the seedLLMConfig logic (inputs: pgStore, cfg) for this component.",
+   "tags": [
+    "function",
+    "entry-point",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/llm/claude/claude.go",
+   "type": "file",
+   "name": "claude.go",
+   "filePath": "internal/adapter/llm/claude/claude.go",
+   "summary": "Go source file implementing the LLM provider adapter — LLM provider adapter logic for the polyglot backend. Exports Provider, NewProvider, Chat, TestConnection.",
+   "tags": [
+    "llm",
+    "adapter",
+    "ai",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/llm/claude/claude.go:NewProvider",
+   "type": "function",
+   "name": "NewProvider",
+   "filePath": "internal/adapter/llm/claude/claude.go",
+   "lineRange": [
+    23,
+    36
+   ],
+   "summary": "Constructor that creates and initializes a Provider instance with the provided configuration.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/llm/claude/claude.go:Chat",
+   "type": "function",
+   "name": "Chat",
+   "filePath": "internal/adapter/llm/claude/claude.go",
+   "lineRange": [
+    65,
+    134
+   ],
+   "summary": "Implements the Chat logic (inputs: ctx, systemPrompt, messages, maxTokens) for this component.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/llm/claude/claude.go:TestConnection",
+   "type": "function",
+   "name": "TestConnection",
+   "filePath": "internal/adapter/llm/claude/claude.go",
+   "lineRange": [
+    136,
+    141
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/llm/claude/claude.go:Provider",
+   "type": "class",
+   "name": "Provider",
+   "filePath": "internal/adapter/llm/claude/claude.go",
+   "lineRange": [
+    16,
+    21
+   ],
+   "summary": "Provider Go type with 2 method(s) [Chat, TestConnection] and 4 field(s), defining the provider behavior of this component.",
+   "tags": [
+    "class",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/llm/gemini/gemini.go",
+   "type": "file",
+   "name": "gemini.go",
+   "filePath": "internal/adapter/llm/gemini/gemini.go",
+   "summary": "Go source file implementing the LLM provider adapter — LLM provider adapter logic for the polyglot backend. Exports Provider, NewProvider, Chat, TestConnection.",
+   "tags": [
+    "llm",
+    "adapter",
+    "ai",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/llm/gemini/gemini.go:NewProvider",
+   "type": "function",
+   "name": "NewProvider",
+   "filePath": "internal/adapter/llm/gemini/gemini.go",
+   "lineRange": [
+    23,
+    36
+   ],
+   "summary": "Constructor that creates and initializes a Provider instance with the provided configuration.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/llm/gemini/gemini.go:Chat",
+   "type": "function",
+   "name": "Chat",
+   "filePath": "internal/adapter/llm/gemini/gemini.go",
+   "lineRange": [
+    74,
+    142
+   ],
+   "summary": "Implements the Chat logic (inputs: ctx, systemPrompt, messages, maxTokens) for this component.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/llm/gemini/gemini.go:TestConnection",
+   "type": "function",
+   "name": "TestConnection",
+   "filePath": "internal/adapter/llm/gemini/gemini.go",
+   "lineRange": [
+    144,
+    149
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/llm/gemini/gemini.go:Provider",
+   "type": "class",
+   "name": "Provider",
+   "filePath": "internal/adapter/llm/gemini/gemini.go",
+   "lineRange": [
+    16,
+    21
+   ],
+   "summary": "Provider Go type with 2 method(s) [Chat, TestConnection] and 4 field(s), defining the provider behavior of this component.",
+   "tags": [
+    "class",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/llm/groq/groq.go",
+   "type": "file",
+   "name": "groq.go",
+   "filePath": "internal/adapter/llm/groq/groq.go",
+   "summary": "Go source file implementing the LLM provider adapter — LLM provider adapter logic for the polyglot backend. Exports Provider, NewProvider, Chat, TestConnection.",
+   "tags": [
+    "llm",
+    "adapter",
+    "ai",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/llm/groq/groq.go:NewProvider",
+   "type": "function",
+   "name": "NewProvider",
+   "filePath": "internal/adapter/llm/groq/groq.go",
+   "lineRange": [
+    23,
+    36
+   ],
+   "summary": "Constructor that creates and initializes a Provider instance with the provided configuration.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/llm/groq/groq.go:Chat",
+   "type": "function",
+   "name": "Chat",
+   "filePath": "internal/adapter/llm/groq/groq.go",
+   "lineRange": [
+    64,
+    122
+   ],
+   "summary": "Implements the Chat logic (inputs: ctx, systemPrompt, messages, maxTokens) for this component.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/llm/groq/groq.go:TestConnection",
+   "type": "function",
+   "name": "TestConnection",
+   "filePath": "internal/adapter/llm/groq/groq.go",
+   "lineRange": [
+    124,
+    129
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/llm/groq/groq.go:Provider",
+   "type": "class",
+   "name": "Provider",
+   "filePath": "internal/adapter/llm/groq/groq.go",
+   "lineRange": [
+    16,
+    21
+   ],
+   "summary": "Provider Go type with 2 method(s) [Chat, TestConnection] and 4 field(s), defining the provider behavior of this component.",
+   "tags": [
+    "class",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/llm/openai/openai.go",
+   "type": "file",
+   "name": "openai.go",
+   "filePath": "internal/adapter/llm/openai/openai.go",
+   "summary": "Go source file implementing the LLM provider adapter — LLM provider adapter logic for the polyglot backend. Exports Provider, NewProvider, Chat, TestConnection.",
+   "tags": [
+    "llm",
+    "adapter",
+    "ai",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/llm/openai/openai.go:NewProvider",
+   "type": "function",
+   "name": "NewProvider",
+   "filePath": "internal/adapter/llm/openai/openai.go",
+   "lineRange": [
+    23,
+    36
+   ],
+   "summary": "Constructor that creates and initializes a Provider instance with the provided configuration.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/llm/openai/openai.go:Chat",
+   "type": "function",
+   "name": "Chat",
+   "filePath": "internal/adapter/llm/openai/openai.go",
+   "lineRange": [
+    64,
+    122
+   ],
+   "summary": "Implements the Chat logic (inputs: ctx, systemPrompt, messages, maxTokens) for this component.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/llm/openai/openai.go:TestConnection",
+   "type": "function",
+   "name": "TestConnection",
+   "filePath": "internal/adapter/llm/openai/openai.go",
+   "lineRange": [
+    124,
+    129
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/llm/openai/openai.go:Provider",
+   "type": "class",
+   "name": "Provider",
+   "filePath": "internal/adapter/llm/openai/openai.go",
+   "lineRange": [
+    16,
+    21
+   ],
+   "summary": "Provider Go type with 2 method(s) [Chat, TestConnection] and 4 field(s), defining the provider behavior of this component.",
+   "tags": [
+    "class",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/llm/provider.go",
+   "type": "file",
+   "name": "provider.go",
+   "filePath": "internal/adapter/llm/provider.go",
+   "summary": "Go source file implementing the LLM provider adapter — LLM provider adapter logic for the polyglot backend. Exports NewProvider.",
+   "tags": [
+    "llm",
+    "adapter",
+    "ai",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/llm/provider.go:NewProvider",
+   "type": "function",
+   "name": "NewProvider",
+   "filePath": "internal/adapter/llm/provider.go",
+   "lineRange": [
+    16,
+    34
+   ],
+   "summary": "Constructor that creates and initializes a Provider instance with the provided configuration.",
+   "tags": [
+    "function",
+    "llm",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/mcp/tool_customer_lookup.go",
+   "type": "file",
+   "name": "tool_customer_lookup.go",
+   "filePath": "internal/adapter/mcp/tool_customer_lookup.go",
+   "summary": "Go source file implementing the MCP tool adapter — MCP tool adapter logic for the polyglot backend.",
+   "tags": [
+    "mcp",
+    "tool",
+    "llm",
+    "adapter",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/mcp/tool_customer_lookup.go:customerLookup",
+   "type": "function",
+   "name": "customerLookup",
+   "filePath": "internal/adapter/mcp/tool_customer_lookup.go",
+   "lineRange": [
+    34,
+    93
+   ],
+   "summary": "Implements the customerLookup logic (inputs: ctx, _, args) for this component.",
+   "tags": [
+    "function",
+    "mcp",
+    "method"
+   ],
+   "complexity": "moderate"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "function:cmd/seed/main.go:main",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "function:cmd/seed/main.go:seedUsers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "function:cmd/seed/main.go:seedCasbin",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "function:cmd/seed/main.go:seedKnowledge",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "function:cmd/seed/main.go:seedLLMConfig",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/casbin.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/jwt_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/jwt.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/auth/policy_seeder.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/device_repository_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/knowledge_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/models/conversation_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/models/device_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/models/knowledge_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/models/llm_config_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/models/session_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/models/technician_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/models/user_model.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/technician_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/adapter/postgres/user_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/config/config.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/config/crypto.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/customer/customer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/customer/technician.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/customer/user.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/knowledge/knowledge.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/llm/llm_config.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/seed/main.go",
+   "target": "file:internal/domain/llm/llm_pricing.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/claude/claude.go",
+   "target": "function:internal/adapter/llm/claude/claude.go:NewProvider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/claude/claude.go",
+   "target": "function:internal/adapter/llm/claude/claude.go:Chat",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/claude/claude.go",
+   "target": "function:internal/adapter/llm/claude/claude.go:TestConnection",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/claude/claude.go",
+   "target": "class:internal/adapter/llm/claude/claude.go:Provider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/claude/claude.go",
+   "target": "class:internal/adapter/llm/claude/claude.go:Provider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/claude/claude.go",
+   "target": "function:internal/adapter/llm/claude/claude.go:NewProvider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/claude/claude.go",
+   "target": "function:internal/adapter/llm/claude/claude.go:Chat",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/claude/claude.go",
+   "target": "function:internal/adapter/llm/claude/claude.go:TestConnection",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/claude/claude.go",
+   "target": "file:internal/domain/llm/llm_config.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/claude/claude.go",
+   "target": "file:internal/domain/llm/llm_pricing.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/gemini/gemini.go",
+   "target": "function:internal/adapter/llm/gemini/gemini.go:NewProvider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/gemini/gemini.go",
+   "target": "function:internal/adapter/llm/gemini/gemini.go:Chat",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/gemini/gemini.go",
+   "target": "function:internal/adapter/llm/gemini/gemini.go:TestConnection",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/gemini/gemini.go",
+   "target": "class:internal/adapter/llm/gemini/gemini.go:Provider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/gemini/gemini.go",
+   "target": "class:internal/adapter/llm/gemini/gemini.go:Provider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/gemini/gemini.go",
+   "target": "function:internal/adapter/llm/gemini/gemini.go:NewProvider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/gemini/gemini.go",
+   "target": "function:internal/adapter/llm/gemini/gemini.go:Chat",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/gemini/gemini.go",
+   "target": "function:internal/adapter/llm/gemini/gemini.go:TestConnection",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/gemini/gemini.go",
+   "target": "file:internal/domain/llm/llm_config.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/gemini/gemini.go",
+   "target": "file:internal/domain/llm/llm_pricing.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/groq/groq.go",
+   "target": "function:internal/adapter/llm/groq/groq.go:NewProvider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/groq/groq.go",
+   "target": "function:internal/adapter/llm/groq/groq.go:Chat",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/groq/groq.go",
+   "target": "function:internal/adapter/llm/groq/groq.go:TestConnection",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/groq/groq.go",
+   "target": "class:internal/adapter/llm/groq/groq.go:Provider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/groq/groq.go",
+   "target": "class:internal/adapter/llm/groq/groq.go:Provider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/groq/groq.go",
+   "target": "function:internal/adapter/llm/groq/groq.go:NewProvider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/groq/groq.go",
+   "target": "function:internal/adapter/llm/groq/groq.go:Chat",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/groq/groq.go",
+   "target": "function:internal/adapter/llm/groq/groq.go:TestConnection",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/groq/groq.go",
+   "target": "file:internal/domain/llm/llm_config.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/groq/groq.go",
+   "target": "file:internal/domain/llm/llm_pricing.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/openai/openai.go",
+   "target": "function:internal/adapter/llm/openai/openai.go:NewProvider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/openai/openai.go",
+   "target": "function:internal/adapter/llm/openai/openai.go:Chat",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/openai/openai.go",
+   "target": "function:internal/adapter/llm/openai/openai.go:TestConnection",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/openai/openai.go",
+   "target": "class:internal/adapter/llm/openai/openai.go:Provider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/openai/openai.go",
+   "target": "class:internal/adapter/llm/openai/openai.go:Provider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/openai/openai.go",
+   "target": "function:internal/adapter/llm/openai/openai.go:NewProvider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/openai/openai.go",
+   "target": "function:internal/adapter/llm/openai/openai.go:Chat",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/openai/openai.go",
+   "target": "function:internal/adapter/llm/openai/openai.go:TestConnection",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/openai/openai.go",
+   "target": "file:internal/domain/llm/llm_config.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/openai/openai.go",
+   "target": "file:internal/domain/llm/llm_pricing.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "function:internal/adapter/llm/provider.go:NewProvider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "function:internal/adapter/llm/provider.go:NewProvider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/adapter/llm/claude/claude.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/adapter/llm/gemini/gemini.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/adapter/llm/groq/groq.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/adapter/llm/openai/openai.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/config/config.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/config/crypto.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/domain/llm/llm_config.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/domain/llm/llm_pricing.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/audit_writer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/knowledge_retriever.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/llm/provider.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/tool_customer_lookup.go",
+   "target": "function:internal/adapter/mcp/tool_customer_lookup.go:customerLookup",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/mcp/tool_customer_lookup.go",
+   "target": "file:internal/domain/customer/customer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/tool_customer_lookup.go",
+   "target": "file:internal/domain/customer/technician.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/mcp/tool_customer_lookup.go",
+   "target": "file:internal/domain/customer/user.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

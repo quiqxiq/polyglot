@@ -1,0 +1,176 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 4,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "docs/adr/0001-pilih-gin-daripada-echo.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 15,
+      "nonEmptyLines": 11,
+      "sections": [
+        {
+          "heading": "0001 — Pilih Gin daripada Echo",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Status",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Konteks",
+          "level": 2,
+          "line": 6
+        },
+        {
+          "heading": "Keputusan",
+          "level": 2,
+          "line": 9
+        },
+        {
+          "heading": "Konsekuensi",
+          "level": 2,
+          "line": 13
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    },
+    {
+      "path": "docs/adr/0002-devicedriver-tanpa-session-terpisah.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 42,
+      "nonEmptyLines": 38,
+      "sections": [
+        {
+          "heading": "0002 — port.DeviceDriver Tanpa Tipe Session Terpisah",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Status",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Konteks",
+          "level": 2,
+          "line": 6
+        },
+        {
+          "heading": "Keputusan",
+          "level": 2,
+          "line": 14
+        },
+        {
+          "heading": "Konsekuensi",
+          "level": 2,
+          "line": 24
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    },
+    {
+      "path": "docs/adr/0003-mikrotik-dual-connection-streaming.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 113,
+      "nonEmptyLines": 98,
+      "sections": [
+        {
+          "heading": "0003 — Mikrotik: Dua Koneksi Persisten (Exec + Stream), Bukan Satu",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Status",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Konteks",
+          "level": 2,
+          "line": 6
+        },
+        {
+          "heading": "Keputusan",
+          "level": 2,
+          "line": 41
+        },
+        {
+          "heading": "Konsekuensi",
+          "level": 2,
+          "line": 89
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    },
+    {
+      "path": "docs/adr/0004-generic-cli-driver-scrapligo.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 174,
+      "nonEmptyLines": 151,
+      "sections": [
+        {
+          "heading": "0004 — genericssh & generictelnet Berbagi Satu Mesin scrapligo",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Status",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Konteks",
+          "level": 2,
+          "line": 6
+        },
+        {
+          "heading": "Keputusan",
+          "level": 2,
+          "line": 34
+        },
+        {
+          "heading": "Konsekuensi",
+          "level": 2,
+          "line": 107
+        },
+        {
+          "heading": "Addendum — `internal/platformdef/mikrotik_routeros.yaml`",
+          "level": 2,
+          "line": 132
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 6
+      }
+    }
+  ]
+}

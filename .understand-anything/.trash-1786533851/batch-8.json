@@ -1,0 +1,5536 @@
+{
+ "nodes": [
+  {
+   "id": "file:cmd/probe/main.go",
+   "type": "file",
+   "name": "main.go",
+   "filePath": "cmd/probe/main.go",
+   "summary": "cmd/probe/main.go — code file in cmd/probe, exports: ReportStatus, 39 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:cmd/probe/main.go:main",
+   "type": "function",
+   "name": "main",
+   "filePath": "cmd/probe/main.go",
+   "lineRange": [
+    19,
+    39
+   ],
+   "summary": "main() in main.go",
+   "tags": [
+    "function"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:cmd/probe/main.go:runHeartbeatLoop",
+   "type": "function",
+   "name": "runHeartbeatLoop",
+   "filePath": "cmd/probe/main.go",
+   "lineRange": [
+    41,
+    66
+   ],
+   "summary": "runHeartbeatLoop() in main.go",
+   "tags": [
+    "function"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:cmd/probe/main.go:runTelemetryLoop",
+   "type": "function",
+   "name": "runTelemetryLoop",
+   "filePath": "cmd/probe/main.go",
+   "lineRange": [
+    68,
+    87
+   ],
+   "summary": "runTelemetryLoop() in main.go",
+   "tags": [
+    "function"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:cmd/probe/main.go:measureTargetLatency",
+   "type": "function",
+   "name": "measureTargetLatency",
+   "filePath": "cmd/probe/main.go",
+   "lineRange": [
+    89,
+    102
+   ],
+   "summary": "measureTargetLatency() in main.go",
+   "tags": [
+    "function"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:cmd/probe/main.go:ReportStatus",
+   "type": "function",
+   "name": "ReportStatus",
+   "filePath": "cmd/probe/main.go",
+   "lineRange": [
+    116,
+    126
+   ],
+   "summary": "ReportStatus() in main.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/auth/auth_handler.go",
+   "type": "file",
+   "name": "auth_handler.go",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "summary": "internal/adapter/connect/auth/auth_handler.go — code file in internal/adapter/connect/auth, exports: NewAuthConnectHandler, Login, GetMe, RefreshToken, NewAuthServiceHandler, AuthConnectHandler, 55 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthConnectHandler",
+   "type": "function",
+   "name": "NewAuthConnectHandler",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "lineRange": [
+    27,
+    32
+   ],
+   "summary": "NewAuthConnectHandler() in auth_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/auth_handler.go:Login",
+   "type": "function",
+   "name": "Login",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "lineRange": [
+    34,
+    72
+   ],
+   "summary": "Login() in auth_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/auth_handler.go:GetMe",
+   "type": "function",
+   "name": "GetMe",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "lineRange": [
+    74,
+    112
+   ],
+   "summary": "GetMe() in auth_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/auth_handler.go:RefreshToken",
+   "type": "function",
+   "name": "RefreshToken",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "lineRange": [
+    114,
+    124
+   ],
+   "summary": "RefreshToken() in auth_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthServiceHandler",
+   "type": "function",
+   "name": "NewAuthServiceHandler",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "lineRange": [
+    126,
+    149
+   ],
+   "summary": "NewAuthServiceHandler() in auth_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/connect/auth/auth_handler.go:AuthConnectHandler",
+   "type": "class",
+   "name": "AuthConnectHandler",
+   "filePath": "internal/adapter/connect/auth/auth_handler.go",
+   "lineRange": [
+    22,
+    25
+   ],
+   "summary": "AuthConnectHandler type in auth_handler.go (exported)",
+   "tags": [
+    "class",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "type": "file",
+   "name": "rbac_handler.go",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "summary": "internal/adapter/connect/auth/rbac_handler.go — code file in internal/adapter/connect/auth, exports: NewRBACConnectHandler, ListPolicies, AddPolicy, RemovePolicy, ListRoleAssignments, AssignRole, 60 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACConnectHandler",
+   "type": "function",
+   "name": "NewRBACConnectHandler",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    19,
+    21
+   ],
+   "summary": "NewRBACConnectHandler() in rbac_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:ListPolicies",
+   "type": "function",
+   "name": "ListPolicies",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    23,
+    45
+   ],
+   "summary": "ListPolicies() in rbac_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:AddPolicy",
+   "type": "function",
+   "name": "AddPolicy",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    47,
+    62
+   ],
+   "summary": "AddPolicy() in rbac_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:RemovePolicy",
+   "type": "function",
+   "name": "RemovePolicy",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    64,
+    79
+   ],
+   "summary": "RemovePolicy() in rbac_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:ListRoleAssignments",
+   "type": "function",
+   "name": "ListRoleAssignments",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    81,
+    102
+   ],
+   "summary": "ListRoleAssignments() in rbac_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:AssignRole",
+   "type": "function",
+   "name": "AssignRole",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    104,
+    119
+   ],
+   "summary": "AssignRole() in rbac_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:UnassignRole",
+   "type": "function",
+   "name": "UnassignRole",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    121,
+    136
+   ],
+   "summary": "UnassignRole() in rbac_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACServiceHandler",
+   "type": "function",
+   "name": "NewRBACServiceHandler",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    138,
+    152
+   ],
+   "summary": "NewRBACServiceHandler() in rbac_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/connect/auth/rbac_handler.go:RBACConnectHandler",
+   "type": "class",
+   "name": "RBACConnectHandler",
+   "filePath": "internal/adapter/connect/auth/rbac_handler.go",
+   "lineRange": [
+    15,
+    17
+   ],
+   "summary": "RBACConnectHandler type in rbac_handler.go (exported)",
+   "tags": [
+    "class",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/billing/billing_handler.go",
+   "type": "file",
+   "name": "billing_handler.go",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "summary": "internal/adapter/connect/billing/billing_handler.go — code file in internal/adapter/connect/billing, exports: NewBillingConnectHandler, ListInvoices, GetInvoice, CreateInvoice, PayInvoice, ListSubscriptions, 90 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingConnectHandler",
+   "type": "function",
+   "name": "NewBillingConnectHandler",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    30,
+    38
+   ],
+   "summary": "NewBillingConnectHandler() in billing_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:ListInvoices",
+   "type": "function",
+   "name": "ListInvoices",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    40,
+    63
+   ],
+   "summary": "ListInvoices() in billing_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:GetInvoice",
+   "type": "function",
+   "name": "GetInvoice",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    65,
+    88
+   ],
+   "summary": "GetInvoice() in billing_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:CreateInvoice",
+   "type": "function",
+   "name": "CreateInvoice",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    90,
+    130
+   ],
+   "summary": "CreateInvoice() in billing_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:PayInvoice",
+   "type": "function",
+   "name": "PayInvoice",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    132,
+    156
+   ],
+   "summary": "PayInvoice() in billing_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:ListSubscriptions",
+   "type": "function",
+   "name": "ListSubscriptions",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    158,
+    182
+   ],
+   "summary": "ListSubscriptions() in billing_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:CreateSubscription",
+   "type": "function",
+   "name": "CreateSubscription",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    184,
+    222
+   ],
+   "summary": "CreateSubscription() in billing_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:CancelSubscription",
+   "type": "function",
+   "name": "CancelSubscription",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    224,
+    249
+   ],
+   "summary": "CancelSubscription() in billing_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingServiceHandler",
+   "type": "function",
+   "name": "NewBillingServiceHandler",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    251,
+    269
+   ],
+   "summary": "NewBillingServiceHandler() in billing_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/connect/billing/billing_handler.go:BillingConnectHandler",
+   "type": "class",
+   "name": "BillingConnectHandler",
+   "filePath": "internal/adapter/connect/billing/billing_handler.go",
+   "lineRange": [
+    25,
+    28
+   ],
+   "summary": "BillingConnectHandler type in billing_handler.go (exported)",
+   "tags": [
+    "class",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "type": "file",
+   "name": "bot_conversation_handler.go",
+   "filePath": "internal/adapter/connect/bot/bot_conversation_handler.go",
+   "summary": "internal/adapter/connect/bot/bot_conversation_handler.go — code file in internal/adapter/connect/bot, exports: ListConversations, GetConversation, TakeOverConversation, ResetConversationBot, CloseConversation, 28 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/bot_conversation_handler.go:ListConversations",
+   "type": "function",
+   "name": "ListConversations",
+   "filePath": "internal/adapter/connect/bot/bot_conversation_handler.go",
+   "lineRange": [
+    12,
+    31
+   ],
+   "summary": "ListConversations() in bot_conversation_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/bot_conversation_handler.go:GetConversation",
+   "type": "function",
+   "name": "GetConversation",
+   "filePath": "internal/adapter/connect/bot/bot_conversation_handler.go",
+   "lineRange": [
+    33,
+    63
+   ],
+   "summary": "GetConversation() in bot_conversation_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/bot_conversation_handler.go:TakeOverConversation",
+   "type": "function",
+   "name": "TakeOverConversation",
+   "filePath": "internal/adapter/connect/bot/bot_conversation_handler.go",
+   "lineRange": [
+    65,
+    74
+   ],
+   "summary": "TakeOverConversation() in bot_conversation_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/bot_conversation_handler.go:ResetConversationBot",
+   "type": "function",
+   "name": "ResetConversationBot",
+   "filePath": "internal/adapter/connect/bot/bot_conversation_handler.go",
+   "lineRange": [
+    76,
+    85
+   ],
+   "summary": "ResetConversationBot() in bot_conversation_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/bot_conversation_handler.go:CloseConversation",
+   "type": "function",
+   "name": "CloseConversation",
+   "filePath": "internal/adapter/connect/bot/bot_conversation_handler.go",
+   "lineRange": [
+    87,
+    96
+   ],
+   "summary": "CloseConversation() in bot_conversation_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/bot/bot_service_handler.go",
+   "type": "file",
+   "name": "bot_service_handler.go",
+   "filePath": "internal/adapter/connect/bot/bot_service_handler.go",
+   "summary": "internal/adapter/connect/bot/bot_service_handler.go — code file in internal/adapter/connect/bot, exports: NewBotConnectHandler, NewBotServiceHandler, BotConnectHandler, 14 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/bot_service_handler.go:NewBotConnectHandler",
+   "type": "function",
+   "name": "NewBotConnectHandler",
+   "filePath": "internal/adapter/connect/bot/bot_service_handler.go",
+   "lineRange": [
+    16,
+    18
+   ],
+   "summary": "NewBotConnectHandler() in bot_service_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/bot_service_handler.go:NewBotServiceHandler",
+   "type": "function",
+   "name": "NewBotServiceHandler",
+   "filePath": "internal/adapter/connect/bot/bot_service_handler.go",
+   "lineRange": [
+    20,
+    53
+   ],
+   "summary": "NewBotServiceHandler() in bot_service_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/connect/bot/bot_service_handler.go:BotConnectHandler",
+   "type": "class",
+   "name": "BotConnectHandler",
+   "filePath": "internal/adapter/connect/bot/bot_service_handler.go",
+   "lineRange": [
+    12,
+    14
+   ],
+   "summary": "BotConnectHandler type in bot_service_handler.go (exported)",
+   "tags": [
+    "class",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "type": "file",
+   "name": "knowledge_handler.go",
+   "filePath": "internal/adapter/connect/bot/knowledge_handler.go",
+   "summary": "internal/adapter/connect/bot/knowledge_handler.go — code file in internal/adapter/connect/bot, exports: ListKnowledge, GetKnowledge, CreateKnowledge, UpdateKnowledge, DeleteKnowledge, 5 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/knowledge_handler.go:ListKnowledge",
+   "type": "function",
+   "name": "ListKnowledge",
+   "filePath": "internal/adapter/connect/bot/knowledge_handler.go",
+   "lineRange": [
+    11,
+    15
+   ],
+   "summary": "ListKnowledge() in knowledge_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/knowledge_handler.go:GetKnowledge",
+   "type": "function",
+   "name": "GetKnowledge",
+   "filePath": "internal/adapter/connect/bot/knowledge_handler.go",
+   "lineRange": [
+    17,
+    26
+   ],
+   "summary": "GetKnowledge() in knowledge_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/knowledge_handler.go:CreateKnowledge",
+   "type": "function",
+   "name": "CreateKnowledge",
+   "filePath": "internal/adapter/connect/bot/knowledge_handler.go",
+   "lineRange": [
+    28,
+    38
+   ],
+   "summary": "CreateKnowledge() in knowledge_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/knowledge_handler.go:UpdateKnowledge",
+   "type": "function",
+   "name": "UpdateKnowledge",
+   "filePath": "internal/adapter/connect/bot/knowledge_handler.go",
+   "lineRange": [
+    40,
+    50
+   ],
+   "summary": "UpdateKnowledge() in knowledge_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/knowledge_handler.go:DeleteKnowledge",
+   "type": "function",
+   "name": "DeleteKnowledge",
+   "filePath": "internal/adapter/connect/bot/knowledge_handler.go",
+   "lineRange": [
+    52,
+    56
+   ],
+   "summary": "DeleteKnowledge() in knowledge_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/bot/knowledge_service_handler.go",
+   "type": "file",
+   "name": "knowledge_service_handler.go",
+   "filePath": "internal/adapter/connect/bot/knowledge_service_handler.go",
+   "summary": "internal/adapter/connect/bot/knowledge_service_handler.go — code file in internal/adapter/connect/bot, exports: NewKnowledgeConnectHandler, NewKnowledgeServiceHandler, KnowledgeConnectHandler, 26 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/knowledge_service_handler.go:NewKnowledgeConnectHandler",
+   "type": "function",
+   "name": "NewKnowledgeConnectHandler",
+   "filePath": "internal/adapter/connect/bot/knowledge_service_handler.go",
+   "lineRange": [
+    13,
+    15
+   ],
+   "summary": "NewKnowledgeConnectHandler() in knowledge_service_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/knowledge_service_handler.go:NewKnowledgeServiceHandler",
+   "type": "function",
+   "name": "NewKnowledgeServiceHandler",
+   "filePath": "internal/adapter/connect/bot/knowledge_service_handler.go",
+   "lineRange": [
+    17,
+    80
+   ],
+   "summary": "NewKnowledgeServiceHandler() in knowledge_service_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/connect/bot/knowledge_service_handler.go:KnowledgeConnectHandler",
+   "type": "class",
+   "name": "KnowledgeConnectHandler",
+   "filePath": "internal/adapter/connect/bot/knowledge_service_handler.go",
+   "lineRange": [
+    11,
+    11
+   ],
+   "summary": "KnowledgeConnectHandler type in knowledge_service_handler.go (exported)",
+   "tags": [
+    "class",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "type": "file",
+   "name": "llm_config_handler.go",
+   "filePath": "internal/adapter/connect/bot/llm_config_handler.go",
+   "summary": "internal/adapter/connect/bot/llm_config_handler.go — code file in internal/adapter/connect/bot, exports: ListLLMConfigs, CreateLLMConfig, UpdateLLMConfig, ActivateLLMConfig, TestLLMConfig, DeleteLLMConfig, 6 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/llm_config_handler.go:ListLLMConfigs",
+   "type": "function",
+   "name": "ListLLMConfigs",
+   "filePath": "internal/adapter/connect/bot/llm_config_handler.go",
+   "lineRange": [
+    11,
+    25
+   ],
+   "summary": "ListLLMConfigs() in llm_config_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/llm_config_handler.go:CreateLLMConfig",
+   "type": "function",
+   "name": "CreateLLMConfig",
+   "filePath": "internal/adapter/connect/bot/llm_config_handler.go",
+   "lineRange": [
+    27,
+    39
+   ],
+   "summary": "CreateLLMConfig() in llm_config_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/llm_config_handler.go:UpdateLLMConfig",
+   "type": "function",
+   "name": "UpdateLLMConfig",
+   "filePath": "internal/adapter/connect/bot/llm_config_handler.go",
+   "lineRange": [
+    41,
+    53
+   ],
+   "summary": "UpdateLLMConfig() in llm_config_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/llm_config_handler.go:ActivateLLMConfig",
+   "type": "function",
+   "name": "ActivateLLMConfig",
+   "filePath": "internal/adapter/connect/bot/llm_config_handler.go",
+   "lineRange": [
+    55,
+    59
+   ],
+   "summary": "ActivateLLMConfig() in llm_config_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/llm_config_handler.go:TestLLMConfig",
+   "type": "function",
+   "name": "TestLLMConfig",
+   "filePath": "internal/adapter/connect/bot/llm_config_handler.go",
+   "lineRange": [
+    61,
+    66
+   ],
+   "summary": "TestLLMConfig() in llm_config_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/llm_config_handler.go:DeleteLLMConfig",
+   "type": "function",
+   "name": "DeleteLLMConfig",
+   "filePath": "internal/adapter/connect/bot/llm_config_handler.go",
+   "lineRange": [
+    68,
+    72
+   ],
+   "summary": "DeleteLLMConfig() in llm_config_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "type": "file",
+   "name": "whatsapp_session_handler.go",
+   "filePath": "internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "summary": "internal/adapter/connect/bot/whatsapp_session_handler.go — code file in internal/adapter/connect/bot, exports: ListSessions, CreateSession, GetQRCode, GetPairingCode, ToggleBot, ReconnectSession, 47 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:ListSessions",
+   "type": "function",
+   "name": "ListSessions",
+   "filePath": "internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "lineRange": [
+    14,
+    37
+   ],
+   "summary": "ListSessions() in whatsapp_session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:CreateSession",
+   "type": "function",
+   "name": "CreateSession",
+   "filePath": "internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "lineRange": [
+    39,
+    69
+   ],
+   "summary": "CreateSession() in whatsapp_session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:GetQRCode",
+   "type": "function",
+   "name": "GetQRCode",
+   "filePath": "internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "lineRange": [
+    71,
+    84
+   ],
+   "summary": "GetQRCode() in whatsapp_session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:GetPairingCode",
+   "type": "function",
+   "name": "GetPairingCode",
+   "filePath": "internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "lineRange": [
+    86,
+    95
+   ],
+   "summary": "GetPairingCode() in whatsapp_session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:ToggleBot",
+   "type": "function",
+   "name": "ToggleBot",
+   "filePath": "internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "lineRange": [
+    97,
+    102
+   ],
+   "summary": "ToggleBot() in whatsapp_session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:ReconnectSession",
+   "type": "function",
+   "name": "ReconnectSession",
+   "filePath": "internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "lineRange": [
+    104,
+    117
+   ],
+   "summary": "ReconnectSession() in whatsapp_session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:LogoutSession",
+   "type": "function",
+   "name": "LogoutSession",
+   "filePath": "internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "lineRange": [
+    119,
+    125
+   ],
+   "summary": "LogoutSession() in whatsapp_session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:PurgeSession",
+   "type": "function",
+   "name": "PurgeSession",
+   "filePath": "internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "lineRange": [
+    127,
+    133
+   ],
+   "summary": "PurgeSession() in whatsapp_session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:SendTextMessage",
+   "type": "function",
+   "name": "SendTextMessage",
+   "filePath": "internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "lineRange": [
+    135,
+    148
+   ],
+   "summary": "SendTextMessage() in whatsapp_session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/codec.go",
+   "type": "file",
+   "name": "codec.go",
+   "filePath": "internal/adapter/connect/codec.go",
+   "summary": "internal/adapter/connect/codec.go — code file in internal/adapter/connect, exports: Name, Marshal, Unmarshal, JSONCodec, 4 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/codec.go:Name",
+   "type": "function",
+   "name": "Name",
+   "filePath": "internal/adapter/connect/codec.go",
+   "lineRange": [
+    13,
+    13
+   ],
+   "summary": "Name() in codec.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/codec.go:Marshal",
+   "type": "function",
+   "name": "Marshal",
+   "filePath": "internal/adapter/connect/codec.go",
+   "lineRange": [
+    15,
+    23
+   ],
+   "summary": "Marshal() in codec.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/codec.go:Unmarshal",
+   "type": "function",
+   "name": "Unmarshal",
+   "filePath": "internal/adapter/connect/codec.go",
+   "lineRange": [
+    25,
+    32
+   ],
+   "summary": "Unmarshal() in codec.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/codec.go:JSONCodec",
+   "type": "function",
+   "name": "JSONCodec",
+   "filePath": "internal/adapter/connect/codec.go",
+   "lineRange": [
+    35,
+    37
+   ],
+   "summary": "JSONCodec() in codec.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/customer/customer_handler.go",
+   "type": "file",
+   "name": "customer_handler.go",
+   "filePath": "internal/adapter/connect/customer/customer_handler.go",
+   "summary": "internal/adapter/connect/customer/customer_handler.go — code file in internal/adapter/connect/customer, exports: NewCustomerConnectHandler, ListCustomers, GetCustomer, NewCustomerServiceHandler, CustomerConnectHandler, 20 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/customer/customer_handler.go:NewCustomerConnectHandler",
+   "type": "function",
+   "name": "NewCustomerConnectHandler",
+   "filePath": "internal/adapter/connect/customer/customer_handler.go",
+   "lineRange": [
+    19,
+    21
+   ],
+   "summary": "NewCustomerConnectHandler() in customer_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/customer/customer_handler.go:ListCustomers",
+   "type": "function",
+   "name": "ListCustomers",
+   "filePath": "internal/adapter/connect/customer/customer_handler.go",
+   "lineRange": [
+    23,
+    44
+   ],
+   "summary": "ListCustomers() in customer_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/customer/customer_handler.go:GetCustomer",
+   "type": "function",
+   "name": "GetCustomer",
+   "filePath": "internal/adapter/connect/customer/customer_handler.go",
+   "lineRange": [
+    46,
+    68
+   ],
+   "summary": "GetCustomer() in customer_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/customer/customer_handler.go:NewCustomerServiceHandler",
+   "type": "function",
+   "name": "NewCustomerServiceHandler",
+   "filePath": "internal/adapter/connect/customer/customer_handler.go",
+   "lineRange": [
+    70,
+    88
+   ],
+   "summary": "NewCustomerServiceHandler() in customer_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/connect/customer/customer_handler.go:CustomerConnectHandler",
+   "type": "class",
+   "name": "CustomerConnectHandler",
+   "filePath": "internal/adapter/connect/customer/customer_handler.go",
+   "lineRange": [
+    15,
+    17
+   ],
+   "summary": "CustomerConnectHandler type in customer_handler.go (exported)",
+   "tags": [
+    "class",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/customer/technician_handler.go",
+   "type": "file",
+   "name": "technician_handler.go",
+   "filePath": "internal/adapter/connect/customer/technician_handler.go",
+   "summary": "internal/adapter/connect/customer/technician_handler.go — code file in internal/adapter/connect/customer, exports: ListTechnicians, CreateTechnician, UpdateTechnician, ToggleTechnicianActive, DeleteTechnician, 5 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/customer/technician_handler.go:ListTechnicians",
+   "type": "function",
+   "name": "ListTechnicians",
+   "filePath": "internal/adapter/connect/customer/technician_handler.go",
+   "lineRange": [
+    11,
+    23
+   ],
+   "summary": "ListTechnicians() in technician_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/customer/technician_handler.go:CreateTechnician",
+   "type": "function",
+   "name": "CreateTechnician",
+   "filePath": "internal/adapter/connect/customer/technician_handler.go",
+   "lineRange": [
+    25,
+    35
+   ],
+   "summary": "CreateTechnician() in technician_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/customer/technician_handler.go:UpdateTechnician",
+   "type": "function",
+   "name": "UpdateTechnician",
+   "filePath": "internal/adapter/connect/customer/technician_handler.go",
+   "lineRange": [
+    37,
+    47
+   ],
+   "summary": "UpdateTechnician() in technician_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/customer/technician_handler.go:ToggleTechnicianActive",
+   "type": "function",
+   "name": "ToggleTechnicianActive",
+   "filePath": "internal/adapter/connect/customer/technician_handler.go",
+   "lineRange": [
+    49,
+    54
+   ],
+   "summary": "ToggleTechnicianActive() in technician_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/customer/technician_handler.go:DeleteTechnician",
+   "type": "function",
+   "name": "DeleteTechnician",
+   "filePath": "internal/adapter/connect/customer/technician_handler.go",
+   "lineRange": [
+    56,
+    60
+   ],
+   "summary": "DeleteTechnician() in technician_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/device/device_handler_test.go",
+   "type": "file",
+   "name": "device_handler_test.go",
+   "filePath": "internal/adapter/connect/device/device_handler_test.go",
+   "summary": "internal/adapter/connect/device/device_handler_test.go — code file in internal/adapter/connect/device, exports: TestParsePingLatency, TestConnectJSONCodec, 14 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/device/device_handler_test.go:TestParsePingLatency",
+   "type": "function",
+   "name": "TestParsePingLatency",
+   "filePath": "internal/adapter/connect/device/device_handler_test.go",
+   "lineRange": [
+    10,
+    78
+   ],
+   "summary": "TestParsePingLatency() in device_handler_test.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/device/device_handler_test.go:TestConnectJSONCodec",
+   "type": "function",
+   "name": "TestConnectJSONCodec",
+   "filePath": "internal/adapter/connect/device/device_handler_test.go",
+   "lineRange": [
+    80,
+    107
+   ],
+   "summary": "TestConnectJSONCodec() in device_handler_test.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/device/probe_handler.go",
+   "type": "file",
+   "name": "probe_handler.go",
+   "filePath": "internal/adapter/connect/device/probe_handler.go",
+   "summary": "internal/adapter/connect/device/probe_handler.go — code file in internal/adapter/connect/device, exports: NewProbeConnectHandler, ReportStatus, StreamTelemetry, NewProbeServiceHandler, ProbeConnectHandler, 16 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/device/probe_handler.go:NewProbeConnectHandler",
+   "type": "function",
+   "name": "NewProbeConnectHandler",
+   "filePath": "internal/adapter/connect/device/probe_handler.go",
+   "lineRange": [
+    19,
+    21
+   ],
+   "summary": "NewProbeConnectHandler() in probe_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/device/probe_handler.go:ReportStatus",
+   "type": "function",
+   "name": "ReportStatus",
+   "filePath": "internal/adapter/connect/device/probe_handler.go",
+   "lineRange": [
+    23,
+    34
+   ],
+   "summary": "ReportStatus() in probe_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/device/probe_handler.go:StreamTelemetry",
+   "type": "function",
+   "name": "StreamTelemetry",
+   "filePath": "internal/adapter/connect/device/probe_handler.go",
+   "lineRange": [
+    36,
+    49
+   ],
+   "summary": "StreamTelemetry() in probe_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/device/probe_handler.go:NewProbeServiceHandler",
+   "type": "function",
+   "name": "NewProbeServiceHandler",
+   "filePath": "internal/adapter/connect/device/probe_handler.go",
+   "lineRange": [
+    51,
+    69
+   ],
+   "summary": "NewProbeServiceHandler() in probe_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/adapter/connect/device/probe_handler.go:ProbeConnectHandler",
+   "type": "class",
+   "name": "ProbeConnectHandler",
+   "filePath": "internal/adapter/connect/device/probe_handler.go",
+   "lineRange": [
+    17,
+    17
+   ],
+   "summary": "ProbeConnectHandler type in probe_handler.go (exported)",
+   "tags": [
+    "class",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/adapter/connect/errors.go",
+   "summary": "internal/adapter/connect/errors.go — code file in internal/adapter/connect, exports: MapDomainError, 4 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/errors.go:MapDomainError",
+   "type": "function",
+   "name": "MapDomainError",
+   "filePath": "internal/adapter/connect/errors.go",
+   "lineRange": [
+    12,
+    28
+   ],
+   "summary": "MapDomainError() in errors.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "type": "file",
+   "name": "profile_user_handler.go",
+   "filePath": "internal/adapter/connect/hotspot/profile_user_handler.go",
+   "summary": "internal/adapter/connect/hotspot/profile_user_handler.go — code file in internal/adapter/connect/hotspot, exports: ListProfiles, ListUsers, GenerateVouchers, 21 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/profile_user_handler.go:ListProfiles",
+   "type": "function",
+   "name": "ListProfiles",
+   "filePath": "internal/adapter/connect/hotspot/profile_user_handler.go",
+   "lineRange": [
+    12,
+    37
+   ],
+   "summary": "ListProfiles() in profile_user_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/profile_user_handler.go:ListUsers",
+   "type": "function",
+   "name": "ListUsers",
+   "filePath": "internal/adapter/connect/hotspot/profile_user_handler.go",
+   "lineRange": [
+    39,
+    65
+   ],
+   "summary": "ListUsers() in profile_user_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/profile_user_handler.go:GenerateVouchers",
+   "type": "function",
+   "name": "GenerateVouchers",
+   "filePath": "internal/adapter/connect/hotspot/profile_user_handler.go",
+   "lineRange": [
+    67,
+    104
+   ],
+   "summary": "GenerateVouchers() in profile_user_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "type": "file",
+   "name": "session_handler.go",
+   "filePath": "internal/adapter/connect/hotspot/session_handler.go",
+   "summary": "internal/adapter/connect/hotspot/session_handler.go — code file in internal/adapter/connect/hotspot, exports: ListActiveSessions, KickActiveSession, ListDHCPLeases, BlockDHCPLease, 24 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/session_handler.go:ListActiveSessions",
+   "type": "function",
+   "name": "ListActiveSessions",
+   "filePath": "internal/adapter/connect/hotspot/session_handler.go",
+   "lineRange": [
+    12,
+    38
+   ],
+   "summary": "ListActiveSessions() in session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/session_handler.go:KickActiveSession",
+   "type": "function",
+   "name": "KickActiveSession",
+   "filePath": "internal/adapter/connect/hotspot/session_handler.go",
+   "lineRange": [
+    40,
+    58
+   ],
+   "summary": "KickActiveSession() in session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/session_handler.go:ListDHCPLeases",
+   "type": "function",
+   "name": "ListDHCPLeases",
+   "filePath": "internal/adapter/connect/hotspot/session_handler.go",
+   "lineRange": [
+    60,
+    85
+   ],
+   "summary": "ListDHCPLeases() in session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/session_handler.go:BlockDHCPLease",
+   "type": "function",
+   "name": "BlockDHCPLease",
+   "filePath": "internal/adapter/connect/hotspot/session_handler.go",
+   "lineRange": [
+    87,
+    101
+   ],
+   "summary": "BlockDHCPLease() in session_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "type": "file",
+   "name": "system_report_handler.go",
+   "filePath": "internal/adapter/connect/hotspot/system_report_handler.go",
+   "summary": "internal/adapter/connect/hotspot/system_report_handler.go — code file in internal/adapter/connect/hotspot, exports: GetDashboard, 7 internal call sites",
+   "tags": [
+    "go",
+    "code"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/adapter/connect/hotspot/system_report_handler.go:GetDashboard",
+   "type": "function",
+   "name": "GetDashboard",
+   "filePath": "internal/adapter/connect/hotspot/system_report_handler.go",
+   "lineRange": [
+    11,
+    30
+   ],
+   "summary": "GetDashboard() in system_report_handler.go (exported)",
+   "tags": [
+    "function",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:main",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:runHeartbeatLoop",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:runTelemetryLoop",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:measureTargetLatency",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:ReportStatus",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:ReportStatus",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:envOr",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:envOr",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:newJSONConnectClient",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:runHeartbeatLoop",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:runTelemetryLoop",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "function:cmd/probe/main.go:measureTargetLatency",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:cmd/probe/main.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:Login",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:GetMe",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:RefreshToken",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthServiceHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "class:internal/adapter/connect/auth/auth_handler.go:AuthConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:Login",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:GetMe",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:RefreshToken",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthServiceHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "class:internal/adapter/connect/auth/auth_handler.go:AuthConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "function:internal/adapter/connect/auth/auth_handler.go:NewAuthConnectHandler",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/auth/casbin.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/auth/jwt_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/auth/jwt.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/auth/policy_seeder.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/connect/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/device_repository_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/knowledge_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/llm_config_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/technician_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/auth_handler.go",
+   "target": "file:internal/adapter/postgres/user_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:ListPolicies",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:AddPolicy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:RemovePolicy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:ListRoleAssignments",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:AssignRole",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:UnassignRole",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACServiceHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "class:internal/adapter/connect/auth/rbac_handler.go:RBACConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:ListPolicies",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:AddPolicy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:RemovePolicy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:ListRoleAssignments",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:AssignRole",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:UnassignRole",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACServiceHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "class:internal/adapter/connect/auth/rbac_handler.go:RBACConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "function:internal/adapter/connect/auth/rbac_handler.go:NewRBACConnectHandler",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:internal/adapter/auth/casbin.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:internal/adapter/auth/jwt_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:internal/adapter/auth/jwt.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:internal/adapter/auth/policy_seeder.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/auth/rbac_handler.go",
+   "target": "file:internal/adapter/connect/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:ListInvoices",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:GetInvoice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:CreateInvoice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:PayInvoice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:ListSubscriptions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:CreateSubscription",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:CancelSubscription",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingServiceHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "class:internal/adapter/connect/billing/billing_handler.go:BillingConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:ListInvoices",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:GetInvoice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:CreateInvoice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:PayInvoice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:ListSubscriptions",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:CreateSubscription",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:CancelSubscription",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingServiceHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "class:internal/adapter/connect/billing/billing_handler.go:BillingConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "function:internal/adapter/connect/billing/billing_handler.go:NewBillingConnectHandler",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/adapter/connect/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/domain/billing/invoice.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/domain/billing/payment.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/usecase/billing/manage_invoice.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/usecase/billing/manage_plan.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/billing/billing_handler.go",
+   "target": "file:internal/usecase/billing/manage_subscription.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_conversation_handler.go:ListConversations",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_conversation_handler.go:GetConversation",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_conversation_handler.go:TakeOverConversation",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_conversation_handler.go:ResetConversationBot",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_conversation_handler.go:CloseConversation",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_conversation_handler.go:ListConversations",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_conversation_handler.go:GetConversation",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_conversation_handler.go:TakeOverConversation",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_conversation_handler.go:ResetConversationBot",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_conversation_handler.go:CloseConversation",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_service_handler.go:NewBotConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_service_handler.go:NewBotServiceHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_service_handler.go",
+   "target": "class:internal/adapter/connect/bot/bot_service_handler.go:BotConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_service_handler.go:NewBotConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_service_handler.go:NewBotServiceHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_service_handler.go",
+   "target": "class:internal/adapter/connect/bot/bot_service_handler.go:BotConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/bot_service_handler.go:NewBotConnectHandler",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_service_handler.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_service_handler.go",
+   "target": "file:internal/adapter/connect/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/bot_service_handler.go",
+   "target": "file:internal/usecase/conversation/manage_conversation.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_handler.go:ListKnowledge",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_handler.go:GetKnowledge",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_handler.go:CreateKnowledge",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_handler.go:UpdateKnowledge",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_handler.go:DeleteKnowledge",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_handler.go:ListKnowledge",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_handler.go:GetKnowledge",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_handler.go:CreateKnowledge",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_handler.go:UpdateKnowledge",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_handler.go:DeleteKnowledge",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_service_handler.go:NewKnowledgeConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_service_handler.go:NewKnowledgeServiceHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_service_handler.go",
+   "target": "class:internal/adapter/connect/bot/knowledge_service_handler.go:KnowledgeConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_service_handler.go:NewKnowledgeConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_service_handler.go:NewKnowledgeServiceHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_service_handler.go",
+   "target": "class:internal/adapter/connect/bot/knowledge_service_handler.go:KnowledgeConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_service_handler.go",
+   "target": "function:internal/adapter/connect/bot/knowledge_service_handler.go:NewKnowledgeConnectHandler",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_service_handler.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/knowledge_service_handler.go",
+   "target": "file:internal/adapter/connect/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "function:internal/adapter/connect/bot/llm_config_handler.go:ListLLMConfigs",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "function:internal/adapter/connect/bot/llm_config_handler.go:CreateLLMConfig",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "function:internal/adapter/connect/bot/llm_config_handler.go:UpdateLLMConfig",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "function:internal/adapter/connect/bot/llm_config_handler.go:ActivateLLMConfig",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "function:internal/adapter/connect/bot/llm_config_handler.go:TestLLMConfig",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "function:internal/adapter/connect/bot/llm_config_handler.go:DeleteLLMConfig",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "function:internal/adapter/connect/bot/llm_config_handler.go:ListLLMConfigs",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "function:internal/adapter/connect/bot/llm_config_handler.go:CreateLLMConfig",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "function:internal/adapter/connect/bot/llm_config_handler.go:UpdateLLMConfig",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "function:internal/adapter/connect/bot/llm_config_handler.go:ActivateLLMConfig",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "function:internal/adapter/connect/bot/llm_config_handler.go:TestLLMConfig",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "function:internal/adapter/connect/bot/llm_config_handler.go:DeleteLLMConfig",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/llm_config_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:ListSessions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:CreateSession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:GetQRCode",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:GetPairingCode",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:ToggleBot",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:ReconnectSession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:LogoutSession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:PurgeSession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:SendTextMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:ListSessions",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:CreateSession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:GetQRCode",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:GetPairingCode",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:ToggleBot",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:ReconnectSession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:LogoutSession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:PurgeSession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "function:internal/adapter/connect/bot/whatsapp_session_handler.go:SendTextMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:internal/domain/bot/conversation.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:internal/domain/bot/message.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+   "target": "file:internal/domain/bot/session.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/codec.go",
+   "target": "function:internal/adapter/connect/codec.go:Name",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/codec.go",
+   "target": "function:internal/adapter/connect/codec.go:Marshal",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/codec.go",
+   "target": "function:internal/adapter/connect/codec.go:Unmarshal",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/codec.go",
+   "target": "function:internal/adapter/connect/codec.go:JSONCodec",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/codec.go",
+   "target": "function:internal/adapter/connect/codec.go:Name",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/codec.go",
+   "target": "function:internal/adapter/connect/codec.go:Marshal",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/codec.go",
+   "target": "function:internal/adapter/connect/codec.go:Unmarshal",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/codec.go",
+   "target": "function:internal/adapter/connect/codec.go:JSONCodec",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "function:internal/adapter/connect/customer/customer_handler.go:NewCustomerConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "function:internal/adapter/connect/customer/customer_handler.go:ListCustomers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "function:internal/adapter/connect/customer/customer_handler.go:GetCustomer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "function:internal/adapter/connect/customer/customer_handler.go:NewCustomerServiceHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "class:internal/adapter/connect/customer/customer_handler.go:CustomerConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "function:internal/adapter/connect/customer/customer_handler.go:NewCustomerConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "function:internal/adapter/connect/customer/customer_handler.go:ListCustomers",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "function:internal/adapter/connect/customer/customer_handler.go:GetCustomer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "function:internal/adapter/connect/customer/customer_handler.go:NewCustomerServiceHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "class:internal/adapter/connect/customer/customer_handler.go:CustomerConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "function:internal/adapter/connect/customer/customer_handler.go:NewCustomerConnectHandler",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:internal/adapter/connect/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/customer_handler.go",
+   "target": "file:internal/usecase/customer/manage_customer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "function:internal/adapter/connect/customer/technician_handler.go:ListTechnicians",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "function:internal/adapter/connect/customer/technician_handler.go:CreateTechnician",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "function:internal/adapter/connect/customer/technician_handler.go:UpdateTechnician",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "function:internal/adapter/connect/customer/technician_handler.go:ToggleTechnicianActive",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "function:internal/adapter/connect/customer/technician_handler.go:DeleteTechnician",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "function:internal/adapter/connect/customer/technician_handler.go:ListTechnicians",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "function:internal/adapter/connect/customer/technician_handler.go:CreateTechnician",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "function:internal/adapter/connect/customer/technician_handler.go:UpdateTechnician",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "function:internal/adapter/connect/customer/technician_handler.go:ToggleTechnicianActive",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "function:internal/adapter/connect/customer/technician_handler.go:DeleteTechnician",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/customer/technician_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "function:internal/adapter/connect/device/device_handler_test.go:TestParsePingLatency",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "function:internal/adapter/connect/device/device_handler_test.go:TestConnectJSONCodec",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "function:internal/adapter/connect/device/device_handler_test.go:TestParsePingLatency",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "function:internal/adapter/connect/device/device_handler_test.go:TestConnectJSONCodec",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/device_handler_test.go",
+   "target": "file:internal/adapter/connect/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "function:internal/adapter/connect/device/probe_handler.go:NewProbeConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "function:internal/adapter/connect/device/probe_handler.go:ReportStatus",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "function:internal/adapter/connect/device/probe_handler.go:StreamTelemetry",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "function:internal/adapter/connect/device/probe_handler.go:NewProbeServiceHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "class:internal/adapter/connect/device/probe_handler.go:ProbeConnectHandler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "function:internal/adapter/connect/device/probe_handler.go:NewProbeConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "function:internal/adapter/connect/device/probe_handler.go:ReportStatus",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "function:internal/adapter/connect/device/probe_handler.go:StreamTelemetry",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "function:internal/adapter/connect/device/probe_handler.go:NewProbeServiceHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "class:internal/adapter/connect/device/probe_handler.go:ProbeConnectHandler",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "function:internal/adapter/connect/device/probe_handler.go:NewProbeConnectHandler",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:internal/adapter/connect/codec.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/device/probe_handler.go",
+   "target": "file:internal/adapter/connect/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/errors.go",
+   "target": "function:internal/adapter/connect/errors.go:MapDomainError",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/errors.go",
+   "target": "function:internal/adapter/connect/errors.go:MapDomainError",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/errors.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/errors.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/errors.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/profile_user_handler.go:ListProfiles",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/profile_user_handler.go:ListUsers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/profile_user_handler.go:GenerateVouchers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/profile_user_handler.go:ListProfiles",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/profile_user_handler.go:ListUsers",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/profile_user_handler.go:GenerateVouchers",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/comment_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/expire_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/expire.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/profile_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/profile.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/report_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/report.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/voucher_test.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+   "target": "file:internal/driver/mikrotik/hotspot/voucher.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:ListActiveSessions",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:KickActiveSession",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:ListDHCPLeases",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:BlockDHCPLease",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:ListActiveSessions",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:KickActiveSession",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:ListDHCPLeases",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/session_handler.go:BlockDHCPLease",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/session_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/system_report_handler.go:GetDashboard",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "function:internal/adapter/connect/hotspot/system_report_handler.go:GetDashboard",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/auth_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/auth.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/billing_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/billing.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/bot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/bot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/customer_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/customer.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/device.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/hotspot_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/hotspot.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/knowledge_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/knowledge.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/probe_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/probe.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/rbac.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/whatsapp_grpc.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+   "target": "file:api/gen/v1/whatsapp.pb.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

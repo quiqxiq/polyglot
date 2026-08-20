@@ -1,0 +1,3327 @@
+{
+  "nodes": [
+    {
+      "id": "file:cmd/server/main.go",
+      "type": "file",
+      "name": "main.go",
+      "summary": "main.go (42 lines)",
+      "tags": [
+        "cmd",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "cmd/server/main.go"
+    },
+    {
+      "id": "function:cmd/server/main.go:main",
+      "type": "function",
+      "name": "main",
+      "summary": "Function main in cmd/server/main.go",
+      "tags": [
+        "cmd",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "cmd/server/main.go"
+    },
+    {
+      "id": "file:internal/adapter/auth/jwt.go",
+      "type": "file",
+      "name": "jwt.go",
+      "summary": "jwt.go (87 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/auth/jwt.go"
+    },
+    {
+      "id": "function:internal/adapter/auth/jwt.go:NewJWTService",
+      "type": "function",
+      "name": "NewJWTService",
+      "summary": "Function NewJWTService(secret, expiryHours) in internal/adapter/auth/jwt.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/auth/jwt.go"
+    },
+    {
+      "id": "function:internal/adapter/auth/jwt.go:GenerateToken",
+      "type": "function",
+      "name": "GenerateToken",
+      "summary": "Function GenerateToken(userID, email, role, tenantID) in internal/adapter/auth/jwt.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/auth/jwt.go"
+    },
+    {
+      "id": "function:internal/adapter/auth/jwt.go:ExpiryDuration",
+      "type": "function",
+      "name": "ExpiryDuration",
+      "summary": "Function ExpiryDuration in internal/adapter/auth/jwt.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/auth/jwt.go"
+    },
+    {
+      "id": "function:internal/adapter/auth/jwt.go:ValidateToken",
+      "type": "function",
+      "name": "ValidateToken",
+      "summary": "Function ValidateToken(tokenStr) in internal/adapter/auth/jwt.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/auth/jwt.go"
+    },
+    {
+      "id": "class:internal/adapter/auth/jwt.go:Claims",
+      "type": "class",
+      "name": "Claims",
+      "summary": "Type/class Claims in internal/adapter/auth/jwt.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/auth/jwt.go"
+    },
+    {
+      "id": "class:internal/adapter/auth/jwt.go:JWTService",
+      "type": "class",
+      "name": "JWTService",
+      "summary": "Type/class JWTService in internal/adapter/auth/jwt.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/auth/jwt.go"
+    },
+    {
+      "id": "file:internal/adapter/auth/jwt_test.go",
+      "type": "file",
+      "name": "jwt_test.go",
+      "summary": "jwt_test.go (29 lines)",
+      "tags": [
+        "test",
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/adapter/auth/jwt_test.go"
+    },
+    {
+      "id": "function:internal/adapter/auth/jwt_test.go:TestJWTService",
+      "type": "function",
+      "name": "TestJWTService",
+      "summary": "Function TestJWTService(t) in internal/adapter/auth/jwt_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/auth/jwt_test.go"
+    },
+    {
+      "id": "file:internal/adapter/auth/policy_seeder.go",
+      "type": "file",
+      "name": "policy_seeder.go",
+      "summary": "policy_seeder.go (50 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/adapter/auth/policy_seeder.go"
+    },
+    {
+      "id": "function:internal/adapter/auth/policy_seeder.go:SeedSystemPolicies",
+      "type": "function",
+      "name": "SeedSystemPolicies",
+      "summary": "Function SeedSystemPolicies(ce) in internal/adapter/auth/policy_seeder.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/auth/policy_seeder.go"
+    },
+    {
+      "id": "file:internal/adapter/http/middleware/auth.go",
+      "type": "file",
+      "name": "auth.go",
+      "summary": "auth.go (45 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/adapter/http/middleware/auth.go"
+    },
+    {
+      "id": "function:internal/adapter/http/middleware/auth.go:AuthenticateJWT",
+      "type": "function",
+      "name": "AuthenticateJWT",
+      "summary": "Function AuthenticateJWT(jwtService) in internal/adapter/http/middleware/auth.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/http/middleware/auth.go"
+    },
+    {
+      "id": "file:internal/adapter/http/middleware/cors.go",
+      "type": "file",
+      "name": "cors.go",
+      "summary": "cors.go (45 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/adapter/http/middleware/cors.go"
+    },
+    {
+      "id": "function:internal/adapter/http/middleware/cors.go:CORS",
+      "type": "function",
+      "name": "CORS",
+      "summary": "Function CORS(allowedOrigins, appEnv) in internal/adapter/http/middleware/cors.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/http/middleware/cors.go"
+    },
+    {
+      "id": "file:internal/adapter/http/middleware/rbac.go",
+      "type": "file",
+      "name": "rbac.go",
+      "summary": "rbac.go (52 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/http/middleware/rbac.go"
+    },
+    {
+      "id": "function:internal/adapter/http/middleware/rbac.go:AuthorizeCasbin",
+      "type": "function",
+      "name": "AuthorizeCasbin",
+      "summary": "Function AuthorizeCasbin(enforcer) in internal/adapter/http/middleware/rbac.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/http/middleware/rbac.go"
+    },
+    {
+      "id": "file:internal/adapter/mcp/tool_search_knowledge.go",
+      "type": "file",
+      "name": "tool_search_knowledge.go",
+      "summary": "tool_search_knowledge.go (68 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/mcp/tool_search_knowledge.go"
+    },
+    {
+      "id": "function:internal/adapter/mcp/tool_search_knowledge.go:searchKnowledge",
+      "type": "function",
+      "name": "searchKnowledge",
+      "summary": "Function searchKnowledge(ctx, _, args) in internal/adapter/mcp/tool_search_knowledge.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/mcp/tool_search_knowledge.go"
+    },
+    {
+      "id": "class:internal/adapter/mcp/tool_search_knowledge.go:searchKnowledgeArgs",
+      "type": "class",
+      "name": "searchKnowledgeArgs",
+      "summary": "Type/class searchKnowledgeArgs in internal/adapter/mcp/tool_search_knowledge.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/mcp/tool_search_knowledge.go"
+    },
+    {
+      "id": "class:internal/adapter/mcp/tool_search_knowledge.go:knowledgeItem",
+      "type": "class",
+      "name": "knowledgeItem",
+      "summary": "Type/class knowledgeItem in internal/adapter/mcp/tool_search_knowledge.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/mcp/tool_search_knowledge.go"
+    },
+    {
+      "id": "class:internal/adapter/mcp/tool_search_knowledge.go:searchKnowledgeOutput",
+      "type": "class",
+      "name": "searchKnowledgeOutput",
+      "summary": "Type/class searchKnowledgeOutput in internal/adapter/mcp/tool_search_knowledge.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/mcp/tool_search_knowledge.go"
+    },
+    {
+      "id": "file:internal/adapter/ws/hub.go",
+      "type": "file",
+      "name": "hub.go",
+      "summary": "hub.go (11 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/adapter/ws/hub.go"
+    },
+    {
+      "id": "function:internal/adapter/ws/hub.go:NewHub",
+      "type": "function",
+      "name": "NewHub",
+      "summary": "Function NewHub(ctx) in internal/adapter/ws/hub.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/ws/hub.go"
+    },
+    {
+      "id": "file:internal/adapter/ws/sse_hub.go",
+      "type": "file",
+      "name": "sse_hub.go",
+      "summary": "sse_hub.go (88 lines)",
+      "tags": [
+        "internal",
+        "adapter",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/ws/sse_hub.go"
+    },
+    {
+      "id": "function:internal/adapter/ws/sse_hub.go:NewSSEHub",
+      "type": "function",
+      "name": "NewSSEHub",
+      "summary": "Function NewSSEHub in internal/adapter/ws/sse_hub.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/ws/sse_hub.go"
+    },
+    {
+      "id": "function:internal/adapter/ws/sse_hub.go:RegisterClient",
+      "type": "function",
+      "name": "RegisterClient",
+      "summary": "Function RegisterClient(c) in internal/adapter/ws/sse_hub.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/ws/sse_hub.go"
+    },
+    {
+      "id": "function:internal/adapter/ws/sse_hub.go:Broadcast",
+      "type": "function",
+      "name": "Broadcast",
+      "summary": "Function Broadcast(eventName, data) in internal/adapter/ws/sse_hub.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/ws/sse_hub.go"
+    },
+    {
+      "id": "function:internal/adapter/ws/sse_hub.go:PublishEvent",
+      "type": "function",
+      "name": "PublishEvent",
+      "summary": "Function PublishEvent(eventType, data) in internal/adapter/ws/sse_hub.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/ws/sse_hub.go"
+    },
+    {
+      "id": "class:internal/adapter/ws/sse_hub.go:SSEEvent",
+      "type": "class",
+      "name": "SSEEvent",
+      "summary": "Type/class SSEEvent in internal/adapter/ws/sse_hub.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/ws/sse_hub.go"
+    },
+    {
+      "id": "class:internal/adapter/ws/sse_hub.go:SSEHub",
+      "type": "class",
+      "name": "SSEHub",
+      "summary": "Type/class SSEHub in internal/adapter/ws/sse_hub.go",
+      "tags": [
+        "internal",
+        "adapter",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/adapter/ws/sse_hub.go"
+    },
+    {
+      "id": "file:internal/app/app.go",
+      "type": "file",
+      "name": "app.go",
+      "summary": "app.go (220 lines)",
+      "tags": [
+        "internal",
+        "app",
+        "go"
+      ],
+      "complexity": "complex",
+      "filePath": "internal/app/app.go"
+    },
+    {
+      "id": "function:internal/app/app.go:New",
+      "type": "function",
+      "name": "New",
+      "summary": "Function New(ctx, cfg) in internal/app/app.go",
+      "tags": [
+        "internal",
+        "app",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/app/app.go"
+    },
+    {
+      "id": "function:internal/app/app.go:Run",
+      "type": "function",
+      "name": "Run",
+      "summary": "Function Run in internal/app/app.go",
+      "tags": [
+        "internal",
+        "app",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/app/app.go"
+    },
+    {
+      "id": "function:internal/app/app.go:Shutdown",
+      "type": "function",
+      "name": "Shutdown",
+      "summary": "Function Shutdown(ctx) in internal/app/app.go",
+      "tags": [
+        "internal",
+        "app",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/app/app.go"
+    },
+    {
+      "id": "function:internal/app/app.go:envOr",
+      "type": "function",
+      "name": "envOr",
+      "summary": "Function envOr(key, fallback) in internal/app/app.go",
+      "tags": [
+        "internal",
+        "app",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/app/app.go"
+    },
+    {
+      "id": "function:internal/app/app.go:loadInitialDevices",
+      "type": "function",
+      "name": "loadInitialDevices",
+      "summary": "Function loadInitialDevices(pgStore) in internal/app/app.go",
+      "tags": [
+        "internal",
+        "app",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/app/app.go"
+    },
+    {
+      "id": "class:internal/app/app.go:App",
+      "type": "class",
+      "name": "App",
+      "summary": "Type/class App in internal/app/app.go",
+      "tags": [
+        "internal",
+        "app",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/app/app.go"
+    },
+    {
+      "id": "file:internal/config/config.go",
+      "type": "file",
+      "name": "config.go",
+      "summary": "config.go (136 lines)",
+      "tags": [
+        "internal",
+        "config",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/config/config.go"
+    },
+    {
+      "id": "function:internal/config/config.go:Load",
+      "type": "function",
+      "name": "Load",
+      "summary": "Function Load in internal/config/config.go",
+      "tags": [
+        "internal",
+        "config",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/config/config.go"
+    },
+    {
+      "id": "function:internal/config/config.go:getEnv",
+      "type": "function",
+      "name": "getEnv",
+      "summary": "Function getEnv(key, fallback) in internal/config/config.go",
+      "tags": [
+        "internal",
+        "config",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/config/config.go"
+    },
+    {
+      "id": "function:internal/config/config.go:getEnvInt",
+      "type": "function",
+      "name": "getEnvInt",
+      "summary": "Function getEnvInt(key, fallback) in internal/config/config.go",
+      "tags": [
+        "internal",
+        "config",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/config/config.go"
+    },
+    {
+      "id": "function:internal/config/config.go:getEnvSlice",
+      "type": "function",
+      "name": "getEnvSlice",
+      "summary": "Function getEnvSlice(key, fallback) in internal/config/config.go",
+      "tags": [
+        "internal",
+        "config",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/config/config.go"
+    },
+    {
+      "id": "function:internal/config/config.go:Validate",
+      "type": "function",
+      "name": "Validate",
+      "summary": "Function Validate in internal/config/config.go",
+      "tags": [
+        "internal",
+        "config",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/config/config.go"
+    },
+    {
+      "id": "class:internal/config/config.go:Config",
+      "type": "class",
+      "name": "Config",
+      "summary": "Type/class Config in internal/config/config.go",
+      "tags": [
+        "internal",
+        "config",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/config/config.go"
+    },
+    {
+      "id": "file:internal/config/crypto.go",
+      "type": "file",
+      "name": "crypto.go",
+      "summary": "crypto.go (70 lines)",
+      "tags": [
+        "internal",
+        "config",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/config/crypto.go"
+    },
+    {
+      "id": "function:internal/config/crypto.go:Encrypt",
+      "type": "function",
+      "name": "Encrypt",
+      "summary": "Function Encrypt(plaintext, key) in internal/config/crypto.go",
+      "tags": [
+        "internal",
+        "config",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/config/crypto.go"
+    },
+    {
+      "id": "function:internal/config/crypto.go:Decrypt",
+      "type": "function",
+      "name": "Decrypt",
+      "summary": "Function Decrypt(ciphertext, key) in internal/config/crypto.go",
+      "tags": [
+        "internal",
+        "config",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/config/crypto.go"
+    },
+    {
+      "id": "file:internal/driver/genieacs/errors.go",
+      "type": "file",
+      "name": "errors.go",
+      "summary": "errors.go (27 lines)",
+      "tags": [
+        "internal",
+        "driver",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/driver/genieacs/errors.go"
+    },
+    {
+      "id": "file:internal/driver/whatsapp/client.go",
+      "type": "file",
+      "name": "client.go",
+      "summary": "client.go (366 lines)",
+      "tags": [
+        "internal",
+        "driver",
+        "go"
+      ],
+      "complexity": "complex",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:init",
+      "type": "function",
+      "name": "init",
+      "summary": "Function init in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:NewClient",
+      "type": "function",
+      "name": "NewClient",
+      "summary": "Function NewClient(sessionID, deviceStore, onMsg, onStat) in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:Connect",
+      "type": "function",
+      "name": "Connect",
+      "summary": "Function Connect(ctx) in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:Disconnect",
+      "type": "function",
+      "name": "Disconnect",
+      "summary": "Function Disconnect in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:Logout",
+      "type": "function",
+      "name": "Logout",
+      "summary": "Function Logout(ctx) in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:Reconnect",
+      "type": "function",
+      "name": "Reconnect",
+      "summary": "Function Reconnect(ctx) in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:GetQRCode",
+      "type": "function",
+      "name": "GetQRCode",
+      "summary": "Function GetQRCode in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:GetPairingCode",
+      "type": "function",
+      "name": "GetPairingCode",
+      "summary": "Function GetPairingCode(ctx, phoneNumber) in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:SendMessage",
+      "type": "function",
+      "name": "SendMessage",
+      "summary": "Function SendMessage(ctx, to, content) in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:SendDocument",
+      "type": "function",
+      "name": "SendDocument",
+      "summary": "Function SendDocument(ctx, to, fileBytes, fileName, contentType, caption) in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:SendImage",
+      "type": "function",
+      "name": "SendImage",
+      "summary": "Function SendImage(ctx, to, imageBytes, contentType, caption) in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:handleEvent",
+      "type": "function",
+      "name": "handleEvent",
+      "summary": "Function handleEvent(evt) in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:handleIncomingMessage",
+      "type": "function",
+      "name": "handleIncomingMessage",
+      "summary": "Function handleIncomingMessage(evt) in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:extractMessageBody",
+      "type": "function",
+      "name": "extractMessageBody",
+      "summary": "Function extractMessageBody(msg) in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "function:internal/driver/whatsapp/client.go:parseJID",
+      "type": "function",
+      "name": "parseJID",
+      "summary": "Function parseJID(target) in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "class:internal/driver/whatsapp/client.go:Client",
+      "type": "class",
+      "name": "Client",
+      "summary": "Type/class Client in internal/driver/whatsapp/client.go",
+      "tags": [
+        "internal",
+        "driver",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/driver/whatsapp/client.go"
+    },
+    {
+      "id": "file:internal/usecase/bot/guardrail.go",
+      "type": "file",
+      "name": "guardrail.go",
+      "summary": "guardrail.go (69 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/guardrail.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/guardrail.go:NewGuardrail",
+      "type": "function",
+      "name": "NewGuardrail",
+      "summary": "Function NewGuardrail(cfg) in internal/usecase/bot/guardrail.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/guardrail.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/guardrail.go:IsTopicAllowed",
+      "type": "function",
+      "name": "IsTopicAllowed",
+      "summary": "Function IsTopicAllowed(message) in internal/usecase/bot/guardrail.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/guardrail.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/guardrail.go:FormatOffTopicResponse",
+      "type": "function",
+      "name": "FormatOffTopicResponse",
+      "summary": "Function FormatOffTopicResponse in internal/usecase/bot/guardrail.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/guardrail.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/guardrail.go:SanitizeResponse",
+      "type": "function",
+      "name": "SanitizeResponse",
+      "summary": "Function SanitizeResponse(response) in internal/usecase/bot/guardrail.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/guardrail.go"
+    },
+    {
+      "id": "class:internal/usecase/bot/guardrail.go:Guardrail",
+      "type": "class",
+      "name": "Guardrail",
+      "summary": "Type/class Guardrail in internal/usecase/bot/guardrail.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/guardrail.go"
+    },
+    {
+      "id": "file:internal/usecase/bot/media_cleaner.go",
+      "type": "file",
+      "name": "media_cleaner.go",
+      "summary": "media_cleaner.go (96 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/media_cleaner.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/media_cleaner.go:NewMediaCleanerWorker",
+      "type": "function",
+      "name": "NewMediaCleanerWorker",
+      "summary": "Function NewMediaCleanerWorker(cfg) in internal/usecase/bot/media_cleaner.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/media_cleaner.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/media_cleaner.go:CleanOnce",
+      "type": "function",
+      "name": "CleanOnce",
+      "summary": "Function CleanOnce(_) in internal/usecase/bot/media_cleaner.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/media_cleaner.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/media_cleaner.go:Start",
+      "type": "function",
+      "name": "Start",
+      "summary": "Function Start(ctx) in internal/usecase/bot/media_cleaner.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/media_cleaner.go"
+    },
+    {
+      "id": "class:internal/usecase/bot/media_cleaner.go:MediaCleanerConfig",
+      "type": "class",
+      "name": "MediaCleanerConfig",
+      "summary": "Type/class MediaCleanerConfig in internal/usecase/bot/media_cleaner.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/media_cleaner.go"
+    },
+    {
+      "id": "class:internal/usecase/bot/media_cleaner.go:MediaCleanerWorker",
+      "type": "class",
+      "name": "MediaCleanerWorker",
+      "summary": "Type/class MediaCleanerWorker in internal/usecase/bot/media_cleaner.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/media_cleaner.go"
+    },
+    {
+      "id": "file:internal/usecase/bot/media_cleaner_test.go",
+      "type": "file",
+      "name": "media_cleaner_test.go",
+      "summary": "media_cleaner_test.go (64 lines)",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/media_cleaner_test.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/media_cleaner_test.go:TestMediaCleanerWorker_CleanOnce",
+      "type": "function",
+      "name": "TestMediaCleanerWorker_CleanOnce",
+      "summary": "Function TestMediaCleanerWorker_CleanOnce(t) in internal/usecase/bot/media_cleaner_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/media_cleaner_test.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/media_cleaner_test.go:TestMediaCleanerWorker_NonExistentDir",
+      "type": "function",
+      "name": "TestMediaCleanerWorker_NonExistentDir",
+      "summary": "Function TestMediaCleanerWorker_NonExistentDir(t) in internal/usecase/bot/media_cleaner_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/media_cleaner_test.go"
+    },
+    {
+      "id": "file:internal/usecase/device/manage_device_test.go",
+      "type": "file",
+      "name": "manage_device_test.go",
+      "summary": "manage_device_test.go (170 lines)",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:newMockDeviceRepo",
+      "type": "function",
+      "name": "newMockDeviceRepo",
+      "summary": "Function newMockDeviceRepo in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:Save",
+      "type": "function",
+      "name": "Save",
+      "summary": "Function Save(ctx, d) in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:FindByID",
+      "type": "function",
+      "name": "FindByID",
+      "summary": "Function FindByID(ctx, id) in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:FindAll",
+      "type": "function",
+      "name": "FindAll",
+      "summary": "Function FindAll(ctx) in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:Update",
+      "type": "function",
+      "name": "Update",
+      "summary": "Function Update(ctx, d) in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:Delete",
+      "type": "function",
+      "name": "Delete",
+      "summary": "Function Delete(ctx, id) in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:newMockVault",
+      "type": "function",
+      "name": "newMockVault",
+      "summary": "Function newMockVault in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:Save",
+      "type": "function",
+      "name": "Save",
+      "summary": "Function Save(ctx, deviceID, c) in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:Get",
+      "type": "function",
+      "name": "Get",
+      "summary": "Function Get(ctx, deviceID) in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:Delete",
+      "type": "function",
+      "name": "Delete",
+      "summary": "Function Delete(ctx, deviceID) in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:Execute",
+      "type": "function",
+      "name": "Execute",
+      "summary": "Function Execute(ctx, cmd) in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:Classify",
+      "type": "function",
+      "name": "Classify",
+      "summary": "Function Classify(cmd) in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:Translate",
+      "type": "function",
+      "name": "Translate",
+      "summary": "Function Translate(op) in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:Close",
+      "type": "function",
+      "name": "Close",
+      "summary": "Function Close in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "function:internal/usecase/device/manage_device_test.go:TestManageDeviceUseCase",
+      "type": "function",
+      "name": "TestManageDeviceUseCase",
+      "summary": "Function TestManageDeviceUseCase(t) in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "class:internal/usecase/device/manage_device_test.go:mockDeviceRepo",
+      "type": "class",
+      "name": "mockDeviceRepo",
+      "summary": "Type/class mockDeviceRepo in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "class:internal/usecase/device/manage_device_test.go:mockVault",
+      "type": "class",
+      "name": "mockVault",
+      "summary": "Type/class mockVault in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    },
+    {
+      "id": "class:internal/usecase/device/manage_device_test.go:mockDriver",
+      "type": "class",
+      "name": "mockDriver",
+      "summary": "Type/class mockDriver in internal/usecase/device/manage_device_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/device/manage_device_test.go"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:cmd/server/main.go",
+      "target": "function:cmd/server/main.go:main",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/server/main.go",
+      "target": "file:internal/app/app.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/server/main.go",
+      "target": "file:internal/config/config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:cmd/server/main.go",
+      "target": "file:internal/config/crypto.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/auth/jwt.go",
+      "target": "function:internal/adapter/auth/jwt.go:NewJWTService",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/auth/jwt.go",
+      "target": "function:internal/adapter/auth/jwt.go:GenerateToken",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/auth/jwt.go",
+      "target": "function:internal/adapter/auth/jwt.go:ExpiryDuration",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/auth/jwt.go",
+      "target": "function:internal/adapter/auth/jwt.go:ValidateToken",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/auth/jwt.go",
+      "target": "class:internal/adapter/auth/jwt.go:Claims",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/auth/jwt.go",
+      "target": "class:internal/adapter/auth/jwt.go:JWTService",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/auth/jwt_test.go",
+      "target": "function:internal/adapter/auth/jwt_test.go:TestJWTService",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/auth/jwt_test.go:TestJWTService",
+      "target": "function:internal/adapter/auth/jwt.go:NewJWTService",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/auth/policy_seeder.go",
+      "target": "function:internal/adapter/auth/policy_seeder.go:SeedSystemPolicies",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/http/middleware/auth.go",
+      "target": "function:internal/adapter/http/middleware/auth.go:AuthenticateJWT",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/http/middleware/auth.go",
+      "target": "file:internal/adapter/auth/casbin.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/http/middleware/auth.go",
+      "target": "file:internal/adapter/auth/jwt_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/http/middleware/auth.go",
+      "target": "file:internal/adapter/auth/jwt.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/http/middleware/auth.go",
+      "target": "file:internal/adapter/auth/policy_seeder.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/http/middleware/cors.go",
+      "target": "function:internal/adapter/http/middleware/cors.go:CORS",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/http/middleware/rbac.go",
+      "target": "function:internal/adapter/http/middleware/rbac.go:AuthorizeCasbin",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/http/middleware/rbac.go",
+      "target": "file:internal/adapter/auth/casbin.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/http/middleware/rbac.go",
+      "target": "file:internal/adapter/auth/jwt_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/http/middleware/rbac.go",
+      "target": "file:internal/adapter/auth/jwt.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/http/middleware/rbac.go",
+      "target": "file:internal/adapter/auth/policy_seeder.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/mcp/tool_search_knowledge.go",
+      "target": "function:internal/adapter/mcp/tool_search_knowledge.go:searchKnowledge",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/mcp/tool_search_knowledge.go",
+      "target": "class:internal/adapter/mcp/tool_search_knowledge.go:searchKnowledgeArgs",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/mcp/tool_search_knowledge.go",
+      "target": "class:internal/adapter/mcp/tool_search_knowledge.go:knowledgeItem",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/mcp/tool_search_knowledge.go",
+      "target": "class:internal/adapter/mcp/tool_search_knowledge.go:searchKnowledgeOutput",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/mcp/tool_search_knowledge.go:searchKnowledge",
+      "target": "function:internal/adapter/mcp/tool_get_device_status.go:toolError",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/mcp/tool_search_knowledge.go:searchKnowledge",
+      "target": "function:internal/adapter/mcp/tool_get_device_status.go:toolOK",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/mcp/tool_search_knowledge.go:searchKnowledge",
+      "target": "function:internal/adapter/mcp/tool_get_device_status.go:toolError",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/mcp/tool_search_knowledge.go:searchKnowledge",
+      "target": "function:internal/adapter/mcp/tool_get_device_status.go:toolOK",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/mcp/tool_search_knowledge.go:searchKnowledge",
+      "target": "function:internal/adapter/mcp/tool_get_device_status.go:toolOK",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/ws/hub.go",
+      "target": "function:internal/adapter/ws/hub.go:NewHub",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/ws/sse_hub.go",
+      "target": "function:internal/adapter/ws/sse_hub.go:NewSSEHub",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/ws/sse_hub.go",
+      "target": "function:internal/adapter/ws/sse_hub.go:RegisterClient",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/ws/sse_hub.go",
+      "target": "function:internal/adapter/ws/sse_hub.go:Broadcast",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/ws/sse_hub.go",
+      "target": "function:internal/adapter/ws/sse_hub.go:PublishEvent",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/ws/sse_hub.go",
+      "target": "class:internal/adapter/ws/sse_hub.go:SSEEvent",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/adapter/ws/sse_hub.go",
+      "target": "class:internal/adapter/ws/sse_hub.go:SSEHub",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/adapter/ws/sse_hub.go:RegisterClient",
+      "target": "function:internal/driver/zteolt/telnet.go:close",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "function:internal/app/app.go:New",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "function:internal/app/app.go:Run",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "function:internal/app/app.go:Shutdown",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "function:internal/app/app.go:envOr",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "function:internal/app/app.go:loadInitialDevices",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "class:internal/app/app.go:App",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/app/app.go:New",
+      "target": "function:internal/app/app.go:loadInitialDevices",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/app/app.go:New",
+      "target": "function:internal/app/app.go:envOr",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/auth/casbin.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/auth/jwt_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/auth/jwt.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/auth/policy_seeder.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/auth/auth_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/auth/rbac_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/billing/billing_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/bot/bot_conversation_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/bot/bot_service_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/bot/knowledge_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/bot/knowledge_service_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/bot/llm_config_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/bot/whatsapp_service_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/bot/whatsapp_session_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/customer/customer_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/customer/technician_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/device/device_handler_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/device/device_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/device/probe_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/hotspot/hotspot_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/hotspot/profile_user_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/hotspot/session_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/connect/hotspot/system_report_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/http/middleware/auth.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/http/middleware/cors.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/http/middleware/rbac.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/mcp/server_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/mcp/server.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/mcp/tool_customer_lookup.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/mcp/tool_get_device_status.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/mcp/tool_mikhmon_generate_voucher.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/mcp/tool_mikhmon_get_dashboard.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/mcp/tool_mikhmon_kick_session.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/mcp/tool_push_config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/mcp/tool_run_command.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/mcp/tool_search_knowledge.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/mcp/tools_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/postgres/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/postgres/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/postgres/device_repository_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/postgres/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/postgres/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/postgres/knowledge_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/postgres/llm_config_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/postgres/store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/postgres/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/postgres/technician_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/postgres/user_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/redis/store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/ws/device_stream_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/ws/hub.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/ws/router.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/adapter/ws/sse_hub.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/config/config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/config/crypto.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/domain/device/credentials.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/domain/device/device.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/domain/device/errors.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/genieacs/client_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/genieacs/client.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/genieacs/commands_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/genieacs/commands.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/genieacs/errors.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/commands_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/commands.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/connect.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/dhcp.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/drivers_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/errors.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/firewall.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/hotspot_active.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/hotspot_profile.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/hotspot_user.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/iface.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/ip.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/pool.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/ppp_active_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/ppp_active.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/ppp_profile.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/ppp_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/ppp.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/queue.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/stream.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/mikrotik/system.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/whatsapp/client.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/whatsapp/event_handler.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/driver/whatsapp/session_manager.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/registry/registry_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/registry/registry.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/billing/manage_invoice.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/billing/manage_plan.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/billing/manage_subscription.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/bot/context_manager.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/bot/engine.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/bot/guardrail.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/bot/media_cleaner_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/bot/media_cleaner.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/bot/ratelimit.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/conversation/manage_conversation.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/customer/manage_customer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/device/manage_device_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/device/manage_device.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/hotspot/hotspot_usecase_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/hotspot/hotspot_usecase.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/knowledge/retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/network/execute_command_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/network/execute_command.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/network/get_active_sessions_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/network/get_active_sessions.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/network/get_device_status.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/network/open_terminal.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/network/push_config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/network/stream_output.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/app/app.go",
+      "target": "file:internal/usecase/network/stream_terminal.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/config/config.go",
+      "target": "function:internal/config/config.go:Load",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/config/config.go",
+      "target": "function:internal/config/config.go:getEnv",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/config/config.go",
+      "target": "function:internal/config/config.go:getEnvInt",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/config/config.go",
+      "target": "function:internal/config/config.go:getEnvSlice",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/config/config.go",
+      "target": "function:internal/config/config.go:Validate",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/config/config.go",
+      "target": "class:internal/config/config.go:Config",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnv",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnv",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnv",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnv",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnv",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnv",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnv",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnvInt",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnvInt",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnvInt",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnvInt",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnvInt",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnvInt",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnvSlice",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnv",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnv",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/config/config.go:Load",
+      "target": "function:internal/config/config.go:getEnvSlice",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/config/crypto.go",
+      "target": "function:internal/config/crypto.go:Encrypt",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/config/crypto.go",
+      "target": "function:internal/config/crypto.go:Decrypt",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:init",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:NewClient",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:Connect",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:Disconnect",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:Logout",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:Reconnect",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:GetQRCode",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:GetPairingCode",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:SendMessage",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:SendDocument",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:SendImage",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:handleEvent",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:handleIncomingMessage",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:extractMessageBody",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "function:internal/driver/whatsapp/client.go:parseJID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/driver/whatsapp/client.go",
+      "target": "class:internal/driver/whatsapp/client.go:Client",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/driver/whatsapp/client.go:SendMessage",
+      "target": "function:internal/driver/whatsapp/client.go:parseJID",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/driver/whatsapp/client.go:SendDocument",
+      "target": "function:internal/driver/whatsapp/client.go:parseJID",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/driver/whatsapp/client.go:SendImage",
+      "target": "function:internal/driver/whatsapp/client.go:parseJID",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/driver/whatsapp/client.go:handleIncomingMessage",
+      "target": "function:internal/driver/whatsapp/client.go:extractMessageBody",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/guardrail.go",
+      "target": "function:internal/usecase/bot/guardrail.go:NewGuardrail",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/guardrail.go",
+      "target": "function:internal/usecase/bot/guardrail.go:IsTopicAllowed",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/guardrail.go",
+      "target": "function:internal/usecase/bot/guardrail.go:FormatOffTopicResponse",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/guardrail.go",
+      "target": "function:internal/usecase/bot/guardrail.go:SanitizeResponse",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/guardrail.go",
+      "target": "class:internal/usecase/bot/guardrail.go:Guardrail",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/guardrail.go",
+      "target": "file:internal/config/config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/guardrail.go",
+      "target": "file:internal/config/crypto.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner.go",
+      "target": "function:internal/usecase/bot/media_cleaner.go:NewMediaCleanerWorker",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner.go",
+      "target": "function:internal/usecase/bot/media_cleaner.go:CleanOnce",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner.go",
+      "target": "function:internal/usecase/bot/media_cleaner.go:Start",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner.go",
+      "target": "class:internal/usecase/bot/media_cleaner.go:MediaCleanerConfig",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner.go",
+      "target": "class:internal/usecase/bot/media_cleaner.go:MediaCleanerWorker",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner_test.go",
+      "target": "function:internal/usecase/bot/media_cleaner_test.go:TestMediaCleanerWorker_CleanOnce",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner_test.go",
+      "target": "function:internal/usecase/bot/media_cleaner_test.go:TestMediaCleanerWorker_NonExistentDir",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner_test.go",
+      "target": "file:internal/usecase/bot/context_manager.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner_test.go",
+      "target": "file:internal/usecase/bot/engine.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner_test.go",
+      "target": "file:internal/usecase/bot/guardrail.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner_test.go",
+      "target": "file:internal/usecase/bot/media_cleaner_test.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner_test.go",
+      "target": "file:internal/usecase/bot/media_cleaner.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/media_cleaner_test.go",
+      "target": "file:internal/usecase/bot/ratelimit.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:newMockDeviceRepo",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:Save",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:FindByID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:FindAll",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:Update",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:Delete",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:newMockVault",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:Save",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:Get",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:Delete",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:Execute",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:Classify",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:Translate",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:Close",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "function:internal/usecase/device/manage_device_test.go:TestManageDeviceUseCase",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "class:internal/usecase/device/manage_device_test.go:mockDeviceRepo",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "class:internal/usecase/device/manage_device_test.go:mockVault",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "class:internal/usecase/device/manage_device_test.go:mockDriver",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/usecase/device/manage_device_test.go:TestManageDeviceUseCase",
+      "target": "function:internal/usecase/device/manage_device_test.go:newMockDeviceRepo",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/usecase/device/manage_device_test.go:TestManageDeviceUseCase",
+      "target": "function:internal/usecase/device/manage_device_test.go:newMockVault",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/usecase/device/manage_device_test.go:TestManageDeviceUseCase",
+      "target": "function:internal/usecase/device/manage_device.go:NewManageDeviceUseCase",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "file:internal/domain/command/command.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "file:internal/domain/command/policy.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "file:internal/domain/device/credentials.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "file:internal/domain/device/device.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/device/manage_device_test.go",
+      "target": "file:internal/domain/device/errors.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    }
+  ]
+}

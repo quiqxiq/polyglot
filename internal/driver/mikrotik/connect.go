@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/go-routeros/routeros/v3"
+	"github.com/quiqxiq/goros/v4"
 
 	"github.com/quixiq/polyglot/internal/domain/device"
 )

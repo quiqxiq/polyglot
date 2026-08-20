@@ -1,0 +1,280 @@
+{
+ "nodes": [
+  {
+   "id": "service:.dockerignore",
+   "type": "service",
+   "name": ".dockerignore",
+   "filePath": ".dockerignore",
+   "summary": ".dockerignore — service definition",
+   "tags": [
+    "service",
+    "unknown"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "config:.env.example",
+   "type": "config",
+   "name": ".env.example",
+   "filePath": ".env.example",
+   "summary": "Configuration file .env.example",
+   "tags": [
+    "config",
+    "config"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "config:.golangci.yml",
+   "type": "config",
+   "name": ".golangci.yml",
+   "filePath": ".golangci.yml",
+   "summary": "Configuration file .golangci.yml",
+   "tags": [
+    "config",
+    "yaml"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "config:.mcp.json",
+   "type": "config",
+   "name": ".mcp.json",
+   "filePath": ".mcp.json",
+   "summary": "Configuration file .mcp.json",
+   "tags": [
+    "config",
+    "json"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:AGENTS.md",
+   "type": "document",
+   "name": "AGENTS.md",
+   "filePath": "AGENTS.md",
+   "summary": "Documentation: AGENTS.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "document:CLAUDE.md",
+   "type": "document",
+   "name": "CLAUDE.md",
+   "filePath": "CLAUDE.md",
+   "summary": "Documentation: CLAUDE.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "document:MIKROTIK-COMMAND.md",
+   "type": "document",
+   "name": "MIKROTIK-COMMAND.md",
+   "filePath": "MIKROTIK-COMMAND.md",
+   "summary": "Documentation: MIKROTIK-COMMAND.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "service:Makefile",
+   "type": "service",
+   "name": "Makefile",
+   "filePath": "Makefile",
+   "summary": "Makefile — service definition",
+   "tags": [
+    "service",
+    "makefile"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:PANDUAN.md",
+   "type": "document",
+   "name": "PANDUAN.md",
+   "filePath": "PANDUAN.md",
+   "summary": "Documentation: PANDUAN.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:Polyglot-Architecture.md",
+   "type": "document",
+   "name": "Polyglot-Architecture.md",
+   "filePath": "Polyglot-Architecture.md",
+   "summary": "Documentation: Polyglot-Architecture.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "document:README.md",
+   "type": "document",
+   "name": "README.md",
+   "filePath": "README.md",
+   "summary": "Documentation: README.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:SYSTEM-STRUCTURE-AND-ARCHITECTURE.md",
+   "type": "document",
+   "name": "SYSTEM-STRUCTURE-AND-ARCHITECTURE.md",
+   "filePath": "SYSTEM-STRUCTURE-AND-ARCHITECTURE.md",
+   "summary": "Documentation: SYSTEM-STRUCTURE-AND-ARCHITECTURE.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "document:TECH-STACK-DAN-PERSIAPAN.md",
+   "type": "document",
+   "name": "TECH-STACK-DAN-PERSIAPAN.md",
+   "filePath": "TECH-STACK-DAN-PERSIAPAN.md",
+   "summary": "Documentation: TECH-STACK-DAN-PERSIAPAN.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "document:analisis-api-genieacs.md",
+   "type": "document",
+   "name": "analisis-api-genieacs.md",
+   "filePath": "analisis-api-genieacs.md",
+   "summary": "Documentation: analisis-api-genieacs.md",
+   "tags": [
+    "document",
+    "markdown"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "config:go.mod",
+   "type": "config",
+   "name": "go.mod",
+   "filePath": "go.mod",
+   "summary": "Configuration file go.mod",
+   "tags": [
+    "config",
+    "mod"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "config:go.sum",
+   "type": "config",
+   "name": "go.sum",
+   "filePath": "go.sum",
+   "summary": "Configuration file go.sum",
+   "tags": [
+    "config",
+    "sum"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "config:opencode.jsonc",
+   "type": "config",
+   "name": "opencode.jsonc",
+   "filePath": "opencode.jsonc",
+   "summary": "Configuration file opencode.jsonc",
+   "tags": [
+    "config",
+    "jsonc"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "config:.env.example",
+   "target": "file:cmd/server/main.go",
+   "type": "configures",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "config:.env.example",
+   "target": "file:internal/config/config.go",
+   "type": "configures",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "document:AGENTS.md",
+   "target": "file:cmd/server/main.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "document:CLAUDE.md",
+   "target": "file:cmd/server/main.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "document:PANDUAN.md",
+   "target": "file:cmd/server/main.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "document:Polyglot-Architecture.md",
+   "target": "file:internal/app/app.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "document:README.md",
+   "target": "file:cmd/server/main.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "document:SYSTEM-STRUCTURE-AND-ARCHITECTURE.md",
+   "target": "file:cmd/server/main.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "document:TECH-STACK-DAN-PERSIAPAN.md",
+   "target": "file:internal/app/app.go",
+   "type": "documents",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "config:go.mod",
+   "target": "file:cmd/server/main.go",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  }
+ ]
+}

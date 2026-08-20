@@ -39,12 +39,34 @@ type memRepo struct {
 	devices map[string]device.Device
 }
 
+func (r *memRepo) Save(_ context.Context, d device.Device) error {
+	r.devices[d.ID] = d
+	return nil
+}
+
 func (r *memRepo) FindByID(_ context.Context, id string) (device.Device, error) {
 	d, ok := r.devices[id]
 	if !ok {
 		return device.Device{}, device.ErrNotFound
 	}
 	return d, nil
+}
+
+func (r *memRepo) FindAll(_ context.Context) ([]device.Device, error) {
+	list := make([]device.Device, 0, len(r.devices))
+	for _, d := range r.devices {
+		list = append(list, d)
+	}
+	return list, nil
+}
+
+func (r *memRepo) Update(ctx context.Context, d device.Device) error {
+	return r.Save(ctx, d)
+}
+
+func (r *memRepo) Delete(_ context.Context, id string) error {
+	delete(r.devices, id)
+	return nil
 }
 
 // memVault is an in-memory port.CredentialVault for testing.
@@ -58,6 +80,11 @@ func (v *memVault) Get(_ context.Context, deviceID string) (device.Credentials, 
 		return device.Credentials{}, device.ErrNotFound
 	}
 	return c, nil
+}
+
+func (v *memVault) Save(_ context.Context, deviceID string, c device.Credentials) error {
+	v.creds[deviceID] = c
+	return nil
 }
 
 func newTestRegistry(t *testing.T) (*Registry, *mockDriver) {

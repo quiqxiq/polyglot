@@ -1,0 +1,1923 @@
+{
+ "nodes": [
+  {
+   "id": "file:api/gen/v1/rbac.pb.go",
+   "type": "file",
+   "name": "rbac.pb.go",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "summary": "Go source file implementing the API specification — API specification logic for the polyglot backend. Exports Policy, Reset, String, ProtoMessage, ProtoReflect, Descriptor.",
+   "tags": [
+    "api-schema",
+    "openapi",
+    "documentation",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "function",
+   "name": "Reset",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    33,
+    38
+   ],
+   "summary": "Implements the Reset logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "function",
+   "name": "String",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    40,
+    42
+   ],
+   "summary": "Implements the String logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "function",
+   "name": "ProtoMessage",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    44,
+    44
+   ],
+   "summary": "Implements the ProtoMessage logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "function",
+   "name": "ProtoReflect",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    46,
+    56
+   ],
+   "summary": "Implements the ProtoReflect logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "function",
+   "name": "Descriptor",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    59,
+    61
+   ],
+   "summary": "Implements the Descriptor logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:GetSub",
+   "type": "function",
+   "name": "GetSub",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    63,
+    68
+   ],
+   "summary": "Retrieves sub data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:GetObj",
+   "type": "function",
+   "name": "GetObj",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    70,
+    75
+   ],
+   "summary": "Retrieves obj data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:GetAct",
+   "type": "function",
+   "name": "GetAct",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    77,
+    82
+   ],
+   "summary": "Retrieves act data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:GetUser",
+   "type": "function",
+   "name": "GetUser",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    122,
+    127
+   ],
+   "summary": "Retrieves user data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:GetRole",
+   "type": "function",
+   "name": "GetRole",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    129,
+    134
+   ],
+   "summary": "Retrieves role data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:GetPolicies",
+   "type": "function",
+   "name": "GetPolicies",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    209,
+    214
+   ],
+   "summary": "Retrieves policies data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:GetPolicy",
+   "type": "function",
+   "name": "GetPolicy",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    253,
+    258
+   ],
+   "summary": "Retrieves policy data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:GetSuccess",
+   "type": "function",
+   "name": "GetSuccess",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    297,
+    302
+   ],
+   "summary": "Retrieves success data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:GetRoleAssignments",
+   "type": "function",
+   "name": "GetRoleAssignments",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    465,
+    470
+   ],
+   "summary": "Retrieves roleassignments data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:GetAssignment",
+   "type": "function",
+   "name": "GetAssignment",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    509,
+    514
+   ],
+   "summary": "Retrieves assignment data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac.pb.go:file_v1_rbac_proto_init",
+   "type": "function",
+   "name": "file_v1_rbac_proto_init",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    751,
+    772
+   ],
+   "summary": "Implements the file_v1_rbac_proto_init logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:Policy",
+   "type": "class",
+   "name": "Policy",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    24,
+    31
+   ],
+   "summary": "Policy Go type with 8 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 6 field(s), defining the policy behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:RoleAssignment",
+   "type": "class",
+   "name": "RoleAssignment",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    84,
+    90
+   ],
+   "summary": "RoleAssignment Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the roleassignment behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:ListPoliciesRequest",
+   "type": "class",
+   "name": "ListPoliciesRequest",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    136,
+    140
+   ],
+   "summary": "ListPoliciesRequest Go type with 5 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor] and 3 field(s), defining the listpoliciesrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:ListPoliciesResponse",
+   "type": "class",
+   "name": "ListPoliciesResponse",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    172,
+    177
+   ],
+   "summary": "ListPoliciesResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the listpoliciesresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:AddPolicyRequest",
+   "type": "class",
+   "name": "AddPolicyRequest",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    216,
+    221
+   ],
+   "summary": "AddPolicyRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the addpolicyrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:AddPolicyResponse",
+   "type": "class",
+   "name": "AddPolicyResponse",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    260,
+    265
+   ],
+   "summary": "AddPolicyResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the addpolicyresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:RemovePolicyRequest",
+   "type": "class",
+   "name": "RemovePolicyRequest",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    304,
+    309
+   ],
+   "summary": "RemovePolicyRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the removepolicyrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:RemovePolicyResponse",
+   "type": "class",
+   "name": "RemovePolicyResponse",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    348,
+    353
+   ],
+   "summary": "RemovePolicyResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the removepolicyresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:ListRoleAssignmentsRequest",
+   "type": "class",
+   "name": "ListRoleAssignmentsRequest",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    392,
+    396
+   ],
+   "summary": "ListRoleAssignmentsRequest Go type with 5 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor] and 3 field(s), defining the listroleassignmentsrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:ListRoleAssignmentsResponse",
+   "type": "class",
+   "name": "ListRoleAssignmentsResponse",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    428,
+    433
+   ],
+   "summary": "ListRoleAssignmentsResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the listroleassignmentsresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:AssignRoleRequest",
+   "type": "class",
+   "name": "AssignRoleRequest",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    472,
+    477
+   ],
+   "summary": "AssignRoleRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the assignrolerequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:AssignRoleResponse",
+   "type": "class",
+   "name": "AssignRoleResponse",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    516,
+    521
+   ],
+   "summary": "AssignRoleResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the assignroleresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:UnassignRoleRequest",
+   "type": "class",
+   "name": "UnassignRoleRequest",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    560,
+    565
+   ],
+   "summary": "UnassignRoleRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the unassignrolerequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac.pb.go:UnassignRoleResponse",
+   "type": "class",
+   "name": "UnassignRoleResponse",
+   "filePath": "api/gen/v1/rbac.pb.go",
+   "lineRange": [
+    604,
+    609
+   ],
+   "summary": "UnassignRoleResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the unassignroleresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetSub",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetObj",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetAct",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetUser",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetRole",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetPolicies",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetPolicy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetSuccess",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetPolicy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetSuccess",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetRoleAssignments",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetAssignment",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetSuccess",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetAssignment",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetSuccess",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:file_v1_rbac_proto_init",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:Policy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:RoleAssignment",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:ListPoliciesRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:ListPoliciesResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:AddPolicyRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:AddPolicyResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:RemovePolicyRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:RemovePolicyResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:ListRoleAssignmentsRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:ListRoleAssignmentsResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:AssignRoleRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:AssignRoleResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:UnassignRoleRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:UnassignRoleResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:Policy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetSub",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetObj",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetAct",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:RoleAssignment",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetUser",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetRole",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:ListPoliciesRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:ListPoliciesResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetPolicies",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:AddPolicyRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetPolicy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:AddPolicyResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetSuccess",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:RemovePolicyRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetPolicy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:RemovePolicyResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetSuccess",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:ListRoleAssignmentsRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:ListRoleAssignmentsResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetRoleAssignments",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:AssignRoleRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetAssignment",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:AssignRoleResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetSuccess",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:UnassignRoleRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetAssignment",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "class:api/gen/v1/rbac.pb.go:UnassignRoleResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac.pb.go",
+   "target": "function:api/gen/v1/rbac.pb.go:GetSuccess",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

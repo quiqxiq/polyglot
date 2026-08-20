@@ -24,10 +24,23 @@
 #     field) dan assets/platforms/vyatta_vyos.yaml (referensi vendor
 #     dengan privilege level tunggal, mirip kasus RouterOS)
 #
-# ⚠ BELUM divalidasi ke device RouterOS fisik oleh saya (Claude) — sandbox
-# saya tidak punya jalur jaringan ke lab Anda. Sebelum dipakai produksi,
-# jalankan test/integration/mikrotik_ssh_test.go (lihat komentar di file
-# itu) dan sesuaikan CATATAN PENTING di bawah kalau perlu.
+# ✅ DIVALIDASI di lab nyata (lihat komentar panjang di
+# test/integration/mikrotik_ssh_test.go):
+#   - Pattern prompt di bawah ini terverifikasi match terhadap raw bytes
+#     aktual RouterOS v6 (192.168.233.1) dan v7 (192.168.230.3), termasuk
+#     redraw ganda, submenu path, safe mode, dan identity berspasi.
+#   - SUFFIX USERNAME yang terbukti: +cet512w cukup untuk v7 asli
+#     (192.168.230.3) DAN firmware G-Net v6 (192.168.233.1) — test
+#     integrasi memakai +cet512w di kedua device dan keduanya PASS.
+#     (scrapli_community pakai +cet511w4098h; keduanya mengandung
+#     c=no-color, t=no-auto-detect, lebar 512/511 — esensinya sama.)
+#   - ⚠ TEMUAN PENTING: firmware G-Net RouterOS v6 (banner "PT Gnet Ghaib
+#     Network") MENOLAK command path slash-delimited bertingkat
+#     ("expected command name (line 1 column N)" di slash kedua),
+#     sedangkan RouterOS v7 asli menerimanya. Pakai SPASI sebagai pemisah
+#     level ("system resource print") — bentuk yang jalan di semua
+#     firmware. Contoh: internal/driver/genericcli catalog untuk platform
+#     ini sebaiknya memakai command berspasi.
 #
 # CATATAN PENTING — WAJIB dibaca sebelum pakai:
 #   RouterOS men-support parameter tambahan di login_name, dipisah '+',
@@ -74,7 +87,48 @@ default:
       #     driver ini selalu kirim path lengkap per command jadi
       #     seharusnya tidak pernah benar-benar "nyangkut" di submenu,
       #     pattern tetap dibuat toleran terhadap itu untuk jaga-jaga.
-      pattern: '(?im)^\[[\w.\-]{1,32}@[^\]\r\n]{1,64}\]\s*(?:<SAFE>\s*)?\S*>\s*$'
+      #
+      # ⚠ DIVALIDASI DI LAB (v6 192.168.233.1 & v7 192.168.230.3):
+      # DUA alasan pattern lama ber-anchor `^...$` TIDAK PERNAH match dan
+      # Open() selalu timeout fetching prompt (verifikasi dari raw bytes
+      # aktual + source scrapligo):
+      #   1. scrapligo channel/read.go MENGHAPUS semua \r dari data masuk
+      #      (bytes.ReplaceAll(b, "\r", "")), sementara prompt RouterOS
+      #      memakai CR-only line ending — jadi tidak pernah ada baris baru
+      #      untuk di-anchor `^`/`$`.
+      #   2. prompt RouterOS di-redraw 2x dalam satu chunk (redraw lebar
+      #      terminal 512): `[admin@x] > <spasi>[admin@x] > `. Prompt
+      #      pertama tidak pernah berakhir di akhir teks (masih ada
+      #      padding + redraw) sehingga `$` gagal; prompt kedua ada di
+      #      akhir teks tapi tidak didahului baris baru sehingga `^` gagal.
+      #      Ditambah processReadBuf yang memotong buffer ke 1000 byte
+      #      terakhir (PromptSearchDepth) mulai dari tengah padding spasi.
+      # Fix final (DIVALIDASI di lab, dua iterasi):
+      #   Iterasi 1 — pattern TANPA anchor `^`/`$`:
+      #     - Fix dari masalah awal: `^...$` tidak pernah match karena (a)
+      #       scrapligo menghapus semua \r (prompt RouterOS CR-only, jadi
+      #       tidak ada baris baru untuk di-anchor), dan (b) prompt di-
+      #       redraw 2x dalam satu chunk sehingga prompt pertama tak pernah
+      #       di akhir teks dan prompt kedua tak pernah di awal baris.
+      #     - TAPI pattern tanpa anchor MATCH ECHO saat command diketik:
+      #       prompt lama `[admin@x] > ` muncul di awal baris echo, jadi
+      #       ReadUntilPrompt berhenti di echo dan output terpotong.
+      #   Iterasi 2 (INI YANG DIPAKAI) — pattern tanpa `^` tapi DENGAN `$`:
+      #     - `$` memaksa prompt yang match berada di AKHIR buffer. Echo
+      #       tidak pernah match: setelah `>` selalu ada teks command pada
+      #       baris yang sama, sehingga `$` gagal.
+      #     - SENG AJA TIDAK pakai flag (?m): dengan (?m), `$` juga match
+      #       di akhir baris mana pun (sebelum \n), dan scrapligo menghapus
+      #       \r tapi MENYIMPAN \n dari output — itu melemahkan tujuan `$`.
+      #       Tanpa (?m), `$` = end-of-text SAJA, tempat prompt final selalu
+      #       berada. Terverifikasi: 10 case (prompt tunggal, redraw 2x,
+      #       echo, submenu, <SAFE>, identity berspasi, v6/v7) tetap match
+      #       dengan (?i) saja, dan dua case echo yang HARUS ditolak tetap
+      #       ditolak.
+      #     - Prompt redraw kedua selalu di akhir buffer → match tepat.
+      #     - `(?:[\w.\-/]+\s*)?` opsional menoleransi path submenu (mis.
+      #       "/ip").
+      pattern: '(?i)\[[\w.\-]{1,32}@[^\]\r\n]{1,64}\]\s*(?:<SAFE>\s*)?(?:[\w.\-/]+\s*)?\S*>\s*$'
       not-contains:
       previous-priv:
       deescalate:

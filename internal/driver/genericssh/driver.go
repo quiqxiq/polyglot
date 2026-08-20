@@ -38,11 +38,22 @@ const transportType = "standard"
 // delegate to whatever Catalog NewDriver was given.
 type Driver struct {
 	session *genericcli.Session
+	// target is kept so OpenTerminalSession can dial a fresh direct SSH
+	// connection for interactive PTY streaming — the scrapligo engine that
+	// backs session is deliberately NOT reused for terminals (it strips \r
+	// from all output and exposes no raw channel read/write or resize API;
+	// see pty.go).
+	target device.Target
 }
 
 // Compile-time proof that *Driver actually satisfies port.DeviceDriver —
 // required per CLAUDE.md §1.2 for every vendor driver.
 var _ port.DeviceDriver = (*Driver)(nil)
+
+// Compile-time proof that *Driver also satisfies port.TerminalDeviceDriver,
+// so interactive PTY streaming works through the same driver instance that
+// executes commands (StreamTerminalUseCase / connect.StreamTerminal).
+var _ port.TerminalDeviceDriver = (*Driver)(nil)
 
 // NewDriver connects to target over SSH using platformDef (anything
 // scrapligo's platform.NewPlatform accepts: a built-in platform name, a
@@ -58,7 +69,15 @@ func NewDriver(ctx context.Context, target device.Target, platformDef any, catal
 	if err != nil {
 		return nil, err
 	}
-	return &Driver{session: session}, nil
+	return &Driver{session: session, target: target}, nil
+}
+
+// OpenTerminalSession opens an interactive PTY session to the same target
+// over a fresh direct SSH connection (delegates to DialSSHPty). The
+// scrapligo session held by this Driver stays untouched, so Execute and
+// terminal streaming can run concurrently against the device.
+func (d *Driver) OpenTerminalSession(ctx context.Context, cols, rows int) (port.TerminalSession, error) {
+	return DialSSHPty(ctx, d.target, cols, rows)
 }
 
 // Execute runs cmd against the connected device over the persistent SSH

@@ -1,0 +1,1693 @@
+{
+ "nodes": [
+  {
+   "id": "file:api/gen/v1/customer.pb.go",
+   "type": "file",
+   "name": "customer.pb.go",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "summary": "Go source file implementing the API specification — API specification logic for the polyglot backend. Exports Customer, Reset, String, ProtoMessage, ProtoReflect, Descriptor.",
+   "tags": [
+    "api-schema",
+    "openapi",
+    "documentation",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "function",
+   "name": "Reset",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    38,
+    43
+   ],
+   "summary": "Implements the Reset logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:String",
+   "type": "function",
+   "name": "String",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    45,
+    47
+   ],
+   "summary": "Implements the String logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "function",
+   "name": "ProtoMessage",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    49,
+    49
+   ],
+   "summary": "Implements the ProtoMessage logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "function",
+   "name": "ProtoReflect",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    51,
+    61
+   ],
+   "summary": "Implements the ProtoReflect logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "function",
+   "name": "Descriptor",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    64,
+    66
+   ],
+   "summary": "Implements the Descriptor logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:GetId",
+   "type": "function",
+   "name": "GetId",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    68,
+    73
+   ],
+   "summary": "Retrieves id data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:GetTenantId",
+   "type": "function",
+   "name": "GetTenantId",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    75,
+    80
+   ],
+   "summary": "Retrieves tenantid data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:GetName",
+   "type": "function",
+   "name": "GetName",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    82,
+    87
+   ],
+   "summary": "Retrieves name data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:GetEmail",
+   "type": "function",
+   "name": "GetEmail",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    89,
+    94
+   ],
+   "summary": "Retrieves email data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:GetPhone",
+   "type": "function",
+   "name": "GetPhone",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    96,
+    101
+   ],
+   "summary": "Retrieves phone data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:GetAddress",
+   "type": "function",
+   "name": "GetAddress",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    103,
+    108
+   ],
+   "summary": "Retrieves address data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:GetStatus",
+   "type": "function",
+   "name": "GetStatus",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    110,
+    115
+   ],
+   "summary": "Retrieves status data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:GetCreatedAtUnix",
+   "type": "function",
+   "name": "GetCreatedAtUnix",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    117,
+    122
+   ],
+   "summary": "Retrieves createdatunix data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:GetCustomers",
+   "type": "function",
+   "name": "GetCustomers",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    197,
+    202
+   ],
+   "summary": "Retrieves customers data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:GetCustomer",
+   "type": "function",
+   "name": "GetCustomer",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    285,
+    290
+   ],
+   "summary": "Retrieves customer data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:GetMessage",
+   "type": "function",
+   "name": "GetMessage",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    381,
+    386
+   ],
+   "summary": "Retrieves message data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/customer.pb.go:file_v1_customer_proto_init",
+   "type": "function",
+   "name": "file_v1_customer_proto_init",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    670,
+    692
+   ],
+   "summary": "Implements the file_v1_customer_proto_init logic for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/customer.pb.go:Customer",
+   "type": "class",
+   "name": "Customer",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    24,
+    36
+   ],
+   "summary": "Customer Go type with 13 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 11 field(s), defining the customer behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/customer.pb.go:ListCustomersRequest",
+   "type": "class",
+   "name": "ListCustomersRequest",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    124,
+    128
+   ],
+   "summary": "ListCustomersRequest Go type with 5 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor] and 3 field(s), defining the listcustomersrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/customer.pb.go:ListCustomersResponse",
+   "type": "class",
+   "name": "ListCustomersResponse",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    160,
+    165
+   ],
+   "summary": "ListCustomersResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the listcustomersresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/customer.pb.go:GetCustomerRequest",
+   "type": "class",
+   "name": "GetCustomerRequest",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    204,
+    209
+   ],
+   "summary": "GetCustomerRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the getcustomerrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/customer.pb.go:GetCustomerResponse",
+   "type": "class",
+   "name": "GetCustomerResponse",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    248,
+    253
+   ],
+   "summary": "GetCustomerResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the getcustomerresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/customer.pb.go:CreateCustomerRequest",
+   "type": "class",
+   "name": "CreateCustomerRequest",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    292,
+    297
+   ],
+   "summary": "CreateCustomerRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the createcustomerrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/customer.pb.go:CreateCustomerResponse",
+   "type": "class",
+   "name": "CreateCustomerResponse",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    336,
+    342
+   ],
+   "summary": "CreateCustomerResponse Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the createcustomerresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/customer.pb.go:UpdateCustomerRequest",
+   "type": "class",
+   "name": "UpdateCustomerRequest",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    388,
+    393
+   ],
+   "summary": "UpdateCustomerRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the updatecustomerrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/customer.pb.go:UpdateCustomerResponse",
+   "type": "class",
+   "name": "UpdateCustomerResponse",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    432,
+    438
+   ],
+   "summary": "UpdateCustomerResponse Go type with 7 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 5 field(s), defining the updatecustomerresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/customer.pb.go:DeleteCustomerRequest",
+   "type": "class",
+   "name": "DeleteCustomerRequest",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    484,
+    489
+   ],
+   "summary": "DeleteCustomerRequest Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the deletecustomerrequest behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/customer.pb.go:DeleteCustomerResponse",
+   "type": "class",
+   "name": "DeleteCustomerResponse",
+   "filePath": "api/gen/v1/customer.pb.go",
+   "lineRange": [
+    528,
+    533
+   ],
+   "summary": "DeleteCustomerResponse Go type with 6 method(s) [Reset, String, ProtoMessage, ProtoReflect, Descriptor, …] and 4 field(s), defining the deletecustomerresponse behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetTenantId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetName",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetEmail",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetPhone",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetAddress",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetStatus",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCreatedAtUnix",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCustomers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCustomer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCustomer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCustomer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCustomer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCustomer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetId",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetMessage",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:file_v1_customer_proto_init",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:Customer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:ListCustomersRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:ListCustomersResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:GetCustomerRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:GetCustomerResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:CreateCustomerRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:CreateCustomerResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:UpdateCustomerRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:UpdateCustomerResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:DeleteCustomerRequest",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:DeleteCustomerResponse",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:Customer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetTenantId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetName",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetEmail",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetPhone",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetAddress",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetStatus",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCreatedAtUnix",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:ListCustomersRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:ListCustomersResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCustomers",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:GetCustomerRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:GetCustomerResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCustomer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:CreateCustomerRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCustomer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:CreateCustomerResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCustomer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:UpdateCustomerRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCustomer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:UpdateCustomerResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetCustomer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:DeleteCustomerRequest",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetId",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "class:api/gen/v1/customer.pb.go:DeleteCustomerResponse",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Reset",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:String",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:ProtoReflect",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:Descriptor",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/customer.pb.go",
+   "target": "function:api/gen/v1/customer.pb.go:GetMessage",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

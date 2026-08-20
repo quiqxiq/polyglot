@@ -1,0 +1,734 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/port/invoice_repository.go",
+   "type": "file",
+   "name": "invoice_repository.go",
+   "filePath": "internal/port/invoice_repository.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports InvoiceRepository.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/invoice_repository.go:InvoiceRepository",
+   "type": "class",
+   "name": "InvoiceRepository",
+   "filePath": "internal/port/invoice_repository.go",
+   "lineRange": [
+    10,
+    16
+   ],
+   "summary": "InvoiceRepository Go type with 5 method(s) [Save, FindByID, FindByCustomerID, FindAll, UpdateStatus] and 0 field(s), defining the invoicerepository behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/port/knowledge_retriever.go",
+   "type": "file",
+   "name": "knowledge_retriever.go",
+   "filePath": "internal/port/knowledge_retriever.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports KnowledgeRepository, KnowledgeRetriever.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/knowledge_retriever.go:KnowledgeRepository",
+   "type": "class",
+   "name": "KnowledgeRepository",
+   "filePath": "internal/port/knowledge_retriever.go",
+   "lineRange": [
+    10,
+    17
+   ],
+   "summary": "KnowledgeRepository Go type with 6 method(s) [Create, FindByID, FindAll, Update, Delete, …] and 0 field(s), defining the knowledgerepository behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/knowledge_retriever.go:KnowledgeRetriever",
+   "type": "class",
+   "name": "KnowledgeRetriever",
+   "filePath": "internal/port/knowledge_retriever.go",
+   "lineRange": [
+    20,
+    22
+   ],
+   "summary": "KnowledgeRetriever Go type with 1 method(s) [Retrieve] and 0 field(s), defining the knowledgeretriever behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/port/llm_provider.go",
+   "type": "file",
+   "name": "llm_provider.go",
+   "filePath": "internal/port/llm_provider.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports LLMConfigRepository, LLMProvider.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/llm_provider.go:LLMConfigRepository",
+   "type": "class",
+   "name": "LLMConfigRepository",
+   "filePath": "internal/port/llm_provider.go",
+   "lineRange": [
+    10,
+    18
+   ],
+   "summary": "LLMConfigRepository Go type with 7 method(s) [Create, FindByID, FindActive, FindAll, Update, …] and 0 field(s), defining the llmconfigrepository behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/llm_provider.go:LLMProvider",
+   "type": "class",
+   "name": "LLMProvider",
+   "filePath": "internal/port/llm_provider.go",
+   "lineRange": [
+    21,
+    24
+   ],
+   "summary": "LLMProvider Go type with 2 method(s) [Chat, TestConnection] and 0 field(s), defining the llmprovider behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/port/streaming_driver.go",
+   "type": "file",
+   "name": "streaming_driver.go",
+   "filePath": "internal/port/streaming_driver.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports StreamHandle, StreamingDeviceDriver.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "class:internal/port/streaming_driver.go:StreamHandle",
+   "type": "class",
+   "name": "StreamHandle",
+   "filePath": "internal/port/streaming_driver.go",
+   "lineRange": [
+    14,
+    30
+   ],
+   "summary": "StreamHandle Go type with 3 method(s) [Chan, Cancel, Err] and 0 field(s), defining the streamhandle behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/streaming_driver.go:StreamingDeviceDriver",
+   "type": "class",
+   "name": "StreamingDeviceDriver",
+   "filePath": "internal/port/streaming_driver.go",
+   "lineRange": [
+    50,
+    60
+   ],
+   "summary": "StreamingDeviceDriver Go type with 1 method(s) [Stream] and 0 field(s), defining the streamingdevicedriver behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/port/subscription_repository.go",
+   "type": "file",
+   "name": "subscription_repository.go",
+   "filePath": "internal/port/subscription_repository.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports SubscriptionRepository.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/subscription_repository.go:SubscriptionRepository",
+   "type": "class",
+   "name": "SubscriptionRepository",
+   "filePath": "internal/port/subscription_repository.go",
+   "lineRange": [
+    10,
+    16
+   ],
+   "summary": "SubscriptionRepository Go type with 5 method(s) [Save, FindByID, FindByCustomerID, FindAll, UpdateStatus] and 0 field(s), defining the subscriptionrepository behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/port/whatsapp_gateway.go",
+   "type": "file",
+   "name": "whatsapp_gateway.go",
+   "filePath": "internal/port/whatsapp_gateway.go",
+   "summary": "Go source file implementing the port interface contract — port interface contract logic for the polyglot backend. Exports WhatsAppGateway.",
+   "tags": [
+    "interface",
+    "contract",
+    "port",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/port/whatsapp_gateway.go:WhatsAppGateway",
+   "type": "class",
+   "name": "WhatsAppGateway",
+   "filePath": "internal/port/whatsapp_gateway.go",
+   "lineRange": [
+    10,
+    22
+   ],
+   "summary": "WhatsAppGateway Go type with 11 method(s) [Connect, Disconnect, Logout, Reconnect, SendMessage, …] and 0 field(s), defining the whatsappgateway behavior of this component.",
+   "tags": [
+    "class",
+    "interface",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/registry/registry.go",
+   "type": "file",
+   "name": "registry.go",
+   "filePath": "internal/registry/registry.go",
+   "summary": "Go source file implementing the driver registry — driver registry logic for the polyglot backend. Exports Registry, New, Get, Evict, Close.",
+   "tags": [
+    "registry",
+    "factory",
+    "driver",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/registry/registry.go:New",
+   "type": "function",
+   "name": "New",
+   "filePath": "internal/registry/registry.go",
+   "lineRange": [
+    39,
+    46
+   ],
+   "summary": "Constructor that creates and initializes a New instance with the provided configuration.",
+   "tags": [
+    "function",
+    "registry",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/registry/registry.go:Get",
+   "type": "function",
+   "name": "Get",
+   "filePath": "internal/registry/registry.go",
+   "lineRange": [
+    54,
+    98
+   ],
+   "summary": "Retrieves get data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "registry",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/registry/registry.go:Evict",
+   "type": "function",
+   "name": "Evict",
+   "filePath": "internal/registry/registry.go",
+   "lineRange": [
+    101,
+    115
+   ],
+   "summary": "Implements the Evict logic (inputs: deviceID) for this component.",
+   "tags": [
+    "function",
+    "registry",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/registry/registry.go:Close",
+   "type": "function",
+   "name": "Close",
+   "filePath": "internal/registry/registry.go",
+   "lineRange": [
+    119,
+    131
+   ],
+   "summary": "Releases resources held by this component (connections, goroutines).",
+   "tags": [
+    "function",
+    "registry",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/registry/registry.go:Registry",
+   "type": "class",
+   "name": "Registry",
+   "filePath": "internal/registry/registry.go",
+   "lineRange": [
+    24,
+    31
+   ],
+   "summary": "Registry Go type with 3 method(s) [Get, Evict, Close] and 5 field(s), defining the registry behavior of this component.",
+   "tags": [
+    "class",
+    "registry",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/port/invoice_repository.go",
+   "target": "class:internal/port/invoice_repository.go:InvoiceRepository",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/invoice_repository.go",
+   "target": "class:internal/port/invoice_repository.go:InvoiceRepository",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/invoice_repository.go",
+   "target": "file:internal/domain/billing/invoice.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/invoice_repository.go",
+   "target": "file:internal/domain/billing/payment.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/knowledge_retriever.go",
+   "target": "class:internal/port/knowledge_retriever.go:KnowledgeRepository",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/knowledge_retriever.go",
+   "target": "class:internal/port/knowledge_retriever.go:KnowledgeRetriever",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/knowledge_retriever.go",
+   "target": "class:internal/port/knowledge_retriever.go:KnowledgeRepository",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/knowledge_retriever.go",
+   "target": "class:internal/port/knowledge_retriever.go:KnowledgeRetriever",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/knowledge_retriever.go",
+   "target": "file:internal/domain/knowledge/knowledge.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/llm_provider.go",
+   "target": "class:internal/port/llm_provider.go:LLMConfigRepository",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/llm_provider.go",
+   "target": "class:internal/port/llm_provider.go:LLMProvider",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/llm_provider.go",
+   "target": "class:internal/port/llm_provider.go:LLMConfigRepository",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/llm_provider.go",
+   "target": "class:internal/port/llm_provider.go:LLMProvider",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/llm_provider.go",
+   "target": "file:internal/domain/llm/llm_config.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/llm_provider.go",
+   "target": "file:internal/domain/llm/llm_pricing.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/streaming_driver.go",
+   "target": "class:internal/port/streaming_driver.go:StreamHandle",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/streaming_driver.go",
+   "target": "class:internal/port/streaming_driver.go:StreamingDeviceDriver",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/streaming_driver.go",
+   "target": "class:internal/port/streaming_driver.go:StreamHandle",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/streaming_driver.go",
+   "target": "class:internal/port/streaming_driver.go:StreamingDeviceDriver",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/streaming_driver.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/streaming_driver.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/subscription_repository.go",
+   "target": "class:internal/port/subscription_repository.go:SubscriptionRepository",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/subscription_repository.go",
+   "target": "class:internal/port/subscription_repository.go:SubscriptionRepository",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/subscription_repository.go",
+   "target": "file:internal/domain/subscription/subscription.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/whatsapp_gateway.go",
+   "target": "class:internal/port/whatsapp_gateway.go:WhatsAppGateway",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/port/whatsapp_gateway.go",
+   "target": "class:internal/port/whatsapp_gateway.go:WhatsAppGateway",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/port/whatsapp_gateway.go",
+   "target": "file:internal/domain/bot/conversation.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/whatsapp_gateway.go",
+   "target": "file:internal/domain/bot/message.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/port/whatsapp_gateway.go",
+   "target": "file:internal/domain/bot/session.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "function:internal/registry/registry.go:New",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "function:internal/registry/registry.go:Get",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "function:internal/registry/registry.go:Evict",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "function:internal/registry/registry.go:Close",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "class:internal/registry/registry.go:Registry",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "class:internal/registry/registry.go:Registry",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "function:internal/registry/registry.go:New",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "function:internal/registry/registry.go:Get",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "function:internal/registry/registry.go:Evict",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "function:internal/registry/registry.go:Close",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/audit_writer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/authorizer.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/bot_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/cache_store.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/credential_vault.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/customer_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/device_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/device_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/invoice_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/knowledge_retriever.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/llm_provider.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/streaming_driver.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/subscription_repository.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/registry/registry.go",
+   "target": "file:internal/port/whatsapp_gateway.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

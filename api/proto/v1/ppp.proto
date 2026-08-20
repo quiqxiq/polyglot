@@ -1,0 +1,320 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// ── Models ─────────────────────────────────────────────────────────────
+
+message PPPSecret {
+  string id = 1;
+  string name = 2;
+  string password = 3;
+  string profile = 4;
+  string service = 5;
+  string local_address = 6;
+  string remote_address = 7;
+  string comment = 8;
+  bool disabled = 9;
+  string last_logged_out = 10;
+  string caller_id = 11;
+}
+
+message PPPProfile {
+  string id = 1;
+  string name = 2;
+  string rate_limit = 3;
+  string local_address = 4;
+  string remote_address = 5;
+  string dns_server = 6;
+  string parent_queue = 7;
+  string address_list = 8;
+  string comment = 9;
+  string shared_users = 10;
+  string only_one = 11;
+  string use_mpls = 12;
+  string use_compression = 13;
+  string use_encryption = 14;
+  string change_tcp_mss = 15;
+  string bridge_learning = 16;
+}
+
+message PPPActiveSession {
+  string id = 1;
+  string name = 2;
+  string service = 3;
+  string caller_id = 4;
+  string address = 5;
+  string encoding = 6;
+  string session_id = 7;
+  bool radius = 8;
+  string profile = 9;
+}
+
+// ── Secret Messages ───────────────────────────────────────────────────
+
+message ListPPPSecretsRequest {
+  string device_id = 1;
+  string name_filter = 2;
+}
+
+message ListPPPSecretsResponse {
+  repeated PPPSecret secrets = 1;
+}
+
+message GetPPPSecretRequest {
+  string device_id = 1;
+  string ros_id = 2;
+}
+
+message GetPPPSecretResponse {
+  PPPSecret secret = 1;
+}
+
+message CreatePPPSecretRequest {
+  string device_id = 1;
+  string name = 2;
+  string password = 3;
+  string profile = 4;
+  string service = 5;
+  string local_address = 6;
+  string remote_address = 7;
+  string comment = 8;
+  bool disabled = 9;
+  string caller_id = 10;
+}
+
+message CreatePPPSecretResponse {
+  PPPSecret secret = 1;
+  string message = 2;
+}
+
+message UpdatePPPSecretRequest {
+  string device_id = 1;
+  string ros_id = 2;
+  string name = 3;
+  string password = 4;
+  string profile = 5;
+  string service = 6;
+  string local_address = 7;
+  string remote_address = 8;
+  string comment = 9;
+  string caller_id = 10;
+}
+
+message UpdatePPPSecretResponse {
+  PPPSecret secret = 1;
+  string message = 2;
+}
+
+message DeletePPPSecretRequest {
+  string device_id = 1;
+  string ros_id = 2;
+}
+
+message DeletePPPSecretResponse {
+  string message = 1;
+}
+
+message SetPPPSecretDisabledRequest {
+  string device_id = 1;
+  string ros_id = 2;
+  bool disabled = 3;
+}
+
+message SetPPPSecretDisabledResponse {
+  string message = 1;
+}
+
+// ── Profile Messages ──────────────────────────────────────────────────
+
+message ListPPPProfilesRequest {
+  string device_id = 1;
+  string name_filter = 2;
+}
+
+message ListPPPProfilesResponse {
+  repeated PPPProfile profiles = 1;
+}
+
+message GetPPPProfileRequest {
+  string device_id = 1;
+  string ros_id = 2;
+}
+
+message GetPPPProfileResponse {
+  PPPProfile profile = 1;
+}
+
+message CreatePPPProfileRequest {
+  string device_id = 1;
+  string name = 2;
+  string rate_limit = 3;
+  string local_address = 4;
+  string remote_address = 5;
+  string dns_server = 6;
+  string parent_queue = 7;
+  string address_list = 8;
+  string comment = 9;
+  string shared_users = 10;
+  string only_one = 11;
+  string use_mpls = 12;
+  string use_compression = 13;
+  string use_encryption = 14;
+  string change_tcp_mss = 15;
+  string bridge_learning = 16;
+}
+
+message CreatePPPProfileResponse {
+  PPPProfile profile = 1;
+  string message = 2;
+}
+
+message UpdatePPPProfileRequest {
+  string device_id = 1;
+  string ros_id = 2;
+  string name = 3;
+  string rate_limit = 4;
+  string local_address = 5;
+  string remote_address = 6;
+  string dns_server = 7;
+  string parent_queue = 8;
+  string address_list = 9;
+  string comment = 10;
+  string shared_users = 11;
+  string only_one = 12;
+  string use_mpls = 13;
+  string use_compression = 14;
+  string use_encryption = 15;
+  string change_tcp_mss = 16;
+  string bridge_learning = 17;
+}
+
+message UpdatePPPProfileResponse {
+  PPPProfile profile = 1;
+  string message = 2;
+}
+
+message DeletePPPProfileRequest {
+  string device_id = 1;
+  string ros_id = 2;
+}
+
+message DeletePPPProfileResponse {
+  string message = 1;
+}
+
+// ── Active Sessions Messages ──────────────────────────────────────────
+
+message ListPPPActiveSessionsRequest {
+  string device_id = 1;
+  string name_filter = 2;
+}
+
+message ListPPPActiveSessionsResponse {
+  repeated PPPActiveSession sessions = 1;
+}
+
+message KickPPPActiveSessionRequest {
+  string device_id = 1;
+  string ros_id = 2;
+}
+
+message KickPPPActiveSessionResponse {
+  string message = 1;
+}
+
+message KickPPPActiveSessionsRequest {
+  string device_id = 1;
+  repeated string ros_ids = 2;
+}
+
+message KickPPPActiveSessionsResponse {
+  int32 kicked_count = 1;
+  string message = 2;
+}
+
+message ListPPPInactiveSecretsRequest {
+  string device_id = 1;
+}
+
+message ListPPPInactiveSecretsResponse {
+  repeated PPPSecret secrets = 1;
+}
+
+// ── Streaming Messages ────────────────────────────────────────────────
+
+message StreamPPPActiveSessionsRequest {
+  string device_id = 1;
+  string name_filter = 2;
+}
+
+message PPPActiveSessionsFrame {
+  string device_id = 1;
+  int64 timestamp_unix = 2;
+  repeated PPPActiveSession sessions = 3;
+}
+
+message PPPActiveStat {
+  string id = 1;
+  string uptime = 2;
+  string limit_bytes_in = 3;
+  string limit_bytes_out = 4;
+  string bytes_in = 5;
+  string bytes_out = 6;
+  string packets_in = 7;
+  string packets_out = 8;
+}
+
+message StreamPPPActiveStatsRequest {
+  string device_id = 1;
+  string interval = 2;
+}
+
+message PPPActiveStatsFrame {
+  string device_id = 1;
+  int64 timestamp_unix = 2;
+  repeated PPPActiveStat stats = 3;
+}
+
+message StreamPPPInactiveSecretsRequest {
+  string device_id = 1;
+}
+
+message PPPInactiveSecretsFrame {
+  string device_id = 1;
+  int64 timestamp_unix = 2;
+  repeated PPPSecret secrets = 3;
+}
+
+// ── Service Definition ────────────────────────────────────────────────
+
+service PPPService {
+  // Secret Operations
+  rpc ListSecrets(ListPPPSecretsRequest) returns (ListPPPSecretsResponse);
+  rpc GetSecret(GetPPPSecretRequest) returns (GetPPPSecretResponse);
+  rpc CreateSecret(CreatePPPSecretRequest) returns (CreatePPPSecretResponse);
+  rpc UpdateSecret(UpdatePPPSecretRequest) returns (UpdatePPPSecretResponse);
+  rpc DeleteSecret(DeletePPPSecretRequest) returns (DeletePPPSecretResponse);
+  rpc SetSecretDisabled(SetPPPSecretDisabledRequest) returns (SetPPPSecretDisabledResponse);
+
+  // Profile Operations
+  rpc ListProfiles(ListPPPProfilesRequest) returns (ListPPPProfilesResponse);
+  rpc GetProfile(GetPPPProfileRequest) returns (GetPPPProfileResponse);
+  rpc CreateProfile(CreatePPPProfileRequest) returns (CreatePPPProfileResponse);
+  rpc UpdateProfile(UpdatePPPProfileRequest) returns (UpdatePPPProfileResponse);
+  rpc DeleteProfile(DeletePPPProfileRequest) returns (DeletePPPProfileResponse);
+
+  // Active / Inactive Operations
+  rpc ListActiveSessions(ListPPPActiveSessionsRequest) returns (ListPPPActiveSessionsResponse);
+  rpc KickActiveSession(KickPPPActiveSessionRequest) returns (KickPPPActiveSessionResponse);
+  rpc KickActiveSessions(KickPPPActiveSessionsRequest) returns (KickPPPActiveSessionsResponse);
+  rpc ListInactiveSecrets(ListPPPInactiveSecretsRequest) returns (ListPPPInactiveSecretsResponse);
+
+  // Streaming Live Updates
+  rpc StreamActiveSessions(StreamPPPActiveSessionsRequest) returns (stream PPPActiveSessionsFrame);
+  rpc StreamActiveStats(StreamPPPActiveStatsRequest) returns (stream PPPActiveStatsFrame);
+  rpc StreamInactiveSecrets(StreamPPPInactiveSecretsRequest) returns (stream PPPInactiveSecretsFrame);
+}
+
+

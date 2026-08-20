@@ -1,0 +1,902 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/driver/genieacs/commands.go",
+   "type": "file",
+   "name": "commands.go",
+   "filePath": "internal/driver/genieacs/commands.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports Classify, Translate.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/genieacs/commands.go",
+   "lineRange": [
+    48,
+    53
+   ],
+   "summary": "Classifies a command as destructive or read-only based on vendor conventions.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/genieacs/commands.go",
+   "lineRange": [
+    56,
+    62
+   ],
+   "summary": "Translates an abstract operation into a vendor-native command.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands.go:buildTaskBody",
+   "type": "function",
+   "name": "buildTaskBody",
+   "filePath": "internal/driver/genieacs/commands.go",
+   "lineRange": [
+    113,
+    136
+   ],
+   "summary": "Implements the buildTaskBody logic (inputs: cmd) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/genieacs/commands_test.go",
+   "type": "file",
+   "name": "commands_test.go",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports TestClassify, TestTranslate, TestIsTaskCommand, TestBuildTaskBody, TestProjectionFromParamNames, TestFlattenJSON.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go",
+    "test"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands_test.go:TestClassify",
+   "type": "function",
+   "name": "TestClassify",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "lineRange": [
+    13,
+    35
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands_test.go:TestTranslate",
+   "type": "function",
+   "name": "TestTranslate",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "lineRange": [
+    37,
+    59
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands_test.go:TestIsTaskCommand",
+   "type": "function",
+   "name": "TestIsTaskCommand",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "lineRange": [
+    61,
+    79
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands_test.go:TestBuildTaskBody",
+   "type": "function",
+   "name": "TestBuildTaskBody",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "lineRange": [
+    81,
+    172
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands_test.go:TestProjectionFromParamNames",
+   "type": "function",
+   "name": "TestProjectionFromParamNames",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "lineRange": [
+    174,
+    190
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/genieacs/commands_test.go:TestFlattenJSON",
+   "type": "function",
+   "name": "TestFlattenJSON",
+   "filePath": "internal/driver/genieacs/commands_test.go",
+   "lineRange": [
+    192,
+    221
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/huaweiolt/commands.go",
+   "type": "file",
+   "name": "commands.go",
+   "filePath": "internal/driver/huaweiolt/commands.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports Classify, Translate.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/huaweiolt/commands.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/huaweiolt/commands.go",
+   "lineRange": [
+    23,
+    28
+   ],
+   "summary": "Classifies a command as destructive or read-only based on vendor conventions.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/huaweiolt/commands.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/huaweiolt/commands.go",
+   "lineRange": [
+    31,
+    37
+   ],
+   "summary": "Translates an abstract operation into a vendor-native command.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/commands.go",
+   "type": "file",
+   "name": "commands.go",
+   "filePath": "internal/driver/mikrotik/commands.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports Classify, Translate.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/commands.go:Classify",
+   "type": "function",
+   "name": "Classify",
+   "filePath": "internal/driver/mikrotik/commands.go",
+   "lineRange": [
+    28,
+    33
+   ],
+   "summary": "Classifies a command as destructive or read-only based on vendor conventions.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/commands.go:Translate",
+   "type": "function",
+   "name": "Translate",
+   "filePath": "internal/driver/mikrotik/commands.go",
+   "lineRange": [
+    36,
+    42
+   ],
+   "summary": "Translates an abstract operation into a vendor-native command.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/commands.go:isStreamingCommand",
+   "type": "function",
+   "name": "isStreamingCommand",
+   "filePath": "internal/driver/mikrotik/commands.go",
+   "lineRange": [
+    72,
+    97
+   ],
+   "summary": "Implements the isStreamingCommand logic (inputs: cmd) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/commands.go:buildArgs",
+   "type": "function",
+   "name": "buildArgs",
+   "filePath": "internal/driver/mikrotik/commands.go",
+   "lineRange": [
+    104,
+    126
+   ],
+   "summary": "Implements the buildArgs logic (inputs: cmd) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/commands.go:toResult",
+   "type": "function",
+   "name": "toResult",
+   "filePath": "internal/driver/mikrotik/commands.go",
+   "lineRange": [
+    132,
+    141
+   ],
+   "summary": "Implements the toResult logic (inputs: reply) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/commands_test.go",
+   "type": "file",
+   "name": "commands_test.go",
+   "filePath": "internal/driver/mikrotik/commands_test.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports TestClassify, TestTranslate, TestIsStreamingCommand, TestBuildArgs, TestToResult.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go",
+    "test"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/commands_test.go:TestClassify",
+   "type": "function",
+   "name": "TestClassify",
+   "filePath": "internal/driver/mikrotik/commands_test.go",
+   "lineRange": [
+    14,
+    30
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/commands_test.go:TestTranslate",
+   "type": "function",
+   "name": "TestTranslate",
+   "filePath": "internal/driver/mikrotik/commands_test.go",
+   "lineRange": [
+    32,
+    54
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/commands_test.go:TestIsStreamingCommand",
+   "type": "function",
+   "name": "TestIsStreamingCommand",
+   "filePath": "internal/driver/mikrotik/commands_test.go",
+   "lineRange": [
+    56,
+    78
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/commands_test.go:TestBuildArgs",
+   "type": "function",
+   "name": "TestBuildArgs",
+   "filePath": "internal/driver/mikrotik/commands_test.go",
+   "lineRange": [
+    80,
+    125
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/commands_test.go:TestToResult",
+   "type": "function",
+   "name": "TestToResult",
+   "filePath": "internal/driver/mikrotik/commands_test.go",
+   "lineRange": [
+    127,
+    156
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/connect.go",
+   "type": "file",
+   "name": "connect.go",
+   "filePath": "internal/driver/mikrotik/connect.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/connect.go:dialAndLogin",
+   "type": "function",
+   "name": "dialAndLogin",
+   "filePath": "internal/driver/mikrotik/connect.go",
+   "lineRange": [
+    64,
+    89
+   ],
+   "summary": "Implements the dialAndLogin logic (inputs: ctx, target) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/connect.go:superviseConnection",
+   "type": "function",
+   "name": "superviseConnection",
+   "filePath": "internal/driver/mikrotik/connect.go",
+   "lineRange": [
+    102,
+    117
+   ],
+   "summary": "Implements the superviseConnection logic (inputs: conn) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/connect.go:reconnectUntilSuccess",
+   "type": "function",
+   "name": "reconnectUntilSuccess",
+   "filePath": "internal/driver/mikrotik/connect.go",
+   "lineRange": [
+    123,
+    151
+   ],
+   "summary": "Implements the reconnectUntilSuccess logic (inputs: conn) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/connect.go:managedConn",
+   "type": "class",
+   "name": "managedConn",
+   "filePath": "internal/driver/mikrotik/connect.go",
+   "lineRange": [
+    21,
+    25
+   ],
+   "summary": "managedConn Go type with 3 method(s) [get, set, errChan] and 3 field(s), defining the managedconn behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "internal"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "function:internal/driver/genieacs/commands.go:Classify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "function:internal/driver/genieacs/commands.go:Translate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "function:internal/driver/genieacs/commands.go:buildTaskBody",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "function:internal/driver/genieacs/commands.go:Classify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "function:internal/driver/genieacs/commands.go:Translate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestClassify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestTranslate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestIsTaskCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestBuildTaskBody",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestProjectionFromParamNames",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestFlattenJSON",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestClassify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestTranslate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestIsTaskCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestBuildTaskBody",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestProjectionFromParamNames",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "function:internal/driver/genieacs/commands_test.go:TestFlattenJSON",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/genieacs/commands_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/commands.go",
+   "target": "function:internal/driver/huaweiolt/commands.go:Classify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/commands.go",
+   "target": "function:internal/driver/huaweiolt/commands.go:Translate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/commands.go",
+   "target": "function:internal/driver/huaweiolt/commands.go:Classify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/commands.go",
+   "target": "function:internal/driver/huaweiolt/commands.go:Translate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/commands.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/huaweiolt/commands.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands.go",
+   "target": "function:internal/driver/mikrotik/commands.go:Classify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands.go",
+   "target": "function:internal/driver/mikrotik/commands.go:Translate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands.go",
+   "target": "function:internal/driver/mikrotik/commands.go:isStreamingCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands.go",
+   "target": "function:internal/driver/mikrotik/commands.go:buildArgs",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands.go",
+   "target": "function:internal/driver/mikrotik/commands.go:toResult",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands.go",
+   "target": "function:internal/driver/mikrotik/commands.go:Classify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands.go",
+   "target": "function:internal/driver/mikrotik/commands.go:Translate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands_test.go",
+   "target": "function:internal/driver/mikrotik/commands_test.go:TestClassify",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands_test.go",
+   "target": "function:internal/driver/mikrotik/commands_test.go:TestTranslate",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands_test.go",
+   "target": "function:internal/driver/mikrotik/commands_test.go:TestIsStreamingCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands_test.go",
+   "target": "function:internal/driver/mikrotik/commands_test.go:TestBuildArgs",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands_test.go",
+   "target": "function:internal/driver/mikrotik/commands_test.go:TestToResult",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands_test.go",
+   "target": "function:internal/driver/mikrotik/commands_test.go:TestClassify",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands_test.go",
+   "target": "function:internal/driver/mikrotik/commands_test.go:TestTranslate",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands_test.go",
+   "target": "function:internal/driver/mikrotik/commands_test.go:TestIsStreamingCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands_test.go",
+   "target": "function:internal/driver/mikrotik/commands_test.go:TestBuildArgs",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands_test.go",
+   "target": "function:internal/driver/mikrotik/commands_test.go:TestToResult",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/commands_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/connect.go",
+   "target": "function:internal/driver/mikrotik/connect.go:dialAndLogin",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/connect.go",
+   "target": "function:internal/driver/mikrotik/connect.go:superviseConnection",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/connect.go",
+   "target": "function:internal/driver/mikrotik/connect.go:reconnectUntilSuccess",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/connect.go",
+   "target": "class:internal/driver/mikrotik/connect.go:managedConn",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/connect.go",
+   "target": "file:internal/domain/device/credentials.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/connect.go",
+   "target": "file:internal/domain/device/device.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/connect.go",
+   "target": "file:internal/domain/device/errors.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  }
+ ]
+}

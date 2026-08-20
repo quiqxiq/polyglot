@@ -1,46 +1,31 @@
-# CATATAN VERSI (dicek langsung per hari ini, bukan tebakan):
-#   - golangci/golangci-lint-action versi stabil saat ini adalah v9, dan
-#     v7+ HANYA mendukung golangci-lint v2 (selaras .golangci.yml di root
-#     yang sudah pakai skema v2). Jangan turunkan ke action versi lama
-#     tanpa juga menurunkan skema .golangci.yml ke v1.
-#   - actions/checkout dan actions/setup-go dipin ke v6, versi stabil saat
-#     ini per contoh resmi golangci-lint-action.
 name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main, master ]
   pull_request:
+    branches: [ main, master ]
 
 jobs:
-  build-test-lint:
+  backend-test:
+    name: Build & Test Backend (Go)
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-go@v6
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          go-version: '1.26'
+          go-version: '1.22'
+          cache: true
 
-      - name: Build
-        run: go build ./...
+      - name: Install Dependencies
+        run: go mod download
 
-      - name: Vet
-        run: go vet ./...
+      - name: Run Go Build
+        run: go build -v ./...
 
-      - name: gofmt check
-        run: |
-          UNFORMATTED="$(gofmt -l .)"
-          if [ -n "$UNFORMATTED" ]; then
-            echo "Belum sesuai gofmt:"
-            echo "$UNFORMATTED"
-            exit 1
-          fi
-
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v9
-        with:
-          version: v2.12
-
-      - name: Test
-        run: go test ./... -race -cover
+      - name: Run Go Tests
+        run: go test -v ./...

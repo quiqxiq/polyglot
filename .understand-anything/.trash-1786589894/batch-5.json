@@ -1,0 +1,4401 @@
+{
+  "nodes": [
+    {
+      "id": "file:internal/port/audit_writer.go",
+      "type": "file",
+      "name": "audit_writer.go",
+      "summary": "audit_writer.go (27 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/audit_writer.go"
+    },
+    {
+      "id": "class:internal/port/audit_writer.go:AuditEvent",
+      "type": "class",
+      "name": "AuditEvent",
+      "summary": "Type/class AuditEvent in internal/port/audit_writer.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/audit_writer.go"
+    },
+    {
+      "id": "class:internal/port/audit_writer.go:AuditWriter",
+      "type": "class",
+      "name": "AuditWriter",
+      "summary": "Type/class AuditWriter in internal/port/audit_writer.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/audit_writer.go"
+    },
+    {
+      "id": "file:internal/port/authorizer.go",
+      "type": "file",
+      "name": "authorizer.go",
+      "summary": "authorizer.go (15 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/authorizer.go"
+    },
+    {
+      "id": "class:internal/port/authorizer.go:Authorizer",
+      "type": "class",
+      "name": "Authorizer",
+      "summary": "Type/class Authorizer in internal/port/authorizer.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/authorizer.go"
+    },
+    {
+      "id": "file:internal/port/bot_repository.go",
+      "type": "file",
+      "name": "bot_repository.go",
+      "summary": "bot_repository.go (33 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/bot_repository.go"
+    },
+    {
+      "id": "class:internal/port/bot_repository.go:WASessionRepository",
+      "type": "class",
+      "name": "WASessionRepository",
+      "summary": "Type/class WASessionRepository in internal/port/bot_repository.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/bot_repository.go"
+    },
+    {
+      "id": "class:internal/port/bot_repository.go:ConversationRepository",
+      "type": "class",
+      "name": "ConversationRepository",
+      "summary": "Type/class ConversationRepository in internal/port/bot_repository.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/bot_repository.go"
+    },
+    {
+      "id": "class:internal/port/bot_repository.go:MessageRepository",
+      "type": "class",
+      "name": "MessageRepository",
+      "summary": "Type/class MessageRepository in internal/port/bot_repository.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/bot_repository.go"
+    },
+    {
+      "id": "file:internal/port/cache_store.go",
+      "type": "file",
+      "name": "cache_store.go",
+      "summary": "cache_store.go (17 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/cache_store.go"
+    },
+    {
+      "id": "class:internal/port/cache_store.go:CacheStore",
+      "type": "class",
+      "name": "CacheStore",
+      "summary": "Type/class CacheStore in internal/port/cache_store.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/cache_store.go"
+    },
+    {
+      "id": "class:internal/port/cache_store.go:EventPublisher",
+      "type": "class",
+      "name": "EventPublisher",
+      "summary": "Type/class EventPublisher in internal/port/cache_store.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/cache_store.go"
+    },
+    {
+      "id": "file:internal/port/credential_vault.go",
+      "type": "file",
+      "name": "credential_vault.go",
+      "summary": "credential_vault.go (23 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/credential_vault.go"
+    },
+    {
+      "id": "class:internal/port/credential_vault.go:CredentialVault",
+      "type": "class",
+      "name": "CredentialVault",
+      "summary": "Type/class CredentialVault in internal/port/credential_vault.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/credential_vault.go"
+    },
+    {
+      "id": "file:internal/port/customer_repository.go",
+      "type": "file",
+      "name": "customer_repository.go",
+      "summary": "customer_repository.go (16 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/customer_repository.go"
+    },
+    {
+      "id": "class:internal/port/customer_repository.go:CustomerRepository",
+      "type": "class",
+      "name": "CustomerRepository",
+      "summary": "Type/class CustomerRepository in internal/port/customer_repository.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/customer_repository.go"
+    },
+    {
+      "id": "file:internal/port/device_driver.go",
+      "type": "file",
+      "name": "device_driver.go",
+      "summary": "device_driver.go (48 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/device_driver.go"
+    },
+    {
+      "id": "class:internal/port/device_driver.go:DeviceDriver",
+      "type": "class",
+      "name": "DeviceDriver",
+      "summary": "Type/class DeviceDriver in internal/port/device_driver.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/device_driver.go"
+    },
+    {
+      "id": "class:internal/port/device_driver.go:TerminalSession",
+      "type": "class",
+      "name": "TerminalSession",
+      "summary": "Type/class TerminalSession in internal/port/device_driver.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/device_driver.go"
+    },
+    {
+      "id": "class:internal/port/device_driver.go:TerminalDeviceDriver",
+      "type": "class",
+      "name": "TerminalDeviceDriver",
+      "summary": "Type/class TerminalDeviceDriver in internal/port/device_driver.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/device_driver.go"
+    },
+    {
+      "id": "file:internal/port/device_repository.go",
+      "type": "file",
+      "name": "device_repository.go",
+      "summary": "device_repository.go (25 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/device_repository.go"
+    },
+    {
+      "id": "class:internal/port/device_repository.go:DeviceRepository",
+      "type": "class",
+      "name": "DeviceRepository",
+      "summary": "Type/class DeviceRepository in internal/port/device_repository.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/device_repository.go"
+    },
+    {
+      "id": "file:internal/port/invoice_repository.go",
+      "type": "file",
+      "name": "invoice_repository.go",
+      "summary": "invoice_repository.go (16 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/invoice_repository.go"
+    },
+    {
+      "id": "class:internal/port/invoice_repository.go:InvoiceRepository",
+      "type": "class",
+      "name": "InvoiceRepository",
+      "summary": "Type/class InvoiceRepository in internal/port/invoice_repository.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/invoice_repository.go"
+    },
+    {
+      "id": "file:internal/port/knowledge_retriever.go",
+      "type": "file",
+      "name": "knowledge_retriever.go",
+      "summary": "knowledge_retriever.go (22 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/knowledge_retriever.go"
+    },
+    {
+      "id": "class:internal/port/knowledge_retriever.go:KnowledgeRepository",
+      "type": "class",
+      "name": "KnowledgeRepository",
+      "summary": "Type/class KnowledgeRepository in internal/port/knowledge_retriever.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/knowledge_retriever.go"
+    },
+    {
+      "id": "class:internal/port/knowledge_retriever.go:KnowledgeRetriever",
+      "type": "class",
+      "name": "KnowledgeRetriever",
+      "summary": "Type/class KnowledgeRetriever in internal/port/knowledge_retriever.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/knowledge_retriever.go"
+    },
+    {
+      "id": "file:internal/port/llm_provider.go",
+      "type": "file",
+      "name": "llm_provider.go",
+      "summary": "llm_provider.go (24 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/llm_provider.go"
+    },
+    {
+      "id": "class:internal/port/llm_provider.go:LLMConfigRepository",
+      "type": "class",
+      "name": "LLMConfigRepository",
+      "summary": "Type/class LLMConfigRepository in internal/port/llm_provider.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/llm_provider.go"
+    },
+    {
+      "id": "class:internal/port/llm_provider.go:LLMProvider",
+      "type": "class",
+      "name": "LLMProvider",
+      "summary": "Type/class LLMProvider in internal/port/llm_provider.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/llm_provider.go"
+    },
+    {
+      "id": "file:internal/port/streaming_driver.go",
+      "type": "file",
+      "name": "streaming_driver.go",
+      "summary": "streaming_driver.go (60 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/streaming_driver.go"
+    },
+    {
+      "id": "class:internal/port/streaming_driver.go:StreamHandle",
+      "type": "class",
+      "name": "StreamHandle",
+      "summary": "Type/class StreamHandle in internal/port/streaming_driver.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/streaming_driver.go"
+    },
+    {
+      "id": "class:internal/port/streaming_driver.go:StreamingDeviceDriver",
+      "type": "class",
+      "name": "StreamingDeviceDriver",
+      "summary": "Type/class StreamingDeviceDriver in internal/port/streaming_driver.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/streaming_driver.go"
+    },
+    {
+      "id": "file:internal/port/subscription_repository.go",
+      "type": "file",
+      "name": "subscription_repository.go",
+      "summary": "subscription_repository.go (16 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/subscription_repository.go"
+    },
+    {
+      "id": "class:internal/port/subscription_repository.go:SubscriptionRepository",
+      "type": "class",
+      "name": "SubscriptionRepository",
+      "summary": "Type/class SubscriptionRepository in internal/port/subscription_repository.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/subscription_repository.go"
+    },
+    {
+      "id": "file:internal/port/validating_driver.go",
+      "type": "file",
+      "name": "validating_driver.go",
+      "summary": "validating_driver.go (34 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/validating_driver.go"
+    },
+    {
+      "id": "class:internal/port/validating_driver.go:ValidatingDeviceDriver",
+      "type": "class",
+      "name": "ValidatingDeviceDriver",
+      "summary": "Type/class ValidatingDeviceDriver in internal/port/validating_driver.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/validating_driver.go"
+    },
+    {
+      "id": "file:internal/port/whatsapp_gateway.go",
+      "type": "file",
+      "name": "whatsapp_gateway.go",
+      "summary": "whatsapp_gateway.go (22 lines)",
+      "tags": [
+        "internal",
+        "port",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/port/whatsapp_gateway.go"
+    },
+    {
+      "id": "class:internal/port/whatsapp_gateway.go:WhatsAppGateway",
+      "type": "class",
+      "name": "WhatsAppGateway",
+      "summary": "Type/class WhatsAppGateway in internal/port/whatsapp_gateway.go",
+      "tags": [
+        "internal",
+        "port",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/port/whatsapp_gateway.go"
+    },
+    {
+      "id": "file:internal/registry/registry.go",
+      "type": "file",
+      "name": "registry.go",
+      "summary": "registry.go (131 lines)",
+      "tags": [
+        "internal",
+        "registry",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry.go"
+    },
+    {
+      "id": "function:internal/registry/registry.go:New",
+      "type": "function",
+      "name": "New",
+      "summary": "Function New(repo, vault, factories) in internal/registry/registry.go",
+      "tags": [
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry.go"
+    },
+    {
+      "id": "function:internal/registry/registry.go:Get",
+      "type": "function",
+      "name": "Get",
+      "summary": "Function Get(ctx, deviceID) in internal/registry/registry.go",
+      "tags": [
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry.go"
+    },
+    {
+      "id": "function:internal/registry/registry.go:Evict",
+      "type": "function",
+      "name": "Evict",
+      "summary": "Function Evict(deviceID) in internal/registry/registry.go",
+      "tags": [
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry.go"
+    },
+    {
+      "id": "function:internal/registry/registry.go:Close",
+      "type": "function",
+      "name": "Close",
+      "summary": "Function Close in internal/registry/registry.go",
+      "tags": [
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry.go"
+    },
+    {
+      "id": "class:internal/registry/registry.go:Registry",
+      "type": "class",
+      "name": "Registry",
+      "summary": "Type/class Registry in internal/registry/registry.go",
+      "tags": [
+        "internal",
+        "registry",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry.go"
+    },
+    {
+      "id": "file:internal/registry/registry_test.go",
+      "type": "file",
+      "name": "registry_test.go",
+      "summary": "registry_test.go (179 lines)",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:Execute",
+      "type": "function",
+      "name": "Execute",
+      "summary": "Function Execute(_, _) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:Classify",
+      "type": "function",
+      "name": "Classify",
+      "summary": "Function Classify(_) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:Translate",
+      "type": "function",
+      "name": "Translate",
+      "summary": "Function Translate(op) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:Close",
+      "type": "function",
+      "name": "Close",
+      "summary": "Function Close in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:Save",
+      "type": "function",
+      "name": "Save",
+      "summary": "Function Save(_, d) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:FindByID",
+      "type": "function",
+      "name": "FindByID",
+      "summary": "Function FindByID(_, id) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:FindAll",
+      "type": "function",
+      "name": "FindAll",
+      "summary": "Function FindAll(_) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:Update",
+      "type": "function",
+      "name": "Update",
+      "summary": "Function Update(ctx, d) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:Delete",
+      "type": "function",
+      "name": "Delete",
+      "summary": "Function Delete(_, id) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:Get",
+      "type": "function",
+      "name": "Get",
+      "summary": "Function Get(_, deviceID) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:Save",
+      "type": "function",
+      "name": "Save",
+      "summary": "Function Save(_, deviceID, c) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:newTestRegistry",
+      "type": "function",
+      "name": "newTestRegistry",
+      "summary": "Function newTestRegistry(t) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:TestRegistry_Get_CacheHit",
+      "type": "function",
+      "name": "TestRegistry_Get_CacheHit",
+      "summary": "Function TestRegistry_Get_CacheHit(t) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:TestRegistry_Get_NotFound",
+      "type": "function",
+      "name": "TestRegistry_Get_NotFound",
+      "summary": "Function TestRegistry_Get_NotFound(t) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:TestRegistry_Get_DisabledDevice",
+      "type": "function",
+      "name": "TestRegistry_Get_DisabledDevice",
+      "summary": "Function TestRegistry_Get_DisabledDevice(t) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:TestRegistry_Get_UnknownDriverType",
+      "type": "function",
+      "name": "TestRegistry_Get_UnknownDriverType",
+      "summary": "Function TestRegistry_Get_UnknownDriverType(t) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "function:internal/registry/registry_test.go:TestRegistry_Close_ReleasesDrivers",
+      "type": "function",
+      "name": "TestRegistry_Close_ReleasesDrivers",
+      "summary": "Function TestRegistry_Close_ReleasesDrivers(t) in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "class:internal/registry/registry_test.go:mockDriver",
+      "type": "class",
+      "name": "mockDriver",
+      "summary": "Type/class mockDriver in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "class:internal/registry/registry_test.go:memRepo",
+      "type": "class",
+      "name": "memRepo",
+      "summary": "Type/class memRepo in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "class:internal/registry/registry_test.go:memVault",
+      "type": "class",
+      "name": "memVault",
+      "summary": "Type/class memVault in internal/registry/registry_test.go",
+      "tags": [
+        "test",
+        "internal",
+        "registry",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/registry/registry_test.go"
+    },
+    {
+      "id": "file:internal/usecase/billing/manage_invoice.go",
+      "type": "file",
+      "name": "manage_invoice.go",
+      "summary": "manage_invoice.go (65 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_invoice.go"
+    },
+    {
+      "id": "function:internal/usecase/billing/manage_invoice.go:NewInvoiceUsecase",
+      "type": "function",
+      "name": "NewInvoiceUsecase",
+      "summary": "Function NewInvoiceUsecase(repo) in internal/usecase/billing/manage_invoice.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_invoice.go"
+    },
+    {
+      "id": "function:internal/usecase/billing/manage_invoice.go:ListInvoices",
+      "type": "function",
+      "name": "ListInvoices",
+      "summary": "Function ListInvoices(ctx, customerID) in internal/usecase/billing/manage_invoice.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_invoice.go"
+    },
+    {
+      "id": "function:internal/usecase/billing/manage_invoice.go:GetInvoice",
+      "type": "function",
+      "name": "GetInvoice",
+      "summary": "Function GetInvoice(ctx, id) in internal/usecase/billing/manage_invoice.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_invoice.go"
+    },
+    {
+      "id": "function:internal/usecase/billing/manage_invoice.go:CreateInvoice",
+      "type": "function",
+      "name": "CreateInvoice",
+      "summary": "Function CreateInvoice(ctx, inv) in internal/usecase/billing/manage_invoice.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_invoice.go"
+    },
+    {
+      "id": "function:internal/usecase/billing/manage_invoice.go:PayInvoice",
+      "type": "function",
+      "name": "PayInvoice",
+      "summary": "Function PayInvoice(ctx, id) in internal/usecase/billing/manage_invoice.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_invoice.go"
+    },
+    {
+      "id": "class:internal/usecase/billing/manage_invoice.go:InvoiceUsecase",
+      "type": "class",
+      "name": "InvoiceUsecase",
+      "summary": "Type/class InvoiceUsecase in internal/usecase/billing/manage_invoice.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_invoice.go"
+    },
+    {
+      "id": "file:internal/usecase/billing/manage_subscription.go",
+      "type": "file",
+      "name": "manage_subscription.go",
+      "summary": "manage_subscription.go (65 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_subscription.go"
+    },
+    {
+      "id": "function:internal/usecase/billing/manage_subscription.go:NewSubscriptionUsecase",
+      "type": "function",
+      "name": "NewSubscriptionUsecase",
+      "summary": "Function NewSubscriptionUsecase(repo) in internal/usecase/billing/manage_subscription.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_subscription.go"
+    },
+    {
+      "id": "function:internal/usecase/billing/manage_subscription.go:ListSubscriptions",
+      "type": "function",
+      "name": "ListSubscriptions",
+      "summary": "Function ListSubscriptions(ctx, customerID) in internal/usecase/billing/manage_subscription.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_subscription.go"
+    },
+    {
+      "id": "function:internal/usecase/billing/manage_subscription.go:GetSubscription",
+      "type": "function",
+      "name": "GetSubscription",
+      "summary": "Function GetSubscription(ctx, id) in internal/usecase/billing/manage_subscription.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_subscription.go"
+    },
+    {
+      "id": "function:internal/usecase/billing/manage_subscription.go:CreateSubscription",
+      "type": "function",
+      "name": "CreateSubscription",
+      "summary": "Function CreateSubscription(ctx, sub) in internal/usecase/billing/manage_subscription.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_subscription.go"
+    },
+    {
+      "id": "function:internal/usecase/billing/manage_subscription.go:CancelSubscription",
+      "type": "function",
+      "name": "CancelSubscription",
+      "summary": "Function CancelSubscription(ctx, id) in internal/usecase/billing/manage_subscription.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_subscription.go"
+    },
+    {
+      "id": "class:internal/usecase/billing/manage_subscription.go:SubscriptionUsecase",
+      "type": "class",
+      "name": "SubscriptionUsecase",
+      "summary": "Type/class SubscriptionUsecase in internal/usecase/billing/manage_subscription.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/billing/manage_subscription.go"
+    },
+    {
+      "id": "file:internal/usecase/bot/context_manager.go",
+      "type": "file",
+      "name": "context_manager.go",
+      "summary": "context_manager.go (82 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/context_manager.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/context_manager.go:NewContextManager",
+      "type": "function",
+      "name": "NewContextManager",
+      "summary": "Function NewContextManager(cache, cfg) in internal/usecase/bot/context_manager.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/context_manager.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/context_manager.go:BuildPromptContext",
+      "type": "function",
+      "name": "BuildPromptContext",
+      "summary": "Function BuildPromptContext(ctx, customerNumber, userMessage, knowledgeEntries) in internal/usecase/bot/context_manager.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/context_manager.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/context_manager.go:SaveMessageToSession",
+      "type": "function",
+      "name": "SaveMessageToSession",
+      "summary": "Function SaveMessageToSession(ctx, customerNumber, userMsg, botMsg) in internal/usecase/bot/context_manager.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/context_manager.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/context_manager.go:SummarizeSessionIfLong",
+      "type": "function",
+      "name": "SummarizeSessionIfLong",
+      "summary": "Function SummarizeSessionIfLong(ctx, customerNumber, provider) in internal/usecase/bot/context_manager.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/context_manager.go"
+    },
+    {
+      "id": "class:internal/usecase/bot/context_manager.go:ContextManager",
+      "type": "class",
+      "name": "ContextManager",
+      "summary": "Type/class ContextManager in internal/usecase/bot/context_manager.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/context_manager.go"
+    },
+    {
+      "id": "file:internal/usecase/bot/engine.go",
+      "type": "file",
+      "name": "engine.go",
+      "summary": "engine.go (137 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/engine.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/engine.go:NewEngine",
+      "type": "function",
+      "name": "NewEngine",
+      "summary": "Function NewEngine(cfg, cache, waGateway, convService, retriever, llmConfigRepo, publisher) in internal/usecase/bot/engine.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/engine.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/engine.go:HandleIncomingMessage",
+      "type": "function",
+      "name": "HandleIncomingMessage",
+      "summary": "Function HandleIncomingMessage(ctx, sessionID, customerNumber, messageContent) in internal/usecase/bot/engine.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/engine.go"
+    },
+    {
+      "id": "class:internal/usecase/bot/engine.go:Engine",
+      "type": "class",
+      "name": "Engine",
+      "summary": "Type/class Engine in internal/usecase/bot/engine.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/engine.go"
+    },
+    {
+      "id": "file:internal/usecase/bot/ratelimit.go",
+      "type": "file",
+      "name": "ratelimit.go",
+      "summary": "ratelimit.go (45 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/usecase/bot/ratelimit.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/ratelimit.go:NewRateLimiter",
+      "type": "function",
+      "name": "NewRateLimiter",
+      "summary": "Function NewRateLimiter(cache, cfg) in internal/usecase/bot/ratelimit.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/ratelimit.go"
+    },
+    {
+      "id": "function:internal/usecase/bot/ratelimit.go:Check",
+      "type": "function",
+      "name": "Check",
+      "summary": "Function Check(ctx, customerNumber, messageContent) in internal/usecase/bot/ratelimit.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/ratelimit.go"
+    },
+    {
+      "id": "class:internal/usecase/bot/ratelimit.go:RateLimitResult",
+      "type": "class",
+      "name": "RateLimitResult",
+      "summary": "Type/class RateLimitResult in internal/usecase/bot/ratelimit.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/ratelimit.go"
+    },
+    {
+      "id": "class:internal/usecase/bot/ratelimit.go:RateLimiter",
+      "type": "class",
+      "name": "RateLimiter",
+      "summary": "Type/class RateLimiter in internal/usecase/bot/ratelimit.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/bot/ratelimit.go"
+    },
+    {
+      "id": "file:internal/usecase/customer/manage_customer.go",
+      "type": "file",
+      "name": "manage_customer.go",
+      "summary": "manage_customer.go (55 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/customer/manage_customer.go"
+    },
+    {
+      "id": "function:internal/usecase/customer/manage_customer.go:NewManageCustomerUseCase",
+      "type": "function",
+      "name": "NewManageCustomerUseCase",
+      "summary": "Function NewManageCustomerUseCase(repo) in internal/usecase/customer/manage_customer.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/customer/manage_customer.go"
+    },
+    {
+      "id": "function:internal/usecase/customer/manage_customer.go:ListCustomers",
+      "type": "function",
+      "name": "ListCustomers",
+      "summary": "Function ListCustomers(ctx) in internal/usecase/customer/manage_customer.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/customer/manage_customer.go"
+    },
+    {
+      "id": "function:internal/usecase/customer/manage_customer.go:GetCustomer",
+      "type": "function",
+      "name": "GetCustomer",
+      "summary": "Function GetCustomer(ctx, id) in internal/usecase/customer/manage_customer.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/customer/manage_customer.go"
+    },
+    {
+      "id": "function:internal/usecase/customer/manage_customer.go:CreateCustomer",
+      "type": "function",
+      "name": "CreateCustomer",
+      "summary": "Function CreateCustomer(ctx, c) in internal/usecase/customer/manage_customer.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/customer/manage_customer.go"
+    },
+    {
+      "id": "function:internal/usecase/customer/manage_customer.go:UpdateCustomer",
+      "type": "function",
+      "name": "UpdateCustomer",
+      "summary": "Function UpdateCustomer(ctx, c) in internal/usecase/customer/manage_customer.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/customer/manage_customer.go"
+    },
+    {
+      "id": "function:internal/usecase/customer/manage_customer.go:DeleteCustomer",
+      "type": "function",
+      "name": "DeleteCustomer",
+      "summary": "Function DeleteCustomer(ctx, id) in internal/usecase/customer/manage_customer.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/customer/manage_customer.go"
+    },
+    {
+      "id": "function:internal/usecase/customer/manage_customer.go:ListSubscriptions",
+      "type": "function",
+      "name": "ListSubscriptions",
+      "summary": "Function ListSubscriptions(ctx, customerID) in internal/usecase/customer/manage_customer.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/customer/manage_customer.go"
+    },
+    {
+      "id": "class:internal/usecase/customer/manage_customer.go:ManageCustomerUseCase",
+      "type": "class",
+      "name": "ManageCustomerUseCase",
+      "summary": "Type/class ManageCustomerUseCase in internal/usecase/customer/manage_customer.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/customer/manage_customer.go"
+    },
+    {
+      "id": "file:internal/usecase/knowledge/retriever.go",
+      "type": "file",
+      "name": "retriever.go",
+      "summary": "retriever.go (23 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/usecase/knowledge/retriever.go"
+    },
+    {
+      "id": "function:internal/usecase/knowledge/retriever.go:NewKeywordRetriever",
+      "type": "function",
+      "name": "NewKeywordRetriever",
+      "summary": "Function NewKeywordRetriever(retriever) in internal/usecase/knowledge/retriever.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/knowledge/retriever.go"
+    },
+    {
+      "id": "function:internal/usecase/knowledge/retriever.go:Retrieve",
+      "type": "function",
+      "name": "Retrieve",
+      "summary": "Function Retrieve(ctx, query) in internal/usecase/knowledge/retriever.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/knowledge/retriever.go"
+    },
+    {
+      "id": "class:internal/usecase/knowledge/retriever.go:KeywordRetriever",
+      "type": "class",
+      "name": "KeywordRetriever",
+      "summary": "Type/class KeywordRetriever in internal/usecase/knowledge/retriever.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/knowledge/retriever.go"
+    },
+    {
+      "id": "file:internal/usecase/network/execute_command.go",
+      "type": "file",
+      "name": "execute_command.go",
+      "summary": "execute_command.go (66 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/network/execute_command.go"
+    },
+    {
+      "id": "function:internal/usecase/network/execute_command.go:validateIfSupported",
+      "type": "function",
+      "name": "validateIfSupported",
+      "summary": "Function validateIfSupported(ctx, driver, cmd) in internal/usecase/network/execute_command.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/network/execute_command.go"
+    },
+    {
+      "id": "function:internal/usecase/network/execute_command.go:ExecuteCommand",
+      "type": "function",
+      "name": "ExecuteCommand",
+      "summary": "Function ExecuteCommand(ctx, driver, cmd) in internal/usecase/network/execute_command.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/network/execute_command.go"
+    },
+    {
+      "id": "function:internal/usecase/network/execute_command.go:ExecuteCommandPreApproved",
+      "type": "function",
+      "name": "ExecuteCommandPreApproved",
+      "summary": "Function ExecuteCommandPreApproved(ctx, driver, cmd) in internal/usecase/network/execute_command.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/network/execute_command.go"
+    },
+    {
+      "id": "file:internal/usecase/network/get_device_status.go",
+      "type": "file",
+      "name": "get_device_status.go",
+      "summary": "get_device_status.go (20 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/usecase/network/get_device_status.go"
+    },
+    {
+      "id": "function:internal/usecase/network/get_device_status.go:GetDeviceStatus",
+      "type": "function",
+      "name": "GetDeviceStatus",
+      "summary": "Function GetDeviceStatus(ctx, driver) in internal/usecase/network/get_device_status.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/network/get_device_status.go"
+    },
+    {
+      "id": "file:internal/usecase/network/open_terminal.go",
+      "type": "file",
+      "name": "open_terminal.go",
+      "summary": "open_terminal.go (43 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/usecase/network/open_terminal.go"
+    },
+    {
+      "id": "function:internal/usecase/network/open_terminal.go:NewOpenTerminalUseCase",
+      "type": "function",
+      "name": "NewOpenTerminalUseCase",
+      "summary": "Function NewOpenTerminalUseCase(repo, vault) in internal/usecase/network/open_terminal.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/network/open_terminal.go"
+    },
+    {
+      "id": "function:internal/usecase/network/open_terminal.go:Execute",
+      "type": "function",
+      "name": "Execute",
+      "summary": "Function Execute(ctx, deviceID, cols, rows) in internal/usecase/network/open_terminal.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/network/open_terminal.go"
+    },
+    {
+      "id": "class:internal/usecase/network/open_terminal.go:OpenTerminalUseCase",
+      "type": "class",
+      "name": "OpenTerminalUseCase",
+      "summary": "Type/class OpenTerminalUseCase in internal/usecase/network/open_terminal.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/network/open_terminal.go"
+    },
+    {
+      "id": "file:internal/usecase/network/push_config.go",
+      "type": "file",
+      "name": "push_config.go",
+      "summary": "push_config.go (16 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/usecase/network/push_config.go"
+    },
+    {
+      "id": "function:internal/usecase/network/push_config.go:PushConfig",
+      "type": "function",
+      "name": "PushConfig",
+      "summary": "Function PushConfig(ctx, driver, cmd) in internal/usecase/network/push_config.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/network/push_config.go"
+    },
+    {
+      "id": "file:internal/usecase/network/stream_terminal.go",
+      "type": "file",
+      "name": "stream_terminal.go",
+      "summary": "stream_terminal.go (30 lines)",
+      "tags": [
+        "internal",
+        "usecase",
+        "go"
+      ],
+      "complexity": "simple",
+      "filePath": "internal/usecase/network/stream_terminal.go"
+    },
+    {
+      "id": "function:internal/usecase/network/stream_terminal.go:NewStreamTerminalUseCase",
+      "type": "function",
+      "name": "NewStreamTerminalUseCase",
+      "summary": "Function NewStreamTerminalUseCase(repo, vault) in internal/usecase/network/stream_terminal.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/network/stream_terminal.go"
+    },
+    {
+      "id": "function:internal/usecase/network/stream_terminal.go:OpenTerminal",
+      "type": "function",
+      "name": "OpenTerminal",
+      "summary": "Function OpenTerminal(ctx, driver, deviceID, cols, rows) in internal/usecase/network/stream_terminal.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "function"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/network/stream_terminal.go"
+    },
+    {
+      "id": "class:internal/usecase/network/stream_terminal.go:StreamTerminalUseCase",
+      "type": "class",
+      "name": "StreamTerminalUseCase",
+      "summary": "Type/class StreamTerminalUseCase in internal/usecase/network/stream_terminal.go",
+      "tags": [
+        "internal",
+        "usecase",
+        "go",
+        "class"
+      ],
+      "complexity": "moderate",
+      "filePath": "internal/usecase/network/stream_terminal.go"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:internal/port/audit_writer.go",
+      "target": "class:internal/port/audit_writer.go:AuditEvent",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/audit_writer.go",
+      "target": "class:internal/port/audit_writer.go:AuditWriter",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/authorizer.go",
+      "target": "class:internal/port/authorizer.go:Authorizer",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/bot_repository.go",
+      "target": "class:internal/port/bot_repository.go:WASessionRepository",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/bot_repository.go",
+      "target": "class:internal/port/bot_repository.go:ConversationRepository",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/bot_repository.go",
+      "target": "class:internal/port/bot_repository.go:MessageRepository",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/bot_repository.go",
+      "target": "file:internal/domain/bot/conversation.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/bot_repository.go",
+      "target": "file:internal/domain/bot/message.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/bot_repository.go",
+      "target": "file:internal/domain/bot/session.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/cache_store.go",
+      "target": "class:internal/port/cache_store.go:CacheStore",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/cache_store.go",
+      "target": "class:internal/port/cache_store.go:EventPublisher",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/credential_vault.go",
+      "target": "class:internal/port/credential_vault.go:CredentialVault",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/credential_vault.go",
+      "target": "file:internal/domain/device/credentials.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/credential_vault.go",
+      "target": "file:internal/domain/device/device.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/credential_vault.go",
+      "target": "file:internal/domain/device/errors.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/customer_repository.go",
+      "target": "class:internal/port/customer_repository.go:CustomerRepository",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/customer_repository.go",
+      "target": "file:internal/domain/customer/customer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/customer_repository.go",
+      "target": "file:internal/domain/customer/technician.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/customer_repository.go",
+      "target": "file:internal/domain/customer/user.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/device_driver.go",
+      "target": "class:internal/port/device_driver.go:DeviceDriver",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/device_driver.go",
+      "target": "class:internal/port/device_driver.go:TerminalSession",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/device_driver.go",
+      "target": "class:internal/port/device_driver.go:TerminalDeviceDriver",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/device_driver.go",
+      "target": "file:internal/domain/command/command.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/device_driver.go",
+      "target": "file:internal/domain/command/policy.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/device_repository.go",
+      "target": "class:internal/port/device_repository.go:DeviceRepository",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/device_repository.go",
+      "target": "file:internal/domain/device/credentials.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/device_repository.go",
+      "target": "file:internal/domain/device/device.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/device_repository.go",
+      "target": "file:internal/domain/device/errors.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/invoice_repository.go",
+      "target": "class:internal/port/invoice_repository.go:InvoiceRepository",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/invoice_repository.go",
+      "target": "file:internal/domain/billing/invoice.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/invoice_repository.go",
+      "target": "file:internal/domain/billing/payment.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/knowledge_retriever.go",
+      "target": "class:internal/port/knowledge_retriever.go:KnowledgeRepository",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/knowledge_retriever.go",
+      "target": "class:internal/port/knowledge_retriever.go:KnowledgeRetriever",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/knowledge_retriever.go",
+      "target": "file:internal/domain/knowledge/knowledge.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/llm_provider.go",
+      "target": "class:internal/port/llm_provider.go:LLMConfigRepository",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/llm_provider.go",
+      "target": "class:internal/port/llm_provider.go:LLMProvider",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/llm_provider.go",
+      "target": "file:internal/domain/llm/llm_config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/llm_provider.go",
+      "target": "file:internal/domain/llm/llm_pricing.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/streaming_driver.go",
+      "target": "class:internal/port/streaming_driver.go:StreamHandle",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/streaming_driver.go",
+      "target": "class:internal/port/streaming_driver.go:StreamingDeviceDriver",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/streaming_driver.go",
+      "target": "file:internal/domain/command/command.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/streaming_driver.go",
+      "target": "file:internal/domain/command/policy.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/subscription_repository.go",
+      "target": "class:internal/port/subscription_repository.go:SubscriptionRepository",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/subscription_repository.go",
+      "target": "file:internal/domain/subscription/subscription.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/validating_driver.go",
+      "target": "class:internal/port/validating_driver.go:ValidatingDeviceDriver",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/validating_driver.go",
+      "target": "file:internal/domain/command/command.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/validating_driver.go",
+      "target": "file:internal/domain/command/policy.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/whatsapp_gateway.go",
+      "target": "class:internal/port/whatsapp_gateway.go:WhatsAppGateway",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/whatsapp_gateway.go",
+      "target": "file:internal/domain/bot/conversation.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/whatsapp_gateway.go",
+      "target": "file:internal/domain/bot/message.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/port/whatsapp_gateway.go",
+      "target": "file:internal/domain/bot/session.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "function:internal/registry/registry.go:New",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "function:internal/registry/registry.go:Get",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "function:internal/registry/registry.go:Evict",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "function:internal/registry/registry.go:Close",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "class:internal/registry/registry.go:Registry",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/domain/device/credentials.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/domain/device/device.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/domain/device/errors.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:Execute",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:Classify",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:Translate",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:Close",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:Save",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:FindByID",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:FindAll",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:Update",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:Delete",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:Get",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:Save",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:newTestRegistry",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:TestRegistry_Get_CacheHit",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:TestRegistry_Get_NotFound",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:TestRegistry_Get_DisabledDevice",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:TestRegistry_Get_UnknownDriverType",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "function:internal/registry/registry_test.go:TestRegistry_Close_ReleasesDrivers",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "class:internal/registry/registry_test.go:mockDriver",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "class:internal/registry/registry_test.go:memRepo",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "class:internal/registry/registry_test.go:memVault",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/registry/registry_test.go:newTestRegistry",
+      "target": "function:internal/adapter/mcp/server.go:New",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/registry/registry_test.go:TestRegistry_Get_CacheHit",
+      "target": "function:internal/registry/registry_test.go:newTestRegistry",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/registry/registry_test.go:TestRegistry_Get_NotFound",
+      "target": "function:internal/registry/registry_test.go:newTestRegistry",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/registry/registry_test.go:TestRegistry_Get_DisabledDevice",
+      "target": "function:internal/adapter/mcp/server.go:New",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/registry/registry_test.go:TestRegistry_Get_UnknownDriverType",
+      "target": "function:internal/adapter/mcp/server.go:New",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/registry/registry_test.go:TestRegistry_Close_ReleasesDrivers",
+      "target": "function:internal/registry/registry_test.go:newTestRegistry",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/domain/command/command.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/domain/command/policy.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/domain/device/credentials.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/domain/device/device.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/domain/device/errors.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/registry/registry_test.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "function:internal/usecase/billing/manage_invoice.go:NewInvoiceUsecase",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "function:internal/usecase/billing/manage_invoice.go:ListInvoices",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "function:internal/usecase/billing/manage_invoice.go:GetInvoice",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "function:internal/usecase/billing/manage_invoice.go:CreateInvoice",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "function:internal/usecase/billing/manage_invoice.go:PayInvoice",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "class:internal/usecase/billing/manage_invoice.go:InvoiceUsecase",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/domain/billing/invoice.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/domain/billing/payment.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_invoice.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "function:internal/usecase/billing/manage_subscription.go:NewSubscriptionUsecase",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "function:internal/usecase/billing/manage_subscription.go:ListSubscriptions",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "function:internal/usecase/billing/manage_subscription.go:GetSubscription",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "function:internal/usecase/billing/manage_subscription.go:CreateSubscription",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "function:internal/usecase/billing/manage_subscription.go:CancelSubscription",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "class:internal/usecase/billing/manage_subscription.go:SubscriptionUsecase",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/domain/subscription/subscription.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/billing/manage_subscription.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "function:internal/usecase/bot/context_manager.go:NewContextManager",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "function:internal/usecase/bot/context_manager.go:BuildPromptContext",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "function:internal/usecase/bot/context_manager.go:SaveMessageToSession",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "function:internal/usecase/bot/context_manager.go:SummarizeSessionIfLong",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "class:internal/usecase/bot/context_manager.go:ContextManager",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/config/config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/config/crypto.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/domain/knowledge/knowledge.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/domain/llm/llm_config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/domain/llm/llm_pricing.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/context_manager.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "function:internal/usecase/bot/engine.go:NewEngine",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "function:internal/usecase/bot/engine.go:HandleIncomingMessage",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "class:internal/usecase/bot/engine.go:Engine",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/usecase/bot/engine.go:NewEngine",
+      "target": "function:internal/usecase/bot/ratelimit.go:NewRateLimiter",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/usecase/bot/engine.go:NewEngine",
+      "target": "function:internal/usecase/bot/guardrail.go:NewGuardrail",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/usecase/bot/engine.go:NewEngine",
+      "target": "function:internal/usecase/bot/context_manager.go:NewContextManager",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/config/config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/config/crypto.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/domain/bot/conversation.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/domain/bot/message.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/domain/bot/session.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/engine.go",
+      "target": "file:internal/usecase/conversation/manage_conversation.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "function:internal/usecase/bot/ratelimit.go:NewRateLimiter",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "function:internal/usecase/bot/ratelimit.go:Check",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "class:internal/usecase/bot/ratelimit.go:RateLimitResult",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "class:internal/usecase/bot/ratelimit.go:RateLimiter",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/config/config.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/config/crypto.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/bot/ratelimit.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "function:internal/usecase/customer/manage_customer.go:NewManageCustomerUseCase",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "function:internal/usecase/customer/manage_customer.go:ListCustomers",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "function:internal/usecase/customer/manage_customer.go:GetCustomer",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "function:internal/usecase/customer/manage_customer.go:CreateCustomer",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "function:internal/usecase/customer/manage_customer.go:UpdateCustomer",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "function:internal/usecase/customer/manage_customer.go:DeleteCustomer",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "function:internal/usecase/customer/manage_customer.go:ListSubscriptions",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "class:internal/usecase/customer/manage_customer.go:ManageCustomerUseCase",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/domain/customer/customer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/domain/customer/technician.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/domain/customer/user.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/customer/manage_customer.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "function:internal/usecase/knowledge/retriever.go:NewKeywordRetriever",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "function:internal/usecase/knowledge/retriever.go:Retrieve",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "class:internal/usecase/knowledge/retriever.go:KeywordRetriever",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/domain/knowledge/knowledge.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/knowledge/retriever.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "function:internal/usecase/network/execute_command.go:validateIfSupported",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "function:internal/usecase/network/execute_command.go:ExecuteCommand",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "function:internal/usecase/network/execute_command.go:ExecuteCommandPreApproved",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/usecase/network/execute_command.go:ExecuteCommand",
+      "target": "function:internal/usecase/network/execute_command.go:validateIfSupported",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/domain/command/command.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/domain/command/policy.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/execute_command.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "function:internal/usecase/network/get_device_status.go:GetDeviceStatus",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/usecase/network/get_device_status.go:GetDeviceStatus",
+      "target": "function:internal/usecase/network/execute_command.go:ExecuteCommand",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/domain/command/command.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/domain/command/policy.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/get_device_status.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "function:internal/usecase/network/open_terminal.go:NewOpenTerminalUseCase",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "function:internal/usecase/network/open_terminal.go:Execute",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "class:internal/usecase/network/open_terminal.go:OpenTerminalUseCase",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/driver/genericssh/commands.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/driver/genericssh/driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/driver/genericssh/pty.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/open_terminal.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "function:internal/usecase/network/push_config.go:PushConfig",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "function:internal/usecase/network/push_config.go:PushConfig",
+      "target": "function:internal/usecase/network/execute_command.go:ExecuteCommand",
+      "type": "calls",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/domain/command/command.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/domain/command/policy.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/push_config.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "function:internal/usecase/network/stream_terminal.go:NewStreamTerminalUseCase",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "function:internal/usecase/network/stream_terminal.go:OpenTerminal",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "class:internal/usecase/network/stream_terminal.go:StreamTerminalUseCase",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/audit_writer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/authorizer.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/bot_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/cache_store.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/credential_vault.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/customer_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/device_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/device_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/invoice_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/knowledge_retriever.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/llm_provider.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/streaming_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/subscription_repository.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/validating_driver.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    },
+    {
+      "source": "file:internal/usecase/network/stream_terminal.go",
+      "target": "file:internal/port/whatsapp_gateway.go",
+      "type": "imports",
+      "weight": 0.7,
+      "direction": "forward"
+    }
+  ]
+}

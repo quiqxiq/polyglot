@@ -38,58 +38,58 @@ LibreChat dipilih sebagai lapisan **chat/AI/UI** karena ia sudah menyediakan hal
 
 ```mermaid
 flowchart TB
-    subgraph Consumers["Lapisan Konsumen - Bisa Diganti/Ditambah Bebas"]
-        subgraph LibreChatBox["LibreChat - dipilih karena kesiapan chat, RAG, admin scaffolding"]
-            ChatUI["Chat UI + Agent"]
-            AdminPages["Halaman Admin Panel - React, di-host dalam LibreChat"]
-            LC_BE["LibreChat Backend - Node - sesi user, orkestrasi LLM, MCP client"]
-            RAG["RAG/File-Chat bawaan LibreChat - untuk dokumen SOP dsb"]
-        end
-        OtherUI["UI Lain - opsional, misal dashboard NOC custom atau mobile app"]
+subgraph Consumers["Lapisan Konsumen - Bisa Diganti/Ditambah Bebas"]
+    subgraph LibreChatBox["LibreChat - dipilih karena kesiapan chat, RAG, admin scaffolding"]
+        ChatUI["Chat UI + Agent"]
+        AdminPages["Halaman Admin Panel - React, di-host dalam LibreChat"]
+        LC_BE["LibreChat Backend - Node - sesi user, orkestrasi LLM, MCP client"]
+        RAG["RAG/File-Chat bawaan LibreChat - untuk dokumen SOP dsb"]
     end
+    OtherUI["UI Lain - opsional, misal dashboard NOC custom atau mobile app"]
+end
 
-    subgraph GoBackend["Go Backend - Standalone, Headless, Sumber Kebenaran Tunggal"]
-        MCPSrv["MCP Server - cek konfigurasi, eksekusi command"]
-        RESTSrv["REST API - device, customer, subscription, paket, monitoring query"]
-        WSSrv["WebSocket/SSE - resource hardware realtime, traffic"]
-        AuthSrv["Auth Service - JWT, Casbin RBAC - single-tenant"]
-        CoreDomain["Core Domain - device, command, customer, subscription, billing"]
-        Vault["Credential Vault - terenkripsi"]
-        Audit["Audit Log"]
-    end
+subgraph GoBackend["Go Backend - Standalone, Headless, Sumber Kebenaran Tunggal"]
+    MCPSrv["MCP Server - cek konfigurasi, eksekusi command"]
+    RESTSrv["REST API - device, customer, subscription, paket, monitoring query"]
+    WSSrv["WebSocket/SSE - resource hardware realtime, traffic"]
+    AuthSrv["Auth Service - JWT, Casbin RBAC - single-tenant"]
+    CoreDomain["Core Domain - device, command, customer, subscription, billing"]
+    Vault["Credential Vault - terenkripsi"]
+    Audit["Audit Log"]
+end
 
-    subgraph DRIVERS["Driver Layer - per vendor"]
-        DrvMikrotik["go-routeros"]
-        DrvScrapli["scrapligo"]
-        DrvZTE["gosnmp + Telnet"]
-        DrvACS["REST client ke GenieACS NBI"]
-    end
+subgraph DRIVERS["Driver Layer - per vendor"]
+    DrvMikrotik["go-routeros"]
+    DrvScrapli["scrapligo"]
+    DrvZTE["gosnmp + Telnet"]
+    DrvACS["REST client ke GenieACS NBI"]
+end
 
-    subgraph Devices["Perangkat & Servis Eksternal"]
-        Mikrotik["Mikrotik"]
-        Cisco["Cisco"]
-        OLT["OLT ZTE/Huawei"]
-        GenieACS["GenieACS"]
-    end
+subgraph Devices["Perangkat & Servis Eksternal"]
+    Mikrotik["Mikrotik"]
+    Cisco["Cisco"]
+    OLT["OLT ZTE/Huawei"]
+    GenieACS["GenieACS"]
+end
 
-    ChatUI --> LC_BE
-    LC_BE -- "MCP protokol, OAuth/OBO per user" --> MCPSrv
-    RAG -. "tidak menyentuh Go Backend" .-> RAG
+ChatUI --> LC_BE
+LC_BE -- "MCP protokol, OAuth/OBO per user" --> MCPSrv
+RAG -. "tidak menyentuh Go Backend" .-> RAG
 
-    AdminPages -- "REST langsung dari browser" --> RESTSrv
-    AdminPages -. "subscribe" .-> WSSrv
-    OtherUI -- "REST/WS langsung, tanpa AI" --> RESTSrv
-    OtherUI -.-> WSSrv
+AdminPages -- "REST langsung dari browser" --> RESTSrv
+AdminPages -. "subscribe" .-> WSSrv
+OtherUI -- "REST/WS langsung, tanpa AI" --> RESTSrv
+OtherUI -.-> WSSrv
 
-    MCPSrv & RESTSrv & WSSrv --> AuthSrv
-    MCPSrv & RESTSrv & WSSrv --> CoreDomain
-    CoreDomain --> Vault
-    CoreDomain --> Audit
-    CoreDomain --> DrvMikrotik & DrvScrapli & DrvZTE & DrvACS
-    DrvMikrotik --> Mikrotik
-    DrvScrapli --> Cisco
-    DrvZTE --> OLT
-    DrvACS --> GenieACS
+MCPSrv & RESTSrv & WSSrv --> AuthSrv
+MCPSrv & RESTSrv & WSSrv --> CoreDomain
+CoreDomain --> Vault
+CoreDomain --> Audit
+CoreDomain --> DrvMikrotik & DrvScrapli & DrvZTE & DrvACS
+DrvMikrotik --> Mikrotik
+DrvScrapli --> Cisco
+DrvZTE --> OLT
+DrvACS --> GenieACS
 ```
 
 **Dua hal krusial dari diagram ini:**
@@ -121,42 +121,42 @@ Meskipun berjalan sebagai satu service/binary untuk kesederhanaan operasional (c
 
 ```mermaid
 flowchart LR
-    subgraph Adapter_Masuk["Adapter Masuk"]
-        A1["MCP Handler"]
-        A2["REST Handler"]
-        A3["WS Handler"]
-    end
+subgraph Adapter_Masuk["Adapter Masuk"]
+    A1["MCP Handler"]
+    A2["REST Handler"]
+    A3["WS Handler"]
+end
 
-    subgraph Domain_Jaringan["Domain: Jaringan"]
-        UC1["ExecuteCommand"]
-        UC2["GetDeviceStatus"]
-        UC3["PushConfig"]
-        Policy["Command Policy - allow/deny/ask"]
-    end
+subgraph Domain_Jaringan["Domain: Jaringan"]
+    UC1["ExecuteCommand"]
+    UC2["GetDeviceStatus"]
+    UC3["PushConfig"]
+    Policy["Command Policy - allow/deny/ask"]
+end
 
-    subgraph Domain_Bisnis["Domain: Bisnis ISP"]
-        UC4["ManageCustomer"]
-        UC5["ManageSubscription"]
-        UC6["ManagePlan"]
-        UC7["ManageInvoice"]
-    end
+subgraph Domain_Bisnis["Domain: Bisnis ISP"]
+    UC4["ManageCustomer"]
+    UC5["ManageSubscription"]
+    UC6["ManagePlan"]
+    UC7["ManageInvoice"]
+end
 
-    subgraph Adapter_Keluar["Adapter Keluar"]
-        D1["DeviceDriver Interface"]
-        D2["CredentialVault"]
-        D3["AuditWriter"]
-        D4["Repository - Postgres"]
-    end
+subgraph Adapter_Keluar["Adapter Keluar"]
+    D1["DeviceDriver Interface"]
+    D2["CredentialVault"]
+    D3["AuditWriter"]
+    D4["Repository - Postgres"]
+end
 
-    A1 --> UC1 & UC2 & UC3
-    A2 --> UC1 & UC2 & UC3 & UC4 & UC5 & UC6 & UC7
-    A3 --> UC2
+A1 --> UC1 & UC2 & UC3
+A2 --> UC1 & UC2 & UC3 & UC4 & UC5 & UC6 & UC7
+A3 --> UC2
 
-    UC1 & UC3 --> Policy
-    UC1 & UC2 & UC3 --> D1
-    UC1 & UC3 --> D2
-    UC1 & UC3 --> D3
-    UC4 & UC5 & UC6 & UC7 --> D4
+UC1 & UC3 --> Policy
+UC1 & UC2 & UC3 --> D1
+UC1 & UC3 --> D2
+UC1 & UC3 --> D3
+UC4 & UC5 & UC6 & UC7 --> D4
 ```
 
 ### 5.2 Struktur Folder Proyek
@@ -182,10 +182,10 @@ package port
 // sini — ditunda sampai Fase 7 (streaming) benar-benar dikerjakan, supaya
 // tidak ada method separuh jadi hari ini.
 type DeviceDriver interface {
-    Execute(ctx context.Context, cmd command.Command) (command.Result, error)
-    Classify(cmd command.Command) command.Class
-    Translate(op command.Operation) (command.Command, error)
-    Close() error
+Execute(ctx context.Context, cmd command.Command) (command.Result, error)
+Classify(cmd command.Command) command.Class
+Translate(op command.Operation) (command.Command, error)
+Close() error
 }
 ```
 
@@ -195,26 +195,26 @@ type DeviceDriver interface {
 package command
 
 type Command struct {
-    Raw  string
-    Args map[string]string
+Raw  string
+Args map[string]string
 }
 
 type Result struct {
-    Output string
+Output string
 }
 
 type Operation string
 
 const (
-    OpGetStatus Operation = "get_status"
-    OpReboot    Operation = "reboot"
+OpGetStatus Operation = "get_status"
+OpReboot    Operation = "reboot"
 )
 
 type Class int
 
 const (
-    ClassReadOnly Class = iota
-    ClassDestructive
+ClassReadOnly Class = iota
+ClassDestructive
 )
 ```
 
@@ -222,12 +222,12 @@ const (
 package device
 
 type Target struct {
-    Host     string
-    Port     int
-    Username string
-    Password string
-    Timeout  time.Duration
-    Extra    map[string]string
+Host     string
+Port     int
+Username string
+Password string
+Timeout  time.Duration
+Extra    map[string]string
 }
 ```
 
@@ -260,43 +260,43 @@ Satu pengecualian yang disengaja: `internal/driver/genericssh/commands.go` **tid
 
 ```mermaid
 sequenceDiagram
-    participant U as User/Teknisi
-    participant UI as LibreChat Chat UI
-    participant Agent as LibreChat Agent
-    participant HITL as Tool Approval - HITL
-    participant LCBE as LibreChat Backend
-    participant MCP as Go Backend - MCP Server
-    participant Policy as Command Policy
-    participant Driver as Device Driver
-    participant Dev as Perangkat
+participant U as User/Teknisi
+participant UI as LibreChat Chat UI
+participant Agent as LibreChat Agent
+participant HITL as Tool Approval - HITL
+participant LCBE as LibreChat Backend
+participant MCP as Go Backend - MCP Server
+participant Policy as Command Policy
+participant Driver as Device Driver
+participant Dev as Perangkat
 
-    U->>UI: "Cek status interface Mikrotik Cabang A"
-    UI->>Agent: pesan + device_id dari Device Picker
-    Agent->>LCBE: panggil tool run_command
-    LCBE->>MCP: MCP call - dengan token OAuth/OBO milik user
-    MCP->>Policy: read-only atau destruktif?
-    alt Read-only
-        Policy-->>MCP: auto-approve
-        MCP->>Driver: Execute
-        Driver->>Dev: kirim command
-        Dev-->>Driver: hasil
-        Driver-->>MCP: Result
-        MCP-->>LCBE: tool result
-        LCBE-->>UI: jawaban
-    else Destruktif
-        Policy-->>MCP: butuh approval
-        MCP-->>LCBE: pending_approval
-        LCBE-->>HITL: munculkan prompt
-        HITL-->>U: approve/reject/edit
-        U-->>HITL: approve
-        HITL-->>MCP: lanjutkan
-        MCP->>Driver: Execute
-        Driver->>Dev: kirim command
-        Dev-->>Driver: hasil
-        MCP->>MCP: tulis Audit Log
-        MCP-->>LCBE: tool result
-        LCBE-->>UI: jawaban + status approval
-    end
+U->>UI: "Cek status interface Mikrotik Cabang A"
+UI->>Agent: pesan + device_id dari Device Picker
+Agent->>LCBE: panggil tool run_command
+LCBE->>MCP: MCP call - dengan token OAuth/OBO milik user
+MCP->>Policy: read-only atau destruktif?
+alt Read-only
+    Policy-->>MCP: auto-approve
+    MCP->>Driver: Execute
+    Driver->>Dev: kirim command
+    Dev-->>Driver: hasil
+    Driver-->>MCP: Result
+    MCP-->>LCBE: tool result
+    LCBE-->>UI: jawaban
+else Destruktif
+    Policy-->>MCP: butuh approval
+    MCP-->>LCBE: pending_approval
+    LCBE-->>HITL: munculkan prompt
+    HITL-->>U: approve/reject/edit
+    U-->>HITL: approve
+    HITL-->>MCP: lanjutkan
+    MCP->>Driver: Execute
+    Driver->>Dev: kirim command
+    Dev-->>Driver: hasil
+    MCP->>MCP: tulis Audit Log
+    MCP-->>LCBE: tool result
+    LCBE-->>UI: jawaban + status approval
+end
 ```
 
 **Auth pada jalur ini:** LibreChat MCP client memanfaatkan mekanisme OAuth/OBO (*on-behalf-of*) yang sudah tersedia — Go backend mengenali user asli di balik request, bukan cuma "LibreChat sebagai satu identitas generik". Ini penting untuk audit trail yang akurat (siapa sebenarnya yang menyuruh AI eksekusi command).
@@ -305,31 +305,31 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant U as Staff Admin/NOC
-    participant UI as Halaman Admin Panel - di dalam LibreChat atau UI lain
-    participant REST as Go Backend - REST API
-    participant WS as Go Backend - WebSocket/SSE
-    participant DB as Postgres
-    participant TSDB as Time-series DB
-    participant Dev as Perangkat/GenieACS
+participant U as Staff Admin/NOC
+participant UI as Halaman Admin Panel - di dalam LibreChat atau UI lain
+participant REST as Go Backend - REST API
+participant WS as Go Backend - WebSocket/SSE
+participant DB as Postgres
+participant TSDB as Time-series DB
+participant Dev as Perangkat/GenieACS
 
-    U->>UI: Tambah device baru - pilih vendor Mikrotik/Cisco/OLT/dst
-    UI->>REST: POST /devices - langsung, dengan token Go-backend milik user
-    REST->>DB: simpan metadata + kredensial terenkripsi
-    REST-->>UI: berhasil
+U->>UI: Tambah device baru - pilih vendor Mikrotik/Cisco/OLT/dst
+UI->>REST: POST /devices - langsung, dengan token Go-backend milik user
+REST->>DB: simpan metadata + kredensial terenkripsi
+REST-->>UI: berhasil
 
-    U->>UI: Tambah customer + subscription + paket
-    UI->>REST: POST /customers, /subscriptions, /packages
-    REST->>DB: simpan
-    REST-->>UI: berhasil
+U->>UI: Tambah customer + subscription + paket
+UI->>REST: POST /customers, /subscriptions, /packages
+REST->>DB: simpan
+REST-->>UI: berhasil
 
-    U->>UI: Buka dashboard monitoring
-    UI->>WS: subscribe resource hardware & traffic per device
-    WS->>Dev: polling/listen data
-    WS-->>UI: stream data realtime
-    UI->>REST: query histori/agregat
-    REST->>TSDB: query
-    REST-->>UI: data histori
+U->>UI: Buka dashboard monitoring
+UI->>WS: subscribe resource hardware & traffic per device
+WS->>Dev: polling/listen data
+WS-->>UI: stream data realtime
+UI->>REST: query histori/agregat
+REST->>TSDB: query
+REST-->>UI: data histori
 ```
 
 Tidak ada MCP, tidak ada agent, tidak ada LLM di jalur ini sama sekali — persis seperti admin panel ISP pada umumnya. LibreChat di sini hanya berperan sebagai *shell* React yang meng-*host* halaman-halaman ini.
@@ -338,12 +338,12 @@ Tidak ada MCP, tidak ada agent, tidak ada LLM di jalur ini sama sekali — persi
 
 ```mermaid
 flowchart LR
-    U["Staff upload dokumen SOP"] --> RAGUI["LibreChat - fitur Chat with Files/RAG bawaan"]
-    RAGUI --> RAGStore[("Vector store/RAG API milik LibreChat")]
-    Chat["User bertanya di chat"] --> Agent["LibreChat Agent"]
-    Agent -- retrieval --> RAGStore
-    RAGStore -- konteks relevan --> Agent
-    Agent --> Chat
+U["Staff upload dokumen SOP"] --> RAGUI["LibreChat - fitur Chat with Files/RAG bawaan"]
+RAGUI --> RAGStore[("Vector store/RAG API milik LibreChat")]
+Chat["User bertanya di chat"] --> Agent["LibreChat Agent"]
+Agent -- retrieval --> RAGStore
+RAGStore -- konteks relevan --> Agent
+Agent --> Chat
 ```
 
 Ini murni memanfaatkan fitur RAG yang sudah ada di LibreChat (`RAG API`, `Chat with Files`) — sesuai prinsip awal Anda: tidak perlu membangun ulang apa yang LibreChat sudah sediakan. Go backend sama sekali tidak terlibat di alur ini.
@@ -354,17 +354,17 @@ Fokus utama: **data realtime di admin panel** — resource hardware (CPU/memori/
 
 ```mermaid
 sequenceDiagram
-    participant UI as Admin Panel UI
-    participant WS as Go Backend - WS/SSE Adapter
-    participant Poller as Poller Internal
-    participant Dev as Perangkat
+participant UI as Admin Panel UI
+participant WS as Go Backend - WS/SSE Adapter
+participant Poller as Poller Internal
+participant Dev as Perangkat
 
-    UI->>WS: subscribe device_id atau group_id
-    Poller->>Dev: polling berkala - SNMP/API native
-    Dev-->>Poller: metrik
-    Poller->>WS: publish metrik terbaru
-    WS-->>UI: push data realtime - resource, traffic
-    UI->>WS: unsubscribe saat halaman ditutup
+UI->>WS: subscribe device_id atau group_id
+Poller->>Dev: polling berkala - SNMP/API native
+Dev-->>Poller: metrik
+Poller->>WS: publish metrik terbaru
+WS-->>UI: push data realtime - resource, traffic
+UI->>WS: unsubscribe saat halaman ditutup
 ```
 
 ---
@@ -433,34 +433,34 @@ Rekomendasi: mulai dengan opsi (a) untuk MVP (lebih cepat dibangun, tidak butuh 
 
 ```mermaid
 flowchart TB
-    subgraph Internet["Internet"]
-        LLMProv["LLM Providers"]
-        Browser["Browser User"]
-    end
+subgraph Internet["Internet"]
+    LLMProv["LLM Providers"]
+    Browser["Browser User"]
+end
 
-    subgraph DMZ["DMZ / Zona Publik"]
-        LibreChatSvc["LibreChat - Web + Backend"]
-    end
+subgraph DMZ["DMZ / Zona Publik"]
+    LibreChatSvc["LibreChat - Web + Backend"]
+end
 
-    subgraph MgmtZone["Zona Manajemen - VPN/VLAN Terisolasi"]
-        GoBackendSvc["Go Backend - MCP + REST + WS + Auth"]
-        GenieACSSvc["GenieACS + NBI"]
-        TSDBSvc[("Time-series DB")]
-        PGSvc[("Postgres")]
-    end
+subgraph MgmtZone["Zona Manajemen - VPN/VLAN Terisolasi"]
+    GoBackendSvc["Go Backend - MCP + REST + WS + Auth"]
+    GenieACSSvc["GenieACS + NBI"]
+    TSDBSvc[("Time-series DB")]
+    PGSvc[("Postgres")]
+end
 
-    subgraph DeviceVLAN["VLAN Manajemen Perangkat"]
-        DevicesAll["Mikrotik/Cisco/OLT/CPE"]
-    end
+subgraph DeviceVLAN["VLAN Manajemen Perangkat"]
+    DevicesAll["Mikrotik/Cisco/OLT/CPE"]
+end
 
-    Browser -- HTTPS chat --> LibreChatSvc
-    Browser -- HTTPS admin panel, langsung --> GoBackendSvc
-    LibreChatSvc -- HTTPS --> LLMProv
-    LibreChatSvc -- MCP, OBO token --> GoBackendSvc
-    GoBackendSvc --> DevicesAll
-    GoBackendSvc --> GenieACSSvc --> DevicesAll
-    GoBackendSvc --> TSDBSvc
-    GoBackendSvc --> PGSvc
+Browser -- HTTPS chat --> LibreChatSvc
+Browser -- HTTPS admin panel, langsung --> GoBackendSvc
+LibreChatSvc -- HTTPS --> LLMProv
+LibreChatSvc -- MCP, OBO token --> GoBackendSvc
+GoBackendSvc --> DevicesAll
+GoBackendSvc --> GenieACSSvc --> DevicesAll
+GoBackendSvc --> TSDBSvc
+GoBackendSvc --> PGSvc
 ```
 
 Catatan: `Browser` punya dua jalur independen — satu ke LibreChat (chat), satu langsung ke Go backend (admin panel). Ini secara topologi membuktikan Go backend tidak wajib LibreChat hidup untuk berfungsi.

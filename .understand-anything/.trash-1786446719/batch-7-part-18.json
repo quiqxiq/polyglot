@@ -1,0 +1,644 @@
+{
+ "nodes": [
+  {
+   "id": "file:api/gen/v1/rbac_grpc.pb.go",
+   "type": "file",
+   "name": "rbac_grpc.pb.go",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "summary": "Go source file implementing the API specification — API specification logic for the polyglot backend. Exports RBACServiceClient, NewRBACServiceClient, ListPolicies, AddPolicy, RemovePolicy, ListRoleAssignments.",
+   "tags": [
+    "api-schema",
+    "openapi",
+    "documentation",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:NewRBACServiceClient",
+   "type": "function",
+   "name": "NewRBACServiceClient",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    46,
+    48
+   ],
+   "summary": "Constructor that creates and initializes a RBACServiceClient instance with the provided configuration.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:ListPolicies",
+   "type": "function",
+   "name": "ListPolicies",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    50,
+    58
+   ],
+   "summary": "Retrieves policies data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:AddPolicy",
+   "type": "function",
+   "name": "AddPolicy",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    60,
+    68
+   ],
+   "summary": "Creates a new policy record or resource.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:RemovePolicy",
+   "type": "function",
+   "name": "RemovePolicy",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    70,
+    78
+   ],
+   "summary": "Removes policy from the system.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:ListRoleAssignments",
+   "type": "function",
+   "name": "ListRoleAssignments",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    80,
+    88
+   ],
+   "summary": "Retrieves roleassignments data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:AssignRole",
+   "type": "function",
+   "name": "AssignRole",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    90,
+    98
+   ],
+   "summary": "Implements the AssignRole logic (inputs: ctx, in) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:UnassignRole",
+   "type": "function",
+   "name": "UnassignRole",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    100,
+    108
+   ],
+   "summary": "Implements the UnassignRole logic (inputs: ctx, in) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:RegisterRBACServiceServer",
+   "type": "function",
+   "name": "RegisterRBACServiceServer",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    158,
+    167
+   ],
+   "summary": "Implements the RegisterRBACServiceServer logic (inputs: s, srv) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:_RBACService_ListPolicies_Handler",
+   "type": "function",
+   "name": "_RBACService_ListPolicies_Handler",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    169,
+    185
+   ],
+   "summary": "Implements the _RBACService_ListPolicies_Handler logic (inputs: srv, ctx, dec, interceptor) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:_RBACService_AddPolicy_Handler",
+   "type": "function",
+   "name": "_RBACService_AddPolicy_Handler",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    187,
+    203
+   ],
+   "summary": "Implements the _RBACService_AddPolicy_Handler logic (inputs: srv, ctx, dec, interceptor) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:_RBACService_RemovePolicy_Handler",
+   "type": "function",
+   "name": "_RBACService_RemovePolicy_Handler",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    205,
+    221
+   ],
+   "summary": "Implements the _RBACService_RemovePolicy_Handler logic (inputs: srv, ctx, dec, interceptor) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:_RBACService_ListRoleAssignments_Handler",
+   "type": "function",
+   "name": "_RBACService_ListRoleAssignments_Handler",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    223,
+    239
+   ],
+   "summary": "Implements the _RBACService_ListRoleAssignments_Handler logic (inputs: srv, ctx, dec, interceptor) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:_RBACService_AssignRole_Handler",
+   "type": "function",
+   "name": "_RBACService_AssignRole_Handler",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    241,
+    257
+   ],
+   "summary": "Implements the _RBACService_AssignRole_Handler logic (inputs: srv, ctx, dec, interceptor) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/rbac_grpc.pb.go:_RBACService_UnassignRole_Handler",
+   "type": "function",
+   "name": "_RBACService_UnassignRole_Handler",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    259,
+    275
+   ],
+   "summary": "Implements the _RBACService_UnassignRole_Handler logic (inputs: srv, ctx, dec, interceptor) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac_grpc.pb.go:RBACServiceClient",
+   "type": "class",
+   "name": "RBACServiceClient",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    33,
+    40
+   ],
+   "summary": "RBACServiceClient Go type with 6 method(s) [ListPolicies, AddPolicy, RemovePolicy, ListRoleAssignments, AssignRole, …] and 0 field(s), defining the rbacserviceclient behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac_grpc.pb.go:rBACServiceClient",
+   "type": "class",
+   "name": "rBACServiceClient",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    42,
+    44
+   ],
+   "summary": "rBACServiceClient Go type with 6 method(s) [ListPolicies, AddPolicy, RemovePolicy, ListRoleAssignments, AssignRole, …] and 1 field(s), defining the rbacserviceclient behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "internal"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac_grpc.pb.go:RBACServiceServer",
+   "type": "class",
+   "name": "RBACServiceServer",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    113,
+    121
+   ],
+   "summary": "RBACServiceServer Go type with 7 method(s) [ListPolicies, AddPolicy, RemovePolicy, ListRoleAssignments, AssignRole, …] and 0 field(s), defining the rbacserviceserver behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac_grpc.pb.go:UnimplementedRBACServiceServer",
+   "type": "class",
+   "name": "UnimplementedRBACServiceServer",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    128,
+    128
+   ],
+   "summary": "UnimplementedRBACServiceServer Go type with 8 method(s) [ListPolicies, AddPolicy, RemovePolicy, ListRoleAssignments, AssignRole, …] and 0 field(s), defining the unimplementedrbacserviceserver behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/rbac_grpc.pb.go:UnsafeRBACServiceServer",
+   "type": "class",
+   "name": "UnsafeRBACServiceServer",
+   "filePath": "api/gen/v1/rbac_grpc.pb.go",
+   "lineRange": [
+    154,
+    156
+   ],
+   "summary": "UnsafeRBACServiceServer Go type with 1 method(s) [mustEmbedUnimplementedRBACServiceServer] and 0 field(s), defining the unsaferbacserviceserver behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:NewRBACServiceClient",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:ListPolicies",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:AddPolicy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:RemovePolicy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:ListRoleAssignments",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:AssignRole",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:UnassignRole",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:ListPolicies",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:AddPolicy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:RemovePolicy",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:ListRoleAssignments",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:AssignRole",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:UnassignRole",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:RegisterRBACServiceServer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:_RBACService_ListPolicies_Handler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:_RBACService_AddPolicy_Handler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:_RBACService_RemovePolicy_Handler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:_RBACService_ListRoleAssignments_Handler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:_RBACService_AssignRole_Handler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:_RBACService_UnassignRole_Handler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "class:api/gen/v1/rbac_grpc.pb.go:RBACServiceClient",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "class:api/gen/v1/rbac_grpc.pb.go:rBACServiceClient",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "class:api/gen/v1/rbac_grpc.pb.go:RBACServiceServer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "class:api/gen/v1/rbac_grpc.pb.go:UnimplementedRBACServiceServer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "class:api/gen/v1/rbac_grpc.pb.go:UnsafeRBACServiceServer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "class:api/gen/v1/rbac_grpc.pb.go:RBACServiceClient",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:NewRBACServiceClient",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:ListPolicies",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:AddPolicy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:RemovePolicy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:ListRoleAssignments",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:AssignRole",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:UnassignRole",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "class:api/gen/v1/rbac_grpc.pb.go:RBACServiceServer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "class:api/gen/v1/rbac_grpc.pb.go:UnimplementedRBACServiceServer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:ListPolicies",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:AddPolicy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:RemovePolicy",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:ListRoleAssignments",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:AssignRole",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:UnassignRole",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "class:api/gen/v1/rbac_grpc.pb.go:UnsafeRBACServiceServer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/rbac_grpc.pb.go",
+   "target": "function:api/gen/v1/rbac_grpc.pb.go:RegisterRBACServiceServer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

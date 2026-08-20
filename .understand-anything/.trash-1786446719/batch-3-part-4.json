@@ -1,0 +1,1894 @@
+{
+ "nodes": [
+  {
+   "id": "file:internal/driver/mikrotik/dhcp.go",
+   "type": "file",
+   "name": "dhcp.go",
+   "filePath": "internal/driver/mikrotik/dhcp.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports DHCPLease, DHCPServer, DHCPLeaseBlockParams, NewPrintDHCPLeasesCommand, NewStreamDHCPLeasesCommand, NewSetDHCPLeaseBlockCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/dhcp.go:NewPrintDHCPLeasesCommand",
+   "type": "function",
+   "name": "NewPrintDHCPLeasesCommand",
+   "filePath": "internal/driver/mikrotik/dhcp.go",
+   "lineRange": [
+    64,
+    73
+   ],
+   "summary": "Constructor that creates and initializes a PrintDHCPLeasesCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/dhcp.go:NewStreamDHCPLeasesCommand",
+   "type": "function",
+   "name": "NewStreamDHCPLeasesCommand",
+   "filePath": "internal/driver/mikrotik/dhcp.go",
+   "lineRange": [
+    85,
+    94
+   ],
+   "summary": "Constructor that creates and initializes a StreamDHCPLeasesCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/dhcp.go:NewSetDHCPLeaseBlockCommand",
+   "type": "function",
+   "name": "NewSetDHCPLeaseBlockCommand",
+   "filePath": "internal/driver/mikrotik/dhcp.go",
+   "lineRange": [
+    104,
+    115
+   ],
+   "summary": "Constructor that creates and initializes a SetDHCPLeaseBlockCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/dhcp.go:NewPrintDHCPServersCommand",
+   "type": "function",
+   "name": "NewPrintDHCPServersCommand",
+   "filePath": "internal/driver/mikrotik/dhcp.go",
+   "lineRange": [
+    119,
+    124
+   ],
+   "summary": "Constructor that creates and initializes a PrintDHCPServersCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/dhcp.go:ParseDHCPLeases",
+   "type": "function",
+   "name": "ParseDHCPLeases",
+   "filePath": "internal/driver/mikrotik/dhcp.go",
+   "lineRange": [
+    128,
+    149
+   ],
+   "summary": "Implements the ParseDHCPLeases logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/dhcp.go:ParseDHCPServers",
+   "type": "function",
+   "name": "ParseDHCPServers",
+   "filePath": "internal/driver/mikrotik/dhcp.go",
+   "lineRange": [
+    153,
+    171
+   ],
+   "summary": "Implements the ParseDHCPServers logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/dhcp.go:DHCPLease",
+   "type": "class",
+   "name": "DHCPLease",
+   "filePath": "internal/driver/mikrotik/dhcp.go",
+   "lineRange": [
+    29,
+    40
+   ],
+   "summary": "DHCPLease Go type with 0 method(s) [—] and 10 field(s), defining the dhcplease behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/dhcp.go:DHCPServer",
+   "type": "class",
+   "name": "DHCPServer",
+   "filePath": "internal/driver/mikrotik/dhcp.go",
+   "lineRange": [
+    44,
+    51
+   ],
+   "summary": "DHCPServer Go type with 0 method(s) [—] and 6 field(s), defining the dhcpserver behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/dhcp.go:DHCPLeaseBlockParams",
+   "type": "class",
+   "name": "DHCPLeaseBlockParams",
+   "filePath": "internal/driver/mikrotik/dhcp.go",
+   "lineRange": [
+    56,
+    59
+   ],
+   "summary": "DHCPLeaseBlockParams Go type with 0 method(s) [—] and 2 field(s), defining the dhcpleaseblockparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/drivers_test.go",
+   "type": "file",
+   "name": "drivers_test.go",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports TestNewPrintSimpleQueuesCommand, TestNewStreamQueueStatsCommand, TestNewAddSimpleQueueCommand, TestNewRemoveSimpleQueueCommand, TestSuspendQueueParams, TestParseSimpleQueues.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go",
+    "test"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewPrintSimpleQueuesCommand",
+   "type": "function",
+   "name": "TestNewPrintSimpleQueuesCommand",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    14,
+    25
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewStreamQueueStatsCommand",
+   "type": "function",
+   "name": "TestNewStreamQueueStatsCommand",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    27,
+    53
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewAddSimpleQueueCommand",
+   "type": "function",
+   "name": "TestNewAddSimpleQueueCommand",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    55,
+    68
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewRemoveSimpleQueueCommand",
+   "type": "function",
+   "name": "TestNewRemoveSimpleQueueCommand",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    70,
+    74
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestSuspendQueueParams",
+   "type": "function",
+   "name": "TestSuspendQueueParams",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    76,
+    89
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestParseSimpleQueues",
+   "type": "function",
+   "name": "TestParseSimpleQueues",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    93,
+    113
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewAddFirewallFilterCommand",
+   "type": "function",
+   "name": "TestNewAddFirewallFilterCommand",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    117,
+    142
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestParseFirewallFilters",
+   "type": "function",
+   "name": "TestParseFirewallFilters",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    144,
+    160
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewAddToAddressListCommand",
+   "type": "function",
+   "name": "TestNewAddToAddressListCommand",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    164,
+    170
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestParseAddressListEntries",
+   "type": "function",
+   "name": "TestParseAddressListEntries",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    172,
+    185
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewPrintDHCPLeasesCommand",
+   "type": "function",
+   "name": "TestNewPrintDHCPLeasesCommand",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    189,
+    200
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewStreamDHCPLeasesCommand",
+   "type": "function",
+   "name": "TestNewStreamDHCPLeasesCommand",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    202,
+    208
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewSetDHCPLeaseBlockCommand",
+   "type": "function",
+   "name": "TestNewSetDHCPLeaseBlockCommand",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    210,
+    224
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestParseDHCPLeases",
+   "type": "function",
+   "name": "TestParseDHCPLeases",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    226,
+    241
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewMonitorTrafficCommands",
+   "type": "function",
+   "name": "TestNewMonitorTrafficCommands",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    245,
+    263
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestParseInterfaceTrafficStats",
+   "type": "function",
+   "name": "TestParseInterfaceTrafficStats",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    265,
+    283
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewStreamSystemResourceCommand",
+   "type": "function",
+   "name": "TestNewStreamSystemResourceCommand",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    287,
+    292
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestParseSystemResource",
+   "type": "function",
+   "name": "TestParseSystemResource",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    294,
+    325
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestParseLogEntries",
+   "type": "function",
+   "name": "TestParseLogEntries",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    327,
+    336
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewPingCommand",
+   "type": "function",
+   "name": "TestNewPingCommand",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    338,
+    350
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestFilterInactiveHotspotUsers",
+   "type": "function",
+   "name": "TestFilterInactiveHotspotUsers",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    352,
+    364
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestIPPool",
+   "type": "function",
+   "name": "TestIPPool",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    366,
+    378
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/drivers_test.go:TestNewPrintParentQueuesCommand",
+   "type": "function",
+   "name": "TestNewPrintParentQueuesCommand",
+   "filePath": "internal/driver/mikrotik/drivers_test.go",
+   "lineRange": [
+    380,
+    384
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/errors.go",
+   "type": "file",
+   "name": "errors.go",
+   "filePath": "internal/driver/mikrotik/errors.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/firewall.go",
+   "type": "file",
+   "name": "firewall.go",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports FirewallFilterParams, FirewallFilter, BlockIPFilterParams, BlockAddressListFilterParams, FirewallFilterPrintParams, NewPrintFirewallFiltersCommand.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/firewall.go:BlockIPFilterParams",
+   "type": "function",
+   "name": "BlockIPFilterParams",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    59,
+    66
+   ],
+   "summary": "Implements the BlockIPFilterParams logic (inputs: customerIP, reason) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/firewall.go:BlockAddressListFilterParams",
+   "type": "function",
+   "name": "BlockAddressListFilterParams",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    72,
+    86
+   ],
+   "summary": "Implements the BlockAddressListFilterParams logic (inputs: chain, listName) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/firewall.go:NewPrintFirewallFiltersCommand",
+   "type": "function",
+   "name": "NewPrintFirewallFiltersCommand",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    99,
+    109
+   ],
+   "summary": "Constructor that creates and initializes a PrintFirewallFiltersCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/firewall.go:NewAddFirewallFilterCommand",
+   "type": "function",
+   "name": "NewAddFirewallFilterCommand",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    113,
+    128
+   ],
+   "summary": "Constructor that creates and initializes a AddFirewallFilterCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/firewall.go:NewRemoveFirewallFilterCommand",
+   "type": "function",
+   "name": "NewRemoveFirewallFilterCommand",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    132,
+    137
+   ],
+   "summary": "Constructor that creates and initializes a RemoveFirewallFilterCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/firewall.go:ParseFirewallFilters",
+   "type": "function",
+   "name": "ParseFirewallFilters",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    142,
+    164
+   ],
+   "summary": "Implements the ParseFirewallFilters logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/firewall.go:NewPrintAddressListCommand",
+   "type": "function",
+   "name": "NewPrintAddressListCommand",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    190,
+    198
+   ],
+   "summary": "Constructor that creates and initializes a PrintAddressListCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/firewall.go:NewAddToAddressListCommand",
+   "type": "function",
+   "name": "NewAddToAddressListCommand",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    203,
+    210
+   ],
+   "summary": "Constructor that creates and initializes a AddToAddressListCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/firewall.go:NewRemoveFromAddressListCommand",
+   "type": "function",
+   "name": "NewRemoveFromAddressListCommand",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    214,
+    219
+   ],
+   "summary": "Constructor that creates and initializes a RemoveFromAddressListCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/firewall.go:ParseAddressListEntries",
+   "type": "function",
+   "name": "ParseAddressListEntries",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    223,
+    241
+   ],
+   "summary": "Implements the ParseAddressListEntries logic (inputs: result) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/firewall.go:NewPrintFirewallNATRulesCommand",
+   "type": "function",
+   "name": "NewPrintFirewallNATRulesCommand",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    244,
+    249
+   ],
+   "summary": "Constructor that creates and initializes a PrintFirewallNATRulesCommand instance with the provided configuration.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/firewall.go:FirewallFilterParams",
+   "type": "class",
+   "name": "FirewallFilterParams",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    26,
+    36
+   ],
+   "summary": "FirewallFilterParams Go type with 0 method(s) [—] and 9 field(s), defining the firewallfilterparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/firewall.go:FirewallFilter",
+   "type": "class",
+   "name": "FirewallFilter",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    42,
+    54
+   ],
+   "summary": "FirewallFilter Go type with 0 method(s) [—] and 11 field(s), defining the firewallfilter behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/firewall.go:FirewallFilterPrintParams",
+   "type": "class",
+   "name": "FirewallFilterPrintParams",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    90,
+    95
+   ],
+   "summary": "FirewallFilterPrintParams Go type with 0 method(s) [—] and 4 field(s), defining the firewallfilterprintparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/firewall.go:AddressListEntry",
+   "type": "class",
+   "name": "AddressListEntry",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    172,
+    180
+   ],
+   "summary": "AddressListEntry Go type with 0 method(s) [—] and 7 field(s), defining the addresslistentry behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/firewall.go:AddressListPrintParams",
+   "type": "class",
+   "name": "AddressListPrintParams",
+   "filePath": "internal/driver/mikrotik/firewall.go",
+   "lineRange": [
+    183,
+    186
+   ],
+   "summary": "AddressListPrintParams Go type with 0 method(s) [—] and 2 field(s), defining the addresslistprintparams behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "type": "file",
+   "name": "comment.go",
+   "filePath": "internal/driver/mikrotik/hotspot/comment.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports MikhmonComment, FormatPreLoginComment, ParseMikhmonComment, IsExpired, IsMikhmonComment.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/comment.go:FormatPreLoginComment",
+   "type": "function",
+   "name": "FormatPreLoginComment",
+   "filePath": "internal/driver/mikrotik/hotspot/comment.go",
+   "lineRange": [
+    45,
+    54
+   ],
+   "summary": "Implements the FormatPreLoginComment logic (inputs: vcType, code, tag, t) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/comment.go:ParseMikhmonComment",
+   "type": "function",
+   "name": "ParseMikhmonComment",
+   "filePath": "internal/driver/mikrotik/hotspot/comment.go",
+   "lineRange": [
+    58,
+    87
+   ],
+   "summary": "Implements the ParseMikhmonComment logic (inputs: commentStr) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/comment.go:parsePreLoginParts",
+   "type": "function",
+   "name": "parsePreLoginParts",
+   "filePath": "internal/driver/mikrotik/hotspot/comment.go",
+   "lineRange": [
+    90,
+    106
+   ],
+   "summary": "Implements the parsePreLoginParts logic (inputs: s, c) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/comment.go:IsExpired",
+   "type": "function",
+   "name": "IsExpired",
+   "filePath": "internal/driver/mikrotik/hotspot/comment.go",
+   "lineRange": [
+    110,
+    133
+   ],
+   "summary": "Implements the IsExpired logic (inputs: commentStr, now) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/comment.go:IsMikhmonComment",
+   "type": "function",
+   "name": "IsMikhmonComment",
+   "filePath": "internal/driver/mikrotik/hotspot/comment.go",
+   "lineRange": [
+    139,
+    142
+   ],
+   "summary": "Implements the IsMikhmonComment logic (inputs: comment) for this component.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:internal/driver/mikrotik/hotspot/comment.go:MikhmonComment",
+   "type": "class",
+   "name": "MikhmonComment",
+   "filePath": "internal/driver/mikrotik/hotspot/comment.go",
+   "lineRange": [
+    30,
+    41
+   ],
+   "summary": "MikhmonComment Go type with 0 method(s) [—] and 9 field(s), defining the mikhmoncomment behavior of this component.",
+   "tags": [
+    "class",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:internal/driver/mikrotik/hotspot/comment_test.go",
+   "type": "file",
+   "name": "comment_test.go",
+   "filePath": "internal/driver/mikrotik/hotspot/comment_test.go",
+   "summary": "Go source file implementing the vendor device driver — vendor device driver logic for the polyglot backend. Exports TestFormatPreLoginComment, TestParseMikhmonComment, TestIsExpired.",
+   "tags": [
+    "driver",
+    "device",
+    "vendor",
+    "go",
+    "test"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/comment_test.go:TestFormatPreLoginComment",
+   "type": "function",
+   "name": "TestFormatPreLoginComment",
+   "filePath": "internal/driver/mikrotik/hotspot/comment_test.go",
+   "lineRange": [
+    11,
+    28
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/comment_test.go:TestParseMikhmonComment",
+   "type": "function",
+   "name": "TestParseMikhmonComment",
+   "filePath": "internal/driver/mikrotik/hotspot/comment_test.go",
+   "lineRange": [
+    30,
+    59
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:internal/driver/mikrotik/hotspot/comment_test.go:TestIsExpired",
+   "type": "function",
+   "name": "TestIsExpired",
+   "filePath": "internal/driver/mikrotik/hotspot/comment_test.go",
+   "lineRange": [
+    61,
+    79
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "driver",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "function:internal/driver/mikrotik/dhcp.go:NewPrintDHCPLeasesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "function:internal/driver/mikrotik/dhcp.go:NewStreamDHCPLeasesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "function:internal/driver/mikrotik/dhcp.go:NewSetDHCPLeaseBlockCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "function:internal/driver/mikrotik/dhcp.go:NewPrintDHCPServersCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "function:internal/driver/mikrotik/dhcp.go:ParseDHCPLeases",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "function:internal/driver/mikrotik/dhcp.go:ParseDHCPServers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "class:internal/driver/mikrotik/dhcp.go:DHCPLease",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "class:internal/driver/mikrotik/dhcp.go:DHCPServer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "class:internal/driver/mikrotik/dhcp.go:DHCPLeaseBlockParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "class:internal/driver/mikrotik/dhcp.go:DHCPLease",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "class:internal/driver/mikrotik/dhcp.go:DHCPServer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "class:internal/driver/mikrotik/dhcp.go:DHCPLeaseBlockParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "function:internal/driver/mikrotik/dhcp.go:NewPrintDHCPLeasesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "function:internal/driver/mikrotik/dhcp.go:NewStreamDHCPLeasesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "function:internal/driver/mikrotik/dhcp.go:NewSetDHCPLeaseBlockCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "function:internal/driver/mikrotik/dhcp.go:NewPrintDHCPServersCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "function:internal/driver/mikrotik/dhcp.go:ParseDHCPLeases",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "function:internal/driver/mikrotik/dhcp.go:ParseDHCPServers",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/dhcp.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewPrintSimpleQueuesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewStreamQueueStatsCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewAddSimpleQueueCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewRemoveSimpleQueueCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestSuspendQueueParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseSimpleQueues",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewAddFirewallFilterCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseFirewallFilters",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewAddToAddressListCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseAddressListEntries",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewPrintDHCPLeasesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewStreamDHCPLeasesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewSetDHCPLeaseBlockCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseDHCPLeases",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewMonitorTrafficCommands",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseInterfaceTrafficStats",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewStreamSystemResourceCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseSystemResource",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseLogEntries",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewPingCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestFilterInactiveHotspotUsers",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestIPPool",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewPrintParentQueuesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewPrintSimpleQueuesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewStreamQueueStatsCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewAddSimpleQueueCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewRemoveSimpleQueueCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestSuspendQueueParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseSimpleQueues",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewAddFirewallFilterCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseFirewallFilters",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewAddToAddressListCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseAddressListEntries",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewPrintDHCPLeasesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewStreamDHCPLeasesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewSetDHCPLeaseBlockCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseDHCPLeases",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewMonitorTrafficCommands",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseInterfaceTrafficStats",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewStreamSystemResourceCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseSystemResource",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestParseLogEntries",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewPingCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestFilterInactiveHotspotUsers",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestIPPool",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "function:internal/driver/mikrotik/drivers_test.go:TestNewPrintParentQueuesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/drivers_test.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:BlockIPFilterParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:BlockAddressListFilterParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewPrintFirewallFiltersCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewAddFirewallFilterCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewRemoveFirewallFilterCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:ParseFirewallFilters",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewPrintAddressListCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewAddToAddressListCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewRemoveFromAddressListCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:ParseAddressListEntries",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewPrintFirewallNATRulesCommand",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "class:internal/driver/mikrotik/firewall.go:FirewallFilterParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "class:internal/driver/mikrotik/firewall.go:FirewallFilter",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "class:internal/driver/mikrotik/firewall.go:FirewallFilterPrintParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "class:internal/driver/mikrotik/firewall.go:AddressListEntry",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "class:internal/driver/mikrotik/firewall.go:AddressListPrintParams",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "class:internal/driver/mikrotik/firewall.go:FirewallFilterParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "class:internal/driver/mikrotik/firewall.go:FirewallFilter",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:BlockIPFilterParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:BlockAddressListFilterParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "class:internal/driver/mikrotik/firewall.go:FirewallFilterPrintParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewPrintFirewallFiltersCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewAddFirewallFilterCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewRemoveFirewallFilterCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:ParseFirewallFilters",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "class:internal/driver/mikrotik/firewall.go:AddressListEntry",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "class:internal/driver/mikrotik/firewall.go:AddressListPrintParams",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewPrintAddressListCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewAddToAddressListCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewRemoveFromAddressListCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:ParseAddressListEntries",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "function:internal/driver/mikrotik/firewall.go:NewPrintFirewallNATRulesCommand",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "file:internal/domain/command/command.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/firewall.go",
+   "target": "file:internal/domain/command/policy.go",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment.go:FormatPreLoginComment",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment.go:ParseMikhmonComment",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment.go:parsePreLoginParts",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment.go:IsExpired",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment.go:IsMikhmonComment",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "target": "class:internal/driver/mikrotik/hotspot/comment.go:MikhmonComment",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "target": "class:internal/driver/mikrotik/hotspot/comment.go:MikhmonComment",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment.go:FormatPreLoginComment",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment.go:ParseMikhmonComment",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment.go:IsExpired",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment.go:IsMikhmonComment",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment_test.go:TestFormatPreLoginComment",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment_test.go:TestParseMikhmonComment",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment_test.go:TestIsExpired",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment_test.go:TestFormatPreLoginComment",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment_test.go:TestParseMikhmonComment",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:internal/driver/mikrotik/hotspot/comment_test.go",
+   "target": "function:internal/driver/mikrotik/hotspot/comment_test.go:TestIsExpired",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

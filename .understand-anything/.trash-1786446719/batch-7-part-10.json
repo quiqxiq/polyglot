@@ -1,0 +1,755 @@
+{
+ "nodes": [
+  {
+   "id": "file:api/gen/v1/device_grpc.pb.go",
+   "type": "file",
+   "name": "device_grpc.pb.go",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "summary": "Go source file implementing the API specification — API specification logic for the polyglot backend. Exports DeviceServiceClient, NewDeviceServiceClient, ListDevices, GetDevice, UpdateDevice, DeleteDevice.",
+   "tags": [
+    "api-schema",
+    "openapi",
+    "documentation",
+    "go"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:NewDeviceServiceClient",
+   "type": "function",
+   "name": "NewDeviceServiceClient",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    54,
+    56
+   ],
+   "summary": "Constructor that creates and initializes a DeviceServiceClient instance with the provided configuration.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:ListDevices",
+   "type": "function",
+   "name": "ListDevices",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    58,
+    66
+   ],
+   "summary": "Retrieves devices data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:GetDevice",
+   "type": "function",
+   "name": "GetDevice",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    68,
+    76
+   ],
+   "summary": "Retrieves device data or state, returning results to the caller.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:UpdateDevice",
+   "type": "function",
+   "name": "UpdateDevice",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    78,
+    86
+   ],
+   "summary": "Updates device state with the given inputs.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:DeleteDevice",
+   "type": "function",
+   "name": "DeleteDevice",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    88,
+    96
+   ],
+   "summary": "Removes device from the system.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:TestDeviceConnection",
+   "type": "function",
+   "name": "TestDeviceConnection",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    98,
+    106
+   ],
+   "summary": "Verifies connectivity or behavior of the underlying service.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:StreamDeviceStatus",
+   "type": "function",
+   "name": "StreamDeviceStatus",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    108,
+    122
+   ],
+   "summary": "Implements the StreamDeviceStatus logic (inputs: ctx, in) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:StreamPing",
+   "type": "function",
+   "name": "StreamPing",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    127,
+    141
+   ],
+   "summary": "Implements the StreamPing logic (inputs: ctx, in) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:StreamInterfaceTraffic",
+   "type": "function",
+   "name": "StreamInterfaceTraffic",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    146,
+    160
+   ],
+   "summary": "Implements the StreamInterfaceTraffic logic (inputs: ctx, in) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:StreamTerminal",
+   "type": "function",
+   "name": "StreamTerminal",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    165,
+    173
+   ],
+   "summary": "Implements the StreamTerminal logic (inputs: ctx) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:RegisterDeviceServiceServer",
+   "type": "function",
+   "name": "RegisterDeviceServiceServer",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    240,
+    249
+   ],
+   "summary": "Implements the RegisterDeviceServiceServer logic (inputs: s, srv) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:_DeviceService_ListDevices_Handler",
+   "type": "function",
+   "name": "_DeviceService_ListDevices_Handler",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    251,
+    267
+   ],
+   "summary": "Implements the _DeviceService_ListDevices_Handler logic (inputs: srv, ctx, dec, interceptor) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:_DeviceService_GetDevice_Handler",
+   "type": "function",
+   "name": "_DeviceService_GetDevice_Handler",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    269,
+    285
+   ],
+   "summary": "Implements the _DeviceService_GetDevice_Handler logic (inputs: srv, ctx, dec, interceptor) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:_DeviceService_UpdateDevice_Handler",
+   "type": "function",
+   "name": "_DeviceService_UpdateDevice_Handler",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    287,
+    303
+   ],
+   "summary": "Implements the _DeviceService_UpdateDevice_Handler logic (inputs: srv, ctx, dec, interceptor) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:_DeviceService_DeleteDevice_Handler",
+   "type": "function",
+   "name": "_DeviceService_DeleteDevice_Handler",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    305,
+    321
+   ],
+   "summary": "Implements the _DeviceService_DeleteDevice_Handler logic (inputs: srv, ctx, dec, interceptor) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:api/gen/v1/device_grpc.pb.go:_DeviceService_TestDeviceConnection_Handler",
+   "type": "function",
+   "name": "_DeviceService_TestDeviceConnection_Handler",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    323,
+    339
+   ],
+   "summary": "Implements the _DeviceService_TestDeviceConnection_Handler logic (inputs: srv, ctx, dec, interceptor) for this component.",
+   "tags": [
+    "function",
+    "api-schema",
+    "method"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/device_grpc.pb.go:DeviceServiceClient",
+   "type": "class",
+   "name": "DeviceServiceClient",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    38,
+    48
+   ],
+   "summary": "DeviceServiceClient Go type with 9 method(s) [ListDevices, GetDevice, UpdateDevice, DeleteDevice, TestDeviceConnection, …] and 0 field(s), defining the deviceserviceclient behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/device_grpc.pb.go:deviceServiceClient",
+   "type": "class",
+   "name": "deviceServiceClient",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    50,
+    52
+   ],
+   "summary": "deviceServiceClient Go type with 9 method(s) [ListDevices, GetDevice, UpdateDevice, DeleteDevice, TestDeviceConnection, …] and 1 field(s), defining the deviceserviceclient behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "internal"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/device_grpc.pb.go:DeviceServiceServer",
+   "type": "class",
+   "name": "DeviceServiceServer",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    183,
+    194
+   ],
+   "summary": "DeviceServiceServer Go type with 10 method(s) [ListDevices, GetDevice, UpdateDevice, DeleteDevice, TestDeviceConnection, …] and 0 field(s), defining the deviceserviceserver behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/device_grpc.pb.go:UnimplementedDeviceServiceServer",
+   "type": "class",
+   "name": "UnimplementedDeviceServiceServer",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    201,
+    201
+   ],
+   "summary": "UnimplementedDeviceServiceServer Go type with 11 method(s) [ListDevices, GetDevice, UpdateDevice, DeleteDevice, TestDeviceConnection, …] and 0 field(s), defining the unimplementeddeviceserviceserver behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:api/gen/v1/device_grpc.pb.go:UnsafeDeviceServiceServer",
+   "type": "class",
+   "name": "UnsafeDeviceServiceServer",
+   "filePath": "api/gen/v1/device_grpc.pb.go",
+   "lineRange": [
+    236,
+    238
+   ],
+   "summary": "UnsafeDeviceServiceServer Go type with 1 method(s) [mustEmbedUnimplementedDeviceServiceServer] and 0 field(s), defining the unsafedeviceserviceserver behavior of this component.",
+   "tags": [
+    "class",
+    "api-schema",
+    "exported"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:NewDeviceServiceClient",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:ListDevices",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:GetDevice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:UpdateDevice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:DeleteDevice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:TestDeviceConnection",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamDeviceStatus",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamPing",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamInterfaceTraffic",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamTerminal",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:ListDevices",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:GetDevice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:UpdateDevice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:DeleteDevice",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:TestDeviceConnection",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamDeviceStatus",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamPing",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamInterfaceTraffic",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamTerminal",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:RegisterDeviceServiceServer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:_DeviceService_ListDevices_Handler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:_DeviceService_GetDevice_Handler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:_DeviceService_UpdateDevice_Handler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:_DeviceService_DeleteDevice_Handler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:_DeviceService_TestDeviceConnection_Handler",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "class:api/gen/v1/device_grpc.pb.go:DeviceServiceClient",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "class:api/gen/v1/device_grpc.pb.go:deviceServiceClient",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "class:api/gen/v1/device_grpc.pb.go:DeviceServiceServer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "class:api/gen/v1/device_grpc.pb.go:UnimplementedDeviceServiceServer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "class:api/gen/v1/device_grpc.pb.go:UnsafeDeviceServiceServer",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "class:api/gen/v1/device_grpc.pb.go:DeviceServiceClient",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:NewDeviceServiceClient",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:ListDevices",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:GetDevice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:UpdateDevice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:DeleteDevice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:TestDeviceConnection",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamDeviceStatus",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamPing",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamInterfaceTraffic",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamTerminal",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "class:api/gen/v1/device_grpc.pb.go:DeviceServiceServer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "class:api/gen/v1/device_grpc.pb.go:UnimplementedDeviceServiceServer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:ListDevices",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:GetDevice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:UpdateDevice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:DeleteDevice",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:TestDeviceConnection",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamDeviceStatus",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamPing",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamInterfaceTraffic",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:StreamTerminal",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "class:api/gen/v1/device_grpc.pb.go:UnsafeDeviceServiceServer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:api/gen/v1/device_grpc.pb.go",
+   "target": "function:api/gen/v1/device_grpc.pb.go:RegisterDeviceServiceServer",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+.git
+.gitignore
+.env
+.env.*
+node_modules
+web/node_modules
+web/dist
+vendor
+*.md
+.commandcode
+.gemini

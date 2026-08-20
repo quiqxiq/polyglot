@@ -1,0 +1,77 @@
+{
+  "projectRoot": "/home/quixiq/projects/polyground/polyglot",
+  "batchFiles": [
+    {
+      "path": "api/proto/v1/auth.proto",
+      "language": "protobuf",
+      "sizeLines": 44,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/billing.proto",
+      "language": "protobuf",
+      "sizeLines": 90,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/bot.proto",
+      "language": "protobuf",
+      "sizeLines": 67,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/customer.proto",
+      "language": "protobuf",
+      "sizeLines": 67,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/device.proto",
+      "language": "protobuf",
+      "sizeLines": 165,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/hotspot.proto",
+      "language": "protobuf",
+      "sizeLines": 200,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/knowledge.proto",
+      "language": "protobuf",
+      "sizeLines": 196,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/probe.proto",
+      "language": "protobuf",
+      "sizeLines": 35,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/rbac.proto",
+      "language": "protobuf",
+      "sizeLines": 63,
+      "fileCategory": "data"
+    },
+    {
+      "path": "api/proto/v1/whatsapp.proto",
+      "language": "protobuf",
+      "sizeLines": 97,
+      "fileCategory": "data"
+    }
+  ],
+  "batchImportData": {
+    "api/proto/v1/auth.proto": [],
+    "api/proto/v1/billing.proto": [],
+    "api/proto/v1/bot.proto": [],
+    "api/proto/v1/customer.proto": [],
+    "api/proto/v1/device.proto": [],
+    "api/proto/v1/hotspot.proto": [],
+    "api/proto/v1/knowledge.proto": [],
+    "api/proto/v1/probe.proto": [],
+    "api/proto/v1/rbac.proto": [],
+    "api/proto/v1/whatsapp.proto": []
+  }
+}

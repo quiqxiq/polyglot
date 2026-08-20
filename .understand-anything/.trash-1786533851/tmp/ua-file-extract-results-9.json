@@ -1,0 +1,163 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 1,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "deployments/docker/Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra",
+      "totalLines": 38,
+      "nonEmptyLines": 30,
+      "services": [
+        {
+          "name": "base",
+          "image": "golang:alpine",
+          "ports": [],
+          "startLine": 5,
+          "endLine": 11
+        },
+        {
+          "name": "dev",
+          "image": "base",
+          "ports": [
+            8080
+          ],
+          "startLine": 12,
+          "endLine": 17
+        },
+        {
+          "name": "builder",
+          "image": "base",
+          "ports": [],
+          "startLine": 18,
+          "endLine": 23
+        },
+        {
+          "name": "prod",
+          "image": "alpine:3.20",
+          "ports": [
+            8080
+          ],
+          "startLine": 24,
+          "endLine": 39
+        }
+      ],
+      "steps": [
+        {
+          "name": "FROM golang:alpine AS base",
+          "startLine": 5,
+          "endLine": 5
+        },
+        {
+          "name": "WORKDIR /app",
+          "startLine": 6,
+          "endLine": 6
+        },
+        {
+          "name": "RUN apk add --no-cache git ca-certificates tzdata",
+          "startLine": 7,
+          "endLine": 7
+        },
+        {
+          "name": "COPY go.mod go.sum ./",
+          "startLine": 8,
+          "endLine": 8
+        },
+        {
+          "name": "RUN go mod download",
+          "startLine": 9,
+          "endLine": 9
+        },
+        {
+          "name": "FROM base AS dev",
+          "startLine": 12,
+          "endLine": 12
+        },
+        {
+          "name": "COPY . .",
+          "startLine": 13,
+          "endLine": 13
+        },
+        {
+          "name": "EXPOSE 8080",
+          "startLine": 14,
+          "endLine": 14
+        },
+        {
+          "name": "CMD [\"go\", \"run\", \"./cmd/server\"]",
+          "startLine": 15,
+          "endLine": 15
+        },
+        {
+          "name": "FROM base AS builder",
+          "startLine": 18,
+          "endLine": 18
+        },
+        {
+          "name": "COPY . .",
+          "startLine": 19,
+          "endLine": 19
+        },
+        {
+          "name": "RUN CGO_ENABLED=0 GOOS=linux go build -ldflags=\"-w -s\" -o /out/s",
+          "startLine": 20,
+          "endLine": 20
+        },
+        {
+          "name": "FROM alpine:3.20 AS prod",
+          "startLine": 24,
+          "endLine": 24
+        },
+        {
+          "name": "RUN apk add --no-cache ca-certificates tzdata && \\",
+          "startLine": 25,
+          "endLine": 25
+        },
+        {
+          "name": "WORKDIR /app",
+          "startLine": 28,
+          "endLine": 28
+        },
+        {
+          "name": "COPY --from=builder /out/server /usr/local/bin/server",
+          "startLine": 29,
+          "endLine": 29
+        },
+        {
+          "name": "COPY --from=builder /out/seed /usr/local/bin/seed",
+          "startLine": 30,
+          "endLine": 30
+        },
+        {
+          "name": "COPY --from=builder /app/internal/templates /app/internal/templat",
+          "startLine": 33,
+          "endLine": 33
+        },
+        {
+          "name": "USER appuser",
+          "startLine": 35,
+          "endLine": 35
+        },
+        {
+          "name": "EXPOSE 8080",
+          "startLine": 36,
+          "endLine": 36
+        },
+        {
+          "name": "ENTRYPOINT [\"/usr/local/bin/server\"]",
+          "startLine": 38,
+          "endLine": 38
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "serviceCount": 4,
+        "stepCount": 21
+      }
+    }
+  ]
+}

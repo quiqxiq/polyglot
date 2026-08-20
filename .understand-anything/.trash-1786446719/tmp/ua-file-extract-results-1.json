@@ -1,0 +1,6351 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 34,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "cmd/seed/main.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 226,
+      "nonEmptyLines": 197,
+      "functions": [
+        {
+          "name": "main",
+          "startLine": 20,
+          "endLine": 46,
+          "params": []
+        },
+        {
+          "name": "seedUsers",
+          "startLine": 48,
+          "endLine": 127,
+          "params": [
+            "pgStore"
+          ]
+        },
+        {
+          "name": "seedCasbin",
+          "startLine": 129,
+          "endLine": 138,
+          "params": [
+            "ctx",
+            "pgStore"
+          ]
+        },
+        {
+          "name": "seedKnowledge",
+          "startLine": 140,
+          "endLine": 198,
+          "params": [
+            "pgStore"
+          ]
+        },
+        {
+          "name": "seedLLMConfig",
+          "startLine": 200,
+          "endLine": 226,
+          "params": [
+            "pgStore",
+            "cfg"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "main",
+          "callee": "godotenv.Load",
+          "lineNumber": 21
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 22
+        },
+        {
+          "caller": "main",
+          "callee": "config.Load",
+          "lineNumber": 25
+        },
+        {
+          "caller": "main",
+          "callee": "cfg.Validate",
+          "lineNumber": 26
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 27
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 30
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewStore",
+          "lineNumber": 32
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 34
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 37
+        },
+        {
+          "caller": "main",
+          "callee": "context.Background",
+          "lineNumber": 39
+        },
+        {
+          "caller": "main",
+          "callee": "seedUsers",
+          "lineNumber": 40
+        },
+        {
+          "caller": "main",
+          "callee": "seedKnowledge",
+          "lineNumber": 41
+        },
+        {
+          "caller": "main",
+          "callee": "seedLLMConfig",
+          "lineNumber": 42
+        },
+        {
+          "caller": "main",
+          "callee": "seedCasbin",
+          "lineNumber": 43
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 45
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "os.Getenv",
+          "lineNumber": 49
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "log.Println",
+          "lineNumber": 51
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "os.Getenv",
+          "lineNumber": 53
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "log.Println",
+          "lineNumber": 55
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "len",
+          "lineNumber": 63
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "validatePassword",
+          "lineNumber": 74
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "log.Fatalf",
+          "lineNumber": 75
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "append",
+          "lineNumber": 77
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "validatePassword",
+          "lineNumber": 86
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "log.Fatalf",
+          "lineNumber": 87
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "append",
+          "lineNumber": 89
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.FindUserByUsername",
+          "lineNumber": 98
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "bcrypt.GenerateFromPassword",
+          "lineNumber": 99
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "log.Printf",
+          "lineNumber": 101
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.DB().Model(&models.UserModel{}).Where(\"username = ?\", u.username).Update",
+          "lineNumber": 106
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.DB().Model(&models.UserModel{}).Where",
+          "lineNumber": 106
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.DB().Model",
+          "lineNumber": 106
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.DB",
+          "lineNumber": 106
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "string",
+          "lineNumber": 106
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "log.Printf",
+          "lineNumber": 107
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "log.Printf",
+          "lineNumber": 109
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "string",
+          "lineNumber": 117
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "pgStore.CreateUser",
+          "lineNumber": 121
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "log.Printf",
+          "lineNumber": 122
+        },
+        {
+          "caller": "seedUsers",
+          "callee": "log.Printf",
+          "lineNumber": 124
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "auth.NewCasbinEnforcer",
+          "lineNumber": 130
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "pgStore.DB",
+          "lineNumber": 130
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "log.Printf",
+          "lineNumber": 132
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "auth.SeedSystemPolicies",
+          "lineNumber": 136
+        },
+        {
+          "caller": "seedCasbin",
+          "callee": "log.Println",
+          "lineNumber": 137
+        },
+        {
+          "caller": "seedKnowledge",
+          "callee": "pgStore.FindAllKnowledgeEntries",
+          "lineNumber": 184
+        },
+        {
+          "caller": "seedKnowledge",
+          "callee": "len",
+          "lineNumber": 185
+        },
+        {
+          "caller": "seedKnowledge",
+          "callee": "log.Printf",
+          "lineNumber": 186
+        },
+        {
+          "caller": "seedKnowledge",
+          "callee": "len",
+          "lineNumber": 186
+        },
+        {
+          "caller": "seedKnowledge",
+          "callee": "pgStore.CreateKnowledgeEntry",
+          "lineNumber": 192
+        },
+        {
+          "caller": "seedKnowledge",
+          "callee": "log.Printf",
+          "lineNumber": 193
+        },
+        {
+          "caller": "seedKnowledge",
+          "callee": "log.Printf",
+          "lineNumber": 195
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "pgStore.FindAllLLMConfigs",
+          "lineNumber": 201
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "len",
+          "lineNumber": 202
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "log.Printf",
+          "lineNumber": 203
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "config.Encrypt",
+          "lineNumber": 207
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "log.Printf",
+          "lineNumber": 209
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "pgStore.CreateLLMConfig",
+          "lineNumber": 221
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "log.Printf",
+          "lineNumber": 222
+        },
+        {
+          "caller": "seedLLMConfig",
+          "callee": "log.Printf",
+          "lineNumber": 224
+        }
+      ],
+      "metrics": {
+        "importCount": 30,
+        "exportCount": 0,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/llm/claude/claude.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 141,
+      "nonEmptyLines": 120,
+      "functions": [
+        {
+          "name": "NewProvider",
+          "startLine": 23,
+          "endLine": 36,
+          "params": [
+            "apiKey",
+            "model",
+            "maxTokens"
+          ]
+        },
+        {
+          "name": "Chat",
+          "startLine": 65,
+          "endLine": 134,
+          "params": [
+            "ctx",
+            "systemPrompt",
+            "messages",
+            "maxTokens"
+          ]
+        },
+        {
+          "name": "TestConnection",
+          "startLine": 136,
+          "endLine": 141,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Provider",
+          "startLine": 16,
+          "endLine": 21,
+          "methods": [
+            "Chat",
+            "TestConnection"
+          ],
+          "properties": [
+            "apiKey",
+            "model",
+            "maxTokens",
+            "httpClient"
+          ]
+        },
+        {
+          "name": "claudeRequest",
+          "startLine": 38,
+          "endLine": 43,
+          "methods": [],
+          "properties": [
+            "Model",
+            "System",
+            "Messages",
+            "MaxTokens"
+          ]
+        },
+        {
+          "name": "claudeMessage",
+          "startLine": 45,
+          "endLine": 48,
+          "methods": [],
+          "properties": [
+            "Role",
+            "Content"
+          ]
+        },
+        {
+          "name": "claudeResponse",
+          "startLine": 50,
+          "endLine": 63,
+          "methods": [],
+          "properties": [
+            "Content",
+            "Usage",
+            "Error"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Provider",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "NewProvider",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Chat",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "TestConnection",
+          "line": 136,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewProvider",
+          "callee": "fmt.Errorf",
+          "lineNumber": 25
+        },
+        {
+          "caller": "Chat",
+          "callee": "make",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Chat",
+          "callee": "len",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Chat",
+          "callee": "append",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Chat",
+          "callee": "json.Marshal",
+          "lineNumber": 85
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Chat",
+          "callee": "http.NewRequestWithContext",
+          "lineNumber": 90
+        },
+        {
+          "caller": "Chat",
+          "callee": "bytes.NewReader",
+          "lineNumber": 90
+        },
+        {
+          "caller": "Chat",
+          "callee": "req.Header.Set",
+          "lineNumber": 94
+        },
+        {
+          "caller": "Chat",
+          "callee": "req.Header.Set",
+          "lineNumber": 95
+        },
+        {
+          "caller": "Chat",
+          "callee": "req.Header.Set",
+          "lineNumber": 96
+        },
+        {
+          "caller": "Chat",
+          "callee": "p.httpClient.Do",
+          "lineNumber": 98
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 100
+        },
+        {
+          "caller": "Chat",
+          "callee": "resp.Body.Close",
+          "lineNumber": 102
+        },
+        {
+          "caller": "Chat",
+          "callee": "io.ReadAll",
+          "lineNumber": 104
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 106
+        },
+        {
+          "caller": "Chat",
+          "callee": "json.Unmarshal",
+          "lineNumber": 110
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 111
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Chat",
+          "callee": "len",
+          "lineNumber": 118
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "p.Chat",
+          "lineNumber": 137
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "internal/adapter/llm/gemini/gemini.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 149,
+      "nonEmptyLines": 127,
+      "functions": [
+        {
+          "name": "NewProvider",
+          "startLine": 23,
+          "endLine": 36,
+          "params": [
+            "apiKey",
+            "model",
+            "maxTokens"
+          ]
+        },
+        {
+          "name": "Chat",
+          "startLine": 74,
+          "endLine": 142,
+          "params": [
+            "ctx",
+            "systemPrompt",
+            "messages",
+            "maxTokens"
+          ]
+        },
+        {
+          "name": "TestConnection",
+          "startLine": 144,
+          "endLine": 149,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Provider",
+          "startLine": 16,
+          "endLine": 21,
+          "methods": [
+            "Chat",
+            "TestConnection"
+          ],
+          "properties": [
+            "apiKey",
+            "model",
+            "maxTokens",
+            "httpClient"
+          ]
+        },
+        {
+          "name": "geminiRequest",
+          "startLine": 38,
+          "endLine": 42,
+          "methods": [],
+          "properties": [
+            "Contents",
+            "SystemInstruction",
+            "GenerationConfig"
+          ]
+        },
+        {
+          "name": "geminiContent",
+          "startLine": 44,
+          "endLine": 47,
+          "methods": [],
+          "properties": [
+            "Role",
+            "Parts"
+          ]
+        },
+        {
+          "name": "geminiPart",
+          "startLine": 49,
+          "endLine": 51,
+          "methods": [],
+          "properties": [
+            "Text"
+          ]
+        },
+        {
+          "name": "geminiGenerationConfig",
+          "startLine": 53,
+          "endLine": 55,
+          "methods": [],
+          "properties": [
+            "MaxOutputTokens"
+          ]
+        },
+        {
+          "name": "geminiResponse",
+          "startLine": 57,
+          "endLine": 72,
+          "methods": [],
+          "properties": [
+            "Candidates",
+            "UsageMetadata",
+            "Error"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Provider",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "NewProvider",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Chat",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "TestConnection",
+          "line": 144,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewProvider",
+          "callee": "fmt.Errorf",
+          "lineNumber": 25
+        },
+        {
+          "caller": "Chat",
+          "callee": "make",
+          "lineNumber": 79
+        },
+        {
+          "caller": "Chat",
+          "callee": "len",
+          "lineNumber": 79
+        },
+        {
+          "caller": "Chat",
+          "callee": "append",
+          "lineNumber": 85
+        },
+        {
+          "caller": "Chat",
+          "callee": "json.Marshal",
+          "lineNumber": 101
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 103
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 106
+        },
+        {
+          "caller": "Chat",
+          "callee": "http.NewRequestWithContext",
+          "lineNumber": 107
+        },
+        {
+          "caller": "Chat",
+          "callee": "bytes.NewReader",
+          "lineNumber": 107
+        },
+        {
+          "caller": "Chat",
+          "callee": "req.Header.Set",
+          "lineNumber": 111
+        },
+        {
+          "caller": "Chat",
+          "callee": "p.httpClient.Do",
+          "lineNumber": 113
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Chat",
+          "callee": "resp.Body.Close",
+          "lineNumber": 117
+        },
+        {
+          "caller": "Chat",
+          "callee": "io.ReadAll",
+          "lineNumber": 119
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 121
+        },
+        {
+          "caller": "Chat",
+          "callee": "json.Unmarshal",
+          "lineNumber": 125
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 126
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 130
+        },
+        {
+          "caller": "Chat",
+          "callee": "len",
+          "lineNumber": 133
+        },
+        {
+          "caller": "Chat",
+          "callee": "len",
+          "lineNumber": 133
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "p.Chat",
+          "lineNumber": 145
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 6
+      }
+    },
+    {
+      "path": "internal/adapter/llm/groq/groq.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 129,
+      "nonEmptyLines": 109,
+      "functions": [
+        {
+          "name": "NewProvider",
+          "startLine": 23,
+          "endLine": 36,
+          "params": [
+            "apiKey",
+            "model",
+            "maxTokens"
+          ]
+        },
+        {
+          "name": "Chat",
+          "startLine": 64,
+          "endLine": 122,
+          "params": [
+            "ctx",
+            "systemPrompt",
+            "messages",
+            "maxTokens"
+          ]
+        },
+        {
+          "name": "TestConnection",
+          "startLine": 124,
+          "endLine": 129,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Provider",
+          "startLine": 16,
+          "endLine": 21,
+          "methods": [
+            "Chat",
+            "TestConnection"
+          ],
+          "properties": [
+            "apiKey",
+            "model",
+            "maxTokens",
+            "httpClient"
+          ]
+        },
+        {
+          "name": "chatRequest",
+          "startLine": 38,
+          "endLine": 42,
+          "methods": [],
+          "properties": [
+            "Model",
+            "Messages",
+            "MaxTokens"
+          ]
+        },
+        {
+          "name": "apiMessage",
+          "startLine": 44,
+          "endLine": 47,
+          "methods": [],
+          "properties": [
+            "Role",
+            "Content"
+          ]
+        },
+        {
+          "name": "chatResponse",
+          "startLine": 49,
+          "endLine": 62,
+          "methods": [],
+          "properties": [
+            "Choices",
+            "Usage",
+            "Error"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Provider",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "NewProvider",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Chat",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "TestConnection",
+          "line": 124,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewProvider",
+          "callee": "fmt.Errorf",
+          "lineNumber": 25
+        },
+        {
+          "caller": "Chat",
+          "callee": "make",
+          "lineNumber": 69
+        },
+        {
+          "caller": "Chat",
+          "callee": "len",
+          "lineNumber": 69
+        },
+        {
+          "caller": "Chat",
+          "callee": "append",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Chat",
+          "callee": "append",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Chat",
+          "callee": "json.Marshal",
+          "lineNumber": 81
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 83
+        },
+        {
+          "caller": "Chat",
+          "callee": "http.NewRequestWithContext",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Chat",
+          "callee": "bytes.NewReader",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Chat",
+          "callee": "req.Header.Set",
+          "lineNumber": 90
+        },
+        {
+          "caller": "Chat",
+          "callee": "req.Header.Set",
+          "lineNumber": 91
+        },
+        {
+          "caller": "Chat",
+          "callee": "p.httpClient.Do",
+          "lineNumber": 93
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 95
+        },
+        {
+          "caller": "Chat",
+          "callee": "resp.Body.Close",
+          "lineNumber": 97
+        },
+        {
+          "caller": "Chat",
+          "callee": "io.ReadAll",
+          "lineNumber": 99
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 101
+        },
+        {
+          "caller": "Chat",
+          "callee": "json.Unmarshal",
+          "lineNumber": 105
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 106
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 110
+        },
+        {
+          "caller": "Chat",
+          "callee": "len",
+          "lineNumber": 113
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 114
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "p.Chat",
+          "lineNumber": 125
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "internal/adapter/llm/openai/openai.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 129,
+      "nonEmptyLines": 109,
+      "functions": [
+        {
+          "name": "NewProvider",
+          "startLine": 23,
+          "endLine": 36,
+          "params": [
+            "apiKey",
+            "model",
+            "maxTokens"
+          ]
+        },
+        {
+          "name": "Chat",
+          "startLine": 64,
+          "endLine": 122,
+          "params": [
+            "ctx",
+            "systemPrompt",
+            "messages",
+            "maxTokens"
+          ]
+        },
+        {
+          "name": "TestConnection",
+          "startLine": 124,
+          "endLine": 129,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Provider",
+          "startLine": 16,
+          "endLine": 21,
+          "methods": [
+            "Chat",
+            "TestConnection"
+          ],
+          "properties": [
+            "apiKey",
+            "model",
+            "maxTokens",
+            "httpClient"
+          ]
+        },
+        {
+          "name": "chatRequest",
+          "startLine": 38,
+          "endLine": 42,
+          "methods": [],
+          "properties": [
+            "Model",
+            "Messages",
+            "MaxTokens"
+          ]
+        },
+        {
+          "name": "apiMessage",
+          "startLine": 44,
+          "endLine": 47,
+          "methods": [],
+          "properties": [
+            "Role",
+            "Content"
+          ]
+        },
+        {
+          "name": "chatResponse",
+          "startLine": 49,
+          "endLine": 62,
+          "methods": [],
+          "properties": [
+            "Choices",
+            "Usage",
+            "Error"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Provider",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "NewProvider",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Chat",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "TestConnection",
+          "line": 124,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewProvider",
+          "callee": "fmt.Errorf",
+          "lineNumber": 25
+        },
+        {
+          "caller": "Chat",
+          "callee": "make",
+          "lineNumber": 69
+        },
+        {
+          "caller": "Chat",
+          "callee": "len",
+          "lineNumber": 69
+        },
+        {
+          "caller": "Chat",
+          "callee": "append",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Chat",
+          "callee": "append",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Chat",
+          "callee": "json.Marshal",
+          "lineNumber": 81
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 83
+        },
+        {
+          "caller": "Chat",
+          "callee": "http.NewRequestWithContext",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Chat",
+          "callee": "bytes.NewReader",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Chat",
+          "callee": "req.Header.Set",
+          "lineNumber": 90
+        },
+        {
+          "caller": "Chat",
+          "callee": "req.Header.Set",
+          "lineNumber": 91
+        },
+        {
+          "caller": "Chat",
+          "callee": "p.httpClient.Do",
+          "lineNumber": 93
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 95
+        },
+        {
+          "caller": "Chat",
+          "callee": "resp.Body.Close",
+          "lineNumber": 97
+        },
+        {
+          "caller": "Chat",
+          "callee": "io.ReadAll",
+          "lineNumber": 99
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 101
+        },
+        {
+          "caller": "Chat",
+          "callee": "json.Unmarshal",
+          "lineNumber": 105
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 106
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 110
+        },
+        {
+          "caller": "Chat",
+          "callee": "len",
+          "lineNumber": 113
+        },
+        {
+          "caller": "Chat",
+          "callee": "fmt.Errorf",
+          "lineNumber": 114
+        },
+        {
+          "caller": "TestConnection",
+          "callee": "p.Chat",
+          "lineNumber": 125
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "internal/adapter/llm/provider.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 30,
+      "functions": [
+        {
+          "name": "NewProvider",
+          "startLine": 16,
+          "endLine": 34,
+          "params": [
+            "cfg",
+            "encryptionKey"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewProvider",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewProvider",
+          "callee": "config.Decrypt",
+          "lineNumber": 17
+        },
+        {
+          "caller": "NewProvider",
+          "callee": "fmt.Errorf",
+          "lineNumber": 19
+        },
+        {
+          "caller": "NewProvider",
+          "callee": "llmopenai.NewProvider",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewProvider",
+          "callee": "llmgemini.NewProvider",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewProvider",
+          "callee": "llmclaude.NewProvider",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewProvider",
+          "callee": "llmgroq.NewProvider",
+          "lineNumber": 30
+        },
+        {
+          "caller": "NewProvider",
+          "callee": "fmt.Errorf",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 22,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/mcp/tool_customer_lookup.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 93,
+      "nonEmptyLines": 82,
+      "functions": [
+        {
+          "name": "customerLookup",
+          "startLine": 34,
+          "endLine": 93,
+          "params": [
+            "ctx",
+            "_",
+            "args"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "customerLookupArgs",
+          "startLine": 12,
+          "endLine": 16,
+          "methods": [],
+          "properties": [
+            "Phone",
+            "Name",
+            "CustomerID"
+          ]
+        },
+        {
+          "name": "customerDetail",
+          "startLine": 18,
+          "endLine": 26,
+          "methods": [],
+          "properties": [
+            "ID",
+            "Name",
+            "Email",
+            "Phone",
+            "Address",
+            "Status",
+            "Subscriptions"
+          ]
+        },
+        {
+          "name": "customerLookupOutput",
+          "startLine": 28,
+          "endLine": 32,
+          "methods": [],
+          "properties": [
+            "Status",
+            "Summary",
+            "Customers"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "customerLookup",
+          "callee": "toolError",
+          "lineNumber": 36
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "toolOK",
+          "lineNumber": 40
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "s.customerRepo.FindByID",
+          "lineNumber": 48
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "append",
+          "lineNumber": 50
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "s.customerRepo.FindAll",
+          "lineNumber": 53
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "toolError",
+          "lineNumber": 55
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "err.Error",
+          "lineNumber": 55
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "strings.Contains",
+          "lineNumber": 58
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "strings.Contains",
+          "lineNumber": 59
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "strings.ToLower",
+          "lineNumber": 59
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "strings.ToLower",
+          "lineNumber": 59
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "append",
+          "lineNumber": 61
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "len",
+          "lineNumber": 66
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "toolOK",
+          "lineNumber": 67
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "make",
+          "lineNumber": 73
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "len",
+          "lineNumber": 73
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "s.customerRepo.FindSubscriptions",
+          "lineNumber": 75
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 87
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "len",
+          "lineNumber": 87
+        },
+        {
+          "caller": "customerLookup",
+          "callee": "toolOK",
+          "lineNumber": 88
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/bot_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 189,
+      "nonEmptyLines": 168,
+      "functions": [
+        {
+          "name": "CreateSession",
+          "startLine": 15,
+          "endLine": 22,
+          "params": [
+            "session"
+          ]
+        },
+        {
+          "name": "FindSessionByID",
+          "startLine": 24,
+          "endLine": 33,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "FindAllSessions",
+          "startLine": 35,
+          "endLine": 47,
+          "params": []
+        },
+        {
+          "name": "UpdateSession",
+          "startLine": 49,
+          "endLine": 52,
+          "params": [
+            "session"
+          ]
+        },
+        {
+          "name": "DeleteSession",
+          "startLine": 54,
+          "endLine": 56,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "CreateConversation",
+          "startLine": 59,
+          "endLine": 66,
+          "params": [
+            "conv"
+          ]
+        },
+        {
+          "name": "FindConversationByID",
+          "startLine": 68,
+          "endLine": 77,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "FindConversationByIDWithMessages",
+          "startLine": 79,
+          "endLine": 90,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "FindConversationsBySessionID",
+          "startLine": 92,
+          "endLine": 104,
+          "params": [
+            "sessionID"
+          ]
+        },
+        {
+          "name": "FindConversationsByStatus",
+          "startLine": 106,
+          "endLine": 118,
+          "params": [
+            "status"
+          ]
+        },
+        {
+          "name": "FindAllConversations",
+          "startLine": 120,
+          "endLine": 132,
+          "params": []
+        },
+        {
+          "name": "FindActiveConversationByCustomer",
+          "startLine": 134,
+          "endLine": 144,
+          "params": [
+            "sessionID",
+            "customerNumber"
+          ]
+        },
+        {
+          "name": "UpdateConversation",
+          "startLine": 146,
+          "endLine": 149,
+          "params": [
+            "conv"
+          ]
+        },
+        {
+          "name": "CreateMessage",
+          "startLine": 152,
+          "endLine": 161,
+          "params": [
+            "msg"
+          ]
+        },
+        {
+          "name": "FindMessagesByConversationID",
+          "startLine": 163,
+          "endLine": 175,
+          "params": [
+            "conversationID"
+          ]
+        },
+        {
+          "name": "FindRecentMessages",
+          "startLine": 177,
+          "endLine": 189,
+          "params": [
+            "conversationID",
+            "limit"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CreateSession",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "FindSessionByID",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "FindAllSessions",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateSession",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteSession",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "CreateConversation",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "FindConversationByID",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "FindConversationByIDWithMessages",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "FindConversationsBySessionID",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "FindConversationsByStatus",
+          "line": 106,
+          "isDefault": false
+        },
+        {
+          "name": "FindAllConversations",
+          "line": 120,
+          "isDefault": false
+        },
+        {
+          "name": "FindActiveConversationByCustomer",
+          "line": 134,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateConversation",
+          "line": 146,
+          "isDefault": false
+        },
+        {
+          "name": "CreateMessage",
+          "line": 152,
+          "isDefault": false
+        },
+        {
+          "name": "FindMessagesByConversationID",
+          "line": 163,
+          "isDefault": false
+        },
+        {
+          "name": "FindRecentMessages",
+          "line": 177,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateSession",
+          "callee": "models.WASessionModelFromDomain",
+          "lineNumber": 16
+        },
+        {
+          "caller": "CreateSession",
+          "callee": "s.db.Create",
+          "lineNumber": 17
+        },
+        {
+          "caller": "FindSessionByID",
+          "callee": "s.db.First",
+          "lineNumber": 26
+        },
+        {
+          "caller": "FindSessionByID",
+          "callee": "errors.Is",
+          "lineNumber": 27
+        },
+        {
+          "caller": "FindSessionByID",
+          "callee": "m.ToDomain",
+          "lineNumber": 32
+        },
+        {
+          "caller": "FindAllSessions",
+          "callee": "s.db.Order(\"created_at DESC\").Find",
+          "lineNumber": 37
+        },
+        {
+          "caller": "FindAllSessions",
+          "callee": "s.db.Order",
+          "lineNumber": 37
+        },
+        {
+          "caller": "FindAllSessions",
+          "callee": "m.ToDomain",
+          "lineNumber": 42
+        },
+        {
+          "caller": "FindAllSessions",
+          "callee": "append",
+          "lineNumber": 43
+        },
+        {
+          "caller": "UpdateSession",
+          "callee": "models.WASessionModelFromDomain",
+          "lineNumber": 50
+        },
+        {
+          "caller": "UpdateSession",
+          "callee": "s.db.Save",
+          "lineNumber": 51
+        },
+        {
+          "caller": "DeleteSession",
+          "callee": "s.db.Delete",
+          "lineNumber": 55
+        },
+        {
+          "caller": "CreateConversation",
+          "callee": "models.ConversationModelFromDomain",
+          "lineNumber": 60
+        },
+        {
+          "caller": "CreateConversation",
+          "callee": "s.db.Create",
+          "lineNumber": 61
+        },
+        {
+          "caller": "FindConversationByID",
+          "callee": "s.db.First",
+          "lineNumber": 70
+        },
+        {
+          "caller": "FindConversationByID",
+          "callee": "errors.Is",
+          "lineNumber": 71
+        },
+        {
+          "caller": "FindConversationByID",
+          "callee": "m.ToDomain",
+          "lineNumber": 76
+        },
+        {
+          "caller": "FindConversationByIDWithMessages",
+          "callee": "s.db.Preload(\"Messages\", func(db *gorm.DB) *gorm.DB {\n\t\treturn db.Order(\"created_at ASC\")\n\t}).First",
+          "lineNumber": 81
+        },
+        {
+          "caller": "FindConversationByIDWithMessages",
+          "callee": "s.db.Preload",
+          "lineNumber": 81
+        },
+        {
+          "caller": "FindConversationByIDWithMessages",
+          "callee": "db.Order",
+          "lineNumber": 82
+        },
+        {
+          "caller": "FindConversationByIDWithMessages",
+          "callee": "errors.Is",
+          "lineNumber": 84
+        },
+        {
+          "caller": "FindConversationByIDWithMessages",
+          "callee": "m.ToDomain",
+          "lineNumber": 89
+        },
+        {
+          "caller": "FindConversationsBySessionID",
+          "callee": "s.db.Where(\"session_id = ?\", sessionID).Order(\"updated_at DESC\").Find",
+          "lineNumber": 94
+        },
+        {
+          "caller": "FindConversationsBySessionID",
+          "callee": "s.db.Where(\"session_id = ?\", sessionID).Order",
+          "lineNumber": 94
+        },
+        {
+          "caller": "FindConversationsBySessionID",
+          "callee": "s.db.Where",
+          "lineNumber": 94
+        },
+        {
+          "caller": "FindConversationsBySessionID",
+          "callee": "m.ToDomain",
+          "lineNumber": 99
+        },
+        {
+          "caller": "FindConversationsBySessionID",
+          "callee": "append",
+          "lineNumber": 100
+        },
+        {
+          "caller": "FindConversationsByStatus",
+          "callee": "s.db.Where(\"status = ?\", string(status)).Order(\"updated_at DESC\").Find",
+          "lineNumber": 108
+        },
+        {
+          "caller": "FindConversationsByStatus",
+          "callee": "s.db.Where(\"status = ?\", string(status)).Order",
+          "lineNumber": 108
+        },
+        {
+          "caller": "FindConversationsByStatus",
+          "callee": "s.db.Where",
+          "lineNumber": 108
+        },
+        {
+          "caller": "FindConversationsByStatus",
+          "callee": "string",
+          "lineNumber": 108
+        },
+        {
+          "caller": "FindConversationsByStatus",
+          "callee": "m.ToDomain",
+          "lineNumber": 113
+        },
+        {
+          "caller": "FindConversationsByStatus",
+          "callee": "append",
+          "lineNumber": 114
+        },
+        {
+          "caller": "FindAllConversations",
+          "callee": "s.db.Order(\"updated_at DESC\").Find",
+          "lineNumber": 122
+        },
+        {
+          "caller": "FindAllConversations",
+          "callee": "s.db.Order",
+          "lineNumber": 122
+        },
+        {
+          "caller": "FindAllConversations",
+          "callee": "m.ToDomain",
+          "lineNumber": 127
+        },
+        {
+          "caller": "FindAllConversations",
+          "callee": "append",
+          "lineNumber": 128
+        },
+        {
+          "caller": "FindActiveConversationByCustomer",
+          "callee": "s.db.Where(\"session_id = ? AND customer_wa_number = ? AND status IN ('bot', 'escalation')\", sessionID, customerNumber).\n\t\tOrder(\"updated_at DESC\").First",
+          "lineNumber": 136
+        },
+        {
+          "caller": "FindActiveConversationByCustomer",
+          "callee": "s.db.Where(\"session_id = ? AND customer_wa_number = ? AND status IN ('bot', 'escalation')\", sessionID, customerNumber).\n\t\tOrder",
+          "lineNumber": 136
+        },
+        {
+          "caller": "FindActiveConversationByCustomer",
+          "callee": "s.db.Where",
+          "lineNumber": 136
+        },
+        {
+          "caller": "FindActiveConversationByCustomer",
+          "callee": "errors.Is",
+          "lineNumber": 138
+        },
+        {
+          "caller": "FindActiveConversationByCustomer",
+          "callee": "m.ToDomain",
+          "lineNumber": 143
+        },
+        {
+          "caller": "UpdateConversation",
+          "callee": "models.ConversationModelFromDomain",
+          "lineNumber": 147
+        },
+        {
+          "caller": "UpdateConversation",
+          "callee": "s.db.Save",
+          "lineNumber": 148
+        },
+        {
+          "caller": "CreateMessage",
+          "callee": "models.MessageModelFromDomain",
+          "lineNumber": 153
+        },
+        {
+          "caller": "CreateMessage",
+          "callee": "s.db.Create",
+          "lineNumber": 154
+        },
+        {
+          "caller": "CreateMessage",
+          "callee": "s.db.Model(&models.ConversationModel{}).Where(\"id = ?\", msg.ConversationID).Update",
+          "lineNumber": 159
+        },
+        {
+          "caller": "CreateMessage",
+          "callee": "s.db.Model(&models.ConversationModel{}).Where",
+          "lineNumber": 159
+        },
+        {
+          "caller": "CreateMessage",
+          "callee": "s.db.Model",
+          "lineNumber": 159
+        },
+        {
+          "caller": "FindMessagesByConversationID",
+          "callee": "s.db.Where(\"conversation_id = ?\", conversationID).Order(\"created_at ASC\").Find",
+          "lineNumber": 165
+        },
+        {
+          "caller": "FindMessagesByConversationID",
+          "callee": "s.db.Where(\"conversation_id = ?\", conversationID).Order",
+          "lineNumber": 165
+        },
+        {
+          "caller": "FindMessagesByConversationID",
+          "callee": "s.db.Where",
+          "lineNumber": 165
+        },
+        {
+          "caller": "FindMessagesByConversationID",
+          "callee": "m.ToDomain",
+          "lineNumber": 170
+        },
+        {
+          "caller": "FindMessagesByConversationID",
+          "callee": "append",
+          "lineNumber": 171
+        },
+        {
+          "caller": "FindRecentMessages",
+          "callee": "s.db.Where(\"conversation_id = ?\", conversationID).Order(\"created_at DESC\").Limit(limit).Find",
+          "lineNumber": 179
+        },
+        {
+          "caller": "FindRecentMessages",
+          "callee": "s.db.Where(\"conversation_id = ?\", conversationID).Order(\"created_at DESC\").Limit",
+          "lineNumber": 179
+        },
+        {
+          "caller": "FindRecentMessages",
+          "callee": "s.db.Where(\"conversation_id = ?\", conversationID).Order",
+          "lineNumber": 179
+        },
+        {
+          "caller": "FindRecentMessages",
+          "callee": "s.db.Where",
+          "lineNumber": 179
+        },
+        {
+          "caller": "FindRecentMessages",
+          "callee": "len",
+          "lineNumber": 183
+        },
+        {
+          "caller": "FindRecentMessages",
+          "callee": "mList[i].ToDomain",
+          "lineNumber": 184
+        },
+        {
+          "caller": "FindRecentMessages",
+          "callee": "append",
+          "lineNumber": 185
+        }
+      ],
+      "metrics": {
+        "importCount": 10,
+        "exportCount": 16,
+        "functionCount": 16,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/device_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 110,
+      "nonEmptyLines": 93,
+      "functions": [
+        {
+          "name": "NewDeviceRepository",
+          "startLine": 31,
+          "endLine": 33,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "NewCredentialVault",
+          "startLine": 36,
+          "endLine": 42,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "Save",
+          "startLine": 45,
+          "endLine": 48,
+          "params": [
+            "ctx",
+            "d"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 51,
+          "endLine": 60,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "FindAll",
+          "startLine": 63,
+          "endLine": 74,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "Update",
+          "startLine": 77,
+          "endLine": 79,
+          "params": [
+            "ctx",
+            "d"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 82,
+          "endLine": 89,
+          "params": [
+            "ctx",
+            "id"
+          ]
+        },
+        {
+          "name": "Get",
+          "startLine": 92,
+          "endLine": 101,
+          "params": [
+            "ctx",
+            "deviceID"
+          ]
+        },
+        {
+          "name": "Save",
+          "startLine": 104,
+          "endLine": 110,
+          "params": [
+            "ctx",
+            "deviceID",
+            "creds"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "DeviceRepository",
+          "startLine": 14,
+          "endLine": 16,
+          "methods": [
+            "Save",
+            "FindByID",
+            "FindAll",
+            "Update",
+            "Delete"
+          ],
+          "properties": [
+            "db"
+          ]
+        },
+        {
+          "name": "CredentialVault",
+          "startLine": 18,
+          "endLine": 21,
+          "methods": [
+            "Get",
+            "Save"
+          ],
+          "properties": [
+            "db",
+            "key"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DeviceRepository",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "CredentialVault",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "NewDeviceRepository",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "NewCredentialVault",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "FindAll",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "Update",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "Get",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "Save",
+          "line": 104,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewCredentialVault",
+          "callee": "len",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Save",
+          "callee": "models.DeviceModelFromDomain",
+          "lineNumber": 46
+        },
+        {
+          "caller": "Save",
+          "callee": "r.db.WithContext(ctx).Save",
+          "lineNumber": 47
+        },
+        {
+          "caller": "Save",
+          "callee": "r.db.WithContext",
+          "lineNumber": 47
+        },
+        {
+          "caller": "FindByID",
+          "callee": "r.db.WithContext(ctx).First",
+          "lineNumber": 53
+        },
+        {
+          "caller": "FindByID",
+          "callee": "r.db.WithContext",
+          "lineNumber": 53
+        },
+        {
+          "caller": "FindByID",
+          "callee": "errors.Is",
+          "lineNumber": 54
+        },
+        {
+          "caller": "FindByID",
+          "callee": "m.ToDomain",
+          "lineNumber": 59
+        },
+        {
+          "caller": "FindAll",
+          "callee": "r.db.WithContext(ctx).Order(\"created_at desc\").Find",
+          "lineNumber": 65
+        },
+        {
+          "caller": "FindAll",
+          "callee": "r.db.WithContext(ctx).Order",
+          "lineNumber": 65
+        },
+        {
+          "caller": "FindAll",
+          "callee": "r.db.WithContext",
+          "lineNumber": 65
+        },
+        {
+          "caller": "FindAll",
+          "callee": "make",
+          "lineNumber": 69
+        },
+        {
+          "caller": "FindAll",
+          "callee": "len",
+          "lineNumber": 69
+        },
+        {
+          "caller": "FindAll",
+          "callee": "m.ToDomain",
+          "lineNumber": 71
+        },
+        {
+          "caller": "Update",
+          "callee": "r.Save",
+          "lineNumber": 78
+        },
+        {
+          "caller": "Delete",
+          "callee": "r.db.WithContext(ctx).Transaction",
+          "lineNumber": 83
+        },
+        {
+          "caller": "Delete",
+          "callee": "r.db.WithContext",
+          "lineNumber": 83
+        },
+        {
+          "caller": "Delete",
+          "callee": "tx.Delete",
+          "lineNumber": 84
+        },
+        {
+          "caller": "Delete",
+          "callee": "tx.Delete",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Get",
+          "callee": "v.db.WithContext(ctx).First",
+          "lineNumber": 94
+        },
+        {
+          "caller": "Get",
+          "callee": "v.db.WithContext",
+          "lineNumber": 94
+        },
+        {
+          "caller": "Get",
+          "callee": "errors.Is",
+          "lineNumber": 95
+        },
+        {
+          "caller": "Get",
+          "callee": "m.ToDomain",
+          "lineNumber": 100
+        },
+        {
+          "caller": "Save",
+          "callee": "models.CredentialModelFromDomain",
+          "lineNumber": 105
+        },
+        {
+          "caller": "Save",
+          "callee": "v.db.WithContext(ctx).Save",
+          "lineNumber": 109
+        },
+        {
+          "caller": "Save",
+          "callee": "v.db.WithContext",
+          "lineNumber": 109
+        }
+      ],
+      "metrics": {
+        "importCount": 24,
+        "exportCount": 11,
+        "functionCount": 9,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/device_repository_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 144,
+      "nonEmptyLines": 121,
+      "functions": [
+        {
+          "name": "setupTestDB",
+          "startLine": 17,
+          "endLine": 44,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestDeviceModel_Conversion",
+          "startLine": 46,
+          "endLine": 72,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestCredentialModel_Conversion",
+          "startLine": 74,
+          "endLine": 92,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestPostgresDeviceRepository_CRUD",
+          "startLine": 94,
+          "endLine": 144,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestDeviceModel_Conversion",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "TestCredentialModel_Conversion",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "TestPostgresDeviceRepository_CRUD",
+          "line": 94,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "setupTestDB",
+          "callee": "gorm.Open",
+          "lineNumber": 18
+        },
+        {
+          "caller": "setupTestDB",
+          "callee": "sqlite.Open",
+          "lineNumber": 18
+        },
+        {
+          "caller": "setupTestDB",
+          "callee": "require.NoError",
+          "lineNumber": 19
+        },
+        {
+          "caller": "setupTestDB",
+          "callee": "db.Exec",
+          "lineNumber": 21
+        },
+        {
+          "caller": "setupTestDB",
+          "callee": "require.NoError",
+          "lineNumber": 38
+        },
+        {
+          "caller": "setupTestDB",
+          "callee": "db.AutoMigrate",
+          "lineNumber": 40
+        },
+        {
+          "caller": "setupTestDB",
+          "callee": "require.NoError",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestDeviceModel_Conversion",
+          "callee": "models.DeviceModelFromDomain",
+          "lineNumber": 62
+        },
+        {
+          "caller": "TestDeviceModel_Conversion",
+          "callee": "assert.Equal",
+          "lineNumber": 63
+        },
+        {
+          "caller": "TestDeviceModel_Conversion",
+          "callee": "assert.Equal",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestDeviceModel_Conversion",
+          "callee": "model.ToDomain",
+          "lineNumber": 66
+        },
+        {
+          "caller": "TestDeviceModel_Conversion",
+          "callee": "assert.Equal",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestDeviceModel_Conversion",
+          "callee": "assert.Equal",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestDeviceModel_Conversion",
+          "callee": "assert.Equal",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestDeviceModel_Conversion",
+          "callee": "assert.Equal",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestDeviceModel_Conversion",
+          "callee": "assert.Equal",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestCredentialModel_Conversion",
+          "callee": "models.CredentialModelFromDomain",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestCredentialModel_Conversion",
+          "callee": "require.NoError",
+          "lineNumber": 82
+        },
+        {
+          "caller": "TestCredentialModel_Conversion",
+          "callee": "assert.Equal",
+          "lineNumber": 83
+        },
+        {
+          "caller": "TestCredentialModel_Conversion",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 84
+        },
+        {
+          "caller": "TestCredentialModel_Conversion",
+          "callee": "assert.NotEmpty",
+          "lineNumber": 85
+        },
+        {
+          "caller": "TestCredentialModel_Conversion",
+          "callee": "model.ToDomain",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestCredentialModel_Conversion",
+          "callee": "require.NoError",
+          "lineNumber": 88
+        },
+        {
+          "caller": "TestCredentialModel_Conversion",
+          "callee": "assert.Equal",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestCredentialModel_Conversion",
+          "callee": "assert.Equal",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestCredentialModel_Conversion",
+          "callee": "assert.Equal",
+          "lineNumber": 91
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "setupTestDB",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "postgres.NewDeviceRepository",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "postgres.NewCredentialVault",
+          "lineNumber": 97
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "context.Background",
+          "lineNumber": 98
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "repo.Save",
+          "lineNumber": 118
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 119
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "vault.Save",
+          "lineNumber": 121
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 122
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "repo.FindByID",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 126
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 127
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "vault.Get",
+          "lineNumber": 129
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 130
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "assert.Equal",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "repo.FindAll",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 135
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "assert.Len",
+          "lineNumber": 136
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "repo.Delete",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "require.NoError",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "repo.FindByID",
+          "lineNumber": 142
+        },
+        {
+          "caller": "TestPostgresDeviceRepository_CRUD",
+          "callee": "assert.ErrorIs",
+          "lineNumber": 143
+        }
+      ],
+      "metrics": {
+        "importCount": 21,
+        "exportCount": 3,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/knowledge_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 102,
+      "nonEmptyLines": 84,
+      "functions": [
+        {
+          "name": "CreateKnowledgeEntry",
+          "startLine": 13,
+          "endLine": 20,
+          "params": [
+            "entry"
+          ]
+        },
+        {
+          "name": "CreateKnowledge",
+          "startLine": 22,
+          "endLine": 24,
+          "params": [
+            "entry"
+          ]
+        },
+        {
+          "name": "FindKnowledgeEntryByID",
+          "startLine": 26,
+          "endLine": 35,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "FindAllKnowledgeEntries",
+          "startLine": 37,
+          "endLine": 49,
+          "params": []
+        },
+        {
+          "name": "FindAllKnowledge",
+          "startLine": 51,
+          "endLine": 53,
+          "params": []
+        },
+        {
+          "name": "FindKnowledgeByID",
+          "startLine": 55,
+          "endLine": 57,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "UpdateKnowledge",
+          "startLine": 59,
+          "endLine": 61,
+          "params": [
+            "entry"
+          ]
+        },
+        {
+          "name": "DeleteKnowledge",
+          "startLine": 63,
+          "endLine": 65,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "UpdateKnowledgeEntry",
+          "startLine": 67,
+          "endLine": 70,
+          "params": [
+            "entry"
+          ]
+        },
+        {
+          "name": "DeleteKnowledgeEntry",
+          "startLine": 72,
+          "endLine": 74,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "SearchKnowledgeByTags",
+          "startLine": 76,
+          "endLine": 98,
+          "params": [
+            "tags"
+          ]
+        },
+        {
+          "name": "Retrieve",
+          "startLine": 100,
+          "endLine": 102,
+          "params": [
+            "ctx",
+            "query"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CreateKnowledgeEntry",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "CreateKnowledge",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "FindKnowledgeEntryByID",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "FindAllKnowledgeEntries",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "FindAllKnowledge",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "FindKnowledgeByID",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateKnowledge",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteKnowledge",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateKnowledgeEntry",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteKnowledgeEntry",
+          "line": 72,
+          "isDefault": false
+        },
+        {
+          "name": "SearchKnowledgeByTags",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "Retrieve",
+          "line": 100,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateKnowledgeEntry",
+          "callee": "models.KnowledgeEntryModelFromDomain",
+          "lineNumber": 14
+        },
+        {
+          "caller": "CreateKnowledgeEntry",
+          "callee": "s.db.Create",
+          "lineNumber": 15
+        },
+        {
+          "caller": "CreateKnowledge",
+          "callee": "s.CreateKnowledgeEntry",
+          "lineNumber": 23
+        },
+        {
+          "caller": "FindKnowledgeEntryByID",
+          "callee": "s.db.First",
+          "lineNumber": 28
+        },
+        {
+          "caller": "FindKnowledgeEntryByID",
+          "callee": "errors.Is",
+          "lineNumber": 29
+        },
+        {
+          "caller": "FindKnowledgeEntryByID",
+          "callee": "m.ToDomain",
+          "lineNumber": 34
+        },
+        {
+          "caller": "FindAllKnowledgeEntries",
+          "callee": "s.db.Order(\"created_at DESC\").Find",
+          "lineNumber": 39
+        },
+        {
+          "caller": "FindAllKnowledgeEntries",
+          "callee": "s.db.Order",
+          "lineNumber": 39
+        },
+        {
+          "caller": "FindAllKnowledgeEntries",
+          "callee": "m.ToDomain",
+          "lineNumber": 44
+        },
+        {
+          "caller": "FindAllKnowledgeEntries",
+          "callee": "append",
+          "lineNumber": 45
+        },
+        {
+          "caller": "FindAllKnowledge",
+          "callee": "s.FindAllKnowledgeEntries",
+          "lineNumber": 52
+        },
+        {
+          "caller": "FindKnowledgeByID",
+          "callee": "s.FindKnowledgeEntryByID",
+          "lineNumber": 56
+        },
+        {
+          "caller": "UpdateKnowledge",
+          "callee": "s.UpdateKnowledgeEntry",
+          "lineNumber": 60
+        },
+        {
+          "caller": "DeleteKnowledge",
+          "callee": "s.DeleteKnowledgeEntry",
+          "lineNumber": 64
+        },
+        {
+          "caller": "UpdateKnowledgeEntry",
+          "callee": "models.KnowledgeEntryModelFromDomain",
+          "lineNumber": 68
+        },
+        {
+          "caller": "UpdateKnowledgeEntry",
+          "callee": "s.db.Save",
+          "lineNumber": 69
+        },
+        {
+          "caller": "DeleteKnowledgeEntry",
+          "callee": "s.db.Delete",
+          "lineNumber": 73
+        },
+        {
+          "caller": "SearchKnowledgeByTags",
+          "callee": "len",
+          "lineNumber": 77
+        },
+        {
+          "caller": "SearchKnowledgeByTags",
+          "callee": "s.FindAllKnowledgeEntries",
+          "lineNumber": 78
+        },
+        {
+          "caller": "SearchKnowledgeByTags",
+          "callee": "query.Or",
+          "lineNumber": 83
+        },
+        {
+          "caller": "SearchKnowledgeByTags",
+          "callee": "query.Find",
+          "lineNumber": 87
+        },
+        {
+          "caller": "SearchKnowledgeByTags",
+          "callee": "m.ToDomain",
+          "lineNumber": 93
+        },
+        {
+          "caller": "SearchKnowledgeByTags",
+          "callee": "append",
+          "lineNumber": 94
+        },
+        {
+          "caller": "Retrieve",
+          "callee": "s.FindAllKnowledgeEntries",
+          "lineNumber": 101
+        }
+      ],
+      "metrics": {
+        "importCount": 8,
+        "exportCount": 12,
+        "functionCount": 12,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/llm_config_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 157,
+      "nonEmptyLines": 133,
+      "functions": [
+        {
+          "name": "Create",
+          "startLine": 18,
+          "endLine": 20,
+          "params": [
+            "config"
+          ]
+        },
+        {
+          "name": "FindByID",
+          "startLine": 22,
+          "endLine": 24,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "FindActive",
+          "startLine": 26,
+          "endLine": 28,
+          "params": []
+        },
+        {
+          "name": "FindAll",
+          "startLine": 30,
+          "endLine": 32,
+          "params": []
+        },
+        {
+          "name": "Update",
+          "startLine": 34,
+          "endLine": 36,
+          "params": [
+            "config"
+          ]
+        },
+        {
+          "name": "SetActive",
+          "startLine": 38,
+          "endLine": 40,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 42,
+          "endLine": 44,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "CreateLLMConfig",
+          "startLine": 46,
+          "endLine": 53,
+          "params": [
+            "config"
+          ]
+        },
+        {
+          "name": "PopulateLLMConfigAnalytics",
+          "startLine": 55,
+          "endLine": 90,
+          "params": [
+            "config"
+          ]
+        },
+        {
+          "name": "FindLLMConfigByID",
+          "startLine": 92,
+          "endLine": 103,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "FindActiveLLMConfig",
+          "startLine": 105,
+          "endLine": 116,
+          "params": []
+        },
+        {
+          "name": "FindAllLLMConfigs",
+          "startLine": 118,
+          "endLine": 132,
+          "params": []
+        },
+        {
+          "name": "UpdateLLMConfig",
+          "startLine": 134,
+          "endLine": 137,
+          "params": [
+            "config"
+          ]
+        },
+        {
+          "name": "SetActiveLLMConfig",
+          "startLine": 139,
+          "endLine": 153,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "DeleteLLMConfig",
+          "startLine": 155,
+          "endLine": 157,
+          "params": [
+            "id"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "tokenStats",
+          "startLine": 12,
+          "endLine": 16,
+          "methods": [],
+          "properties": [
+            "TotalIn",
+            "TotalOut",
+            "Count"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Create",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "FindByID",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "FindActive",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "FindAll",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "Update",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "SetActive",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "CreateLLMConfig",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "PopulateLLMConfigAnalytics",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "FindLLMConfigByID",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "FindActiveLLMConfig",
+          "line": 105,
+          "isDefault": false
+        },
+        {
+          "name": "FindAllLLMConfigs",
+          "line": 118,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateLLMConfig",
+          "line": 134,
+          "isDefault": false
+        },
+        {
+          "name": "SetActiveLLMConfig",
+          "line": 139,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteLLMConfig",
+          "line": 155,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Create",
+          "callee": "s.CreateLLMConfig",
+          "lineNumber": 19
+        },
+        {
+          "caller": "FindByID",
+          "callee": "s.FindLLMConfigByID",
+          "lineNumber": 23
+        },
+        {
+          "caller": "FindActive",
+          "callee": "s.FindActiveLLMConfig",
+          "lineNumber": 27
+        },
+        {
+          "caller": "FindAll",
+          "callee": "s.FindAllLLMConfigs",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Update",
+          "callee": "s.UpdateLLMConfig",
+          "lineNumber": 35
+        },
+        {
+          "caller": "SetActive",
+          "callee": "s.SetActiveLLMConfig",
+          "lineNumber": 39
+        },
+        {
+          "caller": "Delete",
+          "callee": "s.DeleteLLMConfig",
+          "lineNumber": 43
+        },
+        {
+          "caller": "CreateLLMConfig",
+          "callee": "models.LLMConfigModelFromDomain",
+          "lineNumber": 47
+        },
+        {
+          "caller": "CreateLLMConfig",
+          "callee": "s.db.Create",
+          "lineNumber": 48
+        },
+        {
+          "caller": "PopulateLLMConfigAnalytics",
+          "callee": "llm.GetDefaultModelPricing",
+          "lineNumber": 63
+        },
+        {
+          "caller": "PopulateLLMConfigAnalytics",
+          "callee": "s.db.Model(&models.LLMConfigModel{}).Where(\"id = ?\", config.ID).\n\t\t\tUpdates",
+          "lineNumber": 66
+        },
+        {
+          "caller": "PopulateLLMConfigAnalytics",
+          "callee": "s.db.Model(&models.LLMConfigModel{}).Where",
+          "lineNumber": 66
+        },
+        {
+          "caller": "PopulateLLMConfigAnalytics",
+          "callee": "s.db.Model",
+          "lineNumber": 66
+        },
+        {
+          "caller": "PopulateLLMConfigAnalytics",
+          "callee": "s.db.Model(&models.MessageModel{}).\n\t\tSelect(\"COALESCE(SUM(token_in), 0) as total_in, COALESCE(SUM(token_out), 0) as total_out, COUNT(*) as count\").\n\t\tWhere(\"llm_config_id = ? OR (llm_config_id IS NULL AND sender_type = 'bot')\", config.ID).\n\t\tScan",
+          "lineNumber": 74
+        },
+        {
+          "caller": "PopulateLLMConfigAnalytics",
+          "callee": "s.db.Model(&models.MessageModel{}).\n\t\tSelect(\"COALESCE(SUM(token_in), 0) as total_in, COALESCE(SUM(token_out), 0) as total_out, COUNT(*) as count\").\n\t\tWhere",
+          "lineNumber": 74
+        },
+        {
+          "caller": "PopulateLLMConfigAnalytics",
+          "callee": "s.db.Model(&models.MessageModel{}).\n\t\tSelect",
+          "lineNumber": 74
+        },
+        {
+          "caller": "PopulateLLMConfigAnalytics",
+          "callee": "s.db.Model",
+          "lineNumber": 74
+        },
+        {
+          "caller": "PopulateLLMConfigAnalytics",
+          "callee": "float64",
+          "lineNumber": 84
+        },
+        {
+          "caller": "PopulateLLMConfigAnalytics",
+          "callee": "float64",
+          "lineNumber": 85
+        },
+        {
+          "caller": "FindLLMConfigByID",
+          "callee": "s.db.First",
+          "lineNumber": 94
+        },
+        {
+          "caller": "FindLLMConfigByID",
+          "callee": "errors.Is",
+          "lineNumber": 95
+        },
+        {
+          "caller": "FindLLMConfigByID",
+          "callee": "m.ToDomain",
+          "lineNumber": 100
+        },
+        {
+          "caller": "FindLLMConfigByID",
+          "callee": "s.PopulateLLMConfigAnalytics",
+          "lineNumber": 101
+        },
+        {
+          "caller": "FindActiveLLMConfig",
+          "callee": "s.db.Where(\"is_active = ?\", true).First",
+          "lineNumber": 107
+        },
+        {
+          "caller": "FindActiveLLMConfig",
+          "callee": "s.db.Where",
+          "lineNumber": 107
+        },
+        {
+          "caller": "FindActiveLLMConfig",
+          "callee": "errors.Is",
+          "lineNumber": 108
+        },
+        {
+          "caller": "FindActiveLLMConfig",
+          "callee": "m.ToDomain",
+          "lineNumber": 113
+        },
+        {
+          "caller": "FindActiveLLMConfig",
+          "callee": "s.PopulateLLMConfigAnalytics",
+          "lineNumber": 114
+        },
+        {
+          "caller": "FindAllLLMConfigs",
+          "callee": "s.db.Order(\"created_at DESC\").Find",
+          "lineNumber": 120
+        },
+        {
+          "caller": "FindAllLLMConfigs",
+          "callee": "s.db.Order",
+          "lineNumber": 120
+        },
+        {
+          "caller": "FindAllLLMConfigs",
+          "callee": "m.ToDomain",
+          "lineNumber": 125
+        },
+        {
+          "caller": "FindAllLLMConfigs",
+          "callee": "s.PopulateLLMConfigAnalytics",
+          "lineNumber": 127
+        },
+        {
+          "caller": "FindAllLLMConfigs",
+          "callee": "append",
+          "lineNumber": 128
+        },
+        {
+          "caller": "UpdateLLMConfig",
+          "callee": "models.LLMConfigModelFromDomain",
+          "lineNumber": 135
+        },
+        {
+          "caller": "UpdateLLMConfig",
+          "callee": "s.db.Save",
+          "lineNumber": 136
+        },
+        {
+          "caller": "SetActiveLLMConfig",
+          "callee": "s.db.Transaction",
+          "lineNumber": 140
+        },
+        {
+          "caller": "SetActiveLLMConfig",
+          "callee": "tx.Model(&models.LLMConfigModel{}).Where(\"is_active = ?\", true).Update",
+          "lineNumber": 141
+        },
+        {
+          "caller": "SetActiveLLMConfig",
+          "callee": "tx.Model(&models.LLMConfigModel{}).Where",
+          "lineNumber": 141
+        },
+        {
+          "caller": "SetActiveLLMConfig",
+          "callee": "tx.Model",
+          "lineNumber": 141
+        },
+        {
+          "caller": "SetActiveLLMConfig",
+          "callee": "tx.Model(&models.LLMConfigModel{}).Where(\"id = ?\", id).Update",
+          "lineNumber": 144
+        },
+        {
+          "caller": "SetActiveLLMConfig",
+          "callee": "tx.Model(&models.LLMConfigModel{}).Where",
+          "lineNumber": 144
+        },
+        {
+          "caller": "SetActiveLLMConfig",
+          "callee": "tx.Model",
+          "lineNumber": 144
+        },
+        {
+          "caller": "DeleteLLMConfig",
+          "callee": "s.db.Delete",
+          "lineNumber": 156
+        }
+      ],
+      "metrics": {
+        "importCount": 9,
+        "exportCount": 15,
+        "functionCount": 15,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/models/conversation_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 104,
+      "nonEmptyLines": 95,
+      "functions": [
+        {
+          "name": "ToDomain",
+          "startLine": 23,
+          "endLine": 44,
+          "params": []
+        },
+        {
+          "name": "ConversationModelFromDomain",
+          "startLine": 46,
+          "endLine": 60,
+          "params": [
+            "c"
+          ]
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 74,
+          "endLine": 88,
+          "params": []
+        },
+        {
+          "name": "MessageModelFromDomain",
+          "startLine": 90,
+          "endLine": 104,
+          "params": [
+            "msg"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ConversationModel",
+          "startLine": 10,
+          "endLine": 21,
+          "methods": [
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "SessionID",
+            "CustomerWANumber",
+            "Status",
+            "AssignedAgentID",
+            "StartedAt",
+            "CreatedAt",
+            "UpdatedAt",
+            "Messages"
+          ]
+        },
+        {
+          "name": "MessageModel",
+          "startLine": 63,
+          "endLine": 72,
+          "methods": [
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "ConversationID",
+            "SenderType",
+            "Content",
+            "TokenIn",
+            "TokenOut",
+            "LLMConfigID",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ConversationModel",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "ConversationModelFromDomain",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "MessageModel",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "MessageModelFromDomain",
+          "line": 90,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ToDomain",
+          "callee": "msg.ToDomain",
+          "lineNumber": 29
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "append",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "bot.ConversationStatus",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ConversationModelFromDomain",
+          "callee": "string",
+          "lineNumber": 54
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "bot.SenderType",
+          "lineNumber": 81
+        },
+        {
+          "caller": "MessageModelFromDomain",
+          "callee": "string",
+          "lineNumber": 97
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 6,
+        "functionCount": 4,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/models/device_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 185,
+      "nonEmptyLines": 166,
+      "functions": [
+        {
+          "name": "TableName",
+          "startLine": 34,
+          "endLine": 36,
+          "params": []
+        },
+        {
+          "name": "TableName",
+          "startLine": 46,
+          "endLine": 48,
+          "params": []
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 52,
+          "endLine": 87,
+          "params": []
+        },
+        {
+          "name": "DeviceModelFromDomain",
+          "startLine": 89,
+          "endLine": 118,
+          "params": [
+            "d"
+          ]
+        },
+        {
+          "name": "ToDomain",
+          "startLine": 120,
+          "endLine": 151,
+          "params": [
+            "key"
+          ]
+        },
+        {
+          "name": "CredentialModelFromDomain",
+          "startLine": 153,
+          "endLine": 184,
+          "params": [
+            "deviceID",
+            "c",
+            "key"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "DeviceModel",
+          "startLine": 16,
+          "endLine": 32,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "TenantID",
+            "Name",
+            "Vendor",
+            "DriverType",
+            "Host",
+            "Port",
+            "SSHPort",
+            "TimeoutMS",
+            "PollIntervalMS",
+            "ExtraJSON",
+            "TagsJSON",
+            "Enabled",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        },
+        {
+          "name": "CredentialModel",
+          "startLine": 39,
+          "endLine": 44,
+          "methods": [
+            "TableName",
+            "ToDomain"
+          ],
+          "properties": [
+            "DeviceID",
+            "Ciphertext",
+            "Nonce",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DeviceModel",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "CredentialModel",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "TableName",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "DeviceModelFromDomain",
+          "line": 89,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 120,
+          "isDefault": false
+        },
+        {
+          "name": "CredentialModelFromDomain",
+          "line": 153,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ToDomain",
+          "callee": "json.Unmarshal",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "json.Unmarshal",
+          "lineNumber": 64
+        },
+        {
+          "caller": "DeviceModelFromDomain",
+          "callee": "json.Marshal",
+          "lineNumber": 90
+        },
+        {
+          "caller": "DeviceModelFromDomain",
+          "callee": "json.Marshal",
+          "lineNumber": 91
+        },
+        {
+          "caller": "DeviceModelFromDomain",
+          "callee": "string",
+          "lineNumber": 114
+        },
+        {
+          "caller": "DeviceModelFromDomain",
+          "callee": "string",
+          "lineNumber": 115
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "len",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "len",
+          "lineNumber": 128
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "fmt.Errorf",
+          "lineNumber": 129
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "aes.NewCipher",
+          "lineNumber": 131
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "cipher.NewGCM",
+          "lineNumber": 135
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "len",
+          "lineNumber": 139
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "aesGCM.NonceSize",
+          "lineNumber": 139
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "fmt.Errorf",
+          "lineNumber": 140
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "len",
+          "lineNumber": 140
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "aesGCM.Open",
+          "lineNumber": 142
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "fmt.Errorf",
+          "lineNumber": 144
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "json.Unmarshal",
+          "lineNumber": 147
+        },
+        {
+          "caller": "ToDomain",
+          "callee": "fmt.Errorf",
+          "lineNumber": 148
+        },
+        {
+          "caller": "CredentialModelFromDomain",
+          "callee": "len",
+          "lineNumber": 158
+        },
+        {
+          "caller": "CredentialModelFromDomain",
+          "callee": "fmt.Errorf",
+          "lineNumber": 159
+        },
+        {
+          "caller": "CredentialModelFromDomain",
+          "callee": "json.Marshal",
+          "lineNumber": 161
+        },
+        {
+          "caller": "CredentialModelFromDomain",
+          "callee": "aes.NewCipher",
+          "lineNumber": 165
+        },
+        {
+          "caller": "CredentialModelFromDomain",
+          "callee": "cipher.NewGCM",
+          "lineNumber": 169
+        },
+        {
+          "caller": "CredentialModelFromDomain",
+          "callee": "make",
+          "lineNumber": 173
+        },
+        {
+          "caller": "CredentialModelFromDomain",
+          "callee": "aesGCM.NonceSize",
+          "lineNumber": 173
+        },
+        {
+          "caller": "CredentialModelFromDomain",
+          "callee": "io.ReadFull",
+          "lineNumber": 174
+        },
+        {
+          "caller": "CredentialModelFromDomain",
+          "callee": "aesGCM.Seal",
+          "lineNumber": 177
+        },
+        {
+          "caller": "CredentialModelFromDomain",
+          "callee": "time.Now",
+          "lineNumber": 182
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 8,
+        "functionCount": 6,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/models/knowledge_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 45,
+      "nonEmptyLines": 40,
+      "functions": [
+        {
+          "name": "ToDomain",
+          "startLine": 19,
+          "endLine": 31,
+          "params": []
+        },
+        {
+          "name": "KnowledgeEntryModelFromDomain",
+          "startLine": 33,
+          "endLine": 45,
+          "params": [
+            "k"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "KnowledgeEntryModel",
+          "startLine": 10,
+          "endLine": 17,
+          "methods": [
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "Title",
+            "Content",
+            "Tags",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "KnowledgeEntryModel",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "KnowledgeEntryModelFromDomain",
+          "line": 33,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/models/llm_config_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 60,
+      "nonEmptyLines": 55,
+      "functions": [
+        {
+          "name": "ToDomain",
+          "startLine": 24,
+          "endLine": 41,
+          "params": []
+        },
+        {
+          "name": "LLMConfigModelFromDomain",
+          "startLine": 43,
+          "endLine": 60,
+          "params": [
+            "c"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "LLMConfigModel",
+          "startLine": 10,
+          "endLine": 22,
+          "methods": [
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "Provider",
+            "Model",
+            "APIKeyEncrypted",
+            "Params",
+            "MaxOutputTokens",
+            "IsActive",
+            "CostPer1MInput",
+            "CostPer1MOutput",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "LLMConfigModel",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "LLMConfigModelFromDomain",
+          "line": 43,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/models/session_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 54,
+      "nonEmptyLines": 49,
+      "functions": [
+        {
+          "name": "ToDomain",
+          "startLine": 22,
+          "endLine": 37,
+          "params": []
+        },
+        {
+          "name": "WASessionModelFromDomain",
+          "startLine": 39,
+          "endLine": 54,
+          "params": [
+            "s"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "WASessionModel",
+          "startLine": 10,
+          "endLine": 20,
+          "methods": [
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "DeviceName",
+            "PhoneNumber",
+            "JID",
+            "Status",
+            "IsBotEnabled",
+            "ConnectedAt",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WASessionModel",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "WASessionModelFromDomain",
+          "line": 39,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ToDomain",
+          "callee": "bot.WASessionStatus",
+          "lineNumber": 31
+        },
+        {
+          "caller": "WASessionModelFromDomain",
+          "callee": "string",
+          "lineNumber": 48
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/models/technician_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 46,
+      "functions": [
+        {
+          "name": "ToDomain",
+          "startLine": 21,
+          "endLine": 35,
+          "params": []
+        },
+        {
+          "name": "TechnicianModelFromDomain",
+          "startLine": 37,
+          "endLine": 51,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "TechnicianModel",
+          "startLine": 10,
+          "endLine": 19,
+          "methods": [
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "FullName",
+            "Username",
+            "PhoneNumber",
+            "Specialization",
+            "IsActive",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TechnicianModel",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "TechnicianModelFromDomain",
+          "line": 37,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/models/user_model.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 46,
+      "functions": [
+        {
+          "name": "ToDomain",
+          "startLine": 21,
+          "endLine": 35,
+          "params": []
+        },
+        {
+          "name": "UserModelFromDomain",
+          "startLine": 37,
+          "endLine": 51,
+          "params": [
+            "u"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "UserModel",
+          "startLine": 10,
+          "endLine": 19,
+          "methods": [
+            "ToDomain"
+          ],
+          "properties": [
+            "ID",
+            "Username",
+            "Email",
+            "PasswordHash",
+            "Role",
+            "TenantID",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UserModel",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ToDomain",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "UserModelFromDomain",
+          "line": 37,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 54,
+      "nonEmptyLines": 46,
+      "functions": [
+        {
+          "name": "NewStore",
+          "startLine": 21,
+          "endLine": 49,
+          "params": [
+            "dsn"
+          ]
+        },
+        {
+          "name": "DB",
+          "startLine": 52,
+          "endLine": 54,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "Store",
+          "startLine": 16,
+          "endLine": 18,
+          "methods": [
+            "DB"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Store",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "NewStore",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "DB",
+          "line": 52,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewStore",
+          "callee": "gorm.Open",
+          "lineNumber": 22
+        },
+        {
+          "caller": "NewStore",
+          "callee": "postgres.Open",
+          "lineNumber": 22
+        },
+        {
+          "caller": "NewStore",
+          "callee": "fmt.Errorf",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewStore",
+          "callee": "strings.ToLower",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewStore",
+          "callee": "os.Getenv",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewStore",
+          "callee": "os.Getenv",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewStore",
+          "callee": "db.AutoMigrate",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewStore",
+          "callee": "fmt.Errorf",
+          "lineNumber": 40
+        },
+        {
+          "caller": "NewStore",
+          "callee": "log.Println",
+          "lineNumber": 42
+        },
+        {
+          "caller": "NewStore",
+          "callee": "log.Println",
+          "lineNumber": 44
+        },
+        {
+          "caller": "NewStore",
+          "callee": "log.Println",
+          "lineNumber": 47
+        }
+      ],
+      "metrics": {
+        "importCount": 7,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/technician_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 58,
+      "functions": [
+        {
+          "name": "CreateTechnician",
+          "startLine": 12,
+          "endLine": 19,
+          "params": [
+            "tech"
+          ]
+        },
+        {
+          "name": "FindAllTechnicians",
+          "startLine": 21,
+          "endLine": 33,
+          "params": []
+        },
+        {
+          "name": "FindActiveTechnicians",
+          "startLine": 35,
+          "endLine": 47,
+          "params": []
+        },
+        {
+          "name": "FindTechnicianByID",
+          "startLine": 49,
+          "endLine": 58,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "UpdateTechnician",
+          "startLine": 60,
+          "endLine": 63,
+          "params": [
+            "tech"
+          ]
+        },
+        {
+          "name": "DeleteTechnician",
+          "startLine": 65,
+          "endLine": 67,
+          "params": [
+            "id"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CreateTechnician",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "FindAllTechnicians",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "FindActiveTechnicians",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "FindTechnicianByID",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateTechnician",
+          "line": 60,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteTechnician",
+          "line": 65,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateTechnician",
+          "callee": "models.TechnicianModelFromDomain",
+          "lineNumber": 13
+        },
+        {
+          "caller": "CreateTechnician",
+          "callee": "s.db.Create",
+          "lineNumber": 14
+        },
+        {
+          "caller": "FindAllTechnicians",
+          "callee": "s.db.Order(\"created_at DESC\").Find",
+          "lineNumber": 23
+        },
+        {
+          "caller": "FindAllTechnicians",
+          "callee": "s.db.Order",
+          "lineNumber": 23
+        },
+        {
+          "caller": "FindAllTechnicians",
+          "callee": "m.ToDomain",
+          "lineNumber": 28
+        },
+        {
+          "caller": "FindAllTechnicians",
+          "callee": "append",
+          "lineNumber": 29
+        },
+        {
+          "caller": "FindActiveTechnicians",
+          "callee": "s.db.Where(\"is_active = ?\", true).Order(\"full_name ASC\").Find",
+          "lineNumber": 37
+        },
+        {
+          "caller": "FindActiveTechnicians",
+          "callee": "s.db.Where(\"is_active = ?\", true).Order",
+          "lineNumber": 37
+        },
+        {
+          "caller": "FindActiveTechnicians",
+          "callee": "s.db.Where",
+          "lineNumber": 37
+        },
+        {
+          "caller": "FindActiveTechnicians",
+          "callee": "m.ToDomain",
+          "lineNumber": 42
+        },
+        {
+          "caller": "FindActiveTechnicians",
+          "callee": "append",
+          "lineNumber": 43
+        },
+        {
+          "caller": "FindTechnicianByID",
+          "callee": "s.db.First",
+          "lineNumber": 51
+        },
+        {
+          "caller": "FindTechnicianByID",
+          "callee": "errors.Is",
+          "lineNumber": 52
+        },
+        {
+          "caller": "FindTechnicianByID",
+          "callee": "m.ToDomain",
+          "lineNumber": 57
+        },
+        {
+          "caller": "UpdateTechnician",
+          "callee": "models.TechnicianModelFromDomain",
+          "lineNumber": 61
+        },
+        {
+          "caller": "UpdateTechnician",
+          "callee": "s.db.Save",
+          "lineNumber": 62
+        },
+        {
+          "caller": "DeleteTechnician",
+          "callee": "s.db.Delete",
+          "lineNumber": 66
+        }
+      ],
+      "metrics": {
+        "importCount": 10,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/postgres/user_repository.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 58,
+      "nonEmptyLines": 50,
+      "functions": [
+        {
+          "name": "CreateUser",
+          "startLine": 12,
+          "endLine": 19,
+          "params": [
+            "user"
+          ]
+        },
+        {
+          "name": "FindUserByID",
+          "startLine": 21,
+          "endLine": 30,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "FindUserByUsername",
+          "startLine": 32,
+          "endLine": 41,
+          "params": [
+            "username"
+          ]
+        },
+        {
+          "name": "FindUserByEmail",
+          "startLine": 43,
+          "endLine": 52,
+          "params": [
+            "email"
+          ]
+        },
+        {
+          "name": "CountUsers",
+          "startLine": 54,
+          "endLine": 58,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CreateUser",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "FindUserByID",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "FindUserByUsername",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "FindUserByEmail",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "CountUsers",
+          "line": 54,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateUser",
+          "callee": "models.UserModelFromDomain",
+          "lineNumber": 13
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "s.db.Create",
+          "lineNumber": 14
+        },
+        {
+          "caller": "FindUserByID",
+          "callee": "s.db.First",
+          "lineNumber": 23
+        },
+        {
+          "caller": "FindUserByID",
+          "callee": "errors.Is",
+          "lineNumber": 24
+        },
+        {
+          "caller": "FindUserByID",
+          "callee": "m.ToDomain",
+          "lineNumber": 29
+        },
+        {
+          "caller": "FindUserByUsername",
+          "callee": "s.db.Where(\"username = ?\", username).First",
+          "lineNumber": 34
+        },
+        {
+          "caller": "FindUserByUsername",
+          "callee": "s.db.Where",
+          "lineNumber": 34
+        },
+        {
+          "caller": "FindUserByUsername",
+          "callee": "errors.Is",
+          "lineNumber": 35
+        },
+        {
+          "caller": "FindUserByUsername",
+          "callee": "m.ToDomain",
+          "lineNumber": 40
+        },
+        {
+          "caller": "FindUserByEmail",
+          "callee": "s.db.Where(\"email = ?\", email).First",
+          "lineNumber": 45
+        },
+        {
+          "caller": "FindUserByEmail",
+          "callee": "s.db.Where",
+          "lineNumber": 45
+        },
+        {
+          "caller": "FindUserByEmail",
+          "callee": "errors.Is",
+          "lineNumber": 46
+        },
+        {
+          "caller": "FindUserByEmail",
+          "callee": "m.ToDomain",
+          "lineNumber": 51
+        },
+        {
+          "caller": "CountUsers",
+          "callee": "s.db.Model(&models.UserModel{}).Count",
+          "lineNumber": 56
+        },
+        {
+          "caller": "CountUsers",
+          "callee": "s.db.Model",
+          "lineNumber": 56
+        }
+      ],
+      "metrics": {
+        "importCount": 10,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "internal/adapter/redis/store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 176,
+      "nonEmptyLines": 147,
+      "functions": [
+        {
+          "name": "NewStore",
+          "startLine": 18,
+          "endLine": 33,
+          "params": [
+            "url"
+          ]
+        },
+        {
+          "name": "Get",
+          "startLine": 35,
+          "endLine": 37,
+          "params": [
+            "ctx",
+            "key"
+          ]
+        },
+        {
+          "name": "Set",
+          "startLine": 39,
+          "endLine": 41,
+          "params": [
+            "ctx",
+            "key",
+            "value",
+            "expirationSeconds"
+          ]
+        },
+        {
+          "name": "Delete",
+          "startLine": 43,
+          "endLine": 45,
+          "params": [
+            "ctx",
+            "key"
+          ]
+        },
+        {
+          "name": "sessionKey",
+          "startLine": 47,
+          "endLine": 49,
+          "params": [
+            "customerNumber"
+          ]
+        },
+        {
+          "name": "summaryKey",
+          "startLine": 51,
+          "endLine": 53,
+          "params": [
+            "customerNumber"
+          ]
+        },
+        {
+          "name": "SaveSessionMessages",
+          "startLine": 55,
+          "endLine": 61,
+          "params": [
+            "ctx",
+            "customerNumber",
+            "messages",
+            "ttl"
+          ]
+        },
+        {
+          "name": "GetSessionMessages",
+          "startLine": 63,
+          "endLine": 77,
+          "params": [
+            "ctx",
+            "customerNumber"
+          ]
+        },
+        {
+          "name": "DeleteSession",
+          "startLine": 79,
+          "endLine": 85,
+          "params": [
+            "ctx",
+            "customerNumber"
+          ]
+        },
+        {
+          "name": "SetSessionSummary",
+          "startLine": 87,
+          "endLine": 89,
+          "params": [
+            "ctx",
+            "customerNumber",
+            "summary",
+            "ttl"
+          ]
+        },
+        {
+          "name": "GetSessionSummary",
+          "startLine": 91,
+          "endLine": 100,
+          "params": [
+            "ctx",
+            "customerNumber"
+          ]
+        },
+        {
+          "name": "RefreshSessionTTL",
+          "startLine": 102,
+          "endLine": 108,
+          "params": [
+            "ctx",
+            "customerNumber",
+            "ttl"
+          ]
+        },
+        {
+          "name": "rateLimitKey",
+          "startLine": 110,
+          "endLine": 112,
+          "params": [
+            "customerNumber",
+            "window"
+          ]
+        },
+        {
+          "name": "muteKey",
+          "startLine": 114,
+          "endLine": 116,
+          "params": [
+            "customerNumber"
+          ]
+        },
+        {
+          "name": "spamKey",
+          "startLine": 118,
+          "endLine": 120,
+          "params": [
+            "customerNumber"
+          ]
+        },
+        {
+          "name": "IncrementRateLimit",
+          "startLine": 122,
+          "endLine": 132,
+          "params": [
+            "ctx",
+            "customerNumber",
+            "window",
+            "ttl"
+          ]
+        },
+        {
+          "name": "GetRateLimitCount",
+          "startLine": 134,
+          "endLine": 143,
+          "params": [
+            "ctx",
+            "customerNumber",
+            "window"
+          ]
+        },
+        {
+          "name": "MuteNumber",
+          "startLine": 145,
+          "endLine": 147,
+          "params": [
+            "ctx",
+            "customerNumber",
+            "duration"
+          ]
+        },
+        {
+          "name": "IsMuted",
+          "startLine": 149,
+          "endLine": 155,
+          "params": [
+            "ctx",
+            "customerNumber"
+          ]
+        },
+        {
+          "name": "UnmuteNumber",
+          "startLine": 157,
+          "endLine": 159,
+          "params": [
+            "ctx",
+            "customerNumber"
+          ]
+        },
+        {
+          "name": "RecordMessageForSpamDetection",
+          "startLine": 161,
+          "endLine": 176,
+          "params": [
+            "ctx",
+            "customerNumber",
+            "messageHash"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Store",
+          "startLine": 14,
+          "endLine": 16,
+          "methods": [
+            "Get",
+            "Set",
+            "Delete",
+            "SaveSessionMessages",
+            "GetSessionMessages",
+            "DeleteSession",
+            "SetSessionSummary",
+            "GetSessionSummary",
+            "RefreshSessionTTL",
+            "IncrementRateLimit",
+            "GetRateLimitCount",
+            "MuteNumber",
+            "IsMuted",
+            "UnmuteNumber",
+            "RecordMessageForSpamDetection"
+          ],
+          "properties": [
+            "client"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Store",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "NewStore",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Get",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "Set",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "Delete",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "SaveSessionMessages",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "GetSessionMessages",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteSession",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "SetSessionSummary",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "GetSessionSummary",
+          "line": 91,
+          "isDefault": false
+        },
+        {
+          "name": "RefreshSessionTTL",
+          "line": 102,
+          "isDefault": false
+        },
+        {
+          "name": "IncrementRateLimit",
+          "line": 122,
+          "isDefault": false
+        },
+        {
+          "name": "GetRateLimitCount",
+          "line": 134,
+          "isDefault": false
+        },
+        {
+          "name": "MuteNumber",
+          "line": 145,
+          "isDefault": false
+        },
+        {
+          "name": "IsMuted",
+          "line": 149,
+          "isDefault": false
+        },
+        {
+          "name": "UnmuteNumber",
+          "line": 157,
+          "isDefault": false
+        },
+        {
+          "name": "RecordMessageForSpamDetection",
+          "line": 161,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewStore",
+          "callee": "redis.ParseURL",
+          "lineNumber": 19
+        },
+        {
+          "caller": "NewStore",
+          "callee": "fmt.Errorf",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NewStore",
+          "callee": "redis.NewClient",
+          "lineNumber": 24
+        },
+        {
+          "caller": "NewStore",
+          "callee": "context.WithTimeout",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewStore",
+          "callee": "context.Background",
+          "lineNumber": 25
+        },
+        {
+          "caller": "NewStore",
+          "callee": "cancel",
+          "lineNumber": 26
+        },
+        {
+          "caller": "NewStore",
+          "callee": "client.Ping(ctx).Err",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewStore",
+          "callee": "client.Ping",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewStore",
+          "callee": "fmt.Errorf",
+          "lineNumber": 29
+        },
+        {
+          "caller": "Get",
+          "callee": "s.client.Get(ctx, key).Result",
+          "lineNumber": 36
+        },
+        {
+          "caller": "Get",
+          "callee": "s.client.Get",
+          "lineNumber": 36
+        },
+        {
+          "caller": "Set",
+          "callee": "s.client.Set(ctx, key, value, time.Duration(expirationSeconds)*time.Second).Err",
+          "lineNumber": 40
+        },
+        {
+          "caller": "Set",
+          "callee": "s.client.Set",
+          "lineNumber": 40
+        },
+        {
+          "caller": "Set",
+          "callee": "time.Duration",
+          "lineNumber": 40
+        },
+        {
+          "caller": "Delete",
+          "callee": "s.client.Del(ctx, key).Err",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Delete",
+          "callee": "s.client.Del",
+          "lineNumber": 44
+        },
+        {
+          "caller": "sessionKey",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 48
+        },
+        {
+          "caller": "summaryKey",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 52
+        },
+        {
+          "caller": "SaveSessionMessages",
+          "callee": "json.Marshal",
+          "lineNumber": 56
+        },
+        {
+          "caller": "SaveSessionMessages",
+          "callee": "fmt.Errorf",
+          "lineNumber": 58
+        },
+        {
+          "caller": "SaveSessionMessages",
+          "callee": "s.client.Set(ctx, sessionKey(customerNumber), data, ttl).Err",
+          "lineNumber": 60
+        },
+        {
+          "caller": "SaveSessionMessages",
+          "callee": "s.client.Set",
+          "lineNumber": 60
+        },
+        {
+          "caller": "SaveSessionMessages",
+          "callee": "sessionKey",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GetSessionMessages",
+          "callee": "s.client.Get(ctx, sessionKey(customerNumber)).Bytes",
+          "lineNumber": 64
+        },
+        {
+          "caller": "GetSessionMessages",
+          "callee": "s.client.Get",
+          "lineNumber": 64
+        },
+        {
+          "caller": "GetSessionMessages",
+          "callee": "sessionKey",
+          "lineNumber": 64
+        },
+        {
+          "caller": "GetSessionMessages",
+          "callee": "json.Unmarshal",
+          "lineNumber": 73
+        },
+        {
+          "caller": "GetSessionMessages",
+          "callee": "fmt.Errorf",
+          "lineNumber": 74
+        },
+        {
+          "caller": "DeleteSession",
+          "callee": "s.client.Pipeline",
+          "lineNumber": 80
+        },
+        {
+          "caller": "DeleteSession",
+          "callee": "pipe.Del",
+          "lineNumber": 81
+        },
+        {
+          "caller": "DeleteSession",
+          "callee": "sessionKey",
+          "lineNumber": 81
+        },
+        {
+          "caller": "DeleteSession",
+          "callee": "pipe.Del",
+          "lineNumber": 82
+        },
+        {
+          "caller": "DeleteSession",
+          "callee": "summaryKey",
+          "lineNumber": 82
+        },
+        {
+          "caller": "DeleteSession",
+          "callee": "pipe.Exec",
+          "lineNumber": 83
+        },
+        {
+          "caller": "SetSessionSummary",
+          "callee": "s.client.Set(ctx, summaryKey(customerNumber), summary, ttl).Err",
+          "lineNumber": 88
+        },
+        {
+          "caller": "SetSessionSummary",
+          "callee": "s.client.Set",
+          "lineNumber": 88
+        },
+        {
+          "caller": "SetSessionSummary",
+          "callee": "summaryKey",
+          "lineNumber": 88
+        },
+        {
+          "caller": "GetSessionSummary",
+          "callee": "s.client.Get(ctx, summaryKey(customerNumber)).Result",
+          "lineNumber": 92
+        },
+        {
+          "caller": "GetSessionSummary",
+          "callee": "s.client.Get",
+          "lineNumber": 92
+        },
+        {
+          "caller": "GetSessionSummary",
+          "callee": "summaryKey",
+          "lineNumber": 92
+        },
+        {
+          "caller": "RefreshSessionTTL",
+          "callee": "s.client.Pipeline",
+          "lineNumber": 103
+        },
+        {
+          "caller": "RefreshSessionTTL",
+          "callee": "pipe.Expire",
+          "lineNumber": 104
+        },
+        {
+          "caller": "RefreshSessionTTL",
+          "callee": "sessionKey",
+          "lineNumber": 104
+        },
+        {
+          "caller": "RefreshSessionTTL",
+          "callee": "pipe.Expire",
+          "lineNumber": 105
+        },
+        {
+          "caller": "RefreshSessionTTL",
+          "callee": "summaryKey",
+          "lineNumber": 105
+        },
+        {
+          "caller": "RefreshSessionTTL",
+          "callee": "pipe.Exec",
+          "lineNumber": 106
+        },
+        {
+          "caller": "rateLimitKey",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 111
+        },
+        {
+          "caller": "muteKey",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 115
+        },
+        {
+          "caller": "spamKey",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 119
+        },
+        {
+          "caller": "IncrementRateLimit",
+          "callee": "rateLimitKey",
+          "lineNumber": 123
+        },
+        {
+          "caller": "IncrementRateLimit",
+          "callee": "s.client.Pipeline",
+          "lineNumber": 124
+        },
+        {
+          "caller": "IncrementRateLimit",
+          "callee": "pipe.Incr",
+          "lineNumber": 125
+        },
+        {
+          "caller": "IncrementRateLimit",
+          "callee": "pipe.Expire",
+          "lineNumber": 126
+        },
+        {
+          "caller": "IncrementRateLimit",
+          "callee": "pipe.Exec",
+          "lineNumber": 127
+        },
+        {
+          "caller": "IncrementRateLimit",
+          "callee": "incr.Val",
+          "lineNumber": 131
+        },
+        {
+          "caller": "GetRateLimitCount",
+          "callee": "s.client.Get(ctx, rateLimitKey(customerNumber, window)).Int64",
+          "lineNumber": 135
+        },
+        {
+          "caller": "GetRateLimitCount",
+          "callee": "s.client.Get",
+          "lineNumber": 135
+        },
+        {
+          "caller": "GetRateLimitCount",
+          "callee": "rateLimitKey",
+          "lineNumber": 135
+        },
+        {
+          "caller": "MuteNumber",
+          "callee": "s.client.Set(ctx, muteKey(customerNumber), \"1\", duration).Err",
+          "lineNumber": 146
+        },
+        {
+          "caller": "MuteNumber",
+          "callee": "s.client.Set",
+          "lineNumber": 146
+        },
+        {
+          "caller": "MuteNumber",
+          "callee": "muteKey",
+          "lineNumber": 146
+        },
+        {
+          "caller": "IsMuted",
+          "callee": "s.client.Exists(ctx, muteKey(customerNumber)).Result",
+          "lineNumber": 150
+        },
+        {
+          "caller": "IsMuted",
+          "callee": "s.client.Exists",
+          "lineNumber": 150
+        },
+        {
+          "caller": "IsMuted",
+          "callee": "muteKey",
+          "lineNumber": 150
+        },
+        {
+          "caller": "UnmuteNumber",
+          "callee": "s.client.Del(ctx, muteKey(customerNumber)).Err",
+          "lineNumber": 158
+        },
+        {
+          "caller": "UnmuteNumber",
+          "callee": "s.client.Del",
+          "lineNumber": 158
+        },
+        {
+          "caller": "UnmuteNumber",
+          "callee": "muteKey",
+          "lineNumber": 158
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "spamKey",
+          "lineNumber": 162
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "s.client.Pipeline",
+          "lineNumber": 163
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "pipe.ZAdd",
+          "lineNumber": 164
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "float64",
+          "lineNumber": 165
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "time.Now().Unix",
+          "lineNumber": 165
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "time.Now",
+          "lineNumber": 165
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "pipe.ZRemRangeByScore",
+          "lineNumber": 168
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 168
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "time.Now().Add(-60*time.Second).Unix",
+          "lineNumber": 168
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "time.Now().Add",
+          "lineNumber": 168
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "time.Now",
+          "lineNumber": 168
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "pipe.ZCard",
+          "lineNumber": 169
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "pipe.Expire",
+          "lineNumber": 170
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "pipe.Exec",
+          "lineNumber": 171
+        },
+        {
+          "caller": "RecordMessageForSpamDetection",
+          "callee": "count.Val",
+          "lineNumber": 175
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 17,
+        "functionCount": 21,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/bot/conversation.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 26,
+      "nonEmptyLines": 21,
+      "classes": [
+        {
+          "name": "Conversation",
+          "startLine": 15,
+          "endLine": 26,
+          "methods": [],
+          "properties": [
+            "ID",
+            "SessionID",
+            "CustomerWANumber",
+            "Status",
+            "AssignedAgentID",
+            "StartedAt",
+            "CreatedAt",
+            "UpdatedAt",
+            "Messages"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Conversation",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/bot/message.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 20,
+      "classes": [
+        {
+          "name": "Message",
+          "startLine": 15,
+          "endLine": 24,
+          "methods": [],
+          "properties": [
+            "ID",
+            "ConversationID",
+            "SenderType",
+            "Content",
+            "TokenIn",
+            "TokenOut",
+            "LLMConfigID",
+            "CreatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Message",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/bot/session.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 25,
+      "nonEmptyLines": 21,
+      "classes": [
+        {
+          "name": "WASession",
+          "startLine": 15,
+          "endLine": 25,
+          "methods": [],
+          "properties": [
+            "ID",
+            "DeviceName",
+            "PhoneNumber",
+            "JID",
+            "Status",
+            "IsBotEnabled",
+            "ConnectedAt",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WASession",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/customer/customer.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 27,
+      "nonEmptyLines": 24,
+      "classes": [
+        {
+          "name": "Customer",
+          "startLine": 6,
+          "endLine": 16,
+          "methods": [],
+          "properties": [
+            "ID",
+            "TenantID",
+            "Name",
+            "Email",
+            "Phone",
+            "Address",
+            "Status",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        },
+        {
+          "name": "Subscription",
+          "startLine": 19,
+          "endLine": 27,
+          "methods": [],
+          "properties": [
+            "ID",
+            "CustomerID",
+            "PlanID",
+            "Status",
+            "StartDate",
+            "EndDate",
+            "Price"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Customer",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "Subscription",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "internal/domain/customer/technician.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 13,
+      "classes": [
+        {
+          "name": "Technician",
+          "startLine": 6,
+          "endLine": 15,
+          "methods": [],
+          "properties": [
+            "ID",
+            "FullName",
+            "Username",
+            "PhoneNumber",
+            "Specialization",
+            "IsActive",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Technician",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/customer/user.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 13,
+      "classes": [
+        {
+          "name": "User",
+          "startLine": 6,
+          "endLine": 15,
+          "methods": [],
+          "properties": [
+            "ID",
+            "Username",
+            "Email",
+            "PasswordHash",
+            "Role",
+            "TenantID",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "User",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/knowledge/knowledge.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 11,
+      "classes": [
+        {
+          "name": "KnowledgeEntry",
+          "startLine": 6,
+          "endLine": 13,
+          "methods": [],
+          "properties": [
+            "ID",
+            "Title",
+            "Content",
+            "Tags",
+            "CreatedAt",
+            "UpdatedAt"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "KnowledgeEntry",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/domain/llm/llm_config.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 38,
+      "nonEmptyLines": 33,
+      "classes": [
+        {
+          "name": "LLMConfig",
+          "startLine": 6,
+          "endLine": 25,
+          "methods": [],
+          "properties": [
+            "ID",
+            "Provider",
+            "Model",
+            "APIKeyEncrypted",
+            "Params",
+            "MaxOutputTokens",
+            "IsActive",
+            "CostPer1MInput",
+            "CostPer1MOutput",
+            "CreatedAt",
+            "UpdatedAt",
+            "TotalInputTokens",
+            "TotalOutputTokens",
+            "TotalMessages",
+            "TotalCostUSD",
+            "TotalCostIDR"
+          ]
+        },
+        {
+          "name": "ChatMessage",
+          "startLine": 28,
+          "endLine": 31,
+          "methods": [],
+          "properties": [
+            "Role",
+            "Content"
+          ]
+        },
+        {
+          "name": "ChatResponse",
+          "startLine": 34,
+          "endLine": 38,
+          "methods": [],
+          "properties": [
+            "Content",
+            "TokenIn",
+            "TokenOut"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "LLMConfig",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "ChatMessage",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "ChatResponse",
+          "line": 34,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "internal/domain/llm/llm_pricing.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 61,
+      "nonEmptyLines": 53,
+      "functions": [
+        {
+          "name": "GetDefaultModelPricing",
+          "startLine": 12,
+          "endLine": 61,
+          "params": [
+            "provider",
+            "model"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ModelPricing",
+          "startLine": 6,
+          "endLine": 9,
+          "methods": [],
+          "properties": [
+            "CostPer1MInput",
+            "CostPer1MOutput"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ModelPricing",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "GetDefaultModelPricing",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.ToLower",
+          "lineNumber": 13
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 13
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.ToLower",
+          "lineNumber": 14
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.TrimSpace",
+          "lineNumber": 14
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 18
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 21
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 27
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 27
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 30
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 30
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 33
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 42
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 42
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 48
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 51
+        },
+        {
+          "caller": "GetDefaultModelPricing",
+          "callee": "strings.Contains",
+          "lineNumber": 54
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/driver/whatsapp/event_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 65,
+      "nonEmptyLines": 56,
+      "functions": [
+        {
+          "name": "NewEventHandler",
+          "startLine": 17,
+          "endLine": 22,
+          "params": [
+            "pgStore",
+            "sseHub"
+          ]
+        },
+        {
+          "name": "MakeStatusCallback",
+          "startLine": 24,
+          "endLine": 28,
+          "params": []
+        },
+        {
+          "name": "handleStatusUpdate",
+          "startLine": 30,
+          "endLine": 54,
+          "params": [
+            "sessionID",
+            "status",
+            "qrCode",
+            "jid",
+            "phoneNumber"
+          ]
+        },
+        {
+          "name": "MakeMessageCallback",
+          "startLine": 56,
+          "endLine": 65,
+          "params": [
+            "engineHandler"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "EventHandler",
+          "startLine": 12,
+          "endLine": 15,
+          "methods": [
+            "MakeStatusCallback",
+            "handleStatusUpdate",
+            "MakeMessageCallback"
+          ],
+          "properties": [
+            "pgStore",
+            "sseHub"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "EventHandler",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewEventHandler",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "MakeStatusCallback",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "MakeMessageCallback",
+          "line": 56,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "MakeStatusCallback",
+          "callee": "eh.handleStatusUpdate",
+          "lineNumber": 26
+        },
+        {
+          "caller": "handleStatusUpdate",
+          "callee": "eh.pgStore.FindSessionByID",
+          "lineNumber": 35
+        },
+        {
+          "caller": "handleStatusUpdate",
+          "callee": "bot.WASessionStatus",
+          "lineNumber": 37
+        },
+        {
+          "caller": "handleStatusUpdate",
+          "callee": "eh.pgStore.UpdateSession",
+          "lineNumber": 44
+        },
+        {
+          "caller": "handleStatusUpdate",
+          "callee": "eh.sseHub.Broadcast",
+          "lineNumber": 48
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "func() {\n\t\t\tctx := context.Background()\n\t\t\tif err := engineHandler(ctx, sessionID, customerNumber, content); err != nil {\n\t\t\t\tlog.Printf(\"[EventHandler] Error processing message from %s: %v\", customerNumber, err)\n\t\t\t}\n\t\t}",
+          "lineNumber": 58
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "context.Background",
+          "lineNumber": 59
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "engineHandler",
+          "lineNumber": 60
+        },
+        {
+          "caller": "MakeMessageCallback",
+          "callee": "log.Printf",
+          "lineNumber": 61
+        }
+      ],
+      "metrics": {
+        "importCount": 18,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "internal/usecase/conversation/manage_conversation.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 130,
+      "nonEmptyLines": 110,
+      "functions": [
+        {
+          "name": "NewConversationService",
+          "startLine": 28,
+          "endLine": 30,
+          "params": [
+            "repo"
+          ]
+        },
+        {
+          "name": "NewService",
+          "startLine": 32,
+          "endLine": 34,
+          "params": [
+            "repo"
+          ]
+        },
+        {
+          "name": "GetOrCreateConversation",
+          "startLine": 36,
+          "endLine": 52,
+          "params": [
+            "sessionID",
+            "customerNumber"
+          ]
+        },
+        {
+          "name": "AddMessageWithConfig",
+          "startLine": 54,
+          "endLine": 65,
+          "params": [
+            "convID",
+            "senderType",
+            "content",
+            "tokenIn",
+            "tokenOut",
+            "llmConfigID"
+          ]
+        },
+        {
+          "name": "AddMessage",
+          "startLine": 67,
+          "endLine": 69,
+          "params": [
+            "convID",
+            "senderType",
+            "content",
+            "tokenIn",
+            "tokenOut"
+          ]
+        },
+        {
+          "name": "GetHistory",
+          "startLine": 71,
+          "endLine": 77,
+          "params": [
+            "convID",
+            "limit"
+          ]
+        },
+        {
+          "name": "Escalate",
+          "startLine": 79,
+          "endLine": 86,
+          "params": [
+            "convID"
+          ]
+        },
+        {
+          "name": "ResetBot",
+          "startLine": 88,
+          "endLine": 96,
+          "params": [
+            "convID"
+          ]
+        },
+        {
+          "name": "TakeOver",
+          "startLine": 98,
+          "endLine": 106,
+          "params": [
+            "convID",
+            "agentID"
+          ]
+        },
+        {
+          "name": "CloseConversation",
+          "startLine": 108,
+          "endLine": 115,
+          "params": [
+            "convID"
+          ]
+        },
+        {
+          "name": "GetConversation",
+          "startLine": 117,
+          "endLine": 119,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "GetConversationWithMessages",
+          "startLine": 121,
+          "endLine": 123,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "ListConversations",
+          "startLine": 125,
+          "endLine": 130,
+          "params": [
+            "status"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ConversationRepository",
+          "startLine": 12,
+          "endLine": 20,
+          "methods": [
+            "FindActiveConversationByCustomer",
+            "CreateConversation",
+            "FindConversationByID",
+            "FindConversationByIDWithMessages",
+            "FindConversationsByStatus",
+            "FindAllConversations",
+            "UpdateConversation"
+          ],
+          "properties": []
+        },
+        {
+          "name": "ConversationService",
+          "startLine": 22,
+          "endLine": 24,
+          "methods": [
+            "GetOrCreateConversation",
+            "AddMessageWithConfig",
+            "AddMessage",
+            "GetHistory",
+            "Escalate",
+            "ResetBot",
+            "TakeOver",
+            "CloseConversation",
+            "GetConversation",
+            "GetConversationWithMessages",
+            "ListConversations"
+          ],
+          "properties": [
+            "repo"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ConversationRepository",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "ConversationService",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "NewConversationService",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "NewService",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "GetOrCreateConversation",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "AddMessageWithConfig",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "AddMessage",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "GetHistory",
+          "line": 71,
+          "isDefault": false
+        },
+        {
+          "name": "Escalate",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "ResetBot",
+          "line": 88,
+          "isDefault": false
+        },
+        {
+          "name": "TakeOver",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "CloseConversation",
+          "line": 108,
+          "isDefault": false
+        },
+        {
+          "name": "GetConversation",
+          "line": 117,
+          "isDefault": false
+        },
+        {
+          "name": "GetConversationWithMessages",
+          "line": 121,
+          "isDefault": false
+        },
+        {
+          "name": "ListConversations",
+          "line": 125,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewService",
+          "callee": "NewConversationService",
+          "lineNumber": 33
+        },
+        {
+          "caller": "GetOrCreateConversation",
+          "callee": "s.repo.FindActiveConversationByCustomer",
+          "lineNumber": 37
+        },
+        {
+          "caller": "GetOrCreateConversation",
+          "callee": "time.Now",
+          "lineNumber": 46
+        },
+        {
+          "caller": "GetOrCreateConversation",
+          "callee": "s.repo.CreateConversation",
+          "lineNumber": 48
+        },
+        {
+          "caller": "AddMessageWithConfig",
+          "callee": "bot.SenderType",
+          "lineNumber": 57
+        },
+        {
+          "caller": "AddMessageWithConfig",
+          "callee": "time.Now",
+          "lineNumber": 62
+        },
+        {
+          "caller": "AddMessage",
+          "callee": "s.AddMessageWithConfig",
+          "lineNumber": 68
+        },
+        {
+          "caller": "GetHistory",
+          "callee": "s.repo.FindConversationByIDWithMessages",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Escalate",
+          "callee": "s.repo.FindConversationByID",
+          "lineNumber": 80
+        },
+        {
+          "caller": "Escalate",
+          "callee": "s.repo.UpdateConversation",
+          "lineNumber": 85
+        },
+        {
+          "caller": "ResetBot",
+          "callee": "s.repo.FindConversationByID",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ResetBot",
+          "callee": "s.repo.UpdateConversation",
+          "lineNumber": 95
+        },
+        {
+          "caller": "TakeOver",
+          "callee": "s.repo.FindConversationByID",
+          "lineNumber": 99
+        },
+        {
+          "caller": "TakeOver",
+          "callee": "s.repo.UpdateConversation",
+          "lineNumber": 105
+        },
+        {
+          "caller": "CloseConversation",
+          "callee": "s.repo.FindConversationByID",
+          "lineNumber": 109
+        },
+        {
+          "caller": "CloseConversation",
+          "callee": "s.repo.UpdateConversation",
+          "lineNumber": 114
+        },
+        {
+          "caller": "GetConversation",
+          "callee": "s.repo.FindConversationByID",
+          "lineNumber": 118
+        },
+        {
+          "caller": "GetConversationWithMessages",
+          "callee": "s.repo.FindConversationByIDWithMessages",
+          "lineNumber": 122
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "s.repo.FindConversationsByStatus",
+          "lineNumber": 127
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "bot.ConversationStatus",
+          "lineNumber": 127
+        },
+        {
+          "caller": "ListConversations",
+          "callee": "s.repo.FindAllConversations",
+          "lineNumber": 129
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 15,
+        "functionCount": 13,
+        "classCount": 2
+      }
+    }
+  ]
+}
