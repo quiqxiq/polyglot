@@ -42,6 +42,10 @@ func (f *fakePromptBuilder) BuildCompositeSystemPrompt(context.Context) (string,
 	return f.prompt, nil
 }
 
+func (f *fakePromptBuilder) BuildSelectivePrompt(context.Context, string) (string, error) {
+	return f.prompt, nil
+}
+
 type fakeLLMConfigRepo struct {
 	active *llm.Config
 	err    error

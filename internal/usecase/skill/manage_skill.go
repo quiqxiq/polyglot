@@ -286,8 +286,8 @@ func (u *ManageSkillUseCase) SaveGlobalSystemPrompt(ctx context.Context, content
 	return nil
 }
 
-// BuildCompositeSystemPrompt merakit System Prompt Lengkap: Base System Prompt + Seluruh Skill yang Aktif.
-func (u *ManageSkillUseCase) BuildCompositeSystemPrompt(ctx context.Context) (string, error) {
+// BuildSelectivePrompt merakit System Prompt selektif berbasis relevansi topik pertanyaan user.
+func (u *ManageSkillUseCase) BuildSelectivePrompt(ctx context.Context, contextText string) (string, error) {
 	var sb strings.Builder
 
 	// 1. Base / Global System Prompt
@@ -297,7 +297,7 @@ func (u *ManageSkillUseCase) BuildCompositeSystemPrompt(ctx context.Context) (st
 		sb.WriteString("\n\n")
 	}
 
-	// 2. Active Modular Skills
+	// 2. Active Modular Skills with Selective File Filtering
 	skills, err := u.repo.ListSkills(ctx)
 	if err == nil && len(skills) > 0 {
 		hasActive := false
@@ -305,8 +305,15 @@ func (u *ManageSkillUseCase) BuildCompositeSystemPrompt(ctx context.Context) (st
 			if !sk.IsEnabled {
 				continue
 			}
+
+			// Saring hanya berkas yang relevan dengan pertanyaan/konteks user
+			matchedFiles := MatchRelevantFiles(&sk, contextText)
+			if len(matchedFiles) == 0 {
+				continue
+			}
+
 			if !hasActive {
-				sb.WriteString("## MODUL SKILL & PROSEDUR SOP AKTIF:\n\n")
+				sb.WriteString("## MODUL SKILL & PROSEDUR SOP RELEVAN:\n\n")
 				hasActive = true
 			}
 			sb.WriteString(fmt.Sprintf("### SKILL: %s (%s)\n", sk.Name, sk.Slug))
@@ -314,8 +321,8 @@ func (u *ManageSkillUseCase) BuildCompositeSystemPrompt(ctx context.Context) (st
 				sb.WriteString(fmt.Sprintf("**Deskripsi Pemicu**: %s\n\n", sk.Description))
 			}
 
-			// Render isi berkas (utamakan SKILL.md lalu berkas referensi)
-			for _, f := range sk.Files {
+			// Render isi berkas yang terpilih
+			for _, f := range matchedFiles {
 				content := strings.TrimSpace(f.Content)
 				if content == "" {
 					continue
@@ -329,4 +336,9 @@ func (u *ManageSkillUseCase) BuildCompositeSystemPrompt(ctx context.Context) (st
 	}
 
 	return strings.TrimSpace(sb.String()), nil
+}
+
+// BuildCompositeSystemPrompt merakit seluruh berkas skill aktif (untuk sinkronisasi lengkap / preview).
+func (u *ManageSkillUseCase) BuildCompositeSystemPrompt(ctx context.Context) (string, error) {
+	return u.BuildSelectivePrompt(ctx, "paket harga gangguan tagihan profil eskalasi")
 }

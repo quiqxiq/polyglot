@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/config"
@@ -41,6 +42,7 @@ type ProviderFactory func(cfg *llm.Config) (port.LLMProvider, error)
 // PromptBuilder constructs composite system prompt from active modular skills and global SOP.
 type PromptBuilder interface {
 	BuildCompositeSystemPrompt(ctx context.Context) (string, error)
+	BuildSelectivePrompt(ctx context.Context, contextText string) (string, error)
 }
 
 // Engine orchestrates the WhatsApp customer-service bot.
@@ -156,12 +158,29 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, offTopicReply, 0, 0, nil)
 	}
 
+	history, err := e.convService.GetRecentHistory(ctx, conv.ID, historyLimit)
+	if err != nil || len(history) == 0 {
+		if err != nil {
+			logger.WithComponent("BotEngine").Warnf("Failed to load recent history for conversation %d: %v", conv.ID, err)
+		}
+		history = []bot.Message{
+			{ConversationID: conv.ID, SenderType: bot.SenderCustomer, Content: messageContent},
+		}
+	}
+
 	var compositePrompt string
 	if e.promptBuilder != nil {
-		if cp, err := e.promptBuilder.BuildCompositeSystemPrompt(ctx); err == nil && cp != "" {
+		var queryBuilder strings.Builder
+		for _, h := range history {
+			queryBuilder.WriteString(h.Content)
+			queryBuilder.WriteString(" ")
+		}
+		queryBuilder.WriteString(messageContent)
+
+		if cp, err := e.promptBuilder.BuildSelectivePrompt(ctx, queryBuilder.String()); err == nil && cp != "" {
 			compositePrompt = cp
 		} else if err != nil {
-			logger.WithComponent("BotEngine").Warnf("Failed to build composite skills prompt: %v", err)
+			logger.WithComponent("BotEngine").Warnf("Failed to build selective skills prompt: %v", err)
 		}
 	}
 
@@ -173,16 +192,6 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	if err != nil {
 		logger.WithComponent("BotEngine").Warnf("No active LLM config found for conversation %d", conv.ID)
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Maaf, konfigurasi asisten AI belum aktif. Pesan Anda telah kami terima.", 0, 0, nil)
-	}
-
-	history, err := e.convService.GetRecentHistory(ctx, conv.ID, historyLimit)
-	if err != nil || len(history) == 0 {
-		if err != nil {
-			logger.WithComponent("BotEngine").Warnf("Failed to load recent history for conversation %d: %v", conv.ID, err)
-		}
-		history = []bot.Message{
-			{ConversationID: conv.ID, SenderType: bot.SenderCustomer, Content: messageContent},
-		}
 	}
 
 	systemPrompt, chatMessages, err := e.contextMgr.BuildPromptContext(ctx, conv.ID, history, compositePrompt)
