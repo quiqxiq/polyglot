@@ -81,15 +81,23 @@ func (s *Store) FindByID(ctx context.Context, id uint) (*llm.Config, error) {
 
 func (s *Store) FindActive(ctx context.Context) (*llm.Config, error) {
 	var m model.LLMConfigModel
-	if err := s.db.WithContext(ctx).Where("is_active = ?", true).First(&m).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, ErrNotFound
-		}
-		return nil, err
+	// 1. Coba cari konfigurasi yang ditandai aktif
+	if err := s.db.WithContext(ctx).Where("is_active = ?", true).First(&m).Error; err == nil {
+		cfg := m.ToDomain()
+		s.PopulateLLMConfigAnalytics(ctx, cfg)
+		return cfg, nil
 	}
-	cfg := m.ToDomain()
-	s.PopulateLLMConfigAnalytics(ctx, cfg)
-	return cfg, nil
+
+	// 2. Fallback: jika belum ada yang aktif, ambil konfigurasi terbaru dan aktifkan otomatis
+	if err := s.db.WithContext(ctx).Order("updated_at DESC, id DESC").First(&m).Error; err == nil {
+		m.IsActive = true
+		_ = s.db.WithContext(ctx).Model(&m).Update("is_active", true)
+		cfg := m.ToDomain()
+		s.PopulateLLMConfigAnalytics(ctx, cfg)
+		return cfg, nil
+	}
+
+	return nil, ErrNotFound
 }
 
 func (s *Store) FindAll(ctx context.Context) ([]llm.Config, error) {

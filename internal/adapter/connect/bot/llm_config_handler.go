@@ -43,6 +43,11 @@ func (h *BotConnectHandler) CreateLLMConfig(ctx context.Context, req *connect.Re
 
 	inRate, outRate := llmcost.GetDefaultPricing(req.Msg.Provider, req.Msg.ModelName)
 
+	isActive := false
+	if activeCfg, _ := h.llmRepo.FindActive(ctx); activeCfg == nil {
+		isActive = true
+	}
+
 	cfg := &domainllm.Config{
 		Provider:        req.Msg.Provider,
 		Model:           req.Msg.ModelName,
@@ -50,7 +55,7 @@ func (h *BotConnectHandler) CreateLLMConfig(ctx context.Context, req *connect.Re
 		MaxOutputTokens: int(req.Msg.MaxTokens),
 		CostPer1MInput:  inRate,
 		CostPer1MOutput: outRate,
-		IsActive:        false,
+		IsActive:        isActive,
 	}
 
 	if err := h.llmRepo.Create(ctx, cfg); err != nil {
