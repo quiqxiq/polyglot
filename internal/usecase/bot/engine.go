@@ -142,12 +142,12 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		return nil
 	case StatusWarned, StatusDailyQuotaExceeded:
 		logger.WithComponent("BotEngine").Warnf("Number %s rate limit notification (%v).", customerNumber, rateResult.Status)
-		return e.sendBotReply(ctx, conv.ID, sessionID, customerNumber, rateResult.Message, 0, 0, nil)
+		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, rateResult.Message, 0, 0, nil)
 	}
 
 	if !e.guardrail.IsTopicAllowed(messageContent) {
 		offTopicReply := e.guardrail.FormatOffTopicResponse()
-		return e.sendBotReply(ctx, conv.ID, sessionID, customerNumber, offTopicReply, 0, 0, nil)
+		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, offTopicReply, 0, 0, nil)
 	}
 
 	if e.chat != nil {
@@ -155,7 +155,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		if chatErr == nil && strings.TrimSpace(chatResult.Content) != "" {
 			reply := e.guardrail.SanitizeResponse(chatResult.Content)
 			if reply != "" {
-				if err := e.sendBotReply(ctx, conv.ID, sessionID, customerNumber, reply, chatResult.TokenIn, chatResult.TokenOut, nil); err != nil {
+				if err := e.sendBotReply(ctx, conv.ID, sessionID, chatJID, reply, chatResult.TokenIn, chatResult.TokenOut, nil); err != nil {
 					return err
 				}
 				_ = e.rateLimiter.IncrementDailyQuota(ctx, customerNumber)
@@ -170,14 +170,14 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 
 	if e.llmConfigRepo == nil {
 		fallbackReply := "Maaf, kami kesulitan memproses pesan Anda. Pesan telah kami teruskan ke admin kami."
-		return e.escalateWithFallback(ctx, conv.ID, sessionID, customerNumber, fallbackReply)
+		return e.escalateWithFallback(ctx, conv.ID, sessionID, chatJID, fallbackReply)
 	}
 
 	llmCfg, err := e.llmConfigRepo.FindActive(ctx)
 	if err != nil {
 		logger.WithComponent("BotEngine").Warnf("No active LLM config found! Escalating conversation %d", conv.ID)
 		fallbackReply := "Maaf, sistem AI kami sedang dalam pemeliharaan. Pesan Anda telah diteruskan ke tim admin."
-		return e.escalateWithFallback(ctx, conv.ID, sessionID, customerNumber, fallbackReply)
+		return e.escalateWithFallback(ctx, conv.ID, sessionID, chatJID, fallbackReply)
 	}
 
 	history, err := e.convService.GetRecentHistory(ctx, conv.ID, historyLimit)
@@ -196,13 +196,13 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	}
 
 	if e.providerF == nil {
-		return e.escalateWithFallback(ctx, conv.ID, sessionID, customerNumber, "Maaf, sistem AI kami sedang tidak tersedia. Pesan Anda telah diteruskan ke tim admin.")
+		return e.escalateWithFallback(ctx, conv.ID, sessionID, chatJID, "Maaf, sistem AI kami sedang tidak tersedia. Pesan Anda telah diteruskan ke tim admin.")
 	}
 
 	provider, err := e.providerF(llmCfg)
 	if err != nil {
 		logger.WithComponent("BotEngine").Errorf("Failed to build LLM provider for conversation %d: %v", conv.ID, err)
-		return e.escalateWithFallback(ctx, conv.ID, sessionID, customerNumber, "Maaf, sistem AI kami sedang tidak tersedia. Pesan Anda telah diteruskan ke tim admin.")
+		return e.escalateWithFallback(ctx, conv.ID, sessionID, chatJID, "Maaf, sistem AI kami sedang tidak tersedia. Pesan Anda telah diteruskan ke tim admin.")
 	}
 
 	maxTokens := llmCfg.MaxOutputTokens
@@ -213,16 +213,16 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	resp, err := provider.Chat(ctx, systemPrompt, chatMessages, maxTokens)
 	if err != nil {
 		logger.WithComponent("BotEngine").Errorf("LLM call failed for conversation %d: %v", conv.ID, err)
-		return e.escalateWithFallback(ctx, conv.ID, sessionID, customerNumber, "Maaf, sistem AI kami sedang bermasalah. Pesan Anda telah diteruskan ke tim admin kami.")
+		return e.escalateWithFallback(ctx, conv.ID, sessionID, chatJID, "Maaf, sistem AI kami sedang bermasalah. Pesan Anda telah diteruskan ke tim admin kami.")
 	}
 
 	reply := e.guardrail.SanitizeResponse(resp.Content)
 	if reply == "" {
 		logger.WithComponent("BotEngine").Warnf("Empty LLM reply for conversation %d", conv.ID)
-		reply = "Maaf, saya tidak menemukan jawaban yang tepat. Tim kami akan segera menghubungi Anda."
+		reply = "Maaf, saya tidak dapat memahami permintaan Anda. Bisakah Anda menjelaskan lebih detail?"
 	}
 
-	if err := e.sendBotReply(ctx, conv.ID, sessionID, customerNumber, reply, resp.TokenIn, resp.TokenOut, &llmCfg.ID); err != nil {
+	if err := e.sendBotReply(ctx, conv.ID, sessionID, chatJID, reply, resp.TokenIn, resp.TokenOut, &llmCfg.ID); err != nil {
 		return err
 	}
 
@@ -282,9 +282,9 @@ func (e *Engine) GetConversationContext(ctx context.Context, convID uint) (*bot.
 }
 
 // sendBotReply sends a bot message via the WhatsApp gateway and persists it.
-func (e *Engine) sendBotReply(ctx context.Context, convID uint, sessionID uint, customerNumber string, content string, tokenIn, tokenOut int, llmConfigID *uint) error {
-	if err := e.waGateway.SendMessage(sessionID, customerNumber, content); err != nil {
-		logger.WithComponent("BotEngine").Errorf("Failed to send reply to %s: %v", customerNumber, err)
+func (e *Engine) sendBotReply(ctx context.Context, convID uint, sessionID uint, targetJID string, content string, tokenIn, tokenOut int, llmConfigID *uint) error {
+	if err := e.waGateway.SendMessage(sessionID, targetJID, content); err != nil {
+		logger.WithComponent("BotEngine").Errorf("Failed to send reply to %s: %v", targetJID, err)
 		return fmt.Errorf("failed to send bot reply: %w", err)
 	}
 
@@ -300,9 +300,9 @@ func (e *Engine) sendBotReply(ctx context.Context, convID uint, sessionID uint, 
 
 // escalateWithFallback marks the conversation as needing a human agent, sends
 // a fallback reply and persists it.
-func (e *Engine) escalateWithFallback(ctx context.Context, convID uint, sessionID uint, customerNumber string, reply string) error {
+func (e *Engine) escalateWithFallback(ctx context.Context, convID uint, sessionID uint, targetJID string, reply string) error {
 	if err := e.convService.Escalate(ctx, convID); err != nil {
 		logger.WithComponent("BotEngine").Errorf("Failed to escalate conversation %d: %v", convID, err)
 	}
-	return e.sendBotReply(ctx, convID, sessionID, customerNumber, reply, 0, 0, nil)
+	return e.sendBotReply(ctx, convID, sessionID, targetJID, reply, 0, 0, nil)
 }

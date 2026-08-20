@@ -254,7 +254,15 @@ export function Chats() {
   const selectedConv = useMemo(() => {
     if (!selectedChat) return undefined
     const phone = formatJid(selectedChat.chatJid)
-    return conversations.find((c) => c.clientPhone === phone)
+    const cleanDigits = phone.replace(/\D/g, '')
+    return conversations.find((c) => {
+      if (c.clientPhone === phone || c.clientPhone === selectedChat.chatJid) return true
+      const cDigits = c.clientPhone.replace(/\D/g, '')
+      if (cDigits && cleanDigits) {
+        return cDigits === cleanDigits || cDigits.endsWith(cleanDigits) || cleanDigits.endsWith(cDigits)
+      }
+      return false
+    })
   }, [selectedChat, conversations])
   const contextQuery = useConversationContextQuery(
     selectedConv?.id ?? '',
@@ -331,17 +339,27 @@ export function Chats() {
   }
 
   const handleTakeOver = () => {
-    if (!selectedConv) return
-    takeOverMutation.mutate(
-      new TakeOverConversationRequest({ id: selectedConv.id })
-    )
+    if (selectedChat?.botEnabled) {
+      handleToggleChatBot()
+    }
+    if (selectedConv) {
+      takeOverMutation.mutate(
+        new TakeOverConversationRequest({ id: selectedConv.id })
+      )
+    }
+    toast.success('Percakapan dialihkan ke agen CS manual (Bot dinonaktifkan)')
   }
 
   const handleResetBot = () => {
-    if (!selectedConv) return
-    resetBotMutation.mutate(
-      new ResetConversationBotRequest({ id: selectedConv.id })
-    )
+    if (selectedChat && !selectedChat.botEnabled) {
+      handleToggleChatBot()
+    }
+    if (selectedConv) {
+      resetBotMutation.mutate(
+        new ResetConversationBotRequest({ id: selectedConv.id })
+      )
+    }
+    toast.success('Bot AI diaktifkan kembali untuk percakapan ini')
   }
 
   const handleCloseConversation = () => {
@@ -646,7 +664,7 @@ export function Chats() {
                 </div>
               </div>
 
-              {(convContext || (selectedPhone && rateLimitStatus && (rateLimitStatus.isMuted || rateLimitStatus.dailyChatCount > 0))) && (
+              {(convContext || selectedPhone) && (
                 <div className='flex flex-none flex-wrap items-center gap-x-3 gap-y-1 border-b bg-card px-4 py-2 text-xs'>
                   {convContext && (
                     <span
@@ -721,50 +739,60 @@ export function Chats() {
                     </p>
                   )}
                   <div className='ms-auto flex items-center gap-2'>
-                    {rateLimitStatus &&
-                      (rateLimitStatus.isMuted ||
-                        rateLimitStatus.dailyChatCount > 0) && (
-                        <Button
-                          size='sm'
-                          variant='outline'
-                          className='gap-1.5 border-amber-300 text-amber-700 hover:bg-amber-50 dark:border-amber-700 dark:text-amber-300 dark:hover:bg-amber-950/50'
-                          disabled={resetRateLimitMutation.isPending}
-                          onClick={handleResetRateLimit}
-                          title='Reset pembatasan spam dan kuota percakapan AI nomor ini'
-                        >
-                          <RotateCcw size={13} /> Reset Limit
-                        </Button>
-                      )}
-                    {convContext?.status === 'bot' && (
+                    {/* Tombol Reset Rate Limit & Kuota Harian (Selalu Tersedia) */}
+                    {selectedPhone && (
+                      <Button
+                        size='sm'
+                        variant={rateLimitStatus?.isMuted ? 'destructive' : 'outline'}
+                        className={cn(
+                          'gap-1.5 text-xs',
+                          rateLimitStatus?.isMuted
+                            ? 'animate-pulse'
+                            : 'border-amber-300 text-amber-700 hover:bg-amber-50 dark:border-amber-700 dark:text-amber-300 dark:hover:bg-amber-950/50'
+                        )}
+                        disabled={resetRateLimitMutation.isPending}
+                        onClick={handleResetRateLimit}
+                        title='Reset pembatasan spam (mute 1 jam/24 jam) dan kuota percakapan AI nomor ini'
+                      >
+                        <RotateCcw size={13} /> Reset Limit
+                      </Button>
+                    )}
+
+                    {/* Tombol Ambil Alih CS vs Aktifkan AI */}
+                    {selectedChat?.botEnabled || convContext?.status === 'bot' ? (
                       <Button
                         size='sm'
                         variant='outline'
-                        className='gap-1.5'
-                        disabled={takeOverMutation.isPending}
+                        className='gap-1.5 text-xs'
+                        disabled={takeOverMutation.isPending || toggleChatBotMutation.isPending}
                         onClick={handleTakeOver}
+                        title='Hentikan bot AI dan alihkan percakapan ke CS manual'
                       >
-                        <UserCheck size={14} /> Ambil alih
+                        <UserCheck size={14} className='text-amber-600' /> Ambil Alih CS
                       </Button>
-                    )}
-                    {convContext?.status === 'escalation' && (
+                    ) : (
                       <Button
                         size='sm'
                         variant='outline'
-                        className='gap-1.5'
-                        disabled={resetBotMutation.isPending}
+                        className='gap-1.5 text-xs border-emerald-300 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-700 dark:text-emerald-300 dark:hover:bg-emerald-950/50'
+                        disabled={resetBotMutation.isPending || toggleChatBotMutation.isPending}
                         onClick={handleResetBot}
+                        title='Kembalikan percakapan ke mode bot AI otomatis'
                       >
-                        <Bot size={14} /> Kembalikan ke bot
+                        <Bot size={14} className='text-emerald-600' /> Aktifkan AI
                       </Button>
                     )}
-                    {convContext && convContext.status !== 'done' && (
+
+                    {convContext && convContext.status !== 'done' && convContext.status !== 'closed' && (
                       <Button
                         size='sm'
                         variant='ghost'
+                        className='text-xs text-muted-foreground hover:text-foreground'
                         disabled={closeConvMutation.isPending}
                         onClick={handleCloseConversation}
+                        title='Tandai percakapan selesai'
                       >
-                        Tutup
+                        Tutup Chat
                       </Button>
                     )}
                   </div>

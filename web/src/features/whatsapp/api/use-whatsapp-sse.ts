@@ -195,7 +195,7 @@ export function useWARealtimeStream(): WARealtimeState {
 
       // Daftar chat session tsb (preview/urutan/unread) + pesan chat tsb bila
       // sedang dipilih (key lengkap hanya match query yang aktif) + daftar
-      // percakapan bot + konteks percakapan yang sedang dibuka.
+      // percakapan bot + konteks percakapan yang sedang dibuka + status rate limit.
       queryClient.invalidateQueries({ queryKey: botKeys.chats(sessionId) })
       queryClient.invalidateQueries({
         queryKey: botKeys.chatMessages(sessionId, chatJid),
@@ -204,6 +204,9 @@ export function useWARealtimeStream(): WARealtimeState {
         queryKey: botKeys.conversations(sessionId),
       })
       queryClient.invalidateQueries({ queryKey: BOT_CONTEXT_PREFIX })
+      queryClient.invalidateQueries({
+        queryKey: [...botKeys.all, 'rate-limit-status'],
+      })
     }
 
     const applyConversationStatus = (raw: string) => {
