@@ -95,8 +95,23 @@ func NewEngine(
 	}
 }
 
-// HandleIncomingMessage processes a single incoming WhatsApp text message.
+// HandleIncomingMessage processes an incoming message from a WhatsApp session.
 func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chatJID string, customerNumber string, messageContent string) error {
+	if strings.TrimSpace(messageContent) == "" {
+		return nil
+	}
+
+	// Filter ketat: Bot HANYA memproses dan membalas chat direct 1:1 dari nomor WhatsApp pribadi.
+	// Dilarang keras membalas Group (@g.us), Status/Story (@broadcast), Channel/News (@newsletter), atau Akun Sistem (0@s.whatsapp.net).
+	if strings.HasSuffix(chatJID, "@g.us") ||
+		strings.HasSuffix(chatJID, "@broadcast") ||
+		strings.HasSuffix(chatJID, "@newsletter") ||
+		chatJID == "status@broadcast" ||
+		chatJID == "0@s.whatsapp.net" {
+		logger.WithComponent("BotEngine").Debugf("Ignoring non-direct message from %s (group/channel/broadcast)", chatJID)
+		return nil
+	}
+
 	if e.waGateway == nil {
 		return errors.New("bot engine: whatsapp gateway not initialized")
 	}

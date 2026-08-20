@@ -248,3 +248,36 @@ func TestEngineChatBotDisabled(t *testing.T) {
 		t.Fatalf("expected customer message recorded, got %d", len(convRepo.msgs[convID]))
 	}
 }
+
+func TestEngineIgnoresGroupsAndBroadcasts(t *testing.T) {
+	cache := newFakeCache()
+	gw := &fakeGateway{}
+	prov := &fakeProvider{reply: "balasan"}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
+	convRepo := newFakeConvRepo()
+
+	e := newTestEngine(cache, gw, llmRepo, prov, convRepo)
+
+	// 1. Group message
+	if err := e.HandleIncomingMessage(context.Background(), 1, "123456789-987654@g.us", "628123456789", "Halo semua di grup"); err != nil {
+		t.Fatalf("unexpected error for group: %v", err)
+	}
+
+	// 2. Broadcast / status
+	if err := e.HandleIncomingMessage(context.Background(), 1, "status@broadcast", "628123456789", "Status update"); err != nil {
+		t.Fatalf("unexpected error for broadcast: %v", err)
+	}
+
+	// 3. Channel / Newsletter
+	if err := e.HandleIncomingMessage(context.Background(), 1, "123456789012345678@newsletter", "news", "Berita terbaru"); err != nil {
+		t.Fatalf("unexpected error for newsletter: %v", err)
+	}
+
+	// Pastikan bot tidak pernah mengirim balasan dan tidak memanggil LLM
+	if len(gw.sent) != 0 {
+		t.Fatalf("bot must not reply to groups or broadcasts, got %v", gw.sent)
+	}
+	if len(prov.calls) != 0 {
+		t.Fatalf("LLM must not be called for groups or broadcasts")
+	}
+}

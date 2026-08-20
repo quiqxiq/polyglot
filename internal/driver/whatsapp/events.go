@@ -2,6 +2,7 @@ package whatsapp
 
 import (
 	"context"
+	"strings"
 
 	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/types"
@@ -61,6 +62,13 @@ func (c *Client) handleIncomingMessage(evt *events.Message) {
 		return
 	}
 
+	// Jangan teruskan pesan grup, newsletter, atau broadcast ke bot engine auto-reply.
+	// Pesan tersebut tetap tersimpan di database mirror via persistMirrorMessage,
+	// tetapi tidak boleh memicu AI bot otomatis.
+	if evt.Info.IsGroup || evt.Info.Chat.Server == types.GroupServer || strings.HasSuffix(chatJID, "@g.us") || strings.HasSuffix(chatJID, "@broadcast") || strings.HasSuffix(chatJID, "@newsletter") {
+		return
+	}
+
 	senderJID := evt.Info.Sender.User
 	if !evt.Info.IsGroup && evt.Info.Chat.User != "" {
 		senderJID = evt.Info.Chat.User
@@ -77,7 +85,7 @@ func (c *Client) handleIncomingMessage(evt *events.Message) {
 		"session_id": c.SessionID,
 		"sender":     senderJID,
 		"chat_jid":   chatJID,
-	}).Debugf("incoming message: %s", body)
+	}).Debugf("incoming direct 1:1 message: %s", body)
 
 	if cb := c.getMessageCallback(); cb != nil {
 		cb(c.SessionID, chatJID, senderJID, body)
