@@ -1,5 +1,4 @@
 import {
-  BookOpen,
   FileText,
   LayoutDashboard,
   MessageCircleMore,
@@ -7,6 +6,7 @@ import {
   Monitor,
   Network,
   ShieldCheck,
+  Sparkles,
   Users,
   Wifi,
 } from 'lucide-react'
@@ -65,16 +65,16 @@ export const sidebarData: SidebarData = {
           permission: 'conversation:read',
         },
         {
+          title: 'Skills & Prompts',
+          url: '/skills',
+          icon: Sparkles,
+          permission: 'skill:read',
+        },
+        {
           title: 'WhatsApp Devices',
           url: '/whatsapp',
           icon: MessageCircleMore,
           permission: 'whatsapp:read',
-        },
-        {
-          title: 'Knowledge',
-          url: '/knowledge',
-          icon: BookOpen,
-          permission: 'knowledge:read',
         },
         {
           title: 'Users',

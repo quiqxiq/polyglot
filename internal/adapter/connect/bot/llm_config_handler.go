@@ -2,70 +2,166 @@ package bot
 
 import (
 	"context"
+	"fmt"
+	"strconv"
 
 	"connectrpc.com/connect"
-
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	"github.com/quixiq/polyglot/internal/adapter/llm/genkit"
+	"github.com/quixiq/polyglot/internal/config"
+	domainllm "github.com/quixiq/polyglot/internal/domain/llm"
+	"github.com/quixiq/polyglot/pkg/llmcost"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
-func (h *KnowledgeConnectHandler) ListLLMConfigs(ctx context.Context, req *connect.Request[devicepb.ListLLMConfigsRequest]) (*connect.Response[devicepb.ListLLMConfigsResponse], error) {
+func (h *BotConnectHandler) ListLLMConfigs(ctx context.Context, req *connect.Request[devicepb.ListLLMConfigsRequest]) (*connect.Response[devicepb.ListLLMConfigsResponse], error) {
+	if h.llmRepo == nil {
+		return connect.NewResponse(&devicepb.ListLLMConfigsResponse{}), nil
+	}
+	configs, err := h.llmRepo.FindAll(ctx)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
 	return connect.NewResponse(&devicepb.ListLLMConfigsResponse{
-		Configs: []*devicepb.LLMConfig{
-			{
-				Id:           "llm-default",
-				Provider:     "openai",
-				ModelName:    "gpt-4o-mini",
-				IsActive:     true,
-				Temperature:  0.7,
-				MaxTokens:    1024,
-				SystemPrompt: "You are GNET Bot assistant.",
-			},
-		},
+		Configs: toProtoLLMConfigList(configs),
 	}), nil
 }
 
-func (h *KnowledgeConnectHandler) CreateLLMConfig(ctx context.Context, req *connect.Request[devicepb.CreateLLMConfigRequest]) (*connect.Response[devicepb.CreateLLMConfigResponse], error) {
+func (h *BotConnectHandler) CreateLLMConfig(ctx context.Context, req *connect.Request[devicepb.CreateLLMConfigRequest]) (*connect.Response[devicepb.CreateLLMConfigResponse], error) {
+	if h.llmRepo == nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("llm repository not initialized"))
+	}
+
+	var encryptedKey string
+	if req.Msg.ApiKey != "" {
+		enc, err := config.Encrypt(req.Msg.ApiKey, h.encryptionKey)
+		if err != nil {
+			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to encrypt api key: %w", err))
+		}
+		encryptedKey = enc
+	}
+
+	inRate, outRate := llmcost.GetDefaultPricing(req.Msg.Provider, req.Msg.ModelName)
+
+	cfg := &domainllm.Config{
+		Provider:        req.Msg.Provider,
+		Model:           req.Msg.ModelName,
+		APIKeyEncrypted: encryptedKey,
+		MaxOutputTokens: int(req.Msg.MaxTokens),
+		CostPer1MInput:  inRate,
+		CostPer1MOutput: outRate,
+		IsActive:        false,
+	}
+
+	if err := h.llmRepo.Create(ctx, cfg); err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
 	return connect.NewResponse(&devicepb.CreateLLMConfigResponse{
-		Config: &devicepb.LLMConfig{
-			Id:           "llm-new",
-			Provider:     req.Msg.Provider,
-			ModelName:    req.Msg.ModelName,
-			IsActive:     false,
-			Temperature:  req.Msg.Temperature,
-			MaxTokens:    req.Msg.MaxTokens,
-			SystemPrompt: req.Msg.SystemPrompt,
-		},
+		Config: toProtoLLMConfig(cfg),
 	}), nil
 }
 
-func (h *KnowledgeConnectHandler) UpdateLLMConfig(ctx context.Context, req *connect.Request[devicepb.UpdateLLMConfigRequest]) (*connect.Response[devicepb.UpdateLLMConfigResponse], error) {
+func (h *BotConnectHandler) UpdateLLMConfig(ctx context.Context, req *connect.Request[devicepb.UpdateLLMConfigRequest]) (*connect.Response[devicepb.UpdateLLMConfigResponse], error) {
+	if h.llmRepo == nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("llm repository not initialized"))
+	}
+	idNum, _ := strconv.ParseUint(req.Msg.Id, 10, 32)
+	cfg, err := h.llmRepo.FindByID(ctx, uint(idNum))
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
+	cfg.Provider = req.Msg.Provider
+	cfg.Model = req.Msg.ModelName
+	inRate, outRate := llmcost.GetDefaultPricing(req.Msg.Provider, req.Msg.ModelName)
+	cfg.CostPer1MInput = inRate
+	cfg.CostPer1MOutput = outRate
+
+	if req.Msg.MaxTokens > 0 {
+		cfg.MaxOutputTokens = int(req.Msg.MaxTokens)
+	}
+	if req.Msg.ApiKey != "" {
+		enc, err := config.Encrypt(req.Msg.ApiKey, h.encryptionKey)
+		if err != nil {
+			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to encrypt api key: %w", err))
+		}
+		cfg.APIKeyEncrypted = enc
+	}
+
+	if err := h.llmRepo.Update(ctx, cfg); err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
 	return connect.NewResponse(&devicepb.UpdateLLMConfigResponse{
-		Config: &devicepb.LLMConfig{
-			Id:           req.Msg.Id,
-			Provider:     req.Msg.Provider,
-			ModelName:    req.Msg.ModelName,
-			IsActive:     true,
-			Temperature:  req.Msg.Temperature,
-			MaxTokens:    req.Msg.MaxTokens,
-			SystemPrompt: req.Msg.SystemPrompt,
-		},
+		Config: toProtoLLMConfig(cfg),
 	}), nil
 }
 
-func (h *KnowledgeConnectHandler) ActivateLLMConfig(ctx context.Context, req *connect.Request[devicepb.ActivateLLMConfigRequest]) (*connect.Response[devicepb.ActivateLLMConfigResponse], error) {
+func (h *BotConnectHandler) ActivateLLMConfig(ctx context.Context, req *connect.Request[devicepb.ActivateLLMConfigRequest]) (*connect.Response[devicepb.ActivateLLMConfigResponse], error) {
+	if h.llmRepo == nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("llm repository not initialized"))
+	}
+	idNum, _ := strconv.ParseUint(req.Msg.Id, 10, 32)
+	if err := h.llmRepo.SetActive(ctx, uint(idNum)); err != nil {
+		return nil, response.MapDomainError(err)
+	}
 	return connect.NewResponse(&devicepb.ActivateLLMConfigResponse{
 		Message: "llm config activated successfully",
 	}), nil
 }
 
-func (h *KnowledgeConnectHandler) TestLLMConfig(ctx context.Context, req *connect.Request[devicepb.TestLLMConfigRequest]) (*connect.Response[devicepb.TestLLMConfigResponse], error) {
+func (h *BotConnectHandler) TestLLMConfig(ctx context.Context, req *connect.Request[devicepb.TestLLMConfigRequest]) (*connect.Response[devicepb.TestLLMConfigResponse], error) {
+	if h.llmRepo == nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("llm repository not initialized"))
+	}
+	idNum, _ := strconv.ParseUint(req.Msg.Id, 10, 32)
+	cfg, err := h.llmRepo.FindByID(ctx, uint(idNum))
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
+	var apiKey string
+	if cfg.APIKeyEncrypted != "" {
+		dec, err := config.Decrypt(cfg.APIKeyEncrypted, h.encryptionKey)
+		if err != nil {
+			return connect.NewResponse(&devicepb.TestLLMConfigResponse{
+				Success:      false,
+				ErrorMessage: fmt.Sprintf("Gagal decrypt API key: %v", err),
+			}), nil
+		}
+		apiKey = dec
+	}
+
+	prov, err := genkit.NewProvider(ctx, cfg, apiKey)
+	if err != nil {
+		return connect.NewResponse(&devicepb.TestLLMConfigResponse{
+			Success:      false,
+			ErrorMessage: err.Error(),
+		}), nil
+	}
+
+	if err := prov.TestConnection(ctx); err != nil {
+		return connect.NewResponse(&devicepb.TestLLMConfigResponse{
+			Success:      false,
+			ErrorMessage: err.Error(),
+		}), nil
+	}
+
 	return connect.NewResponse(&devicepb.TestLLMConfigResponse{
 		Success:      true,
-		ResponseText: "Hello! LLM Connection test successful.",
+		ResponseText: fmt.Sprintf("Koneksi ke model AI Genkit (%s - %s) berhasil diuji!", cfg.Provider, cfg.Model),
 	}), nil
 }
 
-func (h *KnowledgeConnectHandler) DeleteLLMConfig(ctx context.Context, req *connect.Request[devicepb.DeleteLLMConfigRequest]) (*connect.Response[devicepb.DeleteLLMConfigResponse], error) {
+func (h *BotConnectHandler) DeleteLLMConfig(ctx context.Context, req *connect.Request[devicepb.DeleteLLMConfigRequest]) (*connect.Response[devicepb.DeleteLLMConfigResponse], error) {
+	if h.llmRepo == nil {
+		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("llm repository not initialized"))
+	}
+	idNum, _ := strconv.ParseUint(req.Msg.Id, 10, 32)
+	if err := h.llmRepo.Delete(ctx, uint(idNum)); err != nil {
+		return nil, response.MapDomainError(err)
+	}
 	return connect.NewResponse(&devicepb.DeleteLLMConfigResponse{
 		Message: "llm config deleted successfully",
 	}), nil

@@ -58,11 +58,10 @@ func TestEnforceRoleMatrix(t *testing.T) {
 		want   bool
 	}{
 		{"owner can manage rbac", "1001", "rbac:manage", true},
-		{"owner can write knowledge", "1001", "knowledge:write", true},
+		{"owner can write skill", "1001", "skill:manage", true},
 		{"owner can device command", "1001", "device:command", true},
 
-		{"admin can manage knowledge", "1002", "knowledge:write", true},
-		{"admin can embed knowledge", "1002", "knowledge:embed", true},
+		{"admin can manage skill", "1002", "skill:manage", true},
 		{"admin can manage devices", "1002", "device:manage", true},
 		{"admin can manage llmconfig", "1002", "llmconfig:manage", true},
 		{"admin CANNOT manage rbac", "1002", "rbac:manage", false},
@@ -70,8 +69,8 @@ func TestEnforceRoleMatrix(t *testing.T) {
 
 		{"agent can read conversation", "1003", "conversation:read", true},
 		{"agent can write conversation", "1003", "conversation:write", true},
-		{"agent can read knowledge", "1003", "knowledge:read", true},
-		{"agent CANNOT write knowledge", "1003", "knowledge:write", false},
+		{"agent can read skill", "1003", "skill:read", true},
+		{"agent CANNOT write skill", "1003", "skill:manage", false},
 		{"agent CANNOT device read", "1003", "device:read", false},
 		{"agent CANNOT manage rbac", "1003", "rbac:manage", false},
 
@@ -79,10 +78,11 @@ func TestEnforceRoleMatrix(t *testing.T) {
 		{"teknisi can device command", "1004", "device:command", true},
 		{"teknisi CANNOT manage device", "1004", "device:manage", false},
 		{"teknisi can read conversation", "1004", "conversation:read", true},
+		{"teknisi can read skill", "1004", "skill:read", true},
 		{"teknisi can read technician", "1004", "technician:read", true},
 		{"teknisi CANNOT manage rbac", "1004", "rbac:manage", false},
 
-		{"unknown user denied", "9999", "knowledge:read", false},
+		{"unknown user denied", "9999", "skill:read", false},
 	}
 
 	for _, tt := range tests {

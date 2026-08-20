@@ -8,7 +8,6 @@ import (
 	"testing"
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
-	"github.com/quixiq/polyglot/internal/domain/knowledge"
 	"github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -88,9 +87,8 @@ func TestBuildPromptContextRolesAndSummary(t *testing.T) {
 		{ID: 3, ConversationID: 5, SenderType: bot.SenderAgent, Content: "Ini dari admin."},
 	}
 
-	systemPrompt, messages, err := cm.BuildPromptContext(ctx, 5, history, []knowledge.Entry{
-		{Title: "Paket", Content: "Paket mulai 150rb."},
-	})
+	compositePrompt := "Kamu adalah asisten layanan GNET.\n\n### SKILL: Paket\nPaket mulai 150rb."
+	systemPrompt, messages, err := cm.BuildPromptContext(ctx, 5, history, compositePrompt)
 	if err != nil {
 		t.Fatalf("BuildPromptContext: %v", err)
 	}
@@ -99,7 +97,7 @@ func TestBuildPromptContextRolesAndSummary(t *testing.T) {
 		t.Fatal("base system prompt missing")
 	}
 	if !strings.Contains(systemPrompt, "Paket mulai 150rb.") {
-		t.Fatal("knowledge entries missing from prompt")
+		t.Fatal("skill entries missing from prompt")
 	}
 	if !strings.Contains(systemPrompt, "Pelanggan menanyakan paket.") {
 		t.Fatal("per-conversation summary missing from prompt")
@@ -113,7 +111,7 @@ func TestBuildPromptContextRolesAndSummary(t *testing.T) {
 	}
 
 	// Summary milik conv lain tidak boleh bocor.
-	other, _, err := cm.BuildPromptContext(ctx, 99, nil, nil)
+	other, _, err := cm.BuildPromptContext(ctx, 99, nil, "")
 	if err != nil {
 		t.Fatal(err)
 	}

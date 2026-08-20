@@ -14,7 +14,6 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/customer"
-	"github.com/quixiq/polyglot/internal/domain/knowledge"
 	"github.com/quixiq/polyglot/internal/domain/llm"
 )
 
@@ -40,7 +39,6 @@ func main() {
 	ctx := context.Background()
 	seedUsers(ctx, pgStore)
 	ensureOwnerExists(ctx, pgStore)
-	seedKnowledge(ctx, pgStore)
 	seedLLMConfig(ctx, pgStore, cfg)
 	seedCasbin(ctx, pgStore)
 
@@ -177,66 +175,6 @@ func seedCasbin(ctx context.Context, pgStore *postgres.Store) {
 	}
 	auth.EnsureUserRoleAssignments(enforcer, refs)
 	log.Println("Synced user role assignments into Casbin grouping policies")
-}
-
-func seedKnowledge(ctx context.Context, pgStore *postgres.Store) {
-	entries := []knowledge.Entry{
-		{
-			Title: "Paket & Harga Internet GNET Home",
-			Content: "PT Ghaib Network (GNET) menyediakan paket internet rumah unmetered unlimited tanpa FUP:\n" +
-				"1. GNET Starter 20 Mbps — Rp 199.000 / bulan\n" +
-				"2. GNET Family 50 Mbps — Rp 299.000 / bulan\n" +
-				"3. GNET Ultra 100 Mbps — Rp 499.000 / bulan\n\n" +
-				"Harga sudah termasuk PPN 11% dan sewa router modem Wi-Fi dual-band gratis.",
-			Tags: "paket,harga,tarif,biaya,kecepatan,mbps,home,internet,unlimited,fup,promo",
-		},
-		{
-			Title: "Prosedur Pembayaran Tagihan Bulanan",
-			Content: "Pembayaran tagihan internet dilakukan paling lambat tanggal 20 setiap bulannya.\n" +
-				"Transfer dapat dilakukan ke rekening resmi perusahaan yang tertera pada invoice.\n" +
-				"Setelah melakukan pembayaran, mohon simpan resi transfer dan konfirmasikan ke WhatsApp ini.",
-			Tags: "pembayaran,bayar,tagihan,rekening,virtual account,va,jatuh tempo,transfer",
-		},
-		{
-			Title: "Penanganan Gangguan Koneksi Internet (Troubleshooting)",
-			Content: "Jika jaringan internet GNET Anda mengalami gangguan atau lampu indikator LOS berwarna merah:\n" +
-				"1. Matikan router/modem GNET selama 30 detik lalu nyalakan kembali.\n" +
-				"2. Pastikan kabel fiber optik berwarna kuning terpasang kencang dan tidak tertekuk.\n" +
-				"3. Jika kendala masih berlanjut, infokan lokasi dan nama pelanggan. Tim teknisi GNET siap datang ke lokasi.",
-			Tags: "gangguan,rusak,los,merah,lambat,lemot,mati,trouble,restart,modem,router,teknisi,kabel",
-		},
-		{
-			Title: "Pemasangan Baru & Cek Coverage Area",
-			Content: "Untuk mendaftar pemasangan baru internet GNET:\n" +
-				"1. Kirimkan lokasi Share Location (Google Maps) rumah/kantor Anda untuk cek ODP terdekat.\n" +
-				"2. Pemasangan gratis biaya instalasi (Free Biaya Pasang).\n" +
-				"3. Proses instalasi dilakukan oleh teknisi dalam waktu 1x24 jam setelah verifikasi.",
-			Tags: "pemasangan,pasang,baru,coverage,area,jangkauan,odp,lokasi,registrasi,daftar,instalasi",
-		},
-		{
-			Title: "Kontak Layanan Pelanggan & Kantor Pusat",
-			Content: "Layanan pelanggan beroperasi 24 jam setiap hari.\n" +
-				"- Telepon: sesuai nomor yang tertera pada invoice atau aplikasi\n" +
-				"- Email Support: support@example.com\n" +
-				"- Website: https://example.com",
-			Tags: "kontak,alamat,lokasi,kantor,telepon,email,call center,operasional,jam,hubungi",
-		},
-	}
-
-	existingEntries, _ := pgStore.FindAllKnowledgeEntries(ctx)
-	if len(existingEntries) > 0 {
-		log.Printf("Knowledge base already has %d entries, skipping.", len(existingEntries))
-		return
-	}
-
-	for i := range entries {
-		entry := &entries[i]
-		if err := pgStore.CreateKnowledgeEntry(ctx, entry); err != nil {
-			log.Printf("Failed to seed knowledge entry '%s': %v", entry.Title, err)
-		} else {
-			log.Printf("Created knowledge entry: %s", entry.Title)
-		}
-	}
 }
 
 func seedLLMConfig(ctx context.Context, pgStore *postgres.Store, cfg config.Config) {

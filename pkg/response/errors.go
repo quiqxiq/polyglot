@@ -5,11 +5,10 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/quixiq/polyglot/internal/domain/device"
-	"github.com/quixiq/polyglot/internal/domain/knowledge"
+	"github.com/quixiq/polyglot/internal/domain/skill"
 	authuc "github.com/quixiq/polyglot/internal/usecase/auth"
 	chatuc "github.com/quixiq/polyglot/internal/usecase/chat"
 	convuc "github.com/quixiq/polyglot/internal/usecase/conversation"
-	knowledgeuc "github.com/quixiq/polyglot/internal/usecase/knowledge"
 	networkuc "github.com/quixiq/polyglot/internal/usecase/network"
 	useruc "github.com/quixiq/polyglot/internal/usecase/user"
 )
@@ -35,10 +34,9 @@ func MapDomainError(err error) error {
 	}
 
 	// FailedPrecondition: aksi belum bisa dijalankan karena prasyarat
-	// (approval, streaming capability, infra embed) belum terpenuhi.
+	// (approval, streaming capability) belum terpenuhi.
 	if errors.Is(err, networkuc.ErrApprovalRequired) ||
-		errors.Is(err, networkuc.ErrDriverNotStreaming) ||
-		errors.Is(err, knowledgeuc.ErrEmbedNotConfigured) {
+		errors.Is(err, networkuc.ErrDriverNotStreaming) {
 		return connect.NewError(connect.CodeFailedPrecondition, err)
 	}
 
@@ -48,22 +46,22 @@ func MapDomainError(err error) error {
 	}
 
 	// AlreadyExists: entitas duplikat saat create.
-	if errors.Is(err, useruc.ErrUserAlreadyExists) {
+	if errors.Is(err, useruc.ErrUserAlreadyExists) ||
+		errors.Is(err, skill.ErrSkillAlreadyExists) {
 		return connect.NewError(connect.CodeAlreadyExists, err)
 	}
 
 	// InvalidArgument (validation errors dari usecase layer).
 	if errors.Is(err, authuc.ErrRefreshTokenRequired) ||
 		errors.Is(err, chatuc.ErrEmptyChatJID) ||
-		errors.Is(err, knowledgeuc.ErrInvalidTitle) ||
-		errors.Is(err, knowledgeuc.ErrEmptyContent) {
+		errors.Is(err, skill.ErrInvalidSlug) {
 		return connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	// NotFound.
 	if errors.Is(err, convuc.ErrNotFound) ||
 		errors.Is(err, device.ErrNotFound) ||
-		errors.Is(err, knowledge.ErrNotFound) {
+		errors.Is(err, skill.ErrSkillNotFound) {
 		return connect.NewError(connect.CodeNotFound, err)
 	}
 

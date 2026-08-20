@@ -13,6 +13,33 @@ service BotService {
   rpc CloseConversation (CloseConversationRequest) returns (CloseConversationResponse);
   rpc ResetRateLimit (ResetRateLimitRequest) returns (ResetRateLimitResponse);
   rpc GetRateLimitStatus (GetRateLimitStatusRequest) returns (GetRateLimitStatusResponse);
+
+  // Skill Management
+  rpc ListSkills (ListSkillsRequest) returns (ListSkillsResponse);
+  rpc GetSkill (GetSkillRequest) returns (GetSkillResponse);
+  rpc CreateSkill (CreateSkillRequest) returns (CreateSkillResponse);
+  rpc SaveSkillFile (SaveSkillFileRequest) returns (SaveSkillFileResponse);
+  rpc DeleteSkill (DeleteSkillRequest) returns (DeleteSkillResponse);
+  rpc DeleteSkillFile (DeleteSkillFileRequest) returns (DeleteSkillFileResponse);
+  rpc ToggleSkill (ToggleSkillRequest) returns (ToggleSkillResponse);
+  rpc SyncSkillsFromDisk (SyncSkillsFromDiskRequest) returns (SyncSkillsFromDiskResponse);
+  rpc GetGlobalPrompt (GetGlobalPromptRequest) returns (GetGlobalPromptResponse);
+  rpc SaveGlobalPrompt (SaveGlobalPromptRequest) returns (SaveGlobalPromptResponse);
+
+  // LLM Configs Management
+  rpc ListLLMConfigs (ListLLMConfigsRequest) returns (ListLLMConfigsResponse);
+  rpc CreateLLMConfig (CreateLLMConfigRequest) returns (CreateLLMConfigResponse);
+  rpc UpdateLLMConfig (UpdateLLMConfigRequest) returns (UpdateLLMConfigResponse);
+  rpc ActivateLLMConfig (ActivateLLMConfigRequest) returns (ActivateLLMConfigResponse);
+  rpc TestLLMConfig (TestLLMConfigRequest) returns (TestLLMConfigResponse);
+  rpc DeleteLLMConfig (DeleteLLMConfigRequest) returns (DeleteLLMConfigResponse);
+
+  // Technician Management
+  rpc ListTechnicians (ListTechniciansRequest) returns (ListTechniciansResponse);
+  rpc CreateTechnician (CreateTechnicianRequest) returns (CreateTechnicianResponse);
+  rpc UpdateTechnician (UpdateTechnicianRequest) returns (UpdateTechnicianResponse);
+  rpc ToggleTechnicianActive (ToggleTechnicianActiveRequest) returns (ToggleTechnicianActiveResponse);
+  rpc DeleteTechnician (DeleteTechnicianRequest) returns (DeleteTechnicianResponse);
 }
 
 message ConversationMessage {
@@ -119,3 +146,240 @@ message GetRateLimitStatusResponse {
   bool is_whitelisted = 6;
 }
 
+// -----------------------------------------------------------------------------
+// Skill Messages
+// -----------------------------------------------------------------------------
+
+message SkillFileItem {
+  uint32 id = 1;
+  uint32 skill_id = 2;
+  string name = 3;
+  string file_path = 4;
+  string content = 5;
+  bool is_reference = 6;
+  string updated_at = 7;
+}
+
+message SkillItem {
+  uint32 id = 1;
+  string slug = 2;
+  string name = 3;
+  string description = 4;
+  bool is_enabled = 5;
+  repeated SkillFileItem files = 6;
+  string created_at = 7;
+  string updated_at = 8;
+}
+
+message ListSkillsRequest {}
+
+message ListSkillsResponse {
+  repeated SkillItem skills = 1;
+}
+
+message GetSkillRequest {
+  string slug = 1;
+}
+
+message GetSkillResponse {
+  SkillItem skill = 1;
+}
+
+message CreateSkillRequest {
+  string slug = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message CreateSkillResponse {
+  SkillItem skill = 1;
+}
+
+message SaveSkillFileRequest {
+  string slug = 1;
+  string file_path = 2;
+  string content = 3;
+  bool is_reference = 4;
+}
+
+message SaveSkillFileResponse {
+  SkillFileItem file = 1;
+}
+
+message DeleteSkillRequest {
+  uint32 id = 1;
+  string slug = 2;
+}
+
+message DeleteSkillResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message DeleteSkillFileRequest {
+  string slug = 1;
+  uint32 file_id = 2;
+  string file_path = 3;
+}
+
+message DeleteSkillFileResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ToggleSkillRequest {
+  string slug = 1;
+  bool enabled = 2;
+}
+
+message ToggleSkillResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message SyncSkillsFromDiskRequest {}
+
+message SyncSkillsFromDiskResponse {
+  int32 synced_count = 1;
+  string message = 2;
+}
+
+message GetGlobalPromptRequest {}
+
+message GetGlobalPromptResponse {
+  string content = 1;
+}
+
+message SaveGlobalPromptRequest {
+  string content = 1;
+}
+
+message SaveGlobalPromptResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// -----------------------------------------------------------------------------
+// LLM Config Messages
+// -----------------------------------------------------------------------------
+
+message LLMConfig {
+  string id = 1;
+  string provider = 2; // e.g. "openai", "gemini", "ollama", "groq", "claude"
+  string model_name = 3;
+  string api_key_masked = 4;
+  string base_url = 5;
+  bool is_active = 6;
+  double temperature = 7;
+  int32 max_tokens = 8;
+  string system_prompt = 9;
+}
+
+message ListLLMConfigsRequest {}
+message ListLLMConfigsResponse {
+  repeated LLMConfig configs = 1;
+}
+
+message CreateLLMConfigRequest {
+  string provider = 1;
+  string model_name = 2;
+  string api_key = 3;
+  string base_url = 4;
+  double temperature = 5;
+  int32 max_tokens = 6;
+  string system_prompt = 7;
+}
+message CreateLLMConfigResponse {
+  LLMConfig config = 1;
+}
+
+message UpdateLLMConfigRequest {
+  string id = 1;
+  string provider = 2;
+  string model_name = 3;
+  string api_key = 4;
+  string base_url = 5;
+  double temperature = 6;
+  int32 max_tokens = 7;
+  string system_prompt = 8;
+}
+message UpdateLLMConfigResponse {
+  LLMConfig config = 1;
+}
+
+message ActivateLLMConfigRequest {
+  string id = 1;
+}
+message ActivateLLMConfigResponse {
+  string message = 1;
+}
+
+message TestLLMConfigRequest {
+  string id = 1;
+  string test_prompt = 2;
+}
+message TestLLMConfigResponse {
+  bool success = 1;
+  string response_text = 2;
+  string error_message = 3;
+}
+
+message DeleteLLMConfigRequest {
+  string id = 1;
+}
+message DeleteLLMConfigResponse {
+  string message = 1;
+}
+
+// -----------------------------------------------------------------------------
+// Technician Messages
+// -----------------------------------------------------------------------------
+
+message Technician {
+  string id = 1;
+  string name = 2;
+  string phone_number = 3;
+  string email = 4;
+  bool is_active = 5;
+  int32 active_tickets = 6;
+}
+
+message ListTechniciansRequest {}
+message ListTechniciansResponse {
+  repeated Technician technicians = 1;
+}
+
+message CreateTechnicianRequest {
+  string name = 1;
+  string phone_number = 2;
+  string email = 3;
+}
+message CreateTechnicianResponse {
+  Technician technician = 1;
+}
+
+message UpdateTechnicianRequest {
+  string id = 1;
+  string name = 2;
+  string phone_number = 3;
+  string email = 4;
+}
+message UpdateTechnicianResponse {
+  Technician technician = 1;
+}
+
+message ToggleTechnicianActiveRequest {
+  string id = 1;
+  bool is_active = 2;
+}
+message ToggleTechnicianActiveResponse {
+  string message = 1;
+  bool is_active = 2;
+}
+
+message DeleteTechnicianRequest {
+  string id = 1;
+}
+message DeleteTechnicianResponse {
+  string message = 1;
+}

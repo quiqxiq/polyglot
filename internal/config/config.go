@@ -46,11 +46,6 @@ type Config struct {
 
 	CORSOrigins []string
 
-	AnythingLLMBaseURL   string
-	AnythingLLMAPIKey    string
-	AnythingLLMWorkspace string
-	AnythingLLMTopN      int
-
 	// WhatsApp Bot Multi-Tier Rate Limiter
 	BotBurstLimit        int
 	BotBurstWindowSecs   int
@@ -112,10 +107,6 @@ func Load() Config {
 		SystemPrompt:          prompt,
 		WAStoreDir:            getEnv("WA_STORE_DIR", "./data/whatsapp"),
 		CORSOrigins:           origins,
-		AnythingLLMBaseURL:    getEnv("ANYTHINGLLM_BASE_URL", "http://localhost:3001"),
-		AnythingLLMAPIKey:     os.Getenv("ANYTHINGLLM_API_KEY"),
-		AnythingLLMWorkspace:  getEnv("ANYTHINGLLM_WORKSPACE", "polyglot"),
-		AnythingLLMTopN:       getEnvAsInt("ANYTHINGLLM_TOP_N", 4),
 		BotBurstLimit:         getEnvAsInt("BOT_BURST_LIMIT", 3),
 		BotBurstWindowSecs:    getEnvAsInt("BOT_BURST_WINDOW_SECS", 5),
 		BotMute1HourSecs:      getEnvAsInt("BOT_MUTE_1H_SECS", 3600),

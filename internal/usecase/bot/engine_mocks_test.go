@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
-	"github.com/quixiq/polyglot/internal/domain/knowledge"
 	"github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/port"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
@@ -35,10 +34,12 @@ func (f *fakeGateway) GetQRCode(uint) (string, error)              { return "", 
 func (f *fakeGateway) GetPairingCode(uint, string) (string, error) { return "", nil }
 func (f *fakeGateway) RestoreAllSessions([]bot.WASession) error    { return nil }
 
-type fakeRetriever struct{}
+type fakePromptBuilder struct {
+	prompt string
+}
 
-func (f *fakeRetriever) Retrieve(context.Context, string) ([]knowledge.Entry, error) {
-	return nil, nil
+func (f *fakePromptBuilder) BuildCompositeSystemPrompt(context.Context) (string, error) {
+	return f.prompt, nil
 }
 
 type fakeLLMConfigRepo struct {
@@ -203,23 +204,6 @@ func (f *fakeChatRepo) MarkMessagesStatus(context.Context, uint, string, []strin
 }
 func (f *fakeChatRepo) MergeChatLID(context.Context, uint, string, string) error { return nil }
 
-// fakeKnowledgeChat is a programmable port.KnowledgeChat for engine tests.
-type fakeKnowledgeChat struct {
-	result port.KnowledgeChatResult
-	err    error
-	calls  int
-	lastID string
-}
-
-func (f *fakeKnowledgeChat) Chat(_ context.Context, msg string, sessionID string) (port.KnowledgeChatResult, error) {
-	f.calls++
-	f.lastID = sessionID
-	if f.err != nil {
-		return port.KnowledgeChatResult{}, f.err
-	}
-	return f.result, nil
-}
-
 func testBotConfig() Config {
 	return Config{
 		SystemPrompt:       "Kamu adalah asisten layanan GNET.",
@@ -229,22 +213,17 @@ func testBotConfig() Config {
 }
 
 func newTestEngine(cache port.CacheStore, gw *fakeGateway, llmRepo *fakeLLMConfigRepo, prov *fakeProvider, convRepo *fakeConvRepo) *Engine {
-	return newTestEngineWithChatRepoAndChat(cache, gw, llmRepo, prov, convRepo, newFakeChatRepo(), nil)
+	return newTestEngineWithChatRepo(cache, gw, llmRepo, prov, convRepo, newFakeChatRepo())
 }
 
 func newTestEngineWithChatRepo(cache port.CacheStore, gw *fakeGateway, llmRepo *fakeLLMConfigRepo, prov *fakeProvider, convRepo *fakeConvRepo, chatRepo *fakeChatRepo) *Engine {
-	return newTestEngineWithChatRepoAndChat(cache, gw, llmRepo, prov, convRepo, chatRepo, nil)
-}
-
-func newTestEngineWithChatRepoAndChat(cache port.CacheStore, gw *fakeGateway, llmRepo *fakeLLMConfigRepo, prov *fakeProvider, convRepo *fakeConvRepo, chatRepo *fakeChatRepo, chat port.KnowledgeChat) *Engine {
 	svc := convUC.NewConversationService(convRepo)
 	return NewEngine(
 		testBotConfig(),
 		cache,
 		gw,
 		svc,
-		&fakeRetriever{},
-		chat,
+		&fakePromptBuilder{},
 		llmRepo,
 		chatRepo,
 		&fakePublisher{},
@@ -253,7 +232,7 @@ func newTestEngineWithChatRepoAndChat(cache port.CacheStore, gw *fakeGateway, ll
 }
 
 var _ port.WhatsAppGateway = (*fakeGateway)(nil)
-var _ port.KnowledgeRetriever = (*fakeRetriever)(nil)
+var _ PromptBuilder = (*fakePromptBuilder)(nil)
 var _ port.LLMConfigRepository = (*fakeLLMConfigRepo)(nil)
 var _ port.EventPublisher = (*fakePublisher)(nil)
 var _ port.ChatRepository = (*fakeChatRepo)(nil)

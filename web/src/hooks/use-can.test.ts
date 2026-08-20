@@ -7,7 +7,7 @@ import { canPermission } from './use-can'
 const ownerPerms = ['.*:*']
 const adminPerms = [
   'device:.*:*',
-  'knowledge:.*:*',
+  'skill:.*:*',
   'user:.*:*',
   'conversation:.*:*',
   'whatsapp:.*:*',
@@ -15,14 +15,14 @@ const adminPerms = [
 const agentPerms = [
   'conversation:.*:*',
   'customer:read:*',
-  'knowledge:read:*',
+  'skill:read:*',
   'billing:read:*',
   'whatsapp:read:*',
 ]
 const teknisiPerms = [
   'device:read:*',
   'device:command:*',
-  'knowledge:read:*',
+  'skill:read:*',
   'technician:read:*',
   'probe:read:*',
   'hotspot:read:*',
@@ -37,13 +37,13 @@ describe('canPermission', () => {
   it('owner wildcard matches everything', () => {
     expect(canPermission(ownerPerms, 'user:read')).toBe(true)
     expect(canPermission(ownerPerms, 'rbac:manage')).toBe(true)
-    expect(canPermission(ownerPerms, 'knowledge:write')).toBe(true)
+    expect(canPermission(ownerPerms, 'skill:manage')).toBe(true)
   })
 
   it('admin wildcard per resource matches every action of that resource', () => {
     expect(canPermission(adminPerms, 'user:read')).toBe(true)
     expect(canPermission(adminPerms, 'user:manage')).toBe(true)
-    expect(canPermission(adminPerms, 'knowledge:write')).toBe(true)
+    expect(canPermission(adminPerms, 'skill:manage')).toBe(true)
   })
 
   it('admin has no rbac:manage (matches backend deny)', () => {
@@ -51,9 +51,9 @@ describe('canPermission', () => {
   })
 
   it('agent read-only: exact action from read policies only', () => {
-    expect(canPermission(agentPerms, 'knowledge:read')).toBe(true)
+    expect(canPermission(agentPerms, 'skill:read')).toBe(true)
     expect(canPermission(agentPerms, 'customer:read')).toBe(true)
-    expect(canPermission(agentPerms, 'knowledge:write')).toBe(false)
+    expect(canPermission(agentPerms, 'skill:manage')).toBe(false)
     expect(canPermission(agentPerms, 'user:read')).toBe(false)
     expect(canPermission(agentPerms, 'rbac:manage')).toBe(false)
   })
@@ -69,7 +69,7 @@ describe('canPermission', () => {
     expect(canPermission(['customer:read:*'], 'customer:read')).toBe(true)
     expect(canPermission(['customer:read:*'], 'customer:write')).toBe(false)
     // a non-wildcard action only matches itself
-    expect(canPermission(['knowledge:read:read'], 'knowledge:read')).toBe(true)
-    expect(canPermission(['knowledge:read:read'], 'knowledge:write')).toBe(false)
+    expect(canPermission(['skill:read:read'], 'skill:read')).toBe(true)
+    expect(canPermission(['skill:read:read'], 'skill:manage')).toBe(false)
   })
 })

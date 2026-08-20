@@ -17,11 +17,11 @@ import (
 	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
 	pppConnect "github.com/quixiq/polyglot/internal/adapter/connect/ppp"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
-	knowledgeadapter "github.com/quixiq/polyglot/internal/adapter/knowledge"
 	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
-	"github.com/quixiq/polyglot/internal/adapter/postgres"
+	postgres "github.com/quixiq/polyglot/internal/adapter/postgres"
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
+	storageAdapter "github.com/quixiq/polyglot/internal/adapter/storage"
 	wsAdapter "github.com/quixiq/polyglot/internal/adapter/ws"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/device"
@@ -41,9 +41,9 @@ import (
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
-	knowledgeUC "github.com/quixiq/polyglot/internal/usecase/knowledge"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
+	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
@@ -109,51 +109,11 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	convService := convUC.NewConversationService(pgStore)
 	convService.SetPublisher(sseHub)
 
-	keywordRetriever := knowledgeUC.NewKeywordRetriever(pgStore)
-	retrievers := []port.KnowledgeRetriever{keywordRetriever}
-
-	var knowledgeDocManager port.KnowledgeDocumentManager
-	if cfg.AnythingLLMAPIKey != "" {
-		anyRetriever, err := knowledgeadapter.NewRetriever(
-			cfg.AnythingLLMBaseURL,
-			cfg.AnythingLLMAPIKey,
-			cfg.AnythingLLMWorkspace,
-			cfg.AnythingLLMTopN,
-		)
-		if err != nil {
-			logger.WithComponent("Knowledge").Warnf("AnythingLLM retriever disabled (%v)", err)
-		} else {
-			retrievers = append(retrievers, anyRetriever)
-			logger.WithComponent("Knowledge").Infof("AnythingLLM retriever active for workspace %q", cfg.AnythingLLMWorkspace)
-		}
-		if anyManager, err := knowledgeadapter.NewManager(
-			cfg.AnythingLLMBaseURL,
-			cfg.AnythingLLMAPIKey,
-			cfg.AnythingLLMWorkspace,
-		); err != nil {
-			logger.WithComponent("Knowledge").Warnf("AnythingLLM document manager disabled (%v)", err)
-		} else {
-			knowledgeDocManager = anyManager
-			logger.WithComponent("Knowledge").Info("AnythingLLM document manager active")
-		}
+	fsSkillStore, err := storageAdapter.NewFSSkillStore("data")
+	if err != nil {
+		logger.WithComponent("App").WithError(err).Warn("Failed to initialize FSSkillStore")
 	}
-	knowledgeRetriever := knowledgeUC.NewHybridRetriever(retrievers...)
-	knowledgeRepo := postgres.NewKnowledgeRepository(pgStore)
-	knowledgeDocUC := knowledgeUC.NewDocumentManager(knowledgeRepo, knowledgeDocManager)
-
-	var knowledgeChat port.KnowledgeChat
-	if cfg.AnythingLLMAPIKey != "" {
-		if anyChat, err := knowledgeadapter.NewChatClient(
-			cfg.AnythingLLMBaseURL,
-			cfg.AnythingLLMAPIKey,
-			cfg.AnythingLLMWorkspace,
-		); err != nil {
-			logger.WithComponent("Bot").Warnf("AnythingLLM chat client disabled (%v)", err)
-		} else {
-			knowledgeChat = anyChat
-			logger.WithComponent("Bot").Infof("AnythingLLM chat active for workspace %q", cfg.AnythingLLMWorkspace)
-		}
-	}
+	skillUseCase := skillUC.NewManageSkillUseCase(pgStore, fsSkillStore)
 
 	llmFactory := func(c *domainllm.Config) (port.LLMProvider, error) {
 		return llmadapter.NewProvider(c, cfg.EncryptionKey)
@@ -173,8 +133,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		redisStore,
 		waManager,
 		convService,
-		knowledgeRetriever,
-		knowledgeChat,
+		skillUseCase,
 		pgStore,
 		pgStore,
 		sseHub,
@@ -284,11 +243,8 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	waPath, waHandler := botConnect.NewWhatsAppServiceHandler(pgStore, waManager, chatService)
 	registerProtected(waPath, waHandler)
 
-	botPath, botHandler := botConnect.NewBotServiceHandler(convService, botEngine)
+	botPath, botHandler := botConnect.NewBotServiceHandler(convService, botEngine, skillUseCase, pgStore, cfg.EncryptionKey)
 	registerProtected(botPath, botHandler)
-
-	knwPath, knwHandler := botConnect.NewKnowledgeServiceHandler(knowledgeDocUC)
-	registerProtected(knwPath, knwHandler)
 
 	probePath, probeHandler := deviceConnect.NewProbeServiceHandler()
 	registerProtected(probePath, probeHandler)
@@ -310,7 +266,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	rootMux.Handle(pppPath, protectedHandler)
 	rootMux.Handle(waPath, protectedHandler)
 	rootMux.Handle(botPath, protectedHandler)
-	rootMux.Handle(knwPath, protectedHandler)
 	rootMux.Handle(probePath, protectedHandler)
 
 	// 3. Wrap root handler with Global Middlewares (CORS, Logger, Recovery)

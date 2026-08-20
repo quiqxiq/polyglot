@@ -2,58 +2,12 @@ package bot
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 	"time"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/bot"
-	"github.com/quixiq/polyglot/internal/domain/knowledge"
 	"github.com/quixiq/polyglot/internal/domain/llm"
 )
-
-// toProtoKnowledgeItem converts a domain knowledge.Entry into its Protobuf representation.
-func toProtoKnowledgeItem(e *knowledge.Entry) *devicepb.KnowledgeItem {
-	if e == nil {
-		return &devicepb.KnowledgeItem{}
-	}
-	return &devicepb.KnowledgeItem{
-		Id:                 strconv.FormatUint(uint64(e.ID), 10),
-		Title:              e.Title,
-		Content:            e.Content,
-		Category:           e.Category,
-		Tags:               splitTags(e.Tags),
-		CreatedAt:          e.CreatedAt.Format(time.RFC3339),
-		UpdatedAt:          e.UpdatedAt.Format(time.RFC3339),
-		EmbedToLlm:         e.EmbedToLLM,
-		EmbedStatus:        e.EmbedStatus,
-		AnythingllmDocName: e.AnythingLLMDocName,
-	}
-}
-
-// splitTags splits comma-separated tags into a string slice.
-func splitTags(raw string) []string {
-	if strings.TrimSpace(raw) == "" {
-		return []string{}
-	}
-	parts := strings.Split(raw, ",")
-	out := make([]string, 0, len(parts))
-	for _, p := range parts {
-		if p = strings.TrimSpace(p); p != "" {
-			out = append(out, p)
-		}
-	}
-	return out
-}
-
-// toProtoKnowledgeItemList converts a slice of domain knowledge.Entry into Protobuf representations.
-func toProtoKnowledgeItemList(entries []knowledge.Entry) []*devicepb.KnowledgeItem {
-	items := make([]*devicepb.KnowledgeItem, len(entries))
-	for i := range entries {
-		items[i] = toProtoKnowledgeItem(&entries[i])
-	}
-	return items
-}
 
 // toProtoWASession converts a domain bot.WASession into its Protobuf representation.
 func toProtoWASession(s *bot.WASession) *devicepb.WASession {

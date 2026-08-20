@@ -58,24 +58,32 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.BotService/ResetRateLimit":          "conversation:write",
 	"/polyglot.v1.BotService/GetRateLimitStatus":      "conversation:read",
 
-	// KnowledgeService
-	"/polyglot.v1.KnowledgeService/ListKnowledge":          "knowledge:read",
-	"/polyglot.v1.KnowledgeService/GetKnowledge":           "knowledge:read",
-	"/polyglot.v1.KnowledgeService/CreateKnowledge":        "knowledge:write",
-	"/polyglot.v1.KnowledgeService/UpdateKnowledge":        "knowledge:write",
-	"/polyglot.v1.KnowledgeService/DeleteKnowledge":        "knowledge:write",
-	"/polyglot.v1.KnowledgeService/RetryEmbed":             "knowledge:embed",
-	"/polyglot.v1.KnowledgeService/ListLLMConfigs":         "llmconfig:read",
-	"/polyglot.v1.KnowledgeService/CreateLLMConfig":        "llmconfig:manage",
-	"/polyglot.v1.KnowledgeService/UpdateLLMConfig":        "llmconfig:manage",
-	"/polyglot.v1.KnowledgeService/ActivateLLMConfig":      "llmconfig:manage",
-	"/polyglot.v1.KnowledgeService/TestLLMConfig":          "llmconfig:manage",
-	"/polyglot.v1.KnowledgeService/DeleteLLMConfig":        "llmconfig:manage",
-	"/polyglot.v1.KnowledgeService/ListTechnicians":        "technician:read",
-	"/polyglot.v1.KnowledgeService/CreateTechnician":       "technician:manage",
-	"/polyglot.v1.KnowledgeService/UpdateTechnician":       "technician:manage",
-	"/polyglot.v1.KnowledgeService/ToggleTechnicianActive": "technician:manage",
-	"/polyglot.v1.KnowledgeService/DeleteTechnician":       "technician:manage",
+	// Skills Management
+	"/polyglot.v1.BotService/ListSkills":         "skill:read",
+	"/polyglot.v1.BotService/GetSkill":           "skill:read",
+	"/polyglot.v1.BotService/CreateSkill":        "skill:manage",
+	"/polyglot.v1.BotService/SaveSkillFile":      "skill:manage",
+	"/polyglot.v1.BotService/DeleteSkill":        "skill:manage",
+	"/polyglot.v1.BotService/DeleteSkillFile":    "skill:manage",
+	"/polyglot.v1.BotService/ToggleSkill":        "skill:manage",
+	"/polyglot.v1.BotService/SyncSkillsFromDisk": "skill:manage",
+	"/polyglot.v1.BotService/GetGlobalPrompt":    "skill:read",
+	"/polyglot.v1.BotService/SaveGlobalPrompt":   "skill:manage",
+
+	// LLM Configs Management (BotService)
+	"/polyglot.v1.BotService/ListLLMConfigs":         "llmconfig:read",
+	"/polyglot.v1.BotService/CreateLLMConfig":        "llmconfig:manage",
+	"/polyglot.v1.BotService/UpdateLLMConfig":        "llmconfig:manage",
+	"/polyglot.v1.BotService/ActivateLLMConfig":      "llmconfig:manage",
+	"/polyglot.v1.BotService/TestLLMConfig":          "llmconfig:manage",
+	"/polyglot.v1.BotService/DeleteLLMConfig":        "llmconfig:manage",
+
+	// Technicians Management (BotService)
+	"/polyglot.v1.BotService/ListTechnicians":        "technician:read",
+	"/polyglot.v1.BotService/CreateTechnician":       "technician:manage",
+	"/polyglot.v1.BotService/UpdateTechnician":       "technician:manage",
+	"/polyglot.v1.BotService/ToggleTechnicianActive": "technician:manage",
+	"/polyglot.v1.BotService/DeleteTechnician":       "technician:manage",
 
 	// HotspotService (Mikhmon)
 	"/polyglot.v1.HotspotService/ListProfiles":         "hotspot:read",

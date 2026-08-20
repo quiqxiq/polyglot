@@ -12,14 +12,16 @@ import (
 
 // Server wraps the MCP SDK server and holds the dependencies every tool
 // handler needs: the device driver registry, audit writer, Mikhmon use case,
-// customer repository, and knowledge retriever.
+// Server wraps the MCP SDK server and holds the dependencies every tool
+// handler needs: the device driver registry, audit writer, Mikhmon use case,
+// customer repository, and skill repository.
 type Server struct {
-	mcpServer          *mcp.Server
-	registry           *registry.Registry
-	audit              port.AuditWriter
-	mikhmonUC          *hotspotUC.UseCase
-	customerRepo       port.CustomerRepository
-	knowledgeRetriever port.KnowledgeRetriever
+	mcpServer    *mcp.Server
+	registry     *registry.Registry
+	audit        port.AuditWriter
+	mikhmonUC    *hotspotUC.UseCase
+	customerRepo port.CustomerRepository
+	skillRepo    port.SkillRepository
 }
 
 // New builds an MCP Server with registered tools.
@@ -45,9 +47,9 @@ func (s *Server) WithCustomerRepository(repo port.CustomerRepository) *Server {
 	return s
 }
 
-// WithKnowledgeRetriever sets the KnowledgeRetriever dependency.
-func (s *Server) WithKnowledgeRetriever(kr port.KnowledgeRetriever) *Server {
-	s.knowledgeRetriever = kr
+// WithSkillRepository sets the SkillRepository dependency.
+func (s *Server) WithSkillRepository(sr port.SkillRepository) *Server {
+	s.skillRepo = sr
 	return s
 }
 
@@ -98,10 +100,10 @@ func (s *Server) registerTools() {
 	}, s.customerLookup)
 
 	mcp.AddTool(s.mcpServer, &mcp.Tool{
-		Name:        "search_knowledge",
-		Description: "Search RAG Knowledge Base articles and troubleshooting solutions for technical customer issues. Read-only.",
+		Name:        "list_skills",
+		Description: "List active modular skills and standard operational procedures (SOP). Read-only.",
 		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
-	}, s.searchKnowledge)
+	}, s.listSkills)
 }
 
 // HTTPHandler returns an http.Handler that serves the MCP streamable-HTTP

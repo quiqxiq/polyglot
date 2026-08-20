@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"strings"
 
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/bot"
@@ -38,14 +37,18 @@ type Config struct {
 // ProviderFactory creates an LLM provider from a stored LLM configuration.
 type ProviderFactory func(cfg *llm.Config) (port.LLMProvider, error)
 
+// PromptBuilder constructs composite system prompt from active modular skills and global SOP.
+type PromptBuilder interface {
+	BuildCompositeSystemPrompt(ctx context.Context) (string, error)
+}
+
 // Engine orchestrates the WhatsApp customer-service bot.
 type Engine struct {
 	cfg           Config
 	cache         port.CacheStore
 	waGateway     port.WhatsAppGateway
 	convService   *convUC.ConversationService
-	retriever     port.KnowledgeRetriever
-	chat          port.KnowledgeChat
+	promptBuilder PromptBuilder
 	llmConfigRepo port.LLMConfigRepository
 	chatRepo      port.ChatRepository
 	rateLimiter   *RateLimiter
@@ -60,8 +63,7 @@ func NewEngine(
 	cache port.CacheStore,
 	waGateway port.WhatsAppGateway,
 	convService *convUC.ConversationService,
-	retriever port.KnowledgeRetriever,
-	chat port.KnowledgeChat,
+	promptBuilder PromptBuilder,
 	llmConfigRepo port.LLMConfigRepository,
 	chatRepo port.ChatRepository,
 	publisher port.EventPublisher,
@@ -72,8 +74,7 @@ func NewEngine(
 		cache:         cache,
 		waGateway:     waGateway,
 		convService:   convService,
-		retriever:     retriever,
-		chat:          chat,
+		promptBuilder: promptBuilder,
 		llmConfigRepo: llmConfigRepo,
 		chatRepo:      chatRepo,
 		rateLimiter: NewRateLimiter(cache, config.Config{
@@ -150,23 +151,14 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, offTopicReply, 0, 0, nil)
 	}
 
-	if e.chat != nil {
-		chatResult, chatErr := e.chat.Chat(ctx, messageContent, fmt.Sprintf("conv-%d", conv.ID))
-		if chatErr == nil && strings.TrimSpace(chatResult.Content) != "" {
-			reply := e.guardrail.SanitizeResponse(chatResult.Content)
-			if reply != "" {
-				if err := e.sendBotReply(ctx, conv.ID, sessionID, chatJID, reply, chatResult.TokenIn, chatResult.TokenOut, nil); err != nil {
-					return err
-				}
-				_ = e.rateLimiter.IncrementDailyQuota(ctx, customerNumber)
-				_ = e.contextMgr.SaveMessageToSession(ctx, conv.ID, messageContent, reply)
-				return nil
-			}
+	var compositePrompt string
+	if e.promptBuilder != nil {
+		if cp, err := e.promptBuilder.BuildCompositeSystemPrompt(ctx); err == nil && cp != "" {
+			compositePrompt = cp
+		} else if err != nil {
+			logger.WithComponent("BotEngine").Warnf("Failed to build composite skills prompt: %v", err)
 		}
-		logger.WithComponent("BotEngine").Warnf("AnythingLLM chat failed/unavailable for conversation %d: %v — falling back to local LLM", conv.ID, chatErr)
 	}
-
-	relEntries, _ := e.retriever.Retrieve(ctx, messageContent)
 
 	if e.llmConfigRepo == nil {
 		fallbackReply := "Maaf, kami kesulitan memproses pesan Anda. Pesan telah kami teruskan ke admin kami."
@@ -190,7 +182,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		}
 	}
 
-	systemPrompt, chatMessages, err := e.contextMgr.BuildPromptContext(ctx, conv.ID, history, relEntries)
+	systemPrompt, chatMessages, err := e.contextMgr.BuildPromptContext(ctx, conv.ID, history, compositePrompt)
 	if err != nil {
 		return fmt.Errorf("failed to build prompt context: %w", err)
 	}

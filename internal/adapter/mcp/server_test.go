@@ -179,7 +179,7 @@ func TestMCP_ListTools(t *testing.T) {
 	assert.ElementsMatch(t, []string{
 		"get_device_status", "run_command", "push_config",
 		"mikhmon_get_dashboard", "mikhmon_generate_voucher", "mikhmon_kick_session",
-		"customer_lookup", "search_knowledge",
+		"customer_lookup", "list_skills",
 	}, names)
 }
 

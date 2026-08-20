@@ -8,8 +8,10 @@ import (
 
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/port"
 	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
+	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 )
 
 // ConversationContextProvider abstracts the engine's ability to aggregate the
@@ -23,17 +25,35 @@ type ConversationContextProvider interface {
 type BotConnectHandler struct {
 	convService     *convUC.ConversationService
 	contextProvider ConversationContextProvider
+	skillHandler    *SkillConnectHandler
+	llmRepo         port.LLMConfigRepository
+	encryptionKey   string
 }
 
-func NewBotConnectHandler(convService *convUC.ConversationService, contextProvider ConversationContextProvider) *BotConnectHandler {
+func NewBotConnectHandler(
+	convService *convUC.ConversationService,
+	contextProvider ConversationContextProvider,
+	skillUC *skillUC.ManageSkillUseCase,
+	llmRepo port.LLMConfigRepository,
+	encryptionKey string,
+) *BotConnectHandler {
 	return &BotConnectHandler{
 		convService:     convService,
 		contextProvider: contextProvider,
+		skillHandler:    NewSkillConnectHandler(skillUC),
+		llmRepo:         llmRepo,
+		encryptionKey:   encryptionKey,
 	}
 }
 
-func NewBotServiceHandler(convService *convUC.ConversationService, contextProvider ConversationContextProvider) (string, http.Handler) {
-	handler := NewBotConnectHandler(convService, contextProvider)
+func NewBotServiceHandler(
+	convService *convUC.ConversationService,
+	contextProvider ConversationContextProvider,
+	skillUC *skillUC.ManageSkillUseCase,
+	llmRepo port.LLMConfigRepository,
+	encryptionKey string,
+) (string, http.Handler) {
+	handler := NewBotConnectHandler(convService, contextProvider, skillUC, llmRepo, encryptionKey)
 	mux := http.NewServeMux()
 	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
@@ -76,6 +96,119 @@ func NewBotServiceHandler(convService *convUC.ConversationService, contextProvid
 	mux.Handle("/"+serviceName+"/GetRateLimitStatus", connect.NewUnaryHandler(
 		"/"+serviceName+"/GetRateLimitStatus",
 		handler.GetRateLimitStatus,
+		codecOpt,
+	))
+
+	// Skill RPCs
+	if handler.skillHandler != nil {
+		mux.Handle("/"+serviceName+"/ListSkills", connect.NewUnaryHandler(
+			"/"+serviceName+"/ListSkills",
+			handler.skillHandler.ListSkills,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/GetSkill", connect.NewUnaryHandler(
+			"/"+serviceName+"/GetSkill",
+			handler.skillHandler.GetSkill,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/CreateSkill", connect.NewUnaryHandler(
+			"/"+serviceName+"/CreateSkill",
+			handler.skillHandler.CreateSkill,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/SaveSkillFile", connect.NewUnaryHandler(
+			"/"+serviceName+"/SaveSkillFile",
+			handler.skillHandler.SaveSkillFile,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/DeleteSkill", connect.NewUnaryHandler(
+			"/"+serviceName+"/DeleteSkill",
+			handler.skillHandler.DeleteSkill,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/DeleteSkillFile", connect.NewUnaryHandler(
+			"/"+serviceName+"/DeleteSkillFile",
+			handler.skillHandler.DeleteSkillFile,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/ToggleSkill", connect.NewUnaryHandler(
+			"/"+serviceName+"/ToggleSkill",
+			handler.skillHandler.ToggleSkill,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/SyncSkillsFromDisk", connect.NewUnaryHandler(
+			"/"+serviceName+"/SyncSkillsFromDisk",
+			handler.skillHandler.SyncSkillsFromDisk,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/GetGlobalPrompt", connect.NewUnaryHandler(
+			"/"+serviceName+"/GetGlobalPrompt",
+			handler.skillHandler.GetGlobalPrompt,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/SaveGlobalPrompt", connect.NewUnaryHandler(
+			"/"+serviceName+"/SaveGlobalPrompt",
+			handler.skillHandler.SaveGlobalPrompt,
+			codecOpt,
+		))
+	}
+
+	// LLM Config RPCs
+	mux.Handle("/"+serviceName+"/ListLLMConfigs", connect.NewUnaryHandler(
+		"/"+serviceName+"/ListLLMConfigs",
+		handler.ListLLMConfigs,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/CreateLLMConfig", connect.NewUnaryHandler(
+		"/"+serviceName+"/CreateLLMConfig",
+		handler.CreateLLMConfig,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/UpdateLLMConfig", connect.NewUnaryHandler(
+		"/"+serviceName+"/UpdateLLMConfig",
+		handler.UpdateLLMConfig,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/ActivateLLMConfig", connect.NewUnaryHandler(
+		"/"+serviceName+"/ActivateLLMConfig",
+		handler.ActivateLLMConfig,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/TestLLMConfig", connect.NewUnaryHandler(
+		"/"+serviceName+"/TestLLMConfig",
+		handler.TestLLMConfig,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/DeleteLLMConfig", connect.NewUnaryHandler(
+		"/"+serviceName+"/DeleteLLMConfig",
+		handler.DeleteLLMConfig,
+		codecOpt,
+	))
+
+	// Technician RPCs
+	mux.Handle("/"+serviceName+"/ListTechnicians", connect.NewUnaryHandler(
+		"/"+serviceName+"/ListTechnicians",
+		handler.ListTechnicians,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/CreateTechnician", connect.NewUnaryHandler(
+		"/"+serviceName+"/CreateTechnician",
+		handler.CreateTechnician,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/UpdateTechnician", connect.NewUnaryHandler(
+		"/"+serviceName+"/UpdateTechnician",
+		handler.UpdateTechnician,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/ToggleTechnicianActive", connect.NewUnaryHandler(
+		"/"+serviceName+"/ToggleTechnicianActive",
+		handler.ToggleTechnicianActive,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/DeleteTechnician", connect.NewUnaryHandler(
+		"/"+serviceName+"/DeleteTechnician",
+		handler.DeleteTechnician,
 		codecOpt,
 	))
 

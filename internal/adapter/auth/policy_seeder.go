@@ -37,7 +37,7 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"admin", "billing:.*", "*"},
 		{"admin", "whatsapp:.*", "*"},
 		{"admin", "conversation:.*", "*"},
-		{"admin", "knowledge:.*", "*"},
+		{"admin", "skill:.*", "*"},
 		{"admin", "llmconfig:.*", "*"},
 		{"admin", "technician:.*", "*"},
 		{"admin", "hotspot:.*", "*"},
@@ -47,7 +47,7 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		// Agent / CS — customer service & knowledge lookup.
 		{"agent", "conversation:.*", "*"},
 		{"agent", "customer:read", "*"},
-		{"agent", "knowledge:read", "*"},
+		{"agent", "skill:read", "*"},
 		{"agent", "billing:read", "*"},
 		{"agent", "whatsapp:read", "*"},
 
@@ -56,7 +56,7 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"teknisi", "device:command", "*"},
 		{"teknisi", "conversation:read", "*"},
 		{"teknisi", "customer:read", "*"},
-		{"teknisi", "knowledge:read", "*"},
+		{"teknisi", "skill:read", "*"},
 		{"teknisi", "technician:read", "*"},
 		{"teknisi", "probe:read", "*"},
 		{"teknisi", "hotspot:read", "*"},

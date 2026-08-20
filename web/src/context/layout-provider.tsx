@@ -74,19 +74,12 @@ export function LayoutProvider({ children }: LayoutProviderProps) {
   return <LayoutContext value={contextValue}>{children}</LayoutContext>
 }
 
-const defaultLayoutContext: LayoutContextType = {
-  resetLayout: () => {},
-  defaultCollapsible: DEFAULT_COLLAPSIBLE,
-  collapsible: DEFAULT_COLLAPSIBLE,
-  setCollapsible: () => {},
-  defaultVariant: DEFAULT_VARIANT,
-  variant: DEFAULT_VARIANT,
-  setVariant: () => {},
-}
-
 // Define the hook for the provider
 // eslint-disable-next-line react-refresh/only-export-components
 export function useLayout() {
   const context = useContext(LayoutContext)
-  return context || defaultLayoutContext
+  if (!context) {
+    throw new Error('useLayout must be used within a LayoutProvider')
+  }
+  return context
 }

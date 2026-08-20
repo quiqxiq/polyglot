@@ -8,7 +8,6 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/domain/llm"
-	"github.com/quixiq/polyglot/internal/port"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 )
 
@@ -57,74 +56,6 @@ func TestEngineHappyPath(t *testing.T) {
 	raw, err := cache.Get(context.Background(), "history:conv:1")
 	if err != nil || raw == "" {
 		t.Fatalf("expected per-conversation history in cache, got %q err=%v", raw, err)
-	}
-}
-
-// TestEngineAnythingLLMPrimary verifies bahwa dengan chat (AnythingLLM)
-// terkonfigurasi, jawaban datang dari chat — LLM lokal TIDAK dipanggil.
-func TestEngineAnythingLLMPrimary(t *testing.T) {
-	cache := newFakeCache()
-	gw := &fakeGateway{}
-	prov := &fakeProvider{reply: "seharusnya tidak dipanggil", tokenIn: 1, tokenOut: 1}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
-	convRepo := newFakeConvRepo()
-	chat := &fakeKnowledgeChat{result: port.KnowledgeChatResult{Content: "Jawaban dari AnythingLLM.", TokenIn: 10, TokenOut: 5}}
-
-	e := newTestEngineWithChatRepoAndChat(cache, gw, llmRepo, prov, convRepo, newFakeChatRepo(), chat)
-	if err := e.HandleIncomingMessage(context.Background(), 1, "6281@s.whatsapp.net", "6281", "berapa harga paket?"); err != nil {
-		t.Fatalf("HandleIncomingMessage: %v", err)
-	}
-
-	if len(gw.sent) != 1 || gw.sent[0] != "Jawaban dari AnythingLLM." {
-		t.Fatalf("expected AnythingLLM reply sent, got %v", gw.sent)
-	}
-	if len(prov.calls) != 0 {
-		t.Fatalf("local LLM should NOT be called when AnythingLLM chat succeeds, got %d calls", len(prov.calls))
-	}
-	if chat.calls != 1 || chat.lastID != "conv-1" {
-		t.Fatalf("expected 1 chat call with session conv-1, got calls=%d lastID=%q", chat.calls, chat.lastID)
-	}
-}
-
-// TestEngineAnythingLLMFallback verifies bahwa bila chat (AnythingLLM) gagal,
-// engine fallback ke LLM lokal proyek.
-func TestEngineAnythingLLMFallback(t *testing.T) {
-	cache := newFakeCache()
-	gw := &fakeGateway{}
-	prov := &fakeProvider{reply: "Jawaban fallback lokal.", tokenIn: 7, tokenOut: 3}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
-	convRepo := newFakeConvRepo()
-	chat := &fakeKnowledgeChat{err: errors.New("anythingllm down")}
-
-	e := newTestEngineWithChatRepoAndChat(cache, gw, llmRepo, prov, convRepo, newFakeChatRepo(), chat)
-	if err := e.HandleIncomingMessage(context.Background(), 1, "6281@s.whatsapp.net", "6281", "berapa harga paket?"); err != nil {
-		t.Fatalf("HandleIncomingMessage: %v", err)
-	}
-
-	if len(gw.sent) != 1 || gw.sent[0] != "Jawaban fallback lokal." {
-		t.Fatalf("expected fallback reply sent, got %v", gw.sent)
-	}
-	if len(prov.calls) != 1 {
-		t.Fatalf("expected 1 local LLM call after AnythingLLM failure, got %d", len(prov.calls))
-	}
-}
-
-// TestEngineAnythingLLMEmptyFallback verifies bahwa jawaban kosong dari chat
-// juga memicu fallback ke LLM lokal.
-func TestEngineAnythingLLMEmptyFallback(t *testing.T) {
-	cache := newFakeCache()
-	gw := &fakeGateway{}
-	prov := &fakeProvider{reply: "Jawaban fallback."}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
-	convRepo := newFakeConvRepo()
-	chat := &fakeKnowledgeChat{result: port.KnowledgeChatResult{Content: "   "}}
-
-	e := newTestEngineWithChatRepoAndChat(cache, gw, llmRepo, prov, convRepo, newFakeChatRepo(), chat)
-	if err := e.HandleIncomingMessage(context.Background(), 1, "6281@s.whatsapp.net", "6281", "berapa harga paket?"); err != nil {
-		t.Fatalf("HandleIncomingMessage: %v", err)
-	}
-	if len(prov.calls) != 1 {
-		t.Fatalf("expected fallback after empty chat reply, got %d local calls", len(prov.calls))
 	}
 }
 

@@ -9,7 +9,7 @@ func TestPermissionFor(t *testing.T) {
 		want      string
 		wantOK    bool
 	}{
-		{"knowledge create", "/polyglot.v1.KnowledgeService/CreateKnowledge", "knowledge:write", true},
+		{"skill create", "/polyglot.v1.BotService/CreateSkill", "skill:manage", true},
 		{"device stream terminal", "/polyglot.v1.DeviceService/StreamTerminal", "device:command", true},
 		{"rbac manage", "/polyglot.v1.RBACService/AssignRole", "rbac:manage", true},
 		{"hotspot stream", "/polyglot.v1.HotspotService/StreamTraffic", "hotspot:read", true},

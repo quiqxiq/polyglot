@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
-	"github.com/quixiq/polyglot/internal/domain/knowledge"
 	"github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -42,28 +41,23 @@ func NewContextManager(cache port.CacheStore, systemPrompt string) *ContextManag
 	}
 }
 
-// BuildPromptContext assembles the system prompt (base + knowledge base +
+// BuildPromptContext assembles the system prompt (composite skills prompt +
 // summarized earlier context) and the ordered chat history for the LLM.
 // history harus dalam urutan kronologis (pesan terbaru di akhir).
 func (cm *ContextManager) BuildPromptContext(
 	ctx context.Context,
 	convID uint,
 	history []bot.Message,
-	knowledgeEntries []knowledge.Entry,
+	basePrompt string,
 ) (systemPrompt string, messages []llm.ChatMessage, err error) {
 	var sb strings.Builder
-	sb.WriteString(cm.systemPrompt)
+	if strings.TrimSpace(basePrompt) != "" {
+		sb.WriteString(basePrompt)
+	} else {
+		sb.WriteString(cm.systemPrompt)
+	}
 
 	sb.WriteString("\n\n")
-
-	if len(knowledgeEntries) > 0 {
-		sb.WriteString("### BASIS PENGETAHUAN LOKAL (GNET):\n")
-		sb.WriteString("Gunakan informasi berikut sebagai acuan utama untuk menjawab:\n")
-		for _, entry := range knowledgeEntries {
-			sb.WriteString(fmt.Sprintf("- **%s**: %s\n", entry.Title, entry.Content))
-		}
-		sb.WriteString("\n")
-	}
 
 	if cm.cache != nil {
 		summary, _ := cm.cache.Get(ctx, fmt.Sprintf(summaryCacheKeyFmt, convID))

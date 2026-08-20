@@ -1,34 +1,29 @@
 package llm
 
 import (
+	"context"
 	"fmt"
 
+	"github.com/quixiq/polyglot/internal/adapter/llm/genkit"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/llm"
-	llmclaude "github.com/quixiq/polyglot/internal/adapter/llm/claude"
-	llmgemini "github.com/quixiq/polyglot/internal/adapter/llm/gemini"
-	llmgroq "github.com/quixiq/polyglot/internal/adapter/llm/groq"
-	llmopenai "github.com/quixiq/polyglot/internal/adapter/llm/openai"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-// NewProvider creates the appropriate LLMProvider based on the given config.
+// NewProvider creates the appropriate LLMProvider based on the given config using Google Genkit.
 func NewProvider(cfg *llm.Config, encryptionKey string) (port.LLMProvider, error) {
-	apiKey, err := config.Decrypt(cfg.APIKeyEncrypted, encryptionKey)
-	if err != nil {
-		return nil, fmt.Errorf("failed to decrypt API key: %w", err)
+	if cfg == nil {
+		return nil, fmt.Errorf("llm config is nil")
 	}
 
-	switch cfg.Provider {
-	case "openai":
-		return llmopenai.NewProvider(apiKey, cfg.Model, cfg.MaxOutputTokens)
-	case "gemini":
-		return llmgemini.NewProvider(apiKey, cfg.Model, cfg.MaxOutputTokens)
-	case "claude":
-		return llmclaude.NewProvider(apiKey, cfg.Model, cfg.MaxOutputTokens)
-	case "groq":
-		return llmgroq.NewProvider(apiKey, cfg.Model, cfg.MaxOutputTokens)
-	default:
-		return nil, fmt.Errorf("unsupported LLM provider: %s", cfg.Provider)
+	var apiKey string
+	if cfg.APIKeyEncrypted != "" {
+		decrypted, err := config.Decrypt(cfg.APIKeyEncrypted, encryptionKey)
+		if err != nil {
+			return nil, fmt.Errorf("failed to decrypt API key: %w", err)
+		}
+		apiKey = decrypted
 	}
+
+	return genkit.NewProvider(context.Background(), cfg, apiKey)
 }
