@@ -199,26 +199,6 @@ func TestEngineLLMError(t *testing.T) {
 	}
 }
 
-func TestEngineOffTopic(t *testing.T) {
-	cache := newFakeCache()
-	gw := &fakeGateway{}
-	prov := &fakeProvider{reply: "balasan"}
-	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
-	convRepo := newFakeConvRepo()
-
-	e := newTestEngine(cache, gw, llmRepo, prov, convRepo)
-	if err := e.HandleIncomingMessage(context.Background(), 1, "628123456789@s.whatsapp.net", "628123456789", "ceritakan dongeng tentang kucing"); err != nil {
-		t.Fatalf("HandleIncomingMessage: %v", err)
-	}
-
-	if len(gw.sent) != 1 {
-		t.Fatalf("expected off-topic reply, got %v", gw.sent)
-	}
-	if len(prov.calls) != 0 {
-		t.Fatalf("LLM must not be called for off-topic messages")
-	}
-}
-
 func TestEngineChatBotDisabled(t *testing.T) {
 	cache := newFakeCache()
 	gw := &fakeGateway{}
@@ -281,3 +261,53 @@ func TestEngineIgnoresGroupsAndBroadcasts(t *testing.T) {
 		t.Fatalf("LLM must not be called for groups or broadcasts")
 	}
 }
+
+func TestEngineRateLimitTracking(t *testing.T) {
+	cache := newFakeCache()
+	gw := &fakeGateway{}
+	prov := &fakeProvider{reply: "Halo, ada yang bisa dibantu?"}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
+	convRepo := newFakeConvRepo()
+
+	e := newTestEngine(cache, gw, llmRepo, prov, convRepo)
+	ctx := context.Background()
+	phone := "628123456789"
+
+	// Awalnya kuota harian = 0
+	status, err := e.GetRateLimitStatus(ctx, phone)
+	if err != nil {
+		t.Fatalf("GetRateLimitStatus error: %v", err)
+	}
+	if status.DailyChatCount != 0 {
+		t.Fatalf("expected initial daily chat count 0, got %d", status.DailyChatCount)
+	}
+
+	// Pesan 1 masuk dan dibalas bot
+	if err := e.HandleIncomingMessage(ctx, 1, phone+"@s.whatsapp.net", phone, "Halo bot"); err != nil {
+		t.Fatalf("HandleIncomingMessage: %v", err)
+	}
+
+	// Kuota harian bertambah menjadi 1
+	statusAfter, err := e.GetRateLimitStatus(ctx, phone)
+	if err != nil {
+		t.Fatalf("GetRateLimitStatus error: %v", err)
+	}
+	if statusAfter.DailyChatCount != 1 {
+		t.Fatalf("expected daily chat count 1 after 1 message, got %d", statusAfter.DailyChatCount)
+	}
+
+	// Reset rate limit oleh admin
+	if err := e.ResetRateLimit(ctx, phone); err != nil {
+		t.Fatalf("ResetRateLimit error: %v", err)
+	}
+
+	// Kuota harian kembali ke 0
+	statusReset, err := e.GetRateLimitStatus(ctx, phone)
+	if err != nil {
+		t.Fatalf("GetRateLimitStatus error: %v", err)
+	}
+	if statusReset.DailyChatCount != 0 {
+		t.Fatalf("expected daily chat count 0 after reset, got %d", statusReset.DailyChatCount)
+	}
+}
+

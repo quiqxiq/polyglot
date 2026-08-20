@@ -134,8 +134,11 @@ func (s *Store) FindAllConversations(ctx context.Context) ([]bot.Conversation, e
 
 func (s *Store) FindActiveConversationByCustomer(ctx context.Context, sessionID uint, customerNumber string) (*bot.Conversation, error) {
 	var m model.ConversationModel
-	if err := s.db.WithContext(ctx).Where("session_id = ? AND customer_wa_number = ? AND status IN ('bot', 'escalation')", sessionID, customerNumber).
-		Order("updated_at DESC").First(&m).Error; err != nil {
+	query := s.db.WithContext(ctx).Where("customer_wa_number = ? AND status IN ('bot', 'escalation')", customerNumber)
+	if sessionID > 0 {
+		query = query.Where("session_id = ?", sessionID)
+	}
+	if err := query.Order("updated_at DESC").First(&m).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrNotFound
 		}

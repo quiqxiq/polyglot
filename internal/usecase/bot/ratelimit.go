@@ -93,6 +93,11 @@ func NewRateLimiter(cache port.CacheStore, cfg config.Config) *RateLimiter {
 	}
 }
 
+// HasCache reports whether the rate limiter has an active cache backend.
+func (r *RateLimiter) HasCache() bool {
+	return r != nil && r.cache != nil
+}
+
 // Check evaluates incoming message for spam burst, active mute penalties, and daily quota.
 func (r *RateLimiter) Check(ctx context.Context, customerNumber string, messageContent string) (RateLimitResult, error) {
 	customerNumber = cleanPhoneNumber(customerNumber)

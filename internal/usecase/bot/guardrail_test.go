@@ -8,7 +8,7 @@ import (
 )
 
 func TestGuardrail_SanitizeResponse(t *testing.T) {
-	g := bot.NewGuardrail([]string{"paket", "harga"})
+	g := bot.NewGuardrail()
 
 	tests := []struct {
 		name     string

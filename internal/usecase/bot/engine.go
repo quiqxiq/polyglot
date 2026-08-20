@@ -88,7 +88,7 @@ func NewEngine(
 			BotDailyChatLimit:  cfg.DailyChatLimit,
 			BotWhitelistPhones: cfg.WhitelistPhones,
 		}),
-		guardrail:     NewGuardrail(cfg.AllowedTopics),
+		guardrail:     NewGuardrail(),
 		contextMgr:    NewContextManager(cache, cfg.SystemPrompt),
 		publisher:     publisher,
 		providerF:     providerFactory,
@@ -166,11 +166,6 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	case StatusWarned, StatusDailyQuotaExceeded, StatusMuted, StatusBlocked:
 		logger.WithComponent("BotEngine").Warnf("Number %s rate limit notification (%v).", customerNumber, rateResult.Status)
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, rateResult.Message, 0, 0, nil)
-	}
-
-	if !e.guardrail.IsTopicAllowed(messageContent) {
-		offTopicReply := e.guardrail.FormatOffTopicResponse()
-		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, offTopicReply, 0, 0, nil)
 	}
 
 	history, err := e.convService.GetRecentHistory(ctx, conv.ID, historyLimit)
@@ -270,17 +265,18 @@ func (e *Engine) GetRateLimitStatus(ctx context.Context, customerNumber string) 
 		return nil, err
 	}
 
-	// Fallback to conversation DB history if redis quota is 0 or unlinked
-	if info.DailyChatCount == 0 && e.convService != nil {
+	// Fallback to conversation DB history ONLY if rate limiter has no active cache backend (e.g. redis nil)
+	if !e.rateLimiter.HasCache() && e.convService != nil {
 		cleaned := cleanPhoneNumber(customerNumber)
-		conv, err := e.convService.GetActiveConversationByCustomer(ctx, 1, cleaned)
+		conv, err := e.convService.GetActiveConversationByCustomer(ctx, 0, cleaned)
 		if err == nil && conv != nil {
 			msgs, err := e.convService.GetHistory(ctx, conv.ID, 100)
 			if err == nil {
-				today := time.Now().Truncate(24 * time.Hour)
+				now := time.Now()
+				today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
 				count := 0
 				for _, m := range msgs {
-					if m.SenderType == bot.SenderCustomer && m.CreatedAt.After(today) {
+					if m.SenderType == bot.SenderCustomer && (m.CreatedAt.Equal(today) || m.CreatedAt.After(today)) {
 						count++
 					}
 				}

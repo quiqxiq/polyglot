@@ -14,9 +14,6 @@ import (
 //go:embed rbac_model.conf
 var RBACModelConf string
 
-//go:embed system_prompt.md
-var DefaultSystemPrompt string
-
 type Config struct {
 	Port     string
 	AppEnv   string
@@ -62,9 +59,6 @@ func Load() Config {
 	_ = godotenv.Overload(".env.local")
 
 	prompt := os.Getenv("SYSTEM_PROMPT")
-	if prompt == "" {
-		prompt = DefaultSystemPrompt
-	}
 
 	originsRaw := getEnv("CORS_ORIGINS", "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000")
 	var origins []string

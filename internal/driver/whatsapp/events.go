@@ -68,14 +68,19 @@ func (c *Client) handleIncomingMessage(evt *events.Message) {
 		return
 	}
 
-	chatJID := normalizeJIDFromLID(context.Background(), evt.Info.Chat, c.waClient).String()
+	normChat := normalizeJIDFromLID(context.Background(), evt.Info.Chat, c.waClient).ToNonAD()
+	chatJID := normChat.String()
 	if chatJID == "" || isSkippedJID(chatJID) || strings.HasSuffix(chatJID, "@g.us") || strings.HasSuffix(chatJID, "@broadcast") || strings.HasSuffix(chatJID, "@newsletter") || strings.HasPrefix(chatJID, "status@") {
 		return
 	}
 
-	senderJID := evt.Info.Sender.User
-	if evt.Info.Chat.User != "" {
-		senderJID = evt.Info.Chat.User
+	senderNumber := normChat.User
+	if senderNumber == "" {
+		normSender := normalizeJIDFromLID(context.Background(), evt.Info.Sender, c.waClient).ToNonAD()
+		senderNumber = normSender.User
+	}
+	if senderNumber == "" {
+		senderNumber = evt.Info.Sender.User
 	}
 
 	body := extractMessageBody(evt.Message)
@@ -85,12 +90,12 @@ func (c *Client) handleIncomingMessage(evt *events.Message) {
 
 	logger.WithComponent("WhatsAppDriver").WithFields(map[string]any{
 		"session_id": c.SessionID,
-		"sender":     senderJID,
+		"sender":     senderNumber,
 		"chat_jid":   chatJID,
 	}).Debugf("incoming direct 1:1 message: %s", body)
 
 	if cb := c.getMessageCallback(); cb != nil {
-		cb(c.SessionID, chatJID, senderJID, body)
+		cb(c.SessionID, chatJID, senderNumber, body)
 	}
 }
 
