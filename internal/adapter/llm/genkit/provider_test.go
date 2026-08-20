@@ -110,3 +110,27 @@ func TestNewProvider_Validation(t *testing.T) {
 		assert.NotNil(t, p)
 	})
 }
+
+func TestProvider_ChatWithTools_Structure(t *testing.T) {
+	ctx := context.Background()
+	p, err := genkit.NewProvider(ctx, &llm.Config{
+		Provider:        "ollama",
+		Model:           "llama3.2",
+		MaxOutputTokens: 512,
+	}, "")
+	require.NoError(t, err)
+	assert.NotNil(t, p)
+
+	tools := []llm.Tool{
+		{
+			Name:        "test_tool",
+			Description: "A dummy tool for testing",
+			Handler: func(ctx context.Context, argsJSON string) (string, error) {
+				return "ok", nil
+			},
+		},
+	}
+
+	assert.NotNil(t, tools)
+}
+

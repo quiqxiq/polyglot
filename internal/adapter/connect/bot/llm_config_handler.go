@@ -52,7 +52,14 @@ func (h *BotConnectHandler) CreateLLMConfig(ctx context.Context, req *connect.Re
 		Provider:        req.Msg.Provider,
 		Model:           req.Msg.ModelName,
 		APIKeyEncrypted: encryptedKey,
+		BaseURL:         req.Msg.BaseUrl,
+		Temperature:     req.Msg.Temperature,
 		MaxOutputTokens: int(req.Msg.MaxTokens),
+		SystemPrompt:    req.Msg.SystemPrompt,
+		SkillsMode:      req.Msg.SkillsMode,
+		EnableSkills:    req.Msg.EnableSkills,
+		SkillsPrompt:    req.Msg.SkillsPrompt,
+		SelectedSkills:  req.Msg.SelectedSkills,
 		CostPer1MInput:  inRate,
 		CostPer1MOutput: outRate,
 		IsActive:        isActive,
@@ -79,6 +86,14 @@ func (h *BotConnectHandler) UpdateLLMConfig(ctx context.Context, req *connect.Re
 
 	cfg.Provider = req.Msg.Provider
 	cfg.Model = req.Msg.ModelName
+	cfg.BaseURL = req.Msg.BaseUrl
+	cfg.Temperature = req.Msg.Temperature
+	cfg.SystemPrompt = req.Msg.SystemPrompt
+	cfg.SkillsMode = req.Msg.SkillsMode
+	cfg.EnableSkills = req.Msg.EnableSkills
+	cfg.SkillsPrompt = req.Msg.SkillsPrompt
+	cfg.SelectedSkills = req.Msg.SelectedSkills
+
 	inRate, outRate := llmcost.GetDefaultPricing(req.Msg.Provider, req.Msg.ModelName)
 	cfg.CostPer1MInput = inRate
 	cfg.CostPer1MOutput = outRate

@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { botClient } from '@/lib/api-client'
 import { toast } from 'sonner'
-import type { Skill } from '../types'
+import type { Skill, SkillFile } from '../types'
 
 export const skillKeys = {
   all: ['skills'] as const,
@@ -10,31 +10,81 @@ export const skillKeys = {
   globalPrompt: () => [...skillKeys.all, 'global-prompt'] as const,
 }
 
+function formatSkillFrontmatter(s: {
+  name: string
+  description: string
+  license?: string
+  compatibility?: string
+  allowedTools?: string
+  metadata?: Record<string, string>
+}) {
+  let fm = `---\nname: ${s.name}\ndescription: '${(s.description || '').replace(/'/g, "''")}'\n`
+  if (s.license) fm += `license: ${s.license}\n`
+  if (s.compatibility) fm += `compatibility: ${s.compatibility}\n`
+  if (s.allowedTools) fm += `allowed-tools: ${s.allowedTools}\n`
+  if (s.metadata && Object.keys(s.metadata).length > 0) {
+    fm += `metadata:\n`
+    for (const [k, v] of Object.entries(s.metadata)) {
+      fm += `  ${k}: ${v}\n`
+    }
+  }
+  fm += `---\n\n`
+  return fm
+}
+
 export function useSkills() {
   return useQuery({
     queryKey: skillKeys.lists(),
     queryFn: async () => {
       const resp = await botClient.listSkills({})
-      const mapped: Skill[] = resp.skills.map((s) => ({
-        id: String(s.id),
-        slug: s.slug,
-        name: s.name,
-        description: s.description,
-        enabled: s.isEnabled,
-        isEnabled: s.isEnabled,
-        files: s.files.map((f) => ({
-          id: String(f.id),
-          skillId: String(f.skillId),
-          name: f.name,
-          path: f.filePath,
-          filePath: f.filePath,
-          content: f.content,
-          isReference: f.isReference,
-          updatedAt: f.updatedAt,
-        })),
-        createdAt: s.createdAt,
-        updatedAt: s.updatedAt,
-      }))
+      const mapped: Skill[] = await Promise.all(
+        resp.skills.map(async (s) => {
+          let resourceFiles: SkillFile[] = []
+          try {
+            const resResp = await botClient.listResources({ skillId: s.id })
+            resourceFiles = (resResp.resources || []).map((r) => ({
+              id: `${s.id}-${r.path}`,
+              skillId: s.id,
+              name: r.name,
+              path: r.path,
+              filePath: r.path,
+              content: '',
+              isReference: r.type === 'reference' || r.path.startsWith('references/'),
+              updatedAt: r.modified,
+            }))
+          } catch {
+            // Ignore error if skill has no resources
+          }
+
+          const rawContent = s.content || ''
+          const fullContent = rawContent.startsWith('---')
+            ? rawContent
+            : `${formatSkillFrontmatter(s)}${rawContent}`
+
+          const mainFile: SkillFile = {
+            id: `${s.id}-main`,
+            skillId: s.id,
+            name: 'SKILL.md',
+            path: 'SKILL.md',
+            filePath: 'SKILL.md',
+            content: fullContent,
+            isReference: false,
+            updatedAt: s.updatedAt,
+          }
+
+          return {
+            id: s.id,
+            slug: s.name,
+            name: s.name,
+            description: s.description,
+            enabled: true,
+            isEnabled: true,
+            files: [mainFile, ...resourceFiles],
+            createdAt: s.createdAt,
+            updatedAt: s.updatedAt,
+          }
+        })
+      )
       return mapped
     },
   })
@@ -58,7 +108,7 @@ export function useSaveGlobalPrompt() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: skillKeys.globalPrompt() })
-      toast.success('Global System Prompt berhasil disimpan ke DB & Disk')
+      toast.success('Global System Prompt berhasil disimpan')
     },
     onError: (err: Error) => {
       toast.error(`Gagal menyimpan global prompt: ${err.message}`)
@@ -78,7 +128,12 @@ export function useCreateSkill() {
       name: string
       description: string
     }) => {
-      return await botClient.createSkill({ slug, name, description })
+      const skillName = (slug || name).toLowerCase().replace(/\s+/g, '-')
+      return await botClient.createSkill({
+        name: skillName,
+        description,
+        content: `# ${name}\n\n${description}\n`,
+      })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: skillKeys.lists() })
@@ -97,23 +152,28 @@ export function useSaveSkillFile() {
       slug,
       filePath,
       content,
-      isReference,
     }: {
       slug: string
       filePath: string
       content: string
-      isReference: boolean
+      isReference?: boolean
     }) => {
-      return await botClient.saveSkillFile({
-        slug,
-        filePath,
-        content,
-        isReference,
+      if (filePath === 'SKILL.md' || !filePath) {
+        return await botClient.updateSkill({
+          id: slug,
+          name: slug,
+          content: content,
+        })
+      }
+      return await botClient.saveResource({
+        skillId: slug,
+        path: filePath,
+        data: new TextEncoder().encode(content),
       })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: skillKeys.lists() })
-      toast.success('Berkas berhasil disimpan ke Database & Disk')
+      toast.success('Berkas berhasil disimpan')
     },
     onError: (err: Error) => {
       toast.error(`Gagal menyimpan berkas: ${err.message}`)
@@ -124,8 +184,9 @@ export function useSaveSkillFile() {
 export function useDeleteSkill() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: async ({ id, slug }: { id: number; slug: string }) => {
-      return await botClient.deleteSkill({ id, slug })
+    mutationFn: async ({ id, slug }: { id: number | string; slug: string }) => {
+      const targetId = slug || String(id)
+      return await botClient.deleteSkill({ id: targetId })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: skillKeys.lists() })
@@ -142,17 +203,15 @@ export function useDeleteSkillFile() {
   return useMutation({
     mutationFn: async ({
       slug,
-      fileId,
       filePath,
     }: {
       slug: string
-      fileId: number
+      fileId?: number | string
       filePath: string
     }) => {
-      return await botClient.deleteSkillFile({
-        slug,
-        fileId,
-        filePath,
+      return await botClient.deleteResource({
+        skillId: slug,
+        path: filePath,
       })
     },
     onSuccess: () => {
@@ -169,7 +228,7 @@ export function useToggleSkill() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async ({ slug, enabled }: { slug: string; enabled: boolean }) => {
-      return await botClient.toggleSkill({ slug, enabled })
+      return await botClient.toggleSkill({ id: slug, enabled })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: skillKeys.lists() })
@@ -177,23 +236,6 @@ export function useToggleSkill() {
     },
     onError: (err: Error) => {
       toast.error(`Gagal mengubah status skill: ${err.message}`)
-    },
-  })
-}
-
-export function useSyncSkillsFromDisk() {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: async () => {
-      return await botClient.syncSkillsFromDisk({})
-    },
-    onSuccess: (resp) => {
-      queryClient.invalidateQueries({ queryKey: skillKeys.lists() })
-      queryClient.invalidateQueries({ queryKey: skillKeys.globalPrompt() })
-      toast.success(resp.message || 'Berhasil sinkronisasi dari disk')
-    },
-    onError: (err: Error) => {
-      toast.error(`Gagal sinkronisasi dari disk: ${err.message}`)
     },
   })
 }

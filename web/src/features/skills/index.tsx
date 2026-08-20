@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Sparkles, ArrowLeft, RefreshCw, Cpu, Loader2 } from 'lucide-react'
+import { Sparkles, ArrowLeft, Cpu, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -23,8 +23,8 @@ import {
   useDeleteSkill,
   useDeleteSkillFile,
   useToggleSkill,
-  useSyncSkillsFromDisk,
 } from './api/use-skills'
+import { botClient } from '@/lib/api-client'
 
 export function Skills() {
   const { data: serverSkills, isLoading: isSkillsLoading } = useSkills()
@@ -36,7 +36,6 @@ export function Skills() {
   const deleteSkillMutation = useDeleteSkill()
   const deleteSkillFileMutation = useDeleteSkillFile()
   const toggleSkillMutation = useToggleSkill()
-  const syncSkillsMutation = useSyncSkillsFromDisk()
 
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null)
   const [activeFile, setActiveFile] = useState<SkillFile | null>(null)
@@ -104,8 +103,22 @@ export function Skills() {
     }
   }
 
-  const handleSelectFile = (skill: Skill, file: SkillFile) => {
+  const handleSelectFile = async (skill: Skill, file: SkillFile) => {
     setActiveSkill(skill)
+    if (!file.content && file.path !== 'SKILL.md' && !file.isGlobal) {
+      try {
+        const resp = await botClient.getResource({
+          skillId: skill.id,
+          path: file.filePath || file.path,
+        })
+        const loadedFile = { ...file, content: resp.content?.content || '' }
+        setActiveFile(loadedFile)
+        setMobileSelected(true)
+        return
+      } catch {
+        // Continue with original file object if fetch fails
+      }
+    }
     setActiveFile(file)
     setMobileSelected(true)
   }
@@ -172,7 +185,7 @@ export function Skills() {
         setActiveFile(globalPromptFile)
       }
       setSkillToDelete(null)
-    } catch (err: any) {
+    } catch {
       // Error handled by mutation
     }
   }
@@ -200,7 +213,7 @@ export function Skills() {
         setActiveFile(remaining[0] || globalPromptFile)
       }
       setFileToDelete(null)
-    } catch (err: any) {
+    } catch {
       // Error handled by mutation
     }
   }
@@ -223,21 +236,6 @@ export function Skills() {
           >
             <Cpu className='h-4 w-4 text-primary' />
             <span className='hidden sm:inline'>Pengaturan LLM</span>
-          </Button>
-
-          <Button
-            variant='outline'
-            size='sm'
-            onClick={() => syncSkillsMutation.mutate()}
-            disabled={syncSkillsMutation.isPending}
-            className='gap-1.5'
-          >
-            {syncSkillsMutation.isPending ? (
-              <Loader2 className='h-4 w-4 animate-spin' />
-            ) : (
-              <RefreshCw className='h-4 w-4' />
-            )}
-            <span className='hidden sm:inline'>Sinkronkan Disk</span>
           </Button>
 
           <Search />

@@ -1,5 +1,6 @@
 export interface SkillFile {
   id: string
+  skillId?: string
   name: string
   path: string // e.g. "SKILL.md", "system-prompt.md", "references/profil-perusahaan.md"
   filePath?: string

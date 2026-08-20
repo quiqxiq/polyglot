@@ -10,8 +10,10 @@ import (
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/domain/llm"
+	skillDomain "github.com/quixiq/polyglot/internal/domain/skill"
 	"github.com/quixiq/polyglot/internal/port"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
+	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
 
@@ -34,15 +36,21 @@ type Config struct {
 	Ban24HourSeconds   int
 	DailyChatLimit     int
 	WhitelistPhones    []string
+	TechnicianPhone    string
 }
 
 // ProviderFactory creates an LLM provider from a stored LLM configuration.
 type ProviderFactory func(cfg *llm.Config) (port.LLMProvider, error)
 
-// PromptBuilder constructs composite system prompt from active modular skills and global SOP.
-type PromptBuilder interface {
-	BuildCompositeSystemPrompt(ctx context.Context) (string, error)
-	BuildSelectivePrompt(ctx context.Context, contextText string) (string, error)
+// SkillProvider loads available skills for LLM agent runtime.
+type SkillProvider interface {
+	ListSkills(ctx context.Context) ([]skillDomain.SkillInfo, error)
+	GetSkillContent(ctx context.Context, name string) (string, error)
+}
+
+// GlobalPromptProvider loads global system prompt from database or disk.
+type GlobalPromptProvider interface {
+	GetGlobalSystemPrompt(ctx context.Context) (string, error)
 }
 
 // Engine orchestrates the WhatsApp customer-service bot.
@@ -51,7 +59,8 @@ type Engine struct {
 	cache         port.CacheStore
 	waGateway     port.WhatsAppGateway
 	convService   *convUC.ConversationService
-	promptBuilder PromptBuilder
+	skillProvider SkillProvider
+	globalPromptP GlobalPromptProvider
 	llmConfigRepo port.LLMConfigRepository
 	chatRepo      port.ChatRepository
 	rateLimiter   *RateLimiter
@@ -66,7 +75,8 @@ func NewEngine(
 	cache port.CacheStore,
 	waGateway port.WhatsAppGateway,
 	convService *convUC.ConversationService,
-	promptBuilder PromptBuilder,
+	skillProvider SkillProvider,
+	globalPromptP GlobalPromptProvider,
 	llmConfigRepo port.LLMConfigRepository,
 	chatRepo port.ChatRepository,
 	publisher port.EventPublisher,
@@ -77,7 +87,8 @@ func NewEngine(
 		cache:         cache,
 		waGateway:     waGateway,
 		convService:   convService,
-		promptBuilder: promptBuilder,
+		skillProvider: skillProvider,
+		globalPromptP: globalPromptP,
 		llmConfigRepo: llmConfigRepo,
 		chatRepo:      chatRepo,
 		rateLimiter: NewRateLimiter(cache, config.Config{
@@ -178,22 +189,6 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		}
 	}
 
-	var compositePrompt string
-	if e.promptBuilder != nil {
-		var queryBuilder strings.Builder
-		for _, h := range history {
-			queryBuilder.WriteString(h.Content)
-			queryBuilder.WriteString(" ")
-		}
-		queryBuilder.WriteString(messageContent)
-
-		if cp, err := e.promptBuilder.BuildSelectivePrompt(ctx, queryBuilder.String()); err == nil && cp != "" {
-			compositePrompt = cp
-		} else if err != nil {
-			logger.WithComponent("BotEngine").Warnf("Failed to build selective skills prompt: %v", err)
-		}
-	}
-
 	if e.llmConfigRepo == nil {
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Maaf, sistem AI kami saat ini tidak tersedia.", 0, 0, nil)
 	}
@@ -204,7 +199,42 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Maaf, konfigurasi asisten AI belum aktif. Pesan Anda telah kami terima.", 0, 0, nil)
 	}
 
-	systemPrompt, chatMessages, err := e.contextMgr.BuildPromptContext(ctx, conv.ID, history, compositePrompt)
+	var compositePrompt strings.Builder
+	if e.globalPromptP != nil {
+		if gp, err := e.globalPromptP.GetGlobalSystemPrompt(ctx); err == nil && strings.TrimSpace(gp) != "" {
+			compositePrompt.WriteString(strings.TrimSpace(gp))
+			compositePrompt.WriteString("\n\n")
+		}
+	}
+
+	var botTools []llm.Tool
+	botTools = append(botTools, NewGetCurrentTimeTool(), NewPingHostTool(), NewNotifyTechnicianTool(e.waGateway, sessionID, e.cfg.TechnicianPhone))
+
+	// Inject skills based on active LLM config (LocalAI standard)
+	if llmCfg.EnableSkills && e.skillProvider != nil {
+		skillsMode := llmCfg.SkillsMode
+		if skillsMode == "" {
+			skillsMode = llm.SkillsModePrompt
+		}
+
+		allSkills, err := e.skillProvider.ListSkills(ctx)
+		if err == nil && len(allSkills) > 0 {
+			filtered := skillUC.FilterSkills(allSkills, llmCfg.SelectedSkills)
+			if skillsMode == llm.SkillsModePrompt || skillsMode == llm.SkillsModeBoth {
+				if skillsText := skillUC.RenderSkillsPrompt(filtered, llmCfg.SkillsPrompt); skillsText != "" {
+					compositePrompt.WriteString(skillsText)
+					compositePrompt.WriteString("\n\n")
+				}
+			}
+			if skillsMode == llm.SkillsModeTools || skillsMode == llm.SkillsModeBoth {
+				compositePrompt.WriteString(skillUC.SkillsToolsHint)
+				compositePrompt.WriteString("\n\n")
+				botTools = append(botTools, NewRequestSkillTool(e.skillProvider))
+			}
+		}
+	}
+
+	systemPrompt, chatMessages, err := e.contextMgr.BuildPromptContext(ctx, conv.ID, history, compositePrompt.String())
 	if err != nil {
 		return fmt.Errorf("failed to build prompt context: %w", err)
 	}
@@ -224,7 +254,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		maxTokens = e.cfg.LLMMaxOutputTokens
 	}
 
-	resp, err := provider.Chat(ctx, systemPrompt, chatMessages, maxTokens)
+	resp, err := provider.ChatWithTools(ctx, systemPrompt, chatMessages, botTools, maxTokens)
 	if err != nil {
 		logger.WithComponent("BotEngine").Errorf("LLM call failed for conversation %d: %v", conv.ID, err)
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Mohon maaf, sistem AI kami sedang sibuk atau mengalami kendala koneksi. Silakan ulangi pesan Anda dalam beberapa saat.", 0, 0, nil)

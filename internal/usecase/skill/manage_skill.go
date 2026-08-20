@@ -2,343 +2,265 @@ package skill
 
 import (
 	"context"
-	"fmt"
-	"path/filepath"
-	"regexp"
 	"strings"
-	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/skill"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
 
-var slugRegex = regexp.MustCompile(`^[a-z0-9]+(-[a-z0-9]+)*$`)
-
+// ManageSkillUseCase mengorkestrasikan seluruh operasi manajemen skill (LocalAI Write-Through pattern).
 type ManageSkillUseCase struct {
-	repo port.SkillRepository
-	fs   port.SkillFileStore
+	repo      port.SkillRepository
+	store     port.SkillStore
+	gitSyncer port.SkillGitSyncer
 }
 
-func NewManageSkillUseCase(repo port.SkillRepository, fs port.SkillFileStore) *ManageSkillUseCase {
+func NewManageSkillUseCase(repo port.SkillRepository, store port.SkillStore, gitSyncer port.SkillGitSyncer) *ManageSkillUseCase {
 	return &ManageSkillUseCase{
-		repo: repo,
-		fs:   fs,
+		repo:      repo,
+		store:     store,
+		gitSyncer: gitSyncer,
 	}
 }
 
-func (u *ManageSkillUseCase) ListSkills(ctx context.Context) ([]skill.Skill, error) {
-	return u.repo.ListSkills(ctx)
+// Provider mengembalikan port.SkillProvider untuk bot engine runtime.
+func (u *ManageSkillUseCase) Provider() port.SkillProvider {
+	return &skillProviderAdapter{uc: u}
 }
 
-func (u *ManageSkillUseCase) GetSkill(ctx context.Context, slug string) (*skill.Skill, error) {
-	if strings.TrimSpace(slug) == "" {
-		return nil, skill.ErrInvalidSlug
-	}
-	return u.repo.GetSkillBySlug(ctx, slug)
+type skillProviderAdapter struct {
+	uc *ManageSkillUseCase
 }
 
-func (u *ManageSkillUseCase) CreateSkill(ctx context.Context, slug, name, description string) (*skill.Skill, error) {
-	slug = strings.ToLower(strings.TrimSpace(slug))
-	if !slugRegex.MatchString(slug) {
-		return nil, skill.ErrInvalidSlug
-	}
-	name = strings.TrimSpace(name)
-	if name == "" {
-		return nil, skill.ErrInvalidSkillName
-	}
+func (a *skillProviderAdapter) ListSkills(ctx context.Context) ([]skill.SkillInfo, error) {
+	return a.uc.ListSkillsForProvider(ctx)
+}
 
-	existing, _ := u.repo.GetSkillBySlug(ctx, slug)
-	if existing != nil {
-		return nil, skill.ErrSkillAlreadyExists
-	}
+func (a *skillProviderAdapter) GetSkillContent(ctx context.Context, name string) (string, error) {
+	return a.uc.GetSkillContent(ctx, name)
+}
 
-	initialContent := fmt.Sprintf(`---
-name: %s
-description: '%s'
----
+// --- Skills CRUD ---
 
-# %s
-
-Jelaskan tujuan utama skill ini secara ringkas di sini.
-
-## 1. Ruang Lingkup & Batasan
-- Hal yang **boleh** dijawab oleh skill ini: ...
-- Hal yang **di luar cakupan** dan harus dialihkan: ...
-
-## 2. Alur Prosedur / SOP
-Jelaskan langkah demi langkah instruksi untuk bot:
-1. Langkah 1: ...
-2. Langkah 2: ...
-
-## 3. Dokumen Referensi Pendukung
-Hubungkan berkas yang ada di folder `+"`references/`"+`:
-
-| Kasus / Topik Pelanggan | Dokumen Referensi yang Dibaca |
-|---|---|
-| Info & Detail Khusus | `+"`references/panduan.md`"+` |
-
-## 4. Kriteria Eskalasi ke Manusia
-Tentukan kapan bot harus menyerah dan mengalihkan ke CS manusia:
-- Pelanggan meminta berbicara langsung dengan petugas / teknisi.
-- Kendala teknis tidak terselesaikan setelah mengikuti langkah SOP di atas.
-`, slug, description, name)
-
-	sk := &skill.Skill{
-		Slug:        slug,
-		Name:        name,
-		Description: description,
-		IsEnabled:   true,
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
-		Files: []skill.SkillFile{
-			{
-				Name:        "SKILL.md",
-				FilePath:    "SKILL.md",
-				Content:     initialContent,
-				IsReference: false,
-				UpdatedAt:   time.Now(),
-			},
-		},
-	}
-
-	// 1. Simpan ke PostgreSQL
-	if err := u.repo.CreateSkill(ctx, sk); err != nil {
-		return nil, fmt.Errorf("failed to save skill to database: %w", err)
-	}
-
-	// 2. Tulis ke Filesystem Disk
-	if u.fs != nil {
-		if err := u.fs.WriteSkillToDisk(sk); err != nil {
-			logger.WithComponent("ManageSkill").WithError(err).Warn("failed to write skill to disk")
+func (u *ManageSkillUseCase) ListSkills(ctx context.Context, userID string) ([]skill.Skill, error) {
+	// 1. Coba baca dari PostgreSQL jika repo tersedia
+	if u.repo != nil {
+		records, err := u.repo.ListSkills(ctx, userID)
+		if err == nil && len(records) > 0 {
+			skills := make([]skill.Skill, 0, len(records))
+			for _, r := range records {
+				if !r.Enabled {
+					continue
+				}
+				// Baca detail penuh dari disk jika ada
+				sk, readErr := u.store.ReadSkillFromDisk(r.Name)
+				if readErr == nil && sk != nil {
+					sk.SourceType = r.SourceType
+					sk.SourceURL = r.SourceURL
+					skills = append(skills, *sk)
+				} else {
+					skills = append(skills, skill.Skill{
+						ID:          r.Name,
+						Name:        r.Name,
+						Description: r.Definition,
+						SourceType:  r.SourceType,
+						SourceURL:   r.SourceURL,
+					})
+				}
+			}
+			return skills, nil
 		}
 	}
 
-	return sk, nil
-}
-
-func (u *ManageSkillUseCase) SaveSkillFile(ctx context.Context, slug, filePath, content string, isReference bool) (*skill.SkillFile, error) {
-	slug = strings.ToLower(strings.TrimSpace(slug))
-	sk, err := u.repo.GetSkillBySlug(ctx, slug)
+	// 2. Fallback baca langsung dari Filesystem disk
+	fsSkills, err := u.store.ListSkillsFromDisk()
 	if err != nil {
 		return nil, err
 	}
 
-	filePath = filepath.Clean(filePath)
-	fileName := filepath.Base(filePath)
-	if isReference && !strings.HasPrefix(filePath, "references/") && !strings.HasPrefix(filePath, "references\\") {
-		filePath = filepath.Join("references", fileName)
-	}
-
-	f := &skill.SkillFile{
-		SkillID:     sk.ID,
-		Name:        fileName,
-		FilePath:    filePath,
-		Content:     content,
-		IsReference: isReference,
-		UpdatedAt:   time.Now(),
-	}
-
-	// 1. Update frontmatter metadata jika mengedit SKILL.md
-	if fileName == "SKILL.md" {
-		parsedName, parsedDesc, _, err := skill.ParseFrontmatter(content)
-		if err == nil {
-			if parsedName != "" {
-				sk.Name = parsedName
-			}
-			if parsedDesc != "" {
-				sk.Description = parsedDesc
-			}
-			_ = u.repo.UpdateSkill(ctx, sk)
+	// Auto-seed metadata ke PostgreSQL jika kosong
+	if u.repo != nil && len(fsSkills) > 0 {
+		for _, s := range fsSkills {
+			u.persistMetadata(ctx, userID, s.Name, s.SourceType, s.SourceURL)
 		}
 	}
 
-	// 2. Simpan ke Database
-	if err := u.repo.SaveSkillFile(ctx, sk.ID, f); err != nil {
-		return nil, fmt.Errorf("failed to save file to database: %w", err)
-	}
-
-	// 3. Tulis ke Filesystem Disk
-	if u.fs != nil {
-		if err := u.fs.WriteSkillFileToDisk(slug, f); err != nil {
-			logger.WithComponent("ManageSkill").WithError(err).Warn("failed to write file to disk")
-		}
-	}
-
-	return f, nil
+	return fsSkills, nil
 }
 
-func (u *ManageSkillUseCase) DeleteSkillFile(ctx context.Context, slug string, fileID uint, filePath string) error {
-	slug = strings.ToLower(strings.TrimSpace(slug))
-	sk, _ := u.repo.GetSkillBySlug(ctx, slug)
-	if sk != nil {
-		_ = u.repo.DeleteSkillFileByPath(ctx, sk.ID, filePath)
+func (u *ManageSkillUseCase) GetSkill(ctx context.Context, userID, name string) (*skill.Skill, error) {
+	name = strings.TrimSpace(name)
+	if err := skill.ValidateSkillName(name); err != nil {
+		return nil, err
 	}
-	if fileID > 0 {
-		_ = u.repo.DeleteSkillFile(ctx, fileID)
-	}
-	if u.fs != nil {
-		_ = u.fs.DeleteSkillFileFromDisk(slug, filePath)
-	}
-	return nil
+	return u.store.ReadSkillFromDisk(name)
 }
 
-func (u *ManageSkillUseCase) DeleteSkill(ctx context.Context, id uint, slug string) error {
-	slug = strings.ToLower(strings.TrimSpace(slug))
-	if id == 0 && slug != "" {
-		existing, _ := u.repo.GetSkillBySlug(ctx, slug)
-		if existing != nil {
-			id = existing.ID
-		}
-	}
-	if id > 0 {
-		if err := u.repo.DeleteSkill(ctx, id); err != nil {
-			return err
-		}
-	}
-	if u.fs != nil {
-		_ = u.fs.DeleteSkillFolderFromDisk(slug)
-	}
-	return nil
-}
-
-func (u *ManageSkillUseCase) ToggleSkillEnabled(ctx context.Context, slug string, enabled bool) error {
-	return u.repo.ToggleSkillEnabled(ctx, slug, enabled)
-}
-
-func (u *ManageSkillUseCase) SyncFromDisk(ctx context.Context) (int, error) {
-	if u.fs == nil {
-		return 0, nil
-	}
-	diskSkills, err := u.fs.ScanAllSkillsFromDisk()
+func (u *ManageSkillUseCase) SearchSkills(ctx context.Context, query string) ([]skill.Skill, error) {
+	allSkills, err := u.store.ListSkillsFromDisk()
 	if err != nil {
-		return 0, fmt.Errorf("failed to scan skills from disk: %w", err)
+		return nil, err
 	}
 
-	// 1. Dapatkan daftar skill saat ini di DB untuk pruning skill yang sudah dihapus dari disk
-	dbSkills, _ := u.repo.ListSkills(ctx)
-	diskSlugMap := make(map[string]bool)
-	for _, ds := range diskSkills {
-		diskSlugMap[ds.Slug] = true
+	queryLower := strings.ToLower(strings.TrimSpace(query))
+	if queryLower == "" {
+		return allSkills, nil
 	}
-	for _, dbs := range dbSkills {
-		if !diskSlugMap[dbs.Slug] {
-			_ = u.repo.DeleteSkill(ctx, dbs.ID)
+
+	var results []skill.Skill
+	for _, s := range allSkills {
+		if strings.Contains(strings.ToLower(s.Name), queryLower) ||
+			strings.Contains(strings.ToLower(s.Description), queryLower) ||
+			strings.Contains(strings.ToLower(s.Content), queryLower) {
+			results = append(results, s)
 		}
 	}
-
-	// 2. Sinkronkan dan perbarui seluruh file skill
-	syncedCount := 0
-	for _, ds := range diskSkills {
-		existing, _ := u.repo.GetSkillBySlug(ctx, ds.Slug)
-		if existing == nil {
-			if err := u.repo.CreateSkill(ctx, &ds); err == nil {
-				syncedCount++
-			}
-		} else {
-			// Prune berkas DB yang sudah dihapus dari disk
-			diskFileMap := make(map[string]bool)
-			for _, f := range ds.Files {
-				diskFileMap[f.FilePath] = true
-				diskFileMap[f.Name] = true
-			}
-			for _, dbf := range existing.Files {
-				if !diskFileMap[dbf.FilePath] && !diskFileMap[dbf.Name] {
-					_ = u.repo.DeleteSkillFile(ctx, dbf.ID)
-				}
-			}
-
-			// Simpan atau update berkas disk
-			for _, f := range ds.Files {
-				_ = u.repo.SaveSkillFile(ctx, existing.ID, &f)
-			}
-			syncedCount++
-		}
-	}
-
-	// 3. Sync global prompt dari data/system-prompt.md
-	diskPrompt, err := u.fs.ReadGlobalPromptFromDisk()
-	if err == nil && strings.TrimSpace(diskPrompt) != "" {
-		_ = u.repo.SaveGlobalSystemPrompt(ctx, diskPrompt)
-	}
-
-	return syncedCount, nil
+	return results, nil
 }
+
+func (u *ManageSkillUseCase) CreateSkill(ctx context.Context, userID, name, description, content, license, compatibility, allowedTools string, metadata map[string]string) (*skill.Skill, error) {
+	sk, err := u.store.CreateSkillOnDisk(name, description, content, license, compatibility, allowedTools, metadata)
+	if err != nil {
+		return nil, err
+	}
+
+	u.persistMetadata(ctx, userID, name, "inline", "")
+	return sk, nil
+}
+
+func (u *ManageSkillUseCase) UpdateSkill(ctx context.Context, userID, name, description, content, license, compatibility, allowedTools string, metadata map[string]string) (*skill.Skill, error) {
+	sk, err := u.store.UpdateSkillOnDisk(name, description, content, license, compatibility, allowedTools, metadata)
+	if err != nil {
+		return nil, err
+	}
+
+	u.persistMetadata(ctx, userID, name, sk.SourceType, sk.SourceURL)
+	return sk, nil
+}
+
+func (u *ManageSkillUseCase) DeleteSkill(ctx context.Context, userID, name string) error {
+	if err := u.store.DeleteSkillFromDisk(name); err != nil {
+		return err
+	}
+	u.removeMetadata(ctx, userID, name)
+	return nil
+}
+
+func (u *ManageSkillUseCase) ExportSkill(name string) ([]byte, error) {
+	return u.store.ExportSkillZip(name)
+}
+
+func (u *ManageSkillUseCase) ImportSkill(ctx context.Context, userID string, archiveData []byte) (*skill.Skill, error) {
+	sk, err := u.store.ImportSkillZip(archiveData)
+	if err != nil {
+		return nil, err
+	}
+	u.persistMetadata(ctx, userID, sk.Name, "inline", "")
+	return sk, nil
+}
+
+func (u *ManageSkillUseCase) ToggleSkillEnabled(ctx context.Context, userID, name string, enabled bool) error {
+	if u.repo == nil {
+		return nil
+	}
+	return u.repo.ToggleSkillEnabled(ctx, userID, name, enabled)
+}
+
+// --- Global System Prompt ---
 
 func (u *ManageSkillUseCase) GetGlobalSystemPrompt(ctx context.Context) (string, error) {
-	content, err := u.repo.GetGlobalSystemPrompt(ctx)
-	if err == nil && content != "" {
-		return content, nil
+	if u.repo != nil {
+		prompt, err := u.repo.GetGlobalSystemPrompt(ctx)
+		if err == nil && strings.TrimSpace(prompt) != "" {
+			return prompt, nil
+		}
 	}
-	if u.fs != nil {
-		return u.fs.ReadGlobalPromptFromDisk()
-	}
-	return "", nil
+	return u.store.ReadGlobalPromptFromDisk()
 }
 
 func (u *ManageSkillUseCase) SaveGlobalSystemPrompt(ctx context.Context, content string) error {
-	if err := u.repo.SaveGlobalSystemPrompt(ctx, content); err != nil {
-		return err
+	if u.repo != nil {
+		_ = u.repo.SaveGlobalSystemPrompt(ctx, content)
 	}
-	if u.fs != nil {
-		_ = u.fs.WriteGlobalPromptToDisk(content)
-	}
-	return nil
+	return u.store.WriteGlobalPromptToDisk(content)
 }
 
-// BuildSelectivePrompt merakit System Prompt selektif berbasis relevansi topik pertanyaan user.
-func (u *ManageSkillUseCase) BuildSelectivePrompt(ctx context.Context, contextText string) (string, error) {
-	var sb strings.Builder
+// --- SkillProvider Implementation for Agent Runtime ---
 
-	// 1. Base / Global System Prompt
-	basePrompt, _ := u.GetGlobalSystemPrompt(ctx)
-	if strings.TrimSpace(basePrompt) != "" {
-		sb.WriteString(strings.TrimSpace(basePrompt))
-		sb.WriteString("\n\n")
+func (u *ManageSkillUseCase) ListSkillsForProvider(ctx context.Context) ([]skill.SkillInfo, error) {
+	skills, err := u.store.ListSkillsFromDisk()
+	if err != nil {
+		return nil, err
 	}
 
-	// 2. Active Modular Skills with Selective File Filtering
-	skills, err := u.repo.ListSkills(ctx)
-	if err == nil && len(skills) > 0 {
-		hasActive := false
-		for _, sk := range skills {
-			if !sk.IsEnabled {
-				continue
-			}
+	out := make([]skill.SkillInfo, len(skills))
+	for i, s := range skills {
+		out[i] = skill.SkillInfo{
+			Name:        s.Name,
+			Description: s.Description,
+			Content:     s.Content,
+		}
+	}
+	return out, nil
+}
 
-			// Saring hanya berkas yang relevan dengan pertanyaan/konteks user
-			matchedFiles := MatchRelevantFiles(&sk, contextText)
-			if len(matchedFiles) == 0 {
-				continue
-			}
+func (u *ManageSkillUseCase) GetSkillContent(ctx context.Context, name string) (string, error) {
+	sk, err := u.store.ReadSkillFromDisk(name)
+	if err != nil {
+		return "", err
+	}
+	if sk.Content != "" {
+		return sk.Content, nil
+	}
+	return sk.Description, nil
+}
 
-			if !hasActive {
-				sb.WriteString("## MODUL SKILL & PROSEDUR SOP RELEVAN:\n\n")
-				hasActive = true
-			}
-			sb.WriteString(fmt.Sprintf("### SKILL: %s (%s)\n", sk.Name, sk.Slug))
-			if sk.Description != "" {
-				sb.WriteString(fmt.Sprintf("**Deskripsi Pemicu**: %s\n\n", sk.Description))
-			}
+// --- Internal Helpers ---
 
-			// Render isi berkas yang terpilih
-			for _, f := range matchedFiles {
-				content := strings.TrimSpace(f.Content)
-				if content == "" {
-					continue
-				}
-				sb.WriteString(fmt.Sprintf("#### [BERKAS: %s]\n", f.FilePath))
-				sb.WriteString(content)
-				sb.WriteString("\n\n")
-			}
-			sb.WriteString("---\n\n")
+func (u *ManageSkillUseCase) persistMetadata(ctx context.Context, userID, name, sourceType, sourceURL string) {
+	if u.repo == nil {
+		return
+	}
+
+	definition := ""
+	if sk, err := u.store.ReadSkillFromDisk(name); err == nil && sk != nil {
+		definition = sk.Content
+		if len(definition) > 500 {
+			definition = definition[:500]
+		}
+		if definition == "" {
+			definition = sk.Description
 		}
 	}
 
-	return strings.TrimSpace(sb.String()), nil
+	rec := &skill.SkillMetadataRecord{
+		UserID:     userID,
+		Name:       name,
+		Definition: definition,
+		SourceType: sourceType,
+		SourceURL:  sourceURL,
+		Enabled:    true,
+	}
+
+	if err := u.repo.SaveSkillMetadata(ctx, rec); err != nil {
+		logger.WithComponent("ManageSkill").WithError(err).Warnf("Failed to persist skill metadata for %s", name)
+	}
 }
 
-// BuildCompositeSystemPrompt merakit seluruh berkas skill aktif (untuk sinkronisasi lengkap / preview).
-func (u *ManageSkillUseCase) BuildCompositeSystemPrompt(ctx context.Context) (string, error) {
-	return u.BuildSelectivePrompt(ctx, "paket harga gangguan tagihan profil eskalasi")
+func (u *ManageSkillUseCase) removeMetadata(ctx context.Context, userID, name string) {
+	if u.repo == nil {
+		return
+	}
+	if err := u.repo.DeleteSkillMetadata(ctx, userID, name); err != nil {
+		logger.WithComponent("ManageSkill").WithError(err).Warnf("Failed to delete skill metadata for %s", name)
+	}
+}
+
+func extractRepoName(repoURL string) string {
+	parts := strings.Split(strings.TrimSuffix(repoURL, ".git"), "/")
+	if len(parts) > 0 {
+		return strings.ToLower(parts[len(parts)-1])
+	}
+	return "repo"
 }

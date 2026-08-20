@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ActivateLLMConfigRequest, ActivateLLMConfigResponse, CloseConversationRequest, CloseConversationResponse, CreateLLMConfigRequest, CreateLLMConfigResponse, CreateSkillRequest, CreateSkillResponse, CreateTechnicianRequest, CreateTechnicianResponse, DeleteLLMConfigRequest, DeleteLLMConfigResponse, DeleteSkillFileRequest, DeleteSkillFileResponse, DeleteSkillRequest, DeleteSkillResponse, DeleteTechnicianRequest, DeleteTechnicianResponse, GetConversationContextRequest, GetConversationContextResponse, GetConversationRequest, GetConversationResponse, GetGlobalPromptRequest, GetGlobalPromptResponse, GetRateLimitStatusRequest, GetRateLimitStatusResponse, GetSkillRequest, GetSkillResponse, ListConversationsRequest, ListConversationsResponse, ListLLMConfigsRequest, ListLLMConfigsResponse, ListSkillsRequest, ListSkillsResponse, ListTechniciansRequest, ListTechniciansResponse, ResetConversationBotRequest, ResetConversationBotResponse, ResetRateLimitRequest, ResetRateLimitResponse, SaveGlobalPromptRequest, SaveGlobalPromptResponse, SaveSkillFileRequest, SaveSkillFileResponse, SyncSkillsFromDiskRequest, SyncSkillsFromDiskResponse, TakeOverConversationRequest, TakeOverConversationResponse, TestLLMConfigRequest, TestLLMConfigResponse, ToggleSkillRequest, ToggleSkillResponse, ToggleTechnicianActiveRequest, ToggleTechnicianActiveResponse, UpdateLLMConfigRequest, UpdateLLMConfigResponse, UpdateTechnicianRequest, UpdateTechnicianResponse } from "./bot_pb.js";
+import { ActivateLLMConfigRequest, ActivateLLMConfigResponse, AddGitRepoRequest, AddGitRepoResponse, CloseConversationRequest, CloseConversationResponse, CreateLLMConfigRequest, CreateLLMConfigResponse, CreateSkillRequest, CreateSkillResponse, CreateTechnicianRequest, CreateTechnicianResponse, DeleteGitRepoRequest, DeleteGitRepoResponse, DeleteLLMConfigRequest, DeleteLLMConfigResponse, DeleteResourceRequest, DeleteResourceResponse, DeleteSkillRequest, DeleteSkillResponse, DeleteTechnicianRequest, DeleteTechnicianResponse, ExportSkillRequest, ExportSkillResponse, GetConversationContextRequest, GetConversationContextResponse, GetConversationRequest, GetConversationResponse, GetGlobalPromptRequest, GetGlobalPromptResponse, GetRateLimitStatusRequest, GetRateLimitStatusResponse, GetResourceRequest, GetResourceResponse, GetSkillRequest, GetSkillResponse, ImportSkillRequest, ImportSkillResponse, ListConversationsRequest, ListConversationsResponse, ListGitReposRequest, ListGitReposResponse, ListLLMConfigsRequest, ListLLMConfigsResponse, ListResourcesRequest, ListResourcesResponse, ListSkillsRequest, ListSkillsResponse, ListTechniciansRequest, ListTechniciansResponse, ResetConversationBotRequest, ResetConversationBotResponse, ResetRateLimitRequest, ResetRateLimitResponse, SaveGlobalPromptRequest, SaveGlobalPromptResponse, SaveResourceRequest, SaveResourceResponse, SyncGitRepoRequest, SyncGitRepoResponse, TakeOverConversationRequest, TakeOverConversationResponse, TestLLMConfigRequest, TestLLMConfigResponse, ToggleGitRepoRequest, ToggleGitRepoResponse, ToggleSkillRequest, ToggleSkillResponse, ToggleTechnicianActiveRequest, ToggleTechnicianActiveResponse, UpdateGitRepoRequest, UpdateGitRepoResponse, UpdateLLMConfigRequest, UpdateLLMConfigResponse, UpdateSkillRequest, UpdateSkillResponse, UpdateTechnicianRequest, UpdateTechnicianResponse } from "./bot_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -85,7 +85,7 @@ export const BotService = {
       kind: MethodKind.Unary,
     },
     /**
-     * Skill Management
+     * Skill Management (LocalAI Standard)
      *
      * @generated from rpc polyglot.v1.BotService.ListSkills
      */
@@ -114,12 +114,12 @@ export const BotService = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc polyglot.v1.BotService.SaveSkillFile
+     * @generated from rpc polyglot.v1.BotService.UpdateSkill
      */
-    saveSkillFile: {
-      name: "SaveSkillFile",
-      I: SaveSkillFileRequest,
-      O: SaveSkillFileResponse,
+    updateSkill: {
+      name: "UpdateSkill",
+      I: UpdateSkillRequest,
+      O: UpdateSkillResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -132,12 +132,111 @@ export const BotService = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc polyglot.v1.BotService.DeleteSkillFile
+     * @generated from rpc polyglot.v1.BotService.ExportSkill
      */
-    deleteSkillFile: {
-      name: "DeleteSkillFile",
-      I: DeleteSkillFileRequest,
-      O: DeleteSkillFileResponse,
+    exportSkill: {
+      name: "ExportSkill",
+      I: ExportSkillRequest,
+      O: ExportSkillResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.ImportSkill
+     */
+    importSkill: {
+      name: "ImportSkill",
+      I: ImportSkillRequest,
+      O: ImportSkillResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.ListResources
+     */
+    listResources: {
+      name: "ListResources",
+      I: ListResourcesRequest,
+      O: ListResourcesResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.GetResource
+     */
+    getResource: {
+      name: "GetResource",
+      I: GetResourceRequest,
+      O: GetResourceResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.SaveResource
+     */
+    saveResource: {
+      name: "SaveResource",
+      I: SaveResourceRequest,
+      O: SaveResourceResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.DeleteResource
+     */
+    deleteResource: {
+      name: "DeleteResource",
+      I: DeleteResourceRequest,
+      O: DeleteResourceResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.ListGitRepos
+     */
+    listGitRepos: {
+      name: "ListGitRepos",
+      I: ListGitReposRequest,
+      O: ListGitReposResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.AddGitRepo
+     */
+    addGitRepo: {
+      name: "AddGitRepo",
+      I: AddGitRepoRequest,
+      O: AddGitRepoResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.UpdateGitRepo
+     */
+    updateGitRepo: {
+      name: "UpdateGitRepo",
+      I: UpdateGitRepoRequest,
+      O: UpdateGitRepoResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.DeleteGitRepo
+     */
+    deleteGitRepo: {
+      name: "DeleteGitRepo",
+      I: DeleteGitRepoRequest,
+      O: DeleteGitRepoResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.SyncGitRepo
+     */
+    syncGitRepo: {
+      name: "SyncGitRepo",
+      I: SyncGitRepoRequest,
+      O: SyncGitRepoResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BotService.ToggleGitRepo
+     */
+    toggleGitRepo: {
+      name: "ToggleGitRepo",
+      I: ToggleGitRepoRequest,
+      O: ToggleGitRepoResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -147,15 +246,6 @@ export const BotService = {
       name: "ToggleSkill",
       I: ToggleSkillRequest,
       O: ToggleSkillResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BotService.SyncSkillsFromDisk
-     */
-    syncSkillsFromDisk: {
-      name: "SyncSkillsFromDisk",
-      I: SyncSkillsFromDiskRequest,
-      O: SyncSkillsFromDiskResponse,
       kind: MethodKind.Unary,
     },
     /**

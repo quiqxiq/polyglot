@@ -3,7 +3,9 @@ package postgres
 import (
 	"context"
 	"errors"
+	"time"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
@@ -13,13 +15,17 @@ import (
 
 var _ port.SkillRepository = (*Store)(nil)
 
-func (s *Store) ListSkills(ctx context.Context) ([]skill.Skill, error) {
-	var models []model.SkillModel
-	if err := s.db.WithContext(ctx).Preload("Files").Order("created_at ASC").Find(&models).Error; err != nil {
+func (s *Store) ListSkills(ctx context.Context, userID string) ([]skill.SkillMetadataRecord, error) {
+	var models []model.SkillMetadataModel
+	q := s.db.WithContext(ctx).Order("name ASC")
+	if userID != "" {
+		q = q.Where("user_id = ?", userID)
+	}
+	if err := q.Find(&models).Error; err != nil {
 		return nil, err
 	}
 
-	result := make([]skill.Skill, 0, len(models))
+	result := make([]skill.SkillMetadataRecord, 0, len(models))
 	for _, m := range models {
 		if d := m.ToDomain(); d != nil {
 			result = append(result, *d)
@@ -28,9 +34,13 @@ func (s *Store) ListSkills(ctx context.Context) ([]skill.Skill, error) {
 	return result, nil
 }
 
-func (s *Store) GetSkillByID(ctx context.Context, id uint) (*skill.Skill, error) {
-	var m model.SkillModel
-	if err := s.db.WithContext(ctx).Preload("Files").First(&m, id).Error; err != nil {
+func (s *Store) GetSkill(ctx context.Context, userID, name string) (*skill.SkillMetadataRecord, error) {
+	var m model.SkillMetadataModel
+	q := s.db.WithContext(ctx).Where("name = ?", name)
+	if userID != "" {
+		q = q.Where("user_id = ?", userID)
+	}
+	if err := q.First(&m).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, skill.ErrSkillNotFound
 		}
@@ -39,38 +49,68 @@ func (s *Store) GetSkillByID(ctx context.Context, id uint) (*skill.Skill, error)
 	return m.ToDomain(), nil
 }
 
-func (s *Store) GetSkillBySlug(ctx context.Context, slug string) (*skill.Skill, error) {
-	var m model.SkillModel
-	if err := s.db.WithContext(ctx).Preload("Files").Where("slug = ?", slug).First(&m).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, skill.ErrSkillNotFound
-		}
+func (s *Store) SaveSkillMetadata(ctx context.Context, rec *skill.SkillMetadataRecord) error {
+	if rec == nil {
+		return errors.New("skill metadata record cannot be nil")
+	}
+	if rec.ID == "" {
+		rec.ID = uuid.New().String()
+	}
+	rec.UpdatedAt = time.Now()
+	if rec.CreatedAt.IsZero() {
+		rec.CreatedAt = rec.UpdatedAt
+	}
+
+	// Truncate definition to 500 chars to keep DB light (LocalAI standard)
+	if len(rec.Definition) > 500 {
+		rec.Definition = rec.Definition[:500]
+	}
+
+	var existing model.SkillMetadataModel
+	q := s.db.WithContext(ctx).Where("name = ?", rec.Name)
+	if rec.UserID != "" {
+		q = q.Where("user_id = ?", rec.UserID)
+	}
+	err := q.First(&existing).Error
+	if err == nil {
+		rec.ID = existing.ID
+		rec.CreatedAt = existing.CreatedAt
+		m := model.SkillMetadataModelFromDomain(rec)
+		return s.db.WithContext(ctx).Model(&existing).Updates(m).Error
+	}
+
+	m := model.SkillMetadataModelFromDomain(rec)
+	return s.db.WithContext(ctx).Create(m).Error
+}
+
+func (s *Store) DeleteSkillMetadata(ctx context.Context, userID, name string) error {
+	q := s.db.WithContext(ctx).Where("name = ?", name)
+	if userID != "" {
+		q = q.Where("user_id = ?", userID)
+	}
+	return q.Delete(&model.SkillMetadataModel{}).Error
+}
+
+func (s *Store) ListGitSkills(ctx context.Context) ([]skill.SkillMetadataRecord, error) {
+	var models []model.SkillMetadataModel
+	if err := s.db.WithContext(ctx).Where("source_type = ? AND enabled = true", "git").Order("name ASC").Find(&models).Error; err != nil {
 		return nil, err
 	}
-	return m.ToDomain(), nil
-}
-
-func (s *Store) CreateSkill(ctx context.Context, sEntity *skill.Skill) error {
-	m := model.SkillModelFromDomain(sEntity)
-	if err := s.db.WithContext(ctx).Create(m).Error; err != nil {
-		return err
+	result := make([]skill.SkillMetadataRecord, 0, len(models))
+	for _, m := range models {
+		if d := m.ToDomain(); d != nil {
+			result = append(result, *d)
+		}
 	}
-	sEntity.ID = m.ID
-	return nil
+	return result, nil
 }
 
-func (s *Store) UpdateSkill(ctx context.Context, sEntity *skill.Skill) error {
-	m := model.SkillModelFromDomain(sEntity)
-	return s.db.WithContext(ctx).Save(m).Error
-}
-
-func (s *Store) DeleteSkill(ctx context.Context, id uint) error {
-	_ = s.db.WithContext(ctx).Where("skill_id = ?", id).Delete(&model.SkillFileModel{}).Error
-	return s.db.WithContext(ctx).Delete(&model.SkillModel{}, id).Error
-}
-
-func (s *Store) ToggleSkillEnabled(ctx context.Context, slug string, enabled bool) error {
-	res := s.db.WithContext(ctx).Model(&model.SkillModel{}).Where("slug = ?", slug).Update("is_enabled", enabled)
+func (s *Store) ToggleSkillEnabled(ctx context.Context, userID, name string, enabled bool) error {
+	q := s.db.WithContext(ctx).Model(&model.SkillMetadataModel{}).Where("name = ?", name)
+	if userID != "" {
+		q = q.Where("user_id = ?", userID)
+	}
+	res := q.Update("enabled", enabled)
 	if res.Error != nil {
 		return res.Error
 	}
@@ -78,40 +118,6 @@ func (s *Store) ToggleSkillEnabled(ctx context.Context, slug string, enabled boo
 		return skill.ErrSkillNotFound
 	}
 	return nil
-}
-
-func (s *Store) SaveSkillFile(ctx context.Context, skillID uint, f *skill.SkillFile) error {
-	f.SkillID = skillID
-	var existing model.SkillFileModel
-	err := s.db.WithContext(ctx).Where("skill_id = ? AND file_path = ?", skillID, f.FilePath).First(&existing).Error
-	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			m := model.SkillFileModelFromDomain(f)
-			if err := s.db.WithContext(ctx).Create(m).Error; err != nil {
-				return err
-			}
-			f.ID = m.ID
-			return nil
-		}
-		return err
-	}
-
-	existing.Content = f.Content
-	existing.Name = f.Name
-	existing.IsReference = f.IsReference
-	if err := s.db.WithContext(ctx).Save(&existing).Error; err != nil {
-		return err
-	}
-	f.ID = existing.ID
-	return nil
-}
-
-func (s *Store) DeleteSkillFile(ctx context.Context, fileID uint) error {
-	return s.db.WithContext(ctx).Delete(&model.SkillFileModel{}, fileID).Error
-}
-
-func (s *Store) DeleteSkillFileByPath(ctx context.Context, skillID uint, filePath string) error {
-	return s.db.WithContext(ctx).Where("skill_id = ? AND file_path = ?", skillID, filePath).Delete(&model.SkillFileModel{}).Error
 }
 
 func (s *Store) GetGlobalSystemPrompt(ctx context.Context) (string, error) {

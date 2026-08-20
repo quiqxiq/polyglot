@@ -6,115 +6,64 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/skill"
 )
 
-// SkillModel represents the bot_skills table in PostgreSQL.
-type SkillModel struct {
-	ID          uint              `gorm:"primaryKey;autoIncrement"`
-	Slug        string            `gorm:"type:varchar(100);uniqueIndex;not null"`
-	Name        string            `gorm:"type:varchar(255);not null"`
-	Description string            `gorm:"type:text"`
-	IsEnabled   bool              `gorm:"default:true;index"`
-	Files       []SkillFileModel  `gorm:"foreignKey:SkillID;constraint:OnDelete:CASCADE"`
-	CreatedAt   time.Time         `gorm:"autoCreateTime"`
-	UpdatedAt   time.Time         `gorm:"autoUpdateTime"`
+// SkillMetadataModel represents the skills_metadata table in PostgreSQL.
+type SkillMetadataModel struct {
+	ID         string    `gorm:"primaryKey;size:36" json:"id"`
+	UserID     string    `gorm:"index;size:36" json:"user_id,omitempty"`
+	Name       string    `gorm:"index;size:255;not null" json:"name"`
+	Definition string    `gorm:"type:text" json:"definition,omitempty"`
+	SourceType string    `gorm:"size:32;default:'inline'" json:"source_type"`
+	SourceURL  string    `gorm:"size:512" json:"source_url,omitempty"`
+	Version    string    `gorm:"size:64" json:"version,omitempty"`
+	Enabled    bool      `gorm:"default:true;index" json:"enabled"`
+	CreatedAt  time.Time `gorm:"autoCreateTime" json:"created_at"`
+	UpdatedAt  time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 }
 
-func (SkillModel) TableName() string {
-	return "bot_skills"
+func (SkillMetadataModel) TableName() string {
+	return "skills_metadata"
 }
 
-func (m *SkillModel) ToDomain() *skill.Skill {
+func (m *SkillMetadataModel) ToDomain() *skill.SkillMetadataRecord {
 	if m == nil {
 		return nil
 	}
-	var files []skill.SkillFile
-	for _, f := range m.Files {
-		if d := f.ToDomain(); d != nil {
-			files = append(files, *d)
-		}
-	}
-	return &skill.Skill{
-		ID:          m.ID,
-		Slug:        m.Slug,
-		Name:        m.Name,
-		Description: m.Description,
-		IsEnabled:   m.IsEnabled,
-		Files:       files,
-		CreatedAt:   m.CreatedAt,
-		UpdatedAt:   m.UpdatedAt,
+	return &skill.SkillMetadataRecord{
+		ID:         m.ID,
+		UserID:     m.UserID,
+		Name:       m.Name,
+		Definition: m.Definition,
+		SourceType: m.SourceType,
+		SourceURL:  m.SourceURL,
+		Version:    m.Version,
+		Enabled:    m.Enabled,
+		CreatedAt:  m.CreatedAt,
+		UpdatedAt:  m.UpdatedAt,
 	}
 }
 
-func SkillModelFromDomain(s *skill.Skill) *SkillModel {
-	if s == nil {
+func SkillMetadataModelFromDomain(r *skill.SkillMetadataRecord) *SkillMetadataModel {
+	if r == nil {
 		return nil
 	}
-	var files []SkillFileModel
-	for _, f := range s.Files {
-		if m := SkillFileModelFromDomain(&f); m != nil {
-			files = append(files, *m)
-		}
-	}
-	return &SkillModel{
-		ID:          s.ID,
-		Slug:        s.Slug,
-		Name:        s.Name,
-		Description: s.Description,
-		IsEnabled:   s.IsEnabled,
-		Files:       files,
-		CreatedAt:   s.CreatedAt,
-		UpdatedAt:   s.UpdatedAt,
-	}
-}
-
-// SkillFileModel represents the bot_skill_files table in PostgreSQL.
-type SkillFileModel struct {
-	ID          uint      `gorm:"primaryKey;autoIncrement"`
-	SkillID     uint      `gorm:"index;not null"`
-	Name        string    `gorm:"type:varchar(255);not null"`
-	FilePath    string    `gorm:"type:varchar(500);index;not null"`
-	Content     string    `gorm:"type:text"`
-	IsReference bool      `gorm:"default:false"`
-	UpdatedAt   time.Time `gorm:"autoUpdateTime"`
-}
-
-func (SkillFileModel) TableName() string {
-	return "bot_skill_files"
-}
-
-func (m *SkillFileModel) ToDomain() *skill.SkillFile {
-	if m == nil {
-		return nil
-	}
-	return &skill.SkillFile{
-		ID:          m.ID,
-		SkillID:     m.SkillID,
-		Name:        m.Name,
-		FilePath:    m.FilePath,
-		Content:     m.Content,
-		IsReference: m.IsReference,
-		UpdatedAt:   m.UpdatedAt,
-	}
-}
-
-func SkillFileModelFromDomain(f *skill.SkillFile) *SkillFileModel {
-	if f == nil {
-		return nil
-	}
-	return &SkillFileModel{
-		ID:          f.ID,
-		SkillID:     f.SkillID,
-		Name:        f.Name,
-		FilePath:    f.FilePath,
-		Content:     f.Content,
-		IsReference: f.IsReference,
-		UpdatedAt:   f.UpdatedAt,
+	return &SkillMetadataModel{
+		ID:         r.ID,
+		UserID:     r.UserID,
+		Name:       r.Name,
+		Definition: r.Definition,
+		SourceType: r.SourceType,
+		SourceURL:  r.SourceURL,
+		Version:    r.Version,
+		Enabled:    r.Enabled,
+		CreatedAt:  r.CreatedAt,
+		UpdatedAt:  r.UpdatedAt,
 	}
 }
 
 // GlobalPromptModel represents the bot_global_prompts table in PostgreSQL.
 type GlobalPromptModel struct {
 	ID        uint      `gorm:"primaryKey;autoIncrement"`
-	Key       string    `gorm:"type:varchar(50);uniqueIndex;not null;default:'default'"`
+	Key       string    `gorm:"type:varchar(50);unique;not null;default:'default'"`
 	Content   string    `gorm:"type:text"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime"`
 }

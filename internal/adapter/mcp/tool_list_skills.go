@@ -10,11 +10,11 @@ import (
 type listSkillsArgs struct{}
 
 type skillItem struct {
-	ID          uint   `json:"id"`
-	Slug        string `json:"slug"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	IsEnabled   bool   `json:"is_enabled"`
+	ID         string `json:"id"`
+	Name       string `json:"name"`
+	Definition string `json:"definition"`
+	SourceType string `json:"source_type"`
+	IsEnabled  bool   `json:"is_enabled"`
 }
 
 type listSkillsOutput struct {
@@ -31,7 +31,7 @@ func (s *Server) listSkills(ctx context.Context, _ *mcp.CallToolRequest, _ listS
 		})
 	}
 
-	skills, err := s.skillRepo.ListSkills(ctx)
+	skills, err := s.skillRepo.ListSkills(ctx, "")
 	if err != nil {
 		return toolError(listSkillsOutput{Status: "error", Summary: err.Error()})
 	}
@@ -46,11 +46,11 @@ func (s *Server) listSkills(ctx context.Context, _ *mcp.CallToolRequest, _ listS
 	items := make([]skillItem, len(skills))
 	for i, sk := range skills {
 		items[i] = skillItem{
-			ID:          sk.ID,
-			Slug:        sk.Slug,
-			Name:        sk.Name,
-			Description: sk.Description,
-			IsEnabled:   sk.IsEnabled,
+			ID:         sk.ID,
+			Name:       sk.Name,
+			Definition: sk.Definition,
+			SourceType: sk.SourceType,
+			IsEnabled:  sk.Enabled,
 		}
 	}
 

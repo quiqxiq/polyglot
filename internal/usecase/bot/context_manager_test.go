@@ -66,6 +66,10 @@ func (f *fakeProvider) Chat(_ context.Context, systemPrompt string, messages []l
 	return &llm.ChatResponse{Content: f.reply, TokenIn: f.tokenIn, TokenOut: f.tokenOut}, nil
 }
 
+func (f *fakeProvider) ChatWithTools(ctx context.Context, systemPrompt string, messages []llm.ChatMessage, _ []llm.Tool, maxTokens int) (*llm.ChatResponse, error) {
+	return f.Chat(ctx, systemPrompt, messages, maxTokens)
+}
+
 func (f *fakeProvider) TestConnection(context.Context) error { return nil }
 
 const testSystemPrompt = "Kamu adalah asisten layanan GNET."

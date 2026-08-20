@@ -14,15 +14,25 @@ service BotService {
   rpc ResetRateLimit (ResetRateLimitRequest) returns (ResetRateLimitResponse);
   rpc GetRateLimitStatus (GetRateLimitStatusRequest) returns (GetRateLimitStatusResponse);
 
-  // Skill Management
+  // Skill Management (LocalAI Standard)
   rpc ListSkills (ListSkillsRequest) returns (ListSkillsResponse);
   rpc GetSkill (GetSkillRequest) returns (GetSkillResponse);
   rpc CreateSkill (CreateSkillRequest) returns (CreateSkillResponse);
-  rpc SaveSkillFile (SaveSkillFileRequest) returns (SaveSkillFileResponse);
+  rpc UpdateSkill (UpdateSkillRequest) returns (UpdateSkillResponse);
   rpc DeleteSkill (DeleteSkillRequest) returns (DeleteSkillResponse);
-  rpc DeleteSkillFile (DeleteSkillFileRequest) returns (DeleteSkillFileResponse);
+  rpc ExportSkill (ExportSkillRequest) returns (ExportSkillResponse);
+  rpc ImportSkill (ImportSkillRequest) returns (ImportSkillResponse);
+  rpc ListResources (ListResourcesRequest) returns (ListResourcesResponse);
+  rpc GetResource (GetResourceRequest) returns (GetResourceResponse);
+  rpc SaveResource (SaveResourceRequest) returns (SaveResourceResponse);
+  rpc DeleteResource (DeleteResourceRequest) returns (DeleteResourceResponse);
+  rpc ListGitRepos (ListGitReposRequest) returns (ListGitReposResponse);
+  rpc AddGitRepo (AddGitRepoRequest) returns (AddGitRepoResponse);
+  rpc UpdateGitRepo (UpdateGitRepoRequest) returns (UpdateGitRepoResponse);
+  rpc DeleteGitRepo (DeleteGitRepoRequest) returns (DeleteGitRepoResponse);
+  rpc SyncGitRepo (SyncGitRepoRequest) returns (SyncGitRepoResponse);
+  rpc ToggleGitRepo (ToggleGitRepoRequest) returns (ToggleGitRepoResponse);
   rpc ToggleSkill (ToggleSkillRequest) returns (ToggleSkillResponse);
-  rpc SyncSkillsFromDisk (SyncSkillsFromDiskRequest) returns (SyncSkillsFromDiskResponse);
   rpc GetGlobalPrompt (GetGlobalPromptRequest) returns (GetGlobalPromptResponse);
   rpc SaveGlobalPrompt (SaveGlobalPromptRequest) returns (SaveGlobalPromptResponse);
 
@@ -41,6 +51,10 @@ service BotService {
   rpc ToggleTechnicianActive (ToggleTechnicianActiveRequest) returns (ToggleTechnicianActiveResponse);
   rpc DeleteTechnician (DeleteTechnicianRequest) returns (DeleteTechnicianResponse);
 }
+
+// -----------------------------------------------------------------------------
+// Conversation Messages
+// -----------------------------------------------------------------------------
 
 message ConversationMessage {
   string id = 1;
@@ -96,8 +110,6 @@ message CloseConversationResponse {
   string message = 1;
 }
 
-// ConversationContextMessage adalah pesan bisnis (conversation.messages)
-// dengan metrik token LLM — berbeda dari mirror wa_messages.
 message ConversationContextMessage {
   string id = 1;
   string sender = 2;
@@ -147,68 +159,101 @@ message GetRateLimitStatusResponse {
 }
 
 // -----------------------------------------------------------------------------
-// Skill Messages
+// Skill Messages (LocalAI Standard)
 // -----------------------------------------------------------------------------
 
-message SkillFileItem {
-  uint32 id = 1;
-  uint32 skill_id = 2;
-  string name = 3;
-  string file_path = 4;
-  string content = 5;
-  bool is_reference = 6;
-  string updated_at = 7;
+message Skill {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string content = 4;
+  string license = 5;
+  string compatibility = 6;
+  string allowed_tools = 7;
+  map<string, string> metadata = 8;
+  bool read_only = 9;
+  string source_type = 10;
+  string source_url = 11;
+  string created_at = 12;
+  string updated_at = 13;
 }
 
-message SkillItem {
-  uint32 id = 1;
-  string slug = 2;
-  string name = 3;
-  string description = 4;
-  bool is_enabled = 5;
-  repeated SkillFileItem files = 6;
-  string created_at = 7;
-  string updated_at = 8;
+message SkillResource {
+  string path = 1;
+  string name = 2;
+  string type = 3;
+  int64 size = 4;
+  string mime_type = 5;
+  bool readable = 6;
+  string modified = 7;
 }
 
-message ListSkillsRequest {}
+message ResourceContent {
+  string content = 1;
+  string encoding = 2;
+  string mime_type = 3;
+  int64 size = 4;
+}
+
+message GitRepoInfo {
+  string id = 1;
+  string url = 2;
+  string name = 3;
+  bool enabled = 4;
+  string last_synced_at = 5;
+}
+
+message ListSkillsRequest {
+  string user_id = 1;
+}
 
 message ListSkillsResponse {
-  repeated SkillItem skills = 1;
+  repeated Skill skills = 1;
 }
 
 message GetSkillRequest {
-  string slug = 1;
+  string id = 1;
+  string user_id = 2;
 }
 
 message GetSkillResponse {
-  SkillItem skill = 1;
+  Skill skill = 1;
 }
 
 message CreateSkillRequest {
-  string slug = 1;
+  string user_id = 1;
   string name = 2;
   string description = 3;
+  string content = 4;
+  string license = 5;
+  string compatibility = 6;
+  string allowed_tools = 7;
+  map<string, string> metadata = 8;
 }
 
 message CreateSkillResponse {
-  SkillItem skill = 1;
+  Skill skill = 1;
 }
 
-message SaveSkillFileRequest {
-  string slug = 1;
-  string file_path = 2;
-  string content = 3;
-  bool is_reference = 4;
+message UpdateSkillRequest {
+  string id = 1;
+  string user_id = 2;
+  string name = 3;
+  string description = 4;
+  string content = 5;
+  string license = 6;
+  string compatibility = 7;
+  string allowed_tools = 8;
+  map<string, string> metadata = 9;
 }
 
-message SaveSkillFileResponse {
-  SkillFileItem file = 1;
+message UpdateSkillResponse {
+  Skill skill = 1;
 }
 
 message DeleteSkillRequest {
-  uint32 id = 1;
-  string slug = 2;
+  string id = 1;
+  string user_id = 2;
 }
 
 message DeleteSkillResponse {
@@ -216,31 +261,121 @@ message DeleteSkillResponse {
   string message = 2;
 }
 
-message DeleteSkillFileRequest {
-  string slug = 1;
-  uint32 file_id = 2;
-  string file_path = 3;
+message ExportSkillRequest {
+  string id = 1;
 }
 
-message DeleteSkillFileResponse {
+message ExportSkillResponse {
+  bytes archive = 1;
+  string filename = 2;
+}
+
+message ImportSkillRequest {
+  bytes archive = 1;
+  string user_id = 2;
+}
+
+message ImportSkillResponse {
+  Skill skill = 1;
+}
+
+message ListResourcesRequest {
+  string skill_id = 1;
+}
+
+message ListResourcesResponse {
+  repeated SkillResource resources = 1;
+}
+
+message GetResourceRequest {
+  string skill_id = 1;
+  string path = 2;
+}
+
+message GetResourceResponse {
+  ResourceContent content = 1;
+  SkillResource metadata = 2;
+}
+
+message SaveResourceRequest {
+  string skill_id = 1;
+  string path = 2;
+  bytes data = 3;
+}
+
+message SaveResourceResponse {
   bool success = 1;
   string message = 2;
 }
 
+message DeleteResourceRequest {
+  string skill_id = 1;
+  string path = 2;
+}
+
+message DeleteResourceResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ListGitReposRequest {}
+
+message ListGitReposResponse {
+  repeated GitRepoInfo repos = 1;
+}
+
+message AddGitRepoRequest {
+  string url = 1;
+}
+
+message AddGitRepoResponse {
+  GitRepoInfo repo = 1;
+}
+
+message UpdateGitRepoRequest {
+  string id = 1;
+  string url = 2;
+  optional bool enabled = 3;
+}
+
+message UpdateGitRepoResponse {
+  GitRepoInfo repo = 1;
+}
+
+message DeleteGitRepoRequest {
+  string id = 1;
+}
+
+message DeleteGitRepoResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message SyncGitRepoRequest {
+  string id = 1;
+}
+
+message SyncGitRepoResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ToggleGitRepoRequest {
+  string id = 1;
+}
+
+message ToggleGitRepoResponse {
+  GitRepoInfo repo = 1;
+}
+
 message ToggleSkillRequest {
-  string slug = 1;
-  bool enabled = 2;
+  string id = 1;
+  string user_id = 2;
+  bool enabled = 3;
 }
 
 message ToggleSkillResponse {
   bool success = 1;
-  string message = 2;
-}
-
-message SyncSkillsFromDiskRequest {}
-
-message SyncSkillsFromDiskResponse {
-  int32 synced_count = 1;
   string message = 2;
 }
 
@@ -273,6 +408,10 @@ message LLMConfig {
   double temperature = 7;
   int32 max_tokens = 8;
   string system_prompt = 9;
+  string skills_mode = 10;
+  bool enable_skills = 11;
+  string skills_prompt = 12;
+  repeated string selected_skills = 13;
 }
 
 message ListLLMConfigsRequest {}
@@ -288,6 +427,10 @@ message CreateLLMConfigRequest {
   double temperature = 5;
   int32 max_tokens = 6;
   string system_prompt = 7;
+  string skills_mode = 8;
+  bool enable_skills = 9;
+  string skills_prompt = 10;
+  repeated string selected_skills = 11;
 }
 message CreateLLMConfigResponse {
   LLMConfig config = 1;
@@ -302,6 +445,10 @@ message UpdateLLMConfigRequest {
   double temperature = 6;
   int32 max_tokens = 7;
   string system_prompt = 8;
+  string skills_mode = 9;
+  bool enable_skills = 10;
+  string skills_prompt = 11;
+  repeated string selected_skills = 12;
 }
 message UpdateLLMConfigResponse {
   LLMConfig config = 1;

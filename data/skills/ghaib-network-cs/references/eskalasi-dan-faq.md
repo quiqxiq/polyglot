@@ -15,11 +15,18 @@ Langsung alihkan ke agent manusia/tim terkait kalau salah satu terjadi:
 - Pelanggan menunjukkan tanda kesal/distres berat yang butuh penanganan manusiawi, bukan skrip bot.
 - Pertanyaan tentang layanan Ghaib Network di luar cakupan internet/jaringan (CCTV, web development, service HP/PC, Mikrotik) — lihat `profil-perusahaan.md`.
 
-## Cara Eskalasi
+## Cara Eskalasi & Pelaporan ke Teknisi
 
-1. **Ringkas dulu** masalah pelanggan sebelum diteruskan — jangan minta pelanggan mengulang cerita dari awal ke agent manusia.
-2. Sampaikan kontak yang akan menangani (lihat tabel di bawah).
-3. Informasikan estimasi waktu respons manusia kalau ada datanya. `[ISI: mis. "biasanya direspons dalam 1x24 jam kerja"]`
+1. **Untuk Kunjungan Teknisi Lapangan (Gangguan Fisik/Kabel/Modem):**
+   - Tawarkan bantuan teknisi ke pelanggan.
+   - Minta 4 data: **Nama Lengkap**, **Alamat Lengkap**, **Nomor HP/WA aktif**, dan **Deskripsi Masalah**.
+   - Panggil tool **`notify_technician`** agar pesan laporan langsung terkirim otomatis ke WhatsApp tim teknisi lapangan.
+   - Informasikan kepada pelanggan bahwa laporan sudah masuk dan teknisi akan segera menghubungi sebelum meluncur ke lokasi.
+
+2. **Untuk Pertanyaan Non-Teknis (Billing/Sales/Komplain Umum):**
+   - Ringkas dulu masalah pelanggan sebelum diteruskan.
+   - Sampaikan kontak resmi yang akan menangani (lihat tabel di bawah).
+   - Informasikan estimasi waktu respons: "biasanya direspons dalam 1x24 jam kerja".
 
 ## Kontak Eskalasi per Kategori
 

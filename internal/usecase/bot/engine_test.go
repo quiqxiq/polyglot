@@ -6,9 +6,14 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/domain/llm"
+	"github.com/quixiq/polyglot/internal/domain/skill"
+	"github.com/quixiq/polyglot/internal/port"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
+	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 )
 
 func TestEngineHappyPath(t *testing.T) {
@@ -311,3 +316,223 @@ func TestEngineRateLimitTracking(t *testing.T) {
 	}
 }
 
+func TestEngineSkillsInjection(t *testing.T) {
+	cache := newFakeCache()
+	gw := &fakeGateway{}
+	prov := &fakeProvider{reply: "Ikuti langkah SOP berikut."}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{
+		ID:           1,
+		EnableSkills: true,
+		SkillsMode:   llm.SkillsModePrompt,
+	}}
+	convRepo := newFakeConvRepo()
+
+	skillProv := &fakeSkillProvider{
+		skills: []skill.SkillInfo{
+			{
+				Name:        "troubleshoot-los",
+				Description: "Panduan lampu LOS merah",
+				Content:     "# Langkah Cek Fiber\n1. Pastikan konektor biru kencang.",
+			},
+		},
+	}
+
+	svc := convUC.NewConversationService(convRepo)
+	e := NewEngine(
+		testBotConfig(),
+		cache,
+		gw,
+		svc,
+		skillProv,
+		&fakeGlobalPromptProvider{prompt: "Kamu adalah asisten GNET."},
+		llmRepo,
+		newFakeChatRepo(),
+		&fakePublisher{},
+		func(*llm.Config) (port.LLMProvider, error) { return prov, nil },
+	)
+
+	ctx := context.Background()
+	phone := "628123456789"
+	err := e.HandleIncomingMessage(ctx, 1, phone+"@s.whatsapp.net", phone, "Modem saya lampu merah")
+	if err != nil {
+		t.Fatalf("HandleIncomingMessage error: %v", err)
+	}
+
+	if len(prov.calls) != 1 {
+		t.Fatalf("expected 1 LLM call, got %d", len(prov.calls))
+	}
+
+	callStr := prov.calls[0]
+	assert.Contains(t, callStr, "<available_skills>")
+	assert.Contains(t, callStr, "Langkah Cek Fiber")
+}
+
+func TestEngineSkillsMode_Tools_LazyLoad(t *testing.T) {
+	cache := newFakeCache()
+	gw := &fakeGateway{}
+	prov := &fakeProvider{reply: "Saya akan mengecek SOP terlebih dahulu."}
+	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{
+		ID:           1,
+		EnableSkills: true,
+		SkillsMode:   llm.SkillsModeTools, // Lazy Load Mode!
+	}}
+	convRepo := newFakeConvRepo()
+
+	skillProv := &fakeSkillProvider{
+		skills: []skill.SkillInfo{
+			{
+				Name:        "ghaib-network-cs",
+				Description: "Menangani percakapan CS Ghaib Network",
+				Content:     "# SOP Rinci Penanganan Fiber Optik Putus\n1. Ukur OTDR.",
+			},
+		},
+	}
+
+	svc := convUC.NewConversationService(convRepo)
+	e := NewEngine(
+		testBotConfig(),
+		cache,
+		gw,
+		svc,
+		skillProv,
+		&fakeGlobalPromptProvider{prompt: "Kamu adalah asisten CS."},
+		llmRepo,
+		newFakeChatRepo(),
+		&fakePublisher{},
+		func(*llm.Config) (port.LLMProvider, error) { return prov, nil },
+	)
+
+	ctx := context.Background()
+	phone := "628123456789"
+	err := e.HandleIncomingMessage(ctx, 1, phone+"@s.whatsapp.net", phone, "Internet mati total")
+	assert.NoError(t, err)
+
+	assert.Len(t, prov.calls, 1)
+	callStr := prov.calls[0]
+
+	// 1. Pada mode "tools", full body SOP tidak di-dump di system prompt awal (menghemat token context)
+	assert.NotContains(t, callStr, "# SOP Rinci Penanganan Fiber Optik Putus")
+	assert.NotContains(t, callStr, "<available_skills>")
+
+	// 2. Tetapi instruksi request_skill diinjeksikan agar LLM dapat memanggil tool on-demand
+	assert.Contains(t, callStr, "request_skill")
+}
+
+func TestEngineSkills_RequestSkillTool_Execution(t *testing.T) {
+	tool := skillUC.RequestSkillTool{
+		Skills: []skill.SkillInfo{
+			{
+				Name:        "ghaib-network-cs",
+				Description: "Menangani CS Ghaib Network",
+				Content:     "# Panduan Tagihan\nJatuh tempo tanggal 20 setiap bulan.",
+			},
+		},
+	}
+
+	// 1. Sukses mengambil skill yang ada secara on-demand (Lazy Loading)
+	result, err := tool.Run(skillUC.RequestSkillArgs{SkillName: "ghaib-network-cs"})
+	assert.NoError(t, err)
+	assert.Contains(t, result, "Skill 'ghaib-network-cs':")
+	assert.Contains(t, result, "# Panduan Tagihan")
+	assert.Contains(t, result, "Jatuh tempo tanggal 20 setiap bulan.")
+
+	// 2. Handle skill yang tidak ditemukan
+	missingResult, err := tool.Run(skillUC.RequestSkillArgs{SkillName: "unknown-skill"})
+	assert.NoError(t, err)
+	assert.Contains(t, missingResult, "Skill 'unknown-skill' not found")
+	assert.Contains(t, missingResult, "ghaib-network-cs")
+}
+
+func TestEngineSkills_SelectedSkillsFilter(t *testing.T) {
+	allSkills := []skill.SkillInfo{
+		{Name: "skill-a", Description: "Desc A", Content: "Content A"},
+		{Name: "skill-b", Description: "Desc B", Content: "Content B"},
+		{Name: "skill-c", Description: "Desc C", Content: "Content C"},
+	}
+
+	// Jika SelectedSkills kosong, seluruh skill disertakan
+	unfiltered := skillUC.FilterSkills(allSkills, nil)
+	assert.Len(t, unfiltered, 3)
+
+	// Jika SelectedSkills dispesifikasikan, hanya skill terpilih yang disertakan
+	filtered := skillUC.FilterSkills(allSkills, []string{"skill-a", "skill-c"})
+	assert.Len(t, filtered, 2)
+	assert.Equal(t, "skill-a", filtered[0].Name)
+	assert.Equal(t, "skill-c", filtered[1].Name)
+}
+
+func TestBotBuiltinTools_GetCurrentTime(t *testing.T) {
+	tool := NewGetCurrentTimeTool()
+	assert.Equal(t, "get_current_time", tool.Name)
+	res, err := tool.Handler(context.Background(), "")
+	assert.NoError(t, err)
+	assert.Contains(t, res, "Waktu sistem saat ini:")
+	assert.Contains(t, res, "WIB")
+}
+
+func TestBotBuiltinTools_PingHost(t *testing.T) {
+	tool := NewPingHostTool()
+	assert.Equal(t, "ping_host", tool.Name)
+
+	// Validasi input kosong
+	resEmpty, err := tool.Handler(context.Background(), `{"host":""}`)
+	assert.NoError(t, err)
+	assert.Contains(t, resEmpty, "Error: parameter 'host'")
+
+	// Ping ke localhost (127.0.0.1)
+	res, err := tool.Handler(context.Background(), `{"host":"127.0.0.1", "count":1}`)
+	assert.NoError(t, err)
+	assert.Contains(t, res, "127.0.0.1")
+}
+
+func TestBotBuiltinTools_RequestSkill(t *testing.T) {
+	skillProv := &fakeSkillProvider{
+		skills: []skill.SkillInfo{
+			{
+				Name:        "ghaib-network-cs",
+				Description: "CS Ghaib Network",
+				Content:     "# SOP Tagihan\nJatuh tempo tgl 20.",
+			},
+		},
+	}
+	tool := NewRequestSkillTool(skillProv)
+	assert.Equal(t, "request_skill", tool.Name)
+
+	// Sukses mengambil skill
+	res, err := tool.Handler(context.Background(), `{"skill_name":"ghaib-network-cs"}`)
+	assert.NoError(t, err)
+	assert.Contains(t, res, "=== SKILL: ghaib-network-cs ===")
+	assert.Contains(t, res, "Jatuh tempo tgl 20.")
+}
+
+func TestBotBuiltinTools_NotifyTechnician(t *testing.T) {
+	gw := &fakeGateway{}
+	tool := NewNotifyTechnicianTool(gw, 1, "6281249338533")
+	assert.Equal(t, "notify_technician", tool.Name)
+
+	// 1. Validasi data belum lengkap
+	incompleteRes, err := tool.Handler(context.Background(), `{"customer_name":"Budi"}`)
+	assert.NoError(t, err)
+	assert.Contains(t, incompleteRes, "Error: Data belum lengkap")
+
+	// 2. Data lengkap -> kirim WhatsApp ke teknisi
+	completePayload := `{
+		"customer_name": "Budi Santoso",
+		"customer_phone": "081234567890",
+		"address": "Jl. Mawar No. 12 RT 02/03 Sukajadi",
+		"issue_type": "Kabel Fiber Putus",
+		"issue_description": "Kabel putus tertimpa pohon, modem LOS merah"
+	}`
+	completeRes, err := tool.Handler(context.Background(), completePayload)
+	assert.NoError(t, err)
+	assert.Contains(t, completeRes, "Sukses!")
+	assert.Contains(t, completeRes, "Budi Santoso")
+
+	// Pastikan pesan sampai ke gateway WhatsApp teknisi
+	assert.Len(t, gw.sent, 1)
+	assert.Contains(t, gw.sent[0], "LAPORAN GANGGUAN PELANGGAN")
+	assert.Contains(t, gw.sent[0], "Budi Santoso")
+	assert.Contains(t, gw.sent[0], "081234567890")
+	assert.Contains(t, gw.sent[0], "Jl. Mawar No. 12 RT 02/03 Sukajadi")
+	assert.Contains(t, gw.sent[0], "Kabel Fiber Putus")
+}

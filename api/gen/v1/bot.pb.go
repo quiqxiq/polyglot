@@ -637,8 +637,6 @@ func (x *CloseConversationResponse) GetMessage() string {
 	return ""
 }
 
-// ConversationContextMessage adalah pesan bisnis (conversation.messages)
-// dengan metrik token LLM — berbeda dari mirror wa_messages.
 type ConversationContextMessage struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -1107,33 +1105,39 @@ func (x *GetRateLimitStatusResponse) GetIsWhitelisted() bool {
 	return false
 }
 
-type SkillFileItem struct {
+type Skill struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	SkillId       uint32                 `protobuf:"varint,2,opt,name=skill_id,json=skillId,proto3" json:"skill_id,omitempty"`
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	FilePath      string                 `protobuf:"bytes,4,opt,name=file_path,json=filePath,proto3" json:"file_path,omitempty"`
-	Content       string                 `protobuf:"bytes,5,opt,name=content,proto3" json:"content,omitempty"`
-	IsReference   bool                   `protobuf:"varint,6,opt,name=is_reference,json=isReference,proto3" json:"is_reference,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Content       string                 `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty"`
+	License       string                 `protobuf:"bytes,5,opt,name=license,proto3" json:"license,omitempty"`
+	Compatibility string                 `protobuf:"bytes,6,opt,name=compatibility,proto3" json:"compatibility,omitempty"`
+	AllowedTools  string                 `protobuf:"bytes,7,opt,name=allowed_tools,json=allowedTools,proto3" json:"allowed_tools,omitempty"`
+	Metadata      map[string]string      `protobuf:"bytes,8,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	ReadOnly      bool                   `protobuf:"varint,9,opt,name=read_only,json=readOnly,proto3" json:"read_only,omitempty"`
+	SourceType    string                 `protobuf:"bytes,10,opt,name=source_type,json=sourceType,proto3" json:"source_type,omitempty"`
+	SourceUrl     string                 `protobuf:"bytes,11,opt,name=source_url,json=sourceUrl,proto3" json:"source_url,omitempty"`
+	CreatedAt     string                 `protobuf:"bytes,12,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     string                 `protobuf:"bytes,13,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SkillFileItem) Reset() {
-	*x = SkillFileItem{}
+func (x *Skill) Reset() {
+	*x = Skill{}
 	mi := &file_v1_bot_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SkillFileItem) String() string {
+func (x *Skill) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SkillFileItem) ProtoMessage() {}
+func (*Skill) ProtoMessage() {}
 
-func (x *SkillFileItem) ProtoReflect() protoreflect.Message {
+func (x *Skill) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_bot_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1145,169 +1149,348 @@ func (x *SkillFileItem) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SkillFileItem.ProtoReflect.Descriptor instead.
-func (*SkillFileItem) Descriptor() ([]byte, []int) {
+// Deprecated: Use Skill.ProtoReflect.Descriptor instead.
+func (*Skill) Descriptor() ([]byte, []int) {
 	return file_v1_bot_proto_rawDescGZIP(), []int{19}
 }
 
-func (x *SkillFileItem) GetId() uint32 {
+func (x *Skill) GetId() string {
 	if x != nil {
 		return x.Id
 	}
-	return 0
+	return ""
 }
 
-func (x *SkillFileItem) GetSkillId() uint32 {
-	if x != nil {
-		return x.SkillId
-	}
-	return 0
-}
-
-func (x *SkillFileItem) GetName() string {
+func (x *Skill) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *SkillFileItem) GetFilePath() string {
-	if x != nil {
-		return x.FilePath
-	}
-	return ""
-}
-
-func (x *SkillFileItem) GetContent() string {
-	if x != nil {
-		return x.Content
-	}
-	return ""
-}
-
-func (x *SkillFileItem) GetIsReference() bool {
-	if x != nil {
-		return x.IsReference
-	}
-	return false
-}
-
-func (x *SkillFileItem) GetUpdatedAt() string {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return ""
-}
-
-type SkillItem struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Slug          string                 `protobuf:"bytes,2,opt,name=slug,proto3" json:"slug,omitempty"`
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	IsEnabled     bool                   `protobuf:"varint,5,opt,name=is_enabled,json=isEnabled,proto3" json:"is_enabled,omitempty"`
-	Files         []*SkillFileItem       `protobuf:"bytes,6,rep,name=files,proto3" json:"files,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SkillItem) Reset() {
-	*x = SkillItem{}
-	mi := &file_v1_bot_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SkillItem) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SkillItem) ProtoMessage() {}
-
-func (x *SkillItem) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SkillItem.ProtoReflect.Descriptor instead.
-func (*SkillItem) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *SkillItem) GetId() uint32 {
-	if x != nil {
-		return x.Id
-	}
-	return 0
-}
-
-func (x *SkillItem) GetSlug() string {
-	if x != nil {
-		return x.Slug
-	}
-	return ""
-}
-
-func (x *SkillItem) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *SkillItem) GetDescription() string {
+func (x *Skill) GetDescription() string {
 	if x != nil {
 		return x.Description
 	}
 	return ""
 }
 
-func (x *SkillItem) GetIsEnabled() bool {
+func (x *Skill) GetContent() string {
 	if x != nil {
-		return x.IsEnabled
+		return x.Content
 	}
-	return false
+	return ""
 }
 
-func (x *SkillItem) GetFiles() []*SkillFileItem {
+func (x *Skill) GetLicense() string {
 	if x != nil {
-		return x.Files
+		return x.License
+	}
+	return ""
+}
+
+func (x *Skill) GetCompatibility() string {
+	if x != nil {
+		return x.Compatibility
+	}
+	return ""
+}
+
+func (x *Skill) GetAllowedTools() string {
+	if x != nil {
+		return x.AllowedTools
+	}
+	return ""
+}
+
+func (x *Skill) GetMetadata() map[string]string {
+	if x != nil {
+		return x.Metadata
 	}
 	return nil
 }
 
-func (x *SkillItem) GetCreatedAt() string {
+func (x *Skill) GetReadOnly() bool {
+	if x != nil {
+		return x.ReadOnly
+	}
+	return false
+}
+
+func (x *Skill) GetSourceType() string {
+	if x != nil {
+		return x.SourceType
+	}
+	return ""
+}
+
+func (x *Skill) GetSourceUrl() string {
+	if x != nil {
+		return x.SourceUrl
+	}
+	return ""
+}
+
+func (x *Skill) GetCreatedAt() string {
 	if x != nil {
 		return x.CreatedAt
 	}
 	return ""
 }
 
-func (x *SkillItem) GetUpdatedAt() string {
+func (x *Skill) GetUpdatedAt() string {
 	if x != nil {
 		return x.UpdatedAt
 	}
 	return ""
 }
 
+type SkillResource struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Path          string                 `protobuf:"bytes,1,opt,name=path,proto3" json:"path,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Type          string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
+	Size          int64                  `protobuf:"varint,4,opt,name=size,proto3" json:"size,omitempty"`
+	MimeType      string                 `protobuf:"bytes,5,opt,name=mime_type,json=mimeType,proto3" json:"mime_type,omitempty"`
+	Readable      bool                   `protobuf:"varint,6,opt,name=readable,proto3" json:"readable,omitempty"`
+	Modified      string                 `protobuf:"bytes,7,opt,name=modified,proto3" json:"modified,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SkillResource) Reset() {
+	*x = SkillResource{}
+	mi := &file_v1_bot_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SkillResource) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SkillResource) ProtoMessage() {}
+
+func (x *SkillResource) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SkillResource.ProtoReflect.Descriptor instead.
+func (*SkillResource) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *SkillResource) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *SkillResource) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *SkillResource) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+func (x *SkillResource) GetSize() int64 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *SkillResource) GetMimeType() string {
+	if x != nil {
+		return x.MimeType
+	}
+	return ""
+}
+
+func (x *SkillResource) GetReadable() bool {
+	if x != nil {
+		return x.Readable
+	}
+	return false
+}
+
+func (x *SkillResource) GetModified() string {
+	if x != nil {
+		return x.Modified
+	}
+	return ""
+}
+
+type ResourceContent struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Content       string                 `protobuf:"bytes,1,opt,name=content,proto3" json:"content,omitempty"`
+	Encoding      string                 `protobuf:"bytes,2,opt,name=encoding,proto3" json:"encoding,omitempty"`
+	MimeType      string                 `protobuf:"bytes,3,opt,name=mime_type,json=mimeType,proto3" json:"mime_type,omitempty"`
+	Size          int64                  `protobuf:"varint,4,opt,name=size,proto3" json:"size,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResourceContent) Reset() {
+	*x = ResourceContent{}
+	mi := &file_v1_bot_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResourceContent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResourceContent) ProtoMessage() {}
+
+func (x *ResourceContent) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResourceContent.ProtoReflect.Descriptor instead.
+func (*ResourceContent) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *ResourceContent) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *ResourceContent) GetEncoding() string {
+	if x != nil {
+		return x.Encoding
+	}
+	return ""
+}
+
+func (x *ResourceContent) GetMimeType() string {
+	if x != nil {
+		return x.MimeType
+	}
+	return ""
+}
+
+func (x *ResourceContent) GetSize() int64 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+type GitRepoInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Url           string                 `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Enabled       bool                   `protobuf:"varint,4,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	LastSyncedAt  string                 `protobuf:"bytes,5,opt,name=last_synced_at,json=lastSyncedAt,proto3" json:"last_synced_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GitRepoInfo) Reset() {
+	*x = GitRepoInfo{}
+	mi := &file_v1_bot_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GitRepoInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GitRepoInfo) ProtoMessage() {}
+
+func (x *GitRepoInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GitRepoInfo.ProtoReflect.Descriptor instead.
+func (*GitRepoInfo) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *GitRepoInfo) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *GitRepoInfo) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *GitRepoInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *GitRepoInfo) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *GitRepoInfo) GetLastSyncedAt() string {
+	if x != nil {
+		return x.LastSyncedAt
+	}
+	return ""
+}
+
 type ListSkillsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListSkillsRequest) Reset() {
 	*x = ListSkillsRequest{}
-	mi := &file_v1_bot_proto_msgTypes[21]
+	mi := &file_v1_bot_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1319,7 +1502,7 @@ func (x *ListSkillsRequest) String() string {
 func (*ListSkillsRequest) ProtoMessage() {}
 
 func (x *ListSkillsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[21]
+	mi := &file_v1_bot_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1332,19 +1515,26 @@ func (x *ListSkillsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSkillsRequest.ProtoReflect.Descriptor instead.
 func (*ListSkillsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{21}
+	return file_v1_bot_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *ListSkillsRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
 }
 
 type ListSkillsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Skills        []*SkillItem           `protobuf:"bytes,1,rep,name=skills,proto3" json:"skills,omitempty"`
+	Skills        []*Skill               `protobuf:"bytes,1,rep,name=skills,proto3" json:"skills,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListSkillsResponse) Reset() {
 	*x = ListSkillsResponse{}
-	mi := &file_v1_bot_proto_msgTypes[22]
+	mi := &file_v1_bot_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1356,7 +1546,7 @@ func (x *ListSkillsResponse) String() string {
 func (*ListSkillsResponse) ProtoMessage() {}
 
 func (x *ListSkillsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[22]
+	mi := &file_v1_bot_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1369,10 +1559,10 @@ func (x *ListSkillsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSkillsResponse.ProtoReflect.Descriptor instead.
 func (*ListSkillsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{22}
+	return file_v1_bot_proto_rawDescGZIP(), []int{24}
 }
 
-func (x *ListSkillsResponse) GetSkills() []*SkillItem {
+func (x *ListSkillsResponse) GetSkills() []*Skill {
 	if x != nil {
 		return x.Skills
 	}
@@ -1381,14 +1571,15 @@ func (x *ListSkillsResponse) GetSkills() []*SkillItem {
 
 type GetSkillRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Slug          string                 `protobuf:"bytes,1,opt,name=slug,proto3" json:"slug,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetSkillRequest) Reset() {
 	*x = GetSkillRequest{}
-	mi := &file_v1_bot_proto_msgTypes[23]
+	mi := &file_v1_bot_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1400,7 +1591,7 @@ func (x *GetSkillRequest) String() string {
 func (*GetSkillRequest) ProtoMessage() {}
 
 func (x *GetSkillRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[23]
+	mi := &file_v1_bot_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1413,26 +1604,33 @@ func (x *GetSkillRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSkillRequest.ProtoReflect.Descriptor instead.
 func (*GetSkillRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{23}
+	return file_v1_bot_proto_rawDescGZIP(), []int{25}
 }
 
-func (x *GetSkillRequest) GetSlug() string {
+func (x *GetSkillRequest) GetId() string {
 	if x != nil {
-		return x.Slug
+		return x.Id
+	}
+	return ""
+}
+
+func (x *GetSkillRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
 	}
 	return ""
 }
 
 type GetSkillResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Skill         *SkillItem             `protobuf:"bytes,1,opt,name=skill,proto3" json:"skill,omitempty"`
+	Skill         *Skill                 `protobuf:"bytes,1,opt,name=skill,proto3" json:"skill,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetSkillResponse) Reset() {
 	*x = GetSkillResponse{}
-	mi := &file_v1_bot_proto_msgTypes[24]
+	mi := &file_v1_bot_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1444,7 +1642,7 @@ func (x *GetSkillResponse) String() string {
 func (*GetSkillResponse) ProtoMessage() {}
 
 func (x *GetSkillResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[24]
+	mi := &file_v1_bot_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1457,10 +1655,10 @@ func (x *GetSkillResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSkillResponse.ProtoReflect.Descriptor instead.
 func (*GetSkillResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{24}
+	return file_v1_bot_proto_rawDescGZIP(), []int{26}
 }
 
-func (x *GetSkillResponse) GetSkill() *SkillItem {
+func (x *GetSkillResponse) GetSkill() *Skill {
 	if x != nil {
 		return x.Skill
 	}
@@ -1469,16 +1667,21 @@ func (x *GetSkillResponse) GetSkill() *SkillItem {
 
 type CreateSkillRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Slug          string                 `protobuf:"bytes,1,opt,name=slug,proto3" json:"slug,omitempty"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Content       string                 `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty"`
+	License       string                 `protobuf:"bytes,5,opt,name=license,proto3" json:"license,omitempty"`
+	Compatibility string                 `protobuf:"bytes,6,opt,name=compatibility,proto3" json:"compatibility,omitempty"`
+	AllowedTools  string                 `protobuf:"bytes,7,opt,name=allowed_tools,json=allowedTools,proto3" json:"allowed_tools,omitempty"`
+	Metadata      map[string]string      `protobuf:"bytes,8,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateSkillRequest) Reset() {
 	*x = CreateSkillRequest{}
-	mi := &file_v1_bot_proto_msgTypes[25]
+	mi := &file_v1_bot_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1490,7 +1693,7 @@ func (x *CreateSkillRequest) String() string {
 func (*CreateSkillRequest) ProtoMessage() {}
 
 func (x *CreateSkillRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[25]
+	mi := &file_v1_bot_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1503,12 +1706,12 @@ func (x *CreateSkillRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateSkillRequest.ProtoReflect.Descriptor instead.
 func (*CreateSkillRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{25}
+	return file_v1_bot_proto_rawDescGZIP(), []int{27}
 }
 
-func (x *CreateSkillRequest) GetSlug() string {
+func (x *CreateSkillRequest) GetUserId() string {
 	if x != nil {
-		return x.Slug
+		return x.UserId
 	}
 	return ""
 }
@@ -1527,16 +1730,51 @@ func (x *CreateSkillRequest) GetDescription() string {
 	return ""
 }
 
+func (x *CreateSkillRequest) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *CreateSkillRequest) GetLicense() string {
+	if x != nil {
+		return x.License
+	}
+	return ""
+}
+
+func (x *CreateSkillRequest) GetCompatibility() string {
+	if x != nil {
+		return x.Compatibility
+	}
+	return ""
+}
+
+func (x *CreateSkillRequest) GetAllowedTools() string {
+	if x != nil {
+		return x.AllowedTools
+	}
+	return ""
+}
+
+func (x *CreateSkillRequest) GetMetadata() map[string]string {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
 type CreateSkillResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Skill         *SkillItem             `protobuf:"bytes,1,opt,name=skill,proto3" json:"skill,omitempty"`
+	Skill         *Skill                 `protobuf:"bytes,1,opt,name=skill,proto3" json:"skill,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateSkillResponse) Reset() {
 	*x = CreateSkillResponse{}
-	mi := &file_v1_bot_proto_msgTypes[26]
+	mi := &file_v1_bot_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1548,7 +1786,7 @@ func (x *CreateSkillResponse) String() string {
 func (*CreateSkillResponse) ProtoMessage() {}
 
 func (x *CreateSkillResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[26]
+	mi := &file_v1_bot_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1561,41 +1799,46 @@ func (x *CreateSkillResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateSkillResponse.ProtoReflect.Descriptor instead.
 func (*CreateSkillResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{26}
+	return file_v1_bot_proto_rawDescGZIP(), []int{28}
 }
 
-func (x *CreateSkillResponse) GetSkill() *SkillItem {
+func (x *CreateSkillResponse) GetSkill() *Skill {
 	if x != nil {
 		return x.Skill
 	}
 	return nil
 }
 
-type SaveSkillFileRequest struct {
+type UpdateSkillRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Slug          string                 `protobuf:"bytes,1,opt,name=slug,proto3" json:"slug,omitempty"`
-	FilePath      string                 `protobuf:"bytes,2,opt,name=file_path,json=filePath,proto3" json:"file_path,omitempty"`
-	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
-	IsReference   bool                   `protobuf:"varint,4,opt,name=is_reference,json=isReference,proto3" json:"is_reference,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	Content       string                 `protobuf:"bytes,5,opt,name=content,proto3" json:"content,omitempty"`
+	License       string                 `protobuf:"bytes,6,opt,name=license,proto3" json:"license,omitempty"`
+	Compatibility string                 `protobuf:"bytes,7,opt,name=compatibility,proto3" json:"compatibility,omitempty"`
+	AllowedTools  string                 `protobuf:"bytes,8,opt,name=allowed_tools,json=allowedTools,proto3" json:"allowed_tools,omitempty"`
+	Metadata      map[string]string      `protobuf:"bytes,9,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SaveSkillFileRequest) Reset() {
-	*x = SaveSkillFileRequest{}
-	mi := &file_v1_bot_proto_msgTypes[27]
+func (x *UpdateSkillRequest) Reset() {
+	*x = UpdateSkillRequest{}
+	mi := &file_v1_bot_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SaveSkillFileRequest) String() string {
+func (x *UpdateSkillRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SaveSkillFileRequest) ProtoMessage() {}
+func (*UpdateSkillRequest) ProtoMessage() {}
 
-func (x *SaveSkillFileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[27]
+func (x *UpdateSkillRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1606,61 +1849,96 @@ func (x *SaveSkillFileRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SaveSkillFileRequest.ProtoReflect.Descriptor instead.
-func (*SaveSkillFileRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{27}
+// Deprecated: Use UpdateSkillRequest.ProtoReflect.Descriptor instead.
+func (*UpdateSkillRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{29}
 }
 
-func (x *SaveSkillFileRequest) GetSlug() string {
+func (x *UpdateSkillRequest) GetId() string {
 	if x != nil {
-		return x.Slug
+		return x.Id
 	}
 	return ""
 }
 
-func (x *SaveSkillFileRequest) GetFilePath() string {
+func (x *UpdateSkillRequest) GetUserId() string {
 	if x != nil {
-		return x.FilePath
+		return x.UserId
 	}
 	return ""
 }
 
-func (x *SaveSkillFileRequest) GetContent() string {
+func (x *UpdateSkillRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *UpdateSkillRequest) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *UpdateSkillRequest) GetContent() string {
 	if x != nil {
 		return x.Content
 	}
 	return ""
 }
 
-func (x *SaveSkillFileRequest) GetIsReference() bool {
+func (x *UpdateSkillRequest) GetLicense() string {
 	if x != nil {
-		return x.IsReference
+		return x.License
 	}
-	return false
+	return ""
 }
 
-type SaveSkillFileResponse struct {
+func (x *UpdateSkillRequest) GetCompatibility() string {
+	if x != nil {
+		return x.Compatibility
+	}
+	return ""
+}
+
+func (x *UpdateSkillRequest) GetAllowedTools() string {
+	if x != nil {
+		return x.AllowedTools
+	}
+	return ""
+}
+
+func (x *UpdateSkillRequest) GetMetadata() map[string]string {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+type UpdateSkillResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	File          *SkillFileItem         `protobuf:"bytes,1,opt,name=file,proto3" json:"file,omitempty"`
+	Skill         *Skill                 `protobuf:"bytes,1,opt,name=skill,proto3" json:"skill,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SaveSkillFileResponse) Reset() {
-	*x = SaveSkillFileResponse{}
-	mi := &file_v1_bot_proto_msgTypes[28]
+func (x *UpdateSkillResponse) Reset() {
+	*x = UpdateSkillResponse{}
+	mi := &file_v1_bot_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SaveSkillFileResponse) String() string {
+func (x *UpdateSkillResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SaveSkillFileResponse) ProtoMessage() {}
+func (*UpdateSkillResponse) ProtoMessage() {}
 
-func (x *SaveSkillFileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[28]
+func (x *UpdateSkillResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1671,29 +1949,29 @@ func (x *SaveSkillFileResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SaveSkillFileResponse.ProtoReflect.Descriptor instead.
-func (*SaveSkillFileResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{28}
+// Deprecated: Use UpdateSkillResponse.ProtoReflect.Descriptor instead.
+func (*UpdateSkillResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{30}
 }
 
-func (x *SaveSkillFileResponse) GetFile() *SkillFileItem {
+func (x *UpdateSkillResponse) GetSkill() *Skill {
 	if x != nil {
-		return x.File
+		return x.Skill
 	}
 	return nil
 }
 
 type DeleteSkillRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Slug          string                 `protobuf:"bytes,2,opt,name=slug,proto3" json:"slug,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *DeleteSkillRequest) Reset() {
 	*x = DeleteSkillRequest{}
-	mi := &file_v1_bot_proto_msgTypes[29]
+	mi := &file_v1_bot_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1705,7 +1983,7 @@ func (x *DeleteSkillRequest) String() string {
 func (*DeleteSkillRequest) ProtoMessage() {}
 
 func (x *DeleteSkillRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[29]
+	mi := &file_v1_bot_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1718,19 +1996,19 @@ func (x *DeleteSkillRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteSkillRequest.ProtoReflect.Descriptor instead.
 func (*DeleteSkillRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{29}
+	return file_v1_bot_proto_rawDescGZIP(), []int{31}
 }
 
-func (x *DeleteSkillRequest) GetId() uint32 {
+func (x *DeleteSkillRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
-	return 0
+	return ""
 }
 
-func (x *DeleteSkillRequest) GetSlug() string {
+func (x *DeleteSkillRequest) GetUserId() string {
 	if x != nil {
-		return x.Slug
+		return x.UserId
 	}
 	return ""
 }
@@ -1745,7 +2023,7 @@ type DeleteSkillResponse struct {
 
 func (x *DeleteSkillResponse) Reset() {
 	*x = DeleteSkillResponse{}
-	mi := &file_v1_bot_proto_msgTypes[30]
+	mi := &file_v1_bot_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1757,7 +2035,7 @@ func (x *DeleteSkillResponse) String() string {
 func (*DeleteSkillResponse) ProtoMessage() {}
 
 func (x *DeleteSkillResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[30]
+	mi := &file_v1_bot_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1770,7 +2048,7 @@ func (x *DeleteSkillResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteSkillResponse.ProtoReflect.Descriptor instead.
 func (*DeleteSkillResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{30}
+	return file_v1_bot_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *DeleteSkillResponse) GetSuccess() bool {
@@ -1787,30 +2065,28 @@ func (x *DeleteSkillResponse) GetMessage() string {
 	return ""
 }
 
-type DeleteSkillFileRequest struct {
+type ExportSkillRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Slug          string                 `protobuf:"bytes,1,opt,name=slug,proto3" json:"slug,omitempty"`
-	FileId        uint32                 `protobuf:"varint,2,opt,name=file_id,json=fileId,proto3" json:"file_id,omitempty"`
-	FilePath      string                 `protobuf:"bytes,3,opt,name=file_path,json=filePath,proto3" json:"file_path,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeleteSkillFileRequest) Reset() {
-	*x = DeleteSkillFileRequest{}
-	mi := &file_v1_bot_proto_msgTypes[31]
+func (x *ExportSkillRequest) Reset() {
+	*x = ExportSkillRequest{}
+	mi := &file_v1_bot_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeleteSkillFileRequest) String() string {
+func (x *ExportSkillRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteSkillFileRequest) ProtoMessage() {}
+func (*ExportSkillRequest) ProtoMessage() {}
 
-func (x *DeleteSkillFileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[31]
+func (x *ExportSkillRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1821,33 +2097,419 @@ func (x *DeleteSkillFileRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteSkillFileRequest.ProtoReflect.Descriptor instead.
-func (*DeleteSkillFileRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{31}
+// Deprecated: Use ExportSkillRequest.ProtoReflect.Descriptor instead.
+func (*ExportSkillRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{33}
 }
 
-func (x *DeleteSkillFileRequest) GetSlug() string {
+func (x *ExportSkillRequest) GetId() string {
 	if x != nil {
-		return x.Slug
+		return x.Id
 	}
 	return ""
 }
 
-func (x *DeleteSkillFileRequest) GetFileId() uint32 {
-	if x != nil {
-		return x.FileId
-	}
-	return 0
+type ExportSkillResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Archive       []byte                 `protobuf:"bytes,1,opt,name=archive,proto3" json:"archive,omitempty"`
+	Filename      string                 `protobuf:"bytes,2,opt,name=filename,proto3" json:"filename,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeleteSkillFileRequest) GetFilePath() string {
+func (x *ExportSkillResponse) Reset() {
+	*x = ExportSkillResponse{}
+	mi := &file_v1_bot_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExportSkillResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportSkillResponse) ProtoMessage() {}
+
+func (x *ExportSkillResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[34]
 	if x != nil {
-		return x.FilePath
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportSkillResponse.ProtoReflect.Descriptor instead.
+func (*ExportSkillResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *ExportSkillResponse) GetArchive() []byte {
+	if x != nil {
+		return x.Archive
+	}
+	return nil
+}
+
+func (x *ExportSkillResponse) GetFilename() string {
+	if x != nil {
+		return x.Filename
 	}
 	return ""
 }
 
-type DeleteSkillFileResponse struct {
+type ImportSkillRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Archive       []byte                 `protobuf:"bytes,1,opt,name=archive,proto3" json:"archive,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ImportSkillRequest) Reset() {
+	*x = ImportSkillRequest{}
+	mi := &file_v1_bot_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ImportSkillRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImportSkillRequest) ProtoMessage() {}
+
+func (x *ImportSkillRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImportSkillRequest.ProtoReflect.Descriptor instead.
+func (*ImportSkillRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *ImportSkillRequest) GetArchive() []byte {
+	if x != nil {
+		return x.Archive
+	}
+	return nil
+}
+
+func (x *ImportSkillRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+type ImportSkillResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Skill         *Skill                 `protobuf:"bytes,1,opt,name=skill,proto3" json:"skill,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ImportSkillResponse) Reset() {
+	*x = ImportSkillResponse{}
+	mi := &file_v1_bot_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ImportSkillResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImportSkillResponse) ProtoMessage() {}
+
+func (x *ImportSkillResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImportSkillResponse.ProtoReflect.Descriptor instead.
+func (*ImportSkillResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *ImportSkillResponse) GetSkill() *Skill {
+	if x != nil {
+		return x.Skill
+	}
+	return nil
+}
+
+type ListResourcesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SkillId       string                 `protobuf:"bytes,1,opt,name=skill_id,json=skillId,proto3" json:"skill_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListResourcesRequest) Reset() {
+	*x = ListResourcesRequest{}
+	mi := &file_v1_bot_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListResourcesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListResourcesRequest) ProtoMessage() {}
+
+func (x *ListResourcesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListResourcesRequest.ProtoReflect.Descriptor instead.
+func (*ListResourcesRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *ListResourcesRequest) GetSkillId() string {
+	if x != nil {
+		return x.SkillId
+	}
+	return ""
+}
+
+type ListResourcesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Resources     []*SkillResource       `protobuf:"bytes,1,rep,name=resources,proto3" json:"resources,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListResourcesResponse) Reset() {
+	*x = ListResourcesResponse{}
+	mi := &file_v1_bot_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListResourcesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListResourcesResponse) ProtoMessage() {}
+
+func (x *ListResourcesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListResourcesResponse.ProtoReflect.Descriptor instead.
+func (*ListResourcesResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *ListResourcesResponse) GetResources() []*SkillResource {
+	if x != nil {
+		return x.Resources
+	}
+	return nil
+}
+
+type GetResourceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SkillId       string                 `protobuf:"bytes,1,opt,name=skill_id,json=skillId,proto3" json:"skill_id,omitempty"`
+	Path          string                 `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetResourceRequest) Reset() {
+	*x = GetResourceRequest{}
+	mi := &file_v1_bot_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetResourceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetResourceRequest) ProtoMessage() {}
+
+func (x *GetResourceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetResourceRequest.ProtoReflect.Descriptor instead.
+func (*GetResourceRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *GetResourceRequest) GetSkillId() string {
+	if x != nil {
+		return x.SkillId
+	}
+	return ""
+}
+
+func (x *GetResourceRequest) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+type GetResourceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Content       *ResourceContent       `protobuf:"bytes,1,opt,name=content,proto3" json:"content,omitempty"`
+	Metadata      *SkillResource         `protobuf:"bytes,2,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetResourceResponse) Reset() {
+	*x = GetResourceResponse{}
+	mi := &file_v1_bot_proto_msgTypes[40]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetResourceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetResourceResponse) ProtoMessage() {}
+
+func (x *GetResourceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[40]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetResourceResponse.ProtoReflect.Descriptor instead.
+func (*GetResourceResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{40}
+}
+
+func (x *GetResourceResponse) GetContent() *ResourceContent {
+	if x != nil {
+		return x.Content
+	}
+	return nil
+}
+
+func (x *GetResourceResponse) GetMetadata() *SkillResource {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+type SaveResourceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SkillId       string                 `protobuf:"bytes,1,opt,name=skill_id,json=skillId,proto3" json:"skill_id,omitempty"`
+	Path          string                 `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
+	Data          []byte                 `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SaveResourceRequest) Reset() {
+	*x = SaveResourceRequest{}
+	mi := &file_v1_bot_proto_msgTypes[41]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SaveResourceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SaveResourceRequest) ProtoMessage() {}
+
+func (x *SaveResourceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[41]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SaveResourceRequest.ProtoReflect.Descriptor instead.
+func (*SaveResourceRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{41}
+}
+
+func (x *SaveResourceRequest) GetSkillId() string {
+	if x != nil {
+		return x.SkillId
+	}
+	return ""
+}
+
+func (x *SaveResourceRequest) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *SaveResourceRequest) GetData() []byte {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type SaveResourceResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
@@ -1855,21 +2517,21 @@ type DeleteSkillFileResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeleteSkillFileResponse) Reset() {
-	*x = DeleteSkillFileResponse{}
-	mi := &file_v1_bot_proto_msgTypes[32]
+func (x *SaveResourceResponse) Reset() {
+	*x = SaveResourceResponse{}
+	mi := &file_v1_bot_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeleteSkillFileResponse) String() string {
+func (x *SaveResourceResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteSkillFileResponse) ProtoMessage() {}
+func (*SaveResourceResponse) ProtoMessage() {}
 
-func (x *DeleteSkillFileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[32]
+func (x *SaveResourceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1880,36 +2542,693 @@ func (x *DeleteSkillFileResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteSkillFileResponse.ProtoReflect.Descriptor instead.
-func (*DeleteSkillFileResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{32}
+// Deprecated: Use SaveResourceResponse.ProtoReflect.Descriptor instead.
+func (*SaveResourceResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{42}
 }
 
-func (x *DeleteSkillFileResponse) GetSuccess() bool {
+func (x *SaveResourceResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-func (x *DeleteSkillFileResponse) GetMessage() string {
+func (x *SaveResourceResponse) GetMessage() string {
 	if x != nil {
 		return x.Message
 	}
 	return ""
 }
 
+type DeleteResourceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SkillId       string                 `protobuf:"bytes,1,opt,name=skill_id,json=skillId,proto3" json:"skill_id,omitempty"`
+	Path          string                 `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteResourceRequest) Reset() {
+	*x = DeleteResourceRequest{}
+	mi := &file_v1_bot_proto_msgTypes[43]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteResourceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteResourceRequest) ProtoMessage() {}
+
+func (x *DeleteResourceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[43]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteResourceRequest.ProtoReflect.Descriptor instead.
+func (*DeleteResourceRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *DeleteResourceRequest) GetSkillId() string {
+	if x != nil {
+		return x.SkillId
+	}
+	return ""
+}
+
+func (x *DeleteResourceRequest) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+type DeleteResourceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteResourceResponse) Reset() {
+	*x = DeleteResourceResponse{}
+	mi := &file_v1_bot_proto_msgTypes[44]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteResourceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteResourceResponse) ProtoMessage() {}
+
+func (x *DeleteResourceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[44]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteResourceResponse.ProtoReflect.Descriptor instead.
+func (*DeleteResourceResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *DeleteResourceResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *DeleteResourceResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type ListGitReposRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListGitReposRequest) Reset() {
+	*x = ListGitReposRequest{}
+	mi := &file_v1_bot_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListGitReposRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListGitReposRequest) ProtoMessage() {}
+
+func (x *ListGitReposRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListGitReposRequest.ProtoReflect.Descriptor instead.
+func (*ListGitReposRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{45}
+}
+
+type ListGitReposResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Repos         []*GitRepoInfo         `protobuf:"bytes,1,rep,name=repos,proto3" json:"repos,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListGitReposResponse) Reset() {
+	*x = ListGitReposResponse{}
+	mi := &file_v1_bot_proto_msgTypes[46]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListGitReposResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListGitReposResponse) ProtoMessage() {}
+
+func (x *ListGitReposResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[46]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListGitReposResponse.ProtoReflect.Descriptor instead.
+func (*ListGitReposResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *ListGitReposResponse) GetRepos() []*GitRepoInfo {
+	if x != nil {
+		return x.Repos
+	}
+	return nil
+}
+
+type AddGitRepoRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Url           string                 `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddGitRepoRequest) Reset() {
+	*x = AddGitRepoRequest{}
+	mi := &file_v1_bot_proto_msgTypes[47]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddGitRepoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddGitRepoRequest) ProtoMessage() {}
+
+func (x *AddGitRepoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[47]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddGitRepoRequest.ProtoReflect.Descriptor instead.
+func (*AddGitRepoRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *AddGitRepoRequest) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+type AddGitRepoResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Repo          *GitRepoInfo           `protobuf:"bytes,1,opt,name=repo,proto3" json:"repo,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddGitRepoResponse) Reset() {
+	*x = AddGitRepoResponse{}
+	mi := &file_v1_bot_proto_msgTypes[48]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddGitRepoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddGitRepoResponse) ProtoMessage() {}
+
+func (x *AddGitRepoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[48]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddGitRepoResponse.ProtoReflect.Descriptor instead.
+func (*AddGitRepoResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{48}
+}
+
+func (x *AddGitRepoResponse) GetRepo() *GitRepoInfo {
+	if x != nil {
+		return x.Repo
+	}
+	return nil
+}
+
+type UpdateGitRepoRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Url           string                 `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
+	Enabled       *bool                  `protobuf:"varint,3,opt,name=enabled,proto3,oneof" json:"enabled,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateGitRepoRequest) Reset() {
+	*x = UpdateGitRepoRequest{}
+	mi := &file_v1_bot_proto_msgTypes[49]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateGitRepoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateGitRepoRequest) ProtoMessage() {}
+
+func (x *UpdateGitRepoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[49]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateGitRepoRequest.ProtoReflect.Descriptor instead.
+func (*UpdateGitRepoRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{49}
+}
+
+func (x *UpdateGitRepoRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateGitRepoRequest) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *UpdateGitRepoRequest) GetEnabled() bool {
+	if x != nil && x.Enabled != nil {
+		return *x.Enabled
+	}
+	return false
+}
+
+type UpdateGitRepoResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Repo          *GitRepoInfo           `protobuf:"bytes,1,opt,name=repo,proto3" json:"repo,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateGitRepoResponse) Reset() {
+	*x = UpdateGitRepoResponse{}
+	mi := &file_v1_bot_proto_msgTypes[50]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateGitRepoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateGitRepoResponse) ProtoMessage() {}
+
+func (x *UpdateGitRepoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[50]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateGitRepoResponse.ProtoReflect.Descriptor instead.
+func (*UpdateGitRepoResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{50}
+}
+
+func (x *UpdateGitRepoResponse) GetRepo() *GitRepoInfo {
+	if x != nil {
+		return x.Repo
+	}
+	return nil
+}
+
+type DeleteGitRepoRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteGitRepoRequest) Reset() {
+	*x = DeleteGitRepoRequest{}
+	mi := &file_v1_bot_proto_msgTypes[51]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteGitRepoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteGitRepoRequest) ProtoMessage() {}
+
+func (x *DeleteGitRepoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[51]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteGitRepoRequest.ProtoReflect.Descriptor instead.
+func (*DeleteGitRepoRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{51}
+}
+
+func (x *DeleteGitRepoRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DeleteGitRepoResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteGitRepoResponse) Reset() {
+	*x = DeleteGitRepoResponse{}
+	mi := &file_v1_bot_proto_msgTypes[52]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteGitRepoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteGitRepoResponse) ProtoMessage() {}
+
+func (x *DeleteGitRepoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[52]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteGitRepoResponse.ProtoReflect.Descriptor instead.
+func (*DeleteGitRepoResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{52}
+}
+
+func (x *DeleteGitRepoResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *DeleteGitRepoResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type SyncGitRepoRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncGitRepoRequest) Reset() {
+	*x = SyncGitRepoRequest{}
+	mi := &file_v1_bot_proto_msgTypes[53]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncGitRepoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncGitRepoRequest) ProtoMessage() {}
+
+func (x *SyncGitRepoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[53]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncGitRepoRequest.ProtoReflect.Descriptor instead.
+func (*SyncGitRepoRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{53}
+}
+
+func (x *SyncGitRepoRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type SyncGitRepoResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SyncGitRepoResponse) Reset() {
+	*x = SyncGitRepoResponse{}
+	mi := &file_v1_bot_proto_msgTypes[54]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SyncGitRepoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SyncGitRepoResponse) ProtoMessage() {}
+
+func (x *SyncGitRepoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[54]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SyncGitRepoResponse.ProtoReflect.Descriptor instead.
+func (*SyncGitRepoResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *SyncGitRepoResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *SyncGitRepoResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type ToggleGitRepoRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ToggleGitRepoRequest) Reset() {
+	*x = ToggleGitRepoRequest{}
+	mi := &file_v1_bot_proto_msgTypes[55]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ToggleGitRepoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ToggleGitRepoRequest) ProtoMessage() {}
+
+func (x *ToggleGitRepoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[55]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ToggleGitRepoRequest.ProtoReflect.Descriptor instead.
+func (*ToggleGitRepoRequest) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{55}
+}
+
+func (x *ToggleGitRepoRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type ToggleGitRepoResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Repo          *GitRepoInfo           `protobuf:"bytes,1,opt,name=repo,proto3" json:"repo,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ToggleGitRepoResponse) Reset() {
+	*x = ToggleGitRepoResponse{}
+	mi := &file_v1_bot_proto_msgTypes[56]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ToggleGitRepoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ToggleGitRepoResponse) ProtoMessage() {}
+
+func (x *ToggleGitRepoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_bot_proto_msgTypes[56]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ToggleGitRepoResponse.ProtoReflect.Descriptor instead.
+func (*ToggleGitRepoResponse) Descriptor() ([]byte, []int) {
+	return file_v1_bot_proto_rawDescGZIP(), []int{56}
+}
+
+func (x *ToggleGitRepoResponse) GetRepo() *GitRepoInfo {
+	if x != nil {
+		return x.Repo
+	}
+	return nil
+}
+
 type ToggleSkillRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Slug          string                 `protobuf:"bytes,1,opt,name=slug,proto3" json:"slug,omitempty"`
-	Enabled       bool                   `protobuf:"varint,2,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Enabled       bool                   `protobuf:"varint,3,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ToggleSkillRequest) Reset() {
 	*x = ToggleSkillRequest{}
-	mi := &file_v1_bot_proto_msgTypes[33]
+	mi := &file_v1_bot_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1921,7 +3240,7 @@ func (x *ToggleSkillRequest) String() string {
 func (*ToggleSkillRequest) ProtoMessage() {}
 
 func (x *ToggleSkillRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[33]
+	mi := &file_v1_bot_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1934,12 +3253,19 @@ func (x *ToggleSkillRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToggleSkillRequest.ProtoReflect.Descriptor instead.
 func (*ToggleSkillRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{33}
+	return file_v1_bot_proto_rawDescGZIP(), []int{57}
 }
 
-func (x *ToggleSkillRequest) GetSlug() string {
+func (x *ToggleSkillRequest) GetId() string {
 	if x != nil {
-		return x.Slug
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ToggleSkillRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
 	}
 	return ""
 }
@@ -1961,7 +3287,7 @@ type ToggleSkillResponse struct {
 
 func (x *ToggleSkillResponse) Reset() {
 	*x = ToggleSkillResponse{}
-	mi := &file_v1_bot_proto_msgTypes[34]
+	mi := &file_v1_bot_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1973,7 +3299,7 @@ func (x *ToggleSkillResponse) String() string {
 func (*ToggleSkillResponse) ProtoMessage() {}
 
 func (x *ToggleSkillResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[34]
+	mi := &file_v1_bot_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1986,7 +3312,7 @@ func (x *ToggleSkillResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToggleSkillResponse.ProtoReflect.Descriptor instead.
 func (*ToggleSkillResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{34}
+	return file_v1_bot_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *ToggleSkillResponse) GetSuccess() bool {
@@ -2003,94 +3329,6 @@ func (x *ToggleSkillResponse) GetMessage() string {
 	return ""
 }
 
-type SyncSkillsFromDiskRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncSkillsFromDiskRequest) Reset() {
-	*x = SyncSkillsFromDiskRequest{}
-	mi := &file_v1_bot_proto_msgTypes[35]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncSkillsFromDiskRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncSkillsFromDiskRequest) ProtoMessage() {}
-
-func (x *SyncSkillsFromDiskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[35]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncSkillsFromDiskRequest.ProtoReflect.Descriptor instead.
-func (*SyncSkillsFromDiskRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{35}
-}
-
-type SyncSkillsFromDiskResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	SyncedCount   int32                  `protobuf:"varint,1,opt,name=synced_count,json=syncedCount,proto3" json:"synced_count,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SyncSkillsFromDiskResponse) Reset() {
-	*x = SyncSkillsFromDiskResponse{}
-	mi := &file_v1_bot_proto_msgTypes[36]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SyncSkillsFromDiskResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SyncSkillsFromDiskResponse) ProtoMessage() {}
-
-func (x *SyncSkillsFromDiskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[36]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SyncSkillsFromDiskResponse.ProtoReflect.Descriptor instead.
-func (*SyncSkillsFromDiskResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{36}
-}
-
-func (x *SyncSkillsFromDiskResponse) GetSyncedCount() int32 {
-	if x != nil {
-		return x.SyncedCount
-	}
-	return 0
-}
-
-func (x *SyncSkillsFromDiskResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
 type GetGlobalPromptRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -2099,7 +3337,7 @@ type GetGlobalPromptRequest struct {
 
 func (x *GetGlobalPromptRequest) Reset() {
 	*x = GetGlobalPromptRequest{}
-	mi := &file_v1_bot_proto_msgTypes[37]
+	mi := &file_v1_bot_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2111,7 +3349,7 @@ func (x *GetGlobalPromptRequest) String() string {
 func (*GetGlobalPromptRequest) ProtoMessage() {}
 
 func (x *GetGlobalPromptRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[37]
+	mi := &file_v1_bot_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2124,7 +3362,7 @@ func (x *GetGlobalPromptRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGlobalPromptRequest.ProtoReflect.Descriptor instead.
 func (*GetGlobalPromptRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{37}
+	return file_v1_bot_proto_rawDescGZIP(), []int{59}
 }
 
 type GetGlobalPromptResponse struct {
@@ -2136,7 +3374,7 @@ type GetGlobalPromptResponse struct {
 
 func (x *GetGlobalPromptResponse) Reset() {
 	*x = GetGlobalPromptResponse{}
-	mi := &file_v1_bot_proto_msgTypes[38]
+	mi := &file_v1_bot_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2148,7 +3386,7 @@ func (x *GetGlobalPromptResponse) String() string {
 func (*GetGlobalPromptResponse) ProtoMessage() {}
 
 func (x *GetGlobalPromptResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[38]
+	mi := &file_v1_bot_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2161,7 +3399,7 @@ func (x *GetGlobalPromptResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGlobalPromptResponse.ProtoReflect.Descriptor instead.
 func (*GetGlobalPromptResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{38}
+	return file_v1_bot_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *GetGlobalPromptResponse) GetContent() string {
@@ -2180,7 +3418,7 @@ type SaveGlobalPromptRequest struct {
 
 func (x *SaveGlobalPromptRequest) Reset() {
 	*x = SaveGlobalPromptRequest{}
-	mi := &file_v1_bot_proto_msgTypes[39]
+	mi := &file_v1_bot_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2192,7 +3430,7 @@ func (x *SaveGlobalPromptRequest) String() string {
 func (*SaveGlobalPromptRequest) ProtoMessage() {}
 
 func (x *SaveGlobalPromptRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[39]
+	mi := &file_v1_bot_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2205,7 +3443,7 @@ func (x *SaveGlobalPromptRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SaveGlobalPromptRequest.ProtoReflect.Descriptor instead.
 func (*SaveGlobalPromptRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{39}
+	return file_v1_bot_proto_rawDescGZIP(), []int{61}
 }
 
 func (x *SaveGlobalPromptRequest) GetContent() string {
@@ -2225,7 +3463,7 @@ type SaveGlobalPromptResponse struct {
 
 func (x *SaveGlobalPromptResponse) Reset() {
 	*x = SaveGlobalPromptResponse{}
-	mi := &file_v1_bot_proto_msgTypes[40]
+	mi := &file_v1_bot_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2237,7 +3475,7 @@ func (x *SaveGlobalPromptResponse) String() string {
 func (*SaveGlobalPromptResponse) ProtoMessage() {}
 
 func (x *SaveGlobalPromptResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[40]
+	mi := &file_v1_bot_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2250,7 +3488,7 @@ func (x *SaveGlobalPromptResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SaveGlobalPromptResponse.ProtoReflect.Descriptor instead.
 func (*SaveGlobalPromptResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{40}
+	return file_v1_bot_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *SaveGlobalPromptResponse) GetSuccess() bool {
@@ -2268,23 +3506,27 @@ func (x *SaveGlobalPromptResponse) GetMessage() string {
 }
 
 type LLMConfig struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Provider      string                 `protobuf:"bytes,2,opt,name=provider,proto3" json:"provider,omitempty"` // e.g. "openai", "gemini", "ollama", "groq", "claude"
-	ModelName     string                 `protobuf:"bytes,3,opt,name=model_name,json=modelName,proto3" json:"model_name,omitempty"`
-	ApiKeyMasked  string                 `protobuf:"bytes,4,opt,name=api_key_masked,json=apiKeyMasked,proto3" json:"api_key_masked,omitempty"`
-	BaseUrl       string                 `protobuf:"bytes,5,opt,name=base_url,json=baseUrl,proto3" json:"base_url,omitempty"`
-	IsActive      bool                   `protobuf:"varint,6,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
-	Temperature   float64                `protobuf:"fixed64,7,opt,name=temperature,proto3" json:"temperature,omitempty"`
-	MaxTokens     int32                  `protobuf:"varint,8,opt,name=max_tokens,json=maxTokens,proto3" json:"max_tokens,omitempty"`
-	SystemPrompt  string                 `protobuf:"bytes,9,opt,name=system_prompt,json=systemPrompt,proto3" json:"system_prompt,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Provider       string                 `protobuf:"bytes,2,opt,name=provider,proto3" json:"provider,omitempty"` // e.g. "openai", "gemini", "ollama", "groq", "claude"
+	ModelName      string                 `protobuf:"bytes,3,opt,name=model_name,json=modelName,proto3" json:"model_name,omitempty"`
+	ApiKeyMasked   string                 `protobuf:"bytes,4,opt,name=api_key_masked,json=apiKeyMasked,proto3" json:"api_key_masked,omitempty"`
+	BaseUrl        string                 `protobuf:"bytes,5,opt,name=base_url,json=baseUrl,proto3" json:"base_url,omitempty"`
+	IsActive       bool                   `protobuf:"varint,6,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
+	Temperature    float64                `protobuf:"fixed64,7,opt,name=temperature,proto3" json:"temperature,omitempty"`
+	MaxTokens      int32                  `protobuf:"varint,8,opt,name=max_tokens,json=maxTokens,proto3" json:"max_tokens,omitempty"`
+	SystemPrompt   string                 `protobuf:"bytes,9,opt,name=system_prompt,json=systemPrompt,proto3" json:"system_prompt,omitempty"`
+	SkillsMode     string                 `protobuf:"bytes,10,opt,name=skills_mode,json=skillsMode,proto3" json:"skills_mode,omitempty"`
+	EnableSkills   bool                   `protobuf:"varint,11,opt,name=enable_skills,json=enableSkills,proto3" json:"enable_skills,omitempty"`
+	SkillsPrompt   string                 `protobuf:"bytes,12,opt,name=skills_prompt,json=skillsPrompt,proto3" json:"skills_prompt,omitempty"`
+	SelectedSkills []string               `protobuf:"bytes,13,rep,name=selected_skills,json=selectedSkills,proto3" json:"selected_skills,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *LLMConfig) Reset() {
 	*x = LLMConfig{}
-	mi := &file_v1_bot_proto_msgTypes[41]
+	mi := &file_v1_bot_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2296,7 +3538,7 @@ func (x *LLMConfig) String() string {
 func (*LLMConfig) ProtoMessage() {}
 
 func (x *LLMConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[41]
+	mi := &file_v1_bot_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2309,7 +3551,7 @@ func (x *LLMConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LLMConfig.ProtoReflect.Descriptor instead.
 func (*LLMConfig) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{41}
+	return file_v1_bot_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *LLMConfig) GetId() string {
@@ -2375,6 +3617,34 @@ func (x *LLMConfig) GetSystemPrompt() string {
 	return ""
 }
 
+func (x *LLMConfig) GetSkillsMode() string {
+	if x != nil {
+		return x.SkillsMode
+	}
+	return ""
+}
+
+func (x *LLMConfig) GetEnableSkills() bool {
+	if x != nil {
+		return x.EnableSkills
+	}
+	return false
+}
+
+func (x *LLMConfig) GetSkillsPrompt() string {
+	if x != nil {
+		return x.SkillsPrompt
+	}
+	return ""
+}
+
+func (x *LLMConfig) GetSelectedSkills() []string {
+	if x != nil {
+		return x.SelectedSkills
+	}
+	return nil
+}
+
 type ListLLMConfigsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -2383,7 +3653,7 @@ type ListLLMConfigsRequest struct {
 
 func (x *ListLLMConfigsRequest) Reset() {
 	*x = ListLLMConfigsRequest{}
-	mi := &file_v1_bot_proto_msgTypes[42]
+	mi := &file_v1_bot_proto_msgTypes[64]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2395,7 +3665,7 @@ func (x *ListLLMConfigsRequest) String() string {
 func (*ListLLMConfigsRequest) ProtoMessage() {}
 
 func (x *ListLLMConfigsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[42]
+	mi := &file_v1_bot_proto_msgTypes[64]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2408,7 +3678,7 @@ func (x *ListLLMConfigsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListLLMConfigsRequest.ProtoReflect.Descriptor instead.
 func (*ListLLMConfigsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{42}
+	return file_v1_bot_proto_rawDescGZIP(), []int{64}
 }
 
 type ListLLMConfigsResponse struct {
@@ -2420,7 +3690,7 @@ type ListLLMConfigsResponse struct {
 
 func (x *ListLLMConfigsResponse) Reset() {
 	*x = ListLLMConfigsResponse{}
-	mi := &file_v1_bot_proto_msgTypes[43]
+	mi := &file_v1_bot_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2432,7 +3702,7 @@ func (x *ListLLMConfigsResponse) String() string {
 func (*ListLLMConfigsResponse) ProtoMessage() {}
 
 func (x *ListLLMConfigsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[43]
+	mi := &file_v1_bot_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2445,7 +3715,7 @@ func (x *ListLLMConfigsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListLLMConfigsResponse.ProtoReflect.Descriptor instead.
 func (*ListLLMConfigsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{43}
+	return file_v1_bot_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *ListLLMConfigsResponse) GetConfigs() []*LLMConfig {
@@ -2456,21 +3726,25 @@ func (x *ListLLMConfigsResponse) GetConfigs() []*LLMConfig {
 }
 
 type CreateLLMConfigRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Provider      string                 `protobuf:"bytes,1,opt,name=provider,proto3" json:"provider,omitempty"`
-	ModelName     string                 `protobuf:"bytes,2,opt,name=model_name,json=modelName,proto3" json:"model_name,omitempty"`
-	ApiKey        string                 `protobuf:"bytes,3,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
-	BaseUrl       string                 `protobuf:"bytes,4,opt,name=base_url,json=baseUrl,proto3" json:"base_url,omitempty"`
-	Temperature   float64                `protobuf:"fixed64,5,opt,name=temperature,proto3" json:"temperature,omitempty"`
-	MaxTokens     int32                  `protobuf:"varint,6,opt,name=max_tokens,json=maxTokens,proto3" json:"max_tokens,omitempty"`
-	SystemPrompt  string                 `protobuf:"bytes,7,opt,name=system_prompt,json=systemPrompt,proto3" json:"system_prompt,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Provider       string                 `protobuf:"bytes,1,opt,name=provider,proto3" json:"provider,omitempty"`
+	ModelName      string                 `protobuf:"bytes,2,opt,name=model_name,json=modelName,proto3" json:"model_name,omitempty"`
+	ApiKey         string                 `protobuf:"bytes,3,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
+	BaseUrl        string                 `protobuf:"bytes,4,opt,name=base_url,json=baseUrl,proto3" json:"base_url,omitempty"`
+	Temperature    float64                `protobuf:"fixed64,5,opt,name=temperature,proto3" json:"temperature,omitempty"`
+	MaxTokens      int32                  `protobuf:"varint,6,opt,name=max_tokens,json=maxTokens,proto3" json:"max_tokens,omitempty"`
+	SystemPrompt   string                 `protobuf:"bytes,7,opt,name=system_prompt,json=systemPrompt,proto3" json:"system_prompt,omitempty"`
+	SkillsMode     string                 `protobuf:"bytes,8,opt,name=skills_mode,json=skillsMode,proto3" json:"skills_mode,omitempty"`
+	EnableSkills   bool                   `protobuf:"varint,9,opt,name=enable_skills,json=enableSkills,proto3" json:"enable_skills,omitempty"`
+	SkillsPrompt   string                 `protobuf:"bytes,10,opt,name=skills_prompt,json=skillsPrompt,proto3" json:"skills_prompt,omitempty"`
+	SelectedSkills []string               `protobuf:"bytes,11,rep,name=selected_skills,json=selectedSkills,proto3" json:"selected_skills,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *CreateLLMConfigRequest) Reset() {
 	*x = CreateLLMConfigRequest{}
-	mi := &file_v1_bot_proto_msgTypes[44]
+	mi := &file_v1_bot_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2482,7 +3756,7 @@ func (x *CreateLLMConfigRequest) String() string {
 func (*CreateLLMConfigRequest) ProtoMessage() {}
 
 func (x *CreateLLMConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[44]
+	mi := &file_v1_bot_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2495,7 +3769,7 @@ func (x *CreateLLMConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateLLMConfigRequest.ProtoReflect.Descriptor instead.
 func (*CreateLLMConfigRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{44}
+	return file_v1_bot_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *CreateLLMConfigRequest) GetProvider() string {
@@ -2547,6 +3821,34 @@ func (x *CreateLLMConfigRequest) GetSystemPrompt() string {
 	return ""
 }
 
+func (x *CreateLLMConfigRequest) GetSkillsMode() string {
+	if x != nil {
+		return x.SkillsMode
+	}
+	return ""
+}
+
+func (x *CreateLLMConfigRequest) GetEnableSkills() bool {
+	if x != nil {
+		return x.EnableSkills
+	}
+	return false
+}
+
+func (x *CreateLLMConfigRequest) GetSkillsPrompt() string {
+	if x != nil {
+		return x.SkillsPrompt
+	}
+	return ""
+}
+
+func (x *CreateLLMConfigRequest) GetSelectedSkills() []string {
+	if x != nil {
+		return x.SelectedSkills
+	}
+	return nil
+}
+
 type CreateLLMConfigResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Config        *LLMConfig             `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
@@ -2556,7 +3858,7 @@ type CreateLLMConfigResponse struct {
 
 func (x *CreateLLMConfigResponse) Reset() {
 	*x = CreateLLMConfigResponse{}
-	mi := &file_v1_bot_proto_msgTypes[45]
+	mi := &file_v1_bot_proto_msgTypes[67]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2568,7 +3870,7 @@ func (x *CreateLLMConfigResponse) String() string {
 func (*CreateLLMConfigResponse) ProtoMessage() {}
 
 func (x *CreateLLMConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[45]
+	mi := &file_v1_bot_proto_msgTypes[67]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2581,7 +3883,7 @@ func (x *CreateLLMConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateLLMConfigResponse.ProtoReflect.Descriptor instead.
 func (*CreateLLMConfigResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{45}
+	return file_v1_bot_proto_rawDescGZIP(), []int{67}
 }
 
 func (x *CreateLLMConfigResponse) GetConfig() *LLMConfig {
@@ -2592,22 +3894,26 @@ func (x *CreateLLMConfigResponse) GetConfig() *LLMConfig {
 }
 
 type UpdateLLMConfigRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Provider      string                 `protobuf:"bytes,2,opt,name=provider,proto3" json:"provider,omitempty"`
-	ModelName     string                 `protobuf:"bytes,3,opt,name=model_name,json=modelName,proto3" json:"model_name,omitempty"`
-	ApiKey        string                 `protobuf:"bytes,4,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
-	BaseUrl       string                 `protobuf:"bytes,5,opt,name=base_url,json=baseUrl,proto3" json:"base_url,omitempty"`
-	Temperature   float64                `protobuf:"fixed64,6,opt,name=temperature,proto3" json:"temperature,omitempty"`
-	MaxTokens     int32                  `protobuf:"varint,7,opt,name=max_tokens,json=maxTokens,proto3" json:"max_tokens,omitempty"`
-	SystemPrompt  string                 `protobuf:"bytes,8,opt,name=system_prompt,json=systemPrompt,proto3" json:"system_prompt,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Provider       string                 `protobuf:"bytes,2,opt,name=provider,proto3" json:"provider,omitempty"`
+	ModelName      string                 `protobuf:"bytes,3,opt,name=model_name,json=modelName,proto3" json:"model_name,omitempty"`
+	ApiKey         string                 `protobuf:"bytes,4,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
+	BaseUrl        string                 `protobuf:"bytes,5,opt,name=base_url,json=baseUrl,proto3" json:"base_url,omitempty"`
+	Temperature    float64                `protobuf:"fixed64,6,opt,name=temperature,proto3" json:"temperature,omitempty"`
+	MaxTokens      int32                  `protobuf:"varint,7,opt,name=max_tokens,json=maxTokens,proto3" json:"max_tokens,omitempty"`
+	SystemPrompt   string                 `protobuf:"bytes,8,opt,name=system_prompt,json=systemPrompt,proto3" json:"system_prompt,omitempty"`
+	SkillsMode     string                 `protobuf:"bytes,9,opt,name=skills_mode,json=skillsMode,proto3" json:"skills_mode,omitempty"`
+	EnableSkills   bool                   `protobuf:"varint,10,opt,name=enable_skills,json=enableSkills,proto3" json:"enable_skills,omitempty"`
+	SkillsPrompt   string                 `protobuf:"bytes,11,opt,name=skills_prompt,json=skillsPrompt,proto3" json:"skills_prompt,omitempty"`
+	SelectedSkills []string               `protobuf:"bytes,12,rep,name=selected_skills,json=selectedSkills,proto3" json:"selected_skills,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *UpdateLLMConfigRequest) Reset() {
 	*x = UpdateLLMConfigRequest{}
-	mi := &file_v1_bot_proto_msgTypes[46]
+	mi := &file_v1_bot_proto_msgTypes[68]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2619,7 +3925,7 @@ func (x *UpdateLLMConfigRequest) String() string {
 func (*UpdateLLMConfigRequest) ProtoMessage() {}
 
 func (x *UpdateLLMConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[46]
+	mi := &file_v1_bot_proto_msgTypes[68]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2632,7 +3938,7 @@ func (x *UpdateLLMConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLLMConfigRequest.ProtoReflect.Descriptor instead.
 func (*UpdateLLMConfigRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{46}
+	return file_v1_bot_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *UpdateLLMConfigRequest) GetId() string {
@@ -2691,6 +3997,34 @@ func (x *UpdateLLMConfigRequest) GetSystemPrompt() string {
 	return ""
 }
 
+func (x *UpdateLLMConfigRequest) GetSkillsMode() string {
+	if x != nil {
+		return x.SkillsMode
+	}
+	return ""
+}
+
+func (x *UpdateLLMConfigRequest) GetEnableSkills() bool {
+	if x != nil {
+		return x.EnableSkills
+	}
+	return false
+}
+
+func (x *UpdateLLMConfigRequest) GetSkillsPrompt() string {
+	if x != nil {
+		return x.SkillsPrompt
+	}
+	return ""
+}
+
+func (x *UpdateLLMConfigRequest) GetSelectedSkills() []string {
+	if x != nil {
+		return x.SelectedSkills
+	}
+	return nil
+}
+
 type UpdateLLMConfigResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Config        *LLMConfig             `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
@@ -2700,7 +4034,7 @@ type UpdateLLMConfigResponse struct {
 
 func (x *UpdateLLMConfigResponse) Reset() {
 	*x = UpdateLLMConfigResponse{}
-	mi := &file_v1_bot_proto_msgTypes[47]
+	mi := &file_v1_bot_proto_msgTypes[69]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2712,7 +4046,7 @@ func (x *UpdateLLMConfigResponse) String() string {
 func (*UpdateLLMConfigResponse) ProtoMessage() {}
 
 func (x *UpdateLLMConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[47]
+	mi := &file_v1_bot_proto_msgTypes[69]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2725,7 +4059,7 @@ func (x *UpdateLLMConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateLLMConfigResponse.ProtoReflect.Descriptor instead.
 func (*UpdateLLMConfigResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{47}
+	return file_v1_bot_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *UpdateLLMConfigResponse) GetConfig() *LLMConfig {
@@ -2744,7 +4078,7 @@ type ActivateLLMConfigRequest struct {
 
 func (x *ActivateLLMConfigRequest) Reset() {
 	*x = ActivateLLMConfigRequest{}
-	mi := &file_v1_bot_proto_msgTypes[48]
+	mi := &file_v1_bot_proto_msgTypes[70]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2756,7 +4090,7 @@ func (x *ActivateLLMConfigRequest) String() string {
 func (*ActivateLLMConfigRequest) ProtoMessage() {}
 
 func (x *ActivateLLMConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[48]
+	mi := &file_v1_bot_proto_msgTypes[70]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2769,7 +4103,7 @@ func (x *ActivateLLMConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivateLLMConfigRequest.ProtoReflect.Descriptor instead.
 func (*ActivateLLMConfigRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{48}
+	return file_v1_bot_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *ActivateLLMConfigRequest) GetId() string {
@@ -2788,7 +4122,7 @@ type ActivateLLMConfigResponse struct {
 
 func (x *ActivateLLMConfigResponse) Reset() {
 	*x = ActivateLLMConfigResponse{}
-	mi := &file_v1_bot_proto_msgTypes[49]
+	mi := &file_v1_bot_proto_msgTypes[71]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2800,7 +4134,7 @@ func (x *ActivateLLMConfigResponse) String() string {
 func (*ActivateLLMConfigResponse) ProtoMessage() {}
 
 func (x *ActivateLLMConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[49]
+	mi := &file_v1_bot_proto_msgTypes[71]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2813,7 +4147,7 @@ func (x *ActivateLLMConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActivateLLMConfigResponse.ProtoReflect.Descriptor instead.
 func (*ActivateLLMConfigResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{49}
+	return file_v1_bot_proto_rawDescGZIP(), []int{71}
 }
 
 func (x *ActivateLLMConfigResponse) GetMessage() string {
@@ -2833,7 +4167,7 @@ type TestLLMConfigRequest struct {
 
 func (x *TestLLMConfigRequest) Reset() {
 	*x = TestLLMConfigRequest{}
-	mi := &file_v1_bot_proto_msgTypes[50]
+	mi := &file_v1_bot_proto_msgTypes[72]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2845,7 +4179,7 @@ func (x *TestLLMConfigRequest) String() string {
 func (*TestLLMConfigRequest) ProtoMessage() {}
 
 func (x *TestLLMConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[50]
+	mi := &file_v1_bot_proto_msgTypes[72]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2858,7 +4192,7 @@ func (x *TestLLMConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TestLLMConfigRequest.ProtoReflect.Descriptor instead.
 func (*TestLLMConfigRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{50}
+	return file_v1_bot_proto_rawDescGZIP(), []int{72}
 }
 
 func (x *TestLLMConfigRequest) GetId() string {
@@ -2886,7 +4220,7 @@ type TestLLMConfigResponse struct {
 
 func (x *TestLLMConfigResponse) Reset() {
 	*x = TestLLMConfigResponse{}
-	mi := &file_v1_bot_proto_msgTypes[51]
+	mi := &file_v1_bot_proto_msgTypes[73]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2898,7 +4232,7 @@ func (x *TestLLMConfigResponse) String() string {
 func (*TestLLMConfigResponse) ProtoMessage() {}
 
 func (x *TestLLMConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[51]
+	mi := &file_v1_bot_proto_msgTypes[73]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2911,7 +4245,7 @@ func (x *TestLLMConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TestLLMConfigResponse.ProtoReflect.Descriptor instead.
 func (*TestLLMConfigResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{51}
+	return file_v1_bot_proto_rawDescGZIP(), []int{73}
 }
 
 func (x *TestLLMConfigResponse) GetSuccess() bool {
@@ -2944,7 +4278,7 @@ type DeleteLLMConfigRequest struct {
 
 func (x *DeleteLLMConfigRequest) Reset() {
 	*x = DeleteLLMConfigRequest{}
-	mi := &file_v1_bot_proto_msgTypes[52]
+	mi := &file_v1_bot_proto_msgTypes[74]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2956,7 +4290,7 @@ func (x *DeleteLLMConfigRequest) String() string {
 func (*DeleteLLMConfigRequest) ProtoMessage() {}
 
 func (x *DeleteLLMConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[52]
+	mi := &file_v1_bot_proto_msgTypes[74]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2969,7 +4303,7 @@ func (x *DeleteLLMConfigRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteLLMConfigRequest.ProtoReflect.Descriptor instead.
 func (*DeleteLLMConfigRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{52}
+	return file_v1_bot_proto_rawDescGZIP(), []int{74}
 }
 
 func (x *DeleteLLMConfigRequest) GetId() string {
@@ -2988,7 +4322,7 @@ type DeleteLLMConfigResponse struct {
 
 func (x *DeleteLLMConfigResponse) Reset() {
 	*x = DeleteLLMConfigResponse{}
-	mi := &file_v1_bot_proto_msgTypes[53]
+	mi := &file_v1_bot_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3000,7 +4334,7 @@ func (x *DeleteLLMConfigResponse) String() string {
 func (*DeleteLLMConfigResponse) ProtoMessage() {}
 
 func (x *DeleteLLMConfigResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[53]
+	mi := &file_v1_bot_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3013,7 +4347,7 @@ func (x *DeleteLLMConfigResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteLLMConfigResponse.ProtoReflect.Descriptor instead.
 func (*DeleteLLMConfigResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{53}
+	return file_v1_bot_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *DeleteLLMConfigResponse) GetMessage() string {
@@ -3037,7 +4371,7 @@ type Technician struct {
 
 func (x *Technician) Reset() {
 	*x = Technician{}
-	mi := &file_v1_bot_proto_msgTypes[54]
+	mi := &file_v1_bot_proto_msgTypes[76]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3049,7 +4383,7 @@ func (x *Technician) String() string {
 func (*Technician) ProtoMessage() {}
 
 func (x *Technician) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[54]
+	mi := &file_v1_bot_proto_msgTypes[76]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3062,7 +4396,7 @@ func (x *Technician) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Technician.ProtoReflect.Descriptor instead.
 func (*Technician) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{54}
+	return file_v1_bot_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *Technician) GetId() string {
@@ -3115,7 +4449,7 @@ type ListTechniciansRequest struct {
 
 func (x *ListTechniciansRequest) Reset() {
 	*x = ListTechniciansRequest{}
-	mi := &file_v1_bot_proto_msgTypes[55]
+	mi := &file_v1_bot_proto_msgTypes[77]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3127,7 +4461,7 @@ func (x *ListTechniciansRequest) String() string {
 func (*ListTechniciansRequest) ProtoMessage() {}
 
 func (x *ListTechniciansRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[55]
+	mi := &file_v1_bot_proto_msgTypes[77]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3140,7 +4474,7 @@ func (x *ListTechniciansRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTechniciansRequest.ProtoReflect.Descriptor instead.
 func (*ListTechniciansRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{55}
+	return file_v1_bot_proto_rawDescGZIP(), []int{77}
 }
 
 type ListTechniciansResponse struct {
@@ -3152,7 +4486,7 @@ type ListTechniciansResponse struct {
 
 func (x *ListTechniciansResponse) Reset() {
 	*x = ListTechniciansResponse{}
-	mi := &file_v1_bot_proto_msgTypes[56]
+	mi := &file_v1_bot_proto_msgTypes[78]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3164,7 +4498,7 @@ func (x *ListTechniciansResponse) String() string {
 func (*ListTechniciansResponse) ProtoMessage() {}
 
 func (x *ListTechniciansResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[56]
+	mi := &file_v1_bot_proto_msgTypes[78]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3177,7 +4511,7 @@ func (x *ListTechniciansResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTechniciansResponse.ProtoReflect.Descriptor instead.
 func (*ListTechniciansResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{56}
+	return file_v1_bot_proto_rawDescGZIP(), []int{78}
 }
 
 func (x *ListTechniciansResponse) GetTechnicians() []*Technician {
@@ -3198,7 +4532,7 @@ type CreateTechnicianRequest struct {
 
 func (x *CreateTechnicianRequest) Reset() {
 	*x = CreateTechnicianRequest{}
-	mi := &file_v1_bot_proto_msgTypes[57]
+	mi := &file_v1_bot_proto_msgTypes[79]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3210,7 +4544,7 @@ func (x *CreateTechnicianRequest) String() string {
 func (*CreateTechnicianRequest) ProtoMessage() {}
 
 func (x *CreateTechnicianRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[57]
+	mi := &file_v1_bot_proto_msgTypes[79]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3223,7 +4557,7 @@ func (x *CreateTechnicianRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateTechnicianRequest.ProtoReflect.Descriptor instead.
 func (*CreateTechnicianRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{57}
+	return file_v1_bot_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *CreateTechnicianRequest) GetName() string {
@@ -3256,7 +4590,7 @@ type CreateTechnicianResponse struct {
 
 func (x *CreateTechnicianResponse) Reset() {
 	*x = CreateTechnicianResponse{}
-	mi := &file_v1_bot_proto_msgTypes[58]
+	mi := &file_v1_bot_proto_msgTypes[80]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3268,7 +4602,7 @@ func (x *CreateTechnicianResponse) String() string {
 func (*CreateTechnicianResponse) ProtoMessage() {}
 
 func (x *CreateTechnicianResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[58]
+	mi := &file_v1_bot_proto_msgTypes[80]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3281,7 +4615,7 @@ func (x *CreateTechnicianResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateTechnicianResponse.ProtoReflect.Descriptor instead.
 func (*CreateTechnicianResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{58}
+	return file_v1_bot_proto_rawDescGZIP(), []int{80}
 }
 
 func (x *CreateTechnicianResponse) GetTechnician() *Technician {
@@ -3303,7 +4637,7 @@ type UpdateTechnicianRequest struct {
 
 func (x *UpdateTechnicianRequest) Reset() {
 	*x = UpdateTechnicianRequest{}
-	mi := &file_v1_bot_proto_msgTypes[59]
+	mi := &file_v1_bot_proto_msgTypes[81]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3315,7 +4649,7 @@ func (x *UpdateTechnicianRequest) String() string {
 func (*UpdateTechnicianRequest) ProtoMessage() {}
 
 func (x *UpdateTechnicianRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[59]
+	mi := &file_v1_bot_proto_msgTypes[81]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3328,7 +4662,7 @@ func (x *UpdateTechnicianRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateTechnicianRequest.ProtoReflect.Descriptor instead.
 func (*UpdateTechnicianRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{59}
+	return file_v1_bot_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *UpdateTechnicianRequest) GetId() string {
@@ -3368,7 +4702,7 @@ type UpdateTechnicianResponse struct {
 
 func (x *UpdateTechnicianResponse) Reset() {
 	*x = UpdateTechnicianResponse{}
-	mi := &file_v1_bot_proto_msgTypes[60]
+	mi := &file_v1_bot_proto_msgTypes[82]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3380,7 +4714,7 @@ func (x *UpdateTechnicianResponse) String() string {
 func (*UpdateTechnicianResponse) ProtoMessage() {}
 
 func (x *UpdateTechnicianResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[60]
+	mi := &file_v1_bot_proto_msgTypes[82]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3393,7 +4727,7 @@ func (x *UpdateTechnicianResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateTechnicianResponse.ProtoReflect.Descriptor instead.
 func (*UpdateTechnicianResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{60}
+	return file_v1_bot_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *UpdateTechnicianResponse) GetTechnician() *Technician {
@@ -3413,7 +4747,7 @@ type ToggleTechnicianActiveRequest struct {
 
 func (x *ToggleTechnicianActiveRequest) Reset() {
 	*x = ToggleTechnicianActiveRequest{}
-	mi := &file_v1_bot_proto_msgTypes[61]
+	mi := &file_v1_bot_proto_msgTypes[83]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3425,7 +4759,7 @@ func (x *ToggleTechnicianActiveRequest) String() string {
 func (*ToggleTechnicianActiveRequest) ProtoMessage() {}
 
 func (x *ToggleTechnicianActiveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[61]
+	mi := &file_v1_bot_proto_msgTypes[83]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3438,7 +4772,7 @@ func (x *ToggleTechnicianActiveRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToggleTechnicianActiveRequest.ProtoReflect.Descriptor instead.
 func (*ToggleTechnicianActiveRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{61}
+	return file_v1_bot_proto_rawDescGZIP(), []int{83}
 }
 
 func (x *ToggleTechnicianActiveRequest) GetId() string {
@@ -3465,7 +4799,7 @@ type ToggleTechnicianActiveResponse struct {
 
 func (x *ToggleTechnicianActiveResponse) Reset() {
 	*x = ToggleTechnicianActiveResponse{}
-	mi := &file_v1_bot_proto_msgTypes[62]
+	mi := &file_v1_bot_proto_msgTypes[84]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3477,7 +4811,7 @@ func (x *ToggleTechnicianActiveResponse) String() string {
 func (*ToggleTechnicianActiveResponse) ProtoMessage() {}
 
 func (x *ToggleTechnicianActiveResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[62]
+	mi := &file_v1_bot_proto_msgTypes[84]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3490,7 +4824,7 @@ func (x *ToggleTechnicianActiveResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToggleTechnicianActiveResponse.ProtoReflect.Descriptor instead.
 func (*ToggleTechnicianActiveResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{62}
+	return file_v1_bot_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *ToggleTechnicianActiveResponse) GetMessage() string {
@@ -3516,7 +4850,7 @@ type DeleteTechnicianRequest struct {
 
 func (x *DeleteTechnicianRequest) Reset() {
 	*x = DeleteTechnicianRequest{}
-	mi := &file_v1_bot_proto_msgTypes[63]
+	mi := &file_v1_bot_proto_msgTypes[85]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3528,7 +4862,7 @@ func (x *DeleteTechnicianRequest) String() string {
 func (*DeleteTechnicianRequest) ProtoMessage() {}
 
 func (x *DeleteTechnicianRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[63]
+	mi := &file_v1_bot_proto_msgTypes[85]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3541,7 +4875,7 @@ func (x *DeleteTechnicianRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteTechnicianRequest.ProtoReflect.Descriptor instead.
 func (*DeleteTechnicianRequest) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{63}
+	return file_v1_bot_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *DeleteTechnicianRequest) GetId() string {
@@ -3560,7 +4894,7 @@ type DeleteTechnicianResponse struct {
 
 func (x *DeleteTechnicianResponse) Reset() {
 	*x = DeleteTechnicianResponse{}
-	mi := &file_v1_bot_proto_msgTypes[64]
+	mi := &file_v1_bot_proto_msgTypes[86]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3572,7 +4906,7 @@ func (x *DeleteTechnicianResponse) String() string {
 func (*DeleteTechnicianResponse) ProtoMessage() {}
 
 func (x *DeleteTechnicianResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_bot_proto_msgTypes[64]
+	mi := &file_v1_bot_proto_msgTypes[86]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3585,7 +4919,7 @@ func (x *DeleteTechnicianResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteTechnicianResponse.ProtoReflect.Descriptor instead.
 func (*DeleteTechnicianResponse) Descriptor() ([]byte, []int) {
-	return file_v1_bot_proto_rawDescGZIP(), []int{64}
+	return file_v1_bot_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *DeleteTechnicianResponse) GetMessage() string {
@@ -3673,70 +5007,160 @@ const file_v1_bot_proto_rawDesc = "" +
 	"\x16mute_remaining_seconds\x18\x03 \x01(\x03R\x14muteRemainingSeconds\x12(\n" +
 	"\x10daily_chat_count\x18\x04 \x01(\x05R\x0edailyChatCount\x12*\n" +
 	"\x11daily_quota_limit\x18\x05 \x01(\x05R\x0fdailyQuotaLimit\x12%\n" +
-	"\x0eis_whitelisted\x18\x06 \x01(\bR\risWhitelisted\"\xc7\x01\n" +
-	"\rSkillFileItem\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\x12\x19\n" +
-	"\bskill_id\x18\x02 \x01(\rR\askillId\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x12\x1b\n" +
-	"\tfile_path\x18\x04 \x01(\tR\bfilePath\x12\x18\n" +
-	"\acontent\x18\x05 \x01(\tR\acontent\x12!\n" +
-	"\fis_reference\x18\x06 \x01(\bR\visReference\x12\x1d\n" +
-	"\n" +
-	"updated_at\x18\a \x01(\tR\tupdatedAt\"\xf4\x01\n" +
-	"\tSkillItem\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
-	"\x04slug\x18\x02 \x01(\tR\x04slug\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x12 \n" +
-	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x1d\n" +
-	"\n" +
-	"is_enabled\x18\x05 \x01(\bR\tisEnabled\x120\n" +
-	"\x05files\x18\x06 \x03(\v2\x1a.polyglot.v1.SkillFileItemR\x05files\x12\x1d\n" +
-	"\n" +
-	"created_at\x18\a \x01(\tR\tcreatedAt\x12\x1d\n" +
-	"\n" +
-	"updated_at\x18\b \x01(\tR\tupdatedAt\"\x13\n" +
-	"\x11ListSkillsRequest\"D\n" +
-	"\x12ListSkillsResponse\x12.\n" +
-	"\x06skills\x18\x01 \x03(\v2\x16.polyglot.v1.SkillItemR\x06skills\"%\n" +
-	"\x0fGetSkillRequest\x12\x12\n" +
-	"\x04slug\x18\x01 \x01(\tR\x04slug\"@\n" +
-	"\x10GetSkillResponse\x12,\n" +
-	"\x05skill\x18\x01 \x01(\v2\x16.polyglot.v1.SkillItemR\x05skill\"^\n" +
-	"\x12CreateSkillRequest\x12\x12\n" +
-	"\x04slug\x18\x01 \x01(\tR\x04slug\x12\x12\n" +
+	"\x0eis_whitelisted\x18\x06 \x01(\bR\risWhitelisted\"\xe2\x03\n" +
+	"\x05Skill\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
-	"\vdescription\x18\x03 \x01(\tR\vdescription\"C\n" +
-	"\x13CreateSkillResponse\x12,\n" +
-	"\x05skill\x18\x01 \x01(\v2\x16.polyglot.v1.SkillItemR\x05skill\"\x84\x01\n" +
-	"\x14SaveSkillFileRequest\x12\x12\n" +
-	"\x04slug\x18\x01 \x01(\tR\x04slug\x12\x1b\n" +
-	"\tfile_path\x18\x02 \x01(\tR\bfilePath\x12\x18\n" +
-	"\acontent\x18\x03 \x01(\tR\acontent\x12!\n" +
-	"\fis_reference\x18\x04 \x01(\bR\visReference\"G\n" +
-	"\x15SaveSkillFileResponse\x12.\n" +
-	"\x04file\x18\x01 \x01(\v2\x1a.polyglot.v1.SkillFileItemR\x04file\"8\n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x18\n" +
+	"\acontent\x18\x04 \x01(\tR\acontent\x12\x18\n" +
+	"\alicense\x18\x05 \x01(\tR\alicense\x12$\n" +
+	"\rcompatibility\x18\x06 \x01(\tR\rcompatibility\x12#\n" +
+	"\rallowed_tools\x18\a \x01(\tR\fallowedTools\x12<\n" +
+	"\bmetadata\x18\b \x03(\v2 .polyglot.v1.Skill.MetadataEntryR\bmetadata\x12\x1b\n" +
+	"\tread_only\x18\t \x01(\bR\breadOnly\x12\x1f\n" +
+	"\vsource_type\x18\n" +
+	" \x01(\tR\n" +
+	"sourceType\x12\x1d\n" +
+	"\n" +
+	"source_url\x18\v \x01(\tR\tsourceUrl\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\f \x01(\tR\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\r \x01(\tR\tupdatedAt\x1a;\n" +
+	"\rMetadataEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xb4\x01\n" +
+	"\rSkillResource\x12\x12\n" +
+	"\x04path\x18\x01 \x01(\tR\x04path\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
+	"\x04type\x18\x03 \x01(\tR\x04type\x12\x12\n" +
+	"\x04size\x18\x04 \x01(\x03R\x04size\x12\x1b\n" +
+	"\tmime_type\x18\x05 \x01(\tR\bmimeType\x12\x1a\n" +
+	"\breadable\x18\x06 \x01(\bR\breadable\x12\x1a\n" +
+	"\bmodified\x18\a \x01(\tR\bmodified\"x\n" +
+	"\x0fResourceContent\x12\x18\n" +
+	"\acontent\x18\x01 \x01(\tR\acontent\x12\x1a\n" +
+	"\bencoding\x18\x02 \x01(\tR\bencoding\x12\x1b\n" +
+	"\tmime_type\x18\x03 \x01(\tR\bmimeType\x12\x12\n" +
+	"\x04size\x18\x04 \x01(\x03R\x04size\"\x83\x01\n" +
+	"\vGitRepoInfo\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x10\n" +
+	"\x03url\x18\x02 \x01(\tR\x03url\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12\x18\n" +
+	"\aenabled\x18\x04 \x01(\bR\aenabled\x12$\n" +
+	"\x0elast_synced_at\x18\x05 \x01(\tR\flastSyncedAt\",\n" +
+	"\x11ListSkillsRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"@\n" +
+	"\x12ListSkillsResponse\x12*\n" +
+	"\x06skills\x18\x01 \x03(\v2\x12.polyglot.v1.SkillR\x06skills\":\n" +
+	"\x0fGetSkillRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\"<\n" +
+	"\x10GetSkillResponse\x12(\n" +
+	"\x05skill\x18\x01 \x01(\v2\x12.polyglot.v1.SkillR\x05skill\"\xea\x02\n" +
+	"\x12CreateSkillRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x18\n" +
+	"\acontent\x18\x04 \x01(\tR\acontent\x12\x18\n" +
+	"\alicense\x18\x05 \x01(\tR\alicense\x12$\n" +
+	"\rcompatibility\x18\x06 \x01(\tR\rcompatibility\x12#\n" +
+	"\rallowed_tools\x18\a \x01(\tR\fallowedTools\x12I\n" +
+	"\bmetadata\x18\b \x03(\v2-.polyglot.v1.CreateSkillRequest.MetadataEntryR\bmetadata\x1a;\n" +
+	"\rMetadataEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"?\n" +
+	"\x13CreateSkillResponse\x12(\n" +
+	"\x05skill\x18\x01 \x01(\v2\x12.polyglot.v1.SkillR\x05skill\"\xfa\x02\n" +
+	"\x12UpdateSkillRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x18\n" +
+	"\acontent\x18\x05 \x01(\tR\acontent\x12\x18\n" +
+	"\alicense\x18\x06 \x01(\tR\alicense\x12$\n" +
+	"\rcompatibility\x18\a \x01(\tR\rcompatibility\x12#\n" +
+	"\rallowed_tools\x18\b \x01(\tR\fallowedTools\x12I\n" +
+	"\bmetadata\x18\t \x03(\v2-.polyglot.v1.UpdateSkillRequest.MetadataEntryR\bmetadata\x1a;\n" +
+	"\rMetadataEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"?\n" +
+	"\x13UpdateSkillResponse\x12(\n" +
+	"\x05skill\x18\x01 \x01(\v2\x12.polyglot.v1.SkillR\x05skill\"=\n" +
 	"\x12DeleteSkillRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
-	"\x04slug\x18\x02 \x01(\tR\x04slug\"I\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\"I\n" +
 	"\x13DeleteSkillResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"b\n" +
-	"\x16DeleteSkillFileRequest\x12\x12\n" +
-	"\x04slug\x18\x01 \x01(\tR\x04slug\x12\x17\n" +
-	"\afile_id\x18\x02 \x01(\rR\x06fileId\x12\x1b\n" +
-	"\tfile_path\x18\x03 \x01(\tR\bfilePath\"M\n" +
-	"\x17DeleteSkillFileResponse\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"$\n" +
+	"\x12ExportSkillRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"K\n" +
+	"\x13ExportSkillResponse\x12\x18\n" +
+	"\aarchive\x18\x01 \x01(\fR\aarchive\x12\x1a\n" +
+	"\bfilename\x18\x02 \x01(\tR\bfilename\"G\n" +
+	"\x12ImportSkillRequest\x12\x18\n" +
+	"\aarchive\x18\x01 \x01(\fR\aarchive\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\"?\n" +
+	"\x13ImportSkillResponse\x12(\n" +
+	"\x05skill\x18\x01 \x01(\v2\x12.polyglot.v1.SkillR\x05skill\"1\n" +
+	"\x14ListResourcesRequest\x12\x19\n" +
+	"\bskill_id\x18\x01 \x01(\tR\askillId\"Q\n" +
+	"\x15ListResourcesResponse\x128\n" +
+	"\tresources\x18\x01 \x03(\v2\x1a.polyglot.v1.SkillResourceR\tresources\"C\n" +
+	"\x12GetResourceRequest\x12\x19\n" +
+	"\bskill_id\x18\x01 \x01(\tR\askillId\x12\x12\n" +
+	"\x04path\x18\x02 \x01(\tR\x04path\"\x85\x01\n" +
+	"\x13GetResourceResponse\x126\n" +
+	"\acontent\x18\x01 \x01(\v2\x1c.polyglot.v1.ResourceContentR\acontent\x126\n" +
+	"\bmetadata\x18\x02 \x01(\v2\x1a.polyglot.v1.SkillResourceR\bmetadata\"X\n" +
+	"\x13SaveResourceRequest\x12\x19\n" +
+	"\bskill_id\x18\x01 \x01(\tR\askillId\x12\x12\n" +
+	"\x04path\x18\x02 \x01(\tR\x04path\x12\x12\n" +
+	"\x04data\x18\x03 \x01(\fR\x04data\"J\n" +
+	"\x14SaveResourceResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"B\n" +
-	"\x12ToggleSkillRequest\x12\x12\n" +
-	"\x04slug\x18\x01 \x01(\tR\x04slug\x12\x18\n" +
-	"\aenabled\x18\x02 \x01(\bR\aenabled\"I\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"F\n" +
+	"\x15DeleteResourceRequest\x12\x19\n" +
+	"\bskill_id\x18\x01 \x01(\tR\askillId\x12\x12\n" +
+	"\x04path\x18\x02 \x01(\tR\x04path\"L\n" +
+	"\x16DeleteResourceResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\x15\n" +
+	"\x13ListGitReposRequest\"F\n" +
+	"\x14ListGitReposResponse\x12.\n" +
+	"\x05repos\x18\x01 \x03(\v2\x18.polyglot.v1.GitRepoInfoR\x05repos\"%\n" +
+	"\x11AddGitRepoRequest\x12\x10\n" +
+	"\x03url\x18\x01 \x01(\tR\x03url\"B\n" +
+	"\x12AddGitRepoResponse\x12,\n" +
+	"\x04repo\x18\x01 \x01(\v2\x18.polyglot.v1.GitRepoInfoR\x04repo\"c\n" +
+	"\x14UpdateGitRepoRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x10\n" +
+	"\x03url\x18\x02 \x01(\tR\x03url\x12\x1d\n" +
+	"\aenabled\x18\x03 \x01(\bH\x00R\aenabled\x88\x01\x01B\n" +
+	"\n" +
+	"\b_enabled\"E\n" +
+	"\x15UpdateGitRepoResponse\x12,\n" +
+	"\x04repo\x18\x01 \x01(\v2\x18.polyglot.v1.GitRepoInfoR\x04repo\"&\n" +
+	"\x14DeleteGitRepoRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"K\n" +
+	"\x15DeleteGitRepoResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"$\n" +
+	"\x12SyncGitRepoRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"I\n" +
+	"\x13SyncGitRepoResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"&\n" +
+	"\x14ToggleGitRepoRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"E\n" +
+	"\x15ToggleGitRepoResponse\x12,\n" +
+	"\x04repo\x18\x01 \x01(\v2\x18.polyglot.v1.GitRepoInfoR\x04repo\"W\n" +
+	"\x12ToggleSkillRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x18\n" +
+	"\aenabled\x18\x03 \x01(\bR\aenabled\"I\n" +
 	"\x13ToggleSkillResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"\x1b\n" +
-	"\x19SyncSkillsFromDiskRequest\"Y\n" +
-	"\x1aSyncSkillsFromDiskResponse\x12!\n" +
-	"\fsynced_count\x18\x01 \x01(\x05R\vsyncedCount\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"\x18\n" +
 	"\x16GetGlobalPromptRequest\"3\n" +
 	"\x17GetGlobalPromptResponse\x12\x18\n" +
@@ -3745,7 +5169,7 @@ const file_v1_bot_proto_rawDesc = "" +
 	"\acontent\x18\x01 \x01(\tR\acontent\"N\n" +
 	"\x18SaveGlobalPromptResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"\x9a\x02\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\xae\x03\n" +
 	"\tLLMConfig\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
 	"\bprovider\x18\x02 \x01(\tR\bprovider\x12\x1d\n" +
@@ -3757,10 +5181,16 @@ const file_v1_bot_proto_rawDesc = "" +
 	"\vtemperature\x18\a \x01(\x01R\vtemperature\x12\x1d\n" +
 	"\n" +
 	"max_tokens\x18\b \x01(\x05R\tmaxTokens\x12#\n" +
-	"\rsystem_prompt\x18\t \x01(\tR\fsystemPrompt\"\x17\n" +
+	"\rsystem_prompt\x18\t \x01(\tR\fsystemPrompt\x12\x1f\n" +
+	"\vskills_mode\x18\n" +
+	" \x01(\tR\n" +
+	"skillsMode\x12#\n" +
+	"\renable_skills\x18\v \x01(\bR\fenableSkills\x12#\n" +
+	"\rskills_prompt\x18\f \x01(\tR\fskillsPrompt\x12'\n" +
+	"\x0fselected_skills\x18\r \x03(\tR\x0eselectedSkills\"\x17\n" +
 	"\x15ListLLMConfigsRequest\"J\n" +
 	"\x16ListLLMConfigsResponse\x120\n" +
-	"\aconfigs\x18\x01 \x03(\v2\x16.polyglot.v1.LLMConfigR\aconfigs\"\xed\x01\n" +
+	"\aconfigs\x18\x01 \x03(\v2\x16.polyglot.v1.LLMConfigR\aconfigs\"\x81\x03\n" +
 	"\x16CreateLLMConfigRequest\x12\x1a\n" +
 	"\bprovider\x18\x01 \x01(\tR\bprovider\x12\x1d\n" +
 	"\n" +
@@ -3770,9 +5200,15 @@ const file_v1_bot_proto_rawDesc = "" +
 	"\vtemperature\x18\x05 \x01(\x01R\vtemperature\x12\x1d\n" +
 	"\n" +
 	"max_tokens\x18\x06 \x01(\x05R\tmaxTokens\x12#\n" +
-	"\rsystem_prompt\x18\a \x01(\tR\fsystemPrompt\"I\n" +
+	"\rsystem_prompt\x18\a \x01(\tR\fsystemPrompt\x12\x1f\n" +
+	"\vskills_mode\x18\b \x01(\tR\n" +
+	"skillsMode\x12#\n" +
+	"\renable_skills\x18\t \x01(\bR\fenableSkills\x12#\n" +
+	"\rskills_prompt\x18\n" +
+	" \x01(\tR\fskillsPrompt\x12'\n" +
+	"\x0fselected_skills\x18\v \x03(\tR\x0eselectedSkills\"I\n" +
 	"\x17CreateLLMConfigResponse\x12.\n" +
-	"\x06config\x18\x01 \x01(\v2\x16.polyglot.v1.LLMConfigR\x06config\"\xfd\x01\n" +
+	"\x06config\x18\x01 \x01(\v2\x16.polyglot.v1.LLMConfigR\x06config\"\x91\x03\n" +
 	"\x16UpdateLLMConfigRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
 	"\bprovider\x18\x02 \x01(\tR\bprovider\x12\x1d\n" +
@@ -3783,7 +5219,13 @@ const file_v1_bot_proto_rawDesc = "" +
 	"\vtemperature\x18\x06 \x01(\x01R\vtemperature\x12\x1d\n" +
 	"\n" +
 	"max_tokens\x18\a \x01(\x05R\tmaxTokens\x12#\n" +
-	"\rsystem_prompt\x18\b \x01(\tR\fsystemPrompt\"I\n" +
+	"\rsystem_prompt\x18\b \x01(\tR\fsystemPrompt\x12\x1f\n" +
+	"\vskills_mode\x18\t \x01(\tR\n" +
+	"skillsMode\x12#\n" +
+	"\renable_skills\x18\n" +
+	" \x01(\bR\fenableSkills\x12#\n" +
+	"\rskills_prompt\x18\v \x01(\tR\fskillsPrompt\x12'\n" +
+	"\x0fselected_skills\x18\f \x03(\tR\x0eselectedSkills\"I\n" +
 	"\x17UpdateLLMConfigResponse\x12.\n" +
 	"\x06config\x18\x01 \x01(\v2\x16.polyglot.v1.LLMConfigR\x06config\"*\n" +
 	"\x18ActivateLLMConfigRequest\x12\x0e\n" +
@@ -3839,7 +5281,7 @@ const file_v1_bot_proto_rawDesc = "" +
 	"\x17DeleteTechnicianRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"4\n" +
 	"\x18DeleteTechnicianResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\xd0\x15\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\x81\x1c\n" +
 	"\n" +
 	"BotService\x12b\n" +
 	"\x11ListConversations\x12%.polyglot.v1.ListConversationsRequest\x1a&.polyglot.v1.ListConversationsResponse\x12\\\n" +
@@ -3853,12 +5295,23 @@ const file_v1_bot_proto_rawDesc = "" +
 	"\n" +
 	"ListSkills\x12\x1e.polyglot.v1.ListSkillsRequest\x1a\x1f.polyglot.v1.ListSkillsResponse\x12G\n" +
 	"\bGetSkill\x12\x1c.polyglot.v1.GetSkillRequest\x1a\x1d.polyglot.v1.GetSkillResponse\x12P\n" +
-	"\vCreateSkill\x12\x1f.polyglot.v1.CreateSkillRequest\x1a .polyglot.v1.CreateSkillResponse\x12V\n" +
-	"\rSaveSkillFile\x12!.polyglot.v1.SaveSkillFileRequest\x1a\".polyglot.v1.SaveSkillFileResponse\x12P\n" +
-	"\vDeleteSkill\x12\x1f.polyglot.v1.DeleteSkillRequest\x1a .polyglot.v1.DeleteSkillResponse\x12\\\n" +
-	"\x0fDeleteSkillFile\x12#.polyglot.v1.DeleteSkillFileRequest\x1a$.polyglot.v1.DeleteSkillFileResponse\x12P\n" +
-	"\vToggleSkill\x12\x1f.polyglot.v1.ToggleSkillRequest\x1a .polyglot.v1.ToggleSkillResponse\x12e\n" +
-	"\x12SyncSkillsFromDisk\x12&.polyglot.v1.SyncSkillsFromDiskRequest\x1a'.polyglot.v1.SyncSkillsFromDiskResponse\x12\\\n" +
+	"\vCreateSkill\x12\x1f.polyglot.v1.CreateSkillRequest\x1a .polyglot.v1.CreateSkillResponse\x12P\n" +
+	"\vUpdateSkill\x12\x1f.polyglot.v1.UpdateSkillRequest\x1a .polyglot.v1.UpdateSkillResponse\x12P\n" +
+	"\vDeleteSkill\x12\x1f.polyglot.v1.DeleteSkillRequest\x1a .polyglot.v1.DeleteSkillResponse\x12P\n" +
+	"\vExportSkill\x12\x1f.polyglot.v1.ExportSkillRequest\x1a .polyglot.v1.ExportSkillResponse\x12P\n" +
+	"\vImportSkill\x12\x1f.polyglot.v1.ImportSkillRequest\x1a .polyglot.v1.ImportSkillResponse\x12V\n" +
+	"\rListResources\x12!.polyglot.v1.ListResourcesRequest\x1a\".polyglot.v1.ListResourcesResponse\x12P\n" +
+	"\vGetResource\x12\x1f.polyglot.v1.GetResourceRequest\x1a .polyglot.v1.GetResourceResponse\x12S\n" +
+	"\fSaveResource\x12 .polyglot.v1.SaveResourceRequest\x1a!.polyglot.v1.SaveResourceResponse\x12Y\n" +
+	"\x0eDeleteResource\x12\".polyglot.v1.DeleteResourceRequest\x1a#.polyglot.v1.DeleteResourceResponse\x12S\n" +
+	"\fListGitRepos\x12 .polyglot.v1.ListGitReposRequest\x1a!.polyglot.v1.ListGitReposResponse\x12M\n" +
+	"\n" +
+	"AddGitRepo\x12\x1e.polyglot.v1.AddGitRepoRequest\x1a\x1f.polyglot.v1.AddGitRepoResponse\x12V\n" +
+	"\rUpdateGitRepo\x12!.polyglot.v1.UpdateGitRepoRequest\x1a\".polyglot.v1.UpdateGitRepoResponse\x12V\n" +
+	"\rDeleteGitRepo\x12!.polyglot.v1.DeleteGitRepoRequest\x1a\".polyglot.v1.DeleteGitRepoResponse\x12P\n" +
+	"\vSyncGitRepo\x12\x1f.polyglot.v1.SyncGitRepoRequest\x1a .polyglot.v1.SyncGitRepoResponse\x12V\n" +
+	"\rToggleGitRepo\x12!.polyglot.v1.ToggleGitRepoRequest\x1a\".polyglot.v1.ToggleGitRepoResponse\x12P\n" +
+	"\vToggleSkill\x12\x1f.polyglot.v1.ToggleSkillRequest\x1a .polyglot.v1.ToggleSkillResponse\x12\\\n" +
 	"\x0fGetGlobalPrompt\x12#.polyglot.v1.GetGlobalPromptRequest\x1a$.polyglot.v1.GetGlobalPromptResponse\x12_\n" +
 	"\x10SaveGlobalPrompt\x12$.polyglot.v1.SaveGlobalPromptRequest\x1a%.polyglot.v1.SaveGlobalPromptResponse\x12Y\n" +
 	"\x0eListLLMConfigs\x12\".polyglot.v1.ListLLMConfigsRequest\x1a#.polyglot.v1.ListLLMConfigsResponse\x12\\\n" +
@@ -3885,7 +5338,7 @@ func file_v1_bot_proto_rawDescGZIP() []byte {
 	return file_v1_bot_proto_rawDescData
 }
 
-var file_v1_bot_proto_msgTypes = make([]protoimpl.MessageInfo, 65)
+var file_v1_bot_proto_msgTypes = make([]protoimpl.MessageInfo, 90)
 var file_v1_bot_proto_goTypes = []any{
 	(*ConversationMessage)(nil),            // 0: polyglot.v1.ConversationMessage
 	(*Conversation)(nil),                   // 1: polyglot.v1.Conversation
@@ -3906,132 +5359,187 @@ var file_v1_bot_proto_goTypes = []any{
 	(*ResetRateLimitResponse)(nil),         // 16: polyglot.v1.ResetRateLimitResponse
 	(*GetRateLimitStatusRequest)(nil),      // 17: polyglot.v1.GetRateLimitStatusRequest
 	(*GetRateLimitStatusResponse)(nil),     // 18: polyglot.v1.GetRateLimitStatusResponse
-	(*SkillFileItem)(nil),                  // 19: polyglot.v1.SkillFileItem
-	(*SkillItem)(nil),                      // 20: polyglot.v1.SkillItem
-	(*ListSkillsRequest)(nil),              // 21: polyglot.v1.ListSkillsRequest
-	(*ListSkillsResponse)(nil),             // 22: polyglot.v1.ListSkillsResponse
-	(*GetSkillRequest)(nil),                // 23: polyglot.v1.GetSkillRequest
-	(*GetSkillResponse)(nil),               // 24: polyglot.v1.GetSkillResponse
-	(*CreateSkillRequest)(nil),             // 25: polyglot.v1.CreateSkillRequest
-	(*CreateSkillResponse)(nil),            // 26: polyglot.v1.CreateSkillResponse
-	(*SaveSkillFileRequest)(nil),           // 27: polyglot.v1.SaveSkillFileRequest
-	(*SaveSkillFileResponse)(nil),          // 28: polyglot.v1.SaveSkillFileResponse
-	(*DeleteSkillRequest)(nil),             // 29: polyglot.v1.DeleteSkillRequest
-	(*DeleteSkillResponse)(nil),            // 30: polyglot.v1.DeleteSkillResponse
-	(*DeleteSkillFileRequest)(nil),         // 31: polyglot.v1.DeleteSkillFileRequest
-	(*DeleteSkillFileResponse)(nil),        // 32: polyglot.v1.DeleteSkillFileResponse
-	(*ToggleSkillRequest)(nil),             // 33: polyglot.v1.ToggleSkillRequest
-	(*ToggleSkillResponse)(nil),            // 34: polyglot.v1.ToggleSkillResponse
-	(*SyncSkillsFromDiskRequest)(nil),      // 35: polyglot.v1.SyncSkillsFromDiskRequest
-	(*SyncSkillsFromDiskResponse)(nil),     // 36: polyglot.v1.SyncSkillsFromDiskResponse
-	(*GetGlobalPromptRequest)(nil),         // 37: polyglot.v1.GetGlobalPromptRequest
-	(*GetGlobalPromptResponse)(nil),        // 38: polyglot.v1.GetGlobalPromptResponse
-	(*SaveGlobalPromptRequest)(nil),        // 39: polyglot.v1.SaveGlobalPromptRequest
-	(*SaveGlobalPromptResponse)(nil),       // 40: polyglot.v1.SaveGlobalPromptResponse
-	(*LLMConfig)(nil),                      // 41: polyglot.v1.LLMConfig
-	(*ListLLMConfigsRequest)(nil),          // 42: polyglot.v1.ListLLMConfigsRequest
-	(*ListLLMConfigsResponse)(nil),         // 43: polyglot.v1.ListLLMConfigsResponse
-	(*CreateLLMConfigRequest)(nil),         // 44: polyglot.v1.CreateLLMConfigRequest
-	(*CreateLLMConfigResponse)(nil),        // 45: polyglot.v1.CreateLLMConfigResponse
-	(*UpdateLLMConfigRequest)(nil),         // 46: polyglot.v1.UpdateLLMConfigRequest
-	(*UpdateLLMConfigResponse)(nil),        // 47: polyglot.v1.UpdateLLMConfigResponse
-	(*ActivateLLMConfigRequest)(nil),       // 48: polyglot.v1.ActivateLLMConfigRequest
-	(*ActivateLLMConfigResponse)(nil),      // 49: polyglot.v1.ActivateLLMConfigResponse
-	(*TestLLMConfigRequest)(nil),           // 50: polyglot.v1.TestLLMConfigRequest
-	(*TestLLMConfigResponse)(nil),          // 51: polyglot.v1.TestLLMConfigResponse
-	(*DeleteLLMConfigRequest)(nil),         // 52: polyglot.v1.DeleteLLMConfigRequest
-	(*DeleteLLMConfigResponse)(nil),        // 53: polyglot.v1.DeleteLLMConfigResponse
-	(*Technician)(nil),                     // 54: polyglot.v1.Technician
-	(*ListTechniciansRequest)(nil),         // 55: polyglot.v1.ListTechniciansRequest
-	(*ListTechniciansResponse)(nil),        // 56: polyglot.v1.ListTechniciansResponse
-	(*CreateTechnicianRequest)(nil),        // 57: polyglot.v1.CreateTechnicianRequest
-	(*CreateTechnicianResponse)(nil),       // 58: polyglot.v1.CreateTechnicianResponse
-	(*UpdateTechnicianRequest)(nil),        // 59: polyglot.v1.UpdateTechnicianRequest
-	(*UpdateTechnicianResponse)(nil),       // 60: polyglot.v1.UpdateTechnicianResponse
-	(*ToggleTechnicianActiveRequest)(nil),  // 61: polyglot.v1.ToggleTechnicianActiveRequest
-	(*ToggleTechnicianActiveResponse)(nil), // 62: polyglot.v1.ToggleTechnicianActiveResponse
-	(*DeleteTechnicianRequest)(nil),        // 63: polyglot.v1.DeleteTechnicianRequest
-	(*DeleteTechnicianResponse)(nil),       // 64: polyglot.v1.DeleteTechnicianResponse
+	(*Skill)(nil),                          // 19: polyglot.v1.Skill
+	(*SkillResource)(nil),                  // 20: polyglot.v1.SkillResource
+	(*ResourceContent)(nil),                // 21: polyglot.v1.ResourceContent
+	(*GitRepoInfo)(nil),                    // 22: polyglot.v1.GitRepoInfo
+	(*ListSkillsRequest)(nil),              // 23: polyglot.v1.ListSkillsRequest
+	(*ListSkillsResponse)(nil),             // 24: polyglot.v1.ListSkillsResponse
+	(*GetSkillRequest)(nil),                // 25: polyglot.v1.GetSkillRequest
+	(*GetSkillResponse)(nil),               // 26: polyglot.v1.GetSkillResponse
+	(*CreateSkillRequest)(nil),             // 27: polyglot.v1.CreateSkillRequest
+	(*CreateSkillResponse)(nil),            // 28: polyglot.v1.CreateSkillResponse
+	(*UpdateSkillRequest)(nil),             // 29: polyglot.v1.UpdateSkillRequest
+	(*UpdateSkillResponse)(nil),            // 30: polyglot.v1.UpdateSkillResponse
+	(*DeleteSkillRequest)(nil),             // 31: polyglot.v1.DeleteSkillRequest
+	(*DeleteSkillResponse)(nil),            // 32: polyglot.v1.DeleteSkillResponse
+	(*ExportSkillRequest)(nil),             // 33: polyglot.v1.ExportSkillRequest
+	(*ExportSkillResponse)(nil),            // 34: polyglot.v1.ExportSkillResponse
+	(*ImportSkillRequest)(nil),             // 35: polyglot.v1.ImportSkillRequest
+	(*ImportSkillResponse)(nil),            // 36: polyglot.v1.ImportSkillResponse
+	(*ListResourcesRequest)(nil),           // 37: polyglot.v1.ListResourcesRequest
+	(*ListResourcesResponse)(nil),          // 38: polyglot.v1.ListResourcesResponse
+	(*GetResourceRequest)(nil),             // 39: polyglot.v1.GetResourceRequest
+	(*GetResourceResponse)(nil),            // 40: polyglot.v1.GetResourceResponse
+	(*SaveResourceRequest)(nil),            // 41: polyglot.v1.SaveResourceRequest
+	(*SaveResourceResponse)(nil),           // 42: polyglot.v1.SaveResourceResponse
+	(*DeleteResourceRequest)(nil),          // 43: polyglot.v1.DeleteResourceRequest
+	(*DeleteResourceResponse)(nil),         // 44: polyglot.v1.DeleteResourceResponse
+	(*ListGitReposRequest)(nil),            // 45: polyglot.v1.ListGitReposRequest
+	(*ListGitReposResponse)(nil),           // 46: polyglot.v1.ListGitReposResponse
+	(*AddGitRepoRequest)(nil),              // 47: polyglot.v1.AddGitRepoRequest
+	(*AddGitRepoResponse)(nil),             // 48: polyglot.v1.AddGitRepoResponse
+	(*UpdateGitRepoRequest)(nil),           // 49: polyglot.v1.UpdateGitRepoRequest
+	(*UpdateGitRepoResponse)(nil),          // 50: polyglot.v1.UpdateGitRepoResponse
+	(*DeleteGitRepoRequest)(nil),           // 51: polyglot.v1.DeleteGitRepoRequest
+	(*DeleteGitRepoResponse)(nil),          // 52: polyglot.v1.DeleteGitRepoResponse
+	(*SyncGitRepoRequest)(nil),             // 53: polyglot.v1.SyncGitRepoRequest
+	(*SyncGitRepoResponse)(nil),            // 54: polyglot.v1.SyncGitRepoResponse
+	(*ToggleGitRepoRequest)(nil),           // 55: polyglot.v1.ToggleGitRepoRequest
+	(*ToggleGitRepoResponse)(nil),          // 56: polyglot.v1.ToggleGitRepoResponse
+	(*ToggleSkillRequest)(nil),             // 57: polyglot.v1.ToggleSkillRequest
+	(*ToggleSkillResponse)(nil),            // 58: polyglot.v1.ToggleSkillResponse
+	(*GetGlobalPromptRequest)(nil),         // 59: polyglot.v1.GetGlobalPromptRequest
+	(*GetGlobalPromptResponse)(nil),        // 60: polyglot.v1.GetGlobalPromptResponse
+	(*SaveGlobalPromptRequest)(nil),        // 61: polyglot.v1.SaveGlobalPromptRequest
+	(*SaveGlobalPromptResponse)(nil),       // 62: polyglot.v1.SaveGlobalPromptResponse
+	(*LLMConfig)(nil),                      // 63: polyglot.v1.LLMConfig
+	(*ListLLMConfigsRequest)(nil),          // 64: polyglot.v1.ListLLMConfigsRequest
+	(*ListLLMConfigsResponse)(nil),         // 65: polyglot.v1.ListLLMConfigsResponse
+	(*CreateLLMConfigRequest)(nil),         // 66: polyglot.v1.CreateLLMConfigRequest
+	(*CreateLLMConfigResponse)(nil),        // 67: polyglot.v1.CreateLLMConfigResponse
+	(*UpdateLLMConfigRequest)(nil),         // 68: polyglot.v1.UpdateLLMConfigRequest
+	(*UpdateLLMConfigResponse)(nil),        // 69: polyglot.v1.UpdateLLMConfigResponse
+	(*ActivateLLMConfigRequest)(nil),       // 70: polyglot.v1.ActivateLLMConfigRequest
+	(*ActivateLLMConfigResponse)(nil),      // 71: polyglot.v1.ActivateLLMConfigResponse
+	(*TestLLMConfigRequest)(nil),           // 72: polyglot.v1.TestLLMConfigRequest
+	(*TestLLMConfigResponse)(nil),          // 73: polyglot.v1.TestLLMConfigResponse
+	(*DeleteLLMConfigRequest)(nil),         // 74: polyglot.v1.DeleteLLMConfigRequest
+	(*DeleteLLMConfigResponse)(nil),        // 75: polyglot.v1.DeleteLLMConfigResponse
+	(*Technician)(nil),                     // 76: polyglot.v1.Technician
+	(*ListTechniciansRequest)(nil),         // 77: polyglot.v1.ListTechniciansRequest
+	(*ListTechniciansResponse)(nil),        // 78: polyglot.v1.ListTechniciansResponse
+	(*CreateTechnicianRequest)(nil),        // 79: polyglot.v1.CreateTechnicianRequest
+	(*CreateTechnicianResponse)(nil),       // 80: polyglot.v1.CreateTechnicianResponse
+	(*UpdateTechnicianRequest)(nil),        // 81: polyglot.v1.UpdateTechnicianRequest
+	(*UpdateTechnicianResponse)(nil),       // 82: polyglot.v1.UpdateTechnicianResponse
+	(*ToggleTechnicianActiveRequest)(nil),  // 83: polyglot.v1.ToggleTechnicianActiveRequest
+	(*ToggleTechnicianActiveResponse)(nil), // 84: polyglot.v1.ToggleTechnicianActiveResponse
+	(*DeleteTechnicianRequest)(nil),        // 85: polyglot.v1.DeleteTechnicianRequest
+	(*DeleteTechnicianResponse)(nil),       // 86: polyglot.v1.DeleteTechnicianResponse
+	nil,                                    // 87: polyglot.v1.Skill.MetadataEntry
+	nil,                                    // 88: polyglot.v1.CreateSkillRequest.MetadataEntry
+	nil,                                    // 89: polyglot.v1.UpdateSkillRequest.MetadataEntry
 }
 var file_v1_bot_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.Conversation.messages:type_name -> polyglot.v1.ConversationMessage
 	1,  // 1: polyglot.v1.ListConversationsResponse.conversations:type_name -> polyglot.v1.Conversation
 	1,  // 2: polyglot.v1.GetConversationResponse.conversation:type_name -> polyglot.v1.Conversation
 	12, // 3: polyglot.v1.GetConversationContextResponse.recent_messages:type_name -> polyglot.v1.ConversationContextMessage
-	19, // 4: polyglot.v1.SkillItem.files:type_name -> polyglot.v1.SkillFileItem
-	20, // 5: polyglot.v1.ListSkillsResponse.skills:type_name -> polyglot.v1.SkillItem
-	20, // 6: polyglot.v1.GetSkillResponse.skill:type_name -> polyglot.v1.SkillItem
-	20, // 7: polyglot.v1.CreateSkillResponse.skill:type_name -> polyglot.v1.SkillItem
-	19, // 8: polyglot.v1.SaveSkillFileResponse.file:type_name -> polyglot.v1.SkillFileItem
-	41, // 9: polyglot.v1.ListLLMConfigsResponse.configs:type_name -> polyglot.v1.LLMConfig
-	41, // 10: polyglot.v1.CreateLLMConfigResponse.config:type_name -> polyglot.v1.LLMConfig
-	41, // 11: polyglot.v1.UpdateLLMConfigResponse.config:type_name -> polyglot.v1.LLMConfig
-	54, // 12: polyglot.v1.ListTechniciansResponse.technicians:type_name -> polyglot.v1.Technician
-	54, // 13: polyglot.v1.CreateTechnicianResponse.technician:type_name -> polyglot.v1.Technician
-	54, // 14: polyglot.v1.UpdateTechnicianResponse.technician:type_name -> polyglot.v1.Technician
-	2,  // 15: polyglot.v1.BotService.ListConversations:input_type -> polyglot.v1.ListConversationsRequest
-	4,  // 16: polyglot.v1.BotService.GetConversation:input_type -> polyglot.v1.GetConversationRequest
-	13, // 17: polyglot.v1.BotService.GetConversationContext:input_type -> polyglot.v1.GetConversationContextRequest
-	6,  // 18: polyglot.v1.BotService.TakeOverConversation:input_type -> polyglot.v1.TakeOverConversationRequest
-	8,  // 19: polyglot.v1.BotService.ResetConversationBot:input_type -> polyglot.v1.ResetConversationBotRequest
-	10, // 20: polyglot.v1.BotService.CloseConversation:input_type -> polyglot.v1.CloseConversationRequest
-	15, // 21: polyglot.v1.BotService.ResetRateLimit:input_type -> polyglot.v1.ResetRateLimitRequest
-	17, // 22: polyglot.v1.BotService.GetRateLimitStatus:input_type -> polyglot.v1.GetRateLimitStatusRequest
-	21, // 23: polyglot.v1.BotService.ListSkills:input_type -> polyglot.v1.ListSkillsRequest
-	23, // 24: polyglot.v1.BotService.GetSkill:input_type -> polyglot.v1.GetSkillRequest
-	25, // 25: polyglot.v1.BotService.CreateSkill:input_type -> polyglot.v1.CreateSkillRequest
-	27, // 26: polyglot.v1.BotService.SaveSkillFile:input_type -> polyglot.v1.SaveSkillFileRequest
-	29, // 27: polyglot.v1.BotService.DeleteSkill:input_type -> polyglot.v1.DeleteSkillRequest
-	31, // 28: polyglot.v1.BotService.DeleteSkillFile:input_type -> polyglot.v1.DeleteSkillFileRequest
-	33, // 29: polyglot.v1.BotService.ToggleSkill:input_type -> polyglot.v1.ToggleSkillRequest
-	35, // 30: polyglot.v1.BotService.SyncSkillsFromDisk:input_type -> polyglot.v1.SyncSkillsFromDiskRequest
-	37, // 31: polyglot.v1.BotService.GetGlobalPrompt:input_type -> polyglot.v1.GetGlobalPromptRequest
-	39, // 32: polyglot.v1.BotService.SaveGlobalPrompt:input_type -> polyglot.v1.SaveGlobalPromptRequest
-	42, // 33: polyglot.v1.BotService.ListLLMConfigs:input_type -> polyglot.v1.ListLLMConfigsRequest
-	44, // 34: polyglot.v1.BotService.CreateLLMConfig:input_type -> polyglot.v1.CreateLLMConfigRequest
-	46, // 35: polyglot.v1.BotService.UpdateLLMConfig:input_type -> polyglot.v1.UpdateLLMConfigRequest
-	48, // 36: polyglot.v1.BotService.ActivateLLMConfig:input_type -> polyglot.v1.ActivateLLMConfigRequest
-	50, // 37: polyglot.v1.BotService.TestLLMConfig:input_type -> polyglot.v1.TestLLMConfigRequest
-	52, // 38: polyglot.v1.BotService.DeleteLLMConfig:input_type -> polyglot.v1.DeleteLLMConfigRequest
-	55, // 39: polyglot.v1.BotService.ListTechnicians:input_type -> polyglot.v1.ListTechniciansRequest
-	57, // 40: polyglot.v1.BotService.CreateTechnician:input_type -> polyglot.v1.CreateTechnicianRequest
-	59, // 41: polyglot.v1.BotService.UpdateTechnician:input_type -> polyglot.v1.UpdateTechnicianRequest
-	61, // 42: polyglot.v1.BotService.ToggleTechnicianActive:input_type -> polyglot.v1.ToggleTechnicianActiveRequest
-	63, // 43: polyglot.v1.BotService.DeleteTechnician:input_type -> polyglot.v1.DeleteTechnicianRequest
-	3,  // 44: polyglot.v1.BotService.ListConversations:output_type -> polyglot.v1.ListConversationsResponse
-	5,  // 45: polyglot.v1.BotService.GetConversation:output_type -> polyglot.v1.GetConversationResponse
-	14, // 46: polyglot.v1.BotService.GetConversationContext:output_type -> polyglot.v1.GetConversationContextResponse
-	7,  // 47: polyglot.v1.BotService.TakeOverConversation:output_type -> polyglot.v1.TakeOverConversationResponse
-	9,  // 48: polyglot.v1.BotService.ResetConversationBot:output_type -> polyglot.v1.ResetConversationBotResponse
-	11, // 49: polyglot.v1.BotService.CloseConversation:output_type -> polyglot.v1.CloseConversationResponse
-	16, // 50: polyglot.v1.BotService.ResetRateLimit:output_type -> polyglot.v1.ResetRateLimitResponse
-	18, // 51: polyglot.v1.BotService.GetRateLimitStatus:output_type -> polyglot.v1.GetRateLimitStatusResponse
-	22, // 52: polyglot.v1.BotService.ListSkills:output_type -> polyglot.v1.ListSkillsResponse
-	24, // 53: polyglot.v1.BotService.GetSkill:output_type -> polyglot.v1.GetSkillResponse
-	26, // 54: polyglot.v1.BotService.CreateSkill:output_type -> polyglot.v1.CreateSkillResponse
-	28, // 55: polyglot.v1.BotService.SaveSkillFile:output_type -> polyglot.v1.SaveSkillFileResponse
-	30, // 56: polyglot.v1.BotService.DeleteSkill:output_type -> polyglot.v1.DeleteSkillResponse
-	32, // 57: polyglot.v1.BotService.DeleteSkillFile:output_type -> polyglot.v1.DeleteSkillFileResponse
-	34, // 58: polyglot.v1.BotService.ToggleSkill:output_type -> polyglot.v1.ToggleSkillResponse
-	36, // 59: polyglot.v1.BotService.SyncSkillsFromDisk:output_type -> polyglot.v1.SyncSkillsFromDiskResponse
-	38, // 60: polyglot.v1.BotService.GetGlobalPrompt:output_type -> polyglot.v1.GetGlobalPromptResponse
-	40, // 61: polyglot.v1.BotService.SaveGlobalPrompt:output_type -> polyglot.v1.SaveGlobalPromptResponse
-	43, // 62: polyglot.v1.BotService.ListLLMConfigs:output_type -> polyglot.v1.ListLLMConfigsResponse
-	45, // 63: polyglot.v1.BotService.CreateLLMConfig:output_type -> polyglot.v1.CreateLLMConfigResponse
-	47, // 64: polyglot.v1.BotService.UpdateLLMConfig:output_type -> polyglot.v1.UpdateLLMConfigResponse
-	49, // 65: polyglot.v1.BotService.ActivateLLMConfig:output_type -> polyglot.v1.ActivateLLMConfigResponse
-	51, // 66: polyglot.v1.BotService.TestLLMConfig:output_type -> polyglot.v1.TestLLMConfigResponse
-	53, // 67: polyglot.v1.BotService.DeleteLLMConfig:output_type -> polyglot.v1.DeleteLLMConfigResponse
-	56, // 68: polyglot.v1.BotService.ListTechnicians:output_type -> polyglot.v1.ListTechniciansResponse
-	58, // 69: polyglot.v1.BotService.CreateTechnician:output_type -> polyglot.v1.CreateTechnicianResponse
-	60, // 70: polyglot.v1.BotService.UpdateTechnician:output_type -> polyglot.v1.UpdateTechnicianResponse
-	62, // 71: polyglot.v1.BotService.ToggleTechnicianActive:output_type -> polyglot.v1.ToggleTechnicianActiveResponse
-	64, // 72: polyglot.v1.BotService.DeleteTechnician:output_type -> polyglot.v1.DeleteTechnicianResponse
-	44, // [44:73] is the sub-list for method output_type
-	15, // [15:44] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	87, // 4: polyglot.v1.Skill.metadata:type_name -> polyglot.v1.Skill.MetadataEntry
+	19, // 5: polyglot.v1.ListSkillsResponse.skills:type_name -> polyglot.v1.Skill
+	19, // 6: polyglot.v1.GetSkillResponse.skill:type_name -> polyglot.v1.Skill
+	88, // 7: polyglot.v1.CreateSkillRequest.metadata:type_name -> polyglot.v1.CreateSkillRequest.MetadataEntry
+	19, // 8: polyglot.v1.CreateSkillResponse.skill:type_name -> polyglot.v1.Skill
+	89, // 9: polyglot.v1.UpdateSkillRequest.metadata:type_name -> polyglot.v1.UpdateSkillRequest.MetadataEntry
+	19, // 10: polyglot.v1.UpdateSkillResponse.skill:type_name -> polyglot.v1.Skill
+	19, // 11: polyglot.v1.ImportSkillResponse.skill:type_name -> polyglot.v1.Skill
+	20, // 12: polyglot.v1.ListResourcesResponse.resources:type_name -> polyglot.v1.SkillResource
+	21, // 13: polyglot.v1.GetResourceResponse.content:type_name -> polyglot.v1.ResourceContent
+	20, // 14: polyglot.v1.GetResourceResponse.metadata:type_name -> polyglot.v1.SkillResource
+	22, // 15: polyglot.v1.ListGitReposResponse.repos:type_name -> polyglot.v1.GitRepoInfo
+	22, // 16: polyglot.v1.AddGitRepoResponse.repo:type_name -> polyglot.v1.GitRepoInfo
+	22, // 17: polyglot.v1.UpdateGitRepoResponse.repo:type_name -> polyglot.v1.GitRepoInfo
+	22, // 18: polyglot.v1.ToggleGitRepoResponse.repo:type_name -> polyglot.v1.GitRepoInfo
+	63, // 19: polyglot.v1.ListLLMConfigsResponse.configs:type_name -> polyglot.v1.LLMConfig
+	63, // 20: polyglot.v1.CreateLLMConfigResponse.config:type_name -> polyglot.v1.LLMConfig
+	63, // 21: polyglot.v1.UpdateLLMConfigResponse.config:type_name -> polyglot.v1.LLMConfig
+	76, // 22: polyglot.v1.ListTechniciansResponse.technicians:type_name -> polyglot.v1.Technician
+	76, // 23: polyglot.v1.CreateTechnicianResponse.technician:type_name -> polyglot.v1.Technician
+	76, // 24: polyglot.v1.UpdateTechnicianResponse.technician:type_name -> polyglot.v1.Technician
+	2,  // 25: polyglot.v1.BotService.ListConversations:input_type -> polyglot.v1.ListConversationsRequest
+	4,  // 26: polyglot.v1.BotService.GetConversation:input_type -> polyglot.v1.GetConversationRequest
+	13, // 27: polyglot.v1.BotService.GetConversationContext:input_type -> polyglot.v1.GetConversationContextRequest
+	6,  // 28: polyglot.v1.BotService.TakeOverConversation:input_type -> polyglot.v1.TakeOverConversationRequest
+	8,  // 29: polyglot.v1.BotService.ResetConversationBot:input_type -> polyglot.v1.ResetConversationBotRequest
+	10, // 30: polyglot.v1.BotService.CloseConversation:input_type -> polyglot.v1.CloseConversationRequest
+	15, // 31: polyglot.v1.BotService.ResetRateLimit:input_type -> polyglot.v1.ResetRateLimitRequest
+	17, // 32: polyglot.v1.BotService.GetRateLimitStatus:input_type -> polyglot.v1.GetRateLimitStatusRequest
+	23, // 33: polyglot.v1.BotService.ListSkills:input_type -> polyglot.v1.ListSkillsRequest
+	25, // 34: polyglot.v1.BotService.GetSkill:input_type -> polyglot.v1.GetSkillRequest
+	27, // 35: polyglot.v1.BotService.CreateSkill:input_type -> polyglot.v1.CreateSkillRequest
+	29, // 36: polyglot.v1.BotService.UpdateSkill:input_type -> polyglot.v1.UpdateSkillRequest
+	31, // 37: polyglot.v1.BotService.DeleteSkill:input_type -> polyglot.v1.DeleteSkillRequest
+	33, // 38: polyglot.v1.BotService.ExportSkill:input_type -> polyglot.v1.ExportSkillRequest
+	35, // 39: polyglot.v1.BotService.ImportSkill:input_type -> polyglot.v1.ImportSkillRequest
+	37, // 40: polyglot.v1.BotService.ListResources:input_type -> polyglot.v1.ListResourcesRequest
+	39, // 41: polyglot.v1.BotService.GetResource:input_type -> polyglot.v1.GetResourceRequest
+	41, // 42: polyglot.v1.BotService.SaveResource:input_type -> polyglot.v1.SaveResourceRequest
+	43, // 43: polyglot.v1.BotService.DeleteResource:input_type -> polyglot.v1.DeleteResourceRequest
+	45, // 44: polyglot.v1.BotService.ListGitRepos:input_type -> polyglot.v1.ListGitReposRequest
+	47, // 45: polyglot.v1.BotService.AddGitRepo:input_type -> polyglot.v1.AddGitRepoRequest
+	49, // 46: polyglot.v1.BotService.UpdateGitRepo:input_type -> polyglot.v1.UpdateGitRepoRequest
+	51, // 47: polyglot.v1.BotService.DeleteGitRepo:input_type -> polyglot.v1.DeleteGitRepoRequest
+	53, // 48: polyglot.v1.BotService.SyncGitRepo:input_type -> polyglot.v1.SyncGitRepoRequest
+	55, // 49: polyglot.v1.BotService.ToggleGitRepo:input_type -> polyglot.v1.ToggleGitRepoRequest
+	57, // 50: polyglot.v1.BotService.ToggleSkill:input_type -> polyglot.v1.ToggleSkillRequest
+	59, // 51: polyglot.v1.BotService.GetGlobalPrompt:input_type -> polyglot.v1.GetGlobalPromptRequest
+	61, // 52: polyglot.v1.BotService.SaveGlobalPrompt:input_type -> polyglot.v1.SaveGlobalPromptRequest
+	64, // 53: polyglot.v1.BotService.ListLLMConfigs:input_type -> polyglot.v1.ListLLMConfigsRequest
+	66, // 54: polyglot.v1.BotService.CreateLLMConfig:input_type -> polyglot.v1.CreateLLMConfigRequest
+	68, // 55: polyglot.v1.BotService.UpdateLLMConfig:input_type -> polyglot.v1.UpdateLLMConfigRequest
+	70, // 56: polyglot.v1.BotService.ActivateLLMConfig:input_type -> polyglot.v1.ActivateLLMConfigRequest
+	72, // 57: polyglot.v1.BotService.TestLLMConfig:input_type -> polyglot.v1.TestLLMConfigRequest
+	74, // 58: polyglot.v1.BotService.DeleteLLMConfig:input_type -> polyglot.v1.DeleteLLMConfigRequest
+	77, // 59: polyglot.v1.BotService.ListTechnicians:input_type -> polyglot.v1.ListTechniciansRequest
+	79, // 60: polyglot.v1.BotService.CreateTechnician:input_type -> polyglot.v1.CreateTechnicianRequest
+	81, // 61: polyglot.v1.BotService.UpdateTechnician:input_type -> polyglot.v1.UpdateTechnicianRequest
+	83, // 62: polyglot.v1.BotService.ToggleTechnicianActive:input_type -> polyglot.v1.ToggleTechnicianActiveRequest
+	85, // 63: polyglot.v1.BotService.DeleteTechnician:input_type -> polyglot.v1.DeleteTechnicianRequest
+	3,  // 64: polyglot.v1.BotService.ListConversations:output_type -> polyglot.v1.ListConversationsResponse
+	5,  // 65: polyglot.v1.BotService.GetConversation:output_type -> polyglot.v1.GetConversationResponse
+	14, // 66: polyglot.v1.BotService.GetConversationContext:output_type -> polyglot.v1.GetConversationContextResponse
+	7,  // 67: polyglot.v1.BotService.TakeOverConversation:output_type -> polyglot.v1.TakeOverConversationResponse
+	9,  // 68: polyglot.v1.BotService.ResetConversationBot:output_type -> polyglot.v1.ResetConversationBotResponse
+	11, // 69: polyglot.v1.BotService.CloseConversation:output_type -> polyglot.v1.CloseConversationResponse
+	16, // 70: polyglot.v1.BotService.ResetRateLimit:output_type -> polyglot.v1.ResetRateLimitResponse
+	18, // 71: polyglot.v1.BotService.GetRateLimitStatus:output_type -> polyglot.v1.GetRateLimitStatusResponse
+	24, // 72: polyglot.v1.BotService.ListSkills:output_type -> polyglot.v1.ListSkillsResponse
+	26, // 73: polyglot.v1.BotService.GetSkill:output_type -> polyglot.v1.GetSkillResponse
+	28, // 74: polyglot.v1.BotService.CreateSkill:output_type -> polyglot.v1.CreateSkillResponse
+	30, // 75: polyglot.v1.BotService.UpdateSkill:output_type -> polyglot.v1.UpdateSkillResponse
+	32, // 76: polyglot.v1.BotService.DeleteSkill:output_type -> polyglot.v1.DeleteSkillResponse
+	34, // 77: polyglot.v1.BotService.ExportSkill:output_type -> polyglot.v1.ExportSkillResponse
+	36, // 78: polyglot.v1.BotService.ImportSkill:output_type -> polyglot.v1.ImportSkillResponse
+	38, // 79: polyglot.v1.BotService.ListResources:output_type -> polyglot.v1.ListResourcesResponse
+	40, // 80: polyglot.v1.BotService.GetResource:output_type -> polyglot.v1.GetResourceResponse
+	42, // 81: polyglot.v1.BotService.SaveResource:output_type -> polyglot.v1.SaveResourceResponse
+	44, // 82: polyglot.v1.BotService.DeleteResource:output_type -> polyglot.v1.DeleteResourceResponse
+	46, // 83: polyglot.v1.BotService.ListGitRepos:output_type -> polyglot.v1.ListGitReposResponse
+	48, // 84: polyglot.v1.BotService.AddGitRepo:output_type -> polyglot.v1.AddGitRepoResponse
+	50, // 85: polyglot.v1.BotService.UpdateGitRepo:output_type -> polyglot.v1.UpdateGitRepoResponse
+	52, // 86: polyglot.v1.BotService.DeleteGitRepo:output_type -> polyglot.v1.DeleteGitRepoResponse
+	54, // 87: polyglot.v1.BotService.SyncGitRepo:output_type -> polyglot.v1.SyncGitRepoResponse
+	56, // 88: polyglot.v1.BotService.ToggleGitRepo:output_type -> polyglot.v1.ToggleGitRepoResponse
+	58, // 89: polyglot.v1.BotService.ToggleSkill:output_type -> polyglot.v1.ToggleSkillResponse
+	60, // 90: polyglot.v1.BotService.GetGlobalPrompt:output_type -> polyglot.v1.GetGlobalPromptResponse
+	62, // 91: polyglot.v1.BotService.SaveGlobalPrompt:output_type -> polyglot.v1.SaveGlobalPromptResponse
+	65, // 92: polyglot.v1.BotService.ListLLMConfigs:output_type -> polyglot.v1.ListLLMConfigsResponse
+	67, // 93: polyglot.v1.BotService.CreateLLMConfig:output_type -> polyglot.v1.CreateLLMConfigResponse
+	69, // 94: polyglot.v1.BotService.UpdateLLMConfig:output_type -> polyglot.v1.UpdateLLMConfigResponse
+	71, // 95: polyglot.v1.BotService.ActivateLLMConfig:output_type -> polyglot.v1.ActivateLLMConfigResponse
+	73, // 96: polyglot.v1.BotService.TestLLMConfig:output_type -> polyglot.v1.TestLLMConfigResponse
+	75, // 97: polyglot.v1.BotService.DeleteLLMConfig:output_type -> polyglot.v1.DeleteLLMConfigResponse
+	78, // 98: polyglot.v1.BotService.ListTechnicians:output_type -> polyglot.v1.ListTechniciansResponse
+	80, // 99: polyglot.v1.BotService.CreateTechnician:output_type -> polyglot.v1.CreateTechnicianResponse
+	82, // 100: polyglot.v1.BotService.UpdateTechnician:output_type -> polyglot.v1.UpdateTechnicianResponse
+	84, // 101: polyglot.v1.BotService.ToggleTechnicianActive:output_type -> polyglot.v1.ToggleTechnicianActiveResponse
+	86, // 102: polyglot.v1.BotService.DeleteTechnician:output_type -> polyglot.v1.DeleteTechnicianResponse
+	64, // [64:103] is the sub-list for method output_type
+	25, // [25:64] is the sub-list for method input_type
+	25, // [25:25] is the sub-list for extension type_name
+	25, // [25:25] is the sub-list for extension extendee
+	0,  // [0:25] is the sub-list for field type_name
 }
 
 func init() { file_v1_bot_proto_init() }
@@ -4039,13 +5547,14 @@ func file_v1_bot_proto_init() {
 	if File_v1_bot_proto != nil {
 		return
 	}
+	file_v1_bot_proto_msgTypes[49].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_bot_proto_rawDesc), len(file_v1_bot_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   65,
+			NumMessages:   90,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

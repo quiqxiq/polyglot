@@ -376,6 +376,8 @@ export function LLMConfigDialog({ open, onOpenChange }: LLMConfigDialogProps) {
           apiKey: apiKey.trim(),
           maxTokens: Number(maxTokens) || 1024,
           temperature: 0.7,
+          enableSkills: true,
+          skillsMode: 'prompt',
         })
         await updateMutation.mutateAsync(req)
         toast.success('Konfigurasi LLM berhasil diperbarui')
@@ -386,6 +388,8 @@ export function LLMConfigDialog({ open, onOpenChange }: LLMConfigDialogProps) {
           apiKey: apiKey.trim(),
           maxTokens: Number(maxTokens) || 1024,
           temperature: 0.7,
+          enableSkills: true,
+          skillsMode: 'prompt',
         })
         await createMutation.mutateAsync(req)
         toast.success('Konfigurasi LLM berhasil ditambahkan')

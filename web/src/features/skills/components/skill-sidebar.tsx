@@ -193,8 +193,12 @@ export const SkillSidebar: React.FC<SkillSidebarProps> = ({
                 const isExpanded = expandedSkills[skill.id] ?? true
                 const isCurrentSkillActive =
                   !activeFile?.isGlobal && activeSkill?.id === skill.id
-                const rootFiles = skill.files.filter((f) => !f.isReference)
-                const refFiles = skill.files.filter((f) => f.isReference)
+                const rootFiles = skill.files.filter(
+                  (f) => f.name === 'SKILL.md' || (!f.isReference && !f.path.includes('/'))
+                )
+                const refFiles = skill.files.filter(
+                  (f) => f.isReference || f.path.startsWith('references/')
+                )
                 const folderKey = `${skill.id}-refs`
                 const isRefFolderExpanded = expandedFolders[folderKey] ?? true
 

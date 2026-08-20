@@ -6,20 +6,14 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/skill"
 )
 
-// SkillRepository mengelola persistensi data skill di database relasional (PostgreSQL).
+// SkillRepository mengelola persistensi metadata skill di database relasional (PostgreSQL).
 type SkillRepository interface {
-	ListSkills(ctx context.Context) ([]skill.Skill, error)
-	GetSkillByID(ctx context.Context, id uint) (*skill.Skill, error)
-	GetSkillBySlug(ctx context.Context, slug string) (*skill.Skill, error)
-	CreateSkill(ctx context.Context, s *skill.Skill) error
-	UpdateSkill(ctx context.Context, s *skill.Skill) error
-	DeleteSkill(ctx context.Context, id uint) error
-	ToggleSkillEnabled(ctx context.Context, slug string, enabled bool) error
-
-	// File operations
-	SaveSkillFile(ctx context.Context, skillID uint, f *skill.SkillFile) error
-	DeleteSkillFile(ctx context.Context, fileID uint) error
-	DeleteSkillFileByPath(ctx context.Context, skillID uint, filePath string) error
+	ListSkills(ctx context.Context, userID string) ([]skill.SkillMetadataRecord, error)
+	GetSkill(ctx context.Context, userID, name string) (*skill.SkillMetadataRecord, error)
+	SaveSkillMetadata(ctx context.Context, rec *skill.SkillMetadataRecord) error
+	DeleteSkillMetadata(ctx context.Context, userID, name string) error
+	ListGitSkills(ctx context.Context) ([]skill.SkillMetadataRecord, error)
+	ToggleSkillEnabled(ctx context.Context, userID, name string, enabled bool) error
 
 	// Global System Prompt
 	GetGlobalSystemPrompt(ctx context.Context) (string, error)

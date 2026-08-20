@@ -99,7 +99,7 @@ func NewBotServiceHandler(
 		codecOpt,
 	))
 
-	// Skill RPCs
+	// Skill RPCs (LocalAI Standard)
 	if handler.skillHandler != nil {
 		mux.Handle("/"+serviceName+"/ListSkills", connect.NewUnaryHandler(
 			"/"+serviceName+"/ListSkills",
@@ -116,9 +116,9 @@ func NewBotServiceHandler(
 			handler.skillHandler.CreateSkill,
 			codecOpt,
 		))
-		mux.Handle("/"+serviceName+"/SaveSkillFile", connect.NewUnaryHandler(
-			"/"+serviceName+"/SaveSkillFile",
-			handler.skillHandler.SaveSkillFile,
+		mux.Handle("/"+serviceName+"/UpdateSkill", connect.NewUnaryHandler(
+			"/"+serviceName+"/UpdateSkill",
+			handler.skillHandler.UpdateSkill,
 			codecOpt,
 		))
 		mux.Handle("/"+serviceName+"/DeleteSkill", connect.NewUnaryHandler(
@@ -126,19 +126,69 @@ func NewBotServiceHandler(
 			handler.skillHandler.DeleteSkill,
 			codecOpt,
 		))
-		mux.Handle("/"+serviceName+"/DeleteSkillFile", connect.NewUnaryHandler(
-			"/"+serviceName+"/DeleteSkillFile",
-			handler.skillHandler.DeleteSkillFile,
+		mux.Handle("/"+serviceName+"/ExportSkill", connect.NewUnaryHandler(
+			"/"+serviceName+"/ExportSkill",
+			handler.skillHandler.ExportSkill,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/ImportSkill", connect.NewUnaryHandler(
+			"/"+serviceName+"/ImportSkill",
+			handler.skillHandler.ImportSkill,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/ListResources", connect.NewUnaryHandler(
+			"/"+serviceName+"/ListResources",
+			handler.skillHandler.ListResources,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/GetResource", connect.NewUnaryHandler(
+			"/"+serviceName+"/GetResource",
+			handler.skillHandler.GetResource,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/SaveResource", connect.NewUnaryHandler(
+			"/"+serviceName+"/SaveResource",
+			handler.skillHandler.SaveResource,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/DeleteResource", connect.NewUnaryHandler(
+			"/"+serviceName+"/DeleteResource",
+			handler.skillHandler.DeleteResource,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/ListGitRepos", connect.NewUnaryHandler(
+			"/"+serviceName+"/ListGitRepos",
+			handler.skillHandler.ListGitRepos,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/AddGitRepo", connect.NewUnaryHandler(
+			"/"+serviceName+"/AddGitRepo",
+			handler.skillHandler.AddGitRepo,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/UpdateGitRepo", connect.NewUnaryHandler(
+			"/"+serviceName+"/UpdateGitRepo",
+			handler.skillHandler.UpdateGitRepo,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/DeleteGitRepo", connect.NewUnaryHandler(
+			"/"+serviceName+"/DeleteGitRepo",
+			handler.skillHandler.DeleteGitRepo,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/SyncGitRepo", connect.NewUnaryHandler(
+			"/"+serviceName+"/SyncGitRepo",
+			handler.skillHandler.SyncGitRepo,
+			codecOpt,
+		))
+		mux.Handle("/"+serviceName+"/ToggleGitRepo", connect.NewUnaryHandler(
+			"/"+serviceName+"/ToggleGitRepo",
+			handler.skillHandler.ToggleGitRepo,
 			codecOpt,
 		))
 		mux.Handle("/"+serviceName+"/ToggleSkill", connect.NewUnaryHandler(
 			"/"+serviceName+"/ToggleSkill",
 			handler.skillHandler.ToggleSkill,
-			codecOpt,
-		))
-		mux.Handle("/"+serviceName+"/SyncSkillsFromDisk", connect.NewUnaryHandler(
-			"/"+serviceName+"/SyncSkillsFromDisk",
-			handler.skillHandler.SyncSkillsFromDisk,
 			codecOpt,
 		))
 		mux.Handle("/"+serviceName+"/GetGlobalPrompt", connect.NewUnaryHandler(

@@ -50,6 +50,8 @@ type Config struct {
 	BotBan24HourSecs     int
 	BotDailyChatLimit    int
 	BotWhitelistPhones   []string
+
+	TechnicianWANumber string
 }
 
 func Load() Config {
@@ -107,6 +109,7 @@ func Load() Config {
 		BotBan24HourSecs:      getEnvAsInt("BOT_BAN_24H_SECS", 86400),
 		BotDailyChatLimit:     getEnvAsInt("BOT_DAILY_CHAT_LIMIT", 10),
 		BotWhitelistPhones:    whitelist,
+		TechnicianWANumber:    getEnv("TECHNICIAN_WA_NUMBER", "6281249338533"),
 	}
 }
 

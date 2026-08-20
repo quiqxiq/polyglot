@@ -30,11 +30,21 @@ const (
 	BotService_ListSkills_FullMethodName             = "/polyglot.v1.BotService/ListSkills"
 	BotService_GetSkill_FullMethodName               = "/polyglot.v1.BotService/GetSkill"
 	BotService_CreateSkill_FullMethodName            = "/polyglot.v1.BotService/CreateSkill"
-	BotService_SaveSkillFile_FullMethodName          = "/polyglot.v1.BotService/SaveSkillFile"
+	BotService_UpdateSkill_FullMethodName            = "/polyglot.v1.BotService/UpdateSkill"
 	BotService_DeleteSkill_FullMethodName            = "/polyglot.v1.BotService/DeleteSkill"
-	BotService_DeleteSkillFile_FullMethodName        = "/polyglot.v1.BotService/DeleteSkillFile"
+	BotService_ExportSkill_FullMethodName            = "/polyglot.v1.BotService/ExportSkill"
+	BotService_ImportSkill_FullMethodName            = "/polyglot.v1.BotService/ImportSkill"
+	BotService_ListResources_FullMethodName          = "/polyglot.v1.BotService/ListResources"
+	BotService_GetResource_FullMethodName            = "/polyglot.v1.BotService/GetResource"
+	BotService_SaveResource_FullMethodName           = "/polyglot.v1.BotService/SaveResource"
+	BotService_DeleteResource_FullMethodName         = "/polyglot.v1.BotService/DeleteResource"
+	BotService_ListGitRepos_FullMethodName           = "/polyglot.v1.BotService/ListGitRepos"
+	BotService_AddGitRepo_FullMethodName             = "/polyglot.v1.BotService/AddGitRepo"
+	BotService_UpdateGitRepo_FullMethodName          = "/polyglot.v1.BotService/UpdateGitRepo"
+	BotService_DeleteGitRepo_FullMethodName          = "/polyglot.v1.BotService/DeleteGitRepo"
+	BotService_SyncGitRepo_FullMethodName            = "/polyglot.v1.BotService/SyncGitRepo"
+	BotService_ToggleGitRepo_FullMethodName          = "/polyglot.v1.BotService/ToggleGitRepo"
 	BotService_ToggleSkill_FullMethodName            = "/polyglot.v1.BotService/ToggleSkill"
-	BotService_SyncSkillsFromDisk_FullMethodName     = "/polyglot.v1.BotService/SyncSkillsFromDisk"
 	BotService_GetGlobalPrompt_FullMethodName        = "/polyglot.v1.BotService/GetGlobalPrompt"
 	BotService_SaveGlobalPrompt_FullMethodName       = "/polyglot.v1.BotService/SaveGlobalPrompt"
 	BotService_ListLLMConfigs_FullMethodName         = "/polyglot.v1.BotService/ListLLMConfigs"
@@ -62,15 +72,25 @@ type BotServiceClient interface {
 	CloseConversation(ctx context.Context, in *CloseConversationRequest, opts ...grpc.CallOption) (*CloseConversationResponse, error)
 	ResetRateLimit(ctx context.Context, in *ResetRateLimitRequest, opts ...grpc.CallOption) (*ResetRateLimitResponse, error)
 	GetRateLimitStatus(ctx context.Context, in *GetRateLimitStatusRequest, opts ...grpc.CallOption) (*GetRateLimitStatusResponse, error)
-	// Skill Management
+	// Skill Management (LocalAI Standard)
 	ListSkills(ctx context.Context, in *ListSkillsRequest, opts ...grpc.CallOption) (*ListSkillsResponse, error)
 	GetSkill(ctx context.Context, in *GetSkillRequest, opts ...grpc.CallOption) (*GetSkillResponse, error)
 	CreateSkill(ctx context.Context, in *CreateSkillRequest, opts ...grpc.CallOption) (*CreateSkillResponse, error)
-	SaveSkillFile(ctx context.Context, in *SaveSkillFileRequest, opts ...grpc.CallOption) (*SaveSkillFileResponse, error)
+	UpdateSkill(ctx context.Context, in *UpdateSkillRequest, opts ...grpc.CallOption) (*UpdateSkillResponse, error)
 	DeleteSkill(ctx context.Context, in *DeleteSkillRequest, opts ...grpc.CallOption) (*DeleteSkillResponse, error)
-	DeleteSkillFile(ctx context.Context, in *DeleteSkillFileRequest, opts ...grpc.CallOption) (*DeleteSkillFileResponse, error)
+	ExportSkill(ctx context.Context, in *ExportSkillRequest, opts ...grpc.CallOption) (*ExportSkillResponse, error)
+	ImportSkill(ctx context.Context, in *ImportSkillRequest, opts ...grpc.CallOption) (*ImportSkillResponse, error)
+	ListResources(ctx context.Context, in *ListResourcesRequest, opts ...grpc.CallOption) (*ListResourcesResponse, error)
+	GetResource(ctx context.Context, in *GetResourceRequest, opts ...grpc.CallOption) (*GetResourceResponse, error)
+	SaveResource(ctx context.Context, in *SaveResourceRequest, opts ...grpc.CallOption) (*SaveResourceResponse, error)
+	DeleteResource(ctx context.Context, in *DeleteResourceRequest, opts ...grpc.CallOption) (*DeleteResourceResponse, error)
+	ListGitRepos(ctx context.Context, in *ListGitReposRequest, opts ...grpc.CallOption) (*ListGitReposResponse, error)
+	AddGitRepo(ctx context.Context, in *AddGitRepoRequest, opts ...grpc.CallOption) (*AddGitRepoResponse, error)
+	UpdateGitRepo(ctx context.Context, in *UpdateGitRepoRequest, opts ...grpc.CallOption) (*UpdateGitRepoResponse, error)
+	DeleteGitRepo(ctx context.Context, in *DeleteGitRepoRequest, opts ...grpc.CallOption) (*DeleteGitRepoResponse, error)
+	SyncGitRepo(ctx context.Context, in *SyncGitRepoRequest, opts ...grpc.CallOption) (*SyncGitRepoResponse, error)
+	ToggleGitRepo(ctx context.Context, in *ToggleGitRepoRequest, opts ...grpc.CallOption) (*ToggleGitRepoResponse, error)
 	ToggleSkill(ctx context.Context, in *ToggleSkillRequest, opts ...grpc.CallOption) (*ToggleSkillResponse, error)
-	SyncSkillsFromDisk(ctx context.Context, in *SyncSkillsFromDiskRequest, opts ...grpc.CallOption) (*SyncSkillsFromDiskResponse, error)
 	GetGlobalPrompt(ctx context.Context, in *GetGlobalPromptRequest, opts ...grpc.CallOption) (*GetGlobalPromptResponse, error)
 	SaveGlobalPrompt(ctx context.Context, in *SaveGlobalPromptRequest, opts ...grpc.CallOption) (*SaveGlobalPromptResponse, error)
 	// LLM Configs Management
@@ -206,10 +226,10 @@ func (c *botServiceClient) CreateSkill(ctx context.Context, in *CreateSkillReque
 	return out, nil
 }
 
-func (c *botServiceClient) SaveSkillFile(ctx context.Context, in *SaveSkillFileRequest, opts ...grpc.CallOption) (*SaveSkillFileResponse, error) {
+func (c *botServiceClient) UpdateSkill(ctx context.Context, in *UpdateSkillRequest, opts ...grpc.CallOption) (*UpdateSkillResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SaveSkillFileResponse)
-	err := c.cc.Invoke(ctx, BotService_SaveSkillFile_FullMethodName, in, out, cOpts...)
+	out := new(UpdateSkillResponse)
+	err := c.cc.Invoke(ctx, BotService_UpdateSkill_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -226,10 +246,120 @@ func (c *botServiceClient) DeleteSkill(ctx context.Context, in *DeleteSkillReque
 	return out, nil
 }
 
-func (c *botServiceClient) DeleteSkillFile(ctx context.Context, in *DeleteSkillFileRequest, opts ...grpc.CallOption) (*DeleteSkillFileResponse, error) {
+func (c *botServiceClient) ExportSkill(ctx context.Context, in *ExportSkillRequest, opts ...grpc.CallOption) (*ExportSkillResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteSkillFileResponse)
-	err := c.cc.Invoke(ctx, BotService_DeleteSkillFile_FullMethodName, in, out, cOpts...)
+	out := new(ExportSkillResponse)
+	err := c.cc.Invoke(ctx, BotService_ExportSkill_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) ImportSkill(ctx context.Context, in *ImportSkillRequest, opts ...grpc.CallOption) (*ImportSkillResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ImportSkillResponse)
+	err := c.cc.Invoke(ctx, BotService_ImportSkill_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) ListResources(ctx context.Context, in *ListResourcesRequest, opts ...grpc.CallOption) (*ListResourcesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListResourcesResponse)
+	err := c.cc.Invoke(ctx, BotService_ListResources_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) GetResource(ctx context.Context, in *GetResourceRequest, opts ...grpc.CallOption) (*GetResourceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetResourceResponse)
+	err := c.cc.Invoke(ctx, BotService_GetResource_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) SaveResource(ctx context.Context, in *SaveResourceRequest, opts ...grpc.CallOption) (*SaveResourceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SaveResourceResponse)
+	err := c.cc.Invoke(ctx, BotService_SaveResource_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) DeleteResource(ctx context.Context, in *DeleteResourceRequest, opts ...grpc.CallOption) (*DeleteResourceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteResourceResponse)
+	err := c.cc.Invoke(ctx, BotService_DeleteResource_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) ListGitRepos(ctx context.Context, in *ListGitReposRequest, opts ...grpc.CallOption) (*ListGitReposResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListGitReposResponse)
+	err := c.cc.Invoke(ctx, BotService_ListGitRepos_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) AddGitRepo(ctx context.Context, in *AddGitRepoRequest, opts ...grpc.CallOption) (*AddGitRepoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddGitRepoResponse)
+	err := c.cc.Invoke(ctx, BotService_AddGitRepo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) UpdateGitRepo(ctx context.Context, in *UpdateGitRepoRequest, opts ...grpc.CallOption) (*UpdateGitRepoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateGitRepoResponse)
+	err := c.cc.Invoke(ctx, BotService_UpdateGitRepo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) DeleteGitRepo(ctx context.Context, in *DeleteGitRepoRequest, opts ...grpc.CallOption) (*DeleteGitRepoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteGitRepoResponse)
+	err := c.cc.Invoke(ctx, BotService_DeleteGitRepo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) SyncGitRepo(ctx context.Context, in *SyncGitRepoRequest, opts ...grpc.CallOption) (*SyncGitRepoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SyncGitRepoResponse)
+	err := c.cc.Invoke(ctx, BotService_SyncGitRepo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *botServiceClient) ToggleGitRepo(ctx context.Context, in *ToggleGitRepoRequest, opts ...grpc.CallOption) (*ToggleGitRepoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ToggleGitRepoResponse)
+	err := c.cc.Invoke(ctx, BotService_ToggleGitRepo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -240,16 +370,6 @@ func (c *botServiceClient) ToggleSkill(ctx context.Context, in *ToggleSkillReque
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ToggleSkillResponse)
 	err := c.cc.Invoke(ctx, BotService_ToggleSkill_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *botServiceClient) SyncSkillsFromDisk(ctx context.Context, in *SyncSkillsFromDiskRequest, opts ...grpc.CallOption) (*SyncSkillsFromDiskResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SyncSkillsFromDiskResponse)
-	err := c.cc.Invoke(ctx, BotService_SyncSkillsFromDisk_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -398,15 +518,25 @@ type BotServiceServer interface {
 	CloseConversation(context.Context, *CloseConversationRequest) (*CloseConversationResponse, error)
 	ResetRateLimit(context.Context, *ResetRateLimitRequest) (*ResetRateLimitResponse, error)
 	GetRateLimitStatus(context.Context, *GetRateLimitStatusRequest) (*GetRateLimitStatusResponse, error)
-	// Skill Management
+	// Skill Management (LocalAI Standard)
 	ListSkills(context.Context, *ListSkillsRequest) (*ListSkillsResponse, error)
 	GetSkill(context.Context, *GetSkillRequest) (*GetSkillResponse, error)
 	CreateSkill(context.Context, *CreateSkillRequest) (*CreateSkillResponse, error)
-	SaveSkillFile(context.Context, *SaveSkillFileRequest) (*SaveSkillFileResponse, error)
+	UpdateSkill(context.Context, *UpdateSkillRequest) (*UpdateSkillResponse, error)
 	DeleteSkill(context.Context, *DeleteSkillRequest) (*DeleteSkillResponse, error)
-	DeleteSkillFile(context.Context, *DeleteSkillFileRequest) (*DeleteSkillFileResponse, error)
+	ExportSkill(context.Context, *ExportSkillRequest) (*ExportSkillResponse, error)
+	ImportSkill(context.Context, *ImportSkillRequest) (*ImportSkillResponse, error)
+	ListResources(context.Context, *ListResourcesRequest) (*ListResourcesResponse, error)
+	GetResource(context.Context, *GetResourceRequest) (*GetResourceResponse, error)
+	SaveResource(context.Context, *SaveResourceRequest) (*SaveResourceResponse, error)
+	DeleteResource(context.Context, *DeleteResourceRequest) (*DeleteResourceResponse, error)
+	ListGitRepos(context.Context, *ListGitReposRequest) (*ListGitReposResponse, error)
+	AddGitRepo(context.Context, *AddGitRepoRequest) (*AddGitRepoResponse, error)
+	UpdateGitRepo(context.Context, *UpdateGitRepoRequest) (*UpdateGitRepoResponse, error)
+	DeleteGitRepo(context.Context, *DeleteGitRepoRequest) (*DeleteGitRepoResponse, error)
+	SyncGitRepo(context.Context, *SyncGitRepoRequest) (*SyncGitRepoResponse, error)
+	ToggleGitRepo(context.Context, *ToggleGitRepoRequest) (*ToggleGitRepoResponse, error)
 	ToggleSkill(context.Context, *ToggleSkillRequest) (*ToggleSkillResponse, error)
-	SyncSkillsFromDisk(context.Context, *SyncSkillsFromDiskRequest) (*SyncSkillsFromDiskResponse, error)
 	GetGlobalPrompt(context.Context, *GetGlobalPromptRequest) (*GetGlobalPromptResponse, error)
 	SaveGlobalPrompt(context.Context, *SaveGlobalPromptRequest) (*SaveGlobalPromptResponse, error)
 	// LLM Configs Management
@@ -465,20 +595,50 @@ func (UnimplementedBotServiceServer) GetSkill(context.Context, *GetSkillRequest)
 func (UnimplementedBotServiceServer) CreateSkill(context.Context, *CreateSkillRequest) (*CreateSkillResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreateSkill not implemented")
 }
-func (UnimplementedBotServiceServer) SaveSkillFile(context.Context, *SaveSkillFileRequest) (*SaveSkillFileResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method SaveSkillFile not implemented")
+func (UnimplementedBotServiceServer) UpdateSkill(context.Context, *UpdateSkillRequest) (*UpdateSkillResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateSkill not implemented")
 }
 func (UnimplementedBotServiceServer) DeleteSkill(context.Context, *DeleteSkillRequest) (*DeleteSkillResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteSkill not implemented")
 }
-func (UnimplementedBotServiceServer) DeleteSkillFile(context.Context, *DeleteSkillFileRequest) (*DeleteSkillFileResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method DeleteSkillFile not implemented")
+func (UnimplementedBotServiceServer) ExportSkill(context.Context, *ExportSkillRequest) (*ExportSkillResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ExportSkill not implemented")
+}
+func (UnimplementedBotServiceServer) ImportSkill(context.Context, *ImportSkillRequest) (*ImportSkillResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ImportSkill not implemented")
+}
+func (UnimplementedBotServiceServer) ListResources(context.Context, *ListResourcesRequest) (*ListResourcesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListResources not implemented")
+}
+func (UnimplementedBotServiceServer) GetResource(context.Context, *GetResourceRequest) (*GetResourceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetResource not implemented")
+}
+func (UnimplementedBotServiceServer) SaveResource(context.Context, *SaveResourceRequest) (*SaveResourceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SaveResource not implemented")
+}
+func (UnimplementedBotServiceServer) DeleteResource(context.Context, *DeleteResourceRequest) (*DeleteResourceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteResource not implemented")
+}
+func (UnimplementedBotServiceServer) ListGitRepos(context.Context, *ListGitReposRequest) (*ListGitReposResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListGitRepos not implemented")
+}
+func (UnimplementedBotServiceServer) AddGitRepo(context.Context, *AddGitRepoRequest) (*AddGitRepoResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method AddGitRepo not implemented")
+}
+func (UnimplementedBotServiceServer) UpdateGitRepo(context.Context, *UpdateGitRepoRequest) (*UpdateGitRepoResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateGitRepo not implemented")
+}
+func (UnimplementedBotServiceServer) DeleteGitRepo(context.Context, *DeleteGitRepoRequest) (*DeleteGitRepoResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteGitRepo not implemented")
+}
+func (UnimplementedBotServiceServer) SyncGitRepo(context.Context, *SyncGitRepoRequest) (*SyncGitRepoResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SyncGitRepo not implemented")
+}
+func (UnimplementedBotServiceServer) ToggleGitRepo(context.Context, *ToggleGitRepoRequest) (*ToggleGitRepoResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ToggleGitRepo not implemented")
 }
 func (UnimplementedBotServiceServer) ToggleSkill(context.Context, *ToggleSkillRequest) (*ToggleSkillResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ToggleSkill not implemented")
-}
-func (UnimplementedBotServiceServer) SyncSkillsFromDisk(context.Context, *SyncSkillsFromDiskRequest) (*SyncSkillsFromDiskResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method SyncSkillsFromDisk not implemented")
 }
 func (UnimplementedBotServiceServer) GetGlobalPrompt(context.Context, *GetGlobalPromptRequest) (*GetGlobalPromptResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetGlobalPrompt not implemented")
@@ -738,20 +898,20 @@ func _BotService_CreateSkill_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BotService_SaveSkillFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SaveSkillFileRequest)
+func _BotService_UpdateSkill_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSkillRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BotServiceServer).SaveSkillFile(ctx, in)
+		return srv.(BotServiceServer).UpdateSkill(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BotService_SaveSkillFile_FullMethodName,
+		FullMethod: BotService_UpdateSkill_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BotServiceServer).SaveSkillFile(ctx, req.(*SaveSkillFileRequest))
+		return srv.(BotServiceServer).UpdateSkill(ctx, req.(*UpdateSkillRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -774,20 +934,218 @@ func _BotService_DeleteSkill_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BotService_DeleteSkillFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteSkillFileRequest)
+func _BotService_ExportSkill_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExportSkillRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BotServiceServer).DeleteSkillFile(ctx, in)
+		return srv.(BotServiceServer).ExportSkill(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BotService_DeleteSkillFile_FullMethodName,
+		FullMethod: BotService_ExportSkill_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BotServiceServer).DeleteSkillFile(ctx, req.(*DeleteSkillFileRequest))
+		return srv.(BotServiceServer).ExportSkill(ctx, req.(*ExportSkillRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_ImportSkill_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportSkillRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).ImportSkill(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_ImportSkill_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).ImportSkill(ctx, req.(*ImportSkillRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_ListResources_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListResourcesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).ListResources(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_ListResources_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).ListResources(ctx, req.(*ListResourcesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_GetResource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).GetResource(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_GetResource_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).GetResource(ctx, req.(*GetResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_SaveResource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).SaveResource(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_SaveResource_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).SaveResource(ctx, req.(*SaveResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_DeleteResource_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteResourceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).DeleteResource(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_DeleteResource_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).DeleteResource(ctx, req.(*DeleteResourceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_ListGitRepos_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListGitReposRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).ListGitRepos(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_ListGitRepos_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).ListGitRepos(ctx, req.(*ListGitReposRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_AddGitRepo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddGitRepoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).AddGitRepo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_AddGitRepo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).AddGitRepo(ctx, req.(*AddGitRepoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_UpdateGitRepo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGitRepoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).UpdateGitRepo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_UpdateGitRepo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).UpdateGitRepo(ctx, req.(*UpdateGitRepoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_DeleteGitRepo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteGitRepoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).DeleteGitRepo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_DeleteGitRepo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).DeleteGitRepo(ctx, req.(*DeleteGitRepoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_SyncGitRepo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SyncGitRepoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).SyncGitRepo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_SyncGitRepo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).SyncGitRepo(ctx, req.(*SyncGitRepoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BotService_ToggleGitRepo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ToggleGitRepoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BotServiceServer).ToggleGitRepo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BotService_ToggleGitRepo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BotServiceServer).ToggleGitRepo(ctx, req.(*ToggleGitRepoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -806,24 +1164,6 @@ func _BotService_ToggleSkill_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BotServiceServer).ToggleSkill(ctx, req.(*ToggleSkillRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BotService_SyncSkillsFromDisk_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SyncSkillsFromDiskRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BotServiceServer).SyncSkillsFromDisk(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BotService_SyncSkillsFromDisk_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BotServiceServer).SyncSkillsFromDisk(ctx, req.(*SyncSkillsFromDiskRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1114,24 +1454,64 @@ var BotService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BotService_CreateSkill_Handler,
 		},
 		{
-			MethodName: "SaveSkillFile",
-			Handler:    _BotService_SaveSkillFile_Handler,
+			MethodName: "UpdateSkill",
+			Handler:    _BotService_UpdateSkill_Handler,
 		},
 		{
 			MethodName: "DeleteSkill",
 			Handler:    _BotService_DeleteSkill_Handler,
 		},
 		{
-			MethodName: "DeleteSkillFile",
-			Handler:    _BotService_DeleteSkillFile_Handler,
+			MethodName: "ExportSkill",
+			Handler:    _BotService_ExportSkill_Handler,
+		},
+		{
+			MethodName: "ImportSkill",
+			Handler:    _BotService_ImportSkill_Handler,
+		},
+		{
+			MethodName: "ListResources",
+			Handler:    _BotService_ListResources_Handler,
+		},
+		{
+			MethodName: "GetResource",
+			Handler:    _BotService_GetResource_Handler,
+		},
+		{
+			MethodName: "SaveResource",
+			Handler:    _BotService_SaveResource_Handler,
+		},
+		{
+			MethodName: "DeleteResource",
+			Handler:    _BotService_DeleteResource_Handler,
+		},
+		{
+			MethodName: "ListGitRepos",
+			Handler:    _BotService_ListGitRepos_Handler,
+		},
+		{
+			MethodName: "AddGitRepo",
+			Handler:    _BotService_AddGitRepo_Handler,
+		},
+		{
+			MethodName: "UpdateGitRepo",
+			Handler:    _BotService_UpdateGitRepo_Handler,
+		},
+		{
+			MethodName: "DeleteGitRepo",
+			Handler:    _BotService_DeleteGitRepo_Handler,
+		},
+		{
+			MethodName: "SyncGitRepo",
+			Handler:    _BotService_SyncGitRepo_Handler,
+		},
+		{
+			MethodName: "ToggleGitRepo",
+			Handler:    _BotService_ToggleGitRepo_Handler,
 		},
 		{
 			MethodName: "ToggleSkill",
 			Handler:    _BotService_ToggleSkill_Handler,
-		},
-		{
-			MethodName: "SyncSkillsFromDisk",
-			Handler:    _BotService_SyncSkillsFromDisk_Handler,
 		},
 		{
 			MethodName: "GetGlobalPrompt",

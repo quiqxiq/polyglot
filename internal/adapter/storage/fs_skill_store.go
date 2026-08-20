@@ -5,18 +5,18 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/skill"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-var _ port.SkillFileStore = (*FSSkillStore)(nil)
+var _ port.SkillStore = (*FSSkillStore)(nil)
 
-// FSSkillStore mengelola pembacaan dan penulisan berkas fisik skill di direktori disk server.
+// FSSkillStore mengelola penyimpanan fisik skill, resources, zip archive, dan git config di disk lokal.
 type FSSkillStore struct {
 	baseDir          string
 	skillsDir        string
+	gitConfigPath    string
 	globalPromptPath string
 }
 
@@ -29,15 +29,24 @@ func NewFSSkillStore(baseDir string) (*FSSkillStore, error) {
 		return nil, fmt.Errorf("failed to create skills directory: %w", err)
 	}
 
+	gitConfigPath := filepath.Join(skillsDir, "git_repos.json")
 	globalPromptPath := filepath.Join(baseDir, "system-prompt.md")
+
 	return &FSSkillStore{
 		baseDir:          baseDir,
 		skillsDir:        skillsDir,
+		gitConfigPath:    gitConfigPath,
 		globalPromptPath: globalPromptPath,
 	}, nil
 }
 
-func (s *FSSkillStore) ScanAllSkillsFromDisk() ([]skill.Skill, error) {
+func (s *FSSkillStore) GetSkillsDir() string {
+	return s.skillsDir
+}
+
+// --- Skills CRUD ---
+
+func (s *FSSkillStore) ListSkillsFromDisk() ([]skill.Skill, error) {
 	entries, err := os.ReadDir(s.skillsDir)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -51,20 +60,25 @@ func (s *FSSkillStore) ScanAllSkillsFromDisk() ([]skill.Skill, error) {
 		if !entry.IsDir() {
 			continue
 		}
-		slug := entry.Name()
-		sk, err := s.ReadSkillFromDisk(slug)
-		if err != nil {
+		name := entry.Name()
+		if strings.HasPrefix(name, ".") {
 			continue
 		}
-		if sk != nil {
-			result = append(result, *sk)
+		sk, err := s.ReadSkillFromDisk(name)
+		if err != nil || sk == nil {
+			continue
 		}
+		result = append(result, *sk)
 	}
 	return result, nil
 }
 
-func (s *FSSkillStore) ReadSkillFromDisk(slug string) (*skill.Skill, error) {
-	skillDir := filepath.Join(s.skillsDir, slug)
+func (s *FSSkillStore) ReadSkillFromDisk(name string) (*skill.Skill, error) {
+	if err := skill.ValidateSkillName(name); err != nil {
+		return nil, err
+	}
+
+	skillDir := filepath.Join(s.skillsDir, name)
 	stat, err := os.Stat(skillDir)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -76,165 +90,157 @@ func (s *FSSkillStore) ReadSkillFromDisk(slug string) (*skill.Skill, error) {
 		return nil, skill.ErrSkillNotFound
 	}
 
-	sk := &skill.Skill{
-		Slug:      slug,
-		Name:      slug,
-		IsEnabled: true,
-		UpdatedAt: stat.ModTime(),
+	skillMDPath := filepath.Join(skillDir, "SKILL.md")
+	contentBytes, err := os.ReadFile(skillMDPath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return nil, skill.ErrSkillNotFound
+		}
+		return nil, err
 	}
 
-	var files []skill.SkillFile
+	meta, body, _ := skill.ParseFrontmatter(string(contentBytes))
+	skillName := meta.Name
+	if skillName == "" {
+		skillName = name
+	}
 
-	// 1. Read Root Files in skillDir
-	rootEntries, err := os.ReadDir(skillDir)
-	if err == nil {
-		for _, e := range rootEntries {
-			if e.IsDir() {
-				continue
-			}
-			if !strings.HasSuffix(strings.ToLower(e.Name()), ".md") {
-				continue
-			}
-			fPath := filepath.Join(skillDir, e.Name())
-			contentBytes, rErr := os.ReadFile(fPath)
-			if rErr != nil {
-				continue
-			}
-			content := string(contentBytes)
-			fileInfo, _ := e.Info()
-			modTime := time.Now()
-			if fileInfo != nil {
-				modTime = fileInfo.ModTime()
-			}
-
-			if e.Name() == "SKILL.md" {
-				parsedName, parsedDesc, _, _ := skill.ParseFrontmatter(content)
-				if parsedName != "" {
-					sk.Name = parsedName
-				}
-				if parsedDesc != "" {
-					sk.Description = parsedDesc
-				}
-			}
-
-			files = append(files, skill.SkillFile{
-				Name:        e.Name(),
-				FilePath:    e.Name(),
-				Content:     content,
-				IsReference: false,
-				UpdatedAt:   modTime,
-			})
+	// Check if this skill is sourced from Git
+	readOnly := false
+	sourceType := "inline"
+	sourceURL := ""
+	gitRepos, _ := s.ListGitRepos()
+	for _, gr := range gitRepos {
+		if gr.Name == name || gr.ID == name {
+			readOnly = true
+			sourceType = "git"
+			sourceURL = gr.URL
+			break
 		}
 	}
 
-	// 2. Read References subfolder
-	refDir := filepath.Join(skillDir, "references")
-	refEntries, err := os.ReadDir(refDir)
-	if err == nil {
-		for _, e := range refEntries {
-			if e.IsDir() {
-				continue
-			}
-			if !strings.HasSuffix(strings.ToLower(e.Name()), ".md") {
-				continue
-			}
-			fPath := filepath.Join(refDir, e.Name())
-			contentBytes, rErr := os.ReadFile(fPath)
-			if rErr != nil {
-				continue
-			}
-			fileInfo, _ := e.Info()
-			modTime := time.Now()
-			if fileInfo != nil {
-				modTime = fileInfo.ModTime()
-			}
-
-			files = append(files, skill.SkillFile{
-				Name:        e.Name(),
-				FilePath:    filepath.Join("references", e.Name()),
-				Content:     string(contentBytes),
-				IsReference: true,
-				UpdatedAt:   modTime,
-			})
-		}
-	}
-
-	sk.Files = files
-	return sk, nil
+	return &skill.Skill{
+		ID:            name,
+		Name:          skillName,
+		Description:   meta.Description,
+		Content:       body,
+		License:       meta.License,
+		Compatibility: meta.Compatibility,
+		AllowedTools:  meta.AllowedTools,
+		Metadata:      meta.Metadata,
+		ReadOnly:      readOnly,
+		SourceType:    sourceType,
+		SourceURL:     sourceURL,
+		CreatedAt:     stat.ModTime(),
+		UpdatedAt:     stat.ModTime(),
+	}, nil
 }
 
-func (s *FSSkillStore) WriteSkillToDisk(sk *skill.Skill) error {
-	if sk == nil || strings.TrimSpace(sk.Slug) == "" {
-		return skill.ErrInvalidSlug
+func (s *FSSkillStore) CreateSkillOnDisk(name, description, content, license, compatibility, allowedTools string, metadata map[string]string) (*skill.Skill, error) {
+	if err := skill.ValidateSkillName(name); err != nil {
+		return nil, err
 	}
-	skillDir := filepath.Join(s.skillsDir, sk.Slug)
+
+	trimmed := strings.TrimSpace(content)
+	if strings.HasPrefix(trimmed, "---") {
+		parsedMeta, body, parseErr := skill.ParseFrontmatter(trimmed)
+		if parseErr == nil {
+			if parsedMeta.Name != "" {
+				name = parsedMeta.Name
+			}
+			if parsedMeta.Description != "" {
+				description = parsedMeta.Description
+			}
+			if parsedMeta.License != "" {
+				license = parsedMeta.License
+			}
+			if parsedMeta.Compatibility != "" {
+				compatibility = parsedMeta.Compatibility
+			}
+			if parsedMeta.AllowedTools != "" {
+				allowedTools = parsedMeta.AllowedTools
+			}
+			if len(parsedMeta.Metadata) > 0 {
+				metadata = parsedMeta.Metadata
+			}
+			content = body
+		}
+	}
+
+	skillDir := filepath.Join(s.skillsDir, name)
+	if _, err := os.Stat(skillDir); err == nil {
+		return nil, skill.ErrSkillAlreadyExists
+	}
+
 	if err := os.MkdirAll(skillDir, 0755); err != nil {
-		return err
-	}
-	if err := os.MkdirAll(filepath.Join(skillDir, "references"), 0755); err != nil {
-		return err
+		return nil, err
 	}
 
-	for _, f := range sk.Files {
-		if err := s.WriteSkillFileToDisk(sk.Slug, &f); err != nil {
-			return err
+	fm := skill.BuildFrontmatter(name, description, license, compatibility, allowedTools, metadata)
+	fullDoc := fm + strings.TrimSpace(content) + "\n"
+
+	skillMDPath := filepath.Join(skillDir, "SKILL.md")
+	if err := os.WriteFile(skillMDPath, []byte(fullDoc), 0644); err != nil {
+		_ = os.RemoveAll(skillDir)
+		return nil, err
+	}
+
+	return s.ReadSkillFromDisk(name)
+}
+
+func (s *FSSkillStore) UpdateSkillOnDisk(name, description, content, license, compatibility, allowedTools string, metadata map[string]string) (*skill.Skill, error) {
+	existing, err := s.ReadSkillFromDisk(name)
+	if err != nil {
+		return nil, err
+	}
+	if existing.ReadOnly {
+		return nil, skill.ErrReadOnlySkill
+	}
+
+	trimmed := strings.TrimSpace(content)
+	if strings.HasPrefix(trimmed, "---") {
+		parsedMeta, body, parseErr := skill.ParseFrontmatter(trimmed)
+		if parseErr == nil {
+			if parsedMeta.Description != "" {
+				description = parsedMeta.Description
+			}
+			if parsedMeta.License != "" {
+				license = parsedMeta.License
+			}
+			if parsedMeta.Compatibility != "" {
+				compatibility = parsedMeta.Compatibility
+			}
+			if parsedMeta.AllowedTools != "" {
+				allowedTools = parsedMeta.AllowedTools
+			}
+			if len(parsedMeta.Metadata) > 0 {
+				metadata = parsedMeta.Metadata
+			}
+			content = body
 		}
 	}
-	return nil
+
+	skillDir := filepath.Join(s.skillsDir, name)
+	fm := skill.BuildFrontmatter(name, description, license, compatibility, allowedTools, metadata)
+	fullDoc := fm + strings.TrimSpace(content) + "\n"
+
+	skillMDPath := filepath.Join(skillDir, "SKILL.md")
+	if err := os.WriteFile(skillMDPath, []byte(fullDoc), 0644); err != nil {
+		return nil, err
+	}
+
+	return s.ReadSkillFromDisk(name)
 }
 
-func (s *FSSkillStore) WriteSkillFileToDisk(slug string, f *skill.SkillFile) error {
-	if f == nil || strings.TrimSpace(f.FilePath) == "" {
-		return skill.ErrInvalidFileName
-	}
-	fullPath := filepath.Join(s.skillsDir, slug, f.FilePath)
-	dir := filepath.Dir(fullPath)
-	if err := os.MkdirAll(dir, 0755); err != nil {
+func (s *FSSkillStore) DeleteSkillFromDisk(name string) error {
+	existing, err := s.ReadSkillFromDisk(name)
+	if err != nil {
 		return err
 	}
-	return os.WriteFile(fullPath, []byte(f.Content), 0644)
-}
-
-func (s *FSSkillStore) DeleteSkillFileFromDisk(slug string, filePath string) error {
-	fullPath := filepath.Join(s.skillsDir, slug, filePath)
-	err := os.Remove(fullPath)
-	if err != nil && !os.IsNotExist(err) {
-		return err
+	if existing.ReadOnly {
+		return skill.ErrReadOnlySkill
 	}
-	return nil
-}
 
-func (s *FSSkillStore) DeleteSkillFolderFromDisk(slug string) error {
-	skillDir := filepath.Join(s.skillsDir, slug)
+	skillDir := filepath.Join(s.skillsDir, name)
 	return os.RemoveAll(skillDir)
-}
-
-func (s *FSSkillStore) ReadGlobalPromptFromDisk() (string, error) {
-	// Priority 1: data/system-prompt.md
-	if bytes, err := os.ReadFile(s.globalPromptPath); err == nil && len(bytes) > 0 {
-		return string(bytes), nil
-	}
-	// Priority 2 fallback: data/skills/system-prompt.md
-	skillsPromptPath := filepath.Join(s.skillsDir, "system-prompt.md")
-	if bytes, err := os.ReadFile(skillsPromptPath); err == nil && len(bytes) > 0 {
-		return string(bytes), nil
-	}
-	return "", nil
-}
-
-func (s *FSSkillStore) WriteGlobalPromptToDisk(content string) error {
-	dir := filepath.Dir(s.globalPromptPath)
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		return err
-	}
-	if err := os.WriteFile(s.globalPromptPath, []byte(content), 0644); err != nil {
-		return err
-	}
-
-	// Clean up legacy duplicated file in data/skills/system-prompt.md if it exists
-	skillsPromptPath := filepath.Join(s.skillsDir, "system-prompt.md")
-	if _, statErr := os.Stat(skillsPromptPath); statErr == nil {
-		_ = os.Remove(skillsPromptPath)
-	}
-	return nil
 }

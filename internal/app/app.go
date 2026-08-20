@@ -113,7 +113,8 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	if err != nil {
 		logger.WithComponent("App").WithError(err).Warn("Failed to initialize FSSkillStore")
 	}
-	skillUseCase := skillUC.NewManageSkillUseCase(pgStore, fsSkillStore)
+	gitSyncer := storageAdapter.NewGitSyncer(2 * time.Minute)
+	skillUseCase := skillUC.NewManageSkillUseCase(pgStore, fsSkillStore, gitSyncer)
 
 	llmFactory := func(c *domainllm.Config) (port.LLMProvider, error) {
 		return llmadapter.NewProvider(c, cfg.EncryptionKey)
@@ -129,10 +130,12 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 			Ban24HourSeconds:   cfg.BotBan24HourSecs,
 			DailyChatLimit:     cfg.BotDailyChatLimit,
 			WhitelistPhones:    cfg.BotWhitelistPhones,
+			TechnicianPhone:    cfg.TechnicianWANumber,
 		},
 		redisStore,
 		waManager,
 		convService,
+		skillUseCase.Provider(),
 		skillUseCase,
 		pgStore,
 		pgStore,

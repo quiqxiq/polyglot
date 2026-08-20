@@ -5,6 +5,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/domain/llm"
+	skillDomain "github.com/quixiq/polyglot/internal/domain/skill"
 	"github.com/quixiq/polyglot/internal/port"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 )
@@ -34,15 +35,23 @@ func (f *fakeGateway) GetQRCode(uint) (string, error)              { return "", 
 func (f *fakeGateway) GetPairingCode(uint, string) (string, error) { return "", nil }
 func (f *fakeGateway) RestoreAllSessions([]bot.WASession) error    { return nil }
 
-type fakePromptBuilder struct {
+type fakeSkillProvider struct {
+	skills []skillDomain.SkillInfo
+}
+
+func (f *fakeSkillProvider) ListSkills(context.Context) ([]skillDomain.SkillInfo, error) {
+	return f.skills, nil
+}
+
+func (f *fakeSkillProvider) GetSkillContent(context.Context, string) (string, error) {
+	return "", nil
+}
+
+type fakeGlobalPromptProvider struct {
 	prompt string
 }
 
-func (f *fakePromptBuilder) BuildCompositeSystemPrompt(context.Context) (string, error) {
-	return f.prompt, nil
-}
-
-func (f *fakePromptBuilder) BuildSelectivePrompt(context.Context, string) (string, error) {
+func (f *fakeGlobalPromptProvider) GetGlobalSystemPrompt(context.Context) (string, error) {
 	return f.prompt, nil
 }
 
@@ -227,7 +236,8 @@ func newTestEngineWithChatRepo(cache port.CacheStore, gw *fakeGateway, llmRepo *
 		cache,
 		gw,
 		svc,
-		&fakePromptBuilder{},
+		&fakeSkillProvider{},
+		&fakeGlobalPromptProvider{prompt: "Kamu adalah asisten layanan GNET."},
 		llmRepo,
 		chatRepo,
 		&fakePublisher{},
@@ -236,7 +246,8 @@ func newTestEngineWithChatRepo(cache port.CacheStore, gw *fakeGateway, llmRepo *
 }
 
 var _ port.WhatsAppGateway = (*fakeGateway)(nil)
-var _ PromptBuilder = (*fakePromptBuilder)(nil)
+var _ SkillProvider = (*fakeSkillProvider)(nil)
+var _ GlobalPromptProvider = (*fakeGlobalPromptProvider)(nil)
 var _ port.LLMConfigRepository = (*fakeLLMConfigRepo)(nil)
 var _ port.EventPublisher = (*fakePublisher)(nil)
 var _ port.ChatRepository = (*fakeChatRepo)(nil)

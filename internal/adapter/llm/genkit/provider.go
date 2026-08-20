@@ -1,9 +1,12 @@
 package genkit
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
 	"strings"
 
 	"github.com/firebase/genkit/go/ai"
@@ -16,6 +19,48 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/port"
 )
+
+// sanitizingRoundTripper membersihkan atribut yang tidak didukung upstream (seperti reasoning_content pada Groq)
+type sanitizingRoundTripper struct {
+	base http.RoundTripper
+}
+
+func (s *sanitizingRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+	if req.Body != nil && req.Method == http.MethodPost && strings.Contains(req.URL.Path, "/chat/completions") {
+		bodyBytes, err := io.ReadAll(req.Body)
+		if err == nil {
+			_ = req.Body.Close()
+
+			var payload map[string]any
+			if err := json.Unmarshal(bodyBytes, &payload); err == nil {
+				if msgs, ok := payload["messages"].([]any); ok {
+					changed := false
+					for _, m := range msgs {
+						if msgMap, ok := m.(map[string]any); ok {
+							if _, has := msgMap["reasoning_content"]; has {
+								delete(msgMap, "reasoning_content")
+								changed = true
+							}
+						}
+					}
+					if changed {
+						if modifiedBytes, err := json.Marshal(payload); err == nil {
+							bodyBytes = modifiedBytes
+							req.ContentLength = int64(len(bodyBytes))
+						}
+					}
+				}
+			}
+			req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
+		}
+	}
+
+	base := s.base
+	if base == nil {
+		base = http.DefaultTransport
+	}
+	return base.RoundTrip(req)
+}
 
 // Provider implements port.LLMProvider using Google Genkit Go SDK.
 type Provider struct {
@@ -86,9 +131,15 @@ func NewProvider(ctx context.Context, cfg *llm.Config, apiKey string) (*Provider
 			rawModel = "qwen/qwen3.6-27b"
 		}
 		modelName = "openai/" + rawModel
+		httpClient := &http.Client{
+			Transport: &sanitizingRoundTripper{base: http.DefaultTransport},
+		}
 		g = genkit.Init(ctx, genkit.WithPlugins(&openai.OpenAI{
 			APIKey: apiKey,
-			Opts:   []option.RequestOption{option.WithBaseURL(baseURL)},
+			Opts: []option.RequestOption{
+				option.WithBaseURL(baseURL),
+				option.WithHTTPClient(httpClient),
+			},
 		}))
 
 	case "deepseek":
@@ -165,6 +216,11 @@ func NewProvider(ctx context.Context, cfg *llm.Config, apiKey string) (*Provider
 
 // Chat executes a conversational completion through Genkit unified interface.
 func (p *Provider) Chat(ctx context.Context, systemPrompt string, messages []llm.ChatMessage, maxTokens int) (*llm.ChatResponse, error) {
+	return p.ChatWithTools(ctx, systemPrompt, messages, nil, maxTokens)
+}
+
+// ChatWithTools executes a conversational completion with native Genkit tool calling support.
+func (p *Provider) ChatWithTools(ctx context.Context, systemPrompt string, messages []llm.ChatMessage, tools []llm.Tool, maxTokens int) (*llm.ChatResponse, error) {
 	if p.g == nil {
 		return nil, fmt.Errorf("genkit instance is not initialized")
 	}
@@ -212,6 +268,33 @@ func (p *Provider) Chat(ctx context.Context, systemPrompt string, messages []llm
 		opts = append(opts, ai.WithConfig(&ai.GenerationCommonConfig{
 			MaxOutputTokens: maxTokens,
 		}))
+	}
+
+	// Daftarkan tools jika disediakan
+	if len(tools) > 0 {
+		var genkitTools []ai.ToolRef
+		for _, t := range tools {
+			toolDef := t
+			gt := ai.NewTool(
+				toolDef.Name,
+				toolDef.Description,
+				func(toolCtx *ai.ToolContext, input map[string]any) (string, error) {
+					var argsJSON string
+					if input != nil {
+						b, err := json.Marshal(input)
+						if err == nil {
+							argsJSON = string(b)
+						}
+					}
+					if toolDef.Handler != nil {
+						return toolDef.Handler(toolCtx.Context, argsJSON)
+					}
+					return "tool executed", nil
+				},
+			)
+			genkitTools = append(genkitTools, gt)
+		}
+		opts = append(opts, ai.WithTools(genkitTools...), ai.WithMaxTurns(5))
 	}
 
 	resp, err := genkit.Generate(ctx, p.g, opts...)
