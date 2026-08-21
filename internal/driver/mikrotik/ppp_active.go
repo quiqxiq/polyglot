@@ -36,7 +36,7 @@ type PPPActiveStat = port.PPPActiveStat
 func NewStreamPPPActiveCommand(nameFilter string) command.Command {
 	args := map[string]string{
 		"follow":    "",
-		".proplist": ".id,name,service,caller-id,address,encoding,session-id,radius,profile",
+		".proplist": ".id,name,service,caller-id,address,encoding,session-id,radius",
 	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter

@@ -58,6 +58,14 @@ export function useStreamPPPActiveSessions(
           setError(err as Error)
           setIsLoading(false)
         }
+      } finally {
+        if (!abortController.signal.aborted) {
+          setTimeout(() => {
+            if (!abortController.signal.aborted) {
+              startSessionStream()
+            }
+          }, 3000)
+        }
       }
     }
 
@@ -90,6 +98,14 @@ export function useStreamPPPActiveSessions(
         }
       } catch {
         // Fall back gracefully if stats stream encounters network blip
+      } finally {
+        if (!abortController.signal.aborted) {
+          setTimeout(() => {
+            if (!abortController.signal.aborted) {
+              startStatsStream()
+            }
+          }, 3000)
+        }
       }
     }
 
@@ -135,6 +151,14 @@ export function useStreamPPPInactiveSecrets(deviceId?: string, enabled = true) {
         if (!abortController.signal.aborted) {
           setError(err as Error)
           setIsLoading(false)
+        }
+      } finally {
+        if (!abortController.signal.aborted) {
+          setTimeout(() => {
+            if (!abortController.signal.aborted) {
+              startStream()
+            }
+          }, 3000)
         }
       }
     }

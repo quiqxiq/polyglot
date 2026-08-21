@@ -66,6 +66,14 @@ export function useStreamActiveSessions(
           setError(err as Error)
           setIsLoading(false)
         }
+      } finally {
+        if (!abortController.signal.aborted) {
+          setTimeout(() => {
+            if (!abortController.signal.aborted) {
+              startSessionStream()
+            }
+          }, 3000)
+        }
       }
     }
 
@@ -102,6 +110,14 @@ export function useStreamActiveSessions(
         }
       } catch {
         // Fall back gracefully if stats stream encounters network blip
+      } finally {
+        if (!abortController.signal.aborted) {
+          setTimeout(() => {
+            if (!abortController.signal.aborted) {
+              startStatsStream()
+            }
+          }, 3000)
+        }
       }
     }
 
@@ -147,6 +163,14 @@ export function useStreamHotspotInactive(deviceId: string, enabled = true) {
         if (!abortController.signal.aborted) {
           setError(err as Error)
           setIsLoading(false)
+        }
+      } finally {
+        if (!abortController.signal.aborted) {
+          setTimeout(() => {
+            if (!abortController.signal.aborted) {
+              startStream()
+            }
+          }, 3000)
         }
       }
     }

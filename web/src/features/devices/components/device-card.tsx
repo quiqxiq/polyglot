@@ -168,7 +168,6 @@ export function DeviceCard({ device }: DeviceCardProps) {
   // 2. Traffic Stream (Rx/Tx Bps per Interface)
   useEffect(() => {
     if (!device.id || !device.enabled || !selectedIface || selectedIface === 'default') return
-    console.log(`[TrafficStream] Selected interface changed -> "${selectedIface}" (Device: ${device.name || device.id})`)
     const controller = new AbortController()
     let active = true
 
@@ -179,7 +178,6 @@ export function DeviceCard({ device }: DeviceCardProps) {
 
     async function startTrafficStream() {
       try {
-        console.log(`[TrafficStream] Starting stream for interface: "${selectedIface}"...`)
         const stream = deviceClient.streamInterfaceTraffic(
           { id: device.id, interfaceName: selectedIface },
           { signal: controller.signal }
@@ -188,12 +186,6 @@ export function DeviceCard({ device }: DeviceCardProps) {
           if (!active) break
           const rx = Number(frame.rxBps || 0)
           const tx = Number(frame.txBps || 0)
-          console.log(`[TrafficStream] Frame received for "${selectedIface}":`, {
-            rawRxBps: frame.rxBps,
-            rawTxBps: frame.txBps,
-            parsedRx: rx,
-            parsedTx: tx,
-          })
           setRxBps(rx)
           setTxBps(tx)
           setTrafficHistory((prev) => {
@@ -219,7 +211,6 @@ export function DeviceCard({ device }: DeviceCardProps) {
     startTrafficStream()
 
     return () => {
-      console.log(`[TrafficStream] Closing stream for interface: "${selectedIface}"`)
       active = false
       controller.abort()
     }
@@ -527,7 +518,6 @@ export function DeviceCard({ device }: DeviceCardProps) {
             <Select
               value={selectedIface}
               onValueChange={(val) => {
-                console.log(`[UI Select] User selected interface from dropdown: "${val}"`)
                 setSelectedIface(val)
               }}
             >
