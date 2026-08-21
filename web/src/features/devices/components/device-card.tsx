@@ -145,8 +145,14 @@ export function DeviceCard({ device }: DeviceCardProps) {
           }
         }
       } catch (err: any) {
-        if (err?.name !== 'AbortError' && active) {
+        const isAborted = controller.signal.aborted || !active || err?.name === 'AbortError' || err?.code === 1 || err?.message?.includes('aborted')
+        if (!isAborted && active) {
           setIsOnline(false)
+          setTimeout(() => {
+            if (active && !controller.signal.aborted) {
+              startStatusStream()
+            }
+          }, 3000)
         }
       }
     }
@@ -199,6 +205,13 @@ export function DeviceCard({ device }: DeviceCardProps) {
         const isAborted = controller.signal.aborted || !active || err?.name === 'AbortError' || err?.code === 1 || err?.message?.includes('aborted')
         if (!isAborted) {
           console.warn(`[TrafficStream] Stream error for "${selectedIface}":`, err)
+          if (active && !controller.signal.aborted) {
+            setTimeout(() => {
+              if (active && !controller.signal.aborted) {
+                startTrafficStream()
+              }
+            }, 3000)
+          }
         }
       }
     }
@@ -236,7 +249,14 @@ export function DeviceCard({ device }: DeviceCardProps) {
           }
         }
       } catch (err: any) {
-        // Silent catch on abort or clean disconnect
+        const isAborted = controller.signal.aborted || !active || err?.name === 'AbortError' || err?.code === 1 || err?.message?.includes('aborted')
+        if (!isAborted && active) {
+          setTimeout(() => {
+            if (active && !controller.signal.aborted) {
+              startPingStream()
+            }
+          }, 3000)
+        }
       }
     }
 
