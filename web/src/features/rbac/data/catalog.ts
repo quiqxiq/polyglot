@@ -248,6 +248,20 @@ export const RBAC_MODULE_GROUPS: ModuleGroup[] = [
       },
     ],
   },
+  {
+    id: 'logs',
+    label: 'Router & System Logs',
+    description: 'Pemantauan live stream log MikroTik, Hotspot, dan PPP',
+    permissions: [
+      {
+        id: 'log:read',
+        resource: 'log',
+        action: 'read',
+        label: 'View Router Logs',
+        description: 'Melihat live stream log MikroTik (All, Hotspot, dan PPP)',
+      },
+    ],
+  },
 ]
 
 export const ALL_PERMISSION_IDS = RBAC_MODULE_GROUPS.flatMap((g) =>
@@ -268,6 +282,7 @@ export const RBAC_RESOURCES = [
   'probe',
   'hotspot',
   'ppp',
+  'log',
 ] as const
 
 export const RBAC_ACTIONS = [

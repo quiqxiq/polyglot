@@ -66,12 +66,14 @@ func TestEnforceRoleMatrix(t *testing.T) {
 		{"admin can manage llmconfig", "1002", "llmconfig:manage", true},
 		{"admin CANNOT manage rbac", "1002", "rbac:manage", false},
 		{"admin can list technicians", "1002", "technician:read", true},
+		{"admin can read logs", "1002", "log:read", true},
 
 		{"agent can read conversation", "1003", "conversation:read", true},
 		{"agent can write conversation", "1003", "conversation:write", true},
 		{"agent can read skill", "1003", "skill:read", true},
 		{"agent CANNOT write skill", "1003", "skill:manage", false},
 		{"agent CANNOT device read", "1003", "device:read", false},
+		{"agent CANNOT read logs", "1003", "log:read", false},
 		{"agent CANNOT manage rbac", "1003", "rbac:manage", false},
 
 		{"teknisi can read device", "1004", "device:read", true},
@@ -80,6 +82,7 @@ func TestEnforceRoleMatrix(t *testing.T) {
 		{"teknisi can read conversation", "1004", "conversation:read", true},
 		{"teknisi can read skill", "1004", "skill:read", true},
 		{"teknisi can read technician", "1004", "technician:read", true},
+		{"teknisi can read logs", "1004", "log:read", true},
 		{"teknisi CANNOT manage rbac", "1004", "rbac:manage", false},
 
 		{"unknown user denied", "9999", "skill:read", false},

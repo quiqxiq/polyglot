@@ -130,7 +130,7 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.HotspotService/StreamSystemSnapshot":   "hotspot:read",
 	"/polyglot.v1.HotspotService/StreamInterfaceEthernet": "hotspot:read",
 	"/polyglot.v1.HotspotService/StreamQueueStats":        "hotspot:read",
-	"/polyglot.v1.HotspotService/StreamLogs":              "hotspot:read",
+	"/polyglot.v1.HotspotService/StreamLogs":              "log:read",
 	"/polyglot.v1.HotspotService/StreamHotspotInactive":   "hotspot:read",
 	"/polyglot.v1.HotspotService/StreamPPPActive":         "hotspot:read",
 	"/polyglot.v1.HotspotService/StreamPPPInactive":       "hotspot:read",

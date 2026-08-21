@@ -13,6 +13,7 @@ func TestPermissionFor(t *testing.T) {
 		{"device stream terminal", "/polyglot.v1.DeviceService/StreamTerminal", "device:command", true},
 		{"rbac manage", "/polyglot.v1.RBACService/AssignRole", "rbac:manage", true},
 		{"hotspot stream", "/polyglot.v1.HotspotService/StreamTraffic", "hotspot:read", true},
+		{"hotspot stream logs", "/polyglot.v1.HotspotService/StreamLogs", "log:read", true},
 		{"hotspot create user", "/polyglot.v1.HotspotService/CreateUser", "hotspot:manage", true},
 		{"hotspot create profile", "/polyglot.v1.HotspotService/CreateProfile", "hotspot:manage", true},
 		{"hotspot list hosts", "/polyglot.v1.HotspotService/ListHosts", "hotspot:read", true},

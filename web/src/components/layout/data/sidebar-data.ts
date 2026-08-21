@@ -5,6 +5,7 @@ import {
   MessagesSquare,
   Monitor,
   Network,
+  ScrollText,
   ShieldCheck,
   Sparkles,
   Users,
@@ -52,6 +53,12 @@ export const sidebarData: SidebarData = {
           url: '/ppp',
           icon: Network,
           permission: 'ppp:read',
+        },
+        {
+          title: 'Router Logs',
+          url: '/logs',
+          icon: ScrollText,
+          permission: 'log:read',
         },
         {
           title: 'Sales Report',

@@ -97,17 +97,17 @@ func TestBuildArgs(t *testing.T) {
 		{
 			name: "bare follow flag ignores any value",
 			cmd:  command.Command{Raw: "/interface/print", Args: map[string]string{"follow": ""}},
-			want: []string{"/interface/print", "follow"},
+			want: []string{"/interface/print", "=follow="},
 		},
 		{
 			name: "bare follow-only flag",
 			cmd:  command.Command{Raw: "/log/print", Args: map[string]string{"follow-only": ""}},
-			want: []string{"/log/print", "follow-only"},
+			want: []string{"/log/print", "=follow-only="},
 		},
 		{
 			name: "attribute with empty value becomes bare",
 			cmd:  command.Command{Raw: "/interface/print", Args: map[string]string{"disabled": ""}},
-			want: []string{"/interface/print", "=disabled"},
+			want: []string{"/interface/print", "=disabled="},
 		},
 		{
 			name: "query word starting with ?",

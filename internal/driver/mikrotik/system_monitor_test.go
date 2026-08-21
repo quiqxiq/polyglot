@@ -134,13 +134,19 @@ func TestNewStreamLogsCommand(t *testing.T) {
 func TestParseLogs(t *testing.T) {
 	result := command.Result{Rows: []map[string]string{
 		{".id": "*1", "time": "14:30:25", "topics": "hotspot,info", "message": "user logged in"},
-		{"time": "orphan", "message": "tanpa .id"},
+		{"time": "14:30:26", "topics": "system,info", "message": "tanpa .id"},
+		{"other": "empty"},
 	}}
 	logs := ParseLogs(result)
-	require.Len(t, logs, 1)
+	require.Len(t, logs, 2)
 	assert.Equal(t, "*1", logs[0].RosID)
 	assert.Equal(t, "hotspot,info", logs[0].Topics)
 	assert.Equal(t, "user logged in", logs[0].Message)
+
+	assert.NotEmpty(t, logs[1].RosID)
+	assert.Equal(t, "14:30:26", logs[1].Time)
+	assert.Equal(t, "system,info", logs[1].Topics)
+	assert.Equal(t, "tanpa .id", logs[1].Message)
 }
 
 // ─── Interface ethernet stream ────────────────────────────────────────────

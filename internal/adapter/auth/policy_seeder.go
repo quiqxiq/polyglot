@@ -42,6 +42,7 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"admin", "technician:.*", "*"},
 		{"admin", "hotspot:.*", "*"},
 		{"admin", "ppp:.*", "*"},
+		{"admin", "log:.*", "*"},
 		{"admin", "user:.*", "*"},
 		{"admin", "setting:.*", "*"},
 		{"admin", "profile:.*", "*"},
@@ -64,6 +65,7 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"teknisi", "probe:read", "*"},
 		{"teknisi", "hotspot:read", "*"},
 		{"teknisi", "ppp:read", "*"},
+		{"teknisi", "log:read", "*"},
 		{"teknisi", "profile:.*", "*"},
 	}
 

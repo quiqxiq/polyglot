@@ -29,6 +29,7 @@ import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authen
 import { Route as AuthenticatedReportsIndexRouteImport } from './routes/_authenticated/reports/index'
 import { Route as AuthenticatedRbacIndexRouteImport } from './routes/_authenticated/rbac/index'
 import { Route as AuthenticatedPppIndexRouteImport } from './routes/_authenticated/ppp/index'
+import { Route as AuthenticatedLogsIndexRouteImport } from './routes/_authenticated/logs/index'
 import { Route as AuthenticatedHotspotIndexRouteImport } from './routes/_authenticated/hotspot/index'
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
 import { Route as AuthenticatedDevicesIndexRouteImport } from './routes/_authenticated/devices/index'
@@ -145,6 +146,11 @@ const AuthenticatedPppIndexRoute = AuthenticatedPppIndexRouteImport.update({
   path: '/ppp/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedLogsIndexRoute = AuthenticatedLogsIndexRouteImport.update({
+  id: '/logs/',
+  path: '/logs/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedHotspotIndexRoute =
   AuthenticatedHotspotIndexRouteImport.update({
     id: '/hotspot/',
@@ -234,6 +240,7 @@ export interface FileRoutesByFullPath {
   '/devices/': typeof AuthenticatedDevicesIndexRoute
   '/help-center/': typeof AuthenticatedHelpCenterIndexRoute
   '/hotspot/': typeof AuthenticatedHotspotIndexRoute
+  '/logs/': typeof AuthenticatedLogsIndexRoute
   '/ppp/': typeof AuthenticatedPppIndexRoute
   '/rbac/': typeof AuthenticatedRbacIndexRoute
   '/reports/': typeof AuthenticatedReportsIndexRoute
@@ -265,6 +272,7 @@ export interface FileRoutesByTo {
   '/devices': typeof AuthenticatedDevicesIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
   '/hotspot': typeof AuthenticatedHotspotIndexRoute
+  '/logs': typeof AuthenticatedLogsIndexRoute
   '/ppp': typeof AuthenticatedPppIndexRoute
   '/rbac': typeof AuthenticatedRbacIndexRoute
   '/reports': typeof AuthenticatedReportsIndexRoute
@@ -299,6 +307,7 @@ export interface FileRoutesById {
   '/_authenticated/devices/': typeof AuthenticatedDevicesIndexRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
   '/_authenticated/hotspot/': typeof AuthenticatedHotspotIndexRoute
+  '/_authenticated/logs/': typeof AuthenticatedLogsIndexRoute
   '/_authenticated/ppp/': typeof AuthenticatedPppIndexRoute
   '/_authenticated/rbac/': typeof AuthenticatedRbacIndexRoute
   '/_authenticated/reports/': typeof AuthenticatedReportsIndexRoute
@@ -333,6 +342,7 @@ export interface FileRouteTypes {
     | '/devices/'
     | '/help-center/'
     | '/hotspot/'
+    | '/logs/'
     | '/ppp/'
     | '/rbac/'
     | '/reports/'
@@ -364,6 +374,7 @@ export interface FileRouteTypes {
     | '/devices'
     | '/help-center'
     | '/hotspot'
+    | '/logs'
     | '/ppp'
     | '/rbac'
     | '/reports'
@@ -397,6 +408,7 @@ export interface FileRouteTypes {
     | '/_authenticated/devices/'
     | '/_authenticated/help-center/'
     | '/_authenticated/hotspot/'
+    | '/_authenticated/logs/'
     | '/_authenticated/ppp/'
     | '/_authenticated/rbac/'
     | '/_authenticated/reports/'
@@ -562,6 +574,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPppIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/logs/': {
+      id: '/_authenticated/logs/'
+      path: '/logs'
+      fullPath: '/logs/'
+      preLoaderRoute: typeof AuthenticatedLogsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/hotspot/': {
       id: '/_authenticated/hotspot/'
       path: '/hotspot'
@@ -676,6 +695,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDevicesIndexRoute: typeof AuthenticatedDevicesIndexRoute
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
   AuthenticatedHotspotIndexRoute: typeof AuthenticatedHotspotIndexRoute
+  AuthenticatedLogsIndexRoute: typeof AuthenticatedLogsIndexRoute
   AuthenticatedPppIndexRoute: typeof AuthenticatedPppIndexRoute
   AuthenticatedRbacIndexRoute: typeof AuthenticatedRbacIndexRoute
   AuthenticatedReportsIndexRoute: typeof AuthenticatedReportsIndexRoute
@@ -693,6 +713,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDevicesIndexRoute: AuthenticatedDevicesIndexRoute,
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
   AuthenticatedHotspotIndexRoute: AuthenticatedHotspotIndexRoute,
+  AuthenticatedLogsIndexRoute: AuthenticatedLogsIndexRoute,
   AuthenticatedPppIndexRoute: AuthenticatedPppIndexRoute,
   AuthenticatedRbacIndexRoute: AuthenticatedRbacIndexRoute,
   AuthenticatedReportsIndexRoute: AuthenticatedReportsIndexRoute,

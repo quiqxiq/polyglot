@@ -10,12 +10,12 @@ import (
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
-// StreamLogs streams /log/print follow natively from RouterOS — each new log
-// line is pushed as it is written. Optional topics filter (?topics~=).
-// Replaces legacy get_log which polled every 10 seconds.
+// StreamLogs streams /log/print follow natively from RouterOS — initial logs
+// are streamed first and each new log line is pushed as it is written.
 func (h *HotspotConnectHandler) StreamLogs(ctx context.Context, req *connect.Request[devicepb.StreamLogsRequest], stream *connect.ServerStream[devicepb.LogsStreamFrame]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
@@ -29,6 +29,7 @@ func (h *HotspotConnectHandler) StreamLogs(ctx context.Context, req *connect.Req
 
 	handle, err := sd.Stream(ctx, mikrotik.NewStreamLogsCommand(req.Msg.Topics))
 	if err != nil {
+		logger.WithComponent("HotspotConnectHandler").WithError(err).Warn("starting log stream failed")
 		return response.MapDomainError(err)
 	}
 	defer handle.Cancel()
@@ -42,6 +43,10 @@ func (h *HotspotConnectHandler) StreamLogs(ctx context.Context, req *connect.Req
 				return handle.Err()
 			}
 			logs := mikrotik.ParseLogs(res)
+			if len(logs) == 0 {
+				continue
+			}
+
 			items := make([]*devicepb.LogEntryItem, 0, len(logs))
 			for _, l := range logs {
 				items = append(items, &devicepb.LogEntryItem{

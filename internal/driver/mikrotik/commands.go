@@ -99,17 +99,16 @@ func isStreamingCommand(cmd command.Command) bool {
 }
 
 // buildArgs converts a vendor-agnostic command.Command into the sentence
-// go-routeros expects: Raw first, then one word per Args entry. RouterOS
-// API distinguishes bare words (no value, e.g. "follow") from attribute
-// words ("=key=value") — follow/follow-only never take a value, so they
-// are always written bare regardless of what's stored in cmd.Args[key].
+// go-routeros expects: Raw first, then one word per Args entry. In RouterOS API
+// protocol, all command attributes must start with "=" (e.g. "=follow=" or
+// "=address=10.0.0.1"). Queries start with "?".
 func buildArgs(cmd command.Command) []string {
 	args := make([]string, 0, 1+len(cmd.Args))
 	args = append(args, cmd.Raw)
 	for key, value := range cmd.Args {
 		switch key {
 		case "follow", "follow-only", "stats", "once", "count-only", "detail", "brief":
-			args = append(args, key)
+			args = append(args, "="+key+"=")
 		default:
 			if strings.HasPrefix(key, "?") {
 				if value == "" {
@@ -118,7 +117,7 @@ func buildArgs(cmd command.Command) []string {
 					args = append(args, key+"="+value)
 				}
 			} else if value == "" {
-				args = append(args, "="+key)
+				args = append(args, "="+key+"=")
 			} else {
 				args = append(args, "="+key+"="+value)
 			}

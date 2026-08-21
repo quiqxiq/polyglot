@@ -1,6 +1,9 @@
 package mikrotik
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/quixiq/polyglot/internal/domain/command"
 )
 
@@ -44,18 +47,29 @@ func NewStreamLogsCommand(topicsFilter string) command.Command {
 }
 
 // ParseLogs converts command.Result rows from /log/print into a slice of LogEntry.
+// It accepts entries even if .id is omitted by RouterOS event stream sentences.
 func ParseLogs(result command.Result) []LogEntry {
 	logs := make([]LogEntry, 0, len(result.Rows))
-	for _, row := range result.Rows {
+	for i, row := range result.Rows {
+		msg := row["message"]
 		id := row[".id"]
-		if id == "" {
+		timeStr := row["time"]
+		topics := row["topics"]
+
+		// Ignore completely empty sentences
+		if msg == "" && timeStr == "" && topics == "" {
 			continue
 		}
+
+		if id == "" {
+			id = fmt.Sprintf("log-%d-%d", time.Now().UnixNano(), i)
+		}
+
 		logs = append(logs, LogEntry{
 			RosID:   id,
-			Time:    row["time"],
-			Topics:  row["topics"],
-			Message: row["message"],
+			Time:    timeStr,
+			Topics:  topics,
+			Message: msg,
 		})
 	}
 	return logs
