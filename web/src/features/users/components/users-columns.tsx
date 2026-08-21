@@ -129,7 +129,26 @@ export const usersColumns: ColumnDef<User>[] = [
 
 function UsersRowActions({ user }: { user: User }) {
   const { setOpen, setCurrentRow } = useUsers()
-  const isSelf = String(user.id) === currentUserID()
+  const currentUser = useAuthStore((s) => s.auth.user)
+  const currentId = currentUser?.accountNo ?? ''
+  const isSelf = String(user.id) === currentId
+  const isCurrentUserOwner = Boolean(currentUser?.role?.includes('owner'))
+
+  // Hierarchy rules for row actions:
+  // - Edit & Reset Password:
+  //   - Self: ALWAYS allowed
+  //   - Target is owner (not self): DISABLED (Owner is strictly protected)
+  //   - Target is admin (not self): ONLY Owner can edit/reset (Admin cannot edit another admin)
+  //   - Target is agent/teknisi: Owner and Admin can edit/reset
+  const canEdit = isSelf || (user.role !== 'owner' && (isCurrentUserOwner || user.role !== 'admin'))
+  const canReset = isSelf || (user.role !== 'owner' && (isCurrentUserOwner || user.role !== 'admin'))
+
+  // - Deactivate & Delete:
+  //   - Self: ALWAYS disabled (prevent self lockout)
+  //   - Target is owner: ALWAYS disabled (Owner account cannot be deleted/deactivated)
+  //   - Target is admin: ONLY Owner can deactivate/delete
+  //   - Target is agent/teknisi: Owner and Admin can deactivate/delete
+  const canToggleOrDelete = !isSelf && user.role !== 'owner' && (isCurrentUserOwner || user.role !== 'admin')
 
   return (
     <DropdownMenu>
@@ -140,7 +159,7 @@ function UsersRowActions({ user }: { user: User }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-44'>
         <DropdownMenuLabel className='text-xs text-muted-foreground'>
-          {user.username}
+          {user.username} {isSelf && '(You)'}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem
@@ -148,7 +167,7 @@ function UsersRowActions({ user }: { user: User }) {
             setCurrentRow(user)
             setOpen('edit')
           }}
-          disabled={isSelf}
+          disabled={!canEdit}
         >
           Edit user
         </DropdownMenuItem>
@@ -157,6 +176,7 @@ function UsersRowActions({ user }: { user: User }) {
             setCurrentRow(user)
             setOpen('reset')
           }}
+          disabled={!canReset}
         >
           Reset password
         </DropdownMenuItem>
@@ -166,7 +186,7 @@ function UsersRowActions({ user }: { user: User }) {
             setCurrentRow(user)
             setOpen('toggle')
           }}
-          disabled={isSelf}
+          disabled={!canToggleOrDelete}
         >
           {user.isActive ? (
             <>
@@ -183,7 +203,7 @@ function UsersRowActions({ user }: { user: User }) {
             setCurrentRow(user)
             setOpen('delete')
           }}
-          disabled={isSelf}
+          disabled={!canToggleOrDelete}
           className='text-destructive focus:text-destructive'
         >
           Delete user
@@ -191,11 +211,4 @@ function UsersRowActions({ user }: { user: User }) {
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
-
-// currentUserID membaca id user yang sedang login dari auth store (field
-// accountNo dipakai untuk menyimpan id string — lihat user-auth-form).
-function currentUserID(): string {
-  const user = useAuthStore.getState().auth.user
-  return user?.accountNo ?? ''
 }

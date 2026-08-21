@@ -61,7 +61,22 @@ export function UsersActionDialog({
   const createMutation = useCreateUserMutation()
   const updateMutation = useUpdateUserMutation()
 
-  const isSelf = isEdit && String(currentRow.id) === selfID()
+  const currentUser = useAuthStore((s) => s.auth.user)
+  const isCurrentUserOwner = Boolean(currentUser?.role?.includes('owner'))
+  const isSelf = isEdit && String(currentRow.id) === (currentUser?.accountNo ?? '')
+
+  // Filter available role options based on actor role and hierarchy:
+  // - Owner: can create/assign any role (owner, admin, agent, teknisi)
+  // - Admin (non-owner):
+  //     - Create mode: ONLY agent, teknisi (cannot create admin or owner)
+  //     - Edit self: admin, agent, teknisi (cannot promote self to owner)
+  //     - Edit other: ONLY agent, teknisi (cannot promote other to admin or owner)
+  const availableRoleOptions = ROLE_OPTIONS.filter((opt) => {
+    if (isCurrentUserOwner) return true
+    if (opt.value === 'owner') return false
+    if (!isSelf && opt.value === 'admin') return false
+    return true
+  })
 
   const form = useForm<UserForm>({
     resolver: zodResolver(formSchema),
@@ -210,8 +225,7 @@ export function UsersActionDialog({
                     isControlled
                     placeholder='Select a role'
                     className='col-span-4'
-                    items={ROLE_OPTIONS}
-                    disabled={isSelf}
+                    items={availableRoleOptions}
                   />
                   <FormMessage className='col-span-4 col-start-3' />
                 </FormItem>
@@ -314,8 +328,4 @@ export function UsersActionDialog({
       </DialogContent>
     </Dialog>
   )
-}
-
-function selfID(): string {
-  return useAuthStore.getState().auth.user?.accountNo ?? ''
 }

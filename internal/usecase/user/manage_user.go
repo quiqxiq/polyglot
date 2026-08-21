@@ -14,12 +14,18 @@ import (
 )
 
 var (
-	ErrUserNotFound      = errors.New("user not found")
-	ErrUsernameRequired  = errors.New("username is required")
-	ErrPasswordTooShort  = errors.New("password must be at least 8 characters")
-	ErrInvalidRole       = errors.New("invalid role")
-	ErrUserAlreadyExists = errors.New("username or email already taken")
-	ErrSelfOperation     = errors.New("cannot perform this operation on your own account")
+	ErrUserNotFound                   = errors.New("user not found")
+	ErrUsernameRequired               = errors.New("username is required")
+	ErrPasswordTooShort               = errors.New("password must be at least 8 characters")
+	ErrInvalidRole                    = errors.New("invalid role")
+	ErrUserAlreadyExists              = errors.New("username or email already taken")
+	ErrSelfOperation                  = errors.New("cannot perform this operation on your own account")
+	ErrCannotModifyOwner              = errors.New("owner account can only be modified by itself")
+	ErrCannotModifyAdmin              = errors.New("admin account can only be modified by itself or owner")
+	ErrAdminCannotCreateAdminOrOwner  = errors.New("admin can only create accounts with role agent or teknisi")
+	ErrAdminCannotAssignAdminOrOwner  = errors.New("admin can only assign role agent or teknisi")
+	ErrCannotAssignOwnerRole          = errors.New("only owner can assign owner role")
+	ErrLastOwnerDemotion              = errors.New("system requires at least one active owner account")
 )
 
 var KnownRoles = map[string]bool{
@@ -74,7 +80,35 @@ func (u *ManageUserUseCase) GetPermissions(ctx context.Context, id uint) ([]stri
 	return u.roles.GetImplicitPermissionsForUser(fmt.Sprintf("%d", id))
 }
 
-func (u *ManageUserUseCase) CreateUser(ctx context.Context, username, email, password, role, fullName, phoneNumber, specialization string) (*customer.User, error) {
+func isOwnerRole(roles []string) bool {
+	for _, r := range roles {
+		if strings.EqualFold(r, "owner") {
+			return true
+		}
+	}
+	return false
+}
+
+func (u *ManageUserUseCase) countActiveOwners(ctx context.Context) (int, error) {
+	users, _, err := u.repo.List(ctx, 1, 1000, "")
+	if err != nil {
+		return 0, err
+	}
+	count := 0
+	for _, usr := range users {
+		if strings.EqualFold(usr.Role, "owner") && usr.IsActive {
+			count++
+		}
+	}
+	return count, nil
+}
+
+func (u *ManageUserUseCase) CreateUser(
+	ctx context.Context,
+	actorID uint,
+	actorRoles []string,
+	username, email, password, role, fullName, phoneNumber, specialization string,
+) (*customer.User, error) {
 	username = strings.TrimSpace(username)
 	email = strings.TrimSpace(email)
 	role = strings.ToLower(strings.TrimSpace(role))
@@ -87,6 +121,13 @@ func (u *ManageUserUseCase) CreateUser(ctx context.Context, username, email, pas
 	}
 	if !KnownRoles[role] {
 		return nil, ErrInvalidRole
+	}
+
+	// Hierarchy check: Non-owner (admin) can only create agent or teknisi
+	if !isOwnerRole(actorRoles) {
+		if role == "owner" || role == "admin" {
+			return nil, ErrAdminCannotCreateAdminOrOwner
+		}
 	}
 
 	if existing, _ := u.repo.FindByUsername(ctx, username); existing != nil {
@@ -122,63 +163,135 @@ func (u *ManageUserUseCase) CreateUser(ctx context.Context, username, email, pas
 		_, _ = u.roles.AddRoleForUser(fmt.Sprintf("%d", newUser.ID), role)
 	}
 
-	logger.WithComponent("UserUseCase").WithField("username", username).Info("user created successfully")
+	logger.WithComponent("UserUseCase").WithFields(map[string]any{
+		"username": username,
+		"role":     role,
+		"actor_id": actorID,
+	}).Info("user created successfully")
 	return newUser, nil
 }
 
-func (u *ManageUserUseCase) UpdateUser(ctx context.Context, id uint, username, email, role, fullName, phoneNumber, specialization string) (*customer.User, error) {
-	user, err := u.repo.FindByID(ctx, id)
+func (u *ManageUserUseCase) UpdateUser(
+	ctx context.Context,
+	actorID uint,
+	actorRoles []string,
+	targetID uint,
+	username, email, role, fullName, phoneNumber, specialization string,
+) (*customer.User, error) {
+	targetUser, err := u.repo.FindByID(ctx, targetID)
 	if err != nil {
 		return nil, ErrUserNotFound
+	}
+
+	isSelf := actorID > 0 && actorID == targetID
+	actorIsOwner := isOwnerRole(actorRoles)
+
+	// Rule 1: Owner account protection - ONLY the owner account itself can modify its data.
+	if strings.EqualFold(targetUser.Role, "owner") && !isSelf {
+		return nil, ErrCannotModifyOwner
+	}
+
+	// Rule 2: Admin account protection - Admin can modify self; Owner can modify admin;
+	// Another admin (or lower role) CANNOT modify an admin.
+	if strings.EqualFold(targetUser.Role, "admin") && !isSelf && !actorIsOwner {
+		return nil, ErrCannotModifyAdmin
 	}
 
 	username = strings.TrimSpace(username)
 	email = strings.TrimSpace(email)
 	role = strings.ToLower(strings.TrimSpace(role))
 
-	if username != "" {
-		user.Username = username
-	}
-	if email != "" {
-		user.Email = email
-	}
+	// Rule 3: Role assignment restrictions
 	if role != "" {
 		if !KnownRoles[role] {
 			return nil, ErrInvalidRole
 		}
-		user.Role = role
-	}
-	if fullName != "" {
-		user.FullName = strings.TrimSpace(fullName)
-	}
-	if phoneNumber != "" {
-		user.PhoneNumber = strings.TrimSpace(phoneNumber)
-	}
-	if specialization != "" {
-		user.Specialization = strings.TrimSpace(specialization)
+
+		if !actorIsOwner {
+			// Non-owner (admin) cannot assign "owner" role to anyone (including self)
+			if role == "owner" {
+				return nil, ErrCannotAssignOwnerRole
+			}
+			// When modifying other users (agent/teknisi), admin cannot promote them to "admin" or "owner"
+			if !isSelf && role == "admin" {
+				return nil, ErrAdminCannotAssignAdminOrOwner
+			}
+		}
+
+		// Rule 4: If an owner is demoting themselves from owner to non-owner,
+		// ensure there is at least one other active owner in the system.
+		if isSelf && strings.EqualFold(targetUser.Role, "owner") && !strings.EqualFold(role, "owner") {
+			ownersCount, err := u.countActiveOwners(ctx)
+			if err == nil && ownersCount <= 1 {
+				return nil, ErrLastOwnerDemotion
+			}
+		}
+
+		targetUser.Role = role
 	}
 
-	if err := u.repo.Update(ctx, user); err != nil {
+	if username != "" {
+		targetUser.Username = username
+	}
+	if email != "" {
+		targetUser.Email = email
+	}
+	if fullName != "" {
+		targetUser.FullName = strings.TrimSpace(fullName)
+	}
+	if phoneNumber != "" {
+		targetUser.PhoneNumber = strings.TrimSpace(phoneNumber)
+	}
+	if specialization != "" {
+		targetUser.Specialization = strings.TrimSpace(specialization)
+	}
+
+	if err := u.repo.Update(ctx, targetUser); err != nil {
 		return nil, err
 	}
 
 	if role != "" && u.roles != nil {
-		_, _ = u.roles.DeleteRolesForUser(fmt.Sprintf("%d", id))
-		_, _ = u.roles.AddRoleForUser(fmt.Sprintf("%d", id), role)
+		_, _ = u.roles.DeleteRolesForUser(fmt.Sprintf("%d", targetID))
+		_, _ = u.roles.AddRoleForUser(fmt.Sprintf("%d", targetID), role)
 	}
 
-	logger.WithComponent("UserUseCase").WithField("user_id", id).Info("user updated successfully")
-	return user, nil
+	logger.WithComponent("UserUseCase").WithFields(map[string]any{
+		"target_id": targetID,
+		"actor_id":  actorID,
+	}).Info("user updated successfully")
+	return targetUser, nil
 }
 
-func (u *ManageUserUseCase) DeleteUser(ctx context.Context, id uint) error {
-	if err := u.repo.Delete(ctx, id); err != nil {
+func (u *ManageUserUseCase) DeleteUser(ctx context.Context, actorID uint, actorRoles []string, targetID uint) error {
+	if actorID > 0 && actorID == targetID {
+		return ErrSelfOperation
+	}
+
+	targetUser, err := u.repo.FindByID(ctx, targetID)
+	if err != nil {
+		return ErrUserNotFound
+	}
+
+	// Owner account cannot be deleted by anyone
+	if strings.EqualFold(targetUser.Role, "owner") {
+		return ErrCannotModifyOwner
+	}
+
+	// Admin account can only be deleted by owner
+	if strings.EqualFold(targetUser.Role, "admin") && !isOwnerRole(actorRoles) {
+		return ErrCannotModifyAdmin
+	}
+
+	if err := u.repo.Delete(ctx, targetID); err != nil {
 		return err
 	}
 	if u.roles != nil {
-		_, _ = u.roles.DeleteRolesForUser(fmt.Sprintf("%d", id))
+		_, _ = u.roles.DeleteRolesForUser(fmt.Sprintf("%d", targetID))
 	}
-	logger.WithComponent("UserUseCase").WithField("user_id", id).Info("user deleted successfully")
+	logger.WithComponent("UserUseCase").WithFields(map[string]any{
+		"target_id": targetID,
+		"actor_id":  actorID,
+	}).Info("user deleted successfully")
 	return nil
 }
 
@@ -204,9 +317,26 @@ func (u *ManageUserUseCase) ChangePassword(ctx context.Context, id uint, oldPass
 	return u.repo.UpdatePassword(ctx, id, string(hash))
 }
 
-func (u *ManageUserUseCase) AdminResetPassword(ctx context.Context, id uint, newPassword string) error {
+func (u *ManageUserUseCase) AdminResetPassword(ctx context.Context, actorID uint, actorRoles []string, targetID uint, newPassword string) error {
 	if len(newPassword) < 8 {
 		return ErrPasswordTooShort
+	}
+
+	targetUser, err := u.repo.FindByID(ctx, targetID)
+	if err != nil {
+		return ErrUserNotFound
+	}
+
+	isSelf := actorID > 0 && actorID == targetID
+
+	// Owner account password can only be reset by self
+	if strings.EqualFold(targetUser.Role, "owner") && !isSelf {
+		return ErrCannotModifyOwner
+	}
+
+	// Admin account password can only be reset by self or owner
+	if strings.EqualFold(targetUser.Role, "admin") && !isSelf && !isOwnerRole(actorRoles) {
+		return ErrCannotModifyAdmin
 	}
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
@@ -214,9 +344,28 @@ func (u *ManageUserUseCase) AdminResetPassword(ctx context.Context, id uint, new
 		return fmt.Errorf("failed to hash password: %w", err)
 	}
 
-	return u.repo.UpdatePassword(ctx, id, string(hash))
+	return u.repo.UpdatePassword(ctx, targetID, string(hash))
 }
 
-func (u *ManageUserUseCase) ToggleStatus(ctx context.Context, id uint, isActive bool) error {
-	return u.repo.UpdateStatus(ctx, id, isActive)
+func (u *ManageUserUseCase) ToggleStatus(ctx context.Context, actorID uint, actorRoles []string, targetID uint, isActive bool) error {
+	if actorID > 0 && actorID == targetID {
+		return ErrSelfOperation
+	}
+
+	targetUser, err := u.repo.FindByID(ctx, targetID)
+	if err != nil {
+		return ErrUserNotFound
+	}
+
+	// Owner account cannot be deactivated
+	if strings.EqualFold(targetUser.Role, "owner") {
+		return ErrCannotModifyOwner
+	}
+
+	// Admin account can only be toggled by owner
+	if strings.EqualFold(targetUser.Role, "admin") && !isOwnerRole(actorRoles) {
+		return ErrCannotModifyAdmin
+	}
+
+	return u.repo.UpdateStatus(ctx, targetID, isActive)
 }
