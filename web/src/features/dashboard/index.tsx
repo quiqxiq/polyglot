@@ -15,6 +15,7 @@ import { SalesChart } from './components/sales-chart'
 import { RecentVoucherSales } from './components/recent-voucher-sales'
 import { DeviceFleetCard } from './components/device-fleet-card'
 import { QuickActions } from './components/quick-actions'
+import { PPPSubscriberSearchCard } from './components/ppp-subscriber-search-card'
 import { RefreshCw } from 'lucide-react'
 
 export function Dashboard() {
@@ -76,6 +77,9 @@ export function Dashboard() {
 
         {/* Top 4 KPI Metrics */}
         <KPICards deviceId={activeDeviceId} />
+
+        {/* PPPoE Subscriber Realtime Search Widget */}
+        <PPPSubscriberSearchCard deviceId={activeDeviceId} />
 
         {/* Middle Section: Charts & Side widgets */}
         <div className='grid grid-cols-1 gap-4 lg:grid-cols-7'>
