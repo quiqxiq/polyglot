@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -64,8 +65,21 @@ export function UsersActionDialog({
 
   const form = useForm<UserForm>({
     resolver: zodResolver(formSchema),
-    defaultValues: isEdit
-      ? {
+    defaultValues: {
+      username: '',
+      email: '',
+      role: '',
+      fullName: '',
+      phoneNumber: '',
+      specialization: '',
+      password: '',
+    },
+  })
+
+  useEffect(() => {
+    if (open) {
+      if (currentRow) {
+        form.reset({
           username: currentRow.username,
           email: currentRow.email,
           role: currentRow.role,
@@ -73,8 +87,9 @@ export function UsersActionDialog({
           phoneNumber: currentRow.phoneNumber ?? '',
           specialization: currentRow.specialization ?? '',
           password: '',
-        }
-      : {
+        })
+      } else {
+        form.reset({
           username: '',
           email: '',
           role: '',
@@ -82,8 +97,10 @@ export function UsersActionDialog({
           phoneNumber: '',
           specialization: '',
           password: '',
-        },
-  })
+        })
+      }
+    }
+  }, [open, currentRow, form])
 
   async function onSubmit(values: UserForm) {
     try {
@@ -190,6 +207,7 @@ export function UsersActionDialog({
                   <SelectDropdown
                     defaultValue={field.value}
                     onValueChange={field.onChange}
+                    isControlled
                     placeholder='Select a role'
                     className='col-span-4'
                     items={ROLE_OPTIONS}
