@@ -130,7 +130,15 @@ func (g *Gateway) ListActive(ctx context.Context, driver port.DeviceDriver, name
 	if err != nil {
 		return nil, err
 	}
-	return ParsePPPActiveSessions(res), nil
+	active := ParsePPPActiveSessions(res)
+
+	// RouterOS /ppp/active/print does not include profile property; enrich from /ppp/secret
+	if secRes, err := g.exec(ctx, driver, NewPrintPPPoESecretsCommand(nameFilter)); err == nil {
+		secrets := ParsePPPoESecrets(secRes)
+		active = EnrichPPPActiveSessionsWithProfiles(active, secrets)
+	}
+
+	return active, nil
 }
 
 // KickActive implements port.PPPGateway.
@@ -145,11 +153,7 @@ func (g *Gateway) ListInactive(ctx context.Context, driver port.DeviceDriver) ([
 
 // ListPPPActive implements port.SessionGateway.
 func (g *Gateway) ListPPPActive(ctx context.Context, driver port.DeviceDriver) ([]port.PPPActiveSession, error) {
-	res, err := g.exec(ctx, driver, NewPrintPPPActiveCommand(""))
-	if err != nil {
-		return nil, err
-	}
-	return ParsePPPActiveSessions(res), nil
+	return g.ListActive(ctx, driver, "")
 }
 
 // ListPPPInactive implements port.SessionGateway.

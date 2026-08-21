@@ -47,12 +47,21 @@ func TestActiveSessionsUseCase(t *testing.T) {
 	t.Run("GetPPPActiveSessions", func(t *testing.T) {
 		driver := &mockDriver{
 			executeFn: func(ctx context.Context, cmd command.Command) (command.Result, error) {
-				assert.Equal(t, "/ppp/active/print", cmd.Raw)
-				return command.Result{
-					Rows: []map[string]string{
-						{".id": "*1", "name": "user_ppp1", "address": "192.168.10.2", "caller-id": "AA:BB:CC:DD:EE:FF"},
-					},
-				}, nil
+				if cmd.Raw == "/ppp/active/print" {
+					return command.Result{
+						Rows: []map[string]string{
+							{".id": "*1", "name": "user_ppp1", "address": "192.168.10.2", "caller-id": "AA:BB:CC:DD:EE:FF"},
+						},
+					}, nil
+				}
+				if cmd.Raw == "/ppp/secret/print" {
+					return command.Result{
+						Rows: []map[string]string{
+							{".id": "*1", "name": "user_ppp1", "profile": "10Mbps_Plan"},
+						},
+					}, nil
+				}
+				return command.Result{}, nil
 			},
 		}
 		sessions, err := uc.GetPPPActiveSessions(ctx, driver)
@@ -60,6 +69,7 @@ func TestActiveSessionsUseCase(t *testing.T) {
 		require.Len(t, sessions, 1)
 		assert.Equal(t, "user_ppp1", sessions[0].Name)
 		assert.Equal(t, "192.168.10.2", sessions[0].Address)
+		assert.Equal(t, "10Mbps_Plan", sessions[0].Profile)
 	})
 
 	t.Run("GetPPPInactiveSessions", func(t *testing.T) {

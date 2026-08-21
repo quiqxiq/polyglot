@@ -53,6 +53,15 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 	}
 	defer handle.Cancel()
 
+	secretProfileMap := make(map[string]string)
+	if secrets, err := h.useCase.ListSecrets(ctx, driver, req.Msg.NameFilter); err == nil {
+		for _, s := range secrets {
+			if s.Profile != "" {
+				secretProfileMap[s.Name] = s.Profile
+			}
+		}
+	}
+
 	for {
 		select {
 		case <-ctx.Done():
@@ -74,6 +83,12 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 				if name == "" {
 					continue
 				}
+				profile := row["profile"]
+				if profile == "" {
+					if p, ok := secretProfileMap[name]; ok {
+						profile = p
+					}
+				}
 				activeMap[id] = port.PPPActiveSession{
 					RosID:     id,
 					Name:      name,
@@ -83,7 +98,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 					Encoding:  row["encoding"],
 					SessionID: row["session-id"],
 					Radius:    strings.EqualFold(row["radius"], "true"),
-					Profile:   row["profile"],
+					Profile:   profile,
 				}
 			}
 

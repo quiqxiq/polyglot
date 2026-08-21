@@ -142,3 +142,22 @@ func FilterInactivePPPoESecrets(secrets []PPPoESecret, active []PPPActiveSession
 	}
 	return inactive
 }
+
+// EnrichPPPActiveSessionsWithProfiles enriches PPP active sessions with the subscriber's
+// profile from /ppp/secret because RouterOS /ppp/active/print does not include a profile property.
+func EnrichPPPActiveSessionsWithProfiles(active []PPPActiveSession, secrets []PPPoESecret) []PPPActiveSession {
+	secretMap := make(map[string]string, len(secrets))
+	for _, s := range secrets {
+		if s.Profile != "" {
+			secretMap[s.Name] = s.Profile
+		}
+	}
+	for i := range active {
+		if active[i].Profile == "" {
+			if prof, ok := secretMap[active[i].Name]; ok {
+				active[i].Profile = prof
+			}
+		}
+	}
+	return active
+}

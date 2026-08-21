@@ -179,3 +179,22 @@ func TestFilterInactivePPPoESecrets(t *testing.T) {
 	assert.NotContains(t, names, "budi")
 }
 
+func TestEnrichPPPActiveSessionsWithProfiles(t *testing.T) {
+	secrets := []PPPoESecret{
+		{RosID: "*1", Name: "budi", Profile: "10Mbps_Plan"},
+		{RosID: "*2", Name: "andi", Profile: "20Mbps_Plan"},
+		{RosID: "*3", Name: "siti", Profile: ""},
+	}
+	active := []PPPActiveSession{
+		{RosID: "*A1", Name: "budi", Profile: ""},
+		{RosID: "*A2", Name: "andi", Profile: "Custom_Plan"},
+		{RosID: "*A3", Name: "unknown", Profile: ""},
+	}
+
+	enriched := EnrichPPPActiveSessionsWithProfiles(active, secrets)
+	require.Len(t, enriched, 3)
+	assert.Equal(t, "10Mbps_Plan", enriched[0].Profile, "budi harus diisi profil dari secrets")
+	assert.Equal(t, "Custom_Plan", enriched[1].Profile, "andi tetap memakai profil yang sudah ada")
+	assert.Equal(t, "", enriched[2].Profile, "unknown tanpa secret tetap kosong")
+}
+

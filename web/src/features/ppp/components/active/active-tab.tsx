@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Activity, Radio } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -6,12 +6,25 @@ import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { useDeviceStore } from '@/stores/device-store'
 import { usePPPActiveSessionsQuery } from '../../api/use-ppp-active'
-import { useStreamPPPActiveSessions } from '../../api/use-ppp-stream'
+import { usePPPSecretsQuery } from '../../api/use-ppp-secrets'
+import { useStreamPPPActiveSessions, type EnrichedPPPActiveSession } from '../../api/use-ppp-stream'
 import { ActiveTable } from './active-table'
 
 export function ActiveTab() {
   const selectedDeviceId = useDeviceStore((state) => state.selectedDeviceId)
   const [liveMode, setLiveMode] = useState(true)
+
+  // Secrets list for profile enrichment fallback
+  const { data: secrets = [] } = usePPPSecretsQuery(selectedDeviceId)
+  const secretsProfileMap = useMemo(() => {
+    const map = new Map<string, string>()
+    for (const s of secrets) {
+      if (s.name && s.profile) {
+        map.set(s.name, s.profile)
+      }
+    }
+    return map
+  }, [secrets])
 
   // Query-based fallback
   const { data: polledSessions = [], isLoading: isQueryLoading } =
@@ -21,7 +34,18 @@ export function ActiveTab() {
   const { sessions: streamedSessions, isLoading: isStreamLoading } =
     useStreamPPPActiveSessions(selectedDeviceId, liveMode)
 
-  const sessions = liveMode ? (streamedSessions.length > 0 ? streamedSessions : polledSessions) : polledSessions
+  const rawSessions = liveMode ? (streamedSessions.length > 0 ? streamedSessions : polledSessions) : polledSessions
+  const sessions = useMemo<EnrichedPPPActiveSession[]>(() => {
+    return rawSessions.map((s) => {
+      const resolvedProfile = s.profile && s.profile !== '' && s.profile !== 'default'
+        ? s.profile
+        : secretsProfileMap.get(s.name) || s.profile || 'default'
+      const cloned = s.clone ? s.clone() : Object.assign(Object.create(Object.getPrototypeOf(s)), s)
+      cloned.profile = resolvedProfile
+      return cloned as EnrichedPPPActiveSession
+    })
+  }, [rawSessions, secretsProfileMap])
+
   const isLoading = liveMode ? isStreamLoading && polledSessions.length === 0 : isQueryLoading
 
   return (
