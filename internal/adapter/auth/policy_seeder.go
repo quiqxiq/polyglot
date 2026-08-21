@@ -103,23 +103,29 @@ func removeLegacyPathPolicies(ce *CasbinEnforcer) {
 }
 
 // EnsureUserRoleAssignments syncs Casbin role assignments (g table) with the
-// users table: every registered user gets at least the role stored in their
-// users.role column. Kept idempotent — existing assignments are left intact.
+// users table: every registered user gets the role stored in their users.role column.
+// Stale roles that no longer match are removed.
 func EnsureUserRoleAssignments(ce *CasbinEnforcer, users []*UserRef) {
 	if ce == nil {
 		return
 	}
-	added := 0
+	synced := 0
 	for _, u := range users {
 		if u == nil || u.Role == "" {
 			continue
 		}
+		currentRoles, _ := ce.GetRolesForUser(u.ID)
+		for _, r := range currentRoles {
+			if r != u.Role {
+				_, _ = ce.DeleteRoleForUser(u.ID, r)
+			}
+		}
 		if ok, err := ce.AddRoleForUser(u.ID, u.Role); err == nil && ok {
-			added++
+			synced++
 		}
 	}
-	if added > 0 {
-		logger.WithComponent("PolicySeeder").Infof("Assigned roles to %d user(s) in Casbin", added)
+	if synced > 0 {
+		logger.WithComponent("PolicySeeder").Infof("Synced role assignments for %d user(s) in Casbin", synced)
 	}
 }
 

@@ -293,6 +293,7 @@ type CreateUserRequest struct {
 	FullName       string                 `protobuf:"bytes,5,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
 	PhoneNumber    string                 `protobuf:"bytes,6,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
 	Specialization string                 `protobuf:"bytes,7,opt,name=specialization,proto3" json:"specialization,omitempty"`
+	Roles          []string               `protobuf:"bytes,8,rep,name=roles,proto3" json:"roles,omitempty"` // daftar multi-role
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -376,6 +377,13 @@ func (x *CreateUserRequest) GetSpecialization() string {
 	return ""
 }
 
+func (x *CreateUserRequest) GetRoles() []string {
+	if x != nil {
+		return x.Roles
+	}
+	return nil
+}
+
 type CreateUserResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
@@ -430,6 +438,7 @@ type UpdateUserRequest struct {
 	FullName       string                 `protobuf:"bytes,5,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
 	PhoneNumber    string                 `protobuf:"bytes,6,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
 	Specialization string                 `protobuf:"bytes,7,opt,name=specialization,proto3" json:"specialization,omitempty"`
+	Roles          []string               `protobuf:"bytes,8,rep,name=roles,proto3" json:"roles,omitempty"` // daftar multi-role
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -511,6 +520,13 @@ func (x *UpdateUserRequest) GetSpecialization() string {
 		return x.Specialization
 	}
 	return ""
+}
+
+func (x *UpdateUserRequest) GetRoles() []string {
+	if x != nil {
+		return x.Roles
+	}
+	return nil
 }
 
 type UpdateUserResponse struct {
@@ -858,7 +874,7 @@ const file_v1_users_proto_rawDesc = "" +
 	"\x05users\x18\x01 \x03(\v2\x11.polyglot.v1.UserR\x05users\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x03R\x05total\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\"\xdd\x01\n" +
+	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\"\xf3\x01\n" +
 	"\x11CreateUserRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
@@ -866,9 +882,10 @@ const file_v1_users_proto_rawDesc = "" +
 	"\x04role\x18\x04 \x01(\tR\x04role\x12\x1b\n" +
 	"\tfull_name\x18\x05 \x01(\tR\bfullName\x12!\n" +
 	"\fphone_number\x18\x06 \x01(\tR\vphoneNumber\x12&\n" +
-	"\x0especialization\x18\a \x01(\tR\x0especialization\";\n" +
+	"\x0especialization\x18\a \x01(\tR\x0especialization\x12\x14\n" +
+	"\x05roles\x18\b \x03(\tR\x05roles\";\n" +
 	"\x12CreateUserResponse\x12%\n" +
-	"\x04user\x18\x01 \x01(\v2\x11.polyglot.v1.UserR\x04user\"\xd1\x01\n" +
+	"\x04user\x18\x01 \x01(\v2\x11.polyglot.v1.UserR\x04user\"\xe7\x01\n" +
 	"\x11UpdateUserRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
@@ -876,7 +893,8 @@ const file_v1_users_proto_rawDesc = "" +
 	"\x04role\x18\x04 \x01(\tR\x04role\x12\x1b\n" +
 	"\tfull_name\x18\x05 \x01(\tR\bfullName\x12!\n" +
 	"\fphone_number\x18\x06 \x01(\tR\vphoneNumber\x12&\n" +
-	"\x0especialization\x18\a \x01(\tR\x0especialization\";\n" +
+	"\x0especialization\x18\a \x01(\tR\x0especialization\x12\x14\n" +
+	"\x05roles\x18\b \x03(\tR\x05roles\";\n" +
 	"\x12UpdateUserResponse\x12%\n" +
 	"\x04user\x18\x01 \x01(\v2\x11.polyglot.v1.UserR\x04user\"I\n" +
 	"\x14ResetPasswordRequest\x12\x0e\n" +

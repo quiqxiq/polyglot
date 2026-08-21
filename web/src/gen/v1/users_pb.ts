@@ -266,6 +266,13 @@ export class CreateUserRequest extends Message<CreateUserRequest> {
    */
   specialization = "";
 
+  /**
+   * daftar multi-role
+   *
+   * @generated from field: repeated string roles = 8;
+   */
+  roles: string[] = [];
+
   constructor(data?: PartialMessage<CreateUserRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -281,6 +288,7 @@ export class CreateUserRequest extends Message<CreateUserRequest> {
     { no: 5, name: "full_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "phone_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "specialization", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "roles", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateUserRequest {
@@ -378,6 +386,13 @@ export class UpdateUserRequest extends Message<UpdateUserRequest> {
    */
   specialization = "";
 
+  /**
+   * daftar multi-role
+   *
+   * @generated from field: repeated string roles = 8;
+   */
+  roles: string[] = [];
+
   constructor(data?: PartialMessage<UpdateUserRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -393,6 +408,7 @@ export class UpdateUserRequest extends Message<UpdateUserRequest> {
     { no: 5, name: "full_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "phone_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "specialization", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "roles", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateUserRequest {

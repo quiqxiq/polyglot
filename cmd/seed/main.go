@@ -38,7 +38,6 @@ func main() {
 
 	ctx := context.Background()
 	seedUsers(ctx, pgStore)
-	ensureOwnerExists(ctx, pgStore)
 	seedLLMConfig(ctx, pgStore, cfg)
 	seedCasbin(ctx, pgStore)
 
@@ -46,17 +45,17 @@ func main() {
 }
 
 func seedUsers(ctx context.Context, pgStore *postgres.Store) {
+	ownerPassword := os.Getenv("SEED_OWNER_PASSWORD")
+	if ownerPassword == "" {
+		ownerPassword = "owner12345"
+	}
 	adminPassword := os.Getenv("SEED_ADMIN_PASSWORD")
 	if adminPassword == "" {
-		log.Println("SEED_ADMIN_PASSWORD not set, skipping admin user seeding.")
+		adminPassword = "admin12345"
 	}
 	agentPassword := os.Getenv("SEED_AGENT_PASSWORD")
 	if agentPassword == "" {
-		log.Println("SEED_AGENT_PASSWORD not set, skipping agent user seeding.")
-	}
-
-	if adminPassword == "" && agentPassword == "" {
-		return
+		agentPassword = "agent123"
 	}
 
 	validatePassword := func(pw string) bool {
@@ -64,37 +63,57 @@ func seedUsers(ctx context.Context, pgStore *postgres.Store) {
 	}
 
 	users := []struct {
-		username string
-		email    string
-		password string
-		role     string
-	}{}
-
-	if adminPassword != "" {
-		if !validatePassword(adminPassword) {
-			log.Fatalf("SEED_ADMIN_PASSWORD does not meet strength requirements (min 8 chars)")
-		}
-		users = append(users, struct {
-			username string
-			email    string
-			password string
-			role     string
-		}{username: "admin", email: "admin@example.com", password: adminPassword, role: "admin"})
-	}
-
-	if agentPassword != "" {
-		if !validatePassword(agentPassword) {
-			log.Fatalf("SEED_AGENT_PASSWORD does not meet strength requirements (min 8 chars)")
-		}
-		users = append(users, struct {
-			username string
-			email    string
-			password string
-			role     string
-		}{username: "agent", email: "agent@example.com", password: agentPassword, role: "agent"})
+		username       string
+		email          string
+		password       string
+		role           string
+		fullName       string
+		phoneNumber    string
+		specialization string
+	}{
+		{
+			username:       "owner",
+			email:          "owner@example.com",
+			password:       ownerPassword,
+			role:           "owner",
+			fullName:       "System Owner",
+			phoneNumber:    "628111111111",
+			specialization: "Superadmin",
+		},
+		{
+			username:       "admin",
+			email:          "admin@example.com",
+			password:       adminPassword,
+			role:           "admin",
+			fullName:       "Administrator",
+			phoneNumber:    "628222222222",
+			specialization: "Network Admin",
+		},
+		{
+			username:       "agent",
+			email:          "agent@example.com",
+			password:       agentPassword,
+			role:           "agent",
+			fullName:       "Customer Service",
+			phoneNumber:    "628333333333",
+			specialization: "Billing & CS",
+		},
+		{
+			username:       "tech_lapangan",
+			email:          "tech@gnet.local",
+			password:       "teknisi123",
+			role:           "teknisi",
+			fullName:       "Budi Santoso",
+			phoneNumber:    "6281249338533",
+			specialization: "Fiber Optic",
+		},
 	}
 
 	for _, u := range users {
+		if !validatePassword(u.password) {
+			log.Fatalf("Password for %s does not meet strength requirements (min 8 chars)", u.username)
+		}
+
 		existing, err := pgStore.FindUserByUsername(ctx, u.username)
 		hash, errHash := bcrypt.GenerateFromPassword([]byte(u.password), bcrypt.DefaultCost)
 		if errHash != nil {
@@ -103,55 +122,39 @@ func seedUsers(ctx context.Context, pgStore *postgres.Store) {
 		}
 
 		if err == nil && existing != nil {
-			if err := pgStore.DB().WithContext(ctx).Model(&model.UserModel{}).Where("username = ?", u.username).Update("password_hash", string(hash)).Error; err != nil {
-				log.Printf("Failed to update password for existing user %s: %v", u.username, err)
+			updates := map[string]any{
+				"password_hash":  string(hash),
+				"role":           u.role,
+				"full_name":      u.fullName,
+				"phone_number":   u.phoneNumber,
+				"specialization": u.specialization,
+				"is_active":      true,
+			}
+			if err := pgStore.DB().WithContext(ctx).Model(&model.UserModel{}).Where("username = ?", u.username).Updates(updates).Error; err != nil {
+				log.Printf("Failed to update existing user %s: %v", u.username, err)
 			} else {
-				log.Printf("Updated password for existing user: %s", u.username)
+				log.Printf("Updated existing user: %s [Role: %s, Email: %s]", u.username, u.role, u.email)
 			}
 			continue
 		}
 
 		user := &customer.User{
-			Username:     u.username,
-			Email:        u.email,
-			PasswordHash: string(hash),
-			Role:         u.role,
+			Username:       u.username,
+			Email:          u.email,
+			PasswordHash:   string(hash),
+			Role:           u.role,
+			FullName:       u.fullName,
+			PhoneNumber:    u.phoneNumber,
+			Specialization: u.specialization,
+			IsActive:       true,
 		}
 
 		if err := pgStore.CreateUser(ctx, user); err != nil {
 			log.Printf("Failed to create user %s: %v", u.username, err)
 		} else {
-			log.Printf("Created user: %s [Email: %s] (%s)", u.username, u.email, u.role)
+			log.Printf("Created user: %s [Role: %s, Email: %s]", u.username, u.role, u.email)
 		}
 	}
-}
-
-// ensureOwnerExists menjamin minimal ada satu user ber-role owner — satu-
-// satunya role yang bisa mengelola RBAC (rbac:manage). Kalau belum ada
-// owner dan ada user admin, admin pertama (ID terkecil) otomatis dinaikkan
-// jadi owner. Idempotent: kalau owner sudah ada, tidak melakukan apa-apa.
-func ensureOwnerExists(ctx context.Context, pgStore *postgres.Store) {
-	users, err := pgStore.FindAllUsers(ctx)
-	if err != nil || len(users) == 0 {
-		return
-	}
-	for _, u := range users {
-		if u.Role == "owner" {
-			return
-		}
-	}
-	for _, u := range users {
-		if u.Role == "admin" {
-			u.Role = "owner"
-			if err := pgStore.UpdateUser(ctx, u); err != nil {
-				log.Printf("Failed to promote first admin to owner: %v", err)
-			} else {
-				log.Printf("Promoted user %q (id=%d) to owner — first admin becomes owner", u.Username, u.ID)
-			}
-			return
-		}
-	}
-	log.Println("No admin user found to promote to owner — create an owner manually to manage RBAC")
 }
 
 func seedCasbin(ctx context.Context, pgStore *postgres.Store) {
