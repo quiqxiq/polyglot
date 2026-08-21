@@ -34,7 +34,7 @@ interface ActiveTableProps {
 }
 
 export function ActiveTable({ data, isLoading }: ActiveTableProps) {
-  const [sorting, setSorting] = useState<SortingState>([])
+  const [sorting, setSorting] = useState<SortingState>([{ id: 'user', desc: false }])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [globalFilter, setGlobalFilter] = useState('')
 
@@ -46,6 +46,8 @@ export function ActiveTable({ data, isLoading }: ActiveTableProps) {
       columnVisibility,
       globalFilter,
     },
+    getRowId: (row) => row.id,
+    autoResetPageIndex: false,
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,

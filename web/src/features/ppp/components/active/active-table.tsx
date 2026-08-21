@@ -38,7 +38,7 @@ export function ActiveTable({ data, isLoading }: ActiveTableProps) {
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [sorting, setSorting] = useState<SortingState>([])
+  const [sorting, setSorting] = useState<SortingState>([{ id: 'name', desc: false }])
   const [globalFilter, setGlobalFilter] = useState('')
 
   // Derive unique profiles from active data
@@ -64,6 +64,8 @@ export function ActiveTable({ data, isLoading }: ActiveTableProps) {
       columnFilters,
       globalFilter,
     },
+    getRowId: (row) => row.id,
+    autoResetPageIndex: false,
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,

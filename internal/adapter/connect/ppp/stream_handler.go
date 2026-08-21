@@ -3,6 +3,7 @@ package ppp
 import (
 	"context"
 	"fmt"
+	"sort"
 	"strings"
 	"time"
 
@@ -70,7 +71,21 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 			if !ok {
 				return handle.Err()
 			}
-			for _, row := range res.Rows {
+			rows := append([]map[string]string(nil), res.Rows...)
+		drain:
+			for {
+				select {
+				case next, nextOk := <-handle.Chan():
+					if !nextOk {
+						break drain
+					}
+					rows = append(rows, next.Rows...)
+				default:
+					break drain
+				}
+			}
+
+			for _, row := range rows {
 				id := row[".id"]
 				if id == "" {
 					continue
@@ -106,6 +121,9 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 			for _, s := range activeMap {
 				items = append(items, ToProtoPPPActiveSession(s))
 			}
+			sort.Slice(items, func(i, j int) bool {
+				return items[i].Name < items[j].Name
+			})
 
 			if err := stream.Send(&devicepb.PPPActiveSessionsFrame{
 				DeviceId:      req.Msg.DeviceId,

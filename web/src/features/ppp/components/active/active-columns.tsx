@@ -90,7 +90,7 @@ export const activeColumns: ColumnDef<EnrichedPPPActiveSession>[] = [
       <DataTableColumnHeader column={column} title="Uptime" />
     ),
     cell: ({ row }) => {
-      const uptime = row.getValue('uptime') as string
+      const uptime = row.original.uptime || (row.getValue('uptime') as string) || ''
       return (
         <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
           <Clock className="h-3.5 w-3.5 text-primary" />

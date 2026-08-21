@@ -320,6 +320,9 @@ type PPPActiveSession struct {
 	SessionId     string                 `protobuf:"bytes,7,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	Radius        bool                   `protobuf:"varint,8,opt,name=radius,proto3" json:"radius,omitempty"`
 	Profile       string                 `protobuf:"bytes,9,opt,name=profile,proto3" json:"profile,omitempty"`
+	Uptime        string                 `protobuf:"bytes,10,opt,name=uptime,proto3" json:"uptime,omitempty"`
+	LimitBytesIn  string                 `protobuf:"bytes,11,opt,name=limit_bytes_in,json=limitBytesIn,proto3" json:"limit_bytes_in,omitempty"`
+	LimitBytesOut string                 `protobuf:"bytes,12,opt,name=limit_bytes_out,json=limitBytesOut,proto3" json:"limit_bytes_out,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -413,6 +416,27 @@ func (x *PPPActiveSession) GetRadius() bool {
 func (x *PPPActiveSession) GetProfile() string {
 	if x != nil {
 		return x.Profile
+	}
+	return ""
+}
+
+func (x *PPPActiveSession) GetUptime() string {
+	if x != nil {
+		return x.Uptime
+	}
+	return ""
+}
+
+func (x *PPPActiveSession) GetLimitBytesIn() string {
+	if x != nil {
+		return x.LimitBytesIn
+	}
+	return ""
+}
+
+func (x *PPPActiveSession) GetLimitBytesOut() string {
+	if x != nil {
+		return x.LimitBytesOut
 	}
 	return ""
 }
@@ -2723,7 +2747,7 @@ const file_v1_ppp_proto_rawDesc = "" +
 	"\x0fuse_compression\x18\r \x01(\tR\x0euseCompression\x12%\n" +
 	"\x0euse_encryption\x18\x0e \x01(\tR\ruseEncryption\x12$\n" +
 	"\x0echange_tcp_mss\x18\x0f \x01(\tR\fchangeTcpMss\x12'\n" +
-	"\x0fbridge_learning\x18\x10 \x01(\tR\x0ebridgeLearning\"\xf4\x01\n" +
+	"\x0fbridge_learning\x18\x10 \x01(\tR\x0ebridgeLearning\"\xda\x02\n" +
 	"\x10PPPActiveSession\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x18\n" +
@@ -2734,7 +2758,11 @@ const file_v1_ppp_proto_rawDesc = "" +
 	"\n" +
 	"session_id\x18\a \x01(\tR\tsessionId\x12\x16\n" +
 	"\x06radius\x18\b \x01(\bR\x06radius\x12\x18\n" +
-	"\aprofile\x18\t \x01(\tR\aprofile\"U\n" +
+	"\aprofile\x18\t \x01(\tR\aprofile\x12\x16\n" +
+	"\x06uptime\x18\n" +
+	" \x01(\tR\x06uptime\x12$\n" +
+	"\x0elimit_bytes_in\x18\v \x01(\tR\flimitBytesIn\x12&\n" +
+	"\x0flimit_bytes_out\x18\f \x01(\tR\rlimitBytesOut\"U\n" +
 	"\x15ListPPPSecretsRequest\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x1f\n" +
 	"\vname_filter\x18\x02 \x01(\tR\n" +

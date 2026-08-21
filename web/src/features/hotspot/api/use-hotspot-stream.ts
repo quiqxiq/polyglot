@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { hotspotClient } from '@/lib/api-client'
-import type { HotspotActiveSession, HotspotUser } from '@/gen/v1/hotspot_pb'
+import type { HotspotActiveSession, HotspotActiveStat, HotspotUser } from '@/gen/v1/hotspot_pb'
 
 export type EnrichedHotspotActiveSession = HotspotActiveSession & {
   uptime?: string
@@ -21,11 +21,13 @@ export function useStreamActiveSessions(
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
   const sessionsMapRef = useRef<Map<string, EnrichedHotspotActiveSession>>(new Map())
+  const statsMapRef = useRef<Map<string, HotspotActiveStat>>(new Map())
 
   useEffect(() => {
     if (!deviceId || !enabled) {
       setSessions([])
       sessionsMapRef.current.clear()
+      statsMapRef.current.clear()
       setIsLoading(false)
       return
     }
@@ -46,14 +48,15 @@ export function useStreamActiveSessions(
           const newMap = new Map<string, EnrichedHotspotActiveSession>()
           for (const s of frame.sessions) {
             const existing = sessionsMapRef.current.get(s.id)
+            const stat = statsMapRef.current.get(s.id)
             const enriched = Object.assign(s, {
-              uptime: existing?.uptime || '',
-              sessionTimeLeft: existing?.sessionTimeLeft || '',
-              idleTime: existing?.idleTime || '',
-              bytesIn: existing?.bytesIn || '',
-              bytesOut: existing?.bytesOut || '',
-              packetsIn: existing?.packetsIn || '',
-              packetsOut: existing?.packetsOut || '',
+              uptime: stat?.uptime || existing?.uptime || '',
+              sessionTimeLeft: stat?.sessionTimeLeft || existing?.sessionTimeLeft || '',
+              idleTime: stat?.idleTime || existing?.idleTime || '',
+              bytesIn: stat?.bytesIn || existing?.bytesIn || '',
+              bytesOut: stat?.bytesOut || existing?.bytesOut || '',
+              packetsIn: stat?.packetsIn || existing?.packetsIn || '',
+              packetsOut: stat?.packetsOut || existing?.packetsOut || '',
             }) as EnrichedHotspotActiveSession
             newMap.set(s.id, enriched)
           }
@@ -86,19 +89,19 @@ export function useStreamActiveSessions(
         )
         for await (const frame of stream) {
           if (abortController.signal.aborted) break
-          if (sessionsMapRef.current.size === 0) continue
           let changed = false
           for (const st of frame.stats) {
+            statsMapRef.current.set(st.id, st)
             const sess = sessionsMapRef.current.get(st.id)
             if (sess) {
               const updated: EnrichedHotspotActiveSession = Object.assign(sess.clone ? sess.clone() : { ...sess }, {
-                uptime: st.uptime || sess.uptime,
-                sessionTimeLeft: st.sessionTimeLeft || sess.sessionTimeLeft,
-                idleTime: st.idleTime || sess.idleTime,
-                bytesIn: st.bytesIn || sess.bytesIn,
-                bytesOut: st.bytesOut || sess.bytesOut,
-                packetsIn: st.packetsIn || sess.packetsIn,
-                packetsOut: st.packetsOut || sess.packetsOut,
+                uptime: st.uptime || sess.uptime || '',
+                sessionTimeLeft: st.sessionTimeLeft || sess.sessionTimeLeft || '',
+                idleTime: st.idleTime || sess.idleTime || '',
+                bytesIn: st.bytesIn || sess.bytesIn || '',
+                bytesOut: st.bytesOut || sess.bytesOut || '',
+                packetsIn: st.packetsIn || sess.packetsIn || '',
+                packetsOut: st.packetsOut || sess.packetsOut || '',
               }) as EnrichedHotspotActiveSession
               sessionsMapRef.current.set(st.id, updated)
               changed = true

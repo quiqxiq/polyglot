@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { pppClient } from '@/lib/api-client'
-import type { PPPActiveSession, PPPSecret } from '@/gen/v1/ppp_pb'
+import type { PPPActiveSession, PPPActiveStat, PPPSecret } from '@/gen/v1/ppp_pb'
 
 export type EnrichedPPPActiveSession = PPPActiveSession & {
   uptime?: string
@@ -17,11 +17,13 @@ export function useStreamPPPActiveSessions(
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
   const sessionsMapRef = useRef<Map<string, EnrichedPPPActiveSession>>(new Map())
+  const statsMapRef = useRef<Map<string, PPPActiveStat>>(new Map())
 
   useEffect(() => {
     if (!deviceId || !enabled) {
       setSessions([])
       sessionsMapRef.current.clear()
+      statsMapRef.current.clear()
       setIsLoading(false)
       return
     }
@@ -42,10 +44,11 @@ export function useStreamPPPActiveSessions(
           const newMap = new Map<string, EnrichedPPPActiveSession>()
           for (const s of frame.sessions) {
             const existing = sessionsMapRef.current.get(s.id)
+            const stat = statsMapRef.current.get(s.id)
             const enriched = Object.assign(s, {
-              uptime: existing?.uptime || '',
-              limitBytesIn: existing?.limitBytesIn || '',
-              limitBytesOut: existing?.limitBytesOut || '',
+              uptime: stat?.uptime || existing?.uptime || '',
+              limitBytesIn: stat?.limitBytesIn || existing?.limitBytesIn || '',
+              limitBytesOut: stat?.limitBytesOut || existing?.limitBytesOut || '',
             }) as EnrichedPPPActiveSession
             newMap.set(s.id, enriched)
           }
@@ -78,15 +81,15 @@ export function useStreamPPPActiveSessions(
         )
         for await (const frame of stream) {
           if (abortController.signal.aborted) break
-          if (sessionsMapRef.current.size === 0) continue
           let changed = false
           for (const st of frame.stats) {
+            statsMapRef.current.set(st.id, st)
             const sess = sessionsMapRef.current.get(st.id)
             if (sess) {
               const updated: EnrichedPPPActiveSession = Object.assign(sess.clone ? sess.clone() : { ...sess }, {
-                uptime: st.uptime || sess.uptime,
-                limitBytesIn: st.limitBytesIn || sess.limitBytesIn,
-                limitBytesOut: st.limitBytesOut || sess.limitBytesOut,
+                uptime: st.uptime || sess.uptime || '',
+                limitBytesIn: st.limitBytesIn || sess.limitBytesIn || '',
+                limitBytesOut: st.limitBytesOut || sess.limitBytesOut || '',
               }) as EnrichedPPPActiveSession
               sessionsMapRef.current.set(st.id, updated)
               changed = true

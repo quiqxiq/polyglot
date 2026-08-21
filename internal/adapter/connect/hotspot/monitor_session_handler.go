@@ -3,6 +3,7 @@ package hotspot
 import (
 	"context"
 	"fmt"
+	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -43,6 +44,9 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 	for _, s := range activeMap {
 		initialSessions = append(initialSessions, s)
 	}
+	sort.Slice(initialSessions, func(i, j int) bool {
+		return initialSessions[i].User < initialSessions[j].User
+	})
 
 	// Immediately send initial snapshot frame so frontend has data right away
 	_ = stream.Send(&devicepb.ActiveSessionsStreamData{
@@ -65,7 +69,21 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 			if !ok {
 				return handle.Err()
 			}
-			for _, row := range res.Rows {
+			rows := append([]map[string]string(nil), res.Rows...)
+		drain:
+			for {
+				select {
+				case next, nextOk := <-handle.Chan():
+					if !nextOk {
+						break drain
+					}
+					rows = append(rows, next.Rows...)
+				default:
+					break drain
+				}
+			}
+
+			for _, row := range rows {
 				id := row[".id"]
 				if id == "" {
 					continue
@@ -92,6 +110,9 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 			for _, s := range activeMap {
 				sessions = append(sessions, s)
 			}
+			sort.Slice(sessions, func(i, j int) bool {
+				return sessions[i].User < sessions[j].User
+			})
 
 			err := stream.Send(&devicepb.ActiveSessionsStreamData{
 				DeviceId:      req.Msg.DeviceId,
