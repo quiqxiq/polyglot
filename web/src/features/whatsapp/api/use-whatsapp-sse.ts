@@ -142,7 +142,7 @@ export function useWARealtimeStream(): WARealtimeState {
   const [typing, setTyping] = useState<Record<string, ChatPresence>>({})
 
   useEffect(() => {
-    const es = new EventSource(`${SSE_BASE}/events`)
+    const es = new EventSource(`${SSE_BASE}/events`, { withCredentials: true })
     let hasConnectedOnce = false
 
     const applyStatus = (raw: string) => {
