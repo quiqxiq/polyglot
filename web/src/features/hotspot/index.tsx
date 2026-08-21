@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Route } from '@/routes/_authenticated/hotspot/index'
 import { Wifi, Users, PieChart, Activity, Radio, Laptop, ShieldCheck, Cookie, AlertCircle } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ConfigDrawer } from '@/components/config-drawer'
@@ -23,11 +23,23 @@ import { useDevicesQuery } from '@/features/devices/api/use-devices'
 type HotspotTabType = 'users' | 'profiles' | 'active' | 'inactive' | 'hosts' | 'bindings' | 'cookies'
 
 function HotspotContent() {
-  const [currentTab, setCurrentTab] = useState<HotspotTabType>('users')
+  const navigate = Route.useNavigate()
+  const search = Route.useSearch()
+  const currentTab = (search.tab as HotspotTabType) || 'users'
   const { selectedDeviceId } = useDeviceStore()
   const { data: devices = [] } = useDevicesQuery()
 
   const currentDevice = devices.find((d) => d.id === selectedDeviceId)
+
+  const handleTabChange = (val: string) => {
+    navigate({
+      search: (prev) => ({
+        ...prev,
+        tab: val as HotspotTabType,
+      }),
+      replace: true,
+    })
+  }
 
   return (
     <>
@@ -75,7 +87,7 @@ function HotspotContent() {
           /* ===== Main Tabs ===== */
           <Tabs
             value={currentTab}
-            onValueChange={(val) => setCurrentTab(val as HotspotTabType)}
+            onValueChange={handleTabChange}
             className='flex flex-1 flex-col gap-4'
           >
             <div className='w-full overflow-x-auto pb-1'>

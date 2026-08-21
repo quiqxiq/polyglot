@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Route } from '@/routes/_authenticated/ppp/index'
 import {
   Activity,
   AlertCircle,
@@ -27,11 +27,23 @@ import { ProfilesTab } from './components/profiles/profiles-tab'
 type PPPTabType = 'secrets' | 'active' | 'inactive' | 'profiles'
 
 function PPPContent() {
-  const [currentTab, setCurrentTab] = useState<PPPTabType>('secrets')
+  const navigate = Route.useNavigate()
+  const search = Route.useSearch()
+  const currentTab = (search.tab as PPPTabType) || 'secrets'
   const { selectedDeviceId } = useDeviceStore()
   const { data: devices = [] } = useDevicesQuery()
 
   const currentDevice = devices.find((d) => d.id === selectedDeviceId)
+
+  const handleTabChange = (val: string) => {
+    navigate({
+      search: (prev) => ({
+        ...prev,
+        tab: val as PPPTabType,
+      }),
+      replace: true,
+    })
+  }
 
   return (
     <>
@@ -79,7 +91,7 @@ function PPPContent() {
           /* ===== Main Tabs ===== */
           <Tabs
             value={currentTab}
-            onValueChange={(val) => setCurrentTab(val as PPPTabType)}
+            onValueChange={handleTabChange}
             className="flex flex-1 flex-col gap-4"
           >
             <div className="w-full overflow-x-auto pb-1">
