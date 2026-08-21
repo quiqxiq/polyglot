@@ -7,6 +7,7 @@ import { HotspotService } from '@/gen/v1/hotspot_connect'
 import { PPPService } from '@/gen/v1/ppp_connect'
 import { ProbeService } from '@/gen/v1/probe_connect'
 import { RBACService } from '@/gen/v1/rbac_connect'
+import { SettingService } from '@/gen/v1/settings_connect'
 import { UserService } from '@/gen/v1/users_connect'
 import { WhatsAppService } from '@/gen/v1/whatsapp_connect'
 import { createPromiseClient, Code, ConnectError } from '@connectrpc/connect'
@@ -101,5 +102,6 @@ export const hotspotClient = createPromiseClient(HotspotService, transport)
 export const pppClient = createPromiseClient(PPPService, transport)
 export const probeClient = createPromiseClient(ProbeService, transport)
 export const rbacClient = createPromiseClient(RBACService, transport)
+export const settingClient = createPromiseClient(SettingService, transport)
 export const userClient = createPromiseClient(UserService, transport)
 export const whatsappClient = createPromiseClient(WhatsAppService, transport)

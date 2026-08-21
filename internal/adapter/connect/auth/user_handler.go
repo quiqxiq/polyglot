@@ -53,7 +53,7 @@ func (h *UserConnectHandler) ListUsers(ctx context.Context, req *connect.Request
 }
 
 func (h *UserConnectHandler) CreateUser(ctx context.Context, req *connect.Request[devicepb.CreateUserRequest]) (*connect.Response[devicepb.CreateUserResponse], error) {
-	u, err := h.userUC.CreateUser(ctx, req.Msg.Username, req.Msg.Email, req.Msg.Password, req.Msg.Role)
+	u, err := h.userUC.CreateUser(ctx, req.Msg.Username, req.Msg.Email, req.Msg.Password, req.Msg.Role, req.Msg.FullName, req.Msg.PhoneNumber, req.Msg.Specialization)
 	if err != nil {
 		if errors.Is(err, userUC.ErrUserAlreadyExists) {
 			return nil, connect.NewError(connect.CodeAlreadyExists, err)
@@ -75,7 +75,7 @@ func (h *UserConnectHandler) UpdateUser(ctx context.Context, req *connect.Reques
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("user id is required"))
 	}
 
-	u, err := h.userUC.UpdateUser(ctx, uint(req.Msg.Id), req.Msg.Username, req.Msg.Email, req.Msg.Role)
+	u, err := h.userUC.UpdateUser(ctx, uint(req.Msg.Id), req.Msg.Username, req.Msg.Email, req.Msg.Role, req.Msg.FullName, req.Msg.PhoneNumber, req.Msg.Specialization)
 	if err != nil {
 		if errors.Is(err, userUC.ErrInvalidRole) {
 			return nil, connect.NewError(connect.CodeInvalidArgument, err)

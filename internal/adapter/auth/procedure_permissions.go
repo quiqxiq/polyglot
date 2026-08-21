@@ -182,6 +182,19 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.RBACService/UnassignRole":          "rbac:manage",
 	"/polyglot.v1.RBACService/SyncRolePermissions":   "rbac:manage",
 	"/polyglot.v1.RBACService/DeleteRole":            "rbac:manage",
+
+	// AuthService — profil & ganti password akun sendiri
+	"/polyglot.v1.AuthService/GetMe":          "profile:read",
+	"/polyglot.v1.AuthService/UpdateMe":       "profile:write",
+	"/polyglot.v1.AuthService/ChangePassword": "profile:write",
+
+	// SettingService — konfigurasi sistem & bot dinamis
+	"/polyglot.v1.SettingService/GetAllSettings":        "setting:read",
+	"/polyglot.v1.SettingService/GetSettingsByCategory": "setting:read",
+	"/polyglot.v1.SettingService/GetBotSettings":        "setting:read",
+	"/polyglot.v1.SettingService/UpdateSetting":         "setting:manage",
+	"/polyglot.v1.SettingService/BatchUpdateSettings":   "setting:manage",
+	"/polyglot.v1.SettingService/UpdateBotSettings":     "setting:manage",
 }
 
 // PermissionFor returns the resource:action object for a ConnectRPC procedure.

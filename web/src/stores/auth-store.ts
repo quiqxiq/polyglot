@@ -1,13 +1,17 @@
 import { create } from 'zustand'
 
 interface AuthUser {
-  accountNo: string
+  accountNo?: string
+  username?: string
+  fullName?: string
+  phoneNumber?: string
+  specialization?: string
   email: string
   role: string[]
   // Permissions efektif dari backend (GetMe/Login) — diflatten ke format
   // "resource:action" dengan wildcard regex, mis. "knowledge:.*:*".
   permissions: string[]
-  exp: number
+  exp?: number
 }
 
 interface AuthState {

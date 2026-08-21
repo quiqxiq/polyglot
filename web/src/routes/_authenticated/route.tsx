@@ -14,6 +14,10 @@ async function trySilentRefresh(): Promise<boolean> {
     if (me.user) {
       setUser({
         accountNo: me.user.id,
+        username: me.user.username,
+        fullName: me.user.fullName,
+        phoneNumber: me.user.phoneNumber,
+        specialization: me.user.specialization,
         email: me.user.email,
         role: me.user.roles.length ? me.user.roles : [me.user.role],
         permissions: me.user.permissions,

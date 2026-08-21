@@ -9,6 +9,7 @@ import {
   Sparkles,
   Users,
   Wifi,
+  Settings,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
@@ -87,6 +88,37 @@ export const sidebarData: SidebarData = {
           url: '/rbac',
           icon: ShieldCheck,
           permission: 'rbac:manage',
+        },
+        {
+          title: 'Settings',
+          icon: Settings,
+          items: [
+            {
+              title: 'Profile',
+              url: '/settings',
+            },
+            {
+              title: 'Account Security',
+              url: '/settings/account',
+            },
+            {
+              title: 'Bot & Anti-Spam',
+              url: '/settings/bot',
+              permission: 'setting:read',
+            },
+            {
+              title: 'Appearance',
+              url: '/settings/appearance',
+            },
+            // {
+            //   title: 'Notifications',
+            //   url: '/settings/notifications',
+            // },
+            {
+              title: 'Display',
+              url: '/settings/display',
+            },
+          ],
         },
       ],
     },

@@ -1,9 +1,9 @@
+import { useEffect } from 'react'
 import { z } from 'zod'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link } from '@tanstack/react-router'
-import { showSubmittedData } from '@/lib/show-submitted-data'
-import { cn } from '@/lib/utils'
+import { Loader2, ShieldCheck, UserCheck } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -15,162 +15,176 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
+import { useGetMe, useUpdateMe } from '../api/use-profile'
 
 const profileFormSchema = z.object({
-  username: z
-    .string('Please enter your username.')
-    .min(2, 'Username must be at least 2 characters.')
-    .max(30, 'Username must not be longer than 30 characters.'),
-  email: z.email({
-    error: (iss) =>
-      iss.input === undefined
-        ? 'Please select an email to display.'
-        : undefined,
-  }),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.url('Please enter a valid URL.'),
-      })
-    )
-    .optional(),
+  fullName: z.string().min(2, 'Nama lengkap minimal 2 karakter.'),
+  phoneNumber: z.string().min(8, 'Nomor HP/WhatsApp minimal 8 digit.'),
+  email: z.string().email('Format email tidak valid.').or(z.literal('')),
+  specialization: z.string().optional(),
 })
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-  bio: 'I own a computer.',
-  urls: [
-    { value: 'https://shadcn.com' },
-    { value: 'http://twitter.com/shadcn' },
-  ],
-}
-
 export function ProfileForm() {
+  const { data: user, isLoading } = useGetMe()
+  const updateMeMutation = useUpdateMe()
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues,
+    defaultValues: {
+      fullName: '',
+      phoneNumber: '',
+      email: '',
+      specialization: '',
+    },
     mode: 'onChange',
   })
 
-  const { fields, append } = useFieldArray({
-    name: 'urls',
-    control: form.control,
-  })
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        fullName: user.fullName || '',
+        phoneNumber: user.phoneNumber || '',
+        email: user.email || '',
+        specialization: user.specialization || '',
+      })
+    }
+  }, [user, form])
+
+  function onSubmit(data: ProfileFormValues) {
+    updateMeMutation.mutate({
+      fullName: data.fullName,
+      phoneNumber: data.phoneNumber,
+      email: data.email || '',
+      specialization: data.specialization || '',
+    })
+  }
+
+  if (isLoading) {
+    return (
+      <div className='flex h-48 items-center justify-center'>
+        <Loader2 className='h-8 w-8 animate-spin text-muted-foreground' />
+      </div>
+    )
+  }
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit((data) => showSubmittedData(data))}
-        className='space-y-8'
-      >
-        <FormField
-          control={form.control}
-          name='username'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder='shadcn' {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='email'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select a verified email to display' />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value='m@example.com'>m@example.com</SelectItem>
-                  <SelectItem value='m@google.com'>m@google.com</SelectItem>
-                  <SelectItem value='m@support.com'>m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                You can manage verified email addresses in your{' '}
-                <Link to='/'>email settings</Link>.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='bio'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder='Tell us a little bit about yourself'
-                  className='resize-none'
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div>
-          {fields.map((field, index) => (
-            <FormField
-              control={form.control}
-              key={field.id}
-              name={`urls.${index}.value`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={cn(index !== 0 && 'sr-only')}>
-                    URLs
-                  </FormLabel>
-                  <FormDescription className={cn(index !== 0 && 'sr-only')}>
-                    Add links to your website, blog, or social media profiles.
-                  </FormDescription>
-                  <FormControl className={cn(index !== 0 && 'mt-1.5')}>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+        {/* Identitas Akun (Read-only) */}
+        <div className='grid grid-cols-1 gap-4 rounded-lg border bg-muted/30 p-4 md:grid-cols-2'>
+          <div>
+            <span className='text-xs font-semibold text-muted-foreground uppercase'>
+              Username
+            </span>
+            <div className='mt-1 flex items-center gap-2 font-mono text-sm font-medium'>
+              <UserCheck className='h-4 w-4 text-primary' />
+              {user?.username || '-'}
+            </div>
+          </div>
+          <div>
+            <span className='text-xs font-semibold text-muted-foreground uppercase'>
+              Role & Hak Akses
+            </span>
+            <div className='mt-1 flex flex-wrap gap-1.5'>
+              <Badge variant='secondary' className='capitalize'>
+                <ShieldCheck className='mr-1 h-3 w-3 text-primary' />
+                {user?.role || 'user'}
+              </Badge>
+              {user?.roles?.map(
+                (r) =>
+                  r !== user.role && (
+                    <Badge key={r} variant='outline' className='capitalize'>
+                      {r}
+                    </Badge>
+                  )
               )}
-            />
-          ))}
-          <Button
-            type='button'
-            variant='outline'
-            size='sm'
-            className='mt-2'
-            onClick={() => append({ value: '' })}
-          >
-            Add URL
-          </Button>
+            </div>
+          </div>
         </div>
-        <Button type='submit'>Update profile</Button>
+
+        {/* Form Input Editable */}
+        <FormField
+          control={form.control}
+          name='fullName'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nama Lengkap</FormLabel>
+              <FormControl>
+                <Input placeholder='Contoh: Budi Santoso' {...field} />
+              </FormControl>
+              <FormDescription>
+                Nama lengkap Anda yang akan tampil di sistem dan laporan.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+          <FormField
+            control={form.control}
+            name='phoneNumber'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>No. WhatsApp / HP</FormLabel>
+                <FormControl>
+                  <Input placeholder='Contoh: 081234567890' {...field} />
+                </FormControl>
+                <FormDescription>
+                  Nomor aktif untuk notifikasi darurat dan operasional.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='email'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder='user@example.com' type='email' {...field} />
+                </FormControl>
+                <FormDescription>
+                  Alamat email untuk pemulihan dan komunikasi resmi.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <FormField
+          control={form.control}
+          name='specialization'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Spesialisasi / Posisi</FormLabel>
+              <FormControl>
+                <Input placeholder='Contoh: Fiber Optic, Mikrotik NOC, CS Tier-1' {...field} />
+              </FormControl>
+              <FormDescription>
+                Bidang keahlian atau divisi tempat Anda bertugas (opsional).
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button
+          type='submit'
+          disabled={updateMeMutation.isPending}
+          className='min-w-32'
+        >
+          {updateMeMutation.isPending && (
+            <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+          )}
+          Simpan Profil
+        </Button>
       </form>
     </Form>
   )

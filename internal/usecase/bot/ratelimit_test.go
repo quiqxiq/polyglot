@@ -8,7 +8,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/quixiq/polyglot/internal/config"
+	"github.com/quixiq/polyglot/internal/domain/customer"
+	settingDomain "github.com/quixiq/polyglot/internal/domain/setting"
 	"github.com/quixiq/polyglot/internal/usecase/bot"
 )
 
@@ -38,19 +39,86 @@ func (m *mockCacheStore) Delete(_ context.Context, key string) error {
 	return nil
 }
 
+type mockSettingRepoForRateLimit struct {
+	settings *settingDomain.BotSettings
+}
+
+func (m *mockSettingRepoForRateLimit) Get(ctx context.Context, key string) (*settingDomain.Setting, error) {
+	return nil, nil
+}
+func (m *mockSettingRepoForRateLimit) GetAll(ctx context.Context) ([]settingDomain.Setting, error) {
+	return nil, nil
+}
+func (m *mockSettingRepoForRateLimit) GetByCategory(ctx context.Context, category string) ([]settingDomain.Setting, error) {
+	return nil, nil
+}
+func (m *mockSettingRepoForRateLimit) GetValue(ctx context.Context, key string, fallback string) string {
+	return fallback
+}
+func (m *mockSettingRepoForRateLimit) Set(ctx context.Context, key, value, category, description string) error {
+	return nil
+}
+func (m *mockSettingRepoForRateLimit) BatchSet(ctx context.Context, settings []settingDomain.Setting) error {
+	return nil
+}
+func (m *mockSettingRepoForRateLimit) GetBotSettings(ctx context.Context) (*settingDomain.BotSettings, error) {
+	if m.settings == nil {
+		return settingDomain.DefaultBotSettings(), nil
+	}
+	return m.settings, nil
+}
+func (m *mockSettingRepoForRateLimit) SaveBotSettings(ctx context.Context, s *settingDomain.BotSettings) error {
+	m.settings = s
+	return nil
+}
+
+type mockUserRepoForRateLimit struct {
+	users []*customer.User
+}
+
+func (m *mockUserRepoForRateLimit) FindAll(ctx context.Context) ([]*customer.User, error) {
+	return m.users, nil
+}
+func (m *mockUserRepoForRateLimit) FindByID(ctx context.Context, id uint) (*customer.User, error) {
+	return nil, nil
+}
+func (m *mockUserRepoForRateLimit) FindByUsername(ctx context.Context, username string) (*customer.User, error) {
+	return nil, nil
+}
+func (m *mockUserRepoForRateLimit) FindByEmail(ctx context.Context, email string) (*customer.User, error) {
+	return nil, nil
+}
+func (m *mockUserRepoForRateLimit) FindByRoles(ctx context.Context, roles []string, activeOnly bool) ([]*customer.User, error) {
+	return nil, nil
+}
+func (m *mockUserRepoForRateLimit) Create(ctx context.Context, user *customer.User) error {
+	return nil
+}
+func (m *mockUserRepoForRateLimit) Update(ctx context.Context, user *customer.User) error {
+	return nil
+}
+func (m *mockUserRepoForRateLimit) Delete(ctx context.Context, id uint) error {
+	return nil
+}
+func (m *mockUserRepoForRateLimit) UpdatePassword(ctx context.Context, id uint, passwordHash string) error {
+	return nil
+}
+func (m *mockUserRepoForRateLimit) UpdateStatus(ctx context.Context, id uint, isActive bool) error {
+	return nil
+}
+func (m *mockUserRepoForRateLimit) Count(ctx context.Context) (int64, error) {
+	return int64(len(m.users)), nil
+}
+func (m *mockUserRepoForRateLimit) List(ctx context.Context, offset, limit int, search string) ([]*customer.User, int64, error) {
+	return m.users, int64(len(m.users)), nil
+}
+
 func TestRateLimiter_NormalChatAllowed(t *testing.T) {
 	cache := newMockCacheStore()
-	cfg := config.Config{
-		BotBurstLimit:      3,
-		BotBurstWindowSecs: 5,
-		BotMute1HourSecs:   3600,
-		BotBan24HourSecs:   86400,
-		BotDailyChatLimit:  10,
-	}
-	limiter := bot.NewRateLimiter(cache, cfg)
+	limiter := bot.NewRateLimiter(cache, nil, nil)
 	ctx := context.Background()
 
-	// Pesan 1-3 dalam toleransi
+	// Pesan 1-3 dalam toleransi (default burst limit: 3)
 	for i := 0; i < 3; i++ {
 		res, err := limiter.Check(ctx, "628123456789", "Halo admin")
 		require.NoError(t, err)
@@ -60,14 +128,7 @@ func TestRateLimiter_NormalChatAllowed(t *testing.T) {
 
 func TestRateLimiter_BurstSpam_Mutes1Hour(t *testing.T) {
 	cache := newMockCacheStore()
-	cfg := config.Config{
-		BotBurstLimit:      3,
-		BotBurstWindowSecs: 5,
-		BotMute1HourSecs:   3600,
-		BotBan24HourSecs:   86400,
-		BotDailyChatLimit:  10,
-	}
-	limiter := bot.NewRateLimiter(cache, cfg)
+	limiter := bot.NewRateLimiter(cache, nil, nil)
 	ctx := context.Background()
 
 	// Kirim 3 pesan normal
@@ -91,14 +152,7 @@ func TestRateLimiter_BurstSpam_Mutes1Hour(t *testing.T) {
 
 func TestRateLimiter_EscalatesTo24HourBan(t *testing.T) {
 	cache := newMockCacheStore()
-	cfg := config.Config{
-		BotBurstLimit:      3,
-		BotBurstWindowSecs: 5,
-		BotMute1HourSecs:   3600,
-		BotBan24HourSecs:   86400,
-		BotDailyChatLimit:  10,
-	}
-	limiter := bot.NewRateLimiter(cache, cfg)
+	limiter := bot.NewRateLimiter(cache, nil, nil)
 	ctx := context.Background()
 
 	// Trigger burst mute
@@ -124,11 +178,13 @@ func TestRateLimiter_EscalatesTo24HourBan(t *testing.T) {
 
 func TestRateLimiter_DailyQuotaExceeded(t *testing.T) {
 	cache := newMockCacheStore()
-	cfg := config.Config{
-		BotBurstLimit:      100, // Longgar untuk fokus test daily limit
-		BotDailyChatLimit:  10,
+	settingRepo := &mockSettingRepoForRateLimit{
+		settings: &settingDomain.BotSettings{
+			BurstLimit:     100, // Longgar untuk fokus test daily limit
+			DailyChatLimit: 10,
+		},
 	}
-	limiter := bot.NewRateLimiter(cache, cfg)
+	limiter := bot.NewRateLimiter(cache, settingRepo, nil)
 	ctx := context.Background()
 
 	// Simulasikan 10 chat sukses
@@ -148,15 +204,28 @@ func TestRateLimiter_DailyQuotaExceeded(t *testing.T) {
 
 func TestRateLimiter_WhitelistBypass(t *testing.T) {
 	cache := newMockCacheStore()
-	cfg := config.Config{
-		BotBurstLimit:      1,
-		BotDailyChatLimit:  1,
-		BotWhitelistPhones: []string{"628999999999", "+628111111111"},
+	settingRepo := &mockSettingRepoForRateLimit{
+		settings: &settingDomain.BotSettings{
+			BurstLimit:            1,
+			DailyChatLimit:        1,
+			WhitelistAllStaff:     true,
+			CustomWhitelistPhones: "628999999999, +628111111111",
+		},
 	}
-	limiter := bot.NewRateLimiter(cache, cfg)
+	userRepo := &mockUserRepoForRateLimit{
+		users: []*customer.User{
+			{
+				ID:          1,
+				Username:    "staff_ali",
+				PhoneNumber: "628777777777",
+				IsActive:    true,
+			},
+		},
+	}
+	limiter := bot.NewRateLimiter(cache, settingRepo, userRepo)
 	ctx := context.Background()
 
-	// Whitelisted number bebas spam
+	// Custom Whitelisted numbers bebas limit
 	for i := 0; i < 20; i++ {
 		res, err := limiter.Check(ctx, "628999999999@s.whatsapp.net", "Spam admin")
 		require.NoError(t, err)
@@ -168,15 +237,18 @@ func TestRateLimiter_WhitelistBypass(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, bot.StatusAllowed, res.Status)
 	}
+
+	// Staff Whitelist bebas limit
+	for i := 0; i < 20; i++ {
+		res, err := limiter.Check(ctx, "628777777777", "Spam staf")
+		require.NoError(t, err)
+		assert.Equal(t, bot.StatusAllowed, res.Status)
+	}
 }
 
 func TestRateLimiter_ResetRateLimitAndStatus(t *testing.T) {
 	cache := newMockCacheStore()
-	cfg := config.Config{
-		BotBurstLimit:     3,
-		BotDailyChatLimit: 10,
-	}
-	limiter := bot.NewRateLimiter(cache, cfg)
+	limiter := bot.NewRateLimiter(cache, nil, nil)
 	ctx := context.Background()
 
 	phone := "628123456789"
@@ -208,4 +280,43 @@ func TestRateLimiter_ResetRateLimitAndStatus(t *testing.T) {
 	res, err := limiter.Check(ctx, phone, "Halo kembali")
 	require.NoError(t, err)
 	assert.Equal(t, bot.StatusAllowed, res.Status)
+}
+
+func TestRateLimiter_DynamicSettings_CustomMuteAndBanDuration(t *testing.T) {
+	cache := newMockCacheStore()
+	mockRepo := &mockSettingRepoForRateLimit{
+		settings: &settingDomain.BotSettings{
+			BurstLimit:            3,
+			BurstWindowSecs:       5,
+			Mute1HourSecs:         7200,   // 2 jam
+			Ban24HourSecs:         172800, // 2 hari
+			DailyChatLimit:        20,     // 20 chat
+			WhitelistAllStaff:     false,
+			CustomWhitelistPhones: "",
+		},
+	}
+	limiter := bot.NewRateLimiter(cache, mockRepo, nil)
+	ctx := context.Background()
+	phone := "628999999999"
+
+	// 1. Trigger burst spam
+	for i := 0; i < 3; i++ {
+		_, _ = limiter.Check(ctx, phone, "Normal")
+	}
+	res, err := limiter.Check(ctx, phone, "Spam 4")
+	require.NoError(t, err)
+	assert.Equal(t, bot.StatusWarned, res.Status)
+	// Harus menyebut 2 jam, bukan 1 jam!
+	assert.Contains(t, res.Message, "2 jam")
+
+	// 2. Status saat di-mute
+	resMuted, err := limiter.Check(ctx, phone, "Spam while muted")
+	require.NoError(t, err)
+	assert.Equal(t, bot.StatusMuted, resMuted.Status)
+	assert.Contains(t, resMuted.Message, "2 jam")
+
+	// 3. Kuota status harus 20
+	status, err := limiter.GetRateLimitStatus(ctx, phone)
+	require.NoError(t, err)
+	assert.Equal(t, 20, status.DailyQuotaLimit)
 }

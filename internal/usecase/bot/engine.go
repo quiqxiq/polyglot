@@ -7,7 +7,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/bot"
 	"github.com/quixiq/polyglot/internal/domain/llm"
 	skillDomain "github.com/quixiq/polyglot/internal/domain/skill"
@@ -21,23 +20,9 @@ const (
 	SenderCustomer = "customer"
 	SenderBot      = "bot"
 
-	// historyLimit is the number of recent messages fed to the LLM as context (max 6 to preserve tokens).
-	historyLimit = 6
+	// historyLimit is the default baseline number of recent messages fed to the LLM.
+	historyLimit = 10
 )
-
-// Config holds configuration parameters needed by the bot usecase.
-type Config struct {
-	SystemPrompt       string
-	AllowedTopics      []string
-	LLMMaxOutputTokens int
-	BurstLimit         int
-	BurstWindowSeconds int
-	Mute1HourSeconds   int
-	Ban24HourSeconds   int
-	DailyChatLimit     int
-	WhitelistPhones    []string
-	TechnicianPhone    string
-}
 
 // ProviderFactory creates an LLM provider from a stored LLM configuration.
 type ProviderFactory func(cfg *llm.Config) (port.LLMProvider, error)
@@ -55,7 +40,6 @@ type GlobalPromptProvider interface {
 
 // Engine orchestrates the WhatsApp customer-service bot.
 type Engine struct {
-	cfg           Config
 	cache         port.CacheStore
 	waGateway     port.WhatsAppGateway
 	convService   *convUC.ConversationService
@@ -63,6 +47,8 @@ type Engine struct {
 	globalPromptP GlobalPromptProvider
 	llmConfigRepo port.LLMConfigRepository
 	chatRepo      port.ChatRepository
+	userRepo      port.UserRepository
+	settingRepo   port.SettingRepository
 	rateLimiter   *RateLimiter
 	guardrail     *Guardrail
 	contextMgr    *ContextManager
@@ -70,8 +56,8 @@ type Engine struct {
 	providerF     ProviderFactory
 }
 
+// NewEngine creates a new bot engine instance with port dependencies.
 func NewEngine(
-	cfg Config,
 	cache port.CacheStore,
 	waGateway port.WhatsAppGateway,
 	convService *convUC.ConversationService,
@@ -79,11 +65,14 @@ func NewEngine(
 	globalPromptP GlobalPromptProvider,
 	llmConfigRepo port.LLMConfigRepository,
 	chatRepo port.ChatRepository,
+	userRepo port.UserRepository,
+	settingRepo port.SettingRepository,
 	publisher port.EventPublisher,
 	providerFactory ProviderFactory,
 ) *Engine {
+	rl := NewRateLimiter(cache, settingRepo, userRepo)
+
 	return &Engine{
-		cfg:           cfg,
 		cache:         cache,
 		waGateway:     waGateway,
 		convService:   convService,
@@ -91,16 +80,11 @@ func NewEngine(
 		globalPromptP: globalPromptP,
 		llmConfigRepo: llmConfigRepo,
 		chatRepo:      chatRepo,
-		rateLimiter: NewRateLimiter(cache, config.Config{
-			BotBurstLimit:      cfg.BurstLimit,
-			BotBurstWindowSecs: cfg.BurstWindowSeconds,
-			BotMute1HourSecs:   cfg.Mute1HourSeconds,
-			BotBan24HourSecs:   cfg.Ban24HourSeconds,
-			BotDailyChatLimit:  cfg.DailyChatLimit,
-			BotWhitelistPhones: cfg.WhitelistPhones,
-		}),
+		userRepo:      userRepo,
+		settingRepo:   settingRepo,
+		rateLimiter:   rl,
 		guardrail:     NewGuardrail(),
-		contextMgr:    NewContextManager(cache, cfg.SystemPrompt),
+		contextMgr:    NewContextManager(cache),
 		publisher:     publisher,
 		providerF:     providerFactory,
 	}
@@ -131,7 +115,14 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		return errors.New("bot engine: conversation service not initialized")
 	}
 
-	conv, err := e.convService.GetOrCreateConversation(ctx, sessionID, customerNumber)
+	sessionTimeout := 30
+	if e.settingRepo != nil {
+		if botSettings, err := e.settingRepo.GetBotSettings(ctx); err == nil && botSettings != nil && botSettings.SessionTimeoutMinutes > 0 {
+			sessionTimeout = botSettings.SessionTimeoutMinutes
+		}
+	}
+
+	conv, err := e.convService.GetOrCreateConversationWithTimeout(ctx, sessionID, customerNumber, sessionTimeout)
 	if err != nil {
 		return fmt.Errorf("failed to get/create conversation: %w", err)
 	}
@@ -179,14 +170,24 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, rateResult.Message, 0, 0, nil)
 	}
 
-	history, err := e.convService.GetRecentHistory(ctx, conv.ID, historyLimit)
+	limit := historyLimit
+	if e.settingRepo != nil {
+		if botSettings, err := e.settingRepo.GetBotSettings(ctx); err == nil && botSettings != nil && botSettings.SlidingWindowSize > 0 {
+			limit = botSettings.SlidingWindowSize
+		}
+	}
+
+	history, err := e.convService.GetRecentHistory(ctx, conv.ID, limit)
 	if err != nil || len(history) == 0 {
 		if err != nil {
-			logger.WithComponent("BotEngine").Warnf("Failed to load recent history for conversation %d: %v", conv.ID, err)
+			logger.WithComponent("BotEngine").Warnf("Failed to fetch conversation history: %v", err)
 		}
-		history = []bot.Message{
-			{ConversationID: conv.ID, SenderType: bot.SenderCustomer, Content: messageContent},
-		}
+		history = []bot.Message{{
+			ConversationID: conv.ID,
+			SenderType:     bot.SenderCustomer,
+			Content:        messageContent,
+			CreatedAt:      time.Now(),
+		}}
 	}
 
 	if e.llmConfigRepo == nil {
@@ -194,8 +195,8 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	}
 
 	llmCfg, err := e.llmConfigRepo.FindActive(ctx)
-	if err != nil {
-		logger.WithComponent("BotEngine").Warnf("No active LLM config found for conversation %d", conv.ID)
+	if err != nil || llmCfg == nil {
+		logger.WithComponent("BotEngine").Warnf("No active LLM config found for conversation %d: %v", conv.ID, err)
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Maaf, konfigurasi asisten AI belum aktif. Pesan Anda telah kami terima.", 0, 0, nil)
 	}
 
@@ -208,7 +209,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	}
 
 	var botTools []llm.Tool
-	botTools = append(botTools, NewGetCurrentTimeTool(), NewPingHostTool(), NewNotifyTechnicianTool(e.waGateway, sessionID, e.cfg.TechnicianPhone))
+	botTools = append(botTools, NewGetCurrentTimeTool(), NewPingHostTool(), NewNotifyTechnicianTool(e.userRepo, e.waGateway, sessionID))
 
 	// Inject skills based on active LLM config (LocalAI standard)
 	if llmCfg.EnableSkills && e.skillProvider != nil {
@@ -234,6 +235,10 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		}
 	}
 
+	if strings.TrimSpace(llmCfg.SystemPrompt) != "" {
+		compositePrompt.WriteString(strings.TrimSpace(llmCfg.SystemPrompt))
+	}
+
 	systemPrompt, chatMessages, err := e.contextMgr.BuildPromptContext(ctx, conv.ID, history, compositePrompt.String())
 	if err != nil {
 		return fmt.Errorf("failed to build prompt context: %w", err)
@@ -250,8 +255,13 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	}
 
 	maxTokens := llmCfg.MaxOutputTokens
+	if e.settingRepo != nil {
+		if botSettings, err := e.settingRepo.GetBotSettings(ctx); err == nil && botSettings != nil && botSettings.LLMMaxOutputTokens > 0 {
+			maxTokens = botSettings.LLMMaxOutputTokens
+		}
+	}
 	if maxTokens <= 0 {
-		maxTokens = e.cfg.LLMMaxOutputTokens
+		maxTokens = 1024
 	}
 
 	resp, err := provider.ChatWithTools(ctx, systemPrompt, chatMessages, botTools, maxTokens)

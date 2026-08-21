@@ -86,6 +86,21 @@ export class UserProfile extends Message<UserProfile> {
    */
   permissions: string[] = [];
 
+  /**
+   * @generated from field: string full_name = 7;
+   */
+  fullName = "";
+
+  /**
+   * @generated from field: string phone_number = 8;
+   */
+  phoneNumber = "";
+
+  /**
+   * @generated from field: string specialization = 9;
+   */
+  specialization = "";
+
   constructor(data?: PartialMessage<UserProfile>) {
     super();
     proto3.util.initPartial(data, this);
@@ -100,6 +115,9 @@ export class UserProfile extends Message<UserProfile> {
     { no: 4, name: "role", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 5, name: "roles", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 6, name: "permissions", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 7, name: "full_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "phone_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "specialization", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UserProfile {
@@ -233,6 +251,184 @@ export class GetMeResponse extends Message<GetMeResponse> {
 
   static equals(a: GetMeResponse | PlainMessage<GetMeResponse> | undefined, b: GetMeResponse | PlainMessage<GetMeResponse> | undefined): boolean {
     return proto3.util.equals(GetMeResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.UpdateMeRequest
+ */
+export class UpdateMeRequest extends Message<UpdateMeRequest> {
+  /**
+   * @generated from field: string full_name = 1;
+   */
+  fullName = "";
+
+  /**
+   * @generated from field: string phone_number = 2;
+   */
+  phoneNumber = "";
+
+  /**
+   * @generated from field: string email = 3;
+   */
+  email = "";
+
+  /**
+   * @generated from field: string specialization = 4;
+   */
+  specialization = "";
+
+  constructor(data?: PartialMessage<UpdateMeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.UpdateMeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "full_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "phone_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "email", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "specialization", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateMeRequest {
+    return new UpdateMeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateMeRequest {
+    return new UpdateMeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateMeRequest {
+    return new UpdateMeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateMeRequest | PlainMessage<UpdateMeRequest> | undefined, b: UpdateMeRequest | PlainMessage<UpdateMeRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateMeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.UpdateMeResponse
+ */
+export class UpdateMeResponse extends Message<UpdateMeResponse> {
+  /**
+   * @generated from field: polyglot.v1.UserProfile user = 1;
+   */
+  user?: UserProfile;
+
+  constructor(data?: PartialMessage<UpdateMeResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.UpdateMeResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "user", kind: "message", T: UserProfile },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateMeResponse {
+    return new UpdateMeResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateMeResponse {
+    return new UpdateMeResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateMeResponse {
+    return new UpdateMeResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateMeResponse | PlainMessage<UpdateMeResponse> | undefined, b: UpdateMeResponse | PlainMessage<UpdateMeResponse> | undefined): boolean {
+    return proto3.util.equals(UpdateMeResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ChangePasswordRequest
+ */
+export class ChangePasswordRequest extends Message<ChangePasswordRequest> {
+  /**
+   * @generated from field: string old_password = 1;
+   */
+  oldPassword = "";
+
+  /**
+   * @generated from field: string new_password = 2;
+   */
+  newPassword = "";
+
+  constructor(data?: PartialMessage<ChangePasswordRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ChangePasswordRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "old_password", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "new_password", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangePasswordRequest {
+    return new ChangePasswordRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChangePasswordRequest {
+    return new ChangePasswordRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChangePasswordRequest {
+    return new ChangePasswordRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChangePasswordRequest | PlainMessage<ChangePasswordRequest> | undefined, b: ChangePasswordRequest | PlainMessage<ChangePasswordRequest> | undefined): boolean {
+    return proto3.util.equals(ChangePasswordRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ChangePasswordResponse
+ */
+export class ChangePasswordResponse extends Message<ChangePasswordResponse> {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success = false;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<ChangePasswordResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ChangePasswordResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ChangePasswordResponse {
+    return new ChangePasswordResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ChangePasswordResponse {
+    return new ChangePasswordResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ChangePasswordResponse {
+    return new ChangePasswordResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ChangePasswordResponse | PlainMessage<ChangePasswordResponse> | undefined, b: ChangePasswordResponse | PlainMessage<ChangePasswordResponse> | undefined): boolean {
+    return proto3.util.equals(ChangePasswordResponse, a, b);
   }
 }
 

@@ -16,6 +16,7 @@ import (
 	deviceConnect "github.com/quixiq/polyglot/internal/adapter/connect/device"
 	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
 	pppConnect "github.com/quixiq/polyglot/internal/adapter/connect/ppp"
+	settingConnect "github.com/quixiq/polyglot/internal/adapter/connect/setting"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
@@ -43,6 +44,7 @@ import (
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
+	settingUC "github.com/quixiq/polyglot/internal/usecase/setting"
 	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -119,19 +121,9 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	llmFactory := func(c *domainllm.Config) (port.LLMProvider, error) {
 		return llmadapter.NewProvider(c, cfg.EncryptionKey)
 	}
+	userRepo := postgres.NewUserRepository(pgStore.DB())
+	settingRepo := postgres.NewSettingRepository(pgStore.DB())
 	botEngine := botUC.NewEngine(
-		botUC.Config{
-			SystemPrompt:       cfg.SystemPrompt,
-			AllowedTopics:      cfg.AllowedTopics,
-			LLMMaxOutputTokens: cfg.LLMMaxOutputTokens,
-			BurstLimit:         cfg.BotBurstLimit,
-			BurstWindowSeconds: cfg.BotBurstWindowSecs,
-			Mute1HourSeconds:   cfg.BotMute1HourSecs,
-			Ban24HourSeconds:   cfg.BotBan24HourSecs,
-			DailyChatLimit:     cfg.BotDailyChatLimit,
-			WhitelistPhones:    cfg.BotWhitelistPhones,
-			TechnicianPhone:    cfg.TechnicianWANumber,
-		},
 		redisStore,
 		waManager,
 		convService,
@@ -139,6 +131,8 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		skillUseCase,
 		pgStore,
 		pgStore,
+		userRepo,
+		settingRepo,
 		sseHub,
 		llmFactory,
 	)
@@ -181,10 +175,10 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	customerRepo := postgres.NewCustomerRepository(pgStore.DB())
 	custUC := customerUC.NewManageCustomerUseCase(customerRepo)
 
-	userRepo := postgres.NewUserRepository(pgStore.DB())
 	authUseCase := authUC.NewAuthUseCase(userRepo, jwtService, refreshSvc, redisStore, casbinEnforcer)
 	refreshUseCase := authUC.NewRefreshTokenUseCase(userRepo, jwtService, refreshSvc, casbinEnforcer)
 	manageUserUseCase := userUC.NewManageUserUseCase(userRepo, casbinEnforcer)
+	manageSettingUseCase := settingUC.NewManageSettingUseCase(settingRepo)
 
 	connectDriverProvider := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
 		return reg.Get(ctx, deviceID)
@@ -211,9 +205,10 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	// 2. Register Protected ConnectRPC Services onto a Protected Sub-Mux
 	protectedMux := http.NewServeMux()
 
+	var protectedPaths []string
 	registerProtected := func(servicePath string, handler http.Handler) {
 		protectedMux.Handle(servicePath, handler)
-		// Mount pattern on rootMux forwarding through auth+rbac middlewares
+		protectedPaths = append(protectedPaths, servicePath)
 	}
 
 	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(devUC, openTermUC, connectDriverProvider)
@@ -227,6 +222,9 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	userPath, userHandler := authConnect.NewUserServiceHandler(manageUserUseCase)
 	registerProtected(userPath, userHandler)
+
+	settingPath, settingHandler := settingConnect.NewSettingServiceHandler(manageSettingUseCase)
+	registerProtected(settingPath, settingHandler)
 
 	invRepo := postgres.NewInvoiceRepository(pgStore.DB())
 	subRepo := postgres.NewSubscriptionRepository(pgStore.DB())
@@ -260,16 +258,9 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	)
 
 	// Mount protected handler for all protected service paths
-	rootMux.Handle(devPath, protectedHandler)
-	rootMux.Handle(custPath, protectedHandler)
-	rootMux.Handle(rbacPath, protectedHandler)
-	rootMux.Handle(userPath, protectedHandler)
-	rootMux.Handle(billingPath, protectedHandler)
-	rootMux.Handle(mikhmonPath, protectedHandler)
-	rootMux.Handle(pppPath, protectedHandler)
-	rootMux.Handle(waPath, protectedHandler)
-	rootMux.Handle(botPath, protectedHandler)
-	rootMux.Handle(probePath, protectedHandler)
+	for _, path := range protectedPaths {
+		rootMux.Handle(path, protectedHandler)
+	}
 
 	// 3. Wrap root handler with Global Middlewares (CORS, Logger, Recovery)
 	finalHandler := middleware.Chain(

@@ -23,6 +23,8 @@ func NewAuthServiceHandler(
 	serviceName := "polyglot.v1.AuthService"
 	mux.Handle("/"+serviceName+"/Login", connect.NewUnaryHandler("/"+serviceName+"/Login", handler.Login, codecOpt))
 	mux.Handle("/"+serviceName+"/GetMe", connect.NewUnaryHandler("/"+serviceName+"/GetMe", handler.GetMe, codecOpt))
+	mux.Handle("/"+serviceName+"/UpdateMe", connect.NewUnaryHandler("/"+serviceName+"/UpdateMe", handler.UpdateMe, codecOpt))
+	mux.Handle("/"+serviceName+"/ChangePassword", connect.NewUnaryHandler("/"+serviceName+"/ChangePassword", handler.ChangePassword, codecOpt))
 	mux.Handle("/"+serviceName+"/RefreshToken", connect.NewUnaryHandler("/"+serviceName+"/RefreshToken", handler.RefreshToken, codecOpt))
 	mux.Handle("/"+serviceName+"/Logout", connect.NewUnaryHandler("/"+serviceName+"/Logout", handler.Logout, codecOpt))
 

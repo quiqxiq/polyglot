@@ -17,14 +17,17 @@ type UserModel struct {
 	// `uniqueIndex`) karena migrasi memakai UNIQUE constraint per-kolom —
 	// dengan `uniqueIndex` GORM membaca columnType.Unique()=true tapi
 	// field.Unique=false → AutoMigrate crash saat DROP CONSTRAINT `uni_*`.
-	Username     string `gorm:"type:varchar(100);unique;not null"`
-	Email        string `gorm:"type:varchar(255);unique;not null"`
-	PasswordHash string `gorm:"type:varchar(255);not null"`
-	Role         string `gorm:"type:varchar(50);not null;default:agent"`
-	IsActive     bool   `gorm:"type:boolean;not null;default:true"`
-	TenantID     string `gorm:"type:varchar(100);not null;default:tenant-default"`
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
+	Username       string `gorm:"type:varchar(100);unique;not null"`
+	Email          string `gorm:"type:varchar(255);unique;not null"`
+	PasswordHash   string `gorm:"type:varchar(255);not null"`
+	Role           string `gorm:"type:varchar(50);not null;default:agent"`
+	FullName       string `gorm:"type:varchar(255)"`
+	PhoneNumber    string `gorm:"type:varchar(50)"`
+	Specialization string `gorm:"type:varchar(255)"`
+	IsActive       bool   `gorm:"type:boolean;not null;default:true"`
+	TenantID       string `gorm:"type:varchar(100);not null;default:tenant-default"`
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
 }
 
 // TableName maps UserModel ke tabel migrasi `users`.
@@ -35,15 +38,18 @@ func (m *UserModel) ToDomain() *customer.User {
 		return nil
 	}
 	return &customer.User{
-		ID:           m.ID,
-		Username:     m.Username,
-		Email:        m.Email,
-		PasswordHash: m.PasswordHash,
-		Role:         m.Role,
-		IsActive:     m.IsActive,
-		TenantID:     m.TenantID,
-		CreatedAt:    m.CreatedAt,
-		UpdatedAt:    m.UpdatedAt,
+		ID:             m.ID,
+		Username:       m.Username,
+		Email:          m.Email,
+		PasswordHash:   m.PasswordHash,
+		Role:           m.Role,
+		FullName:       m.FullName,
+		PhoneNumber:    m.PhoneNumber,
+		Specialization: m.Specialization,
+		IsActive:       m.IsActive,
+		TenantID:       m.TenantID,
+		CreatedAt:      m.CreatedAt,
+		UpdatedAt:      m.UpdatedAt,
 	}
 }
 
@@ -52,14 +58,17 @@ func UserModelFromDomain(u *customer.User) *UserModel {
 		return nil
 	}
 	return &UserModel{
-		ID:           u.ID,
-		Username:     u.Username,
-		Email:        u.Email,
-		PasswordHash: u.PasswordHash,
-		Role:         u.Role,
-		IsActive:     u.IsActive,
-		TenantID:     u.TenantID,
-		CreatedAt:    u.CreatedAt,
-		UpdatedAt:    u.UpdatedAt,
+		ID:             u.ID,
+		Username:       u.Username,
+		Email:          u.Email,
+		PasswordHash:   u.PasswordHash,
+		Role:           u.Role,
+		FullName:       u.FullName,
+		PhoneNumber:    u.PhoneNumber,
+		Specialization: u.Specialization,
+		IsActive:       u.IsActive,
+		TenantID:       u.TenantID,
+		CreatedAt:      u.CreatedAt,
+		UpdatedAt:      u.UpdatedAt,
 	}
 }

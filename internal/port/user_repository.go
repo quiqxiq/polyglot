@@ -15,6 +15,7 @@ type UserRepository interface {
 	Count(ctx context.Context) (int64, error)
 	List(ctx context.Context, page, pageSize int, search string) ([]*customer.User, int64, error)
 	FindAll(ctx context.Context) ([]*customer.User, error)
+	FindByRoles(ctx context.Context, roles []string, activeOnly bool) ([]*customer.User, error)
 	Update(ctx context.Context, user *customer.User) error
 	Delete(ctx context.Context, id uint) error
 	UpdatePassword(ctx context.Context, id uint, passwordHash string) error

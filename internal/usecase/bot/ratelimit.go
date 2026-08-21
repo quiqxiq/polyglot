@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/quixiq/polyglot/internal/config"
+	"github.com/quixiq/polyglot/internal/domain/setting"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -37,12 +37,8 @@ type RateLimitStatusInfo struct {
 
 type RateLimiter struct {
 	cache       port.CacheStore
-	burstLimit  int
-	burstWindow int
-	mute1hSecs  int
-	ban24hSecs  int
-	dailyLimit  int
-	whitelist   map[string]bool
+	settingRepo port.SettingRepository
+	userRepo    port.UserRepository
 }
 
 func cleanPhoneNumber(phone string) string {
@@ -52,50 +48,118 @@ func cleanPhoneNumber(phone string) string {
 	return phone
 }
 
-func NewRateLimiter(cache port.CacheStore, cfg config.Config) *RateLimiter {
-	burstLimit := cfg.BotBurstLimit
-	if burstLimit <= 0 {
-		burstLimit = 3
-	}
-	burstWindow := cfg.BotBurstWindowSecs
-	if burstWindow <= 0 {
-		burstWindow = 5
-	}
-	mute1h := cfg.BotMute1HourSecs
-	if mute1h <= 0 {
-		mute1h = 3600
-	}
-	ban24h := cfg.BotBan24HourSecs
-	if ban24h <= 0 {
-		ban24h = 86400
-	}
-	dailyLimit := cfg.BotDailyChatLimit
-	if dailyLimit <= 0 {
-		dailyLimit = 10
-	}
-
-	wl := make(map[string]bool)
-	for _, p := range cfg.BotWhitelistPhones {
-		cleaned := cleanPhoneNumber(p)
-		if cleaned != "" {
-			wl[cleaned] = true
-		}
-	}
-
+// NewRateLimiter creates a dynamic multi-tier rate limiter backed by system_settings and users repository.
+func NewRateLimiter(cache port.CacheStore, settingRepo port.SettingRepository, userRepo port.UserRepository) *RateLimiter {
 	return &RateLimiter{
 		cache:       cache,
-		burstLimit:  burstLimit,
-		burstWindow: burstWindow,
-		mute1hSecs:  mute1h,
-		ban24hSecs:  ban24h,
-		dailyLimit:  dailyLimit,
-		whitelist:   wl,
+		settingRepo: settingRepo,
+		userRepo:    userRepo,
 	}
+}
+
+// WithSettings attaches dynamic setting and user repositories.
+func (r *RateLimiter) WithSettings(settingRepo port.SettingRepository, userRepo port.UserRepository) *RateLimiter {
+	r.settingRepo = settingRepo
+	r.userRepo = userRepo
+	return r
 }
 
 // HasCache reports whether the rate limiter has an active cache backend.
 func (r *RateLimiter) HasCache() bool {
 	return r != nil && r.cache != nil
+}
+
+func (r *RateLimiter) isWhitelisted(ctx context.Context, customerNumber string) bool {
+	if customerNumber == "" {
+		return false
+	}
+	if r.settingRepo != nil {
+		s, err := r.settingRepo.GetBotSettings(ctx)
+		if err == nil && s != nil {
+			if s.WhitelistAllStaff && r.userRepo != nil {
+				allUsers, err := r.userRepo.FindAll(ctx)
+				if err == nil {
+					for _, u := range allUsers {
+						if cleanPhoneNumber(u.PhoneNumber) == customerNumber && u.PhoneNumber != "" {
+							return true
+						}
+					}
+				}
+			}
+			if s.CustomWhitelistPhones != "" {
+				for _, p := range strings.Split(s.CustomWhitelistPhones, ",") {
+					if cleanPhoneNumber(p) == customerNumber && strings.TrimSpace(p) != "" {
+						return true
+					}
+				}
+			}
+		}
+	}
+	return false
+}
+
+func formatDurationID(secs int) string {
+	if secs <= 0 {
+		return "sementara"
+	}
+	if secs%86400 == 0 {
+		days := secs / 86400
+		if days == 1 {
+			return "24 jam"
+		}
+		return fmt.Sprintf("%d hari", days)
+	}
+	if secs%3600 == 0 {
+		hours := secs / 3600
+		return fmt.Sprintf("%d jam", hours)
+	}
+	if secs%60 == 0 {
+		minutes := secs / 60
+		return fmt.Sprintf("%d menit", minutes)
+	}
+	if secs > 3600 {
+		hours := secs / 3600
+		rem := (secs % 3600) / 60
+		if rem > 0 {
+			return fmt.Sprintf("%d jam %d menit", hours, rem)
+		}
+		return fmt.Sprintf("%d jam", hours)
+	}
+	if secs > 60 {
+		mins := secs / 60
+		return fmt.Sprintf("%d menit", mins)
+	}
+	return fmt.Sprintf("%d detik", secs)
+}
+
+func (r *RateLimiter) getEffectiveLimits(ctx context.Context) (burstLimit, burstWindow, mute1h, ban24h, dailyLimit int) {
+	defaults := setting.DefaultBotSettings()
+	burstLimit = defaults.BurstLimit
+	burstWindow = defaults.BurstWindowSecs
+	mute1h = defaults.Mute1HourSecs
+	ban24h = defaults.Ban24HourSecs
+	dailyLimit = defaults.DailyChatLimit
+
+	if r.settingRepo != nil {
+		if s, err := r.settingRepo.GetBotSettings(ctx); err == nil && s != nil {
+			if s.BurstLimit > 0 {
+				burstLimit = s.BurstLimit
+			}
+			if s.BurstWindowSecs > 0 {
+				burstWindow = s.BurstWindowSecs
+			}
+			if s.Mute1HourSecs > 0 {
+				mute1h = s.Mute1HourSecs
+			}
+			if s.Ban24HourSecs > 0 {
+				ban24h = s.Ban24HourSecs
+			}
+			if s.DailyChatLimit > 0 {
+				dailyLimit = s.DailyChatLimit
+			}
+		}
+	}
+	return
 }
 
 // Check evaluates incoming message for spam burst, active mute penalties, and daily quota.
@@ -106,13 +170,15 @@ func (r *RateLimiter) Check(ctx context.Context, customerNumber string, messageC
 	}
 
 	// 1. Whitelist Check
-	if r.whitelist[customerNumber] {
+	if r.isWhitelisted(ctx, customerNumber) {
 		return RateLimitResult{Status: StatusAllowed}, nil
 	}
 
 	if r.cache == nil {
 		return RateLimitResult{Status: StatusAllowed}, nil
 	}
+
+	burstLimit, burstWindow, mute1hSecs, ban24hSecs, dailyLimit := r.getEffectiveLimits(ctx)
 
 	// 2. Active Mute / Ban Check (Tier 1 & 2)
 	muteVal, err := r.cache.Get(ctx, "mute:"+customerNumber)
@@ -122,20 +188,20 @@ func (r *RateLimiter) Check(ctx context.Context, customerNumber string, messageC
 		strikesStr, _ := r.cache.Get(ctx, strikesKey)
 		strikes, _ := strconv.Atoi(strikesStr)
 		strikes++
-		_ = r.cache.Set(ctx, strikesKey, strconv.Itoa(strikes), r.ban24hSecs)
+		_ = r.cache.Set(ctx, strikesKey, strconv.Itoa(strikes), ban24hSecs)
 
-		// Jika terus melakukan spam (>= 3 strike) selama masa 1 jam, eskalasi ke ban 24 jam
+		// Jika terus melakukan spam (>= 3 strike) selama masa mute, eskalasi ke ban level 2
 		if strikes >= 3 && muteVal != "ban_24h" {
-			_ = r.cache.Set(ctx, "mute:"+customerNumber, "ban_24h", r.ban24hSecs)
+			_ = r.cache.Set(ctx, "mute:"+customerNumber, "ban_24h", ban24hSecs)
 			return RateLimitResult{
 				Status:  StatusMuted,
-				Message: "⚠️ Nomor Anda telah dinonaktifkan selama 24 jam karena aktivitas spam berulang. Silakan hubungi admin Customer Service kami.",
+				Message: fmt.Sprintf("⚠️ Nomor Anda telah dinonaktifkan selama %s karena aktivitas spam berulang. Silakan hubungi admin Customer Service kami.", formatDurationID(ban24hSecs)),
 			}, nil
 		}
 
 		return RateLimitResult{
 			Status:  StatusMuted,
-			Message: "⚠️ Nomor Anda sedang dalam masa pembatasan sementara (1 jam). Mohon menunggu atau hubungi admin jika butuh bantuan segera.",
+			Message: fmt.Sprintf("⚠️ Nomor Anda sedang dalam masa pembatasan sementara (%s). Mohon menunggu atau hubungi admin jika butuh bantuan segera.", formatDurationID(mute1hSecs)),
 		}, nil
 	}
 
@@ -144,14 +210,14 @@ func (r *RateLimiter) Check(ctx context.Context, customerNumber string, messageC
 	burstStr, _ := r.cache.Get(ctx, burstKey)
 	burstCount, _ := strconv.Atoi(burstStr)
 	burstCount++
-	_ = r.cache.Set(ctx, burstKey, strconv.Itoa(burstCount), r.burstWindow)
+	_ = r.cache.Set(ctx, burstKey, strconv.Itoa(burstCount), burstWindow)
 
-	if burstCount > r.burstLimit {
-		// Terapkan penalti mute 1 jam (3600 detik)
-		_ = r.cache.Set(ctx, "mute:"+customerNumber, "temp_1h", r.mute1hSecs)
+	if burstCount > burstLimit {
+		// Terapkan penalti mute
+		_ = r.cache.Set(ctx, "mute:"+customerNumber, "temp_1h", mute1hSecs)
 		return RateLimitResult{
 			Status:  StatusWarned,
-			Message: "⚠️ Anda mengirim pesan terlalu cepat. Layanan asisten otomatis dinonaktifkan sementara untuk nomor Anda selama 1 jam.",
+			Message: fmt.Sprintf("⚠️ Anda mengirim pesan terlalu cepat. Layanan asisten otomatis dinonaktifkan sementara untuk nomor Anda selama %s.", formatDurationID(mute1hSecs)),
 		}, nil
 	}
 
@@ -161,10 +227,10 @@ func (r *RateLimiter) Check(ctx context.Context, customerNumber string, messageC
 	dailyStr, _ := r.cache.Get(ctx, dailyKey)
 	dailyCount, _ := strconv.Atoi(dailyStr)
 
-	if dailyCount >= r.dailyLimit {
+	if dailyCount >= dailyLimit {
 		return RateLimitResult{
 			Status:  StatusDailyQuotaExceeded,
-			Message: fmt.Sprintf("ℹ️ Anda telah mencapai batas harian %d percakapan AI untuk hari ini. Untuk bantuan lebih lanjut, silakan hubungi Customer Service kami.", r.dailyLimit),
+			Message: fmt.Sprintf("ℹ️ Anda telah mencapai batas harian %d percakapan AI untuk hari ini. Untuk bantuan lebih lanjut, silakan hubungi Customer Service kami.", dailyLimit),
 		}, nil
 	}
 
@@ -202,13 +268,15 @@ func (r *RateLimiter) ResetRateLimit(ctx context.Context, customerNumber string)
 // GetRateLimitStatus queries the current rate limit and quota state of a phone number.
 func (r *RateLimiter) GetRateLimitStatus(ctx context.Context, customerNumber string) (*RateLimitStatusInfo, error) {
 	customerNumber = cleanPhoneNumber(customerNumber)
-	isWhitelisted := r.whitelist[customerNumber]
+	isWhitelisted := r.isWhitelisted(ctx, customerNumber)
+	_, _, _, _, dailyLimit := r.getEffectiveLimits(ctx)
+
 	if isWhitelisted || r.cache == nil {
 		return &RateLimitStatusInfo{
 			PhoneNumber:     customerNumber,
 			IsMuted:         false,
 			DailyChatCount:  0,
-			DailyQuotaLimit: r.dailyLimit,
+			DailyQuotaLimit: dailyLimit,
 			IsWhitelisted:   isWhitelisted,
 		}, nil
 	}
@@ -225,7 +293,7 @@ func (r *RateLimiter) GetRateLimitStatus(ctx context.Context, customerNumber str
 		IsMuted:         isMuted,
 		MuteType:        muteVal,
 		DailyChatCount:  dailyCount,
-		DailyQuotaLimit: r.dailyLimit,
+		DailyQuotaLimit: dailyLimit,
 		IsWhitelisted:   false,
 	}, nil
 }

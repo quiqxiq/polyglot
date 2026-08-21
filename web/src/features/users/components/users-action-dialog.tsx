@@ -37,6 +37,9 @@ const formSchema = z.object({
   username: z.string().min(1, 'Username is required.'),
   email: z.string().email('Enter a valid email.'),
   role: z.string().min(1, 'Role is required.'),
+  fullName: z.string().optional(),
+  phoneNumber: z.string().optional(),
+  specialization: z.string().optional(),
   password: z.string().optional(),
 })
 
@@ -66,12 +69,18 @@ export function UsersActionDialog({
           username: currentRow.username,
           email: currentRow.email,
           role: currentRow.role,
+          fullName: currentRow.fullName ?? '',
+          phoneNumber: currentRow.phoneNumber ?? '',
+          specialization: currentRow.specialization ?? '',
           password: '',
         }
       : {
           username: '',
           email: '',
           role: '',
+          fullName: '',
+          phoneNumber: '',
+          specialization: '',
           password: '',
         },
   })
@@ -85,6 +94,9 @@ export function UsersActionDialog({
             username: values.username,
             email: values.email,
             role: values.role,
+            fullName: values.fullName ?? '',
+            phoneNumber: values.phoneNumber ?? '',
+            specialization: values.specialization ?? '',
           })
         )
         toast.success(`User ${values.username} updated`)
@@ -95,6 +107,9 @@ export function UsersActionDialog({
             email: values.email,
             password: values.password ?? '',
             role: values.role,
+            fullName: values.fullName ?? '',
+            phoneNumber: values.phoneNumber ?? '',
+            specialization: values.specialization ?? '',
           })
         )
         toast.success(`User ${values.username} created`)
@@ -180,6 +195,66 @@ export function UsersActionDialog({
                     items={ROLE_OPTIONS}
                     disabled={isSelf}
                   />
+                  <FormMessage className='col-span-4 col-start-3' />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='fullName'
+              render={({ field }) => (
+                <FormItem className='grid grid-cols-6 items-center space-y-0 gap-x-4 gap-y-1'>
+                  <FormLabel className='col-span-2 text-end'>
+                    Nama Lengkap
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder='Budi Santoso'
+                      className='col-span-4'
+                      autoComplete='off'
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className='col-span-4 col-start-3' />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='phoneNumber'
+              render={({ field }) => (
+                <FormItem className='grid grid-cols-6 items-center space-y-0 gap-x-4 gap-y-1'>
+                  <FormLabel className='col-span-2 text-end'>
+                    No. WhatsApp / HP
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder='08123456789 atau 6281...'
+                      className='col-span-4'
+                      autoComplete='off'
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className='col-span-4 col-start-3' />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='specialization'
+              render={({ field }) => (
+                <FormItem className='grid grid-cols-6 items-center space-y-0 gap-x-4 gap-y-1'>
+                  <FormLabel className='col-span-2 text-end'>
+                    Spesialisasi
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder='Fiber Optic, Splicing, Wireless, dll'
+                      className='col-span-4'
+                      autoComplete='off'
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage className='col-span-4 col-start-3' />
                 </FormItem>
               )}

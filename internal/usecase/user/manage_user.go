@@ -23,10 +23,11 @@ var (
 )
 
 var KnownRoles = map[string]bool{
-	"owner":   true,
-	"admin":   true,
-	"agent":   true,
-	"teknisi": true,
+	"owner":      true,
+	"admin":      true,
+	"agent":      true,
+	"teknisi":    true,
+	"technician": true,
 }
 
 type ManageUserUseCase struct {
@@ -73,7 +74,7 @@ func (u *ManageUserUseCase) GetPermissions(ctx context.Context, id uint) ([]stri
 	return u.roles.GetImplicitPermissionsForUser(fmt.Sprintf("%d", id))
 }
 
-func (u *ManageUserUseCase) CreateUser(ctx context.Context, username, email, password, role string) (*customer.User, error) {
+func (u *ManageUserUseCase) CreateUser(ctx context.Context, username, email, password, role, fullName, phoneNumber, specialization string) (*customer.User, error) {
 	username = strings.TrimSpace(username)
 	email = strings.TrimSpace(email)
 	role = strings.ToLower(strings.TrimSpace(role))
@@ -103,11 +104,14 @@ func (u *ManageUserUseCase) CreateUser(ctx context.Context, username, email, pas
 	}
 
 	newUser := &customer.User{
-		Username:     username,
-		Email:        email,
-		PasswordHash: string(hash),
-		Role:         role,
-		IsActive:     true,
+		Username:       username,
+		Email:          email,
+		PasswordHash:   string(hash),
+		Role:           role,
+		FullName:       strings.TrimSpace(fullName),
+		PhoneNumber:    strings.TrimSpace(phoneNumber),
+		Specialization: strings.TrimSpace(specialization),
+		IsActive:       true,
 	}
 
 	if err := u.repo.Create(ctx, newUser); err != nil {
@@ -122,7 +126,7 @@ func (u *ManageUserUseCase) CreateUser(ctx context.Context, username, email, pas
 	return newUser, nil
 }
 
-func (u *ManageUserUseCase) UpdateUser(ctx context.Context, id uint, username, email, role string) (*customer.User, error) {
+func (u *ManageUserUseCase) UpdateUser(ctx context.Context, id uint, username, email, role, fullName, phoneNumber, specialization string) (*customer.User, error) {
 	user, err := u.repo.FindByID(ctx, id)
 	if err != nil {
 		return nil, ErrUserNotFound
@@ -143,6 +147,15 @@ func (u *ManageUserUseCase) UpdateUser(ctx context.Context, id uint, username, e
 			return nil, ErrInvalidRole
 		}
 		user.Role = role
+	}
+	if fullName != "" {
+		user.FullName = strings.TrimSpace(fullName)
+	}
+	if phoneNumber != "" {
+		user.PhoneNumber = strings.TrimSpace(phoneNumber)
+	}
+	if specialization != "" {
+		user.Specialization = strings.TrimSpace(specialization)
 	}
 
 	if err := u.repo.Update(ctx, user); err != nil {

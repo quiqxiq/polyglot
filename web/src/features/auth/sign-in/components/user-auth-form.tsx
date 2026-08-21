@@ -63,6 +63,10 @@ export function UserAuthForm({
       if (res.user) {
         auth.setUser({
           accountNo: res.user.id,
+          username: res.user.username,
+          fullName: res.user.fullName,
+          phoneNumber: res.user.phoneNumber,
+          specialization: res.user.specialization,
           email: res.user.email,
           role: res.user.roles.length ? res.user.roles : [res.user.role],
           permissions: res.user.permissions,

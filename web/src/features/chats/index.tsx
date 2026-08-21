@@ -28,7 +28,6 @@ import {
   RotateCcw,
   ShieldAlert,
   Smartphone,
-  Sparkles,
   UserCheck,
 } from 'lucide-react'
 import { cn, getDisplayNameInitials } from '@/lib/utils'
@@ -701,7 +700,7 @@ export function Chats() {
                         )}
                       {rateLimitStatus?.isWhitelisted && (
                         <span className='inline-flex items-center gap-1 rounded-full bg-blue-500/15 px-2 py-0.5 font-medium text-blue-700 dark:text-blue-300'>
-                          ⭐ Whitelist
+                        Whitelist
                         </span>
                       )}
                       {rateLimitStatus &&
@@ -798,7 +797,7 @@ export function Chats() {
                   </div>
 
                   {/* Baris 2: Ringkasan Bot (Jika Ada Summary) */}
-                  {convContext?.summary && (
+                  {/* {convContext?.summary && (
                     <div
                       className='flex items-start gap-1.5 rounded-md border border-border/60 bg-muted/40 px-2.5 py-1.5 text-xs text-muted-foreground'
                     >
@@ -808,7 +807,7 @@ export function Chats() {
                         {convContext.summary}
                       </div>
                     </div>
-                  )}
+                  )} */}
                 </div>
               )}
 

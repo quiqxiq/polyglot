@@ -25,18 +25,21 @@ const (
 // `role` = role utama (kolom users.role), `roles` = SEMUA role efektif
 // termasuk tambahan dari Casbin group assignment (multi-role).
 type User struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
-	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	Role          string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
-	Roles         []string               `protobuf:"bytes,5,rep,name=roles,proto3" json:"roles,omitempty"`
-	IsActive      bool                   `protobuf:"varint,6,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
-	TenantId      string                 `protobuf:"bytes,7,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
-	CreatedAtUnix int64                  `protobuf:"varint,8,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
-	UpdatedAtUnix int64                  `protobuf:"varint,9,opt,name=updated_at_unix,json=updatedAtUnix,proto3" json:"updated_at_unix,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Username       string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	Email          string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	Role           string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
+	Roles          []string               `protobuf:"bytes,5,rep,name=roles,proto3" json:"roles,omitempty"`
+	IsActive       bool                   `protobuf:"varint,6,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
+	TenantId       string                 `protobuf:"bytes,7,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	CreatedAtUnix  int64                  `protobuf:"varint,8,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
+	UpdatedAtUnix  int64                  `protobuf:"varint,9,opt,name=updated_at_unix,json=updatedAtUnix,proto3" json:"updated_at_unix,omitempty"`
+	FullName       string                 `protobuf:"bytes,10,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
+	PhoneNumber    string                 `protobuf:"bytes,11,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	Specialization string                 `protobuf:"bytes,12,opt,name=specialization,proto3" json:"specialization,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *User) Reset() {
@@ -130,6 +133,27 @@ func (x *User) GetUpdatedAtUnix() int64 {
 		return x.UpdatedAtUnix
 	}
 	return 0
+}
+
+func (x *User) GetFullName() string {
+	if x != nil {
+		return x.FullName
+	}
+	return ""
+}
+
+func (x *User) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
+	}
+	return ""
+}
+
+func (x *User) GetSpecialization() string {
+	if x != nil {
+		return x.Specialization
+	}
+	return ""
 }
 
 type ListUsersRequest struct {
@@ -261,13 +285,16 @@ func (x *ListUsersResponse) GetPageSize() int32 {
 }
 
 type CreateUserRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
-	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	Password      string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"` // plaintext; di-hash bcrypt di server
-	Role          string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`         // role utama: owner|admin|agent|teknisi
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Username       string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Email          string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	Password       string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"` // plaintext; di-hash bcrypt di server
+	Role           string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`         // role utama: owner|admin|agent|teknisi
+	FullName       string                 `protobuf:"bytes,5,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
+	PhoneNumber    string                 `protobuf:"bytes,6,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	Specialization string                 `protobuf:"bytes,7,opt,name=specialization,proto3" json:"specialization,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *CreateUserRequest) Reset() {
@@ -328,6 +355,27 @@ func (x *CreateUserRequest) GetRole() string {
 	return ""
 }
 
+func (x *CreateUserRequest) GetFullName() string {
+	if x != nil {
+		return x.FullName
+	}
+	return ""
+}
+
+func (x *CreateUserRequest) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
+	}
+	return ""
+}
+
+func (x *CreateUserRequest) GetSpecialization() string {
+	if x != nil {
+		return x.Specialization
+	}
+	return ""
+}
+
 type CreateUserResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
@@ -374,13 +422,16 @@ func (x *CreateUserResponse) GetUser() *User {
 
 // UpdateUser bersifat full-update: kirim semua field yang ingin diubah.
 type UpdateUserRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
-	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	Role          string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Username       string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	Email          string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	Role           string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
+	FullName       string                 `protobuf:"bytes,5,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
+	PhoneNumber    string                 `protobuf:"bytes,6,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	Specialization string                 `protobuf:"bytes,7,opt,name=specialization,proto3" json:"specialization,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *UpdateUserRequest) Reset() {
@@ -437,6 +488,27 @@ func (x *UpdateUserRequest) GetEmail() string {
 func (x *UpdateUserRequest) GetRole() string {
 	if x != nil {
 		return x.Role
+	}
+	return ""
+}
+
+func (x *UpdateUserRequest) GetFullName() string {
+	if x != nil {
+		return x.FullName
+	}
+	return ""
+}
+
+func (x *UpdateUserRequest) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
+	}
+	return ""
+}
+
+func (x *UpdateUserRequest) GetSpecialization() string {
+	if x != nil {
+		return x.Specialization
 	}
 	return ""
 }
@@ -763,7 +835,7 @@ var File_v1_users_proto protoreflect.FileDescriptor
 
 const file_v1_users_proto_rawDesc = "" +
 	"\n" +
-	"\x0ev1/users.proto\x12\vpolyglot.v1\"\xfc\x01\n" +
+	"\x0ev1/users.proto\x12\vpolyglot.v1\"\xe4\x02\n" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
@@ -773,7 +845,11 @@ const file_v1_users_proto_rawDesc = "" +
 	"\tis_active\x18\x06 \x01(\bR\bisActive\x12\x1b\n" +
 	"\ttenant_id\x18\a \x01(\tR\btenantId\x12&\n" +
 	"\x0fcreated_at_unix\x18\b \x01(\x03R\rcreatedAtUnix\x12&\n" +
-	"\x0fupdated_at_unix\x18\t \x01(\x03R\rupdatedAtUnix\"[\n" +
+	"\x0fupdated_at_unix\x18\t \x01(\x03R\rupdatedAtUnix\x12\x1b\n" +
+	"\tfull_name\x18\n" +
+	" \x01(\tR\bfullName\x12!\n" +
+	"\fphone_number\x18\v \x01(\tR\vphoneNumber\x12&\n" +
+	"\x0especialization\x18\f \x01(\tR\x0especialization\"[\n" +
 	"\x10ListUsersRequest\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\x12\x16\n" +
@@ -782,19 +858,25 @@ const file_v1_users_proto_rawDesc = "" +
 	"\x05users\x18\x01 \x03(\v2\x11.polyglot.v1.UserR\x05users\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x03R\x05total\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\"u\n" +
+	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\"\xdd\x01\n" +
 	"\x11CreateUserRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
 	"\bpassword\x18\x03 \x01(\tR\bpassword\x12\x12\n" +
-	"\x04role\x18\x04 \x01(\tR\x04role\";\n" +
+	"\x04role\x18\x04 \x01(\tR\x04role\x12\x1b\n" +
+	"\tfull_name\x18\x05 \x01(\tR\bfullName\x12!\n" +
+	"\fphone_number\x18\x06 \x01(\tR\vphoneNumber\x12&\n" +
+	"\x0especialization\x18\a \x01(\tR\x0especialization\";\n" +
 	"\x12CreateUserResponse\x12%\n" +
-	"\x04user\x18\x01 \x01(\v2\x11.polyglot.v1.UserR\x04user\"i\n" +
+	"\x04user\x18\x01 \x01(\v2\x11.polyglot.v1.UserR\x04user\"\xd1\x01\n" +
 	"\x11UpdateUserRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12\x12\n" +
-	"\x04role\x18\x04 \x01(\tR\x04role\";\n" +
+	"\x04role\x18\x04 \x01(\tR\x04role\x12\x1b\n" +
+	"\tfull_name\x18\x05 \x01(\tR\bfullName\x12!\n" +
+	"\fphone_number\x18\x06 \x01(\tR\vphoneNumber\x12&\n" +
+	"\x0especialization\x18\a \x01(\tR\x0especialization\";\n" +
 	"\x12UpdateUserResponse\x12%\n" +
 	"\x04user\x18\x01 \x01(\v2\x11.polyglot.v1.UserR\x04user\"I\n" +
 	"\x14ResetPasswordRequest\x12\x0e\n" +

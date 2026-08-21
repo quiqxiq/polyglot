@@ -219,6 +219,30 @@ func (s *Store) SetPasswordHash(ctx context.Context, id uint, hash string) error
 	return NewUserRepository(s.db).UpdatePassword(ctx, id, hash)
 }
 
+func (r *UserRepository) FindByRoles(ctx context.Context, roles []string, activeOnly bool) ([]*customer.User, error) {
+	q := r.db.WithContext(ctx).Model(&model.UserModel{})
+	if len(roles) > 0 {
+		q = q.Where("role IN (?)", roles)
+	}
+	if activeOnly {
+		q = q.Where("is_active = ?", true)
+	}
+	var ms []model.UserModel
+	if err := q.Order("id ASC").Find(&ms).Error; err != nil {
+		return nil, err
+	}
+	users := make([]*customer.User, 0, len(ms))
+	for i := range ms {
+		users = append(users, ms[i].ToDomain())
+	}
+	return users, nil
+}
+
 func (s *Store) SetUserActive(ctx context.Context, id uint, active bool) error {
 	return NewUserRepository(s.db).UpdateStatus(ctx, id, active)
 }
+
+func (s *Store) FindUsersByRoles(ctx context.Context, roles []string, activeOnly bool) ([]*customer.User, error) {
+	return NewUserRepository(s.db).FindByRoles(ctx, roles, activeOnly)
+}
+

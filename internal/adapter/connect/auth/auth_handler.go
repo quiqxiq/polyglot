@@ -107,6 +107,68 @@ func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[dev
 	return connect.NewResponse(&devicepb.GetMeResponse{User: profile}), nil
 }
 
+func (h *AuthConnectHandler) UpdateMe(ctx context.Context, req *connect.Request[devicepb.UpdateMeRequest]) (*connect.Response[devicepb.UpdateMeResponse], error) {
+	authHeader := req.Header().Get("Authorization")
+	if authHeader == "" {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("authorization header missing"))
+	}
+	parts := strings.SplitN(authHeader, " ", 2)
+	if len(parts) != 2 || !strings.EqualFold(parts[0], BearerScheme) {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid authorization header format"))
+	}
+
+	userIDStr, _, _, err := h.authUC.TokenService().ValidateAccessToken(parts[1])
+	if err != nil {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid or expired token"))
+	}
+
+	var uid uint
+	fmt.Sscanf(userIDStr, "%d", &uid)
+
+	user, err := h.authUC.UpdateProfile(ctx, uid, req.Msg.FullName, req.Msg.PhoneNumber, req.Msg.Email, req.Msg.Specialization)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
+	roles, _ := h.userUC.GetRoles(ctx, uid)
+	perms, _ := h.userUC.GetPermissions(ctx, uid)
+
+	profile := DomainUserToProfile(user, roles, perms)
+	return connect.NewResponse(&devicepb.UpdateMeResponse{User: profile}), nil
+}
+
+func (h *AuthConnectHandler) ChangePassword(ctx context.Context, req *connect.Request[devicepb.ChangePasswordRequest]) (*connect.Response[devicepb.ChangePasswordResponse], error) {
+	if req.Msg.OldPassword == "" || req.Msg.NewPassword == "" {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("old_password and new_password are required"))
+	}
+
+	authHeader := req.Header().Get("Authorization")
+	if authHeader == "" {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("authorization header missing"))
+	}
+	parts := strings.SplitN(authHeader, " ", 2)
+	if len(parts) != 2 || !strings.EqualFold(parts[0], BearerScheme) {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid authorization header format"))
+	}
+
+	userIDStr, _, _, err := h.authUC.TokenService().ValidateAccessToken(parts[1])
+	if err != nil {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid or expired token"))
+	}
+
+	var uid uint
+	fmt.Sscanf(userIDStr, "%d", &uid)
+
+	if err := h.authUC.ChangePassword(ctx, uid, req.Msg.OldPassword, req.Msg.NewPassword); err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
+	return connect.NewResponse(&devicepb.ChangePasswordResponse{
+		Success: true,
+		Message: "Password updated successfully",
+	}), nil
+}
+
 func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Request[devicepb.RefreshTokenRequest]) (*connect.Response[devicepb.RefreshTokenResponse], error) {
 	rawToken := req.Msg.RefreshToken
 	if rawToken == "" {

@@ -29,23 +29,35 @@ function formatDate(unixSeconds: bigint): string {
 export const usersColumns: ColumnDef<User>[] = [
   {
     accessorKey: 'username',
-    header: 'Username',
-    cell: ({ row }) => (
-      <div className='ps-1'>
-        <div className='font-medium'>{row.original.username}</div>
-        <div className='text-xs text-muted-foreground'>
-          {row.original.email}
+    header: 'User',
+    cell: ({ row }) => {
+      const { username, fullName, email } = row.original
+      return (
+        <div className='ps-1'>
+          <div className='font-medium'>{fullName || username}</div>
+          <div className='text-xs text-muted-foreground'>
+            {fullName ? `@${username} • ` : ''}{email}
+          </div>
         </div>
-      </div>
-    ),
+      )
+    },
     enableHiding: false,
   },
   {
-    accessorKey: 'email',
-    header: 'Email',
-    cell: ({ row }) => (
-      <div className='w-fit text-sm text-nowrap'>{row.original.email}</div>
-    ),
+    id: 'contact',
+    header: 'Kontak & Spesialisasi',
+    cell: ({ row }) => {
+      const { phoneNumber, specialization } = row.original
+      if (!phoneNumber && !specialization) {
+        return <span className='text-xs text-muted-foreground'>-</span>
+      }
+      return (
+        <div className='text-xs space-y-0.5'>
+          {phoneNumber && <div className='font-mono font-medium'>{phoneNumber}</div>}
+          {specialization && <div className='text-muted-foreground'>{specialization}</div>}
+        </div>
+      )
+    },
   },
   {
     id: 'roles',

@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+message SettingItem {
+  string key = 1;
+  string value = 2;
+  string category = 3;
+  string description = 4;
+  int64 updated_at_unix = 5;
+}
+
+message BotSettings {
+  int32 burst_limit = 1;
+  int32 burst_window_secs = 2;
+  int32 mute_1h_secs = 3;
+  int32 ban_24h_secs = 4;
+  int32 daily_chat_limit = 5;
+  int32 session_timeout_minutes = 6;
+  int32 sliding_window_size = 7;
+  int32 llm_max_output_tokens = 8;
+  bool whitelist_all_staff = 9;
+  string custom_whitelist_phones = 10;
+}
+
+message GetAllSettingsRequest {}
+
+message GetAllSettingsResponse {
+  repeated SettingItem settings = 1;
+}
+
+message GetSettingsByCategoryRequest {
+  string category = 1;
+}
+
+message GetSettingsByCategoryResponse {
+  repeated SettingItem settings = 1;
+}
+
+message UpdateSettingRequest {
+  string key = 1;
+  string value = 2;
+}
+
+message UpdateSettingResponse {
+  SettingItem setting = 1;
+}
+
+message BatchUpdateSettingsRequest {
+  repeated SettingItem settings = 1;
+}
+
+message BatchUpdateSettingsResponse {
+  repeated SettingItem settings = 1;
+}
+
+message GetBotSettingsRequest {}
+
+message GetBotSettingsResponse {
+  BotSettings settings = 1;
+}
+
+message UpdateBotSettingsRequest {
+  BotSettings settings = 1;
+}
+
+message UpdateBotSettingsResponse {
+  BotSettings settings = 1;
+}
+
+service SettingService {
+  rpc GetAllSettings(GetAllSettingsRequest) returns (GetAllSettingsResponse);
+  rpc GetSettingsByCategory(GetSettingsByCategoryRequest) returns (GetSettingsByCategoryResponse);
+  rpc UpdateSetting(UpdateSettingRequest) returns (UpdateSettingResponse);
+  rpc BatchUpdateSettings(BatchUpdateSettingsRequest) returns (BatchUpdateSettingsResponse);
+  rpc GetBotSettings(GetBotSettingsRequest) returns (GetBotSettingsResponse);
+  rpc UpdateBotSettings(UpdateBotSettingsRequest) returns (UpdateBotSettingsResponse);
+}

@@ -26,18 +26,18 @@ const (
 // window into a short Indonesian summary that survives cache expiry.
 var summarizePrompt = "Anda adalah peringkas percakapan layanan pelanggan internet. Ringkas percakapan berikut dalam Bahasa Indonesia, maksimal 3 kalimat. Pertahankan konteks penting: nama/nomor pelanggan, keluhan, dan solusi yang sudah diberikan. Jangan menambahkan informasi baru:"
 
+const DefaultSystemPrompt = "Kamu adalah asisten layanan pelanggan internet yang ramah, sopan, dan solutif."
+
 // ContextManager builds LLM prompt context scoped to a conversation (convID).
 // Cache keys are per-conversation, bukan per nomor telepon, sehingga dua
 // percakapan berbeda dari kontak yang sama tidak saling mencampur konteks.
 type ContextManager struct {
-	cache        port.CacheStore
-	systemPrompt string
+	cache port.CacheStore
 }
 
-func NewContextManager(cache port.CacheStore, systemPrompt string) *ContextManager {
+func NewContextManager(cache port.CacheStore) *ContextManager {
 	return &ContextManager{
-		cache:        cache,
-		systemPrompt: systemPrompt,
+		cache: cache,
 	}
 }
 
@@ -54,7 +54,7 @@ func (cm *ContextManager) BuildPromptContext(
 	if strings.TrimSpace(basePrompt) != "" {
 		sb.WriteString(basePrompt)
 	} else {
-		sb.WriteString(cm.systemPrompt)
+		sb.WriteString(DefaultSystemPrompt)
 	}
 
 	sb.WriteString("\n\n")

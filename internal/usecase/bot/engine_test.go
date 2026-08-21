@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/domain/skill"
 	"github.com/quixiq/polyglot/internal/port"
@@ -339,7 +340,6 @@ func TestEngineSkillsInjection(t *testing.T) {
 
 	svc := convUC.NewConversationService(convRepo)
 	e := NewEngine(
-		testBotConfig(),
 		cache,
 		gw,
 		svc,
@@ -347,6 +347,8 @@ func TestEngineSkillsInjection(t *testing.T) {
 		&fakeGlobalPromptProvider{prompt: "Kamu adalah asisten GNET."},
 		llmRepo,
 		newFakeChatRepo(),
+		&fakeUserRepo{},
+		nil,
 		&fakePublisher{},
 		func(*llm.Config) (port.LLMProvider, error) { return prov, nil },
 	)
@@ -390,7 +392,6 @@ func TestEngineSkillsMode_Tools_LazyLoad(t *testing.T) {
 
 	svc := convUC.NewConversationService(convRepo)
 	e := NewEngine(
-		testBotConfig(),
 		cache,
 		gw,
 		svc,
@@ -398,6 +399,8 @@ func TestEngineSkillsMode_Tools_LazyLoad(t *testing.T) {
 		&fakeGlobalPromptProvider{prompt: "Kamu adalah asisten CS."},
 		llmRepo,
 		newFakeChatRepo(),
+		&fakeUserRepo{},
+		nil,
 		&fakePublisher{},
 		func(*llm.Config) (port.LLMProvider, error) { return prov, nil },
 	)
@@ -507,7 +510,37 @@ func TestBotBuiltinTools_RequestSkill(t *testing.T) {
 
 func TestBotBuiltinTools_NotifyTechnician(t *testing.T) {
 	gw := &fakeGateway{}
-	tool := NewNotifyTechnicianTool(gw, 1, "6281249338533")
+	userRepo := &fakeUserRepo{
+		users: []*customer.User{
+			{
+				ID:             1,
+				Username:       "tech_budi",
+				FullName:       "Budi Santoso",
+				PhoneNumber:    "081249338533",
+				Role:           "teknisi",
+				Specialization: "Fiber Optic",
+				IsActive:       true,
+			},
+			{
+				ID:             2,
+				Username:       "tech_agus",
+				FullName:       "Agus Pratama",
+				PhoneNumber:    "6281234567890",
+				Role:           "technician",
+				Specialization: "Wireless",
+				IsActive:       true,
+			},
+			{
+				ID:             3,
+				Username:       "admin_user",
+				FullName:       "Admin Sistem",
+				PhoneNumber:    "6289999999999",
+				Role:           "admin",
+				IsActive:       true,
+			},
+		},
+	}
+	tool := NewNotifyTechnicianTool(userRepo, gw, 1)
 	assert.Equal(t, "notify_technician", tool.Name)
 
 	// 1. Validasi data belum lengkap
@@ -515,7 +548,7 @@ func TestBotBuiltinTools_NotifyTechnician(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Contains(t, incompleteRes, "Error: Data belum lengkap")
 
-	// 2. Data lengkap -> kirim WhatsApp ke teknisi
+	// 2. Data lengkap -> kirim WhatsApp ke teknisi aktif
 	completePayload := `{
 		"customer_name": "Budi Santoso",
 		"customer_phone": "081234567890",
@@ -526,13 +559,14 @@ func TestBotBuiltinTools_NotifyTechnician(t *testing.T) {
 	completeRes, err := tool.Handler(context.Background(), completePayload)
 	assert.NoError(t, err)
 	assert.Contains(t, completeRes, "Sukses!")
-	assert.Contains(t, completeRes, "Budi Santoso")
+	assert.Contains(t, completeRes, "2 teknisi aktif")
 
-	// Pastikan pesan sampai ke gateway WhatsApp teknisi
-	assert.Len(t, gw.sent, 1)
+	// Pastikan pesan sampai ke gateway WhatsApp ke-2 teknisi
+	assert.Len(t, gw.sent, 2)
 	assert.Contains(t, gw.sent[0], "LAPORAN GANGGUAN PELANGGAN")
 	assert.Contains(t, gw.sent[0], "Budi Santoso")
 	assert.Contains(t, gw.sent[0], "081234567890")
 	assert.Contains(t, gw.sent[0], "Jl. Mawar No. 12 RT 02/03 Sukajadi")
 	assert.Contains(t, gw.sent[0], "Kabel Fiber Putus")
 }
+

@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { GetMeRequest, GetMeResponse, LoginRequest, LoginResponse, LogoutRequest, LogoutResponse, RefreshTokenRequest, RefreshTokenResponse } from "./auth_pb.js";
+import { ChangePasswordRequest, ChangePasswordResponse, GetMeRequest, GetMeResponse, LoginRequest, LoginResponse, LogoutRequest, LogoutResponse, RefreshTokenRequest, RefreshTokenResponse, UpdateMeRequest, UpdateMeResponse } from "./auth_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -28,6 +28,24 @@ export const AuthService = {
       name: "GetMe",
       I: GetMeRequest,
       O: GetMeResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.AuthService.UpdateMe
+     */
+    updateMe: {
+      name: "UpdateMe",
+      I: UpdateMeRequest,
+      O: UpdateMeResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.AuthService.ChangePassword
+     */
+    changePassword: {
+      name: "ChangePassword",
+      I: ChangePasswordRequest,
+      O: ChangePasswordResponse,
       kind: MethodKind.Unary,
     },
     /**

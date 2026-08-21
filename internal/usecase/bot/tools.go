@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/llm"
+	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/ping"
 )
@@ -23,11 +24,11 @@ type RequestSkillInput struct {
 func NewRequestSkillTool(skillProv SkillProvider) llm.Tool {
 	return llm.Tool{
 		Name:        "request_skill",
-		Description: "Mengambil instruksi lengkap, SOP, dan berkas referensi untuk skill tertentu (misalnya troubleshooting, info paket, atau tagihan) agar dapat menjawab pertanyaan pengguna dengan akurat.",
+		Description: "Mengambil petunjuk teknis, SOP, panduan langkah-demi-langkah, atau berkas referensi dari skill tertentu saat pelanggan menanyakan topik spesifik.",
 		InputSchema: RequestSkillInput{},
 		Handler: func(ctx context.Context, argsJSON string) (string, error) {
 			if skillProv == nil {
-				return "Error: Skill provider tidak tersedia.", nil
+				return "Error: SkillProvider tidak tersedia", nil
 			}
 
 			var input RequestSkillInput
@@ -35,58 +36,50 @@ func NewRequestSkillTool(skillProv SkillProvider) llm.Tool {
 				_ = json.Unmarshal([]byte(argsJSON), &input)
 			}
 
-			allSkills, err := skillProv.ListSkills(ctx)
-			if err != nil {
-				logger.WithComponent("BotTools").WithError(err).Error("failed to list skills in tool")
-				return fmt.Sprintf("Error listing skills: %v", err), nil
+			skillName := strings.TrimSpace(input.SkillName)
+			if skillName == "" {
+				return "Error: parameter 'skill_name' wajib diisi (misal: 'ghaib-network-cs')", nil
 			}
 
-			if len(allSkills) == 0 {
-				return "Tidak ada skill yang terdaftar dalam sistem.", nil
-			}
-
-			targetName := strings.TrimSpace(input.SkillName)
-			if targetName == "" && len(allSkills) == 1 {
-				targetName = allSkills[0].Name
-			}
-
-			for _, s := range allSkills {
-				if strings.EqualFold(s.Name, targetName) {
-					content := s.Content
-					if content == "" {
-						if loaded, err := skillProv.GetSkillContent(ctx, s.Name); err == nil && loaded != "" {
-							content = loaded
-						} else {
-							content = s.Description
-						}
+			resPath := strings.TrimSpace(input.ResourcePath)
+			if resPath != "" {
+				if getter, ok := skillProv.(interface {
+					GetSkillResource(ctx context.Context, skillName, path string) ([]byte, string, error)
+				}); ok {
+					data, mime, err := getter.GetSkillResource(ctx, skillName, resPath)
+					if err != nil {
+						logger.WithComponent("BotTool").Warnf("Failed to get skill resource %s/%s: %v", skillName, resPath, err)
+						return fmt.Sprintf("Gagal memuat referensi '%s' dari skill '%s': %v", resPath, skillName, err), nil
 					}
-					var sb strings.Builder
-					sb.WriteString(fmt.Sprintf("=== SKILL: %s ===\n", s.Name))
-					sb.WriteString(content)
-					return sb.String(), nil
+					if strings.HasPrefix(mime, "text/") || strings.Contains(mime, "markdown") || strings.Contains(mime, "json") {
+						return fmt.Sprintf("=== REFERENSI: %s (%s) ===\n%s", resPath, skillName, string(data)), nil
+					}
+					return fmt.Sprintf("Berkas referensi '%s' termuat (tipe biner: %s, %d bytes)", resPath, mime, len(data)), nil
 				}
 			}
 
-			var available []string
-			for _, s := range allSkills {
-				available = append(available, s.Name)
+			content, err := skillProv.GetSkillContent(ctx, skillName)
+			if err != nil {
+				logger.WithComponent("BotTool").Warnf("Failed to get skill content for %s: %v", skillName, err)
+				return fmt.Sprintf("Gagal memuat skill '%s': %v", skillName, err), nil
 			}
-			return fmt.Sprintf("Skill '%s' tidak ditemukan. Skill yang tersedia: %s", targetName, strings.Join(available, ", ")), nil
+
+			return fmt.Sprintf("=== SKILL: %s ===\n%s", skillName, content), nil
 		},
 	}
 }
 
 // PingHostInput adalah argumen untuk pemanggilan tool ping_host.
 type PingHostInput struct {
-	Host  string `json:"host" jsonschema:"description=IP address atau hostname yang akan diuji"`
-	Count int    `json:"count,omitempty" jsonschema:"description=Jumlah paket ping (default: 3, max: 5)"`
+	Host  string `json:"host" jsonschema:"description=Alamat IP atau domain target yang ingin dicek latensi/konektivitasnya (contoh: 8.8.8.8, 1.1.1.1)"`
+	Count int    `json:"count,omitempty" jsonschema:"description=Jumlah paket ping yang dikirimkan (default 3, maksimum 5)"`
 }
 
-// NewPingHostTool membuat tool LLM untuk menguji konektivitas jaringan ke host/IP tertentu.
+// NewPingHostTool membuat tool LLM untuk melakukan uji ping / diagnostik latensi.
 func NewPingHostTool() llm.Tool {
 	return llm.Tool{
 		Name:        "ping_host",
-		Description: "Menguji latensi dan konektivitas jaringan (ping) ke IP address atau domain tertentu secara aman.",
+		Description: "Melakukan diagnostik ping jaringan ke alamat IP atau domain target untuk memeriksa latensi, kestabilan koneksi, dan packet loss.",
 		InputSchema: PingHostInput{},
 		Handler: func(ctx context.Context, argsJSON string) (string, error) {
 			var input PingHostInput
@@ -96,7 +89,12 @@ func NewPingHostTool() llm.Tool {
 
 			host := strings.TrimSpace(input.Host)
 			if host == "" {
-				return "Error: parameter 'host' (IP atau domain) wajib diisi.", nil
+				return "Error: parameter 'host' wajib diisi (contoh: '8.8.8.8')", nil
+			}
+
+			// Validasi keamanan: cegah shell injection
+			if strings.ContainsAny(host, " ;&|`$><\n\r") {
+				return "Error: format host tidak valid atau mengandung karakter terlarang", nil
 			}
 
 			count := input.Count
@@ -180,8 +178,8 @@ type NotifyTechnicianInput struct {
 	IssueDescription string `json:"issue_description" jsonschema:"description=Detail atau keterangan kendala yang dialami"`
 }
 
-// NewNotifyTechnicianTool membuat tool LLM untuk mengirimkan notifikasi laporan gangguan langsung ke WhatsApp teknisi.
-func NewNotifyTechnicianTool(waGateway any, sessionID uint, technicianNumber string) llm.Tool {
+// NewNotifyTechnicianTool membuat tool LLM untuk mengirimkan notifikasi laporan gangguan langsung ke WhatsApp teknisi yang aktif di database.
+func NewNotifyTechnicianTool(userRepo port.UserRepository, waGateway any, sessionID uint) llm.Tool {
 	return llm.Tool{
 		Name:        "notify_technician",
 		Description: "Meneruskan laporan gangguan dan permintaan kunjungan teknisi lapangan langsung ke WhatsApp teknisi aktif setelah pelanggan memberikan data (Nama, Alamat, No. HP, dan Detail Kendala).",
@@ -215,22 +213,6 @@ func NewNotifyTechnicianTool(waGateway any, sessionID uint, technicianNumber str
 			}
 			nowStr := time.Now().In(loc).Format("02/01/2006 15:04 WIB")
 
-			targetPhone := strings.TrimSpace(technicianNumber)
-			if targetPhone == "" {
-				targetPhone = "6281249338533"
-			}
-			targetPhone = strings.TrimPrefix(targetPhone, "+")
-			if strings.HasPrefix(targetPhone, "0") {
-				targetPhone = "62" + targetPhone[1:]
-			}
-			targetJID := targetPhone + "@s.whatsapp.net"
-			if strings.Contains(targetPhone, "-") || strings.Contains(targetPhone, "@g.us") {
-				targetJID = targetPhone
-				if !strings.HasSuffix(targetJID, "@g.us") {
-					targetJID = targetJID + "@g.us"
-				}
-			}
-
 			formattedMessage := fmt.Sprintf("🚨 *LAPORAN GANGGUAN PELANGGAN* 🚨\n"+
 				"━━━━━━━━━━━━━━━━━━━━━\n"+
 				"👤 *Pelanggan:* %s\n"+
@@ -244,13 +226,52 @@ func NewNotifyTechnicianTool(waGateway any, sessionID uint, technicianNumber str
 				name, phone, addr, issueType, desc, nowStr,
 			)
 
-			if gw, ok := waGateway.(interface {
-				SendMessage(sessionID uint, to string, content string) error
-			}); ok && gw != nil {
-				_ = gw.SendMessage(sessionID, targetJID, formattedMessage)
+			var notifiedCount int
+			var notifiedNames []string
+
+			if userRepo != nil {
+				techUsers, err := userRepo.FindByRoles(ctx, []string{"teknisi", "technician"}, true)
+				if err == nil {
+					gw, ok := waGateway.(interface {
+						SendMessage(sessionID uint, to string, content string) error
+					})
+					for _, tech := range techUsers {
+						rawPhone := strings.TrimSpace(tech.PhoneNumber)
+						if rawPhone == "" {
+							continue
+						}
+						targetPhone := strings.TrimPrefix(rawPhone, "+")
+						if strings.HasPrefix(targetPhone, "0") {
+							targetPhone = "62" + targetPhone[1:]
+						}
+						targetJID := targetPhone + "@s.whatsapp.net"
+						if strings.Contains(targetPhone, "-") || strings.Contains(targetPhone, "@g.us") {
+							targetJID = targetPhone
+							if !strings.HasSuffix(targetJID, "@g.us") {
+								targetJID = targetJID + "@g.us"
+							}
+						}
+
+						if ok && gw != nil {
+							_ = gw.SendMessage(sessionID, targetJID, formattedMessage)
+						}
+						notifiedCount++
+						displayName := tech.FullName
+						if displayName == "" {
+							displayName = tech.Username
+						}
+						notifiedNames = append(notifiedNames, displayName)
+					}
+				}
 			}
 
-			return fmt.Sprintf("Sukses! Laporan untuk %s (%s) di %s telah berhasil diteruskan ke WhatsApp teknisi lapangan.",
+			if notifiedCount > 0 {
+				return fmt.Sprintf("Sukses! Laporan untuk %s (%s) di %s telah berhasil diteruskan ke %d teknisi aktif (%s).",
+					name, phone, addr, notifiedCount, strings.Join(notifiedNames, ", "),
+				), nil
+			}
+
+			return fmt.Sprintf("Sukses! Laporan untuk %s (%s) di %s telah berhasil dicatat untuk tindak lanjut tim teknisi lapangan.",
 				name, phone, addr,
 			), nil
 		},

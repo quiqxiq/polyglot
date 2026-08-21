@@ -17,6 +17,9 @@ message User {
   string tenant_id = 7;
   int64 created_at_unix = 8;
   int64 updated_at_unix = 9;
+  string full_name = 10;
+  string phone_number = 11;
+  string specialization = 12;
 }
 
 message ListUsersRequest {
@@ -37,6 +40,9 @@ message CreateUserRequest {
   string email = 2;
   string password = 3;  // plaintext; di-hash bcrypt di server
   string role = 4;      // role utama: owner|admin|agent|teknisi
+  string full_name = 5;
+  string phone_number = 6;
+  string specialization = 7;
 }
 
 message CreateUserResponse {
@@ -49,6 +55,9 @@ message UpdateUserRequest {
   string username = 2;
   string email = 3;
   string role = 4;
+  string full_name = 5;
+  string phone_number = 6;
+  string specialization = 7;
 }
 
 message UpdateUserResponse {

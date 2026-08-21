@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -146,3 +147,59 @@ func (u *AuthUseCase) Login(ctx context.Context, username, password, clientIP st
 		Permissions:  perms,
 	}, nil
 }
+
+func (u *AuthUseCase) UpdateProfile(ctx context.Context, userID uint, fullName, phone, email, specialization string) (*customer.User, error) {
+	user, err := u.userRepo.FindByID(ctx, userID)
+	if err != nil {
+		return nil, ErrUserNotFound
+	}
+
+	email = strings.TrimSpace(email)
+	if email != "" && email != user.Email {
+		if existing, _ := u.userRepo.FindByEmail(ctx, email); existing != nil && existing.ID != userID {
+			return nil, errors.New("email already in use by another account")
+		}
+		user.Email = email
+	}
+
+	user.FullName = strings.TrimSpace(fullName)
+	user.PhoneNumber = strings.TrimSpace(phone)
+	if specialization != "" {
+		user.Specialization = strings.TrimSpace(specialization)
+	}
+
+	if err := u.userRepo.Update(ctx, user); err != nil {
+		return nil, err
+	}
+
+	logger.WithComponent("AuthUseCase").WithField("user_id", userID).Info("user profile updated")
+	return user, nil
+}
+
+func (u *AuthUseCase) ChangePassword(ctx context.Context, userID uint, oldPassword, newPassword string) error {
+	if len(newPassword) < 8 {
+		return errors.New("new password must be at least 8 characters")
+	}
+
+	user, err := u.userRepo.FindByID(ctx, userID)
+	if err != nil {
+		return ErrUserNotFound
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(oldPassword)); err != nil {
+		return errors.New("current password is incorrect")
+	}
+
+	newHash, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
+	if err != nil {
+		return fmt.Errorf("failed to hash new password: %w", err)
+	}
+
+	if err := u.userRepo.UpdatePassword(ctx, userID, string(newHash)); err != nil {
+		return err
+	}
+
+	logger.WithComponent("AuthUseCase").WithField("user_id", userID).Info("user password changed successfully")
+	return nil
+}
+

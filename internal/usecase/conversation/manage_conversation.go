@@ -59,10 +59,15 @@ func (s *ConversationService) GetActiveConversationByCustomer(ctx context.Contex
 	return s.repo.FindActiveConversationByCustomer(ctx, sessionID, customerNumber)
 }
 
-func (s *ConversationService) GetOrCreateConversation(ctx context.Context, sessionID uint, customerNumber string) (*bot.Conversation, error) {
+func (s *ConversationService) GetOrCreateConversationWithTimeout(ctx context.Context, sessionID uint, customerNumber string, timeoutMinutes int) (*bot.Conversation, error) {
 	conv, err := s.repo.FindActiveConversationByCustomer(ctx, sessionID, customerNumber)
 	if err == nil {
-		return conv, nil
+		if timeoutMinutes > 0 && !conv.UpdatedAt.IsZero() && time.Since(conv.UpdatedAt) > time.Duration(timeoutMinutes)*time.Minute {
+			conv.Status = bot.StatusDone
+			_ = s.repo.UpdateConversation(ctx, conv)
+		} else {
+			return conv, nil
+		}
 	}
 
 	newConv := &bot.Conversation{
@@ -75,6 +80,10 @@ func (s *ConversationService) GetOrCreateConversation(ctx context.Context, sessi
 		return nil, err
 	}
 	return newConv, nil
+}
+
+func (s *ConversationService) GetOrCreateConversation(ctx context.Context, sessionID uint, customerNumber string) (*bot.Conversation, error) {
+	return s.GetOrCreateConversationWithTimeout(ctx, sessionID, customerNumber, 0)
 }
 
 func (s *ConversationService) AddMessageWithConfig(ctx context.Context, convID uint, senderType string, content string, tokenIn, tokenOut int, llmConfigID *uint) (*bot.Message, error) {

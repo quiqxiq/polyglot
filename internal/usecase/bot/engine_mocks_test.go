@@ -2,8 +2,10 @@ package bot
 
 import (
 	"context"
+	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/llm"
 	skillDomain "github.com/quixiq/polyglot/internal/domain/skill"
 	"github.com/quixiq/polyglot/internal/port"
@@ -43,7 +45,12 @@ func (f *fakeSkillProvider) ListSkills(context.Context) ([]skillDomain.SkillInfo
 	return f.skills, nil
 }
 
-func (f *fakeSkillProvider) GetSkillContent(context.Context, string) (string, error) {
+func (f *fakeSkillProvider) GetSkillContent(_ context.Context, name string) (string, error) {
+	for _, s := range f.skills {
+		if strings.EqualFold(s.Name, name) {
+			return s.Content, nil
+		}
+	}
 	return "", nil
 }
 
@@ -217,13 +224,39 @@ func (f *fakeChatRepo) MarkMessagesStatus(context.Context, uint, string, []strin
 }
 func (f *fakeChatRepo) MergeChatLID(context.Context, uint, string, string) error { return nil }
 
-func testBotConfig() Config {
-	return Config{
-		SystemPrompt:       "Kamu adalah asisten layanan GNET.",
-		LLMMaxOutputTokens: 512,
-		AllowedTopics:      []string{"internet", "paket", "harga"},
-	}
+type fakeUserRepo struct {
+	users []*customer.User
 }
+
+func (f *fakeUserRepo) Create(ctx context.Context, user *customer.User) error { return nil }
+func (f *fakeUserRepo) FindByID(ctx context.Context, id uint) (*customer.User, error) { return nil, nil }
+func (f *fakeUserRepo) FindByUsername(ctx context.Context, username string) (*customer.User, error) { return nil, nil }
+func (f *fakeUserRepo) FindByEmail(ctx context.Context, email string) (*customer.User, error) { return nil, nil }
+func (f *fakeUserRepo) Count(ctx context.Context) (int64, error) { return int64(len(f.users)), nil }
+func (f *fakeUserRepo) List(ctx context.Context, page, pageSize int, search string) ([]*customer.User, int64, error) { return f.users, int64(len(f.users)), nil }
+func (f *fakeUserRepo) FindAll(ctx context.Context) ([]*customer.User, error) { return f.users, nil }
+func (f *fakeUserRepo) FindByRoles(ctx context.Context, roles []string, activeOnly bool) ([]*customer.User, error) {
+	var result []*customer.User
+	for _, u := range f.users {
+		match := false
+		for _, r := range roles {
+			if strings.EqualFold(u.Role, r) {
+				match = true
+				break
+			}
+		}
+		if match {
+			if !activeOnly || u.IsActive {
+				result = append(result, u)
+			}
+		}
+	}
+	return result, nil
+}
+func (f *fakeUserRepo) Update(ctx context.Context, user *customer.User) error { return nil }
+func (f *fakeUserRepo) Delete(ctx context.Context, id uint) error { return nil }
+func (f *fakeUserRepo) UpdatePassword(ctx context.Context, id uint, passwordHash string) error { return nil }
+func (f *fakeUserRepo) UpdateStatus(ctx context.Context, id uint, isActive bool) error { return nil }
 
 func newTestEngine(cache port.CacheStore, gw *fakeGateway, llmRepo *fakeLLMConfigRepo, prov *fakeProvider, convRepo *fakeConvRepo) *Engine {
 	return newTestEngineWithChatRepo(cache, gw, llmRepo, prov, convRepo, newFakeChatRepo())
@@ -232,7 +265,6 @@ func newTestEngine(cache port.CacheStore, gw *fakeGateway, llmRepo *fakeLLMConfi
 func newTestEngineWithChatRepo(cache port.CacheStore, gw *fakeGateway, llmRepo *fakeLLMConfigRepo, prov *fakeProvider, convRepo *fakeConvRepo, chatRepo *fakeChatRepo) *Engine {
 	svc := convUC.NewConversationService(convRepo)
 	return NewEngine(
-		testBotConfig(),
 		cache,
 		gw,
 		svc,
@@ -240,6 +272,20 @@ func newTestEngineWithChatRepo(cache port.CacheStore, gw *fakeGateway, llmRepo *
 		&fakeGlobalPromptProvider{prompt: "Kamu adalah asisten layanan GNET."},
 		llmRepo,
 		chatRepo,
+		&fakeUserRepo{
+			users: []*customer.User{
+				{
+					ID:             1,
+					Username:       "tech_budi",
+					FullName:       "Budi Santoso",
+					PhoneNumber:    "6281249338533",
+					Role:           "teknisi",
+					Specialization: "Fiber Optic",
+					IsActive:       true,
+				},
+			},
+		},
+		nil,
 		&fakePublisher{},
 		func(*llm.Config) (port.LLMProvider, error) { return prov, nil },
 	)
@@ -252,3 +298,4 @@ var _ port.LLMConfigRepository = (*fakeLLMConfigRepo)(nil)
 var _ port.EventPublisher = (*fakePublisher)(nil)
 var _ port.ChatRepository = (*fakeChatRepo)(nil)
 var _ port.ConversationRepository = (*fakeConvRepo)(nil)
+var _ port.UserRepository = (*fakeUserRepo)(nil)

@@ -82,9 +82,12 @@ type UserProfile struct {
 	Roles    []string               `protobuf:"bytes,5,rep,name=roles,proto3" json:"roles,omitempty"`
 	// Permissions efektif user (dari Casbin, termasuk warisan role group),
 	// diflatten ke format "resource:action" (wildcard regex, mis. "user:.*:*").
-	Permissions   []string `protobuf:"bytes,6,rep,name=permissions,proto3" json:"permissions,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Permissions    []string `protobuf:"bytes,6,rep,name=permissions,proto3" json:"permissions,omitempty"`
+	FullName       string   `protobuf:"bytes,7,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
+	PhoneNumber    string   `protobuf:"bytes,8,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	Specialization string   `protobuf:"bytes,9,opt,name=specialization,proto3" json:"specialization,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *UserProfile) Reset() {
@@ -157,6 +160,27 @@ func (x *UserProfile) GetPermissions() []string {
 		return x.Permissions
 	}
 	return nil
+}
+
+func (x *UserProfile) GetFullName() string {
+	if x != nil {
+		return x.FullName
+	}
+	return ""
+}
+
+func (x *UserProfile) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
+	}
+	return ""
+}
+
+func (x *UserProfile) GetSpecialization() string {
+	if x != nil {
+		return x.Specialization
+	}
+	return ""
 }
 
 type LoginResponse struct {
@@ -299,6 +323,222 @@ func (x *GetMeResponse) GetUser() *UserProfile {
 	return nil
 }
 
+type UpdateMeRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	FullName       string                 `protobuf:"bytes,1,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
+	PhoneNumber    string                 `protobuf:"bytes,2,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	Email          string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	Specialization string                 `protobuf:"bytes,4,opt,name=specialization,proto3" json:"specialization,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *UpdateMeRequest) Reset() {
+	*x = UpdateMeRequest{}
+	mi := &file_v1_auth_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateMeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateMeRequest) ProtoMessage() {}
+
+func (x *UpdateMeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_auth_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateMeRequest.ProtoReflect.Descriptor instead.
+func (*UpdateMeRequest) Descriptor() ([]byte, []int) {
+	return file_v1_auth_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *UpdateMeRequest) GetFullName() string {
+	if x != nil {
+		return x.FullName
+	}
+	return ""
+}
+
+func (x *UpdateMeRequest) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
+	}
+	return ""
+}
+
+func (x *UpdateMeRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *UpdateMeRequest) GetSpecialization() string {
+	if x != nil {
+		return x.Specialization
+	}
+	return ""
+}
+
+type UpdateMeResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	User          *UserProfile           `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateMeResponse) Reset() {
+	*x = UpdateMeResponse{}
+	mi := &file_v1_auth_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateMeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateMeResponse) ProtoMessage() {}
+
+func (x *UpdateMeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_auth_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateMeResponse.ProtoReflect.Descriptor instead.
+func (*UpdateMeResponse) Descriptor() ([]byte, []int) {
+	return file_v1_auth_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *UpdateMeResponse) GetUser() *UserProfile {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
+type ChangePasswordRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OldPassword   string                 `protobuf:"bytes,1,opt,name=old_password,json=oldPassword,proto3" json:"old_password,omitempty"`
+	NewPassword   string                 `protobuf:"bytes,2,opt,name=new_password,json=newPassword,proto3" json:"new_password,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ChangePasswordRequest) Reset() {
+	*x = ChangePasswordRequest{}
+	mi := &file_v1_auth_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ChangePasswordRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChangePasswordRequest) ProtoMessage() {}
+
+func (x *ChangePasswordRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_auth_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChangePasswordRequest.ProtoReflect.Descriptor instead.
+func (*ChangePasswordRequest) Descriptor() ([]byte, []int) {
+	return file_v1_auth_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ChangePasswordRequest) GetOldPassword() string {
+	if x != nil {
+		return x.OldPassword
+	}
+	return ""
+}
+
+func (x *ChangePasswordRequest) GetNewPassword() string {
+	if x != nil {
+		return x.NewPassword
+	}
+	return ""
+}
+
+type ChangePasswordResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ChangePasswordResponse) Reset() {
+	*x = ChangePasswordResponse{}
+	mi := &file_v1_auth_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ChangePasswordResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChangePasswordResponse) ProtoMessage() {}
+
+func (x *ChangePasswordResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_auth_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChangePasswordResponse.ProtoReflect.Descriptor instead.
+func (*ChangePasswordResponse) Descriptor() ([]byte, []int) {
+	return file_v1_auth_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ChangePasswordResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *ChangePasswordResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 // RefreshTokenRequest: refresh token diambil dari cookie httpOnly
 // (polyglot_refresh) secara otomatis; field refresh_token hanya fallback
 // untuk client non-browser.
@@ -311,7 +551,7 @@ type RefreshTokenRequest struct {
 
 func (x *RefreshTokenRequest) Reset() {
 	*x = RefreshTokenRequest{}
-	mi := &file_v1_auth_proto_msgTypes[5]
+	mi := &file_v1_auth_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -323,7 +563,7 @@ func (x *RefreshTokenRequest) String() string {
 func (*RefreshTokenRequest) ProtoMessage() {}
 
 func (x *RefreshTokenRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_auth_proto_msgTypes[5]
+	mi := &file_v1_auth_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -336,7 +576,7 @@ func (x *RefreshTokenRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshTokenRequest.ProtoReflect.Descriptor instead.
 func (*RefreshTokenRequest) Descriptor() ([]byte, []int) {
-	return file_v1_auth_proto_rawDescGZIP(), []int{5}
+	return file_v1_auth_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *RefreshTokenRequest) GetRefreshToken() string {
@@ -357,7 +597,7 @@ type RefreshTokenResponse struct {
 
 func (x *RefreshTokenResponse) Reset() {
 	*x = RefreshTokenResponse{}
-	mi := &file_v1_auth_proto_msgTypes[6]
+	mi := &file_v1_auth_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -369,7 +609,7 @@ func (x *RefreshTokenResponse) String() string {
 func (*RefreshTokenResponse) ProtoMessage() {}
 
 func (x *RefreshTokenResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_auth_proto_msgTypes[6]
+	mi := &file_v1_auth_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -382,7 +622,7 @@ func (x *RefreshTokenResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshTokenResponse.ProtoReflect.Descriptor instead.
 func (*RefreshTokenResponse) Descriptor() ([]byte, []int) {
-	return file_v1_auth_proto_rawDescGZIP(), []int{6}
+	return file_v1_auth_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *RefreshTokenResponse) GetToken() string {
@@ -414,7 +654,7 @@ type LogoutRequest struct {
 
 func (x *LogoutRequest) Reset() {
 	*x = LogoutRequest{}
-	mi := &file_v1_auth_proto_msgTypes[7]
+	mi := &file_v1_auth_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -426,7 +666,7 @@ func (x *LogoutRequest) String() string {
 func (*LogoutRequest) ProtoMessage() {}
 
 func (x *LogoutRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_auth_proto_msgTypes[7]
+	mi := &file_v1_auth_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -439,7 +679,7 @@ func (x *LogoutRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogoutRequest.ProtoReflect.Descriptor instead.
 func (*LogoutRequest) Descriptor() ([]byte, []int) {
-	return file_v1_auth_proto_rawDescGZIP(), []int{7}
+	return file_v1_auth_proto_rawDescGZIP(), []int{11}
 }
 
 type LogoutResponse struct {
@@ -451,7 +691,7 @@ type LogoutResponse struct {
 
 func (x *LogoutResponse) Reset() {
 	*x = LogoutResponse{}
-	mi := &file_v1_auth_proto_msgTypes[8]
+	mi := &file_v1_auth_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -463,7 +703,7 @@ func (x *LogoutResponse) String() string {
 func (*LogoutResponse) ProtoMessage() {}
 
 func (x *LogoutResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_auth_proto_msgTypes[8]
+	mi := &file_v1_auth_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -476,7 +716,7 @@ func (x *LogoutResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogoutResponse.ProtoReflect.Descriptor instead.
 func (*LogoutResponse) Descriptor() ([]byte, []int) {
-	return file_v1_auth_proto_rawDescGZIP(), []int{8}
+	return file_v1_auth_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *LogoutResponse) GetSuccess() bool {
@@ -493,21 +733,37 @@ const file_v1_auth_proto_rawDesc = "" +
 	"\rv1/auth.proto\x12\vpolyglot.v1\"F\n" +
 	"\fLoginRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"\x9b\x01\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"\x83\x02\n" +
 	"\vUserProfile\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12\x12\n" +
 	"\x04role\x18\x04 \x01(\tR\x04role\x12\x14\n" +
 	"\x05roles\x18\x05 \x03(\tR\x05roles\x12 \n" +
-	"\vpermissions\x18\x06 \x03(\tR\vpermissions\"{\n" +
+	"\vpermissions\x18\x06 \x03(\tR\vpermissions\x12\x1b\n" +
+	"\tfull_name\x18\a \x01(\tR\bfullName\x12!\n" +
+	"\fphone_number\x18\b \x01(\tR\vphoneNumber\x12&\n" +
+	"\x0especialization\x18\t \x01(\tR\x0especialization\"{\n" +
 	"\rLoginResponse\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\x12,\n" +
 	"\x04user\x18\x02 \x01(\v2\x18.polyglot.v1.UserProfileR\x04user\x12&\n" +
 	"\x0fexpires_at_unix\x18\x03 \x01(\x03R\rexpiresAtUnix\"\x0e\n" +
 	"\fGetMeRequest\"=\n" +
 	"\rGetMeResponse\x12,\n" +
-	"\x04user\x18\x01 \x01(\v2\x18.polyglot.v1.UserProfileR\x04user\":\n" +
+	"\x04user\x18\x01 \x01(\v2\x18.polyglot.v1.UserProfileR\x04user\"\x8f\x01\n" +
+	"\x0fUpdateMeRequest\x12\x1b\n" +
+	"\tfull_name\x18\x01 \x01(\tR\bfullName\x12!\n" +
+	"\fphone_number\x18\x02 \x01(\tR\vphoneNumber\x12\x14\n" +
+	"\x05email\x18\x03 \x01(\tR\x05email\x12&\n" +
+	"\x0especialization\x18\x04 \x01(\tR\x0especialization\"@\n" +
+	"\x10UpdateMeResponse\x12,\n" +
+	"\x04user\x18\x01 \x01(\v2\x18.polyglot.v1.UserProfileR\x04user\"]\n" +
+	"\x15ChangePasswordRequest\x12!\n" +
+	"\fold_password\x18\x01 \x01(\tR\voldPassword\x12!\n" +
+	"\fnew_password\x18\x02 \x01(\tR\vnewPassword\"L\n" +
+	"\x16ChangePasswordResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\":\n" +
 	"\x13RefreshTokenRequest\x12#\n" +
 	"\rrefresh_token\x18\x01 \x01(\tR\frefreshToken\"\x8b\x01\n" +
 	"\x14RefreshTokenResponse\x12\x14\n" +
@@ -516,10 +772,12 @@ const file_v1_auth_proto_rawDesc = "" +
 	"\x17refresh_expires_at_unix\x18\x03 \x01(\x03R\x14refreshExpiresAtUnix\"\x0f\n" +
 	"\rLogoutRequest\"*\n" +
 	"\x0eLogoutResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\xa5\x02\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\xc9\x03\n" +
 	"\vAuthService\x12>\n" +
 	"\x05Login\x12\x19.polyglot.v1.LoginRequest\x1a\x1a.polyglot.v1.LoginResponse\x12>\n" +
-	"\x05GetMe\x12\x19.polyglot.v1.GetMeRequest\x1a\x1a.polyglot.v1.GetMeResponse\x12S\n" +
+	"\x05GetMe\x12\x19.polyglot.v1.GetMeRequest\x1a\x1a.polyglot.v1.GetMeResponse\x12G\n" +
+	"\bUpdateMe\x12\x1c.polyglot.v1.UpdateMeRequest\x1a\x1d.polyglot.v1.UpdateMeResponse\x12Y\n" +
+	"\x0eChangePassword\x12\".polyglot.v1.ChangePasswordRequest\x1a#.polyglot.v1.ChangePasswordResponse\x12S\n" +
 	"\fRefreshToken\x12 .polyglot.v1.RefreshTokenRequest\x1a!.polyglot.v1.RefreshTokenResponse\x12A\n" +
 	"\x06Logout\x12\x1a.polyglot.v1.LogoutRequest\x1a\x1b.polyglot.v1.LogoutResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
@@ -535,34 +793,43 @@ func file_v1_auth_proto_rawDescGZIP() []byte {
 	return file_v1_auth_proto_rawDescData
 }
 
-var file_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_v1_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_v1_auth_proto_goTypes = []any{
-	(*LoginRequest)(nil),         // 0: polyglot.v1.LoginRequest
-	(*UserProfile)(nil),          // 1: polyglot.v1.UserProfile
-	(*LoginResponse)(nil),        // 2: polyglot.v1.LoginResponse
-	(*GetMeRequest)(nil),         // 3: polyglot.v1.GetMeRequest
-	(*GetMeResponse)(nil),        // 4: polyglot.v1.GetMeResponse
-	(*RefreshTokenRequest)(nil),  // 5: polyglot.v1.RefreshTokenRequest
-	(*RefreshTokenResponse)(nil), // 6: polyglot.v1.RefreshTokenResponse
-	(*LogoutRequest)(nil),        // 7: polyglot.v1.LogoutRequest
-	(*LogoutResponse)(nil),       // 8: polyglot.v1.LogoutResponse
+	(*LoginRequest)(nil),           // 0: polyglot.v1.LoginRequest
+	(*UserProfile)(nil),            // 1: polyglot.v1.UserProfile
+	(*LoginResponse)(nil),          // 2: polyglot.v1.LoginResponse
+	(*GetMeRequest)(nil),           // 3: polyglot.v1.GetMeRequest
+	(*GetMeResponse)(nil),          // 4: polyglot.v1.GetMeResponse
+	(*UpdateMeRequest)(nil),        // 5: polyglot.v1.UpdateMeRequest
+	(*UpdateMeResponse)(nil),       // 6: polyglot.v1.UpdateMeResponse
+	(*ChangePasswordRequest)(nil),  // 7: polyglot.v1.ChangePasswordRequest
+	(*ChangePasswordResponse)(nil), // 8: polyglot.v1.ChangePasswordResponse
+	(*RefreshTokenRequest)(nil),    // 9: polyglot.v1.RefreshTokenRequest
+	(*RefreshTokenResponse)(nil),   // 10: polyglot.v1.RefreshTokenResponse
+	(*LogoutRequest)(nil),          // 11: polyglot.v1.LogoutRequest
+	(*LogoutResponse)(nil),         // 12: polyglot.v1.LogoutResponse
 }
 var file_v1_auth_proto_depIdxs = []int32{
-	1, // 0: polyglot.v1.LoginResponse.user:type_name -> polyglot.v1.UserProfile
-	1, // 1: polyglot.v1.GetMeResponse.user:type_name -> polyglot.v1.UserProfile
-	0, // 2: polyglot.v1.AuthService.Login:input_type -> polyglot.v1.LoginRequest
-	3, // 3: polyglot.v1.AuthService.GetMe:input_type -> polyglot.v1.GetMeRequest
-	5, // 4: polyglot.v1.AuthService.RefreshToken:input_type -> polyglot.v1.RefreshTokenRequest
-	7, // 5: polyglot.v1.AuthService.Logout:input_type -> polyglot.v1.LogoutRequest
-	2, // 6: polyglot.v1.AuthService.Login:output_type -> polyglot.v1.LoginResponse
-	4, // 7: polyglot.v1.AuthService.GetMe:output_type -> polyglot.v1.GetMeResponse
-	6, // 8: polyglot.v1.AuthService.RefreshToken:output_type -> polyglot.v1.RefreshTokenResponse
-	8, // 9: polyglot.v1.AuthService.Logout:output_type -> polyglot.v1.LogoutResponse
-	6, // [6:10] is the sub-list for method output_type
-	2, // [2:6] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	1,  // 0: polyglot.v1.LoginResponse.user:type_name -> polyglot.v1.UserProfile
+	1,  // 1: polyglot.v1.GetMeResponse.user:type_name -> polyglot.v1.UserProfile
+	1,  // 2: polyglot.v1.UpdateMeResponse.user:type_name -> polyglot.v1.UserProfile
+	0,  // 3: polyglot.v1.AuthService.Login:input_type -> polyglot.v1.LoginRequest
+	3,  // 4: polyglot.v1.AuthService.GetMe:input_type -> polyglot.v1.GetMeRequest
+	5,  // 5: polyglot.v1.AuthService.UpdateMe:input_type -> polyglot.v1.UpdateMeRequest
+	7,  // 6: polyglot.v1.AuthService.ChangePassword:input_type -> polyglot.v1.ChangePasswordRequest
+	9,  // 7: polyglot.v1.AuthService.RefreshToken:input_type -> polyglot.v1.RefreshTokenRequest
+	11, // 8: polyglot.v1.AuthService.Logout:input_type -> polyglot.v1.LogoutRequest
+	2,  // 9: polyglot.v1.AuthService.Login:output_type -> polyglot.v1.LoginResponse
+	4,  // 10: polyglot.v1.AuthService.GetMe:output_type -> polyglot.v1.GetMeResponse
+	6,  // 11: polyglot.v1.AuthService.UpdateMe:output_type -> polyglot.v1.UpdateMeResponse
+	8,  // 12: polyglot.v1.AuthService.ChangePassword:output_type -> polyglot.v1.ChangePasswordResponse
+	10, // 13: polyglot.v1.AuthService.RefreshToken:output_type -> polyglot.v1.RefreshTokenResponse
+	12, // 14: polyglot.v1.AuthService.Logout:output_type -> polyglot.v1.LogoutResponse
+	9,  // [9:15] is the sub-list for method output_type
+	3,  // [3:9] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_v1_auth_proto_init() }
@@ -576,7 +843,7 @@ func file_v1_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_auth_proto_rawDesc), len(file_v1_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

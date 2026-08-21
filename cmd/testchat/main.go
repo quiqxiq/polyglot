@@ -12,6 +12,7 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/storage"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/bot"
+	"github.com/quixiq/polyglot/internal/domain/customer"
 	domainLLM "github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/port"
 	usecaseBot "github.com/quixiq/polyglot/internal/usecase/bot"
@@ -82,23 +83,13 @@ func main() {
 	}
 	publisher := &mockPublisher{}
 
-	botCfg := usecaseBot.Config{
-		AllowedTopics:      cfg.AllowedTopics,
-		LLMMaxOutputTokens: cfg.LLMMaxOutputTokens,
-		BurstLimit:         cfg.RateLimitPerMinute,
-		BurstWindowSeconds: 60,
-		Mute1HourSeconds:   3600,
-		Ban24HourSeconds:   86400,
-		DailyChatLimit:     cfg.RateLimitPerHour * 24,
-		TechnicianPhone:    cfg.TechnicianWANumber,
-	}
-
 	providerFactory := func(llmCfg *domainLLM.Config) (port.LLMProvider, error) {
 		return llm.NewProvider(llmCfg, cfg.EncryptionKey)
 	}
 
+	userRepo := postgres.NewUserRepository(pgStore.DB())
+	settingRepo := postgres.NewSettingRepository(pgStore.DB())
 	engine := usecaseBot.NewEngine(
-		botCfg,
 		redisStore,
 		gw,
 		convService,
@@ -106,6 +97,8 @@ func main() {
 		skillUseCase,
 		pgStore,
 		pgStore,
+		userRepo,
+		settingRepo,
 		publisher,
 		providerFactory,
 	)
@@ -121,6 +114,23 @@ func main() {
 			IsBotEnabled: true,
 		}
 		_ = pgStore.CreateSession(ctx, testSess)
+	}
+
+	// Ensure active technician user exists in DB
+	techs, _ := pgStore.FindUsersByRoles(ctx, []string{"teknisi", "technician"}, true)
+	if len(techs) == 0 {
+		testTech := &customer.User{
+			Username:       "tech_lapangan",
+			Email:          "tech@gnet.local",
+			PasswordHash:   "$2a$10$testHashPlaceholder",
+			Role:           "teknisi",
+			FullName:       "Budi Santoso (Teknisi Lapangan)",
+			PhoneNumber:    "6281249338533",
+			Specialization: "Fiber Optic & Splicing",
+			IsActive:       true,
+			TenantID:       "tenant-default",
+		}
+		_ = pgStore.CreateUser(ctx, testTech)
 	}
 
 	// Baca active LLM config dari database
@@ -198,13 +208,12 @@ func main() {
 	fmt.Println(gw.lastReply)
 
 	// Cek apakah pesan ke WhatsApp teknisi terkirim
-	techTargetJID := cfg.TechnicianWANumber + "@s.whatsapp.net"
-	techMsgs := gw.sentMessages[techTargetJID]
-	if len(techMsgs) > 0 {
-		fmt.Println("\n[PESAN YANG DITERIMA WHATSAPP TEKNISI LAPANGAN]:")
-		fmt.Println(techMsgs[len(techMsgs)-1])
-	} else {
-		fmt.Printf("\n[INFO] Pesan dikirim ke tujuan list: %+v\n", gw.sentMessages)
+	fmt.Println("\n[PESAN YANG DITERIMA WHATSAPP TEKNISI / GATEWAY]:")
+	for jid, msgs := range gw.sentMessages {
+		if len(msgs) > 0 {
+			fmt.Printf("-> Target %s (%d messages):\n", jid, len(msgs))
+			fmt.Println(msgs[len(msgs)-1])
+		}
 	}
 
 	fmt.Println("\n=== LIVE CHATBOT TEST COMPLETED SUCCESSFULLY! ===")

@@ -76,7 +76,7 @@ const testSystemPrompt = "Kamu adalah asisten layanan GNET."
 
 func TestBuildPromptContextRolesAndSummary(t *testing.T) {
 	cache := newFakeCache()
-	cm := NewContextManager(cache, testSystemPrompt)
+	cm := NewContextManager(cache)
 
 	ctx := context.Background()
 
@@ -126,7 +126,7 @@ func TestBuildPromptContextRolesAndSummary(t *testing.T) {
 
 func TestSaveMessageToSessionAppendsAndTrims(t *testing.T) {
 	cache := newFakeCache()
-	cm := NewContextManager(cache, testSystemPrompt)
+	cm := NewContextManager(cache)
 	ctx := context.Background()
 
 	// Setiap save menyimpan 2 pesan (user + bot). 25 turn = 50 pesan >
@@ -156,7 +156,7 @@ func TestSaveMessageToSessionAppendsAndTrims(t *testing.T) {
 
 func TestSummarizeSessionIfLong(t *testing.T) {
 	cache := newFakeCache()
-	cm := NewContextManager(cache, testSystemPrompt)
+	cm := NewContextManager(cache)
 	ctx := context.Background()
 	prov := &fakeProvider{reply: "Ringkasan percakapan."}
 
