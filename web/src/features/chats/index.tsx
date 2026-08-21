@@ -28,6 +28,7 @@ import {
   RotateCcw,
   ShieldAlert,
   Smartphone,
+  Sparkles,
   UserCheck,
 } from 'lucide-react'
 import { cn, getDisplayNameInitials } from '@/lib/utils'
@@ -667,137 +668,147 @@ export function Chats() {
               </div>
 
               {(convContext || selectedPhone) && (
-                <div className='flex flex-none flex-wrap items-center gap-x-3 gap-y-1 border-b bg-card px-4 py-2 text-xs'>
-                  {convContext && (
-                    <span
-                      className={cn(
-                        'rounded-full px-2 py-0.5 font-medium',
-                        statusStyles[convContext.status] ??
-                          'bg-muted text-muted-foreground'
-                      )}
-                    >
-                      {statusLabel(convContext.status)}
-                    </span>
-                  )}
-                  {rateLimitStatus?.isMuted && (
-                    <span className='inline-flex items-center gap-1 rounded-full bg-destructive/15 px-2 py-0.5 font-medium text-destructive'>
-                      <ShieldAlert size={12} /> Rate Limited (Muted)
-                    </span>
-                  )}
-                  {rateLimitStatus &&
-                    rateLimitStatus.dailyChatCount >=
-                      rateLimitStatus.dailyQuotaLimit &&
-                    rateLimitStatus.dailyQuotaLimit > 0 && (
-                      <span className='inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 font-medium text-amber-700 dark:text-amber-300'>
-                        <ShieldAlert size={12} /> Kuota AI Habis (
-                        {rateLimitStatus.dailyChatCount}/
-                        {rateLimitStatus.dailyQuotaLimit})
-                      </span>
-                    )}
-                  {rateLimitStatus?.isWhitelisted && (
-                    <span className='inline-flex items-center gap-1 rounded-full bg-blue-500/15 px-2 py-0.5 font-medium text-blue-700 dark:text-blue-300'>
-                      ⭐ Whitelist
-                    </span>
-                  )}
-                  {rateLimitStatus &&
-                    !rateLimitStatus.isMuted &&
-                    !rateLimitStatus.isWhitelisted && (
-                      <span className='text-muted-foreground'>
-                        Kuota AI:{' '}
-                        <span className='font-medium text-foreground'>
-                          {rateLimitStatus.dailyChatCount}
+                <div className='flex flex-none flex-col gap-2 border-b bg-card px-4 py-2 text-xs'>
+                  {/* Baris 1: Status Badges, Metrik Token/Kuota & Tombol Aksi */}
+                  <div className='flex flex-wrap items-center justify-between gap-2'>
+                    {/* Kolom Kiri: Status & Metrik */}
+                    <div className='flex flex-wrap items-center gap-2'>
+                      {convContext && (
+                        <span
+                          className={cn(
+                            'rounded-full px-2 py-0.5 font-medium',
+                            statusStyles[convContext.status] ??
+                              'bg-muted text-muted-foreground'
+                          )}
+                        >
+                          {statusLabel(convContext.status)}
                         </span>
-                        /{rateLimitStatus.dailyQuotaLimit}
-                      </span>
-                    )}
-                  {convContext && (
-                    <>
-                      <span className='text-muted-foreground'>
-                        Tokens:{' '}
-                        <span className='font-medium text-foreground'>
-                          {convContext.totalTokenIn.toLocaleString('id-ID')}
-                        </span>{' '}
-                        in /{' '}
-                        <span className='font-medium text-foreground'>
-                          {convContext.totalTokenOut.toLocaleString('id-ID')}
-                        </span>{' '}
-                        out
-                      </span>
-                      <span className='text-muted-foreground'>
-                        {convContext.totalLlmCalls.toLocaleString('id-ID')}{' '}
-                        balasan LLM
-                      </span>
-                    </>
-                  )}
-                  {convContext?.summary && (
-                    <p
-                      className='w-full truncate text-muted-foreground'
-                      title={convContext.summary}
-                    >
-                      <span className='font-medium text-foreground not-italic'>
-                        Ringkasan bot:
-                      </span>{' '}
-                      {convContext.summary}
-                    </p>
-                  )}
-                  <div className='ms-auto flex items-center gap-2'>
-                    {/* Tombol Reset Rate Limit & Kuota Harian (Selalu Tersedia) */}
-                    {selectedPhone && (
-                      <Button
-                        size='sm'
-                        variant={rateLimitStatus?.isMuted ? 'destructive' : 'outline'}
-                        className={cn(
-                          'gap-1.5 text-xs',
-                          rateLimitStatus?.isMuted
-                            ? 'animate-pulse'
-                            : 'border-amber-300 text-amber-700 hover:bg-amber-50 dark:border-amber-700 dark:text-amber-300 dark:hover:bg-amber-950/50'
+                      )}
+                      {rateLimitStatus?.isMuted && (
+                        <span className='inline-flex items-center gap-1 rounded-full bg-destructive/15 px-2 py-0.5 font-medium text-destructive'>
+                          <ShieldAlert size={12} /> Rate Limited (Muted)
+                        </span>
+                      )}
+                      {rateLimitStatus &&
+                        rateLimitStatus.dailyChatCount >=
+                          rateLimitStatus.dailyQuotaLimit &&
+                        rateLimitStatus.dailyQuotaLimit > 0 && (
+                          <span className='inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-0.5 font-medium text-amber-700 dark:text-amber-300'>
+                            <ShieldAlert size={12} /> Kuota AI Habis (
+                            {rateLimitStatus.dailyChatCount}/
+                            {rateLimitStatus.dailyQuotaLimit})
+                          </span>
                         )}
-                        disabled={resetRateLimitMutation.isPending}
-                        onClick={handleResetRateLimit}
-                        title='Reset pembatasan spam (mute 1 jam/24 jam) dan kuota percakapan AI nomor ini'
-                      >
-                        <RotateCcw size={13} /> Reset Limit
-                      </Button>
-                    )}
+                      {rateLimitStatus?.isWhitelisted && (
+                        <span className='inline-flex items-center gap-1 rounded-full bg-blue-500/15 px-2 py-0.5 font-medium text-blue-700 dark:text-blue-300'>
+                          ⭐ Whitelist
+                        </span>
+                      )}
+                      {rateLimitStatus &&
+                        !rateLimitStatus.isMuted &&
+                        !rateLimitStatus.isWhitelisted && (
+                          <span className='text-muted-foreground'>
+                            Kuota AI:{' '}
+                            <span className='font-medium text-foreground'>
+                              {rateLimitStatus.dailyChatCount}
+                            </span>
+                            /{rateLimitStatus.dailyQuotaLimit}
+                          </span>
+                        )}
+                      {convContext && (
+                        <>
+                          <span className='text-muted-foreground'>
+                            Tokens:{' '}
+                            <span className='font-medium text-foreground'>
+                              {convContext.totalTokenIn.toLocaleString('id-ID')}
+                            </span>{' '}
+                            in /{' '}
+                            <span className='font-medium text-foreground'>
+                              {convContext.totalTokenOut.toLocaleString('id-ID')}
+                            </span>{' '}
+                            out
+                          </span>
+                          <span className='text-muted-foreground'>
+                            {convContext.totalLlmCalls.toLocaleString('id-ID')}{' '}
+                            balasan LLM
+                          </span>
+                        </>
+                      )}
+                    </div>
 
-                    {/* Tombol Ambil Alih CS vs Aktifkan AI */}
-                    {selectedChat?.botEnabled && convContext?.status !== 'escalation' ? (
-                      <Button
-                        size='sm'
-                        variant='outline'
-                        className='gap-1.5 text-xs'
-                        disabled={takeOverMutation.isPending || toggleChatBotMutation.isPending}
-                        onClick={handleTakeOver}
-                        title='Hentikan bot AI dan alihkan percakapan ke CS manual'
-                      >
-                        <UserCheck size={14} className='text-amber-600' /> Ambil Alih CS
-                      </Button>
-                    ) : (
-                      <Button
-                        size='sm'
-                        variant='outline'
-                        className='gap-1.5 text-xs border-emerald-300 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-700 dark:text-emerald-300 dark:hover:bg-emerald-950/50'
-                        disabled={resetBotMutation.isPending || toggleChatBotMutation.isPending}
-                        onClick={handleResetBot}
-                        title='Kembalikan percakapan ke mode bot AI otomatis'
-                      >
-                        <Bot size={14} className='text-emerald-600' /> Aktifkan AI
-                      </Button>
-                    )}
+                    {/* Kolom Kanan: Tombol Action (Reset Limit, Ambil Alih CS / Aktifkan AI, Tutup Chat) */}
+                    <div className='flex items-center gap-2 shrink-0'>
+                      {/* Tombol Reset Rate Limit & Kuota Harian (Selalu Tersedia) */}
+                      {selectedPhone && (
+                        <Button
+                          size='sm'
+                          variant={rateLimitStatus?.isMuted ? 'destructive' : 'outline'}
+                          className={cn(
+                            'h-7 gap-1.5 text-xs px-2.5',
+                            rateLimitStatus?.isMuted
+                              ? 'animate-pulse'
+                              : 'border-amber-300 text-amber-700 hover:bg-amber-50 dark:border-amber-700 dark:text-amber-300 dark:hover:bg-amber-950/50'
+                          )}
+                          disabled={resetRateLimitMutation.isPending}
+                          onClick={handleResetRateLimit}
+                          title='Reset pembatasan spam (mute 1 jam/24 jam) dan kuota percakapan AI nomor ini'
+                        >
+                          <RotateCcw size={13} /> Reset Limit
+                        </Button>
+                      )}
 
-                    {convContext && convContext.status !== 'done' && convContext.status !== 'closed' && (
-                      <Button
-                        size='sm'
-                        variant='ghost'
-                        className='text-xs text-muted-foreground hover:text-foreground'
-                        disabled={closeConvMutation.isPending}
-                        onClick={handleCloseConversation}
-                        title='Tandai percakapan selesai'
-                      >
-                        Tutup Chat
-                      </Button>
-                    )}
+                      {/* Tombol Ambil Alih CS vs Aktifkan AI */}
+                      {selectedChat?.botEnabled && convContext?.status !== 'escalation' ? (
+                        <Button
+                          size='sm'
+                          variant='outline'
+                          className='h-7 gap-1.5 text-xs px-2.5'
+                          disabled={takeOverMutation.isPending || toggleChatBotMutation.isPending}
+                          onClick={handleTakeOver}
+                          title='Hentikan bot AI dan alihkan percakapan ke CS manual'
+                        >
+                          <UserCheck size={14} className='text-amber-600' /> Ambil Alih CS
+                        </Button>
+                      ) : (
+                        <Button
+                          size='sm'
+                          variant='outline'
+                          className='h-7 gap-1.5 text-xs px-2.5 border-emerald-300 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-700 dark:text-emerald-300 dark:hover:bg-emerald-950/50'
+                          disabled={resetBotMutation.isPending || toggleChatBotMutation.isPending}
+                          onClick={handleResetBot}
+                          title='Kembalikan percakapan ke mode bot AI otomatis'
+                        >
+                          <Bot size={14} className='text-emerald-600' /> Aktifkan AI
+                        </Button>
+                      )}
+
+                      {convContext && convContext.status !== 'done' && convContext.status !== 'closed' && (
+                        <Button
+                          size='sm'
+                          variant='ghost'
+                          className='h-7 text-xs px-2 text-muted-foreground hover:text-foreground'
+                          disabled={closeConvMutation.isPending}
+                          onClick={handleCloseConversation}
+                          title='Tandai percakapan selesai'
+                        >
+                          Tutup Chat
+                        </Button>
+                      )}
+                    </div>
                   </div>
+
+                  {/* Baris 2: Ringkasan Bot (Jika Ada Summary) */}
+                  {convContext?.summary && (
+                    <div
+                      className='flex items-start gap-1.5 rounded-md border border-border/60 bg-muted/40 px-2.5 py-1.5 text-xs text-muted-foreground'
+                    >
+                      <Sparkles size={13} className='text-amber-500 shrink-0 mt-0.5' />
+                      <div className='flex-1 leading-relaxed'>
+                        <span className='font-medium text-foreground'>Ringkasan Percakapan:</span>{' '}
+                        {convContext.summary}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
