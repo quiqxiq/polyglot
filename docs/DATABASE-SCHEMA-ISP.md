@@ -1,118 +1,194 @@
 # 🗄️ Skema Database Definitif ISP Management & NetOps Engine (Polyglot)
 
-Dokumen ini adalah **arsitektur dan spesifikasi skema database definitif** yang telah disesuaikan secara presisi untuk kebutuhan operasional ISP:
-- **Pendaftaran Pelanggan Ringkas (Tanpa KTP/Berkas Rumit)**: Cukup Nama, No. WhatsApp, Alamat, dan Titik Koordinat (Latitude & Longitude).
-- **Manajemen Pelanggan & Paket**: Pelanggan tetap, paket layanan (PPPoE & Hotspot bulanan), dan pemetaan ke router MikroTik.
-- **Invoicing & Penagihan Bulanan**: Faktur tagihan bulanan otomatis berbasis periode (`YYYY-MM`).
-- **Pembayaran Cepat & Fleksibel**:
-  - **Scan QR / Input Kode Portal**: Petugas/kasir tinggal memindai QR code atau mengetik kode pembayaran singkat pelanggan dari portal tanpa perlu input nama/nominal manual.
-  - **Payment Gateway**: Otomatisasi Virtual Account & QRIS online (Tripay, Midtrans, Xendit).
-  - **Tunai / Kasir**: Pembayaran langsung di loket kantor.
-- **Buku Kas Sederhana & Arus Kas**: Pencatatan mutasi kas masuk otomatis dari pembayaran tagihan serta pencatatan pengeluaran operasional manual.
-- **Laporan Keuangan & Operasional Lengkap**: Query agregasi dan snapshot harian untuk laporan per-hari, per-bulan, dan per-tahun.
+Dokumen ini adalah **skema database lengkap (Full Standalone DDL)** untuk operasional sistem ISP Management pada project Polyglot. Skema ini dirancang berdasarkan referensi nyata ekspor data ISP (`Data_Pelanggan_*.xlsx`) dan kebutuhan inti sistem:
+
+1. **Pendaftaran Pelanggan Ringkas (Tanpa NIK/KTP)**:
+   - Cukup Nama, No. WhatsApp, Alamat, dan Titik Koordinat (Latitude & Longitude).
+2. **Master Pelanggan & Paket Layanan Lengkap (`service_plans`)**:
+   - Mendukung paket **PPPoE** dan **Hotspot Tetap/Bulanan**.
+   - Parameter jaringan lengkap: IP Pool, Parent Queue, Rate Limit, Address List, Burst, Validity, Expire Mode, Simultaneous Use, dsb.
+   - Tanpa pembatasan kuota GB / FUP (unlimited flat rate).
+3. **Invoicing & Penagihan Bulanan**:
+   - Tagihan bulanan otomatis berbasis periode (`YYYY-MM`).
+4. **Pembayaran Cepat & Multi-Channel**:
+   - **Scan QR / Input Kode Portal**: Kasir memindai QR code atau mengetik `manual_payment_code` / `portal_access_code` pelanggan tanpa perlu input nama/nominal manual.
+   - **Payment Gateway**: Otomatisasi QRIS & Virtual Account (Tripay, Midtrans, Xendit).
+   - **Tunai di Loket**: Pembayaran langsung di kantor.
+5. **Buku Kas Sederhana (Arus Kas Masuk & Keluar)**:
+   - Kas masuk otomatis dicatat saat invoice lunas.
+   - Pengeluaran operasional (listrik, gaji, bandwidth) dicatat manual.
+6. **Laporan Menyeluruh**:
+   - Snapshot finansial harian (`daily_financial_snapshots`) dan query agregasi untuk laporan **Per-Hari, Per-Bulan, dan Per-Tahun**.
+7. **Template Notifikasi WhatsApp**:
+   - Kustomisasi template pesan otomatis (tagihan, bukti bayar, jadwal pasang, isolir).
 
 ---
 
-## 1. Prinsip Arsitektur & Aturan Sistem
-
-1. **MikroTik Router = Sumber Kebenaran Data Jaringan**:
-   - Akun PPPoE, Hotspot user, active session, antrean bandwidth (queue), dan IP leases hidup di router MikroTik.
-   - Database hanya menyimpan **mapping relasional** (`subscriptions.remote_username`, `device_id`, `remote_profile`) — tidak menduplikasi konfigurasi internal router.
-2. **Database PostgreSQL = Sumber Kebenaran Data Bisnis & Finansial**:
-   - Master pelanggan, paket layanan, invoice, pembayaran, buku kas, dan laporan keuangan dihitung dan dicatat 100% dari database.
-3. **Teknisi Terintegrasi di Tabel `users`**:
-   - Sesuai migrasi `000012_merge_technicians_into_users`, staf teknisi adalah user sistem dengan `role = 'teknisi'`. Relasi penugasan teknisi merujuk langsung ke `users(id)`.
-4. **Pendaftaran Ringkas & Praktis**:
-   - Formulir pendaftaran baru hanya membutuhkan informasi esensial: Nama, Kontak WhatsApp, Alamat, Titik Peta (Lat/Lng), dan Pilihan Paket. Tidak memerlukan unggah KTP/foto identitas.
-5. **Pembayaran Bebas Human Error**:
-   - Setiap tagihan memiliki `qr_payload` dan `manual_payment_code` (kode unik 6–12 digit). Saat discan/diketik di kasir, sistem langsung memuat data tagihan dan nominal secara otomatis.
-6. **Buku Kas Otomatis & Akurat**:
-   - Pelunasan tagihan (`payments`) secara otomatis menghasilkan baris mutasi kas masuk (`cash_transactions.direction = 'IN'`).
-   - Saldo kas adalah hasil kalkulasi agregat mutasi masuk dikurangi keluar (`SUM(IN) - SUM(OUT)`), mencegah terjadinya selisih/drift saldo.
-
----
-
-## 2. Diagram Relasi Entitas (ERD)
+## 1. Diagram Relasi Entitas (Entity-Relationship Diagram)
 
 ```mermaid
 erDiagram
-    USERS ||--o{ REGISTRATIONS : "meninjau & memasang"
-    USERS ||--o{ PAYMENTS : "menerima pembayaran"
-    USERS ||--o{ CASH_TRANSACTIONS : "mencatat mutasi"
-    USERS ||--o{ AUDIT_LOGS : "melakukan aksi"
+    USERS ||--o{ REGISTRATIONS : "meninjau_dan_pasang"
+    USERS ||--o{ PAYMENTS : "menerima_kasir"
+    USERS ||--o{ CASH_TRANSACTIONS : "mencatat_mutasi"
+    USERS ||--o{ AUDIT_LOGS : "melakukan_aksi"
 
-    REGISTRATIONS ||--o| CUSTOMERS : "dikonversi menjadi"
-    REGISTRATIONS }o--|| PLANS : "memilih paket"
+    REGISTRATIONS ||--o| CUSTOMERS : "dikonversi_menjadi"
+    REGISTRATIONS }o--|| SERVICE_PLANS : "memilih_paket"
 
-    CUSTOMERS ||--o{ SUBSCRIPTIONS : "memiliki langganan"
-    CUSTOMERS ||--o{ INVOICES : "menerima tagihan"
-    CUSTOMERS ||--o{ CUSTOMER_PORTAL_SESSIONS : "login portal"
-    CUSTOMERS ||--o{ WA_NOTIFICATIONS : "menerima pesan"
+    CUSTOMERS ||--o{ SUBSCRIPTIONS : "memiliki_layanan"
+    CUSTOMERS ||--o{ INVOICES : "diterbitkan_tagihan"
+    CUSTOMERS ||--o{ CUSTOMER_PORTAL_SESSIONS : "sesi_portal"
+    CUSTOMERS ||--o{ WA_NOTIFICATIONS : "menerima_wa"
 
-    NOTIFICATION_TEMPLATES ||--o{ WA_NOTIFICATIONS : "memformat pesan"
+    DEVICES ||--o{ SUBSCRIPTIONS : "router_bras_target"
 
-    DEVICES ||--o{ SUBSCRIPTIONS : "router target (BRAS)"
+    SERVICE_PLANS ||--o{ SUBSCRIPTIONS : "konfigurasi_paket"
+    SERVICE_PLANS ||--o{ INVOICE_ITEMS : "rincian_item"
 
-    PLANS ||--o{ SUBSCRIPTIONS : "dasar harga & profil"
-    PLANS ||--o{ INVOICE_ITEMS : "item paket"
+    SUBSCRIPTIONS ||--o{ INVOICES : "generate_tagihan_bulanan"
 
-    SUBSCRIPTIONS ||--o{ INVOICES : "generate tagihan bulanan"
+    INVOICES ||--o{ INVOICE_ITEMS : "memiliki_rincian"
+    INVOICES ||--o{ PAYMENTS : "dilunasi_oleh"
+    INVOICES ||--o{ GATEWAY_TRANSACTIONS : "transaksi_online"
 
-    INVOICES ||--o{ INVOICE_ITEMS : "memiliki rincian"
-    INVOICES ||--o{ PAYMENTS : "dilunasi oleh"
-    INVOICES ||--o{ GATEWAY_TRANSACTIONS : "diproses via gateway"
+    PAYMENT_METHODS ||--o{ PAYMENTS : "metode_bayar"
+    PAYMENTS ||--o{ CASH_TRANSACTIONS : "otomatis_kas_masuk"
 
-    PAYMENT_METHODS ||--o{ PAYMENTS : "metode bayar"
-    PAYMENTS ||--o{ CASH_TRANSACTIONS : "memicu kas masuk"
+    CASH_ACCOUNTS ||--o{ CASH_TRANSACTIONS : "rekening_kas_bank"
+    CASH_CATEGORIES ||--o{ CASH_TRANSACTIONS : "pos_kategori"
 
-    CASH_ACCOUNTS ||--o{ CASH_TRANSACTIONS : "rekening kas/bank"
-    CASH_CATEGORIES ||--o{ CASH_TRANSACTIONS : "kategori arus kas"
+    NOTIFICATION_TEMPLATES ||--o{ WA_NOTIFICATIONS : "format_pesan"
 ```
 
 ---
 
-## 3. Definisi Skema Database (DDL PostgreSQL)
+## 2. Definisi Skema Database Penuh (Full PostgreSQL DDL)
 
-### 3.1 Pendaftaran Pelanggan Baru (Registrations)
-
-Mengelola alur permohonan pasang baru secara ringkas dari pendaftaran mandiri/admin, penjadwalan pasang, penugasan teknisi, hingga aktivasi otomatis.
+### 2.1 Utilitas & Pengguna Sistem (Users)
 
 ```sql
-CREATE TABLE IF NOT EXISTS registrations (
-    id                     TEXT PRIMARY KEY,
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+-- Fungsi update timestamp otomatis
+CREATE OR REPLACE FUNCTION set_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- 1. Tabel Pengguna Sistem (Owner, Admin, Kasir, Teknisi)
+CREATE TABLE users (
+    id             BIGSERIAL PRIMARY KEY,
+    username       VARCHAR(100) NOT NULL UNIQUE,
+    email          VARCHAR(255) NOT NULL UNIQUE,
+    password_hash  VARCHAR(255) NOT NULL,
+    full_name      VARCHAR(255),
+    phone_number   VARCHAR(50),
+    role           VARCHAR(50)  NOT NULL DEFAULT 'agent', -- 'owner', 'admin', 'agent', 'teknisi'
+    specialization VARCHAR(255),                          -- Spesialisasi untuk teknisi (Fiber Optic, Wireless, dll)
+    is_active      BOOLEAN      NOT NULL DEFAULT TRUE,
+    tenant_id      VARCHAR(100) NOT NULL DEFAULT 'tenant-default',
+    created_at     TIMESTAMPTZ  NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at     TIMESTAMPTZ  NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_users_role      ON users(role);
+CREATE INDEX idx_users_is_active ON users(is_active);
+CREATE TRIGGER trg_users_upd BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+```
+
+---
+
+### 2.2 Master Paket Layanan (`service_plans`)
+
+Mendukung paket PPPoE dan Hotspot Bulanan/Tetap dengan parameter MikroTik lengkap (tanpa kuota GB / FUP).
+
+```sql
+-- 2. Master Paket Layanan
+CREATE TABLE service_plans (
+    id                      TEXT PRIMARY KEY,                     -- UUID string / slug
+    tenant_id               TEXT NOT NULL DEFAULT 'tenant-default',
+    name                    VARCHAR(100)  NOT NULL,               -- Nama paket (mis. "100-RB-100", "HOME-20M")
+    service_type            VARCHAR(20)   NOT NULL,               -- 'PPPOE', 'HOTSPOT', 'DEDICATED'
+    bandwidth_download_kbps INT           NOT NULL,               -- Kecepatan download (kbps)
+    bandwidth_upload_kbps   INT           NOT NULL,               -- Kecepatan upload (kbps)
+    burst_download_kbps     INT,
+    burst_upload_kbps       INT,
+    burst_threshold_kbps    INT,
+    burst_time_seconds      INT,
+    price                   NUMERIC(15,2) NOT NULL,               -- Harga dasar tagihan bulanan
+    selling_price           NUMERIC(15,2),
+    installation_fee        NUMERIC(15,2) DEFAULT 0.00,           -- Biaya pasang awal
+    tax_percent             NUMERIC(5,2)  DEFAULT 0.00,
+    validity                VARCHAR(20)   DEFAULT '30d',          -- '30d', '1M'
+    validity_mode           VARCHAR(20)   DEFAULT 'CALENDAR',     -- 'CALENDAR', 'UPTIME'
+    simultaneous_use        INT           DEFAULT 1,              -- Jumlah sesi login bersamaan
+    ip_pool_name            VARCHAR(50),                          -- IP Pool MikroTik (mis. "PPPOE (IP Pool)")
+    parent_queue            VARCHAR(50)   DEFAULT 'none',         -- Parent Queue MikroTik
+    address_list            VARCHAR(50),                          -- Address List firewall
+    shared_users            INT           DEFAULT 1,
+    expire_mode             VARCHAR(10)   DEFAULT 'ntf',          -- 'ntf', 'ntfc', 'rem', 'remc', '0'
+    lock_user               BOOLEAN       DEFAULT FALSE,
+    lock_server             BOOLEAN       DEFAULT FALSE,
+    limit_uptime            VARCHAR(20),
+    limit_bytes             VARCHAR(20),                          -- NULL/opsional (unlimited flat rate)
+    is_active               BOOLEAN       NOT NULL DEFAULT TRUE,
+    description             TEXT,
+    created_at              TIMESTAMPTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at              TIMESTAMPTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_service_plans_type   ON service_plans(service_type);
+CREATE INDEX idx_service_plans_active ON service_plans(is_active);
+CREATE TRIGGER trg_service_plans_upd BEFORE UPDATE ON service_plans FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+```
+
+---
+
+### 2.3 Pendaftaran Pelanggan Baru (`registrations`)
+
+Formulir pendaftaran pelanggan baru yang ringkas (tanpa NIK/KTP) beserta alur approval teknisi dan aktivasi.
+
+```sql
+-- 3. Pendaftaran Pelanggan Baru
+CREATE TABLE registrations (
+    id                     TEXT PRIMARY KEY,                      -- UUID string
     tenant_id              TEXT NOT NULL DEFAULT 'tenant-default',
-    registration_no        VARCHAR(30) UNIQUE NOT NULL,       -- Contoh: REG-202608-0001
-    plan_id                TEXT NOT NULL REFERENCES plans(id) ON DELETE RESTRICT,
+    registration_no        VARCHAR(30) UNIQUE NOT NULL,           -- Contoh: REG-202608-0001
+    plan_id                TEXT NOT NULL REFERENCES service_plans(id) ON DELETE RESTRICT,
     
-    -- Data Pemohon Ringkas (Tanpa KTP)
+    -- Data Pemohon Ringkas (Tanpa NIK/KTP)
     full_name              VARCHAR(100) NOT NULL,
-    phone                  VARCHAR(20)  NOT NULL,             -- Nomor WhatsApp aktif
+    phone                  VARCHAR(20)  NOT NULL,                 -- Nomor WhatsApp aktif
     email                  VARCHAR(100),
-    address                TEXT         NOT NULL,
-    latitude               DOUBLE PRECISION,                  -- Koordinat lokasi pemasangan
+    address                TEXT         NOT NULL,                 -- Alamat pemasangan (Desa/Dusun/Patokan)
+    latitude               DOUBLE PRECISION,                      -- Titik koordinat GPS
     longitude              DOUBLE PRECISION,
-    notes                  TEXT,                              -- Catatan khusus dari pemohon/patokan rumah
+    notes                  TEXT,                                  -- Catatan khusus / patokan rumah
     
     -- Status Alur
     status                 VARCHAR(20)  NOT NULL DEFAULT 'PENDING',
     -- PENDING -> APPROVED -> INSTALLED -> ACTIVE (atau REJECTED / CANCELLED)
     
-    -- Review & Penjadwalan Pemasangan
+    -- Review Admin & Penjadwalan
     reviewed_by            BIGINT       REFERENCES users(id) ON DELETE SET NULL,
     reviewed_at            TIMESTAMPTZ,
     admin_notes            TEXT,
     scheduled_install_date DATE,
     scheduled_install_time VARCHAR(20),
-    assigned_technician_id BIGINT       REFERENCES users(id) ON DELETE SET NULL,
+    assigned_technician_id BIGINT       REFERENCES users(id) ON DELETE SET NULL, -- Teknisi penugasan
     
-    -- Hasil Pemasangan & Konfirmasi Teknisi
+    -- Hasil Pemasangan Teknisi Lapangan
     installed_at           TIMESTAMPTZ,
     technician_notes       TEXT,
     
-    -- Relasi Hasil Aktivasi
-    customer_id            TEXT         REFERENCES customers(id) ON DELETE SET NULL,
-    subscription_id        TEXT         REFERENCES subscriptions(id) ON DELETE SET NULL,
-    invoice_id             TEXT         REFERENCES invoices(id) ON DELETE SET NULL,
+    -- Relasi Hasil Konversi Pelanggan Aktif
+    customer_id            TEXT,
+    subscription_id        TEXT,
+    invoice_id             TEXT,
     
     rejected_at            TIMESTAMPTZ,
     rejected_reason        TEXT,
@@ -124,39 +200,45 @@ CREATE TABLE IF NOT EXISTS registrations (
     CONSTRAINT chk_reg_status CHECK (status IN ('PENDING', 'APPROVED', 'INSTALLED', 'ACTIVE', 'REJECTED', 'CANCELLED'))
 );
 
-CREATE INDEX IF NOT EXISTS idx_registrations_status ON registrations(status, created_at DESC);
-CREATE INDEX IF NOT EXISTS idx_registrations_phone  ON registrations(phone);
-CREATE INDEX IF NOT EXISTS idx_registrations_tech   ON registrations(assigned_technician_id, status);
+CREATE INDEX idx_registrations_status ON registrations(status, created_at DESC);
+CREATE INDEX idx_registrations_phone  ON registrations(phone);
+CREATE INDEX idx_registrations_tech   ON registrations(assigned_technician_id, status);
+CREATE TRIGGER trg_registrations_upd BEFORE UPDATE ON registrations FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 ```
 
 ---
 
-### 3.2 Master Pelanggan Aktif & Sesi Portal
-
-Menyimpan data master pelanggan aktif dan kode akses portal pelanggan untuk verifikasi pembayaran instan.
+### 2.4 Master Pelanggan Aktif & Sesi Portal (`customers`)
 
 ```sql
--- Tabel customers (Perluasan dari migrasi 000006)
-ALTER TABLE customers
-    ADD COLUMN IF NOT EXISTS customer_code      VARCHAR(30),       -- Contoh: CUST-2026-0001
-    ADD COLUMN IF NOT EXISTS portal_access_code VARCHAR(16),       -- Kode unik 6-12 char untuk scan/portal
-    ADD COLUMN IF NOT EXISTS latitude           DOUBLE PRECISION,
-    ADD COLUMN IF NOT EXISTS longitude          DOUBLE PRECISION,
-    ADD COLUMN IF NOT EXISTS notes              TEXT,
-    ADD COLUMN IF NOT EXISTS deleted_at         TIMESTAMPTZ;
+-- 4. Master Pelanggan Aktif
+CREATE TABLE customers (
+    id                 TEXT PRIMARY KEY,                          -- UUID string
+    tenant_id          TEXT NOT NULL DEFAULT 'tenant-default',
+    customer_code      VARCHAR(30)  UNIQUE NOT NULL,              -- ID Pelanggan (mis. "01075" / "CUST-01075")
+    name               VARCHAR(100) NOT NULL,
+    phone              VARCHAR(20)  NOT NULL,                     -- Nomor WhatsApp aktif
+    email              VARCHAR(100),
+    address            TEXT         NOT NULL,                     -- Alamat pelanggan
+    latitude           DOUBLE PRECISION,                          -- Koordinat lokasi
+    longitude          DOUBLE PRECISION,
+    portal_access_code VARCHAR(16)  UNIQUE NOT NULL,              -- Kode unik 6-12 digit untuk scan/portal
+    status             VARCHAR(20)  NOT NULL DEFAULT 'ACTIVE',    -- 'ACTIVE', 'ISOLATED', 'SUSPENDED', 'TERMINATED'
+    notes              TEXT,
+    registered_at      DATE         NOT NULL DEFAULT CURRENT_DATE,
+    deleted_at         TIMESTAMPTZ,
+    created_at         TIMESTAMPTZ  NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at         TIMESTAMPTZ  NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
-CREATE UNIQUE INDEX IF NOT EXISTS idx_customers_tenant_code 
-    ON customers (tenant_id, customer_code) 
-    WHERE customer_code IS NOT NULL AND deleted_at IS NULL;
+CREATE INDEX idx_customers_code   ON customers(customer_code) WHERE deleted_at IS NULL;
+CREATE INDEX idx_customers_phone  ON customers(phone) WHERE deleted_at IS NULL;
+CREATE INDEX idx_customers_portal ON customers(portal_access_code) WHERE deleted_at IS NULL;
+CREATE INDEX idx_customers_status ON customers(status) WHERE deleted_at IS NULL;
+CREATE TRIGGER trg_customers_upd BEFORE UPDATE ON customers FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
-CREATE UNIQUE INDEX IF NOT EXISTS idx_customers_portal_code 
-    ON customers (tenant_id, portal_access_code) 
-    WHERE portal_access_code IS NOT NULL AND deleted_at IS NULL;
-
-CREATE INDEX IF NOT EXISTS idx_customers_phone ON customers(phone) WHERE deleted_at IS NULL;
-
--- Sesi Login Portal Pelanggan
-CREATE TABLE IF NOT EXISTS customer_portal_sessions (
+-- 5. Sesi Login Portal Mandiri Pelanggan
+CREATE TABLE customer_portal_sessions (
     id            TEXT PRIMARY KEY,
     tenant_id     TEXT NOT NULL DEFAULT 'tenant-default',
     customer_id   TEXT NOT NULL REFERENCES customers(id) ON DELETE CASCADE,
@@ -167,362 +249,399 @@ CREATE TABLE IF NOT EXISTS customer_portal_sessions (
     created_at    TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX IF NOT EXISTS idx_portal_sessions_token ON customer_portal_sessions(session_token);
+CREATE INDEX idx_portal_sessions_token ON customer_portal_sessions(session_token);
 ```
 
 ---
 
-### 3.3 Paket Layanan & Langganan Jaringan
+### 2.5 Langganan Jaringan Pelanggan (`subscriptions`)
 
-Sumber kebenaran profil paket (kecepatan, harga) dan langganan aktif pelanggan yang terhubung ke MikroTik.
-
-```sql
--- Tabel plans (Perluasan dari migrasi 000006)
-ALTER TABLE plans
-    ADD COLUMN IF NOT EXISTS tenant_id        TEXT NOT NULL DEFAULT 'tenant-default',
-    ADD COLUMN IF NOT EXISTS plan_type        VARCHAR(20) NOT NULL DEFAULT 'PPPOE', -- 'PPPOE' | 'HOTSPOT'
-    ADD COLUMN IF NOT EXISTS speed_up_kbps    BIGINT NOT NULL DEFAULT 0,
-    ADD COLUMN IF NOT EXISTS speed_down_kbps  BIGINT NOT NULL DEFAULT 0,
-    ADD COLUMN IF NOT EXISTS setup_fee        NUMERIC(18,2) NOT NULL DEFAULT 0.00,
-    ADD COLUMN IF NOT EXISTS remote_profile   VARCHAR(100),                         -- Nama profile di MikroTik
-    ADD COLUMN IF NOT EXISTS billing_cycle    VARCHAR(20) NOT NULL DEFAULT 'MONTHLY',
-    ADD COLUMN IF NOT EXISTS is_active        BOOLEAN NOT NULL DEFAULT TRUE,
-    ADD COLUMN IF NOT EXISTS deleted_at       TIMESTAMPTZ;
-
-CREATE INDEX IF NOT EXISTS idx_plans_type_active ON plans (plan_type, is_active) WHERE deleted_at IS NULL;
-
--- Tabel subscriptions (Perluasan dari migrasi 000006)
-ALTER TABLE subscriptions
-    ADD COLUMN IF NOT EXISTS tenant_id             TEXT NOT NULL DEFAULT 'tenant-default',
-    ADD COLUMN IF NOT EXISTS device_id             UUID REFERENCES devices(id) ON DELETE RESTRICT,
-    ADD COLUMN IF NOT EXISTS remote_username       VARCHAR(100),                          -- Username akun di MikroTik
-    ADD COLUMN IF NOT EXISTS remote_profile        VARCHAR(100),                          -- Profil MikroTik saat ini
-    ADD COLUMN IF NOT EXISTS billing_day           INT NOT NULL DEFAULT 1,                -- Tanggal jatuh tempo (1-28)
-    ADD COLUMN IF NOT EXISTS auto_isolate          BOOLEAN NOT NULL DEFAULT TRUE,         -- Auto-isolir saat nunggak
-    ADD COLUMN IF NOT EXISTS current_period_start  TIMESTAMPTZ,
-    ADD COLUMN IF NOT EXISTS current_period_end    TIMESTAMPTZ,
-    ADD COLUMN IF NOT EXISTS deleted_at            TIMESTAMPTZ;
-
-CREATE INDEX IF NOT EXISTS idx_subscriptions_device ON subscriptions(device_id);
-CREATE INDEX IF NOT EXISTS idx_subscriptions_remote ON subscriptions(device_id, remote_username) 
-    WHERE remote_username IS NOT NULL AND deleted_at IS NULL;
-```
-
----
-
-### 3.4 Invoices & Penagihan Bulanan
-
-Faktur tagihan bulanan pelanggan yang dilengkapi payload QR dan kode pembayaran singkat untuk kasir.
+Menyimpan data langganan aktif pelanggan beserta parameter akun MikroTik (PPPoE Secret atau Hotspot User).
 
 ```sql
--- Tabel invoices (Perluasan dari migrasi 000006)
-ALTER TABLE invoices
-    ADD COLUMN IF NOT EXISTS tenant_id           TEXT NOT NULL DEFAULT 'tenant-default',
-    ADD COLUMN IF NOT EXISTS invoice_number      VARCHAR(50),                           -- Contoh: INV-202608-0001
-    ADD COLUMN IF NOT EXISTS subscription_id     TEXT REFERENCES subscriptions(id) ON DELETE SET NULL,
-    ADD COLUMN IF NOT EXISTS period              VARCHAR(10),                           -- Format: '2026-08'
-    ADD COLUMN IF NOT EXISTS subtotal            NUMERIC(18,2) NOT NULL DEFAULT 0.00,
-    ADD COLUMN IF NOT EXISTS discount            NUMERIC(18,2) NOT NULL DEFAULT 0.00,
-    ADD COLUMN IF NOT EXISTS total               NUMERIC(18,2) NOT NULL DEFAULT 0.00,
-    ADD COLUMN IF NOT EXISTS qr_payload          VARCHAR(255),                          -- String data QR untuk scan kasir
-    ADD COLUMN IF NOT EXISTS manual_payment_code VARCHAR(30),                           -- Kode pembayaran singkat (misal: PAY-892147)
-    ADD COLUMN IF NOT EXISTS notes               TEXT,
-    ADD COLUMN IF NOT EXISTS cancelled_at        TIMESTAMPTZ,
-    ADD COLUMN IF NOT EXISTS cancel_reason       TEXT,
-    ADD COLUMN IF NOT EXISTS deleted_at          TIMESTAMPTZ;
-
-CREATE UNIQUE INDEX IF NOT EXISTS idx_invoices_number 
-    ON invoices (tenant_id, invoice_number) 
-    WHERE invoice_number IS NOT NULL AND deleted_at IS NULL;
-
-CREATE INDEX IF NOT EXISTS idx_invoices_period      ON invoices (period);
-CREATE INDEX IF NOT EXISTS idx_invoices_status      ON invoices (status);
-CREATE INDEX IF NOT EXISTS idx_invoices_pay_code    ON invoices (manual_payment_code) WHERE manual_payment_code IS NOT NULL;
-CREATE INDEX IF NOT EXISTS idx_invoices_qr_payload  ON invoices (qr_payload) WHERE qr_payload IS NOT NULL;
-
--- Rincian Baris Tagihan (Invoice Items)
-CREATE TABLE IF NOT EXISTS invoice_items (
-    id             TEXT PRIMARY KEY,
-    invoice_id     TEXT NOT NULL REFERENCES invoices(id) ON DELETE CASCADE,
-    description    VARCHAR(255) NOT NULL,               -- Contoh: "Paket Fiber 20 Mbps (Agustus 2026)"
-    quantity       NUMERIC(12,2) NOT NULL DEFAULT 1.00,
-    unit_price     NUMERIC(18,2) NOT NULL DEFAULT 0.00,
-    amount         NUMERIC(18,2) NOT NULL DEFAULT 0.00,
-    created_at     TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+-- 6. Langganan Pelanggan (Mapping ke Router MikroTik)
+CREATE TABLE subscriptions (
+    id                   TEXT PRIMARY KEY,                        -- UUID string
+    tenant_id            TEXT NOT NULL DEFAULT 'tenant-default',
+    customer_id          TEXT NOT NULL REFERENCES customers(id) ON DELETE RESTRICT,
+    plan_id              TEXT NOT NULL REFERENCES service_plans(id) ON DELETE RESTRICT,
+    device_id            UUID REFERENCES devices(id) ON DELETE RESTRICT, -- Router BRAS MikroTik (mis. "JAYA ABADI")
+    service_type         VARCHAR(20)  NOT NULL DEFAULT 'PPPOE',   -- 'PPPOE', 'HOTSPOT'
+    
+    -- Kredensial & Konfigurasi MikroTik
+    remote_username      VARCHAR(100) NOT NULL,                   -- Username PPP Secret / Hotspot User
+    remote_password      VARCHAR(100) NOT NULL,                   -- Password akun jaringan
+    local_address        VARCHAR(45),                             -- Gateway IP (mis. 192.168.56.1)
+    remote_address       VARCHAR(45),                             -- IP Statis atau nama IP Pool
+    parent_queue         VARCHAR(50)  DEFAULT 'none',
+    rate_limit           VARCHAR(100),                            -- String Rate Limit MikroTik (mis. "5M/5M 10M/10M ...")
+    
+    -- Penagihan & Periode
+    billing_cycle        VARCHAR(20)  NOT NULL DEFAULT '1 Bulan',
+    billing_day          INT          NOT NULL DEFAULT 1,         -- Tanggal jatuh tempo per bulan (1-28)
+    auto_isolate         BOOLEAN      NOT NULL DEFAULT TRUE,      -- Otomatis ubah profile ke ISOLIR jika jatuh tempo
+    isolation_grace_days INT          NOT NULL DEFAULT 3,
+    status               VARCHAR(20)  NOT NULL DEFAULT 'ACTIVE',  -- 'ACTIVE', 'ISOLATED', 'SUSPENDED', 'TERMINATED'
+    start_date           DATE         NOT NULL DEFAULT CURRENT_DATE,
+    end_date             DATE,                                    -- Tanggal expired langganan
+    custom_price         NUMERIC(15,2),                           -- Override harga jika ada promo khusus
+    current_period_start TIMESTAMPTZ,
+    current_period_end   TIMESTAMPTZ,
+    notes                TEXT,
+    deleted_at           TIMESTAMPTZ,
+    created_at           TIMESTAMPTZ  NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at           TIMESTAMPTZ  NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX IF NOT EXISTS idx_invoice_items_invoice ON invoice_items(invoice_id);
+CREATE INDEX idx_subscriptions_customer ON subscriptions(customer_id);
+CREATE INDEX idx_subscriptions_device   ON subscriptions(device_id);
+CREATE INDEX idx_subscriptions_remote   ON subscriptions(device_id, remote_username) WHERE deleted_at IS NULL;
+CREATE INDEX idx_subscriptions_status   ON subscriptions(status) WHERE deleted_at IS NULL;
+CREATE TRIGGER trg_subscriptions_upd BEFORE UPDATE ON subscriptions FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 ```
 
 ---
 
-### 3.5 Pembayaran & Payment Gateway
+### 2.6 Invoices & Rincian Tagihan (`invoices`, `invoice_items`)
 
-Mencatat bukti pelunasan tagihan melalui berbagai metode (QR Scan kasir, kode manual, transfer, atau Payment Gateway).
+Mendukung penagihan bulanan berbasis periode (`YYYY-MM`), kode QR, dan kode pembayaran kasir cepat.
 
 ```sql
--- Master Metode Pembayaran
-CREATE TABLE IF NOT EXISTS payment_methods (
+-- 7. Faktur Tagihan Bulanan Pelanggan
+CREATE TABLE invoices (
+    id                  TEXT PRIMARY KEY,                         -- UUID string
+    tenant_id           TEXT NOT NULL DEFAULT 'tenant-default',
+    invoice_number      VARCHAR(50) UNIQUE NOT NULL,              -- Contoh: INV-202608-00042
+    customer_id         TEXT NOT NULL REFERENCES customers(id) ON DELETE RESTRICT,
+    subscription_id     TEXT REFERENCES subscriptions(id) ON DELETE SET NULL,
+    period              VARCHAR(10) NOT NULL,                     -- Periode tagihan: '2026-08'
+    subtotal            NUMERIC(15,2) NOT NULL DEFAULT 0.00,
+    discount            NUMERIC(15,2) NOT NULL DEFAULT 0.00,
+    tax_amount          NUMERIC(15,2) NOT NULL DEFAULT 0.00,
+    total               NUMERIC(15,2) NOT NULL DEFAULT 0.00,      -- subtotal - discount + tax
+    paid_amount         NUMERIC(15,2) NOT NULL DEFAULT 0.00,
+    due_date            DATE NOT NULL,                            -- Tanggal batas bayar
+    paid_at             TIMESTAMPTZ,
+    status              VARCHAR(20) NOT NULL DEFAULT 'UNPAID',    -- 'UNPAID', 'PARTIAL', 'PAID', 'OVERDUE', 'CANCELLED'
+    
+    -- Fitur Scan & Bayar Cepat
+    qr_payload          VARCHAR(255) UNIQUE NOT NULL,             -- String payload QR untuk scan kasir
+    manual_payment_code VARCHAR(30)  UNIQUE NOT NULL,             -- Kode bayar singkat (misal: "PAY-892147")
+    
+    notes               TEXT,
+    cancelled_at        TIMESTAMPTZ,
+    cancel_reason       TEXT,
+    deleted_at          TIMESTAMPTZ,
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at          TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_invoices_customer ON invoices(customer_id);
+CREATE INDEX idx_invoices_period   ON invoices(period);
+CREATE INDEX idx_invoices_status   ON invoices(status);
+CREATE INDEX idx_invoices_due_date ON invoices(due_date);
+CREATE INDEX idx_invoices_qr       ON invoices(qr_payload);
+CREATE INDEX idx_invoices_code     ON invoices(manual_payment_code);
+CREATE TRIGGER trg_invoices_upd BEFORE UPDATE ON invoices FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+-- 8. Rincian Item Baris Tagihan
+CREATE TABLE invoice_items (
+    id             TEXT PRIMARY KEY,
+    invoice_id     TEXT NOT NULL REFERENCES invoices(id) ON DELETE CASCADE,
+    description    VARCHAR(255) NOT NULL,                         -- Contoh: "Paket 100-RB-100 (Agustus 2026)"
+    quantity       NUMERIC(12,2) NOT NULL DEFAULT 1.00,
+    unit_price     NUMERIC(15,2) NOT NULL DEFAULT 0.00,
+    amount         NUMERIC(15,2) NOT NULL DEFAULT 0.00,
+    item_type      VARCHAR(30)  NOT NULL DEFAULT 'SUBSCRIPTION_FEE', -- 'SUBSCRIPTION_FEE', 'INSTALLATION_FEE', 'AD_HOC'
+    created_at     TIMESTAMPTZ  NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_invoice_items_invoice ON invoice_items(invoice_id);
+```
+
+---
+
+### 2.7 Pembayaran & Payment Gateway (`payments`, `gateway_transactions`)
+
+```sql
+-- 9. Master Metode Pembayaran
+CREATE TABLE payment_methods (
     id          TEXT PRIMARY KEY,
     tenant_id   TEXT NOT NULL DEFAULT 'tenant-default',
-    name        VARCHAR(50) NOT NULL,                  -- 'TUNAI', 'TRANSFER_BCA', 'QRIS', 'XENDIT_VA', 'TRIPAY'
-    type        VARCHAR(30) NOT NULL,                  -- 'CASH', 'BANK', 'QRIS', 'GATEWAY'
+    name        VARCHAR(50) NOT NULL,                             -- 'TUNAI', 'TRANSFER_BCA', 'QRIS', 'TRIPAY_VA'
+    type        VARCHAR(30) NOT NULL,                             -- 'CASH', 'BANK', 'QRIS', 'GATEWAY'
     is_active   BOOLEAN NOT NULL DEFAULT TRUE,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Bukti Pembayaran / Pelunasan
-CREATE TABLE IF NOT EXISTS payments (
+-- 10. Kwitansi Pembayaran Tagihan
+CREATE TABLE payments (
     id                TEXT PRIMARY KEY,
     tenant_id         TEXT NOT NULL DEFAULT 'tenant-default',
+    payment_no        VARCHAR(50)   UNIQUE NOT NULL,              -- No kwitansi (mis. "PAY-202608-0012")
     invoice_id        TEXT NOT NULL REFERENCES invoices(id) ON DELETE RESTRICT,
     payment_method_id TEXT REFERENCES payment_methods(id) ON DELETE SET NULL,
-    amount            NUMERIC(18,2) NOT NULL CHECK (amount > 0),
-    payment_date      TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    received_by       BIGINT REFERENCES users(id) ON DELETE SET NULL, -- Kasir / Admin penerima
-    scan_method       VARCHAR(30) NOT NULL DEFAULT 'MANUAL',          -- 'QR_SCAN', 'CODE_INPUT', 'MANUAL', 'PAYMENT_GATEWAY'
-    reference         VARCHAR(100),                                   -- No. ref transfer bank / kwitansi
+    amount            NUMERIC(15,2) NOT NULL CHECK (amount > 0),
+    payment_date      TIMESTAMPTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    received_by       BIGINT REFERENCES users(id) ON DELETE SET NULL, -- User/kasir penerima
+    scan_method       VARCHAR(30)   NOT NULL DEFAULT 'MANUAL',    -- 'QR_SCAN', 'CODE_INPUT', 'MANUAL', 'PAYMENT_GATEWAY'
+    reference         VARCHAR(100),                               -- No ref bank / bukti bayar
     notes             TEXT,
-    created_at        TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at        TIMESTAMPTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX IF NOT EXISTS idx_payments_invoice ON payments(invoice_id);
-CREATE INDEX IF NOT EXISTS idx_payments_date    ON payments(payment_date);
+CREATE INDEX idx_payments_invoice ON payments(invoice_id);
+CREATE INDEX idx_payments_date    ON payments(payment_date);
 
--- Transaksi Payment Gateway Online (Tripay / Midtrans / Xendit)
-CREATE TABLE IF NOT EXISTS gateway_transactions (
+-- 11. Transaksi Payment Gateway Online (Tripay / Midtrans / Xendit)
+CREATE TABLE gateway_transactions (
     id              TEXT PRIMARY KEY,
     tenant_id       TEXT NOT NULL DEFAULT 'tenant-default',
-    gateway         VARCHAR(30) NOT NULL,             -- 'TRIPAY', 'MIDTRANS', 'XENDIT'
-    external_id     VARCHAR(100) NOT NULL,            -- Order ID / Referensi unik dari gateway
+    gateway         VARCHAR(30)   NOT NULL,                       -- 'TRIPAY', 'MIDTRANS', 'XENDIT'
+    external_id     VARCHAR(100)  NOT NULL,                       -- Order ID dari payment gateway
     invoice_id      TEXT REFERENCES invoices(id) ON DELETE CASCADE,
     payment_id      TEXT REFERENCES payments(id) ON DELETE SET NULL,
-    amount          NUMERIC(18,2) NOT NULL,
-    fee_amount      NUMERIC(18,2) DEFAULT 0.00,
-    status          VARCHAR(30) NOT NULL DEFAULT 'PENDING', -- 'PENDING', 'SETTLED', 'EXPIRED', 'FAILED'
-    payment_channel VARCHAR(50),                      -- 'BCA_VA', 'QRIS', 'MANDIRI_VA'
-    payment_url     TEXT,                             -- URL pembayaran / redirect QRIS
+    amount          NUMERIC(15,2) NOT NULL,
+    fee_amount      NUMERIC(15,2) DEFAULT 0.00,
+    status          VARCHAR(30)   NOT NULL DEFAULT 'PENDING',     -- 'PENDING', 'SETTLED', 'EXPIRED', 'FAILED'
+    payment_channel VARCHAR(50),                                  -- 'BCA_VA', 'QRIS', 'MANDIRI_VA'
+    payment_url     TEXT,                                         -- URL pembayaran / redirect QRIS
     qr_string       TEXT,
-    raw_callback    JSONB,                            -- Payload webhook terakhir untuk audit
-    callback_count  INT NOT NULL DEFAULT 0,
+    raw_callback    JSONB,                                        -- Payload webhook callback terakhir
+    callback_count  INT           NOT NULL DEFAULT 0,
     paid_at         TIMESTAMPTZ,
     expires_at      TIMESTAMPTZ,
-    created_at      TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at      TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at      TIMESTAMPTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMPTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT uq_gateway_ext UNIQUE (gateway, external_id)
 );
 
-CREATE INDEX IF NOT EXISTS idx_gateway_tx_invoice ON gateway_transactions(invoice_id);
-CREATE INDEX IF NOT EXISTS idx_gateway_tx_status  ON gateway_transactions(status);
+CREATE INDEX idx_gateway_tx_invoice ON gateway_transactions(invoice_id);
+CREATE INDEX idx_gateway_tx_status  ON gateway_transactions(status);
+CREATE TRIGGER trg_gateway_tx_upd BEFORE UPDATE ON gateway_transactions FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 ```
 
 ---
 
-### 3.6 Buku Kas, Arus Kas & Pengeluaran Operasional
+### 2.8 Buku Kas Sederhana (`cash_accounts`, `cash_categories`, `cash_transactions`)
 
-Buku kas sederhana untuk mencatat keluar-masuk uang secara real-time. Pemasukan tercatat otomatis saat invoice lunas, dan pengeluaran dicatat manual.
+Mencatat mutasi kas masuk (otomatis saat invoice lunas) dan kas keluar operasional secara real-time.
 
 ```sql
--- Rekening Kas & Bank
-CREATE TABLE IF NOT EXISTS cash_accounts (
-    id          TEXT PRIMARY KEY,
-    tenant_id   TEXT NOT NULL DEFAULT 'tenant-default',
-    account_code VARCHAR(30) UNIQUE NOT NULL,          -- '1001-KAS-KANTOR', '1002-BANK-BCA'
-    name        VARCHAR(100) NOT NULL,                 -- 'Kas Kasir Utama', 'Rekening BCA Operasional'
-    type        VARCHAR(30) NOT NULL DEFAULT 'CASH',   -- 'CASH', 'BANK'
-    is_active   BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+-- 12. Rekening Kas & Bank
+CREATE TABLE cash_accounts (
+    id           TEXT PRIMARY KEY,
+    tenant_id    TEXT NOT NULL DEFAULT 'tenant-default',
+    account_code VARCHAR(30) UNIQUE NOT NULL,                     -- '1001-KAS-KANTOR', '1002-BANK-BCA'
+    name         VARCHAR(100) NOT NULL,                            -- 'Kas Kasir Utama', 'Rekening BCA Operasional'
+    type         VARCHAR(30) NOT NULL DEFAULT 'CASH',             -- 'CASH', 'BANK'
+    is_active    BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at   TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at   TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Kategori Arus Kas (Pendapatan vs Pengeluaran)
-CREATE TABLE IF NOT EXISTS cash_categories (
+-- 13. Kategori Pos Arus Kas
+CREATE TABLE cash_categories (
     id          TEXT PRIMARY KEY,
     tenant_id   TEXT NOT NULL DEFAULT 'tenant-default',
-    name        VARCHAR(100) NOT NULL,                 -- 'Tagihan Pelanggan', 'Biaya Listrik', 'Bandwidth Uplink', 'Gaji'
-    type        VARCHAR(20) NOT NULL,                  -- 'INCOME', 'EXPENSE'
+    name        VARCHAR(100) NOT NULL,                            -- 'Tagihan Pelanggan', 'Biaya Listrik', 'Bandwidth Uplink', 'Gaji'
+    type        VARCHAR(20) NOT NULL,                             -- 'INCOME', 'EXPENSE'
     is_active   BOOLEAN NOT NULL DEFAULT TRUE,
     CONSTRAINT uq_cash_cat_tenant UNIQUE (tenant_id, name)
 );
 
--- Buku Mutasi Kas Keluar & Masuk
-CREATE TABLE IF NOT EXISTS cash_transactions (
+-- 14. Jurnal Mutasi Arus Kas Keluar & Masuk
+CREATE TABLE cash_transactions (
     id             TEXT PRIMARY KEY,
     tenant_id      TEXT NOT NULL DEFAULT 'tenant-default',
+    transaction_no VARCHAR(50)   UNIQUE NOT NULL,                 -- Contoh: TRX-202608-00125
     account_id     TEXT NOT NULL REFERENCES cash_accounts(id) ON DELETE RESTRICT,
-    category_id    TEXT REFERENCES cash_categories(id) ON DELETE RESTRICT,
-    direction      VARCHAR(10) NOT NULL,              -- 'IN' (Masuk), 'OUT' (Keluar)
-    amount         NUMERIC(18,2) NOT NULL CHECK (amount > 0),
-    trx_date       TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    source_type    VARCHAR(30),                       -- 'PAYMENT' (otomatis dari invoice) | 'EXPENSE' (manual) | 'TRANSFER'
-    source_id      TEXT,                              -- id payments terkait jika ada
+    category_id    TEXT NOT NULL REFERENCES cash_categories(id) ON DELETE RESTRICT,
+    direction      VARCHAR(10)   NOT NULL,                        -- 'IN' (Masuk), 'OUT' (Keluar)
+    amount         NUMERIC(15,2) NOT NULL CHECK (amount > 0),
+    trx_date       TIMESTAMPTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    source_type    VARCHAR(30),                                   -- 'PAYMENT' (otomatis dari tagihan) | 'EXPENSE' (manual) | 'TRANSFER'
+    source_id      TEXT,                                          -- ID pembayaran terkait
     description    TEXT NOT NULL,
     recorded_by    BIGINT REFERENCES users(id) ON DELETE SET NULL,
-    created_at     TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at     TIMESTAMPTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT chk_cash_direction CHECK (direction IN ('IN', 'OUT'))
 );
 
-CREATE INDEX IF NOT EXISTS idx_cash_trx_account_date ON cash_transactions(account_id, trx_date DESC);
-CREATE INDEX IF NOT EXISTS idx_cash_trx_category     ON cash_transactions(category_id);
-CREATE INDEX IF NOT EXISTS idx_cash_trx_source       ON cash_transactions(source_type, source_id);
+CREATE INDEX idx_cash_trx_account ON cash_transactions(account_id, trx_date DESC);
+CREATE INDEX idx_cash_trx_cat     ON cash_transactions(category_id);
+CREATE INDEX idx_cash_trx_date    ON cash_transactions(trx_date DESC);
 ```
 
 ---
 
-### 3.7 Laporan Keuangan & Snapshot Agregat
+### 2.9 Laporan Finansial & Snapshot Agregat Harian (`daily_financial_snapshots`)
 
-Menyediakan tabel snapshot harian yang otomatis direkap untuk mempercepat pembuatan **Laporan Harian**, **Laporan Bulanan**, dan **Laporan Tahunan**.
+Menyediakan data rekapitulasi harian siap-pakai untuk menghasilkan **Laporan Harian**, **Laporan Bulanan**, dan **Laporan Tahunan** secara instan.
 
 ```sql
-CREATE TABLE IF NOT EXISTS daily_financial_snapshots (
+-- 15. Snapshot Rekap Finansial Harian
+CREATE TABLE daily_financial_snapshots (
     id                   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     tenant_id            TEXT NOT NULL DEFAULT 'tenant-default',
     snapshot_date        DATE NOT NULL,
-    invoice_count        INT NOT NULL DEFAULT 0,
-    invoice_total        NUMERIC(18,2) NOT NULL DEFAULT 0.00,  -- Total tagihan terbit
-    payment_count        INT NOT NULL DEFAULT 0,
-    payment_total        NUMERIC(18,2) NOT NULL DEFAULT 0.00,  -- Total penerimaan kas
-    outstanding_total    NUMERIC(18,2) NOT NULL DEFAULT 0.00,  -- Total piutang yang belum lunas
-    expense_total        NUMERIC(18,2) NOT NULL DEFAULT 0.00,  -- Total biaya operasional keluar
-    active_subscriptions INT NOT NULL DEFAULT 0,               -- Total pelanggan aktif
-    cash_balance_json    JSONB NOT NULL DEFAULT '{}',          -- Saldo akhir per rekening kas
+    invoice_count        INT NOT NULL DEFAULT 0,                  -- Jumlah tagihan terbit
+    invoice_total        NUMERIC(15,2) NOT NULL DEFAULT 0.00,     -- Total nilai tagihan terbit
+    payment_count        INT NOT NULL DEFAULT 0,                  -- Jumlah pembayaran lunas
+    payment_total        NUMERIC(15,2) NOT NULL DEFAULT 0.00,     -- Total uang kas masuk
+    outstanding_total    NUMERIC(15,2) NOT NULL DEFAULT 0.00,     -- Sisa piutang belum lunas
+    expense_total        NUMERIC(15,2) NOT NULL DEFAULT 0.00,     -- Total biaya operasional keluar
+    active_subscriptions INT NOT NULL DEFAULT 0,                  -- Jumlah pelanggan aktif
+    cash_balance_json    JSONB NOT NULL DEFAULT '{}',             -- Saldo akhir per rekening kas
     created_at           TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT uq_daily_snapshot UNIQUE (tenant_id, snapshot_date)
 );
 
-CREATE INDEX IF NOT EXISTS idx_daily_snapshot_date ON daily_financial_snapshots(snapshot_date DESC);
+CREATE INDEX idx_daily_snapshot_date ON daily_financial_snapshots(snapshot_date DESC);
 ```
 
 ---
 
-### 3.8 Template Pesan WhatsApp, Antrean Notifikasi & Audit Trail
-
-Tabel `notification_templates` menyimpan template pesan dinamis berbasis placeholder (misal: `{{customer_name}}`, `{{amount}}`, `{{due_date}}`, `{{payment_code}}`, `{{payment_url}}`) yang dapat dikustomisasi admin.
+### 2.10 Notifikasi WhatsApp & Audit Trail (`notification_templates`, `wa_notifications`, `audit_logs`)
 
 ```sql
--- Master Template Pesan Notifikasi WhatsApp
-CREATE TABLE IF NOT EXISTS notification_templates (
+-- 16. Master Template Pesan WhatsApp
+CREATE TABLE notification_templates (
     id             TEXT PRIMARY KEY,
     tenant_id      TEXT NOT NULL DEFAULT 'tenant-default',
-    template_key   VARCHAR(50) NOT NULL,               -- 'BILL_REMINDER', 'PAYMENT_RECEIPT', 'REGISTRATION_APPROVED', 'INSTALLATION_SCHEDULED', 'ISOLATION_NOTICE', 'SERVICE_RESTORED'
-    name           VARCHAR(100) NOT NULL,              -- Contoh: "Pengingat Tagihan Jatuh Tempo"
-    content        TEXT NOT NULL,                      -- Isi pesan template dengan variabel {{variable}}
-    variables_json JSONB NOT NULL DEFAULT '[]',        -- Daftar variabel yang tersedia, contoh: ["customer_name", "amount", "due_date", "payment_code"]
+    template_key   VARCHAR(50) NOT NULL,                          -- 'BILL_REMINDER', 'PAYMENT_RECEIPT', 'REGISTRATION_APPROVED', 'INSTALLATION_SCHEDULED', 'ISOLATION_NOTICE'
+    name           VARCHAR(100) NOT NULL,                         -- Contoh: "Pemberitahuan Tagihan Bulanan"
+    content        TEXT NOT NULL,                                 -- Template teks dengan variabel: {{customer_name}}, {{amount}}, {{due_date}}, {{payment_code}}
+    variables_json JSONB NOT NULL DEFAULT '[]',                   -- Metadata variabel: ["customer_name", "amount", "due_date", "payment_code"]
     is_active      BOOLEAN NOT NULL DEFAULT TRUE,
     created_at     TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at     TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT uq_notif_template UNIQUE (tenant_id, template_key)
 );
 
--- Antrean & Log Notifikasi WhatsApp Terkirim
-CREATE TABLE IF NOT EXISTS wa_notifications (
+CREATE TRIGGER trg_notif_templates_upd BEFORE UPDATE ON notification_templates FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+-- 17. Antrean & Log Notifikasi WhatsApp Terkirim
+CREATE TABLE wa_notifications (
     id              TEXT PRIMARY KEY,
     tenant_id       TEXT NOT NULL DEFAULT 'tenant-default',
     template_id     TEXT REFERENCES notification_templates(id) ON DELETE SET NULL,
     customer_id     TEXT REFERENCES customers(id) ON DELETE SET NULL,
     invoice_id      TEXT REFERENCES invoices(id) ON DELETE SET NULL,
     recipient_phone VARCHAR(20) NOT NULL,
-    message_type    VARCHAR(50) NOT NULL,              -- 'BILL_REMINDER', 'PAYMENT_RECEIPT', 'REGISTRATION_APPROVED', 'INSTALLATION_SCHEDULED', 'ISOLATION_NOTICE'
-    message_content TEXT NOT NULL,                     -- Hasil render template setelah variabel diisi
-    status          VARCHAR(20) NOT NULL DEFAULT 'QUEUED', -- 'QUEUED', 'SENT', 'FAILED'
+    message_type    VARCHAR(50) NOT NULL,
+    message_content TEXT NOT NULL,                                -- Hasil render pesan akhir
+    status          VARCHAR(20) NOT NULL DEFAULT 'QUEUED',        -- 'QUEUED', 'SENT', 'FAILED'
     error_message   TEXT,
     sent_at         TIMESTAMPTZ,
     created_at      TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX IF NOT EXISTS idx_wa_notifications_cust ON wa_notifications(customer_id, created_at DESC);
-CREATE INDEX IF NOT EXISTS idx_wa_notifications_status ON wa_notifications(status, created_at DESC);
+CREATE INDEX idx_wa_notif_cust   ON wa_notifications(customer_id, created_at DESC);
+CREATE INDEX idx_wa_notif_status ON wa_notifications(status, created_at DESC);
 
--- Audit Log Aktivitas Sensitif Admin/Petugas
-CREATE TABLE IF NOT EXISTS audit_logs (
+-- 18. Audit Trail Log Aktivitas Penting Sistem
+CREATE TABLE audit_logs (
     id          BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     tenant_id   TEXT NOT NULL DEFAULT 'tenant-default',
-    actor_type  VARCHAR(20) NOT NULL DEFAULT 'USER', -- 'USER', 'SYSTEM', 'PORTAL'
-    actor_id    TEXT,                                -- ID user yang mengeksekusi aksi
-    action      VARCHAR(50) NOT NULL,                -- 'CREATE', 'UPDATE', 'DELETE', 'APPROVE_REGISTRATION', 'COLLECT_PAYMENT'
-    entity_type VARCHAR(50) NOT NULL,                -- 'customer', 'invoice', 'payment', 'plan', 'subscription', 'template'
+    actor_type  VARCHAR(20) NOT NULL DEFAULT 'USER',            -- 'USER', 'SYSTEM', 'PORTAL'
+    actor_id    TEXT,                                           -- User ID yang melakukan aksi
+    action      VARCHAR(50) NOT NULL,                           -- 'CREATE_INVOICE', 'COLLECT_PAYMENT', 'APPROVE_REGISTRATION'
+    entity_type VARCHAR(50) NOT NULL,                           -- 'customer', 'invoice', 'payment', 'plan', 'subscription'
     entity_id   TEXT NOT NULL,
     description TEXT,
     ip_address  VARCHAR(45),
     created_at  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX IF NOT EXISTS idx_audit_logs_entity ON audit_logs(entity_type, entity_id);
-CREATE INDEX IF NOT EXISTS idx_audit_logs_date   ON audit_logs(created_at DESC);
+CREATE INDEX idx_audit_logs_entity ON audit_logs(entity_type, entity_id);
+CREATE INDEX idx_audit_logs_date   ON audit_logs(created_at DESC);
 ```
 
 ---
 
-## 4. Alur Kerja Operasional Utama
+## 3. Matriks Ringkasan Tabel Skema Definitif
 
-### 4.1 Alur Pendaftaran Baru & Aktivasi MikroTik
-1. **Pendaftaran (Online / Input Admin)**:
-   - Masuk ke tabel `registrations` dengan status `PENDING` (hanya Nama, No. WA, Alamat, Titik Lat/Lng, dan Pilihan Paket).
-2. **Review & Jadwal Pasang**:
-   - Admin/petugas menyetujui $\rightarrow$ status `APPROVED`.
-   - Mengisi tanggal pasang (`scheduled_install_date`) dan memilih teknisi (`assigned_technician_id` $\rightarrow$ `users.id`).
-3. **Pemasangan Selesai di Lapangan**:
-   - Teknisi konfirmasi selesai $\rightarrow$ status `INSTALLED`.
-4. **Aktivasi Otomatis (Single DB Transaction)**:
-   - Status registrasi menjadi `ACTIVE`.
-   - Otomatis membuat data master di tabel `customers` (generate `portal_access_code`).
-   - Otomatis membuat `subscriptions` dan akun ke router MikroTik target (`/ppp/secret` untuk PPPoE atau Hotspot user).
-   - Otomatis menerbitkan faktur tagihan pertama di `invoices` (Setup Fee + Bulan ke-1).
-   - Mengirim rincian akun & info login portal via WhatsApp (`wa_notifications`).
-
----
-
-### 4.2 Alur Penagihan Bulanan & Pelunasan Kasir (Scan QR / Kode)
-1. **Terbit Tagihan Otomatis**:
-   - Scheduler bulanan membuat invoice baru untuk setiap langganan aktif:
-     - Mengisi `period` (contoh: `'2026-08'`).
-     - Meng-generate `qr_payload` dan `manual_payment_code` unik (misal: `PAY-892147`).
-   - Notifikasi tagihan terbit terkirim ke WhatsApp pelanggan.
-2. **Pelanggan Membuka Portal**:
-   - Pelanggan login ke portal mandiri $\rightarrow$ menampilkan QR Code pembayaran dan Kode Bayar.
-3. **Pembayaran di Loket / Lapangan**:
-   - **Kasir Scan QR** ATAU **Ketik Kode Bayar `PAY-892147`**:
-     - Sistem langsung menemukan invoice, nama pelanggan, dan nominal `total` secara otomatis (tanpa kasir input data manual).
-   - Kasir klik **Konfirmasi Bayar**:
-     - Status invoice berubah menjadi `'PAID'`.
-     - Tercatat di `payments` dengan `scan_method = 'QR_SCAN'` atau `'CODE_INPUT'`.
-     - Otomatis membuat mutasi `cash_transactions` (`direction = 'IN'`, `source_type = 'PAYMENT'`) ke `cash_accounts` Kasir.
-   - WhatsApp tanda terima lunas otomatis terkirim ke pelanggan.
+| No | Nama Tabel | Kategori | Fungsi Utama |
+|---|---|---|---|
+| 1 | `users` | Akun Sistem | Pengguna internal (Owner, Admin, Kasir, Teknisi Lapangan) |
+| 2 | `service_plans` | Paket Layanan | Master paket (PPPoE & Hotspot tetap), profil MikroTik, queue & bandwidth |
+| 3 | `registrations` | Pendaftaran | Alur pendaftaran baru ringkas (Nama, WA, Alamat, Lat/Lng) & jadwal pasang |
+| 4 | `customers` | Master Pelanggan | Pelanggan aktif, koordinat GPS, dan `portal_access_code` untuk kasir cepat |
+| 5 | `customer_portal_sessions` | Portal Pelanggan | Sesi autentikasi login portal mandiri pelanggan |
+| 6 | `subscriptions` | Langganan Jaringan | Pemetaan langganan pelanggan ke router MikroTik (`remote_username`, IP, rate limit) |
+| 7 | `invoices` | Faktur Tagihan | Tagihan bulanan (`period`), QR payload, dan `manual_payment_code` |
+| 8 | `invoice_items` | Rincian Tagihan | Rincian detail item per faktur (paket langganan, biaya pasang, diskon) |
+| 9 | `payment_methods` | Master Pembayaran | Master kanal bayar (Tunai Kasir, Transfer Bank, QRIS, Payment Gateway) |
+| 10 | `payments` | Kwitansi Pelunasan | Bukti pembayaran tagihan & pencatatan metode scan kasir (`scan_method`) |
+| 11 | `gateway_transactions` | Payment Gateway | Transaksi online & pencatatan callback webhook (Tripay, Midtrans, Xendit) |
+| 12 | `cash_accounts` | Buku Kas | Rekening kas operasional (Kas Kantor, Rekening Bank) |
+| 13 | `cash_categories` | Buku Kas | Kategori pos keluar-masuk uang (Pendapatan Tagihan, Biaya Listrik, Gaji) |
+| 14 | `cash_transactions` | Buku Kas | Jurnal mutasi kas masuk & keluar secara real-time |
+| 15 | `daily_financial_snapshots` | Laporan Finansial | Rekapitulasi harian untuk laporan cepat **Per-Hari, Per-Bulan, dan Per-Tahun** |
+| 16 | `notification_templates` | WhatsApp Notifikasi | Master template pesan WhatsApp dinamis berbasis variabel placeholder |
+| 17 | `wa_notifications` | WhatsApp Notifikasi | Antrean & log pengiriman notifikasi WhatsApp otomatis |
+| 18 | `audit_logs` | Audit Trail | Riwayat audit aktivitas sensitif admin/petugas |
 
 ---
 
-### 4.3 Alur Pembayaran Online (Payment Gateway)
-1. Pelanggan memilih metode bayar QRIS / Virtual Account di portal.
-2. Sistem membuat order ke gateway $\rightarrow$ mencatat di `gateway_transactions` (`status = 'PENDING'`).
-3. Pelanggan menyelesaikan pembayaran di aplikasi bank / e-wallet.
-4. Webhook callback diterima dari gateway:
-   - Update `gateway_transactions` $\rightarrow$ `'SETTLED'`.
-   - Update `invoices` $\rightarrow$ `'PAID'`.
-   - Catat `payments` (`scan_method = 'PAYMENT_GATEWAY'`).
-   - Catat `cash_transactions` (`direction = 'IN'`) ke rekening Kas Bank / Escrow Gateway.
+## 4. Alur Bisnis & Contoh Implementasi
+
+### 4.1 Pemetaan Data Pelanggan Nyata ke Skema
+Berdasarkan data ekspor ISP (`Data_Pelanggan_*.xlsx`), data dipetakan sebagai berikut:
+- **`ID Pelanggan` (`01075`)** $\rightarrow$ `customers.customer_code`
+- **`Nama` (`MATRAJI-KT`)** $\rightarrow$ `customers.name`
+- **`Alamat` (`KATAPANG, SAMPANG`)** $\rightarrow$ `customers.address`
+- **`Koordinat` (`-7.0920843,113.7051486`)** $\rightarrow$ `customers.latitude` & `customers.longitude`
+- **`Nomor Telepon` (`085606846141`)** $\rightarrow$ `customers.phone`
+- **`Tipe` (`PPPOE`)** $\rightarrow$ `subscriptions.service_type`
+- **`Server` (`JAYA ABADI`)** $\rightarrow$ `subscriptions.device_id` (merujuk ke router MikroTik terkait)
+- **`Username` & `Password` (`MATRAJI-KT`)** $\rightarrow$ `subscriptions.remote_username` & `subscriptions.remote_password`
+- **`Paket` (`100-RB-100`)** $\rightarrow `service_plans.name`
+- **`Harga` (`Rp. 100.000`)** $\rightarrow `service_plans.price`
+- **`Local Address` (`192.168.56.1`)** $\rightarrow `subscriptions.local_address`
+- **`Remote Address` (`PPPOE (IP Pool)`)** $\rightarrow `subscriptions.remote_address`
+- **`Parent Queue` (`none`)** $\rightarrow `subscriptions.parent_queue`
+- **`Rate Limit` (`5M/5M 10M/10M ...`)** $\rightarrow `subscriptions.rate_limit`
+- **`Status` (`Active`)** $\rightarrow `customers.status` & `subscriptions.status`
 
 ---
 
-## 5. Ringkasan Matriks Tabel
+### 4.2 Alur Pembayaran Cepat di Kasir (Scan QR / Kode)
+1. **Pelanggan Datang / Buka Portal**:
+   - Menunjukkan kode QR tagihan atau menyebutkan `manual_payment_code` (misal: `PAY-892147`) atau `portal_access_code` miliknya.
+2. **Kasir Scan / Input Kode**:
+   - Endpoint sistem mencari invoice terkait:
+     ```sql
+     SELECT i.*, c.name AS customer_name, s.remote_username 
+     FROM invoices i
+     JOIN customers c ON c.id = i.customer_id
+     LEFT JOIN subscriptions s ON s.id = i.subscription_id
+     WHERE i.manual_payment_code = 'PAY-892147' 
+        OR i.qr_payload = 'QR_STRING_PAYLOAD'
+        OR (c.portal_access_code = 'CUST_CODE' AND i.status = 'UNPAID');
+     ```
+3. **Konfirmasi Pembayaran**:
+   - Kasir menekan tombol **Bayar** $\rightarrow$ Satu transaksi DB mengeksekusi:
+     1. Update `invoices` $\rightarrow$ `status = 'PAID'`, `paid_at = now()`, `paid_amount = total`.
+     2. Insert ke `payments` $\rightarrow$ `scan_method = 'QR_SCAN'` atau `'CODE_INPUT'`.
+     3. Insert ke `cash_transactions` $\rightarrow$ `direction = 'IN'`, `source_type = 'PAYMENT'`, otomatis menambah kas kasir.
+     4. Insert ke `wa_notifications` $\rightarrow$ memicu pengiriman bukti kwitansi lunas ke WhatsApp pelanggan.
 
-| No | Nama Tabel | Status Skema | Kategori & Fungsi |
-|---|---|:---:|---|
-| 1 | `registrations` | 🆕 Baru | Pendaftaran online/manual ringkas (nama, WA, alamat, lat/lng) & alur approval |
-| 2 | `customers` | ✏️ Perluas | Master pelanggan aktif, lokasi GPS, dan `portal_access_code` untuk scan kasir |
-| 3 | `customer_portal_sessions` | 🆕 Baru | Sesi login portal mandiri pelanggan |
-| 4 | `plans` | ✏️ Perluas | Master katalog paket (PPPoE & Hotspot bulanan), kecepatan, biaya pasang |
-| 5 | `subscriptions` | ✏️ Perluas | Langganan aktif pelanggan & mapping akun ke router MikroTik (remote_username) |
-| 6 | `invoices` | ✏️ Perluas | Tagihan bulanan (`period`), QR payload, dan kode pembayaran singkat |
-| 7 | `invoice_items` | 🆕 Baru | Rincian detail per baris item tagihan (paket, diskon, biaya pasang) |
-| 8 | `payment_methods` | 🆕 Baru | Master metode bayar (Tunai, Transfer Bank, QRIS, Payment Gateway) |
-| 9 | `payments` | 🆕 Baru | Kwitansi pelunasan tagihan & pencatatan metode scan kasir |
-| 10 | `gateway_transactions` | 🆕 Baru | Riwayat transaksi & log webhook payment gateway (Tripay, Midtrans, Xendit) |
-| 11 | `cash_accounts` | 🆕 Baru | Rekening kas (Kas Kantor, Rekening Bank) |
-| 12 | `cash_categories` | 🆕 Baru | Kategori keluar-masuk uang (Pendapatan Tagihan, Biaya Listrik, dll) |
-| 13 | `cash_transactions` | 🆕 Baru | Jurnal buku kas masuk & keluar |
-| 14 | `daily_financial_snapshots` | 🆕 Baru | Rekapitulasi harian untuk laporan cepat Harian, Bulanan, dan Tahunan |
-| 15 | `notification_templates` | 🆕 Baru | Master template pesan notifikasi WhatsApp berbasis variabel placeholder |
-| 16 | `wa_notifications` | 🆕 Baru | Antrian & log notifikasi WhatsApp otomatis |
-| 17 | `audit_logs` | 🆕 Baru | Audit trail aktivitas dan perubahan data penting |
+---
 
-*(Tabel `users`, `devices`, `credentials`, `wa_sessions`, `conversations`, dan `messages` tetap menggunakan tabel yang sudah ada tanpa perubahan yang merusak).*
+### 4.3 Alur Pembuatan Laporan Finansial (Harian, Bulanan, Tahunan)
+- **Laporan Harian**: Mengambil transaksi langsung dari `cash_transactions` dan `payments` pada tanggal berjalan.
+- **Laporan Bulanan**:
+  ```sql
+  SELECT 
+      DATE_TRUNC('month', trx_date) AS bulan,
+      SUM(CASE WHEN direction = 'IN' THEN amount ELSE 0 END) AS total_pemasukan,
+      SUM(CASE WHEN direction = 'OUT' THEN amount ELSE 0 END) AS total_pengeluaran,
+      SUM(CASE WHEN direction = 'IN' THEN amount ELSE -amount END) AS laba_bersih
+  FROM cash_transactions
+  WHERE trx_date >= '2026-01-01' AND trx_date < '2027-01-01'
+  GROUP BY DATE_TRUNC('month', trx_date)
+  ORDER BY bulan ASC;
+  ```
+- **Laporan Tahunan**: Mengagregasi data dari tabel `daily_financial_snapshots` per tahun untuk hasil query instan dalam hitungan milidetik tanpa membebani database utama.
