@@ -9,10 +9,18 @@ echo "⚙️ [2/4] Building Go Backend Server..."
 go build -v -o bin/polyglot-server ./cmd/server
 
 echo "🎨 [3/4] Building Web Frontend..."
-if command -v pnpm &> /dev/null; then
-  pnpm --dir web run build
-elif command -v npm &> /dev/null; then
-  npm --prefix web run build
+if [ -d "web" ]; then
+  if command -v pnpm &> /dev/null; then
+    if [ ! -d "web/node_modules" ]; then
+      pnpm --dir web install
+    fi
+    pnpm --dir web run build || echo "⚠️ Frontend build failed, using existing dist"
+  elif command -v npm &> /dev/null; then
+    if [ ! -d "web/node_modules" ]; then
+      npm --prefix web install
+    fi
+    npm --prefix web run build || echo "⚠️ Frontend build failed, using existing dist"
+  fi
 fi
 
 echo "🔄 [4/4] Restarting Polyglot Systemd Service..."
