@@ -9,6 +9,8 @@ import {
 } from '@/components/ui/sidebar'
 import { Button } from '../ui/button'
 
+import { Logo } from '@/assets/logo'
+
 export function AppTitle() {
   const { setOpenMobile } = useSidebar()
   return (
@@ -23,10 +25,17 @@ export function AppTitle() {
             <Link
               to='/'
               onClick={() => setOpenMobile(false)}
-              className='grid flex-1 text-start text-sm leading-tight'
+              className='flex items-center gap-2.5 text-start text-sm leading-tight'
             >
-              <span className='truncate font-bold'>Shadcn-Admin</span>
-              <span className='truncate text-xs'>Vite + ShadcnUI</span>
+              <Logo className='size-6 shrink-0' />
+              <div className='grid flex-1'>
+                <span className='truncate font-bold bg-gradient-to-r from-cyan-400 to-fuchsia-500 bg-clip-text text-transparent'>
+                  Polyglot
+                </span>
+                <span className='truncate text-[10px] text-muted-foreground font-semibold'>
+                  NetOps & ISP Engine
+                </span>
+              </div>
             </Link>
             <ToggleSidebar />
           </div>

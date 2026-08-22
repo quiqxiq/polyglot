@@ -148,5 +148,4 @@ export function PPPFeature() {
 }
 
 export { PPPFeature as PPP }
-export default PPPFeature
 

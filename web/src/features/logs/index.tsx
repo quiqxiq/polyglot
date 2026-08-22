@@ -175,5 +175,3 @@ export function LogsFeature() {
     </>
   )
 }
-
-export default LogsFeature
