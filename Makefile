@@ -177,3 +177,8 @@ prod-setup:
 	@echo "=== [PROD SETUP] Starting Production Server ==="
 	docker compose -f $(COMPOSE_PROD) up -d server
 	@echo "=== Production Stack Setup Completed ==="
+
+# ─── VPS Systemd Deployment Update ────────────────────────────────────
+update:
+	@chmod +x scripts/update.sh
+	@./scripts/update.sh
