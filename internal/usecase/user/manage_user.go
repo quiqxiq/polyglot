@@ -11,6 +11,7 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
+	"github.com/quixiq/polyglot/pkg/phone"
 )
 
 var (
@@ -150,7 +151,7 @@ func (u *ManageUserUseCase) CreateUser(
 		PasswordHash:   string(hash),
 		Role:           role,
 		FullName:       strings.TrimSpace(fullName),
-		PhoneNumber:    strings.TrimSpace(phoneNumber),
+		PhoneNumber:    phone.Normalize(phoneNumber),
 		Specialization: strings.TrimSpace(specialization),
 		IsActive:       true,
 	}
@@ -240,7 +241,7 @@ func (u *ManageUserUseCase) UpdateUser(
 		targetUser.FullName = strings.TrimSpace(fullName)
 	}
 	if phoneNumber != "" {
-		targetUser.PhoneNumber = strings.TrimSpace(phoneNumber)
+		targetUser.PhoneNumber = phone.Normalize(phoneNumber)
 	}
 	if specialization != "" {
 		targetUser.Specialization = strings.TrimSpace(specialization)

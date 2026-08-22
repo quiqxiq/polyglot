@@ -12,6 +12,7 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/ping"
+	"github.com/quixiq/polyglot/pkg/phone"
 )
 
 // RequestSkillInput adalah argumen untuk pemanggilan tool request_skill.
@@ -171,9 +172,9 @@ func NewGetCurrentTimeTool() llm.Tool {
 
 // NotifyTechnicianInput adalah data yang dikirimkan oleh AI untuk laporan teknisi.
 type NotifyTechnicianInput struct {
-	CustomerName     string `json:"customer_name" jsonschema:"description=Nama lengkap pelanggan yang melapor"`
+	CustomerName     string `json:"customer_name" jsonschema:"description=Nama pelanggan yang melapor"`
 	CustomerPhone    string `json:"customer_phone" jsonschema:"description=Nomor HP atau WhatsApp aktif pelanggan yang bisa dihubungi teknisi"`
-	Address          string `json:"address" jsonschema:"description=Alamat lengkap lokasi pelanggan atau titik gangguan"`
+	Address          string `json:"address" jsonschema:"description=Deskripsi lokasi pelanggan SECUKUPNYA sesuai yang diketahui (nama desa/dusun, patokan, warna rumah). Tidak wajib RT/RW atau nomor rumah — area layanan terbatas dan teknisi mengenal lokasi."`
 	IssueType        string `json:"issue_type" jsonschema:"description=Kategori gangguan (contoh: Kabel Fiber Putus, Modem Rusak / Mati, Redaman Tinggi)"`
 	IssueDescription string `json:"issue_description" jsonschema:"description=Detail atau keterangan kendala yang dialami"`
 }
@@ -182,7 +183,7 @@ type NotifyTechnicianInput struct {
 func NewNotifyTechnicianTool(userRepo port.UserRepository, waGateway any, sessionID uint) llm.Tool {
 	return llm.Tool{
 		Name:        "notify_technician",
-		Description: "Meneruskan laporan gangguan dan permintaan kunjungan teknisi lapangan langsung ke WhatsApp teknisi aktif setelah pelanggan memberikan data (Nama, Alamat, No. HP, dan Detail Kendala).",
+		Description: "Meneruskan laporan gangguan dan permintaan kunjungan teknisi lapangan langsung ke WhatsApp teknisi aktif begitu tersedia Nama pelanggan, kontak aktif, dan deskripsi lokasi secukupnya (desa/dusun/patokan rumah juga cukup — alamat administratif lengkap tidak wajib).",
 		InputSchema: NotifyTechnicianInput{},
 		Handler: func(ctx context.Context, argsJSON string) (string, error) {
 			var input NotifyTechnicianInput
@@ -191,13 +192,13 @@ func NewNotifyTechnicianTool(userRepo port.UserRepository, waGateway any, sessio
 			}
 
 			name := strings.TrimSpace(input.CustomerName)
-			phone := strings.TrimSpace(input.CustomerPhone)
+			custPhone := strings.TrimSpace(input.CustomerPhone)
 			addr := strings.TrimSpace(input.Address)
 			issueType := strings.TrimSpace(input.IssueType)
 			desc := strings.TrimSpace(input.IssueDescription)
 
-			if name == "" || addr == "" || phone == "" {
-				return "Error: Data belum lengkap. Mohon minta pelanggan melengkapi Nama, Alamat, dan Nomor HP yang dapat dihubungi.", nil
+			if name == "" || addr == "" || custPhone == "" {
+				return "Error: Data belum cukup. Minimal perlukan Nama pelanggan, Nomor HP yang dapat dihubungi, dan deskripsi lokasi secukupnya (sebut desa/dusun atau patokan rumah saja juga sudah memadai).", nil
 			}
 
 			if issueType == "" {
@@ -223,7 +224,7 @@ func NewNotifyTechnicianTool(userRepo port.UserRepository, waGateway any, sessio
 				"⏰ *Waktu Lapor:* %s\n"+
 				"━━━━━━━━━━━━━━━━━━━━━\n"+
 				"_Diteruskan otomatis oleh AI CS Bot Ghaib Network._",
-				name, phone, addr, issueType, desc, nowStr,
+				name, custPhone, addr, issueType, desc, nowStr,
 			)
 
 			var notifiedCount int
@@ -236,20 +237,9 @@ func NewNotifyTechnicianTool(userRepo port.UserRepository, waGateway any, sessio
 						SendMessage(sessionID uint, to string, content string) error
 					})
 					for _, tech := range techUsers {
-						rawPhone := strings.TrimSpace(tech.PhoneNumber)
-						if rawPhone == "" {
+						targetJID := phone.ToWhatsAppJID(tech.PhoneNumber)
+						if targetJID == "" {
 							continue
-						}
-						targetPhone := strings.TrimPrefix(rawPhone, "+")
-						if strings.HasPrefix(targetPhone, "0") {
-							targetPhone = "62" + targetPhone[1:]
-						}
-						targetJID := targetPhone + "@s.whatsapp.net"
-						if strings.Contains(targetPhone, "-") || strings.Contains(targetPhone, "@g.us") {
-							targetJID = targetPhone
-							if !strings.HasSuffix(targetJID, "@g.us") {
-								targetJID = targetJID + "@g.us"
-							}
 						}
 
 						if ok && gw != nil {
@@ -267,12 +257,12 @@ func NewNotifyTechnicianTool(userRepo port.UserRepository, waGateway any, sessio
 
 			if notifiedCount > 0 {
 				return fmt.Sprintf("Sukses! Laporan untuk %s (%s) di %s telah berhasil diteruskan ke %d teknisi aktif (%s).",
-					name, phone, addr, notifiedCount, strings.Join(notifiedNames, ", "),
+					name, custPhone, addr, notifiedCount, strings.Join(notifiedNames, ", "),
 				), nil
 			}
 
 			return fmt.Sprintf("Sukses! Laporan untuk %s (%s) di %s telah berhasil dicatat untuk tindak lanjut tim teknisi lapangan.",
-				name, phone, addr,
+				name, custPhone, addr,
 			), nil
 		},
 	}

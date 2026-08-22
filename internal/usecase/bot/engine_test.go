@@ -546,7 +546,8 @@ func TestBotBuiltinTools_NotifyTechnician(t *testing.T) {
 	// 1. Validasi data belum lengkap
 	incompleteRes, err := tool.Handler(context.Background(), `{"customer_name":"Budi"}`)
 	assert.NoError(t, err)
-	assert.Contains(t, incompleteRes, "Error: Data belum lengkap")
+	assert.Contains(t, incompleteRes, "Error: Data belum cukup")
+	assert.Contains(t, incompleteRes, "deskripsi lokasi secukupnya")
 
 	// 2. Data lengkap -> kirim WhatsApp ke teknisi aktif
 	completePayload := `{

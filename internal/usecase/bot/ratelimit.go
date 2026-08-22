@@ -9,6 +9,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/setting"
 	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/pkg/phone"
 )
 
 type RateLimitStatus int
@@ -41,11 +42,11 @@ type RateLimiter struct {
 	userRepo    port.UserRepository
 }
 
-func cleanPhoneNumber(phone string) string {
-	phone = strings.TrimSpace(phone)
-	phone = strings.TrimPrefix(phone, "+")
-	phone = strings.Split(phone, "@")[0]
-	return phone
+// cleanPhoneNumber menyeragamkan nomor ke format digit internasional
+// tanpa "+" (mis. "0812-3456-7890" -> "6281234567890") via pkg/phone,
+// sehingga cocok dengan nomor pengirim hasil ekstraksi JID WhatsApp.
+func cleanPhoneNumber(raw string) string {
+	return phone.Normalize(raw)
 }
 
 // NewRateLimiter creates a dynamic multi-tier rate limiter backed by system_settings and users repository.
@@ -73,6 +74,10 @@ func (r *RateLimiter) isWhitelisted(ctx context.Context, customerNumber string) 
 	if customerNumber == "" {
 		return false
 	}
+	target := phone.Normalize(customerNumber)
+	if target == "" {
+		return false
+	}
 	if r.settingRepo != nil {
 		s, err := r.settingRepo.GetBotSettings(ctx)
 		if err == nil && s != nil {
@@ -80,7 +85,7 @@ func (r *RateLimiter) isWhitelisted(ctx context.Context, customerNumber string) 
 				allUsers, err := r.userRepo.FindAll(ctx)
 				if err == nil {
 					for _, u := range allUsers {
-						if cleanPhoneNumber(u.PhoneNumber) == customerNumber && u.PhoneNumber != "" {
+						if u.PhoneNumber != "" && phone.Normalize(u.PhoneNumber) == target {
 							return true
 						}
 					}
@@ -88,7 +93,10 @@ func (r *RateLimiter) isWhitelisted(ctx context.Context, customerNumber string) 
 			}
 			if s.CustomWhitelistPhones != "" {
 				for _, p := range strings.Split(s.CustomWhitelistPhones, ",") {
-					if cleanPhoneNumber(p) == customerNumber && strings.TrimSpace(p) != "" {
+					if strings.TrimSpace(p) == "" {
+						continue
+					}
+					if phone.Normalize(p) == target {
 						return true
 					}
 				}
