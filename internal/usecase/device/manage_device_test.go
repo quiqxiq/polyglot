@@ -77,6 +77,17 @@ func (m *mockVault) Delete(ctx context.Context, deviceID string) error {
 	return nil
 }
 
+func (m *mockVault) EncryptString(_ context.Context, plaintext string) (string, error) {
+	return "enc:" + plaintext, nil
+}
+
+func (m *mockVault) DecryptString(_ context.Context, ciphertext string) (string, error) {
+	if len(ciphertext) > 4 && ciphertext[:4] == "enc:" {
+		return ciphertext[4:], nil
+	}
+	return ciphertext, nil
+}
+
 type mockDriver struct {
 	executeFn func(ctx context.Context, cmd command.Command) (command.Result, error)
 }

@@ -19,7 +19,7 @@ var _ port.InvoiceRepository = (*InvoiceRepository)(nil)
 
 // NewInvoiceRepository returns a port.InvoiceRepository backed by GORM/Postgres.
 func NewInvoiceRepository(db *gorm.DB) *InvoiceRepository {
-	_ = db.AutoMigrate(&model.InvoiceModel{}, &model.PlanModel{})
+	_ = db.AutoMigrate(&model.InvoiceModel{}, &model.ServicePlanModel{})
 	return &InvoiceRepository{db: db}
 }
 
@@ -72,4 +72,55 @@ func (r *InvoiceRepository) UpdateStatus(ctx context.Context, id string, status 
 		return ErrNotFound
 	}
 	return nil
+}
+
+// FindByPaymentCode implements the cashier quick-pay lookup (§4.2).
+func (r *InvoiceRepository) FindByPaymentCode(ctx context.Context, code string) (billing.Invoice, error) {
+	var m model.InvoiceModel
+	err := r.db.WithContext(ctx).First(&m, "manual_payment_code = ?", code).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return billing.Invoice{}, ErrNotFound
+	}
+	return m.ToDomain(), err
+}
+
+// FindByQRPayload implements the QR-scan lookup (§4.2).
+func (r *InvoiceRepository) FindByQRPayload(ctx context.Context, qr string) (billing.Invoice, error) {
+	var m model.InvoiceModel
+	err := r.db.WithContext(ctx).First(&m, "qr_payload = ?", qr).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return billing.Invoice{}, ErrNotFound
+	}
+	return m.ToDomain(), err
+}
+
+// FindBySubscriptionPeriod implements billing-run idempotency check.
+func (r *InvoiceRepository) FindBySubscriptionPeriod(ctx context.Context, subscriptionID, period string) (billing.Invoice, error) {
+	var m model.InvoiceModel
+	err := r.db.WithContext(ctx).
+		Where("subscription_id = ? AND period = ?", subscriptionID, period).
+		First(&m).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return billing.Invoice{}, ErrNotFound
+	}
+	return m.ToDomain(), err
+}
+
+// SaveWithItems persists the invoice aggregate (header + line items)
+// atomically.
+func (r *InvoiceRepository) SaveWithItems(ctx context.Context, inv billing.Invoice, items []billing.InvoiceItem) error {
+	m := model.InvoiceModelFromDomain(inv)
+	itemModels := make([]model.InvoiceItemModel, len(items))
+	for i, it := range items {
+		itemModels[i] = *model.InvoiceItemModelFromDomain(it)
+	}
+	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		if err := tx.Save(m).Error; err != nil {
+			return err
+		}
+		if len(itemModels) == 0 {
+			return nil
+		}
+		return tx.Create(&itemModels).Error
+	})
 }

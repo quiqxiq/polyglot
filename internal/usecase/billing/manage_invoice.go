@@ -37,8 +37,8 @@ func (u *InvoiceUseCase) CreateInvoice(ctx context.Context, inv domainBilling.In
 	if u.repo == nil {
 		return domainBilling.Invoice{}, fmt.Errorf("invoice repository unavailable")
 	}
-	if inv.CustomerID == "" || inv.Amount <= 0 {
-		return domainBilling.Invoice{}, fmt.Errorf("customer_id and valid amount are required")
+	if inv.CustomerID == "" || inv.Total <= 0 {
+		return domainBilling.Invoice{}, fmt.Errorf("customer_id and valid total amount are required")
 	}
 	if inv.Status == "" {
 		inv.Status = domainBilling.StatusUnpaid

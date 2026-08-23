@@ -16,4 +16,3 @@ type LLMConfigRepository interface {
 	SetActive(ctx context.Context, id uint) error
 	Delete(ctx context.Context, id uint) error
 }
-

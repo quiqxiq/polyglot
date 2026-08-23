@@ -227,7 +227,13 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	registerProtected(settingPath, settingHandler)
 
 	invRepo := postgres.NewInvoiceRepository(pgStore.DB())
-	subRepo := postgres.NewSubscriptionRepository(pgStore.DB())
+	subRepo := postgres.NewSubscriptionRepository(pgStore.DB(), vault)
+	planRepo := postgres.NewServicePlanRepository(pgStore.DB())
+	customerRepo2 := customerRepo
+	notifRepo := postgres.NewNotificationRepository(pgStore.DB())
+
+	// cashRepo / paymentProcessor / reportingRepo / regRepo dibangunkan di
+	// fase 4 bersama handler ConnectRPC-nya.
 	invUC := billingUC.NewInvoiceUseCase(invRepo)
 	subUC := billingUC.NewSubscriptionUseCase(subRepo)
 
@@ -249,6 +255,27 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	probePath, probeHandler := deviceConnect.NewProbeServiceHandler()
 	registerProtected(probePath, probeHandler)
+
+	// Scheduler ISP (fase 3.5): generator tagihan harian + lifecycle worker
+	// (provisi retry, isolir, auto-suspend) — semua parameter dari settings.
+	if cfg.SchedulerEnabled && cfg.BillingCronSpec != "" && cfg.IsolationCronSpec != "" {
+		runBillingUC := billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo)
+		accountMgr := newRouterAccountManager(reg, sessionGateway, hotGateway, sessionGateway)
+		isolateWorker := billingUC.NewIsolateWorker(
+			subRepo, invRepo, customerRepo2, planRepo,
+			accountMgr, notifRepo, settingRepo,
+		)
+		paymentProc := postgres.NewPaymentProcessor(pgStore.DB())
+		paymentProc.OnPaid = buildOnPaidRestore(accountMgr, subRepo, planRepo, settingRepo)
+		sched := newScheduler(runBillingUC, isolateWorker,
+			cfg.BillingCronSpec, cfg.IsolationCronSpec, "tenant-default")
+		defer sched.Stop()
+		sched.Start()
+		logger.WithComponent("Polyglot").WithFields(map[string]any{
+			"billing_cron":   cfg.BillingCronSpec,
+			"isolation_cron": cfg.IsolationCronSpec,
+		}).Info("ISP scheduler started")
+	}
 
 	// Wrap protected services with JWT and RBAC enforcement
 	protectedHandler := middleware.Chain(

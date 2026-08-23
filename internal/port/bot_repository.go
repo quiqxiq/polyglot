@@ -29,5 +29,3 @@ type ConversationRepository interface {
 	FindMessagesByConversationID(ctx context.Context, conversationID uint) ([]bot.Message, error)
 	FindRecentMessages(ctx context.Context, conversationID uint, limit int) ([]bot.Message, error)
 }
-
-

@@ -32,6 +32,11 @@ type Config struct {
 	WAStoreDir string
 
 	CORSOrigins []string
+
+	// Scheduler ISP (fase 3).
+	BillingCronSpec   string
+	IsolationCronSpec string
+	SchedulerEnabled  bool
 }
 
 // Load reads infrastructure secrets and settings from environment variables or .env files.
@@ -66,6 +71,12 @@ func Load() Config {
 		RefreshTokenTTLHours: getEnvAsInt("REFRESH_TOKEN_TTL_HOURS", 168),
 		WAStoreDir:           getEnv("WA_STORE_DIR", "./data/whatsapp"),
 		CORSOrigins:          origins,
+
+		// Scheduler ISP (fase 3). Kosongkan spesifikasi untuk menonaktifkan
+		// job terkait.
+		BillingCronSpec:   getEnv("BILLING_CRON", "0 6 * * *"),
+		IsolationCronSpec: getEnv("ISOLATION_CRON", "@every 10m"),
+		SchedulerEnabled:  getEnv("SCHEDULER_ENABLED", "true") == "true",
 	}
 }
 

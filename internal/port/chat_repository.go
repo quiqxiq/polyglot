@@ -49,4 +49,3 @@ type ChatRepository interface {
 	// belum pernah tercatat dianggap aktif (default TRUE).
 	IsChatBotEnabled(ctx context.Context, sessionID uint, chatJID string) (bool, error)
 }
-

@@ -14,7 +14,7 @@ func toProtoInvoice(inv *domainBilling.Invoice) *devicepb.Invoice {
 	return &devicepb.Invoice{
 		Id:            inv.ID,
 		CustomerId:    inv.CustomerID,
-		Amount:        inv.Amount,
+		Amount:        inv.Total,
 		Status:        inv.Status,
 		DueDateUnix:   inv.DueDate.Unix(),
 		CreatedAtUnix: inv.CreatedAt.Unix(),
@@ -35,14 +35,22 @@ func toProtoSubscription(sub *domainSub.Subscription) *devicepb.Subscription {
 	if sub == nil {
 		return nil
 	}
+	var endDateUnix int64
+	if sub.EndDate != nil {
+		endDateUnix = sub.EndDate.Unix()
+	}
+	var price float64
+	if sub.CustomPrice != nil {
+		price = *sub.CustomPrice
+	}
 	return &devicepb.Subscription{
 		Id:            sub.ID,
 		CustomerId:    sub.CustomerID,
 		PlanId:        sub.PlanID,
 		Status:        sub.Status,
 		StartDateUnix: sub.StartDate.Unix(),
-		EndDateUnix:   sub.EndDate.Unix(),
-		Price:         sub.Price,
+		EndDateUnix:   endDateUnix,
+		Price:         price,
 	}
 }
 

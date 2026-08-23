@@ -13,4 +13,15 @@ type InvoiceRepository interface {
 	FindByCustomerID(ctx context.Context, customerID string) ([]billing.Invoice, error)
 	FindAll(ctx context.Context) ([]billing.Invoice, error)
 	UpdateStatus(ctx context.Context, id string, status string) error
+
+	// Alur kasir scan & bayar cepat (DATABASE-SCHEMA-ISP.md §4.2).
+	FindByPaymentCode(ctx context.Context, code string) (billing.Invoice, error)
+	FindByQRPayload(ctx context.Context, qr string) (billing.Invoice, error)
+
+	// Idempotensi generator tagihan: cek apakah periode sudah ditagih.
+	FindBySubscriptionPeriod(ctx context.Context, subscriptionID, period string) (billing.Invoice, error)
+
+	// SaveWithItems menyimpan faktur beserta seluruh baris item-nya dalam
+	// satu transaksi (aggregate).
+	SaveWithItems(ctx context.Context, inv billing.Invoice, items []billing.InvoiceItem) error
 }

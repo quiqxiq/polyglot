@@ -130,6 +130,17 @@ func (v *memCredVault) Save(_ context.Context, deviceID string, c device.Credent
 	return nil
 }
 
+func (v *memCredVault) EncryptString(_ context.Context, plaintext string) (string, error) {
+	return "enc:" + plaintext, nil
+}
+
+func (v *memCredVault) DecryptString(_ context.Context, ciphertext string) (string, error) {
+	if len(ciphertext) > 4 && ciphertext[:4] == "enc:" {
+		return ciphertext[4:], nil
+	}
+	return ciphertext, nil
+}
+
 // callToolViaInMemoryTransport creates an in-memory MCP client-server pair,
 // calls a tool, and returns the result. This is a real MCP round-trip (not
 // a mock) — it exercises tool registration, schema generation, JSON-RPC

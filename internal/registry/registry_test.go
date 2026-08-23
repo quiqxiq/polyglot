@@ -87,6 +87,17 @@ func (v *memVault) Save(_ context.Context, deviceID string, c device.Credentials
 	return nil
 }
 
+func (v *memVault) EncryptString(_ context.Context, plaintext string) (string, error) {
+	return "enc:" + plaintext, nil
+}
+
+func (v *memVault) DecryptString(_ context.Context, ciphertext string) (string, error) {
+	if len(ciphertext) > 4 && ciphertext[:4] == "enc:" {
+		return ciphertext[4:], nil
+	}
+	return ciphertext, nil
+}
+
 func newTestRegistry(t *testing.T) (*Registry, *mockDriver) {
 	t.Helper()
 	drv := &mockDriver{}

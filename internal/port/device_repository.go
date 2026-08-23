@@ -22,4 +22,3 @@ type DeviceRepository interface {
 	// Delete removes a device inventory record by id.
 	Delete(ctx context.Context, id string) error
 }
-

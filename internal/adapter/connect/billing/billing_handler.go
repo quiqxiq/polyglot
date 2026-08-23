@@ -9,6 +9,7 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
+	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -85,13 +86,18 @@ func (h *BillingConnectHandler) CreateInvoice(ctx context.Context, req *connect.
 
 	invID := fmt.Sprintf("inv-%d", now.UnixNano()%100000)
 	newInv := domainBilling.Invoice{
-		ID:         invID,
-		CustomerID: req.Msg.CustomerId,
-		Amount:     req.Msg.Amount,
-		Status:     StatusUnpaid,
-		DueDate:    dueDate,
-		CreatedAt:  now,
-		UpdatedAt:  now,
+		ID:                invID,
+		InvoiceNumber:     fmt.Sprintf("INV-%s-%05d", now.Format("200601"), now.UnixNano()%100000),
+		CustomerID:        req.Msg.CustomerId,
+		Period:            dueDate.Format("2006-01"),
+		Subtotal:          req.Msg.Amount,
+		Total:             req.Msg.Amount,
+		Status:            StatusUnpaid,
+		QRPayload:         fmt.Sprintf("polyglot://invoice/%s", invID),
+		ManualPaymentCode: fmt.Sprintf("PAY-%06d", now.UnixNano()%1000000),
+		DueDate:           dueDate,
+		CreatedAt:         now,
+		UpdatedAt:         now,
 	}
 
 	created, err := h.invoiceUC.CreateInvoice(ctx, newInv)
@@ -148,16 +154,22 @@ func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *con
 
 	now := time.Now()
 	subID := fmt.Sprintf("sub-%d", now.UnixNano()%100000)
+	endDate := now.AddDate(1, 0, 0)
 	newSub := domainSub.Subscription{
-		ID:         subID,
-		CustomerID: req.Msg.CustomerId,
-		PlanID:     req.Msg.PlanId,
-		Status:     StatusActive,
-		StartDate:  now,
-		EndDate:    now.AddDate(1, 0, 0),
-		Price:      req.Msg.Price,
-		CreatedAt:  now,
-		UpdatedAt:  now,
+		ID:           subID,
+		CustomerID:   req.Msg.CustomerId,
+		PlanID:       req.Msg.PlanId,
+		Status:       StatusActive,
+		ServiceType:  domainPlan.TypePPPoE,
+		BillingCycle: domainSub.CycleMonthly,
+		BillingDay:   int(now.Day()),
+		StartDate:    now,
+		EndDate:      &endDate,
+		CreatedAt:    now,
+		UpdatedAt:    now,
+	}
+	if req.Msg.Price > 0 {
+		newSub.CustomPrice = &req.Msg.Price
 	}
 
 	created, err := h.subscriptionUC.CreateSubscription(ctx, newSub)

@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/quixiq/polyglot/internal/adapter/postgres/model"
+	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -107,4 +108,16 @@ func (v *CredentialVault) Save(ctx context.Context, deviceID string, creds devic
 		return err
 	}
 	return v.db.WithContext(ctx).Save(m).Error
+}
+
+// EncryptString implements port.CredentialVault: seals an arbitrary sensitive
+// string dengan AES-GCM base64 memakai key vault yang sama.
+func (v *CredentialVault) EncryptString(_ context.Context, plaintext string) (string, error) {
+	return config.Encrypt(plaintext, v.key)
+}
+
+// DecryptString implements port.CredentialVault: opens a ciphertext produced
+// by EncryptString.
+func (v *CredentialVault) DecryptString(_ context.Context, ciphertext string) (string, error) {
+	return config.Decrypt(ciphertext, v.key)
 }

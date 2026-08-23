@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"context"
+	"errors"
 
 	"gorm.io/gorm"
 
@@ -63,4 +64,40 @@ func (r *CustomerRepository) FindSubscriptions(ctx context.Context, customerID s
 		subs[i] = m.ToDomain()
 	}
 	return subs, nil
+}
+
+// FindByPortalAccessCode implements portal/quick-pay lookup (§4.2).
+func (r *CustomerRepository) FindByPortalAccessCode(ctx context.Context, code string) (customer.Customer, error) {
+	var m model.CustomerModel
+	err := r.db.WithContext(ctx).First(&m, "portal_access_code = ? AND deleted_at IS NULL", code).Error
+	if err != nil {
+		return customer.Customer{}, mapNotFound(err)
+	}
+	return m.ToDomain(), nil
+}
+
+func (r *CustomerRepository) FindByPhone(ctx context.Context, phone string) (customer.Customer, error) {
+	var m model.CustomerModel
+	err := r.db.WithContext(ctx).First(&m, "phone = ? AND deleted_at IS NULL", phone).Error
+	if err != nil {
+		return customer.Customer{}, mapNotFound(err)
+	}
+	return m.ToDomain(), nil
+}
+
+func (r *CustomerRepository) FindByCustomerCode(ctx context.Context, code string) (customer.Customer, error) {
+	var m model.CustomerModel
+	err := r.db.WithContext(ctx).First(&m, "customer_code = ? AND deleted_at IS NULL", code).Error
+	if err != nil {
+		return customer.Customer{}, mapNotFound(err)
+	}
+	return m.ToDomain(), nil
+}
+
+// mapNotFound translates gorm not-found into the shared ErrNotFound.
+func mapNotFound(err error) error {
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return ErrNotFound
+	}
+	return err
 }

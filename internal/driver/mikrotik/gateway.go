@@ -3,6 +3,7 @@ package mikrotik
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/port"
@@ -261,4 +262,127 @@ func (g *Gateway) MonitorTrafficOnce(ctx context.Context, driver port.DeviceDriv
 		return port.InterfaceTrafficStats{}, err
 	}
 	return ParseInterfaceTrafficStats(res), nil
+}
+
+// ─── Firewall NAT & Address-List (port.FirewallGateway) ─────────────────
+
+var _ port.FirewallGateway = (*Gateway)(nil)
+
+// EnsureIsolationRedirect implements port.FirewallGateway: idempotent
+// pembuatan rule dst-nat redirect halaman bayar untuk address-list isolir.
+// Rule lama milik app (marker comment) disesuaikan parameternya; rule
+// tambahan per port/protocol dibuat bila belum ada.
+func (g *Gateway) EnsureIsolationRedirect(ctx context.Context, driver port.DeviceDriver, cfg port.IsolationRedirectConfig) error {
+	protocols := cfg.Protocols
+	if len(protocols) == 0 {
+		protocols = []string{"tcp"}
+	}
+	dstPorts := cfg.DstPorts
+	if len(dstPorts) == 0 {
+		dstPorts = []string{"80", "443"}
+	}
+	paymentPort := cfg.PaymentPort
+	if paymentPort == "" {
+		paymentPort = "80"
+	}
+
+	res, err := g.exec(ctx, driver, NewPrintFirewallNATCommand("dstnat", IsolationRedirectComment, ""))
+	if err != nil {
+		return err
+	}
+	existing := FindIsolationRedirectRules(ParseFirewallNATRules(res))
+	byKey := make(map[string]FirewallNATRule, len(existing))
+	for _, r := range existing {
+		byKey[r.Protocol+"_"+r.DstPort] = r
+	}
+
+	for _, proto := range protocols {
+		for _, dport := range dstPorts {
+			key := proto + "_" + dport
+			want := IsolationRedirectNATParams(cfg.SrcAddressList, proto, dport, cfg.PaymentHost, paymentPort, cfg.Disabled)
+			if old, ok := byKey[key]; ok {
+				if _, err := g.exec(ctx, driver, NewSetFirewallNATCommand(old.RosID, want)); err != nil {
+					return fmt.Errorf("update nat rule %s: %w", key, err)
+				}
+				continue
+			}
+			if _, err := g.exec(ctx, driver, NewAddFirewallNATCommand(want)); err != nil {
+				return fmt.Errorf("add nat rule %s: %w", key, err)
+			}
+		}
+	}
+	return nil
+}
+
+// DisableIsolationRedirect implements port.FirewallGateway: nonaktifkan
+// semua rule redirect milik app tanpa menghapusnya.
+func (g *Gateway) DisableIsolationRedirect(ctx context.Context, driver port.DeviceDriver) error {
+	res, err := g.exec(ctx, driver, NewPrintFirewallNATCommand("dstnat", IsolationRedirectComment, ""))
+	if err != nil {
+		return err
+	}
+	for _, r := range FindIsolationRedirectRules(ParseFirewallNATRules(res)) {
+		if r.Disabled {
+			continue
+		}
+		p := FirewallNATParams{Disabled: true}
+		if _, err := g.exec(ctx, driver, NewSetFirewallNATCommand(r.RosID, p)); err != nil {
+			return fmt.Errorf("disable nat rule %s: %w", r.RosID, err)
+		}
+	}
+	return nil
+}
+
+// AddToAddressList implements port.FirewallGateway.
+func (g *Gateway) AddToAddressList(ctx context.Context, driver port.DeviceDriver, listName, address, comment string) error {
+	// Idempoten: lewati bila entri sudah ada.
+	res, err := g.exec(ctx, driver, NewPrintAddressListCommand(AddressListPrintParams{List: listName, Address: address}))
+	if err != nil {
+		return err
+	}
+	if len(ParseAddressListEntries(res)) > 0 {
+		return nil
+	}
+	_, err = g.exec(ctx, driver, NewAddToAddressListCommand(listName, address, comment))
+	return err
+}
+
+// RemoveFromAddressList implements port.FirewallGateway.
+func (g *Gateway) RemoveFromAddressList(ctx context.Context, driver port.DeviceDriver, listName, address string) error {
+	res, err := g.exec(ctx, driver, NewPrintAddressListCommand(AddressListPrintParams{List: listName, Address: address}))
+	if err != nil {
+		return err
+	}
+	for _, e := range ParseAddressListEntries(res) {
+		if _, err := g.exec(ctx, driver, NewRemoveFromAddressListCommand(e.RosID)); err != nil {
+			return fmt.Errorf("remove address-list entry %s: %w", address, err)
+		}
+	}
+	return nil
+}
+
+// RemoveFromAddressListByComment implements port.FirewallGateway.
+func (g *Gateway) RemoveFromAddressListByComment(ctx context.Context, driver port.DeviceDriver, listName, commentContains string) error {
+	res, err := g.exec(ctx, driver, NewPrintAddressListCommand(AddressListPrintParams{List: listName}))
+	if err != nil {
+		return err
+	}
+	for _, e := range ParseAddressListEntries(res) {
+		if strings.Contains(e.Comment, commentContains) {
+			if _, err := g.exec(ctx, driver, NewRemoveFromAddressListCommand(e.RosID)); err != nil {
+				return fmt.Errorf("remove address-list entry %s: %w", e.Address, err)
+			}
+		}
+	}
+	return nil
+}
+
+// ListFirewallNATRules exposes filtered /ip/firewall/nat/print results
+// (dipakai E2E untuk verifikasi rule redirect).
+func (g *Gateway) ListFirewallNATRules(ctx context.Context, driver port.DeviceDriver, chain, comment, srcAddressList string) ([]FirewallNATRule, error) {
+	res, err := g.exec(ctx, driver, NewPrintFirewallNATCommand(chain, comment, srcAddressList))
+	if err != nil {
+		return nil, err
+	}
+	return ParseFirewallNATRules(res), nil
 }
