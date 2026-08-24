@@ -44,8 +44,8 @@ type ServicePlanModel struct {
 	RemoteAddressPool string `gorm:"type:varchar(50)"`
 	LimitUptime       string `gorm:"type:varchar(20)"`
 	LimitBytes        string `gorm:"type:varchar(20)"` // NULL/empty = unlimited flat rate
-	IsActive    bool   `gorm:"not null;default:true;index"`
-	Description string `gorm:"type:text"`
+	IsActive          bool   `gorm:"not null;default:true;index"`
+	Description       string `gorm:"type:text"`
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
