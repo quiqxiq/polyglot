@@ -54,3 +54,17 @@ export function isFieldVisible(field: string, serviceType: string): boolean {
   if (!set) return true // tipe tak dikenal → fallback aman: tampilkan semua
   return set.has(field)
 }
+
+// HIDDEN_FOR_TYPE: pengecualian eksplisit — field disembunyikan untuk tipe ini
+// meskipun secara umum tersedia. Keputusan owner: PPPOE & DEDICATED tidak
+// memakai expire mode Mikhmon.
+const HIDDEN_FOR_TYPE: Record<ServiceType, ReadonlySet<string>> = {
+  PPPOE: new Set(['expireMode']),
+  HOTSPOT: new Set(),
+  DEDICATED: new Set(['expireMode']),
+}
+
+export function isFieldHidden(field: string, serviceType: string): boolean {
+  const set = HIDDEN_FOR_TYPE[serviceType as ServiceType]
+  return set ? set.has(field) : false // tipe tak dikenal → fallback aman: sembunyikan apa pun
+}

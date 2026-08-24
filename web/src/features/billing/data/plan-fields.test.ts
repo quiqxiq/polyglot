@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { isFieldVisible } from './plan-fields'
+import { isFieldHidden, isFieldVisible } from './plan-fields'
 
 describe('isFieldVisible', () => {
   it('hides hotspot-only fields for PPPOE', () => {
@@ -48,5 +48,17 @@ describe('isFieldVisible', () => {
   })
   it('unknown type falls back to visible', () => {
     expect(isFieldVisible('anything', 'MYSTERY')).toBe(true)
+  })
+})
+
+describe('isFieldHidden', () => {
+  it('hides expireMode for PPPOE only', () => {
+    expect(isFieldHidden('expireMode', 'PPPOE')).toBe(true)
+    expect(isFieldHidden('expireMode', 'HOTSPOT')).toBe(false)
+    expect(isFieldHidden('expireMode', 'DEDICATED')).toBe(true)
+  })
+  it('other fields unaffected', () => {
+    expect(isFieldHidden('validity', 'PPPOE')).toBe(false)
+    expect(isFieldHidden('sharedUsers', 'HOTSPOT')).toBe(false)
   })
 })

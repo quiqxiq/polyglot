@@ -27,7 +27,7 @@ import { SelectDropdown } from '@/components/select-dropdown'
 import { CreatePlanRequest, Plan, UpdatePlanRequest } from '@/gen/v1/billing_pb'
 import { planFormSchema, type PlanFormValues } from '../data/schema'
 import { EXPIRE_MODES, SERVICE_TYPES, VALIDITY_MODES } from '../data/constants'
-import { isFieldVisible } from '../data/plan-fields'
+import { isFieldHidden, isFieldVisible } from '../data/plan-fields'
 import {
   useCreatePlanMutation,
   useUpdatePlanMutation,
@@ -142,6 +142,12 @@ export function PlansMutateDialog() {
   })
   const serviceType = watchedServiceType ?? 'PPPOE'
 
+  // Satu predikat untuk seluruh form: matrix type-only per tipe layanan
+  // (data/plan-fields.ts) + pengecualian eksplisit HIDDEN_FOR_TYPE
+  // (keputusan owner: PPPOE & DEDICATED tanpa Expire Mode Mikhmon).
+  const showField = (field: string) =>
+    isFieldVisible(field, serviceType) && !isFieldHidden(field, serviceType)
+
   const MIKROTIK_FIELDS = [
     'validity',
     'validityMode',
@@ -160,10 +166,8 @@ export function PlansMutateDialog() {
     'burstThresholdKbps',
     'burstTimeSeconds',
   ] as const
-  const mikrotikVisibleCount = MIKROTIK_FIELDS.filter((f) =>
-    isFieldVisible(f, serviceType)
-  ).length
-  const burstVisible = BURST_FIELDS.some((f) => isFieldVisible(f, serviceType))
+  const mikrotikVisibleCount = MIKROTIK_FIELDS.filter(showField).length
+  const burstVisible = BURST_FIELDS.some(showField)
 
   const onSubmit = async (values: PlanFormValues) => {
     try {
@@ -393,7 +397,7 @@ export function PlansMutateDialog() {
                 <SectionHeading>MikroTik</SectionHeading>
               )}
               <div className='grid gap-4 sm:grid-cols-2'>
-                {isFieldVisible('validity', serviceType) && (
+                {showField('validity') && (
                   <FormField
                     control={form.control}
                     name='validity'
@@ -408,7 +412,7 @@ export function PlansMutateDialog() {
                     )}
                   />
                 )}
-                {isFieldVisible('validityMode', serviceType) && (
+                {showField('validityMode') && (
                   <FormField
                     control={form.control}
                     name='validityMode'
@@ -426,7 +430,7 @@ export function PlansMutateDialog() {
                     )}
                   />
                 )}
-                {isFieldVisible('expireMode', serviceType) && (
+                {showField('expireMode') && (
                   <FormField
                     control={form.control}
                     name='expireMode'
@@ -444,7 +448,7 @@ export function PlansMutateDialog() {
                     )}
                   />
                 )}
-                {isFieldVisible('sharedUsers', serviceType) && (
+                {showField('sharedUsers') && (
                   <FormField
                     control={form.control}
                     name='sharedUsers'
@@ -463,7 +467,7 @@ export function PlansMutateDialog() {
                     )}
                   />
                 )}
-                {isFieldVisible('simultaneousUse', serviceType) && (
+                {showField('simultaneousUse') && (
                   <FormField
                     control={form.control}
                     name='simultaneousUse'
@@ -482,7 +486,7 @@ export function PlansMutateDialog() {
                     )}
                   />
                 )}
-                {isFieldVisible('ipPoolName', serviceType) && (
+                {showField('ipPoolName') && (
                   <FormField
                     control={form.control}
                     name='ipPoolName'
@@ -497,7 +501,7 @@ export function PlansMutateDialog() {
                     )}
                   />
                 )}
-                {isFieldVisible('parentQueue', serviceType) && (
+                {showField('parentQueue') && (
                   <FormField
                     control={form.control}
                     name='parentQueue'
@@ -512,7 +516,7 @@ export function PlansMutateDialog() {
                     )}
                   />
                 )}
-                {isFieldVisible('addressList', serviceType) && (
+                {showField('addressList') && (
                   <FormField
                     control={form.control}
                     name='addressList'
@@ -529,7 +533,7 @@ export function PlansMutateDialog() {
                 )}
               </div>
               <div className='grid gap-4 sm:grid-cols-2'>
-                {isFieldVisible('lockUser', serviceType) && (
+                {showField('lockUser') && (
                   <FormField
                     control={form.control}
                     name='lockUser'
@@ -548,7 +552,7 @@ export function PlansMutateDialog() {
                     )}
                   />
                 )}
-                {isFieldVisible('lockServer', serviceType) && (
+                {showField('lockServer') && (
                   <FormField
                     control={form.control}
                     name='lockServer'
@@ -574,7 +578,7 @@ export function PlansMutateDialog() {
               <div className='space-y-4'>
                 <SectionHeading>Burst (Opsional)</SectionHeading>
                 <div className='grid gap-4 sm:grid-cols-2'>
-                  {isFieldVisible('burstDownloadKbps', serviceType) && (
+                  {showField('burstDownloadKbps') && (
                     <FormField
                       control={form.control}
                       name='burstDownloadKbps'
@@ -593,7 +597,7 @@ export function PlansMutateDialog() {
                       )}
                     />
                   )}
-                  {isFieldVisible('burstUploadKbps', serviceType) && (
+                  {showField('burstUploadKbps') && (
                     <FormField
                       control={form.control}
                       name='burstUploadKbps'
@@ -612,7 +616,7 @@ export function PlansMutateDialog() {
                       )}
                     />
                   )}
-                  {isFieldVisible('burstThresholdKbps', serviceType) && (
+                  {showField('burstThresholdKbps') && (
                     <FormField
                       control={form.control}
                       name='burstThresholdKbps'
@@ -631,7 +635,7 @@ export function PlansMutateDialog() {
                       )}
                     />
                   )}
-                  {isFieldVisible('burstTimeSeconds', serviceType) && (
+                  {showField('burstTimeSeconds') && (
                     <FormField
                       control={form.control}
                       name='burstTimeSeconds'
