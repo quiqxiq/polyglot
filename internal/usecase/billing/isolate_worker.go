@@ -2,7 +2,6 @@ package billing
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -94,13 +93,7 @@ func (w *IsolateWorker) retryProvisioning(ctx context.Context, sub domainSubscri
 		res.SkippedNoRouter++
 		return nil
 	}
-	acct := port.SubscriberAccount{
-		Username:  sub.RemoteUsername,
-		Password:  sub.RemotePassword,
-		Profile:   w.normalProfile(ctx, sub),
-		RateLimit: w.planRateLimit(ctx, sub),
-		Comment:   "polyglot:" + sub.ID,
-	}
+	acct := w.accountForRetry(ctx, sub)
 	if err := w.manager.Provision(ctx, *sub.DeviceID, sub.ServiceType, acct); err != nil {
 		res.ProvisionFailed++
 		logger.WithComponent("IsolateWorker").WithFields(map[string]any{
@@ -251,9 +244,24 @@ func (w *IsolateWorker) planRateLimit(ctx context.Context, sub domainSubscriptio
 	if err != nil {
 		return ""
 	}
-	return fmt.Sprintf("%s/%s",
-		kbpsToRate(pl.BandwidthDownloadKbps),
-		kbpsToRate(pl.BandwidthUploadKbps))
+	return subscriberAccountFromPlan(sub, pl).RateLimit
+}
+
+// accountForRetry membangun akun lengkap dari plan untuk retry provisioning.
+func (w *IsolateWorker) accountForRetry(ctx context.Context, sub domainSubscription.Subscription) port.SubscriberAccount {
+	acct := port.SubscriberAccount{
+		Username: sub.RemoteUsername,
+		Password: sub.RemotePassword,
+		Profile:  w.normalProfile(ctx, sub),
+		Comment:  "polyglot:" + sub.ID,
+	}
+	if pl, err := w.plans.FindByID(ctx, sub.PlanID); err == nil {
+		full := subscriberAccountFromPlan(sub, pl)
+		full.Profile = acct.Profile
+		full.Comment = acct.Comment
+		return full
+	}
+	return acct
 }
 
 // redirectConfig membangun konfigurasi dst-nat dari settings; URL kosong
@@ -296,13 +304,3 @@ func isHotspotService(serviceType string) bool {
 	return strings.EqualFold(serviceType, "HOTSPOT")
 }
 
-// kbpsToRate converts kbps → RouterOS rate token ("5M", "512k").
-func kbpsToRate(kbps int) string {
-	if kbps <= 0 {
-		return ""
-	}
-	if kbps >= 1000 {
-		return strconv.Itoa((kbps+500)/1000) + "M"
-	}
-	return strconv.Itoa(kbps) + "k"
-}

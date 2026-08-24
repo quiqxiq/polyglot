@@ -3,11 +3,9 @@ package billing
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"time"
 
 	domainAudit "github.com/quixiq/polyglot/internal/domain/audit"
-	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -53,13 +51,8 @@ func (u *SubscriptionLifecycleUseCase) Activate(ctx context.Context, subID, devi
 	}
 
 	sub.DeviceID = &deviceID
-	acct := port.SubscriberAccount{
-		Username:  sub.RemoteUsername,
-		Password:  sub.RemotePassword,
-		Profile:   pl.Name,
-		RateLimit: planRate(pl),
-		Comment:   "polyglot:" + sub.ID,
-	}
+	acct := subscriberAccountFromPlan(sub, pl)
+	acct.Comment = "polyglot:" + sub.ID
 	if err := u.manager.Provision(ctx, deviceID, sub.ServiceType, acct); err != nil {
 		sub.ProvisionStatus = domainSubscription.ProvisionPending
 		if serr := u.subs.Save(ctx, sub); serr != nil {
@@ -245,23 +238,4 @@ func appendNote(existing, addition string) string {
 		return addition
 	}
 	return existing + " | " + addition
-}
-
-// planRate formats the MikroTik rate limit from plan bandwidth columns.
-func planRate(pl domainPlan.ServicePlan) string {
-	dl, ul := planRateSide(pl.BandwidthDownloadKbps), planRateSide(pl.BandwidthUploadKbps)
-	if dl == "" && ul == "" {
-		return ""
-	}
-	return dl + "/" + ul
-}
-
-func planRateSide(kbps int) string {
-	if kbps <= 0 {
-		return ""
-	}
-	if kbps >= 1000 {
-		return strconv.Itoa((kbps+500)/1000) + "M"
-	}
-	return strconv.Itoa(kbps) + "k"
 }
