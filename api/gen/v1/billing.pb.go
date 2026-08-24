@@ -547,6 +547,8 @@ type Plan struct {
 	BandwidthUploadKbps   int32                  `protobuf:"varint,5,opt,name=bandwidth_upload_kbps,json=bandwidthUploadKbps,proto3" json:"bandwidth_upload_kbps,omitempty"`
 	BurstDownloadKbps     int32                  `protobuf:"varint,6,opt,name=burst_download_kbps,json=burstDownloadKbps,proto3" json:"burst_download_kbps,omitempty"`
 	BurstUploadKbps       int32                  `protobuf:"varint,7,opt,name=burst_upload_kbps,json=burstUploadKbps,proto3" json:"burst_upload_kbps,omitempty"`
+	BurstThresholdKbps    int32                  `protobuf:"varint,24,opt,name=burst_threshold_kbps,json=burstThresholdKbps,proto3" json:"burst_threshold_kbps,omitempty"`
+	BurstTimeSeconds      int32                  `protobuf:"varint,25,opt,name=burst_time_seconds,json=burstTimeSeconds,proto3" json:"burst_time_seconds,omitempty"`
 	Price                 float64                `protobuf:"fixed64,8,opt,name=price,proto3" json:"price,omitempty"`
 	SellingPrice          float64                `protobuf:"fixed64,9,opt,name=selling_price,json=sellingPrice,proto3" json:"selling_price,omitempty"`
 	InstallationFee       float64                `protobuf:"fixed64,10,opt,name=installation_fee,json=installationFee,proto3" json:"installation_fee,omitempty"`
@@ -642,6 +644,20 @@ func (x *Plan) GetBurstDownloadKbps() int32 {
 func (x *Plan) GetBurstUploadKbps() int32 {
 	if x != nil {
 		return x.BurstUploadKbps
+	}
+	return 0
+}
+
+func (x *Plan) GetBurstThresholdKbps() int32 {
+	if x != nil {
+		return x.BurstThresholdKbps
+	}
+	return 0
+}
+
+func (x *Plan) GetBurstTimeSeconds() int32 {
+	if x != nil {
+		return x.BurstTimeSeconds
 	}
 	return 0
 }
@@ -2462,7 +2478,7 @@ const file_v1_billing_proto_rawDesc = "" +
 	"\x0fstart_date_unix\x18\x10 \x01(\x03R\rstartDateUnix\x12\"\n" +
 	"\rend_date_unix\x18\x11 \x01(\x03R\vendDateUnix\x12!\n" +
 	"\fcustom_price\x18\x12 \x01(\x01R\vcustomPrice\x12\x14\n" +
-	"\x05notes\x18\x13 \x01(\tR\x05notes\"\xb1\x06\n" +
+	"\x05notes\x18\x13 \x01(\tR\x05notes\"\x91\a\n" +
 	"\x04Plan\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12!\n" +
@@ -2470,7 +2486,9 @@ const file_v1_billing_proto_rawDesc = "" +
 	"\x17bandwidth_download_kbps\x18\x04 \x01(\x05R\x15bandwidthDownloadKbps\x122\n" +
 	"\x15bandwidth_upload_kbps\x18\x05 \x01(\x05R\x13bandwidthUploadKbps\x12.\n" +
 	"\x13burst_download_kbps\x18\x06 \x01(\x05R\x11burstDownloadKbps\x12*\n" +
-	"\x11burst_upload_kbps\x18\a \x01(\x05R\x0fburstUploadKbps\x12\x14\n" +
+	"\x11burst_upload_kbps\x18\a \x01(\x05R\x0fburstUploadKbps\x120\n" +
+	"\x14burst_threshold_kbps\x18\x18 \x01(\x05R\x12burstThresholdKbps\x12,\n" +
+	"\x12burst_time_seconds\x18\x19 \x01(\x05R\x10burstTimeSeconds\x12\x14\n" +
 	"\x05price\x18\b \x01(\x01R\x05price\x12#\n" +
 	"\rselling_price\x18\t \x01(\x01R\fsellingPrice\x12)\n" +
 	"\x10installation_fee\x18\n" +

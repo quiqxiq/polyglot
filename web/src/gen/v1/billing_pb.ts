@@ -457,6 +457,16 @@ export class Plan extends Message<Plan> {
   burstUploadKbps = 0;
 
   /**
+   * @generated from field: int32 burst_threshold_kbps = 24;
+   */
+  burstThresholdKbps = 0;
+
+  /**
+   * @generated from field: int32 burst_time_seconds = 25;
+   */
+  burstTimeSeconds = 0;
+
+  /**
    * @generated from field: double price = 8;
    */
   price = 0;
@@ -551,6 +561,8 @@ export class Plan extends Message<Plan> {
     { no: 5, name: "bandwidth_upload_kbps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 6, name: "burst_download_kbps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 7, name: "burst_upload_kbps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 24, name: "burst_threshold_kbps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 25, name: "burst_time_seconds", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 8, name: "price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
     { no: 9, name: "selling_price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
     { no: 10, name: "installation_fee", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },

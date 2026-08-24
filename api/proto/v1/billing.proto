@@ -68,6 +68,8 @@ message Plan {
   int32 bandwidth_upload_kbps = 5;
   int32 burst_download_kbps = 6;
   int32 burst_upload_kbps = 7;
+  int32 burst_threshold_kbps = 24;
+  int32 burst_time_seconds = 25;
   double price = 8;
   double selling_price = 9;
   double installation_fee = 10;

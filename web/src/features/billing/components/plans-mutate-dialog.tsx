@@ -82,10 +82,8 @@ function defaultFormValues(currentRow: Plan | null): PlanFormValues {
     bandwidthUploadKbps: toNumber(currentRow.bandwidthUploadKbps),
     burstDownloadKbps: toNumber(currentRow.burstDownloadKbps),
     burstUploadKbps: toNumber(currentRow.burstUploadKbps),
-    // Plan proto (field 23 = description) has no burst threshold/time fields;
-    // keep form defaults so the optional burst inputs stay consistent.
-    burstThresholdKbps: 0,
-    burstTimeSeconds: 0,
+    burstThresholdKbps: toNumber(currentRow.burstThresholdKbps),
+    burstTimeSeconds: toNumber(currentRow.burstTimeSeconds),
     price: toNumber(currentRow.price),
     sellingPrice: toNumber(currentRow.sellingPrice),
     installationFee: toNumber(currentRow.installationFee),
