@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CancelSubscriptionRequest, CancelSubscriptionResponse, CreateInvoiceRequest, CreateInvoiceResponse, CreateSubscriptionRequest, CreateSubscriptionResponse, GetInvoiceRequest, GetInvoiceResponse, ListInvoicesRequest, ListInvoicesResponse, ListSubscriptionsRequest, ListSubscriptionsResponse, PayInvoiceRequest, PayInvoiceResponse } from "./billing_pb.js";
+import { ActivateSubscriptionRequest, ActivateSubscriptionResponse, CashierPayRequest, CashierPayResponse, CashierResolveRequest, CashierResolveResponse, ChangePlanRequest, ChangePlanResponse, CreatePlanRequest, CreatePlanResponse, DeletePlanRequest, DeletePlanResponse, GenerateInvoicesRequest, GenerateInvoicesResponse, GetInvoiceRequest, GetInvoiceResponse, GetPlanRequest, GetPlanResponse, GetSubscriptionRequest, GetSubscriptionResponse, ListInvoicesRequest, ListInvoicesResponse, ListPlansRequest, ListPlansResponse, ListSubscriptionsRequest, ListSubscriptionsResponse, ResumeSubscriptionRequest, ResumeSubscriptionResponse, SuspendSubscriptionRequest, SuspendSubscriptionResponse, TerminateSubscriptionRequest, TerminateSubscriptionResponse, UpdatePlanRequest, UpdatePlanResponse } from "./billing_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -13,6 +13,8 @@ export const BillingService = {
   typeName: "polyglot.v1.BillingService",
   methods: {
     /**
+     * Faktur
+     *
      * @generated from rpc polyglot.v1.BillingService.ListInvoices
      */
     listInvoices: {
@@ -31,24 +33,28 @@ export const BillingService = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc polyglot.v1.BillingService.CreateInvoice
+     * Kasir
+     *
+     * @generated from rpc polyglot.v1.BillingService.CashierResolve
      */
-    createInvoice: {
-      name: "CreateInvoice",
-      I: CreateInvoiceRequest,
-      O: CreateInvoiceResponse,
+    cashierResolve: {
+      name: "CashierResolve",
+      I: CashierResolveRequest,
+      O: CashierResolveResponse,
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc polyglot.v1.BillingService.PayInvoice
+     * @generated from rpc polyglot.v1.BillingService.CashierPay
      */
-    payInvoice: {
-      name: "PayInvoice",
-      I: PayInvoiceRequest,
-      O: PayInvoiceResponse,
+    cashierPay: {
+      name: "CashierPay",
+      I: CashierPayRequest,
+      O: CashierPayResponse,
       kind: MethodKind.Unary,
     },
     /**
+     * Langganan & lifecycle
+     *
      * @generated from rpc polyglot.v1.BillingService.ListSubscriptions
      */
     listSubscriptions: {
@@ -58,21 +64,115 @@ export const BillingService = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc polyglot.v1.BillingService.CreateSubscription
+     * @generated from rpc polyglot.v1.BillingService.GetSubscription
      */
-    createSubscription: {
-      name: "CreateSubscription",
-      I: CreateSubscriptionRequest,
-      O: CreateSubscriptionResponse,
+    getSubscription: {
+      name: "GetSubscription",
+      I: GetSubscriptionRequest,
+      O: GetSubscriptionResponse,
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc polyglot.v1.BillingService.CancelSubscription
+     * @generated from rpc polyglot.v1.BillingService.ChangePlan
      */
-    cancelSubscription: {
-      name: "CancelSubscription",
-      I: CancelSubscriptionRequest,
-      O: CancelSubscriptionResponse,
+    changePlan: {
+      name: "ChangePlan",
+      I: ChangePlanRequest,
+      O: ChangePlanResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.SuspendSubscription
+     */
+    suspendSubscription: {
+      name: "SuspendSubscription",
+      I: SuspendSubscriptionRequest,
+      O: SuspendSubscriptionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.ResumeSubscription
+     */
+    resumeSubscription: {
+      name: "ResumeSubscription",
+      I: ResumeSubscriptionRequest,
+      O: ResumeSubscriptionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.TerminateSubscription
+     */
+    terminateSubscription: {
+      name: "TerminateSubscription",
+      I: TerminateSubscriptionRequest,
+      O: TerminateSubscriptionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.ActivateSubscription
+     */
+    activateSubscription: {
+      name: "ActivateSubscription",
+      I: ActivateSubscriptionRequest,
+      O: ActivateSubscriptionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Paket layanan
+     *
+     * @generated from rpc polyglot.v1.BillingService.ListPlans
+     */
+    listPlans: {
+      name: "ListPlans",
+      I: ListPlansRequest,
+      O: ListPlansResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.GetPlan
+     */
+    getPlan: {
+      name: "GetPlan",
+      I: GetPlanRequest,
+      O: GetPlanResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.CreatePlan
+     */
+    createPlan: {
+      name: "CreatePlan",
+      I: CreatePlanRequest,
+      O: CreatePlanResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.UpdatePlan
+     */
+    updatePlan: {
+      name: "UpdatePlan",
+      I: UpdatePlanRequest,
+      O: UpdatePlanResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.DeletePlan
+     */
+    deletePlan: {
+      name: "DeletePlan",
+      I: DeletePlanRequest,
+      O: DeletePlanResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Generator tagihan
+     *
+     * @generated from rpc polyglot.v1.BillingService.GenerateInvoices
+     */
+    generateInvoices: {
+      name: "GenerateInvoices",
+      I: GenerateInvoicesRequest,
+      O: GenerateInvoicesResponse,
       kind: MethodKind.Unary,
     },
   }

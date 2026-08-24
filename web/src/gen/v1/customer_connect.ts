@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateCustomerRequest, CreateCustomerResponse, DeleteCustomerRequest, DeleteCustomerResponse, GetCustomerRequest, GetCustomerResponse, ListCustomersRequest, ListCustomersResponse, UpdateCustomerRequest, UpdateCustomerResponse } from "./customer_pb.js";
+import { CreateCustomerRequest, CreateCustomerResponse, DeleteCustomerRequest, DeleteCustomerResponse, FindCustomerByCodeRequest, FindCustomerByPhoneRequest, FindCustomerByPortalCodeRequest, FindCustomerResponse, GetCustomerRequest, GetCustomerResponse, ListCustomersRequest, ListCustomersResponse, UpdateCustomerRequest, UpdateCustomerResponse } from "./customer_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { ListSubscriptionsRequest, ListSubscriptionsResponse } from "./billing_pb.js";
 
@@ -59,6 +59,37 @@ export const CustomerService = {
       kind: MethodKind.Unary,
     },
     /**
+     * Lookups cepat
+     *
+     * @generated from rpc polyglot.v1.CustomerService.FindByPhone
+     */
+    findByPhone: {
+      name: "FindByPhone",
+      I: FindCustomerByPhoneRequest,
+      O: FindCustomerResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.CustomerService.FindByCustomerCode
+     */
+    findByCustomerCode: {
+      name: "FindByCustomerCode",
+      I: FindCustomerByCodeRequest,
+      O: FindCustomerResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.CustomerService.FindByPortalCode
+     */
+    findByPortalCode: {
+      name: "FindByPortalCode",
+      I: FindCustomerByPortalCodeRequest,
+      O: FindCustomerResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Kompatibilitas lama
+     *
      * @generated from rpc polyglot.v1.CustomerService.ListSubscriptions
      */
     listSubscriptions: {

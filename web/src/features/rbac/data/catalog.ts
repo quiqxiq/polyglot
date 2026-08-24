@@ -88,6 +88,146 @@ export const RBAC_MODULE_GROUPS: ModuleGroup[] = [
     ],
   },
   {
+    id: 'customers',
+    label: 'Customer & CRM',
+    description: 'Data pelanggan ISP, koordinat ODP, dan kode akses portal',
+    permissions: [
+      {
+        id: 'customer:read',
+        resource: 'customer',
+        action: 'read',
+        label: 'View Customers',
+        description: 'Melihat database pelanggan, detail kontak, dan geolokasi',
+      },
+    ],
+  },
+  {
+    id: 'registrations',
+    label: 'Registrasi & Pasang Baru',
+    description: 'Pendaftaran calon pelanggan, penjadwalan, instalasi fisik teknisi, dan konversi',
+    permissions: [
+      {
+        id: 'registration:read',
+        resource: 'registration',
+        action: 'read',
+        label: 'View Registrations',
+        description: 'Melihat daftar calon pelanggan dan status permohonan pasang',
+      },
+      {
+        id: 'registration:manage',
+        resource: 'registration',
+        action: 'manage',
+        label: 'Manage Registrations',
+        description: 'Approve pendaftaran, jadwalkan teknisi, reject/cancel, dan konversi ke pelanggan aktif',
+      },
+      {
+        id: 'registration:install',
+        resource: 'registration',
+        action: 'install',
+        label: 'Mark Installed (Teknisi)',
+        description: 'Menandai instalasi fisik telah selesai dan mencatat hasil redaman',
+      },
+    ],
+  },
+  {
+    id: 'billing',
+    label: 'Billing & Invoicing',
+    description: 'Faktur tagihan bulanan, kasir cepat, paket layanan, dan lifecycle langganan',
+    permissions: [
+      {
+        id: 'billing:read',
+        resource: 'billing',
+        action: 'read',
+        label: 'View Billing',
+        description: 'Melihat faktur, langganan aktif/isolir, paket layanan, dan lookup kasir',
+      },
+      {
+        id: 'billing:manage',
+        resource: 'billing',
+        action: 'manage',
+        label: 'Manage Billing & Cashier',
+        description: 'Proses pembayaran kasir, ganti paket, suspend/resume/terminate, dan generate tagihan',
+      },
+    ],
+  },
+  {
+    id: 'cashbook',
+    label: 'Buku Kas & Keuangan',
+    description: 'Pencatatan kasir fisik, rekening bank, mutasi pemasukan/pengeluaran, dan saldo kas',
+    permissions: [
+      {
+        id: 'cashbook:read',
+        resource: 'cashbook',
+        action: 'read',
+        label: 'View Cashbook',
+        description: 'Melihat rekening kas, kategori transaksi, mutasi jurnal kas, dan saldo',
+      },
+      {
+        id: 'cashbook:manage',
+        resource: 'cashbook',
+        action: 'manage',
+        label: 'Manage Cashbook',
+        description: 'Menambah/mengubah rekening, kategori, dan mencatat transaksi kas masuk/keluar',
+      },
+    ],
+  },
+  {
+    id: 'notifications',
+    label: 'WhatsApp Notifications',
+    description: 'Template pesan WhatsApp tagihan/kuitansi, antrean notifikasi, dan monitoring kirim',
+    permissions: [
+      {
+        id: 'notification:read',
+        resource: 'notification',
+        action: 'read',
+        label: 'View Notifications',
+        description: 'Melihat template pesan, antrean notifikasi terkirim/gagal, dan pending count',
+      },
+      {
+        id: 'notification:manage',
+        resource: 'notification',
+        action: 'manage',
+        label: 'Manage Notifications',
+        description: 'Menyimpan template pesan, trigger uji coba kirim, dan update antrean',
+      },
+    ],
+  },
+  {
+    id: 'reports',
+    label: 'Financial & Operational Reports',
+    description: 'Laporan pendapatan, piutang, pengeluaran, dan performa keuangan berkala',
+    permissions: [
+      {
+        id: 'report:read',
+        resource: 'report',
+        action: 'read',
+        label: 'View Reports',
+        description: 'Melihat laporan finansial harian, bulanan, dan tahunan',
+      },
+      {
+        id: 'report:manage',
+        resource: 'report',
+        action: 'manage',
+        label: 'Refresh Reports',
+        description: 'Trigger rebuild kalkulasi snapshot laporan finansial manual',
+      },
+    ],
+  },
+  {
+    id: 'ispadmin',
+    label: 'ISP Migration & Reconcile',
+    description: 'Impor/ekspor data pelanggan CSV/Excel, tarik akun router, dan rekonsiliasi drift',
+    permissions: [
+      {
+        id: 'ispadmin:manage',
+        resource: 'ispadmin',
+        action: 'manage',
+        label: 'Manage ISP Admin Operations',
+        description: 'Impor file, ekspor database, tarik akun router, dan periksa deviasi router vs database',
+      },
+    ],
+  },
+  {
     id: 'whatsapp',
     label: 'WhatsApp & Live Chat',
     description: 'Integrasi WhatsApp, sesi pairing, chatbot, dan ambil alih agen',
@@ -186,37 +326,30 @@ export const RBAC_MODULE_GROUPS: ModuleGroup[] = [
     ],
   },
   {
-    id: 'billing_customer',
-    label: 'Billing & Customers',
-    description: 'Data pelanggan, langganan internet, invoice, dan pembayaran',
+    id: 'settings',
+    label: 'System Settings',
+    description: 'Pengaturan umum sistem, parameter anti-spam bot, dan preferensi aplikasi',
     permissions: [
       {
-        id: 'customer:read',
-        resource: 'customer',
+        id: 'setting:read',
+        resource: 'setting',
         action: 'read',
-        label: 'View Customers',
-        description: 'Melihat data pelanggan dan profil kontak',
+        label: 'View Settings',
+        description: 'Melihat parameter konfigurasi sistem dan bot',
       },
       {
-        id: 'billing:read',
-        resource: 'billing',
-        action: 'read',
-        label: 'View Invoices',
-        description: 'Melihat tagihan, status invoice, dan paket langganan',
-      },
-      {
-        id: 'billing:write',
-        resource: 'billing',
-        action: 'write',
-        label: 'Manage Invoices',
-        description: 'Membuat invoice, memproses pembayaran, dan ubah langganan',
+        id: 'setting:manage',
+        resource: 'setting',
+        action: 'manage',
+        label: 'Manage Settings',
+        description: 'Mengubah konfigurasi sistem, batch update, dan anti-spam bot settings',
       },
     ],
   },
   {
     id: 'system_admin',
-    label: 'Users & System Administration',
-    description: 'Manajemen akun staf, role-based access control, dan probe',
+    label: 'Users & RBAC Administration',
+    description: 'Manajemen akun staf, role-based access control matrix, dan probe',
     permissions: [
       {
         id: 'user:read',
@@ -271,9 +404,14 @@ export const ALL_PERMISSION_IDS = RBAC_MODULE_GROUPS.flatMap((g) =>
 export const RBAC_RESOURCES = [
   'device',
   'customer',
-  'conversation',
-  'knowledge',
+  'registration',
   'billing',
+  'cashbook',
+  'notification',
+  'report',
+  'ispadmin',
+  'conversation',
+  'skill',
   'whatsapp',
   'user',
   'rbac',
@@ -282,6 +420,7 @@ export const RBAC_RESOURCES = [
   'probe',
   'hotspot',
   'ppp',
+  'setting',
   'log',
 ] as const
 
@@ -290,8 +429,8 @@ export const RBAC_ACTIONS = [
   'write',
   'manage',
   'command',
-  'embed',
   'message',
+  'install',
 ] as const
 
 export const ALL = '*'

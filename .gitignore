@@ -37,7 +37,8 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
-# .understand-anything/
 .ref
 mikhmon4
 mikhmon_v4/
+.hermes/
+

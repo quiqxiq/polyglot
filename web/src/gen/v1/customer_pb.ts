@@ -21,14 +21,14 @@ export class Customer extends Message<Customer> {
   tenantId = "";
 
   /**
-   * @generated from field: string name = 3;
+   * @generated from field: string customer_code = 3;
    */
-  name = "";
+  customerCode = "";
 
   /**
-   * @generated from field: string email = 4;
+   * @generated from field: string name = 4;
    */
-  email = "";
+  name = "";
 
   /**
    * @generated from field: string phone = 5;
@@ -36,17 +36,54 @@ export class Customer extends Message<Customer> {
   phone = "";
 
   /**
-   * @generated from field: string address = 6;
+   * @generated from field: string email = 6;
+   */
+  email = "";
+
+  /**
+   * @generated from field: string address = 7;
    */
   address = "";
 
   /**
-   * @generated from field: string status = 7;
+   * @generated from field: double latitude = 8;
+   */
+  latitude = 0;
+
+  /**
+   * @generated from field: double longitude = 9;
+   */
+  longitude = 0;
+
+  /**
+   * @generated from field: bool has_coordinates = 10;
+   */
+  hasCoordinates = false;
+
+  /**
+   * @generated from field: string portal_access_code = 11;
+   */
+  portalAccessCode = "";
+
+  /**
+   * ACTIVE | ISOLATED | SUSPENDED | TERMINATED
+   *
+   * @generated from field: string status = 12;
    */
   status = "";
 
   /**
-   * @generated from field: int64 created_at_unix = 8;
+   * @generated from field: string notes = 13;
+   */
+  notes = "";
+
+  /**
+   * @generated from field: int64 registered_at_unix = 14;
+   */
+  registeredAtUnix = protoInt64.zero;
+
+  /**
+   * @generated from field: int64 created_at_unix = 15;
    */
   createdAtUnix = protoInt64.zero;
 
@@ -60,12 +97,19 @@ export class Customer extends Message<Customer> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "tenant_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "email", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "customer_code", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 5, name: "phone", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 6, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 7, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 8, name: "created_at_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 6, name: "email", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "latitude", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 9, name: "longitude", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 10, name: "has_coordinates", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 11, name: "portal_access_code", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 12, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 13, name: "notes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 14, name: "registered_at_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 15, name: "created_at_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Customer {
@@ -458,6 +502,156 @@ export class DeleteCustomerResponse extends Message<DeleteCustomerResponse> {
 
   static equals(a: DeleteCustomerResponse | PlainMessage<DeleteCustomerResponse> | undefined, b: DeleteCustomerResponse | PlainMessage<DeleteCustomerResponse> | undefined): boolean {
     return proto3.util.equals(DeleteCustomerResponse, a, b);
+  }
+}
+
+/**
+ * Pencarian cepat untuk kasir & portal.
+ *
+ * @generated from message polyglot.v1.FindCustomerByPhoneRequest
+ */
+export class FindCustomerByPhoneRequest extends Message<FindCustomerByPhoneRequest> {
+  /**
+   * @generated from field: string phone = 1;
+   */
+  phone = "";
+
+  constructor(data?: PartialMessage<FindCustomerByPhoneRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.FindCustomerByPhoneRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "phone", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): FindCustomerByPhoneRequest {
+    return new FindCustomerByPhoneRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): FindCustomerByPhoneRequest {
+    return new FindCustomerByPhoneRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): FindCustomerByPhoneRequest {
+    return new FindCustomerByPhoneRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: FindCustomerByPhoneRequest | PlainMessage<FindCustomerByPhoneRequest> | undefined, b: FindCustomerByPhoneRequest | PlainMessage<FindCustomerByPhoneRequest> | undefined): boolean {
+    return proto3.util.equals(FindCustomerByPhoneRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.FindCustomerByCodeRequest
+ */
+export class FindCustomerByCodeRequest extends Message<FindCustomerByCodeRequest> {
+  /**
+   * @generated from field: string customer_code = 1;
+   */
+  customerCode = "";
+
+  constructor(data?: PartialMessage<FindCustomerByCodeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.FindCustomerByCodeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "customer_code", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): FindCustomerByCodeRequest {
+    return new FindCustomerByCodeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): FindCustomerByCodeRequest {
+    return new FindCustomerByCodeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): FindCustomerByCodeRequest {
+    return new FindCustomerByCodeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: FindCustomerByCodeRequest | PlainMessage<FindCustomerByCodeRequest> | undefined, b: FindCustomerByCodeRequest | PlainMessage<FindCustomerByCodeRequest> | undefined): boolean {
+    return proto3.util.equals(FindCustomerByCodeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.FindCustomerByPortalCodeRequest
+ */
+export class FindCustomerByPortalCodeRequest extends Message<FindCustomerByPortalCodeRequest> {
+  /**
+   * @generated from field: string portal_access_code = 1;
+   */
+  portalAccessCode = "";
+
+  constructor(data?: PartialMessage<FindCustomerByPortalCodeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.FindCustomerByPortalCodeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "portal_access_code", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): FindCustomerByPortalCodeRequest {
+    return new FindCustomerByPortalCodeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): FindCustomerByPortalCodeRequest {
+    return new FindCustomerByPortalCodeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): FindCustomerByPortalCodeRequest {
+    return new FindCustomerByPortalCodeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: FindCustomerByPortalCodeRequest | PlainMessage<FindCustomerByPortalCodeRequest> | undefined, b: FindCustomerByPortalCodeRequest | PlainMessage<FindCustomerByPortalCodeRequest> | undefined): boolean {
+    return proto3.util.equals(FindCustomerByPortalCodeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.FindCustomerResponse
+ */
+export class FindCustomerResponse extends Message<FindCustomerResponse> {
+  /**
+   * @generated from field: polyglot.v1.Customer customer = 1;
+   */
+  customer?: Customer;
+
+  constructor(data?: PartialMessage<FindCustomerResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.FindCustomerResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "customer", kind: "message", T: Customer },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): FindCustomerResponse {
+    return new FindCustomerResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): FindCustomerResponse {
+    return new FindCustomerResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): FindCustomerResponse {
+    return new FindCustomerResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: FindCustomerResponse | PlainMessage<FindCustomerResponse> | undefined, b: FindCustomerResponse | PlainMessage<FindCustomerResponse> | undefined): boolean {
+    return proto3.util.equals(FindCustomerResponse, a, b);
   }
 }
 
