@@ -28,3 +28,9 @@ export const exportCustomersSchema = z.object({
 })
 
 export type ExportCustomersFormValues = z.infer<typeof exportCustomersSchema>
+
+export const importFileFormSchema = z.object({
+  file: z.instanceof(FileList).refine((f) => f.length > 0, 'Pilih file terlebih dahulu'),
+  format: z.number(),
+})
+export type ImportFileFormValues = z.infer<typeof importFileFormSchema>
