@@ -39,8 +39,11 @@ type ServicePlanModel struct {
 	ExpireMode  string `gorm:"type:varchar(10);default:ntf"`
 	LockUser    bool   `gorm:"default:false"`
 	LockServer  bool   `gorm:"default:false"`
-	LimitUptime string `gorm:"type:varchar(20)"`
-	LimitBytes  string `gorm:"type:varchar(20)"` // NULL/empty = unlimited flat rate
+	// RemoteAddressPool: pool IP sumber alamat pelanggan (kolom remote-address
+	// pada /ppp/profile RouterOS) — relevan untuk PPPOE/DEDICATED.
+	RemoteAddressPool string `gorm:"type:varchar(50)"`
+	LimitUptime       string `gorm:"type:varchar(20)"`
+	LimitBytes        string `gorm:"type:varchar(20)"` // NULL/empty = unlimited flat rate
 	IsActive    bool   `gorm:"not null;default:true;index"`
 	Description string `gorm:"type:text"`
 
@@ -75,6 +78,7 @@ func (m *ServicePlanModel) ToDomain() plan.ServicePlan {
 		ValidityMode:          m.ValidityMode,
 		SimultaneousUse:       m.SimultaneousUse,
 		IPPoolName:            m.IPPoolName,
+		RemoteAddressPool:     m.RemoteAddressPool,
 		ParentQueue:           m.ParentQueue,
 		AddressList:           m.AddressList,
 		SharedUsers:           m.SharedUsers,
@@ -110,6 +114,7 @@ func ServicePlanModelFromDomain(p plan.ServicePlan) *ServicePlanModel {
 		ValidityMode:          p.ValidityMode,
 		SimultaneousUse:       p.SimultaneousUse,
 		IPPoolName:            p.IPPoolName,
+		RemoteAddressPool:     p.RemoteAddressPool,
 		ParentQueue:           p.ParentQueue,
 		AddressList:           p.AddressList,
 		SharedUsers:           p.SharedUsers,

@@ -549,6 +549,7 @@ type Plan struct {
 	BurstUploadKbps       int32                  `protobuf:"varint,7,opt,name=burst_upload_kbps,json=burstUploadKbps,proto3" json:"burst_upload_kbps,omitempty"`
 	BurstThresholdKbps    int32                  `protobuf:"varint,24,opt,name=burst_threshold_kbps,json=burstThresholdKbps,proto3" json:"burst_threshold_kbps,omitempty"`
 	BurstTimeSeconds      int32                  `protobuf:"varint,25,opt,name=burst_time_seconds,json=burstTimeSeconds,proto3" json:"burst_time_seconds,omitempty"`
+	RemoteAddressPool     string                 `protobuf:"bytes,26,opt,name=remote_address_pool,json=remoteAddressPool,proto3" json:"remote_address_pool,omitempty"`
 	Price                 float64                `protobuf:"fixed64,8,opt,name=price,proto3" json:"price,omitempty"`
 	SellingPrice          float64                `protobuf:"fixed64,9,opt,name=selling_price,json=sellingPrice,proto3" json:"selling_price,omitempty"`
 	InstallationFee       float64                `protobuf:"fixed64,10,opt,name=installation_fee,json=installationFee,proto3" json:"installation_fee,omitempty"`
@@ -660,6 +661,13 @@ func (x *Plan) GetBurstTimeSeconds() int32 {
 		return x.BurstTimeSeconds
 	}
 	return 0
+}
+
+func (x *Plan) GetRemoteAddressPool() string {
+	if x != nil {
+		return x.RemoteAddressPool
+	}
+	return ""
 }
 
 func (x *Plan) GetPrice() float64 {
@@ -2478,7 +2486,7 @@ const file_v1_billing_proto_rawDesc = "" +
 	"\x0fstart_date_unix\x18\x10 \x01(\x03R\rstartDateUnix\x12\"\n" +
 	"\rend_date_unix\x18\x11 \x01(\x03R\vendDateUnix\x12!\n" +
 	"\fcustom_price\x18\x12 \x01(\x01R\vcustomPrice\x12\x14\n" +
-	"\x05notes\x18\x13 \x01(\tR\x05notes\"\x91\a\n" +
+	"\x05notes\x18\x13 \x01(\tR\x05notes\"\xc1\a\n" +
 	"\x04Plan\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12!\n" +
@@ -2488,7 +2496,8 @@ const file_v1_billing_proto_rawDesc = "" +
 	"\x13burst_download_kbps\x18\x06 \x01(\x05R\x11burstDownloadKbps\x12*\n" +
 	"\x11burst_upload_kbps\x18\a \x01(\x05R\x0fburstUploadKbps\x120\n" +
 	"\x14burst_threshold_kbps\x18\x18 \x01(\x05R\x12burstThresholdKbps\x12,\n" +
-	"\x12burst_time_seconds\x18\x19 \x01(\x05R\x10burstTimeSeconds\x12\x14\n" +
+	"\x12burst_time_seconds\x18\x19 \x01(\x05R\x10burstTimeSeconds\x12.\n" +
+	"\x13remote_address_pool\x18\x1a \x01(\tR\x11remoteAddressPool\x12\x14\n" +
 	"\x05price\x18\b \x01(\x01R\x05price\x12#\n" +
 	"\rselling_price\x18\t \x01(\x01R\fsellingPrice\x12)\n" +
 	"\x10installation_fee\x18\n" +

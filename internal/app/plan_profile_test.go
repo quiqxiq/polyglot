@@ -41,15 +41,16 @@ func TestHotspotProfileParams_Defaults(t *testing.T) {
 func TestPPPProfileParams(t *testing.T) {
 	acct := port.SubscriberAccount{
 		Profile: "PPPOE-10M", RateLimit: "10M/5M/20M/10M/4M/4M/8s/8s",
-		ParentQueue: "pq", AddressList: "paid",
+		ParentQueue: "pq", AddressList: "paid", RemoteAddressPool: "pool-pppoe",
 	}
 	got := pppProfileParams(acct)
 	want := port.PPPProfileParams{
-		Name:        "PPPOE-10M",
-		RateLimit:   "10M/5M/20M/10M/4M/4M/8s/8s",
-		ParentQueue: "pq",
-		AddressList: "paid",
-		Comment:     planProfileComment,
+		Name:          "PPPOE-10M",
+		RateLimit:     "10M/5M/20M/10M/4M/4M/8s/8s",
+		ParentQueue:   "pq",
+		AddressList:   "paid",
+		RemoteAddress: "pool-pppoe",
+		Comment:       planProfileComment,
 	}
 	if got != want {
 		t.Errorf("got=%+v want=%+v", got, want)

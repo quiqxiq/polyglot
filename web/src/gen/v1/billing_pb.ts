@@ -467,6 +467,11 @@ export class Plan extends Message<Plan> {
   burstTimeSeconds = 0;
 
   /**
+   * @generated from field: string remote_address_pool = 26;
+   */
+  remoteAddressPool = "";
+
+  /**
    * @generated from field: double price = 8;
    */
   price = 0;
@@ -563,6 +568,7 @@ export class Plan extends Message<Plan> {
     { no: 7, name: "burst_upload_kbps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 24, name: "burst_threshold_kbps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 25, name: "burst_time_seconds", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 26, name: "remote_address_pool", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 8, name: "price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
     { no: 9, name: "selling_price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
     { no: 10, name: "installation_fee", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },

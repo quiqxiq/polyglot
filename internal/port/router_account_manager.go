@@ -22,7 +22,8 @@ type SubscriberAccount struct {
 	LockUser     bool   // hotspot: kunci user ke MAC
 	LockServer   bool   // hotspot: kunci user ke server
 
-	BaseRateLimit string // rate tanpa burst ("10M/5M") — CIR untuk queue DEDICATED
+	BaseRateLimit     string // rate tanpa burst ("10M/5M") — CIR untuk queue DEDICATED
+	RemoteAddressPool string // ppp profile: pool IP sumber alamat pelanggan (remote-address)
 }
 
 // IsolationOptions membawa parameter isolation yang berasal dari

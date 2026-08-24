@@ -47,6 +47,7 @@ type ServicePlan struct {
 	ValidityMode          string    `json:"validity_mode"` // CALENDAR | UPTIME
 	SimultaneousUse       int       `json:"simultaneous_use"`
 	IPPoolName            string    `json:"ip_pool_name,omitempty"`
+	RemoteAddressPool     string    `json:"remote_address_pool,omitempty"`
 	ParentQueue           string    `json:"parent_queue,omitempty"`
 	AddressList           string    `json:"address_list,omitempty"`
 	SharedUsers           int       `json:"shared_users"`

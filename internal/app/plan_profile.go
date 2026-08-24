@@ -38,11 +38,12 @@ func hotspotProfileParams(a port.SubscriberAccount) port.MikhmonProfileParams {
 // pppProfileParams membangun parameter PPP profile dari akun terpetakan.
 func pppProfileParams(a port.SubscriberAccount) port.PPPProfileParams {
 	return port.PPPProfileParams{
-		Name:        a.Profile,
-		RateLimit:   a.RateLimit,
-		ParentQueue: a.ParentQueue,
-		AddressList: a.AddressList,
-		Comment:     planProfileComment,
+		Name:          a.Profile,
+		RateLimit:     a.RateLimit,
+		ParentQueue:   a.ParentQueue,
+		AddressList:   a.AddressList,
+		RemoteAddress: a.RemoteAddressPool,
+		Comment:       planProfileComment,
 	}
 }
 
