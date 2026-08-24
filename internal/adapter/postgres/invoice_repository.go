@@ -124,3 +124,13 @@ func (r *InvoiceRepository) SaveWithItems(ctx context.Context, inv billing.Invoi
 		return tx.Create(&itemModels).Error
 	})
 }
+
+// HasForSubscription reports whether any invoice points at the given
+// subscription — delete-guard for manage_subscription.
+func (r *InvoiceRepository) HasForSubscription(ctx context.Context, subID string) (bool, error) {
+	var n int64
+	err := r.db.WithContext(ctx).Model(&model.InvoiceModel{}).
+		Where("subscription_id = ? AND deleted_at IS NULL", subID).
+		Count(&n).Error
+	return n > 0, err
+}

@@ -24,4 +24,8 @@ type InvoiceRepository interface {
 	// SaveWithItems menyimpan faktur beserta seluruh baris item-nya dalam
 	// satu transaksi (aggregate).
 	SaveWithItems(ctx context.Context, inv billing.Invoice, items []billing.InvoiceItem) error
+
+	// HasForSubscription melaporkan ada tidaknya faktur yang menunjuk
+	// langganan — guard delete subscription pada manage_subscription.
+	HasForSubscription(ctx context.Context, subID string) (bool, error)
 }

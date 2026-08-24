@@ -479,3 +479,26 @@ func (f *FakeSubscriptionRepo) HasActiveForPlan(_ context.Context, planID string
 	}
 	return false, nil
 }
+
+// Delete implements hard-delete for the manage-subscription flow.
+func (f *FakeSubscriptionRepo) Delete(_ context.Context, id string) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if _, ok := f.byID[id]; !ok {
+		return ErrFakeNotFound
+	}
+	delete(f.byID, id)
+	return nil
+}
+
+// HasForSubscription implements the invoice delete-guard lookup.
+func (f *FakeInvoiceRepo) HasForSubscription(_ context.Context, subID string) (bool, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	for _, inv := range f.byID {
+		if inv.SubscriptionID != nil && *inv.SubscriptionID == subID {
+			return true, nil
+		}
+	}
+	return false, nil
+}

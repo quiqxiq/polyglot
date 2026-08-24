@@ -29,4 +29,8 @@ type SubscriptionRepository interface {
 	// HasActiveForPlan melaporkan ada tidaknya langganan aktif/isolated
 	// yang memakai plan — dipakai guard delete service plan.
 	HasActiveForPlan(ctx context.Context, planID string) (bool, error)
+
+	// Delete menghapus permanen baris langganan — dipanggil setelah guard
+	// tagihan lolos pada alur manage_subscription.Delete.
+	Delete(ctx context.Context, id string) error
 }

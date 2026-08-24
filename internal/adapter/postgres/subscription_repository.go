@@ -170,3 +170,15 @@ func (r *SubscriptionRepository) HasActiveForPlan(ctx context.Context, planID st
 		Count(&n).Error
 	return n > 0, err
 }
+
+// Delete implements hard-delete for the manage-subscription flow.
+func (r *SubscriptionRepository) Delete(ctx context.Context, id string) error {
+	res := r.db.WithContext(ctx).Where("id = ?", id).Delete(&model.SubscriptionModel{})
+	if res.Error != nil {
+		return res.Error
+	}
+	if res.RowsAffected == 0 {
+		return gorm.ErrRecordNotFound
+	}
+	return nil
+}
