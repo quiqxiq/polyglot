@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -27,6 +27,7 @@ import { SelectDropdown } from '@/components/select-dropdown'
 import { CreatePlanRequest, Plan, UpdatePlanRequest } from '@/gen/v1/billing_pb'
 import { planFormSchema, type PlanFormValues } from '../data/schema'
 import { EXPIRE_MODES, SERVICE_TYPES, VALIDITY_MODES } from '../data/constants'
+import { isFieldVisible } from '../data/plan-fields'
 import {
   useCreatePlanMutation,
   useUpdatePlanMutation,
@@ -131,6 +132,38 @@ export function PlansMutateDialog() {
   useEffect(() => {
     if (isOpen) form.reset(initialValues)
   }, [isOpen, initialValues, form])
+
+  // Visibility follows the service-type matrix (data/plan-fields.ts) and
+  // re-renders live as the user switches Tipe Layanan. Fallback 'PPPOE'
+  // matches the create default while the watch has not hydrated yet.
+  const watchedServiceType = useWatch({
+    control: form.control,
+    name: 'serviceType',
+  })
+  const serviceType = watchedServiceType ?? 'PPPOE'
+
+  const MIKROTIK_FIELDS = [
+    'validity',
+    'validityMode',
+    'expireMode',
+    'sharedUsers',
+    'simultaneousUse',
+    'ipPoolName',
+    'parentQueue',
+    'addressList',
+    'lockUser',
+    'lockServer',
+  ] as const
+  const BURST_FIELDS = [
+    'burstDownloadKbps',
+    'burstUploadKbps',
+    'burstThresholdKbps',
+    'burstTimeSeconds',
+  ] as const
+  const mikrotikVisibleCount = MIKROTIK_FIELDS.filter((f) =>
+    isFieldVisible(f, serviceType)
+  ).length
+  const burstVisible = BURST_FIELDS.some((f) => isFieldVisible(f, serviceType))
 
   const onSubmit = async (values: PlanFormValues) => {
     try {
@@ -356,241 +389,273 @@ export function PlansMutateDialog() {
             </div>
 
             <div className='space-y-4'>
-              <SectionHeading>MikroTik</SectionHeading>
+              {mikrotikVisibleCount > 0 && (
+                <SectionHeading>MikroTik</SectionHeading>
+              )}
               <div className='grid gap-4 sm:grid-cols-2'>
-                <FormField
-                  control={form.control}
-                  name='validity'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Validity</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder='30d' />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='validityMode'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Validity Mode</FormLabel>
-                      <SelectDropdown
-                        defaultValue={field.value}
-                        onValueChange={field.onChange}
-                        placeholder='Pilih mode validity'
-                        items={[...VALIDITY_MODES]}
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='expireMode'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Expire Mode</FormLabel>
-                      <SelectDropdown
-                        defaultValue={field.value}
-                        onValueChange={field.onChange}
-                        placeholder='Pilih mode expire'
-                        items={[...EXPIRE_MODES]}
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='sharedUsers'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Shared Users</FormLabel>
-                      <FormControl>
-                        <Input
-                          type='number'
-                          {...field}
-                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                {isFieldVisible('validity', serviceType) && (
+                  <FormField
+                    control={form.control}
+                    name='validity'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Validity</FormLabel>
+                        <FormControl>
+                          <Input {...field} placeholder='30d' />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {isFieldVisible('validityMode', serviceType) && (
+                  <FormField
+                    control={form.control}
+                    name='validityMode'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Validity Mode</FormLabel>
+                        <SelectDropdown
+                          defaultValue={field.value}
+                          onValueChange={field.onChange}
+                          placeholder='Pilih mode validity'
+                          items={[...VALIDITY_MODES]}
                         />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='simultaneousUse'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Simultaneous Use</FormLabel>
-                      <FormControl>
-                        <Input
-                          type='number'
-                          {...field}
-                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {isFieldVisible('expireMode', serviceType) && (
+                  <FormField
+                    control={form.control}
+                    name='expireMode'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Expire Mode</FormLabel>
+                        <SelectDropdown
+                          defaultValue={field.value}
+                          onValueChange={field.onChange}
+                          placeholder='Pilih mode expire'
+                          items={[...EXPIRE_MODES]}
                         />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='ipPoolName'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>IP Pool</FormLabel>
-                      <FormControl>
-                        <Input {...field} value={field.value ?? ''} placeholder='pool-hotspot' />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='parentQueue'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Parent Queue</FormLabel>
-                      <FormControl>
-                        <Input {...field} value={field.value ?? ''} placeholder='none' />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='addressList'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Address List</FormLabel>
-                      <FormControl>
-                        <Input {...field} value={field.value ?? ''} placeholder='paid-users' />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {isFieldVisible('sharedUsers', serviceType) && (
+                  <FormField
+                    control={form.control}
+                    name='sharedUsers'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Shared Users</FormLabel>
+                        <FormControl>
+                          <Input
+                            type='number'
+                            {...field}
+                            onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {isFieldVisible('simultaneousUse', serviceType) && (
+                  <FormField
+                    control={form.control}
+                    name='simultaneousUse'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Simultaneous Use</FormLabel>
+                        <FormControl>
+                          <Input
+                            type='number'
+                            {...field}
+                            onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {isFieldVisible('ipPoolName', serviceType) && (
+                  <FormField
+                    control={form.control}
+                    name='ipPoolName'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>IP Pool</FormLabel>
+                        <FormControl>
+                          <Input {...field} value={field.value ?? ''} placeholder='pool-hotspot' />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {isFieldVisible('parentQueue', serviceType) && (
+                  <FormField
+                    control={form.control}
+                    name='parentQueue'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Parent Queue</FormLabel>
+                        <FormControl>
+                          <Input {...field} value={field.value ?? ''} placeholder='none' />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {isFieldVisible('addressList', serviceType) && (
+                  <FormField
+                    control={form.control}
+                    name='addressList'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Address List</FormLabel>
+                        <FormControl>
+                          <Input {...field} value={field.value ?? ''} placeholder='paid-users' />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
               </div>
               <div className='grid gap-4 sm:grid-cols-2'>
-                <FormField
-                  control={form.control}
-                  name='lockUser'
-                  render={({ field }) => (
-                    <FormItem className='flex flex-row items-center justify-between rounded-lg border p-3 shadow-xs'>
-                      <div className='space-y-0.5'>
-                        <FormLabel>Lock User</FormLabel>
-                        <p className='text-muted-foreground text-xs'>
-                          Kunci user ke router tempat pertama kali login.
-                        </p>
-                      </div>
-                      <FormControl>
-                        <Switch checked={field.value} onCheckedChange={field.onChange} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='lockServer'
-                  render={({ field }) => (
-                    <FormItem className='flex flex-row items-center justify-between rounded-lg border p-3 shadow-xs'>
-                      <div className='space-y-0.5'>
-                        <FormLabel>Lock Server</FormLabel>
-                        <p className='text-muted-foreground text-xs'>
-                          Kunci user ke interface server tertentu.
-                        </p>
-                      </div>
-                      <FormControl>
-                        <Switch checked={field.value} onCheckedChange={field.onChange} />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+                {isFieldVisible('lockUser', serviceType) && (
+                  <FormField
+                    control={form.control}
+                    name='lockUser'
+                    render={({ field }) => (
+                      <FormItem className='flex flex-row items-center justify-between rounded-lg border p-3 shadow-xs'>
+                        <div className='space-y-0.5'>
+                          <FormLabel>Lock User</FormLabel>
+                          <p className='text-muted-foreground text-xs'>
+                            Kunci user ke router tempat pertama kali login.
+                          </p>
+                        </div>
+                        <FormControl>
+                          <Switch checked={field.value} onCheckedChange={field.onChange} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {isFieldVisible('lockServer', serviceType) && (
+                  <FormField
+                    control={form.control}
+                    name='lockServer'
+                    render={({ field }) => (
+                      <FormItem className='flex flex-row items-center justify-between rounded-lg border p-3 shadow-xs'>
+                        <div className='space-y-0.5'>
+                          <FormLabel>Lock Server</FormLabel>
+                          <p className='text-muted-foreground text-xs'>
+                            Kunci user ke interface server tertentu.
+                          </p>
+                        </div>
+                        <FormControl>
+                          <Switch checked={field.value} onCheckedChange={field.onChange} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                )}
               </div>
             </div>
 
-            <div className='space-y-4'>
-              <SectionHeading>Burst (Opsional)</SectionHeading>
-              <div className='grid gap-4 sm:grid-cols-2'>
-                <FormField
-                  control={form.control}
-                  name='burstDownloadKbps'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Burst Download (Kbps)</FormLabel>
-                      <FormControl>
-                        <Input
-                          type='number'
-                          {...field}
-                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
+            {burstVisible && (
+              <div className='space-y-4'>
+                <SectionHeading>Burst (Opsional)</SectionHeading>
+                <div className='grid gap-4 sm:grid-cols-2'>
+                  {isFieldVisible('burstDownloadKbps', serviceType) && (
+                    <FormField
+                      control={form.control}
+                      name='burstDownloadKbps'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Burst Download (Kbps)</FormLabel>
+                          <FormControl>
+                            <Input
+                              type='number'
+                              {...field}
+                              onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   )}
-                />
-                <FormField
-                  control={form.control}
-                  name='burstUploadKbps'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Burst Upload (Kbps)</FormLabel>
-                      <FormControl>
-                        <Input
-                          type='number'
-                          {...field}
-                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
+                  {isFieldVisible('burstUploadKbps', serviceType) && (
+                    <FormField
+                      control={form.control}
+                      name='burstUploadKbps'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Burst Upload (Kbps)</FormLabel>
+                          <FormControl>
+                            <Input
+                              type='number'
+                              {...field}
+                              onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   )}
-                />
-                <FormField
-                  control={form.control}
-                  name='burstThresholdKbps'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Burst Threshold (Kbps)</FormLabel>
-                      <FormControl>
-                        <Input
-                          type='number'
-                          {...field}
-                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
+                  {isFieldVisible('burstThresholdKbps', serviceType) && (
+                    <FormField
+                      control={form.control}
+                      name='burstThresholdKbps'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Burst Threshold (Kbps)</FormLabel>
+                          <FormControl>
+                            <Input
+                              type='number'
+                              {...field}
+                              onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   )}
-                />
-                <FormField
-                  control={form.control}
-                  name='burstTimeSeconds'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Burst Time (Detik)</FormLabel>
-                      <FormControl>
-                        <Input
-                          type='number'
-                          {...field}
-                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
+                  {isFieldVisible('burstTimeSeconds', serviceType) && (
+                    <FormField
+                      control={form.control}
+                      name='burstTimeSeconds'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Burst Time (Detik)</FormLabel>
+                          <FormControl>
+                            <Input
+                              type='number'
+                              {...field}
+                              onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   )}
-                />
+                </div>
+                <FormDescription>
+                  Kosongkan = tanpa burst (kolom diisi = fitur aktif)
+                </FormDescription>
               </div>
-              <FormDescription>
-                Kosongkan = tanpa burst (kolom diisi = fitur aktif)
-              </FormDescription>
-            </div>
+            )}
           </form>
         </Form>
         <DialogFooter className='gap-2'>

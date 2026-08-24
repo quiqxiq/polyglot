@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { render } from 'vitest-browser-react'
+import { userEvent } from 'vitest/browser'
 import { PlansProvider, usePlans } from './plans-provider'
 import { PlansMutateDialog } from './plans-mutate-dialog'
 
@@ -79,5 +80,46 @@ describe('PlansMutateDialog', () => {
 
     expect(screen.container).toBeInTheDocument()
     expect(screen.getByText('Tambah Paket').elements()).toHaveLength(0)
+  })
+
+  it('hides hotspot-only fields when service type defaults to PPPOE', async () => {
+    const { getByText } = await render(
+      <PlansProvider>
+        <CreateHarness />
+      </PlansProvider>
+    )
+
+    await expect.element(getByText('Tambah Paket')).toBeInTheDocument()
+
+    // HOTSPOT-only voucher fields must be absent on the PPPOE default.
+    expect(getByText(/Expire Mode/i).elements()).toHaveLength(0)
+    expect(getByText(/Shared Users/i).elements()).toHaveLength(0)
+
+    // PPPoE-relevant fields stay visible.
+    await expect.element(getByText(/Parent Queue/i)).toBeInTheDocument()
+    await expect.element(getByText(/Validity Mode/i)).toBeInTheDocument()
+  })
+
+  it('shows hotspot fields and hides pppoe routing after switching to HOTSPOT', async () => {
+    const { getByRole, getByText } = await render(
+      <PlansProvider>
+        <CreateHarness />
+      </PlansProvider>
+    )
+
+    await expect.element(getByText('Tambah Paket')).toBeInTheDocument()
+
+    const serviceTypeSelect = getByRole('combobox', { name: /Tipe Layanan/i })
+    await userEvent.click(serviceTypeSelect)
+    await userEvent.click(
+      getByRole('option', { name: /Hotspot \(Voucher\/Monthly\)/i })
+    )
+
+    // HOTSPOT-specific field appears once the type switches.
+    await expect.element(getByText(/Expire Mode/i)).toBeInTheDocument()
+
+    // PPPoE routing fields disappear.
+    expect(getByText(/Address List/i).elements()).toHaveLength(0)
+    expect(getByText(/Simultaneous Use/i).elements()).toHaveLength(0)
   })
 })
