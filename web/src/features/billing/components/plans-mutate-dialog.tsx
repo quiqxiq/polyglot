@@ -40,7 +40,36 @@ function toNumber(value: unknown, fallback = 0): number {
 
 function defaultFormValues(currentRow: Plan | null): PlanFormValues {
   if (!currentRow) {
-    return planFormSchema.parse({})
+    // Explicit defaults: schema.parse({}) throws because name/serviceType/
+    // bandwidth/price are required, and this runs at render time even while
+    // the dialog is closed.
+    return {
+      id: undefined,
+      name: '',
+      serviceType: 'PPPOE',
+      bandwidthDownloadKbps: 10240,
+      bandwidthUploadKbps: 5120,
+      burstDownloadKbps: 0,
+      burstUploadKbps: 0,
+      burstThresholdKbps: 0,
+      burstTimeSeconds: 0,
+      price: 0,
+      sellingPrice: 0,
+      installationFee: 0,
+      taxPercent: 0,
+      validity: '30d',
+      validityMode: 'CALENDAR',
+      simultaneousUse: 1,
+      ipPoolName: '',
+      parentQueue: 'none',
+      addressList: '',
+      sharedUsers: 1,
+      expireMode: '0',
+      lockUser: false,
+      lockServer: false,
+      isActive: true,
+      description: '',
+    }
   }
   return {
     id: currentRow.id,
