@@ -9,12 +9,12 @@ import (
 // PortalSessionModel is the GORM model for customer self-service portal
 // sessions (DATABASE-SCHEMA-ISP.md §2.4 — customer_portal_sessions).
 type PortalSessionModel struct {
-	ID           string `gorm:"primaryKey"`
-	TenantID     string `gorm:"type:text;not null;default:tenant-default"`
-	CustomerID   string `gorm:"type:text;not null;index"`
-	SessionToken string `gorm:"type:varchar(128);unique;not null"`
-	IPAddress    string `gorm:"type:varchar(45)"`
-	UserAgent    string `gorm:"type:text"`
+	ID           string    `gorm:"primaryKey"`
+	TenantID     string    `gorm:"type:text;not null;default:tenant-default"`
+	CustomerID   string    `gorm:"type:text;not null;index"`
+	SessionToken string    `gorm:"type:varchar(128);unique;not null"`
+	IPAddress    string    `gorm:"type:varchar(45)"`
+	UserAgent    string    `gorm:"type:text"`
 	ExpiresAt    time.Time `gorm:"not null"`
 	CreatedAt    time.Time
 }

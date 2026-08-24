@@ -2,6 +2,7 @@ package port
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/notification"
@@ -24,4 +25,16 @@ type NotificationRepository interface {
 	MarkSent(ctx context.Context, id string, sentAt time.Time) error
 	MarkFailed(ctx context.Context, id string, errMsg string) error
 	ListByCustomer(ctx context.Context, customerID string, limit int) ([]notification.WANotification, error)
+}
+
+// ErrNoWASession menandai tidak ada sesi WhatsApp terhubung — worker
+// memperlakukan ini sebagai infrastruktur mati (tidak membakar attempts).
+var ErrNoWASession = errors.New("no connected whatsapp session")
+
+// Varian sadar-retry untuk worker pengirim.
+type NotificationRetryRepository interface {
+	// PendingWithRetryLimit mengembalikan QUEUED dengan attempts < maxAttempts.
+	PendingWithRetryLimit(ctx context.Context, limit, maxAttempts int) ([]notification.WANotification, error)
+	// MarkFailedWithAttempt menyimpan pesan gagal + jumlah attempts terbaru.
+	MarkFailedWithAttempt(ctx context.Context, id, errMsg string, attempts int) error
 }

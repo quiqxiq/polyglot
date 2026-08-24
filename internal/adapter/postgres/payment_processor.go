@@ -23,7 +23,7 @@ import (
 // OnPaid dipanggil SETELAH transaksi commit sukses (hook un-isolir otomatis).
 // Kegagalan hook tidak membatalkan pembayaran — hanya dilog.
 type PaymentProcessor struct {
-	db    *gorm.DB
+	db     *gorm.DB
 	OnPaid func(ctx context.Context, inv billing.Invoice, pay billing.Payment)
 }
 

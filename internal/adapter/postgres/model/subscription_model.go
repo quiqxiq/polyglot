@@ -17,11 +17,11 @@ type SubscriptionModel struct {
 	ID string `gorm:"primaryKey"`
 	// device_id UUID nullable → devices(id); tipe eksplisit agar cocok
 	// dengan kolom UUID tabel devices.
-	TenantID       string  `gorm:"type:text;not null;default:tenant-default"`
-	CustomerID     string  `gorm:"type:text;not null;index"`
-	PlanID         string  `gorm:"type:text;not null;index"`
-	DeviceID       *string `gorm:"column:device_id;type:uuid;index"`
-	ServiceType    string  `gorm:"type:varchar(20);not null;default:PPPOE"`
+	TenantID    string  `gorm:"type:text;not null;default:tenant-default"`
+	CustomerID  string  `gorm:"type:text;not null;index"`
+	PlanID      string  `gorm:"type:text;not null;index"`
+	DeviceID    *string `gorm:"column:device_id;type:uuid;index"`
+	ServiceType string  `gorm:"type:varchar(20);not null;default:PPPOE"`
 
 	RemoteUsername string `gorm:"type:varchar(100);not null"`
 	RemotePassword string `gorm:"column:remote_password_cipher;type:text;not null"`
@@ -33,15 +33,15 @@ type SubscriptionModel struct {
 	RouterProfile   string `gorm:"column:router_profile;type:varchar(100)"`
 	ProvisionStatus string `gorm:"type:varchar(20);not null;default:NONE"`
 
-	BillingCycle       string `gorm:"type:varchar(20);not null;default:MONTHLY"`
-	BillingDay         int    `gorm:"not null;default:1"`
-	AutoIsolate        bool   `gorm:"not null;default:true"`
-	IsolationGraceDays int    `gorm:"not null;default:3"`
-	Status             string `gorm:"type:varchar(20);not null;default:ACTIVE;index"`
-	StartDate          time.Time `gorm:"type:date;not null;default:CURRENT_DATE"`
+	BillingCycle       string     `gorm:"type:varchar(20);not null;default:MONTHLY"`
+	BillingDay         int        `gorm:"not null;default:1"`
+	AutoIsolate        bool       `gorm:"not null;default:true"`
+	IsolationGraceDays int        `gorm:"not null;default:3"`
+	Status             string     `gorm:"type:varchar(20);not null;default:ACTIVE;index"`
+	StartDate          time.Time  `gorm:"type:date;not null;default:CURRENT_DATE"`
 	EndDate            *time.Time // nullable — fix review dari TIMESTAMPTZ NOT NULL lama
 
-	CustomPrice        *float64   `gorm:"type:numeric(15,2)"`
+	CustomPrice        *float64 `gorm:"type:numeric(15,2)"`
 	CurrentPeriodStart *time.Time
 	CurrentPeriodEnd   *time.Time
 	Notes              string `gorm:"type:text"`

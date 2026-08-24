@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -29,6 +30,10 @@ type RunBillingUseCase struct {
 	subs     port.SubscriptionRepository
 	plans    port.ServicePlanRepository
 	invoices port.InvoiceRepository
+	// settings opsional — bila diisi, jatuh tempo mengikuti
+	// isp.billing_due_days (janji desain fase 3.5); bila nil, fallback
+	// akhir bulan periode.
+	reader port.SettingReader
 
 	now func() time.Time
 }
@@ -36,6 +41,12 @@ type RunBillingUseCase struct {
 // NewRunBillingUseCase wires dependencies.
 func NewRunBillingUseCase(subs port.SubscriptionRepository, plans port.ServicePlanRepository, inv port.InvoiceRepository) *RunBillingUseCase {
 	return &RunBillingUseCase{subs: subs, plans: plans, invoices: inv, now: time.Now}
+}
+
+// WithSettings menautkan sumber konfigurasi dinamis.
+func (u *RunBillingUseCase) WithSettings(r port.SettingReader) *RunBillingUseCase {
+	u.reader = r
+	return u
 }
 
 // Run creates invoices for the given 'YYYY-MM' period.
@@ -63,7 +74,11 @@ func (u *RunBillingUseCase) Run(ctx context.Context, tenantID, period string) (B
 			continue
 		}
 
-		inv, items := buildMonthlyInvoice(sub, pl, period, u.now())
+		dueDays := 0
+		if u.reader != nil {
+			dueDays = atoiSafe(u.reader.GetValue(ctx, "isp.billing_due_days", "0"))
+		}
+		inv, items := buildMonthlyInvoice(sub, pl, period, u.now(), dueDays)
 		if err := u.invoices.SaveWithItems(ctx, inv, items); err != nil {
 			return res, fmt.Errorf("save invoice %s: %w", inv.InvoiceNumber, err)
 		}
@@ -74,7 +89,7 @@ func (u *RunBillingUseCase) Run(ctx context.Context, tenantID, period string) (B
 
 // buildMonthlyInvoice menyusun faktur + item dari harga paket atau override
 // custom_price langganan; pajak mengikuti tax_percent paket.
-func buildMonthlyInvoice(sub domainSubscription.Subscription, pl domainPlan.ServicePlan, period string, now time.Time) (domainBilling.Invoice, []domainBilling.InvoiceItem) {
+func buildMonthlyInvoice(sub domainSubscription.Subscription, pl domainPlan.ServicePlan, period string, now time.Time, dueDays int) (domainBilling.Invoice, []domainBilling.InvoiceItem) {
 	base := pl.Price
 	if sub.CustomPrice != nil && *sub.CustomPrice > 0 {
 		base = *sub.CustomPrice
@@ -82,7 +97,13 @@ func buildMonthlyInvoice(sub domainSubscription.Subscription, pl domainPlan.Serv
 	tax := base * pl.TaxPercent / 100
 
 	year, month := parsePeriod(period)
-	due := endOfMonthPeriod(year, month)
+	var due time.Time
+	if dueDays > 0 {
+		// Jatuh tempo = terbit + N hari kalender (settings).
+		due = time.Date(year, month, 1, 23, 59, 59, 0, time.UTC).AddDate(0, 0, dueDays)
+	} else {
+		due = endOfMonthPeriod(year, month)
+	}
 
 	invID := idgen.New("inv")
 	subID := sub.ID
@@ -114,6 +135,14 @@ func buildMonthlyInvoice(sub domainSubscription.Subscription, pl domainPlan.Serv
 		CreatedAt:   now,
 	}}
 	return inv, items
+}
+
+func atoiSafe(s string) int {
+	n, err := strconv.Atoi(strings.TrimSpace(s))
+	if err != nil || n < 0 {
+		return 0
+	}
+	return n
 }
 
 func parsePeriod(p string) (int, time.Month) {

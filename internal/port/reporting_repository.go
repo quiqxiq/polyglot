@@ -16,3 +16,9 @@ type ReportingRepository interface {
 	GetByDate(ctx context.Context, tenantID string, date time.Time) (reporting.DailyFinancialSnapshot, error)
 	ListRange(ctx context.Context, tenantID string, from, to time.Time) ([]reporting.DailyFinancialSnapshot, error)
 }
+
+// SnapshotComputer menghitung ulang snapshot harian dari data transaksional
+// (dipanggil job cron; implementasi memakai agregasi SQL).
+type SnapshotComputer interface {
+	RecomputeDaily(ctx context.Context, tenantID string, date time.Time) error
+}

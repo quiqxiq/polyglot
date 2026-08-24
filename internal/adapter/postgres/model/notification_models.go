@@ -60,8 +60,8 @@ func NotificationTemplateModelFromDomain(t notification.NotificationTemplate) *N
 // WANotificationModel is the GORM model for the WhatsApp notification
 // queue/log (DATABASE-SCHEMA-ISP.md §2.10 — wa_notifications).
 type WANotificationModel struct {
-	ID       string  `gorm:"primaryKey"`
-	TenantID string  `gorm:"type:text;not null;default:tenant-default"`
+	ID         string  `gorm:"primaryKey"`
+	TenantID   string  `gorm:"type:text;not null;default:tenant-default"`
 	TemplateID *string `gorm:"column:template_id;type:text"`
 	CustomerID *string `gorm:"column:customer_id;type:text;index"`
 	InvoiceID  *string `gorm:"column:invoice_id;type:text"`
@@ -73,6 +73,7 @@ type WANotificationModel struct {
 	Status       string `gorm:"type:varchar(20);not null;default:QUEUED;index"`
 	ErrorMessage string `gorm:"type:text"`
 	SentAt       *time.Time
+	Attempts     int `gorm:"not null;default:0"`
 
 	CreatedAt time.Time
 }

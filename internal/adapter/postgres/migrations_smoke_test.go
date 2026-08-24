@@ -110,7 +110,18 @@ func TestPostgresMigrationsSmoke(t *testing.T) {
 	var ispKeys int
 	require.NoError(t, db.QueryRow(
 		`SELECT COUNT(*) FROM system_settings WHERE key LIKE 'isp.%'`).Scan(&ispKeys))
-	assert.Equal(t, 9, ispKeys, "seed key isp.*")
+	assert.Equal(t, 13, ispKeys, "seed key isp.+")
+
+	// Migrasi 000019: portal_otps + wa_notifications.attempts + seed gateway.
+	assertSeedCount(t, db, "portal_otps", 0)
+	require.NoError(t, db.QueryRow(
+		`SELECT COUNT(*) FROM information_schema.columns
+		 WHERE table_name='wa_notifications' AND column_name='attempts'`).Scan(&ispKeys))
+	assert.Equal(t, 1, ispKeys, "kolom attempts ada")
+	var gwKeys int
+	require.NoError(t, db.QueryRow(
+		`SELECT COUNT(*) FROM system_settings WHERE key LIKE 'gw.tripay.%'`).Scan(&gwKeys))
+	assert.Equal(t, 8, gwKeys, "seed key gw.tripay.*")
 
 	// ── Unique constraint (tenant_id, name) pada service_plans. ────────
 	seedPlan := func(id, name string) error {

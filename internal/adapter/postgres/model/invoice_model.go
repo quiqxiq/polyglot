@@ -24,9 +24,9 @@ type InvoiceModel struct {
 	Total      float64 `gorm:"type:numeric(15,2)"`
 	PaidAmount float64 `gorm:"type:numeric(15,2)"`
 
-	DueDate time.Time  `gorm:"type:date;not null;index"`
+	DueDate time.Time `gorm:"type:date;not null;index"`
 	PaidAt  *time.Time
-	Status  string     `gorm:"type:varchar(20);not null;default:UNPAID;index"`
+	Status  string `gorm:"type:varchar(20);not null;default:UNPAID;index"`
 
 	QRPayload         string `gorm:"type:varchar(255);unique;not null"`
 	ManualPaymentCode string `gorm:"type:varchar(30);unique;not null"`

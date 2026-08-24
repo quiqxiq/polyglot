@@ -130,3 +130,37 @@ func (r *NotificationRepository) ListByCustomer(ctx context.Context, customerID 
 	}
 	return out, nil
 }
+
+// PendingWithRetryLimit implements port.NotificationRetryRepository.
+func (r *NotificationRepository) PendingWithRetryLimit(ctx context.Context, limit, maxAttempts int) ([]notification.WANotification, error) {
+	var mList []model.WANotificationModel
+	// Retryable: QUEUED, atau FAILED yang masih punya sisa percobaan.
+	q := r.db.WithContext(ctx).
+		Where("(status = ?) OR (status = ? AND attempts < ?)",
+			notification.StatusQueued, notification.StatusFailed, maxAttempts)
+	if limit > 0 {
+		q = q.Limit(limit)
+	}
+	if err := q.Order("created_at asc").Find(&mList).Error; err != nil {
+		return nil, err
+	}
+	out := make([]notification.WANotification, len(mList))
+	for i := range mList {
+		out[i] = mList[i].ToDomain()
+	}
+	return out, nil
+}
+
+// MarkFailedWithAttempt implements port.NotificationRetryRepository.
+func (r *NotificationRepository) MarkFailedWithAttempt(ctx context.Context, id, errMsg string, attempts int) error {
+	res := r.db.WithContext(ctx).Model(&model.WANotificationModel{}).
+		Where("id = ?", id).
+		Updates(map[string]any{"status": notification.StatusFailed, "error_message": errMsg, "attempts": attempts})
+	if res.Error != nil {
+		return res.Error
+	}
+	if res.RowsAffected == 0 {
+		return ErrNotFound
+	}
+	return nil
+}

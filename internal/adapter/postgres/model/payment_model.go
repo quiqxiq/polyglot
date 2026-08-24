@@ -9,11 +9,11 @@ import (
 // PaymentMethodModel is the GORM model for payment channel master
 // (DATABASE-SCHEMA-ISP.md §2.7 — payment_methods).
 type PaymentMethodModel struct {
-	ID       string `gorm:"primaryKey"`
-	TenantID string `gorm:"type:text;not null;default:tenant-default"`
-	Name     string `gorm:"type:varchar(50);not null"` // 'TUNAI', 'TRANSFER_BCA', 'QRIS', 'TRIPAY_VA'
-	Type     string `gorm:"type:varchar(30);not null"` // CASH | BANK | QRIS | GATEWAY
-	IsActive bool   `gorm:"not null;default:true"`
+	ID        string `gorm:"primaryKey"`
+	TenantID  string `gorm:"type:text;not null;default:tenant-default"`
+	Name      string `gorm:"type:varchar(50);not null"` // 'TUNAI', 'TRANSFER_BCA', 'QRIS', 'TRIPAY_VA'
+	Type      string `gorm:"type:varchar(30);not null"` // CASH | BANK | QRIS | GATEWAY
+	IsActive  bool   `gorm:"not null;default:true"`
 	CreatedAt time.Time
 }
 
@@ -58,10 +58,10 @@ type PaymentModel struct {
 
 	Amount      float64   `gorm:"type:numeric(15,2);not null"`
 	PaymentDate time.Time `gorm:"not null;index"`
-	ReceivedBy  *uint   `gorm:"column:received_by"`
-	ScanMethod  string  `gorm:"type:varchar(30);not null;default:MANUAL"`
-	Reference   string  `gorm:"type:varchar(100)"`
-	Notes       string  `gorm:"type:text"`
+	ReceivedBy  *uint     `gorm:"column:received_by"`
+	ScanMethod  string    `gorm:"type:varchar(30);not null;default:MANUAL"`
+	Reference   string    `gorm:"type:varchar(100)"`
+	Notes       string    `gorm:"type:text"`
 	CreatedAt   time.Time
 }
 

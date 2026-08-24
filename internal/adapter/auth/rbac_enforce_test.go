@@ -188,4 +188,3 @@ func TestDeleteRole(t *testing.T) {
 		t.Errorf("expected user 2001 to lose custom_role permissions after deletion")
 	}
 }
-

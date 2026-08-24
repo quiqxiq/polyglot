@@ -16,19 +16,19 @@ type RegistrationModel struct {
 	RegistrationNo string `gorm:"type:varchar(30);unique;not null"` // "REG-202608-0001"
 	PlanID         string `gorm:"type:text;not null;index"`
 
-	FullName  string  `gorm:"type:varchar(100);not null"`
-	Phone     string  `gorm:"type:varchar(20);not null;index"`
-	Email     string  `gorm:"type:varchar(100)"`
-	Address   string  `gorm:"type:text;not null"`
+	FullName  string   `gorm:"type:varchar(100);not null"`
+	Phone     string   `gorm:"type:varchar(20);not null;index"`
+	Email     string   `gorm:"type:varchar(100)"`
+	Address   string   `gorm:"type:text;not null"`
 	Latitude  *float64 `gorm:"type:double precision"`
 	Longitude *float64 `gorm:"type:double precision"`
-	Notes     string  `gorm:"type:text"`
+	Notes     string   `gorm:"type:text"`
 
 	Status string `gorm:"type:varchar(20);not null;default:PENDING;index"`
 
-	ReviewedBy           *uint      `gorm:"column:reviewed_by"`
+	ReviewedBy           *uint `gorm:"column:reviewed_by"`
 	ReviewedAt           *time.Time
-	AdminNotes           string `gorm:"type:text"`
+	AdminNotes           string     `gorm:"type:text"`
 	ScheduledInstallDate *time.Time `gorm:"type:date"`
 	// Fix review: TIME eksplisit, bukan VARCHAR(20).
 	ScheduledInstallTime *time.Time `gorm:"type:time"`
@@ -41,7 +41,7 @@ type RegistrationModel struct {
 	SubscriptionID string `gorm:"type:text"`
 	InvoiceID      string `gorm:"type:text"`
 
-	RejectedAt    *time.Time
+	RejectedAt     *time.Time
 	RejectedReason string `gorm:"type:text"`
 	CancelledAt    *time.Time
 	CancelReason   string `gorm:"type:text"`
@@ -59,68 +59,68 @@ func (m *RegistrationModel) ToDomain() registration.Registration {
 		return registration.Registration{}
 	}
 	return registration.Registration{
-		ID:                    m.ID,
-		TenantID:              m.TenantID,
-		RegistrationNo:        m.RegistrationNo,
-		PlanID:                m.PlanID,
-		FullName:              m.FullName,
-		Phone:                 m.Phone,
-		Email:                 m.Email,
-		Address:               m.Address,
-		Latitude:              m.Latitude,
-		Longitude:             m.Longitude,
-		Notes:                 m.Notes,
-		Status:                m.Status,
-		ReviewedBy:            m.ReviewedBy,
-		ReviewedAt:            m.ReviewedAt,
-		AdminNotes:            m.AdminNotes,
-		ScheduledInstallDate:  m.ScheduledInstallDate,
-		ScheduledInstallTime:  m.ScheduledInstallTime,
-		AssignedTechnicianID:  m.AssignedTechnicianID,
-		InstalledAt:           m.InstalledAt,
-		TechnicianNotes:       m.TechnicianNotes,
-		CustomerID:            m.CustomerID,
-		SubscriptionID:        m.SubscriptionID,
-		InvoiceID:             m.InvoiceID,
-		RejectedAt:            m.RejectedAt,
-		RejectedReason:        m.RejectedReason,
-		CancelledAt:           m.CancelledAt,
-		CancelReason:          m.CancelReason,
-		CreatedAt:             m.CreatedAt,
-		UpdatedAt:             m.UpdatedAt,
+		ID:                   m.ID,
+		TenantID:             m.TenantID,
+		RegistrationNo:       m.RegistrationNo,
+		PlanID:               m.PlanID,
+		FullName:             m.FullName,
+		Phone:                m.Phone,
+		Email:                m.Email,
+		Address:              m.Address,
+		Latitude:             m.Latitude,
+		Longitude:            m.Longitude,
+		Notes:                m.Notes,
+		Status:               m.Status,
+		ReviewedBy:           m.ReviewedBy,
+		ReviewedAt:           m.ReviewedAt,
+		AdminNotes:           m.AdminNotes,
+		ScheduledInstallDate: m.ScheduledInstallDate,
+		ScheduledInstallTime: m.ScheduledInstallTime,
+		AssignedTechnicianID: m.AssignedTechnicianID,
+		InstalledAt:          m.InstalledAt,
+		TechnicianNotes:      m.TechnicianNotes,
+		CustomerID:           m.CustomerID,
+		SubscriptionID:       m.SubscriptionID,
+		InvoiceID:            m.InvoiceID,
+		RejectedAt:           m.RejectedAt,
+		RejectedReason:       m.RejectedReason,
+		CancelledAt:          m.CancelledAt,
+		CancelReason:         m.CancelReason,
+		CreatedAt:            m.CreatedAt,
+		UpdatedAt:            m.UpdatedAt,
 	}
 }
 
 func RegistrationModelFromDomain(r registration.Registration) *RegistrationModel {
 	return &RegistrationModel{
-		ID:                    r.ID,
-		TenantID:              r.TenantID,
-		RegistrationNo:        r.RegistrationNo,
-		PlanID:                r.PlanID,
-		FullName:              r.FullName,
-		Phone:                 r.Phone,
-		Email:                 r.Email,
-		Address:               r.Address,
-		Latitude:              r.Latitude,
-		Longitude:             r.Longitude,
-		Notes:                 r.Notes,
-		Status:                r.Status,
-		ReviewedBy:            r.ReviewedBy,
-		ReviewedAt:            r.ReviewedAt,
-		AdminNotes:            r.AdminNotes,
-		ScheduledInstallDate:  r.ScheduledInstallDate,
-		ScheduledInstallTime:  r.ScheduledInstallTime,
-		AssignedTechnicianID:  r.AssignedTechnicianID,
-		InstalledAt:           r.InstalledAt,
-		TechnicianNotes:       r.TechnicianNotes,
-		CustomerID:            r.CustomerID,
-		SubscriptionID:        r.SubscriptionID,
-		InvoiceID:             r.InvoiceID,
-		RejectedAt:            r.RejectedAt,
-		RejectedReason:        r.RejectedReason,
-		CancelledAt:           r.CancelledAt,
-		CancelReason:          r.CancelReason,
-		CreatedAt:             r.CreatedAt,
-		UpdatedAt:             r.UpdatedAt,
+		ID:                   r.ID,
+		TenantID:             r.TenantID,
+		RegistrationNo:       r.RegistrationNo,
+		PlanID:               r.PlanID,
+		FullName:             r.FullName,
+		Phone:                r.Phone,
+		Email:                r.Email,
+		Address:              r.Address,
+		Latitude:             r.Latitude,
+		Longitude:            r.Longitude,
+		Notes:                r.Notes,
+		Status:               r.Status,
+		ReviewedBy:           r.ReviewedBy,
+		ReviewedAt:           r.ReviewedAt,
+		AdminNotes:           r.AdminNotes,
+		ScheduledInstallDate: r.ScheduledInstallDate,
+		ScheduledInstallTime: r.ScheduledInstallTime,
+		AssignedTechnicianID: r.AssignedTechnicianID,
+		InstalledAt:          r.InstalledAt,
+		TechnicianNotes:      r.TechnicianNotes,
+		CustomerID:           r.CustomerID,
+		SubscriptionID:       r.SubscriptionID,
+		InvoiceID:            r.InvoiceID,
+		RejectedAt:           r.RejectedAt,
+		RejectedReason:       r.RejectedReason,
+		CancelledAt:          r.CancelledAt,
+		CancelReason:         r.CancelReason,
+		CreatedAt:            r.CreatedAt,
+		UpdatedAt:            r.UpdatedAt,
 	}
 }

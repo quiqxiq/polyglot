@@ -6,6 +6,7 @@ import (
 
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
+	"github.com/quixiq/polyglot/internal/port/mocktest"
 )
 
 // timeAfter returns now + days (negatif = lampau).
@@ -39,4 +40,12 @@ func customerWithPortal(id, portal string) domainCustomer.Customer {
 		PortalAccessCode: portal,
 		Status:           domainCustomer.StatusActive,
 	}
+}
+
+func assert_AnError2() error { return errors.New("parse gagal") }
+func firstGwtID(g *mocktest.FakeGatewayTxRepo) string {
+	for _, t := range g.All() {
+		return t.ID
+	}
+	return ""
 }

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 
 	billing "github.com/quixiq/polyglot/internal/domain/billing"
 	"github.com/quixiq/polyglot/internal/port"
@@ -400,4 +401,9 @@ func deref(s *string) string {
 		return ""
 	}
 	return *s
+}
+
+func timeNowUTC() time.Time {
+	n := time.Now().UTC()
+	return time.Date(n.Year(), n.Month(), n.Day(), 0, 0, 0, 0, time.UTC)
 }

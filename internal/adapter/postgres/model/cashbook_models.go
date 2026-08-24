@@ -102,7 +102,7 @@ type CashTransactionModel struct {
 	CategoryID    string `gorm:"type:text;not null;index"`
 	Direction     string `gorm:"type:varchar(10);not null"` // IN | OUT
 
-	Amount  float64 `gorm:"type:numeric(15,2);not null"`
+	Amount  float64   `gorm:"type:numeric(15,2);not null"`
 	TrxDate time.Time `gorm:"not null;index"`
 
 	// Polymorphic reference tanpa FK — konsisten dengan dokumen.

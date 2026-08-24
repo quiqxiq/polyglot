@@ -245,4 +245,3 @@ func (s *Store) SetUserActive(ctx context.Context, id uint, active bool) error {
 func (s *Store) FindUsersByRoles(ctx context.Context, roles []string, activeOnly bool) ([]*customer.User, error) {
 	return NewUserRepository(s.db).FindByRoles(ctx, roles, activeOnly)
 }
-

@@ -16,6 +16,7 @@ type WANotification struct {
 	Status         string     `json:"status"`
 	ErrorMessage   string     `json:"error_message,omitempty"`
 	SentAt         *time.Time `json:"sent_at,omitempty"`
+	Attempts       int        `json:"attempts"`
 
 	CreatedAt time.Time `json:"created_at"`
 }

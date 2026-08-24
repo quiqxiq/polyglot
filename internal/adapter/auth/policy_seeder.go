@@ -46,6 +46,8 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"admin", "user:.*", "*"},
 		{"admin", "setting:.*", "*"},
 		{"admin", "profile:.*", "*"},
+		{"admin", "report:.*", "*"},
+		{"admin", "ispadmin:.*", "*"},
 
 		// Agent / CS — customer service & knowledge lookup.
 		{"agent", "conversation:.*", "*"},
@@ -54,6 +56,7 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"agent", "billing:read", "*"},
 		{"agent", "whatsapp:read", "*"},
 		{"agent", "profile:.*", "*"},
+		{"agent", "report:read", "*"},
 
 		// Teknisi — monitoring + command non-destruktif (guard di usecase).
 		{"teknisi", "device:read", "*"},

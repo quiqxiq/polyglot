@@ -13,17 +13,17 @@ type CustomerModel struct {
 	ID string `gorm:"primaryKey"`
 	// customer_code VARCHAR(30) UNIQUE; unique penuh (bukan parsial) agar
 	// AutoMigrate dev konvergen dengan migrasi prod.
-	CustomerCode     string  `gorm:"type:varchar(30);unique;not null"`
-	TenantID         string  `gorm:"type:text;not null;default:tenant-default"`
-	Name             string  `gorm:"type:varchar(100);not null"`
-	Phone            string  `gorm:"type:varchar(20);not null;index"`
-	Email            string  `gorm:"type:varchar(100)"`
-	Address          string  `gorm:"type:text;not null"`
-	Latitude         *float64 `gorm:"type:double precision"`
-	Longitude        *float64 `gorm:"type:double precision"`
-	PortalAccessCode string  `gorm:"type:varchar(16);unique;not null"`
-	Status           string  `gorm:"type:varchar(20);not null;default:ACTIVE;index"`
-	Notes            string  `gorm:"type:text"`
+	CustomerCode     string    `gorm:"type:varchar(30);unique;not null"`
+	TenantID         string    `gorm:"type:text;not null;default:tenant-default"`
+	Name             string    `gorm:"type:varchar(100);not null"`
+	Phone            string    `gorm:"type:varchar(20);not null;index"`
+	Email            string    `gorm:"type:varchar(100)"`
+	Address          string    `gorm:"type:text;not null"`
+	Latitude         *float64  `gorm:"type:double precision"`
+	Longitude        *float64  `gorm:"type:double precision"`
+	PortalAccessCode string    `gorm:"type:varchar(16);unique;not null"`
+	Status           string    `gorm:"type:varchar(20);not null;default:ACTIVE;index"`
+	Notes            string    `gorm:"type:text"`
 	RegisteredAt     time.Time `gorm:"type:date;not null;default:CURRENT_DATE"`
 	DeletedAt        *time.Time
 	CreatedAt        time.Time

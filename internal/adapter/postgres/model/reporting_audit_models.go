@@ -11,8 +11,8 @@ import (
 // DailySnapshotModel is the GORM model for the pre-aggregated daily
 // financial recap (DATABASE-SCHEMA-ISP.md §2.9 — daily_financial_snapshots).
 type DailySnapshotModel struct {
-	ID           uint   `gorm:"primaryKey;autoIncrement"`
-	TenantID     string `gorm:"type:text;not null;default:tenant-default;uniqueIndex:uq_daily_snapshot"`
+	ID           uint      `gorm:"primaryKey;autoIncrement"`
+	TenantID     string    `gorm:"type:text;not null;default:tenant-default;uniqueIndex:uq_daily_snapshot"`
 	SnapshotDate time.Time `gorm:"type:date;not null;uniqueIndex:uq_daily_snapshot;index"`
 
 	InvoiceCount int     `gorm:"not null;default:0"`

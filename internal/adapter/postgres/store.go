@@ -40,6 +40,7 @@ func NewStore(dsn string) (*Store, error) {
 			&model.WAMessageModel{},
 			&model.CustomerModel{},
 			&model.PortalSessionModel{},
+			&model.PortalOTPModel{},
 			&model.SubscriptionModel{},
 			&model.InvoiceModel{},
 			&model.InvoiceItemModel{},

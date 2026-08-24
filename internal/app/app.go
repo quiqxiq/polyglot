@@ -17,12 +17,18 @@ import (
 	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
 	pppConnect "github.com/quixiq/polyglot/internal/adapter/connect/ppp"
 	settingConnect "github.com/quixiq/polyglot/internal/adapter/connect/setting"
+	adminapi "github.com/quixiq/polyglot/internal/adapter/http/adminapi"
+	gatewayHTTP "github.com/quixiq/polyglot/internal/adapter/http/gateway"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
+	portalHTTP "github.com/quixiq/polyglot/internal/adapter/http/portal"
+	reportsHTTP "github.com/quixiq/polyglot/internal/adapter/http/reports"
 	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
 	postgres "github.com/quixiq/polyglot/internal/adapter/postgres"
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
 	storageAdapter "github.com/quixiq/polyglot/internal/adapter/storage"
+	tripay "github.com/quixiq/polyglot/internal/adapter/tripay"
+	whatsappadapter "github.com/quixiq/polyglot/internal/adapter/whatsapp"
 	wsAdapter "github.com/quixiq/polyglot/internal/adapter/ws"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/device"
@@ -42,7 +48,10 @@ import (
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
+	"github.com/quixiq/polyglot/internal/usecase/importer"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
+	notificationUC "github.com/quixiq/polyglot/internal/usecase/notification"
+	portalUC "github.com/quixiq/polyglot/internal/usecase/portal"
 	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
 	settingUC "github.com/quixiq/polyglot/internal/usecase/setting"
 	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
@@ -256,6 +265,60 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	probePath, probeHandler := deviceConnect.NewProbeServiceHandler()
 	registerProtected(probePath, probeHandler)
 
+	// ─── Fase 4: portal pelanggan, gateway Tripay, laporan, admin ──────
+	accountMgrFase4 := newRouterAccountManager(reg, sessionGateway, hotGateway, sessionGateway)
+	paymentProc := postgres.NewPaymentProcessor(pgStore.DB())
+	paymentProc.OnPaid = buildOnPaidRestore(accountMgrFase4, subRepo, planRepo, settingRepo)
+
+	waSender := whatsappadapter.NewSenderAdapter(waManager, pgStore.FindAllSessions)
+	portalRepo := postgres.NewPortalRepository(pgStore.DB())
+	paymentReader := postgres.NewPaymentReader(pgStore.DB())
+	portalUC := portalUC.NewUseCase(portalRepo, customerRepo2, subRepo, invRepo,
+		paymentReader, waSender, settingRepo)
+	portalHTTP := portalHTTP.NewHandler(portalUC)
+	// Portal: route publik & terautentikasi sama-sama di rootMux —
+	// autentikasi memakai portal token sendiri (bukan JWT staff), sehingga
+	// TIDAK boleh lewat protectedMux (JWT+RBAC akan menolak 401/403).
+	portalHTTP.RegisterPublic(rootMux)
+	portalHTTP.RegisterAuthenticated(rootMux)
+
+	gwtxRepo := postgres.NewGatewayTransactionRepository(pgStore.DB())
+	paymentProcFase4 := postgres.NewPaymentProcessor(pgStore.DB())
+	tripayAdapter := tripay.NewAdapter(settingRepo)
+	chargeUC := billingUC.NewGatewayChargeUseCase(invRepo, customerRepo2,
+		gwtxRepo, tripayAdapter, paymentProcFase4, settingRepo)
+	gatewayHTTP := gatewayHTTP.NewHandler(chargeUC)
+	gatewayHTTP.RegisterPublic(rootMux)         // webhook callback
+	gatewayHTTP.RegisterProtected(protectedMux) // kasir buat link bayar
+
+	reportingRepo := postgres.NewReportingRepository(pgStore.DB())
+	reportsHTTP.NewHandler(reportingRepo).Register(protectedMux)
+
+	upsertImport := importer.NewUpsertUseCase(planRepo, customerRepo2, subRepo, nil, "")
+	upsertImport.SetDeviceResolver(func(deviceName string) (string, bool) {
+		devices, err := repo.FindAll(context.Background())
+		if err != nil {
+			return "", false
+		}
+		for _, d := range devices {
+			if strings.EqualFold(d.Name, deviceName) {
+				return d.ID, true
+			}
+		}
+		return "", false
+	})
+	routerSource := importer.NewRouterSource(sessionGateway)
+	reconciler := importer.NewReconciler(subRepo, sessionGateway)
+	exportUC := importer.NewExportUseCase(subRepo, customerRepo2, planRepo)
+	adminapi.NewHandler(upsertImport, routerSource, reconciler,
+		reportingRepo, exportUC, func(ctx context.Context, deviceID string) (port.DeviceDriver, bool) {
+			drv, err := reg.Get(ctx, deviceID)
+			if err != nil {
+				return nil, false
+			}
+			return drv, true
+		}).RegisterProtected(protectedMux)
+
 	// Scheduler ISP (fase 3.5): generator tagihan harian + lifecycle worker
 	// (provisi retry, isolir, auto-suspend) — semua parameter dari settings.
 	if cfg.SchedulerEnabled && cfg.BillingCronSpec != "" && cfg.IsolationCronSpec != "" {
@@ -265,10 +328,19 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 			subRepo, invRepo, customerRepo2, planRepo,
 			accountMgr, notifRepo, settingRepo,
 		)
-		paymentProc := postgres.NewPaymentProcessor(pgStore.DB())
-		paymentProc.OnPaid = buildOnPaidRestore(accountMgr, subRepo, planRepo, settingRepo)
-		sched := newScheduler(runBillingUC, isolateWorker,
-			cfg.BillingCronSpec, cfg.IsolationCronSpec, "tenant-default")
+		waWorker := notificationUC.NewWaSenderWorker(notifRepo, waSender, settingRepo)
+		snapshotJob := func(ctx context.Context) error {
+			return reportingRepo.RecomputeDaily(ctx, "tenant-default", timeNowUTC())
+		}
+		sched := newScheduler(schedulerJobs{
+			billing:  runBillingUC,
+			isolate:  isolateWorker,
+			waSend:   waWorker,
+			snapshot: snapshotJob,
+		}, schedulerSpecs{
+			billing: cfg.BillingCronSpec, isolation: cfg.IsolationCronSpec,
+			waSend: cfg.WaSendCronSpec, snapshot: cfg.SnapshotCronSpec,
+		}, "tenant-default")
 		defer sched.Stop()
 		sched.Start()
 		logger.WithComponent("Polyglot").WithFields(map[string]any{

@@ -42,6 +42,8 @@ func setupISPDB(t *testing.T) *gorm.DB {
 		&model.NotificationTemplateModel{},
 		&model.WANotificationModel{},
 		&model.DailySnapshotModel{},
+		&model.PortalSessionModel{},
+		&model.PortalOTPModel{},
 		&model.AuditLogModel{},
 	)
 	require.NoError(t, err)
