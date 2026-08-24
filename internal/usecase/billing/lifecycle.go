@@ -89,6 +89,11 @@ func (u *SubscriptionLifecycleUseCase) ChangePlan(ctx context.Context, subID, ne
 
 	provisioned := sub.ProvisionStatus == domainSubscription.ProvisionOK && sub.DeviceID != nil && *sub.DeviceID != ""
 	if provisioned {
+		// Profil tujuan harus ada dengan rate plan baru sebelum akun
+		// dipindah — mencegah pelanggan menempel profil lama/belum ada.
+		if err := u.manager.EnsureProfile(ctx, *sub.DeviceID, sub.ServiceType, pl.Name, pl.RateLimit()); err != nil {
+			return sub, fmt.Errorf("ensure profil router: %w", err)
+		}
 		if err := u.manager.UpdateAccount(ctx, *sub.DeviceID, sub.ServiceType, sub.RemoteUsername, pl.Name); err != nil {
 			return sub, fmt.Errorf("update profil router: %w", err)
 		}

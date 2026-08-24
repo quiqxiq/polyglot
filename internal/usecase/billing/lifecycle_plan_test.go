@@ -160,6 +160,25 @@ func TestChangePlan_SamePlanNoop(t *testing.T) {
 	assert.Equal(t, 0, fx.manager.Count("UpdateAccount"))
 }
 
+func TestChangePlan_EnsuresTargetProfileBeforeSwitch(t *testing.T) {
+	fx := newLifecycleFixture(t, domainSubscription.StatusActive, true)
+
+	_, err := fx.usecase.ChangePlan(context.Background(), "sub-lc", "plan-b")
+	require.NoError(t, err)
+	assert.Equal(t, 1, fx.manager.Count("EnsureProfile:PLAN-B"))
+	assert.Equal(t, 1, fx.manager.Count("UpdateAccount:LCUSER->PLAN-B"))
+}
+
+func TestChangePlan_ProfileFail_KeepsDB(t *testing.T) {
+	fx := newLifecycleFixture(t, domainSubscription.StatusActive, true)
+	fx.manager.Fail = map[string]error{"EnsureProfile:PLAN-B": assert_AnError()}
+
+	_, err := fx.usecase.ChangePlan(context.Background(), "sub-lc", "plan-b")
+	require.Error(t, err)
+	stored, _ := fx.subs.FindByID(context.Background(), "sub-lc")
+	assert.Equal(t, "plan-a", stored.PlanID, "DB tak boleh berubah bila profil gagal")
+}
+
 func TestSuspendResumeTerminate_Flow(t *testing.T) {
 	fx := newLifecycleFixture(t, domainSubscription.StatusActive, true)
 	ctx := context.Background()

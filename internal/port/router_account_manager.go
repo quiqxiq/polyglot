@@ -43,6 +43,10 @@ type IsolationOptions struct {
 type RouterAccountManager interface {
 	Provision(ctx context.Context, deviceID, serviceType string, acct SubscriberAccount) error
 	UpdateAccount(ctx context.Context, deviceID, serviceType, username, newProfile string) error
+	// EnsureProfile memastikan profil bernama profileName ada di router
+	// dengan rate tertentu (auto-create bila belum ada). Dipakai sebelum
+	// memindahkan akun ke profil tersebut (mis. saat ganti paket).
+	EnsureProfile(ctx context.Context, deviceID, serviceType, profileName, rateLimit string) error
 	Isolate(ctx context.Context, deviceID, serviceType, username string, opt IsolationOptions) error
 	Restore(ctx context.Context, deviceID, serviceType, username, normalProfile, addressList string) error
 	Suspend(ctx context.Context, deviceID, serviceType, username string) error

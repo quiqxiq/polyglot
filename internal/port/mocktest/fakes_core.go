@@ -484,6 +484,10 @@ func (f *FakeRouterAccountManager) UpdateAccount(_ context.Context, _, _, userna
 	return f.record("UpdateAccount:" + username + "->" + newProfile)
 }
 
+func (f *FakeRouterAccountManager) EnsureProfile(_ context.Context, _, _, profileName, rateLimit string) error {
+	return f.record("EnsureProfile:" + profileName + "@" + rateLimit)
+}
+
 func (f *FakeRouterAccountManager) Isolate(_ context.Context, _, _, username string, opt port.IsolationOptions) error {
 	return f.record(fmt.Sprintf("Isolate:%s->%s(list=%s)", username, opt.IsolirProfile, opt.AddressList))
 }

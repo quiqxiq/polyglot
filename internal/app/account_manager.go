@@ -107,6 +107,17 @@ func (m *routerAccountManager) ensurePlanProfile(ctx context.Context, driver por
 
 // ─── Update / Isolate / Restore / Suspend / Terminate ───────────────────
 
+// EnsureProfile memastikan profil ada di router dengan rate tertentu
+// (auto-create bila belum ada) sebelum akun dipindah ke profil tersebut.
+func (m *routerAccountManager) EnsureProfile(ctx context.Context, deviceID, serviceType, profileName, rateLimit string) error {
+	driver, err := m.resolve(ctx, deviceID)
+	if err != nil {
+		return err
+	}
+	return m.ensurePlanProfile(ctx, driver, serviceType,
+		port.SubscriberAccount{Profile: profileName, RateLimit: rateLimit})
+}
+
 func (m *routerAccountManager) UpdateAccount(ctx context.Context, deviceID, serviceType, username, newProfile string) error {
 	driver, err := m.resolve(ctx, deviceID)
 	if err != nil {
