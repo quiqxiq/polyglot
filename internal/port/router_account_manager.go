@@ -21,6 +21,8 @@ type SubscriberAccount struct {
 	ExpireMode   string // hotspot: ntf|ntfc|rem|remc|0
 	LockUser     bool   // hotspot: kunci user ke MAC
 	LockServer   bool   // hotspot: kunci user ke server
+
+	BaseRateLimit string // rate tanpa burst ("10M/5M") — CIR untuk queue DEDICATED
 }
 
 // IsolationOptions membawa parameter isolation yang berasal dari

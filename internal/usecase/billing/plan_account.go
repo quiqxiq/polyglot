@@ -28,20 +28,21 @@ func subscriberAccountFromPlan(
 		validity = ""
 	}
 	return port.SubscriberAccount{
-		Username:     sub.RemoteUsername,
-		Password:     sub.RemotePassword,
-		Profile:      pl.Name,
-		RateLimit:    rate,
-		AddressPool:  pl.IPPoolName,
-		ParentQueue:  pl.ParentQueue,
-		AddressList:  pl.AddressList,
-		SharedUsers:  pl.SharedUsers,
-		Price:        hargaJual,
-		SellingPrice: hargaModal,
-		Validity:     validity,
-		ExpireMode:   pl.ExpireMode,
-		LockUser:     pl.LockUser,
-		LockServer:   pl.LockServer,
+		Username:      sub.RemoteUsername,
+		Password:      sub.RemotePassword,
+		Profile:       pl.Name,
+		RateLimit:     rate,
+		AddressPool:   pl.IPPoolName,
+		ParentQueue:   pl.ParentQueue,
+		AddressList:   pl.AddressList,
+		SharedUsers:   pl.SharedUsers,
+		Price:         hargaJual,
+		SellingPrice:  hargaModal,
+		Validity:      validity,
+		ExpireMode:    pl.ExpireMode,
+		LockUser:      pl.LockUser,
+		LockServer:    pl.LockServer,
+		BaseRateLimit: pl.RateLimit(),
 	}
 }
 

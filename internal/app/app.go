@@ -178,6 +178,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	exec := networkUC.ExecuteCommand
 	hotGateway := mikhmon.NewGateway(exec)
 	sessionGateway := mikrotik.NewGateway(exec)
+	queueGateway := mikrotik.NewQueueGateway(exec)
 
 	// ─── 1. Repositori & Manajer Infrastruktur ──────────────────────────────
 	customerRepo := postgres.NewCustomerRepository(pgStore.DB())
@@ -193,7 +194,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	gwtxRepo := postgres.NewGatewayTransactionRepository(pgStore.DB())
 	paymentReader := postgres.NewPaymentReader(pgStore.DB())
 
-	accountMgr := newRouterAccountManager(reg, sessionGateway, hotGateway, sessionGateway)
+	accountMgr := newRouterAccountManager(reg, sessionGateway, hotGateway, sessionGateway, queueGateway)
 	paymentProc := postgres.NewPaymentProcessor(pgStore.DB())
 	paymentProc.OnPaid = buildOnPaidRestore(accountMgr, subRepo, planRepo, settingRepo)
 	waSender := whatsappadapter.NewSenderAdapter(waManager, pgStore.FindAllSessions)

@@ -14,7 +14,7 @@ import (
 )
 
 // routerAccountManager implements port.RouterAccountManager dengan menyusun
-// driver-resolver + PPPGateway + HotspotGateway + FirewallGateway.
+// driver-resolver + PPPGateway + HotspotGateway + FirewallGateway + QueueGateway.
 // Semua semantik mengikuti ISP nyata: isolir = pindah profil + kick +
 // address-list redirect; suspend = disable; terminate = hapus.
 type routerAccountManager struct {
@@ -24,16 +24,17 @@ type routerAccountManager struct {
 	ppp     port.PPPGateway
 	hot     port.HotspotGateway
 	fw      port.FirewallGateway
+	q       port.QueueGateway // khusus langganan DEDICATED (boleh nil)
 }
 
 var _ port.RouterAccountManager = (*routerAccountManager)(nil)
 
-func newRouterAccountManager(reg *registry.Registry, ppp port.PPPGateway, hot port.HotspotGateway, fw port.FirewallGateway) *routerAccountManager {
+func newRouterAccountManager(reg *registry.Registry, ppp port.PPPGateway, hot port.HotspotGateway, fw port.FirewallGateway, q port.QueueGateway) *routerAccountManager {
 	return &routerAccountManager{
 		resolve: func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
 			return reg.Get(ctx, deviceID)
 		},
-		ppp: ppp, hot: hot, fw: fw,
+		ppp: ppp, hot: hot, fw: fw, q: q,
 	}
 }
 
@@ -66,7 +67,88 @@ func (m *routerAccountManager) Provision(ctx context.Context, deviceID, serviceT
 	}); err != nil {
 		return fmt.Errorf("add ppp secret %s: %w", acct.Username, err)
 	}
+	// DEDICATED: tegakkan CIR via simple queue per pelanggan.
+	if isDedicated(serviceType) {
+		if err := m.ensureDedicatedQueue(ctx, driver, acct); err != nil {
+			return fmt.Errorf("dedicated queue: %w", err)
+		}
+	}
 	return nil
+}
+
+// ensureDedicatedQueue memastikan simple queue CIR ada untuk pelanggan
+// DEDICATED — idempotent: skip bila sudah sama, replace bila berubah.
+func (m *routerAccountManager) ensureDedicatedQueue(ctx context.Context, driver port.DeviceDriver, acct port.SubscriberAccount) error {
+	if m.q == nil || acct.Username == "" || acct.RateLimit == "" {
+		return nil // queue gateway tidak tersedia / data kurang → abaikan
+	}
+	params := dedicatedQueueFromAccount(acct, "AUTO dedicated queue "+acct.Comment)
+	name := params.Name
+
+	existing, err := m.q.ListQueues(ctx, driver, name)
+	if err != nil {
+		return fmt.Errorf("list queues: %w", err)
+	}
+	for _, qy := range existing {
+		if qy.Name != name {
+			continue
+		}
+		if qy.MaxLimit == params.MaxLimit && qy.LimitAt == params.LimitAt {
+			return nil // sudah sinkron
+		}
+		// Konfigurasi berubah → replace.
+		if _, err := m.q.RemoveQueue(ctx, driver, qy.RosID); err != nil {
+			return fmt.Errorf("remove stale queue %s: %w", name, err)
+		}
+		break
+	}
+	if _, err := m.q.AddQueue(ctx, driver, params); err != nil {
+		return fmt.Errorf("add queue %s: %w", name, err)
+	}
+	return nil
+}
+
+// setDedicatedQueueEnabled enable/disable queue pelanggan DEDICATED — best-effort.
+func (m *routerAccountManager) setDedicatedQueueEnabled(ctx context.Context, driver port.DeviceDriver, username string, enabled bool) {
+	m.withDedicatedQueue(ctx, driver, username, func(qy port.SimpleQueue) error {
+		_, err := m.q.SetQueueEnabled(ctx, driver, qy.RosID, enabled)
+		return err
+	})
+}
+
+// removeDedicatedQueue menghapus queue pelanggan DEDICATED — best-effort.
+func (m *routerAccountManager) removeDedicatedQueue(ctx context.Context, driver port.DeviceDriver, username string) {
+	m.withDedicatedQueue(ctx, driver, username, func(qy port.SimpleQueue) error {
+		_, err := m.q.RemoveQueue(ctx, driver, qy.RosID)
+		return err
+	})
+}
+
+// withDedicatedQueue menjalankan aksi pada queue pelanggan bila ditemukan.
+// Best-effort: error hanya di-log, tidak dikembalikan (queue hanya shaping,
+// bukan auth — kegagalan tidak boleh menggagalkan isolate/terminate).
+func (m *routerAccountManager) withDedicatedQueue(ctx context.Context, driver port.DeviceDriver, username string, action func(port.SimpleQueue) error) {
+	if m.q == nil || username == "" {
+		return
+	}
+	queues, err := m.q.ListQueues(ctx, driver, dedicatedQueueName(username))
+	if err != nil {
+		logger.WithComponent("AccountManager").WithFields(map[string]any{
+			"username": username,
+		}).WithError(err).Warn("list dedicated queue failed")
+		return
+	}
+	for _, qy := range queues {
+		if qy.Name == dedicatedQueueName(username) {
+			if err := action(qy); err != nil {
+				logger.WithComponent("AccountManager").WithFields(map[string]any{
+					"username": username,
+					"queue":    qy.Name,
+				}).WithError(err).Warn("dedicated queue action failed")
+			}
+			return
+		}
+	}
 }
 
 // ensurePlanProfile memastikan profil paket ada di router — auto-buat dari
@@ -175,6 +257,10 @@ func (m *routerAccountManager) Isolate(ctx context.Context, deviceID, serviceTyp
 			return fmt.Errorf("address-list add %s: %w", ip, err)
 		}
 	}
+	// DEDICATED: queue ikut dimatikan saat isolir (best-effort).
+	if isDedicated(serviceType) {
+		m.setDedicatedQueueEnabled(ctx, driver, username, false)
+	}
 	return nil
 }
 
@@ -187,6 +273,10 @@ func (m *routerAccountManager) Restore(ctx context.Context, deviceID, serviceTyp
 		if err := m.fw.RemoveFromAddressListByComment(ctx, driver, addressList, "isolir:"+username); err != nil {
 			return err
 		}
+	}
+	// DEDICATED: aktifkan kembali queue (best-effort).
+	if isDedicated(serviceType) {
+		m.setDedicatedQueueEnabled(ctx, driver, username, true)
 	}
 	return m.UpdateAccount(ctx, deviceID, serviceType, username, normalProfile)
 }
@@ -241,6 +331,10 @@ func (m *routerAccountManager) Terminate(ctx context.Context, deviceID, serviceT
 	m.kickPPP(ctx, driver, username)
 	if _, err := m.ppp.RemoveSecret(ctx, driver, sec.RosID); err != nil {
 		return fmt.Errorf("remove ppp secret %s: %w", username, err)
+	}
+	// DEDICATED: hapus queue pelanggan (best-effort).
+	if isDedicated(serviceType) {
+		m.removeDedicatedQueue(ctx, driver, username)
 	}
 	return nil
 }
