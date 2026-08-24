@@ -18,6 +18,7 @@ export const planFormSchema = z.object({
   validityMode: z.enum(['CALENDAR', 'UPTIME']).default('CALENDAR'),
   simultaneousUse: z.number().default(1),
   ipPoolName: z.string().default(''),
+  remoteAddressPool: z.string().default(''),
   parentQueue: z.string().default('none'),
   addressList: z.string().default(''),
   sharedUsers: z.number().default(1),

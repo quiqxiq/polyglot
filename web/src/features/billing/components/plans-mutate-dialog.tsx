@@ -71,6 +71,7 @@ function defaultFormValues(currentRow: Plan | null): PlanFormValues {
       validityMode: 'CALENDAR',
       simultaneousUse: 1,
       ipPoolName: '',
+      remoteAddressPool: '',
       parentQueue: 'none',
       addressList: '',
       sharedUsers: 1,
@@ -103,6 +104,7 @@ function defaultFormValues(currentRow: Plan | null): PlanFormValues {
       : 'CALENDAR') as PlanFormValues['validityMode'],
     simultaneousUse: toNumber(currentRow.simultaneousUse, 1),
     ipPoolName: currentRow.ipPoolName ?? '',
+    remoteAddressPool: currentRow.remoteAddressPool ?? '',
     parentQueue: currentRow.parentQueue || 'none',
     addressList: currentRow.addressList ?? '',
     sharedUsers: toNumber(currentRow.sharedUsers, 1),
@@ -512,6 +514,27 @@ export function PlansMutateDialog() {
                             value={field.value ?? ''}
                             onChange={field.onChange}
                             placeholder='none / pool-hotspot'
+                            options={ipPools.data ?? []}
+                            optionsLoading={ipPools.isFetching}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                {showField('remoteAddressPool') && (
+                  <FormField
+                    control={form.control}
+                    name='remoteAddressPool'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Remote Address Pool</FormLabel>
+                        <FormControl>
+                          <ResourceDatalistInput
+                            value={field.value ?? ''}
+                            onChange={field.onChange}
+                            placeholder='none / pool-pppoe'
                             options={ipPools.data ?? []}
                             optionsLoading={ipPools.isFetching}
                           />

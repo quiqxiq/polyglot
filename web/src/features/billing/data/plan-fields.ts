@@ -10,6 +10,7 @@ const TYPE_ONLY_FIELDS: Record<ServiceType, ReadonlySet<string>> = {
     'simultaneousUse',
     'parentQueue',
     'addressList',
+    'remoteAddressPool',
     'burstDownloadKbps',
     'burstUploadKbps',
     'burstThresholdKbps',
@@ -34,6 +35,7 @@ const TYPE_ONLY_FIELDS: Record<ServiceType, ReadonlySet<string>> = {
   DEDICATED: new Set([
     'parentQueue',
     'addressList',
+    'remoteAddressPool',
     'burstDownloadKbps',
     'burstUploadKbps',
     'burstThresholdKbps',

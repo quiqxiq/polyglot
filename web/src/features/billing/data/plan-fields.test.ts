@@ -15,6 +15,7 @@ describe('isFieldVisible', () => {
     expect(isFieldVisible('simultaneousUse', 'PPPOE')).toBe(true)
     expect(isFieldVisible('parentQueue', 'PPPOE')).toBe(true)
     expect(isFieldVisible('addressList', 'PPPOE')).toBe(true)
+    expect(isFieldVisible('remoteAddressPool', 'PPPOE')).toBe(true)
     expect(isFieldVisible('burstDownloadKbps', 'PPPOE')).toBe(true)
   })
   it('hotspot shows mikhmon fields, hides addressList & simultaneousUse', () => {
@@ -30,6 +31,7 @@ describe('isFieldVisible', () => {
   it('dedicated shows cir fields only', () => {
     expect(isFieldVisible('parentQueue', 'DEDICATED')).toBe(true)
     expect(isFieldVisible('addressList', 'DEDICATED')).toBe(true)
+    expect(isFieldVisible('remoteAddressPool', 'DEDICATED')).toBe(true)
     expect(isFieldVisible('burstDownloadKbps', 'DEDICATED')).toBe(true)
     expect(isFieldVisible('sharedUsers', 'DEDICATED')).toBe(false)
     expect(isFieldVisible('validity', 'DEDICATED')).toBe(false)
@@ -38,6 +40,9 @@ describe('isFieldVisible', () => {
     expect(isFieldVisible('ipPoolName', 'DEDICATED')).toBe(false)
     expect(isFieldVisible('lockUser', 'DEDICATED')).toBe(false)
     expect(isFieldVisible('simultaneousUse', 'DEDICATED')).toBe(false)
+  })
+  it('remote address pool hidden for HOTSPOT', () => {
+    expect(isFieldVisible('remoteAddressPool', 'HOTSPOT')).toBe(false)
   })
   it('common fields always visible for all types', () => {
     const common = ['name','serviceType','bandwidthDownloadKbps','bandwidthUploadKbps','price','sellingPrice','installationFee','taxPercent','isActive','description'] as const
