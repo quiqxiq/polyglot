@@ -29,10 +29,12 @@ import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authen
 import { Route as AuthenticatedReportsIndexRouteImport } from './routes/_authenticated/reports/index'
 import { Route as AuthenticatedRbacIndexRouteImport } from './routes/_authenticated/rbac/index'
 import { Route as AuthenticatedPppIndexRouteImport } from './routes/_authenticated/ppp/index'
+import { Route as AuthenticatedPlansIndexRouteImport } from './routes/_authenticated/plans/index'
 import { Route as AuthenticatedLogsIndexRouteImport } from './routes/_authenticated/logs/index'
 import { Route as AuthenticatedHotspotIndexRouteImport } from './routes/_authenticated/hotspot/index'
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
 import { Route as AuthenticatedDevicesIndexRouteImport } from './routes/_authenticated/devices/index'
+import { Route as AuthenticatedCustomersIndexRouteImport } from './routes/_authenticated/customers/index'
 import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
 import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
@@ -146,6 +148,11 @@ const AuthenticatedPppIndexRoute = AuthenticatedPppIndexRouteImport.update({
   path: '/ppp/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPlansIndexRoute = AuthenticatedPlansIndexRouteImport.update({
+  id: '/plans/',
+  path: '/plans/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedLogsIndexRoute = AuthenticatedLogsIndexRouteImport.update({
   id: '/logs/',
   path: '/logs/',
@@ -167,6 +174,12 @@ const AuthenticatedDevicesIndexRoute =
   AuthenticatedDevicesIndexRouteImport.update({
     id: '/devices/',
     path: '/devices/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCustomersIndexRoute =
+  AuthenticatedCustomersIndexRouteImport.update({
+    id: '/customers/',
+    path: '/customers/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedChatsIndexRoute = AuthenticatedChatsIndexRouteImport.update({
@@ -237,10 +250,12 @@ export interface FileRoutesByFullPath {
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/apps/': typeof AuthenticatedAppsIndexRoute
   '/chats/': typeof AuthenticatedChatsIndexRoute
+  '/customers/': typeof AuthenticatedCustomersIndexRoute
   '/devices/': typeof AuthenticatedDevicesIndexRoute
   '/help-center/': typeof AuthenticatedHelpCenterIndexRoute
   '/hotspot/': typeof AuthenticatedHotspotIndexRoute
   '/logs/': typeof AuthenticatedLogsIndexRoute
+  '/plans/': typeof AuthenticatedPlansIndexRoute
   '/ppp/': typeof AuthenticatedPppIndexRoute
   '/rbac/': typeof AuthenticatedRbacIndexRoute
   '/reports/': typeof AuthenticatedReportsIndexRoute
@@ -269,10 +284,12 @@ export interface FileRoutesByTo {
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
+  '/customers': typeof AuthenticatedCustomersIndexRoute
   '/devices': typeof AuthenticatedDevicesIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
   '/hotspot': typeof AuthenticatedHotspotIndexRoute
   '/logs': typeof AuthenticatedLogsIndexRoute
+  '/plans': typeof AuthenticatedPlansIndexRoute
   '/ppp': typeof AuthenticatedPppIndexRoute
   '/rbac': typeof AuthenticatedRbacIndexRoute
   '/reports': typeof AuthenticatedReportsIndexRoute
@@ -304,10 +321,12 @@ export interface FileRoutesById {
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
   '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
+  '/_authenticated/customers/': typeof AuthenticatedCustomersIndexRoute
   '/_authenticated/devices/': typeof AuthenticatedDevicesIndexRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
   '/_authenticated/hotspot/': typeof AuthenticatedHotspotIndexRoute
   '/_authenticated/logs/': typeof AuthenticatedLogsIndexRoute
+  '/_authenticated/plans/': typeof AuthenticatedPlansIndexRoute
   '/_authenticated/ppp/': typeof AuthenticatedPppIndexRoute
   '/_authenticated/rbac/': typeof AuthenticatedRbacIndexRoute
   '/_authenticated/reports/': typeof AuthenticatedReportsIndexRoute
@@ -339,10 +358,12 @@ export interface FileRouteTypes {
     | '/settings/notifications'
     | '/apps/'
     | '/chats/'
+    | '/customers/'
     | '/devices/'
     | '/help-center/'
     | '/hotspot/'
     | '/logs/'
+    | '/plans/'
     | '/ppp/'
     | '/rbac/'
     | '/reports/'
@@ -371,10 +392,12 @@ export interface FileRouteTypes {
     | '/settings/notifications'
     | '/apps'
     | '/chats'
+    | '/customers'
     | '/devices'
     | '/help-center'
     | '/hotspot'
     | '/logs'
+    | '/plans'
     | '/ppp'
     | '/rbac'
     | '/reports'
@@ -405,10 +428,12 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/notifications'
     | '/_authenticated/apps/'
     | '/_authenticated/chats/'
+    | '/_authenticated/customers/'
     | '/_authenticated/devices/'
     | '/_authenticated/help-center/'
     | '/_authenticated/hotspot/'
     | '/_authenticated/logs/'
+    | '/_authenticated/plans/'
     | '/_authenticated/ppp/'
     | '/_authenticated/rbac/'
     | '/_authenticated/reports/'
@@ -574,6 +599,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPppIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/plans/': {
+      id: '/_authenticated/plans/'
+      path: '/plans'
+      fullPath: '/plans/'
+      preLoaderRoute: typeof AuthenticatedPlansIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/logs/': {
       id: '/_authenticated/logs/'
       path: '/logs'
@@ -600,6 +632,13 @@ declare module '@tanstack/react-router' {
       path: '/devices'
       fullPath: '/devices/'
       preLoaderRoute: typeof AuthenticatedDevicesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/customers/': {
+      id: '/_authenticated/customers/'
+      path: '/customers'
+      fullPath: '/customers/'
+      preLoaderRoute: typeof AuthenticatedCustomersIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/chats/': {
@@ -692,10 +731,12 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
   AuthenticatedChatsIndexRoute: typeof AuthenticatedChatsIndexRoute
+  AuthenticatedCustomersIndexRoute: typeof AuthenticatedCustomersIndexRoute
   AuthenticatedDevicesIndexRoute: typeof AuthenticatedDevicesIndexRoute
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
   AuthenticatedHotspotIndexRoute: typeof AuthenticatedHotspotIndexRoute
   AuthenticatedLogsIndexRoute: typeof AuthenticatedLogsIndexRoute
+  AuthenticatedPlansIndexRoute: typeof AuthenticatedPlansIndexRoute
   AuthenticatedPppIndexRoute: typeof AuthenticatedPppIndexRoute
   AuthenticatedRbacIndexRoute: typeof AuthenticatedRbacIndexRoute
   AuthenticatedReportsIndexRoute: typeof AuthenticatedReportsIndexRoute
@@ -710,10 +751,12 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
   AuthenticatedChatsIndexRoute: AuthenticatedChatsIndexRoute,
+  AuthenticatedCustomersIndexRoute: AuthenticatedCustomersIndexRoute,
   AuthenticatedDevicesIndexRoute: AuthenticatedDevicesIndexRoute,
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
   AuthenticatedHotspotIndexRoute: AuthenticatedHotspotIndexRoute,
   AuthenticatedLogsIndexRoute: AuthenticatedLogsIndexRoute,
+  AuthenticatedPlansIndexRoute: AuthenticatedPlansIndexRoute,
   AuthenticatedPppIndexRoute: AuthenticatedPppIndexRoute,
   AuthenticatedRbacIndexRoute: AuthenticatedRbacIndexRoute,
   AuthenticatedReportsIndexRoute: AuthenticatedReportsIndexRoute,

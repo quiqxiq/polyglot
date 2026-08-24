@@ -1,10 +1,12 @@
 import {
+  Contact,
   FileText,
   LayoutDashboard,
   MessageCircleMore,
   MessagesSquare,
   Monitor,
   Network,
+  Package,
   ScrollText,
   ShieldCheck,
   Sparkles,
@@ -53,6 +55,18 @@ export const sidebarData: SidebarData = {
           url: '/ppp',
           icon: Network,
           permission: 'ppp:read',
+        },
+        {
+          title: 'Customers',
+          url: '/customers',
+          icon: Contact,
+          permission: 'customer:read',
+        },
+        {
+          title: 'Service Plans',
+          url: '/plans',
+          icon: Package,
+          permission: 'billing:read',
         },
         {
           title: 'Router Logs',
