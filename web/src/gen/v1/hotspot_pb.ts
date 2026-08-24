@@ -3741,6 +3741,252 @@ export class RenderVouchersResponse extends Message<RenderVouchersResponse> {
 }
 
 /**
+ * @generated from message polyglot.v1.ListParentQueuesRequest
+ */
+export class ListParentQueuesRequest extends Message<ListParentQueuesRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  constructor(data?: PartialMessage<ListParentQueuesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListParentQueuesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListParentQueuesRequest {
+    return new ListParentQueuesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListParentQueuesRequest {
+    return new ListParentQueuesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListParentQueuesRequest {
+    return new ListParentQueuesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListParentQueuesRequest | PlainMessage<ListParentQueuesRequest> | undefined, b: ListParentQueuesRequest | PlainMessage<ListParentQueuesRequest> | undefined): boolean {
+    return proto3.util.equals(ListParentQueuesRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ParentQueueEntry
+ */
+export class ParentQueueEntry extends Message<ParentQueueEntry> {
+  /**
+   * @generated from field: string ros_id = 1;
+   */
+  rosId = "";
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name = "";
+
+  /**
+   * @generated from field: string max_limit = 3;
+   */
+  maxLimit = "";
+
+  constructor(data?: PartialMessage<ParentQueueEntry>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ParentQueueEntry";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "ros_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "max_limit", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ParentQueueEntry {
+    return new ParentQueueEntry().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ParentQueueEntry {
+    return new ParentQueueEntry().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ParentQueueEntry {
+    return new ParentQueueEntry().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ParentQueueEntry | PlainMessage<ParentQueueEntry> | undefined, b: ParentQueueEntry | PlainMessage<ParentQueueEntry> | undefined): boolean {
+    return proto3.util.equals(ParentQueueEntry, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListParentQueuesResponse
+ */
+export class ListParentQueuesResponse extends Message<ListParentQueuesResponse> {
+  /**
+   * @generated from field: repeated polyglot.v1.ParentQueueEntry queues = 1;
+   */
+  queues: ParentQueueEntry[] = [];
+
+  constructor(data?: PartialMessage<ListParentQueuesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListParentQueuesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "queues", kind: "message", T: ParentQueueEntry, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListParentQueuesResponse {
+    return new ListParentQueuesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListParentQueuesResponse {
+    return new ListParentQueuesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListParentQueuesResponse {
+    return new ListParentQueuesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListParentQueuesResponse | PlainMessage<ListParentQueuesResponse> | undefined, b: ListParentQueuesResponse | PlainMessage<ListParentQueuesResponse> | undefined): boolean {
+    return proto3.util.equals(ListParentQueuesResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListIPPoolsRequest
+ */
+export class ListIPPoolsRequest extends Message<ListIPPoolsRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  constructor(data?: PartialMessage<ListIPPoolsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListIPPoolsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListIPPoolsRequest {
+    return new ListIPPoolsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListIPPoolsRequest {
+    return new ListIPPoolsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListIPPoolsRequest {
+    return new ListIPPoolsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListIPPoolsRequest | PlainMessage<ListIPPoolsRequest> | undefined, b: ListIPPoolsRequest | PlainMessage<ListIPPoolsRequest> | undefined): boolean {
+    return proto3.util.equals(ListIPPoolsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.IPPoolEntry
+ */
+export class IPPoolEntry extends Message<IPPoolEntry> {
+  /**
+   * @generated from field: string ros_id = 1;
+   */
+  rosId = "";
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name = "";
+
+  /**
+   * @generated from field: string ranges = 3;
+   */
+  ranges = "";
+
+  constructor(data?: PartialMessage<IPPoolEntry>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.IPPoolEntry";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "ros_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "ranges", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): IPPoolEntry {
+    return new IPPoolEntry().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): IPPoolEntry {
+    return new IPPoolEntry().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): IPPoolEntry {
+    return new IPPoolEntry().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: IPPoolEntry | PlainMessage<IPPoolEntry> | undefined, b: IPPoolEntry | PlainMessage<IPPoolEntry> | undefined): boolean {
+    return proto3.util.equals(IPPoolEntry, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListIPPoolsResponse
+ */
+export class ListIPPoolsResponse extends Message<ListIPPoolsResponse> {
+  /**
+   * @generated from field: repeated polyglot.v1.IPPoolEntry pools = 1;
+   */
+  pools: IPPoolEntry[] = [];
+
+  constructor(data?: PartialMessage<ListIPPoolsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListIPPoolsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "pools", kind: "message", T: IPPoolEntry, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListIPPoolsResponse {
+    return new ListIPPoolsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListIPPoolsResponse {
+    return new ListIPPoolsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListIPPoolsResponse {
+    return new ListIPPoolsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListIPPoolsResponse | PlainMessage<ListIPPoolsResponse> | undefined, b: ListIPPoolsResponse | PlainMessage<ListIPPoolsResponse> | undefined): boolean {
+    return proto3.util.equals(ListIPPoolsResponse, a, b);
+  }
+}
+
+/**
  * @generated from message polyglot.v1.StreamSystemSnapshotRequest
  */
 export class StreamSystemSnapshotRequest extends Message<StreamSystemSnapshotRequest> {

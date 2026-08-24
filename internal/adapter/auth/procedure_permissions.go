@@ -134,6 +134,8 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.HotspotService/ListTemplates":           "hotspot:read",
 	"/polyglot.v1.HotspotService/GetTemplateSection":      "hotspot:read",
 	"/polyglot.v1.HotspotService/RenderVouchers":          "hotspot:read",
+	"/polyglot.v1.HotspotService/ListParentQueues":        "hotspot:read",
+	"/polyglot.v1.HotspotService/ListIPPools":             "hotspot:read",
 
 	// PPPService — manajemen PPPoE / PPP secrets, profiles, active/inactive sessions.
 	"/polyglot.v1.PPPService/ListSecrets":           "ppp:read",

@@ -63,6 +63,8 @@ func NewHotspotServiceHandler(uc *hotspotUC.UseCase, activeUC *network.ActiveSes
 	mux.Handle("/"+serviceName+"/ListTemplates", connect.NewUnaryHandler("/"+serviceName+"/ListTemplates", handler.ListTemplates, codecOpt))
 	mux.Handle("/"+serviceName+"/GetTemplateSection", connect.NewUnaryHandler("/"+serviceName+"/GetTemplateSection", handler.GetTemplateSection, codecOpt))
 	mux.Handle("/"+serviceName+"/RenderVouchers", connect.NewUnaryHandler("/"+serviceName+"/RenderVouchers", handler.RenderVouchers, codecOpt))
+	mux.Handle("/"+serviceName+"/ListParentQueues", connect.NewUnaryHandler("/"+serviceName+"/ListParentQueues", handler.ListParentQueues, codecOpt))
+	mux.Handle("/"+serviceName+"/ListIPPools", connect.NewUnaryHandler("/"+serviceName+"/ListIPPools", handler.ListIPPools, codecOpt))
 
 	return "/" + serviceName + "/", mux
 }

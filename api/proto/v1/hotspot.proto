@@ -462,6 +462,28 @@ message RenderVouchersResponse {
   int32 total_vouchers = 2;
 }
 
+// ── Form suggestions: parent queue & IP pool ──────────────────────────
+
+message ListParentQueuesRequest { string device_id = 1; }
+
+message ParentQueueEntry {
+  string ros_id = 1;
+  string name = 2;
+  string max_limit = 3;
+}
+
+message ListParentQueuesResponse { repeated ParentQueueEntry queues = 1; }
+
+message ListIPPoolsRequest { string device_id = 1; }
+
+message IPPoolEntry {
+  string ros_id = 1;
+  string name = 2;
+  string ranges = 3;
+}
+
+message ListIPPoolsResponse { repeated IPPoolEntry pools = 1; }
+
 // ── Modul 03: Dashboard Monitoring (streaming terpisah) ───────────────
 // Setiap sumber data punya prosedur streaming sendiri — tidak ada satu
 // endpoint gabungan seperti GetDashboard legacy.
@@ -838,4 +860,8 @@ service HotspotService {
   rpc ListTemplates(ListTemplatesRequest) returns (ListTemplatesResponse);
   rpc GetTemplateSection(GetTemplateSectionRequest) returns (GetTemplateSectionResponse);
   rpc RenderVouchers(RenderVouchersRequest) returns (RenderVouchersResponse);
+  // Daftar parent queue statis (/queue/simple print where dynamic=false).
+  rpc ListParentQueues(ListParentQueuesRequest) returns (ListParentQueuesResponse);
+  // Daftar IP pool (/ip/pool/print).
+  rpc ListIPPools(ListIPPoolsRequest) returns (ListIPPoolsResponse);
 }

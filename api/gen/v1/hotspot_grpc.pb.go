@@ -66,6 +66,8 @@ const (
 	HotspotService_ListTemplates_FullMethodName           = "/polyglot.v1.HotspotService/ListTemplates"
 	HotspotService_GetTemplateSection_FullMethodName      = "/polyglot.v1.HotspotService/GetTemplateSection"
 	HotspotService_RenderVouchers_FullMethodName          = "/polyglot.v1.HotspotService/RenderVouchers"
+	HotspotService_ListParentQueues_FullMethodName        = "/polyglot.v1.HotspotService/ListParentQueues"
+	HotspotService_ListIPPools_FullMethodName             = "/polyglot.v1.HotspotService/ListIPPools"
 )
 
 // HotspotServiceClient is the client API for HotspotService service.
@@ -119,6 +121,10 @@ type HotspotServiceClient interface {
 	ListTemplates(ctx context.Context, in *ListTemplatesRequest, opts ...grpc.CallOption) (*ListTemplatesResponse, error)
 	GetTemplateSection(ctx context.Context, in *GetTemplateSectionRequest, opts ...grpc.CallOption) (*GetTemplateSectionResponse, error)
 	RenderVouchers(ctx context.Context, in *RenderVouchersRequest, opts ...grpc.CallOption) (*RenderVouchersResponse, error)
+	// Daftar parent queue statis (/queue/simple print where dynamic=false).
+	ListParentQueues(ctx context.Context, in *ListParentQueuesRequest, opts ...grpc.CallOption) (*ListParentQueuesResponse, error)
+	// Daftar IP pool (/ip/pool/print).
+	ListIPPools(ctx context.Context, in *ListIPPoolsRequest, opts ...grpc.CallOption) (*ListIPPoolsResponse, error)
 }
 
 type hotspotServiceClient struct {
@@ -698,6 +704,26 @@ func (c *hotspotServiceClient) RenderVouchers(ctx context.Context, in *RenderVou
 	return out, nil
 }
 
+func (c *hotspotServiceClient) ListParentQueues(ctx context.Context, in *ListParentQueuesRequest, opts ...grpc.CallOption) (*ListParentQueuesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListParentQueuesResponse)
+	err := c.cc.Invoke(ctx, HotspotService_ListParentQueues_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotspotServiceClient) ListIPPools(ctx context.Context, in *ListIPPoolsRequest, opts ...grpc.CallOption) (*ListIPPoolsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListIPPoolsResponse)
+	err := c.cc.Invoke(ctx, HotspotService_ListIPPools_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HotspotServiceServer is the server API for HotspotService service.
 // All implementations must embed UnimplementedHotspotServiceServer
 // for forward compatibility.
@@ -749,6 +775,10 @@ type HotspotServiceServer interface {
 	ListTemplates(context.Context, *ListTemplatesRequest) (*ListTemplatesResponse, error)
 	GetTemplateSection(context.Context, *GetTemplateSectionRequest) (*GetTemplateSectionResponse, error)
 	RenderVouchers(context.Context, *RenderVouchersRequest) (*RenderVouchersResponse, error)
+	// Daftar parent queue statis (/queue/simple print where dynamic=false).
+	ListParentQueues(context.Context, *ListParentQueuesRequest) (*ListParentQueuesResponse, error)
+	// Daftar IP pool (/ip/pool/print).
+	ListIPPools(context.Context, *ListIPPoolsRequest) (*ListIPPoolsResponse, error)
 	mustEmbedUnimplementedHotspotServiceServer()
 }
 
@@ -899,6 +929,12 @@ func (UnimplementedHotspotServiceServer) GetTemplateSection(context.Context, *Ge
 }
 func (UnimplementedHotspotServiceServer) RenderVouchers(context.Context, *RenderVouchersRequest) (*RenderVouchersResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RenderVouchers not implemented")
+}
+func (UnimplementedHotspotServiceServer) ListParentQueues(context.Context, *ListParentQueuesRequest) (*ListParentQueuesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListParentQueues not implemented")
+}
+func (UnimplementedHotspotServiceServer) ListIPPools(context.Context, *ListIPPoolsRequest) (*ListIPPoolsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListIPPools not implemented")
 }
 func (UnimplementedHotspotServiceServer) mustEmbedUnimplementedHotspotServiceServer() {}
 func (UnimplementedHotspotServiceServer) testEmbeddedByValue()                        {}
@@ -1690,6 +1726,42 @@ func _HotspotService_RenderVouchers_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HotspotService_ListParentQueues_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListParentQueuesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).ListParentQueues(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_ListParentQueues_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).ListParentQueues(ctx, req.(*ListParentQueuesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotspotService_ListIPPools_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListIPPoolsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotspotServiceServer).ListIPPools(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotspotService_ListIPPools_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotspotServiceServer).ListIPPools(ctx, req.(*ListIPPoolsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HotspotService_ServiceDesc is the grpc.ServiceDesc for HotspotService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1840,6 +1912,14 @@ var HotspotService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RenderVouchers",
 			Handler:    _HotspotService_RenderVouchers_Handler,
+		},
+		{
+			MethodName: "ListParentQueues",
+			Handler:    _HotspotService_ListParentQueues_Handler,
+		},
+		{
+			MethodName: "ListIPPools",
+			Handler:    _HotspotService_ListIPPools_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

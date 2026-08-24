@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ActiveSessionsStreamData, ActiveStatsStreamData, BlockDHCPLeaseRequest, BlockDHCPLeaseResponse, CheckVoucherStatusRequest, CheckVoucherStatusResponse, CreateHotspotIPBindingRequest, CreateHotspotIPBindingResponse, CreateHotspotProfileRequest, CreateHotspotProfileResponse, CreateHotspotUserRequest, CreateHotspotUserResponse, DeleteHotspotCookieRequest, DeleteHotspotCookieResponse, DeleteHotspotIPBindingRequest, DeleteHotspotIPBindingResponse, DeleteHotspotProfileRequest, DeleteHotspotProfileResponse, DeleteHotspotReportRequest, DeleteHotspotReportResponse, DeleteHotspotUserRequest, DeleteHotspotUserResponse, DeleteHotspotUsersRequest, DeleteHotspotUsersResponse, DisableExpireMonitorRequest, DisableExpireMonitorResponse, ExpireMonitorStatusResponse, GenerateVouchersRequest, GenerateVouchersResponse, GetExpireMonitorStatusRequest, GetHotspotUserRequest, GetHotspotUserResponse, GetTemplateSectionRequest, GetTemplateSectionResponse, GetVoucherBatchRequest, GetVoucherBatchResponse, HotspotInactiveFrame, InterfaceEthernetFrame, KickHotspotSessionRequest, KickHotspotSessionResponse, ListDHCPLeasesRequest, ListDHCPLeasesResponse, ListHotspotActiveSessionsRequest, ListHotspotActiveSessionsResponse, ListHotspotCookiesRequest, ListHotspotCookiesResponse, ListHotspotHostsRequest, ListHotspotHostsResponse, ListHotspotIPBindingsRequest, ListHotspotIPBindingsResponse, ListHotspotProfilesRequest, ListHotspotProfilesResponse, ListHotspotReportsRequest, ListHotspotReportsResponse, ListHotspotServersRequest, ListHotspotServersResponse, ListHotspotUsersRequest, ListHotspotUsersResponse, ListTemplatesRequest, ListTemplatesResponse, LogsStreamFrame, PPPActiveFrame, PPPInactiveFrame, QueueStatsFrame, RemoveExpireMonitorRequest, RemoveExpireMonitorResponse, RemoveHotspotHostRequest, RemoveHotspotHostResponse, RenderVouchersRequest, RenderVouchersResponse, ResetHotspotUserCountersRequest, ResetHotspotUserCountersResponse, ResourceStreamData, SetupExpireMonitorRequest, SetupExpireMonitorResponse, StreamActiveSessionsRequest, StreamActiveStatsRequest, StreamHotspotInactiveRequest, StreamInterfaceEthernetRequest, StreamLogsRequest, StreamPPPActiveRequest, StreamPPPInactiveRequest, StreamQueueStatsRequest, StreamResourceRequest, StreamSystemSnapshotRequest, StreamTrafficRequest, SystemSnapshotFrame, TrafficStreamData, UpdateHotspotIPBindingRequest, UpdateHotspotIPBindingResponse, UpdateHotspotProfileRequest, UpdateHotspotProfileResponse, UpdateHotspotUserRequest, UpdateHotspotUserResponse } from "./hotspot_pb.js";
+import { ActiveSessionsStreamData, ActiveStatsStreamData, BlockDHCPLeaseRequest, BlockDHCPLeaseResponse, CheckVoucherStatusRequest, CheckVoucherStatusResponse, CreateHotspotIPBindingRequest, CreateHotspotIPBindingResponse, CreateHotspotProfileRequest, CreateHotspotProfileResponse, CreateHotspotUserRequest, CreateHotspotUserResponse, DeleteHotspotCookieRequest, DeleteHotspotCookieResponse, DeleteHotspotIPBindingRequest, DeleteHotspotIPBindingResponse, DeleteHotspotProfileRequest, DeleteHotspotProfileResponse, DeleteHotspotReportRequest, DeleteHotspotReportResponse, DeleteHotspotUserRequest, DeleteHotspotUserResponse, DeleteHotspotUsersRequest, DeleteHotspotUsersResponse, DisableExpireMonitorRequest, DisableExpireMonitorResponse, ExpireMonitorStatusResponse, GenerateVouchersRequest, GenerateVouchersResponse, GetExpireMonitorStatusRequest, GetHotspotUserRequest, GetHotspotUserResponse, GetTemplateSectionRequest, GetTemplateSectionResponse, GetVoucherBatchRequest, GetVoucherBatchResponse, HotspotInactiveFrame, InterfaceEthernetFrame, KickHotspotSessionRequest, KickHotspotSessionResponse, ListDHCPLeasesRequest, ListDHCPLeasesResponse, ListHotspotActiveSessionsRequest, ListHotspotActiveSessionsResponse, ListHotspotCookiesRequest, ListHotspotCookiesResponse, ListHotspotHostsRequest, ListHotspotHostsResponse, ListHotspotIPBindingsRequest, ListHotspotIPBindingsResponse, ListHotspotProfilesRequest, ListHotspotProfilesResponse, ListHotspotReportsRequest, ListHotspotReportsResponse, ListHotspotServersRequest, ListHotspotServersResponse, ListHotspotUsersRequest, ListHotspotUsersResponse, ListIPPoolsRequest, ListIPPoolsResponse, ListParentQueuesRequest, ListParentQueuesResponse, ListTemplatesRequest, ListTemplatesResponse, LogsStreamFrame, PPPActiveFrame, PPPInactiveFrame, QueueStatsFrame, RemoveExpireMonitorRequest, RemoveExpireMonitorResponse, RemoveHotspotHostRequest, RemoveHotspotHostResponse, RenderVouchersRequest, RenderVouchersResponse, ResetHotspotUserCountersRequest, ResetHotspotUserCountersResponse, ResourceStreamData, SetupExpireMonitorRequest, SetupExpireMonitorResponse, StreamActiveSessionsRequest, StreamActiveStatsRequest, StreamHotspotInactiveRequest, StreamInterfaceEthernetRequest, StreamLogsRequest, StreamPPPActiveRequest, StreamPPPInactiveRequest, StreamQueueStatsRequest, StreamResourceRequest, StreamSystemSnapshotRequest, StreamTrafficRequest, SystemSnapshotFrame, TrafficStreamData, UpdateHotspotIPBindingRequest, UpdateHotspotIPBindingResponse, UpdateHotspotProfileRequest, UpdateHotspotProfileResponse, UpdateHotspotUserRequest, UpdateHotspotUserResponse } from "./hotspot_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -433,6 +433,28 @@ export const HotspotService = {
       name: "RenderVouchers",
       I: RenderVouchersRequest,
       O: RenderVouchersResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Daftar parent queue statis (/queue/simple print where dynamic=false).
+     *
+     * @generated from rpc polyglot.v1.HotspotService.ListParentQueues
+     */
+    listParentQueues: {
+      name: "ListParentQueues",
+      I: ListParentQueuesRequest,
+      O: ListParentQueuesResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Daftar IP pool (/ip/pool/print).
+     *
+     * @generated from rpc polyglot.v1.HotspotService.ListIPPools
+     */
+    listIPPools: {
+      name: "ListIPPools",
+      I: ListIPPoolsRequest,
+      O: ListIPPoolsResponse,
       kind: MethodKind.Unary,
     },
   }
