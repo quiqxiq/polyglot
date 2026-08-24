@@ -21,6 +21,9 @@ export const hotspotKeys = {
     [...hotspotKeys.all, 'voucher-batch', deviceId, comment] as const,
   expireMonitorStatus: (deviceId: string) =>
     [...hotspotKeys.all, 'expire-monitor', deviceId] as const,
+  parentQueues: (deviceId: string) =>
+    [...hotspotKeys.all, 'parentQueues', deviceId] as const,
+  ipPools: (deviceId: string) => [...hotspotKeys.all, 'ipPools', deviceId] as const,
   templates: () => [...hotspotKeys.all, 'templates'] as const,
   templateSection: (templateName: string, section: string) =>
     [...hotspotKeys.all, 'template-section', templateName, section] as const,
