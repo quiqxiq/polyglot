@@ -41,7 +41,7 @@ func TestSubscriberAccountFromPlan_Hotspot(t *testing.T) {
 
 func TestSubscriberAccountFromPlan_Burst(t *testing.T) {
 	pl := domainPlan.ServicePlan{
-		Name: "PPPOE-BURST",
+		Name:                  "PPPOE-BURST",
 		BandwidthDownloadKbps: 10240, BandwidthUploadKbps: 5120,
 		BurstDownloadKbps: 20480, BurstUploadKbps: 10240,
 		BurstThresholdKbps: 4096, BurstTimeSeconds: 8,

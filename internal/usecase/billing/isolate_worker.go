@@ -303,4 +303,3 @@ func splitHostPort(s string) (host, portStr string, ok bool) {
 func isHotspotService(serviceType string) bool {
 	return strings.EqualFold(serviceType, "HOTSPOT")
 }
-
