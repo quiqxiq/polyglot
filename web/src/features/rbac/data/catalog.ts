@@ -99,6 +99,13 @@ export const RBAC_MODULE_GROUPS: ModuleGroup[] = [
         label: 'View Customers',
         description: 'Melihat database pelanggan, detail kontak, dan geolokasi',
       },
+      {
+        id: 'customer:manage',
+        resource: 'customer',
+        action: 'manage',
+        label: 'Manage Customers',
+        description: 'Menambah, mengubah, dan menghapus data pelanggan',
+      },
     ],
   },
   {

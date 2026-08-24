@@ -211,6 +211,11 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.CustomerService/FindByCustomerCode": "customer:read",
 	"/polyglot.v1.CustomerService/FindByPortalCode":   "customer:read",
 
+	// ─── CustomerService (CRM mutations) ────────────────────────────────────
+	"/polyglot.v1.CustomerService/CreateCustomer": "customer:manage",
+	"/polyglot.v1.CustomerService/UpdateCustomer": "customer:manage",
+	"/polyglot.v1.CustomerService/DeleteCustomer": "customer:manage",
+
 	// ─── RegistrationService ────────────────────────────────────────────────
 	// SubmitRegistration adalah publik (calon pelanggan) — dipasang di rootMux tanpa RBAC.
 	"/polyglot.v1.RegistrationService/ListRegistrations":   "registration:read",
