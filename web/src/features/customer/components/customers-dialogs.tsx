@@ -3,17 +3,30 @@ import { CustomersDeleteDialog } from './customers-delete-dialog'
 import { useCustomers } from './customers-provider'
 
 export function CustomersDialogs() {
-  const { currentRow } = useCustomers()
-
+  const { open, setOpen, currentRow } = useCustomers()
   return (
     <>
-      <CustomersMutateDrawer key='customer-create' />
-
+      <CustomersMutateDrawer
+        key='customer-create'
+        open={open === 'create'}
+        onOpenChange={() => setOpen('create')}
+        currentRow={null}
+      />
       {currentRow && (
-        <>
-          <CustomersMutateDrawer key={`customer-update-${currentRow.id}`} />
-          <CustomersDeleteDialog key='customer-delete' />
-        </>
+        <CustomersMutateDrawer
+          key={`customer-update-${currentRow.id}`}
+          open={open === 'update'}
+          onOpenChange={() => setOpen('update')}
+          currentRow={currentRow}
+        />
+      )}
+      {currentRow && (
+        <CustomersDeleteDialog
+          key='customer-delete'
+          open={open === 'delete'}
+          onOpenChange={() => setOpen('delete')}
+          currentRow={currentRow}
+        />
       )}
     </>
   )

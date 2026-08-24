@@ -31,7 +31,6 @@ import {
   useCreateCustomerMutation,
   useUpdateCustomerMutation,
 } from '../api/use-customer'
-import { useCustomers } from './customers-provider'
 
 const STATUS_OPTIONS = Object.entries(CUSTOMER_STATUS_META).map(
   ([value, meta]) => ({ label: meta.label, value })
@@ -70,9 +69,18 @@ function defaultFormValues(currentRow: Customer | null): CustomerFormValues {
   }
 }
 
-export function CustomersMutateDrawer() {
-  const { open, setOpen, currentRow } = useCustomers()
-  const isOpen = open === 'create' || open === 'update'
+type CustomersMutateDrawerProps = {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  currentRow: Customer | null
+}
+
+export function CustomersMutateDrawer({
+  open,
+  onOpenChange,
+  currentRow,
+}: CustomersMutateDrawerProps) {
+  const isOpen = open
   const isUpdate = !!currentRow
   const createMutation = useCreateCustomerMutation()
   const updateMutation = useUpdateCustomerMutation()
@@ -111,7 +119,7 @@ export function CustomersMutateDrawer() {
         )
         toast.success('Pelanggan disimpan')
       }
-      setOpen(null)
+      onOpenChange(false)
     } catch (err: unknown) {
       const errorMessage =
         err instanceof Error ? err.message : 'Gagal menyimpan pelanggan'
@@ -121,9 +129,9 @@ export function CustomersMutateDrawer() {
 
   return (
     <Sheet
-      open={isOpen}
+      open={open}
       onOpenChange={(v) => {
-        setOpen(v ? (isUpdate ? 'update' : 'create') : null)
+        onOpenChange(v)
         form.reset(defaultFormValues(currentRow))
       }}
     >

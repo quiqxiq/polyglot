@@ -1,11 +1,19 @@
 import { toast } from 'sonner'
 import { ConfirmDialog } from '@/components/confirm-dialog'
-import { DeleteCustomerRequest } from '@/gen/v1/customer_pb'
+import { type Customer, DeleteCustomerRequest } from '@/gen/v1/customer_pb'
 import { useDeleteCustomerMutation } from '../api/use-customer'
-import { useCustomers } from './customers-provider'
 
-export function CustomersDeleteDialog() {
-  const { open, setOpen, currentRow, setCurrentRow } = useCustomers()
+type CustomersDeleteDialogProps = {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  currentRow: Customer | null
+}
+
+export function CustomersDeleteDialog({
+  open,
+  onOpenChange,
+  currentRow,
+}: CustomersDeleteDialogProps) {
   const deleteMutation = useDeleteCustomerMutation()
 
   const handleDelete = async () => {
@@ -16,8 +24,7 @@ export function CustomersDeleteDialog() {
         new DeleteCustomerRequest({ id: currentRow.id })
       )
       toast.success('Pelanggan dihapus')
-      setOpen(null)
-      setCurrentRow(null)
+      onOpenChange(false)
     } catch (err: unknown) {
       const errorMessage =
         err instanceof Error ? err.message : 'Gagal menghapus pelanggan'
@@ -27,8 +34,8 @@ export function CustomersDeleteDialog() {
 
   return (
     <ConfirmDialog
-      open={open === 'delete'}
-      onOpenChange={() => setOpen(null)}
+      open={open}
+      onOpenChange={(v) => onOpenChange(v)}
       handleConfirm={handleDelete}
       title='Hapus pelanggan?'
       desc={

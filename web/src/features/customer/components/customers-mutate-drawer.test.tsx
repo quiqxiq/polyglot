@@ -1,9 +1,7 @@
-import { useEffect } from 'react'
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 import { render } from 'vitest-browser-react'
 import { userEvent } from 'vitest/browser'
 import { Customer } from '@/gen/v1/customer_pb'
-import { CustomersProvider, useCustomers } from './customers-provider'
 import { CustomersMutateDrawer } from './customers-mutate-drawer'
 
 const { createMutateAsync, updateMutateAsync } = vi.hoisted(() => ({
@@ -35,28 +33,6 @@ const MOCK_CUSTOMER = new Customer({
   status: 'ACTIVE',
 })
 
-function CreateHarness() {
-  const { setOpen } = useCustomers()
-  // Call once: useDialogState's setOpen toggles (same value → null), so
-  // re-invoking it on every render would flip the drawer closed again.
-  useEffect(() => {
-    setOpen('create')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  return <CustomersMutateDrawer />
-}
-
-// Opens the drawer in update mode by seeding the provider, mimicking row actions.
-function UpdateOpener({ customer }: { customer: Customer }) {
-  const { setOpen, setCurrentRow } = useCustomers()
-  useEffect(() => {
-    setCurrentRow(customer)
-    setOpen('update')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  return null
-}
-
 describe('CustomersMutateDrawer', () => {
   beforeEach(() => {
     vi.clearAllMocks()
@@ -66,9 +42,7 @@ describe('CustomersMutateDrawer', () => {
 
   it('renders create title and form fields', async () => {
     const { getByRole, getByText } = await render(
-      <CustomersProvider>
-        <CreateHarness />
-      </CustomersProvider>
+      <CustomersMutateDrawer open onOpenChange={() => {}} currentRow={null} />
     )
 
     const title = getByRole('heading', { level: 2, name: /Tambah Pelanggan/i })
@@ -87,9 +61,7 @@ describe('CustomersMutateDrawer', () => {
 
   it('shows validation messages when submitting an empty form', async () => {
     const { getByRole, getByText } = await render(
-      <CustomersProvider>
-        <CreateHarness />
-      </CustomersProvider>
+      <CustomersMutateDrawer open onOpenChange={() => {}} currentRow={null} />
     )
 
     const saveButton = getByRole('button', { name: /^Save$/i })
@@ -106,9 +78,7 @@ describe('CustomersMutateDrawer', () => {
 
   it('submits create form and calls the create mutation once', async () => {
     const { getByRole } = await render(
-      <CustomersProvider>
-        <CreateHarness />
-      </CustomersProvider>
+      <CustomersMutateDrawer open onOpenChange={() => {}} currentRow={null} />
     )
 
     await userEvent.fill(getByRole('textbox', { name: /^Nama$/i }), 'Budi')
@@ -134,10 +104,11 @@ describe('CustomersMutateDrawer', () => {
 
   it('prefills form from currentRow and calls the update mutation', async () => {
     const { getByRole } = await render(
-      <CustomersProvider>
-        <UpdateOpener customer={MOCK_CUSTOMER} />
-        <CustomersMutateDrawer />
-      </CustomersProvider>
+      <CustomersMutateDrawer
+        open
+        onOpenChange={() => {}}
+        currentRow={MOCK_CUSTOMER}
+      />
     )
 
     const title = getByRole('heading', { level: 2, name: /Edit Pelanggan/i })
@@ -165,9 +136,7 @@ describe('CustomersMutateDrawer', () => {
 
   it('toggles the coordinate inputs with the hasCoordinates switch', async () => {
     const { getByRole } = await render(
-      <CustomersProvider>
-        <CreateHarness />
-      </CustomersProvider>
+      <CustomersMutateDrawer open onOpenChange={() => {}} currentRow={null} />
     )
 
     // Latitude/longitude inputs are hidden until the switch is on.
