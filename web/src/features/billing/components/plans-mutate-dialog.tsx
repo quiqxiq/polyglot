@@ -40,9 +40,10 @@ function toNumber(value: unknown, fallback = 0): number {
 
 function defaultFormValues(currentRow: Plan | null): PlanFormValues {
   if (!currentRow) {
-    // Explicit defaults: schema.parse({}) throws because name/serviceType/
-    // bandwidth/price are required, and this runs at render time even while
-    // the dialog is closed.
+    // Explicit defaults instead of handing the schema an empty object:
+    // name/serviceType/bandwidth/price have no defaults, so validating an
+    // empty input throws — and this runs at render time even while the
+    // dialog is closed.
     return {
       id: undefined,
       name: '',
