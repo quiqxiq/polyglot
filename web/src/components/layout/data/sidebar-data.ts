@@ -12,6 +12,7 @@ import {
   Sparkles,
   Users,
   Wifi,
+  Repeat,
   Settings,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
@@ -66,6 +67,12 @@ export const sidebarData: SidebarData = {
           title: 'Service Plans',
           url: '/plans',
           icon: Package,
+          permission: 'billing:read',
+        },
+        {
+          title: 'Subscriptions',
+          url: '/subscriptions',
+          icon: Repeat,
           permission: 'billing:read',
         },
         {
