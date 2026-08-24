@@ -48,7 +48,7 @@ func (m *routerAccountManager) Provision(ctx context.Context, deviceID, serviceT
 	if err != nil {
 		return fmt.Errorf("resolve driver %s: %w", deviceID, err)
 	}
-	if err := m.ensurePlanProfile(ctx, driver, serviceType, acct.Profile, acct.RateLimit); err != nil {
+	if err := m.ensurePlanProfile(ctx, driver, serviceType, acct); err != nil {
 		return err
 	}
 	if isHotspot(serviceType) {
@@ -70,27 +70,23 @@ func (m *routerAccountManager) Provision(ctx context.Context, deviceID, serviceT
 }
 
 // ensurePlanProfile memastikan profil paket ada di router — auto-buat dari
-// kolom service_plans bila belum ada.
-func (m *routerAccountManager) ensurePlanProfile(ctx context.Context, driver port.DeviceDriver, serviceType, profileName, rateLimit string) error {
-	if profileName == "" || rateLimit == "" {
+// kolom service_plans (via port.SubscriberAccount) bila belum ada.
+func (m *routerAccountManager) ensurePlanProfile(ctx context.Context, driver port.DeviceDriver, serviceType string, acct port.SubscriberAccount) error {
+	if acct.Profile == "" || acct.RateLimit == "" {
 		return nil // tak cukup data untuk auto-buat; asumsikan profil manual
 	}
 	if !isHotspot(serviceType) {
-		existing, err := m.ppp.ListProfiles(ctx, driver, profileName)
+		existing, err := m.ppp.ListProfiles(ctx, driver, acct.Profile)
 		if err != nil {
 			return fmt.Errorf("list profiles: %w", err)
 		}
 		for _, pr := range existing {
-			if pr.Name == profileName {
+			if pr.Name == acct.Profile {
 				return nil
 			}
 		}
-		if _, err := m.ppp.AddProfile(ctx, driver, port.PPPProfileParams{
-			Name:      profileName,
-			RateLimit: rateLimit,
-			Comment:   "AUTO plan profile",
-		}); err != nil {
-			return fmt.Errorf("add profile %s: %w", profileName, err)
+		if _, err := m.ppp.AddProfile(ctx, driver, pppProfileParams(acct)); err != nil {
+			return fmt.Errorf("add profile %s: %w", acct.Profile, err)
 		}
 		return nil
 	}
@@ -99,14 +95,12 @@ func (m *routerAccountManager) ensurePlanProfile(ctx context.Context, driver por
 		return fmt.Errorf("list hotspot profiles: %w", err)
 	}
 	for _, pr := range existing {
-		if pr.Name == profileName {
+		if pr.Name == acct.Profile {
 			return nil
 		}
 	}
-	if _, err := m.hot.CreateUserProfile(ctx, driver, port.MikhmonProfileParams{
-		Name: profileName, RateLimit: rateLimit, Comment: "AUTO plan profile",
-	}); err != nil {
-		return fmt.Errorf("add hotspot profile %s: %w", profileName, err)
+	if _, err := m.hot.CreateUserProfile(ctx, driver, hotspotProfileParams(acct)); err != nil {
+		return fmt.Errorf("add hotspot profile %s: %w", acct.Profile, err)
 	}
 	return nil
 }
@@ -150,7 +144,7 @@ func (m *routerAccountManager) Isolate(ctx context.Context, deviceID, serviceTyp
 	// Profil isolir harus ada sebelum akun dipindah — auto-buat bila belum
 	// (konvensi Mikhmon: rate 0/0).
 	if opt.IsolirProfile != "" {
-		if err := m.ensurePlanProfile(ctx, driver, serviceType, opt.IsolirProfile, "0/0"); err != nil {
+		if err := m.ensurePlanProfile(ctx, driver, serviceType, isolirAccount(opt.IsolirProfile, "0/0")); err != nil {
 			return fmt.Errorf("ensure isolir profile: %w", err)
 		}
 	}
