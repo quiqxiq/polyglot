@@ -2,31 +2,74 @@ package customer
 
 import (
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/domain/customer"
+	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 )
 
-// toProtoCustomer maps a domain Customer entity to its Protobuf wire representation.
-func toProtoCustomer(c *customer.Customer) *devicepb.Customer {
+func toProtoCustomer(c *domainCustomer.Customer) *devicepb.Customer {
 	if c == nil {
 		return nil
 	}
+	var lat, lon float64
+	hasCoord := false
+	if c.Latitude != nil {
+		lat = *c.Latitude
+		hasCoord = true
+	}
+	if c.Longitude != nil {
+		lon = *c.Longitude
+	}
+	var registeredAtUnix int64
+	if !c.RegisteredAt.IsZero() {
+		registeredAtUnix = c.RegisteredAt.Unix()
+	}
 	return &devicepb.Customer{
-		Id:            c.ID,
-		TenantId:      c.TenantID,
-		Name:          c.Name,
-		Email:         c.Email,
-		Phone:         c.Phone,
-		Address:       c.Address,
-		Status:        c.Status,
-		CreatedAtUnix: c.CreatedAt.Unix(),
+		Id:               c.ID,
+		TenantId:         c.TenantID,
+		CustomerCode:     c.CustomerCode,
+		Name:             c.Name,
+		Phone:            c.Phone,
+		Email:            c.Email,
+		Address:          c.Address,
+		Latitude:         lat,
+		Longitude:        lon,
+		HasCoordinates:   hasCoord,
+		PortalAccessCode: c.PortalAccessCode,
+		Status:           c.Status,
+		Notes:            c.Notes,
+		RegisteredAtUnix: registeredAtUnix,
+		CreatedAtUnix:    c.CreatedAt.Unix(),
 	}
 }
 
-// toProtoCustomerList maps a slice of domain Customer entities to a slice of Protobuf Customers.
-func toProtoCustomerList(customers []customer.Customer) []*devicepb.Customer {
-	pbCustomers := make([]*devicepb.Customer, len(customers))
+func toProtoCustomerList(customers []domainCustomer.Customer) []*devicepb.Customer {
+	out := make([]*devicepb.Customer, len(customers))
 	for i := range customers {
-		pbCustomers[i] = toProtoCustomer(&customers[i])
+		out[i] = toProtoCustomer(&customers[i])
 	}
-	return pbCustomers
+	return out
+}
+
+func fromProtoCustomer(pb *devicepb.Customer) domainCustomer.Customer {
+	if pb == nil {
+		return domainCustomer.Customer{}
+	}
+	var lat, lon *float64
+	if pb.HasCoordinates {
+		vLat, vLon := pb.Latitude, pb.Longitude
+		lat, lon = &vLat, &vLon
+	}
+	return domainCustomer.Customer{
+		ID:               pb.Id,
+		TenantID:         pb.TenantId,
+		CustomerCode:     pb.CustomerCode,
+		Name:             pb.Name,
+		Phone:            pb.Phone,
+		Email:            pb.Email,
+		Address:          pb.Address,
+		Latitude:         lat,
+		Longitude:        lon,
+		PortalAccessCode: pb.PortalAccessCode,
+		Status:           pb.Status,
+		Notes:            pb.Notes,
+	}
 }

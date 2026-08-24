@@ -51,7 +51,27 @@ func (uc *ManageCustomerUseCase) DeleteCustomer(ctx context.Context, id string) 
 	return uc.repo.Delete(ctx, id)
 }
 
-func (uc *ManageCustomerUseCase) ListSubscriptions(ctx context.Context, customerID string) ([]subscription.Subscription, error) {
+func (uc *ManageCustomerUseCase) FindSubscriptions(ctx context.Context, customerID string) ([]subscription.Subscription, error) {
 	return uc.repo.FindSubscriptions(ctx, customerID)
 }
 
+func (uc *ManageCustomerUseCase) FindByPhone(ctx context.Context, phone string) (customer.Customer, error) {
+	if phone == "" {
+		return customer.Customer{}, fmt.Errorf("phone required")
+	}
+	return uc.repo.FindByPhone(ctx, phone)
+}
+
+func (uc *ManageCustomerUseCase) FindByCustomerCode(ctx context.Context, code string) (customer.Customer, error) {
+	if code == "" {
+		return customer.Customer{}, fmt.Errorf("customer_code required")
+	}
+	return uc.repo.FindByCustomerCode(ctx, code)
+}
+
+func (uc *ManageCustomerUseCase) FindByPortalCode(ctx context.Context, portalCode string) (customer.Customer, error) {
+	if portalCode == "" {
+		return customer.Customer{}, fmt.Errorf("portal_access_code required")
+	}
+	return uc.repo.FindByPortalAccessCode(ctx, portalCode)
+}

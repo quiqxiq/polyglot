@@ -21,16 +21,78 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type ResolveMethod int32
+
+const (
+	ResolveMethod_RESOLVE_CODE   ResolveMethod = 0 // manual_payment_code
+	ResolveMethod_RESOLVE_QR     ResolveMethod = 1 // qr_payload
+	ResolveMethod_RESOLVE_PORTAL ResolveMethod = 2 // kode portal pelanggan → tagihan UNPAID tertua
+)
+
+// Enum value maps for ResolveMethod.
+var (
+	ResolveMethod_name = map[int32]string{
+		0: "RESOLVE_CODE",
+		1: "RESOLVE_QR",
+		2: "RESOLVE_PORTAL",
+	}
+	ResolveMethod_value = map[string]int32{
+		"RESOLVE_CODE":   0,
+		"RESOLVE_QR":     1,
+		"RESOLVE_PORTAL": 2,
+	}
+)
+
+func (x ResolveMethod) Enum() *ResolveMethod {
+	p := new(ResolveMethod)
+	*p = x
+	return p
+}
+
+func (x ResolveMethod) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ResolveMethod) Descriptor() protoreflect.EnumDescriptor {
+	return file_v1_billing_proto_enumTypes[0].Descriptor()
+}
+
+func (ResolveMethod) Type() protoreflect.EnumType {
+	return &file_v1_billing_proto_enumTypes[0]
+}
+
+func (x ResolveMethod) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ResolveMethod.Descriptor instead.
+func (ResolveMethod) EnumDescriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{0}
+}
+
 type Invoice struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	CustomerId    string                 `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	Amount        float64                `protobuf:"fixed64,3,opt,name=amount,proto3" json:"amount,omitempty"`
-	Status        string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
-	DueDateUnix   int64                  `protobuf:"varint,5,opt,name=due_date_unix,json=dueDateUnix,proto3" json:"due_date_unix,omitempty"`
-	CreatedAtUnix int64                  `protobuf:"varint,6,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Id                string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	TenantId          string                 `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	InvoiceNumber     string                 `protobuf:"bytes,3,opt,name=invoice_number,json=invoiceNumber,proto3" json:"invoice_number,omitempty"`
+	CustomerId        string                 `protobuf:"bytes,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	SubscriptionId    string                 `protobuf:"bytes,5,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	Period            string                 `protobuf:"bytes,6,opt,name=period,proto3" json:"period,omitempty"` // 'YYYY-MM'
+	Subtotal          float64                `protobuf:"fixed64,7,opt,name=subtotal,proto3" json:"subtotal,omitempty"`
+	Discount          float64                `protobuf:"fixed64,8,opt,name=discount,proto3" json:"discount,omitempty"`
+	TaxAmount         float64                `protobuf:"fixed64,9,opt,name=tax_amount,json=taxAmount,proto3" json:"tax_amount,omitempty"`
+	Total             float64                `protobuf:"fixed64,10,opt,name=total,proto3" json:"total,omitempty"`
+	PaidAmount        float64                `protobuf:"fixed64,11,opt,name=paid_amount,json=paidAmount,proto3" json:"paid_amount,omitempty"`
+	DueDateUnix       int64                  `protobuf:"varint,12,opt,name=due_date_unix,json=dueDateUnix,proto3" json:"due_date_unix,omitempty"`
+	PaidAtUnix        int64                  `protobuf:"varint,13,opt,name=paid_at_unix,json=paidAtUnix,proto3" json:"paid_at_unix,omitempty"`
+	Status            string                 `protobuf:"bytes,14,opt,name=status,proto3" json:"status,omitempty"` // UNPAID | PARTIAL | PAID | OVERDUE | CANCELLED
+	QrPayload         string                 `protobuf:"bytes,15,opt,name=qr_payload,json=qrPayload,proto3" json:"qr_payload,omitempty"`
+	ManualPaymentCode string                 `protobuf:"bytes,16,opt,name=manual_payment_code,json=manualPaymentCode,proto3" json:"manual_payment_code,omitempty"`
+	Notes             string                 `protobuf:"bytes,17,opt,name=notes,proto3" json:"notes,omitempty"`
+	Items             []*InvoiceItem         `protobuf:"bytes,18,rep,name=items,proto3" json:"items,omitempty"`
+	CreatedAtUnix     int64                  `protobuf:"varint,19,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *Invoice) Reset() {
@@ -70,6 +132,20 @@ func (x *Invoice) GetId() string {
 	return ""
 }
 
+func (x *Invoice) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+func (x *Invoice) GetInvoiceNumber() string {
+	if x != nil {
+		return x.InvoiceNumber
+	}
+	return ""
+}
+
 func (x *Invoice) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
@@ -77,9 +153,65 @@ func (x *Invoice) GetCustomerId() string {
 	return ""
 }
 
-func (x *Invoice) GetAmount() float64 {
+func (x *Invoice) GetSubscriptionId() string {
 	if x != nil {
-		return x.Amount
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *Invoice) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+func (x *Invoice) GetSubtotal() float64 {
+	if x != nil {
+		return x.Subtotal
+	}
+	return 0
+}
+
+func (x *Invoice) GetDiscount() float64 {
+	if x != nil {
+		return x.Discount
+	}
+	return 0
+}
+
+func (x *Invoice) GetTaxAmount() float64 {
+	if x != nil {
+		return x.TaxAmount
+	}
+	return 0
+}
+
+func (x *Invoice) GetTotal() float64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *Invoice) GetPaidAmount() float64 {
+	if x != nil {
+		return x.PaidAmount
+	}
+	return 0
+}
+
+func (x *Invoice) GetDueDateUnix() int64 {
+	if x != nil {
+		return x.DueDateUnix
+	}
+	return 0
+}
+
+func (x *Invoice) GetPaidAtUnix() int64 {
+	if x != nil {
+		return x.PaidAtUnix
 	}
 	return 0
 }
@@ -91,11 +223,32 @@ func (x *Invoice) GetStatus() string {
 	return ""
 }
 
-func (x *Invoice) GetDueDateUnix() int64 {
+func (x *Invoice) GetQrPayload() string {
 	if x != nil {
-		return x.DueDateUnix
+		return x.QrPayload
 	}
-	return 0
+	return ""
+}
+
+func (x *Invoice) GetManualPaymentCode() string {
+	if x != nil {
+		return x.ManualPaymentCode
+	}
+	return ""
+}
+
+func (x *Invoice) GetNotes() string {
+	if x != nil {
+		return x.Notes
+	}
+	return ""
+}
+
+func (x *Invoice) GetItems() []*InvoiceItem {
+	if x != nil {
+		return x.Items
+	}
+	return nil
 }
 
 func (x *Invoice) GetCreatedAtUnix() int64 {
@@ -105,22 +258,126 @@ func (x *Invoice) GetCreatedAtUnix() int64 {
 	return 0
 }
 
-type Subscription struct {
+type InvoiceItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	CustomerId    string                 `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	PlanId        string                 `protobuf:"bytes,3,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
-	Status        string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
-	StartDateUnix int64                  `protobuf:"varint,5,opt,name=start_date_unix,json=startDateUnix,proto3" json:"start_date_unix,omitempty"`
-	EndDateUnix   int64                  `protobuf:"varint,6,opt,name=end_date_unix,json=endDateUnix,proto3" json:"end_date_unix,omitempty"`
-	Price         float64                `protobuf:"fixed64,7,opt,name=price,proto3" json:"price,omitempty"`
+	InvoiceId     string                 `protobuf:"bytes,2,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Quantity      float64                `protobuf:"fixed64,4,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	UnitPrice     float64                `protobuf:"fixed64,5,opt,name=unit_price,json=unitPrice,proto3" json:"unit_price,omitempty"`
+	Amount        float64                `protobuf:"fixed64,6,opt,name=amount,proto3" json:"amount,omitempty"`
+	ItemType      string                 `protobuf:"bytes,7,opt,name=item_type,json=itemType,proto3" json:"item_type,omitempty"` // SUBSCRIPTION_FEE | INSTALLATION_FEE | AD_HOC
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
+func (x *InvoiceItem) Reset() {
+	*x = InvoiceItem{}
+	mi := &file_v1_billing_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InvoiceItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InvoiceItem) ProtoMessage() {}
+
+func (x *InvoiceItem) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InvoiceItem.ProtoReflect.Descriptor instead.
+func (*InvoiceItem) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *InvoiceItem) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *InvoiceItem) GetInvoiceId() string {
+	if x != nil {
+		return x.InvoiceId
+	}
+	return ""
+}
+
+func (x *InvoiceItem) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *InvoiceItem) GetQuantity() float64 {
+	if x != nil {
+		return x.Quantity
+	}
+	return 0
+}
+
+func (x *InvoiceItem) GetUnitPrice() float64 {
+	if x != nil {
+		return x.UnitPrice
+	}
+	return 0
+}
+
+func (x *InvoiceItem) GetAmount() float64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+func (x *InvoiceItem) GetItemType() string {
+	if x != nil {
+		return x.ItemType
+	}
+	return ""
+}
+
+type Subscription struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	TenantId           string                 `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	CustomerId         string                 `protobuf:"bytes,3,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	PlanId             string                 `protobuf:"bytes,4,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
+	DeviceId           string                 `protobuf:"bytes,5,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`          // Router BRAS target
+	ServiceType        string                 `protobuf:"bytes,6,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"` // PPPOE | HOTSPOT
+	RemoteUsername     string                 `protobuf:"bytes,7,opt,name=remote_username,json=remoteUsername,proto3" json:"remote_username,omitempty"`
+	RateLimit          string                 `protobuf:"bytes,8,opt,name=rate_limit,json=rateLimit,proto3" json:"rate_limit,omitempty"`
+	RouterProfile      string                 `protobuf:"bytes,9,opt,name=router_profile,json=routerProfile,proto3" json:"router_profile,omitempty"`
+	ProvisionStatus    string                 `protobuf:"bytes,10,opt,name=provision_status,json=provisionStatus,proto3" json:"provision_status,omitempty"` // NONE | PENDING | OK | FAILED
+	BillingCycle       string                 `protobuf:"bytes,11,opt,name=billing_cycle,json=billingCycle,proto3" json:"billing_cycle,omitempty"`
+	BillingDay         int32                  `protobuf:"varint,12,opt,name=billing_day,json=billingDay,proto3" json:"billing_day,omitempty"`
+	AutoIsolate        bool                   `protobuf:"varint,13,opt,name=auto_isolate,json=autoIsolate,proto3" json:"auto_isolate,omitempty"`
+	IsolationGraceDays int32                  `protobuf:"varint,14,opt,name=isolation_grace_days,json=isolationGraceDays,proto3" json:"isolation_grace_days,omitempty"`
+	Status             string                 `protobuf:"bytes,15,opt,name=status,proto3" json:"status,omitempty"` // ACTIVE | ISOLATED | SUSPENDED | TERMINATED | ...
+	StartDateUnix      int64                  `protobuf:"varint,16,opt,name=start_date_unix,json=startDateUnix,proto3" json:"start_date_unix,omitempty"`
+	EndDateUnix        int64                  `protobuf:"varint,17,opt,name=end_date_unix,json=endDateUnix,proto3" json:"end_date_unix,omitempty"`
+	CustomPrice        float64                `protobuf:"fixed64,18,opt,name=custom_price,json=customPrice,proto3" json:"custom_price,omitempty"`
+	Notes              string                 `protobuf:"bytes,19,opt,name=notes,proto3" json:"notes,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
 func (x *Subscription) Reset() {
 	*x = Subscription{}
-	mi := &file_v1_billing_proto_msgTypes[1]
+	mi := &file_v1_billing_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -132,7 +389,7 @@ func (x *Subscription) String() string {
 func (*Subscription) ProtoMessage() {}
 
 func (x *Subscription) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[1]
+	mi := &file_v1_billing_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -145,12 +402,19 @@ func (x *Subscription) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Subscription.ProtoReflect.Descriptor instead.
 func (*Subscription) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{1}
+	return file_v1_billing_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Subscription) GetId() string {
 	if x != nil {
 		return x.Id
+	}
+	return ""
+}
+
+func (x *Subscription) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
 	}
 	return ""
 }
@@ -167,6 +431,76 @@ func (x *Subscription) GetPlanId() string {
 		return x.PlanId
 	}
 	return ""
+}
+
+func (x *Subscription) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *Subscription) GetServiceType() string {
+	if x != nil {
+		return x.ServiceType
+	}
+	return ""
+}
+
+func (x *Subscription) GetRemoteUsername() string {
+	if x != nil {
+		return x.RemoteUsername
+	}
+	return ""
+}
+
+func (x *Subscription) GetRateLimit() string {
+	if x != nil {
+		return x.RateLimit
+	}
+	return ""
+}
+
+func (x *Subscription) GetRouterProfile() string {
+	if x != nil {
+		return x.RouterProfile
+	}
+	return ""
+}
+
+func (x *Subscription) GetProvisionStatus() string {
+	if x != nil {
+		return x.ProvisionStatus
+	}
+	return ""
+}
+
+func (x *Subscription) GetBillingCycle() string {
+	if x != nil {
+		return x.BillingCycle
+	}
+	return ""
+}
+
+func (x *Subscription) GetBillingDay() int32 {
+	if x != nil {
+		return x.BillingDay
+	}
+	return 0
+}
+
+func (x *Subscription) GetAutoIsolate() bool {
+	if x != nil {
+		return x.AutoIsolate
+	}
+	return false
+}
+
+func (x *Subscription) GetIsolationGraceDays() int32 {
+	if x != nil {
+		return x.IsolationGraceDays
+	}
+	return 0
 }
 
 func (x *Subscription) GetStatus() string {
@@ -190,23 +524,251 @@ func (x *Subscription) GetEndDateUnix() int64 {
 	return 0
 }
 
-func (x *Subscription) GetPrice() float64 {
+func (x *Subscription) GetCustomPrice() float64 {
+	if x != nil {
+		return x.CustomPrice
+	}
+	return 0
+}
+
+func (x *Subscription) GetNotes() string {
+	if x != nil {
+		return x.Notes
+	}
+	return ""
+}
+
+type Plan struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	Id                    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name                  string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ServiceType           string                 `protobuf:"bytes,3,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"` // PPPOE | HOTSPOT | DEDICATED
+	BandwidthDownloadKbps int32                  `protobuf:"varint,4,opt,name=bandwidth_download_kbps,json=bandwidthDownloadKbps,proto3" json:"bandwidth_download_kbps,omitempty"`
+	BandwidthUploadKbps   int32                  `protobuf:"varint,5,opt,name=bandwidth_upload_kbps,json=bandwidthUploadKbps,proto3" json:"bandwidth_upload_kbps,omitempty"`
+	BurstDownloadKbps     int32                  `protobuf:"varint,6,opt,name=burst_download_kbps,json=burstDownloadKbps,proto3" json:"burst_download_kbps,omitempty"`
+	BurstUploadKbps       int32                  `protobuf:"varint,7,opt,name=burst_upload_kbps,json=burstUploadKbps,proto3" json:"burst_upload_kbps,omitempty"`
+	Price                 float64                `protobuf:"fixed64,8,opt,name=price,proto3" json:"price,omitempty"`
+	SellingPrice          float64                `protobuf:"fixed64,9,opt,name=selling_price,json=sellingPrice,proto3" json:"selling_price,omitempty"`
+	InstallationFee       float64                `protobuf:"fixed64,10,opt,name=installation_fee,json=installationFee,proto3" json:"installation_fee,omitempty"`
+	TaxPercent            float64                `protobuf:"fixed64,11,opt,name=tax_percent,json=taxPercent,proto3" json:"tax_percent,omitempty"`
+	Validity              string                 `protobuf:"bytes,12,opt,name=validity,proto3" json:"validity,omitempty"`
+	ValidityMode          string                 `protobuf:"bytes,13,opt,name=validity_mode,json=validityMode,proto3" json:"validity_mode,omitempty"`
+	SimultaneousUse       int32                  `protobuf:"varint,14,opt,name=simultaneous_use,json=simultaneousUse,proto3" json:"simultaneous_use,omitempty"`
+	IpPoolName            string                 `protobuf:"bytes,15,opt,name=ip_pool_name,json=ipPoolName,proto3" json:"ip_pool_name,omitempty"`
+	ParentQueue           string                 `protobuf:"bytes,16,opt,name=parent_queue,json=parentQueue,proto3" json:"parent_queue,omitempty"`
+	AddressList           string                 `protobuf:"bytes,17,opt,name=address_list,json=addressList,proto3" json:"address_list,omitempty"`
+	SharedUsers           int32                  `protobuf:"varint,18,opt,name=shared_users,json=sharedUsers,proto3" json:"shared_users,omitempty"`
+	ExpireMode            string                 `protobuf:"bytes,19,opt,name=expire_mode,json=expireMode,proto3" json:"expire_mode,omitempty"`
+	LockUser              bool                   `protobuf:"varint,20,opt,name=lock_user,json=lockUser,proto3" json:"lock_user,omitempty"`
+	LockServer            bool                   `protobuf:"varint,21,opt,name=lock_server,json=lockServer,proto3" json:"lock_server,omitempty"`
+	IsActive              bool                   `protobuf:"varint,22,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
+	Description           string                 `protobuf:"bytes,23,opt,name=description,proto3" json:"description,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *Plan) Reset() {
+	*x = Plan{}
+	mi := &file_v1_billing_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Plan) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Plan) ProtoMessage() {}
+
+func (x *Plan) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Plan.ProtoReflect.Descriptor instead.
+func (*Plan) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *Plan) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Plan) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Plan) GetServiceType() string {
+	if x != nil {
+		return x.ServiceType
+	}
+	return ""
+}
+
+func (x *Plan) GetBandwidthDownloadKbps() int32 {
+	if x != nil {
+		return x.BandwidthDownloadKbps
+	}
+	return 0
+}
+
+func (x *Plan) GetBandwidthUploadKbps() int32 {
+	if x != nil {
+		return x.BandwidthUploadKbps
+	}
+	return 0
+}
+
+func (x *Plan) GetBurstDownloadKbps() int32 {
+	if x != nil {
+		return x.BurstDownloadKbps
+	}
+	return 0
+}
+
+func (x *Plan) GetBurstUploadKbps() int32 {
+	if x != nil {
+		return x.BurstUploadKbps
+	}
+	return 0
+}
+
+func (x *Plan) GetPrice() float64 {
 	if x != nil {
 		return x.Price
 	}
 	return 0
 }
 
+func (x *Plan) GetSellingPrice() float64 {
+	if x != nil {
+		return x.SellingPrice
+	}
+	return 0
+}
+
+func (x *Plan) GetInstallationFee() float64 {
+	if x != nil {
+		return x.InstallationFee
+	}
+	return 0
+}
+
+func (x *Plan) GetTaxPercent() float64 {
+	if x != nil {
+		return x.TaxPercent
+	}
+	return 0
+}
+
+func (x *Plan) GetValidity() string {
+	if x != nil {
+		return x.Validity
+	}
+	return ""
+}
+
+func (x *Plan) GetValidityMode() string {
+	if x != nil {
+		return x.ValidityMode
+	}
+	return ""
+}
+
+func (x *Plan) GetSimultaneousUse() int32 {
+	if x != nil {
+		return x.SimultaneousUse
+	}
+	return 0
+}
+
+func (x *Plan) GetIpPoolName() string {
+	if x != nil {
+		return x.IpPoolName
+	}
+	return ""
+}
+
+func (x *Plan) GetParentQueue() string {
+	if x != nil {
+		return x.ParentQueue
+	}
+	return ""
+}
+
+func (x *Plan) GetAddressList() string {
+	if x != nil {
+		return x.AddressList
+	}
+	return ""
+}
+
+func (x *Plan) GetSharedUsers() int32 {
+	if x != nil {
+		return x.SharedUsers
+	}
+	return 0
+}
+
+func (x *Plan) GetExpireMode() string {
+	if x != nil {
+		return x.ExpireMode
+	}
+	return ""
+}
+
+func (x *Plan) GetLockUser() bool {
+	if x != nil {
+		return x.LockUser
+	}
+	return false
+}
+
+func (x *Plan) GetLockServer() bool {
+	if x != nil {
+		return x.LockServer
+	}
+	return false
+}
+
+func (x *Plan) GetIsActive() bool {
+	if x != nil {
+		return x.IsActive
+	}
+	return false
+}
+
+func (x *Plan) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
 type ListInvoicesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"` // kosong = semua
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListInvoicesRequest) Reset() {
 	*x = ListInvoicesRequest{}
-	mi := &file_v1_billing_proto_msgTypes[2]
+	mi := &file_v1_billing_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -218,7 +780,7 @@ func (x *ListInvoicesRequest) String() string {
 func (*ListInvoicesRequest) ProtoMessage() {}
 
 func (x *ListInvoicesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[2]
+	mi := &file_v1_billing_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -231,12 +793,19 @@ func (x *ListInvoicesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListInvoicesRequest.ProtoReflect.Descriptor instead.
 func (*ListInvoicesRequest) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{2}
+	return file_v1_billing_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ListInvoicesRequest) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
+	}
+	return ""
+}
+
+func (x *ListInvoicesRequest) GetStatus() string {
+	if x != nil {
+		return x.Status
 	}
 	return ""
 }
@@ -250,7 +819,7 @@ type ListInvoicesResponse struct {
 
 func (x *ListInvoicesResponse) Reset() {
 	*x = ListInvoicesResponse{}
-	mi := &file_v1_billing_proto_msgTypes[3]
+	mi := &file_v1_billing_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -262,7 +831,7 @@ func (x *ListInvoicesResponse) String() string {
 func (*ListInvoicesResponse) ProtoMessage() {}
 
 func (x *ListInvoicesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[3]
+	mi := &file_v1_billing_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -275,7 +844,7 @@ func (x *ListInvoicesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListInvoicesResponse.ProtoReflect.Descriptor instead.
 func (*ListInvoicesResponse) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{3}
+	return file_v1_billing_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ListInvoicesResponse) GetInvoices() []*Invoice {
@@ -294,7 +863,7 @@ type GetInvoiceRequest struct {
 
 func (x *GetInvoiceRequest) Reset() {
 	*x = GetInvoiceRequest{}
-	mi := &file_v1_billing_proto_msgTypes[4]
+	mi := &file_v1_billing_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -306,7 +875,7 @@ func (x *GetInvoiceRequest) String() string {
 func (*GetInvoiceRequest) ProtoMessage() {}
 
 func (x *GetInvoiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[4]
+	mi := &file_v1_billing_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -319,7 +888,7 @@ func (x *GetInvoiceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetInvoiceRequest.ProtoReflect.Descriptor instead.
 func (*GetInvoiceRequest) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{4}
+	return file_v1_billing_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetInvoiceRequest) GetId() string {
@@ -338,7 +907,7 @@ type GetInvoiceResponse struct {
 
 func (x *GetInvoiceResponse) Reset() {
 	*x = GetInvoiceResponse{}
-	mi := &file_v1_billing_proto_msgTypes[5]
+	mi := &file_v1_billing_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -350,7 +919,7 @@ func (x *GetInvoiceResponse) String() string {
 func (*GetInvoiceResponse) ProtoMessage() {}
 
 func (x *GetInvoiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[5]
+	mi := &file_v1_billing_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -363,7 +932,7 @@ func (x *GetInvoiceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetInvoiceResponse.ProtoReflect.Descriptor instead.
 func (*GetInvoiceResponse) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{5}
+	return file_v1_billing_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetInvoiceResponse) GetInvoice() *Invoice {
@@ -373,30 +942,29 @@ func (x *GetInvoiceResponse) GetInvoice() *Invoice {
 	return nil
 }
 
-type CreateInvoiceRequest struct {
+type CashierResolveRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	Amount        float64                `protobuf:"fixed64,2,opt,name=amount,proto3" json:"amount,omitempty"`
-	DueDateUnix   int64                  `protobuf:"varint,3,opt,name=due_date_unix,json=dueDateUnix,proto3" json:"due_date_unix,omitempty"`
+	Identifier    string                 `protobuf:"bytes,1,opt,name=identifier,proto3" json:"identifier,omitempty"`
+	Method        ResolveMethod          `protobuf:"varint,2,opt,name=method,proto3,enum=polyglot.v1.ResolveMethod" json:"method,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateInvoiceRequest) Reset() {
-	*x = CreateInvoiceRequest{}
-	mi := &file_v1_billing_proto_msgTypes[6]
+func (x *CashierResolveRequest) Reset() {
+	*x = CashierResolveRequest{}
+	mi := &file_v1_billing_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateInvoiceRequest) String() string {
+func (x *CashierResolveRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateInvoiceRequest) ProtoMessage() {}
+func (*CashierResolveRequest) ProtoMessage() {}
 
-func (x *CreateInvoiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[6]
+func (x *CashierResolveRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -407,54 +975,209 @@ func (x *CreateInvoiceRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateInvoiceRequest.ProtoReflect.Descriptor instead.
-func (*CreateInvoiceRequest) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{6}
+// Deprecated: Use CashierResolveRequest.ProtoReflect.Descriptor instead.
+func (*CashierResolveRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *CreateInvoiceRequest) GetCustomerId() string {
+func (x *CashierResolveRequest) GetIdentifier() string {
 	if x != nil {
-		return x.CustomerId
+		return x.Identifier
 	}
 	return ""
 }
 
-func (x *CreateInvoiceRequest) GetAmount() float64 {
+func (x *CashierResolveRequest) GetMethod() ResolveMethod {
+	if x != nil {
+		return x.Method
+	}
+	return ResolveMethod_RESOLVE_CODE
+}
+
+type CashierResolveResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Invoice        *Invoice               `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	CustomerName   string                 `protobuf:"bytes,2,opt,name=customer_name,json=customerName,proto3" json:"customer_name,omitempty"`
+	CustomerPhone  string                 `protobuf:"bytes,3,opt,name=customer_phone,json=customerPhone,proto3" json:"customer_phone,omitempty"`
+	RemoteUsername string                 `protobuf:"bytes,4,opt,name=remote_username,json=remoteUsername,proto3" json:"remote_username,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *CashierResolveResponse) Reset() {
+	*x = CashierResolveResponse{}
+	mi := &file_v1_billing_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CashierResolveResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CashierResolveResponse) ProtoMessage() {}
+
+func (x *CashierResolveResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CashierResolveResponse.ProtoReflect.Descriptor instead.
+func (*CashierResolveResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *CashierResolveResponse) GetInvoice() *Invoice {
+	if x != nil {
+		return x.Invoice
+	}
+	return nil
+}
+
+func (x *CashierResolveResponse) GetCustomerName() string {
+	if x != nil {
+		return x.CustomerName
+	}
+	return ""
+}
+
+func (x *CashierResolveResponse) GetCustomerPhone() string {
+	if x != nil {
+		return x.CustomerPhone
+	}
+	return ""
+}
+
+func (x *CashierResolveResponse) GetRemoteUsername() string {
+	if x != nil {
+		return x.RemoteUsername
+	}
+	return ""
+}
+
+type CashierPayRequest struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	InvoiceId        string                 `protobuf:"bytes,1,opt,name=invoice_id,json=invoiceId,proto3" json:"invoice_id,omitempty"`
+	Amount           float64                `protobuf:"fixed64,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	CashAccountId    string                 `protobuf:"bytes,3,opt,name=cash_account_id,json=cashAccountId,proto3" json:"cash_account_id,omitempty"`
+	IncomeCategoryId string                 `protobuf:"bytes,4,opt,name=income_category_id,json=incomeCategoryId,proto3" json:"income_category_id,omitempty"`
+	ScanMethod       string                 `protobuf:"bytes,5,opt,name=scan_method,json=scanMethod,proto3" json:"scan_method,omitempty"` // QR_SCAN | CODE_INPUT | MANUAL | PAYMENT_GATEWAY
+	Reference        string                 `protobuf:"bytes,6,opt,name=reference,proto3" json:"reference,omitempty"`
+	Notes            string                 `protobuf:"bytes,7,opt,name=notes,proto3" json:"notes,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *CashierPayRequest) Reset() {
+	*x = CashierPayRequest{}
+	mi := &file_v1_billing_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CashierPayRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CashierPayRequest) ProtoMessage() {}
+
+func (x *CashierPayRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CashierPayRequest.ProtoReflect.Descriptor instead.
+func (*CashierPayRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *CashierPayRequest) GetInvoiceId() string {
+	if x != nil {
+		return x.InvoiceId
+	}
+	return ""
+}
+
+func (x *CashierPayRequest) GetAmount() float64 {
 	if x != nil {
 		return x.Amount
 	}
 	return 0
 }
 
-func (x *CreateInvoiceRequest) GetDueDateUnix() int64 {
+func (x *CashierPayRequest) GetCashAccountId() string {
 	if x != nil {
-		return x.DueDateUnix
+		return x.CashAccountId
 	}
-	return 0
+	return ""
 }
 
-type CreateInvoiceResponse struct {
+func (x *CashierPayRequest) GetIncomeCategoryId() string {
+	if x != nil {
+		return x.IncomeCategoryId
+	}
+	return ""
+}
+
+func (x *CashierPayRequest) GetScanMethod() string {
+	if x != nil {
+		return x.ScanMethod
+	}
+	return ""
+}
+
+func (x *CashierPayRequest) GetReference() string {
+	if x != nil {
+		return x.Reference
+	}
+	return ""
+}
+
+func (x *CashierPayRequest) GetNotes() string {
+	if x != nil {
+		return x.Notes
+	}
+	return ""
+}
+
+type CashierPayResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *Invoice               `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	PaymentId     string                 `protobuf:"bytes,1,opt,name=payment_id,json=paymentId,proto3" json:"payment_id,omitempty"`
+	PaymentNo     string                 `protobuf:"bytes,2,opt,name=payment_no,json=paymentNo,proto3" json:"payment_no,omitempty"`
+	Invoice       *Invoice               `protobuf:"bytes,3,opt,name=invoice,proto3" json:"invoice,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateInvoiceResponse) Reset() {
-	*x = CreateInvoiceResponse{}
-	mi := &file_v1_billing_proto_msgTypes[7]
+func (x *CashierPayResponse) Reset() {
+	*x = CashierPayResponse{}
+	mi := &file_v1_billing_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateInvoiceResponse) String() string {
+func (x *CashierPayResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateInvoiceResponse) ProtoMessage() {}
+func (*CashierPayResponse) ProtoMessage() {}
 
-func (x *CreateInvoiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[7]
+func (x *CashierPayResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -465,132 +1188,42 @@ func (x *CreateInvoiceResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateInvoiceResponse.ProtoReflect.Descriptor instead.
-func (*CreateInvoiceResponse) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{7}
+// Deprecated: Use CashierPayResponse.ProtoReflect.Descriptor instead.
+func (*CashierPayResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *CreateInvoiceResponse) GetInvoice() *Invoice {
+func (x *CashierPayResponse) GetPaymentId() string {
+	if x != nil {
+		return x.PaymentId
+	}
+	return ""
+}
+
+func (x *CashierPayResponse) GetPaymentNo() string {
+	if x != nil {
+		return x.PaymentNo
+	}
+	return ""
+}
+
+func (x *CashierPayResponse) GetInvoice() *Invoice {
 	if x != nil {
 		return x.Invoice
 	}
 	return nil
-}
-
-type PayInvoiceRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	PaymentMethod string                 `protobuf:"bytes,2,opt,name=payment_method,json=paymentMethod,proto3" json:"payment_method,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PayInvoiceRequest) Reset() {
-	*x = PayInvoiceRequest{}
-	mi := &file_v1_billing_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PayInvoiceRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PayInvoiceRequest) ProtoMessage() {}
-
-func (x *PayInvoiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PayInvoiceRequest.ProtoReflect.Descriptor instead.
-func (*PayInvoiceRequest) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *PayInvoiceRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *PayInvoiceRequest) GetPaymentMethod() string {
-	if x != nil {
-		return x.PaymentMethod
-	}
-	return ""
-}
-
-type PayInvoiceResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Invoice       *Invoice               `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PayInvoiceResponse) Reset() {
-	*x = PayInvoiceResponse{}
-	mi := &file_v1_billing_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PayInvoiceResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PayInvoiceResponse) ProtoMessage() {}
-
-func (x *PayInvoiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[9]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PayInvoiceResponse.ProtoReflect.Descriptor instead.
-func (*PayInvoiceResponse) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *PayInvoiceResponse) GetInvoice() *Invoice {
-	if x != nil {
-		return x.Invoice
-	}
-	return nil
-}
-
-func (x *PayInvoiceResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
 }
 
 type ListSubscriptionsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"` // kosong = semua lifecycle
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListSubscriptionsRequest) Reset() {
 	*x = ListSubscriptionsRequest{}
-	mi := &file_v1_billing_proto_msgTypes[10]
+	mi := &file_v1_billing_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -602,7 +1235,7 @@ func (x *ListSubscriptionsRequest) String() string {
 func (*ListSubscriptionsRequest) ProtoMessage() {}
 
 func (x *ListSubscriptionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[10]
+	mi := &file_v1_billing_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -615,7 +1248,7 @@ func (x *ListSubscriptionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSubscriptionsRequest.ProtoReflect.Descriptor instead.
 func (*ListSubscriptionsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{10}
+	return file_v1_billing_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ListSubscriptionsRequest) GetCustomerId() string {
@@ -634,7 +1267,7 @@ type ListSubscriptionsResponse struct {
 
 func (x *ListSubscriptionsResponse) Reset() {
 	*x = ListSubscriptionsResponse{}
-	mi := &file_v1_billing_proto_msgTypes[11]
+	mi := &file_v1_billing_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -646,7 +1279,7 @@ func (x *ListSubscriptionsResponse) String() string {
 func (*ListSubscriptionsResponse) ProtoMessage() {}
 
 func (x *ListSubscriptionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[11]
+	mi := &file_v1_billing_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -659,7 +1292,7 @@ func (x *ListSubscriptionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSubscriptionsResponse.ProtoReflect.Descriptor instead.
 func (*ListSubscriptionsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{11}
+	return file_v1_billing_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ListSubscriptionsResponse) GetSubscriptions() []*Subscription {
@@ -669,131 +1302,27 @@ func (x *ListSubscriptionsResponse) GetSubscriptions() []*Subscription {
 	return nil
 }
 
-type CreateSubscriptionRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CustomerId    string                 `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	PlanId        string                 `protobuf:"bytes,2,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`
-	Price         float64                `protobuf:"fixed64,3,opt,name=price,proto3" json:"price,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateSubscriptionRequest) Reset() {
-	*x = CreateSubscriptionRequest{}
-	mi := &file_v1_billing_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateSubscriptionRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateSubscriptionRequest) ProtoMessage() {}
-
-func (x *CreateSubscriptionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateSubscriptionRequest.ProtoReflect.Descriptor instead.
-func (*CreateSubscriptionRequest) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *CreateSubscriptionRequest) GetCustomerId() string {
-	if x != nil {
-		return x.CustomerId
-	}
-	return ""
-}
-
-func (x *CreateSubscriptionRequest) GetPlanId() string {
-	if x != nil {
-		return x.PlanId
-	}
-	return ""
-}
-
-func (x *CreateSubscriptionRequest) GetPrice() float64 {
-	if x != nil {
-		return x.Price
-	}
-	return 0
-}
-
-type CreateSubscriptionResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Subscription  *Subscription          `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateSubscriptionResponse) Reset() {
-	*x = CreateSubscriptionResponse{}
-	mi := &file_v1_billing_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateSubscriptionResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateSubscriptionResponse) ProtoMessage() {}
-
-func (x *CreateSubscriptionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateSubscriptionResponse.ProtoReflect.Descriptor instead.
-func (*CreateSubscriptionResponse) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *CreateSubscriptionResponse) GetSubscription() *Subscription {
-	if x != nil {
-		return x.Subscription
-	}
-	return nil
-}
-
-type CancelSubscriptionRequest struct {
+type GetSubscriptionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CancelSubscriptionRequest) Reset() {
-	*x = CancelSubscriptionRequest{}
+func (x *GetSubscriptionRequest) Reset() {
+	*x = GetSubscriptionRequest{}
 	mi := &file_v1_billing_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CancelSubscriptionRequest) String() string {
+func (x *GetSubscriptionRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CancelSubscriptionRequest) ProtoMessage() {}
+func (*GetSubscriptionRequest) ProtoMessage() {}
 
-func (x *CancelSubscriptionRequest) ProtoReflect() protoreflect.Message {
+func (x *GetSubscriptionRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_billing_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -805,40 +1334,39 @@ func (x *CancelSubscriptionRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CancelSubscriptionRequest.ProtoReflect.Descriptor instead.
-func (*CancelSubscriptionRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetSubscriptionRequest.ProtoReflect.Descriptor instead.
+func (*GetSubscriptionRequest) Descriptor() ([]byte, []int) {
 	return file_v1_billing_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *CancelSubscriptionRequest) GetId() string {
+func (x *GetSubscriptionRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-type CancelSubscriptionResponse struct {
+type GetSubscriptionResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Subscription  *Subscription          `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CancelSubscriptionResponse) Reset() {
-	*x = CancelSubscriptionResponse{}
+func (x *GetSubscriptionResponse) Reset() {
+	*x = GetSubscriptionResponse{}
 	mi := &file_v1_billing_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CancelSubscriptionResponse) String() string {
+func (x *GetSubscriptionResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CancelSubscriptionResponse) ProtoMessage() {}
+func (*GetSubscriptionResponse) ProtoMessage() {}
 
-func (x *CancelSubscriptionResponse) ProtoReflect() protoreflect.Message {
+func (x *GetSubscriptionResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_billing_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -850,96 +1378,1244 @@ func (x *CancelSubscriptionResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CancelSubscriptionResponse.ProtoReflect.Descriptor instead.
-func (*CancelSubscriptionResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetSubscriptionResponse.ProtoReflect.Descriptor instead.
+func (*GetSubscriptionResponse) Descriptor() ([]byte, []int) {
 	return file_v1_billing_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *CancelSubscriptionResponse) GetSubscription() *Subscription {
+func (x *GetSubscriptionResponse) GetSubscription() *Subscription {
 	if x != nil {
 		return x.Subscription
 	}
 	return nil
 }
 
-func (x *CancelSubscriptionResponse) GetMessage() string {
+type ChangePlanRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SubscriptionId string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	NewPlanId      string                 `protobuf:"bytes,2,opt,name=new_plan_id,json=newPlanId,proto3" json:"new_plan_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ChangePlanRequest) Reset() {
+	*x = ChangePlanRequest{}
+	mi := &file_v1_billing_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ChangePlanRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChangePlanRequest) ProtoMessage() {}
+
+func (x *ChangePlanRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChangePlanRequest.ProtoReflect.Descriptor instead.
+func (*ChangePlanRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *ChangePlanRequest) GetSubscriptionId() string {
+	if x != nil {
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *ChangePlanRequest) GetNewPlanId() string {
+	if x != nil {
+		return x.NewPlanId
+	}
+	return ""
+}
+
+type ChangePlanResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Subscription  *Subscription          `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ChangePlanResponse) Reset() {
+	*x = ChangePlanResponse{}
+	mi := &file_v1_billing_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ChangePlanResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChangePlanResponse) ProtoMessage() {}
+
+func (x *ChangePlanResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChangePlanResponse.ProtoReflect.Descriptor instead.
+func (*ChangePlanResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *ChangePlanResponse) GetSubscription() *Subscription {
+	if x != nil {
+		return x.Subscription
+	}
+	return nil
+}
+
+type SuspendSubscriptionRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SubscriptionId string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	Reason         string                 `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *SuspendSubscriptionRequest) Reset() {
+	*x = SuspendSubscriptionRequest{}
+	mi := &file_v1_billing_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SuspendSubscriptionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SuspendSubscriptionRequest) ProtoMessage() {}
+
+func (x *SuspendSubscriptionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SuspendSubscriptionRequest.ProtoReflect.Descriptor instead.
+func (*SuspendSubscriptionRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *SuspendSubscriptionRequest) GetSubscriptionId() string {
+	if x != nil {
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *SuspendSubscriptionRequest) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+type SuspendSubscriptionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Subscription  *Subscription          `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SuspendSubscriptionResponse) Reset() {
+	*x = SuspendSubscriptionResponse{}
+	mi := &file_v1_billing_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SuspendSubscriptionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SuspendSubscriptionResponse) ProtoMessage() {}
+
+func (x *SuspendSubscriptionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SuspendSubscriptionResponse.ProtoReflect.Descriptor instead.
+func (*SuspendSubscriptionResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *SuspendSubscriptionResponse) GetSubscription() *Subscription {
+	if x != nil {
+		return x.Subscription
+	}
+	return nil
+}
+
+type ResumeSubscriptionRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SubscriptionId string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ResumeSubscriptionRequest) Reset() {
+	*x = ResumeSubscriptionRequest{}
+	mi := &file_v1_billing_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResumeSubscriptionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResumeSubscriptionRequest) ProtoMessage() {}
+
+func (x *ResumeSubscriptionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResumeSubscriptionRequest.ProtoReflect.Descriptor instead.
+func (*ResumeSubscriptionRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *ResumeSubscriptionRequest) GetSubscriptionId() string {
+	if x != nil {
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+type ResumeSubscriptionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Subscription  *Subscription          `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResumeSubscriptionResponse) Reset() {
+	*x = ResumeSubscriptionResponse{}
+	mi := &file_v1_billing_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResumeSubscriptionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResumeSubscriptionResponse) ProtoMessage() {}
+
+func (x *ResumeSubscriptionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResumeSubscriptionResponse.ProtoReflect.Descriptor instead.
+func (*ResumeSubscriptionResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *ResumeSubscriptionResponse) GetSubscription() *Subscription {
+	if x != nil {
+		return x.Subscription
+	}
+	return nil
+}
+
+type TerminateSubscriptionRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SubscriptionId string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	Reason         string                 `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *TerminateSubscriptionRequest) Reset() {
+	*x = TerminateSubscriptionRequest{}
+	mi := &file_v1_billing_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TerminateSubscriptionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TerminateSubscriptionRequest) ProtoMessage() {}
+
+func (x *TerminateSubscriptionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TerminateSubscriptionRequest.ProtoReflect.Descriptor instead.
+func (*TerminateSubscriptionRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *TerminateSubscriptionRequest) GetSubscriptionId() string {
+	if x != nil {
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *TerminateSubscriptionRequest) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+type TerminateSubscriptionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Subscription  *Subscription          `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TerminateSubscriptionResponse) Reset() {
+	*x = TerminateSubscriptionResponse{}
+	mi := &file_v1_billing_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TerminateSubscriptionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TerminateSubscriptionResponse) ProtoMessage() {}
+
+func (x *TerminateSubscriptionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TerminateSubscriptionResponse.ProtoReflect.Descriptor instead.
+func (*TerminateSubscriptionResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *TerminateSubscriptionResponse) GetSubscription() *Subscription {
+	if x != nil {
+		return x.Subscription
+	}
+	return nil
+}
+
+type ActivateSubscriptionRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	SubscriptionId string                 `protobuf:"bytes,1,opt,name=subscription_id,json=subscriptionId,proto3" json:"subscription_id,omitempty"`
+	DeviceId       string                 `protobuf:"bytes,2,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ActivateSubscriptionRequest) Reset() {
+	*x = ActivateSubscriptionRequest{}
+	mi := &file_v1_billing_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActivateSubscriptionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivateSubscriptionRequest) ProtoMessage() {}
+
+func (x *ActivateSubscriptionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivateSubscriptionRequest.ProtoReflect.Descriptor instead.
+func (*ActivateSubscriptionRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ActivateSubscriptionRequest) GetSubscriptionId() string {
+	if x != nil {
+		return x.SubscriptionId
+	}
+	return ""
+}
+
+func (x *ActivateSubscriptionRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+type ActivateSubscriptionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Subscription  *Subscription          `protobuf:"bytes,1,opt,name=subscription,proto3" json:"subscription,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ActivateSubscriptionResponse) Reset() {
+	*x = ActivateSubscriptionResponse{}
+	mi := &file_v1_billing_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActivateSubscriptionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivateSubscriptionResponse) ProtoMessage() {}
+
+func (x *ActivateSubscriptionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivateSubscriptionResponse.ProtoReflect.Descriptor instead.
+func (*ActivateSubscriptionResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *ActivateSubscriptionResponse) GetSubscription() *Subscription {
+	if x != nil {
+		return x.Subscription
+	}
+	return nil
+}
+
+type ListPlansRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ActiveOnly    bool                   `protobuf:"varint,1,opt,name=active_only,json=activeOnly,proto3" json:"active_only,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPlansRequest) Reset() {
+	*x = ListPlansRequest{}
+	mi := &file_v1_billing_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPlansRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPlansRequest) ProtoMessage() {}
+
+func (x *ListPlansRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPlansRequest.ProtoReflect.Descriptor instead.
+func (*ListPlansRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *ListPlansRequest) GetActiveOnly() bool {
+	if x != nil {
+		return x.ActiveOnly
+	}
+	return false
+}
+
+type ListPlansResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Plans         []*Plan                `protobuf:"bytes,1,rep,name=plans,proto3" json:"plans,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPlansResponse) Reset() {
+	*x = ListPlansResponse{}
+	mi := &file_v1_billing_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPlansResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPlansResponse) ProtoMessage() {}
+
+func (x *ListPlansResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPlansResponse.ProtoReflect.Descriptor instead.
+func (*ListPlansResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *ListPlansResponse) GetPlans() []*Plan {
+	if x != nil {
+		return x.Plans
+	}
+	return nil
+}
+
+type GetPlanRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPlanRequest) Reset() {
+	*x = GetPlanRequest{}
+	mi := &file_v1_billing_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPlanRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPlanRequest) ProtoMessage() {}
+
+func (x *GetPlanRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPlanRequest.ProtoReflect.Descriptor instead.
+func (*GetPlanRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *GetPlanRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type GetPlanResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Plan          *Plan                  `protobuf:"bytes,1,opt,name=plan,proto3" json:"plan,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPlanResponse) Reset() {
+	*x = GetPlanResponse{}
+	mi := &file_v1_billing_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPlanResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPlanResponse) ProtoMessage() {}
+
+func (x *GetPlanResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPlanResponse.ProtoReflect.Descriptor instead.
+func (*GetPlanResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *GetPlanResponse) GetPlan() *Plan {
+	if x != nil {
+		return x.Plan
+	}
+	return nil
+}
+
+type CreatePlanRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Plan          *Plan                  `protobuf:"bytes,1,opt,name=plan,proto3" json:"plan,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreatePlanRequest) Reset() {
+	*x = CreatePlanRequest{}
+	mi := &file_v1_billing_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreatePlanRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreatePlanRequest) ProtoMessage() {}
+
+func (x *CreatePlanRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreatePlanRequest.ProtoReflect.Descriptor instead.
+func (*CreatePlanRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *CreatePlanRequest) GetPlan() *Plan {
+	if x != nil {
+		return x.Plan
+	}
+	return nil
+}
+
+type CreatePlanResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Plan          *Plan                  `protobuf:"bytes,1,opt,name=plan,proto3" json:"plan,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreatePlanResponse) Reset() {
+	*x = CreatePlanResponse{}
+	mi := &file_v1_billing_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreatePlanResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreatePlanResponse) ProtoMessage() {}
+
+func (x *CreatePlanResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreatePlanResponse.ProtoReflect.Descriptor instead.
+func (*CreatePlanResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *CreatePlanResponse) GetPlan() *Plan {
+	if x != nil {
+		return x.Plan
+	}
+	return nil
+}
+
+type UpdatePlanRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Plan          *Plan                  `protobuf:"bytes,1,opt,name=plan,proto3" json:"plan,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdatePlanRequest) Reset() {
+	*x = UpdatePlanRequest{}
+	mi := &file_v1_billing_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdatePlanRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdatePlanRequest) ProtoMessage() {}
+
+func (x *UpdatePlanRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdatePlanRequest.ProtoReflect.Descriptor instead.
+func (*UpdatePlanRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *UpdatePlanRequest) GetPlan() *Plan {
+	if x != nil {
+		return x.Plan
+	}
+	return nil
+}
+
+type UpdatePlanResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Plan          *Plan                  `protobuf:"bytes,1,opt,name=plan,proto3" json:"plan,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdatePlanResponse) Reset() {
+	*x = UpdatePlanResponse{}
+	mi := &file_v1_billing_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdatePlanResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdatePlanResponse) ProtoMessage() {}
+
+func (x *UpdatePlanResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdatePlanResponse.ProtoReflect.Descriptor instead.
+func (*UpdatePlanResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *UpdatePlanResponse) GetPlan() *Plan {
+	if x != nil {
+		return x.Plan
+	}
+	return nil
+}
+
+type DeletePlanRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeletePlanRequest) Reset() {
+	*x = DeletePlanRequest{}
+	mi := &file_v1_billing_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeletePlanRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeletePlanRequest) ProtoMessage() {}
+
+func (x *DeletePlanRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeletePlanRequest.ProtoReflect.Descriptor instead.
+func (*DeletePlanRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *DeletePlanRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DeletePlanResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeletePlanResponse) Reset() {
+	*x = DeletePlanResponse{}
+	mi := &file_v1_billing_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeletePlanResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeletePlanResponse) ProtoMessage() {}
+
+func (x *DeletePlanResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeletePlanResponse.ProtoReflect.Descriptor instead.
+func (*DeletePlanResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *DeletePlanResponse) GetMessage() string {
 	if x != nil {
 		return x.Message
 	}
 	return ""
 }
 
+type GenerateInvoicesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Period        string                 `protobuf:"bytes,1,opt,name=period,proto3" json:"period,omitempty"` // 'YYYY-MM'; kosong = bulan berjalan
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateInvoicesRequest) Reset() {
+	*x = GenerateInvoicesRequest{}
+	mi := &file_v1_billing_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateInvoicesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateInvoicesRequest) ProtoMessage() {}
+
+func (x *GenerateInvoicesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateInvoicesRequest.ProtoReflect.Descriptor instead.
+func (*GenerateInvoicesRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *GenerateInvoicesRequest) GetPeriod() string {
+	if x != nil {
+		return x.Period
+	}
+	return ""
+}
+
+type GenerateInvoicesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Created       int32                  `protobuf:"varint,1,opt,name=created,proto3" json:"created,omitempty"`
+	Skipped       int32                  `protobuf:"varint,2,opt,name=skipped,proto3" json:"skipped,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateInvoicesResponse) Reset() {
+	*x = GenerateInvoicesResponse{}
+	mi := &file_v1_billing_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateInvoicesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateInvoicesResponse) ProtoMessage() {}
+
+func (x *GenerateInvoicesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateInvoicesResponse.ProtoReflect.Descriptor instead.
+func (*GenerateInvoicesResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *GenerateInvoicesResponse) GetCreated() int32 {
+	if x != nil {
+		return x.Created
+	}
+	return 0
+}
+
+func (x *GenerateInvoicesResponse) GetSkipped() int32 {
+	if x != nil {
+		return x.Skipped
+	}
+	return 0
+}
+
 var File_v1_billing_proto protoreflect.FileDescriptor
 
 const file_v1_billing_proto_rawDesc = "" +
 	"\n" +
-	"\x10v1/billing.proto\x12\vpolyglot.v1\"\xb6\x01\n" +
+	"\x10v1/billing.proto\x12\vpolyglot.v1\"\xe8\x04\n" +
 	"\aInvoice\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
-	"\vcustomer_id\x18\x02 \x01(\tR\n" +
-	"customerId\x12\x16\n" +
-	"\x06amount\x18\x03 \x01(\x01R\x06amount\x12\x16\n" +
-	"\x06status\x18\x04 \x01(\tR\x06status\x12\"\n" +
-	"\rdue_date_unix\x18\x05 \x01(\x03R\vdueDateUnix\x12&\n" +
-	"\x0fcreated_at_unix\x18\x06 \x01(\x03R\rcreatedAtUnix\"\xd2\x01\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
+	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12%\n" +
+	"\x0einvoice_number\x18\x03 \x01(\tR\rinvoiceNumber\x12\x1f\n" +
+	"\vcustomer_id\x18\x04 \x01(\tR\n" +
+	"customerId\x12'\n" +
+	"\x0fsubscription_id\x18\x05 \x01(\tR\x0esubscriptionId\x12\x16\n" +
+	"\x06period\x18\x06 \x01(\tR\x06period\x12\x1a\n" +
+	"\bsubtotal\x18\a \x01(\x01R\bsubtotal\x12\x1a\n" +
+	"\bdiscount\x18\b \x01(\x01R\bdiscount\x12\x1d\n" +
+	"\n" +
+	"tax_amount\x18\t \x01(\x01R\ttaxAmount\x12\x14\n" +
+	"\x05total\x18\n" +
+	" \x01(\x01R\x05total\x12\x1f\n" +
+	"\vpaid_amount\x18\v \x01(\x01R\n" +
+	"paidAmount\x12\"\n" +
+	"\rdue_date_unix\x18\f \x01(\x03R\vdueDateUnix\x12 \n" +
+	"\fpaid_at_unix\x18\r \x01(\x03R\n" +
+	"paidAtUnix\x12\x16\n" +
+	"\x06status\x18\x0e \x01(\tR\x06status\x12\x1d\n" +
+	"\n" +
+	"qr_payload\x18\x0f \x01(\tR\tqrPayload\x12.\n" +
+	"\x13manual_payment_code\x18\x10 \x01(\tR\x11manualPaymentCode\x12\x14\n" +
+	"\x05notes\x18\x11 \x01(\tR\x05notes\x12.\n" +
+	"\x05items\x18\x12 \x03(\v2\x18.polyglot.v1.InvoiceItemR\x05items\x12&\n" +
+	"\x0fcreated_at_unix\x18\x13 \x01(\x03R\rcreatedAtUnix\"\xce\x01\n" +
+	"\vInvoiceItem\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\n" +
+	"invoice_id\x18\x02 \x01(\tR\tinvoiceId\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x1a\n" +
+	"\bquantity\x18\x04 \x01(\x01R\bquantity\x12\x1d\n" +
+	"\n" +
+	"unit_price\x18\x05 \x01(\x01R\tunitPrice\x12\x16\n" +
+	"\x06amount\x18\x06 \x01(\x01R\x06amount\x12\x1b\n" +
+	"\titem_type\x18\a \x01(\tR\bitemType\"\x87\x05\n" +
 	"\fSubscription\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
-	"\vcustomer_id\x18\x02 \x01(\tR\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
+	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12\x1f\n" +
+	"\vcustomer_id\x18\x03 \x01(\tR\n" +
 	"customerId\x12\x17\n" +
-	"\aplan_id\x18\x03 \x01(\tR\x06planId\x12\x16\n" +
-	"\x06status\x18\x04 \x01(\tR\x06status\x12&\n" +
-	"\x0fstart_date_unix\x18\x05 \x01(\x03R\rstartDateUnix\x12\"\n" +
-	"\rend_date_unix\x18\x06 \x01(\x03R\vendDateUnix\x12\x14\n" +
-	"\x05price\x18\a \x01(\x01R\x05price\"6\n" +
+	"\aplan_id\x18\x04 \x01(\tR\x06planId\x12\x1b\n" +
+	"\tdevice_id\x18\x05 \x01(\tR\bdeviceId\x12!\n" +
+	"\fservice_type\x18\x06 \x01(\tR\vserviceType\x12'\n" +
+	"\x0fremote_username\x18\a \x01(\tR\x0eremoteUsername\x12\x1d\n" +
+	"\n" +
+	"rate_limit\x18\b \x01(\tR\trateLimit\x12%\n" +
+	"\x0erouter_profile\x18\t \x01(\tR\rrouterProfile\x12)\n" +
+	"\x10provision_status\x18\n" +
+	" \x01(\tR\x0fprovisionStatus\x12#\n" +
+	"\rbilling_cycle\x18\v \x01(\tR\fbillingCycle\x12\x1f\n" +
+	"\vbilling_day\x18\f \x01(\x05R\n" +
+	"billingDay\x12!\n" +
+	"\fauto_isolate\x18\r \x01(\bR\vautoIsolate\x120\n" +
+	"\x14isolation_grace_days\x18\x0e \x01(\x05R\x12isolationGraceDays\x12\x16\n" +
+	"\x06status\x18\x0f \x01(\tR\x06status\x12&\n" +
+	"\x0fstart_date_unix\x18\x10 \x01(\x03R\rstartDateUnix\x12\"\n" +
+	"\rend_date_unix\x18\x11 \x01(\x03R\vendDateUnix\x12!\n" +
+	"\fcustom_price\x18\x12 \x01(\x01R\vcustomPrice\x12\x14\n" +
+	"\x05notes\x18\x13 \x01(\tR\x05notes\"\xb1\x06\n" +
+	"\x04Plan\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12!\n" +
+	"\fservice_type\x18\x03 \x01(\tR\vserviceType\x126\n" +
+	"\x17bandwidth_download_kbps\x18\x04 \x01(\x05R\x15bandwidthDownloadKbps\x122\n" +
+	"\x15bandwidth_upload_kbps\x18\x05 \x01(\x05R\x13bandwidthUploadKbps\x12.\n" +
+	"\x13burst_download_kbps\x18\x06 \x01(\x05R\x11burstDownloadKbps\x12*\n" +
+	"\x11burst_upload_kbps\x18\a \x01(\x05R\x0fburstUploadKbps\x12\x14\n" +
+	"\x05price\x18\b \x01(\x01R\x05price\x12#\n" +
+	"\rselling_price\x18\t \x01(\x01R\fsellingPrice\x12)\n" +
+	"\x10installation_fee\x18\n" +
+	" \x01(\x01R\x0finstallationFee\x12\x1f\n" +
+	"\vtax_percent\x18\v \x01(\x01R\n" +
+	"taxPercent\x12\x1a\n" +
+	"\bvalidity\x18\f \x01(\tR\bvalidity\x12#\n" +
+	"\rvalidity_mode\x18\r \x01(\tR\fvalidityMode\x12)\n" +
+	"\x10simultaneous_use\x18\x0e \x01(\x05R\x0fsimultaneousUse\x12 \n" +
+	"\fip_pool_name\x18\x0f \x01(\tR\n" +
+	"ipPoolName\x12!\n" +
+	"\fparent_queue\x18\x10 \x01(\tR\vparentQueue\x12!\n" +
+	"\faddress_list\x18\x11 \x01(\tR\vaddressList\x12!\n" +
+	"\fshared_users\x18\x12 \x01(\x05R\vsharedUsers\x12\x1f\n" +
+	"\vexpire_mode\x18\x13 \x01(\tR\n" +
+	"expireMode\x12\x1b\n" +
+	"\tlock_user\x18\x14 \x01(\bR\blockUser\x12\x1f\n" +
+	"\vlock_server\x18\x15 \x01(\bR\n" +
+	"lockServer\x12\x1b\n" +
+	"\tis_active\x18\x16 \x01(\bR\bisActive\x12 \n" +
+	"\vdescription\x18\x17 \x01(\tR\vdescription\"N\n" +
 	"\x13ListInvoicesRequest\x12\x1f\n" +
 	"\vcustomer_id\x18\x01 \x01(\tR\n" +
-	"customerId\"H\n" +
+	"customerId\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\tR\x06status\"H\n" +
 	"\x14ListInvoicesResponse\x120\n" +
 	"\binvoices\x18\x01 \x03(\v2\x14.polyglot.v1.InvoiceR\binvoices\"#\n" +
 	"\x11GetInvoiceRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"D\n" +
 	"\x12GetInvoiceResponse\x12.\n" +
-	"\ainvoice\x18\x01 \x01(\v2\x14.polyglot.v1.InvoiceR\ainvoice\"s\n" +
-	"\x14CreateInvoiceRequest\x12\x1f\n" +
-	"\vcustomer_id\x18\x01 \x01(\tR\n" +
-	"customerId\x12\x16\n" +
-	"\x06amount\x18\x02 \x01(\x01R\x06amount\x12\"\n" +
-	"\rdue_date_unix\x18\x03 \x01(\x03R\vdueDateUnix\"G\n" +
-	"\x15CreateInvoiceResponse\x12.\n" +
-	"\ainvoice\x18\x01 \x01(\v2\x14.polyglot.v1.InvoiceR\ainvoice\"J\n" +
-	"\x11PayInvoiceRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12%\n" +
-	"\x0epayment_method\x18\x02 \x01(\tR\rpaymentMethod\"^\n" +
-	"\x12PayInvoiceResponse\x12.\n" +
-	"\ainvoice\x18\x01 \x01(\v2\x14.polyglot.v1.InvoiceR\ainvoice\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\";\n" +
+	"\ainvoice\x18\x01 \x01(\v2\x14.polyglot.v1.InvoiceR\ainvoice\"k\n" +
+	"\x15CashierResolveRequest\x12\x1e\n" +
+	"\n" +
+	"identifier\x18\x01 \x01(\tR\n" +
+	"identifier\x122\n" +
+	"\x06method\x18\x02 \x01(\x0e2\x1a.polyglot.v1.ResolveMethodR\x06method\"\xbd\x01\n" +
+	"\x16CashierResolveResponse\x12.\n" +
+	"\ainvoice\x18\x01 \x01(\v2\x14.polyglot.v1.InvoiceR\ainvoice\x12#\n" +
+	"\rcustomer_name\x18\x02 \x01(\tR\fcustomerName\x12%\n" +
+	"\x0ecustomer_phone\x18\x03 \x01(\tR\rcustomerPhone\x12'\n" +
+	"\x0fremote_username\x18\x04 \x01(\tR\x0eremoteUsername\"\xf5\x01\n" +
+	"\x11CashierPayRequest\x12\x1d\n" +
+	"\n" +
+	"invoice_id\x18\x01 \x01(\tR\tinvoiceId\x12\x16\n" +
+	"\x06amount\x18\x02 \x01(\x01R\x06amount\x12&\n" +
+	"\x0fcash_account_id\x18\x03 \x01(\tR\rcashAccountId\x12,\n" +
+	"\x12income_category_id\x18\x04 \x01(\tR\x10incomeCategoryId\x12\x1f\n" +
+	"\vscan_method\x18\x05 \x01(\tR\n" +
+	"scanMethod\x12\x1c\n" +
+	"\treference\x18\x06 \x01(\tR\treference\x12\x14\n" +
+	"\x05notes\x18\a \x01(\tR\x05notes\"\x82\x01\n" +
+	"\x12CashierPayResponse\x12\x1d\n" +
+	"\n" +
+	"payment_id\x18\x01 \x01(\tR\tpaymentId\x12\x1d\n" +
+	"\n" +
+	"payment_no\x18\x02 \x01(\tR\tpaymentNo\x12.\n" +
+	"\ainvoice\x18\x03 \x01(\v2\x14.polyglot.v1.InvoiceR\ainvoice\";\n" +
 	"\x18ListSubscriptionsRequest\x12\x1f\n" +
 	"\vcustomer_id\x18\x01 \x01(\tR\n" +
 	"customerId\"\\\n" +
 	"\x19ListSubscriptionsResponse\x12?\n" +
-	"\rsubscriptions\x18\x01 \x03(\v2\x19.polyglot.v1.SubscriptionR\rsubscriptions\"k\n" +
-	"\x19CreateSubscriptionRequest\x12\x1f\n" +
-	"\vcustomer_id\x18\x01 \x01(\tR\n" +
-	"customerId\x12\x17\n" +
-	"\aplan_id\x18\x02 \x01(\tR\x06planId\x12\x14\n" +
-	"\x05price\x18\x03 \x01(\x01R\x05price\"[\n" +
-	"\x1aCreateSubscriptionResponse\x12=\n" +
-	"\fsubscription\x18\x01 \x01(\v2\x19.polyglot.v1.SubscriptionR\fsubscription\"+\n" +
-	"\x19CancelSubscriptionRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"u\n" +
-	"\x1aCancelSubscriptionResponse\x12=\n" +
-	"\fsubscription\x18\x01 \x01(\v2\x19.polyglot.v1.SubscriptionR\fsubscription\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\x8d\x05\n" +
+	"\rsubscriptions\x18\x01 \x03(\v2\x19.polyglot.v1.SubscriptionR\rsubscriptions\"(\n" +
+	"\x16GetSubscriptionRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"X\n" +
+	"\x17GetSubscriptionResponse\x12=\n" +
+	"\fsubscription\x18\x01 \x01(\v2\x19.polyglot.v1.SubscriptionR\fsubscription\"\\\n" +
+	"\x11ChangePlanRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12\x1e\n" +
+	"\vnew_plan_id\x18\x02 \x01(\tR\tnewPlanId\"S\n" +
+	"\x12ChangePlanResponse\x12=\n" +
+	"\fsubscription\x18\x01 \x01(\v2\x19.polyglot.v1.SubscriptionR\fsubscription\"]\n" +
+	"\x1aSuspendSubscriptionRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12\x16\n" +
+	"\x06reason\x18\x02 \x01(\tR\x06reason\"\\\n" +
+	"\x1bSuspendSubscriptionResponse\x12=\n" +
+	"\fsubscription\x18\x01 \x01(\v2\x19.polyglot.v1.SubscriptionR\fsubscription\"D\n" +
+	"\x19ResumeSubscriptionRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\"[\n" +
+	"\x1aResumeSubscriptionResponse\x12=\n" +
+	"\fsubscription\x18\x01 \x01(\v2\x19.polyglot.v1.SubscriptionR\fsubscription\"_\n" +
+	"\x1cTerminateSubscriptionRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12\x16\n" +
+	"\x06reason\x18\x02 \x01(\tR\x06reason\"^\n" +
+	"\x1dTerminateSubscriptionResponse\x12=\n" +
+	"\fsubscription\x18\x01 \x01(\v2\x19.polyglot.v1.SubscriptionR\fsubscription\"c\n" +
+	"\x1bActivateSubscriptionRequest\x12'\n" +
+	"\x0fsubscription_id\x18\x01 \x01(\tR\x0esubscriptionId\x12\x1b\n" +
+	"\tdevice_id\x18\x02 \x01(\tR\bdeviceId\"]\n" +
+	"\x1cActivateSubscriptionResponse\x12=\n" +
+	"\fsubscription\x18\x01 \x01(\v2\x19.polyglot.v1.SubscriptionR\fsubscription\"3\n" +
+	"\x10ListPlansRequest\x12\x1f\n" +
+	"\vactive_only\x18\x01 \x01(\bR\n" +
+	"activeOnly\"<\n" +
+	"\x11ListPlansResponse\x12'\n" +
+	"\x05plans\x18\x01 \x03(\v2\x11.polyglot.v1.PlanR\x05plans\" \n" +
+	"\x0eGetPlanRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"8\n" +
+	"\x0fGetPlanResponse\x12%\n" +
+	"\x04plan\x18\x01 \x01(\v2\x11.polyglot.v1.PlanR\x04plan\":\n" +
+	"\x11CreatePlanRequest\x12%\n" +
+	"\x04plan\x18\x01 \x01(\v2\x11.polyglot.v1.PlanR\x04plan\";\n" +
+	"\x12CreatePlanResponse\x12%\n" +
+	"\x04plan\x18\x01 \x01(\v2\x11.polyglot.v1.PlanR\x04plan\":\n" +
+	"\x11UpdatePlanRequest\x12%\n" +
+	"\x04plan\x18\x01 \x01(\v2\x11.polyglot.v1.PlanR\x04plan\";\n" +
+	"\x12UpdatePlanResponse\x12%\n" +
+	"\x04plan\x18\x01 \x01(\v2\x11.polyglot.v1.PlanR\x04plan\"#\n" +
+	"\x11DeletePlanRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\".\n" +
+	"\x12DeletePlanResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"1\n" +
+	"\x17GenerateInvoicesRequest\x12\x16\n" +
+	"\x06period\x18\x01 \x01(\tR\x06period\"N\n" +
+	"\x18GenerateInvoicesResponse\x12\x18\n" +
+	"\acreated\x18\x01 \x01(\x05R\acreated\x12\x18\n" +
+	"\askipped\x18\x02 \x01(\x05R\askipped*E\n" +
+	"\rResolveMethod\x12\x10\n" +
+	"\fRESOLVE_CODE\x10\x00\x12\x0e\n" +
+	"\n" +
+	"RESOLVE_QR\x10\x01\x12\x12\n" +
+	"\x0eRESOLVE_PORTAL\x10\x022\xfd\v\n" +
 	"\x0eBillingService\x12S\n" +
 	"\fListInvoices\x12 .polyglot.v1.ListInvoicesRequest\x1a!.polyglot.v1.ListInvoicesResponse\x12M\n" +
 	"\n" +
-	"GetInvoice\x12\x1e.polyglot.v1.GetInvoiceRequest\x1a\x1f.polyglot.v1.GetInvoiceResponse\x12V\n" +
-	"\rCreateInvoice\x12!.polyglot.v1.CreateInvoiceRequest\x1a\".polyglot.v1.CreateInvoiceResponse\x12M\n" +
+	"GetInvoice\x12\x1e.polyglot.v1.GetInvoiceRequest\x1a\x1f.polyglot.v1.GetInvoiceResponse\x12Y\n" +
+	"\x0eCashierResolve\x12\".polyglot.v1.CashierResolveRequest\x1a#.polyglot.v1.CashierResolveResponse\x12M\n" +
 	"\n" +
-	"PayInvoice\x12\x1e.polyglot.v1.PayInvoiceRequest\x1a\x1f.polyglot.v1.PayInvoiceResponse\x12b\n" +
-	"\x11ListSubscriptions\x12%.polyglot.v1.ListSubscriptionsRequest\x1a&.polyglot.v1.ListSubscriptionsResponse\x12e\n" +
-	"\x12CreateSubscription\x12&.polyglot.v1.CreateSubscriptionRequest\x1a'.polyglot.v1.CreateSubscriptionResponse\x12e\n" +
-	"\x12CancelSubscription\x12&.polyglot.v1.CancelSubscriptionRequest\x1a'.polyglot.v1.CancelSubscriptionResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"CashierPay\x12\x1e.polyglot.v1.CashierPayRequest\x1a\x1f.polyglot.v1.CashierPayResponse\x12b\n" +
+	"\x11ListSubscriptions\x12%.polyglot.v1.ListSubscriptionsRequest\x1a&.polyglot.v1.ListSubscriptionsResponse\x12\\\n" +
+	"\x0fGetSubscription\x12#.polyglot.v1.GetSubscriptionRequest\x1a$.polyglot.v1.GetSubscriptionResponse\x12M\n" +
+	"\n" +
+	"ChangePlan\x12\x1e.polyglot.v1.ChangePlanRequest\x1a\x1f.polyglot.v1.ChangePlanResponse\x12h\n" +
+	"\x13SuspendSubscription\x12'.polyglot.v1.SuspendSubscriptionRequest\x1a(.polyglot.v1.SuspendSubscriptionResponse\x12e\n" +
+	"\x12ResumeSubscription\x12&.polyglot.v1.ResumeSubscriptionRequest\x1a'.polyglot.v1.ResumeSubscriptionResponse\x12n\n" +
+	"\x15TerminateSubscription\x12).polyglot.v1.TerminateSubscriptionRequest\x1a*.polyglot.v1.TerminateSubscriptionResponse\x12k\n" +
+	"\x14ActivateSubscription\x12(.polyglot.v1.ActivateSubscriptionRequest\x1a).polyglot.v1.ActivateSubscriptionResponse\x12J\n" +
+	"\tListPlans\x12\x1d.polyglot.v1.ListPlansRequest\x1a\x1e.polyglot.v1.ListPlansResponse\x12D\n" +
+	"\aGetPlan\x12\x1b.polyglot.v1.GetPlanRequest\x1a\x1c.polyglot.v1.GetPlanResponse\x12M\n" +
+	"\n" +
+	"CreatePlan\x12\x1e.polyglot.v1.CreatePlanRequest\x1a\x1f.polyglot.v1.CreatePlanResponse\x12M\n" +
+	"\n" +
+	"UpdatePlan\x12\x1e.polyglot.v1.UpdatePlanRequest\x1a\x1f.polyglot.v1.UpdatePlanResponse\x12M\n" +
+	"\n" +
+	"DeletePlan\x12\x1e.polyglot.v1.DeletePlanRequest\x1a\x1f.polyglot.v1.DeletePlanResponse\x12_\n" +
+	"\x10GenerateInvoices\x12$.polyglot.v1.GenerateInvoicesRequest\x1a%.polyglot.v1.GenerateInvoicesResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_billing_proto_rawDescOnce sync.Once
@@ -953,52 +2629,108 @@ func file_v1_billing_proto_rawDescGZIP() []byte {
 	return file_v1_billing_proto_rawDescData
 }
 
-var file_v1_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_v1_billing_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_v1_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
 var file_v1_billing_proto_goTypes = []any{
-	(*Invoice)(nil),                    // 0: polyglot.v1.Invoice
-	(*Subscription)(nil),               // 1: polyglot.v1.Subscription
-	(*ListInvoicesRequest)(nil),        // 2: polyglot.v1.ListInvoicesRequest
-	(*ListInvoicesResponse)(nil),       // 3: polyglot.v1.ListInvoicesResponse
-	(*GetInvoiceRequest)(nil),          // 4: polyglot.v1.GetInvoiceRequest
-	(*GetInvoiceResponse)(nil),         // 5: polyglot.v1.GetInvoiceResponse
-	(*CreateInvoiceRequest)(nil),       // 6: polyglot.v1.CreateInvoiceRequest
-	(*CreateInvoiceResponse)(nil),      // 7: polyglot.v1.CreateInvoiceResponse
-	(*PayInvoiceRequest)(nil),          // 8: polyglot.v1.PayInvoiceRequest
-	(*PayInvoiceResponse)(nil),         // 9: polyglot.v1.PayInvoiceResponse
-	(*ListSubscriptionsRequest)(nil),   // 10: polyglot.v1.ListSubscriptionsRequest
-	(*ListSubscriptionsResponse)(nil),  // 11: polyglot.v1.ListSubscriptionsResponse
-	(*CreateSubscriptionRequest)(nil),  // 12: polyglot.v1.CreateSubscriptionRequest
-	(*CreateSubscriptionResponse)(nil), // 13: polyglot.v1.CreateSubscriptionResponse
-	(*CancelSubscriptionRequest)(nil),  // 14: polyglot.v1.CancelSubscriptionRequest
-	(*CancelSubscriptionResponse)(nil), // 15: polyglot.v1.CancelSubscriptionResponse
+	(ResolveMethod)(0),                    // 0: polyglot.v1.ResolveMethod
+	(*Invoice)(nil),                       // 1: polyglot.v1.Invoice
+	(*InvoiceItem)(nil),                   // 2: polyglot.v1.InvoiceItem
+	(*Subscription)(nil),                  // 3: polyglot.v1.Subscription
+	(*Plan)(nil),                          // 4: polyglot.v1.Plan
+	(*ListInvoicesRequest)(nil),           // 5: polyglot.v1.ListInvoicesRequest
+	(*ListInvoicesResponse)(nil),          // 6: polyglot.v1.ListInvoicesResponse
+	(*GetInvoiceRequest)(nil),             // 7: polyglot.v1.GetInvoiceRequest
+	(*GetInvoiceResponse)(nil),            // 8: polyglot.v1.GetInvoiceResponse
+	(*CashierResolveRequest)(nil),         // 9: polyglot.v1.CashierResolveRequest
+	(*CashierResolveResponse)(nil),        // 10: polyglot.v1.CashierResolveResponse
+	(*CashierPayRequest)(nil),             // 11: polyglot.v1.CashierPayRequest
+	(*CashierPayResponse)(nil),            // 12: polyglot.v1.CashierPayResponse
+	(*ListSubscriptionsRequest)(nil),      // 13: polyglot.v1.ListSubscriptionsRequest
+	(*ListSubscriptionsResponse)(nil),     // 14: polyglot.v1.ListSubscriptionsResponse
+	(*GetSubscriptionRequest)(nil),        // 15: polyglot.v1.GetSubscriptionRequest
+	(*GetSubscriptionResponse)(nil),       // 16: polyglot.v1.GetSubscriptionResponse
+	(*ChangePlanRequest)(nil),             // 17: polyglot.v1.ChangePlanRequest
+	(*ChangePlanResponse)(nil),            // 18: polyglot.v1.ChangePlanResponse
+	(*SuspendSubscriptionRequest)(nil),    // 19: polyglot.v1.SuspendSubscriptionRequest
+	(*SuspendSubscriptionResponse)(nil),   // 20: polyglot.v1.SuspendSubscriptionResponse
+	(*ResumeSubscriptionRequest)(nil),     // 21: polyglot.v1.ResumeSubscriptionRequest
+	(*ResumeSubscriptionResponse)(nil),    // 22: polyglot.v1.ResumeSubscriptionResponse
+	(*TerminateSubscriptionRequest)(nil),  // 23: polyglot.v1.TerminateSubscriptionRequest
+	(*TerminateSubscriptionResponse)(nil), // 24: polyglot.v1.TerminateSubscriptionResponse
+	(*ActivateSubscriptionRequest)(nil),   // 25: polyglot.v1.ActivateSubscriptionRequest
+	(*ActivateSubscriptionResponse)(nil),  // 26: polyglot.v1.ActivateSubscriptionResponse
+	(*ListPlansRequest)(nil),              // 27: polyglot.v1.ListPlansRequest
+	(*ListPlansResponse)(nil),             // 28: polyglot.v1.ListPlansResponse
+	(*GetPlanRequest)(nil),                // 29: polyglot.v1.GetPlanRequest
+	(*GetPlanResponse)(nil),               // 30: polyglot.v1.GetPlanResponse
+	(*CreatePlanRequest)(nil),             // 31: polyglot.v1.CreatePlanRequest
+	(*CreatePlanResponse)(nil),            // 32: polyglot.v1.CreatePlanResponse
+	(*UpdatePlanRequest)(nil),             // 33: polyglot.v1.UpdatePlanRequest
+	(*UpdatePlanResponse)(nil),            // 34: polyglot.v1.UpdatePlanResponse
+	(*DeletePlanRequest)(nil),             // 35: polyglot.v1.DeletePlanRequest
+	(*DeletePlanResponse)(nil),            // 36: polyglot.v1.DeletePlanResponse
+	(*GenerateInvoicesRequest)(nil),       // 37: polyglot.v1.GenerateInvoicesRequest
+	(*GenerateInvoicesResponse)(nil),      // 38: polyglot.v1.GenerateInvoicesResponse
 }
 var file_v1_billing_proto_depIdxs = []int32{
-	0,  // 0: polyglot.v1.ListInvoicesResponse.invoices:type_name -> polyglot.v1.Invoice
-	0,  // 1: polyglot.v1.GetInvoiceResponse.invoice:type_name -> polyglot.v1.Invoice
-	0,  // 2: polyglot.v1.CreateInvoiceResponse.invoice:type_name -> polyglot.v1.Invoice
-	0,  // 3: polyglot.v1.PayInvoiceResponse.invoice:type_name -> polyglot.v1.Invoice
-	1,  // 4: polyglot.v1.ListSubscriptionsResponse.subscriptions:type_name -> polyglot.v1.Subscription
-	1,  // 5: polyglot.v1.CreateSubscriptionResponse.subscription:type_name -> polyglot.v1.Subscription
-	1,  // 6: polyglot.v1.CancelSubscriptionResponse.subscription:type_name -> polyglot.v1.Subscription
-	2,  // 7: polyglot.v1.BillingService.ListInvoices:input_type -> polyglot.v1.ListInvoicesRequest
-	4,  // 8: polyglot.v1.BillingService.GetInvoice:input_type -> polyglot.v1.GetInvoiceRequest
-	6,  // 9: polyglot.v1.BillingService.CreateInvoice:input_type -> polyglot.v1.CreateInvoiceRequest
-	8,  // 10: polyglot.v1.BillingService.PayInvoice:input_type -> polyglot.v1.PayInvoiceRequest
-	10, // 11: polyglot.v1.BillingService.ListSubscriptions:input_type -> polyglot.v1.ListSubscriptionsRequest
-	12, // 12: polyglot.v1.BillingService.CreateSubscription:input_type -> polyglot.v1.CreateSubscriptionRequest
-	14, // 13: polyglot.v1.BillingService.CancelSubscription:input_type -> polyglot.v1.CancelSubscriptionRequest
-	3,  // 14: polyglot.v1.BillingService.ListInvoices:output_type -> polyglot.v1.ListInvoicesResponse
-	5,  // 15: polyglot.v1.BillingService.GetInvoice:output_type -> polyglot.v1.GetInvoiceResponse
-	7,  // 16: polyglot.v1.BillingService.CreateInvoice:output_type -> polyglot.v1.CreateInvoiceResponse
-	9,  // 17: polyglot.v1.BillingService.PayInvoice:output_type -> polyglot.v1.PayInvoiceResponse
-	11, // 18: polyglot.v1.BillingService.ListSubscriptions:output_type -> polyglot.v1.ListSubscriptionsResponse
-	13, // 19: polyglot.v1.BillingService.CreateSubscription:output_type -> polyglot.v1.CreateSubscriptionResponse
-	15, // 20: polyglot.v1.BillingService.CancelSubscription:output_type -> polyglot.v1.CancelSubscriptionResponse
-	14, // [14:21] is the sub-list for method output_type
-	7,  // [7:14] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	2,  // 0: polyglot.v1.Invoice.items:type_name -> polyglot.v1.InvoiceItem
+	1,  // 1: polyglot.v1.ListInvoicesResponse.invoices:type_name -> polyglot.v1.Invoice
+	1,  // 2: polyglot.v1.GetInvoiceResponse.invoice:type_name -> polyglot.v1.Invoice
+	0,  // 3: polyglot.v1.CashierResolveRequest.method:type_name -> polyglot.v1.ResolveMethod
+	1,  // 4: polyglot.v1.CashierResolveResponse.invoice:type_name -> polyglot.v1.Invoice
+	1,  // 5: polyglot.v1.CashierPayResponse.invoice:type_name -> polyglot.v1.Invoice
+	3,  // 6: polyglot.v1.ListSubscriptionsResponse.subscriptions:type_name -> polyglot.v1.Subscription
+	3,  // 7: polyglot.v1.GetSubscriptionResponse.subscription:type_name -> polyglot.v1.Subscription
+	3,  // 8: polyglot.v1.ChangePlanResponse.subscription:type_name -> polyglot.v1.Subscription
+	3,  // 9: polyglot.v1.SuspendSubscriptionResponse.subscription:type_name -> polyglot.v1.Subscription
+	3,  // 10: polyglot.v1.ResumeSubscriptionResponse.subscription:type_name -> polyglot.v1.Subscription
+	3,  // 11: polyglot.v1.TerminateSubscriptionResponse.subscription:type_name -> polyglot.v1.Subscription
+	3,  // 12: polyglot.v1.ActivateSubscriptionResponse.subscription:type_name -> polyglot.v1.Subscription
+	4,  // 13: polyglot.v1.ListPlansResponse.plans:type_name -> polyglot.v1.Plan
+	4,  // 14: polyglot.v1.GetPlanResponse.plan:type_name -> polyglot.v1.Plan
+	4,  // 15: polyglot.v1.CreatePlanRequest.plan:type_name -> polyglot.v1.Plan
+	4,  // 16: polyglot.v1.CreatePlanResponse.plan:type_name -> polyglot.v1.Plan
+	4,  // 17: polyglot.v1.UpdatePlanRequest.plan:type_name -> polyglot.v1.Plan
+	4,  // 18: polyglot.v1.UpdatePlanResponse.plan:type_name -> polyglot.v1.Plan
+	5,  // 19: polyglot.v1.BillingService.ListInvoices:input_type -> polyglot.v1.ListInvoicesRequest
+	7,  // 20: polyglot.v1.BillingService.GetInvoice:input_type -> polyglot.v1.GetInvoiceRequest
+	9,  // 21: polyglot.v1.BillingService.CashierResolve:input_type -> polyglot.v1.CashierResolveRequest
+	11, // 22: polyglot.v1.BillingService.CashierPay:input_type -> polyglot.v1.CashierPayRequest
+	13, // 23: polyglot.v1.BillingService.ListSubscriptions:input_type -> polyglot.v1.ListSubscriptionsRequest
+	15, // 24: polyglot.v1.BillingService.GetSubscription:input_type -> polyglot.v1.GetSubscriptionRequest
+	17, // 25: polyglot.v1.BillingService.ChangePlan:input_type -> polyglot.v1.ChangePlanRequest
+	19, // 26: polyglot.v1.BillingService.SuspendSubscription:input_type -> polyglot.v1.SuspendSubscriptionRequest
+	21, // 27: polyglot.v1.BillingService.ResumeSubscription:input_type -> polyglot.v1.ResumeSubscriptionRequest
+	23, // 28: polyglot.v1.BillingService.TerminateSubscription:input_type -> polyglot.v1.TerminateSubscriptionRequest
+	25, // 29: polyglot.v1.BillingService.ActivateSubscription:input_type -> polyglot.v1.ActivateSubscriptionRequest
+	27, // 30: polyglot.v1.BillingService.ListPlans:input_type -> polyglot.v1.ListPlansRequest
+	29, // 31: polyglot.v1.BillingService.GetPlan:input_type -> polyglot.v1.GetPlanRequest
+	31, // 32: polyglot.v1.BillingService.CreatePlan:input_type -> polyglot.v1.CreatePlanRequest
+	33, // 33: polyglot.v1.BillingService.UpdatePlan:input_type -> polyglot.v1.UpdatePlanRequest
+	35, // 34: polyglot.v1.BillingService.DeletePlan:input_type -> polyglot.v1.DeletePlanRequest
+	37, // 35: polyglot.v1.BillingService.GenerateInvoices:input_type -> polyglot.v1.GenerateInvoicesRequest
+	6,  // 36: polyglot.v1.BillingService.ListInvoices:output_type -> polyglot.v1.ListInvoicesResponse
+	8,  // 37: polyglot.v1.BillingService.GetInvoice:output_type -> polyglot.v1.GetInvoiceResponse
+	10, // 38: polyglot.v1.BillingService.CashierResolve:output_type -> polyglot.v1.CashierResolveResponse
+	12, // 39: polyglot.v1.BillingService.CashierPay:output_type -> polyglot.v1.CashierPayResponse
+	14, // 40: polyglot.v1.BillingService.ListSubscriptions:output_type -> polyglot.v1.ListSubscriptionsResponse
+	16, // 41: polyglot.v1.BillingService.GetSubscription:output_type -> polyglot.v1.GetSubscriptionResponse
+	18, // 42: polyglot.v1.BillingService.ChangePlan:output_type -> polyglot.v1.ChangePlanResponse
+	20, // 43: polyglot.v1.BillingService.SuspendSubscription:output_type -> polyglot.v1.SuspendSubscriptionResponse
+	22, // 44: polyglot.v1.BillingService.ResumeSubscription:output_type -> polyglot.v1.ResumeSubscriptionResponse
+	24, // 45: polyglot.v1.BillingService.TerminateSubscription:output_type -> polyglot.v1.TerminateSubscriptionResponse
+	26, // 46: polyglot.v1.BillingService.ActivateSubscription:output_type -> polyglot.v1.ActivateSubscriptionResponse
+	28, // 47: polyglot.v1.BillingService.ListPlans:output_type -> polyglot.v1.ListPlansResponse
+	30, // 48: polyglot.v1.BillingService.GetPlan:output_type -> polyglot.v1.GetPlanResponse
+	32, // 49: polyglot.v1.BillingService.CreatePlan:output_type -> polyglot.v1.CreatePlanResponse
+	34, // 50: polyglot.v1.BillingService.UpdatePlan:output_type -> polyglot.v1.UpdatePlanResponse
+	36, // 51: polyglot.v1.BillingService.DeletePlan:output_type -> polyglot.v1.DeletePlanResponse
+	38, // 52: polyglot.v1.BillingService.GenerateInvoices:output_type -> polyglot.v1.GenerateInvoicesResponse
+	36, // [36:53] is the sub-list for method output_type
+	19, // [19:36] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
+	0,  // [0:19] is the sub-list for field type_name
 }
 
 func init() { file_v1_billing_proto_init() }
@@ -1011,13 +2743,14 @@ func file_v1_billing_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_billing_proto_rawDesc), len(file_v1_billing_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   16,
+			NumEnums:      1,
+			NumMessages:   38,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_v1_billing_proto_goTypes,
 		DependencyIndexes: file_v1_billing_proto_depIdxs,
+		EnumInfos:         file_v1_billing_proto_enumTypes,
 		MessageInfos:      file_v1_billing_proto_msgTypes,
 	}.Build()
 	File_v1_billing_proto = out.File

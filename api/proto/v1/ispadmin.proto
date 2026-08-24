@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// Operasi admin migrasi Mikhmon & data pelanggan (CSV/XLSX/live-router).
+
+enum ImportFormat {
+  IMPORT_FORMAT_CSV = 0;
+  IMPORT_FORMAT_XLSX = 1;
+}
+
+// bytes dibatasi secara efektif ±15MB setelah overhead JSON/base64 oleh
+// transport Connect — cukup untuk file pelanggan ISP tipikal.
+message ImportFileRequest {
+  bytes payload = 1;
+  ImportFormat format = 2;
+}
+message ImportResult {
+  int32 rows_total = 1;
+  int32 customers_created = 2;
+  int32 customers_updated = 3;
+  int32 subscriptions_created = 4;
+  int32 plans_created = 5;
+  repeated string skipped = 6; // "baris N (nama): alasan"
+}
+message ImportFileResponse { ImportResult result = 1; }
+
+// Tarik akun langsung dari router (read-only di router).
+message ImportRouterRequest {
+  string device_id = 1;
+  string device_name = 2; // nama server untuk baris impor (label)
+  bool dry_run = 3;       // true = preview tanpa menulis DB
+}
+message ImportRouterResponse {
+  ImportResult result = 1;
+  repeated string preview_rows = 2; // username@paket (maks 20)
+  repeated string validation_errors = 3;
+}
+
+message ExportCustomersRequest {
+  ImportFormat format = 1;
+}
+message ExportCustomersResponse {
+  bytes payload = 1;
+  string content_type = 2;
+  string filename = 3;
+}
+
+message ReconcileRequest { string device_id = 1; }
+message ReconcileResponse {
+  repeated string missing_in_db = 1;      // ada di router, tak ada di DB
+  repeated string missing_in_router = 2;  // ada di DB, tak ada di router
+  repeated string profile_mismatch = 3;   // "username: db=X router=Y"
+}
+
+service IspAdminService {
+  rpc ImportFile(ImportFileRequest) returns (ImportFileResponse);
+  rpc ImportRouter(ImportRouterRequest) returns (ImportRouterResponse);
+  rpc ExportCustomers(ExportCustomersRequest) returns (ExportCustomersResponse);
+  rpc Reconcile(ReconcileRequest) returns (ReconcileResponse);
+}

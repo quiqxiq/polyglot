@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 package polyglot.v1;
 
 import "v1/billing.proto";
@@ -8,54 +9,47 @@ option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 message Customer {
   string id = 1;
   string tenant_id = 2;
-  string name = 3;
-  string email = 4;
+  string customer_code = 3;
+  string name = 4;
   string phone = 5;
-  string address = 6;
-  string status = 7;
-  int64 created_at_unix = 8;
+  string email = 6;
+  string address = 7;
+  double latitude = 8;
+  double longitude = 9;
+  bool has_coordinates = 10;
+  string portal_access_code = 11;
+  string status = 12; // ACTIVE | ISOLATED | SUSPENDED | TERMINATED
+  string notes = 13;
+  int64 registered_at_unix = 14;
+  int64 created_at_unix = 15;
 }
 
 message ListCustomersRequest {}
+message ListCustomersResponse { repeated Customer customers = 1; }
 
-message ListCustomersResponse {
-  repeated Customer customers = 1;
-}
+message GetCustomerRequest { string id = 1; }
+message GetCustomerResponse { Customer customer = 1; }
 
-message GetCustomerRequest {
-  string id = 1;
-}
-
-message GetCustomerResponse {
-  Customer customer = 1;
-}
-
-message CreateCustomerRequest {
-  Customer customer = 1;
-}
-
+message CreateCustomerRequest { Customer customer = 1; }
 message CreateCustomerResponse {
   Customer customer = 1;
   string message = 2;
 }
 
-message UpdateCustomerRequest {
-  Customer customer = 1;
-}
-
+message UpdateCustomerRequest { Customer customer = 1; }
 message UpdateCustomerResponse {
   Customer customer = 1;
   string message = 2;
 }
 
-message DeleteCustomerRequest {
-  string id = 1;
-}
+message DeleteCustomerRequest { string id = 1; }
+message DeleteCustomerResponse { string message = 1; }
 
-message DeleteCustomerResponse {
-  string message = 1;
-}
-
+// Pencarian cepat untuk kasir & portal.
+message FindCustomerByPhoneRequest { string phone = 1; }
+message FindCustomerByCodeRequest { string customer_code = 1; }
+message FindCustomerByPortalCodeRequest { string portal_access_code = 1; }
+message FindCustomerResponse { Customer customer = 1; }
 
 service CustomerService {
   rpc ListCustomers(ListCustomersRequest) returns (ListCustomersResponse);
@@ -63,5 +57,12 @@ service CustomerService {
   rpc CreateCustomer(CreateCustomerRequest) returns (CreateCustomerResponse);
   rpc UpdateCustomer(UpdateCustomerRequest) returns (UpdateCustomerResponse);
   rpc DeleteCustomer(DeleteCustomerRequest) returns (DeleteCustomerResponse);
+
+  // Lookups cepat
+  rpc FindByPhone(FindCustomerByPhoneRequest) returns (FindCustomerResponse);
+  rpc FindByCustomerCode(FindCustomerByCodeRequest) returns (FindCustomerResponse);
+  rpc FindByPortalCode(FindCustomerByPortalCodeRequest) returns (FindCustomerResponse);
+
+  // Kompatibilitas lama
   rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse);
 }

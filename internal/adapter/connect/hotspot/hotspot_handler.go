@@ -42,4 +42,3 @@ func (h *HotspotConnectHandler) getDriver(ctx context.Context, deviceID string) 
 	}
 	return driver, nil
 }
-

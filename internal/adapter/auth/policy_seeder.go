@@ -48,6 +48,9 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"admin", "profile:.*", "*"},
 		{"admin", "report:.*", "*"},
 		{"admin", "ispadmin:.*", "*"},
+		{"admin", "registration:.*", "*"},
+		{"admin", "cashbook:.*", "*"},
+		{"admin", "notification:.*", "*"},
 
 		// Agent / CS — customer service & knowledge lookup.
 		{"agent", "conversation:.*", "*"},
@@ -57,6 +60,8 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"agent", "whatsapp:read", "*"},
 		{"agent", "profile:.*", "*"},
 		{"agent", "report:read", "*"},
+		{"agent", "registration:read", "*"},
+		{"agent", "notification:read", "*"},
 
 		// Teknisi — monitoring + command non-destruktif (guard di usecase).
 		{"teknisi", "device:read", "*"},
@@ -70,6 +75,8 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"teknisi", "ppp:read", "*"},
 		{"teknisi", "log:read", "*"},
 		{"teknisi", "profile:.*", "*"},
+		{"teknisi", "registration:read", "*"},
+		{"teknisi", "registration:install", "*"},
 	}
 
 	added := 0

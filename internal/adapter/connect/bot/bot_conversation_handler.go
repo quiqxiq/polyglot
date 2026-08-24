@@ -202,4 +202,3 @@ func (h *BotConnectHandler) GetRateLimitStatus(ctx context.Context, req *connect
 		IsWhitelisted:   info.IsWhitelisted,
 	}), nil
 }
-

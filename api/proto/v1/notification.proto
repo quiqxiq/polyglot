@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+message NotificationTemplate {
+  string id = 1;
+  string template_key = 2; // BILL_REMINDER, PAYMENT_RECEIPT, ...
+  string name = 3;
+  string content = 4;      // teks dengan placeholder {{var}}
+  string variables_json = 5;
+  bool is_active = 6;
+}
+
+message WANotification {
+  string id = 1;
+  string template_id = 2;
+  string customer_id = 3;
+  string invoice_id = 4;
+  string recipient_phone = 5;
+  string message_type = 6;
+  string message_content = 7;
+  string status = 8; // QUEUED | SENT | FAILED
+  string error_message = 9;
+  int32 attempts = 10;
+  int64 sent_at_unix = 11;
+  int64 created_at_unix = 12;
+}
+
+message ListNotificationTemplatesRequest { bool active_only = 1; }
+message ListNotificationTemplatesResponse { repeated NotificationTemplate templates = 1; }
+
+message GetNotificationTemplateRequest { string template_key = 1; }
+message GetNotificationTemplateResponse { NotificationTemplate template = 1; }
+
+message SaveNotificationTemplateRequest { NotificationTemplate template = 1; }
+message SaveNotificationTemplateResponse { NotificationTemplate template = 1; }
+
+message ListNotificationsRequest {
+  string customer_id = 1;
+  string status = 2; // QUEUED | SENT | FAILED | kosong
+  int32 limit = 3;
+}
+message ListNotificationsResponse { repeated WANotification notifications = 1; }
+
+message PendingCountRequest {}
+message PendingCountResponse {
+  int32 queued = 1;
+  int32 failed_recent = 2;
+}
+
+message MarkNotificationSentRequest { string id = 1; }
+message MarkNotificationSentResponse {}
+
+message MarkNotificationFailedRequest {
+  string id = 1;
+  string error_message = 2;
+}
+message MarkNotificationFailedResponse {}
+
+// Util admin: kirim pesan uji langsung (bypass antrean).
+message TestSendRequest {
+  string phone = 1;
+  string content = 2;
+}
+message TestSendResponse { bool sent = 1; }
+
+service NotificationService {
+  rpc ListTemplates(ListNotificationTemplatesRequest) returns (ListNotificationTemplatesResponse);
+  rpc GetTemplate(GetNotificationTemplateRequest) returns (GetNotificationTemplateResponse);
+  rpc SaveTemplate(SaveNotificationTemplateRequest) returns (SaveNotificationTemplateResponse);
+
+  rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse);
+  rpc PendingCount(PendingCountRequest) returns (PendingCountResponse);
+  rpc MarkNotificationSent(MarkNotificationSentRequest) returns (MarkNotificationSentResponse);
+  rpc MarkNotificationFailed(MarkNotificationFailedRequest) returns (MarkNotificationFailedResponse);
+
+  rpc TestSend(TestSendRequest) returns (TestSendResponse);
+}

@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// Laporan finansial dari daily_financial_snapshots (agregat siap pakai).
+
+message ReportSummary {
+  string period = 1;
+  int32 invoice_count = 2;
+  double invoice_total = 3;
+  int32 payment_count = 4;
+  double payment_total = 5;
+  double outstanding_total = 6;
+  double expense_total = 7;
+  int32 active_subscriptions = 8;
+  map<string, double> cash_balances = 9; // per rekening kas
+}
+
+message DailyReportRequest {
+  string date = 1; // 'YYYY-MM-DD'; kosong = hari ini
+}
+message DailyReportResponse { ReportSummary summary = 1; }
+
+message MonthlyReportRequest {
+  string month = 1; // 'YYYY-MM'; kosong = bulan berjalan
+}
+message MonthlyReportResponse { ReportSummary summary = 1; }
+
+message YearlyReportRequest {
+  int32 year = 1; // mis. 2026; 0 = tahun berjalan
+}
+message YearlyReportResponse { ReportSummary summary = 1; }
+
+// Pemicu manual rebuild snapshot untuk satu tanggal.
+message RefreshSnapshotRequest {
+  string date = 1; // 'YYYY-MM-DD'; kosong = hari ini
+}
+message RefreshSnapshotResponse {
+  string message = 1;
+  string date = 2;
+}
+
+service ReportService {
+  rpc DailyReport(DailyReportRequest) returns (DailyReportResponse);
+  rpc MonthlyReport(MonthlyReportRequest) returns (MonthlyReportResponse);
+  rpc YearlyReport(YearlyReportRequest) returns (YearlyReportResponse);
+
+  rpc RefreshSnapshot(RefreshSnapshotRequest) returns (RefreshSnapshotResponse);
+}

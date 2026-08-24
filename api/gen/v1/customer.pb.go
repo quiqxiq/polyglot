@@ -22,17 +22,24 @@ const (
 )
 
 type Customer struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	TenantId      string                 `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	Email         string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
-	Phone         string                 `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
-	Address       string                 `protobuf:"bytes,6,opt,name=address,proto3" json:"address,omitempty"`
-	Status        string                 `protobuf:"bytes,7,opt,name=status,proto3" json:"status,omitempty"`
-	CreatedAtUnix int64                  `protobuf:"varint,8,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Id               string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	TenantId         string                 `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	CustomerCode     string                 `protobuf:"bytes,3,opt,name=customer_code,json=customerCode,proto3" json:"customer_code,omitempty"`
+	Name             string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	Phone            string                 `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
+	Email            string                 `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
+	Address          string                 `protobuf:"bytes,7,opt,name=address,proto3" json:"address,omitempty"`
+	Latitude         float64                `protobuf:"fixed64,8,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Longitude        float64                `protobuf:"fixed64,9,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	HasCoordinates   bool                   `protobuf:"varint,10,opt,name=has_coordinates,json=hasCoordinates,proto3" json:"has_coordinates,omitempty"`
+	PortalAccessCode string                 `protobuf:"bytes,11,opt,name=portal_access_code,json=portalAccessCode,proto3" json:"portal_access_code,omitempty"`
+	Status           string                 `protobuf:"bytes,12,opt,name=status,proto3" json:"status,omitempty"` // ACTIVE | ISOLATED | SUSPENDED | TERMINATED
+	Notes            string                 `protobuf:"bytes,13,opt,name=notes,proto3" json:"notes,omitempty"`
+	RegisteredAtUnix int64                  `protobuf:"varint,14,opt,name=registered_at_unix,json=registeredAtUnix,proto3" json:"registered_at_unix,omitempty"`
+	CreatedAtUnix    int64                  `protobuf:"varint,15,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *Customer) Reset() {
@@ -79,16 +86,16 @@ func (x *Customer) GetTenantId() string {
 	return ""
 }
 
-func (x *Customer) GetName() string {
+func (x *Customer) GetCustomerCode() string {
 	if x != nil {
-		return x.Name
+		return x.CustomerCode
 	}
 	return ""
 }
 
-func (x *Customer) GetEmail() string {
+func (x *Customer) GetName() string {
 	if x != nil {
-		return x.Email
+		return x.Name
 	}
 	return ""
 }
@@ -100,9 +107,44 @@ func (x *Customer) GetPhone() string {
 	return ""
 }
 
+func (x *Customer) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
 func (x *Customer) GetAddress() string {
 	if x != nil {
 		return x.Address
+	}
+	return ""
+}
+
+func (x *Customer) GetLatitude() float64 {
+	if x != nil {
+		return x.Latitude
+	}
+	return 0
+}
+
+func (x *Customer) GetLongitude() float64 {
+	if x != nil {
+		return x.Longitude
+	}
+	return 0
+}
+
+func (x *Customer) GetHasCoordinates() bool {
+	if x != nil {
+		return x.HasCoordinates
+	}
+	return false
+}
+
+func (x *Customer) GetPortalAccessCode() string {
+	if x != nil {
+		return x.PortalAccessCode
 	}
 	return ""
 }
@@ -112,6 +154,20 @@ func (x *Customer) GetStatus() string {
 		return x.Status
 	}
 	return ""
+}
+
+func (x *Customer) GetNotes() string {
+	if x != nil {
+		return x.Notes
+	}
+	return ""
+}
+
+func (x *Customer) GetRegisteredAtUnix() int64 {
+	if x != nil {
+		return x.RegisteredAtUnix
+	}
+	return 0
 }
 
 func (x *Customer) GetCreatedAtUnix() int64 {
@@ -569,20 +625,205 @@ func (x *DeleteCustomerResponse) GetMessage() string {
 	return ""
 }
 
+// Pencarian cepat untuk kasir & portal.
+type FindCustomerByPhoneRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Phone         string                 `protobuf:"bytes,1,opt,name=phone,proto3" json:"phone,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FindCustomerByPhoneRequest) Reset() {
+	*x = FindCustomerByPhoneRequest{}
+	mi := &file_v1_customer_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FindCustomerByPhoneRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FindCustomerByPhoneRequest) ProtoMessage() {}
+
+func (x *FindCustomerByPhoneRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_customer_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FindCustomerByPhoneRequest.ProtoReflect.Descriptor instead.
+func (*FindCustomerByPhoneRequest) Descriptor() ([]byte, []int) {
+	return file_v1_customer_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *FindCustomerByPhoneRequest) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+type FindCustomerByCodeRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CustomerCode  string                 `protobuf:"bytes,1,opt,name=customer_code,json=customerCode,proto3" json:"customer_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FindCustomerByCodeRequest) Reset() {
+	*x = FindCustomerByCodeRequest{}
+	mi := &file_v1_customer_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FindCustomerByCodeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FindCustomerByCodeRequest) ProtoMessage() {}
+
+func (x *FindCustomerByCodeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_customer_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FindCustomerByCodeRequest.ProtoReflect.Descriptor instead.
+func (*FindCustomerByCodeRequest) Descriptor() ([]byte, []int) {
+	return file_v1_customer_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *FindCustomerByCodeRequest) GetCustomerCode() string {
+	if x != nil {
+		return x.CustomerCode
+	}
+	return ""
+}
+
+type FindCustomerByPortalCodeRequest struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	PortalAccessCode string                 `protobuf:"bytes,1,opt,name=portal_access_code,json=portalAccessCode,proto3" json:"portal_access_code,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *FindCustomerByPortalCodeRequest) Reset() {
+	*x = FindCustomerByPortalCodeRequest{}
+	mi := &file_v1_customer_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FindCustomerByPortalCodeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FindCustomerByPortalCodeRequest) ProtoMessage() {}
+
+func (x *FindCustomerByPortalCodeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_customer_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FindCustomerByPortalCodeRequest.ProtoReflect.Descriptor instead.
+func (*FindCustomerByPortalCodeRequest) Descriptor() ([]byte, []int) {
+	return file_v1_customer_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *FindCustomerByPortalCodeRequest) GetPortalAccessCode() string {
+	if x != nil {
+		return x.PortalAccessCode
+	}
+	return ""
+}
+
+type FindCustomerResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Customer      *Customer              `protobuf:"bytes,1,opt,name=customer,proto3" json:"customer,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FindCustomerResponse) Reset() {
+	*x = FindCustomerResponse{}
+	mi := &file_v1_customer_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FindCustomerResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FindCustomerResponse) ProtoMessage() {}
+
+func (x *FindCustomerResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_customer_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FindCustomerResponse.ProtoReflect.Descriptor instead.
+func (*FindCustomerResponse) Descriptor() ([]byte, []int) {
+	return file_v1_customer_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *FindCustomerResponse) GetCustomer() *Customer {
+	if x != nil {
+		return x.Customer
+	}
+	return nil
+}
+
 var File_v1_customer_proto protoreflect.FileDescriptor
 
 const file_v1_customer_proto_rawDesc = "" +
 	"\n" +
-	"\x11v1/customer.proto\x12\vpolyglot.v1\x1a\x10v1/billing.proto\"\xd1\x01\n" +
+	"\x11v1/customer.proto\x12\vpolyglot.v1\x1a\x10v1/billing.proto\"\xcb\x03\n" +
 	"\bCustomer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
-	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x12\x14\n" +
-	"\x05email\x18\x04 \x01(\tR\x05email\x12\x14\n" +
-	"\x05phone\x18\x05 \x01(\tR\x05phone\x12\x18\n" +
-	"\aaddress\x18\x06 \x01(\tR\aaddress\x12\x16\n" +
-	"\x06status\x18\a \x01(\tR\x06status\x12&\n" +
-	"\x0fcreated_at_unix\x18\b \x01(\x03R\rcreatedAtUnix\"\x16\n" +
+	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12#\n" +
+	"\rcustomer_code\x18\x03 \x01(\tR\fcustomerCode\x12\x12\n" +
+	"\x04name\x18\x04 \x01(\tR\x04name\x12\x14\n" +
+	"\x05phone\x18\x05 \x01(\tR\x05phone\x12\x14\n" +
+	"\x05email\x18\x06 \x01(\tR\x05email\x12\x18\n" +
+	"\aaddress\x18\a \x01(\tR\aaddress\x12\x1a\n" +
+	"\blatitude\x18\b \x01(\x01R\blatitude\x12\x1c\n" +
+	"\tlongitude\x18\t \x01(\x01R\tlongitude\x12'\n" +
+	"\x0fhas_coordinates\x18\n" +
+	" \x01(\bR\x0ehasCoordinates\x12,\n" +
+	"\x12portal_access_code\x18\v \x01(\tR\x10portalAccessCode\x12\x16\n" +
+	"\x06status\x18\f \x01(\tR\x06status\x12\x14\n" +
+	"\x05notes\x18\r \x01(\tR\x05notes\x12,\n" +
+	"\x12registered_at_unix\x18\x0e \x01(\x03R\x10registeredAtUnix\x12&\n" +
+	"\x0fcreated_at_unix\x18\x0f \x01(\x03R\rcreatedAtUnix\"\x16\n" +
 	"\x14ListCustomersRequest\"L\n" +
 	"\x15ListCustomersResponse\x123\n" +
 	"\tcustomers\x18\x01 \x03(\v2\x15.polyglot.v1.CustomerR\tcustomers\"$\n" +
@@ -603,13 +844,24 @@ const file_v1_customer_proto_rawDesc = "" +
 	"\x15DeleteCustomerRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"2\n" +
 	"\x16DeleteCustomerResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\xb0\x04\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"2\n" +
+	"\x1aFindCustomerByPhoneRequest\x12\x14\n" +
+	"\x05phone\x18\x01 \x01(\tR\x05phone\"@\n" +
+	"\x19FindCustomerByCodeRequest\x12#\n" +
+	"\rcustomer_code\x18\x01 \x01(\tR\fcustomerCode\"O\n" +
+	"\x1fFindCustomerByPortalCodeRequest\x12,\n" +
+	"\x12portal_access_code\x18\x01 \x01(\tR\x10portalAccessCode\"I\n" +
+	"\x14FindCustomerResponse\x121\n" +
+	"\bcustomer\x18\x01 \x01(\v2\x15.polyglot.v1.CustomerR\bcustomer2\xd1\x06\n" +
 	"\x0fCustomerService\x12V\n" +
 	"\rListCustomers\x12!.polyglot.v1.ListCustomersRequest\x1a\".polyglot.v1.ListCustomersResponse\x12P\n" +
 	"\vGetCustomer\x12\x1f.polyglot.v1.GetCustomerRequest\x1a .polyglot.v1.GetCustomerResponse\x12Y\n" +
 	"\x0eCreateCustomer\x12\".polyglot.v1.CreateCustomerRequest\x1a#.polyglot.v1.CreateCustomerResponse\x12Y\n" +
 	"\x0eUpdateCustomer\x12\".polyglot.v1.UpdateCustomerRequest\x1a#.polyglot.v1.UpdateCustomerResponse\x12Y\n" +
-	"\x0eDeleteCustomer\x12\".polyglot.v1.DeleteCustomerRequest\x1a#.polyglot.v1.DeleteCustomerResponse\x12b\n" +
+	"\x0eDeleteCustomer\x12\".polyglot.v1.DeleteCustomerRequest\x1a#.polyglot.v1.DeleteCustomerResponse\x12Y\n" +
+	"\vFindByPhone\x12'.polyglot.v1.FindCustomerByPhoneRequest\x1a!.polyglot.v1.FindCustomerResponse\x12_\n" +
+	"\x12FindByCustomerCode\x12&.polyglot.v1.FindCustomerByCodeRequest\x1a!.polyglot.v1.FindCustomerResponse\x12c\n" +
+	"\x10FindByPortalCode\x12,.polyglot.v1.FindCustomerByPortalCodeRequest\x1a!.polyglot.v1.FindCustomerResponse\x12b\n" +
 	"\x11ListSubscriptions\x12%.polyglot.v1.ListSubscriptionsRequest\x1a&.polyglot.v1.ListSubscriptionsResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
@@ -624,21 +876,25 @@ func file_v1_customer_proto_rawDescGZIP() []byte {
 	return file_v1_customer_proto_rawDescData
 }
 
-var file_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_v1_customer_proto_goTypes = []any{
-	(*Customer)(nil),                  // 0: polyglot.v1.Customer
-	(*ListCustomersRequest)(nil),      // 1: polyglot.v1.ListCustomersRequest
-	(*ListCustomersResponse)(nil),     // 2: polyglot.v1.ListCustomersResponse
-	(*GetCustomerRequest)(nil),        // 3: polyglot.v1.GetCustomerRequest
-	(*GetCustomerResponse)(nil),       // 4: polyglot.v1.GetCustomerResponse
-	(*CreateCustomerRequest)(nil),     // 5: polyglot.v1.CreateCustomerRequest
-	(*CreateCustomerResponse)(nil),    // 6: polyglot.v1.CreateCustomerResponse
-	(*UpdateCustomerRequest)(nil),     // 7: polyglot.v1.UpdateCustomerRequest
-	(*UpdateCustomerResponse)(nil),    // 8: polyglot.v1.UpdateCustomerResponse
-	(*DeleteCustomerRequest)(nil),     // 9: polyglot.v1.DeleteCustomerRequest
-	(*DeleteCustomerResponse)(nil),    // 10: polyglot.v1.DeleteCustomerResponse
-	(*ListSubscriptionsRequest)(nil),  // 11: polyglot.v1.ListSubscriptionsRequest
-	(*ListSubscriptionsResponse)(nil), // 12: polyglot.v1.ListSubscriptionsResponse
+	(*Customer)(nil),                        // 0: polyglot.v1.Customer
+	(*ListCustomersRequest)(nil),            // 1: polyglot.v1.ListCustomersRequest
+	(*ListCustomersResponse)(nil),           // 2: polyglot.v1.ListCustomersResponse
+	(*GetCustomerRequest)(nil),              // 3: polyglot.v1.GetCustomerRequest
+	(*GetCustomerResponse)(nil),             // 4: polyglot.v1.GetCustomerResponse
+	(*CreateCustomerRequest)(nil),           // 5: polyglot.v1.CreateCustomerRequest
+	(*CreateCustomerResponse)(nil),          // 6: polyglot.v1.CreateCustomerResponse
+	(*UpdateCustomerRequest)(nil),           // 7: polyglot.v1.UpdateCustomerRequest
+	(*UpdateCustomerResponse)(nil),          // 8: polyglot.v1.UpdateCustomerResponse
+	(*DeleteCustomerRequest)(nil),           // 9: polyglot.v1.DeleteCustomerRequest
+	(*DeleteCustomerResponse)(nil),          // 10: polyglot.v1.DeleteCustomerResponse
+	(*FindCustomerByPhoneRequest)(nil),      // 11: polyglot.v1.FindCustomerByPhoneRequest
+	(*FindCustomerByCodeRequest)(nil),       // 12: polyglot.v1.FindCustomerByCodeRequest
+	(*FindCustomerByPortalCodeRequest)(nil), // 13: polyglot.v1.FindCustomerByPortalCodeRequest
+	(*FindCustomerResponse)(nil),            // 14: polyglot.v1.FindCustomerResponse
+	(*ListSubscriptionsRequest)(nil),        // 15: polyglot.v1.ListSubscriptionsRequest
+	(*ListSubscriptionsResponse)(nil),       // 16: polyglot.v1.ListSubscriptionsResponse
 }
 var file_v1_customer_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.ListCustomersResponse.customers:type_name -> polyglot.v1.Customer
@@ -647,23 +903,30 @@ var file_v1_customer_proto_depIdxs = []int32{
 	0,  // 3: polyglot.v1.CreateCustomerResponse.customer:type_name -> polyglot.v1.Customer
 	0,  // 4: polyglot.v1.UpdateCustomerRequest.customer:type_name -> polyglot.v1.Customer
 	0,  // 5: polyglot.v1.UpdateCustomerResponse.customer:type_name -> polyglot.v1.Customer
-	1,  // 6: polyglot.v1.CustomerService.ListCustomers:input_type -> polyglot.v1.ListCustomersRequest
-	3,  // 7: polyglot.v1.CustomerService.GetCustomer:input_type -> polyglot.v1.GetCustomerRequest
-	5,  // 8: polyglot.v1.CustomerService.CreateCustomer:input_type -> polyglot.v1.CreateCustomerRequest
-	7,  // 9: polyglot.v1.CustomerService.UpdateCustomer:input_type -> polyglot.v1.UpdateCustomerRequest
-	9,  // 10: polyglot.v1.CustomerService.DeleteCustomer:input_type -> polyglot.v1.DeleteCustomerRequest
-	11, // 11: polyglot.v1.CustomerService.ListSubscriptions:input_type -> polyglot.v1.ListSubscriptionsRequest
-	2,  // 12: polyglot.v1.CustomerService.ListCustomers:output_type -> polyglot.v1.ListCustomersResponse
-	4,  // 13: polyglot.v1.CustomerService.GetCustomer:output_type -> polyglot.v1.GetCustomerResponse
-	6,  // 14: polyglot.v1.CustomerService.CreateCustomer:output_type -> polyglot.v1.CreateCustomerResponse
-	8,  // 15: polyglot.v1.CustomerService.UpdateCustomer:output_type -> polyglot.v1.UpdateCustomerResponse
-	10, // 16: polyglot.v1.CustomerService.DeleteCustomer:output_type -> polyglot.v1.DeleteCustomerResponse
-	12, // 17: polyglot.v1.CustomerService.ListSubscriptions:output_type -> polyglot.v1.ListSubscriptionsResponse
-	12, // [12:18] is the sub-list for method output_type
-	6,  // [6:12] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	0,  // 6: polyglot.v1.FindCustomerResponse.customer:type_name -> polyglot.v1.Customer
+	1,  // 7: polyglot.v1.CustomerService.ListCustomers:input_type -> polyglot.v1.ListCustomersRequest
+	3,  // 8: polyglot.v1.CustomerService.GetCustomer:input_type -> polyglot.v1.GetCustomerRequest
+	5,  // 9: polyglot.v1.CustomerService.CreateCustomer:input_type -> polyglot.v1.CreateCustomerRequest
+	7,  // 10: polyglot.v1.CustomerService.UpdateCustomer:input_type -> polyglot.v1.UpdateCustomerRequest
+	9,  // 11: polyglot.v1.CustomerService.DeleteCustomer:input_type -> polyglot.v1.DeleteCustomerRequest
+	11, // 12: polyglot.v1.CustomerService.FindByPhone:input_type -> polyglot.v1.FindCustomerByPhoneRequest
+	12, // 13: polyglot.v1.CustomerService.FindByCustomerCode:input_type -> polyglot.v1.FindCustomerByCodeRequest
+	13, // 14: polyglot.v1.CustomerService.FindByPortalCode:input_type -> polyglot.v1.FindCustomerByPortalCodeRequest
+	15, // 15: polyglot.v1.CustomerService.ListSubscriptions:input_type -> polyglot.v1.ListSubscriptionsRequest
+	2,  // 16: polyglot.v1.CustomerService.ListCustomers:output_type -> polyglot.v1.ListCustomersResponse
+	4,  // 17: polyglot.v1.CustomerService.GetCustomer:output_type -> polyglot.v1.GetCustomerResponse
+	6,  // 18: polyglot.v1.CustomerService.CreateCustomer:output_type -> polyglot.v1.CreateCustomerResponse
+	8,  // 19: polyglot.v1.CustomerService.UpdateCustomer:output_type -> polyglot.v1.UpdateCustomerResponse
+	10, // 20: polyglot.v1.CustomerService.DeleteCustomer:output_type -> polyglot.v1.DeleteCustomerResponse
+	14, // 21: polyglot.v1.CustomerService.FindByPhone:output_type -> polyglot.v1.FindCustomerResponse
+	14, // 22: polyglot.v1.CustomerService.FindByCustomerCode:output_type -> polyglot.v1.FindCustomerResponse
+	14, // 23: polyglot.v1.CustomerService.FindByPortalCode:output_type -> polyglot.v1.FindCustomerResponse
+	16, // 24: polyglot.v1.CustomerService.ListSubscriptions:output_type -> polyglot.v1.ListSubscriptionsResponse
+	16, // [16:25] is the sub-list for method output_type
+	7,  // [7:16] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_v1_customer_proto_init() }
@@ -678,7 +941,7 @@ func file_v1_customer_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_customer_proto_rawDesc), len(file_v1_customer_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

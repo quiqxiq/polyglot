@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+message Registration {
+  string id = 1;
+  string tenant_id = 2;
+  string registration_no = 3; // REG-202608-0001
+  string plan_id = 4;
+  string plan_name = 5; // denormalisasi untuk tampilan
+  string full_name = 6;
+  string phone = 7;
+  string email = 8;
+  string address = 9;
+  double latitude = 10;
+  double longitude = 11;
+  bool has_coordinates = 12;
+  string notes = 13;
+  string status = 14; // PENDING | APPROVED | INSTALLED | ACTIVE | REJECTED | CANCELLED
+  int64 scheduled_install_date_unix = 15;
+  string scheduled_install_time = 16; // "HH:MM"
+  string assigned_technician_id = 17;
+  string technician_name = 18;
+  int64 installed_at_unix = 19;
+  string technician_notes = 20;
+  string customer_id = 21;   // terisi setelah convert
+  string subscription_id = 22;
+  string invoice_id = 23;
+  string rejected_reason = 24;
+  string cancel_reason = 25;
+  int64 created_at_unix = 26;
+}
+
+// PUBLIC — dipanggil calon pelanggan tanpa JWT.
+message SubmitRegistrationRequest {
+  string full_name = 1;
+  string phone = 2;
+  string email = 3;
+  string address = 4;
+  double latitude = 5;
+  double longitude = 6;
+  bool has_coordinates = 7;
+  string notes = 8;
+  string plan_id = 9;
+}
+message SubmitRegistrationResponse { Registration registration = 1; }
+
+message ListRegistrationsRequest {
+  string status = 1; // kosong = semua
+  string phone = 2;
+}
+message ListRegistrationsResponse { repeated Registration registrations = 1; }
+
+message GetRegistrationRequest { string id = 1; }
+message GetRegistrationResponse { Registration registration = 1; }
+
+message ApproveRegistrationRequest {
+  string id = 1;
+  string admin_notes = 2;
+}
+message ApproveRegistrationResponse { Registration registration = 1; }
+
+message ScheduleInstallRequest {
+  string id = 1;
+  int64 install_date_unix = 2;
+  string install_time_hhmm = 3; // "09:00"; kosong = tanpa jam
+  string technician_id = 4;     // users.id, kosong = biarkan
+}
+message ScheduleInstallResponse { Registration registration = 1; }
+
+message MarkInstalledRequest {
+  string id = 1;
+  string technician_notes = 2;
+}
+message MarkInstalledResponse { Registration registration = 1; }
+
+message RejectRegistrationRequest {
+  string id = 1;
+  string reason = 2;
+}
+message RejectRegistrationResponse { Registration registration = 1; }
+
+message CancelRegistrationRequest {
+  string id = 1;
+  string reason = 2;
+}
+message CancelRegistrationResponse { Registration registration = 1; }
+
+// Konversi INSTALLED → ACTIVE: buat customer+subscription+invoice.
+// device_id opsional — bila diisi, akun langsung diprovisikan ke router.
+message ConvertRegistrationRequest {
+  string id = 1;
+  string device_id = 2;
+}
+message ConvertRegistrationResponse {
+  Registration registration = 1;
+  string customer_id = 2;
+  string subscription_id = 3;
+  string invoice_id = 4;
+}
+
+service RegistrationService {
+  rpc SubmitRegistration(SubmitRegistrationRequest) returns (SubmitRegistrationResponse);
+  rpc ListRegistrations(ListRegistrationsRequest) returns (ListRegistrationsResponse);
+  rpc GetRegistration(GetRegistrationRequest) returns (GetRegistrationResponse);
+  rpc ApproveRegistration(ApproveRegistrationRequest) returns (ApproveRegistrationResponse);
+  rpc ScheduleInstall(ScheduleInstallRequest) returns (ScheduleInstallResponse);
+  rpc MarkInstalled(MarkInstalledRequest) returns (MarkInstalledResponse);
+  rpc RejectRegistration(RejectRegistrationRequest) returns (RejectRegistrationResponse);
+  rpc CancelRegistration(CancelRegistrationRequest) returns (CancelRegistrationResponse);
+  rpc ConvertRegistration(ConvertRegistrationRequest) returns (ConvertRegistrationResponse);
+}

@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+import "v1/customer.proto";
+import "v1/billing.proto";
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// Portal mandiri pelanggan — PUBLIC tanpa JWT; autentikasi memakai
+// OTP WhatsApp + session token portal (lihat portal_otps &
+// customer_portal_sessions).
+
+message RequestOTPRequest {
+  string identifier = 1; // nomor HP atau portal_access_code
+}
+message RequestOTPResponse {
+  string message = 1;
+  string masked_phone = 2;
+}
+
+message PortalLoginRequest {
+  string identifier = 1;
+  string otp = 2;
+}
+message PortalLoginResponse {
+  string token = 1;
+  int64 expires_at_unix = 2;
+  Customer customer = 3;
+}
+
+message PortalOverviewRequest { string token = 1; }
+
+message UnpaidInvoiceSummary {
+  string id = 1;
+  string invoice_number = 2;
+  string period = 3;
+  double total = 4;
+  double paid_amount = 5;
+  double outstanding = 6;
+  string due_date = 7;
+  string status = 8;
+  string manual_payment_code = 9;
+}
+
+message PortalSubscriptionSummary {
+  string id = 1;
+  string plan_id = 2;
+  string service_type = 3;
+  string status = 4;
+  string rate_limit = 5;
+  int32 billing_day = 6;
+  int64 end_date_unix = 7;
+}
+
+message PortalOverviewResponse {
+  Customer customer = 1;
+  string status = 2;
+  PortalSubscriptionSummary subscription = 3;
+  repeated UnpaidInvoiceSummary unpaid_invoices = 4;
+  string payment_url = 5; // hanya terisi saat ISOLATED
+}
+
+message MyInvoicesRequest {
+  string token = 1;
+  int32 limit = 2; // 0 = 50
+}
+message MyInvoicesResponse {
+  repeated Invoice invoices = 1;
+}
+
+message MyPaymentsRequest {
+  string token = 1;
+  int32 limit = 2;
+}
+message MyPaymentsResponse {
+  // dipetakan tipis dari domain payment; field menyesuaikan stub proto lama.
+  repeated PaymentEntry payments = 1;
+}
+
+message PaymentEntry {
+  string id = 1;
+  string payment_no = 2;
+  string invoice_number = 3;
+  double amount = 4;
+  int64 payment_date_unix = 5;
+  string scan_method = 6;
+  string reference = 7;
+}
+
+message PortalLogoutRequest { string token = 1; }
+message PortalLogoutResponse { string message = 1; }
+
+service PortalService {
+  rpc RequestOTP(RequestOTPRequest) returns (RequestOTPResponse);
+  rpc Login(PortalLoginRequest) returns (PortalLoginResponse);
+  rpc Overview(PortalOverviewRequest) returns (PortalOverviewResponse);
+  rpc MyInvoices(MyInvoicesRequest) returns (MyInvoicesResponse);
+  rpc MyPayments(MyPaymentsRequest) returns (MyPaymentsResponse);
+  rpc Logout(PortalLogoutRequest) returns (PortalLogoutResponse);
+}

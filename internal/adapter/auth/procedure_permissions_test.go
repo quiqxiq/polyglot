@@ -49,3 +49,65 @@ func TestPermissionFor(t *testing.T) {
 		})
 	}
 }
+
+func TestIspProceduresMapped(t *testing.T) {
+	required := []string{
+		"/polyglot.v1.BillingService/ListInvoices",
+		"/polyglot.v1.BillingService/GetInvoice",
+		"/polyglot.v1.BillingService/CashierResolve",
+		"/polyglot.v1.BillingService/CashierPay",
+		"/polyglot.v1.BillingService/ListSubscriptions",
+		"/polyglot.v1.BillingService/GetSubscription",
+		"/polyglot.v1.BillingService/ChangePlan",
+		"/polyglot.v1.BillingService/SuspendSubscription",
+		"/polyglot.v1.BillingService/ResumeSubscription",
+		"/polyglot.v1.BillingService/TerminateSubscription",
+		"/polyglot.v1.BillingService/ActivateSubscription",
+		"/polyglot.v1.BillingService/ListPlans",
+		"/polyglot.v1.BillingService/GetPlan",
+		"/polyglot.v1.BillingService/CreatePlan",
+		"/polyglot.v1.BillingService/UpdatePlan",
+		"/polyglot.v1.BillingService/DeletePlan",
+		"/polyglot.v1.BillingService/GenerateInvoices",
+		"/polyglot.v1.CustomerService/FindByPhone",
+		"/polyglot.v1.CustomerService/FindByCustomerCode",
+		"/polyglot.v1.CustomerService/FindByPortalCode",
+		"/polyglot.v1.RegistrationService/ListRegistrations",
+		"/polyglot.v1.RegistrationService/GetRegistration",
+		"/polyglot.v1.RegistrationService/ApproveRegistration",
+		"/polyglot.v1.RegistrationService/ScheduleInstall",
+		"/polyglot.v1.RegistrationService/MarkInstalled",
+		"/polyglot.v1.RegistrationService/RejectRegistration",
+		"/polyglot.v1.RegistrationService/CancelRegistration",
+		"/polyglot.v1.RegistrationService/ConvertRegistration",
+		"/polyglot.v1.CashbookService/ListAccounts",
+		"/polyglot.v1.CashbookService/SaveAccount",
+		"/polyglot.v1.CashbookService/ListCategories",
+		"/polyglot.v1.CashbookService/SaveCategory",
+		"/polyglot.v1.CashbookService/AddTransaction",
+		"/polyglot.v1.CashbookService/ListTransactions",
+		"/polyglot.v1.CashbookService/Balances",
+		"/polyglot.v1.NotificationService/ListTemplates",
+		"/polyglot.v1.NotificationService/GetTemplate",
+		"/polyglot.v1.NotificationService/SaveTemplate",
+		"/polyglot.v1.NotificationService/ListNotifications",
+		"/polyglot.v1.NotificationService/PendingCount",
+		"/polyglot.v1.NotificationService/MarkNotificationSent",
+		"/polyglot.v1.NotificationService/MarkNotificationFailed",
+		"/polyglot.v1.NotificationService/TestSend",
+		"/polyglot.v1.ReportService/DailyReport",
+		"/polyglot.v1.ReportService/MonthlyReport",
+		"/polyglot.v1.ReportService/YearlyReport",
+		"/polyglot.v1.ReportService/RefreshSnapshot",
+		"/polyglot.v1.IspAdminService/ImportFile",
+		"/polyglot.v1.IspAdminService/ImportRouter",
+		"/polyglot.v1.IspAdminService/ExportCustomers",
+		"/polyglot.v1.IspAdminService/Reconcile",
+	}
+	for _, proc := range required {
+		perm, ok := PermissionFor(proc)
+		if !ok || perm == "" {
+			t.Errorf("procedure %q tidak terdaftar di ProcedurePermissions — akan fail-closed 403", proc)
+		}
+	}
+}

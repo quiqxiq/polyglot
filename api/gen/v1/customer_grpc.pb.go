@@ -19,12 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CustomerService_ListCustomers_FullMethodName     = "/polyglot.v1.CustomerService/ListCustomers"
-	CustomerService_GetCustomer_FullMethodName       = "/polyglot.v1.CustomerService/GetCustomer"
-	CustomerService_CreateCustomer_FullMethodName    = "/polyglot.v1.CustomerService/CreateCustomer"
-	CustomerService_UpdateCustomer_FullMethodName    = "/polyglot.v1.CustomerService/UpdateCustomer"
-	CustomerService_DeleteCustomer_FullMethodName    = "/polyglot.v1.CustomerService/DeleteCustomer"
-	CustomerService_ListSubscriptions_FullMethodName = "/polyglot.v1.CustomerService/ListSubscriptions"
+	CustomerService_ListCustomers_FullMethodName      = "/polyglot.v1.CustomerService/ListCustomers"
+	CustomerService_GetCustomer_FullMethodName        = "/polyglot.v1.CustomerService/GetCustomer"
+	CustomerService_CreateCustomer_FullMethodName     = "/polyglot.v1.CustomerService/CreateCustomer"
+	CustomerService_UpdateCustomer_FullMethodName     = "/polyglot.v1.CustomerService/UpdateCustomer"
+	CustomerService_DeleteCustomer_FullMethodName     = "/polyglot.v1.CustomerService/DeleteCustomer"
+	CustomerService_FindByPhone_FullMethodName        = "/polyglot.v1.CustomerService/FindByPhone"
+	CustomerService_FindByCustomerCode_FullMethodName = "/polyglot.v1.CustomerService/FindByCustomerCode"
+	CustomerService_FindByPortalCode_FullMethodName   = "/polyglot.v1.CustomerService/FindByPortalCode"
+	CustomerService_ListSubscriptions_FullMethodName  = "/polyglot.v1.CustomerService/ListSubscriptions"
 )
 
 // CustomerServiceClient is the client API for CustomerService service.
@@ -36,6 +39,11 @@ type CustomerServiceClient interface {
 	CreateCustomer(ctx context.Context, in *CreateCustomerRequest, opts ...grpc.CallOption) (*CreateCustomerResponse, error)
 	UpdateCustomer(ctx context.Context, in *UpdateCustomerRequest, opts ...grpc.CallOption) (*UpdateCustomerResponse, error)
 	DeleteCustomer(ctx context.Context, in *DeleteCustomerRequest, opts ...grpc.CallOption) (*DeleteCustomerResponse, error)
+	// Lookups cepat
+	FindByPhone(ctx context.Context, in *FindCustomerByPhoneRequest, opts ...grpc.CallOption) (*FindCustomerResponse, error)
+	FindByCustomerCode(ctx context.Context, in *FindCustomerByCodeRequest, opts ...grpc.CallOption) (*FindCustomerResponse, error)
+	FindByPortalCode(ctx context.Context, in *FindCustomerByPortalCodeRequest, opts ...grpc.CallOption) (*FindCustomerResponse, error)
+	// Kompatibilitas lama
 	ListSubscriptions(ctx context.Context, in *ListSubscriptionsRequest, opts ...grpc.CallOption) (*ListSubscriptionsResponse, error)
 }
 
@@ -97,6 +105,36 @@ func (c *customerServiceClient) DeleteCustomer(ctx context.Context, in *DeleteCu
 	return out, nil
 }
 
+func (c *customerServiceClient) FindByPhone(ctx context.Context, in *FindCustomerByPhoneRequest, opts ...grpc.CallOption) (*FindCustomerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FindCustomerResponse)
+	err := c.cc.Invoke(ctx, CustomerService_FindByPhone_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) FindByCustomerCode(ctx context.Context, in *FindCustomerByCodeRequest, opts ...grpc.CallOption) (*FindCustomerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FindCustomerResponse)
+	err := c.cc.Invoke(ctx, CustomerService_FindByCustomerCode_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) FindByPortalCode(ctx context.Context, in *FindCustomerByPortalCodeRequest, opts ...grpc.CallOption) (*FindCustomerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FindCustomerResponse)
+	err := c.cc.Invoke(ctx, CustomerService_FindByPortalCode_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *customerServiceClient) ListSubscriptions(ctx context.Context, in *ListSubscriptionsRequest, opts ...grpc.CallOption) (*ListSubscriptionsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListSubscriptionsResponse)
@@ -116,6 +154,11 @@ type CustomerServiceServer interface {
 	CreateCustomer(context.Context, *CreateCustomerRequest) (*CreateCustomerResponse, error)
 	UpdateCustomer(context.Context, *UpdateCustomerRequest) (*UpdateCustomerResponse, error)
 	DeleteCustomer(context.Context, *DeleteCustomerRequest) (*DeleteCustomerResponse, error)
+	// Lookups cepat
+	FindByPhone(context.Context, *FindCustomerByPhoneRequest) (*FindCustomerResponse, error)
+	FindByCustomerCode(context.Context, *FindCustomerByCodeRequest) (*FindCustomerResponse, error)
+	FindByPortalCode(context.Context, *FindCustomerByPortalCodeRequest) (*FindCustomerResponse, error)
+	// Kompatibilitas lama
 	ListSubscriptions(context.Context, *ListSubscriptionsRequest) (*ListSubscriptionsResponse, error)
 	mustEmbedUnimplementedCustomerServiceServer()
 }
@@ -141,6 +184,15 @@ func (UnimplementedCustomerServiceServer) UpdateCustomer(context.Context, *Updat
 }
 func (UnimplementedCustomerServiceServer) DeleteCustomer(context.Context, *DeleteCustomerRequest) (*DeleteCustomerResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteCustomer not implemented")
+}
+func (UnimplementedCustomerServiceServer) FindByPhone(context.Context, *FindCustomerByPhoneRequest) (*FindCustomerResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method FindByPhone not implemented")
+}
+func (UnimplementedCustomerServiceServer) FindByCustomerCode(context.Context, *FindCustomerByCodeRequest) (*FindCustomerResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method FindByCustomerCode not implemented")
+}
+func (UnimplementedCustomerServiceServer) FindByPortalCode(context.Context, *FindCustomerByPortalCodeRequest) (*FindCustomerResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method FindByPortalCode not implemented")
 }
 func (UnimplementedCustomerServiceServer) ListSubscriptions(context.Context, *ListSubscriptionsRequest) (*ListSubscriptionsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListSubscriptions not implemented")
@@ -256,6 +308,60 @@ func _CustomerService_DeleteCustomer_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CustomerService_FindByPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindCustomerByPhoneRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).FindByPhone(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_FindByPhone_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).FindByPhone(ctx, req.(*FindCustomerByPhoneRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_FindByCustomerCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindCustomerByCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).FindByCustomerCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_FindByCustomerCode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).FindByCustomerCode(ctx, req.(*FindCustomerByCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_FindByPortalCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindCustomerByPortalCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).FindByPortalCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_FindByPortalCode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).FindByPortalCode(ctx, req.(*FindCustomerByPortalCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CustomerService_ListSubscriptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListSubscriptionsRequest)
 	if err := dec(in); err != nil {
@@ -300,6 +406,18 @@ var CustomerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteCustomer",
 			Handler:    _CustomerService_DeleteCustomer_Handler,
+		},
+		{
+			MethodName: "FindByPhone",
+			Handler:    _CustomerService_FindByPhone_Handler,
+		},
+		{
+			MethodName: "FindByCustomerCode",
+			Handler:    _CustomerService_FindByCustomerCode_Handler,
+		},
+		{
+			MethodName: "FindByPortalCode",
+			Handler:    _CustomerService_FindByPortalCode_Handler,
 		},
 		{
 			MethodName: "ListSubscriptions",

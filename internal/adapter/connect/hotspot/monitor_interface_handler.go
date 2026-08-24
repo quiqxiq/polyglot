@@ -102,18 +102,18 @@ func (h *HotspotConnectHandler) StreamInterfaceEthernet(ctx context.Context, req
 			items := make([]*devicepb.InterfaceEthernetItem, 0, len(ifaces))
 			for _, ifc := range ifaces {
 				items = append(items, &devicepb.InterfaceEthernetItem{
-					Id:        ifc.RosID,
-					Name:      ifc.Name,
-					Type:      ifc.Type,
-					Mtu:       ifc.MTU,
+					Id:         ifc.RosID,
+					Name:       ifc.Name,
+					Type:       ifc.Type,
+					Mtu:        ifc.MTU,
 					MacAddress: ifc.MACAddress,
-					Running:   ifc.Running,
-					Disabled:  ifc.Disabled,
-					RxByte:    ifc.RxByte,
-					TxByte:    ifc.TxByte,
-					RxPacket:  ifc.RxPacket,
-					TxPacket:  ifc.TxPacket,
-					Comment:   ifc.Comment,
+					Running:    ifc.Running,
+					Disabled:   ifc.Disabled,
+					RxByte:     ifc.RxByte,
+					TxByte:     ifc.TxByte,
+					RxPacket:   ifc.RxPacket,
+					TxPacket:   ifc.TxPacket,
+					Comment:    ifc.Comment,
 				})
 			}
 

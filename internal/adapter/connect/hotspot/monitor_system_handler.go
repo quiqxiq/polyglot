@@ -19,12 +19,12 @@ import (
 // print streams. Every stream re-sends its full snapshot on its own tick,
 // so this state is always a complete view of the last received frame.
 type systemSnapshotState struct {
-	mu         sync.Mutex
-	clock      mikrotik.SystemClock
-	resource   mikrotik.SystemResource
+	mu          sync.Mutex
+	clock       mikrotik.SystemClock
+	resource    mikrotik.SystemResource
 	routerboard mikrotik.SystemRouterboard
-	identity   string
-	health     mikrotik.SystemHealth
+	identity    string
+	health      mikrotik.SystemHealth
 }
 
 func (s *systemSnapshotState) setClock(c mikrotik.SystemClock) {
@@ -62,7 +62,7 @@ func (s *systemSnapshotState) toFrame(deviceID string) *devicepb.SystemSnapshotF
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	return &devicepb.SystemSnapshotFrame{
-		DeviceId: deviceID,
+		DeviceId:      deviceID,
 		TimestampUnix: time.Now().Unix(),
 		Clock: &devicepb.SystemClockInfo{
 			Time:         s.clock.Time,

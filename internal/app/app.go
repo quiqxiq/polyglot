@@ -8,14 +8,21 @@ import (
 	"strings"
 	"time"
 
+	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	authConnect "github.com/quixiq/polyglot/internal/adapter/connect/auth"
 	billingConnect "github.com/quixiq/polyglot/internal/adapter/connect/billing"
 	botConnect "github.com/quixiq/polyglot/internal/adapter/connect/bot"
+	cashbookConnect "github.com/quixiq/polyglot/internal/adapter/connect/cashbook"
 	customerConnect "github.com/quixiq/polyglot/internal/adapter/connect/customer"
 	deviceConnect "github.com/quixiq/polyglot/internal/adapter/connect/device"
 	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
+	ispadminConnect "github.com/quixiq/polyglot/internal/adapter/connect/ispadmin"
+	notificationConnect "github.com/quixiq/polyglot/internal/adapter/connect/notification"
+	portalConnect "github.com/quixiq/polyglot/internal/adapter/connect/portal"
 	pppConnect "github.com/quixiq/polyglot/internal/adapter/connect/ppp"
+	registrationConnect "github.com/quixiq/polyglot/internal/adapter/connect/registration"
+	reportConnect "github.com/quixiq/polyglot/internal/adapter/connect/report"
 	settingConnect "github.com/quixiq/polyglot/internal/adapter/connect/setting"
 	adminapi "github.com/quixiq/polyglot/internal/adapter/http/adminapi"
 	gatewayHTTP "github.com/quixiq/polyglot/internal/adapter/http/gateway"
@@ -24,7 +31,7 @@ import (
 	reportsHTTP "github.com/quixiq/polyglot/internal/adapter/http/reports"
 	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
-	postgres "github.com/quixiq/polyglot/internal/adapter/postgres"
+	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
 	storageAdapter "github.com/quixiq/polyglot/internal/adapter/storage"
 	tripay "github.com/quixiq/polyglot/internal/adapter/tripay"
@@ -35,8 +42,8 @@ import (
 	domainllm "github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/driver/genericssh"
 	"github.com/quixiq/polyglot/internal/driver/genieacs"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
@@ -53,6 +60,7 @@ import (
 	notificationUC "github.com/quixiq/polyglot/internal/usecase/notification"
 	portalUC "github.com/quixiq/polyglot/internal/usecase/portal"
 	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
+	registrationUC "github.com/quixiq/polyglot/internal/usecase/registration"
 	settingUC "github.com/quixiq/polyglot/internal/usecase/setting"
 	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
@@ -165,44 +173,109 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 			return genieacs.NewDriver(ctx, target)
 		},
 	}
-
 	reg := registry.New(repo, vault, factories)
 
-	// Fase 4 port seam: usecases depend only on port interfaces; vendor-native
-	// command knowledge stays behind the gateways in the driver layer. The
-	// executor is the policy-gated network.ExecuteCommand so destructive
-	// commands keep requiring approval.
 	exec := networkUC.ExecuteCommand
 	hotGateway := mikhmon.NewGateway(exec)
-	sessionGateway := mikrotik.NewGateway(exec) // implements SessionGateway + DeviceDiagnostics
+	sessionGateway := mikrotik.NewGateway(exec)
 
-	devUC := deviceUC.NewManageDeviceUseCase(repo, vault, reg, sessionGateway)
-	hotUC := hotspotUC.New("internal/template", hotGateway)
-	activeSessionsUC := networkUC.NewActiveSessionsUseCase(sessionGateway)
-	openTermUC := networkUC.NewOpenTerminalUseCase(repo, vault, genericssh.DialSSHPty)
-
+	// ─── 1. Repositori & Manajer Infrastruktur ──────────────────────────────
 	customerRepo := postgres.NewCustomerRepository(pgStore.DB())
-	custUC := customerUC.NewManageCustomerUseCase(customerRepo)
+	invRepo := postgres.NewInvoiceRepository(pgStore.DB())
+	subRepo := postgres.NewSubscriptionRepository(pgStore.DB(), vault)
+	planRepo := postgres.NewServicePlanRepository(pgStore.DB())
+	notifRepo := postgres.NewNotificationRepository(pgStore.DB())
+	cashRepo := postgres.NewCashbookRepository(pgStore.DB())
+	reportingRepo := postgres.NewReportingRepository(pgStore.DB())
+	auditLogRepo := postgres.NewAuditLogRepository(pgStore.DB())
+	regRepo := postgres.NewRegistrationRepository(pgStore.DB())
+	portalRepo := postgres.NewPortalRepository(pgStore.DB())
+	gwtxRepo := postgres.NewGatewayTransactionRepository(pgStore.DB())
+	paymentReader := postgres.NewPaymentReader(pgStore.DB())
 
+	accountMgr := newRouterAccountManager(reg, sessionGateway, hotGateway, sessionGateway)
+	paymentProc := postgres.NewPaymentProcessor(pgStore.DB())
+	paymentProc.OnPaid = buildOnPaidRestore(accountMgr, subRepo, planRepo, settingRepo)
+	waSender := whatsappadapter.NewSenderAdapter(waManager, pgStore.FindAllSessions)
+	tripayAdapter := tripay.NewAdapter(settingRepo)
+
+	// ─── 2. Use Cases ───────────────────────────────────────────────────────
 	authUseCase := authUC.NewAuthUseCase(userRepo, jwtService, refreshSvc, redisStore, casbinEnforcer)
 	refreshUseCase := authUC.NewRefreshTokenUseCase(userRepo, jwtService, refreshSvc, casbinEnforcer)
 	manageUserUseCase := userUC.NewManageUserUseCase(userRepo, casbinEnforcer)
 	manageSettingUseCase := settingUC.NewManageSettingUseCase(settingRepo)
+	custUC := customerUC.NewManageCustomerUseCase(customerRepo)
+	devUC := deviceUC.NewManageDeviceUseCase(repo, vault, reg, sessionGateway)
+	openTermUC := networkUC.NewOpenTerminalUseCase(repo, vault, genericssh.DialSSHPty)
+	hotUC := hotspotUC.New("internal/template", hotGateway)
+	activeSessionsUC := networkUC.NewActiveSessionsUseCase(sessionGateway)
+	pppUseCase := pppUC.New(sessionGateway)
+
+	invUC := billingUC.NewInvoiceUseCase(invRepo)
+	subUC := billingUC.NewSubscriptionUseCase(subRepo)
+	planUC := billingUC.NewPlanUseCase(planRepo, subRepo)
+	checkoutUC := billingUC.NewCheckoutUseCase(invRepo, customerRepo, paymentProc)
+	lifecycleUC := billingUC.NewSubscriptionLifecycleUseCase(subRepo, planRepo, accountMgr, auditLogRepo)
+	runBillingUC := billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo).WithSettings(settingRepo)
+	chargeUC := billingUC.NewGatewayChargeUseCase(invRepo, customerRepo, gwtxRepo, tripayAdapter, paymentProc, settingRepo)
+
+	regManagerUC := registrationUC.NewManageRegistrationUseCase(regRepo, notifRepo, auditLogRepo)
+	regConvertUC := registrationUC.NewConvertUseCase(registrationUC.ConvertDeps{
+		Repo: regRepo, Plans: planRepo, Customers: customerRepo,
+		Subs: subRepo, Invoices: invRepo, Audit: auditLogRepo, Manager: accountMgr,
+	})
+
+	portalUCase := portalUC.NewUseCase(portalRepo, customerRepo, subRepo, invRepo, paymentReader, waSender, settingRepo)
+
+	upsertImport := importer.NewUpsertUseCase(planRepo, customerRepo, subRepo, auditLogRepo, "")
+	upsertImport.SetDeviceResolver(func(deviceName string) (string, bool) {
+		devices, err := repo.FindAll(context.Background())
+		if err != nil {
+			return "", false
+		}
+		for _, d := range devices {
+			if strings.EqualFold(d.Name, deviceName) {
+				return d.ID, true
+			}
+		}
+		return "", false
+	})
+	routerSource := importer.NewRouterSource(sessionGateway)
+	reconciler := importer.NewReconciler(subRepo, sessionGateway)
+	exportUC := importer.NewExportUseCase(subRepo, customerRepo, planRepo)
 
 	connectDriverProvider := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
 		return reg.Get(ctx, deviceID)
 	}
 
+	driverResolverConnect := func(ctx context.Context, deviceID string) (port.DeviceDriver, bool) {
+		drv, err := reg.Get(ctx, deviceID)
+		if err != nil {
+			return nil, false
+		}
+		return drv, true
+	}
+
+	// ─── 3. Routing (net/http ServeMux) ─────────────────────────────────────
 	rootMux := http.NewServeMux()
 
-	// 1. Register Public Routes
 	authPath, authHandler := authConnect.NewAuthServiceHandler(
-		authUseCase,
-		refreshUseCase,
-		manageUserUseCase,
-		cfg.AppEnv == "production",
+		authUseCase, refreshUseCase, manageUserUseCase, cfg.AppEnv == "production",
 	)
 	rootMux.Handle(authPath, authHandler)
+
+	pubRegPath, pubRegHandler := registrationConnect.NewPublicSubmitHandler(regManagerUC)
+	rootMux.Handle(pubRegPath, pubRegHandler)
+
+	portalConnectPath, portalConnectHandler := portalConnect.NewPortalServiceHandler(portalUCase)
+	rootMux.Handle(portalConnectPath, portalConnectHandler)
+
+	portalHTTPHandler := portalHTTP.NewHandler(portalUCase)
+	portalHTTPHandler.RegisterPublic(rootMux)
+	portalHTTPHandler.RegisterAuthenticated(rootMux)
+
+	gatewayHTTPHandler := gatewayHTTP.NewHandler(chargeUC)
+	gatewayHTTPHandler.RegisterPublic(rootMux)
 
 	mcpServer := mcp.New(reg, nil).
 		WithMikhmonUseCase(hotUC).
@@ -211,7 +284,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	wsAdapter.RegisterEventRoutes(rootMux, sseHub, openTermUC)
 
-	// 2. Register Protected ConnectRPC Services onto a Protected Sub-Mux
 	protectedMux := http.NewServeMux()
 
 	var protectedPaths []string
@@ -235,24 +307,29 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	settingPath, settingHandler := settingConnect.NewSettingServiceHandler(manageSettingUseCase)
 	registerProtected(settingPath, settingHandler)
 
-	invRepo := postgres.NewInvoiceRepository(pgStore.DB())
-	subRepo := postgres.NewSubscriptionRepository(pgStore.DB(), vault)
-	planRepo := postgres.NewServicePlanRepository(pgStore.DB())
-	customerRepo2 := customerRepo
-	notifRepo := postgres.NewNotificationRepository(pgStore.DB())
-
-	// cashRepo / paymentProcessor / reportingRepo / regRepo dibangunkan di
-	// fase 4 bersama handler ConnectRPC-nya.
-	invUC := billingUC.NewInvoiceUseCase(invRepo)
-	subUC := billingUC.NewSubscriptionUseCase(subRepo)
-
-	billingPath, billingHandler := billingConnect.NewBillingServiceHandler(invUC, subUC)
+	billingPath, billingHandler := billingConnect.NewBillingServiceHandler(
+		invUC, checkoutUC, subUC, lifecycleUC, planUC, runBillingUC)
 	registerProtected(billingPath, billingHandler)
+
+	regPath, regHandler := registrationConnect.NewRegistrationServiceHandler(regManagerUC, regConvertUC, regRepo)
+	registerProtected(regPath, regHandler)
+
+	cashbookPath, cashbookHandler := cashbookConnect.NewCashbookServiceHandler(cashRepo)
+	registerProtected(cashbookPath, cashbookHandler)
+
+	notifPath, notifHandler := notificationConnect.NewNotificationServiceHandler(notifRepo, waSender)
+	registerProtected(notifPath, notifHandler)
+
+	reportPath, reportHandler := reportConnect.NewReportServiceHandler(reportingRepo, reportingRepo)
+	registerProtected(reportPath, reportHandler)
+
+	adminPath, adminHandler := ispadminConnect.NewIspAdminServiceHandler(
+		upsertImport, routerSource, reconciler, exportUC, driverResolverConnect)
+	registerProtected(adminPath, adminHandler)
 
 	mikhmonPath, mikhmonHandler := hotspotConnect.NewHotspotServiceHandler(hotUC, activeSessionsUC, connectDriverProvider)
 	registerProtected(mikhmonPath, mikhmonHandler)
 
-	pppUseCase := pppUC.New(sessionGateway)
 	pppPath, pppHandler := pppConnect.NewPPPServiceHandler(pppUseCase, connectDriverProvider)
 	registerProtected(pppPath, pppHandler)
 
@@ -265,68 +342,32 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	probePath, probeHandler := deviceConnect.NewProbeServiceHandler()
 	registerProtected(probePath, probeHandler)
 
-	// ─── Fase 4: portal pelanggan, gateway Tripay, laporan, admin ──────
-	accountMgrFase4 := newRouterAccountManager(reg, sessionGateway, hotGateway, sessionGateway)
-	paymentProc := postgres.NewPaymentProcessor(pgStore.DB())
-	paymentProc.OnPaid = buildOnPaidRestore(accountMgrFase4, subRepo, planRepo, settingRepo)
-
-	waSender := whatsappadapter.NewSenderAdapter(waManager, pgStore.FindAllSessions)
-	portalRepo := postgres.NewPortalRepository(pgStore.DB())
-	paymentReader := postgres.NewPaymentReader(pgStore.DB())
-	portalUC := portalUC.NewUseCase(portalRepo, customerRepo2, subRepo, invRepo,
-		paymentReader, waSender, settingRepo)
-	portalHTTP := portalHTTP.NewHandler(portalUC)
-	// Portal: route publik & terautentikasi sama-sama di rootMux —
-	// autentikasi memakai portal token sendiri (bukan JWT staff), sehingga
-	// TIDAK boleh lewat protectedMux (JWT+RBAC akan menolak 401/403).
-	portalHTTP.RegisterPublic(rootMux)
-	portalHTTP.RegisterAuthenticated(rootMux)
-
-	gwtxRepo := postgres.NewGatewayTransactionRepository(pgStore.DB())
-	paymentProcFase4 := postgres.NewPaymentProcessor(pgStore.DB())
-	tripayAdapter := tripay.NewAdapter(settingRepo)
-	chargeUC := billingUC.NewGatewayChargeUseCase(invRepo, customerRepo2,
-		gwtxRepo, tripayAdapter, paymentProcFase4, settingRepo)
-	gatewayHTTP := gatewayHTTP.NewHandler(chargeUC)
-	gatewayHTTP.RegisterPublic(rootMux)         // webhook callback
-	gatewayHTTP.RegisterProtected(protectedMux) // kasir buat link bayar
-
-	reportingRepo := postgres.NewReportingRepository(pgStore.DB())
+	gatewayHTTPHandler.RegisterProtected(protectedMux)
 	reportsHTTP.NewHandler(reportingRepo).Register(protectedMux)
+	adminapi.NewHandler(upsertImport, routerSource, reconciler, reportingRepo, exportUC, driverResolverConnect).
+		RegisterProtected(protectedMux)
 
-	upsertImport := importer.NewUpsertUseCase(planRepo, customerRepo2, subRepo, nil, "")
-	upsertImport.SetDeviceResolver(func(deviceName string) (string, bool) {
-		devices, err := repo.FindAll(context.Background())
-		if err != nil {
-			return "", false
-		}
-		for _, d := range devices {
-			if strings.EqualFold(d.Name, deviceName) {
-				return d.ID, true
-			}
-		}
-		return "", false
-	})
-	routerSource := importer.NewRouterSource(sessionGateway)
-	reconciler := importer.NewReconciler(subRepo, sessionGateway)
-	exportUC := importer.NewExportUseCase(subRepo, customerRepo2, planRepo)
-	adminapi.NewHandler(upsertImport, routerSource, reconciler,
-		reportingRepo, exportUC, func(ctx context.Context, deviceID string) (port.DeviceDriver, bool) {
-			drv, err := reg.Get(ctx, deviceID)
-			if err != nil {
-				return nil, false
-			}
-			return drv, true
-		}).RegisterProtected(protectedMux)
+	protectedHandler := middleware.Chain(
+		protectedMux,
+		middleware.AuthenticateJWT(jwtService),
+		middleware.AuthorizeProcedure(casbinEnforcer),
+	)
+	for _, path := range protectedPaths {
+		rootMux.Handle(path, protectedHandler)
+	}
+	for _, plainPath := range []string{
+		"/api/cashier/charge",
+		"/api/reports/daily", "/api/reports/monthly", "/api/reports/yearly",
+		"/api/admin/import", "/api/admin/import-router", "/api/admin/reconcile",
+		"/api/admin/export", "/api/admin/snapshot/refresh",
+	} {
+		rootMux.Handle(plainPath, protectedHandler)
+	}
 
-	// Scheduler ISP (fase 3.5): generator tagihan harian + lifecycle worker
-	// (provisi retry, isolir, auto-suspend) — semua parameter dari settings.
+	// ─── 4. Scheduler (Cron) ────────────────────────────────────────────────
 	if cfg.SchedulerEnabled && cfg.BillingCronSpec != "" && cfg.IsolationCronSpec != "" {
-		runBillingUC := billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo)
-		accountMgr := newRouterAccountManager(reg, sessionGateway, hotGateway, sessionGateway)
 		isolateWorker := billingUC.NewIsolateWorker(
-			subRepo, invRepo, customerRepo2, planRepo,
-			accountMgr, notifRepo, settingRepo,
+			subRepo, invRepo, customerRepo, planRepo, accountMgr, notifRepo, settingRepo,
 		)
 		waWorker := notificationUC.NewWaSenderWorker(notifRepo, waSender, settingRepo)
 		snapshotJob := func(ctx context.Context) error {
@@ -338,50 +379,32 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 			waSend:   waWorker,
 			snapshot: snapshotJob,
 		}, schedulerSpecs{
-			billing: cfg.BillingCronSpec, isolation: cfg.IsolationCronSpec,
-			waSend: cfg.WaSendCronSpec, snapshot: cfg.SnapshotCronSpec,
+			billing:   cfg.BillingCronSpec,
+			isolation: cfg.IsolationCronSpec,
+			waSend:    cfg.WaSendCronSpec,
+			snapshot:  cfg.SnapshotCronSpec,
 		}, "tenant-default")
 		defer sched.Stop()
 		sched.Start()
 		logger.WithComponent("Polyglot").WithFields(map[string]any{
 			"billing_cron":   cfg.BillingCronSpec,
 			"isolation_cron": cfg.IsolationCronSpec,
-		}).Info("ISP scheduler started")
+			"wa_send_cron":   cfg.WaSendCronSpec,
+			"snapshot_cron":  cfg.SnapshotCronSpec,
+		}).Info("ISP scheduler started (4 jobs)")
 	}
 
-	// Wrap protected services with JWT and RBAC enforcement
-	protectedHandler := middleware.Chain(
-		protectedMux,
-		middleware.AuthenticateJWT(jwtService),
-		middleware.AuthorizeProcedure(casbinEnforcer),
-	)
-
-	// Mount protected handler for all protected service paths
-	for _, path := range protectedPaths {
-		rootMux.Handle(path, protectedHandler)
-	}
-
-	// 3. Wrap root handler with Global Middlewares (CORS, Logger, Recovery)
-	finalHandler := middleware.Chain(
-		rootMux,
-		middleware.Recovery(),
-		middleware.RequestLogger(),
-		middleware.CORS(cfg.CORSOrigins, cfg.AppEnv),
-	)
-
-	httpAddr := envOr("PORT", ":"+cfg.Port)
-	if httpAddr[0] != ':' {
-		httpAddr = ":" + httpAddr
-	}
-
-	httpSrv := &http.Server{
-		Addr:    httpAddr,
-		Handler: finalHandler,
+	server := &http.Server{
+		Addr:         ":" + cfg.Port,
+		Handler:      middleware.Chain(rootMux, middleware.CORS(cfg.CORSOrigins, cfg.AppEnv), middleware.Recovery()),
+		ReadTimeout:  30 * time.Second,
+		WriteTimeout: 60 * time.Second,
+		IdleTimeout:  120 * time.Second,
 	}
 
 	return &App{
 		cfg:        cfg,
-		httpServer: httpSrv,
+		httpServer: server,
 		registry:   reg,
 		waManager:  waManager,
 		pgStore:    pgStore,
@@ -400,24 +423,19 @@ func (a *App) Run() error {
 
 func (a *App) Shutdown(ctx context.Context) error {
 	logger.WithComponent("Polyglot").Info("shutting down server...")
-
 	if a.sseHub != nil {
 		a.sseHub.Close()
 	}
-
 	if err := a.httpServer.Shutdown(ctx); err != nil {
 		logger.WithComponent("Polyglot").Warnf("error shutting down HTTP server: %v", err)
 		_ = a.httpServer.Close()
 	}
-
 	if a.waManager != nil {
 		a.waManager.DisconnectAll()
 	}
-
 	if a.registry != nil {
 		_ = a.registry.Close()
 	}
-
 	logger.WithComponent("Polyglot").Info("shutdown complete")
 	return nil
 }
@@ -432,3 +450,5 @@ func envOr(key, fallback string) string {
 func loadInitialDevices(pgStore *postgres.Store) (port.DeviceRepository, port.CredentialVault) {
 	return postgres.NewDeviceRepository(pgStore.DB()), postgres.NewCredentialVault(pgStore.DB())
 }
+
+var _ = devicepb.Registration{}

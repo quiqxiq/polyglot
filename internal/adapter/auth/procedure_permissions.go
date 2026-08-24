@@ -24,15 +24,6 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.CustomerService/ListCustomers": "customer:read",
 	"/polyglot.v1.CustomerService/GetCustomer":   "customer:read",
 
-	// BillingService
-	"/polyglot.v1.BillingService/ListInvoices":       "billing:read",
-	"/polyglot.v1.BillingService/GetInvoice":         "billing:read",
-	"/polyglot.v1.BillingService/CreateInvoice":      "billing:write",
-	"/polyglot.v1.BillingService/PayInvoice":         "billing:write",
-	"/polyglot.v1.BillingService/ListSubscriptions":  "billing:read",
-	"/polyglot.v1.BillingService/CreateSubscription": "billing:write",
-	"/polyglot.v1.BillingService/CancelSubscription": "billing:write",
-
 	// WhatsAppService
 	"/polyglot.v1.WhatsAppService/ListSessions":     "whatsapp:read",
 	"/polyglot.v1.WhatsAppService/CreateSession":    "whatsapp:manage",
@@ -195,6 +186,72 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.SettingService/UpdateSetting":         "setting:manage",
 	"/polyglot.v1.SettingService/BatchUpdateSettings":   "setting:manage",
 	"/polyglot.v1.SettingService/UpdateBotSettings":     "setting:manage",
+
+	// ─── BillingService ─────────────────────────────────────────────────────
+	"/polyglot.v1.BillingService/ListInvoices":          "billing:read",
+	"/polyglot.v1.BillingService/GetInvoice":            "billing:read",
+	"/polyglot.v1.BillingService/CashierResolve":        "billing:read",
+	"/polyglot.v1.BillingService/CashierPay":            "billing:manage",
+	"/polyglot.v1.BillingService/ListSubscriptions":     "billing:read",
+	"/polyglot.v1.BillingService/GetSubscription":       "billing:read",
+	"/polyglot.v1.BillingService/ChangePlan":            "billing:manage",
+	"/polyglot.v1.BillingService/SuspendSubscription":   "billing:manage",
+	"/polyglot.v1.BillingService/ResumeSubscription":    "billing:manage",
+	"/polyglot.v1.BillingService/TerminateSubscription": "billing:manage",
+	"/polyglot.v1.BillingService/ActivateSubscription":  "billing:manage",
+	"/polyglot.v1.BillingService/ListPlans":             "billing:read",
+	"/polyglot.v1.BillingService/GetPlan":               "billing:read",
+	"/polyglot.v1.BillingService/CreatePlan":            "billing:manage",
+	"/polyglot.v1.BillingService/UpdatePlan":            "billing:manage",
+	"/polyglot.v1.BillingService/DeletePlan":            "billing:manage",
+	"/polyglot.v1.BillingService/GenerateInvoices":      "billing:manage",
+
+	// ─── CustomerService (lookups baru) ─────────────────────────────────────
+	"/polyglot.v1.CustomerService/FindByPhone":        "customer:read",
+	"/polyglot.v1.CustomerService/FindByCustomerCode": "customer:read",
+	"/polyglot.v1.CustomerService/FindByPortalCode":   "customer:read",
+
+	// ─── RegistrationService ────────────────────────────────────────────────
+	// SubmitRegistration adalah publik (calon pelanggan) — dipasang di rootMux tanpa RBAC.
+	"/polyglot.v1.RegistrationService/ListRegistrations":   "registration:read",
+	"/polyglot.v1.RegistrationService/GetRegistration":     "registration:read",
+	"/polyglot.v1.RegistrationService/ApproveRegistration": "registration:manage",
+	"/polyglot.v1.RegistrationService/ScheduleInstall":     "registration:manage",
+	"/polyglot.v1.RegistrationService/MarkInstalled":       "registration:install",
+	"/polyglot.v1.RegistrationService/RejectRegistration":  "registration:manage",
+	"/polyglot.v1.RegistrationService/CancelRegistration":  "registration:manage",
+	"/polyglot.v1.RegistrationService/ConvertRegistration": "registration:manage",
+
+	// ─── CashbookService ────────────────────────────────────────────────────
+	"/polyglot.v1.CashbookService/ListAccounts":     "cashbook:read",
+	"/polyglot.v1.CashbookService/SaveAccount":      "cashbook:manage",
+	"/polyglot.v1.CashbookService/ListCategories":   "cashbook:read",
+	"/polyglot.v1.CashbookService/SaveCategory":     "cashbook:manage",
+	"/polyglot.v1.CashbookService/AddTransaction":   "cashbook:manage",
+	"/polyglot.v1.CashbookService/ListTransactions": "cashbook:read",
+	"/polyglot.v1.CashbookService/Balances":         "cashbook:read",
+
+	// ─── NotificationService ────────────────────────────────────────────────
+	"/polyglot.v1.NotificationService/ListTemplates":          "notification:read",
+	"/polyglot.v1.NotificationService/GetTemplate":            "notification:read",
+	"/polyglot.v1.NotificationService/SaveTemplate":           "notification:manage",
+	"/polyglot.v1.NotificationService/ListNotifications":      "notification:read",
+	"/polyglot.v1.NotificationService/PendingCount":           "notification:read",
+	"/polyglot.v1.NotificationService/MarkNotificationSent":   "notification:manage",
+	"/polyglot.v1.NotificationService/MarkNotificationFailed": "notification:manage",
+	"/polyglot.v1.NotificationService/TestSend":               "notification:manage",
+
+	// ─── ReportService ──────────────────────────────────────────────────────
+	"/polyglot.v1.ReportService/DailyReport":     "report:read",
+	"/polyglot.v1.ReportService/MonthlyReport":   "report:read",
+	"/polyglot.v1.ReportService/YearlyReport":    "report:read",
+	"/polyglot.v1.ReportService/RefreshSnapshot": "report:manage",
+
+	// ─── IspAdminService ────────────────────────────────────────────────────
+	"/polyglot.v1.IspAdminService/ImportFile":      "ispadmin:manage",
+	"/polyglot.v1.IspAdminService/ImportRouter":    "ispadmin:manage",
+	"/polyglot.v1.IspAdminService/ExportCustomers": "ispadmin:manage",
+	"/polyglot.v1.IspAdminService/Reconcile":       "ispadmin:manage",
 
 	// ─── Fase 4: endpoint ISP plain-HTTP (staff, di balik JWT) ─────────
 	// Portal pelanggan TIDAK ada di sini — memakai portal token sendiri

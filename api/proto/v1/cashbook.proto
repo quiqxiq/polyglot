@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+message CashAccount {
+  string id = 1;
+  string account_code = 2;
+  string name = 3;
+  string type = 4; // CASH | BANK
+  bool is_active = 5;
+}
+
+message CashCategory {
+  string id = 1;
+  string name = 2;
+  string type = 3; // INCOME | EXPENSE
+  bool is_active = 4;
+}
+
+message CashTransaction {
+  string id = 1;
+  string transaction_no = 2;
+  string account_id = 3;
+  string category_id = 4;
+  string direction = 5; // IN | OUT
+  double amount = 6;
+  int64 trx_date_unix = 7;
+  string source_type = 8; // PAYMENT | EXPENSE | TRANSFER
+  string source_id = 9;
+  string description = 10;
+}
+
+message ListAccountsRequest { bool active_only = 1; }
+message ListAccountsResponse { repeated CashAccount accounts = 1; }
+
+message SaveAccountRequest { CashAccount account = 1; }
+message SaveAccountResponse { CashAccount account = 1; }
+
+message ListCategoriesRequest { bool active_only = 1; }
+message ListCategoriesResponse { repeated CashCategory categories = 1; }
+
+message SaveCategoryRequest { CashCategory category = 1; }
+message SaveCategoryResponse { CashCategory category = 1; }
+
+message AddTransactionRequest {
+  string account_id = 1;
+  string category_id = 2;
+  string direction = 3; // IN | OUT
+  double amount = 4;
+  string description = 5;
+}
+message AddTransactionResponse { CashTransaction transaction = 1; }
+
+message ListTransactionsFilter {
+  string account_id = 1;
+  string category_id = 2;
+  string direction = 3; // IN | OUT | kosong
+  int64 from_unix = 4;
+  int64 to_unix = 5;
+  int32 limit = 6;
+}
+message ListTransactionsResponse { repeated CashTransaction transactions = 1; }
+
+message BalancesRequest {
+  int64 from_unix = 1;
+  int64 to_unix = 2;
+}
+// Saldo bersih per rekening (IN positif, OUT negatif).
+message BalancesResponse { map<string, double> balance_by_account = 1; }
+
+service CashbookService {
+  rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse);
+  rpc SaveAccount(SaveAccountRequest) returns (SaveAccountResponse);
+  rpc ListCategories(ListCategoriesRequest) returns (ListCategoriesResponse);
+  rpc SaveCategory(SaveCategoryRequest) returns (SaveCategoryResponse);
+  rpc AddTransaction(AddTransactionRequest) returns (AddTransactionResponse);
+  rpc ListTransactions(ListTransactionsFilter) returns (ListTransactionsResponse);
+  rpc Balances(BalancesRequest) returns (BalancesResponse);
+}
