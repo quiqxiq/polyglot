@@ -60,6 +60,38 @@ message Subscription {
   string notes = 19;
 }
 
+
+// ─── CRUD Langganan ─────────────────────────────────────────────────────
+
+message CreateSubscriptionRequest {
+  string customer_id = 1;
+  string plan_id = 2;
+  string device_id = 3;       // kosong = belum ditugaskan (provision PENDING)
+  string service_type = 4;    // PPPOE | HOTSPOT | DEDICATED (default dari plan)
+  string remote_username = 5; // kosong = auto-generate
+  string remote_password = 6; // kosong = auto-generate
+  double custom_price = 7;    // 0 = ikut harga plan
+  string billing_cycle = 8;
+  int32 billing_day = 9;
+  string notes = 10;
+}
+message CreateSubscriptionResponse { Subscription subscription = 1; }
+
+message UpdateSubscriptionRequest {
+  string id = 1;
+  string remote_username = 2;
+  string remote_password = 3; // kosong = tidak diubah
+  double custom_price = 4;
+  string billing_cycle = 5;
+  int32 billing_day = 6;
+  string device_id = 7;       // reassignment; kosong = tidak diubah
+  string notes = 8;
+}
+message UpdateSubscriptionResponse { Subscription subscription = 1; }
+
+message DeleteSubscriptionRequest { string id = 1; }
+message DeleteSubscriptionResponse { string message = 1; }
+
 message Plan {
   string id = 1;
   string name = 2;
@@ -215,6 +247,12 @@ service BillingService {
   rpc ResumeSubscription(ResumeSubscriptionRequest) returns (ResumeSubscriptionResponse);
   rpc TerminateSubscription(TerminateSubscriptionRequest) returns (TerminateSubscriptionResponse);
   rpc ActivateSubscription(ActivateSubscriptionRequest) returns (ActivateSubscriptionResponse);
+
+  // CRUD langsung (walk-in / operasional). Create juga tersedia dari
+  // halaman Customer detail. Ganti paket tetap via ChangePlan.
+  rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse);
+  rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse);
+  rpc DeleteSubscription(DeleteSubscriptionRequest) returns (DeleteSubscriptionResponse);
 
   // Paket layanan
   rpc ListPlans(ListPlansRequest) returns (ListPlansResponse);

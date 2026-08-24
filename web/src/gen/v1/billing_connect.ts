@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ActivateSubscriptionRequest, ActivateSubscriptionResponse, CashierPayRequest, CashierPayResponse, CashierResolveRequest, CashierResolveResponse, ChangePlanRequest, ChangePlanResponse, CreatePlanRequest, CreatePlanResponse, DeletePlanRequest, DeletePlanResponse, GenerateInvoicesRequest, GenerateInvoicesResponse, GetInvoiceRequest, GetInvoiceResponse, GetPlanRequest, GetPlanResponse, GetSubscriptionRequest, GetSubscriptionResponse, ListInvoicesRequest, ListInvoicesResponse, ListPlansRequest, ListPlansResponse, ListSubscriptionsRequest, ListSubscriptionsResponse, ResumeSubscriptionRequest, ResumeSubscriptionResponse, SuspendSubscriptionRequest, SuspendSubscriptionResponse, TerminateSubscriptionRequest, TerminateSubscriptionResponse, UpdatePlanRequest, UpdatePlanResponse } from "./billing_pb.js";
+import { ActivateSubscriptionRequest, ActivateSubscriptionResponse, CashierPayRequest, CashierPayResponse, CashierResolveRequest, CashierResolveResponse, ChangePlanRequest, ChangePlanResponse, CreatePlanRequest, CreatePlanResponse, CreateSubscriptionRequest, CreateSubscriptionResponse, DeletePlanRequest, DeletePlanResponse, DeleteSubscriptionRequest, DeleteSubscriptionResponse, GenerateInvoicesRequest, GenerateInvoicesResponse, GetInvoiceRequest, GetInvoiceResponse, GetPlanRequest, GetPlanResponse, GetSubscriptionRequest, GetSubscriptionResponse, ListInvoicesRequest, ListInvoicesResponse, ListPlansRequest, ListPlansResponse, ListSubscriptionsRequest, ListSubscriptionsResponse, ResumeSubscriptionRequest, ResumeSubscriptionResponse, SuspendSubscriptionRequest, SuspendSubscriptionResponse, TerminateSubscriptionRequest, TerminateSubscriptionResponse, UpdatePlanRequest, UpdatePlanResponse, UpdateSubscriptionRequest, UpdateSubscriptionResponse } from "./billing_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -115,6 +115,36 @@ export const BillingService = {
       name: "ActivateSubscription",
       I: ActivateSubscriptionRequest,
       O: ActivateSubscriptionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * CRUD langsung (walk-in / operasional). Create juga tersedia dari
+     * halaman Customer detail. Ganti paket tetap via ChangePlan.
+     *
+     * @generated from rpc polyglot.v1.BillingService.CreateSubscription
+     */
+    createSubscription: {
+      name: "CreateSubscription",
+      I: CreateSubscriptionRequest,
+      O: CreateSubscriptionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.UpdateSubscription
+     */
+    updateSubscription: {
+      name: "UpdateSubscription",
+      I: UpdateSubscriptionRequest,
+      O: UpdateSubscriptionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.DeleteSubscription
+     */
+    deleteSubscription: {
+      name: "DeleteSubscription",
+      I: DeleteSubscriptionRequest,
+      O: DeleteSubscriptionResponse,
       kind: MethodKind.Unary,
     },
     /**
