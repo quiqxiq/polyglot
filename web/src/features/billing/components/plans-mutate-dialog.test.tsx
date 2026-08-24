@@ -25,6 +25,22 @@ vi.mock('../api/use-plans', async (orig) => {
   }
 })
 
+vi.mock('@/features/hotspot/api/use-router-resources', () => ({
+  useParentQueuesQuery: () => ({
+    data: ['pq-utama', 'pq-backup'],
+    isFetching: false,
+  }),
+  useIpPoolsQuery: () => ({
+    data: ['pool-a', 'pool-b'],
+    isFetching: false,
+  }),
+}))
+
+vi.mock('@/stores/device-store', () => ({
+  useDeviceStore: (sel: (s: { selectedDeviceId: string }) => unknown) =>
+    sel({ selectedDeviceId: 'dev-1' }),
+}))
+
 function CreateHarness() {
   const { setOpen } = usePlans()
   // Call once: useDialogState's setOpen toggles (same value → null), so
@@ -121,5 +137,71 @@ describe('PlansMutateDialog', () => {
     // PPPoE routing fields disappear.
     expect(getByText(/Address List/i).elements()).toHaveLength(0)
     expect(getByText(/Simultaneous Use/i).elements()).toHaveLength(0)
+  })
+
+  it('offers router parent queues and IP pools via datalist on create (PPPOE)', async () => {
+    const { getByRole, getByPlaceholder, getByText } = await render(
+      <PlansProvider>
+        <CreateHarness />
+      </PlansProvider>
+    )
+
+    await expect.element(getByText('Tambah Paket')).toBeInTheDocument()
+
+    // Parent Queue input is linked to a datalist listing the router's
+    // simple queues (query by placeholder: list= inputs map to combobox).
+    const pqInput = getByPlaceholder('none / parent queue')
+    await expect.element(pqInput).toHaveAttribute('list')
+
+    const pqListId = pqInput.element().getAttribute('list')
+    expect(pqListId).toBeTruthy()
+    const pqDatalist = document.getElementById(pqListId!)
+    expect(pqDatalist?.tagName.toLowerCase()).toBe('datalist')
+    const queueValues = Array.from(
+      pqDatalist!.querySelectorAll('option')
+    ).map((opt) => opt.getAttribute('value'))
+    expect(queueValues).toContain('pq-utama')
+    expect(queueValues).toEqual(['pq-utama', 'pq-backup'])
+
+    // ipPoolName is HOTSPOT-only in the visibility matrix (hidden on the
+    // PPPOE default), so switch type before checking its datalist.
+    const serviceTypeSelect = getByRole('combobox', { name: /Tipe Layanan/i })
+    await userEvent.click(serviceTypeSelect)
+    await userEvent.click(
+      getByRole('option', { name: /Hotspot \(Voucher\/Monthly\)/i })
+    )
+    await expect.element(getByText(/Expire Mode/i)).toBeInTheDocument()
+
+    // IP Pool input gets its own datalist with the router's pools.
+    const poolInput = getByPlaceholder('none / pool-hotspot')
+    await expect.element(poolInput).toHaveAttribute('list')
+
+    const poolListId = poolInput.element().getAttribute('list')
+    expect(poolListId).toBeTruthy()
+    expect(poolListId).not.toBe(pqListId)
+    const poolDatalist = document.getElementById(poolListId!)
+    expect(poolDatalist?.tagName.toLowerCase()).toBe('datalist')
+    const poolValues = Array.from(
+      poolDatalist!.querySelectorAll('option')
+    ).map((opt) => opt.getAttribute('value'))
+    expect(poolValues).toContain('pool-a')
+    expect(poolValues).toEqual(['pool-a', 'pool-b'])
+  })
+
+  it('still accepts freely typed values outside the datalist suggestions', async () => {
+    const { getByPlaceholder, getByText } = await render(
+      <PlansProvider>
+        <CreateHarness />
+      </PlansProvider>
+    )
+
+    await expect.element(getByText('Tambah Paket')).toBeInTheDocument()
+
+    // Free-typing an unknown parent queue must work without errors —
+    // datalist only suggests, it never restricts. fill() replaces the
+    // seeded 'none' default instead of appending to it.
+    const pqInput = getByPlaceholder('none / parent queue')
+    await userEvent.fill(pqInput, 'pq-luar-router')
+    await expect.element(pqInput).toHaveValue('pq-luar-router')
   })
 })

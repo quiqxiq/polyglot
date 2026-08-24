@@ -21,10 +21,18 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import {
+  ResourceDatalistInput,
+} from '@/components/resource-datalist-input'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import { SelectDropdown } from '@/components/select-dropdown'
+import {
+  useIpPoolsQuery,
+  useParentQueuesQuery,
+} from '@/features/hotspot/api/use-router-resources'
 import { CreatePlanRequest, Plan, UpdatePlanRequest } from '@/gen/v1/billing_pb'
+import { useDeviceStore } from '@/stores/device-store'
 import { planFormSchema, type PlanFormValues } from '../data/schema'
 import { EXPIRE_MODES, SERVICE_TYPES, VALIDITY_MODES } from '../data/constants'
 import { isFieldHidden, isFieldVisible } from '../data/plan-fields'
@@ -118,6 +126,12 @@ export function PlansMutateDialog() {
   const isUpdate = !!currentRow
   const createMutation = useCreatePlanMutation()
   const updateMutation = useUpdatePlanMutation()
+
+  // Suggestion datalist diambil dari router aktif; tanpa device terpilih
+  // query tetap disabled dan input berperilaku seperti input teks biasa.
+  const selectedDeviceId = useDeviceStore((s) => s.selectedDeviceId)
+  const parentQueues = useParentQueuesQuery(selectedDeviceId)
+  const ipPools = useIpPoolsQuery(selectedDeviceId)
 
   // TFieldValues/TTransformedValues are inferred from the resolver: zod
   // `.default()` fields are optional on input but guaranteed on output.
@@ -494,7 +508,13 @@ export function PlansMutateDialog() {
                       <FormItem>
                         <FormLabel>IP Pool</FormLabel>
                         <FormControl>
-                          <Input {...field} value={field.value ?? ''} placeholder='pool-hotspot' />
+                          <ResourceDatalistInput
+                            value={field.value ?? ''}
+                            onChange={field.onChange}
+                            placeholder='none / pool-hotspot'
+                            options={ipPools.data ?? []}
+                            optionsLoading={ipPools.isFetching}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -509,7 +529,13 @@ export function PlansMutateDialog() {
                       <FormItem>
                         <FormLabel>Parent Queue</FormLabel>
                         <FormControl>
-                          <Input {...field} value={field.value ?? ''} placeholder='none' />
+                          <ResourceDatalistInput
+                            value={field.value ?? ''}
+                            onChange={field.onChange}
+                            placeholder='none / parent queue'
+                            options={parentQueues.data ?? []}
+                            optionsLoading={parentQueues.isFetching}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
