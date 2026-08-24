@@ -139,8 +139,8 @@ describe('PlansMutateDialog', () => {
     expect(getByText(/Simultaneous Use/i).elements()).toHaveLength(0)
   })
 
-  it('offers router parent queues and IP pools via datalist on create (PPPOE)', async () => {
-    const { getByRole, getByPlaceholder, getByText } = await render(
+  it('offers router parent queues and IP pools via select dropdowns on create (PPPOE)', async () => {
+    const { getByRole, getByText } = await render(
       <PlansProvider>
         <CreateHarness />
       </PlansProvider>
@@ -148,23 +148,17 @@ describe('PlansMutateDialog', () => {
 
     await expect.element(getByText('Tambah Paket')).toBeInTheDocument()
 
-    // Parent Queue input is linked to a datalist listing the router's
-    // simple queues (query by placeholder: list= inputs map to combobox).
-    const pqInput = getByPlaceholder('none / parent queue')
-    await expect.element(pqInput).toHaveAttribute('list')
-
-    const pqListId = pqInput.element().getAttribute('list')
-    expect(pqListId).toBeTruthy()
-    const pqDatalist = document.getElementById(pqListId!)
-    expect(pqDatalist?.tagName.toLowerCase()).toBe('datalist')
-    const queueValues = Array.from(
-      pqDatalist!.querySelectorAll('option')
-    ).map((opt) => opt.getAttribute('value'))
-    expect(queueValues).toContain('pq-utama')
-    expect(queueValues).toEqual(['pq-utama', 'pq-backup'])
+    // Parent Queue is a proper Select dropdown seeded with 'none'.
+    const pqTrigger = getByRole('combobox', { name: /Parent Queue/i })
+    await userEvent.click(pqTrigger)
+    await expect.element(getByRole('option', { name: 'pq-utama' })).toBeInTheDocument()
+    await expect.element(getByRole('option', { name: 'pq-backup' })).toBeInTheDocument()
+    await expect.element(getByRole('option', { name: 'none' })).toBeInTheDocument()
+    await userEvent.click(getByRole('option', { name: 'pq-utama' }))
+    await expect.element(pqTrigger).toHaveTextContent('pq-utama')
 
     // ipPoolName is HOTSPOT-only in the visibility matrix (hidden on the
-    // PPPOE default), so switch type before checking its datalist.
+    // PPPOE default), so switch type before checking its dropdown.
     const serviceTypeSelect = getByRole('combobox', { name: /Tipe Layanan/i })
     await userEvent.click(serviceTypeSelect)
     await userEvent.click(
@@ -172,24 +166,17 @@ describe('PlansMutateDialog', () => {
     )
     await expect.element(getByText(/Expire Mode/i)).toBeInTheDocument()
 
-    // IP Pool input gets its own datalist with the router's pools.
-    const poolInput = getByPlaceholder('none / pool-hotspot')
-    await expect.element(poolInput).toHaveAttribute('list')
-
-    const poolListId = poolInput.element().getAttribute('list')
-    expect(poolListId).toBeTruthy()
-    expect(poolListId).not.toBe(pqListId)
-    const poolDatalist = document.getElementById(poolListId!)
-    expect(poolDatalist?.tagName.toLowerCase()).toBe('datalist')
-    const poolValues = Array.from(
-      poolDatalist!.querySelectorAll('option')
-    ).map((opt) => opt.getAttribute('value'))
-    expect(poolValues).toContain('pool-a')
-    expect(poolValues).toEqual(['pool-a', 'pool-b'])
+    // IP Pool gets its own dropdown listing the router's pools.
+    const poolTrigger = getByRole('combobox', { name: /IP Pool/i })
+    await userEvent.click(poolTrigger)
+    await expect.element(getByRole('option', { name: 'pool-a' })).toBeInTheDocument()
+    await expect.element(getByRole('option', { name: 'pool-b' })).toBeInTheDocument()
+    await userEvent.click(getByRole('option', { name: 'pool-a' }))
+    await expect.element(poolTrigger).toHaveTextContent('pool-a')
   })
 
-  it('still accepts freely typed values outside the datalist suggestions', async () => {
-    const { getByPlaceholder, getByText } = await render(
+  it('allows switching a queue selection back to none', async () => {
+    const { getByRole, getByText } = await render(
       <PlansProvider>
         <CreateHarness />
       </PlansProvider>
@@ -197,11 +184,13 @@ describe('PlansMutateDialog', () => {
 
     await expect.element(getByText('Tambah Paket')).toBeInTheDocument()
 
-    // Free-typing an unknown parent queue must work without errors —
-    // datalist only suggests, it never restricts. fill() replaces the
-    // seeded 'none' default instead of appending to it.
-    const pqInput = getByPlaceholder('none / parent queue')
-    await userEvent.fill(pqInput, 'pq-luar-router')
-    await expect.element(pqInput).toHaveValue('pq-luar-router')
+    const pqTrigger = getByRole('combobox', { name: /Parent Queue/i })
+    await userEvent.click(pqTrigger)
+    await userEvent.click(getByRole('option', { name: 'pq-backup' }))
+    await expect.element(pqTrigger).toHaveTextContent('pq-backup')
+
+    await userEvent.click(pqTrigger)
+    await userEvent.click(getByRole('option', { name: 'none' }))
+    await expect.element(pqTrigger).toHaveTextContent('none')
   })
 })

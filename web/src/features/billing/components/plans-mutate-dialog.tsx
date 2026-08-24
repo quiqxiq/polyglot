@@ -21,9 +21,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  ResourceDatalistInput,
-} from '@/components/resource-datalist-input'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import { SelectDropdown } from '@/components/select-dropdown'
@@ -509,15 +506,23 @@ export function PlansMutateDialog() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>IP Pool</FormLabel>
-                        <FormControl>
-                          <ResourceDatalistInput
-                            value={field.value ?? ''}
-                            onChange={field.onChange}
-                            placeholder='none / pool-hotspot'
-                            options={ipPools.data ?? []}
-                            optionsLoading={ipPools.isFetching}
-                          />
-                        </FormControl>
+                        <SelectDropdown
+                          isControlled
+                          defaultValue={field.value || ''}
+                          onValueChange={field.onChange}
+                          placeholder={
+                            ipPools.isFetching
+                              ? 'Memuat dari router…'
+                              : 'Pilih IP pool'
+                          }
+                          items={[
+                            { label: 'none', value: 'none' },
+                            ...(ipPools.data ?? []).map((o) => ({
+                              label: o,
+                              value: o,
+                            })),
+                          ]}
+                        />
                         <FormMessage />
                       </FormItem>
                     )}
@@ -530,15 +535,23 @@ export function PlansMutateDialog() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Remote Address Pool</FormLabel>
-                        <FormControl>
-                          <ResourceDatalistInput
-                            value={field.value ?? ''}
-                            onChange={field.onChange}
-                            placeholder='none / pool-pppoe'
-                            options={ipPools.data ?? []}
-                            optionsLoading={ipPools.isFetching}
-                          />
-                        </FormControl>
+                        <SelectDropdown
+                          isControlled
+                          defaultValue={field.value || 'none'}
+                          onValueChange={field.onChange}
+                          placeholder={
+                            ipPools.isFetching
+                              ? 'Memuat dari router…'
+                              : 'Pilih remote address pool'
+                          }
+                          items={[
+                            { label: 'none', value: 'none' },
+                            ...(ipPools.data ?? []).map((o) => ({
+                              label: o,
+                              value: o,
+                            })),
+                          ]}
+                        />
                         <FormMessage />
                       </FormItem>
                     )}
@@ -551,15 +564,23 @@ export function PlansMutateDialog() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Parent Queue</FormLabel>
-                        <FormControl>
-                          <ResourceDatalistInput
-                            value={field.value ?? ''}
-                            onChange={field.onChange}
-                            placeholder='none / parent queue'
-                            options={parentQueues.data ?? []}
-                            optionsLoading={parentQueues.isFetching}
-                          />
-                        </FormControl>
+                        <SelectDropdown
+                          isControlled
+                          defaultValue={field.value || 'none'}
+                          onValueChange={field.onChange}
+                          placeholder={
+                            parentQueues.isFetching
+                              ? 'Memuat dari router…'
+                              : 'Pilih parent queue'
+                          }
+                          items={[
+                            { label: 'none', value: 'none' },
+                            ...(parentQueues.data ?? []).map((o) => ({
+                              label: o,
+                              value: o,
+                            })),
+                          ]}
+                        />
                         <FormMessage />
                       </FormItem>
                     )}
