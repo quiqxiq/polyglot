@@ -64,6 +64,33 @@ func TestSubscriberAccountFromPlan_CustomRateOverride(t *testing.T) {
 	}
 }
 
+func TestSubscriberAccountFromPlan_ExpireNone_NoValidity(t *testing.T) {
+	pl := domainPlan.ServicePlan{
+		Name: "HS-FREE", ServiceType: domainPlan.TypeHotspot,
+		BandwidthDownloadKbps: 1024, BandwidthUploadKbps: 1024,
+		Validity: "30d", ExpireMode: domainPlan.ExpireNone, // "0"
+	}
+	acct := subscriberAccountFromPlan(domainSubscription.Subscription{}, pl)
+	if acct.Validity != "" {
+		t.Errorf("Validity=%q, harus kosong untuk expire mode 0", acct.Validity)
+	}
+	if acct.ExpireMode != "0" {
+		t.Errorf("ExpireMode=%q, harus tetap diteruskan", acct.ExpireMode)
+	}
+}
+
+func TestSubscriberAccountFromPlan_KeepsValidityForOtherModes(t *testing.T) {
+	pl := domainPlan.ServicePlan{
+		Name: "HS-30D", ServiceType: domainPlan.TypeHotspot,
+		BandwidthDownloadKbps: 1024, BandwidthUploadKbps: 1024,
+		Validity: "30d", ExpireMode: domainPlan.ExpireRemove,
+	}
+	acct := subscriberAccountFromPlan(domainSubscription.Subscription{}, pl)
+	if acct.Validity != "30d" {
+		t.Errorf("Validity=%q, harus tetap 30d untuk mode rem", acct.Validity)
+	}
+}
+
 func TestFormatMoney(t *testing.T) {
 	cases := []struct {
 		selling, base, want string

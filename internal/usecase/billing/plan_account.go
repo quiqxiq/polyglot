@@ -2,6 +2,7 @@ package billing
 
 import (
 	"strconv"
+	"strings"
 
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
@@ -20,6 +21,12 @@ func subscriberAccountFromPlan(
 		rate = sub.RateLimit
 	}
 	hargaJual, hargaModal := formatMoney(pl.SellingPrice, pl.Price)
+	validity := pl.Validity
+	if strings.EqualFold(pl.ExpireMode, domainPlan.ExpireNone) {
+		// Mode 0 = tanpa auto-expire: profil hotspot tidak membawa validity
+		// agar script expire monitor Mikhmon tidak pernah menandai user.
+		validity = ""
+	}
 	return port.SubscriberAccount{
 		Username:     sub.RemoteUsername,
 		Password:     sub.RemotePassword,
@@ -31,7 +38,7 @@ func subscriberAccountFromPlan(
 		SharedUsers:  pl.SharedUsers,
 		Price:        hargaJual,
 		SellingPrice: hargaModal,
-		Validity:     pl.Validity,
+		Validity:     validity,
 		ExpireMode:   pl.ExpireMode,
 		LockUser:     pl.LockUser,
 		LockServer:   pl.LockServer,
