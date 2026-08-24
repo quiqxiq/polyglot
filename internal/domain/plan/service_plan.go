@@ -35,8 +35,8 @@ type ServicePlan struct {
 	ServiceType           string    `json:"service_type"`
 	BandwidthDownloadKbps int       `json:"bandwidth_download_kbps"`
 	BandwidthUploadKbps   int       `json:"bandwidth_upload_kbps"`
-	BurstDownloadKbps     int       `json:"burst_download_kbps,omitempty"`
-	BurstUploadKbps       int       `json:"burst_upload_kbps,omitempty"`
+	BurstDownloadKbps     int       `json:"burst_download_kbps,omitempty"` // diisi = burst aktif untuk plan ini
+	BurstUploadKbps       int       `json:"burst_upload_kbps,omitempty"`   // diisi = burst aktif untuk plan ini
 	BurstThresholdKbps    int       `json:"burst_threshold_kbps,omitempty"`
 	BurstTimeSeconds      int       `json:"burst_time_seconds,omitempty"`
 	Price                 float64   `json:"price"` // harga dasar tagihan bulanan

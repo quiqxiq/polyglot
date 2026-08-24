@@ -27,6 +27,11 @@ func (p ServicePlan) RateLimit() string {
 // RateLimitWithBurst mengembalikan rate 8-segmen RouterOS bila semua
 // komponen burst terisi; selain itu fallback ke RateLimit().
 // Format: rx/tx/rx-burst/tx-burst/rx-thr/tx-thr/rx-time/tx-time.
+//
+// Semantik burst: "kolom diisi = fitur aktif". Tidak ada setting global
+// on/off — admin yang tidak menginginkan burst cukup tidak mengisi kolom
+// burst pada plan (burst_download_kbps, burst_upload_kbps,
+// burst_threshold_kbps, burst_time_seconds).
 func (p ServicePlan) RateLimitWithBurst() string {
 	base := p.RateLimit()
 	if base == "" ||
