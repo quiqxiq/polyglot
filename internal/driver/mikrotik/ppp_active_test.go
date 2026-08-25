@@ -197,4 +197,3 @@ func TestEnrichPPPActiveSessionsWithProfiles(t *testing.T) {
 	assert.Equal(t, "Custom_Plan", enriched[1].Profile, "andi tetap memakai profil yang sudah ada")
 	assert.Equal(t, "", enriched[2].Profile, "unknown tanpa secret tetap kosong")
 }
-

@@ -269,7 +269,11 @@ func (f *fakeHotspotGateway) ListActiveSessions(ctx context.Context, d port.Devi
 }
 
 type fakeIsolir struct {
-	ensureCalls int
+	ensureCalls  int
+	inspectCalls int
+	inspection   port.IsolirInspection
+	removedCfg   []port.IsolirConfig
+	removedErr   error
 }
 
 func (f *fakeIsolir) EnsureIsolirProfile(ctx context.Context, d port.DeviceDriver, cfg port.IsolirConfig) (bool, error) {
@@ -282,7 +286,16 @@ func (f *fakeIsolir) EnsureIsolirInfrastructure(ctx context.Context, d port.Devi
 }
 
 func (f *fakeIsolir) RemoveIsolirInfrastructure(ctx context.Context, d port.DeviceDriver, cfg port.IsolirConfig) error {
+	if f.removedErr != nil {
+		return f.removedErr
+	}
+	f.removedCfg = append(f.removedCfg, cfg)
 	return nil
+}
+
+func (f *fakeIsolir) InspectIsolirInfrastructure(ctx context.Context, d port.DeviceDriver, cfg port.IsolirConfig) (port.IsolirInspection, error) {
+	f.inspectCalls++
+	return f.inspection, nil
 }
 
 // ─── fixtures ────────────────────────────────────────────────────────────
@@ -395,6 +408,39 @@ func TestRateLimitString(t *testing.T) {
 	assert.Equal(t, "10M/10M", rateLimitString(10240, 10240))
 	assert.Equal(t, "512k/512k", rateLimitString(512, 512))
 	assert.Equal(t, "20M/10M", rateLimitString(20480, 10240))
+}
+
+func TestRateLimitForPlan_Burst(t *testing.T) {
+	t.Run("tanpa burst", func(t *testing.T) {
+		p := domainPlan.Plan{Name: "BURST-P", ServiceType: domainPlan.ServiceTypePPPoE, RateDownKbps: 10240, RateUpKbps: 10240}
+		assert.Equal(t, "10M/10M", rateLimitForPlan(p))
+	})
+	t.Run("dengan burst penuh", func(t *testing.T) {
+		p := domainPlan.Plan{
+			Name: "BURST-FULL", ServiceType: domainPlan.ServiceTypePPPoE,
+			RateDownKbps: 10240, RateUpKbps: 10240,
+			BurstDownKbps: 20480, BurstUpKbps: 20480,
+			BurstThresholdKbps: 15360, BurstTimeSeconds: 16,
+		}
+		assert.Equal(t, "10M/10M 20M/20M 15M/15M 16s", rateLimitForPlan(p))
+	})
+	t.Run("burst parsial tidak valid", func(t *testing.T) {
+		p := domainPlan.Plan{
+			Name: "BURST-PART", ServiceType: domainPlan.ServiceTypePPPoE,
+			RateDownKbps: 10240, RateUpKbps: 10240,
+			BurstDownKbps: 20480, // sisanya kosong
+		}
+		assert.ErrorIs(t, p.Validate(), domainPlan.ErrInvalidBurst)
+	})
+	t.Run("burst rate lebih kecil dari base ditolak", func(t *testing.T) {
+		p := domainPlan.Plan{
+			Name: "BURST-LOW", ServiceType: domainPlan.ServiceTypePPPoE,
+			RateDownKbps: 10240, RateUpKbps: 10240,
+			BurstDownKbps: 5120, BurstUpKbps: 20480,
+			BurstThresholdKbps: 15360, BurstTimeSeconds: 16,
+		}
+		assert.ErrorIs(t, p.Validate(), domainPlan.ErrInvalidBurst)
+	})
 }
 
 func TestPlanProfileName(t *testing.T) {

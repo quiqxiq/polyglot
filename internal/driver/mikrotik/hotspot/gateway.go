@@ -247,6 +247,7 @@ func (g *Gateway) ListNATRules(ctx context.Context, driver port.DeviceDriver) ([
 //   - gateway two-step form (script "mikhmon-expire-monitor" + scheduler
 //     "mikhmon-expire-scheduler") exists → re-arm it;
 //   - neither exists → create the gateway two-step form.
+//
 // Default interval is "00:01:00" (legacy Mikhmon).
 func (g *Gateway) SetupExpireMonitor(ctx context.Context, driver port.DeviceDriver, interval string) (command.Result, error) {
 	if interval == "" {

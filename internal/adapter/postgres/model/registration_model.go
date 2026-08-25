@@ -8,33 +8,33 @@ import (
 
 // RegistrationModel is the GORM model for new-subscriber applications.
 type RegistrationModel struct {
-	ID                    string     `gorm:"primaryKey"`
-	TenantID              string     `gorm:"not null;index;default:tenant-default"`
-	RegistrationNo        string     `gorm:"column:registration_no;uniqueIndex"`
-	PlanID                string     `gorm:"column:plan_id;not null"`
-	FullName              string     `gorm:"column:full_name;not null"`
-	Phone                 string     `gorm:"not null;index"`
-	Address               string     `gorm:"type:text;not null"`
-	Latitude              float64    `gorm:"column:latitude"`
-	Longitude             float64    `gorm:"column:longitude"`
-	Notes                 string     `gorm:"type:text"`
-	Status                string     `gorm:"not null;default:PENDING;index"`
-	ReviewedBy            *int64     `gorm:"column:reviewed_by"`
-	ReviewedAt            *time.Time `gorm:"column:reviewed_at"`
-	AdminNotes            string     `gorm:"column:admin_notes;type:text"`
-	ScheduledInstallDate  *time.Time `gorm:"column:scheduled_install_date"`
-	AssignedTechnicianID  *int64     `gorm:"column:assigned_technician_id"`
-	DeviceID              *string    `gorm:"column:device_id"`
-	InstalledAt           *time.Time `gorm:"column:installed_at"`
-	TechnicianNotes       string     `gorm:"column:technician_notes;type:text"`
-	CustomerID            *string    `gorm:"column:customer_id"`
-	SubscriptionID        *string    `gorm:"column:subscription_id"`
-	RejectedAt            *time.Time `gorm:"column:rejected_at"`
-	RejectedReason        string     `gorm:"column:rejected_reason;type:text"`
-	CancelledAt           *time.Time `gorm:"column:cancelled_at"`
-	CancelReason          string     `gorm:"column:cancel_reason;type:text"`
-	CreatedAt             time.Time
-	UpdatedAt             time.Time
+	ID                   string     `gorm:"primaryKey"`
+	TenantID             string     `gorm:"not null;index;default:tenant-default"`
+	RegistrationNo       string     `gorm:"column:registration_no;uniqueIndex"`
+	PlanID               string     `gorm:"column:plan_id;not null"`
+	FullName             string     `gorm:"column:full_name;not null"`
+	Phone                string     `gorm:"not null;index"`
+	Address              string     `gorm:"type:text;not null"`
+	Latitude             float64    `gorm:"column:latitude"`
+	Longitude            float64    `gorm:"column:longitude"`
+	Notes                string     `gorm:"type:text"`
+	Status               string     `gorm:"not null;default:PENDING;index"`
+	ReviewedBy           *int64     `gorm:"column:reviewed_by"`
+	ReviewedAt           *time.Time `gorm:"column:reviewed_at"`
+	AdminNotes           string     `gorm:"column:admin_notes;type:text"`
+	ScheduledInstallDate *time.Time `gorm:"column:scheduled_install_date"`
+	AssignedTechnicianID *int64     `gorm:"column:assigned_technician_id"`
+	DeviceID             *string    `gorm:"column:device_id"`
+	InstalledAt          *time.Time `gorm:"column:installed_at"`
+	TechnicianNotes      string     `gorm:"column:technician_notes;type:text"`
+	CustomerID           *string    `gorm:"column:customer_id"`
+	SubscriptionID       *string    `gorm:"column:subscription_id"`
+	RejectedAt           *time.Time `gorm:"column:rejected_at"`
+	RejectedReason       string     `gorm:"column:rejected_reason;type:text"`
+	CancelledAt          *time.Time `gorm:"column:cancelled_at"`
+	CancelReason         string     `gorm:"column:cancel_reason;type:text"`
+	CreatedAt            time.Time
+	UpdatedAt            time.Time
 }
 
 func (RegistrationModel) TableName() string {

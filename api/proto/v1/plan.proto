@@ -18,6 +18,10 @@ message Plan {
   string parent_queue = 9;      // PPPOE opsional
   string address_list = 10;     // PPPOE opsional
   int32 shared_users = 11;      // HOTSPOT
+  int32 burst_download_kbps = 16;   // opsional; 0 = tanpa burst
+  int32 burst_upload_kbps = 17;
+  int32 burst_threshold_kbps = 18;
+  int32 burst_time_seconds = 19;
   bool is_active = 12;
   string description = 13;
   int64 created_at_unix = 14;

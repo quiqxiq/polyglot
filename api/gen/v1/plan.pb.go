@@ -24,24 +24,28 @@ const (
 // Plan is the master paket layanan view. Router-specific fields are NAME
 // REFERENCES to objects on the device, never router-state snapshots.
 type Plan struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	TenantId      string                 `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	ServiceType   string                 `protobuf:"bytes,4,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"` // 'PPPOE' | 'HOTSPOT'
-	RateDownKbps  int32                  `protobuf:"varint,5,opt,name=rate_down_kbps,json=rateDownKbps,proto3" json:"rate_down_kbps,omitempty"`
-	RateUpKbps    int32                  `protobuf:"varint,6,opt,name=rate_up_kbps,json=rateUpKbps,proto3" json:"rate_up_kbps,omitempty"`
-	Price         float64                `protobuf:"fixed64,7,opt,name=price,proto3" json:"price,omitempty"`
-	IpPoolName    string                 `protobuf:"bytes,8,opt,name=ip_pool_name,json=ipPoolName,proto3" json:"ip_pool_name,omitempty"`    // PPPOE
-	ParentQueue   string                 `protobuf:"bytes,9,opt,name=parent_queue,json=parentQueue,proto3" json:"parent_queue,omitempty"`   // PPPOE opsional
-	AddressList   string                 `protobuf:"bytes,10,opt,name=address_list,json=addressList,proto3" json:"address_list,omitempty"`  // PPPOE opsional
-	SharedUsers   int32                  `protobuf:"varint,11,opt,name=shared_users,json=sharedUsers,proto3" json:"shared_users,omitempty"` // HOTSPOT
-	IsActive      bool                   `protobuf:"varint,12,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
-	Description   string                 `protobuf:"bytes,13,opt,name=description,proto3" json:"description,omitempty"`
-	CreatedAtUnix int64                  `protobuf:"varint,14,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
-	UpdatedAtUnix int64                  `protobuf:"varint,15,opt,name=updated_at_unix,json=updatedAtUnix,proto3" json:"updated_at_unix,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	TenantId           string                 `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	Name               string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	ServiceType        string                 `protobuf:"bytes,4,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"` // 'PPPOE' | 'HOTSPOT'
+	RateDownKbps       int32                  `protobuf:"varint,5,opt,name=rate_down_kbps,json=rateDownKbps,proto3" json:"rate_down_kbps,omitempty"`
+	RateUpKbps         int32                  `protobuf:"varint,6,opt,name=rate_up_kbps,json=rateUpKbps,proto3" json:"rate_up_kbps,omitempty"`
+	Price              float64                `protobuf:"fixed64,7,opt,name=price,proto3" json:"price,omitempty"`
+	IpPoolName         string                 `protobuf:"bytes,8,opt,name=ip_pool_name,json=ipPoolName,proto3" json:"ip_pool_name,omitempty"`                        // PPPOE
+	ParentQueue        string                 `protobuf:"bytes,9,opt,name=parent_queue,json=parentQueue,proto3" json:"parent_queue,omitempty"`                       // PPPOE opsional
+	AddressList        string                 `protobuf:"bytes,10,opt,name=address_list,json=addressList,proto3" json:"address_list,omitempty"`                      // PPPOE opsional
+	SharedUsers        int32                  `protobuf:"varint,11,opt,name=shared_users,json=sharedUsers,proto3" json:"shared_users,omitempty"`                     // HOTSPOT
+	BurstDownloadKbps  int32                  `protobuf:"varint,16,opt,name=burst_download_kbps,json=burstDownloadKbps,proto3" json:"burst_download_kbps,omitempty"` // opsional; 0 = tanpa burst
+	BurstUploadKbps    int32                  `protobuf:"varint,17,opt,name=burst_upload_kbps,json=burstUploadKbps,proto3" json:"burst_upload_kbps,omitempty"`
+	BurstThresholdKbps int32                  `protobuf:"varint,18,opt,name=burst_threshold_kbps,json=burstThresholdKbps,proto3" json:"burst_threshold_kbps,omitempty"`
+	BurstTimeSeconds   int32                  `protobuf:"varint,19,opt,name=burst_time_seconds,json=burstTimeSeconds,proto3" json:"burst_time_seconds,omitempty"`
+	IsActive           bool                   `protobuf:"varint,12,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
+	Description        string                 `protobuf:"bytes,13,opt,name=description,proto3" json:"description,omitempty"`
+	CreatedAtUnix      int64                  `protobuf:"varint,14,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
+	UpdatedAtUnix      int64                  `protobuf:"varint,15,opt,name=updated_at_unix,json=updatedAtUnix,proto3" json:"updated_at_unix,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *Plan) Reset() {
@@ -147,6 +151,34 @@ func (x *Plan) GetAddressList() string {
 func (x *Plan) GetSharedUsers() int32 {
 	if x != nil {
 		return x.SharedUsers
+	}
+	return 0
+}
+
+func (x *Plan) GetBurstDownloadKbps() int32 {
+	if x != nil {
+		return x.BurstDownloadKbps
+	}
+	return 0
+}
+
+func (x *Plan) GetBurstUploadKbps() int32 {
+	if x != nil {
+		return x.BurstUploadKbps
+	}
+	return 0
+}
+
+func (x *Plan) GetBurstThresholdKbps() int32 {
+	if x != nil {
+		return x.BurstThresholdKbps
+	}
+	return 0
+}
+
+func (x *Plan) GetBurstTimeSeconds() int32 {
+	if x != nil {
+		return x.BurstTimeSeconds
 	}
 	return 0
 }
@@ -655,7 +687,7 @@ var File_v1_plan_proto protoreflect.FileDescriptor
 
 const file_v1_plan_proto_rawDesc = "" +
 	"\n" +
-	"\rv1/plan.proto\x12\vpolyglot.v1\"\xe2\x03\n" +
+	"\rv1/plan.proto\x12\vpolyglot.v1\"\x9e\x05\n" +
 	"\x04Plan\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12\x12\n" +
@@ -670,7 +702,11 @@ const file_v1_plan_proto_rawDesc = "" +
 	"\fparent_queue\x18\t \x01(\tR\vparentQueue\x12!\n" +
 	"\faddress_list\x18\n" +
 	" \x01(\tR\vaddressList\x12!\n" +
-	"\fshared_users\x18\v \x01(\x05R\vsharedUsers\x12\x1b\n" +
+	"\fshared_users\x18\v \x01(\x05R\vsharedUsers\x12.\n" +
+	"\x13burst_download_kbps\x18\x10 \x01(\x05R\x11burstDownloadKbps\x12*\n" +
+	"\x11burst_upload_kbps\x18\x11 \x01(\x05R\x0fburstUploadKbps\x120\n" +
+	"\x14burst_threshold_kbps\x18\x12 \x01(\x05R\x12burstThresholdKbps\x12,\n" +
+	"\x12burst_time_seconds\x18\x13 \x01(\x05R\x10burstTimeSeconds\x12\x1b\n" +
 	"\tis_active\x18\f \x01(\bR\bisActive\x12 \n" +
 	"\vdescription\x18\r \x01(\tR\vdescription\x12&\n" +
 	"\x0fcreated_at_unix\x18\x0e \x01(\x03R\rcreatedAtUnix\x12&\n" +

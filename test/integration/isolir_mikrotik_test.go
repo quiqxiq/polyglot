@@ -23,6 +23,7 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
+	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 )
 
 const (
@@ -226,4 +227,92 @@ func cleanupPPPSecret(gw *mikrotik.Gateway, driver port.DeviceDriver, cfg port.I
 		}
 	}
 	return nil
+}
+
+// stubSettings menyediakan nilai isolir.* untuk test endpoint tanpa
+// menyentuh Postgres (hanya GetValue yang dipakai usecase).
+type stubSettings struct {
+	port.SettingRepository
+	values map[string]string
+}
+
+func (s *stubSettings) GetValue(ctx context.Context, key, fallback string) string {
+	if v, ok := s.values[key]; ok && v != "" {
+		return v
+	}
+	return fallback
+}
+
+// TestMikrotikIsolir_EndpointFlow menjalankan alur endpoint isolir secara
+// penuh terhadap device fisik: Setup → Status (hadir semua) → Setup ulang
+// (idempotent) → Remove → Status (kosong). Nama pool/profil/port khusus
+// test agar tidak menyentuh infrastruktur isolir produksi di router.
+func TestMikrotikIsolir_EndpointFlow(t *testing.T) {
+	target := mikrotikTestTarget(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	t.Cleanup(cancel)
+
+	drv, err := mikrotik.NewDriver(ctx, target)
+	require.NoError(t, err, "gagal konek ke Mikrotik fisik")
+	t.Cleanup(func() { _ = drv.Close() })
+
+	exec := func(ctx context.Context, d port.DeviceDriver, cmd command.Command) (command.Result, error) {
+		return d.Execute(ctx, cmd)
+	}
+	gw := mikrotik.NewGateway(exec)
+
+	settings := &stubSettings{values: map[string]string{
+		"isolir.profile_name":     "polyglot-it-ep-iso",
+		"isolir.pool_name":        "pool-polyglot-it-ep",
+		"isolir.pool_range":       "172.16.96.10-172.16.96.20",
+		"isolir.portal_ip":        "192.0.2.10",
+		"isolir.portal_http_port": "8099",
+		"isolir.redirect_ports":   "8095,8096",
+	}}
+	uc := networkUC.NewManageIsolationUseCase(
+		settings, gw,
+		func(ctx context.Context, deviceID string) (port.DeviceDriver, error) { return drv, nil },
+	)
+	t.Cleanup(func() {
+		cctx, cc := context.WithTimeout(context.Background(), 15*time.Second)
+		defer cc()
+		_ = uc.Remove(cctx, "integration-test")
+	})
+
+	res, cfg, err := uc.Setup(ctx, "integration-test", networkUC.IsolirConfigOverride{})
+	require.NoError(t, err, "Setup harus sukses")
+	assert.False(t, res.PoolExisted)
+	assert.False(t, res.ProfileExisted)
+	assert.Len(t, res.CreatedNATIDs, 2)
+	assert.Equal(t, "polyglot-it-ep-iso", cfg.ProfileName)
+
+	ins, cfg, warnings, err := uc.Status(ctx, "integration-test")
+	require.NoError(t, err, "Status harus sukses")
+	assert.True(t, ins.PoolExists, "pool harus terdeteksi")
+	assert.Equal(t, "172.16.96.10-172.16.96.20", ins.PoolRanges)
+	assert.True(t, ins.ProfileExists, "profile isolir harus terdeteksi")
+	assert.Equal(t, "512k/512k", ins.ProfileRateLimit)
+	assert.Equal(t, cfg.PoolName, ins.ProfileRemoteAddress, "profile harus menunjuk pool isolir")
+	require.Len(t, ins.NATRules, 2)
+	for _, r := range ins.NATRules {
+		assert.True(t, r.Exists, "rule port %s harus ada", r.Port)
+	}
+	assert.Empty(t, warnings, "tidak boleh ada warning saat semua lengkap")
+
+	res2, _, err := uc.Setup(ctx, "integration-test", networkUC.IsolirConfigOverride{})
+	require.NoError(t, err, "Setup ulang (idempotent) harus sukses")
+	assert.True(t, res2.PoolExisted)
+	assert.True(t, res2.ProfileExisted)
+	assert.Empty(t, res2.CreatedNATIDs, "tidak boleh ada rule baru dibuat ulang")
+
+	require.NoError(t, uc.Remove(ctx, "integration-test"), "Remove harus sukses")
+
+	ins, _, warnings, err = uc.Status(ctx, "integration-test")
+	require.NoError(t, err)
+	assert.False(t, ins.PoolExists)
+	assert.False(t, ins.ProfileExists)
+	for _, r := range ins.NATRules {
+		assert.False(t, r.Exists)
+	}
+	assert.NotEmpty(t, warnings, "warnings harus muncul saat infrastruktur kosong")
 }

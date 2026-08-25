@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// IsolationService menyiapkan, memeriksa, dan menghapus infrastruktur
+// isolir di router Mikrotik secara eksplisit: IP pool khusus, profile
+// suspensi (512k/512k), dan rule NAT dst-nat yang me-redirect trafik web
+// pelanggan terisolir ke portal pembayaran.
+//
+// Konfigurasi master dibaca dari system_settings (key "isolir.*");
+// setiap request boleh membawa override sekali-jalan tanpa disimpan.
+
+message IsolirConfigMsg {
+  string profile_name = 1;
+  string pool_name = 2;
+  string pool_range = 3;
+  string portal_ip = 4;         // kosong → redirect tanpa ganti tujuan (port saja)
+  string portal_http_port = 5;
+  string redirect_ports = 6;    // CSV, mis. "80,443"
+}
+
+message SetupIsolationRequest {
+  string device_id = 1;
+  IsolirConfigMsg override = 2; // opsional; field kosong = ikut settings
+}
+
+message SetupIsolationResponse {
+  bool pool_existed = 1;
+  bool profile_existed = 2;
+  repeated string created_nat_ids = 3;
+  repeated string nat_rule_ids = 4;   // semua rule ISOLIR_REDIRECT (existing + baru)
+  IsolirConfigMsg effective_config = 5;
+  string message = 6;
+}
+
+message GetIsolationStatusRequest {
+  string device_id = 1;
+}
+
+message NATRuleStatusMsg {
+  string port = 1;           // port redirect yang diharapkan (mis. "80")
+  bool exists = 2;
+  string ros_id = 3;
+  string action = 4;         // "redirect" | "dst-nat"
+  string to_addresses = 5;   // portal IP bila dst-nat
+  string to_ports = 6;
+  string comment = 7;
+}
+
+message GetIsolationStatusResponse {
+  bool pool_exists = 1;
+  string pool_name = 2;
+  string pool_ranges = 3;
+  bool profile_exists = 4;
+  string profile_name = 5;
+  string profile_rate_limit = 6;
+  string profile_remote_address = 7;
+  repeated NATRuleStatusMsg nat_rules = 8;
+  IsolirConfigMsg effective_config = 9;
+  repeated string warnings = 10;   // mis. portal_ip kosong
+}
+
+message RemoveIsolationRequest {
+  string device_id = 1;
+}
+
+message RemoveIsolationResponse {
+  string message = 1;
+}
+
+service IsolationService {
+  rpc SetupIsolation(SetupIsolationRequest) returns (SetupIsolationResponse);
+  rpc GetIsolationStatus(GetIsolationStatusRequest) returns (GetIsolationStatusResponse);
+  rpc RemoveIsolation(RemoveIsolationRequest) returns (RemoveIsolationResponse);
+}

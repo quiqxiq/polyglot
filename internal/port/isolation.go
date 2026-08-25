@@ -24,6 +24,31 @@ type IsolirSetupResult struct {
 	CreatedNATIDs  []string // subset of NATRuleIDs created by this call
 }
 
+// IsolirNATRuleStatus reports one expected redirect rule's presence on the
+// router, keyed by the destination port it should match.
+type IsolirNATRuleStatus struct {
+	Port        string
+	Exists      bool
+	RosID       string
+	Action      string
+	ToAddresses string
+	ToPorts     string
+	Comment     string
+}
+
+// IsolirInspection is the read-only health snapshot of the isolation
+// infrastructure on one router, produced by InspectIsolirInfrastructure.
+type IsolirInspection struct {
+	PoolExists           bool
+	PoolName             string
+	PoolRanges           string
+	ProfileExists        bool
+	ProfileName          string
+	ProfileRateLimit     string
+	ProfileRemoteAddress string
+	NATRules             []IsolirNATRuleStatus
+}
+
 // IsolationProvisioner guarantees the suspended-subscriber plumbing exists
 // on a router. Implementations must be idempotent — safe to run before
 // every suspension.
@@ -31,4 +56,7 @@ type IsolationProvisioner interface {
 	EnsureIsolirProfile(ctx context.Context, driver DeviceDriver, cfg IsolirConfig) (existed bool, err error)
 	EnsureIsolirInfrastructure(ctx context.Context, driver DeviceDriver, cfg IsolirConfig) (IsolirSetupResult, error)
 	RemoveIsolirInfrastructure(ctx context.Context, driver DeviceDriver, cfg IsolirConfig) error
+	// InspectIsolirInfrastructure reports which pieces of the configured
+	// isolation setup currently exist on the router. Read-only.
+	InspectIsolirInfrastructure(ctx context.Context, driver DeviceDriver, cfg IsolirConfig) (IsolirInspection, error)
 }

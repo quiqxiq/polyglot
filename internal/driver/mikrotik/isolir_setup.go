@@ -98,10 +98,18 @@ func (g *Gateway) EnsureIsolirProfile(ctx context.Context, driver port.DeviceDri
 	return false, nil
 }
 
-// RemoveIsolirInfrastructure deletes only artifacts this package created:
-// NAT rules tagged ISOLIR_REDIRECT plus — optionally — the pool and
-// profile when no other subscriber still references them.
+// RemoveIsolirInfrastructure deletes only the artifacts belonging to THIS
+// configuration: NAT rules tagged ISOLIR_REDIRECT whose port is in
+// cfg.RedirectPorts, the profile, and the pool. Rules for other ports
+// (e.g. a production isolir setup on the same router) are left untouched.
 func (g *Gateway) RemoveIsolirInfrastructure(ctx context.Context, driver port.DeviceDriver, cfg IsolirConfig) error {
+	cfgPorts := make(map[string]bool)
+	for _, p := range splitPorts(cfg.RedirectPorts) {
+		if p = strings.TrimSpace(p); p != "" {
+			cfgPorts[p] = true
+		}
+	}
+
 	natRes, err := g.exec(ctx, driver, NewPrintFirewallNATRulesCommand())
 	if err != nil {
 		return fmt.Errorf("isolir teardown: list nat rules: %w", err)
@@ -109,6 +117,10 @@ func (g *Gateway) RemoveIsolirInfrastructure(ctx context.Context, driver port.De
 	for _, rule := range ParseFirewallNATRules(natRes) {
 		if !strings.HasPrefix(rule.Comment, natCommentPrefix) {
 			continue
+		}
+		fields := strings.Fields(rule.Comment)
+		if len(fields) < 2 || !cfgPorts[fields[1]] {
+			continue // bukan milik konfigurasi ini
 		}
 		if _, err := g.RemoveNATRule(ctx, driver, rule.RosID); err != nil {
 			return fmt.Errorf("isolir teardown: remove nat rule %s: %w", rule.RosID, err)
@@ -132,6 +144,71 @@ func (g *Gateway) RemoveIsolirInfrastructure(ctx context.Context, driver port.De
 		}
 	}
 	return nil
+}
+
+// InspectIsolirInfrastructure implements port.IsolationProvisioner.
+// Read-only: reports which configured pieces exist on the router, one
+// NATRuleStatus per expected redirect port.
+func (g *Gateway) InspectIsolirInfrastructure(ctx context.Context, driver port.DeviceDriver, cfg IsolirConfig) (port.IsolirInspection, error) {
+	if err := validateIsolirConfig(cfg); err != nil {
+		return port.IsolirInspection{}, err
+	}
+	ins := port.IsolirInspection{
+		PoolName:    cfg.PoolName,
+		ProfileName: cfg.ProfileName,
+		NATRules:    make([]port.IsolirNATRuleStatus, 0),
+	}
+
+	// Pool
+	poolRes, err := g.exec(ctx, driver, NewPrintIPPoolsCommand(cfg.PoolName))
+	if err != nil {
+		return ins, fmt.Errorf("isolir inspect: list pools: %w", err)
+	}
+	if pools := ParseIPPools(poolRes); len(pools) > 0 {
+		ins.PoolExists = true
+		ins.PoolRanges = pools[0].Ranges
+	}
+
+	// Profile
+	profRes, err := g.exec(ctx, driver, NewPrintPPPProfilesCommand(cfg.ProfileName))
+	if err != nil {
+		return ins, fmt.Errorf("isolir inspect: list profiles: %w", err)
+	}
+	if profiles := ParsePPPProfiles(profRes); len(profiles) > 0 {
+		ins.ProfileExists = true
+		ins.ProfileRateLimit = profiles[0].RateLimit
+		ins.ProfileRemoteAddress = profiles[0].RemoteAddress
+	}
+
+	// NAT rules per expected redirect port
+	natRes, err := g.exec(ctx, driver, NewPrintFirewallNATRulesCommand())
+	if err != nil {
+		return ins, fmt.Errorf("isolir inspect: list nat rules: %w", err)
+	}
+	byPort := indexIsolirNATByPort(ParseFirewallNATRules(natRes))
+	byRosID := make(map[string]FirewallNATRule)
+	for _, r := range ParseFirewallNATRules(natRes) {
+		byRosID[r.RosID] = r
+	}
+	for _, portNum := range splitPorts(cfg.RedirectPorts) {
+		portNum = strings.TrimSpace(portNum)
+		if portNum == "" {
+			continue
+		}
+		status := port.IsolirNATRuleStatus{Port: portNum}
+		if id, ok := byPort[portNum]; ok {
+			status.Exists = true
+			status.RosID = id
+			if rule, ok := byRosID[id]; ok {
+				status.Action = rule.Action
+				status.ToAddresses = rule.ToAddresses
+				status.ToPorts = rule.ToPorts
+				status.Comment = rule.Comment
+			}
+		}
+		ins.NATRules = append(ins.NATRules, status)
+	}
+	return ins, nil
 }
 
 // isolirRedirectRule builds one dst-nat/redirect rule for a single port.

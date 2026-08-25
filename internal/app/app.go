@@ -15,6 +15,7 @@ import (
 	customerConnect "github.com/quixiq/polyglot/internal/adapter/connect/customer"
 	deviceConnect "github.com/quixiq/polyglot/internal/adapter/connect/device"
 	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
+	isolirConnect "github.com/quixiq/polyglot/internal/adapter/connect/isolir"
 	planConnect "github.com/quixiq/polyglot/internal/adapter/connect/plan"
 	pppConnect "github.com/quixiq/polyglot/internal/adapter/connect/ppp"
 	registrationConnect "github.com/quixiq/polyglot/internal/adapter/connect/registration"
@@ -267,6 +268,10 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	pppUseCase := pppUC.New(sessionGateway)
 	pppPath, pppHandler := pppConnect.NewPPPServiceHandler(pppUseCase, connectDriverProvider)
 	registerProtected(pppPath, pppHandler)
+
+	manageIsolationUC := networkUC.NewManageIsolationUseCase(settingRepoISP, sessionGateway, connectDriverProvider)
+	isolirPath, isolirHandler := isolirConnect.NewIsolationServiceHandler(manageIsolationUC)
+	registerProtected(isolirPath, isolirHandler)
 
 	waPath, waHandler := botConnect.NewWhatsAppServiceHandler(pgStore, waManager, chatService)
 	registerProtected(waPath, waHandler)

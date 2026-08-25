@@ -8,17 +8,17 @@ import (
 
 // CustomerModel is the GORM model for ISP subscriber identities.
 type CustomerModel struct {
-	ID           string     `gorm:"primaryKey"`
-	TenantID     string     `gorm:"not null;index;default:tenant-default"`
-	CustomerCode string     `gorm:"column:customer_code"`
-	Name         string     `gorm:"not null"`
-	Email        string     `gorm:"index"`
-	Phone        string     `gorm:"index"`
-	Address      string     `gorm:"type:text"`
-	Latitude     float64    `gorm:"column:latitude"`
-	Longitude    float64    `gorm:"column:longitude"`
-	Status       string     `gorm:"not null;default:ACTIVE"`
-	Notes        string     `gorm:"type:text"`
+	ID           string  `gorm:"primaryKey"`
+	TenantID     string  `gorm:"not null;index;default:tenant-default"`
+	CustomerCode string  `gorm:"column:customer_code"`
+	Name         string  `gorm:"not null"`
+	Email        string  `gorm:"index"`
+	Phone        string  `gorm:"index"`
+	Address      string  `gorm:"type:text"`
+	Latitude     float64 `gorm:"column:latitude"`
+	Longitude    float64 `gorm:"column:longitude"`
+	Status       string  `gorm:"not null;default:ACTIVE"`
+	Notes        string  `gorm:"type:text"`
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 	DeletedAt    *time.Time `gorm:"index"`

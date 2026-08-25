@@ -317,7 +317,7 @@ func (p *SubscriptionProvisioner) ensurePPPProfile(ctx context.Context, driver p
 	}
 	if _, err := p.ppp.AddProfile(ctx, driver, port.PPPProfileParams{
 		Name:          profileName,
-		RateLimit:     rateLimitString(planRow.RateDownKbps, planRow.RateUpKbps),
+		RateLimit:     rateLimitForPlan(planRow),
 		RemoteAddress: planRow.IPPoolName,
 		ParentQueue:   planRow.ParentQueue,
 		AddressList:   planRow.AddressList,
@@ -340,7 +340,7 @@ func (p *SubscriptionProvisioner) ensureHotspotProfile(ctx context.Context, driv
 	}
 	if _, err := p.hotspot.CreateUserProfile(ctx, driver, port.MikhmonProfileParams{
 		Name:        profileName,
-		RateLimit:   rateLimitString(planRow.RateDownKbps, planRow.RateUpKbps),
+		RateLimit:   rateLimitForPlan(planRow),
 		SharedUsers: strconv.Itoa(planRow.SharedUsers),
 		AddressPool: planRow.IPPoolName,
 		ParentQueue: planRow.ParentQueue,
@@ -386,20 +386,7 @@ func (p *SubscriptionProvisioner) disconnectHotspotByName(ctx context.Context, d
 
 // isolirConfig reads the "isolir.*" keys with safe defaults.
 func (p *SubscriptionProvisioner) isolirConfig(ctx context.Context) port.IsolirConfig {
-	get := func(key, fallback string) string {
-		if p.settings == nil {
-			return fallback
-		}
-		return p.settings.GetValue(ctx, key, fallback)
-	}
-	return port.IsolirConfig{
-		ProfileName:    get("isolir.profile_name", "isolir"),
-		PoolName:       get("isolir.pool_name", "pool-isolir"),
-		PoolRange:      get("isolir.pool_range", "172.16.99.10-172.16.99.254"),
-		PortalIP:       get("isolir.portal_ip", ""),
-		PortalHTTPPort: get("isolir.portal_http_port", "8080"),
-		RedirectPorts:  get("isolir.redirect_ports", "80,443"),
-	}
+	return isolirConfigFromSettings(ctx, p.settings, IsolirConfigOverride{})
 }
 
 // PlanProfileName derives the router profile name from a plan. The name is
@@ -426,6 +413,22 @@ func PlanProfileName(p domainPlan.Plan) string {
 // preferring Mbps units when cleanly divisible ("10240" → "10M").
 func rateLimitString(downKbps, upKbps int) string {
 	return unitString(downKbps) + "/" + unitString(upKbps)
+}
+
+// rateLimitForPlan renders the full RouterOS rate-limit value for a plan,
+// appending burst tokens when burst parameters are configured:
+//
+//	"10M/10M 20M/20M 15M/15M 16s"
+//	(rx-rate/tx-rate rx-burst-rate/tx-burst-rate rx-burst-threshold/tx-burst-threshold rx-burst-time/tx-burst-time)
+func rateLimitForPlan(p domainPlan.Plan) string {
+	base := rateLimitString(p.RateDownKbps, p.RateUpKbps)
+	if !p.HasBurst() {
+		return base
+	}
+	return base + " " +
+		rateLimitString(p.BurstDownKbps, p.BurstUpKbps) + " " +
+		rateLimitString(p.BurstThresholdKbps, p.BurstThresholdKbps) + " " +
+		strconv.Itoa(p.BurstTimeSeconds) + "s"
 }
 
 func unitString(kbps int) string {
