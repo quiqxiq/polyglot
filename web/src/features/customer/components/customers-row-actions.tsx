@@ -1,4 +1,4 @@
-import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
+import { MoreHorizontal, Pencil, Repeat, Trash2 } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,12 +20,18 @@ export function CustomersRowActions({ customer }: CustomersRowActionsProps) {
   const { setOpen, setCurrentRow } = useCustomers()
   const permissions = useAuthStore((s) => s.auth.user?.permissions)
   const canManage = canPermission(permissions, 'customer:manage')
+  const canBilling = canPermission(permissions, 'billing:manage')
 
   if (!canManage) return null
 
   const handleEdit = () => {
     setCurrentRow(customer)
     setOpen('update')
+  }
+
+  const handleCreateSubscription = () => {
+    setCurrentRow(customer)
+    setOpen('create-subscription')
   }
 
   const handleDelete = () => {
@@ -46,6 +52,15 @@ export function CustomersRowActions({ customer }: CustomersRowActionsProps) {
           <Pencil className='mr-2 h-4 w-4' />
           Edit
         </DropdownMenuItem>
+        {canBilling && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleCreateSubscription}>
+              <Repeat className='mr-2 h-4 w-4' />
+              Buat Langganan
+            </DropdownMenuItem>
+          </>
+        )}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleDelete} className='text-destructive focus:text-destructive'>
           <Trash2 className='mr-2 h-4 w-4' />

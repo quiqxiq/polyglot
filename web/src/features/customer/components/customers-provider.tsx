@@ -2,7 +2,12 @@ import React, { useState } from 'react'
 import useDialogState from '@/hooks/use-dialog-state'
 import { type Customer } from '@/gen/v1/customer_pb'
 
-type CustomersDialogType = 'create' | 'update' | 'delete' | 'import'
+type CustomersDialogType =
+  | 'create'
+  | 'update'
+  | 'delete'
+  | 'import'
+  | 'create-subscription'
 
 type CustomersContextType = {
   open: CustomersDialogType | null
