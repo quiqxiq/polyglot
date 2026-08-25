@@ -19,6 +19,30 @@ func toProtoCustomer(c *customer.Customer) *devicepb.Customer {
 		Address:       c.Address,
 		Status:        c.Status,
 		CreatedAtUnix: c.CreatedAt.Unix(),
+		CustomerCode:  c.CustomerCode,
+		Latitude:      c.Latitude,
+		Longitude:     c.Longitude,
+		Notes:         c.Notes,
+	}
+}
+
+// fromProtoCustomer maps the wire representation into a domain entity.
+func fromProtoCustomer(pb *devicepb.Customer) customer.Customer {
+	if pb == nil {
+		return customer.Customer{}
+	}
+	return customer.Customer{
+		ID:           pb.Id,
+		TenantID:     pb.TenantId,
+		CustomerCode: pb.CustomerCode,
+		Name:         pb.Name,
+		Email:        pb.Email,
+		Phone:        pb.Phone,
+		Address:      pb.Address,
+		Latitude:     pb.Latitude,
+		Longitude:    pb.Longitude,
+		Status:       pb.Status,
+		Notes:        pb.Notes,
 	}
 }
 

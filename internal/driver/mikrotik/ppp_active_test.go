@@ -120,16 +120,16 @@ func TestNewAddPPPProfileCommand(t *testing.T) {
 	})
 
 	t.Run("IsolirProfileParams menghasilkan param yang benar", func(t *testing.T) {
-		p := IsolirProfileParams()
+		p := IsolirProfileParams("pool-isolir")
 		assert.Equal(t, "isolir", p.Name)
-		assert.Equal(t, "0.0.0.0", p.LocalAddress)
-		assert.Equal(t, "0/0", p.RateLimit)
+		assert.Equal(t, "pool-isolir", p.RemoteAddress)
+		assert.Equal(t, "512k/512k", p.RateLimit)
 		assert.Equal(t, "SUSPENDED_PROFILE", p.Comment)
-		assert.Equal(t, "1", p.SharedUsers)
+		assert.Empty(t, p.SharedUsers)
 
 		cmd := NewAddPPPProfileCommand(p)
 		assert.Equal(t, "/ppp/profile/add", cmd.Raw)
-		assert.Equal(t, "0/0", cmd.Args["rate-limit"])
+		assert.Equal(t, "512k/512k", cmd.Args["rate-limit"])
 	})
 }
 

@@ -2,7 +2,7 @@ package postgres
 
 import (
 	"context"
-	"errors"
+	"time"
 
 	"gorm.io/gorm"
 
@@ -11,15 +11,15 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
+var _ port.SubscriptionRepository = (*SubscriptionRepository)(nil)
+
+// SubscriptionRepository persists the MAPPING-ONLY subscriptions table.
 type SubscriptionRepository struct {
 	db *gorm.DB
 }
 
-var _ port.SubscriptionRepository = (*SubscriptionRepository)(nil)
-
 // NewSubscriptionRepository returns a port.SubscriptionRepository backed by GORM/Postgres.
 func NewSubscriptionRepository(db *gorm.DB) *SubscriptionRepository {
-	_ = db.AutoMigrate(&model.SubscriptionModel{})
 	return &SubscriptionRepository{db: db}
 }
 
@@ -30,16 +30,22 @@ func (r *SubscriptionRepository) Save(ctx context.Context, sub subscription.Subs
 
 func (r *SubscriptionRepository) FindByID(ctx context.Context, id string) (subscription.Subscription, error) {
 	var m model.SubscriptionModel
-	err := r.db.WithContext(ctx).First(&m, "id = ?", id).Error
-	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return subscription.Subscription{}, ErrNotFound
+	err := r.db.WithContext(ctx).First(&m, "id = ? AND deleted_at IS NULL", id).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return subscription.Subscription{}, subscription.ErrNotFound
+		}
+		return subscription.Subscription{}, err
 	}
-	return m.ToDomain(), err
+	return m.ToDomain(), nil
 }
 
 func (r *SubscriptionRepository) FindByCustomerID(ctx context.Context, customerID string) ([]subscription.Subscription, error) {
 	var mList []model.SubscriptionModel
-	err := r.db.WithContext(ctx).Where("customer_id = ?", customerID).Order("created_at desc").Find(&mList).Error
+	err := r.db.WithContext(ctx).
+		Where("customer_id = ? AND deleted_at IS NULL", customerID).
+		Order("created_at desc").
+		Find(&mList).Error
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +58,10 @@ func (r *SubscriptionRepository) FindByCustomerID(ctx context.Context, customerI
 
 func (r *SubscriptionRepository) FindAll(ctx context.Context) ([]subscription.Subscription, error) {
 	var mList []model.SubscriptionModel
-	err := r.db.WithContext(ctx).Order("created_at desc").Find(&mList).Error
+	err := r.db.WithContext(ctx).
+		Where("deleted_at IS NULL").
+		Order("created_at desc").
+		Find(&mList).Error
 	if err != nil {
 		return nil, err
 	}
@@ -64,12 +73,74 @@ func (r *SubscriptionRepository) FindAll(ctx context.Context) ([]subscription.Su
 }
 
 func (r *SubscriptionRepository) UpdateStatus(ctx context.Context, id string, status string) error {
-	res := r.db.WithContext(ctx).Model(&model.SubscriptionModel{}).Where("id = ?", id).Update("status", status)
+	res := r.db.WithContext(ctx).Model(&model.SubscriptionModel{}).
+		Where("id = ? AND deleted_at IS NULL", id).
+		Update("status", status)
 	if res.Error != nil {
 		return res.Error
 	}
 	if res.RowsAffected == 0 {
-		return ErrNotFound
+		return subscription.ErrNotFound
+	}
+	return nil
+}
+
+// UpdateMapping persists provisioning results after the device-side account
+// exists. Empty values are written verbatim so callers can clear mappings.
+func (r *SubscriptionRepository) UpdateMapping(ctx context.Context, id, remoteUsername, remoteID, deviceID string) error {
+	updates := map[string]any{}
+	var deviceIDPtr *string
+	if deviceID != "" {
+		d := deviceID
+		deviceIDPtr = &d
+	}
+	updates["device_id"] = deviceIDPtr
+	updates["remote_username"] = remoteUsername
+	updates["remote_id"] = remoteID
+
+	res := r.db.WithContext(ctx).Model(&model.SubscriptionModel{}).
+		Where("id = ? AND deleted_at IS NULL", id).
+		Updates(updates)
+	if res.Error != nil {
+		return res.Error
+	}
+	if res.RowsAffected == 0 {
+		return subscription.ErrNotFound
+	}
+	return nil
+}
+
+func (r *SubscriptionRepository) FindByDeviceAndUsername(ctx context.Context, deviceID, username string) (subscription.Subscription, error) {
+	var m model.SubscriptionModel
+	err := r.db.WithContext(ctx).
+		Where("device_id = ? AND remote_username = ? AND deleted_at IS NULL", deviceID, username).
+		First(&m).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return subscription.Subscription{}, subscription.ErrNotFound
+		}
+		return subscription.Subscription{}, err
+	}
+	return m.ToDomain(), nil
+}
+
+// SetIsolation records isolation lifecycle fields atomically with the
+// status change: isolated_at/isolation_reason when isolating, NULLs when
+// returning to service.
+func (r *SubscriptionRepository) SetIsolation(ctx context.Context, id string, status string, isolatedAt *time.Time, reason string) error {
+	updates := map[string]any{
+		"status":           status,
+		"isolated_at":      isolatedAt,
+		"isolation_reason": reason,
+	}
+	res := r.db.WithContext(ctx).Model(&model.SubscriptionModel{}).
+		Where("id = ? AND deleted_at IS NULL", id).
+		Updates(updates)
+	if res.Error != nil {
+		return res.Error
+	}
+	if res.RowsAffected == 0 {
+		return subscription.ErrNotFound
 	}
 	return nil
 }

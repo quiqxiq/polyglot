@@ -14,6 +14,10 @@ message Customer {
   string address = 6;
   string status = 7;
   int64 created_at_unix = 8;
+  string customer_code = 9;
+  double latitude = 10;
+  double longitude = 11;
+  string notes = 12;
 }
 
 message ListCustomersRequest {}

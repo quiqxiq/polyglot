@@ -28,6 +28,26 @@ func NewGateway(exec port.CommandExecutor) *Gateway {
 var _ port.SessionGateway = (*Gateway)(nil)
 var _ port.DeviceDiagnostics = (*Gateway)(nil)
 var _ port.PPPGateway = (*Gateway)(nil)
+var _ port.FirewallGateway = (*Gateway)(nil)
+
+// AddNATRule implements port.FirewallGateway.
+func (g *Gateway) AddNATRule(ctx context.Context, driver port.DeviceDriver, p port.FirewallNATRuleParams) (command.Result, error) {
+	return g.exec(ctx, driver, NewAddFirewallNATCommand(p))
+}
+
+// RemoveNATRule implements port.FirewallGateway.
+func (g *Gateway) RemoveNATRule(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
+	return g.exec(ctx, driver, NewRemoveFirewallNATCommand(rosID))
+}
+
+// ListNATRules implements port.FirewallGateway.
+func (g *Gateway) ListNATRules(ctx context.Context, driver port.DeviceDriver) ([]port.FirewallNATRule, error) {
+	res, err := g.exec(ctx, driver, NewPrintFirewallNATRulesCommand())
+	if err != nil {
+		return nil, err
+	}
+	return ParseFirewallNATRules(res), nil
+}
 
 // ListSecrets implements port.PPPGateway.
 func (g *Gateway) ListSecrets(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPoESecret, error) {

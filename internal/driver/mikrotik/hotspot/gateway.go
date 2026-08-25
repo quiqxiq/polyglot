@@ -163,6 +163,19 @@ func (g *Gateway) RemoveActiveSession(ctx context.Context, driver port.DeviceDri
 	return g.exec(ctx, driver, mikrotik.NewDisconnectHotspotActiveCommand(rosID))
 }
 
+// SetUserDisabled implements port.HotspotGateway. /ip/hotspot/user/set
+// targets by "numbers" (RouterOS inconsistency handled here).
+func (g *Gateway) SetUserDisabled(ctx context.Context, driver port.DeviceDriver, rosID string, disabled bool) (command.Result, error) {
+	val := "no"
+	if disabled {
+		val = "yes"
+	}
+	return g.exec(ctx, driver, command.Command{
+		Raw:  "/ip/hotspot/user/set",
+		Args: map[string]string{"numbers": rosID, "disabled": val},
+	})
+}
+
 // ListHosts implements port.HotspotGateway.
 func (g *Gateway) ListHosts(ctx context.Context, driver port.DeviceDriver) ([]map[string]string, error) {
 	cmd := command.Command{Raw: "/ip/hotspot/host/print"}

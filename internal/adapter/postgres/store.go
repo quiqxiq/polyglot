@@ -39,9 +39,11 @@ func NewStore(dsn string) (*Store, error) {
 			&model.WAChatModel{},
 			&model.WAMessageModel{},
 			&model.CustomerModel{},
+			&model.ServicePlanModel{},
 			&model.SubscriptionModel{},
+			&model.RegistrationModel{},
+			&model.SecretModel{},
 			&model.InvoiceModel{},
-			&model.PlanModel{},
 			&model.SystemSettingModel{},
 		); err != nil {
 			return nil, fmt.Errorf("failed to auto-migrate: %w", err)

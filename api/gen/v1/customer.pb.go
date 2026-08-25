@@ -31,6 +31,10 @@ type Customer struct {
 	Address       string                 `protobuf:"bytes,6,opt,name=address,proto3" json:"address,omitempty"`
 	Status        string                 `protobuf:"bytes,7,opt,name=status,proto3" json:"status,omitempty"`
 	CreatedAtUnix int64                  `protobuf:"varint,8,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
+	CustomerCode  string                 `protobuf:"bytes,9,opt,name=customer_code,json=customerCode,proto3" json:"customer_code,omitempty"`
+	Latitude      float64                `protobuf:"fixed64,10,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Longitude     float64                `protobuf:"fixed64,11,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	Notes         string                 `protobuf:"bytes,12,opt,name=notes,proto3" json:"notes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -119,6 +123,34 @@ func (x *Customer) GetCreatedAtUnix() int64 {
 		return x.CreatedAtUnix
 	}
 	return 0
+}
+
+func (x *Customer) GetCustomerCode() string {
+	if x != nil {
+		return x.CustomerCode
+	}
+	return ""
+}
+
+func (x *Customer) GetLatitude() float64 {
+	if x != nil {
+		return x.Latitude
+	}
+	return 0
+}
+
+func (x *Customer) GetLongitude() float64 {
+	if x != nil {
+		return x.Longitude
+	}
+	return 0
+}
+
+func (x *Customer) GetNotes() string {
+	if x != nil {
+		return x.Notes
+	}
+	return ""
 }
 
 type ListCustomersRequest struct {
@@ -573,7 +605,7 @@ var File_v1_customer_proto protoreflect.FileDescriptor
 
 const file_v1_customer_proto_rawDesc = "" +
 	"\n" +
-	"\x11v1/customer.proto\x12\vpolyglot.v1\x1a\x10v1/billing.proto\"\xd1\x01\n" +
+	"\x11v1/customer.proto\x12\vpolyglot.v1\x1a\x10v1/billing.proto\"\xc6\x02\n" +
 	"\bCustomer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12\x12\n" +
@@ -582,7 +614,12 @@ const file_v1_customer_proto_rawDesc = "" +
 	"\x05phone\x18\x05 \x01(\tR\x05phone\x12\x18\n" +
 	"\aaddress\x18\x06 \x01(\tR\aaddress\x12\x16\n" +
 	"\x06status\x18\a \x01(\tR\x06status\x12&\n" +
-	"\x0fcreated_at_unix\x18\b \x01(\x03R\rcreatedAtUnix\"\x16\n" +
+	"\x0fcreated_at_unix\x18\b \x01(\x03R\rcreatedAtUnix\x12#\n" +
+	"\rcustomer_code\x18\t \x01(\tR\fcustomerCode\x12\x1a\n" +
+	"\blatitude\x18\n" +
+	" \x01(\x01R\blatitude\x12\x1c\n" +
+	"\tlongitude\x18\v \x01(\x01R\tlongitude\x12\x14\n" +
+	"\x05notes\x18\f \x01(\tR\x05notes\"\x16\n" +
 	"\x14ListCustomersRequest\"L\n" +
 	"\x15ListCustomersResponse\x123\n" +
 	"\tcustomers\x18\x01 \x03(\v2\x15.polyglot.v1.CustomerR\tcustomers\"$\n" +

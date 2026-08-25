@@ -25,6 +25,11 @@ func NewBillingServiceHandler(
 	mux.Handle("/"+serviceName+"/PayInvoice", connect.NewUnaryHandler("/"+serviceName+"/PayInvoice", handler.PayInvoice, codecOpt))
 	mux.Handle("/"+serviceName+"/ListSubscriptions", connect.NewUnaryHandler("/"+serviceName+"/ListSubscriptions", handler.ListSubscriptions, codecOpt))
 	mux.Handle("/"+serviceName+"/CreateSubscription", connect.NewUnaryHandler("/"+serviceName+"/CreateSubscription", handler.CreateSubscription, codecOpt))
+	mux.Handle("/"+serviceName+"/GetSubscription", connect.NewUnaryHandler("/"+serviceName+"/GetSubscription", handler.GetSubscription, codecOpt))
+	mux.Handle("/"+serviceName+"/UpdateSubscription", connect.NewUnaryHandler("/"+serviceName+"/UpdateSubscription", handler.UpdateSubscription, codecOpt))
+	mux.Handle("/"+serviceName+"/DeleteSubscription", connect.NewUnaryHandler("/"+serviceName+"/DeleteSubscription", handler.DeleteSubscription, codecOpt))
+	mux.Handle("/"+serviceName+"/IsolateSubscription", connect.NewUnaryHandler("/"+serviceName+"/IsolateSubscription", handler.IsolateSubscription, codecOpt))
+	mux.Handle("/"+serviceName+"/UnisolateSubscription", connect.NewUnaryHandler("/"+serviceName+"/UnisolateSubscription", handler.UnisolateSubscription, codecOpt))
 	mux.Handle("/"+serviceName+"/CancelSubscription", connect.NewUnaryHandler("/"+serviceName+"/CancelSubscription", handler.CancelSubscription, codecOpt))
 
 	return "/" + serviceName + "/", mux

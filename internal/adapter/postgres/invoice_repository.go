@@ -19,7 +19,7 @@ var _ port.InvoiceRepository = (*InvoiceRepository)(nil)
 
 // NewInvoiceRepository returns a port.InvoiceRepository backed by GORM/Postgres.
 func NewInvoiceRepository(db *gorm.DB) *InvoiceRepository {
-	_ = db.AutoMigrate(&model.InvoiceModel{}, &model.PlanModel{})
+	_ = db.AutoMigrate(&model.InvoiceModel{})
 	return &InvoiceRepository{db: db}
 }
 

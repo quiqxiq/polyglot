@@ -35,15 +35,25 @@ func toProtoSubscription(sub *domainSub.Subscription) *devicepb.Subscription {
 	if sub == nil {
 		return nil
 	}
-	return &devicepb.Subscription{
-		Id:            sub.ID,
-		CustomerId:    sub.CustomerID,
-		PlanId:        sub.PlanID,
-		Status:        sub.Status,
-		StartDateUnix: sub.StartDate.Unix(),
-		EndDateUnix:   sub.EndDate.Unix(),
-		Price:         sub.Price,
+	pb := &devicepb.Subscription{
+		Id:              sub.ID,
+		CustomerId:      sub.CustomerID,
+		PlanId:          sub.PlanID,
+		Status:          sub.Status,
+		StartDateUnix:   sub.StartDate.Unix(),
+		TenantId:        sub.TenantID,
+		DeviceId:        sub.DeviceID,
+		ServiceType:     sub.ServiceType,
+		RemoteUsername:  sub.RemoteUsername,
+		RemoteId:        sub.RemoteID,
+		BillingDay:      int32(sub.BillingDay),
+		IsolationReason: sub.IsolationReason,
+		Notes:           sub.Notes,
 	}
+	if sub.IsolatedAt != nil {
+		pb.IsolatedAtUnix = sub.IsolatedAt.Unix()
+	}
+	return pb
 }
 
 // toProtoSubscriptionList maps a slice of domain Subscriptions to a slice of Protobuf Subscriptions.

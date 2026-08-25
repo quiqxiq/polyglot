@@ -19,13 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	BillingService_ListInvoices_FullMethodName       = "/polyglot.v1.BillingService/ListInvoices"
-	BillingService_GetInvoice_FullMethodName         = "/polyglot.v1.BillingService/GetInvoice"
-	BillingService_CreateInvoice_FullMethodName      = "/polyglot.v1.BillingService/CreateInvoice"
-	BillingService_PayInvoice_FullMethodName         = "/polyglot.v1.BillingService/PayInvoice"
-	BillingService_ListSubscriptions_FullMethodName  = "/polyglot.v1.BillingService/ListSubscriptions"
-	BillingService_CreateSubscription_FullMethodName = "/polyglot.v1.BillingService/CreateSubscription"
-	BillingService_CancelSubscription_FullMethodName = "/polyglot.v1.BillingService/CancelSubscription"
+	BillingService_ListInvoices_FullMethodName          = "/polyglot.v1.BillingService/ListInvoices"
+	BillingService_GetInvoice_FullMethodName            = "/polyglot.v1.BillingService/GetInvoice"
+	BillingService_CreateInvoice_FullMethodName         = "/polyglot.v1.BillingService/CreateInvoice"
+	BillingService_PayInvoice_FullMethodName            = "/polyglot.v1.BillingService/PayInvoice"
+	BillingService_ListSubscriptions_FullMethodName     = "/polyglot.v1.BillingService/ListSubscriptions"
+	BillingService_CreateSubscription_FullMethodName    = "/polyglot.v1.BillingService/CreateSubscription"
+	BillingService_GetSubscription_FullMethodName       = "/polyglot.v1.BillingService/GetSubscription"
+	BillingService_UpdateSubscription_FullMethodName    = "/polyglot.v1.BillingService/UpdateSubscription"
+	BillingService_DeleteSubscription_FullMethodName    = "/polyglot.v1.BillingService/DeleteSubscription"
+	BillingService_IsolateSubscription_FullMethodName   = "/polyglot.v1.BillingService/IsolateSubscription"
+	BillingService_UnisolateSubscription_FullMethodName = "/polyglot.v1.BillingService/UnisolateSubscription"
+	BillingService_CancelSubscription_FullMethodName    = "/polyglot.v1.BillingService/CancelSubscription"
 )
 
 // BillingServiceClient is the client API for BillingService service.
@@ -38,6 +43,11 @@ type BillingServiceClient interface {
 	PayInvoice(ctx context.Context, in *PayInvoiceRequest, opts ...grpc.CallOption) (*PayInvoiceResponse, error)
 	ListSubscriptions(ctx context.Context, in *ListSubscriptionsRequest, opts ...grpc.CallOption) (*ListSubscriptionsResponse, error)
 	CreateSubscription(ctx context.Context, in *CreateSubscriptionRequest, opts ...grpc.CallOption) (*CreateSubscriptionResponse, error)
+	GetSubscription(ctx context.Context, in *GetSubscriptionRequest, opts ...grpc.CallOption) (*GetSubscriptionResponse, error)
+	UpdateSubscription(ctx context.Context, in *UpdateSubscriptionRequest, opts ...grpc.CallOption) (*UpdateSubscriptionResponse, error)
+	DeleteSubscription(ctx context.Context, in *DeleteSubscriptionRequest, opts ...grpc.CallOption) (*DeleteSubscriptionResponse, error)
+	IsolateSubscription(ctx context.Context, in *IsolateSubscriptionRequest, opts ...grpc.CallOption) (*IsolateSubscriptionResponse, error)
+	UnisolateSubscription(ctx context.Context, in *UnisolateSubscriptionRequest, opts ...grpc.CallOption) (*UnisolateSubscriptionResponse, error)
 	CancelSubscription(ctx context.Context, in *CancelSubscriptionRequest, opts ...grpc.CallOption) (*CancelSubscriptionResponse, error)
 }
 
@@ -109,6 +119,56 @@ func (c *billingServiceClient) CreateSubscription(ctx context.Context, in *Creat
 	return out, nil
 }
 
+func (c *billingServiceClient) GetSubscription(ctx context.Context, in *GetSubscriptionRequest, opts ...grpc.CallOption) (*GetSubscriptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSubscriptionResponse)
+	err := c.cc.Invoke(ctx, BillingService_GetSubscription_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) UpdateSubscription(ctx context.Context, in *UpdateSubscriptionRequest, opts ...grpc.CallOption) (*UpdateSubscriptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateSubscriptionResponse)
+	err := c.cc.Invoke(ctx, BillingService_UpdateSubscription_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) DeleteSubscription(ctx context.Context, in *DeleteSubscriptionRequest, opts ...grpc.CallOption) (*DeleteSubscriptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteSubscriptionResponse)
+	err := c.cc.Invoke(ctx, BillingService_DeleteSubscription_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) IsolateSubscription(ctx context.Context, in *IsolateSubscriptionRequest, opts ...grpc.CallOption) (*IsolateSubscriptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(IsolateSubscriptionResponse)
+	err := c.cc.Invoke(ctx, BillingService_IsolateSubscription_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) UnisolateSubscription(ctx context.Context, in *UnisolateSubscriptionRequest, opts ...grpc.CallOption) (*UnisolateSubscriptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UnisolateSubscriptionResponse)
+	err := c.cc.Invoke(ctx, BillingService_UnisolateSubscription_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *billingServiceClient) CancelSubscription(ctx context.Context, in *CancelSubscriptionRequest, opts ...grpc.CallOption) (*CancelSubscriptionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CancelSubscriptionResponse)
@@ -129,6 +189,11 @@ type BillingServiceServer interface {
 	PayInvoice(context.Context, *PayInvoiceRequest) (*PayInvoiceResponse, error)
 	ListSubscriptions(context.Context, *ListSubscriptionsRequest) (*ListSubscriptionsResponse, error)
 	CreateSubscription(context.Context, *CreateSubscriptionRequest) (*CreateSubscriptionResponse, error)
+	GetSubscription(context.Context, *GetSubscriptionRequest) (*GetSubscriptionResponse, error)
+	UpdateSubscription(context.Context, *UpdateSubscriptionRequest) (*UpdateSubscriptionResponse, error)
+	DeleteSubscription(context.Context, *DeleteSubscriptionRequest) (*DeleteSubscriptionResponse, error)
+	IsolateSubscription(context.Context, *IsolateSubscriptionRequest) (*IsolateSubscriptionResponse, error)
+	UnisolateSubscription(context.Context, *UnisolateSubscriptionRequest) (*UnisolateSubscriptionResponse, error)
 	CancelSubscription(context.Context, *CancelSubscriptionRequest) (*CancelSubscriptionResponse, error)
 	mustEmbedUnimplementedBillingServiceServer()
 }
@@ -157,6 +222,21 @@ func (UnimplementedBillingServiceServer) ListSubscriptions(context.Context, *Lis
 }
 func (UnimplementedBillingServiceServer) CreateSubscription(context.Context, *CreateSubscriptionRequest) (*CreateSubscriptionResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreateSubscription not implemented")
+}
+func (UnimplementedBillingServiceServer) GetSubscription(context.Context, *GetSubscriptionRequest) (*GetSubscriptionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSubscription not implemented")
+}
+func (UnimplementedBillingServiceServer) UpdateSubscription(context.Context, *UpdateSubscriptionRequest) (*UpdateSubscriptionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateSubscription not implemented")
+}
+func (UnimplementedBillingServiceServer) DeleteSubscription(context.Context, *DeleteSubscriptionRequest) (*DeleteSubscriptionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteSubscription not implemented")
+}
+func (UnimplementedBillingServiceServer) IsolateSubscription(context.Context, *IsolateSubscriptionRequest) (*IsolateSubscriptionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method IsolateSubscription not implemented")
+}
+func (UnimplementedBillingServiceServer) UnisolateSubscription(context.Context, *UnisolateSubscriptionRequest) (*UnisolateSubscriptionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UnisolateSubscription not implemented")
 }
 func (UnimplementedBillingServiceServer) CancelSubscription(context.Context, *CancelSubscriptionRequest) (*CancelSubscriptionResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CancelSubscription not implemented")
@@ -290,6 +370,96 @@ func _BillingService_CreateSubscription_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BillingService_GetSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).GetSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_GetSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).GetSubscription(ctx, req.(*GetSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_UpdateSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).UpdateSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_UpdateSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).UpdateSubscription(ctx, req.(*UpdateSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_DeleteSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).DeleteSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_DeleteSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).DeleteSubscription(ctx, req.(*DeleteSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_IsolateSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsolateSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).IsolateSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_IsolateSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).IsolateSubscription(ctx, req.(*IsolateSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_UnisolateSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnisolateSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).UnisolateSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_UnisolateSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).UnisolateSubscription(ctx, req.(*UnisolateSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _BillingService_CancelSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CancelSubscriptionRequest)
 	if err := dec(in); err != nil {
@@ -338,6 +508,26 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateSubscription",
 			Handler:    _BillingService_CreateSubscription_Handler,
+		},
+		{
+			MethodName: "GetSubscription",
+			Handler:    _BillingService_GetSubscription_Handler,
+		},
+		{
+			MethodName: "UpdateSubscription",
+			Handler:    _BillingService_UpdateSubscription_Handler,
+		},
+		{
+			MethodName: "DeleteSubscription",
+			Handler:    _BillingService_DeleteSubscription_Handler,
+		},
+		{
+			MethodName: "IsolateSubscription",
+			Handler:    _BillingService_IsolateSubscription_Handler,
+		},
+		{
+			MethodName: "UnisolateSubscription",
+			Handler:    _BillingService_UnisolateSubscription_Handler,
 		},
 		{
 			MethodName: "CancelSubscription",

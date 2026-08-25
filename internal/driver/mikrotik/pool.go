@@ -42,3 +42,23 @@ func ParseIPPools(result command.Result) []IPPool {
 	}
 	return pools
 }
+
+// NewAddIPPoolCommand builds the command.Command for /ip/pool/add.
+func NewAddIPPoolCommand(name, ranges, comment string) command.Command {
+	args := map[string]string{
+		"name":   name,
+		"ranges": ranges,
+	}
+	setIfNonEmpty(args, "comment", comment)
+	return command.Command{Raw: "/ip/pool/add", Args: args}
+}
+
+// NewRemoveIPPoolCommand builds the command.Command for /ip/pool/remove.
+// Classified as ClassDestructive — removing a pool in use can break
+// address assignment for connected subscribers.
+func NewRemoveIPPoolCommand(rosID string) command.Command {
+	return command.Command{
+		Raw:  "/ip/pool/remove",
+		Args: map[string]string{".id": rosID},
+	}
+}

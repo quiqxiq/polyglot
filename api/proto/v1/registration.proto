@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// Registration is a new-subscriber application (ringkas, tanpa NIK/KTP).
+message Registration {
+  string id = 1;
+  string tenant_id = 2;
+  string registration_no = 3;
+  string plan_id = 4;
+  string full_name = 5;
+  string phone = 6;
+  string address = 7;
+  double latitude = 8;
+  double longitude = 9;
+  string notes = 10;
+  string status = 11;            // PENDING|APPROVED|INSTALLED|ACTIVE|REJECTED|CANCELLED
+  int64 reviewed_by = 12;
+  int64 reviewed_at_unix = 13;
+  string admin_notes = 14;
+  int64 scheduled_install_date_unix = 15;
+  int64 assigned_technician_id = 16;
+  string device_id = 17;
+  int64 installed_at_unix = 18;
+  string technician_notes = 19;
+  string customer_id = 20;
+  string subscription_id = 21;
+  int64 rejected_at_unix = 22;
+  string rejected_reason = 23;
+  int64 cancelled_at_unix = 24;
+  string cancel_reason = 25;
+  int64 created_at_unix = 26;
+}
+
+message CreateRegistrationRequest {
+  Registration registration = 1;
+}
+message CreateRegistrationResponse {
+  Registration registration = 1;
+  string message = 2;
+}
+
+message ListRegistrationsRequest {
+  string status = 1;            // kosong = semua
+  int32 limit = 2;              // 0 = default server
+}
+message ListRegistrationsResponse {
+  repeated Registration registrations = 1;
+}
+
+message GetRegistrationRequest {
+  string id = 1;
+}
+message GetRegistrationResponse {
+  Registration registration = 1;
+}
+
+message ReviewRegistrationRequest {
+  string id = 1;
+  bool approve = 2;             // true → APPROVED, false → REJECTED
+  int64 reviewed_by = 3;
+  string notes = 4;
+  // penjadwalan opsional saat approval
+  int64 scheduled_install_date_unix = 5;
+  int64 assigned_technician_id = 6;
+}
+message ReviewRegistrationResponse {
+  Registration registration = 1;
+  string message = 2;
+}
+
+// MarkInstalled dipicu teknisi setelah pemasangan fisik selesai.
+// Inilah trigger provisioning: konversi ke customer + subscription,
+// buat akun di router Mikrotik, simpan mapping (remote_username/remote_id).
+message MarkInstalledRequest {
+  string id = 1;
+  string device_id = 2;         // router target provisioning
+  string remote_username = 3;   // opsional; dibuat otomatis dari nama bila kosong
+  string password = 4;          // opsional; digenerate bila kosong
+  string technician_notes = 5;
+}
+message MarkInstalledResponse {
+  Registration registration = 1;
+  string customer_id = 2;
+  string subscription_id = 3;
+  string message = 4;
+}
+
+message CancelRegistrationRequest {
+  string id = 1;
+  string reason = 2;
+}
+message CancelRegistrationResponse {
+  Registration registration = 1;
+  string message = 2;
+}
+
+service RegistrationService {
+  rpc CreateRegistration(CreateRegistrationRequest) returns (CreateRegistrationResponse);
+  rpc ListRegistrations(ListRegistrationsRequest) returns (ListRegistrationsResponse);
+  rpc GetRegistration(GetRegistrationRequest) returns (GetRegistrationResponse);
+  rpc ReviewRegistration(ReviewRegistrationRequest) returns (ReviewRegistrationResponse);
+  rpc MarkInstalled(MarkInstalledRequest) returns (MarkInstalledResponse);
+  rpc CancelRegistration(CancelRegistrationRequest) returns (CancelRegistrationResponse);
+}

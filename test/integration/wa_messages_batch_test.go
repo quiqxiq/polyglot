@@ -18,6 +18,7 @@
 package integration
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"strconv"
@@ -36,6 +37,7 @@ import (
 // PostgreSQL instance: fresh inserts, idempotent replay, mixed batches, and
 // final table contents.
 func TestUpsertMessagesBatch(t *testing.T) {
+	ctx := context.Background()
 	dsn := os.Getenv("TEST_DATABASE_URL")
 	if dsn == "" {
 		dsn = os.Getenv("DATABASE_URL")
@@ -91,7 +93,7 @@ func TestUpsertMessagesBatch(t *testing.T) {
 	}
 
 	// 1) Batch pertama: 3 pesan baru -> 3 baris ter-insert.
-	inserted, err := store.UpsertMessagesBatch(msgs)
+	inserted, err := store.UpsertMessagesBatch(ctx, msgs)
 	if err != nil {
 		t.Fatalf("batch pertama gagal: %v", err)
 	}
@@ -100,7 +102,7 @@ func TestUpsertMessagesBatch(t *testing.T) {
 	}
 
 	// 2) Replay identik: ON CONFLICT DO NOTHING -> 0 baris baru.
-	inserted, err = store.UpsertMessagesBatch(msgs)
+	inserted, err = store.UpsertMessagesBatch(ctx, msgs)
 	if err != nil {
 		t.Fatalf("replay gagal: %v", err)
 	}
@@ -114,7 +116,7 @@ func TestUpsertMessagesBatch(t *testing.T) {
 		msgs[0],
 		msgs[1],
 	}
-	inserted, err = store.UpsertMessagesBatch(mixed)
+	inserted, err = store.UpsertMessagesBatch(ctx, mixed)
 	if err != nil {
 		t.Fatalf("batch campuran gagal: %v", err)
 	}
@@ -123,7 +125,7 @@ func TestUpsertMessagesBatch(t *testing.T) {
 	}
 
 	// 4) Slice kosong -> (0, nil) tanpa query.
-	inserted, err = store.UpsertMessagesBatch(nil)
+	inserted, err = store.UpsertMessagesBatch(ctx, nil)
 	if err != nil || inserted != 0 {
 		t.Fatalf("batch kosong: want (0, nil), got (%d, %v)", inserted, err)
 	}
@@ -138,7 +140,7 @@ func TestUpsertMessagesBatch(t *testing.T) {
 		t.Fatalf("total pesan: want 4, got %d", total)
 	}
 
-	msgsA, err := store.ListChatMessages(sessionID, chatA, 50, 0)
+	msgsA, err := store.ListChatMessages(ctx, sessionID, chatA, 50, 0)
 	if err != nil {
 		t.Fatalf("ListChatMessages: %v", err)
 	}

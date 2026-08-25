@@ -40,6 +40,10 @@ type HotspotGateway interface {
 	RemoveUser(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
 	// ResetUserCounters resets byte/time counters for a hotspot user.
 	ResetUserCounters(ctx context.Context, driver DeviceDriver, rosID string) (command.Result, error)
+	// SetUserDisabled toggles the disabled flag of a hotspot user directly
+	// (isolation flow). UpdateUser cannot express boolean clears because
+	// empty fields are skipped by design.
+	SetUserDisabled(ctx context.Context, driver DeviceDriver, rosID string, disabled bool) (command.Result, error)
 	// ListActiveSessions fetches all currently connected hotspot active sessions.
 	ListActiveSessions(ctx context.Context, driver DeviceDriver) ([]HotspotActiveSession, error)
 	// RemoveActiveSession kicks an active session by its RouterOS .id.

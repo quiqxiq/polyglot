@@ -15,7 +15,9 @@ import (
 	customerConnect "github.com/quixiq/polyglot/internal/adapter/connect/customer"
 	deviceConnect "github.com/quixiq/polyglot/internal/adapter/connect/device"
 	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
+	planConnect "github.com/quixiq/polyglot/internal/adapter/connect/plan"
 	pppConnect "github.com/quixiq/polyglot/internal/adapter/connect/ppp"
+	registrationConnect "github.com/quixiq/polyglot/internal/adapter/connect/registration"
 	settingConnect "github.com/quixiq/polyglot/internal/adapter/connect/setting"
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
@@ -43,7 +45,9 @@ import (
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
+	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
 	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
+	regUC "github.com/quixiq/polyglot/internal/usecase/registration"
 	settingUC "github.com/quixiq/polyglot/internal/usecase/setting"
 	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
@@ -175,6 +179,13 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	customerRepo := postgres.NewCustomerRepository(pgStore.DB())
 	custUC := customerUC.NewManageCustomerUseCase(customerRepo)
 
+	// ISP core: plans, registrations, subscriptions (mapping-only) + isolir.
+	planRepo := postgres.NewPlanRepository(pgStore.DB())
+	regRepo := postgres.NewRegistrationRepository(pgStore.DB())
+	settingRepoISP := postgres.NewSettingRepository(pgStore.DB())
+	secretVault := postgres.NewSecretVault(pgStore.DB(), cfg.EncryptionKey)
+	planUseCase := planUC.NewManagePlansUseCase(planRepo)
+
 	authUseCase := authUC.NewAuthUseCase(userRepo, jwtService, refreshSvc, redisStore, casbinEnforcer)
 	refreshUseCase := authUC.NewRefreshTokenUseCase(userRepo, jwtService, refreshSvc, casbinEnforcer)
 	manageUserUseCase := userUC.NewManageUserUseCase(userRepo, casbinEnforcer)
@@ -217,6 +228,27 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	custPath, custHandler := customerConnect.NewCustomerServiceHandler(custUC)
 	registerProtected(custPath, custHandler)
 
+	invRepo := postgres.NewInvoiceRepository(pgStore.DB())
+	subRepo := postgres.NewSubscriptionRepository(pgStore.DB())
+	invUC := billingUC.NewInvoiceUseCase(invRepo)
+	subUC := billingUC.NewSubscriptionUseCase(subRepo)
+
+	// Provisioner orchestrates device-side account lifecycle (PPPoE secret /
+	// permanent hotspot user) and the isolir portal-redirect infrastructure.
+	provisioner := networkUC.NewSubscriptionProvisioner(
+		subRepo, planRepo, secretVault, settingRepoISP,
+		sessionGateway, hotGateway, sessionGateway, connectDriverProvider,
+	)
+	subUC.SetDeps(planRepo, secretVault, provisioner)
+
+	regService := regUC.NewRegistrationService(regRepo, planRepo, customerRepo, subRepo, provisioner)
+
+	planPath, planHandler := planConnect.NewPlanServiceHandler(planUseCase)
+	registerProtected(planPath, planHandler)
+
+	regPath, regHandler := registrationConnect.NewRegistrationServiceHandler(regService)
+	registerProtected(regPath, regHandler)
+
 	rbacPath, rbacHandler := authConnect.NewRBACServiceHandler(casbinEnforcer)
 	registerProtected(rbacPath, rbacHandler)
 
@@ -225,11 +257,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	settingPath, settingHandler := settingConnect.NewSettingServiceHandler(manageSettingUseCase)
 	registerProtected(settingPath, settingHandler)
-
-	invRepo := postgres.NewInvoiceRepository(pgStore.DB())
-	subRepo := postgres.NewSubscriptionRepository(pgStore.DB())
-	invUC := billingUC.NewInvoiceUseCase(invRepo)
-	subUC := billingUC.NewSubscriptionUseCase(subRepo)
 
 	billingPath, billingHandler := billingConnect.NewBillingServiceHandler(invUC, subUC)
 	registerProtected(billingPath, billingHandler)

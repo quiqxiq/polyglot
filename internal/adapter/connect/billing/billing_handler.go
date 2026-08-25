@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"connectrpc.com/connect"
+	"github.com/google/uuid"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
@@ -15,10 +16,10 @@ import (
 )
 
 const (
-	StatusUnpaid    = domainBilling.StatusUnpaid
-	StatusPaid      = domainBilling.StatusPaid
-	StatusActive    = domainSub.StatusActive
-	StatusCancelled = domainSub.StatusCancelled
+	StatusUnpaid   = domainBilling.StatusUnpaid
+	StatusPaid     = domainBilling.StatusPaid
+	StatusActive   = domainSub.StatusActive
+	StatusIsolated = domainSub.StatusIsolated
 )
 
 type BillingConnectHandler struct {
@@ -147,26 +148,99 @@ func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *con
 	}
 
 	now := time.Now()
-	subID := fmt.Sprintf("sub-%d", now.UnixNano()%100000)
+	subID := fmt.Sprintf("sub-%s", uuid.NewString()[:8])
 	newSub := domainSub.Subscription{
-		ID:         subID,
-		CustomerID: req.Msg.CustomerId,
-		PlanID:     req.Msg.PlanId,
-		Status:     StatusActive,
-		StartDate:  now,
-		EndDate:    now.AddDate(1, 0, 0),
-		Price:      req.Msg.Price,
-		CreatedAt:  now,
-		UpdatedAt:  now,
+		ID:             subID,
+		CustomerID:     req.Msg.CustomerId,
+		PlanID:         req.Msg.PlanId,
+		DeviceID:       req.Msg.DeviceId,
+		RemoteUsername: req.Msg.RemoteUsername,
+		BillingDay:     int(req.Msg.BillingDay),
+		Status:         domainSub.StatusPendingProvision,
+		StartDate:      now,
+		CreatedAt:      now,
 	}
 
-	created, err := h.subscriptionUC.CreateSubscription(ctx, newSub)
+	created, err := h.subscriptionUC.CreateSubscription(ctx, newSub, req.Msg.Password)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.CreateSubscriptionResponse{
 		Subscription: toProtoSubscription(&created),
+	}), nil
+}
+
+func (h *BillingConnectHandler) GetSubscription(ctx context.Context, req *connect.Request[devicepb.GetSubscriptionRequest]) (*connect.Response[devicepb.GetSubscriptionResponse], error) {
+	if h.subscriptionUC == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription usecase unavailable"))
+	}
+	sub, err := h.subscriptionUC.GetSubscription(ctx, req.Msg.Id)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.GetSubscriptionResponse{
+		Subscription: toProtoSubscription(&sub),
+	}), nil
+}
+
+func (h *BillingConnectHandler) UpdateSubscription(ctx context.Context, req *connect.Request[devicepb.UpdateSubscriptionRequest]) (*connect.Response[devicepb.UpdateSubscriptionResponse], error) {
+	if h.subscriptionUC == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription usecase unavailable"))
+	}
+	current, err := h.subscriptionUC.GetSubscription(ctx, req.Msg.Id)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	updated, err := h.subscriptionUC.UpdateSubscription(ctx, current, req.Msg.PlanId, req.Msg.RemoteUsername, req.Msg.Notes, int(req.Msg.BillingDay))
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.UpdateSubscriptionResponse{
+		Subscription: toProtoSubscription(&updated),
+		Message:      "subscription updated",
+	}), nil
+}
+
+func (h *BillingConnectHandler) DeleteSubscription(ctx context.Context, req *connect.Request[devicepb.DeleteSubscriptionRequest]) (*connect.Response[devicepb.DeleteSubscriptionResponse], error) {
+	if h.subscriptionUC == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription usecase unavailable"))
+	}
+	if err := h.subscriptionUC.DeleteSubscription(ctx, req.Msg.Id, req.Msg.Deprovision); err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	msg := "subscription terminated"
+	if req.Msg.Deprovision {
+		msg = "subscription terminated and account removed from router"
+	}
+	return connect.NewResponse(&devicepb.DeleteSubscriptionResponse{Message: msg}), nil
+}
+
+func (h *BillingConnectHandler) IsolateSubscription(ctx context.Context, req *connect.Request[devicepb.IsolateSubscriptionRequest]) (*connect.Response[devicepb.IsolateSubscriptionResponse], error) {
+	if h.subscriptionUC == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription usecase unavailable"))
+	}
+	sub, err := h.subscriptionUC.IsolateSubscription(ctx, req.Msg.Id, req.Msg.Reason)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.IsolateSubscriptionResponse{
+		Subscription: toProtoSubscription(&sub),
+		Message:      "subscriber isolated; web traffic redirected to payment portal",
+	}), nil
+}
+
+func (h *BillingConnectHandler) UnisolateSubscription(ctx context.Context, req *connect.Request[devicepb.UnisolateSubscriptionRequest]) (*connect.Response[devicepb.UnisolateSubscriptionResponse], error) {
+	if h.subscriptionUC == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription usecase unavailable"))
+	}
+	sub, err := h.subscriptionUC.UnisolateSubscription(ctx, req.Msg.Id)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.UnisolateSubscriptionResponse{
+		Subscription: toProtoSubscription(&sub),
+		Message:      "subscriber restored to active service",
 	}), nil
 }
 

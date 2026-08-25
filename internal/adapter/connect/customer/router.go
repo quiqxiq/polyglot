@@ -26,6 +26,21 @@ func NewCustomerServiceHandler(uc *customerUC.ManageCustomerUseCase) (string, ht
 		handler.GetCustomer,
 		codecOpt,
 	))
+	mux.Handle("/"+serviceName+"/CreateCustomer", connect.NewUnaryHandler(
+		"/"+serviceName+"/CreateCustomer",
+		handler.CreateCustomer,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/UpdateCustomer", connect.NewUnaryHandler(
+		"/"+serviceName+"/UpdateCustomer",
+		handler.UpdateCustomer,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/DeleteCustomer", connect.NewUnaryHandler(
+		"/"+serviceName+"/DeleteCustomer",
+		handler.DeleteCustomer,
+		codecOpt,
+	))
 
 	return "/" + serviceName + "/", mux
 }

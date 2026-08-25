@@ -11,20 +11,33 @@ type PPPProfileParams = port.PPPProfileParams
 // PPPProfile represents one row returned by /ppp/profile/print.
 type PPPProfile = port.PPPProfile
 
+// IsolirProfileName is the default RouterOS profile name used for
+// suspended PPPoE subscribers.
+const IsolirProfileName = "isolir"
+
+// IsolirProfileRateLimit gives suspended subscribers just enough bandwidth
+// to reach the payment portal. A hard 0/0 would block the redirect entirely.
+const IsolirProfileRateLimit = "512k/512k"
+
 // IsolirProfileParams returns a pre-filled PPPProfileParams for the standard
-// "isolir" (suspension) profile used in ISP billing. The isolir profile gives
-// the subscriber a 0/0 rate-limit so they cannot pass traffic.
+// "isolir" (suspension) profile used in ISP billing. The profile assigns the
+// subscriber an address from the dedicated isolation IP pool at a minimal
+// rate-limit so firewall NAT rules can redirect web traffic to the payment
+// portal instead of dropping everything.
+//
+// NOTE: RemoteAddress must reference a pool that ALREADY exists on the
+// device (RouterOS validates the pool name) — EnsureIsolirInfrastructure
+// creates the pool before the profile. SharedUsers is deliberately omitted:
+// it is not a valid /ppp/profile attribute on RouterOS 6.x.
 //
 // Usage: create this profile once on the router on first suspension, then
 // reference it by name ("isolir") for subsequent suspensions.
-func IsolirProfileParams() PPPProfileParams {
+func IsolirProfileParams(isolatedPool string) PPPProfileParams {
 	return PPPProfileParams{
-		Name:          "isolir",
-		LocalAddress:  "0.0.0.0",
-		RemoteAddress: "0.0.0.0",
-		RateLimit:     "0/0",
+		Name:          IsolirProfileName,
+		RemoteAddress: isolatedPool,
+		RateLimit:     IsolirProfileRateLimit,
 		Comment:       "SUSPENDED_PROFILE",
-		SharedUsers:   "1",
 	}
 }
 

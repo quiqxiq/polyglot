@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// Plan is the master paket layanan view. Router-specific fields are NAME
+// REFERENCES to objects on the device, never router-state snapshots.
+message Plan {
+  string id = 1;
+  string tenant_id = 2;
+  string name = 3;
+  string service_type = 4;      // 'PPPOE' | 'HOTSPOT'
+  int32 rate_down_kbps = 5;
+  int32 rate_up_kbps = 6;
+  double price = 7;
+  string ip_pool_name = 8;      // PPPOE
+  string parent_queue = 9;      // PPPOE opsional
+  string address_list = 10;     // PPPOE opsional
+  int32 shared_users = 11;      // HOTSPOT
+  bool is_active = 12;
+  string description = 13;
+  int64 created_at_unix = 14;
+  int64 updated_at_unix = 15;
+}
+
+message CreatePlanRequest {
+  Plan plan = 1;
+}
+message CreatePlanResponse {
+  Plan plan = 1;
+  string message = 2;
+}
+
+message GetPlanRequest {
+  string id = 1;
+}
+message GetPlanResponse {
+  Plan plan = 1;
+}
+
+message ListPlansRequest {
+  string service_type = 1;      // kosong = semua ('PPPOE' | 'HOTSPOT')
+  bool active_only = 2;
+  int32 limit = 3;              // 0 = default server
+}
+message ListPlansResponse {
+  repeated Plan plans = 1;
+}
+
+message UpdatePlanRequest {
+  Plan plan = 1;                // id wajib; field lain menimpa nilai tersimpan
+}
+message UpdatePlanResponse {
+  Plan plan = 1;
+  string message = 2;
+}
+
+message DeletePlanRequest {
+  string id = 1;
+}
+message DeletePlanResponse {
+  string message = 1;
+}
+
+service PlanService {
+  rpc CreatePlan(CreatePlanRequest) returns (CreatePlanResponse);
+  rpc GetPlan(GetPlanRequest) returns (GetPlanResponse);
+  rpc ListPlans(ListPlansRequest) returns (ListPlansResponse);
+  rpc UpdatePlan(UpdatePlanRequest) returns (UpdatePlanResponse);
+  rpc DeletePlan(DeletePlanRequest) returns (DeletePlanResponse);
+}

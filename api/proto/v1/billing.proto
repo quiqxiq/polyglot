@@ -13,14 +13,26 @@ message Invoice {
   int64 created_at_unix = 6;
 }
 
+// Subscription is a MAPPING-ONLY view: identity + relational mapping to the
+// Mikrotik account. The account password never appears on the wire.
 message Subscription {
   string id = 1;
   string customer_id = 2;
   string plan_id = 3;
   string status = 4;
   int64 start_date_unix = 5;
-  int64 end_date_unix = 6;
-  double price = 7;
+  // Deprecated skeleton fields (000006 era). Kept for wire compatibility.
+  int64 end_date_unix = 6 [deprecated = true];
+  double price = 7 [deprecated = true];
+  string tenant_id = 8;
+  string device_id = 9;
+  string service_type = 10;
+  string remote_username = 11;
+  string remote_id = 12;
+  int32 billing_day = 13;
+  int64 isolated_at_unix = 14;
+  string isolation_reason = 15;
+  string notes = 16;
 }
 
 message ListInvoicesRequest {
@@ -65,10 +77,59 @@ message ListSubscriptionsResponse {
 message CreateSubscriptionRequest {
   string customer_id = 1;
   string plan_id = 2;
-  double price = 3;
+  string device_id = 3;
+  string remote_username = 4;
+  string password = 5;          // disimpan terenkripsi di SecretVault, tidak pernah dikembalikan
+  int32 billing_day = 6;
 }
 message CreateSubscriptionResponse {
   Subscription subscription = 1;
+}
+
+message GetSubscriptionRequest {
+  string id = 1;
+}
+message GetSubscriptionResponse {
+  Subscription subscription = 1;
+}
+
+message UpdateSubscriptionRequest {
+  string id = 1;
+  string plan_id = 2;           // kosong = tidak berubah
+  string remote_username = 3;   // kosong = tidak berubah
+  string password = 4;          // kosong = tidak berubah
+  int32 billing_day = 5;        // 0 = tidak berubah
+  string notes = 6;             // kosong = tidak berubah
+  bool change_profile = 7;      // true → sinkronkan profile di router sesuai plan baru
+}
+message UpdateSubscriptionResponse {
+  Subscription subscription = 1;
+  string message = 2;
+}
+
+message DeleteSubscriptionRequest {
+  string id = 1;
+  bool deprovision = 2;         // true → hapus juga akunnya dari router
+}
+message DeleteSubscriptionResponse {
+  string message = 1;
+}
+
+message IsolateSubscriptionRequest {
+  string id = 1;
+  string reason = 2;
+}
+message IsolateSubscriptionResponse {
+  Subscription subscription = 1;
+  string message = 2;
+}
+
+message UnisolateSubscriptionRequest {
+  string id = 1;
+}
+message UnisolateSubscriptionResponse {
+  Subscription subscription = 1;
+  string message = 2;
 }
 
 message CancelSubscriptionRequest {
@@ -86,5 +147,10 @@ service BillingService {
   rpc PayInvoice(PayInvoiceRequest) returns (PayInvoiceResponse);
   rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse);
   rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse);
+  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse);
+  rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse);
+  rpc DeleteSubscription(DeleteSubscriptionRequest) returns (DeleteSubscriptionResponse);
+  rpc IsolateSubscription(IsolateSubscriptionRequest) returns (IsolateSubscriptionResponse);
+  rpc UnisolateSubscription(UnisolateSubscriptionRequest) returns (UnisolateSubscriptionResponse);
   rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse);
 }
