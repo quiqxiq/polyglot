@@ -3,8 +3,10 @@ import {
   Ban,
   MoreHorizontal,
   PauseCircle,
+  Pencil,
   PlayCircle,
   Repeat,
+  Trash2,
 } from 'lucide-react'
 import {
   DropdownMenu,
@@ -30,7 +32,17 @@ export function SubscriptionsRowActions({ subscription }: SubscriptionsRowAction
 
   if (!canManage) return null
 
-  const act = (dialog: 'change-plan' | 'suspend' | 'resume' | 'terminate' | 'activate') => {
+  const act = (
+    dialog:
+      | 'create'
+      | 'edit'
+      | 'delete'
+      | 'change-plan'
+      | 'suspend'
+      | 'resume'
+      | 'terminate'
+      | 'activate'
+  ) => {
     setCurrentRow(subscription)
     setOpen(dialog)
   }
@@ -97,6 +109,19 @@ export function SubscriptionsRowActions({ subscription }: SubscriptionsRowAction
             Terminate
           </DropdownMenuItem>
         )}
+        {/* CRUD tersedia untuk semua status. */}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => act('edit')}>
+          <Pencil className='mr-2 h-4 w-4' />
+          Edit
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => act('delete')}
+          className='text-destructive focus:text-destructive'
+        >
+          <Trash2 className='mr-2 h-4 w-4' />
+          Delete
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

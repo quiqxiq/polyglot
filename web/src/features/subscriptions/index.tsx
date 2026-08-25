@@ -5,6 +5,7 @@ import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { useSubscriptionsQuery } from '@/features/billing/api/use-billing'
+import { SubscriptionsPrimaryButtons } from './components/subscriptions-primary-buttons'
 import { SubscriptionsDialogs } from './components/subscriptions-dialogs'
 import { SubscriptionsProvider } from './components/subscriptions-provider'
 import { SubscriptionsTable } from './components/subscriptions-table'
@@ -30,6 +31,7 @@ export function Subscriptions() {
               router
             </p>
           </div>
+          <SubscriptionsPrimaryButtons />
         </div>
         <SubscriptionsTable data={subscriptions} isLoading={isLoading} />
       </Main>

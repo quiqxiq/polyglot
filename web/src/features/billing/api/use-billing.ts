@@ -1,6 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   type CashierPayRequest,
+  type CreateSubscriptionRequest,
+  type UpdateSubscriptionRequest,
+  type DeleteSubscriptionRequest,
   type ChangePlanRequest,
   type SuspendSubscriptionRequest,
   type ResumeSubscriptionRequest,
@@ -151,6 +154,53 @@ export function useActivateSubscriptionMutation() {
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.detail(vars.subscriptionId) })
+    },
+  })
+}
+
+export function useCreateSubscriptionMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: CreateSubscriptionRequest) => {
+      return await billingClient.createSubscription(req)
+    },
+    onSuccess: (res) => {
+      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      if (res.subscription) {
+        queryClient.invalidateQueries({
+          queryKey: billingKeys.subscriptions.detail(res.subscription.id),
+        })
+      }
+    },
+  })
+}
+
+export function useUpdateSubscriptionMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: UpdateSubscriptionRequest) => {
+      return await billingClient.updateSubscription(req)
+    },
+    onSuccess: (_, vars) => {
+      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.detail(vars.id),
+      })
+    },
+  })
+}
+
+export function useDeleteSubscriptionMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: DeleteSubscriptionRequest) => {
+      return await billingClient.deleteSubscription(req)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
     },
   })
 }

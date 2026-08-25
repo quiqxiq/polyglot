@@ -3,6 +3,9 @@ import useDialogState from '@/hooks/use-dialog-state'
 import { type Subscription } from '@/gen/v1/billing_pb'
 
 type SubscriptionsDialogType =
+  | 'create'
+  | 'edit'
+  | 'delete'
   | 'change-plan'
   | 'suspend'
   | 'resume'
