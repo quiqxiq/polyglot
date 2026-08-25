@@ -38,6 +38,7 @@ func newBillingConnectFixture(t *testing.T) (*connectBilling.BillingConnectHandl
 
 	handler := connectBilling.NewBillingConnectHandler(
 		invUC, checkoutUC, subUC, lifecycleUC, planUC, runBillingUC,
+		billingUC.NewManageSubscriptionUseCase(subRepo, planRepo, custRepo, manager, audit, invRepo),
 	)
 	return handler, invRepo, subRepo, planRepo
 }

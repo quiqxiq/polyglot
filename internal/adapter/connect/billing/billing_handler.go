@@ -21,6 +21,7 @@ type BillingConnectHandler struct {
 	lifecycleUC *billingUC.SubscriptionLifecycleUseCase
 	planUC      *billingUC.PlanUseCase
 	runBilling  *billingUC.RunBillingUseCase
+	manageSubUC *billingUC.ManageSubscriptionUseCase
 }
 
 func NewBillingConnectHandler(
@@ -30,6 +31,7 @@ func NewBillingConnectHandler(
 	lifecycleUC *billingUC.SubscriptionLifecycleUseCase,
 	planUC *billingUC.PlanUseCase,
 	runBilling *billingUC.RunBillingUseCase,
+	manageSubUC *billingUC.ManageSubscriptionUseCase,
 ) *BillingConnectHandler {
 	return &BillingConnectHandler{
 		invoiceUC:   invUC,
@@ -38,6 +40,7 @@ func NewBillingConnectHandler(
 		lifecycleUC: lifecycleUC,
 		planUC:      planUC,
 		runBilling:  runBilling,
+		manageSubUC: manageSubUC,
 	}
 }
 
@@ -246,6 +249,90 @@ func (h *BillingConnectHandler) ActivateSubscription(ctx context.Context, req *c
 	}
 	return connect.NewResponse(&devicepb.ActivateSubscriptionResponse{
 		Subscription: toProtoSubscription(&sub),
+	}), nil
+}
+
+// ─── CRUD langganan ─────────────────────────────────────────────────────
+
+func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *connect.Request[devicepb.CreateSubscriptionRequest]) (*connect.Response[devicepb.CreateSubscriptionResponse], error) {
+	if h.manageSubUC == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription manager usecase unavailable"))
+	}
+	msg := req.Msg
+	var deviceID *string
+	if msg.DeviceId != "" {
+		deviceID = &msg.DeviceId
+	}
+	var customPrice *float64
+	if msg.CustomPrice > 0 {
+		customPrice = &msg.CustomPrice
+	}
+	sub, err := h.manageSubUC.Create(ctx, billingUC.CreateInput{
+		CustomerID:     msg.CustomerId,
+		PlanID:         msg.PlanId,
+		DeviceID:       deviceID,
+		ServiceType:    msg.ServiceType,
+		RemoteUsername: msg.RemoteUsername,
+		RemotePassword: msg.RemotePassword,
+		CustomPrice:    customPrice,
+		BillingCycle:   msg.BillingCycle,
+		BillingDay:     int(msg.BillingDay),
+		Notes:          msg.Notes,
+	})
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.CreateSubscriptionResponse{
+		Subscription: toProtoSubscription(&sub),
+	}), nil
+}
+
+func (h *BillingConnectHandler) UpdateSubscription(ctx context.Context, req *connect.Request[devicepb.UpdateSubscriptionRequest]) (*connect.Response[devicepb.UpdateSubscriptionResponse], error) {
+	if h.manageSubUC == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription manager usecase unavailable"))
+	}
+	msg := req.Msg
+	in := billingUC.UpdateInput{Notes: &msg.Notes}
+	if msg.RemoteUsername != "" {
+		in.RemoteUsername = &msg.RemoteUsername
+	}
+	if msg.RemotePassword != "" {
+		in.RemotePassword = &msg.RemotePassword
+	}
+	if msg.CustomPrice > 0 {
+		in.CustomPrice = &msg.CustomPrice
+	}
+	if msg.BillingCycle != "" {
+		in.BillingCycle = &msg.BillingCycle
+	}
+	if msg.BillingDay != 0 {
+		day := int(msg.BillingDay)
+		in.BillingDay = &day
+	}
+	if msg.DeviceId != "" {
+		in.DeviceID = &msg.DeviceId
+	}
+	sub, err := h.manageSubUC.Update(ctx, msg.Id, in)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.UpdateSubscriptionResponse{
+		Subscription: toProtoSubscription(&sub),
+	}), nil
+}
+
+func (h *BillingConnectHandler) DeleteSubscription(ctx context.Context, req *connect.Request[devicepb.DeleteSubscriptionRequest]) (*connect.Response[devicepb.DeleteSubscriptionResponse], error) {
+	if req.Msg.Id == "" {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("subscription id is required"))
+	}
+	if h.manageSubUC == nil {
+		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription manager usecase unavailable"))
+	}
+	if err := h.manageSubUC.Delete(ctx, req.Msg.Id); err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.DeleteSubscriptionResponse{
+		Message: "langganan dihapus",
 	}), nil
 }
 

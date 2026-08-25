@@ -309,7 +309,8 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	registerProtected(settingPath, settingHandler)
 
 	billingPath, billingHandler := billingConnect.NewBillingServiceHandler(
-		invUC, checkoutUC, subUC, lifecycleUC, planUC, runBillingUC)
+		invUC, checkoutUC, subUC, lifecycleUC, planUC, runBillingUC,
+		billingUC.NewManageSubscriptionUseCase(subRepo, planRepo, customerRepo, accountMgr, auditLogRepo, invRepo))
 	registerProtected(billingPath, billingHandler)
 
 	regPath, regHandler := registrationConnect.NewRegistrationServiceHandler(regManagerUC, regConvertUC, regRepo)

@@ -17,8 +17,9 @@ func NewBillingServiceHandler(
 	lifecycleUC *billingUC.SubscriptionLifecycleUseCase,
 	planUC *billingUC.PlanUseCase,
 	runBilling *billingUC.RunBillingUseCase,
+	manageSubUC *billingUC.ManageSubscriptionUseCase,
 ) (string, http.Handler) {
-	handler := NewBillingConnectHandler(invUC, checkoutUC, subUC, lifecycleUC, planUC, runBilling)
+	handler := NewBillingConnectHandler(invUC, checkoutUC, subUC, lifecycleUC, planUC, runBilling, manageSubUC)
 	mux := http.NewServeMux()
 	codecOpt := connect.WithCodec(iconnect.JSONCodec())
 
@@ -33,6 +34,9 @@ func NewBillingServiceHandler(
 	mux.Handle("/"+serviceName+"/ListSubscriptions", connect.NewUnaryHandler("/"+serviceName+"/ListSubscriptions", handler.ListSubscriptions, codecOpt))
 	mux.Handle("/"+serviceName+"/GetSubscription", connect.NewUnaryHandler("/"+serviceName+"/GetSubscription", handler.GetSubscription, codecOpt))
 	mux.Handle("/"+serviceName+"/ChangePlan", connect.NewUnaryHandler("/"+serviceName+"/ChangePlan", handler.ChangePlan, codecOpt))
+	mux.Handle("/"+serviceName+"/CreateSubscription", connect.NewUnaryHandler("/"+serviceName+"/CreateSubscription", handler.CreateSubscription, codecOpt))
+	mux.Handle("/"+serviceName+"/UpdateSubscription", connect.NewUnaryHandler("/"+serviceName+"/UpdateSubscription", handler.UpdateSubscription, codecOpt))
+	mux.Handle("/"+serviceName+"/DeleteSubscription", connect.NewUnaryHandler("/"+serviceName+"/DeleteSubscription", handler.DeleteSubscription, codecOpt))
 	mux.Handle("/"+serviceName+"/SuspendSubscription", connect.NewUnaryHandler("/"+serviceName+"/SuspendSubscription", handler.SuspendSubscription, codecOpt))
 	mux.Handle("/"+serviceName+"/ResumeSubscription", connect.NewUnaryHandler("/"+serviceName+"/ResumeSubscription", handler.ResumeSubscription, codecOpt))
 	mux.Handle("/"+serviceName+"/TerminateSubscription", connect.NewUnaryHandler("/"+serviceName+"/TerminateSubscription", handler.TerminateSubscription, codecOpt))
