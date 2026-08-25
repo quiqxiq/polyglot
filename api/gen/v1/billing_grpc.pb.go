@@ -30,6 +30,9 @@ const (
 	BillingService_ResumeSubscription_FullMethodName    = "/polyglot.v1.BillingService/ResumeSubscription"
 	BillingService_TerminateSubscription_FullMethodName = "/polyglot.v1.BillingService/TerminateSubscription"
 	BillingService_ActivateSubscription_FullMethodName  = "/polyglot.v1.BillingService/ActivateSubscription"
+	BillingService_CreateSubscription_FullMethodName    = "/polyglot.v1.BillingService/CreateSubscription"
+	BillingService_UpdateSubscription_FullMethodName    = "/polyglot.v1.BillingService/UpdateSubscription"
+	BillingService_DeleteSubscription_FullMethodName    = "/polyglot.v1.BillingService/DeleteSubscription"
 	BillingService_ListPlans_FullMethodName             = "/polyglot.v1.BillingService/ListPlans"
 	BillingService_GetPlan_FullMethodName               = "/polyglot.v1.BillingService/GetPlan"
 	BillingService_CreatePlan_FullMethodName            = "/polyglot.v1.BillingService/CreatePlan"
@@ -56,6 +59,11 @@ type BillingServiceClient interface {
 	ResumeSubscription(ctx context.Context, in *ResumeSubscriptionRequest, opts ...grpc.CallOption) (*ResumeSubscriptionResponse, error)
 	TerminateSubscription(ctx context.Context, in *TerminateSubscriptionRequest, opts ...grpc.CallOption) (*TerminateSubscriptionResponse, error)
 	ActivateSubscription(ctx context.Context, in *ActivateSubscriptionRequest, opts ...grpc.CallOption) (*ActivateSubscriptionResponse, error)
+	// CRUD langsung (walk-in / operasional). Create juga tersedia dari
+	// halaman Customer detail. Ganti paket tetap via ChangePlan.
+	CreateSubscription(ctx context.Context, in *CreateSubscriptionRequest, opts ...grpc.CallOption) (*CreateSubscriptionResponse, error)
+	UpdateSubscription(ctx context.Context, in *UpdateSubscriptionRequest, opts ...grpc.CallOption) (*UpdateSubscriptionResponse, error)
+	DeleteSubscription(ctx context.Context, in *DeleteSubscriptionRequest, opts ...grpc.CallOption) (*DeleteSubscriptionResponse, error)
 	// Paket layanan
 	ListPlans(ctx context.Context, in *ListPlansRequest, opts ...grpc.CallOption) (*ListPlansResponse, error)
 	GetPlan(ctx context.Context, in *GetPlanRequest, opts ...grpc.CallOption) (*GetPlanResponse, error)
@@ -184,6 +192,36 @@ func (c *billingServiceClient) ActivateSubscription(ctx context.Context, in *Act
 	return out, nil
 }
 
+func (c *billingServiceClient) CreateSubscription(ctx context.Context, in *CreateSubscriptionRequest, opts ...grpc.CallOption) (*CreateSubscriptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateSubscriptionResponse)
+	err := c.cc.Invoke(ctx, BillingService_CreateSubscription_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) UpdateSubscription(ctx context.Context, in *UpdateSubscriptionRequest, opts ...grpc.CallOption) (*UpdateSubscriptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateSubscriptionResponse)
+	err := c.cc.Invoke(ctx, BillingService_UpdateSubscription_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) DeleteSubscription(ctx context.Context, in *DeleteSubscriptionRequest, opts ...grpc.CallOption) (*DeleteSubscriptionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteSubscriptionResponse)
+	err := c.cc.Invoke(ctx, BillingService_DeleteSubscription_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *billingServiceClient) ListPlans(ctx context.Context, in *ListPlansRequest, opts ...grpc.CallOption) (*ListPlansResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListPlansResponse)
@@ -262,6 +300,11 @@ type BillingServiceServer interface {
 	ResumeSubscription(context.Context, *ResumeSubscriptionRequest) (*ResumeSubscriptionResponse, error)
 	TerminateSubscription(context.Context, *TerminateSubscriptionRequest) (*TerminateSubscriptionResponse, error)
 	ActivateSubscription(context.Context, *ActivateSubscriptionRequest) (*ActivateSubscriptionResponse, error)
+	// CRUD langsung (walk-in / operasional). Create juga tersedia dari
+	// halaman Customer detail. Ganti paket tetap via ChangePlan.
+	CreateSubscription(context.Context, *CreateSubscriptionRequest) (*CreateSubscriptionResponse, error)
+	UpdateSubscription(context.Context, *UpdateSubscriptionRequest) (*UpdateSubscriptionResponse, error)
+	DeleteSubscription(context.Context, *DeleteSubscriptionRequest) (*DeleteSubscriptionResponse, error)
 	// Paket layanan
 	ListPlans(context.Context, *ListPlansRequest) (*ListPlansResponse, error)
 	GetPlan(context.Context, *GetPlanRequest) (*GetPlanResponse, error)
@@ -312,6 +355,15 @@ func (UnimplementedBillingServiceServer) TerminateSubscription(context.Context, 
 }
 func (UnimplementedBillingServiceServer) ActivateSubscription(context.Context, *ActivateSubscriptionRequest) (*ActivateSubscriptionResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ActivateSubscription not implemented")
+}
+func (UnimplementedBillingServiceServer) CreateSubscription(context.Context, *CreateSubscriptionRequest) (*CreateSubscriptionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateSubscription not implemented")
+}
+func (UnimplementedBillingServiceServer) UpdateSubscription(context.Context, *UpdateSubscriptionRequest) (*UpdateSubscriptionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateSubscription not implemented")
+}
+func (UnimplementedBillingServiceServer) DeleteSubscription(context.Context, *DeleteSubscriptionRequest) (*DeleteSubscriptionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteSubscription not implemented")
 }
 func (UnimplementedBillingServiceServer) ListPlans(context.Context, *ListPlansRequest) (*ListPlansResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListPlans not implemented")
@@ -550,6 +602,60 @@ func _BillingService_ActivateSubscription_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BillingService_CreateSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).CreateSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_CreateSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).CreateSubscription(ctx, req.(*CreateSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_UpdateSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).UpdateSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_UpdateSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).UpdateSubscription(ctx, req.(*UpdateSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_DeleteSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).DeleteSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_DeleteSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).DeleteSubscription(ctx, req.(*DeleteSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _BillingService_ListPlans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListPlansRequest)
 	if err := dec(in); err != nil {
@@ -708,6 +814,18 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ActivateSubscription",
 			Handler:    _BillingService_ActivateSubscription_Handler,
+		},
+		{
+			MethodName: "CreateSubscription",
+			Handler:    _BillingService_CreateSubscription_Handler,
+		},
+		{
+			MethodName: "UpdateSubscription",
+			Handler:    _BillingService_UpdateSubscription_Handler,
+		},
+		{
+			MethodName: "DeleteSubscription",
+			Handler:    _BillingService_DeleteSubscription_Handler,
 		},
 		{
 			MethodName: "ListPlans",
