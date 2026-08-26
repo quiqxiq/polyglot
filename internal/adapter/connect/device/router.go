@@ -9,16 +9,17 @@ import (
 	"github.com/quixiq/polyglot/internal/usecase/network"
 )
 
-// NewDeviceServiceHandler creates the Connect http.Handler and registers procedures onto an http.ServeMux.
 func NewDeviceServiceHandler(
 	uc *deviceUC.ManageDeviceUseCase,
 	openTermUC *network.OpenTerminalUseCase,
 	getter DriverGetter,
+	metricsUC *deviceUC.ManageMetricsUseCase,
 ) (string, http.Handler) {
 	handler := &DeviceConnectHandler{
 		useCase:      uc,
 		openTermUC:   openTermUC,
 		driverGetter: getter,
+		metricsUC:    metricsUC,
 	}
 	mux := http.NewServeMux()
 	codecOpt := connect.WithCodec(iconnect.JSONCodec())
@@ -67,6 +68,21 @@ func NewDeviceServiceHandler(
 	mux.Handle("/"+serviceName+"/StreamTerminal", connect.NewBidiStreamHandler(
 		"/"+serviceName+"/StreamTerminal",
 		handler.StreamTerminal,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/GetDevicePingConfig", connect.NewUnaryHandler(
+		"/"+serviceName+"/GetDevicePingConfig",
+		handler.GetDevicePingConfig,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/UpdateDevicePingConfig", connect.NewUnaryHandler(
+		"/"+serviceName+"/UpdateDevicePingConfig",
+		handler.UpdateDevicePingConfig,
+		codecOpt,
+	))
+	mux.Handle("/"+serviceName+"/QueryDevicePingMetrics", connect.NewUnaryHandler(
+		"/"+serviceName+"/QueryDevicePingMetrics",
+		handler.QueryDevicePingMetrics,
 		codecOpt,
 	))
 

@@ -44,6 +44,8 @@ func NewUserServiceHandler(uc *userUC.ManageUserUseCase) (string, http.Handler) 
 	mux.Handle("/"+serviceName+"/ResetPassword", connect.NewUnaryHandler("/"+serviceName+"/ResetPassword", handler.ResetPassword, codecOpt))
 	mux.Handle("/"+serviceName+"/ToggleActive", connect.NewUnaryHandler("/"+serviceName+"/ToggleActive", handler.ToggleActive, codecOpt))
 	mux.Handle("/"+serviceName+"/DeleteUser", connect.NewUnaryHandler("/"+serviceName+"/DeleteUser", handler.DeleteUser, codecOpt))
+	mux.Handle("/"+serviceName+"/AssignDevicesToUser", connect.NewUnaryHandler("/"+serviceName+"/AssignDevicesToUser", handler.AssignDevicesToUser, codecOpt))
+	mux.Handle("/"+serviceName+"/ListUserAccessibleDevices", connect.NewUnaryHandler("/"+serviceName+"/ListUserAccessibleDevices", handler.ListUserAccessibleDevices, codecOpt))
 
 	return "/" + serviceName + "/", mux
 }

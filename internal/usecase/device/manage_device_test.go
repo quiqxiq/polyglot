@@ -46,6 +46,15 @@ func (m *mockDeviceRepo) Update(ctx context.Context, d device.Device) error {
 	return nil
 }
 
+func (m *mockDeviceRepo) FindByUserScope(ctx context.Context, userID uint) ([]device.Device, error) {
+	if userID == 2 {
+		if d, ok := m.devices["dev-1"]; ok {
+			return []device.Device{d}, nil
+		}
+	}
+	return []device.Device{}, nil
+}
+
 func (m *mockDeviceRepo) Delete(ctx context.Context, id string) error {
 	delete(m.devices, id)
 	return nil
@@ -150,6 +159,23 @@ func TestManageDeviceUseCase(t *testing.T) {
 		list, err := uc.ListDevices(ctx)
 		require.NoError(t, err)
 		assert.Len(t, list, 1)
+	})
+
+	t.Run("List Devices For User Scoping", func(t *testing.T) {
+		// Owner sees all
+		ownerList, err := uc.ListDevicesForUser(ctx, 1, []string{"owner"})
+		require.NoError(t, err)
+		assert.Len(t, ownerList, 1)
+
+		// Admin with assigned router sees dev-1
+		adminList, err := uc.ListDevicesForUser(ctx, 2, []string{"admin"})
+		require.NoError(t, err)
+		assert.Len(t, adminList, 1)
+
+		// Teknisi with 0 assigned routers sees 0
+		tekList, err := uc.ListDevicesForUser(ctx, 3, []string{"teknisi"})
+		require.NoError(t, err)
+		assert.Empty(t, tekList)
 	})
 
 	t.Run("TestConnection", func(t *testing.T) {

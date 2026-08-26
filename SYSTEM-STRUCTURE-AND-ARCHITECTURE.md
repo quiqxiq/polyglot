@@ -1,4 +1,4 @@
-﻿# Struktur Folder & Arsitektur Sistem — Polyglot NetOps Engine
+# Struktur Folder & Arsitektur Sistem — Polyglot NetOps Engine
 
 Dokumen ini menyajikan panduan arsitektur sistem dan struktur folder definitif untuk proyek **Polyglot** (NetOps Engine & ISP Management Platform Go Backend).
 
@@ -122,8 +122,12 @@ Berikut adalah struktur folder lengkap dan definitif untuk repositori **Polyglot
 `
 polyglot/
 ├── cmd/
-│   └── server/
-│       └── main.go                         # Entry point utama aplikasi Go backend
+│   ├── server/
+│   │   └── main.go                         # Entry point utama aplikasi Go backend
+│   ├── probe/
+│   │   └── main.go                         # Remote POP probe agent
+│   └── seed/
+│       └── main.go                         # Database & Casbin RBAC policy seeder
 ├── internal/
 │   ├── domain/                             # Entity & Aturan Bisnis Murni (Zero External Dependencies)
 │   │   ├── billing/                        # Entitas invoice & transaksi pembayaran (invoice.go, payment.go)
@@ -225,8 +229,7 @@ polyglot/
 │   ├── MIKHMON_ANALYSIS.md
 │   ├── MIKHMON_v4_API_ENDPOINTS_DOCUMENTATION.md
 │   └── ...                                 # Source PHP legacy Mikhmon v4
-├── scripts/                                # Script pendukung dev, testing WS/streaming, & seed
-│   ├── seed.go                             # Database seeder
+├── scripts/                                # Script pendukung dev, testing WS/streaming
 │   ├── test_docker_api.ps1                 # Script pengujian API via Docker
 │   ├── test_inactive_streaming.ps1         # Script pengujian WebSocket inactive streaming
 │   ├── test_pure_streaming.ps1             # Script pengujian WebSocket pure streaming

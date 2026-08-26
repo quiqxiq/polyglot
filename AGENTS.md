@@ -82,7 +82,9 @@ polyglot/
 ├── cmd/
 │   ├── server/
 │   │   └── main.go
-│   └── probe/
+│   ├── probe/
+│   │   └── main.go
+│   └── seed/
 │       └── main.go
 │
 ├── internal/

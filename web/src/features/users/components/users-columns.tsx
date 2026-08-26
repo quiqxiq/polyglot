@@ -91,6 +91,41 @@ export const usersColumns: ColumnDef<User>[] = [
     enableSorting: false,
   },
   {
+    id: 'assignedDevices',
+    header: 'Assigned Routers',
+    cell: ({ row }) => {
+      const { role, assignedDeviceIds } = row.original
+      if (role === 'owner') {
+        return (
+          <Badge
+            variant='outline'
+            className='bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-200 text-xs'
+          >
+            All Routers (Global)
+          </Badge>
+        )
+      }
+      if (!assignedDeviceIds || assignedDeviceIds.length === 0) {
+        return <span className='text-xs text-muted-foreground italic'>None (No Access)</span>
+      }
+      return (
+        <div className='flex flex-wrap items-center gap-1'>
+          {assignedDeviceIds.slice(0, 2).map((id) => (
+            <Badge key={id} variant='secondary' className='text-xs font-mono font-normal'>
+              {id}
+            </Badge>
+          ))}
+          {assignedDeviceIds.length > 2 && (
+            <Badge variant='outline' className='text-xs'>
+              +{assignedDeviceIds.length - 2} more
+            </Badge>
+          )}
+        </div>
+      )
+    },
+    enableSorting: false,
+  },
+  {
     id: 'status',
     header: 'Status',
     cell: ({ row }) =>

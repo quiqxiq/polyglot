@@ -66,12 +66,13 @@ func (h *UserConnectHandler) CreateUser(ctx context.Context, req *connect.Reques
 		req.Msg.FullName,
 		req.Msg.PhoneNumber,
 		req.Msg.Specialization,
+		req.Msg.AssignedDeviceIds,
 	)
 	if err != nil {
 		if errors.Is(err, userUC.ErrUserAlreadyExists) {
 			return nil, connect.NewError(connect.CodeAlreadyExists, err)
 		}
-		if errors.Is(err, userUC.ErrAdminCannotCreateAdminOrOwner) {
+		if errors.Is(err, userUC.ErrAdminCannotCreateAdminOrOwner) || errors.Is(err, userUC.ErrUnauthorizedDeviceAssignment) {
 			return nil, connect.NewError(connect.CodePermissionDenied, err)
 		}
 		if errors.Is(err, userUC.ErrInvalidRole) || errors.Is(err, userUC.ErrUsernameRequired) || errors.Is(err, userUC.ErrPasswordTooShort) {
@@ -104,12 +105,14 @@ func (h *UserConnectHandler) UpdateUser(ctx context.Context, req *connect.Reques
 		req.Msg.FullName,
 		req.Msg.PhoneNumber,
 		req.Msg.Specialization,
+		req.Msg.AssignedDeviceIds,
 	)
 	if err != nil {
 		if errors.Is(err, userUC.ErrCannotModifyOwner) ||
 			errors.Is(err, userUC.ErrCannotModifyAdmin) ||
 			errors.Is(err, userUC.ErrAdminCannotAssignAdminOrOwner) ||
-			errors.Is(err, userUC.ErrCannotAssignOwnerRole) {
+			errors.Is(err, userUC.ErrCannotAssignOwnerRole) ||
+			errors.Is(err, userUC.ErrUnauthorizedDeviceAssignment) {
 			return nil, connect.NewError(connect.CodePermissionDenied, err)
 		}
 		if errors.Is(err, userUC.ErrInvalidRole) || errors.Is(err, userUC.ErrLastOwnerDemotion) {
@@ -121,6 +124,51 @@ func (h *UserConnectHandler) UpdateUser(ctx context.Context, req *connect.Reques
 	roles, _ := h.userUC.GetRoles(ctx, u.ID)
 	return connect.NewResponse(&devicepb.UpdateUserResponse{
 		User: DomainUserToPb(u, roles),
+	}), nil
+}
+
+func (h *UserConnectHandler) AssignDevicesToUser(ctx context.Context, req *connect.Request[devicepb.AssignDevicesRequest]) (*connect.Response[devicepb.AssignDevicesResponse], error) {
+	if req.Msg.UserId == 0 {
+		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("user_id is required"))
+	}
+
+	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
+	assigned, err := h.userUC.AssignDevicesToUser(ctx, callerID, callerRoles, uint(req.Msg.UserId), req.Msg.DeviceIds)
+	if err != nil {
+		if errors.Is(err, userUC.ErrCannotModifyOwner) ||
+			errors.Is(err, userUC.ErrCannotModifyAdmin) ||
+			errors.Is(err, userUC.ErrUnauthorizedDeviceAssignment) {
+			return nil, connect.NewError(connect.CodePermissionDenied, err)
+		}
+		if errors.Is(err, userUC.ErrUserNotFound) {
+			return nil, connect.NewError(connect.CodeNotFound, err)
+		}
+		return nil, response.MapDomainError(err)
+	}
+
+	return connect.NewResponse(&devicepb.AssignDevicesResponse{
+		Success:           true,
+		AssignedDeviceIds: assigned,
+	}), nil
+}
+
+func (h *UserConnectHandler) ListUserAccessibleDevices(ctx context.Context, req *connect.Request[devicepb.ListUserDevicesRequest]) (*connect.Response[devicepb.ListUserDevicesResponse], error) {
+	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
+	targetID := uint(req.Msg.UserId)
+	if targetID == 0 {
+		targetID = callerID
+	}
+
+	devices, err := h.userUC.ListUserAccessibleDevices(ctx, callerID, callerRoles, targetID)
+	if err != nil {
+		if errors.Is(err, userUC.ErrUserNotFound) {
+			return nil, connect.NewError(connect.CodeNotFound, err)
+		}
+		return nil, response.MapDomainError(err)
+	}
+
+	return connect.NewResponse(&devicepb.ListUserDevicesResponse{
+		DeviceIds: devices,
 	}), nil
 }
 

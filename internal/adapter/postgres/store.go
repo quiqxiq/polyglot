@@ -28,6 +28,7 @@ func NewStore(dsn string) (*Store, error) {
 	if appEnv == "development" || appEnv == "" || os.Getenv("AUTO_MIGRATE") == "true" {
 		if err := db.AutoMigrate(
 			&model.UserModel{},
+			&model.UserDeviceModel{},
 			&model.WASessionModel{},
 			&model.LLMConfigModel{},
 			&model.ConversationModel{},
@@ -35,6 +36,7 @@ func NewStore(dsn string) (*Store, error) {
 			&model.SkillMetadataModel{},
 			&model.GlobalPromptModel{},
 			&model.DeviceModel{},
+			&model.DevicePingMetricModel{},
 			&model.CredentialModel{},
 			&model.WAChatModel{},
 			&model.WAMessageModel{},
@@ -63,6 +65,36 @@ func NewStore(dsn string) (*Store, error) {
 		logger.WithComponent("PostgresAdapter").Info("Auto-migration executed in development mode")
 	} else {
 		logger.WithComponent("PostgresAdapter").Info("Skipping AutoMigrate in production; relying on SQL migrations")
+	}
+
+	// Memastikan kompatibilitas tipe kolom user_devices.device_id dan inisialisasi TimescaleDB hypertable
+	if db.Dialector.Name() == "postgres" {
+		_ = db.Exec(`DO $$ BEGIN
+			IF EXISTS (
+				SELECT 1 FROM information_schema.columns 
+				WHERE table_name = 'user_devices' 
+				  AND column_name = 'device_id' 
+				  AND data_type = 'character varying'
+			) THEN
+				ALTER TABLE user_devices ALTER COLUMN device_id TYPE uuid USING device_id::uuid;
+			END IF;
+		END $$;`).Error
+
+		_ = db.Exec(`DO $$ BEGIN
+			BEGIN
+				CREATE EXTENSION IF NOT EXISTS timescaledb;
+			EXCEPTION
+				WHEN OTHERS THEN
+					NULL;
+			END;
+
+			IF EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'timescaledb') THEN
+				IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'device_ping_metrics') THEN
+					ALTER TABLE device_ping_metrics DROP CONSTRAINT IF EXISTS device_ping_metrics_pkey;
+				END IF;
+				PERFORM create_hypertable('device_ping_metrics', 'recorded_at', if_not_exists => TRUE);
+			END IF;
+		END $$;`).Error
 	}
 
 	logger.WithComponent("PostgresAdapter").Info("Database connected successfully")

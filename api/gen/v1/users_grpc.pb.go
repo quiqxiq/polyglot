@@ -19,12 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	UserService_ListUsers_FullMethodName     = "/polyglot.v1.UserService/ListUsers"
-	UserService_CreateUser_FullMethodName    = "/polyglot.v1.UserService/CreateUser"
-	UserService_UpdateUser_FullMethodName    = "/polyglot.v1.UserService/UpdateUser"
-	UserService_ResetPassword_FullMethodName = "/polyglot.v1.UserService/ResetPassword"
-	UserService_ToggleActive_FullMethodName  = "/polyglot.v1.UserService/ToggleActive"
-	UserService_DeleteUser_FullMethodName    = "/polyglot.v1.UserService/DeleteUser"
+	UserService_ListUsers_FullMethodName                 = "/polyglot.v1.UserService/ListUsers"
+	UserService_CreateUser_FullMethodName                = "/polyglot.v1.UserService/CreateUser"
+	UserService_UpdateUser_FullMethodName                = "/polyglot.v1.UserService/UpdateUser"
+	UserService_ResetPassword_FullMethodName             = "/polyglot.v1.UserService/ResetPassword"
+	UserService_ToggleActive_FullMethodName              = "/polyglot.v1.UserService/ToggleActive"
+	UserService_DeleteUser_FullMethodName                = "/polyglot.v1.UserService/DeleteUser"
+	UserService_AssignDevicesToUser_FullMethodName       = "/polyglot.v1.UserService/AssignDevicesToUser"
+	UserService_ListUserAccessibleDevices_FullMethodName = "/polyglot.v1.UserService/ListUserAccessibleDevices"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -37,6 +39,8 @@ type UserServiceClient interface {
 	ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*ResetPasswordResponse, error)
 	ToggleActive(ctx context.Context, in *ToggleActiveRequest, opts ...grpc.CallOption) (*ToggleActiveResponse, error)
 	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
+	AssignDevicesToUser(ctx context.Context, in *AssignDevicesRequest, opts ...grpc.CallOption) (*AssignDevicesResponse, error)
+	ListUserAccessibleDevices(ctx context.Context, in *ListUserDevicesRequest, opts ...grpc.CallOption) (*ListUserDevicesResponse, error)
 }
 
 type userServiceClient struct {
@@ -107,6 +111,26 @@ func (c *userServiceClient) DeleteUser(ctx context.Context, in *DeleteUserReques
 	return out, nil
 }
 
+func (c *userServiceClient) AssignDevicesToUser(ctx context.Context, in *AssignDevicesRequest, opts ...grpc.CallOption) (*AssignDevicesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AssignDevicesResponse)
+	err := c.cc.Invoke(ctx, UserService_AssignDevicesToUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) ListUserAccessibleDevices(ctx context.Context, in *ListUserDevicesRequest, opts ...grpc.CallOption) (*ListUserDevicesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListUserDevicesResponse)
+	err := c.cc.Invoke(ctx, UserService_ListUserAccessibleDevices_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility.
@@ -117,6 +141,8 @@ type UserServiceServer interface {
 	ResetPassword(context.Context, *ResetPasswordRequest) (*ResetPasswordResponse, error)
 	ToggleActive(context.Context, *ToggleActiveRequest) (*ToggleActiveResponse, error)
 	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
+	AssignDevicesToUser(context.Context, *AssignDevicesRequest) (*AssignDevicesResponse, error)
+	ListUserAccessibleDevices(context.Context, *ListUserDevicesRequest) (*ListUserDevicesResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -144,6 +170,12 @@ func (UnimplementedUserServiceServer) ToggleActive(context.Context, *ToggleActiv
 }
 func (UnimplementedUserServiceServer) DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteUser not implemented")
+}
+func (UnimplementedUserServiceServer) AssignDevicesToUser(context.Context, *AssignDevicesRequest) (*AssignDevicesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method AssignDevicesToUser not implemented")
+}
+func (UnimplementedUserServiceServer) ListUserAccessibleDevices(context.Context, *ListUserDevicesRequest) (*ListUserDevicesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListUserAccessibleDevices not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 func (UnimplementedUserServiceServer) testEmbeddedByValue()                     {}
@@ -274,6 +306,42 @@ func _UserService_DeleteUser_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_AssignDevicesToUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignDevicesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).AssignDevicesToUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_AssignDevicesToUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).AssignDevicesToUser(ctx, req.(*AssignDevicesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_ListUserAccessibleDevices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUserDevicesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).ListUserAccessibleDevices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_ListUserAccessibleDevices_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).ListUserAccessibleDevices(ctx, req.(*ListUserDevicesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -304,6 +372,14 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteUser",
 			Handler:    _UserService_DeleteUser_Handler,
+		},
+		{
+			MethodName: "AssignDevicesToUser",
+			Handler:    _UserService_AssignDevicesToUser_Handler,
+		},
+		{
+			MethodName: "ListUserAccessibleDevices",
+			Handler:    _UserService_ListUserAccessibleDevices_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

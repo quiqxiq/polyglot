@@ -21,4 +21,6 @@ type DeviceRepository interface {
 	Update(ctx context.Context, d device.Device) error
 	// Delete removes a device inventory record by id.
 	Delete(ctx context.Context, id string) error
+	// FindByUserScope returns only devices assigned to the specified user.
+	FindByUserScope(ctx context.Context, userID uint) ([]device.Device, error)
 }

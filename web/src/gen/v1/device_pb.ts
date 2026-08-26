@@ -72,6 +72,26 @@ export class Device extends Message<Device> {
    */
   sshPort = 0;
 
+  /**
+   * @generated from field: bool ping_enabled = 13;
+   */
+  pingEnabled = false;
+
+  /**
+   * @generated from field: string ping_target = 14;
+   */
+  pingTarget = "";
+
+  /**
+   * @generated from field: int32 ping_retention_days = 15;
+   */
+  pingRetentionDays = 0;
+
+  /**
+   * @generated from field: map<string, string> extra = 16;
+   */
+  extra: { [key: string]: string } = {};
+
   constructor(data?: PartialMessage<Device>) {
     super();
     proto3.util.initPartial(data, this);
@@ -92,6 +112,10 @@ export class Device extends Message<Device> {
     { no: 10, name: "tags", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 11, name: "enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 12, name: "ssh_port", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 13, name: "ping_enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 14, name: "ping_target", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 15, name: "ping_retention_days", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 16, name: "extra", kind: "map", K: 9 /* ScalarType.STRING */, V: {kind: "scalar", T: 9 /* ScalarType.STRING */} },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Device {
@@ -1217,6 +1241,458 @@ export class StreamDeviceTrafficFrame extends Message<StreamDeviceTrafficFrame> 
 
   static equals(a: StreamDeviceTrafficFrame | PlainMessage<StreamDeviceTrafficFrame> | undefined, b: StreamDeviceTrafficFrame | PlainMessage<StreamDeviceTrafficFrame> | undefined): boolean {
     return proto3.util.equals(StreamDeviceTrafficFrame, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.DevicePingConfig
+ */
+export class DevicePingConfig extends Message<DevicePingConfig> {
+  /**
+   * @generated from field: bool enabled = 1;
+   */
+  enabled = false;
+
+  /**
+   * @generated from field: string target = 2;
+   */
+  target = "";
+
+  /**
+   * @generated from field: int32 retention_days = 3;
+   */
+  retentionDays = 0;
+
+  constructor(data?: PartialMessage<DevicePingConfig>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.DevicePingConfig";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "target", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "retention_days", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DevicePingConfig {
+    return new DevicePingConfig().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DevicePingConfig {
+    return new DevicePingConfig().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DevicePingConfig {
+    return new DevicePingConfig().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DevicePingConfig | PlainMessage<DevicePingConfig> | undefined, b: DevicePingConfig | PlainMessage<DevicePingConfig> | undefined): boolean {
+    return proto3.util.equals(DevicePingConfig, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetDevicePingConfigRequest
+ */
+export class GetDevicePingConfigRequest extends Message<GetDevicePingConfigRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  constructor(data?: PartialMessage<GetDevicePingConfigRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetDevicePingConfigRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetDevicePingConfigRequest {
+    return new GetDevicePingConfigRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetDevicePingConfigRequest {
+    return new GetDevicePingConfigRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetDevicePingConfigRequest {
+    return new GetDevicePingConfigRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetDevicePingConfigRequest | PlainMessage<GetDevicePingConfigRequest> | undefined, b: GetDevicePingConfigRequest | PlainMessage<GetDevicePingConfigRequest> | undefined): boolean {
+    return proto3.util.equals(GetDevicePingConfigRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetDevicePingConfigResponse
+ */
+export class GetDevicePingConfigResponse extends Message<GetDevicePingConfigResponse> {
+  /**
+   * @generated from field: polyglot.v1.DevicePingConfig config = 1;
+   */
+  config?: DevicePingConfig;
+
+  /**
+   * @generated from field: bool timescaledb_available = 2;
+   */
+  timescaledbAvailable = false;
+
+  constructor(data?: PartialMessage<GetDevicePingConfigResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetDevicePingConfigResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "config", kind: "message", T: DevicePingConfig },
+    { no: 2, name: "timescaledb_available", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetDevicePingConfigResponse {
+    return new GetDevicePingConfigResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetDevicePingConfigResponse {
+    return new GetDevicePingConfigResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetDevicePingConfigResponse {
+    return new GetDevicePingConfigResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetDevicePingConfigResponse | PlainMessage<GetDevicePingConfigResponse> | undefined, b: GetDevicePingConfigResponse | PlainMessage<GetDevicePingConfigResponse> | undefined): boolean {
+    return proto3.util.equals(GetDevicePingConfigResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.UpdateDevicePingConfigRequest
+ */
+export class UpdateDevicePingConfigRequest extends Message<UpdateDevicePingConfigRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: polyglot.v1.DevicePingConfig config = 2;
+   */
+  config?: DevicePingConfig;
+
+  constructor(data?: PartialMessage<UpdateDevicePingConfigRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.UpdateDevicePingConfigRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "config", kind: "message", T: DevicePingConfig },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateDevicePingConfigRequest {
+    return new UpdateDevicePingConfigRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateDevicePingConfigRequest {
+    return new UpdateDevicePingConfigRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateDevicePingConfigRequest {
+    return new UpdateDevicePingConfigRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateDevicePingConfigRequest | PlainMessage<UpdateDevicePingConfigRequest> | undefined, b: UpdateDevicePingConfigRequest | PlainMessage<UpdateDevicePingConfigRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateDevicePingConfigRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.UpdateDevicePingConfigResponse
+ */
+export class UpdateDevicePingConfigResponse extends Message<UpdateDevicePingConfigResponse> {
+  /**
+   * @generated from field: polyglot.v1.DevicePingConfig config = 1;
+   */
+  config?: DevicePingConfig;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<UpdateDevicePingConfigResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.UpdateDevicePingConfigResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "config", kind: "message", T: DevicePingConfig },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateDevicePingConfigResponse {
+    return new UpdateDevicePingConfigResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateDevicePingConfigResponse {
+    return new UpdateDevicePingConfigResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateDevicePingConfigResponse {
+    return new UpdateDevicePingConfigResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateDevicePingConfigResponse | PlainMessage<UpdateDevicePingConfigResponse> | undefined, b: UpdateDevicePingConfigResponse | PlainMessage<UpdateDevicePingConfigResponse> | undefined): boolean {
+    return proto3.util.equals(UpdateDevicePingConfigResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.QueryDevicePingMetricsRequest
+ */
+export class QueryDevicePingMetricsRequest extends Message<QueryDevicePingMetricsRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string start_time = 2;
+   */
+  startTime = "";
+
+  /**
+   * @generated from field: string end_time = 3;
+   */
+  endTime = "";
+
+  /**
+   * @generated from field: string bucket_interval = 4;
+   */
+  bucketInterval = "";
+
+  constructor(data?: PartialMessage<QueryDevicePingMetricsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.QueryDevicePingMetricsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "start_time", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "end_time", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "bucket_interval", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): QueryDevicePingMetricsRequest {
+    return new QueryDevicePingMetricsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): QueryDevicePingMetricsRequest {
+    return new QueryDevicePingMetricsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): QueryDevicePingMetricsRequest {
+    return new QueryDevicePingMetricsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: QueryDevicePingMetricsRequest | PlainMessage<QueryDevicePingMetricsRequest> | undefined, b: QueryDevicePingMetricsRequest | PlainMessage<QueryDevicePingMetricsRequest> | undefined): boolean {
+    return proto3.util.equals(QueryDevicePingMetricsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.PingMetricPointData
+ */
+export class PingMetricPointData extends Message<PingMetricPointData> {
+  /**
+   * @generated from field: string timestamp = 1;
+   */
+  timestamp = "";
+
+  /**
+   * @generated from field: string target = 2;
+   */
+  target = "";
+
+  /**
+   * @generated from field: int32 seq = 3;
+   */
+  seq = 0;
+
+  /**
+   * @generated from field: int32 size = 4;
+   */
+  size = 0;
+
+  /**
+   * @generated from field: int32 ttl = 5;
+   */
+  ttl = 0;
+
+  /**
+   * @generated from field: float rtt_ms = 6;
+   */
+  rttMs = 0;
+
+  /**
+   * @generated from field: string status = 7;
+   */
+  status = "";
+
+  /**
+   * @generated from field: int32 sent = 8;
+   */
+  sent = 0;
+
+  /**
+   * @generated from field: int32 received = 9;
+   */
+  received = 0;
+
+  /**
+   * @generated from field: int32 packet_loss = 10;
+   */
+  packetLoss = 0;
+
+  /**
+   * @generated from field: float min_rtt_ms = 11;
+   */
+  minRttMs = 0;
+
+  /**
+   * @generated from field: float avg_rtt_ms = 12;
+   */
+  avgRttMs = 0;
+
+  /**
+   * @generated from field: float max_rtt_ms = 13;
+   */
+  maxRttMs = 0;
+
+  constructor(data?: PartialMessage<PingMetricPointData>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PingMetricPointData";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "timestamp", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "target", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "seq", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "size", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "ttl", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 6, name: "rtt_ms", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
+    { no: 7, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "sent", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 9, name: "received", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 10, name: "packet_loss", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 11, name: "min_rtt_ms", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
+    { no: 12, name: "avg_rtt_ms", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
+    { no: 13, name: "max_rtt_ms", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PingMetricPointData {
+    return new PingMetricPointData().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PingMetricPointData {
+    return new PingMetricPointData().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PingMetricPointData {
+    return new PingMetricPointData().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PingMetricPointData | PlainMessage<PingMetricPointData> | undefined, b: PingMetricPointData | PlainMessage<PingMetricPointData> | undefined): boolean {
+    return proto3.util.equals(PingMetricPointData, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.QueryDevicePingMetricsResponse
+ */
+export class QueryDevicePingMetricsResponse extends Message<QueryDevicePingMetricsResponse> {
+  /**
+   * @generated from field: repeated polyglot.v1.PingMetricPointData points = 1;
+   */
+  points: PingMetricPointData[] = [];
+
+  /**
+   * @generated from field: float min_rtt = 2;
+   */
+  minRtt = 0;
+
+  /**
+   * @generated from field: float avg_rtt = 3;
+   */
+  avgRtt = 0;
+
+  /**
+   * @generated from field: float max_rtt = 4;
+   */
+  maxRtt = 0;
+
+  /**
+   * @generated from field: float packet_loss_pct = 5;
+   */
+  packetLossPct = 0;
+
+  /**
+   * @generated from field: int64 total_samples = 6;
+   */
+  totalSamples = protoInt64.zero;
+
+  /**
+   * @generated from field: bool timescaledb_available = 7;
+   */
+  timescaledbAvailable = false;
+
+  constructor(data?: PartialMessage<QueryDevicePingMetricsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.QueryDevicePingMetricsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "points", kind: "message", T: PingMetricPointData, repeated: true },
+    { no: 2, name: "min_rtt", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
+    { no: 3, name: "avg_rtt", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
+    { no: 4, name: "max_rtt", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
+    { no: 5, name: "packet_loss_pct", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },
+    { no: 6, name: "total_samples", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 7, name: "timescaledb_available", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): QueryDevicePingMetricsResponse {
+    return new QueryDevicePingMetricsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): QueryDevicePingMetricsResponse {
+    return new QueryDevicePingMetricsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): QueryDevicePingMetricsResponse {
+    return new QueryDevicePingMetricsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: QueryDevicePingMetricsResponse | PlainMessage<QueryDevicePingMetricsResponse> | undefined, b: QueryDevicePingMetricsResponse | PlainMessage<QueryDevicePingMetricsResponse> | undefined): boolean {
+    return proto3.util.equals(QueryDevicePingMetricsResponse, a, b);
   }
 }
 

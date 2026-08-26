@@ -21,6 +21,9 @@ import {
 import { Device } from '@/gen/v1/device_pb'
 import { deviceClient } from '@/lib/api-client'
 import { useDevicesContext } from './devices-provider'
+import { DevicePingSettingsDialog } from './device-ping-settings-dialog'
+import { DevicePingAnalyticsDialog } from './device-ping-analytics-dialog'
+import { BarChart2, Settings2 } from 'lucide-react'
 
 interface DeviceCardProps {
   device: Device
@@ -57,6 +60,24 @@ function formatBps(bps: number): string {
   return `${v.toFixed(v >= 100 || i === 0 ? 0 : 1)} ${units[i]}`
 }
 
+function isStreamAbortedError(err: any, signal?: AbortSignal, active?: boolean): boolean {
+  if (active === false || signal?.aborted) return true
+  if (!err) return false
+  const name = err.name || ''
+  const msg = (err.message || '').toLowerCase()
+  const rawMsg = (err.rawMessage || '').toLowerCase()
+  return (
+    name === 'AbortError' ||
+    err.code === 1 ||
+    msg.includes('aborted') ||
+    msg.includes('input stream') ||
+    msg.includes('canceled') ||
+    msg.includes('cancelled') ||
+    rawMsg.includes('input stream') ||
+    rawMsg.includes('canceled')
+  )
+}
+
 export function DeviceCard({ device }: DeviceCardProps) {
   const { setOpen, setCurrentRow } = useDevicesContext()
 
@@ -80,7 +101,10 @@ export function DeviceCard({ device }: DeviceCardProps) {
   const [txBps, setTxBps] = useState<number>(0)
   const [trafficHistory, setTrafficHistory] = useState<TrafficData[]>([])
 
-  const pingTarget = '8.8.8.8'
+  // Ping dialog states & dynamic target
+  const [pingSettingsOpen, setPingSettingsOpen] = useState<boolean>(false)
+  const [pingAnalyticsOpen, setPingAnalyticsOpen] = useState<boolean>(false)
+  const pingTarget = device.pingTarget || device.extra?.ping_target || '8.8.8.8'
 
   // 1. Status Stream (Metadata, Resources, Interfaces)
   useEffect(() => {
@@ -145,8 +169,7 @@ export function DeviceCard({ device }: DeviceCardProps) {
           }
         }
       } catch (err: any) {
-        const isAborted = controller.signal.aborted || !active || err?.name === 'AbortError' || err?.code === 1 || err?.message?.includes('aborted')
-        if (!isAborted && active) {
+        if (!isStreamAbortedError(err, controller.signal, active) && active) {
           setIsOnline(false)
           setTimeout(() => {
             if (active && !controller.signal.aborted) {
@@ -194,8 +217,7 @@ export function DeviceCard({ device }: DeviceCardProps) {
           })
         }
       } catch (err: any) {
-        const isAborted = controller.signal.aborted || !active || err?.name === 'AbortError' || err?.code === 1 || err?.message?.includes('aborted')
-        if (!isAborted) {
+        if (!isStreamAbortedError(err, controller.signal, active)) {
           console.warn(`[TrafficStream] Stream error for "${selectedIface}":`, err)
           if (active && !controller.signal.aborted) {
             setTimeout(() => {
@@ -240,8 +262,7 @@ export function DeviceCard({ device }: DeviceCardProps) {
           }
         }
       } catch (err: any) {
-        const isAborted = controller.signal.aborted || !active || err?.name === 'AbortError' || err?.code === 1 || err?.message?.includes('aborted')
-        if (!isAborted && active) {
+        if (!isStreamAbortedError(err, controller.signal, active) && active) {
           setTimeout(() => {
             if (active && !controller.signal.aborted) {
               startPingStream()
@@ -391,7 +412,27 @@ export function DeviceCard({ device }: DeviceCardProps) {
             </Badge>
           )}
 
-          {/* Action Buttons using Radix UI Icons */}
+          {/* Action Buttons using Radix UI & Lucide Icons */}
+          <Button
+            variant='ghost'
+            size='icon'
+            className='h-7 w-7 text-muted-foreground hover:text-blue-500'
+            title='Analisis Ping Historis'
+            onClick={() => setPingAnalyticsOpen(true)}
+          >
+            <BarChart2 className='h-4 w-4' />
+          </Button>
+
+          <Button
+            variant='ghost'
+            size='icon'
+            className='h-7 w-7 text-muted-foreground hover:text-indigo-500'
+            title='Pengaturan Ping Metrics'
+            onClick={() => setPingSettingsOpen(true)}
+          >
+            <Settings2 className='h-4 w-4' />
+          </Button>
+
           <Button
             variant='ghost'
             size='icon'
@@ -499,13 +540,46 @@ export function DeviceCard({ device }: DeviceCardProps) {
 
       {/* ===== Ping Readout & Sparkline Canvas ===== */}
       <section className='py-2.5 border-b flex items-center justify-between gap-2'>
-        <div className='flex items-baseline gap-1 text-xs'>
-          <ActivityLogIcon className='h-3.5 w-3.5 text-muted-foreground' />
-          <span className='font-mono font-bold text-sm text-foreground'>{pingMs}</span>
-          <span className='text-[10px] text-muted-foreground'>ms</span>
-          <span className='text-[10px] text-muted-foreground ml-1 hidden sm:inline'>→ 8.8.8.8</span>
+        <div className='flex items-center gap-1.5 text-xs min-w-0'>
+          <button
+            type='button'
+            onClick={() => setPingAnalyticsOpen(true)}
+            className='flex items-baseline gap-1 hover:opacity-80 transition-opacity text-left cursor-pointer'
+            title='Buka Analisis Ping Historis'
+          >
+            <ActivityLogIcon className='h-3.5 w-3.5 text-muted-foreground' />
+            <span className='font-mono font-bold text-sm text-foreground'>{pingMs}</span>
+            <span className='text-[10px] text-muted-foreground'>ms</span>
+            <span className='text-[10px] text-muted-foreground ml-1 truncate'>
+              → <span className='font-mono text-primary'>{pingTarget}</span>
+            </span>
+          </button>
+
+          {device.pingEnabled ? (
+            <Badge
+              variant='outline'
+              className='text-[9px] px-1 py-0 bg-emerald-500/10 text-emerald-600 border-emerald-200 cursor-pointer'
+              onClick={() => setPingSettingsOpen(true)}
+              title='Metrik Direkam ke TimescaleDB (Klik untuk Ubah)'
+            >
+              REC
+            </Badge>
+          ) : (
+            <Badge
+              variant='outline'
+              className='text-[9px] px-1 py-0 bg-muted text-muted-foreground cursor-pointer hover:bg-accent'
+              onClick={() => setPingSettingsOpen(true)}
+              title='Metrik Tidak Disimpan (Klik untuk Aktifkan)'
+            >
+              OFF
+            </Badge>
+          )}
         </div>
-        <div className='w-32 h-7 bg-muted/30 rounded overflow-hidden'>
+        <div
+          className='w-32 h-7 bg-muted/30 rounded overflow-hidden cursor-pointer hover:opacity-90'
+          onClick={() => setPingAnalyticsOpen(true)}
+          title='Buka Grafik Ping Historis'
+        >
           <canvas ref={pingCanvasRef} className='w-full h-full block' />
         </div>
       </section>
@@ -594,6 +668,18 @@ export function DeviceCard({ device }: DeviceCardProps) {
           <canvas ref={trafficCanvasRef} className='w-full h-full block' />
         </div>
       </section>
+
+      {/* Ping Dialogs */}
+      <DevicePingSettingsDialog
+        open={pingSettingsOpen}
+        onOpenChange={setPingSettingsOpen}
+        device={device}
+      />
+      <DevicePingAnalyticsDialog
+        open={pingAnalyticsOpen}
+        onOpenChange={setPingAnalyticsOpen}
+        device={device}
+      />
     </article>
   )
 }

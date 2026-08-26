@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"connectrpc.com/connect"
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	authConnect "github.com/quixiq/polyglot/internal/adapter/connect/auth"
@@ -47,6 +48,7 @@ import (
 	"github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
+	metricsUC "github.com/quixiq/polyglot/internal/usecase/metrics"
 	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
@@ -68,13 +70,14 @@ import (
 )
 
 type App struct {
-	cfg        config.Config
-	httpServer *http.Server
-	registry   *registry.Registry
-	waManager  *whatsapp.SessionManager
-	pgStore    *postgres.Store
-	redisStore *redisAdapter.Store
-	sseHub     *wsAdapter.SSEHub
+	cfg           config.Config
+	httpServer    *http.Server
+	registry      *registry.Registry
+	waManager     *whatsapp.SessionManager
+	pgStore       *postgres.Store
+	redisStore    *redisAdapter.Store
+	sseHub        *wsAdapter.SSEHub
+	pingStreamMgr *metricsUC.PingStreamManager
 }
 
 func New(ctx context.Context, cfg config.Config) (*App, error) {
@@ -245,7 +248,26 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	reconciler := importer.NewReconciler(subRepo, sessionGateway)
 	exportUC := importer.NewExportUseCase(subRepo, customerRepo, planRepo)
 
+	deviceAuthorizer := auth.NewDeviceAuthorizer(userRepo)
+	metricsRepo := postgres.NewMetricsRepository(pgStore.DB())
+	metricsUseCase := deviceUC.NewManageMetricsUseCase(repo, metricsRepo, deviceAuthorizer)
+
+	pingStreamMgr := metricsUC.NewPingStreamManager(repo, metricsRepo, func(c context.Context, id string) (port.DeviceDriver, error) {
+		return reg.Get(c, id)
+	})
+	pingStreamMgr.Start(ctx)
+
 	connectDriverProvider := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
+		callerID, callerRoles, hasIdentity := auth.IdentityFromContext(ctx)
+		if hasIdentity && deviceAuthorizer != nil {
+			canAccess, err := deviceAuthorizer.CanAccessDevice(ctx, callerID, callerRoles, deviceID)
+			if err != nil {
+				return nil, err
+			}
+			if !canAccess {
+				return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("access to device %s denied", deviceID))
+			}
+		}
 		return reg.Get(ctx, deviceID)
 	}
 
@@ -293,7 +315,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		protectedPaths = append(protectedPaths, servicePath)
 	}
 
-	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(devUC, openTermUC, connectDriverProvider)
+	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(devUC, openTermUC, connectDriverProvider, metricsUseCase)
 	registerProtected(devPath, devHandler)
 
 	custPath, custHandler := customerConnect.NewCustomerServiceHandler(custUC)
@@ -405,13 +427,14 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	}
 
 	return &App{
-		cfg:        cfg,
-		httpServer: server,
-		registry:   reg,
-		waManager:  waManager,
-		pgStore:    pgStore,
-		redisStore: redisStore,
-		sseHub:     sseHub,
+		cfg:           cfg,
+		httpServer:    server,
+		registry:      reg,
+		waManager:     waManager,
+		pgStore:       pgStore,
+		redisStore:    redisStore,
+		sseHub:        sseHub,
+		pingStreamMgr: pingStreamMgr,
 	}, nil
 }
 
@@ -425,6 +448,9 @@ func (a *App) Run() error {
 
 func (a *App) Shutdown(ctx context.Context) error {
 	logger.WithComponent("Polyglot").Info("shutting down server...")
+	if a.pingStreamMgr != nil {
+		a.pingStreamMgr.Stop()
+	}
 	if a.sseHub != nil {
 		a.sseHub.Close()
 	}

@@ -20,6 +20,7 @@ message User {
   string full_name = 10;
   string phone_number = 11;
   string specialization = 12;
+  repeated string assigned_device_ids = 13;
 }
 
 message ListUsersRequest {
@@ -43,6 +44,7 @@ message CreateUserRequest {
   string full_name = 5;
   string phone_number = 6;
   string specialization = 7;
+  repeated string assigned_device_ids = 8;
 }
 
 message CreateUserResponse {
@@ -58,6 +60,7 @@ message UpdateUserRequest {
   string full_name = 5;
   string phone_number = 6;
   string specialization = 7;
+  repeated string assigned_device_ids = 8;
 }
 
 message UpdateUserResponse {
@@ -91,6 +94,24 @@ message DeleteUserResponse {
   bool success = 1;
 }
 
+message AssignDevicesRequest {
+  uint64 user_id = 1;
+  repeated string device_ids = 2;
+}
+
+message AssignDevicesResponse {
+  bool success = 1;
+  repeated string assigned_device_ids = 2;
+}
+
+message ListUserDevicesRequest {
+  uint64 user_id = 1;
+}
+
+message ListUserDevicesResponse {
+  repeated string device_ids = 1;
+}
+
 service UserService {
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
@@ -98,4 +119,6 @@ service UserService {
   rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse);
   rpc ToggleActive(ToggleActiveRequest) returns (ToggleActiveResponse);
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+  rpc AssignDevicesToUser(AssignDevicesRequest) returns (AssignDevicesResponse);
+  rpc ListUserAccessibleDevices(ListUserDevicesRequest) returns (ListUserDevicesResponse);
 }

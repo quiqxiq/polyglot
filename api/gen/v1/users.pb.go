@@ -25,21 +25,22 @@ const (
 // `role` = role utama (kolom users.role), `roles` = SEMUA role efektif
 // termasuk tambahan dari Casbin group assignment (multi-role).
 type User struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Id             uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Username       string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
-	Email          string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	Role           string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
-	Roles          []string               `protobuf:"bytes,5,rep,name=roles,proto3" json:"roles,omitempty"`
-	IsActive       bool                   `protobuf:"varint,6,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
-	TenantId       string                 `protobuf:"bytes,7,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
-	CreatedAtUnix  int64                  `protobuf:"varint,8,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
-	UpdatedAtUnix  int64                  `protobuf:"varint,9,opt,name=updated_at_unix,json=updatedAtUnix,proto3" json:"updated_at_unix,omitempty"`
-	FullName       string                 `protobuf:"bytes,10,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
-	PhoneNumber    string                 `protobuf:"bytes,11,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
-	Specialization string                 `protobuf:"bytes,12,opt,name=specialization,proto3" json:"specialization,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Id                uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Username          string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	Email             string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	Role              string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
+	Roles             []string               `protobuf:"bytes,5,rep,name=roles,proto3" json:"roles,omitempty"`
+	IsActive          bool                   `protobuf:"varint,6,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
+	TenantId          string                 `protobuf:"bytes,7,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	CreatedAtUnix     int64                  `protobuf:"varint,8,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
+	UpdatedAtUnix     int64                  `protobuf:"varint,9,opt,name=updated_at_unix,json=updatedAtUnix,proto3" json:"updated_at_unix,omitempty"`
+	FullName          string                 `protobuf:"bytes,10,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
+	PhoneNumber       string                 `protobuf:"bytes,11,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	Specialization    string                 `protobuf:"bytes,12,opt,name=specialization,proto3" json:"specialization,omitempty"`
+	AssignedDeviceIds []string               `protobuf:"bytes,13,rep,name=assigned_device_ids,json=assignedDeviceIds,proto3" json:"assigned_device_ids,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *User) Reset() {
@@ -154,6 +155,13 @@ func (x *User) GetSpecialization() string {
 		return x.Specialization
 	}
 	return ""
+}
+
+func (x *User) GetAssignedDeviceIds() []string {
+	if x != nil {
+		return x.AssignedDeviceIds
+	}
+	return nil
 }
 
 type ListUsersRequest struct {
@@ -285,16 +293,17 @@ func (x *ListUsersResponse) GetPageSize() int32 {
 }
 
 type CreateUserRequest struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Username       string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
-	Email          string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	Password       string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"` // plaintext; di-hash bcrypt di server
-	Role           string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`         // role utama: owner|admin|agent|teknisi
-	FullName       string                 `protobuf:"bytes,5,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
-	PhoneNumber    string                 `protobuf:"bytes,6,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
-	Specialization string                 `protobuf:"bytes,7,opt,name=specialization,proto3" json:"specialization,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Username          string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Email             string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	Password          string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"` // plaintext; di-hash bcrypt di server
+	Role              string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`         // role utama: owner|admin|agent|teknisi
+	FullName          string                 `protobuf:"bytes,5,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
+	PhoneNumber       string                 `protobuf:"bytes,6,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	Specialization    string                 `protobuf:"bytes,7,opt,name=specialization,proto3" json:"specialization,omitempty"`
+	AssignedDeviceIds []string               `protobuf:"bytes,8,rep,name=assigned_device_ids,json=assignedDeviceIds,proto3" json:"assigned_device_ids,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *CreateUserRequest) Reset() {
@@ -376,6 +385,13 @@ func (x *CreateUserRequest) GetSpecialization() string {
 	return ""
 }
 
+func (x *CreateUserRequest) GetAssignedDeviceIds() []string {
+	if x != nil {
+		return x.AssignedDeviceIds
+	}
+	return nil
+}
+
 type CreateUserResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
@@ -422,16 +438,17 @@ func (x *CreateUserResponse) GetUser() *User {
 
 // UpdateUser bersifat full-update: kirim semua field yang ingin diubah.
 type UpdateUserRequest struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Id             uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Username       string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
-	Email          string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	Role           string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
-	FullName       string                 `protobuf:"bytes,5,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
-	PhoneNumber    string                 `protobuf:"bytes,6,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
-	Specialization string                 `protobuf:"bytes,7,opt,name=specialization,proto3" json:"specialization,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Id                uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Username          string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	Email             string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	Role              string                 `protobuf:"bytes,4,opt,name=role,proto3" json:"role,omitempty"`
+	FullName          string                 `protobuf:"bytes,5,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
+	PhoneNumber       string                 `protobuf:"bytes,6,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	Specialization    string                 `protobuf:"bytes,7,opt,name=specialization,proto3" json:"specialization,omitempty"`
+	AssignedDeviceIds []string               `protobuf:"bytes,8,rep,name=assigned_device_ids,json=assignedDeviceIds,proto3" json:"assigned_device_ids,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *UpdateUserRequest) Reset() {
@@ -511,6 +528,13 @@ func (x *UpdateUserRequest) GetSpecialization() string {
 		return x.Specialization
 	}
 	return ""
+}
+
+func (x *UpdateUserRequest) GetAssignedDeviceIds() []string {
+	if x != nil {
+		return x.AssignedDeviceIds
+	}
+	return nil
 }
 
 type UpdateUserResponse struct {
@@ -831,11 +855,203 @@ func (x *DeleteUserResponse) GetSuccess() bool {
 	return false
 }
 
+type AssignDevicesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        uint64                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	DeviceIds     []string               `protobuf:"bytes,2,rep,name=device_ids,json=deviceIds,proto3" json:"device_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AssignDevicesRequest) Reset() {
+	*x = AssignDevicesRequest{}
+	mi := &file_v1_users_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AssignDevicesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssignDevicesRequest) ProtoMessage() {}
+
+func (x *AssignDevicesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_users_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssignDevicesRequest.ProtoReflect.Descriptor instead.
+func (*AssignDevicesRequest) Descriptor() ([]byte, []int) {
+	return file_v1_users_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *AssignDevicesRequest) GetUserId() uint64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *AssignDevicesRequest) GetDeviceIds() []string {
+	if x != nil {
+		return x.DeviceIds
+	}
+	return nil
+}
+
+type AssignDevicesResponse struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Success           bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	AssignedDeviceIds []string               `protobuf:"bytes,2,rep,name=assigned_device_ids,json=assignedDeviceIds,proto3" json:"assigned_device_ids,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *AssignDevicesResponse) Reset() {
+	*x = AssignDevicesResponse{}
+	mi := &file_v1_users_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AssignDevicesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssignDevicesResponse) ProtoMessage() {}
+
+func (x *AssignDevicesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_users_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssignDevicesResponse.ProtoReflect.Descriptor instead.
+func (*AssignDevicesResponse) Descriptor() ([]byte, []int) {
+	return file_v1_users_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *AssignDevicesResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *AssignDevicesResponse) GetAssignedDeviceIds() []string {
+	if x != nil {
+		return x.AssignedDeviceIds
+	}
+	return nil
+}
+
+type ListUserDevicesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        uint64                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListUserDevicesRequest) Reset() {
+	*x = ListUserDevicesRequest{}
+	mi := &file_v1_users_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListUserDevicesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListUserDevicesRequest) ProtoMessage() {}
+
+func (x *ListUserDevicesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_users_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListUserDevicesRequest.ProtoReflect.Descriptor instead.
+func (*ListUserDevicesRequest) Descriptor() ([]byte, []int) {
+	return file_v1_users_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ListUserDevicesRequest) GetUserId() uint64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+type ListUserDevicesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceIds     []string               `protobuf:"bytes,1,rep,name=device_ids,json=deviceIds,proto3" json:"device_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListUserDevicesResponse) Reset() {
+	*x = ListUserDevicesResponse{}
+	mi := &file_v1_users_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListUserDevicesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListUserDevicesResponse) ProtoMessage() {}
+
+func (x *ListUserDevicesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_users_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListUserDevicesResponse.ProtoReflect.Descriptor instead.
+func (*ListUserDevicesResponse) Descriptor() ([]byte, []int) {
+	return file_v1_users_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *ListUserDevicesResponse) GetDeviceIds() []string {
+	if x != nil {
+		return x.DeviceIds
+	}
+	return nil
+}
+
 var File_v1_users_proto protoreflect.FileDescriptor
 
 const file_v1_users_proto_rawDesc = "" +
 	"\n" +
-	"\x0ev1/users.proto\x12\vpolyglot.v1\"\xe4\x02\n" +
+	"\x0ev1/users.proto\x12\vpolyglot.v1\"\x94\x03\n" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
@@ -849,7 +1065,8 @@ const file_v1_users_proto_rawDesc = "" +
 	"\tfull_name\x18\n" +
 	" \x01(\tR\bfullName\x12!\n" +
 	"\fphone_number\x18\v \x01(\tR\vphoneNumber\x12&\n" +
-	"\x0especialization\x18\f \x01(\tR\x0especialization\"[\n" +
+	"\x0especialization\x18\f \x01(\tR\x0especialization\x12.\n" +
+	"\x13assigned_device_ids\x18\r \x03(\tR\x11assignedDeviceIds\"[\n" +
 	"\x10ListUsersRequest\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x1b\n" +
 	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\x12\x16\n" +
@@ -858,7 +1075,7 @@ const file_v1_users_proto_rawDesc = "" +
 	"\x05users\x18\x01 \x03(\v2\x11.polyglot.v1.UserR\x05users\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x03R\x05total\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
-	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\"\xdd\x01\n" +
+	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\"\x8d\x02\n" +
 	"\x11CreateUserRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
@@ -866,9 +1083,10 @@ const file_v1_users_proto_rawDesc = "" +
 	"\x04role\x18\x04 \x01(\tR\x04role\x12\x1b\n" +
 	"\tfull_name\x18\x05 \x01(\tR\bfullName\x12!\n" +
 	"\fphone_number\x18\x06 \x01(\tR\vphoneNumber\x12&\n" +
-	"\x0especialization\x18\a \x01(\tR\x0especialization\";\n" +
+	"\x0especialization\x18\a \x01(\tR\x0especialization\x12.\n" +
+	"\x13assigned_device_ids\x18\b \x03(\tR\x11assignedDeviceIds\";\n" +
 	"\x12CreateUserResponse\x12%\n" +
-	"\x04user\x18\x01 \x01(\v2\x11.polyglot.v1.UserR\x04user\"\xd1\x01\n" +
+	"\x04user\x18\x01 \x01(\v2\x11.polyglot.v1.UserR\x04user\"\x81\x02\n" +
 	"\x11UpdateUserRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x14\n" +
@@ -876,7 +1094,8 @@ const file_v1_users_proto_rawDesc = "" +
 	"\x04role\x18\x04 \x01(\tR\x04role\x12\x1b\n" +
 	"\tfull_name\x18\x05 \x01(\tR\bfullName\x12!\n" +
 	"\fphone_number\x18\x06 \x01(\tR\vphoneNumber\x12&\n" +
-	"\x0especialization\x18\a \x01(\tR\x0especialization\";\n" +
+	"\x0especialization\x18\a \x01(\tR\x0especialization\x12.\n" +
+	"\x13assigned_device_ids\x18\b \x03(\tR\x11assignedDeviceIds\";\n" +
 	"\x12UpdateUserResponse\x12%\n" +
 	"\x04user\x18\x01 \x01(\v2\x11.polyglot.v1.UserR\x04user\"I\n" +
 	"\x14ResetPasswordRequest\x12\x0e\n" +
@@ -891,7 +1110,19 @@ const file_v1_users_proto_rawDesc = "" +
 	"\x11DeleteUserRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\".\n" +
 	"\x12DeleteUserResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\xf3\x03\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"N\n" +
+	"\x14AssignDevicesRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x04R\x06userId\x12\x1d\n" +
+	"\n" +
+	"device_ids\x18\x02 \x03(\tR\tdeviceIds\"a\n" +
+	"\x15AssignDevicesResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12.\n" +
+	"\x13assigned_device_ids\x18\x02 \x03(\tR\x11assignedDeviceIds\"1\n" +
+	"\x16ListUserDevicesRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x04R\x06userId\"8\n" +
+	"\x17ListUserDevicesResponse\x12\x1d\n" +
+	"\n" +
+	"device_ids\x18\x01 \x03(\tR\tdeviceIds2\xb9\x05\n" +
 	"\vUserService\x12J\n" +
 	"\tListUsers\x12\x1d.polyglot.v1.ListUsersRequest\x1a\x1e.polyglot.v1.ListUsersResponse\x12M\n" +
 	"\n" +
@@ -901,7 +1132,9 @@ const file_v1_users_proto_rawDesc = "" +
 	"\rResetPassword\x12!.polyglot.v1.ResetPasswordRequest\x1a\".polyglot.v1.ResetPasswordResponse\x12S\n" +
 	"\fToggleActive\x12 .polyglot.v1.ToggleActiveRequest\x1a!.polyglot.v1.ToggleActiveResponse\x12M\n" +
 	"\n" +
-	"DeleteUser\x12\x1e.polyglot.v1.DeleteUserRequest\x1a\x1f.polyglot.v1.DeleteUserResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"DeleteUser\x12\x1e.polyglot.v1.DeleteUserRequest\x1a\x1f.polyglot.v1.DeleteUserResponse\x12\\\n" +
+	"\x13AssignDevicesToUser\x12!.polyglot.v1.AssignDevicesRequest\x1a\".polyglot.v1.AssignDevicesResponse\x12f\n" +
+	"\x19ListUserAccessibleDevices\x12#.polyglot.v1.ListUserDevicesRequest\x1a$.polyglot.v1.ListUserDevicesResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_users_proto_rawDescOnce sync.Once
@@ -915,21 +1148,25 @@ func file_v1_users_proto_rawDescGZIP() []byte {
 	return file_v1_users_proto_rawDescData
 }
 
-var file_v1_users_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_v1_users_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_v1_users_proto_goTypes = []any{
-	(*User)(nil),                  // 0: polyglot.v1.User
-	(*ListUsersRequest)(nil),      // 1: polyglot.v1.ListUsersRequest
-	(*ListUsersResponse)(nil),     // 2: polyglot.v1.ListUsersResponse
-	(*CreateUserRequest)(nil),     // 3: polyglot.v1.CreateUserRequest
-	(*CreateUserResponse)(nil),    // 4: polyglot.v1.CreateUserResponse
-	(*UpdateUserRequest)(nil),     // 5: polyglot.v1.UpdateUserRequest
-	(*UpdateUserResponse)(nil),    // 6: polyglot.v1.UpdateUserResponse
-	(*ResetPasswordRequest)(nil),  // 7: polyglot.v1.ResetPasswordRequest
-	(*ResetPasswordResponse)(nil), // 8: polyglot.v1.ResetPasswordResponse
-	(*ToggleActiveRequest)(nil),   // 9: polyglot.v1.ToggleActiveRequest
-	(*ToggleActiveResponse)(nil),  // 10: polyglot.v1.ToggleActiveResponse
-	(*DeleteUserRequest)(nil),     // 11: polyglot.v1.DeleteUserRequest
-	(*DeleteUserResponse)(nil),    // 12: polyglot.v1.DeleteUserResponse
+	(*User)(nil),                    // 0: polyglot.v1.User
+	(*ListUsersRequest)(nil),        // 1: polyglot.v1.ListUsersRequest
+	(*ListUsersResponse)(nil),       // 2: polyglot.v1.ListUsersResponse
+	(*CreateUserRequest)(nil),       // 3: polyglot.v1.CreateUserRequest
+	(*CreateUserResponse)(nil),      // 4: polyglot.v1.CreateUserResponse
+	(*UpdateUserRequest)(nil),       // 5: polyglot.v1.UpdateUserRequest
+	(*UpdateUserResponse)(nil),      // 6: polyglot.v1.UpdateUserResponse
+	(*ResetPasswordRequest)(nil),    // 7: polyglot.v1.ResetPasswordRequest
+	(*ResetPasswordResponse)(nil),   // 8: polyglot.v1.ResetPasswordResponse
+	(*ToggleActiveRequest)(nil),     // 9: polyglot.v1.ToggleActiveRequest
+	(*ToggleActiveResponse)(nil),    // 10: polyglot.v1.ToggleActiveResponse
+	(*DeleteUserRequest)(nil),       // 11: polyglot.v1.DeleteUserRequest
+	(*DeleteUserResponse)(nil),      // 12: polyglot.v1.DeleteUserResponse
+	(*AssignDevicesRequest)(nil),    // 13: polyglot.v1.AssignDevicesRequest
+	(*AssignDevicesResponse)(nil),   // 14: polyglot.v1.AssignDevicesResponse
+	(*ListUserDevicesRequest)(nil),  // 15: polyglot.v1.ListUserDevicesRequest
+	(*ListUserDevicesResponse)(nil), // 16: polyglot.v1.ListUserDevicesResponse
 }
 var file_v1_users_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.ListUsersResponse.users:type_name -> polyglot.v1.User
@@ -942,14 +1179,18 @@ var file_v1_users_proto_depIdxs = []int32{
 	7,  // 7: polyglot.v1.UserService.ResetPassword:input_type -> polyglot.v1.ResetPasswordRequest
 	9,  // 8: polyglot.v1.UserService.ToggleActive:input_type -> polyglot.v1.ToggleActiveRequest
 	11, // 9: polyglot.v1.UserService.DeleteUser:input_type -> polyglot.v1.DeleteUserRequest
-	2,  // 10: polyglot.v1.UserService.ListUsers:output_type -> polyglot.v1.ListUsersResponse
-	4,  // 11: polyglot.v1.UserService.CreateUser:output_type -> polyglot.v1.CreateUserResponse
-	6,  // 12: polyglot.v1.UserService.UpdateUser:output_type -> polyglot.v1.UpdateUserResponse
-	8,  // 13: polyglot.v1.UserService.ResetPassword:output_type -> polyglot.v1.ResetPasswordResponse
-	10, // 14: polyglot.v1.UserService.ToggleActive:output_type -> polyglot.v1.ToggleActiveResponse
-	12, // 15: polyglot.v1.UserService.DeleteUser:output_type -> polyglot.v1.DeleteUserResponse
-	10, // [10:16] is the sub-list for method output_type
-	4,  // [4:10] is the sub-list for method input_type
+	13, // 10: polyglot.v1.UserService.AssignDevicesToUser:input_type -> polyglot.v1.AssignDevicesRequest
+	15, // 11: polyglot.v1.UserService.ListUserAccessibleDevices:input_type -> polyglot.v1.ListUserDevicesRequest
+	2,  // 12: polyglot.v1.UserService.ListUsers:output_type -> polyglot.v1.ListUsersResponse
+	4,  // 13: polyglot.v1.UserService.CreateUser:output_type -> polyglot.v1.CreateUserResponse
+	6,  // 14: polyglot.v1.UserService.UpdateUser:output_type -> polyglot.v1.UpdateUserResponse
+	8,  // 15: polyglot.v1.UserService.ResetPassword:output_type -> polyglot.v1.ResetPasswordResponse
+	10, // 16: polyglot.v1.UserService.ToggleActive:output_type -> polyglot.v1.ToggleActiveResponse
+	12, // 17: polyglot.v1.UserService.DeleteUser:output_type -> polyglot.v1.DeleteUserResponse
+	14, // 18: polyglot.v1.UserService.AssignDevicesToUser:output_type -> polyglot.v1.AssignDevicesResponse
+	16, // 19: polyglot.v1.UserService.ListUserAccessibleDevices:output_type -> polyglot.v1.ListUserDevicesResponse
+	12, // [12:20] is the sub-list for method output_type
+	4,  // [4:12] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
 	4,  // [4:4] is the sub-list for extension extendee
 	0,  // [0:4] is the sub-list for field type_name
@@ -966,7 +1207,7 @@ func file_v1_users_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_users_proto_rawDesc), len(file_v1_users_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

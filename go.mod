@@ -24,6 +24,7 @@ require (
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/stretchr/testify v1.11.1
 	github.com/testcontainers/testcontainers-go v0.44.0
+	github.com/xuri/excelize/v2 v2.8.1
 	go.mau.fi/whatsmeow v0.0.0-20260804144817-1494ba731cb0
 	golang.org/x/crypto v0.54.0
 	google.golang.org/grpc v1.83.0
@@ -130,7 +131,6 @@ require (
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	github.com/xeipuuv/gojsonschema v1.2.0 // indirect
 	github.com/xuri/efp v0.0.0-20231025114914-d1ff6096ae53 // indirect
-	github.com/xuri/excelize/v2 v2.8.1 // indirect
 	github.com/xuri/nfp v0.0.0-20230919160717-d98342af3f05 // indirect
 	github.com/yosida95/uritemplate/v3 v3.0.2 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect

@@ -147,6 +147,7 @@ func seedUsers(ctx context.Context, pgStore *postgres.Store) {
 			PhoneNumber:    u.phoneNumber,
 			Specialization: u.specialization,
 			IsActive:       true,
+			TenantID:       "tenant-default",
 		}
 
 		if err := pgStore.CreateUser(ctx, user); err != nil {

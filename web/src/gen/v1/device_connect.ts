@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteDeviceRequest, DeleteDeviceResponse, DeviceStatusFrame, GetDeviceRequest, GetDeviceResponse, ListDevicesRequest, ListDevicesResponse, StreamDevicePingFrame, StreamDevicePingRequest, StreamDeviceStatusRequest, StreamDeviceTrafficFrame, StreamDeviceTrafficRequest, TerminalFrame, TestDeviceConnectionRequest, TestDeviceConnectionResponse, UpdateDeviceRequest, UpdateDeviceResponse } from "./device_pb.js";
+import { DeleteDeviceRequest, DeleteDeviceResponse, DeviceStatusFrame, GetDevicePingConfigRequest, GetDevicePingConfigResponse, GetDeviceRequest, GetDeviceResponse, ListDevicesRequest, ListDevicesResponse, QueryDevicePingMetricsRequest, QueryDevicePingMetricsResponse, StreamDevicePingFrame, StreamDevicePingRequest, StreamDeviceStatusRequest, StreamDeviceTrafficFrame, StreamDeviceTrafficRequest, TerminalFrame, TestDeviceConnectionRequest, TestDeviceConnectionResponse, UpdateDevicePingConfigRequest, UpdateDevicePingConfigResponse, UpdateDeviceRequest, UpdateDeviceResponse } from "./device_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -94,6 +94,33 @@ export const DeviceService = {
       I: TerminalFrame,
       O: TerminalFrame,
       kind: MethodKind.BiDiStreaming,
+    },
+    /**
+     * @generated from rpc polyglot.v1.DeviceService.GetDevicePingConfig
+     */
+    getDevicePingConfig: {
+      name: "GetDevicePingConfig",
+      I: GetDevicePingConfigRequest,
+      O: GetDevicePingConfigResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.DeviceService.UpdateDevicePingConfig
+     */
+    updateDevicePingConfig: {
+      name: "UpdateDevicePingConfig",
+      I: UpdateDevicePingConfigRequest,
+      O: UpdateDevicePingConfigResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.DeviceService.QueryDevicePingMetrics
+     */
+    queryDevicePingMetrics: {
+      name: "QueryDevicePingMetrics",
+      I: QueryDevicePingMetricsRequest,
+      O: QueryDevicePingMetricsResponse,
+      kind: MethodKind.Unary,
     },
   }
 } as const;

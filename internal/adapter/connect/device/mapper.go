@@ -13,19 +13,24 @@ func DomainToPb(d device.Device) *devicepb.Device {
 	if sshPort <= 0 {
 		sshPort = 22
 	}
+	cfg := d.PingConfig()
 	return &devicepb.Device{
-		Id:             d.ID,
-		TenantId:       d.TenantID,
-		Name:           d.Name,
-		Vendor:         d.Vendor,
-		DriverType:     d.DriverType,
-		Host:           d.Host,
-		Port:           int32(d.Port),
-		SshPort:        sshPort,
-		TimeoutMs:      int32(d.TimeoutMS),
-		PollIntervalMs: int32(d.PollIntervalMS),
-		Tags:           d.Tags,
-		Enabled:        d.Enabled,
+		Id:                d.ID,
+		TenantId:          d.TenantID,
+		Name:              d.Name,
+		Vendor:            d.Vendor,
+		DriverType:        d.DriverType,
+		Host:              d.Host,
+		Port:              int32(d.Port),
+		SshPort:           sshPort,
+		TimeoutMs:         int32(d.TimeoutMS),
+		PollIntervalMs:    int32(d.PollIntervalMS),
+		Tags:              d.Tags,
+		Enabled:           d.Enabled,
+		PingEnabled:       cfg.Enabled,
+		PingTarget:        cfg.Target,
+		PingRetentionDays: int32(cfg.RetentionDays),
+		Extra:             d.Extra,
 	}
 }
 
@@ -38,7 +43,11 @@ func PbToDomain(pb *devicepb.Device) device.Device {
 	if sshPort <= 0 {
 		sshPort = 22
 	}
-	return device.Device{
+	extra := make(map[string]string)
+	for k, v := range pb.Extra {
+		extra[k] = v
+	}
+	dev := device.Device{
 		ID:             pb.Id,
 		TenantID:       pb.TenantId,
 		Name:           pb.Name,
@@ -51,7 +60,16 @@ func PbToDomain(pb *devicepb.Device) device.Device {
 		PollIntervalMS: int(pb.PollIntervalMs),
 		Tags:           pb.Tags,
 		Enabled:        pb.Enabled,
+		Extra:          extra,
 	}
+	if pb.PingTarget != "" || pb.PingEnabled || pb.PingRetentionDays > 0 {
+		dev.SetPingConfig(device.DevicePingConfig{
+			Enabled:       pb.PingEnabled,
+			Target:        pb.PingTarget,
+			RetentionDays: int(pb.PingRetentionDays),
+		})
+	}
+	return dev
 }
 
 // ToProtoInterfaceDetails converts usecase interface details to proto list.

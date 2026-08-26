@@ -42,14 +42,22 @@ export function CommandMenu() {
                     <CommandItem
                       key={`${navItem.url}-${i}`}
                       value={navItem.title}
+                      disabled={navItem.disabled}
                       onSelect={() => {
-                        runCommand(() => navigate({ to: navItem.url }))
+                        if (!navItem.disabled) {
+                          runCommand(() => navigate({ to: navItem.url }))
+                        }
                       }}
                     >
                       <div className='flex size-4 items-center justify-center'>
                         <ArrowRight className='size-2 text-muted-foreground/80' />
                       </div>
-                      {navItem.title}
+                      <span>{navItem.title}</span>
+                      {navItem.badge && (
+                        <span className='ms-auto text-[10px] text-muted-foreground'>
+                          {navItem.badge}
+                        </span>
+                      )}
                     </CommandItem>
                   )
 
@@ -57,14 +65,24 @@ export function CommandMenu() {
                   <CommandItem
                     key={`${navItem.title}-${subItem.url}-${i}`}
                     value={`${navItem.title}-${subItem.url}`}
+                    disabled={subItem.disabled}
                     onSelect={() => {
-                      runCommand(() => navigate({ to: subItem.url }))
+                      if (!subItem.disabled) {
+                        runCommand(() => navigate({ to: subItem.url }))
+                      }
                     }}
                   >
                     <div className='flex size-4 items-center justify-center'>
                       <ArrowRight className='size-2 text-muted-foreground/80' />
                     </div>
-                    {navItem.title} <ChevronRight /> {subItem.title}
+                    <span>
+                      {navItem.title} <ChevronRight className='inline size-3' /> {subItem.title}
+                    </span>
+                    {subItem.badge && (
+                      <span className='ms-auto text-[10px] text-muted-foreground'>
+                        {subItem.badge}
+                      </span>
+                    )}
                   </CommandItem>
                 ))
               })}

@@ -74,6 +74,11 @@ export class User extends Message<User> {
    */
   specialization = "";
 
+  /**
+   * @generated from field: repeated string assigned_device_ids = 13;
+   */
+  assignedDeviceIds: string[] = [];
+
   constructor(data?: PartialMessage<User>) {
     super();
     proto3.util.initPartial(data, this);
@@ -94,6 +99,7 @@ export class User extends Message<User> {
     { no: 10, name: "full_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 11, name: "phone_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 12, name: "specialization", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 13, name: "assigned_device_ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): User {
@@ -266,6 +272,11 @@ export class CreateUserRequest extends Message<CreateUserRequest> {
    */
   specialization = "";
 
+  /**
+   * @generated from field: repeated string assigned_device_ids = 8;
+   */
+  assignedDeviceIds: string[] = [];
+
   constructor(data?: PartialMessage<CreateUserRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -281,6 +292,7 @@ export class CreateUserRequest extends Message<CreateUserRequest> {
     { no: 5, name: "full_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "phone_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "specialization", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "assigned_device_ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateUserRequest {
@@ -378,6 +390,11 @@ export class UpdateUserRequest extends Message<UpdateUserRequest> {
    */
   specialization = "";
 
+  /**
+   * @generated from field: repeated string assigned_device_ids = 8;
+   */
+  assignedDeviceIds: string[] = [];
+
   constructor(data?: PartialMessage<UpdateUserRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -393,6 +410,7 @@ export class UpdateUserRequest extends Message<UpdateUserRequest> {
     { no: 5, name: "full_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "phone_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "specialization", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "assigned_device_ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateUserRequest {
@@ -677,6 +695,166 @@ export class DeleteUserResponse extends Message<DeleteUserResponse> {
 
   static equals(a: DeleteUserResponse | PlainMessage<DeleteUserResponse> | undefined, b: DeleteUserResponse | PlainMessage<DeleteUserResponse> | undefined): boolean {
     return proto3.util.equals(DeleteUserResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.AssignDevicesRequest
+ */
+export class AssignDevicesRequest extends Message<AssignDevicesRequest> {
+  /**
+   * @generated from field: uint64 user_id = 1;
+   */
+  userId = protoInt64.zero;
+
+  /**
+   * @generated from field: repeated string device_ids = 2;
+   */
+  deviceIds: string[] = [];
+
+  constructor(data?: PartialMessage<AssignDevicesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.AssignDevicesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "user_id", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 2, name: "device_ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AssignDevicesRequest {
+    return new AssignDevicesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AssignDevicesRequest {
+    return new AssignDevicesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AssignDevicesRequest {
+    return new AssignDevicesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AssignDevicesRequest | PlainMessage<AssignDevicesRequest> | undefined, b: AssignDevicesRequest | PlainMessage<AssignDevicesRequest> | undefined): boolean {
+    return proto3.util.equals(AssignDevicesRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.AssignDevicesResponse
+ */
+export class AssignDevicesResponse extends Message<AssignDevicesResponse> {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success = false;
+
+  /**
+   * @generated from field: repeated string assigned_device_ids = 2;
+   */
+  assignedDeviceIds: string[] = [];
+
+  constructor(data?: PartialMessage<AssignDevicesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.AssignDevicesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "assigned_device_ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AssignDevicesResponse {
+    return new AssignDevicesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AssignDevicesResponse {
+    return new AssignDevicesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AssignDevicesResponse {
+    return new AssignDevicesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AssignDevicesResponse | PlainMessage<AssignDevicesResponse> | undefined, b: AssignDevicesResponse | PlainMessage<AssignDevicesResponse> | undefined): boolean {
+    return proto3.util.equals(AssignDevicesResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListUserDevicesRequest
+ */
+export class ListUserDevicesRequest extends Message<ListUserDevicesRequest> {
+  /**
+   * @generated from field: uint64 user_id = 1;
+   */
+  userId = protoInt64.zero;
+
+  constructor(data?: PartialMessage<ListUserDevicesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListUserDevicesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "user_id", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListUserDevicesRequest {
+    return new ListUserDevicesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListUserDevicesRequest {
+    return new ListUserDevicesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListUserDevicesRequest {
+    return new ListUserDevicesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListUserDevicesRequest | PlainMessage<ListUserDevicesRequest> | undefined, b: ListUserDevicesRequest | PlainMessage<ListUserDevicesRequest> | undefined): boolean {
+    return proto3.util.equals(ListUserDevicesRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ListUserDevicesResponse
+ */
+export class ListUserDevicesResponse extends Message<ListUserDevicesResponse> {
+  /**
+   * @generated from field: repeated string device_ids = 1;
+   */
+  deviceIds: string[] = [];
+
+  constructor(data?: PartialMessage<ListUserDevicesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ListUserDevicesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListUserDevicesResponse {
+    return new ListUserDevicesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ListUserDevicesResponse {
+    return new ListUserDevicesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ListUserDevicesResponse {
+    return new ListUserDevicesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ListUserDevicesResponse | PlainMessage<ListUserDevicesResponse> | undefined, b: ListUserDevicesResponse | PlainMessage<ListUserDevicesResponse> | undefined): boolean {
+    return proto3.util.equals(ListUserDevicesResponse, a, b);
   }
 }
 

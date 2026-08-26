@@ -82,15 +82,15 @@ proto-clean:
 
 # ─── Seeding ──────────────────────────────────────────────────────────
 seed:
-	DATABASE_URL="$(DATABASE_URL)" go run ./scripts/seed.go
+	DATABASE_URL="$(DATABASE_URL)" go run ./cmd/seed
 
-# ─── Database & Cache Infrastructure (Postgres + Redis) ───────────────
+# ─── Database & Cache Infrastructure (TimescaleDB Postgres + Redis) ──
 db-up:
 	docker compose -f $(COMPOSE_DEV) up -d postgres redis
 	@$(MAKE) db-wait
 
 db-wait:
-	@echo "Waiting for Postgres and Redis..."
+	@echo "Waiting for Postgres (TimescaleDB) and Redis..."
 	@for i in $$(seq 1 30); do \
 		docker compose -f $(COMPOSE_DEV) exec -T postgres pg_isready -U $(POSTGRES_USER) -d $(POSTGRES_DB) >/dev/null 2>&1 && echo "Postgres is ready!" && break; \
 		sleep 1; \

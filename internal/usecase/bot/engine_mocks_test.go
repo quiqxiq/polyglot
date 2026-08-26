@@ -257,6 +257,9 @@ func (f *fakeUserRepo) Update(ctx context.Context, user *customer.User) error { 
 func (f *fakeUserRepo) Delete(ctx context.Context, id uint) error { return nil }
 func (f *fakeUserRepo) UpdatePassword(ctx context.Context, id uint, passwordHash string) error { return nil }
 func (f *fakeUserRepo) UpdateStatus(ctx context.Context, id uint, isActive bool) error { return nil }
+func (f *fakeUserRepo) AssignDevices(ctx context.Context, userID uint, deviceIDs []string, assignedBy *uint) error { return nil }
+func (f *fakeUserRepo) GetAssignedDeviceIDs(ctx context.Context, userID uint) ([]string, error) { return nil, nil }
+func (f *fakeUserRepo) IsDeviceAccessibleByUser(ctx context.Context, userID uint, deviceID string) (bool, error) { return true, nil }
 
 func newTestEngine(cache port.CacheStore, gw *fakeGateway, llmRepo *fakeLLMConfigRepo, prov *fakeProvider, convRepo *fakeConvRepo) *Engine {
 	return newTestEngineWithChatRepo(cache, gw, llmRepo, prov, convRepo, newFakeChatRepo())

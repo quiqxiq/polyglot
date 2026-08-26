@@ -69,3 +69,44 @@ func (d Device) ToTarget(c Credentials) Target {
 		Extra:    extra,
 	}
 }
+
+// PingConfig parses the ping metrics settings from Extra metadata.
+func (d Device) PingConfig() DevicePingConfig {
+	cfg := DefaultPingConfig()
+	if d.Extra == nil {
+		return cfg
+	}
+	if v, ok := d.Extra["ping_enabled"]; ok {
+		cfg.Enabled = v == "true" || v == "1"
+	}
+	if v, ok := d.Extra["ping_target"]; ok && v != "" {
+		cfg.Target = v
+	}
+	if v, ok := d.Extra["ping_retention_days"]; ok {
+		if days, err := strconv.Atoi(v); err == nil && days > 0 {
+			cfg.RetentionDays = days
+		}
+	}
+	return cfg
+}
+
+// SetPingConfig stores the ping metrics settings into Extra metadata.
+func (d *Device) SetPingConfig(cfg DevicePingConfig) {
+	if d.Extra == nil {
+		d.Extra = make(map[string]string)
+	}
+	if cfg.Enabled {
+		d.Extra["ping_enabled"] = "true"
+	} else {
+		d.Extra["ping_enabled"] = "false"
+	}
+	if cfg.Target != "" {
+		d.Extra["ping_target"] = cfg.Target
+	} else {
+		d.Extra["ping_target"] = "8.8.8.8"
+	}
+	if cfg.RetentionDays <= 0 {
+		cfg.RetentionDays = 7
+	}
+	d.Extra["ping_retention_days"] = strconv.Itoa(cfg.RetentionDays)
+}

@@ -23,21 +23,25 @@ const (
 
 // Device represents a network router/device inventory record.
 type Device struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Id             string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	TenantId       string                 `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
-	Name           string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	Vendor         string                 `protobuf:"bytes,4,opt,name=vendor,proto3" json:"vendor,omitempty"`
-	DriverType     string                 `protobuf:"bytes,5,opt,name=driver_type,json=driverType,proto3" json:"driver_type,omitempty"`
-	Host           string                 `protobuf:"bytes,6,opt,name=host,proto3" json:"host,omitempty"`
-	Port           int32                  `protobuf:"varint,7,opt,name=port,proto3" json:"port,omitempty"`
-	TimeoutMs      int32                  `protobuf:"varint,8,opt,name=timeout_ms,json=timeoutMs,proto3" json:"timeout_ms,omitempty"`
-	PollIntervalMs int32                  `protobuf:"varint,9,opt,name=poll_interval_ms,json=pollIntervalMs,proto3" json:"poll_interval_ms,omitempty"`
-	Tags           []string               `protobuf:"bytes,10,rep,name=tags,proto3" json:"tags,omitempty"`
-	Enabled        bool                   `protobuf:"varint,11,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	SshPort        int32                  `protobuf:"varint,12,opt,name=ssh_port,json=sshPort,proto3" json:"ssh_port,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Id                string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	TenantId          string                 `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	Name              string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Vendor            string                 `protobuf:"bytes,4,opt,name=vendor,proto3" json:"vendor,omitempty"`
+	DriverType        string                 `protobuf:"bytes,5,opt,name=driver_type,json=driverType,proto3" json:"driver_type,omitempty"`
+	Host              string                 `protobuf:"bytes,6,opt,name=host,proto3" json:"host,omitempty"`
+	Port              int32                  `protobuf:"varint,7,opt,name=port,proto3" json:"port,omitempty"`
+	TimeoutMs         int32                  `protobuf:"varint,8,opt,name=timeout_ms,json=timeoutMs,proto3" json:"timeout_ms,omitempty"`
+	PollIntervalMs    int32                  `protobuf:"varint,9,opt,name=poll_interval_ms,json=pollIntervalMs,proto3" json:"poll_interval_ms,omitempty"`
+	Tags              []string               `protobuf:"bytes,10,rep,name=tags,proto3" json:"tags,omitempty"`
+	Enabled           bool                   `protobuf:"varint,11,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	SshPort           int32                  `protobuf:"varint,12,opt,name=ssh_port,json=sshPort,proto3" json:"ssh_port,omitempty"`
+	PingEnabled       bool                   `protobuf:"varint,13,opt,name=ping_enabled,json=pingEnabled,proto3" json:"ping_enabled,omitempty"`
+	PingTarget        string                 `protobuf:"bytes,14,opt,name=ping_target,json=pingTarget,proto3" json:"ping_target,omitempty"`
+	PingRetentionDays int32                  `protobuf:"varint,15,opt,name=ping_retention_days,json=pingRetentionDays,proto3" json:"ping_retention_days,omitempty"`
+	Extra             map[string]string      `protobuf:"bytes,16,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *Device) Reset() {
@@ -152,6 +156,34 @@ func (x *Device) GetSshPort() int32 {
 		return x.SshPort
 	}
 	return 0
+}
+
+func (x *Device) GetPingEnabled() bool {
+	if x != nil {
+		return x.PingEnabled
+	}
+	return false
+}
+
+func (x *Device) GetPingTarget() string {
+	if x != nil {
+		return x.PingTarget
+	}
+	return ""
+}
+
+func (x *Device) GetPingRetentionDays() int32 {
+	if x != nil {
+		return x.PingRetentionDays
+	}
+	return 0
+}
+
+func (x *Device) GetExtra() map[string]string {
+	if x != nil {
+		return x.Extra
+	}
+	return nil
 }
 
 type ListDevicesRequest struct {
@@ -1528,11 +1560,571 @@ func (x *StreamDeviceTrafficFrame) GetTxBps() int64 {
 	return 0
 }
 
+type DevicePingConfig struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Enabled       bool                   `protobuf:"varint,1,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Target        string                 `protobuf:"bytes,2,opt,name=target,proto3" json:"target,omitempty"`
+	RetentionDays int32                  `protobuf:"varint,3,opt,name=retention_days,json=retentionDays,proto3" json:"retention_days,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DevicePingConfig) Reset() {
+	*x = DevicePingConfig{}
+	mi := &file_v1_device_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DevicePingConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DevicePingConfig) ProtoMessage() {}
+
+func (x *DevicePingConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DevicePingConfig.ProtoReflect.Descriptor instead.
+func (*DevicePingConfig) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *DevicePingConfig) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+func (x *DevicePingConfig) GetTarget() string {
+	if x != nil {
+		return x.Target
+	}
+	return ""
+}
+
+func (x *DevicePingConfig) GetRetentionDays() int32 {
+	if x != nil {
+		return x.RetentionDays
+	}
+	return 0
+}
+
+type GetDevicePingConfigRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetDevicePingConfigRequest) Reset() {
+	*x = GetDevicePingConfigRequest{}
+	mi := &file_v1_device_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetDevicePingConfigRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDevicePingConfigRequest) ProtoMessage() {}
+
+func (x *GetDevicePingConfigRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDevicePingConfigRequest.ProtoReflect.Descriptor instead.
+func (*GetDevicePingConfigRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *GetDevicePingConfigRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+type GetDevicePingConfigResponse struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Config               *DevicePingConfig      `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+	TimescaledbAvailable bool                   `protobuf:"varint,2,opt,name=timescaledb_available,json=timescaledbAvailable,proto3" json:"timescaledb_available,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *GetDevicePingConfigResponse) Reset() {
+	*x = GetDevicePingConfigResponse{}
+	mi := &file_v1_device_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetDevicePingConfigResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDevicePingConfigResponse) ProtoMessage() {}
+
+func (x *GetDevicePingConfigResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDevicePingConfigResponse.ProtoReflect.Descriptor instead.
+func (*GetDevicePingConfigResponse) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *GetDevicePingConfigResponse) GetConfig() *DevicePingConfig {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+func (x *GetDevicePingConfigResponse) GetTimescaledbAvailable() bool {
+	if x != nil {
+		return x.TimescaledbAvailable
+	}
+	return false
+}
+
+type UpdateDevicePingConfigRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Config        *DevicePingConfig      `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateDevicePingConfigRequest) Reset() {
+	*x = UpdateDevicePingConfigRequest{}
+	mi := &file_v1_device_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateDevicePingConfigRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateDevicePingConfigRequest) ProtoMessage() {}
+
+func (x *UpdateDevicePingConfigRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateDevicePingConfigRequest.ProtoReflect.Descriptor instead.
+func (*UpdateDevicePingConfigRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *UpdateDevicePingConfigRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *UpdateDevicePingConfigRequest) GetConfig() *DevicePingConfig {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+type UpdateDevicePingConfigResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Config        *DevicePingConfig      `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateDevicePingConfigResponse) Reset() {
+	*x = UpdateDevicePingConfigResponse{}
+	mi := &file_v1_device_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateDevicePingConfigResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateDevicePingConfigResponse) ProtoMessage() {}
+
+func (x *UpdateDevicePingConfigResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateDevicePingConfigResponse.ProtoReflect.Descriptor instead.
+func (*UpdateDevicePingConfigResponse) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *UpdateDevicePingConfigResponse) GetConfig() *DevicePingConfig {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+func (x *UpdateDevicePingConfigResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type QueryDevicePingMetricsRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId       string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	StartTime      string                 `protobuf:"bytes,2,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	EndTime        string                 `protobuf:"bytes,3,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	BucketInterval string                 `protobuf:"bytes,4,opt,name=bucket_interval,json=bucketInterval,proto3" json:"bucket_interval,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *QueryDevicePingMetricsRequest) Reset() {
+	*x = QueryDevicePingMetricsRequest{}
+	mi := &file_v1_device_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryDevicePingMetricsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryDevicePingMetricsRequest) ProtoMessage() {}
+
+func (x *QueryDevicePingMetricsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryDevicePingMetricsRequest.ProtoReflect.Descriptor instead.
+func (*QueryDevicePingMetricsRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *QueryDevicePingMetricsRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *QueryDevicePingMetricsRequest) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *QueryDevicePingMetricsRequest) GetEndTime() string {
+	if x != nil {
+		return x.EndTime
+	}
+	return ""
+}
+
+func (x *QueryDevicePingMetricsRequest) GetBucketInterval() string {
+	if x != nil {
+		return x.BucketInterval
+	}
+	return ""
+}
+
+type PingMetricPointData struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Timestamp     string                 `protobuf:"bytes,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Target        string                 `protobuf:"bytes,2,opt,name=target,proto3" json:"target,omitempty"`
+	Seq           int32                  `protobuf:"varint,3,opt,name=seq,proto3" json:"seq,omitempty"`
+	Size          int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size,omitempty"`
+	Ttl           int32                  `protobuf:"varint,5,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	RttMs         float32                `protobuf:"fixed32,6,opt,name=rtt_ms,json=rttMs,proto3" json:"rtt_ms,omitempty"`
+	Status        string                 `protobuf:"bytes,7,opt,name=status,proto3" json:"status,omitempty"`
+	Sent          int32                  `protobuf:"varint,8,opt,name=sent,proto3" json:"sent,omitempty"`
+	Received      int32                  `protobuf:"varint,9,opt,name=received,proto3" json:"received,omitempty"`
+	PacketLoss    int32                  `protobuf:"varint,10,opt,name=packet_loss,json=packetLoss,proto3" json:"packet_loss,omitempty"`
+	MinRttMs      float32                `protobuf:"fixed32,11,opt,name=min_rtt_ms,json=minRttMs,proto3" json:"min_rtt_ms,omitempty"`
+	AvgRttMs      float32                `protobuf:"fixed32,12,opt,name=avg_rtt_ms,json=avgRttMs,proto3" json:"avg_rtt_ms,omitempty"`
+	MaxRttMs      float32                `protobuf:"fixed32,13,opt,name=max_rtt_ms,json=maxRttMs,proto3" json:"max_rtt_ms,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PingMetricPointData) Reset() {
+	*x = PingMetricPointData{}
+	mi := &file_v1_device_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PingMetricPointData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PingMetricPointData) ProtoMessage() {}
+
+func (x *PingMetricPointData) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PingMetricPointData.ProtoReflect.Descriptor instead.
+func (*PingMetricPointData) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *PingMetricPointData) GetTimestamp() string {
+	if x != nil {
+		return x.Timestamp
+	}
+	return ""
+}
+
+func (x *PingMetricPointData) GetTarget() string {
+	if x != nil {
+		return x.Target
+	}
+	return ""
+}
+
+func (x *PingMetricPointData) GetSeq() int32 {
+	if x != nil {
+		return x.Seq
+	}
+	return 0
+}
+
+func (x *PingMetricPointData) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *PingMetricPointData) GetTtl() int32 {
+	if x != nil {
+		return x.Ttl
+	}
+	return 0
+}
+
+func (x *PingMetricPointData) GetRttMs() float32 {
+	if x != nil {
+		return x.RttMs
+	}
+	return 0
+}
+
+func (x *PingMetricPointData) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *PingMetricPointData) GetSent() int32 {
+	if x != nil {
+		return x.Sent
+	}
+	return 0
+}
+
+func (x *PingMetricPointData) GetReceived() int32 {
+	if x != nil {
+		return x.Received
+	}
+	return 0
+}
+
+func (x *PingMetricPointData) GetPacketLoss() int32 {
+	if x != nil {
+		return x.PacketLoss
+	}
+	return 0
+}
+
+func (x *PingMetricPointData) GetMinRttMs() float32 {
+	if x != nil {
+		return x.MinRttMs
+	}
+	return 0
+}
+
+func (x *PingMetricPointData) GetAvgRttMs() float32 {
+	if x != nil {
+		return x.AvgRttMs
+	}
+	return 0
+}
+
+func (x *PingMetricPointData) GetMaxRttMs() float32 {
+	if x != nil {
+		return x.MaxRttMs
+	}
+	return 0
+}
+
+type QueryDevicePingMetricsResponse struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Points               []*PingMetricPointData `protobuf:"bytes,1,rep,name=points,proto3" json:"points,omitempty"`
+	MinRtt               float32                `protobuf:"fixed32,2,opt,name=min_rtt,json=minRtt,proto3" json:"min_rtt,omitempty"`
+	AvgRtt               float32                `protobuf:"fixed32,3,opt,name=avg_rtt,json=avgRtt,proto3" json:"avg_rtt,omitempty"`
+	MaxRtt               float32                `protobuf:"fixed32,4,opt,name=max_rtt,json=maxRtt,proto3" json:"max_rtt,omitempty"`
+	PacketLossPct        float32                `protobuf:"fixed32,5,opt,name=packet_loss_pct,json=packetLossPct,proto3" json:"packet_loss_pct,omitempty"`
+	TotalSamples         int64                  `protobuf:"varint,6,opt,name=total_samples,json=totalSamples,proto3" json:"total_samples,omitempty"`
+	TimescaledbAvailable bool                   `protobuf:"varint,7,opt,name=timescaledb_available,json=timescaledbAvailable,proto3" json:"timescaledb_available,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *QueryDevicePingMetricsResponse) Reset() {
+	*x = QueryDevicePingMetricsResponse{}
+	mi := &file_v1_device_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryDevicePingMetricsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryDevicePingMetricsResponse) ProtoMessage() {}
+
+func (x *QueryDevicePingMetricsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryDevicePingMetricsResponse.ProtoReflect.Descriptor instead.
+func (*QueryDevicePingMetricsResponse) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *QueryDevicePingMetricsResponse) GetPoints() []*PingMetricPointData {
+	if x != nil {
+		return x.Points
+	}
+	return nil
+}
+
+func (x *QueryDevicePingMetricsResponse) GetMinRtt() float32 {
+	if x != nil {
+		return x.MinRtt
+	}
+	return 0
+}
+
+func (x *QueryDevicePingMetricsResponse) GetAvgRtt() float32 {
+	if x != nil {
+		return x.AvgRtt
+	}
+	return 0
+}
+
+func (x *QueryDevicePingMetricsResponse) GetMaxRtt() float32 {
+	if x != nil {
+		return x.MaxRtt
+	}
+	return 0
+}
+
+func (x *QueryDevicePingMetricsResponse) GetPacketLossPct() float32 {
+	if x != nil {
+		return x.PacketLossPct
+	}
+	return 0
+}
+
+func (x *QueryDevicePingMetricsResponse) GetTotalSamples() int64 {
+	if x != nil {
+		return x.TotalSamples
+	}
+	return 0
+}
+
+func (x *QueryDevicePingMetricsResponse) GetTimescaledbAvailable() bool {
+	if x != nil {
+		return x.TimescaledbAvailable
+	}
+	return false
+}
+
 var File_v1_device_proto protoreflect.FileDescriptor
 
 const file_v1_device_proto_rawDesc = "" +
 	"\n" +
-	"\x0fv1/device.proto\x12\vpolyglot.v1\"\xbc\x02\n" +
+	"\x0fv1/device.proto\x12\vpolyglot.v1\"\xa0\x04\n" +
 	"\x06Device\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12\x12\n" +
@@ -1548,7 +2140,16 @@ const file_v1_device_proto_rawDesc = "" +
 	"\x04tags\x18\n" +
 	" \x03(\tR\x04tags\x12\x18\n" +
 	"\aenabled\x18\v \x01(\bR\aenabled\x12\x19\n" +
-	"\bssh_port\x18\f \x01(\x05R\asshPort\"\x14\n" +
+	"\bssh_port\x18\f \x01(\x05R\asshPort\x12!\n" +
+	"\fping_enabled\x18\r \x01(\bR\vpingEnabled\x12\x1f\n" +
+	"\vping_target\x18\x0e \x01(\tR\n" +
+	"pingTarget\x12.\n" +
+	"\x13ping_retention_days\x18\x0f \x01(\x05R\x11pingRetentionDays\x124\n" +
+	"\x05extra\x18\x10 \x03(\v2\x1e.polyglot.v1.Device.ExtraEntryR\x05extra\x1a8\n" +
+	"\n" +
+	"ExtraEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x14\n" +
 	"\x12ListDevicesRequest\"D\n" +
 	"\x13ListDevicesResponse\x12-\n" +
 	"\adevices\x18\x01 \x03(\v2\x13.polyglot.v1.DeviceR\adevices\"\"\n" +
@@ -1674,7 +2275,55 @@ const file_v1_device_proto_rawDesc = "" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
 	"\x0einterface_name\x18\x02 \x01(\tR\rinterfaceName\x12\x15\n" +
 	"\x06rx_bps\x18\x03 \x01(\x03R\x05rxBps\x12\x15\n" +
-	"\x06tx_bps\x18\x04 \x01(\x03R\x05txBps2\xb8\x06\n" +
+	"\x06tx_bps\x18\x04 \x01(\x03R\x05txBps\"k\n" +
+	"\x10DevicePingConfig\x12\x18\n" +
+	"\aenabled\x18\x01 \x01(\bR\aenabled\x12\x16\n" +
+	"\x06target\x18\x02 \x01(\tR\x06target\x12%\n" +
+	"\x0eretention_days\x18\x03 \x01(\x05R\rretentionDays\"9\n" +
+	"\x1aGetDevicePingConfigRequest\x12\x1b\n" +
+	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\"\x89\x01\n" +
+	"\x1bGetDevicePingConfigResponse\x125\n" +
+	"\x06config\x18\x01 \x01(\v2\x1d.polyglot.v1.DevicePingConfigR\x06config\x123\n" +
+	"\x15timescaledb_available\x18\x02 \x01(\bR\x14timescaledbAvailable\"s\n" +
+	"\x1dUpdateDevicePingConfigRequest\x12\x1b\n" +
+	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x125\n" +
+	"\x06config\x18\x02 \x01(\v2\x1d.polyglot.v1.DevicePingConfigR\x06config\"q\n" +
+	"\x1eUpdateDevicePingConfigResponse\x125\n" +
+	"\x06config\x18\x01 \x01(\v2\x1d.polyglot.v1.DevicePingConfigR\x06config\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\x9f\x01\n" +
+	"\x1dQueryDevicePingMetricsRequest\x12\x1b\n" +
+	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\x02 \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\x03 \x01(\tR\aendTime\x12'\n" +
+	"\x0fbucket_interval\x18\x04 \x01(\tR\x0ebucketInterval\"\xdd\x02\n" +
+	"\x13PingMetricPointData\x12\x1c\n" +
+	"\ttimestamp\x18\x01 \x01(\tR\ttimestamp\x12\x16\n" +
+	"\x06target\x18\x02 \x01(\tR\x06target\x12\x10\n" +
+	"\x03seq\x18\x03 \x01(\x05R\x03seq\x12\x12\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\x12\x10\n" +
+	"\x03ttl\x18\x05 \x01(\x05R\x03ttl\x12\x15\n" +
+	"\x06rtt_ms\x18\x06 \x01(\x02R\x05rttMs\x12\x16\n" +
+	"\x06status\x18\a \x01(\tR\x06status\x12\x12\n" +
+	"\x04sent\x18\b \x01(\x05R\x04sent\x12\x1a\n" +
+	"\breceived\x18\t \x01(\x05R\breceived\x12\x1f\n" +
+	"\vpacket_loss\x18\n" +
+	" \x01(\x05R\n" +
+	"packetLoss\x12\x1c\n" +
+	"\n" +
+	"min_rtt_ms\x18\v \x01(\x02R\bminRttMs\x12\x1c\n" +
+	"\n" +
+	"avg_rtt_ms\x18\f \x01(\x02R\bavgRttMs\x12\x1c\n" +
+	"\n" +
+	"max_rtt_ms\x18\r \x01(\x02R\bmaxRttMs\"\xa7\x02\n" +
+	"\x1eQueryDevicePingMetricsResponse\x128\n" +
+	"\x06points\x18\x01 \x03(\v2 .polyglot.v1.PingMetricPointDataR\x06points\x12\x17\n" +
+	"\amin_rtt\x18\x02 \x01(\x02R\x06minRtt\x12\x17\n" +
+	"\aavg_rtt\x18\x03 \x01(\x02R\x06avgRtt\x12\x17\n" +
+	"\amax_rtt\x18\x04 \x01(\x02R\x06maxRtt\x12&\n" +
+	"\x0fpacket_loss_pct\x18\x05 \x01(\x02R\rpacketLossPct\x12#\n" +
+	"\rtotal_samples\x18\x06 \x01(\x03R\ftotalSamples\x123\n" +
+	"\x15timescaledb_available\x18\a \x01(\bR\x14timescaledbAvailable2\x88\t\n" +
 	"\rDeviceService\x12P\n" +
 	"\vListDevices\x12\x1f.polyglot.v1.ListDevicesRequest\x1a .polyglot.v1.ListDevicesResponse\x12J\n" +
 	"\tGetDevice\x12\x1d.polyglot.v1.GetDeviceRequest\x1a\x1e.polyglot.v1.GetDeviceResponse\x12S\n" +
@@ -1685,7 +2334,10 @@ const file_v1_device_proto_rawDesc = "" +
 	"\n" +
 	"StreamPing\x12$.polyglot.v1.StreamDevicePingRequest\x1a\".polyglot.v1.StreamDevicePingFrame0\x01\x12j\n" +
 	"\x16StreamInterfaceTraffic\x12'.polyglot.v1.StreamDeviceTrafficRequest\x1a%.polyglot.v1.StreamDeviceTrafficFrame0\x01\x12L\n" +
-	"\x0eStreamTerminal\x12\x1a.polyglot.v1.TerminalFrame\x1a\x1a.polyglot.v1.TerminalFrame(\x010\x01B0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x0eStreamTerminal\x12\x1a.polyglot.v1.TerminalFrame\x1a\x1a.polyglot.v1.TerminalFrame(\x010\x01\x12h\n" +
+	"\x13GetDevicePingConfig\x12'.polyglot.v1.GetDevicePingConfigRequest\x1a(.polyglot.v1.GetDevicePingConfigResponse\x12q\n" +
+	"\x16UpdateDevicePingConfig\x12*.polyglot.v1.UpdateDevicePingConfigRequest\x1a+.polyglot.v1.UpdateDevicePingConfigResponse\x12q\n" +
+	"\x16QueryDevicePingMetrics\x12*.polyglot.v1.QueryDevicePingMetricsRequest\x1a+.polyglot.v1.QueryDevicePingMetricsResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_device_proto_rawDescOnce sync.Once
@@ -1699,62 +2351,82 @@ func file_v1_device_proto_rawDescGZIP() []byte {
 	return file_v1_device_proto_rawDescData
 }
 
-var file_v1_device_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_v1_device_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
 var file_v1_device_proto_goTypes = []any{
-	(*Device)(nil),                       // 0: polyglot.v1.Device
-	(*ListDevicesRequest)(nil),           // 1: polyglot.v1.ListDevicesRequest
-	(*ListDevicesResponse)(nil),          // 2: polyglot.v1.ListDevicesResponse
-	(*GetDeviceRequest)(nil),             // 3: polyglot.v1.GetDeviceRequest
-	(*GetDeviceResponse)(nil),            // 4: polyglot.v1.GetDeviceResponse
-	(*UpdateDeviceRequest)(nil),          // 5: polyglot.v1.UpdateDeviceRequest
-	(*UpdateDeviceResponse)(nil),         // 6: polyglot.v1.UpdateDeviceResponse
-	(*StreamDeviceStatusRequest)(nil),    // 7: polyglot.v1.StreamDeviceStatusRequest
-	(*DeviceInterfaceInfo)(nil),          // 8: polyglot.v1.DeviceInterfaceInfo
-	(*DeviceTestMetrics)(nil),            // 9: polyglot.v1.DeviceTestMetrics
-	(*DeviceStatusFrame)(nil),            // 10: polyglot.v1.DeviceStatusFrame
-	(*TerminalFrame)(nil),                // 11: polyglot.v1.TerminalFrame
-	(*DeleteDeviceRequest)(nil),          // 12: polyglot.v1.DeleteDeviceRequest
-	(*DeleteDeviceResponse)(nil),         // 13: polyglot.v1.DeleteDeviceResponse
-	(*TestDeviceConnectionRequest)(nil),  // 14: polyglot.v1.TestDeviceConnectionRequest
-	(*TestDeviceConnectionResponse)(nil), // 15: polyglot.v1.TestDeviceConnectionResponse
-	(*StreamDevicePingRequest)(nil),      // 16: polyglot.v1.StreamDevicePingRequest
-	(*StreamDevicePingFrame)(nil),        // 17: polyglot.v1.StreamDevicePingFrame
-	(*StreamDeviceTrafficRequest)(nil),   // 18: polyglot.v1.StreamDeviceTrafficRequest
-	(*StreamDeviceTrafficFrame)(nil),     // 19: polyglot.v1.StreamDeviceTrafficFrame
+	(*Device)(nil),                         // 0: polyglot.v1.Device
+	(*ListDevicesRequest)(nil),             // 1: polyglot.v1.ListDevicesRequest
+	(*ListDevicesResponse)(nil),            // 2: polyglot.v1.ListDevicesResponse
+	(*GetDeviceRequest)(nil),               // 3: polyglot.v1.GetDeviceRequest
+	(*GetDeviceResponse)(nil),              // 4: polyglot.v1.GetDeviceResponse
+	(*UpdateDeviceRequest)(nil),            // 5: polyglot.v1.UpdateDeviceRequest
+	(*UpdateDeviceResponse)(nil),           // 6: polyglot.v1.UpdateDeviceResponse
+	(*StreamDeviceStatusRequest)(nil),      // 7: polyglot.v1.StreamDeviceStatusRequest
+	(*DeviceInterfaceInfo)(nil),            // 8: polyglot.v1.DeviceInterfaceInfo
+	(*DeviceTestMetrics)(nil),              // 9: polyglot.v1.DeviceTestMetrics
+	(*DeviceStatusFrame)(nil),              // 10: polyglot.v1.DeviceStatusFrame
+	(*TerminalFrame)(nil),                  // 11: polyglot.v1.TerminalFrame
+	(*DeleteDeviceRequest)(nil),            // 12: polyglot.v1.DeleteDeviceRequest
+	(*DeleteDeviceResponse)(nil),           // 13: polyglot.v1.DeleteDeviceResponse
+	(*TestDeviceConnectionRequest)(nil),    // 14: polyglot.v1.TestDeviceConnectionRequest
+	(*TestDeviceConnectionResponse)(nil),   // 15: polyglot.v1.TestDeviceConnectionResponse
+	(*StreamDevicePingRequest)(nil),        // 16: polyglot.v1.StreamDevicePingRequest
+	(*StreamDevicePingFrame)(nil),          // 17: polyglot.v1.StreamDevicePingFrame
+	(*StreamDeviceTrafficRequest)(nil),     // 18: polyglot.v1.StreamDeviceTrafficRequest
+	(*StreamDeviceTrafficFrame)(nil),       // 19: polyglot.v1.StreamDeviceTrafficFrame
+	(*DevicePingConfig)(nil),               // 20: polyglot.v1.DevicePingConfig
+	(*GetDevicePingConfigRequest)(nil),     // 21: polyglot.v1.GetDevicePingConfigRequest
+	(*GetDevicePingConfigResponse)(nil),    // 22: polyglot.v1.GetDevicePingConfigResponse
+	(*UpdateDevicePingConfigRequest)(nil),  // 23: polyglot.v1.UpdateDevicePingConfigRequest
+	(*UpdateDevicePingConfigResponse)(nil), // 24: polyglot.v1.UpdateDevicePingConfigResponse
+	(*QueryDevicePingMetricsRequest)(nil),  // 25: polyglot.v1.QueryDevicePingMetricsRequest
+	(*PingMetricPointData)(nil),            // 26: polyglot.v1.PingMetricPointData
+	(*QueryDevicePingMetricsResponse)(nil), // 27: polyglot.v1.QueryDevicePingMetricsResponse
+	nil,                                    // 28: polyglot.v1.Device.ExtraEntry
 }
 var file_v1_device_proto_depIdxs = []int32{
-	0,  // 0: polyglot.v1.ListDevicesResponse.devices:type_name -> polyglot.v1.Device
-	0,  // 1: polyglot.v1.GetDeviceResponse.device:type_name -> polyglot.v1.Device
-	0,  // 2: polyglot.v1.UpdateDeviceRequest.device:type_name -> polyglot.v1.Device
-	0,  // 3: polyglot.v1.UpdateDeviceResponse.device:type_name -> polyglot.v1.Device
-	8,  // 4: polyglot.v1.DeviceTestMetrics.interface_list:type_name -> polyglot.v1.DeviceInterfaceInfo
-	0,  // 5: polyglot.v1.DeviceStatusFrame.device:type_name -> polyglot.v1.Device
-	9,  // 6: polyglot.v1.DeviceStatusFrame.test:type_name -> polyglot.v1.DeviceTestMetrics
-	9,  // 7: polyglot.v1.TestDeviceConnectionResponse.metrics:type_name -> polyglot.v1.DeviceTestMetrics
-	8,  // 8: polyglot.v1.TestDeviceConnectionResponse.interface_list:type_name -> polyglot.v1.DeviceInterfaceInfo
-	1,  // 9: polyglot.v1.DeviceService.ListDevices:input_type -> polyglot.v1.ListDevicesRequest
-	3,  // 10: polyglot.v1.DeviceService.GetDevice:input_type -> polyglot.v1.GetDeviceRequest
-	5,  // 11: polyglot.v1.DeviceService.UpdateDevice:input_type -> polyglot.v1.UpdateDeviceRequest
-	12, // 12: polyglot.v1.DeviceService.DeleteDevice:input_type -> polyglot.v1.DeleteDeviceRequest
-	14, // 13: polyglot.v1.DeviceService.TestDeviceConnection:input_type -> polyglot.v1.TestDeviceConnectionRequest
-	7,  // 14: polyglot.v1.DeviceService.StreamDeviceStatus:input_type -> polyglot.v1.StreamDeviceStatusRequest
-	16, // 15: polyglot.v1.DeviceService.StreamPing:input_type -> polyglot.v1.StreamDevicePingRequest
-	18, // 16: polyglot.v1.DeviceService.StreamInterfaceTraffic:input_type -> polyglot.v1.StreamDeviceTrafficRequest
-	11, // 17: polyglot.v1.DeviceService.StreamTerminal:input_type -> polyglot.v1.TerminalFrame
-	2,  // 18: polyglot.v1.DeviceService.ListDevices:output_type -> polyglot.v1.ListDevicesResponse
-	4,  // 19: polyglot.v1.DeviceService.GetDevice:output_type -> polyglot.v1.GetDeviceResponse
-	6,  // 20: polyglot.v1.DeviceService.UpdateDevice:output_type -> polyglot.v1.UpdateDeviceResponse
-	13, // 21: polyglot.v1.DeviceService.DeleteDevice:output_type -> polyglot.v1.DeleteDeviceResponse
-	15, // 22: polyglot.v1.DeviceService.TestDeviceConnection:output_type -> polyglot.v1.TestDeviceConnectionResponse
-	10, // 23: polyglot.v1.DeviceService.StreamDeviceStatus:output_type -> polyglot.v1.DeviceStatusFrame
-	17, // 24: polyglot.v1.DeviceService.StreamPing:output_type -> polyglot.v1.StreamDevicePingFrame
-	19, // 25: polyglot.v1.DeviceService.StreamInterfaceTraffic:output_type -> polyglot.v1.StreamDeviceTrafficFrame
-	11, // 26: polyglot.v1.DeviceService.StreamTerminal:output_type -> polyglot.v1.TerminalFrame
-	18, // [18:27] is the sub-list for method output_type
-	9,  // [9:18] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	28, // 0: polyglot.v1.Device.extra:type_name -> polyglot.v1.Device.ExtraEntry
+	0,  // 1: polyglot.v1.ListDevicesResponse.devices:type_name -> polyglot.v1.Device
+	0,  // 2: polyglot.v1.GetDeviceResponse.device:type_name -> polyglot.v1.Device
+	0,  // 3: polyglot.v1.UpdateDeviceRequest.device:type_name -> polyglot.v1.Device
+	0,  // 4: polyglot.v1.UpdateDeviceResponse.device:type_name -> polyglot.v1.Device
+	8,  // 5: polyglot.v1.DeviceTestMetrics.interface_list:type_name -> polyglot.v1.DeviceInterfaceInfo
+	0,  // 6: polyglot.v1.DeviceStatusFrame.device:type_name -> polyglot.v1.Device
+	9,  // 7: polyglot.v1.DeviceStatusFrame.test:type_name -> polyglot.v1.DeviceTestMetrics
+	9,  // 8: polyglot.v1.TestDeviceConnectionResponse.metrics:type_name -> polyglot.v1.DeviceTestMetrics
+	8,  // 9: polyglot.v1.TestDeviceConnectionResponse.interface_list:type_name -> polyglot.v1.DeviceInterfaceInfo
+	20, // 10: polyglot.v1.GetDevicePingConfigResponse.config:type_name -> polyglot.v1.DevicePingConfig
+	20, // 11: polyglot.v1.UpdateDevicePingConfigRequest.config:type_name -> polyglot.v1.DevicePingConfig
+	20, // 12: polyglot.v1.UpdateDevicePingConfigResponse.config:type_name -> polyglot.v1.DevicePingConfig
+	26, // 13: polyglot.v1.QueryDevicePingMetricsResponse.points:type_name -> polyglot.v1.PingMetricPointData
+	1,  // 14: polyglot.v1.DeviceService.ListDevices:input_type -> polyglot.v1.ListDevicesRequest
+	3,  // 15: polyglot.v1.DeviceService.GetDevice:input_type -> polyglot.v1.GetDeviceRequest
+	5,  // 16: polyglot.v1.DeviceService.UpdateDevice:input_type -> polyglot.v1.UpdateDeviceRequest
+	12, // 17: polyglot.v1.DeviceService.DeleteDevice:input_type -> polyglot.v1.DeleteDeviceRequest
+	14, // 18: polyglot.v1.DeviceService.TestDeviceConnection:input_type -> polyglot.v1.TestDeviceConnectionRequest
+	7,  // 19: polyglot.v1.DeviceService.StreamDeviceStatus:input_type -> polyglot.v1.StreamDeviceStatusRequest
+	16, // 20: polyglot.v1.DeviceService.StreamPing:input_type -> polyglot.v1.StreamDevicePingRequest
+	18, // 21: polyglot.v1.DeviceService.StreamInterfaceTraffic:input_type -> polyglot.v1.StreamDeviceTrafficRequest
+	11, // 22: polyglot.v1.DeviceService.StreamTerminal:input_type -> polyglot.v1.TerminalFrame
+	21, // 23: polyglot.v1.DeviceService.GetDevicePingConfig:input_type -> polyglot.v1.GetDevicePingConfigRequest
+	23, // 24: polyglot.v1.DeviceService.UpdateDevicePingConfig:input_type -> polyglot.v1.UpdateDevicePingConfigRequest
+	25, // 25: polyglot.v1.DeviceService.QueryDevicePingMetrics:input_type -> polyglot.v1.QueryDevicePingMetricsRequest
+	2,  // 26: polyglot.v1.DeviceService.ListDevices:output_type -> polyglot.v1.ListDevicesResponse
+	4,  // 27: polyglot.v1.DeviceService.GetDevice:output_type -> polyglot.v1.GetDeviceResponse
+	6,  // 28: polyglot.v1.DeviceService.UpdateDevice:output_type -> polyglot.v1.UpdateDeviceResponse
+	13, // 29: polyglot.v1.DeviceService.DeleteDevice:output_type -> polyglot.v1.DeleteDeviceResponse
+	15, // 30: polyglot.v1.DeviceService.TestDeviceConnection:output_type -> polyglot.v1.TestDeviceConnectionResponse
+	10, // 31: polyglot.v1.DeviceService.StreamDeviceStatus:output_type -> polyglot.v1.DeviceStatusFrame
+	17, // 32: polyglot.v1.DeviceService.StreamPing:output_type -> polyglot.v1.StreamDevicePingFrame
+	19, // 33: polyglot.v1.DeviceService.StreamInterfaceTraffic:output_type -> polyglot.v1.StreamDeviceTrafficFrame
+	11, // 34: polyglot.v1.DeviceService.StreamTerminal:output_type -> polyglot.v1.TerminalFrame
+	22, // 35: polyglot.v1.DeviceService.GetDevicePingConfig:output_type -> polyglot.v1.GetDevicePingConfigResponse
+	24, // 36: polyglot.v1.DeviceService.UpdateDevicePingConfig:output_type -> polyglot.v1.UpdateDevicePingConfigResponse
+	27, // 37: polyglot.v1.DeviceService.QueryDevicePingMetrics:output_type -> polyglot.v1.QueryDevicePingMetricsResponse
+	26, // [26:38] is the sub-list for method output_type
+	14, // [14:26] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_v1_device_proto_init() }
@@ -1768,7 +2440,7 @@ func file_v1_device_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_device_proto_rawDesc), len(file_v1_device_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   29,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

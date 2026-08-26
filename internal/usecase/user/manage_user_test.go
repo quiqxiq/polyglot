@@ -117,6 +117,32 @@ func (m *mockUserRepo) UpdateStatus(ctx context.Context, id uint, isActive bool)
 	return user.ErrUserNotFound
 }
 
+func (m *mockUserRepo) AssignDevices(ctx context.Context, userID uint, deviceIDs []string, assignedBy *uint) error {
+	if u, ok := m.users[userID]; ok {
+		u.AssignedDeviceIDs = deviceIDs
+		return nil
+	}
+	return user.ErrUserNotFound
+}
+
+func (m *mockUserRepo) GetAssignedDeviceIDs(ctx context.Context, userID uint) ([]string, error) {
+	if u, ok := m.users[userID]; ok {
+		return u.AssignedDeviceIDs, nil
+	}
+	return nil, nil
+}
+
+func (m *mockUserRepo) IsDeviceAccessibleByUser(ctx context.Context, userID uint, deviceID string) (bool, error) {
+	if u, ok := m.users[userID]; ok {
+		for _, d := range u.AssignedDeviceIDs {
+			if d == deviceID {
+				return true, nil
+			}
+		}
+	}
+	return false, nil
+}
+
 func TestHierarchy_CreateUser(t *testing.T) {
 	ctx := context.Background()
 
@@ -124,7 +150,7 @@ func TestHierarchy_CreateUser(t *testing.T) {
 		repo := newMockRepo()
 		uc := user.NewManageUserUseCase(repo, nil)
 
-		_, err := uc.CreateUser(ctx, 2, []string{"admin"}, "newadmin", "na@ex.com", "password123", "admin", "Admin 2", "", "")
+		_, err := uc.CreateUser(ctx, 2, []string{"admin"}, "newadmin", "na@ex.com", "password123", "admin", "Admin 2", "", "", nil)
 		if !errors.Is(err, user.ErrAdminCannotCreateAdminOrOwner) {
 			t.Fatalf("expected ErrAdminCannotCreateAdminOrOwner, got %v", err)
 		}
@@ -134,7 +160,7 @@ func TestHierarchy_CreateUser(t *testing.T) {
 		repo := newMockRepo()
 		uc := user.NewManageUserUseCase(repo, nil)
 
-		_, err := uc.CreateUser(ctx, 2, []string{"admin"}, "newowner", "no@ex.com", "password123", "owner", "Owner 2", "", "")
+		_, err := uc.CreateUser(ctx, 2, []string{"admin"}, "newowner", "no@ex.com", "password123", "owner", "Owner 2", "", "", nil)
 		if !errors.Is(err, user.ErrAdminCannotCreateAdminOrOwner) {
 			t.Fatalf("expected ErrAdminCannotCreateAdminOrOwner, got %v", err)
 		}
@@ -144,12 +170,12 @@ func TestHierarchy_CreateUser(t *testing.T) {
 		repo := newMockRepo()
 		uc := user.NewManageUserUseCase(repo, nil)
 
-		u1, err := uc.CreateUser(ctx, 2, []string{"admin"}, "agent1", "ag1@ex.com", "password123", "agent", "Agent One", "", "")
+		u1, err := uc.CreateUser(ctx, 2, []string{"admin"}, "agent1", "ag1@ex.com", "password123", "agent", "Agent One", "", "", nil)
 		if err != nil || u1 == nil {
 			t.Fatalf("unexpected error creating agent: %v", err)
 		}
 
-		u2, err := uc.CreateUser(ctx, 2, []string{"admin"}, "tek1", "tk1@ex.com", "password123", "teknisi", "Teknisi One", "", "")
+		u2, err := uc.CreateUser(ctx, 2, []string{"admin"}, "tek1", "tk1@ex.com", "password123", "teknisi", "Teknisi One", "", "", nil)
 		if err != nil || u2 == nil {
 			t.Fatalf("unexpected error creating teknisi: %v", err)
 		}
@@ -159,12 +185,12 @@ func TestHierarchy_CreateUser(t *testing.T) {
 		repo := newMockRepo()
 		uc := user.NewManageUserUseCase(repo, nil)
 
-		uAdmin, err := uc.CreateUser(ctx, 1, []string{"owner"}, "subadmin", "sa@ex.com", "password123", "admin", "Sub Admin", "", "")
+		uAdmin, err := uc.CreateUser(ctx, 1, []string{"owner"}, "subadmin", "sa@ex.com", "password123", "admin", "Sub Admin", "", "", nil)
 		if err != nil || uAdmin == nil {
 			t.Fatalf("unexpected error owner creating admin: %v", err)
 		}
 
-		uOwner, err := uc.CreateUser(ctx, 1, []string{"owner"}, "coowner", "co@ex.com", "password123", "owner", "Co Owner", "", "")
+		uOwner, err := uc.CreateUser(ctx, 1, []string{"owner"}, "coowner", "co@ex.com", "password123", "owner", "Co Owner", "", "", nil)
 		if err != nil || uOwner == nil {
 			t.Fatalf("unexpected error owner creating owner: %v", err)
 		}
@@ -186,7 +212,7 @@ func TestHierarchy_UpdateUser(t *testing.T) {
 
 	t.Run("Admin cannot edit owner account", func(t *testing.T) {
 		_, uc := setupRepo()
-		_, err := uc.UpdateUser(ctx, 2, []string{"admin"}, 1, "owner1_edited", "", "", "", "", "")
+		_, err := uc.UpdateUser(ctx, 2, []string{"admin"}, 1, "owner1_edited", "", "", "", "", "", nil)
 		if !errors.Is(err, user.ErrCannotModifyOwner) {
 			t.Fatalf("expected ErrCannotModifyOwner, got %v", err)
 		}
@@ -195,7 +221,7 @@ func TestHierarchy_UpdateUser(t *testing.T) {
 	t.Run("Another owner cannot edit owner account (strict self-only protection)", func(t *testing.T) {
 		repo, uc := setupRepo()
 		repo.users[5] = &customer.User{ID: 5, Username: "owner2", Role: "owner", IsActive: true}
-		_, err := uc.UpdateUser(ctx, 5, []string{"owner"}, 1, "owner1_edited", "", "", "", "", "")
+		_, err := uc.UpdateUser(ctx, 5, []string{"owner"}, 1, "owner1_edited", "", "", "", "", "", nil)
 		if !errors.Is(err, user.ErrCannotModifyOwner) {
 			t.Fatalf("expected ErrCannotModifyOwner, got %v", err)
 		}
@@ -203,7 +229,7 @@ func TestHierarchy_UpdateUser(t *testing.T) {
 
 	t.Run("Owner can edit own account", func(t *testing.T) {
 		_, uc := setupRepo()
-		u, err := uc.UpdateUser(ctx, 1, []string{"owner"}, 1, "owner1_new", "owner_new@ex.com", "", "Super Owner", "123", "Lead")
+		u, err := uc.UpdateUser(ctx, 1, []string{"owner"}, 1, "owner1_new", "owner_new@ex.com", "", "Super Owner", "123", "Lead", nil)
 		if err != nil {
 			t.Fatalf("expected owner self-edit to succeed, got %v", err)
 		}
@@ -214,7 +240,7 @@ func TestHierarchy_UpdateUser(t *testing.T) {
 
 	t.Run("Admin can edit own account", func(t *testing.T) {
 		_, uc := setupRepo()
-		u, err := uc.UpdateUser(ctx, 2, []string{"admin"}, 2, "admin1_new", "admin1_new@ex.com", "", "Admin One", "456", "Ops")
+		u, err := uc.UpdateUser(ctx, 2, []string{"admin"}, 2, "admin1_new", "admin1_new@ex.com", "", "Admin One", "456", "Ops", nil)
 		if err != nil {
 			t.Fatalf("expected admin self-edit to succeed, got %v", err)
 		}
@@ -225,7 +251,7 @@ func TestHierarchy_UpdateUser(t *testing.T) {
 
 	t.Run("Admin cannot edit another admin account", func(t *testing.T) {
 		_, uc := setupRepo()
-		_, err := uc.UpdateUser(ctx, 2, []string{"admin"}, 3, "admin2_hacked", "", "", "", "", "")
+		_, err := uc.UpdateUser(ctx, 2, []string{"admin"}, 3, "admin2_hacked", "", "", "", "", "", nil)
 		if !errors.Is(err, user.ErrCannotModifyAdmin) {
 			t.Fatalf("expected ErrCannotModifyAdmin, got %v", err)
 		}
@@ -233,7 +259,7 @@ func TestHierarchy_UpdateUser(t *testing.T) {
 
 	t.Run("Owner can edit admin account", func(t *testing.T) {
 		_, uc := setupRepo()
-		u, err := uc.UpdateUser(ctx, 1, []string{"owner"}, 2, "admin1_byowner", "", "", "", "", "")
+		u, err := uc.UpdateUser(ctx, 1, []string{"owner"}, 2, "admin1_byowner", "", "", "", "", "", nil)
 		if err != nil {
 			t.Fatalf("expected owner to edit admin, got %v", err)
 		}
@@ -244,12 +270,12 @@ func TestHierarchy_UpdateUser(t *testing.T) {
 
 	t.Run("Admin editing agent cannot promote agent to admin or owner", func(t *testing.T) {
 		_, uc := setupRepo()
-		_, err := uc.UpdateUser(ctx, 2, []string{"admin"}, 4, "", "", "admin", "", "", "")
+		_, err := uc.UpdateUser(ctx, 2, []string{"admin"}, 4, "", "", "admin", "", "", "", nil)
 		if !errors.Is(err, user.ErrAdminCannotAssignAdminOrOwner) {
 			t.Fatalf("expected ErrAdminCannotAssignAdminOrOwner, got %v", err)
 		}
 
-		_, err = uc.UpdateUser(ctx, 2, []string{"admin"}, 4, "", "", "owner", "", "", "")
+		_, err = uc.UpdateUser(ctx, 2, []string{"admin"}, 4, "", "", "owner", "", "", "", nil)
 		if !errors.Is(err, user.ErrCannotAssignOwnerRole) {
 			t.Fatalf("expected ErrCannotAssignOwnerRole, got %v", err)
 		}
@@ -257,7 +283,7 @@ func TestHierarchy_UpdateUser(t *testing.T) {
 
 	t.Run("Admin editing agent can change role to teknisi", func(t *testing.T) {
 		_, uc := setupRepo()
-		u, err := uc.UpdateUser(ctx, 2, []string{"admin"}, 4, "", "", "teknisi", "", "", "")
+		u, err := uc.UpdateUser(ctx, 2, []string{"admin"}, 4, "", "", "teknisi", "", "", "", nil)
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
@@ -268,9 +294,74 @@ func TestHierarchy_UpdateUser(t *testing.T) {
 
 	t.Run("Sole owner cannot demote self to non-owner", func(t *testing.T) {
 		_, uc := setupRepo()
-		_, err := uc.UpdateUser(ctx, 1, []string{"owner"}, 1, "", "", "admin", "", "", "")
+		_, err := uc.UpdateUser(ctx, 1, []string{"owner"}, 1, "", "", "admin", "", "", "", nil)
 		if !errors.Is(err, user.ErrLastOwnerDemotion) {
 			t.Fatalf("expected ErrLastOwnerDemotion, got %v", err)
+		}
+	})
+}
+
+func TestDeviceAssignment_Delegation(t *testing.T) {
+	ctx := context.Background()
+
+	setupRepo := func() (*mockUserRepo, *user.ManageUserUseCase) {
+		repo := newMockRepo()
+		repo.users[1] = &customer.User{ID: 1, Username: "owner", Role: "owner", IsActive: true}
+		repo.users[2] = &customer.User{ID: 2, Username: "admin_branch", Role: "admin", IsActive: true, AssignedDeviceIDs: []string{"router-1", "router-2"}}
+		repo.users[3] = &customer.User{ID: 3, Username: "teknisi_branch", Role: "teknisi", IsActive: true, AssignedDeviceIDs: []string{"router-1"}}
+		repo.seq = 3
+		return repo, user.NewManageUserUseCase(repo, nil)
+	}
+
+	t.Run("Owner can assign any device to user", func(t *testing.T) {
+		repo, uc := setupRepo()
+		assigned, err := uc.AssignDevicesToUser(ctx, 1, []string{"owner"}, 2, []string{"router-1", "router-2", "router-3"})
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		if len(assigned) != 3 {
+			t.Fatalf("expected 3 assigned devices, got %d", len(assigned))
+		}
+		if len(repo.users[2].AssignedDeviceIDs) != 3 {
+			t.Fatalf("expected repo to have 3 devices")
+		}
+	})
+
+	t.Run("Admin cannot assign device outside their assigned devices", func(t *testing.T) {
+		_, uc := setupRepo()
+		_, err := uc.AssignDevicesToUser(ctx, 2, []string{"admin"}, 3, []string{"router-1", "router-3"}) // router-3 is unauthorized
+		if !errors.Is(err, user.ErrUnauthorizedDeviceAssignment) {
+			t.Fatalf("expected ErrUnauthorizedDeviceAssignment, got %v", err)
+		}
+	})
+
+	t.Run("Admin can assign subset of their assigned devices", func(t *testing.T) {
+		_, uc := setupRepo()
+		assigned, err := uc.AssignDevicesToUser(ctx, 2, []string{"admin"}, 3, []string{"router-1", "router-2"})
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		if len(assigned) != 2 {
+			t.Fatalf("expected 2 devices assigned, got %d", len(assigned))
+		}
+	})
+
+	t.Run("Admin creating user with unauthorized device is rejected", func(t *testing.T) {
+		_, uc := setupRepo()
+		_, err := uc.CreateUser(ctx, 2, []string{"admin"}, "tek2", "tek2@ex.com", "pass12345", "teknisi", "Teknisi 2", "", "", []string{"router-99"})
+		if !errors.Is(err, user.ErrUnauthorizedDeviceAssignment) {
+			t.Fatalf("expected ErrUnauthorizedDeviceAssignment, got %v", err)
+		}
+	})
+
+	t.Run("Admin creating user with authorized device succeeds", func(t *testing.T) {
+		_, uc := setupRepo()
+		u, err := uc.CreateUser(ctx, 2, []string{"admin"}, "tek2", "tek2@ex.com", "pass12345", "teknisi", "Teknisi 2", "", "", []string{"router-1"})
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		if len(u.AssignedDeviceIDs) != 1 || u.AssignedDeviceIDs[0] != "router-1" {
+			t.Fatalf("expected router-1 in user assigned devices, got %v", u.AssignedDeviceIDs)
 		}
 	})
 }

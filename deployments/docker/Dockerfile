@@ -18,7 +18,7 @@ CMD ["go", "run", "./cmd/server"]
 FROM base AS builder
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /out/server ./cmd/server && \
-    CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /out/seed ./scripts/seed.go
+    CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /out/seed ./cmd/seed
 
 # 4. Production Stage: Minimal, hardened Alpine container
 FROM alpine:3.20 AS prod

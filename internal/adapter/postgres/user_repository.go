@@ -44,7 +44,9 @@ func (r *UserRepository) FindByID(ctx context.Context, id uint) (*customer.User,
 		}
 		return nil, err
 	}
-	return m.ToDomain(), nil
+	u := m.ToDomain()
+	u.AssignedDeviceIDs, _ = r.GetAssignedDeviceIDs(ctx, u.ID)
+	return u, nil
 }
 
 func (r *UserRepository) FindByUsername(ctx context.Context, username string) (*customer.User, error) {
@@ -55,7 +57,9 @@ func (r *UserRepository) FindByUsername(ctx context.Context, username string) (*
 		}
 		return nil, err
 	}
-	return m.ToDomain(), nil
+	u := m.ToDomain()
+	u.AssignedDeviceIDs, _ = r.GetAssignedDeviceIDs(ctx, u.ID)
+	return u, nil
 }
 
 func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*customer.User, error) {
@@ -66,7 +70,9 @@ func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*custom
 		}
 		return nil, err
 	}
-	return m.ToDomain(), nil
+	u := m.ToDomain()
+	u.AssignedDeviceIDs, _ = r.GetAssignedDeviceIDs(ctx, u.ID)
+	return u, nil
 }
 
 func (r *UserRepository) Count(ctx context.Context) (int64, error) {
@@ -81,8 +87,23 @@ func (r *UserRepository) FindAll(ctx context.Context) ([]*customer.User, error) 
 		return nil, err
 	}
 	users := make([]*customer.User, 0, len(ms))
+	userIDs := make([]uint, 0, len(ms))
 	for i := range ms {
-		users = append(users, ms[i].ToDomain())
+		u := ms[i].ToDomain()
+		users = append(users, u)
+		userIDs = append(userIDs, u.ID)
+	}
+	if len(userIDs) > 0 {
+		var udList []model.UserDeviceModel
+		if err := r.db.WithContext(ctx).Where("user_id IN (?)", userIDs).Find(&udList).Error; err == nil {
+			devMap := make(map[uint][]string)
+			for _, ud := range udList {
+				devMap[ud.UserID] = append(devMap[ud.UserID], ud.DeviceID)
+			}
+			for _, u := range users {
+				u.AssignedDeviceIDs = devMap[u.ID]
+			}
+		}
 	}
 	return users, nil
 }
@@ -115,8 +136,23 @@ func (r *UserRepository) List(ctx context.Context, page, pageSize int, search st
 	}
 
 	users := make([]*customer.User, 0, len(ms))
+	userIDs := make([]uint, 0, len(ms))
 	for i := range ms {
-		users = append(users, ms[i].ToDomain())
+		u := ms[i].ToDomain()
+		users = append(users, u)
+		userIDs = append(userIDs, u.ID)
+	}
+	if len(userIDs) > 0 {
+		var udList []model.UserDeviceModel
+		if err := r.db.WithContext(ctx).Where("user_id IN (?)", userIDs).Find(&udList).Error; err == nil {
+			devMap := make(map[uint][]string)
+			for _, ud := range udList {
+				devMap[ud.UserID] = append(devMap[ud.UserID], ud.DeviceID)
+			}
+			for _, u := range users {
+				u.AssignedDeviceIDs = devMap[u.ID]
+			}
+		}
 	}
 	return users, total, nil
 }
@@ -244,4 +280,70 @@ func (s *Store) SetUserActive(ctx context.Context, id uint, active bool) error {
 
 func (s *Store) FindUsersByRoles(ctx context.Context, roles []string, activeOnly bool) ([]*customer.User, error) {
 	return NewUserRepository(s.db).FindByRoles(ctx, roles, activeOnly)
+}
+
+func (r *UserRepository) AssignDevices(ctx context.Context, userID uint, deviceIDs []string, assignedBy *uint) error {
+	if userID == 0 {
+		return ErrInvalidArgument
+	}
+
+	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		if err := tx.Where("user_id = ?", userID).Delete(&model.UserDeviceModel{}).Error; err != nil {
+			return err
+		}
+
+		if len(deviceIDs) == 0 {
+			return nil
+		}
+
+		seen := make(map[string]bool)
+		var models []model.UserDeviceModel
+		for _, devID := range deviceIDs {
+			devID = strings.TrimSpace(devID)
+			if devID != "" && !seen[devID] {
+				seen[devID] = true
+				models = append(models, model.UserDeviceModel{
+					UserID:     userID,
+					DeviceID:   devID,
+					AssignedBy: assignedBy,
+				})
+			}
+		}
+
+		if len(models) > 0 {
+			if err := tx.Create(&models).Error; err != nil {
+				return err
+			}
+		}
+		return nil
+	})
+}
+
+func (r *UserRepository) GetAssignedDeviceIDs(ctx context.Context, userID uint) ([]string, error) {
+	if userID == 0 {
+		return nil, nil
+	}
+	var deviceIDs []string
+	err := r.db.WithContext(ctx).Model(&model.UserDeviceModel{}).
+		Where("user_id = ?", userID).
+		Order("device_id ASC").
+		Pluck("device_id", &deviceIDs).Error
+	if err != nil {
+		return nil, err
+	}
+	return deviceIDs, nil
+}
+
+func (r *UserRepository) IsDeviceAccessibleByUser(ctx context.Context, userID uint, deviceID string) (bool, error) {
+	if userID == 0 || deviceID == "" {
+		return false, nil
+	}
+	var count int64
+	err := r.db.WithContext(ctx).Model(&model.UserDeviceModel{}).
+		Where("user_id = ? AND device_id = ?", userID, deviceID).
+		Count(&count).Error
+	if err != nil {
+		return false, err
+	}
+	return count > 0, nil
 }

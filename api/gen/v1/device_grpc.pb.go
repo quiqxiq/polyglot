@@ -28,6 +28,9 @@ const (
 	DeviceService_StreamPing_FullMethodName             = "/polyglot.v1.DeviceService/StreamPing"
 	DeviceService_StreamInterfaceTraffic_FullMethodName = "/polyglot.v1.DeviceService/StreamInterfaceTraffic"
 	DeviceService_StreamTerminal_FullMethodName         = "/polyglot.v1.DeviceService/StreamTerminal"
+	DeviceService_GetDevicePingConfig_FullMethodName    = "/polyglot.v1.DeviceService/GetDevicePingConfig"
+	DeviceService_UpdateDevicePingConfig_FullMethodName = "/polyglot.v1.DeviceService/UpdateDevicePingConfig"
+	DeviceService_QueryDevicePingMetrics_FullMethodName = "/polyglot.v1.DeviceService/QueryDevicePingMetrics"
 )
 
 // DeviceServiceClient is the client API for DeviceService service.
@@ -45,6 +48,9 @@ type DeviceServiceClient interface {
 	StreamPing(ctx context.Context, in *StreamDevicePingRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamDevicePingFrame], error)
 	StreamInterfaceTraffic(ctx context.Context, in *StreamDeviceTrafficRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamDeviceTrafficFrame], error)
 	StreamTerminal(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[TerminalFrame, TerminalFrame], error)
+	GetDevicePingConfig(ctx context.Context, in *GetDevicePingConfigRequest, opts ...grpc.CallOption) (*GetDevicePingConfigResponse, error)
+	UpdateDevicePingConfig(ctx context.Context, in *UpdateDevicePingConfigRequest, opts ...grpc.CallOption) (*UpdateDevicePingConfigResponse, error)
+	QueryDevicePingMetrics(ctx context.Context, in *QueryDevicePingMetricsRequest, opts ...grpc.CallOption) (*QueryDevicePingMetricsResponse, error)
 }
 
 type deviceServiceClient struct {
@@ -175,6 +181,36 @@ func (c *deviceServiceClient) StreamTerminal(ctx context.Context, opts ...grpc.C
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type DeviceService_StreamTerminalClient = grpc.BidiStreamingClient[TerminalFrame, TerminalFrame]
 
+func (c *deviceServiceClient) GetDevicePingConfig(ctx context.Context, in *GetDevicePingConfigRequest, opts ...grpc.CallOption) (*GetDevicePingConfigResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetDevicePingConfigResponse)
+	err := c.cc.Invoke(ctx, DeviceService_GetDevicePingConfig_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceServiceClient) UpdateDevicePingConfig(ctx context.Context, in *UpdateDevicePingConfigRequest, opts ...grpc.CallOption) (*UpdateDevicePingConfigResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateDevicePingConfigResponse)
+	err := c.cc.Invoke(ctx, DeviceService_UpdateDevicePingConfig_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceServiceClient) QueryDevicePingMetrics(ctx context.Context, in *QueryDevicePingMetricsRequest, opts ...grpc.CallOption) (*QueryDevicePingMetricsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QueryDevicePingMetricsResponse)
+	err := c.cc.Invoke(ctx, DeviceService_QueryDevicePingMetrics_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeviceServiceServer is the server API for DeviceService service.
 // All implementations must embed UnimplementedDeviceServiceServer
 // for forward compatibility.
@@ -190,6 +226,9 @@ type DeviceServiceServer interface {
 	StreamPing(*StreamDevicePingRequest, grpc.ServerStreamingServer[StreamDevicePingFrame]) error
 	StreamInterfaceTraffic(*StreamDeviceTrafficRequest, grpc.ServerStreamingServer[StreamDeviceTrafficFrame]) error
 	StreamTerminal(grpc.BidiStreamingServer[TerminalFrame, TerminalFrame]) error
+	GetDevicePingConfig(context.Context, *GetDevicePingConfigRequest) (*GetDevicePingConfigResponse, error)
+	UpdateDevicePingConfig(context.Context, *UpdateDevicePingConfigRequest) (*UpdateDevicePingConfigResponse, error)
+	QueryDevicePingMetrics(context.Context, *QueryDevicePingMetricsRequest) (*QueryDevicePingMetricsResponse, error)
 	mustEmbedUnimplementedDeviceServiceServer()
 }
 
@@ -226,6 +265,15 @@ func (UnimplementedDeviceServiceServer) StreamInterfaceTraffic(*StreamDeviceTraf
 }
 func (UnimplementedDeviceServiceServer) StreamTerminal(grpc.BidiStreamingServer[TerminalFrame, TerminalFrame]) error {
 	return status.Error(codes.Unimplemented, "method StreamTerminal not implemented")
+}
+func (UnimplementedDeviceServiceServer) GetDevicePingConfig(context.Context, *GetDevicePingConfigRequest) (*GetDevicePingConfigResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetDevicePingConfig not implemented")
+}
+func (UnimplementedDeviceServiceServer) UpdateDevicePingConfig(context.Context, *UpdateDevicePingConfigRequest) (*UpdateDevicePingConfigResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateDevicePingConfig not implemented")
+}
+func (UnimplementedDeviceServiceServer) QueryDevicePingMetrics(context.Context, *QueryDevicePingMetricsRequest) (*QueryDevicePingMetricsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method QueryDevicePingMetrics not implemented")
 }
 func (UnimplementedDeviceServiceServer) mustEmbedUnimplementedDeviceServiceServer() {}
 func (UnimplementedDeviceServiceServer) testEmbeddedByValue()                       {}
@@ -378,6 +426,60 @@ func _DeviceService_StreamTerminal_Handler(srv interface{}, stream grpc.ServerSt
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type DeviceService_StreamTerminalServer = grpc.BidiStreamingServer[TerminalFrame, TerminalFrame]
 
+func _DeviceService_GetDevicePingConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDevicePingConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServiceServer).GetDevicePingConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeviceService_GetDevicePingConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServiceServer).GetDevicePingConfig(ctx, req.(*GetDevicePingConfigRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeviceService_UpdateDevicePingConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateDevicePingConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServiceServer).UpdateDevicePingConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeviceService_UpdateDevicePingConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServiceServer).UpdateDevicePingConfig(ctx, req.(*UpdateDevicePingConfigRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeviceService_QueryDevicePingMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryDevicePingMetricsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServiceServer).QueryDevicePingMetrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeviceService_QueryDevicePingMetrics_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServiceServer).QueryDevicePingMetrics(ctx, req.(*QueryDevicePingMetricsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DeviceService_ServiceDesc is the grpc.ServiceDesc for DeviceService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -404,6 +506,18 @@ var DeviceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TestDeviceConnection",
 			Handler:    _DeviceService_TestDeviceConnection_Handler,
+		},
+		{
+			MethodName: "GetDevicePingConfig",
+			Handler:    _DeviceService_GetDevicePingConfig_Handler,
+		},
+		{
+			MethodName: "UpdateDevicePingConfig",
+			Handler:    _DeviceService_UpdateDevicePingConfig_Handler,
+		},
+		{
+			MethodName: "QueryDevicePingMetrics",
+			Handler:    _DeviceService_QueryDevicePingMetrics_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

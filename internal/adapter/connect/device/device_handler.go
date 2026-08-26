@@ -7,7 +7,10 @@ import (
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
 
+	"strings"
+
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
@@ -21,19 +24,33 @@ type DriverGetter func(ctx context.Context, deviceID string) (port.DeviceDriver,
 type DeviceConnectHandler struct {
 	useCase      *deviceUC.ManageDeviceUseCase
 	openTermUC   *network.OpenTerminalUseCase
+	metricsUC    *deviceUC.ManageMetricsUseCase
 	driverGetter DriverGetter
 }
 
-func NewDeviceConnectHandler(uc *deviceUC.ManageDeviceUseCase, openTermUC *network.OpenTerminalUseCase, getter DriverGetter) *DeviceConnectHandler {
+func NewDeviceConnectHandler(
+	uc *deviceUC.ManageDeviceUseCase,
+	openTermUC *network.OpenTerminalUseCase,
+	getter DriverGetter,
+	metricsUC *deviceUC.ManageMetricsUseCase,
+) *DeviceConnectHandler {
 	return &DeviceConnectHandler{
 		useCase:      uc,
 		openTermUC:   openTermUC,
 		driverGetter: getter,
+		metricsUC:    metricsUC,
 	}
 }
 
 func (h *DeviceConnectHandler) ListDevices(ctx context.Context, req *connect.Request[devicepb.ListDevicesRequest]) (*connect.Response[devicepb.ListDevicesResponse], error) {
-	devices, err := h.useCase.ListDevices(ctx)
+	callerID, callerRoles, hasIdentity := iauth.IdentityFromContext(ctx)
+	var devices []device.Device
+	var err error
+	if hasIdentity {
+		devices, err = h.useCase.ListDevicesForUser(ctx, callerID, callerRoles)
+	} else {
+		devices, err = h.useCase.ListDevices(ctx)
+	}
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
@@ -51,12 +68,39 @@ func (h *DeviceConnectHandler) GetDevice(ctx context.Context, req *connect.Reque
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device id is required"))
 	}
 
+	callerID, callerRoles, hasIdentity := iauth.IdentityFromContext(ctx)
+	if hasIdentity && !isOwnerRole(callerRoles) {
+		accessible, err := h.useCase.ListDevicesForUser(ctx, callerID, callerRoles)
+		if err != nil {
+			return nil, response.MapDomainError(err)
+		}
+		found := false
+		for _, dev := range accessible {
+			if dev.ID == req.Msg.Id {
+				found = true
+				break
+			}
+		}
+		if !found {
+			return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("access to device %s denied", req.Msg.Id))
+		}
+	}
+
 	d, err := h.useCase.GetDevice(ctx, req.Msg.Id)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 
 	return connect.NewResponse(&devicepb.GetDeviceResponse{Device: DomainToPb(d)}), nil
+}
+
+func isOwnerRole(roles []string) bool {
+	for _, r := range roles {
+		if strings.EqualFold(r, "owner") {
+			return true
+		}
+	}
+	return false
 }
 
 func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Request[devicepb.UpdateDeviceRequest]) (*connect.Response[devicepb.UpdateDeviceResponse], error) {

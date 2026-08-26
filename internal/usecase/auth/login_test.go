@@ -119,6 +119,32 @@ func (m *mockUserRepo) List(ctx context.Context, offset, limit int, search strin
 	return list, int64(len(list)), nil
 }
 
+func (m *mockUserRepo) AssignDevices(ctx context.Context, userID uint, deviceIDs []string, assignedBy *uint) error {
+	if u, ok := m.users[userID]; ok {
+		u.AssignedDeviceIDs = deviceIDs
+		return nil
+	}
+	return authUC.ErrUserNotFound
+}
+
+func (m *mockUserRepo) GetAssignedDeviceIDs(ctx context.Context, userID uint) ([]string, error) {
+	if u, ok := m.users[userID]; ok {
+		return u.AssignedDeviceIDs, nil
+	}
+	return nil, nil
+}
+
+func (m *mockUserRepo) IsDeviceAccessibleByUser(ctx context.Context, userID uint, deviceID string) (bool, error) {
+	if u, ok := m.users[userID]; ok {
+		for _, d := range u.AssignedDeviceIDs {
+			if d == deviceID {
+				return true, nil
+			}
+		}
+	}
+	return false, nil
+}
+
 func TestAuthUseCase_UpdateProfileAndChangePassword(t *testing.T) {
 	ctx := context.Background()
 	userRepo := newMockUserRepo()

@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreateUserRequest, CreateUserResponse, DeleteUserRequest, DeleteUserResponse, ListUsersRequest, ListUsersResponse, ResetPasswordRequest, ResetPasswordResponse, ToggleActiveRequest, ToggleActiveResponse, UpdateUserRequest, UpdateUserResponse } from "./users_pb.js";
+import { AssignDevicesRequest, AssignDevicesResponse, CreateUserRequest, CreateUserResponse, DeleteUserRequest, DeleteUserResponse, ListUserDevicesRequest, ListUserDevicesResponse, ListUsersRequest, ListUsersResponse, ResetPasswordRequest, ResetPasswordResponse, ToggleActiveRequest, ToggleActiveResponse, UpdateUserRequest, UpdateUserResponse } from "./users_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -64,6 +64,24 @@ export const UserService = {
       name: "DeleteUser",
       I: DeleteUserRequest,
       O: DeleteUserResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.UserService.AssignDevicesToUser
+     */
+    assignDevicesToUser: {
+      name: "AssignDevicesToUser",
+      I: AssignDevicesRequest,
+      O: AssignDevicesResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.UserService.ListUserAccessibleDevices
+     */
+    listUserAccessibleDevices: {
+      name: "ListUserAccessibleDevices",
+      I: ListUserDevicesRequest,
+      O: ListUserDevicesResponse,
       kind: MethodKind.Unary,
     },
   }

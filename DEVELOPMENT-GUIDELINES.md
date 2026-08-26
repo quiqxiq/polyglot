@@ -118,6 +118,7 @@ flowchart TD
 | `api/gen/v1/` | Generated Code dari Buf / Protoc | `*.pb.go`, `*_connect.pb.go` | `api/gen/v1/device.pb.go` |
 | `cmd/server/` | Main entrypoint aplikasi server | `main.go` | `cmd/server/main.go` |
 | `cmd/probe/` | Main entrypoint probe agent remote | `main.go` | `cmd/probe/main.go` |
+| `cmd/seed/` | Database & RBAC data seeder | `main.go` | `cmd/seed/main.go` |
 | `internal/app/` | Dependency Injection & ServeMux Bootstrap | `app.go`, `*_test.go` | `internal/app/app.go` |
 | `internal/config/` | Konfigurasi Environment & Defaults | `config.go` | `internal/config/config.go` |
 | `internal/domain/<domain>/` | Struct entitas murni, enum, domain error | `<domain>.go`, `errors.go` | `internal/domain/device/device.go` |

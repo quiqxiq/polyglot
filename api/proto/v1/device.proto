@@ -18,6 +18,10 @@ message Device {
   repeated string tags = 10;
   bool enabled = 11;
   int32 ssh_port = 12;
+  bool ping_enabled = 13;
+  string ping_target = 14;
+  int32 ping_retention_days = 15;
+  map<string, string> extra = 16;
 }
 
 message ListDevicesRequest {}
@@ -164,6 +168,64 @@ message StreamDeviceTrafficFrame {
   int64 tx_bps = 4;
 }
 
+message DevicePingConfig {
+  bool enabled = 1;
+  string target = 2;
+  int32 retention_days = 3;
+}
+
+message GetDevicePingConfigRequest {
+  string device_id = 1;
+}
+
+message GetDevicePingConfigResponse {
+  DevicePingConfig config = 1;
+  bool timescaledb_available = 2;
+}
+
+message UpdateDevicePingConfigRequest {
+  string device_id = 1;
+  DevicePingConfig config = 2;
+}
+
+message UpdateDevicePingConfigResponse {
+  DevicePingConfig config = 1;
+  string message = 2;
+}
+
+message QueryDevicePingMetricsRequest {
+  string device_id = 1;
+  string start_time = 2;
+  string end_time = 3;
+  string bucket_interval = 4;
+}
+
+message PingMetricPointData {
+  string timestamp = 1;
+  string target = 2;
+  int32 seq = 3;
+  int32 size = 4;
+  int32 ttl = 5;
+  float rtt_ms = 6;
+  string status = 7;
+  int32 sent = 8;
+  int32 received = 9;
+  int32 packet_loss = 10;
+  float min_rtt_ms = 11;
+  float avg_rtt_ms = 12;
+  float max_rtt_ms = 13;
+}
+
+message QueryDevicePingMetricsResponse {
+  repeated PingMetricPointData points = 1;
+  float min_rtt = 2;
+  float avg_rtt = 3;
+  float max_rtt = 4;
+  float packet_loss_pct = 5;
+  int64 total_samples = 6;
+  bool timescaledb_available = 7;
+}
+
 // DeviceService defines gRPC procedures for network device inventory and streaming telemetry.
 service DeviceService {
   rpc ListDevices(ListDevicesRequest) returns (ListDevicesResponse);
@@ -175,4 +237,7 @@ service DeviceService {
   rpc StreamPing(StreamDevicePingRequest) returns (stream StreamDevicePingFrame);
   rpc StreamInterfaceTraffic(StreamDeviceTrafficRequest) returns (stream StreamDeviceTrafficFrame);
   rpc StreamTerminal(stream TerminalFrame) returns (stream TerminalFrame);
+  rpc GetDevicePingConfig(GetDevicePingConfigRequest) returns (GetDevicePingConfigResponse);
+  rpc UpdateDevicePingConfig(UpdateDevicePingConfigRequest) returns (UpdateDevicePingConfigResponse);
+  rpc QueryDevicePingMetrics(QueryDevicePingMetricsRequest) returns (QueryDevicePingMetricsResponse);
 }

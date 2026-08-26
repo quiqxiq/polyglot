@@ -64,3 +64,64 @@ export function useTestConnectionMutation() {
     },
   })
 }
+
+export function useDevicePingConfigQuery(deviceId: string, enabled = true) {
+  return useQuery({
+    queryKey: [...deviceKeys.detail(deviceId), 'ping-config'],
+    queryFn: async () => {
+      return await deviceClient.getDevicePingConfig({ deviceId })
+    },
+    enabled: Boolean(deviceId) && enabled,
+  })
+}
+
+export function useUpdateDevicePingConfigMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: { deviceId: string; enabled: boolean; target: string; retentionDays: number }) => {
+      return await deviceClient.updateDevicePingConfig({
+        deviceId: req.deviceId,
+        config: {
+          enabled: req.enabled,
+          target: req.target,
+          retentionDays: req.retentionDays,
+        },
+      })
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: deviceKeys.lists() })
+      queryClient.invalidateQueries({ queryKey: deviceKeys.detail(variables.deviceId) })
+      queryClient.invalidateQueries({ queryKey: [...deviceKeys.detail(variables.deviceId), 'ping-config'] })
+    },
+  })
+}
+
+export function useDevicePingMetricsQuery(
+  req: {
+    deviceId: string
+    startTime?: string
+    endTime?: string
+    bucketInterval?: string
+  },
+  enabled = true
+) {
+  return useQuery({
+    queryKey: [
+      ...deviceKeys.detail(req.deviceId),
+      'ping-metrics',
+      req.startTime,
+      req.endTime,
+      req.bucketInterval,
+    ],
+    queryFn: async () => {
+      return await deviceClient.queryDevicePingMetrics({
+        deviceId: req.deviceId,
+        startTime: req.startTime,
+        endTime: req.endTime,
+        bucketInterval: req.bucketInterval,
+      })
+    },
+    enabled: Boolean(req.deviceId) && enabled,
+  })
+}

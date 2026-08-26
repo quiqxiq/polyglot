@@ -19,6 +19,7 @@ type BaseNavItem = {
   // Permission Casbin yang dibutuhkan (mis. "user:read"). Item tanpa
   // permission selalu tampil untuk user yang sudah login.
   permission?: string
+  disabled?: boolean
 }
 
 type NavLink = BaseNavItem & {

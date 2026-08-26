@@ -25,8 +25,9 @@ services:
         condition: service_healthy
 
   postgres:
-    image: docker.io/library/postgres:16-alpine
+    image: timescale/timescaledb:latest-pg16
     container_name: polyglot-postgres-prod
+    command: postgres -c shared_preload_libraries=timescaledb
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}

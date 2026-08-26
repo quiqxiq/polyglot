@@ -29,7 +29,8 @@ func MapDomainError(err error) error {
 	}
 
 	// PermissionDenied: kebijakan usecase menolak eksekusi.
-	if errors.Is(err, networkuc.ErrDenied) {
+	if errors.Is(err, networkuc.ErrDenied) ||
+		errors.Is(err, device.ErrUnauthorized) {
 		return connect.NewError(connect.CodePermissionDenied, err)
 	}
 

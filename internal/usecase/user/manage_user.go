@@ -25,8 +25,9 @@ var (
 	ErrCannotModifyAdmin              = errors.New("admin account can only be modified by itself or owner")
 	ErrAdminCannotCreateAdminOrOwner  = errors.New("admin can only create accounts with role agent or teknisi")
 	ErrAdminCannotAssignAdminOrOwner  = errors.New("admin can only assign role agent or teknisi")
-	ErrCannotAssignOwnerRole          = errors.New("only owner can assign owner role")
-	ErrLastOwnerDemotion              = errors.New("system requires at least one active owner account")
+	ErrCannotAssignOwnerRole         = errors.New("only owner can assign owner role")
+	ErrLastOwnerDemotion             = errors.New("system requires at least one active owner account")
+	ErrUnauthorizedDeviceAssignment  = errors.New("cannot assign device outside your assigned devices")
 )
 
 var KnownRoles = map[string]bool{
@@ -104,11 +105,32 @@ func (u *ManageUserUseCase) countActiveOwners(ctx context.Context) (int, error) 
 	return count, nil
 }
 
+func (u *ManageUserUseCase) validateDeviceAssignments(ctx context.Context, actorID uint, actorRoles []string, deviceIDs []string) error {
+	if len(deviceIDs) == 0 || isOwnerRole(actorRoles) {
+		return nil
+	}
+	for _, devID := range deviceIDs {
+		devID = strings.TrimSpace(devID)
+		if devID == "" {
+			continue
+		}
+		accessible, err := u.repo.IsDeviceAccessibleByUser(ctx, actorID, devID)
+		if err != nil {
+			return err
+		}
+		if !accessible {
+			return fmt.Errorf("%w: device %s", ErrUnauthorizedDeviceAssignment, devID)
+		}
+	}
+	return nil
+}
+
 func (u *ManageUserUseCase) CreateUser(
 	ctx context.Context,
 	actorID uint,
 	actorRoles []string,
 	username, email, password, role, fullName, phoneNumber, specialization string,
+	assignedDeviceIDs []string,
 ) (*customer.User, error) {
 	username = strings.TrimSpace(username)
 	email = strings.TrimSpace(email)
@@ -129,6 +151,10 @@ func (u *ManageUserUseCase) CreateUser(
 		if role == "owner" || role == "admin" {
 			return nil, ErrAdminCannotCreateAdminOrOwner
 		}
+	}
+
+	if err := u.validateDeviceAssignments(ctx, actorID, actorRoles, assignedDeviceIDs); err != nil {
+		return nil, err
 	}
 
 	if existing, _ := u.repo.FindByUsername(ctx, username); existing != nil {
@@ -164,6 +190,18 @@ func (u *ManageUserUseCase) CreateUser(
 		_, _ = u.roles.AddRoleForUser(fmt.Sprintf("%d", newUser.ID), role)
 	}
 
+	if len(assignedDeviceIDs) > 0 {
+		var assignedBy *uint
+		if actorID > 0 {
+			assignedBy = &actorID
+		}
+		if err := u.repo.AssignDevices(ctx, newUser.ID, assignedDeviceIDs, assignedBy); err != nil {
+			logger.WithComponent("UserUseCase").Errorf("failed to assign devices to new user %d: %v", newUser.ID, err)
+		} else {
+			newUser.AssignedDeviceIDs = assignedDeviceIDs
+		}
+	}
+
 	logger.WithComponent("UserUseCase").WithFields(map[string]any{
 		"username": username,
 		"role":     role,
@@ -178,6 +216,7 @@ func (u *ManageUserUseCase) UpdateUser(
 	actorRoles []string,
 	targetID uint,
 	username, email, role, fullName, phoneNumber, specialization string,
+	assignedDeviceIDs []string,
 ) (*customer.User, error) {
 	targetUser, err := u.repo.FindByID(ctx, targetID)
 	if err != nil {
@@ -256,11 +295,83 @@ func (u *ManageUserUseCase) UpdateUser(
 		_, _ = u.roles.AddRoleForUser(fmt.Sprintf("%d", targetID), role)
 	}
 
+	if len(assignedDeviceIDs) > 0 || actorIsOwner {
+		if err := u.validateDeviceAssignments(ctx, actorID, actorRoles, assignedDeviceIDs); err != nil {
+			return nil, err
+		}
+		var assignedBy *uint
+		if actorID > 0 {
+			assignedBy = &actorID
+		}
+		if err := u.repo.AssignDevices(ctx, targetID, assignedDeviceIDs, assignedBy); err != nil {
+			logger.WithComponent("UserUseCase").Errorf("failed to update device assignments for user %d: %v", targetID, err)
+		} else {
+			targetUser.AssignedDeviceIDs = assignedDeviceIDs
+		}
+	}
+
 	logger.WithComponent("UserUseCase").WithFields(map[string]any{
 		"target_id": targetID,
 		"actor_id":  actorID,
 	}).Info("user updated successfully")
 	return targetUser, nil
+}
+
+func (u *ManageUserUseCase) AssignDevicesToUser(
+	ctx context.Context,
+	actorID uint,
+	actorRoles []string,
+	targetUserID uint,
+	deviceIDs []string,
+) ([]string, error) {
+	if targetUserID == 0 {
+		return nil, ErrUserNotFound
+	}
+	targetUser, err := u.repo.FindByID(ctx, targetUserID)
+	if err != nil {
+		return nil, ErrUserNotFound
+	}
+
+	actorIsOwner := isOwnerRole(actorRoles)
+	if strings.EqualFold(targetUser.Role, "owner") && !actorIsOwner {
+		return nil, ErrCannotModifyOwner
+	}
+	if strings.EqualFold(targetUser.Role, "admin") && !actorIsOwner && actorID != targetUserID {
+		return nil, ErrCannotModifyAdmin
+	}
+
+	if err := u.validateDeviceAssignments(ctx, actorID, actorRoles, deviceIDs); err != nil {
+		return nil, err
+	}
+
+	var assignedBy *uint
+	if actorID > 0 {
+		assignedBy = &actorID
+	}
+	if err := u.repo.AssignDevices(ctx, targetUserID, deviceIDs, assignedBy); err != nil {
+		return nil, err
+	}
+
+	return u.repo.GetAssignedDeviceIDs(ctx, targetUserID)
+}
+
+func (u *ManageUserUseCase) ListUserAccessibleDevices(
+	ctx context.Context,
+	actorID uint,
+	actorRoles []string,
+	targetUserID uint,
+) ([]string, error) {
+	if targetUserID == 0 {
+		targetUserID = actorID
+	}
+	targetUser, err := u.repo.FindByID(ctx, targetUserID)
+	if err != nil {
+		return nil, ErrUserNotFound
+	}
+	if strings.EqualFold(targetUser.Role, "owner") {
+		return []string{"*"}, nil
+	}
+	return u.repo.GetAssignedDeviceIDs(ctx, targetUserID)
 }
 
 func (u *ManageUserUseCase) DeleteUser(ctx context.Context, actorID uint, actorRoles []string, targetID uint) error {

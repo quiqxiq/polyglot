@@ -109,6 +109,9 @@ func (h *DeviceConnectHandler) StreamPing(
 
 	pingTarget := req.Msg.Address
 	if pingTarget == "" {
+		pingTarget = dev.PingConfig().Target
+	}
+	if pingTarget == "" {
 		pingTarget = dev.Host
 	}
 	if hostOnly, _, err := net.SplitHostPort(pingTarget); err == nil {

@@ -112,6 +112,15 @@ func (m *mockUserRepoForRateLimit) Count(ctx context.Context) (int64, error) {
 func (m *mockUserRepoForRateLimit) List(ctx context.Context, offset, limit int, search string) ([]*customer.User, int64, error) {
 	return m.users, int64(len(m.users)), nil
 }
+func (m *mockUserRepoForRateLimit) AssignDevices(ctx context.Context, userID uint, deviceIDs []string, assignedBy *uint) error {
+	return nil
+}
+func (m *mockUserRepoForRateLimit) GetAssignedDeviceIDs(ctx context.Context, userID uint) ([]string, error) {
+	return nil, nil
+}
+func (m *mockUserRepoForRateLimit) IsDeviceAccessibleByUser(ctx context.Context, userID uint, deviceID string) (bool, error) {
+	return true, nil
+}
 
 func TestRateLimiter_NormalChatAllowed(t *testing.T) {
 	cache := newMockCacheStore()

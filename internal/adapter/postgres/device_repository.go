@@ -89,6 +89,26 @@ func (r *DeviceRepository) Delete(ctx context.Context, id string) error {
 	})
 }
 
+// FindByUserScope returns only devices assigned to the specified user.
+func (r *DeviceRepository) FindByUserScope(ctx context.Context, userID uint) ([]device.Device, error) {
+	var list []model.DeviceModel
+	err := r.db.WithContext(ctx).
+		Table("devices").
+		Joins("INNER JOIN user_devices ON CAST(user_devices.device_id AS text) = CAST(devices.id AS text)").
+		Where("user_devices.user_id = ?", userID).
+		Order("devices.created_at desc").
+		Find(&list).Error
+	if err != nil {
+		return nil, err
+	}
+
+	result := make([]device.Device, len(list))
+	for i, m := range list {
+		result[i] = m.ToDomain()
+	}
+	return result, nil
+}
+
 // Get implements port.CredentialVault: retrieves decrypted credentials for a device.
 func (v *CredentialVault) Get(ctx context.Context, deviceID string) (device.Credentials, error) {
 	var m model.CredentialModel

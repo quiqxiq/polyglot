@@ -77,7 +77,7 @@ func TestEnforceRoleMatrix(t *testing.T) {
 		{"agent CANNOT manage rbac", "1003", "rbac:manage", false},
 
 		{"teknisi can read device", "1004", "device:read", true},
-		{"teknisi can device command", "1004", "device:command", true},
+		{"teknisi can device diagnostic", "1004", "device:diagnostic:exec", true},
 		{"teknisi CANNOT manage device", "1004", "device:manage", false},
 		{"teknisi can read conversation", "1004", "conversation:read", true},
 		{"teknisi can read skill", "1004", "skill:read", true},

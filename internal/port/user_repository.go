@@ -20,4 +20,7 @@ type UserRepository interface {
 	Delete(ctx context.Context, id uint) error
 	UpdatePassword(ctx context.Context, id uint, passwordHash string) error
 	UpdateStatus(ctx context.Context, id uint, isActive bool) error
+	AssignDevices(ctx context.Context, userID uint, deviceIDs []string, assignedBy *uint) error
+	GetAssignedDeviceIDs(ctx context.Context, userID uint) ([]string, error)
+	IsDeviceAccessibleByUser(ctx context.Context, userID uint, deviceID string) (bool, error)
 }

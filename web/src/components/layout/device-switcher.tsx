@@ -17,12 +17,15 @@ import {
 } from '@/components/ui/sidebar'
 import { useDevicesQuery } from '@/features/devices/api/use-devices'
 import { useDeviceStore } from '@/stores/device-store'
+import { useAuthStore } from '@/stores/auth-store'
 
 export function DeviceSwitcher() {
   const { isMobile } = useSidebar()
   const navigate = useNavigate()
   const { data: devices = [], isLoading } = useDevicesQuery()
   const { selectedDeviceId, setSelectedDeviceId } = useDeviceStore()
+
+  const isOwner = Boolean(useAuthStore((s) => s.auth.user?.role?.includes('owner')))
 
   // Otomatis pilih device pertama jika belum ada yang terpilih dan daftar device tersedia
   useEffect(() => {
@@ -31,6 +34,8 @@ export function DeviceSwitcher() {
       if (!selectedDeviceId || !exists) {
         setSelectedDeviceId(devices[0].id)
       }
+    } else if (selectedDeviceId) {
+      setSelectedDeviceId('')
     }
   }, [devices, selectedDeviceId, setSelectedDeviceId])
 
@@ -54,10 +59,16 @@ export function DeviceSwitcher() {
                     ? 'Loading routers...'
                     : currentDevice
                       ? currentDevice.name
-                      : 'No Router Selected'}
+                      : devices.length === 0
+                        ? 'No Assigned Router'
+                        : 'No Router Selected'}
                 </span>
                 <span className='truncate text-xs text-muted-foreground'>
-                  {currentDevice ? `${currentDevice.host} (${currentDevice.vendor})` : 'Select MikroTik'}
+                  {currentDevice
+                    ? `${currentDevice.host} (${currentDevice.vendor})`
+                    : devices.length === 0
+                      ? 'No access assigned'
+                      : 'Select MikroTik'}
                 </span>
               </div>
               <ChevronsUpDown className='ms-auto' />
@@ -73,8 +84,13 @@ export function DeviceSwitcher() {
               Active Routers / Sessions
             </DropdownMenuLabel>
             {devices.length === 0 ? (
-              <div className='p-2 text-xs text-muted-foreground text-center'>
-                No routers found. Add one in Devices.
+              <div className='p-3 text-xs text-muted-foreground text-center space-y-1'>
+                <p className='font-medium text-foreground'>No Assigned Routers</p>
+                <p className='text-[11px] leading-snug'>
+                  {isOwner
+                    ? 'No routers found in inventory. Add one in Devices.'
+                    : 'You do not have any assigned MikroTik routers. Contact Owner or Admin.'}
+                </p>
               </div>
             ) : (
               devices.map((device) => (
@@ -97,16 +113,20 @@ export function DeviceSwitcher() {
                 </DropdownMenuItem>
               ))
             )}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className='gap-2 p-2 cursor-pointer'
-              onClick={() => navigate({ to: '/devices' })}
-            >
-              <div className='flex size-6 items-center justify-center rounded-md border bg-background'>
-                <Plus className='size-4' />
-              </div>
-              <div className='font-medium text-muted-foreground'>Manage Devices</div>
-            </DropdownMenuItem>
+            {isOwner && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className='gap-2 p-2 cursor-pointer'
+                  onClick={() => navigate({ to: '/devices' })}
+                >
+                  <div className='flex size-6 items-center justify-center rounded-md border bg-background'>
+                    <Plus className='size-4' />
+                  </div>
+                  <div className='font-medium text-muted-foreground'>Manage Devices</div>
+                </DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

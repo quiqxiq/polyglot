@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/device"
@@ -95,6 +96,20 @@ func (uc *ManageDeviceUseCase) GetDevice(ctx context.Context, id string) (device
 // ListDevices returns all registered device inventory records.
 func (uc *ManageDeviceUseCase) ListDevices(ctx context.Context) ([]device.Device, error) {
 	return uc.repo.FindAll(ctx)
+}
+
+// ListDevicesForUser returns device inventory records accessible to the specified user.
+// Users with role 'owner' get all devices, while non-owners get only assigned devices.
+func (uc *ManageDeviceUseCase) ListDevicesForUser(ctx context.Context, userID uint, userRoles []string) ([]device.Device, error) {
+	for _, r := range userRoles {
+		if strings.EqualFold(r, "owner") {
+			return uc.repo.FindAll(ctx)
+		}
+	}
+	if userID == 0 {
+		return []device.Device{}, nil
+	}
+	return uc.repo.FindByUserScope(ctx, userID)
 }
 
 // UpdateDevice updates a device inventory record and its credentials.

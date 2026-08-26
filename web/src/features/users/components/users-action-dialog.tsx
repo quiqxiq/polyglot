@@ -12,6 +12,7 @@ import {
 import { toast } from 'sonner'
 import { useAuthStore } from '@/stores/auth-store'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Dialog,
   DialogContent,
@@ -31,8 +32,10 @@ import {
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/password-input'
 import { SelectDropdown } from '@/components/select-dropdown'
+import { useDevicesQuery } from '@/features/devices/api/use-devices'
 import { useCreateUserMutation, useUpdateUserMutation } from '../api/use-users'
 import { ROLE_OPTIONS } from '../data/roles'
+import { cn } from '@/lib/utils'
 
 const formSchema = z.object({
   username: z.string().min(1, 'Username is required.'),
@@ -42,6 +45,7 @@ const formSchema = z.object({
   phoneNumber: z.string().optional(),
   specialization: z.string().optional(),
   password: z.string().optional(),
+  assignedDeviceIds: z.array(z.string()),
 })
 
 type UserForm = z.infer<typeof formSchema>
@@ -60,6 +64,7 @@ export function UsersActionDialog({
   const isEdit = !!currentRow
   const createMutation = useCreateUserMutation()
   const updateMutation = useUpdateUserMutation()
+  const { data: devices = [] } = useDevicesQuery()
 
   const currentUser = useAuthStore((s) => s.auth.user)
   const isCurrentUserOwner = Boolean(currentUser?.role?.includes('owner'))
@@ -88,6 +93,7 @@ export function UsersActionDialog({
       phoneNumber: '',
       specialization: '',
       password: '',
+      assignedDeviceIds: [],
     },
   })
 
@@ -102,6 +108,7 @@ export function UsersActionDialog({
           phoneNumber: currentRow.phoneNumber ?? '',
           specialization: currentRow.specialization ?? '',
           password: '',
+          assignedDeviceIds: currentRow.assignedDeviceIds ?? [],
         })
       } else {
         form.reset({
@@ -112,13 +119,17 @@ export function UsersActionDialog({
           phoneNumber: '',
           specialization: '',
           password: '',
+          assignedDeviceIds: [],
         })
       }
     }
   }, [open, currentRow, form])
 
+  const selectedRole = form.watch('role')
+
   async function onSubmit(values: UserForm) {
     try {
+      const assigned = values.role === 'owner' ? [] : (values.assignedDeviceIds ?? [])
       if (isEdit && currentRow) {
         await updateMutation.mutateAsync(
           new UpdateUserRequest({
@@ -129,6 +140,7 @@ export function UsersActionDialog({
             fullName: values.fullName ?? '',
             phoneNumber: values.phoneNumber ?? '',
             specialization: values.specialization ?? '',
+            assignedDeviceIds: assigned,
           })
         )
         toast.success(`User ${values.username} updated`)
@@ -142,6 +154,7 @@ export function UsersActionDialog({
             fullName: values.fullName ?? '',
             phoneNumber: values.phoneNumber ?? '',
             specialization: values.specialization ?? '',
+            assignedDeviceIds: assigned,
           })
         )
         toast.success(`User ${values.username} created`)
@@ -291,6 +304,92 @@ export function UsersActionDialog({
                 </FormItem>
               )}
             />
+            {selectedRole === 'owner' ? (
+              <div className='rounded-lg bg-purple-500/10 p-3 text-xs text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40 space-y-1'>
+                <p className='font-semibold'>Hak Akses Global Owner</p>
+                <p className='text-[11px] leading-relaxed text-muted-foreground dark:text-purple-300/80'>
+                  Akun dengan role Owner secara otomatis memiliki akses penuh ke seluruh router MikroTik (Global Scope).
+                </p>
+              </div>
+            ) : (
+              <FormField
+                control={form.control}
+                name='assignedDeviceIds'
+                render={({ field }) => (
+                  <FormItem className='space-y-2 rounded-lg border p-3 bg-muted/20'>
+                    <div className='flex items-center justify-between'>
+                      <div>
+                        <FormLabel className='text-xs font-semibold uppercase tracking-wider text-muted-foreground'>
+                          Assigned MikroTik Routers
+                        </FormLabel>
+                        <p className='text-[11px] text-muted-foreground'>
+                          {isCurrentUserOwner
+                            ? 'Pilih router mana saja yang dapat diakses oleh user ini.'
+                            : 'Pilih router dari daftar router yang Anda kelola.'}
+                        </p>
+                      </div>
+                      {devices.length > 0 && (
+                        <Button
+                          type='button'
+                          variant='ghost'
+                          size='sm'
+                          className='h-6 px-2 text-[11px]'
+                          onClick={() => {
+                            const allIds = devices.map((d) => d.id)
+                            const isAllSelected = allIds.every((id) => field.value?.includes(id))
+                            field.onChange(isAllSelected ? [] : allIds)
+                          }}
+                        >
+                          {devices.every((d) => field.value?.includes(d.id)) ? 'Deselect All' : 'Select All'}
+                        </Button>
+                      )}
+                    </div>
+                    {devices.length === 0 ? (
+                      <div className='py-2 text-center text-xs text-muted-foreground italic'>
+                        Tidak ada router yang tersedia untuk di-assign.
+                      </div>
+                    ) : (
+                      <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 max-h-40 overflow-y-auto pr-1'>
+                        {devices.map((device) => {
+                          const isChecked = field.value?.includes(device.id)
+                          return (
+                            <label
+                              key={device.id}
+                              className={cn(
+                                'flex items-start gap-2.5 p-2 rounded-md border text-xs cursor-pointer transition-colors',
+                                isChecked
+                                  ? 'border-primary/50 bg-primary/5 font-medium'
+                                  : 'border-border/60 hover:bg-muted/40'
+                              )}
+                            >
+                              <Checkbox
+                                checked={isChecked}
+                                onCheckedChange={(checked) => {
+                                  const current = field.value ?? []
+                                  if (checked) {
+                                    field.onChange([...current, device.id])
+                                  } else {
+                                    field.onChange(current.filter((id) => id !== device.id))
+                                  }
+                                }}
+                                className='mt-0.5'
+                              />
+                              <div className='flex flex-col min-w-0 flex-1'>
+                                <span className='truncate text-foreground'>{device.name}</span>
+                                <span className='truncate text-[10px] text-muted-foreground'>
+                                  {device.host} ({device.vendor || 'mikrotik'})
+                                </span>
+                              </div>
+                            </label>
+                          )
+                        })}
+                      </div>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             {!isEdit && (
               <FormField
                 control={form.control}

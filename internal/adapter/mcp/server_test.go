@@ -108,6 +108,10 @@ func (r *memDeviceRepo) Update(ctx context.Context, d device.Device) error {
 	return r.Save(ctx, d)
 }
 
+func (r *memDeviceRepo) FindByUserScope(ctx context.Context, userID uint) ([]device.Device, error) {
+	return r.FindAll(ctx)
+}
+
 func (r *memDeviceRepo) Delete(_ context.Context, id string) error {
 	delete(r.devices, id)
 	return nil
