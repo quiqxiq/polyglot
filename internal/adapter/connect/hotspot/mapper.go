@@ -2,12 +2,11 @@ package hotspot
 
 import (
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-// ToProtoHotspotUsers converts mikrotik user list to proto list.
-func ToProtoHotspotUsers(users []mikrotik.HotspotUser) []*devicepb.HotspotUser {
+// ToProtoHotspotUsers converts hotspot user list to proto list.
+func ToProtoHotspotUsers(users []port.HotspotUser) []*devicepb.HotspotUser {
 	pbUsers := make([]*devicepb.HotspotUser, len(users))
 	for i, u := range users {
 		pbUsers[i] = ToProtoHotspotUser(u)
@@ -26,8 +25,8 @@ func ToProtoHotspotActiveSession(s port.HotspotActiveSession) *devicepb.HotspotA
 	}
 }
 
-// ToProtoActiveSessions converts mikrotik active sessions to proto list.
-func ToProtoActiveSessions(sessions []mikrotik.HotspotActiveSession) []*devicepb.HotspotActiveSession {
+// ToProtoActiveSessions converts hotspot active sessions to proto list.
+func ToProtoActiveSessions(sessions []port.HotspotActiveSession) []*devicepb.HotspotActiveSession {
 	pbSessions := make([]*devicepb.HotspotActiveSession, len(sessions))
 	for i, s := range sessions {
 		pbSessions[i] = ToProtoHotspotActiveSession(s)
@@ -49,8 +48,8 @@ func ToProtoHotspotActiveStat(s port.HotspotActiveStat) *devicepb.HotspotActiveS
 	}
 }
 
-// ToProtoActiveStats converts mikrotik active stats to proto list.
-func ToProtoActiveStats(stats []mikrotik.HotspotActiveStat) []*devicepb.HotspotActiveStat {
+// ToProtoActiveStats converts hotspot active stats to proto list.
+func ToProtoActiveStats(stats []port.HotspotActiveStat) []*devicepb.HotspotActiveStat {
 	pbStats := make([]*devicepb.HotspotActiveStat, len(stats))
 	for i, s := range stats {
 		pbStats[i] = ToProtoHotspotActiveStat(s)
@@ -58,19 +57,24 @@ func ToProtoActiveStats(stats []mikrotik.HotspotActiveStat) []*devicepb.HotspotA
 	return pbStats
 }
 
-// ToProtoDHCPLeases converts mikrotik DHCP leases to proto list.
-func ToProtoDHCPLeases(leases []mikrotik.DHCPLease) []*devicepb.DHCPLease {
+// ToProtoDHCPLease converts a single port.DHCPLease to proto.
+func ToProtoDHCPLease(l port.DHCPLease) *devicepb.DHCPLease {
+	return &devicepb.DHCPLease{
+		Id:         l.RosID,
+		Address:    l.Address,
+		MacAddress: l.MACAddress,
+		HostName:   l.HostName,
+		Status:     l.Status,
+		Blocked:    l.Blocked,
+		Comment:    l.Comment,
+	}
+}
+
+// ToProtoDHCPLeases converts a slice of port.DHCPLease to proto slice.
+func ToProtoDHCPLeases(leases []port.DHCPLease) []*devicepb.DHCPLease {
 	pbLeases := make([]*devicepb.DHCPLease, len(leases))
 	for i, l := range leases {
-		pbLeases[i] = &devicepb.DHCPLease{
-			Id:         l.RosID,
-			Address:    l.Address,
-			MacAddress: l.MACAddress,
-			HostName:   l.HostName,
-			Status:     l.Status,
-			Blocked:    l.Blocked,
-			Comment:    l.Comment,
-		}
+		pbLeases[i] = ToProtoDHCPLease(l)
 	}
 	return pbLeases
 }

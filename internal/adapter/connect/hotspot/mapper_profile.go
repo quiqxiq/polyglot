@@ -2,7 +2,6 @@ package hotspot
 
 import (
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -27,9 +26,9 @@ func ProfileParamsFromProto(p *devicepb.HotspotProfileParams) port.MikhmonProfil
 	}
 }
 
-// ToProtoHotspotProfile converts a single mikrotik profile to proto, parsing
+// ToProtoHotspotProfile converts a single hotspot profile to proto, parsing
 // the Mikhmon metadata out of the on-login script (mode/price/validity/locks).
-func ToProtoHotspotProfile(p mikrotik.HotspotUserProfile) *devicepb.HotspotProfile {
+func ToProtoHotspotProfile(p port.HotspotUserProfile) *devicepb.HotspotProfile {
 	meta, _ := hotspot.ParseOnLoginScript(p.OnLogin)
 	return &devicepb.HotspotProfile{
 		Id:           p.RosID,
@@ -48,8 +47,8 @@ func ToProtoHotspotProfile(p mikrotik.HotspotUserProfile) *devicepb.HotspotProfi
 	}
 }
 
-// ToProtoHotspotProfiles converts mikrotik profile list to proto list.
-func ToProtoHotspotProfiles(profiles []mikrotik.HotspotUserProfile) []*devicepb.HotspotProfile {
+// ToProtoHotspotProfiles converts hotspot profile list to proto list.
+func ToProtoHotspotProfiles(profiles []port.HotspotUserProfile) []*devicepb.HotspotProfile {
 	pbProfiles := make([]*devicepb.HotspotProfile, len(profiles))
 	for i, p := range profiles {
 		pbProfiles[i] = ToProtoHotspotProfile(p)

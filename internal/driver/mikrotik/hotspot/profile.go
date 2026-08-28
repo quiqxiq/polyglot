@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -122,7 +121,7 @@ func NewAddMikhmonProfileCommand(p MikhmonProfileParams) command.Command {
 		sharedUsers = "1"
 	}
 
-	return mikrotik.NewAddHotspotUserProfileCommand(mikrotik.HotspotUserProfileParams{
+	return NewAddUserProfileCommand(HotspotProfileParams{
 		Name:        p.Name,
 		AddressPool: p.AddressPool,
 		SharedUsers: sharedUsers,
@@ -200,7 +199,7 @@ func NormalizeProfileName(name string) string {
 func NewSetMikhmonProfileCommand(rosID string, p MikhmonProfileParams) command.Command {
 	onLoginScript := BuildOnLoginScript(p)
 
-	return mikrotik.NewSetHotspotUserProfileCommand(rosID, mikrotik.HotspotUserProfileParams{
+	return NewSetUserProfileCommand(rosID, HotspotProfileParams{
 		Name:        p.Name,
 		AddressPool: p.AddressPool,
 		SharedUsers: p.SharedUsers,

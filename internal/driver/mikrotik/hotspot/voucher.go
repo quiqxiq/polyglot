@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -102,7 +101,7 @@ func ParseDataLimit(s string) int64 {
 }
 
 // NewAddMikhmonVoucherCommand builds a command.Command for /ip/hotspot/user/add
-// using Mikhmon-formatted comments. Reuses mikrotik.NewAddHotspotUserCommand.
+// using Mikhmon-formatted comments. Reuses NewAddUserCommand.
 func NewAddMikhmonVoucherCommand(p VoucherGenerateParams, username, password string) command.Command {
 	code := GenerateVoucherCode(3, CharSetUpperNum)
 	comment := FormatPreLoginComment("vc", code, p.CommentTag, time.Now())
@@ -112,15 +111,15 @@ func NewAddMikhmonVoucherCommand(p VoucherGenerateParams, username, password str
 		limitBytesStr = fmt.Sprintf("%d", bytes)
 	}
 
-	return mikrotik.NewAddHotspotUserCommand(mikrotik.HotspotUserParams{
-		Name:          username,
-		Password:      password,
-		Profile:       p.Profile,
-		Server:        p.Server,
-		LimitUptime:   p.LimitUptime,
-		LimitBytesOut: limitBytesStr,
-		Comment:       comment,
-		Disabled:      false,
+	return NewAddUserCommand(HotspotUserParams{
+		Name:        username,
+		Password:    password,
+		Profile:     p.Profile,
+		Server:      p.Server,
+		LimitUptime: p.LimitUptime,
+		LimitBytes:  limitBytesStr,
+		Comment:     comment,
+		Disabled:    false,
 	})
 }
 
@@ -155,15 +154,15 @@ func NewGenerateVoucherBatchCommands(p VoucherGenerateParams, count int) Voucher
 		}
 		comment := FormatPreLoginComment("vc", code, p.CommentTag, now)
 
-		cmd := mikrotik.NewAddHotspotUserCommand(mikrotik.HotspotUserParams{
-			Name:          uname,
-			Password:      pass,
-			Profile:       p.Profile,
-			Server:        p.Server,
-			LimitUptime:   p.LimitUptime,
-			LimitBytesOut: limitBytesStr,
-			Comment:       comment,
-			Disabled:      false,
+		cmd := NewAddUserCommand(HotspotUserParams{
+			Name:        uname,
+			Password:    pass,
+			Profile:     p.Profile,
+			Server:      p.Server,
+			LimitUptime: p.LimitUptime,
+			LimitBytes:  limitBytesStr,
+			Comment:     comment,
+			Disabled:    false,
 		})
 
 		v := GeneratedVoucher{

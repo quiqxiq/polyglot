@@ -6,7 +6,9 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik/firewall"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik/queue"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -20,9 +22,7 @@ type Gateway struct {
 	exec port.CommandExecutor
 }
 
-// NewGateway creates a HotspotGateway bound to exec. exec must be the
-// policy-gated executor (usecase/network.ExecuteCommand) — a bare
-// driver.Execute here would silently bypass destructive-command approval.
+// NewGateway creates a HotspotGateway bound to exec.
 func NewGateway(exec port.CommandExecutor) *Gateway {
 	return &Gateway{exec: exec}
 }
@@ -31,29 +31,29 @@ var _ port.HotspotGateway = (*Gateway)(nil)
 
 // GetSystemResource implements port.HotspotGateway.
 func (g *Gateway) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error) {
-	res, err := g.exec(ctx, driver, mikrotik.NewPrintSystemResourceCommand())
+	res, err := g.exec(ctx, driver, system.NewPrintResourceCommand())
 	if err != nil {
 		return port.SystemResource{}, err
 	}
-	return mikrotik.ParseSystemResource(res), nil
+	return system.ParseResource(res), nil
 }
 
 // GetSystemIdentity implements port.HotspotGateway.
 func (g *Gateway) GetSystemIdentity(ctx context.Context, driver port.DeviceDriver) (string, error) {
-	res, err := g.exec(ctx, driver, mikrotik.NewPrintSystemIdentityCommand())
+	res, err := g.exec(ctx, driver, system.NewPrintIdentityCommand())
 	if err != nil {
 		return "", err
 	}
-	return mikrotik.ParseSystemIdentity(res).Name, nil
+	return system.ParseIdentity(res).Name, nil
 }
 
 // GetUserProfiles implements port.HotspotGateway.
 func (g *Gateway) GetUserProfiles(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUserProfile, error) {
-	res, err := g.exec(ctx, driver, mikrotik.NewPrintHotspotUserProfilesCommand(""))
+	res, err := g.exec(ctx, driver, NewPrintUserProfilesCommand(""))
 	if err != nil {
 		return nil, err
 	}
-	return mikrotik.ParseHotspotUserProfiles(res), nil
+	return ParseUserProfiles(res), nil
 }
 
 // CreateUserProfile implements port.HotspotGateway.
@@ -68,7 +68,7 @@ func (g *Gateway) UpdateUserProfile(ctx context.Context, driver port.DeviceDrive
 
 // DeleteUserProfile implements port.HotspotGateway.
 func (g *Gateway) DeleteUserProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
-	return g.exec(ctx, driver, mikrotik.NewRemoveHotspotUserProfileCommand(rosID))
+	return g.exec(ctx, driver, NewRemoveUserProfileCommand(rosID))
 }
 
 // GenerateVouchers implements port.HotspotGateway.
@@ -109,7 +109,7 @@ func (g *Gateway) ListUsers(ctx context.Context, driver port.DeviceDriver, f por
 	if err != nil {
 		return nil, err
 	}
-	return mikrotik.ParseHotspotUsers(res), nil
+	return ParseUsers(res), nil
 }
 
 // GetUser implements port.HotspotGateway.
@@ -122,7 +122,7 @@ func (g *Gateway) GetUser(ctx context.Context, driver port.DeviceDriver, rosID s
 	if err != nil {
 		return port.HotspotUser{}, err
 	}
-	users := mikrotik.ParseHotspotUsers(res)
+	users := ParseUsers(res)
 	if len(users) == 0 {
 		return port.HotspotUser{}, fmt.Errorf("user %q not found", rosID)
 	}
@@ -131,36 +131,58 @@ func (g *Gateway) GetUser(ctx context.Context, driver port.DeviceDriver, rosID s
 
 // AddUser implements port.HotspotGateway.
 func (g *Gateway) AddUser(ctx context.Context, driver port.DeviceDriver, p port.HotspotUserParams) (command.Result, error) {
-	return g.exec(ctx, driver, mikrotik.NewAddHotspotUserCommand(p))
+	return g.exec(ctx, driver, NewAddUserCommand(HotspotUserParams{
+		Server:      p.Server,
+		Name:        p.Name,
+		Password:    p.Password,
+		Profile:     p.Profile,
+		Comment:     p.Comment,
+		LimitUptime: p.LimitUptime,
+		LimitBytes:  p.LimitBytesOut,
+		Disabled:    p.Disabled,
+	}))
 }
 
 // UpdateUser implements port.HotspotGateway.
 func (g *Gateway) UpdateUser(ctx context.Context, driver port.DeviceDriver, rosID string, p port.HotspotUserParams) (command.Result, error) {
-	return g.exec(ctx, driver, mikrotik.NewSetHotspotUserCommand(rosID, p))
+	return g.exec(ctx, driver, NewSetUserCommand(rosID, HotspotUserParams{
+		Server:      p.Server,
+		Name:        p.Name,
+		Password:    p.Password,
+		Profile:     p.Profile,
+		Comment:     p.Comment,
+		LimitUptime: p.LimitUptime,
+		LimitBytes:  p.LimitBytesOut,
+		Disabled:    p.Disabled,
+	}))
 }
 
 // RemoveUser implements port.HotspotGateway.
 func (g *Gateway) RemoveUser(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
-	return g.exec(ctx, driver, mikrotik.NewRemoveHotspotUserCommand(rosID))
+	return g.exec(ctx, driver, NewRemoveUserCommand(rosID))
 }
 
 // ResetUserCounters implements port.HotspotGateway.
 func (g *Gateway) ResetUserCounters(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
-	return g.exec(ctx, driver, mikrotik.NewResetHotspotUserCountersCommand(rosID))
+	cmd := command.Command{
+		Raw:  "/ip/hotspot/user/reset-counters",
+		Args: map[string]string{".id": rosID},
+	}
+	return g.exec(ctx, driver, cmd)
 }
 
 // ListActiveSessions implements port.HotspotGateway.
 func (g *Gateway) ListActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotActiveSession, error) {
-	res, err := g.exec(ctx, driver, mikrotik.NewPrintHotspotActiveCommand(""))
+	res, err := g.exec(ctx, driver, NewPrintActiveCommand(""))
 	if err != nil {
 		return nil, err
 	}
-	return mikrotik.ParseHotspotActiveSessions(res), nil
+	return ParseActiveSessions(res), nil
 }
 
 // RemoveActiveSession implements port.HotspotGateway.
 func (g *Gateway) RemoveActiveSession(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
-	return g.exec(ctx, driver, mikrotik.NewDisconnectHotspotActiveCommand(rosID))
+	return g.exec(ctx, driver, NewKickActiveCommand(rosID))
 }
 
 // ListHosts implements port.HotspotGateway.
@@ -194,20 +216,31 @@ func (g *Gateway) ListHotspotServers(ctx context.Context, driver port.DeviceDriv
 
 // ListIPPools implements port.HotspotGateway.
 func (g *Gateway) ListIPPools(ctx context.Context, driver port.DeviceDriver) ([]port.IPPool, error) {
-	res, err := g.exec(ctx, driver, mikrotik.NewPrintIPPoolsCommand(""))
+	res, err := g.exec(ctx, driver, firewall.NewPrintPoolsCommand(""))
 	if err != nil {
 		return nil, err
 	}
-	return mikrotik.ParseIPPools(res), nil
+	pools := firewall.ParsePools(res)
+	portPools := make([]port.IPPool, len(pools))
+	for i, p := range pools {
+		portPools[i] = port.IPPool{
+			RosID:    p.RosID,
+			Name:     p.Name,
+			Ranges:   p.Ranges,
+			NextPool: p.NextPool,
+			Comment:  p.Comment,
+		}
+	}
+	return portPools, nil
 }
 
 // ListParentQueues implements port.HotspotGateway.
 func (g *Gateway) ListParentQueues(ctx context.Context, driver port.DeviceDriver) ([]port.SimpleQueue, error) {
-	res, err := g.exec(ctx, driver, mikrotik.NewPrintSimpleQueuesCommand(""))
+	res, err := g.exec(ctx, driver, queue.NewPrintSimpleQueuesCommand(""))
 	if err != nil {
 		return nil, err
 	}
-	queues := mikrotik.ParseSimpleQueues(res)
+	queues := queue.ParseSimpleQueues(res)
 	parents := make([]port.SimpleQueue, 0)
 	for _, q := range queues {
 		if q.Parent == "none" || q.Parent == "" {
@@ -227,14 +260,7 @@ func (g *Gateway) ListNATRules(ctx context.Context, driver port.DeviceDriver) ([
 	return res.Rows, nil
 }
 
-// SetupExpireMonitor implements port.HotspotGateway. It is idempotent and
-// recognises both scheduler forms (Fase 6 decision A):
-//   - legacy single-step scheduler "Mikhmon-Expire-Monitor" exists → update it
-//     in place (interval + on-event script source);
-//   - gateway two-step form (script "mikhmon-expire-monitor" + scheduler
-//     "mikhmon-expire-scheduler") exists → re-arm it;
-//   - neither exists → create the gateway two-step form.
-// Default interval is "00:01:00" (legacy Mikhmon).
+// SetupExpireMonitor implements port.HotspotGateway.
 func (g *Gateway) SetupExpireMonitor(ctx context.Context, driver port.DeviceDriver, interval string) (command.Result, error) {
 	if interval == "" {
 		interval = "00:01:00"
@@ -284,11 +310,11 @@ func (g *Gateway) SetupExpireMonitor(ctx context.Context, driver port.DeviceDriv
 
 // GetExpireMonitorStatus implements port.HotspotGateway.
 func (g *Gateway) GetExpireMonitorStatus(ctx context.Context, driver port.DeviceDriver) (port.ExpireMonitorStatus, error) {
-	res, err := g.exec(ctx, driver, mikrotik.NewPrintSystemSchedulersCommand(""))
+	res, err := g.exec(ctx, driver, system.NewPrintSchedulerCommand(""))
 	if err != nil {
 		return port.ExpireMonitorStatus{}, err
 	}
-	return classifyExpireMonitorSchedulers(mikrotik.ParseSystemSchedulers(res)), nil
+	return classifyExpireMonitorSchedulers(system.ParseScheduler(res)), nil
 }
 
 // SetExpireMonitorDisabled implements port.HotspotGateway.
@@ -313,10 +339,7 @@ func (g *Gateway) RemoveExpireMonitor(ctx context.Context, driver port.DeviceDri
 	return g.exec(ctx, driver, cmd)
 }
 
-// ListReports implements port.HotspotGateway. Filters follow legacy Mikhmon:
-// day → ?source= (get_report), month → ?owner= (get_livereport); when neither
-// is given the record set is scoped with ?comment=mikhmon. The year filter is
-// applied as a date-suffix match over the fetched records.
+// ListReports implements port.HotspotGateway.
 func (g *Gateway) ListReports(ctx context.Context, driver port.DeviceDriver, f port.ReportFilter) ([]port.MikhmonTransaction, error) {
 	args := map[string]string{}
 	if f.Day != "" {

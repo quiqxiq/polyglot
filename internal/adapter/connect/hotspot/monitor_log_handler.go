@@ -8,7 +8,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -27,7 +27,7 @@ func (h *HotspotConnectHandler) StreamLogs(ctx context.Context, req *connect.Req
 		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
 	}
 
-	handle, err := sd.Stream(ctx, mikrotik.NewStreamLogsCommand(req.Msg.Topics))
+	handle, err := sd.Stream(ctx, mikrotiksystem.NewStreamLogsCommand(req.Msg.Topics))
 	if err != nil {
 		logger.WithComponent("HotspotConnectHandler").WithError(err).Warn("starting log stream failed")
 		return response.MapDomainError(err)
@@ -42,7 +42,7 @@ func (h *HotspotConnectHandler) StreamLogs(ctx context.Context, req *connect.Req
 			if !ok {
 				return handle.Err()
 			}
-			logs := mikrotik.ParseLogs(res)
+			logs := mikrotiksystem.ParseLogs(res)
 			if len(logs) == 0 {
 				continue
 			}

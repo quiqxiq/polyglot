@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/device"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/ping"
@@ -168,7 +168,7 @@ func (m *PingStreamManager) runDeviceStream(ctx context.Context, dev device.Devi
 			continue
 		}
 
-		pingCmd := mikrotik.NewPingStreamCommand(target)
+		pingCmd := system.NewPingStreamCommand(target)
 		handle, err := sDrv.Stream(ctx, pingCmd)
 		if err != nil {
 			time.Sleep(3 * time.Second)

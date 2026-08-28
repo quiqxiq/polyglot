@@ -11,7 +11,7 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	mikrotikppp "github.com/quixiq/polyglot/internal/driver/mikrotik/ppp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -30,7 +30,7 @@ func (h *HotspotConnectHandler) StreamPPPActive(ctx context.Context, req *connec
 		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
 	}
 
-	activeMap := make(map[string]mikrotik.PPPActiveSession)
+	activeMap := make(map[string]port.PPPActiveSession)
 
 	// Pre-populate with initial snapshot from one-shot query
 	if initial, err := h.activeSessionsUseCase.GetPPPActiveSessions(ctx, driver); err == nil {
@@ -60,7 +60,7 @@ func (h *HotspotConnectHandler) StreamPPPActive(ctx context.Context, req *connec
 		Sessions:      initialItems,
 	})
 
-	handle, err := sd.Stream(ctx, mikrotik.NewStreamPPPActiveCommand(""))
+	handle, err := sd.Stream(ctx, mikrotikppp.NewStreamActiveCommand(""))
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -87,7 +87,7 @@ func (h *HotspotConnectHandler) StreamPPPActive(ctx context.Context, req *connec
 				if name == "" {
 					continue
 				}
-				activeMap[id] = mikrotik.PPPActiveSession{
+				activeMap[id] = port.PPPActiveSession{
 					RosID:     id,
 					Name:      name,
 					Service:   row["service"],
@@ -129,14 +129,14 @@ func (h *HotspotConnectHandler) StreamPPPActive(ctx context.Context, req *connec
 // directory and the active session list via live map tracking.
 type pppSessionState struct {
 	mu        sync.Mutex
-	secretMap map[string]mikrotik.PPPoESecret
-	activeMap map[string]mikrotik.PPPActiveSession
+	secretMap map[string]port.PPPoESecret
+	activeMap map[string]port.PPPActiveSession
 }
 
 func newPPPSessionState() *pppSessionState {
 	return &pppSessionState{
-		secretMap: make(map[string]mikrotik.PPPoESecret),
-		activeMap: make(map[string]mikrotik.PPPActiveSession),
+		secretMap: make(map[string]port.PPPoESecret),
+		activeMap: make(map[string]port.PPPActiveSession),
 	}
 }
 
@@ -155,7 +155,7 @@ func (s *pppSessionState) updateSecret(row map[string]string) {
 	if name == "" {
 		return
 	}
-	s.secretMap[id] = mikrotik.PPPoESecret{
+	s.secretMap[id] = port.PPPoESecret{
 		RosID:         id,
 		Name:          name,
 		Profile:       row["profile"],
@@ -184,7 +184,7 @@ func (s *pppSessionState) updateActive(row map[string]string) {
 	if name == "" {
 		return
 	}
-	s.activeMap[id] = mikrotik.PPPActiveSession{
+	s.activeMap[id] = port.PPPActiveSession{
 		RosID:     id,
 		Name:      name,
 		Service:   row["service"],
@@ -197,18 +197,18 @@ func (s *pppSessionState) updateActive(row map[string]string) {
 }
 
 // inactive returns subscriber secrets without an active session.
-func (s *pppSessionState) inactive() []mikrotik.PPPoESecret {
+func (s *pppSessionState) inactive() []port.PPPoESecret {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	secrets := make([]mikrotik.PPPoESecret, 0, len(s.secretMap))
+	secrets := make([]port.PPPoESecret, 0, len(s.secretMap))
 	for _, sec := range s.secretMap {
 		secrets = append(secrets, sec)
 	}
-	active := make([]mikrotik.PPPActiveSession, 0, len(s.activeMap))
+	active := make([]port.PPPActiveSession, 0, len(s.activeMap))
 	for _, a := range s.activeMap {
 		active = append(active, a)
 	}
-	return mikrotik.FilterInactivePPPoESecrets(secrets, active)
+	return mikrotikppp.FilterInactiveSecrets(secrets, active)
 }
 
 // StreamPPPInactive computes the inactive PPPoE subscriber list from two
@@ -294,10 +294,14 @@ func (h *HotspotConnectHandler) StreamPPPInactive(ctx context.Context, req *conn
 		}()
 	}
 
-	start(mikrotik.NewStreamPPPoESecretsCommand(""), func(row map[string]string) {
+	streamSecretsCmd := command.Command{
+		Raw:  "/ppp/secret/print",
+		Args: map[string]string{"follow": ""},
+	}
+	start(streamSecretsCmd, func(row map[string]string) {
 		state.updateSecret(row)
 	})
-	start(mikrotik.NewStreamPPPActiveCommand(""), func(row map[string]string) {
+	start(mikrotikppp.NewStreamActiveCommand(""), func(row map[string]string) {
 		state.updateActive(row)
 	})
 

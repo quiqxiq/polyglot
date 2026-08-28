@@ -8,7 +8,6 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -98,29 +97,29 @@ func (h *HotspotConnectHandler) DeleteProfile(ctx context.Context, req *connect.
 }
 
 // findProfileByName re-prints all profiles and returns the one matching name.
-func (h *HotspotConnectHandler) findProfileByName(ctx context.Context, driver port.DeviceDriver, name string) (mikrotik.HotspotUserProfile, error) {
+func (h *HotspotConnectHandler) findProfileByName(ctx context.Context, driver port.DeviceDriver, name string) (port.HotspotUserProfile, error) {
 	profiles, err := h.useCase.GetProfiles(ctx, driver)
 	if err != nil {
-		return mikrotik.HotspotUserProfile{}, err
+		return port.HotspotUserProfile{}, err
 	}
 	for _, p := range profiles {
 		if strings.EqualFold(p.Name, name) {
 			return p, nil
 		}
 	}
-	return mikrotik.HotspotUserProfile{}, fmt.Errorf("profile %q not found after create", name)
+	return port.HotspotUserProfile{}, fmt.Errorf("profile %q not found after create", name)
 }
 
 // findProfileByRosID re-prints all profiles and returns the one matching .id.
-func (h *HotspotConnectHandler) findProfileByRosID(ctx context.Context, driver port.DeviceDriver, rosID string) (mikrotik.HotspotUserProfile, error) {
+func (h *HotspotConnectHandler) findProfileByRosID(ctx context.Context, driver port.DeviceDriver, rosID string) (port.HotspotUserProfile, error) {
 	profiles, err := h.useCase.GetProfiles(ctx, driver)
 	if err != nil {
-		return mikrotik.HotspotUserProfile{}, err
+		return port.HotspotUserProfile{}, err
 	}
 	for _, p := range profiles {
 		if p.RosID == rosID {
 			return p, nil
 		}
 	}
-	return mikrotik.HotspotUserProfile{}, fmt.Errorf("profile with .id %q not found after update", rosID)
+	return port.HotspotUserProfile{}, fmt.Errorf("profile with .id %q not found after update", rosID)
 }

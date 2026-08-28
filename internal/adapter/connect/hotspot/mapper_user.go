@@ -4,13 +4,12 @@ import (
 	"fmt"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // ToProtoHotspotUser converts a single mikrotik user to proto.
-func ToProtoHotspotUser(u mikrotik.HotspotUser) *devicepb.HotspotUser {
+func ToProtoHotspotUser(u port.HotspotUser) *devicepb.HotspotUser {
 	limitBytes := u.LimitBytesOut
 	if limitBytes == "" {
 		limitBytes = u.LimitBytesIn

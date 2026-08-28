@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -14,9 +14,11 @@ type MikhmonTransaction = port.MikhmonTransaction
 
 // NewPrintMikhmonReportsCommand builds a command.Command to fetch transaction logs
 // from RouterOS /system/script entries matching comment="mikhmon".
-// Reuses mikrotik.NewPrintSystemScriptsCommand.
 func NewPrintMikhmonReportsCommand() command.Command {
-	return mikrotik.NewPrintSystemScriptsCommand("", "mikhmon")
+	return command.Command{
+		Raw:  "/system/script/print",
+		Args: map[string]string{"?comment": "mikhmon"},
+	}
 }
 
 // ParseMikhmonTransactions parses command.Result rows from /system/script/print
@@ -25,7 +27,7 @@ func NewPrintMikhmonReportsCommand() command.Command {
 // Mikhmon encodes transaction metadata into the script's `name` attribute using
 // "-|-" delimiter: "date-|-time-|-user-|-price-|-address-|-mac-|-validity-|-profile-|-comment".
 func ParseMikhmonTransactions(result command.Result) []MikhmonTransaction {
-	scripts := mikrotik.ParseSystemScripts(result)
+	scripts := system.ParseScript(result)
 	records := make([]MikhmonTransaction, 0, len(scripts))
 
 	for _, s := range scripts {

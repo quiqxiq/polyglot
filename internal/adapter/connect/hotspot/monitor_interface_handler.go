@@ -9,7 +9,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik/iface"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -28,12 +28,12 @@ func (h *HotspotConnectHandler) StreamTraffic(ctx context.Context, req *connect.
 		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
 	}
 
-	iface := req.Msg.Interface
-	if iface == "" {
-		iface = "ether1"
+	ifaceName := req.Msg.Interface
+	if ifaceName == "" {
+		ifaceName = "ether1"
 	}
 
-	cmd := mikrotik.NewMonitorTrafficStreamCommand(iface)
+	cmd := iface.NewMonitorTrafficStreamCommand(ifaceName)
 	handle, err := sd.Stream(ctx, cmd)
 	if err != nil {
 		return response.MapDomainError(err)
@@ -48,13 +48,13 @@ func (h *HotspotConnectHandler) StreamTraffic(ctx context.Context, req *connect.
 			if !ok {
 				return handle.Err()
 			}
-			stats := mikrotik.ParseInterfaceTrafficStats(res)
+			stats := iface.ParseInterfaceTrafficStats(res)
 			rx, _ := strconv.ParseInt(stats.RxBitsPerSecond, 10, 64)
 			tx, _ := strconv.ParseInt(stats.TxBitsPerSecond, 10, 64)
 
 			err := stream.Send(&devicepb.TrafficStreamData{
 				DeviceId:      req.Msg.DeviceId,
-				Interface:     iface,
+				Interface:     ifaceName,
 				RxBps:         rx,
 				TxBps:         tx,
 				TimestampUnix: time.Now().Unix(),
@@ -84,7 +84,7 @@ func (h *HotspotConnectHandler) StreamInterfaceEthernet(ctx context.Context, req
 		interval = "1s"
 	}
 
-	handle, err := sd.Stream(ctx, mikrotik.NewStreamInterfacesCommand(req.Msg.TypeFilter, req.Msg.NameFilter, interval))
+	handle, err := sd.Stream(ctx, iface.NewStreamInterfacesCommand(req.Msg.TypeFilter, req.Msg.NameFilter, interval))
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -98,7 +98,7 @@ func (h *HotspotConnectHandler) StreamInterfaceEthernet(ctx context.Context, req
 			if !ok {
 				return handle.Err()
 			}
-			ifaces := mikrotik.ParseInterfaces(res)
+			ifaces := iface.ParseInterfaces(res)
 			items := make([]*devicepb.InterfaceEthernetItem, 0, len(ifaces))
 			for _, ifc := range ifaces {
 				items = append(items, &devicepb.InterfaceEthernetItem{

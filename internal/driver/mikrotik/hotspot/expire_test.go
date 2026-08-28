@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 )
 
 func TestBuildExpireMonitorScript(t *testing.T) {
@@ -35,7 +35,7 @@ func TestNewSetupMikhmonExpireMonitorCommand(t *testing.T) {
 
 func TestClassifyExpireMonitorSchedulers(t *testing.T) {
 	t.Run("legacy scheduler installed and enabled", func(t *testing.T) {
-		schedulers := []mikrotik.SystemScheduler{
+		schedulers := []system.SystemScheduler{
 			{RosID: "*1", Name: "admin-job", Disabled: false},
 			{RosID: "*2", Name: MikhmonExpireMonitorName, Disabled: false},
 		}
@@ -47,7 +47,7 @@ func TestClassifyExpireMonitorSchedulers(t *testing.T) {
 	})
 
 	t.Run("gateway scheduler installed but disabled", func(t *testing.T) {
-		schedulers := []mikrotik.SystemScheduler{
+		schedulers := []system.SystemScheduler{
 			{RosID: "*9", Name: mikhmonExpireSchedulerName, Disabled: true},
 		}
 		status := classifyExpireMonitorSchedulers(schedulers)
@@ -57,7 +57,7 @@ func TestClassifyExpireMonitorSchedulers(t *testing.T) {
 	})
 
 	t.Run("not installed", func(t *testing.T) {
-		schedulers := []mikrotik.SystemScheduler{
+		schedulers := []system.SystemScheduler{
 			{RosID: "*1", Name: "backup", Disabled: false},
 		}
 		status := classifyExpireMonitorSchedulers(schedulers)
@@ -66,7 +66,7 @@ func TestClassifyExpireMonitorSchedulers(t *testing.T) {
 	})
 
 	t.Run("legacy preferred when both forms present", func(t *testing.T) {
-		schedulers := []mikrotik.SystemScheduler{
+		schedulers := []system.SystemScheduler{
 			{RosID: "*3", Name: MikhmonExpireMonitorName, Disabled: false},
 			{RosID: "*4", Name: mikhmonExpireSchedulerName, Disabled: true},
 		}

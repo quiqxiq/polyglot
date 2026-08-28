@@ -12,7 +12,7 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	mikrotikhotspot "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -31,7 +31,7 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
 	}
 
-	activeMap := make(map[string]mikrotik.HotspotActiveSession)
+	activeMap := make(map[string]port.HotspotActiveSession)
 
 	// Pre-populate with initial snapshot from one-shot query
 	if initial, err := h.useCase.GetActiveSessions(ctx, driver); err == nil {
@@ -40,7 +40,7 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 		}
 	}
 
-	initialSessions := make([]mikrotik.HotspotActiveSession, 0, len(activeMap))
+	initialSessions := make([]port.HotspotActiveSession, 0, len(activeMap))
 	for _, s := range activeMap {
 		initialSessions = append(initialSessions, s)
 	}
@@ -55,7 +55,7 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 		TimestampUnix: time.Now().Unix(),
 	})
 
-	handle, err := sd.Stream(ctx, mikrotik.NewStreamHotspotActiveCommand(req.Msg.UserFilter))
+	handle, err := sd.Stream(ctx, mikrotikhotspot.NewStreamActiveCommand(req.Msg.UserFilter))
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -96,7 +96,7 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 				if user == "" {
 					continue
 				}
-				activeMap[id] = mikrotik.HotspotActiveSession{
+				activeMap[id] = port.HotspotActiveSession{
 					RosID:      id,
 					Server:     row["server"],
 					User:       user,
@@ -106,7 +106,7 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 				}
 			}
 
-			sessions := make([]mikrotik.HotspotActiveSession, 0, len(activeMap))
+			sessions := make([]port.HotspotActiveSession, 0, len(activeMap))
 			for _, s := range activeMap {
 				sessions = append(sessions, s)
 			}
@@ -144,7 +144,7 @@ func (h *HotspotConnectHandler) StreamActiveStats(ctx context.Context, req *conn
 		interval = "1s"
 	}
 
-	handle, err := sd.Stream(ctx, mikrotik.NewStreamHotspotActiveStatsCommand(interval))
+	handle, err := sd.Stream(ctx, mikrotikhotspot.NewStreamActiveStatsCommand(interval))
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -158,7 +158,7 @@ func (h *HotspotConnectHandler) StreamActiveStats(ctx context.Context, req *conn
 			if !ok {
 				return handle.Err()
 			}
-			stats := mikrotik.ParseHotspotActiveStats(res)
+			stats := mikrotikhotspot.ParseActiveStats(res)
 			if len(stats) == 0 {
 				continue
 			}
@@ -178,14 +178,14 @@ func (h *HotspotConnectHandler) StreamActiveStats(ctx context.Context, req *conn
 // directory and the active session list via live map tracking.
 type hotspotSessionState struct {
 	mu        sync.Mutex
-	userMap   map[string]mikrotik.HotspotUser
-	activeMap map[string]mikrotik.HotspotActiveSession
+	userMap   map[string]port.HotspotUser
+	activeMap map[string]port.HotspotActiveSession
 }
 
 func newHotspotSessionState() *hotspotSessionState {
 	return &hotspotSessionState{
-		userMap:   make(map[string]mikrotik.HotspotUser),
-		activeMap: make(map[string]mikrotik.HotspotActiveSession),
+		userMap:   make(map[string]port.HotspotUser),
+		activeMap: make(map[string]port.HotspotActiveSession),
 	}
 }
 
@@ -204,7 +204,7 @@ func (s *hotspotSessionState) updateUser(row map[string]string) {
 	if name == "" {
 		return
 	}
-	s.userMap[id] = mikrotik.HotspotUser{
+	s.userMap[id] = port.HotspotUser{
 		RosID:         id,
 		Name:          name,
 		Password:      row["password"],
@@ -238,7 +238,7 @@ func (s *hotspotSessionState) updateActive(row map[string]string) {
 	if user == "" {
 		return
 	}
-	s.activeMap[id] = mikrotik.HotspotActiveSession{
+	s.activeMap[id] = port.HotspotActiveSession{
 		RosID:      id,
 		Server:     row["server"],
 		User:       user,
@@ -249,18 +249,18 @@ func (s *hotspotSessionState) updateActive(row map[string]string) {
 }
 
 // inactive returns users without an active session (legacy inactive list).
-func (s *hotspotSessionState) inactive() []mikrotik.HotspotUser {
+func (s *hotspotSessionState) inactive() []port.HotspotUser {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	users := make([]mikrotik.HotspotUser, 0, len(s.userMap))
+	users := make([]port.HotspotUser, 0, len(s.userMap))
 	for _, u := range s.userMap {
 		users = append(users, u)
 	}
-	active := make([]mikrotik.HotspotActiveSession, 0, len(s.activeMap))
+	active := make([]port.HotspotActiveSession, 0, len(s.activeMap))
 	for _, a := range s.activeMap {
 		active = append(active, a)
 	}
-	return mikrotik.FilterInactiveHotspotUsers(users, active)
+	return mikrotikhotspot.FilterInactiveUsers(users, active)
 }
 
 // StreamHotspotInactive computes the inactive hotspot user list from two
@@ -331,10 +331,10 @@ func (h *HotspotConnectHandler) StreamHotspotInactive(ctx context.Context, req *
 		}()
 	}
 
-	start(mikrotik.NewStreamHotspotUsersCommand(""), func(row map[string]string) {
+	start(mikrotikhotspot.NewStreamUsersCommand(""), func(row map[string]string) {
 		state.updateUser(row)
 	})
-	start(mikrotik.NewStreamHotspotActiveCommand(""), func(row map[string]string) {
+	start(mikrotikhotspot.NewStreamActiveCommand(""), func(row map[string]string) {
 		state.updateActive(row)
 	})
 

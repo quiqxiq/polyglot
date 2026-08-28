@@ -10,7 +10,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	mikrotikppp "github.com/quixiq/polyglot/internal/driver/mikrotik/ppp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -48,7 +48,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 		Sessions:      initialItems,
 	})
 
-	handle, err := sd.Stream(ctx, mikrotik.NewStreamPPPActiveCommand(req.Msg.NameFilter))
+	handle, err := sd.Stream(ctx, mikrotikppp.NewStreamActiveCommand(req.Msg.NameFilter))
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -154,7 +154,7 @@ func (h *PPPConnectHandler) StreamActiveStats(ctx context.Context, req *connect.
 		interval = "1s"
 	}
 
-	handle, err := sd.Stream(ctx, mikrotik.NewStreamPPPActiveStatsCommand(interval))
+	handle, err := sd.Stream(ctx, mikrotikppp.NewStreamActiveStatsCommand(interval))
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -168,7 +168,7 @@ func (h *PPPConnectHandler) StreamActiveStats(ctx context.Context, req *connect.
 			if !ok {
 				return handle.Err()
 			}
-			stats := mikrotik.ParsePPPActiveStats(res)
+			stats := mikrotikppp.ParseActiveStats(res)
 			if len(stats) == 0 {
 				continue
 			}

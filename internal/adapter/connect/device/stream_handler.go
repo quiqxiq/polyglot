@@ -8,7 +8,8 @@ import (
 
 	"connectrpc.com/connect"
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	mikrotikiface "github.com/quixiq/polyglot/internal/driver/mikrotik/iface"
+	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/ping"
@@ -118,7 +119,7 @@ func (h *DeviceConnectHandler) StreamPing(
 		pingTarget = hostOnly
 	}
 
-	pingCmd := mikrotik.NewPingStreamCommand(pingTarget)
+	pingCmd := mikrotiksystem.NewPingStreamCommand(pingTarget)
 	pingHandle, err := sDrv.Stream(ctx, pingCmd)
 	if err != nil {
 		return response.MapDomainError(fmt.Errorf("failed to start ping stream: %w", err))
@@ -203,7 +204,7 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 		ifaceName = "ether1"
 	}
 
-	trafficCmd := mikrotik.NewMonitorTrafficStreamCommand(ifaceName)
+	trafficCmd := mikrotikiface.NewMonitorTrafficStreamCommand(ifaceName)
 	trafficHandle, err := sDrv.Stream(ctx, trafficCmd)
 	if err != nil {
 		return response.MapDomainError(fmt.Errorf("failed to start traffic stream: %w", err))
@@ -218,7 +219,7 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 			if !ok {
 				return nil
 			}
-			stats := mikrotik.ParseInterfaceTrafficStats(res)
+			stats := mikrotikiface.ParseInterfaceTrafficStats(res)
 			rx, _ := strconv.ParseInt(stats.RxBitsPerSecond, 10, 64)
 			tx, _ := strconv.ParseInt(stats.TxBitsPerSecond, 10, 64)
 			frame := &devicepb.StreamDeviceTrafficFrame{

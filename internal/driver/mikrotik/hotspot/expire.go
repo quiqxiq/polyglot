@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -29,7 +29,7 @@ var ExpireMonitorSchedulerNames = []string{
 // classifyExpireMonitorSchedulers maps raw scheduler rows to an
 // ExpireMonitorStatus, preferring the legacy scheduler when both forms are
 // present. Returns zero status (not installed) when no name matches.
-func classifyExpireMonitorSchedulers(schedulers []mikrotik.SystemScheduler) port.ExpireMonitorStatus {
+func classifyExpireMonitorSchedulers(schedulers []system.SystemScheduler) port.ExpireMonitorStatus {
 	for _, s := range schedulers {
 		for _, name := range ExpireMonitorSchedulerNames {
 			if s.Name == name {
@@ -115,7 +115,7 @@ func NewSetupMikhmonExpireMonitorCommand(interval string) command.Command {
 		interval = "00:01:00"
 	}
 	script := BuildExpireMonitorScript()
-	return mikrotik.NewAddSystemSchedulerCommand(mikrotik.SystemSchedulerParams{
+	return system.NewAddSchedulerCommand(system.SystemSchedulerParams{
 		Name:      MikhmonExpireMonitorName,
 		StartTime: "00:00:00",
 		Interval:  interval,
@@ -132,7 +132,7 @@ func NewUpdateMikhmonExpireMonitorCommand(rosID, interval string) command.Comman
 		interval = "00:01:00"
 	}
 	script := BuildExpireMonitorScript()
-	return mikrotik.NewSetSystemSchedulerCommand(rosID, mikrotik.SystemSchedulerParams{
+	return system.NewSetSchedulerCommand(rosID, system.SystemSchedulerParams{
 		Name:     MikhmonExpireMonitorName,
 		Interval: interval,
 		OnEvent:  script,

@@ -8,7 +8,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	mikrotikqueue "github.com/quixiq/polyglot/internal/driver/mikrotik/queue"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -28,7 +28,7 @@ func (h *HotspotConnectHandler) StreamQueueStats(ctx context.Context, req *conne
 		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
 	}
 
-	params := mikrotik.QueueStreamParams{
+	params := mikrotikqueue.QueueStreamParams{
 		NameFilter:   req.Msg.Name,
 		ParentFilter: req.Msg.Parent,
 		ParentsOnly:  req.Msg.ParentsOnly,
@@ -38,7 +38,7 @@ func (h *HotspotConnectHandler) StreamQueueStats(ctx context.Context, req *conne
 		params.Interval = "1s"
 	}
 
-	handle, err := sd.Stream(ctx, mikrotik.NewStreamQueueStatsCommand(params))
+	handle, err := sd.Stream(ctx, mikrotikqueue.NewStreamQueueStatsCommand(params))
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -52,7 +52,7 @@ func (h *HotspotConnectHandler) StreamQueueStats(ctx context.Context, req *conne
 			if !ok {
 				return handle.Err()
 			}
-			queues := mikrotik.ParseSimpleQueues(res)
+			queues := mikrotikqueue.ParseSimpleQueues(res)
 			items := make([]*devicepb.QueueStatsItem, 0, len(queues))
 			for _, q := range queues {
 				items = append(items, &devicepb.QueueStatsItem{

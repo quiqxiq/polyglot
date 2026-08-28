@@ -10,7 +10,7 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -20,26 +20,26 @@ import (
 // so this state is always a complete view of the last received frame.
 type systemSnapshotState struct {
 	mu          sync.Mutex
-	clock       mikrotik.SystemClock
-	resource    mikrotik.SystemResource
-	routerboard mikrotik.SystemRouterboard
+	clock       mikrotiksystem.SystemClock
+	resource    mikrotiksystem.SystemResource
+	routerboard mikrotiksystem.SystemRouterboard
 	identity    string
-	health      mikrotik.SystemHealth
+	health      mikrotiksystem.SystemHealth
 }
 
-func (s *systemSnapshotState) setClock(c mikrotik.SystemClock) {
+func (s *systemSnapshotState) setClock(c mikrotiksystem.SystemClock) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.clock = c
 }
 
-func (s *systemSnapshotState) setResource(r mikrotik.SystemResource) {
+func (s *systemSnapshotState) setResource(r mikrotiksystem.SystemResource) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.resource = r
 }
 
-func (s *systemSnapshotState) setRouterboard(r mikrotik.SystemRouterboard) {
+func (s *systemSnapshotState) setRouterboard(r mikrotiksystem.SystemRouterboard) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.routerboard = r
@@ -51,7 +51,7 @@ func (s *systemSnapshotState) setIdentity(name string) {
 	s.identity = name
 }
 
-func (s *systemSnapshotState) setHealth(h mikrotik.SystemHealth) {
+func (s *systemSnapshotState) setHealth(h mikrotiksystem.SystemHealth) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.health = h
@@ -167,20 +167,20 @@ func (h *HotspotConnectHandler) StreamSystemSnapshot(ctx context.Context, req *c
 		}()
 	}
 
-	start(mikrotik.NewStreamSystemClockCommand(interval), func(res command.Result) {
-		state.setClock(mikrotik.ParseSystemClock(res))
+	start(mikrotiksystem.NewStreamClockCommand(interval), func(res command.Result) {
+		state.setClock(mikrotiksystem.ParseClock(res))
 	})
-	start(mikrotik.NewStreamSystemResourceCommand(interval), func(res command.Result) {
-		state.setResource(mikrotik.ParseSystemResource(res))
+	start(mikrotiksystem.NewStreamResourceCommand(interval), func(res command.Result) {
+		state.setResource(mikrotiksystem.ParseResource(res))
 	})
-	start(mikrotik.NewStreamSystemRouterboardCommand(interval), func(res command.Result) {
-		state.setRouterboard(mikrotik.ParseSystemRouterboard(res))
+	start(mikrotiksystem.NewStreamRouterboardCommand(interval), func(res command.Result) {
+		state.setRouterboard(mikrotiksystem.ParseRouterboard(res))
 	})
-	start(mikrotik.NewStreamSystemIdentityCommand(interval), func(res command.Result) {
-		state.setIdentity(mikrotik.ParseSystemIdentity(res).Name)
+	start(mikrotiksystem.NewStreamIdentityCommand(interval), func(res command.Result) {
+		state.setIdentity(mikrotiksystem.ParseIdentity(res).Name)
 	})
-	start(mikrotik.NewStreamSystemHealthCommand(interval), func(res command.Result) {
-		state.setHealth(mikrotik.ParseSystemHealth(res))
+	start(mikrotiksystem.NewStreamHealthCommand(interval), func(res command.Result) {
+		state.setHealth(mikrotiksystem.ParseHealth(res))
 	})
 
 	go func() { wg.Wait(); close(doneCh) }()
@@ -227,7 +227,7 @@ func (h *HotspotConnectHandler) StreamResource(ctx context.Context, req *connect
 		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
 	}
 
-	handle, err := sd.Stream(ctx, mikrotik.NewStreamSystemResourceCommand("1s"))
+	handle, err := sd.Stream(ctx, mikrotiksystem.NewStreamResourceCommand("1s"))
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -241,7 +241,7 @@ func (h *HotspotConnectHandler) StreamResource(ctx context.Context, req *connect
 			if !ok {
 				return handle.Err()
 			}
-			sysRes := mikrotik.ParseSystemResource(res)
+			sysRes := mikrotiksystem.ParseResource(res)
 			err := stream.Send(&devicepb.ResourceStreamData{
 				DeviceId:      req.Msg.DeviceId,
 				CpuLoad:       int32(sysRes.CPULoad),
