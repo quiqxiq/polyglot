@@ -14,7 +14,11 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { useDevicesContext } from './devices-provider'
 import { useTestConnectionMutation } from '../api/use-devices'
-import { TestDeviceConnectionRequest, TestDeviceConnectionResponse } from '@/gen/v1/device_pb'
+import {
+  TestDeviceConnectionRequest,
+  type TestDeviceConnectionResponse,
+} from '@/gen/v1/device_pb'
+import { getErrorMessage } from '../lib/formatters'
 import { Loader2, Zap } from 'lucide-react'
 
 export function DevicesTestDialog() {
@@ -32,12 +36,12 @@ export function DevicesTestDialog() {
       )
       setResult(res)
       if (res.success) {
-        toast.success(`Connection to ${currentRow.name} successful!`)
+        toast.success(`Koneksi ke ${currentRow.name} berhasil!`)
       } else {
-        toast.error(`Connection failed: ${res.message}`)
+        toast.error(`Koneksi gagal: ${res.message}`)
       }
-    } catch (err: any) {
-      toast.error(err.message || 'Failed to test connection')
+    } catch (err: unknown) {
+      toast.error(getErrorMessage(err, 'Gagal menguji koneksi perangkat'))
     }
   }
 
@@ -57,7 +61,8 @@ export function DevicesTestDialog() {
             Test Device Connection
           </DialogTitle>
           <DialogDescription>
-            Test real-time connectivity to <strong>{currentRow?.name}</strong> ({currentRow?.host}:{currentRow?.port}).
+            Uji konektivitas realtime ke <strong>{currentRow?.name}</strong> (
+            {currentRow?.host}:{currentRow?.port}).
           </DialogDescription>
         </DialogHeader>
 
@@ -65,25 +70,29 @@ export function DevicesTestDialog() {
           <div className='rounded-lg border p-3 text-sm space-y-1.5 bg-muted/40'>
             <div className='flex justify-between'>
               <span className='text-muted-foreground'>Host:</span>
-              <span className='font-mono font-medium'>{currentRow?.host}:{currentRow?.port}</span>
+              <span className='font-mono font-medium'>
+                {currentRow?.host}:{currentRow?.port}
+              </span>
             </div>
             <div className='flex justify-between'>
               <span className='text-muted-foreground'>Vendor / Driver:</span>
-              <span className='font-medium'>{currentRow?.vendor} ({currentRow?.driverType})</span>
+              <span className='font-medium'>
+                {currentRow?.vendor} ({currentRow?.driverType})
+              </span>
             </div>
           </div>
 
           {testMutation.isPending && (
             <div className='flex flex-col items-center justify-center py-6 space-y-2'>
               <Loader2 className='h-8 w-8 animate-spin text-primary' />
-              <p className='text-xs text-muted-foreground'>Connecting to device...</p>
+              <p className='text-xs text-muted-foreground'>Menghubungkan ke perangkat...</p>
             </div>
           )}
 
           {result && (
             <div className='rounded-lg border p-4 space-y-2 text-sm'>
               <div className='flex items-center justify-between'>
-                <span className='font-medium'>Result Status:</span>
+                <span className='font-medium'>Status Hasil:</span>
                 <Badge variant={result.success ? 'default' : 'destructive'}>
                   {result.status.toUpperCase()}
                 </Badge>
@@ -119,7 +128,7 @@ export function DevicesTestDialog() {
 
               {result.message && (
                 <div className='mt-2 pt-2 border-t text-xs text-muted-foreground'>
-                  <p className='font-medium text-foreground mb-0.5'>Message:</p>
+                  <p className='font-medium text-foreground mb-0.5'>Pesan Respons:</p>
                   <p className='font-mono bg-muted p-2 rounded text-[11px]'>{result.message}</p>
                 </div>
               )}
@@ -137,10 +146,10 @@ export function DevicesTestDialog() {
               setResult(null)
             }}
           >
-            Close
+            Tutup
           </Button>
           <Button onClick={handleTest} disabled={testMutation.isPending}>
-            {testMutation.isPending ? 'Testing...' : 'Run Test Now'}
+            {testMutation.isPending ? 'Menguji...' : 'Jalankan Uji Sekarang'}
           </Button>
         </DialogFooter>
       </DialogContent>

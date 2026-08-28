@@ -6,6 +6,7 @@ import { CodeIcon, Cross2Icon, DotFilledIcon } from '@radix-ui/react-icons'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { useDevicesContext } from './devices-provider'
+import { getErrorMessage } from '../lib/formatters'
 
 export function DeviceTerminalDialog() {
   const { open, setOpen, currentRow, setCurrentRow } = useDevicesContext()
@@ -71,11 +72,18 @@ export function DeviceTerminalDialog() {
 
       // Intro banner
       term.writeln(`\x1b[36m=== RouterOS / SSH Terminal ===\x1b[0m`)
-      term.writeln(`Connecting SSH to \x1b[33m${currentRow.name}\x1b[0m (${currentRow.host}:${currentRow.sshPort || 22})...\r\n`)
+      term.writeln(
+        `Connecting SSH to \x1b[33m${currentRow.name}\x1b[0m (${currentRow.host}:${
+          currentRow.sshPort || 22
+        })...\r\n`
+      )
 
       // Connect WebSocket
       const proto = window.location.protocol === 'https:' ? 'wss' : 'ws'
-      const host = window.location.port === '5173' ? `${window.location.hostname}:8080` : window.location.host
+      const host =
+        window.location.port === '5173'
+          ? `${window.location.hostname}:8080`
+          : window.location.host
       const wsUrl = `${proto}://${host}/ws/devices/${currentRow.id}/terminal`
 
       try {
@@ -111,7 +119,9 @@ export function DeviceTerminalDialog() {
         ws.onerror = () => {
           if (!isSubscribed) return
           setIsConnected(false)
-          term?.writeln(`\r\n\x1b[31m[WebSocket Connection Error - Check if backend is running on port 8080]\x1b[0m`)
+          term?.writeln(
+            `\r\n\x1b[31m[WebSocket Connection Error - Check if backend is running on port 8080]\x1b[0m`
+          )
         }
 
         ws.onclose = () => {
@@ -119,8 +129,10 @@ export function DeviceTerminalDialog() {
           setIsConnected(false)
           term?.writeln(`\r\n\x1b[31m[SSH / RouterOS Terminal Session Closed]\x1b[0m`)
         }
-      } catch (err: any) {
-        term.writeln(`\x1b[31m[Failed to connect: ${err?.message || 'Connection error'}]\x1b[0m\r\n`)
+      } catch (err: unknown) {
+        term.writeln(
+          `\x1b[31m[Failed to connect: ${getErrorMessage(err, 'Connection error')}]\x1b[0m\r\n`
+        )
         setIsConnected(false)
       }
 
@@ -137,7 +149,13 @@ export function DeviceTerminalDialog() {
           try {
             fitAddon.fit()
             if (ws && ws.readyState === WebSocket.OPEN) {
-              ws.send(JSON.stringify({ type: 'resize', cols: term.cols, rows: term.rows }))
+              ws.send(
+                JSON.stringify({
+                  type: 'resize',
+                  cols: term.cols,
+                  rows: term.rows,
+                })
+              )
             }
           } catch {
             // ignore

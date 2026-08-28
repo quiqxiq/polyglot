@@ -5,6 +5,7 @@ import { ConfirmDialog } from '@/components/confirm-dialog'
 import { useDevicesContext } from './devices-provider'
 import { useDeleteDeviceMutation } from '../api/use-devices'
 import { DeleteDeviceRequest } from '@/gen/v1/device_pb'
+import { getErrorMessage } from '../lib/formatters'
 
 export function DevicesDeleteDialog() {
   const { open, setOpen, currentRow, setCurrentRow } = useDevicesContext()
@@ -15,11 +16,11 @@ export function DevicesDeleteDialog() {
 
     try {
       await deleteMutation.mutateAsync(new DeleteDeviceRequest({ id: currentRow.id }))
-      toast.success(`Device "${currentRow.name}" deleted successfully`)
+      toast.success(`Perangkat "${currentRow.name}" berhasil dihapus`)
       setOpen(null)
       setCurrentRow(null)
-    } catch (err: any) {
-      toast.error(err.message || 'Failed to delete device')
+    } catch (err: unknown) {
+      toast.error(getErrorMessage(err, 'Gagal menghapus perangkat'))
     }
   }
 
@@ -31,14 +32,14 @@ export function DevicesDeleteDialog() {
         setCurrentRow(null)
       }}
       handleConfirm={handleDelete}
-      title='Delete Device'
+      title='Hapus Perangkat'
       desc={
         <>
-          Are you sure you want to delete <strong>{currentRow?.name}</strong> ({currentRow?.host})?
-          This action cannot be undone.
+          Apakah Anda yakin ingin menghapus <strong>{currentRow?.name}</strong> ({currentRow?.host})?
+          Tindakan ini tidak dapat dibatalkan.
         </>
       }
-      confirmText='Delete'
+      confirmText='Hapus'
       destructive
       isLoading={deleteMutation.isPending}
     />

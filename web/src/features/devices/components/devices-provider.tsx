@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import useDialogState from '@/hooks/use-dialog-state'
-import { Device } from '@/gen/v1/device_pb'
-
-export type DevicesDialogType = 'add' | 'edit' | 'delete' | 'test' | 'terminal'
-export type ViewMode = 'card' | 'table'
+import type { Device } from '@/gen/v1/device_pb'
+import type { DevicesDialogType, ViewMode } from '../types'
 
 type DevicesContextType = {
   open: DevicesDialogType | null
@@ -44,4 +42,3 @@ export const useDevicesContext = () => {
   }
   return context
 }
-

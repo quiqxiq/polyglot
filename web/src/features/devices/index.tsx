@@ -24,8 +24,7 @@ import { DevicesCardGrid } from './components/devices-card-grid'
 import { DevicesTable } from './components/devices-table'
 import { DevicesDialogs } from './components/devices-dialogs'
 import { useDevicesQuery } from './api/use-devices'
-
-type VendorFilter = 'all' | 'mikrotik' | 'cisco' | 'huawei' | 'genieacs'
+import type { SortOrder, VendorFilter } from './types'
 
 function DevicesContent() {
   const { data: devices = [], isLoading } = useDevicesQuery()
@@ -33,7 +32,7 @@ function DevicesContent() {
 
   const [searchTerm, setSearchTerm] = useState('')
   const [vendorFilter, setVendorFilter] = useState<VendorFilter>('all')
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
+  const [sortOrder, setSortOrder] = useState<SortOrder>('asc')
 
   const filteredDevices = devices
     .filter((device) => {
@@ -71,18 +70,18 @@ function DevicesContent() {
           <div>
             <h1 className='text-2xl font-bold tracking-tight'>Device Inventory</h1>
             <p className='text-muted-foreground text-sm'>
-              Manage your network routers, access points, and devices with real-time monitoring.
+              Kelola router jaringan, access point, dan perangkat OLT dengan pemantauan realtime.
             </p>
           </div>
           <DevicesPrimaryButtons />
         </div>
 
-        {/* ===== Filter & Search Controls (Matching Apps Feature) ===== */}
+        {/* ===== Filter & Search Controls ===== */}
         <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
           <div className='flex flex-1 flex-wrap items-center gap-2'>
-            <div className='relative w-full sm:w-64'>
+            <div className='relative w-full sm:w-72'>
               <Input
-                placeholder='Filter devices by name, IP, or vendor...'
+                placeholder='Filter nama, IP host, atau vendor...'
                 className='h-9 pr-8 text-xs sm:text-sm'
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -91,7 +90,7 @@ function DevicesContent() {
                 <button
                   type='button'
                   onClick={() => setSearchTerm('')}
-                  className='absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground'
+                  className='absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer'
                   title='Clear search'
                 >
                   <Cross2Icon className='h-3.5 w-3.5' />
@@ -99,12 +98,15 @@ function DevicesContent() {
               )}
             </div>
 
-            <Select value={vendorFilter} onValueChange={(val) => setVendorFilter(val as VendorFilter)}>
-              <SelectTrigger className='h-9 w-36 text-xs sm:text-sm'>
+            <Select
+              value={vendorFilter}
+              onValueChange={(val) => setVendorFilter(val as VendorFilter)}
+            >
+              <SelectTrigger className='h-9 w-36 text-xs sm:text-sm bg-background'>
                 <SelectValue placeholder='All Vendors' />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='all'>All Vendors</SelectItem>
+                <SelectItem value='all'>Semua Vendor</SelectItem>
                 <SelectItem value='mikrotik'>MikroTik</SelectItem>
                 <SelectItem value='cisco'>Cisco</SelectItem>
                 <SelectItem value='huawei'>Huawei</SelectItem>
@@ -114,11 +116,14 @@ function DevicesContent() {
           </div>
 
           <div className='flex items-center gap-2 self-end sm:self-auto'>
-            <Select value={sortOrder} onValueChange={(val) => setSortOrder(val as 'asc' | 'desc')}>
-              <SelectTrigger className='h-9 w-28 text-xs sm:text-sm'>
+            <Select
+              value={sortOrder}
+              onValueChange={(val) => setSortOrder(val as SortOrder)}
+            >
+              <SelectTrigger className='h-9 w-36 text-xs sm:text-sm bg-background'>
                 <div className='flex items-center gap-1.5'>
                   <MixerHorizontalIcon className='h-3.5 w-3.5' />
-                  <span>{sortOrder === 'asc' ? 'Ascending' : 'Descending'}</span>
+                  <span>{sortOrder === 'asc' ? 'Urutkan (A-Z)' : 'Urutkan (Z-A)'}</span>
                 </div>
               </SelectTrigger>
               <SelectContent align='end'>
@@ -129,7 +134,7 @@ function DevicesContent() {
           </div>
         </div>
 
-        <Separator className='shadow-xs' />
+        <Separator className='shadow-2xs' />
 
         {/* ===== Main View (Card Grid or Table) ===== */}
         {viewMode === 'card' ? (

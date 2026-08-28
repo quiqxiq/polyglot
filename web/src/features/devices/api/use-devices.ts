@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { deviceClient } from '@/lib/api-client'
 import { deviceKeys } from './keys'
-import {
+import type {
   UpdateDeviceRequest,
   DeleteDeviceRequest,
   TestDeviceConnectionRequest,
