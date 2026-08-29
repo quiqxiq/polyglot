@@ -24,6 +24,26 @@ Perubahan dilakukan bertahap. Setiap fase harus meninggalkan repository dalam ke
 
 Audit terhadap commit `4e9aa22` menunjukkan fondasi refactor sudah tersedia, tetapi belum konsisten end-to-end.
 
+### 2.0 Status Audit Terbaru
+
+Status berikut diverifikasi terhadap HEAD `77273db` dan hasil command terbaru.
+
+| Fase | Status | Ringkasan |
+|---|---|---|
+| F0 | **DONE** | Toolchain CI sudah Go 1.26, baseline test/build/vet lulus, E2E router diberi tag eksplisit, `make check` tersedia. |
+| F1 | **PARTIAL** | Logrus `pkg/logger`, structured logging, redaction hook, dan test sudah ada; request correlation dan seluruh log repository belum selesai. |
+| F2 | **PARTIAL** | `pkg/fault`, Connect mapper, HTTP mapper, dan sentinel utama sudah ada; seluruh error domain belum dimigrasikan secara konsisten. |
+| F3 | **PARTIAL** | Protovalidate aktif pada router, test unary/stream tersedia; inventory field dan pembersihan seluruh validasi manual belum selesai. |
+| F4 | **PARTIAL** | Mapper dan HTTP error envelope sudah distandardisasi pada beberapa area; seluruh endpoint belum memiliki contract test dan pagination contract. |
+| F5 | **PARTIAL** | ConnectRPC error boundary dan sebagian dependency inversion sudah ditegakkan; test usecase/import integration dan audit boundary menyeluruh belum selesai. |
+| F6 | **PARTIAL** | Beberapa rename/file split selesai; file besar dan naming stutter legacy masih ada. |
+| F7 | **PARTIAL** | Model domain mulai dipindahkan dan interface audit diperjelas; seluruh port/model belum selesai dibersihkan. |
+| F8 | **PARTIAL** | Modularisasi Mikrotik dan `rosutil` sudah ada; duplicate audit dan facade verification belum lengkap. |
+| F9 | **PARTIAL** | 650 test race lulus, tetapi coverage streaming/worker dan beberapa high-risk flow masih rendah atau belum ada. |
+| F10 | **PARTIAL** | CI lint, `make check`, `wrapcheck`, dan custom boundary check sudah ada; `buf lint`/`buf generate --diff` belum masuk CI dan lint memakai baseline incremental. |
+
+**Catatan verifikasi:** `go build ./...`, `go vet ./...`, `go test ./... -race -count=1`, dan golangci-lint v2.1.6 lulus. `buf lint` belum dijalankan karena `buf` tidak tersedia. Knowledge graph juga perlu rebuild setelah commit terbaru sebelum dipakai sebagai bukti coverage berikutnya.
+
 ### 2.1 Hal yang sudah ada
 
 - `pkg/fault` sudah tersedia dan tidak bergantung pada `internal/*`.
@@ -38,19 +58,18 @@ Audit terhadap commit `4e9aa22` menunjukkan fondasi refactor sudah tersedia, tet
 
 ### 2.2 Gap yang harus dianggap sebagai baseline blocker
 
-- `go test ./...` belum hijau: 629 test lulus dan 1 test gagal pada `TestRouterAccountManager_E2E`.
-- Ditemukan sekitar 161 pemakaian `connect.NewError` pada handler atau layer selain `pkg/response`.
-- Validasi manual `req.Msg.X == ""` masih ada di beberapa handler.
+- `go test ./...` sudah hijau: 650 test lulus dengan race detector pada verifikasi terakhir.
+- Direct `connect.NewError` pada `internal/adapter/connect` sudah nol; pembuatannya dipusatkan di `pkg/response`.
+- Validasi manual `req.Msg.X == ""` masih ada di beberapa handler dan belum seluruhnya dipindahkan ke protovalidate/usecase.
 - Test usecase masih mengimpor adapter/driver secara langsung.
 - `internal/usecase/importer/router_live_e2e_test.go` masih berada di folder usecase.
-- `make check` belum tersedia.
-- CI belum menjalankan lint.
-- `.golangci.yml` belum menegakkan `forbidigo` untuk `connect.NewError` dan belum menegakkan `wrapcheck` atau `err113`.
-- Logging masih mencampur structured fields dengan `Infof/Warnf/Errorf`, dynamic message, bahasa Indonesia/Inggris, dan komponen yang tidak konsisten.
-- Plain HTTP masih mengembalikan `{"error":"..."}` yang berbeda dari endpoint lain dan sebagian handler mengembalikan `err.Error()` langsung ke client.
-- Beberapa domain belum mempunyai `errors.go` walaupun plan lama menargetkan seluruh domain.
+- `make check` sudah tersedia dan lulus pada environment dengan golangci-lint v2.1.6.
+- CI sudah menjalankan lint dan custom ConnectRPC boundary check; `wrapcheck` aktif dengan baseline/exclusion incremental.
+- Logging pada area utama dan driver WhatsApp sudah structured; sebagian log legacy di luar area tersebut masih perlu migrasi.
+- `pkg/response` sudah menyediakan HTTP envelope; adminapi, gateway, reports, dan portal sudah memakai pola ini, tetapi audit seluruh HTTP endpoint belum selesai.
+- Sentinel sudah ditambahkan pada customer, device, billing, dan hotspot; seluruh domain belum memiliki taxonomy/error inventory lengkap.
 - File besar masih ada: `internal/app/app.go`, `internal/app/account_manager.go`, `internal/usecase/user/manage_user.go`, `internal/adapter/connect/billing/billing_handler.go`, dan beberapa file test/fake.
-- `go.mod` menyatakan Go `1.26`, sedangkan CI menggunakan Go `1.22`; ini harus diputuskan sebelum enforcement CI.
+- `go.mod` dan CI sekarang sama-sama menggunakan Go `1.26`.
 
 ### 2.3 Prinsip audit
 
@@ -651,6 +670,104 @@ Jika generated output harus committed, CI harus gagal ketika hasil generate berb
 - Pull request gagal jika check, lint, test, boundary, atau generated code gagal.
 - Tidak ada dokumentasi yang mencantumkan file lama yang sudah dihapus/direname.
 - Aturan baru dapat ditemukan dari satu sumber canonical.
+
+---
+
+## 5.1 Status Task Detail
+
+### F0: Freeze, Inventory, dan Baseline
+
+| Task | Status | Bukti atau sisa |
+|---|---|---|
+| 0.1 Selaraskan toolchain | **DONE** | `go.mod` dan CI memakai Go 1.26. Lint v2.1.6 dapat dijalankan melalui `go run`; instalasi binary lokal belum dijamin. |
+| 0.2 Command baseline | **DONE** | `build`, `vet`, `test`, `lint`, `check`, `check-connect-errors`, dan `test-mikrotik-e2e` tersedia. |
+| 0.3 Perbaiki test baseline | **DONE** | `TestRouterAccountManager_E2E` diberi build tag `mikrotik_e2e`; default suite tidak bergantung router real. |
+
+### F1: Fondasi Logger
+
+| Task | Status | Bukti atau sisa |
+|---|---|---|
+| 1.1 Logging contract | **PARTIAL** | `pkg/logger` tetap Logrus dan structured fields sudah digunakan; request correlation ID belum diterapkan menyeluruh. |
+| 1.2 API pemakaian | **PARTIAL** | Driver WhatsApp, BotEngine, app lifecycle, probe, user, dan beberapa adapter sudah migrated; audit seluruh repository masih diperlukan. |
+| 1.3 Request logging middleware | **PARTIAL** | Middleware logger sudah ada, tetapi field schema, redaction, dan streaming lifecycle belum diverifikasi di semua route. |
+| 1.4 Test logger | **DONE** | Test JSON/text, fields, errors, dan redaction token/JID/phone/password/payload sudah ada. |
+
+### F2: Error Taxonomy dan Mapping
+
+| Task | Status | Bukti atau sisa |
+|---|---|---|
+| 2.1 Stabilkan `pkg/fault` | **DONE** | `Kind`, `New`, `Wrap`, `KindOf`, dan unit test tersedia. |
+| 2.2 Domain error inventory | **PARTIAL** | Sentinel tersedia pada domain utama (`billing`, `customer`, `device`, `hotspot`, dan lainnya); masih ada `fmt.Errorf` input/repository di beberapa usecase. |
+| 2.3 Standardisasi wrapping | **PARTIAL** | `wrapcheck` aktif dan beberapa jalur sudah dibungkus; masih ada backlog legacy yang memakai direct port return. |
+| 2.4 ConnectRPC mapper | **DONE** | Direct `connect.NewError` di `internal/adapter/connect` sudah nol; helper transport dan `MapDomainError` tersedia. |
+| 2.5 HTTP mapper | **PARTIAL** | `pkg/response` dan beberapa handler sudah memakai envelope; semua endpoint HTTP belum diaudit/ditest. |
+
+### F3: Request Validation
+
+| Task | Status | Bukti atau sisa |
+|---|---|---|
+| 3.1 Inventory request protobuf | **TODO** | Belum ada tabel canonical seluruh request, field rule, ID policy, dan business rule. |
+| 3.2 Lengkapi anotasi protovalidate | **PARTIAL** | Banyak anotasi sudah ada; coverage semua request, max length, repeated count, dan nested rules belum dibuktikan. |
+| 3.3 Satu validation interceptor | **PARTIAL** | `DefaultHandlerOptions` memakai protovalidate; contract test unary/stream ada, tetapi semua route dan streaming variants belum diaudit. |
+| 3.4 Bersihkan handler | **PARTIAL** | Banyak direct transport errors sudah dibersihkan; validasi kombinasi dan field manual masih ada di beberapa handler. |
+| 3.5 HTTP validation | **PARTIAL** | Malformed JSON dan error envelope sudah dites pada beberapa route; body limit, unknown fields, dan DTO validation belum seragam. |
+
+### F4: Request/Response Contract
+
+| Task | Status | Bukti atau sisa |
+|---|---|---|
+| 4.1 Mapper naming | **PARTIAL** | Mapper banyak sudah package-private dan konsisten; beberapa unused mapper/naming legacy masih ada. |
+| 4.2 Response semantics | **PARTIAL** | Contract ConnectRPC dan streaming validation sudah dites; seluruh Get/List/Create/Update/Delete belum memiliki contract suite lengkap. |
+| 4.3 Pagination | **PARTIAL** | User list sudah memiliki page/page_size; inventory dan standardisasi pagination semua list endpoint belum selesai. |
+| 4.4 HTTP DTO/writer | **PARTIAL** | Envelope error adminapi/gateway/reports/portal sudah ditambahkan; success envelope dan DTO seluruh HTTP endpoint belum disatukan. |
+
+### F5: Boundary dan Dependency Inversion
+
+| Task | Status | Bukti atau sisa |
+|---|---|---|
+| 5.1 Static boundary check | **PARTIAL** | `check-connect-errors.sh` tersedia; static check domain/usecase imports adapter/driver belum dibuat menyeluruh. |
+| 5.2 Pindahkan integration test | **TODO** | `router_live_e2e_test.go` dan beberapa test usecase masih perlu dipindahkan/diisolasi sesuai plan. |
+| 5.3 Metrics worker | **PARTIAL** | Resolver melalui port/function dan lifecycle worker sudah ada; coverage cancel/restart/leak masih perlu ditambah. |
+| 5.4 Composition root | **PARTIAL** | `app.go` tetap composition root dan logging lifecycle sudah dirapikan; file masih besar dan perlu pemisahan wiring bila bertambah. |
+
+### F6: Naming dan Package Structure
+
+| Task | Status | Bukti atau sisa |
+|---|---|---|
+| 6.1 Rename dengan gopls | **PARTIAL** | Chat, portal, hotspot, ping worker, dan WA worker sudah direname; naming stutter legacy pada domain/driver masih ada. |
+| 6.2 Pecah file besar | **PARTIAL** | Hotspot usecase sudah dipecah; `app.go`, `account_manager.go`, `manage_user.go`, handler billing, dan fake besar masih ada. |
+
+### F7: Port dan Model Domain
+
+| Task | Status | Bukti atau sisa |
+|---|---|---|
+| 7.1 Model relocation | **PARTIAL** | Banyak model sudah berada di domain dan port memakai alias/parameter; audit penghapusan alias jangka panjang belum selesai. |
+| 7.2 Interface overlap | **PARTIAL** | Audit writer dan payment interfaces sudah didokumentasikan; consumer/ownership semua interface belum diverifikasi. |
+| 7.3 Pecah gateway besar | **PARTIAL** | Capability gateway sudah terbagi pada beberapa file; ukuran dan cohesion semua gateway belum selesai diaudit. |
+
+### F8: Modularisasi Mikrotik
+
+| Task | Status | Bukti atau sisa |
+|---|---|---|
+| 8.1 Root facade audit | **PARTIAL** | Subpackage `dhcp`, `firewall`, `hotspot`, `iface`, `ppp`, `queue`, `system`, dan `rosutil` tersedia; audit facade formal belum selesai. |
+| 8.2 Duplicate detection | **PARTIAL** | Beberapa duplikasi sudah dihapus; root/subpackage duplicate audit lengkap belum dibuat. |
+| 8.3 Driver errors | **PARTIAL** | Driver tidak membuat ConnectRPC error; taxonomy `Unavailable` untuk semua dependency failure belum seragam. |
+
+### F9: Test Coverage dan Contract Verification
+
+| Task | Status | Bukti atau sisa |
+|---|---|---|
+| High-risk flow tests | **PARTIAL** | 650 test lulus dengan race detector; beberapa streaming worker, SSE, dan driver masih coverage rendah. |
+| Error/validation contracts | **PARTIAL** | `pkg/fault`, ConnectRPC unary/stream, HTTP adminapi/gateway/reports, dan logger sudah dites; seluruh endpoint belum. |
+| Integration isolation | **PARTIAL** | Real-router E2E sudah explicit tag; seluruh integration test belum memiliki satu convention yang sama. |
+
+### F10: Enforcement dan Dokumentasi
+
+| Task | Status | Bukti atau sisa |
+|---|---|---|
+| 10.1 Lint enforcement | **DONE** | `errorlint`, `wrapcheck`, `revive`, `bodyclose`, `exhaustive`, dan custom Connect boundary check aktif; full lint terakhir `0 issues`. |
+| 10.2 CI | **PARTIAL** | CI menjalankan build/vet/race test/lint/boundary; `go mod verify`, `buf lint`, dan `buf generate --diff` belum seluruhnya masuk workflow. |
+| 10.3 Documentation source of truth | **PARTIAL** | Plan v2 dan guidelines sudah tersedia; `AGENTS.md` masih memuat struktur duplikat yang dapat stale. |
 
 ---
 
