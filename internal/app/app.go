@@ -93,7 +93,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	redisURL := strings.TrimSpace(cfg.RedisURL)
 	redisStore, err := redisAdapter.NewStore(redisURL)
 	if err != nil {
-		logger.WithComponent("Polyglot").Warnf("failed to connect to Redis (%v). Falling back to in-memory cache.", err)
+		logger.WithComponent("Polyglot").WithError(err).Warn("failed to connect to Redis; falling back to in-memory cache")
 	}
 
 	jwtService := auth.NewJWTService(cfg.JWTSecret, cfg.JWTExpiryHours)
@@ -105,7 +105,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	casbinEnforcer, err := auth.NewCasbinEnforcer(ctx, pgStore.DB())
 	if err != nil {
-		logger.WithComponent("Polyglot").Warnf("failed to initialize Casbin enforcer: %v", err)
+		logger.WithComponent("Polyglot").WithError(err).Warn("failed to initialize Casbin enforcer")
 	} else {
 		auth.SeedSystemPolicies(casbinEnforcer)
 		if users, err := pgStore.FindAllUsers(ctx); err == nil {
@@ -115,7 +115,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 			}
 			auth.EnsureUserRoleAssignments(casbinEnforcer, refs)
 		} else {
-			logger.WithComponent("Polyglot").Warnf("failed to load users for role assignment sync: %v", err)
+			logger.WithComponent("Polyglot").WithError(err).Warn("failed to load users for role assignment sync")
 		}
 	}
 
@@ -125,7 +125,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	chatService := chatUC.NewChatUseCase(pgStore)
 	waManager, err := whatsapp.NewSessionManager(cfg.DatabaseURL, pgStore, nil, eventHandler.MakeStatusCallback())
 	if err != nil {
-		logger.WithComponent("Polyglot").Warnf("failed to initialize WhatsApp SessionManager: %v", err)
+		logger.WithComponent("Polyglot").WithError(err).Warn("failed to initialize WhatsApp session manager")
 	}
 
 	convService := convUC.NewConversationUseCase(pgStore)
@@ -439,7 +439,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 }
 
 func (a *App) Run() error {
-	logger.WithComponent("Polyglot").Infof("engine starting on http://localhost%s (net/http ServeMux, ConnectRPC, SSE, WebSockets, WhatsApp Gateway & MCP)", a.httpServer.Addr)
+	logger.WithComponent("Polyglot").WithField("address", a.httpServer.Addr).Info("engine starting")
 	if err := a.httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		return fmt.Errorf("http server failed: %w", err)
 	}
@@ -455,7 +455,7 @@ func (a *App) Shutdown(ctx context.Context) error {
 		a.sseHub.Close()
 	}
 	if err := a.httpServer.Shutdown(ctx); err != nil {
-		logger.WithComponent("Polyglot").Warnf("error shutting down HTTP server: %v", err)
+		logger.WithComponent("Polyglot").WithError(err).Warn("error shutting down HTTP server")
 		_ = a.httpServer.Close()
 	}
 	if a.waManager != nil {
