@@ -63,9 +63,9 @@ func (w *WASenderWorker) Run(ctx context.Context) (SendResult, error) {
 			res.Sent++
 			continue
 		}
-		logger.WithComponent("WaSender").WithError(sendErr).WithFields(map[string]any{
+		logger.WithComponent("WASenderWorker").WithError(sendErr).WithFields(map[string]any{
 			"notification_id": n.ID,
-		}).Warn("kirim WA gagal")
+		}).Warn("WhatsApp notification delivery failed")
 		if errors.Is(sendErr, domainNotification.ErrNoWASession) {
 			res.NoSession = true
 			return res, nil // infrastruktur mati: jangan buang attempts

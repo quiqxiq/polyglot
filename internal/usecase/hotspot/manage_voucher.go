@@ -22,7 +22,7 @@ func (u *UseCase) CheckVoucherStatus(ctx context.Context, driver port.DeviceDriv
 
 	users, err := u.gateway.ListUsers(ctx, driver, port.ListUsersFilter{Name: username})
 	if err != nil {
-		return nil, fmt.Errorf("lookup user %q: %w", username, err)
+		return nil, fmt.Errorf("lookup hotspot user: %w", err)
 	}
 	if len(users) == 0 {
 		return &port.VoucherStatusDetails{

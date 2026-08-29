@@ -164,7 +164,7 @@ func (u *AuthUseCase) UpdateProfile(ctx context.Context, userID uint, fullName, 
 	}
 
 	if err := u.userRepo.Update(ctx, user); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("update user profile: %w", err)
 	}
 
 	logger.WithComponent("AuthUseCase").WithField("user_id", userID).Info("user profile updated")
@@ -191,7 +191,7 @@ func (u *AuthUseCase) ChangePassword(ctx context.Context, userID uint, oldPasswo
 	}
 
 	if err := u.userRepo.UpdatePassword(ctx, userID, string(newHash)); err != nil {
-		return err
+		return fmt.Errorf("update user password: %w", err)
 	}
 
 	logger.WithComponent("AuthUseCase").WithField("user_id", userID).Info("user password changed successfully")

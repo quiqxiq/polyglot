@@ -100,7 +100,9 @@ func (u *RefreshTokenUseCase) Refresh(ctx context.Context, currentRefreshToken s
 
 func (u *RefreshTokenUseCase) Revoke(ctx context.Context, refreshToken string) error {
 	if u.refreshMgr != nil && refreshToken != "" {
-		return u.refreshMgr.RevokeToken(ctx, refreshToken)
+		if err := u.refreshMgr.RevokeToken(ctx, refreshToken); err != nil {
+			return fmt.Errorf("revoke refresh token: %w", err)
+		}
 	}
 	return nil
 }
