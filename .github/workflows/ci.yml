@@ -24,8 +24,16 @@ jobs:
       - name: Install Dependencies
         run: go mod download
 
+      - name: Set up Buf
+        uses: bufbuild/buf-setup-action@v1
+        with:
+          github_token: ${{ github.token }}
+
       - name: Run Go Build
         run: go build -v ./...
+
+      - name: Verify Go Modules
+        run: go mod verify
 
       - name: Run Go Vet
         run: go vet ./...
@@ -40,3 +48,6 @@ jobs:
 
       - name: Check ConnectRPC Error Boundary
         run: make check-connect-errors
+
+      - name: Check Protobuf Contracts
+        run: make proto-check

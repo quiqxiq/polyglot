@@ -1,4 +1,4 @@
-.PHONY: build vet test test-integration test-mikrotik-e2e check-connect-errors lint check fmt run setup seed \
+.PHONY: build vet test test-integration test-mikrotik-e2e check-connect-errors proto-check lint check fmt run setup seed \
         proto proto-tools proto-clean \
         dev-up dev-down dev-logs dev-setup \
         prod-build prod-up prod-down prod-logs prod-setup \
@@ -41,7 +41,10 @@ vet:
 test:
 	go test ./... -race -cover
 
-check: vet build lint test
+check: verify-mod proto-check vet build lint test
+
+verify-mod:
+	go mod verify
 
 test-integration:
 	go test -tags=integration ./test/integration/... -v
@@ -51,6 +54,12 @@ test-mikrotik-e2e:
 
 check-connect-errors:
 	bash scripts/check-connect-errors.sh
+
+proto-check:
+	@test -x "$$(command -v buf)" || (echo "buf is required; install Buf before running proto-check" >&2; exit 1)
+	buf lint
+	buf generate --template buf.gen.yaml
+	git diff --exit-code -- api/gen web/src/gen
 
 lint:
 	golangci-lint run ./... && $(MAKE) check-connect-errors

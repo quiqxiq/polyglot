@@ -532,8 +532,6 @@ export class AddTransactionRequest extends Message<AddTransactionRequest> {
   categoryId = "";
 
   /**
-   * IN | OUT
-   *
    * @generated from field: string direction = 3;
    */
   direction = "";
