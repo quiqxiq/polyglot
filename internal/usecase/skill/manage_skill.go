@@ -244,7 +244,7 @@ func (u *ManageSkillUseCase) persistMetadata(ctx context.Context, userID, name, 
 	}
 
 	if err := u.repo.SaveSkillMetadata(ctx, rec); err != nil {
-		logger.WithComponent("ManageSkill").WithError(err).Warnf("Failed to persist skill metadata for %s", name)
+		logger.WithComponent("ManageSkill").WithError(err).WithField("skill_name", name).Warn("failed to persist skill metadata")
 	}
 }
 
@@ -253,7 +253,7 @@ func (u *ManageSkillUseCase) removeMetadata(ctx context.Context, userID, name st
 		return
 	}
 	if err := u.repo.DeleteSkillMetadata(ctx, userID, name); err != nil {
-		logger.WithComponent("ManageSkill").WithError(err).Warnf("Failed to delete skill metadata for %s", name)
+		logger.WithComponent("ManageSkill").WithError(err).WithField("skill_name", name).Warn("failed to delete skill metadata")
 	}
 }
 

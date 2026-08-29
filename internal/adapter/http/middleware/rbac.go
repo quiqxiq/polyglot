@@ -20,14 +20,14 @@ func AuthorizeProcedure(enforcer PolicyEnforcer) Middleware {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if enforcer == nil {
-				logger.WithComponent("RBAC").Warnf("enforcer unavailable — denying %q (fail closed)", r.URL.Path)
+				logger.WithComponent("RBAC").WithField("path", r.URL.Path).Warn("enforcer unavailable; denying request")
 				writeJSONError(w, http.StatusInternalServerError, "Authorization service unavailable")
 				return
 			}
 
 			obj, ok := auth.PermissionFor(r.URL.Path)
 			if !ok {
-				logger.WithComponent("RBAC").Warnf("unknown procedure %q — denying (fail closed)", r.URL.Path)
+				logger.WithComponent("RBAC").WithField("path", r.URL.Path).Warn("unknown procedure; denying request")
 				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusForbidden)
 				_ = json.NewEncoder(w).Encode(map[string]string{
@@ -53,7 +53,7 @@ func AuthorizeProcedure(enforcer PolicyEnforcer) Middleware {
 			for _, role := range effectiveRoles {
 				ok, err := enforcer.Enforce(role, obj, "*")
 				if err != nil {
-					logger.WithComponent("RBAC").Errorf("error evaluating policy for role '%s' object '%s': %v", role, obj, err)
+					logger.WithComponent("RBAC").WithError(err).WithFields(map[string]any{"role": role, "object": obj}).Error("policy evaluation failed")
 					writeJSONError(w, http.StatusInternalServerError, "Failed to evaluate authorization policy")
 					return
 				}

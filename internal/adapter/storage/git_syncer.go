@@ -39,7 +39,7 @@ func (g *GitSyncer) SyncRepo(ctx context.Context, targetDir, repoURL string) err
 	gitDir := filepath.Join(targetDir, ".git")
 	if _, err := os.Stat(gitDir); err == nil {
 		// Repo already cloned, perform git pull
-		logger.WithComponent("GitSyncer").Infof("Pulling updates for repo in %s", targetDir)
+		logger.WithComponent("GitSyncer").WithField("target_dir", targetDir).Info("pulling repository updates")
 		cmd := exec.CommandContext(ctx, "git", "-C", targetDir, "pull", "--ff-only")
 		out, err := cmd.CombinedOutput()
 		if err != nil {
@@ -49,7 +49,7 @@ func (g *GitSyncer) SyncRepo(ctx context.Context, targetDir, repoURL string) err
 	}
 
 	// New repo, perform git clone
-	logger.WithComponent("GitSyncer").Infof("Cloning repo %s into %s", repoURL, targetDir)
+	logger.WithComponent("GitSyncer").WithFields(map[string]any{"repo_url": repoURL, "target_dir": targetDir}).Info("cloning repository")
 	_ = os.RemoveAll(targetDir)
 	if err := os.MkdirAll(filepath.Dir(targetDir), 0755); err != nil {
 		return err

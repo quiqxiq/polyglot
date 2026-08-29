@@ -50,7 +50,7 @@ func (u *ManageSkillUseCase) AddGitRepo(ctx context.Context, repoURL string) (*s
 		go func() {
 			targetDir := filepath.Join(u.store.GetSkillsDir(), repoName)
 			if err := u.gitSyncer.SyncRepo(context.Background(), targetDir, repoURL); err != nil {
-				logger.WithComponent("ManageSkill").WithError(err).Errorf("Background git clone failed for %s", repoURL)
+				logger.WithComponent("ManageSkill").WithError(err).WithField("repo_url", repoURL).Error("background git clone failed")
 				return
 			}
 			u.persistMetadata(context.Background(), "", repoName, "git", repoURL)
@@ -124,7 +124,7 @@ func (u *ManageSkillUseCase) SyncGitRepo(ctx context.Context, id string) error {
 		go func() {
 			targetDir := filepath.Join(u.store.GetSkillsDir(), repo.Name)
 			if err := u.gitSyncer.SyncRepo(context.Background(), targetDir, repo.URL); err != nil {
-				logger.WithComponent("ManageSkill").WithError(err).Errorf("Manual git sync failed for %s", repo.URL)
+				logger.WithComponent("ManageSkill").WithError(err).WithField("repo_url", repo.URL).Error("manual git sync failed")
 				return
 			}
 			u.persistMetadata(context.Background(), "", repo.Name, "git", repo.URL)

@@ -15,7 +15,7 @@ func Recovery() Middleware {
 			defer func() {
 				if rec := recover(); rec != nil {
 					stack := string(debug.Stack())
-					logger.WithComponent("HTTP").WithField("stack", stack).Errorf("panic recovered: %v", rec)
+					logger.WithComponent("HTTP").WithFields(map[string]any{"stack": stack, "panic": rec}).Error("panic recovered")
 					writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("Internal Server Error: %v", rec))
 				}
 			}()

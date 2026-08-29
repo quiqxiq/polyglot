@@ -104,7 +104,7 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 	}
 
 	if added > 0 {
-		logger.WithComponent("PolicySeeder").Infof("Seeded %d new RBAC system policies (resource:action format)", added)
+		logger.WithComponent("PolicySeeder").WithField("policy_count", added).Info("seeded RBAC system policies")
 	}
 }
 
@@ -126,7 +126,7 @@ func removeLegacyPathPolicies(ce *CasbinEnforcer) {
 		}
 	}
 	if removed > 0 {
-		logger.WithComponent("PolicySeeder").Infof("Removed %d legacy path-based RBAC policies", removed)
+		logger.WithComponent("PolicySeeder").WithField("policy_count", removed).Info("removed legacy RBAC policies")
 	}
 }
 
@@ -153,7 +153,7 @@ func EnsureUserRoleAssignments(ce *CasbinEnforcer, users []*UserRef) {
 		}
 	}
 	if synced > 0 {
-		logger.WithComponent("PolicySeeder").Infof("Synced role assignments for %d user(s) in Casbin", synced)
+		logger.WithComponent("PolicySeeder").WithField("assignment_count", synced).Info("synced Casbin role assignments")
 	}
 }
 

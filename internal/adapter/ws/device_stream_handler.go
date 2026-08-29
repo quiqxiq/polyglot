@@ -39,7 +39,7 @@ func (h *TerminalHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		InsecureSkipVerify: true,
 	})
 	if err != nil {
-		logger.WithComponent("TerminalWS").Errorf("websocket accept failed: %v", err)
+		logger.WithComponent("TerminalWS").WithError(err).Error("websocket accept failed")
 		return
 	}
 	defer func() { _ = conn.CloseNow() }()
