@@ -46,11 +46,11 @@ func (c *Client) startQRFlow() {
 		if errors.Is(err, whatsmeow.ErrQRStoreContainsID) {
 			logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Info("store already contains ID, attempting direct connect")
 			if err := c.waClient.Connect(); err != nil {
-				logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Errorf("connect with saved session failed: %v", err)
+				logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Error("connect with saved session failed")
 			}
 			return
 		}
-		logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Errorf("failed to get QR channel: %v", err)
+		logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Error("failed to get QR channel")
 		if c.onStatus != nil {
 			c.onStatus(c.SessionID, "needs_rescan", "", "", "")
 		}
@@ -66,7 +66,7 @@ func (c *Client) startQRFlow() {
 			if c.onStatus != nil {
 				c.onStatus(c.SessionID, "needs_rescan", "", "", "")
 			}
-			logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Errorf("failed to connect WA client: %v", err)
+			logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Error("failed to connect WhatsApp client")
 			return
 		}
 	}
@@ -100,7 +100,7 @@ func (c *Client) startQRFlow() {
 					c.onStatus(c.SessionID, "needs_rescan", "", "", "")
 				}
 			} else {
-				logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Debugf("QR event: %s", evt.Event)
+				logger.WithComponent("WhatsAppDriver").WithFields(map[string]any{"session_id": c.SessionID, "event": evt.Event}).Debug("QR event received")
 			}
 		}
 	}()

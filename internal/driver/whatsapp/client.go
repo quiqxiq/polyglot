@@ -148,7 +148,7 @@ func (c *Client) Disconnect() {
 func (c *Client) Logout(ctx context.Context) error {
 	if c.waClient.IsConnected() {
 		if err := c.waClient.Logout(ctx); err != nil {
-			logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Warnf("remote logout failed (best-effort): %v", err)
+			logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Warn("remote logout failed; continuing local logout")
 		}
 	}
 	c.Disconnect()

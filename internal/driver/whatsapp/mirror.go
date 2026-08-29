@@ -22,7 +22,7 @@ func (c *Client) reconcileLIDChat(ctx context.Context, resolved types.JID) {
 		return
 	}
 	if err := c.chatRepo.MergeChatLID(ctx, c.SessionID, lid.String(), resolved.String()); err != nil {
-		logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Debugf("failed to merge LID chat: %v", err)
+		logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Debug("failed to merge LID chat")
 	}
 }
 
@@ -70,7 +70,7 @@ func (c *Client) persistMirrorMessage(evt *events.Message) {
 
 	inserted, err := c.chatRepo.UpsertMessage(context.Background(), msg)
 	if err != nil {
-		logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Errorf("failed to mirror message: %v", err)
+		logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Error("failed to mirror message")
 	}
 
 	chat := &bot.WAChat{
@@ -83,12 +83,12 @@ func (c *Client) persistMirrorMessage(evt *events.Message) {
 		LastMessageTime:    evt.Info.Timestamp,
 	}
 	if err := c.chatRepo.UpsertChat(context.Background(), chat); err != nil {
-		logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Errorf("failed to mirror chat: %v", err)
+		logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Error("failed to mirror chat")
 	}
 
 	if inserted && !evt.Info.IsFromMe {
 		if err := c.chatRepo.IncrementUnread(context.Background(), c.SessionID, chatJID); err != nil {
-			logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Debugf("failed to increment unread: %v", err)
+			logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Debug("failed to increment unread")
 		}
 	}
 
@@ -120,7 +120,7 @@ func (c *Client) recordOutgoingMessage(jid types.JID, waMessageID string, conten
 		Timestamp:   now,
 	}
 	if _, err := c.chatRepo.UpsertMessage(context.Background(), msg); err != nil {
-		logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Errorf("failed to mirror outgoing message: %v", err)
+		logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Error("failed to mirror outgoing message")
 	}
 
 	chat := &bot.WAChat{
@@ -131,7 +131,7 @@ func (c *Client) recordOutgoingMessage(jid types.JID, waMessageID string, conten
 		LastMessageTime:    now,
 	}
 	if err := c.chatRepo.UpsertChat(context.Background(), chat); err != nil {
-		logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Errorf("failed to mirror outgoing chat: %v", err)
+		logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Error("failed to mirror outgoing chat")
 	}
 
 	c.notifyChatUpdate(chatJID)

@@ -8,6 +8,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/reporting"
 	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // Handler menyajikan laporan finansial harian/bulanan/tahunan dari
@@ -134,7 +135,8 @@ func writeJSON(w http.ResponseWriter, v any) {
 }
 
 func httpError(w http.ResponseWriter, code int, msg string) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
-	_ = json.NewEncoder(w).Encode(map[string]string{"error": msg})
+	if code >= http.StatusInternalServerError {
+		msg = "internal server error"
+	}
+	response.WriteHTTPStatusError(w, code, msg)
 }

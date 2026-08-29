@@ -80,12 +80,12 @@ func normalizeJIDFromLID(ctx context.Context, jid types.JID, client *whatsmeow.C
 		return jid
 	}
 	if client == nil || client.Store == nil || client.Store.LIDs == nil {
-		logger.WithComponent("JIDFilter").Warnf("Cannot resolve LID %s: client not available", jid.String())
+		logger.WithComponent("JIDFilter").Warn("cannot resolve LID; client unavailable")
 		return jid
 	}
 	pn, err := client.Store.LIDs.GetPNForLID(ctx, jid)
 	if err != nil {
-		logger.WithComponent("JIDFilter").Warnf("Failed to resolve LID %s: %v", jid.String(), err)
+		logger.WithComponent("JIDFilter").WithError(err).Warn("failed to resolve LID")
 		return jid
 	}
 	if pn.IsEmpty() {

@@ -72,7 +72,7 @@ func NewManageDeviceUseCase(repo port.DeviceRepository, vault port.CredentialVau
 // CreateDevice saves device inventory data and encrypts/stores its credentials in vault.
 func (uc *ManageDeviceUseCase) CreateDevice(ctx context.Context, d device.Device, c device.Credentials) error {
 	if d.Host == "" {
-		return fmt.Errorf("device host cannot be empty")
+		return device.ErrInvalidInput
 	}
 	if err := uc.repo.Save(ctx, d); err != nil {
 		return fmt.Errorf("failed to save device: %w", err)

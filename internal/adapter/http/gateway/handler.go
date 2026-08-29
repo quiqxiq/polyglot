@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	uc "github.com/quixiq/polyglot/internal/usecase/billing"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 type Handler struct {
@@ -76,11 +77,15 @@ func (h *Handler) charge(w http.ResponseWriter, r *http.Request) {
 }
 
 func respond(w http.ResponseWriter, code int, success bool, errMsg string) {
-	payload := map[string]any{"success": success}
-	if errMsg != "" {
-		payload["message"] = errMsg
+	if !success {
+		message := errMsg
+		if code >= http.StatusInternalServerError {
+			message = "internal server error"
+		}
+		response.WriteHTTPStatusError(w, code, message)
+		return
 	}
-	writeJSON(w, code, payload)
+	writeJSON(w, code, map[string]any{"success": true})
 }
 
 func writeJSON(w http.ResponseWriter, code int, v any) {

@@ -89,10 +89,10 @@ func (c *Client) handleIncomingMessage(evt *events.Message) {
 	}
 
 	logger.WithComponent("WhatsAppDriver").WithFields(map[string]any{
-		"session_id": c.SessionID,
-		"sender":     senderNumber,
-		"chat_jid":   chatJID,
-	}).Debugf("incoming direct 1:1 message: %s", body)
+		"session_id":     c.SessionID,
+		"chat_jid":       chatJID,
+		"message_length": len(body),
+	}).Debug("incoming direct message received")
 
 	if cb := c.getMessageCallback(); cb != nil {
 		cb(c.SessionID, chatJID, senderNumber, body)
@@ -104,7 +104,7 @@ func (c *Client) sendPresenceAvailable() {
 		return
 	}
 	if err := c.waClient.SendPresence(context.Background(), types.PresenceAvailable); err != nil {
-		logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Debugf("failed to send presence: %v", err)
+		logger.WithComponent("WhatsAppDriver").WithError(err).WithField("session_id", c.SessionID).Debug("failed to send presence")
 		return
 	}
 	logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Debug("presence available sent")
@@ -142,7 +142,7 @@ func (c *Client) handleReceiptEvent(evt *events.Receipt) {
 		strIDs[i] = string(id)
 	}
 	if err := c.chatRepo.MarkMessagesStatus(context.Background(), c.SessionID, chatJID, strIDs, status); err != nil {
-		logger.WithComponent("WhatsAppDriver").WithField("session_id", c.SessionID).Debugf("failed to mark messages %s in %s: %v", status, chatJID, err)
+		logger.WithComponent("WhatsAppDriver").WithError(err).WithFields(map[string]any{"session_id": c.SessionID, "status": status, "chat_jid": chatJID}).Debug("failed to mark messages")
 		return
 	}
 	c.notifyChatUpdate(chatJID)

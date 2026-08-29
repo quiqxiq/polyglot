@@ -13,6 +13,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // Handler exposes administrative HTTP endpoints for imports and reports.
@@ -243,5 +244,9 @@ func writeJSON(w http.ResponseWriter, code int, v any) {
 }
 
 func writeErr(w http.ResponseWriter, code int, msg string) {
-	writeJSON(w, code, map[string]string{"error": msg})
+	if code >= http.StatusInternalServerError {
+		response.WriteHTTPStatusError(w, code, "internal server error")
+		return
+	}
+	response.WriteHTTPStatusError(w, code, msg)
 }

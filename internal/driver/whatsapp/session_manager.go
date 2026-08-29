@@ -311,7 +311,7 @@ func (sm *SessionManager) RestoreAllSessions(sessions []bot.WASession) error {
 	if sm == nil {
 		return nil
 	}
-	logger.WithComponent("SessionManager").Infof("Restoring %d WhatsApp sessions...", len(sessions))
+	logger.WithComponent("SessionManager").WithField("session_count", len(sessions)).Info("restoring WhatsApp sessions")
 	for i := range sessions {
 		sess := &sessions[i]
 		// Hanya session yang pernah online/logged-in yang di-restore otomatis.
@@ -319,7 +319,7 @@ func (sm *SessionManager) RestoreAllSessions(sessions []bot.WASession) error {
 		// menunggu scan manual dari UI.
 		if sess.Status == bot.StatusOnline || sess.JID != "" {
 			if err := sm.Connect(sess); err != nil {
-				logger.WithComponent("SessionManager").Warnf("Failed to connect session %d (%s): %v", sess.ID, sess.DeviceName, err)
+				logger.WithComponent("SessionManager").WithError(err).WithField("session_id", sess.ID).Warn("failed to connect WhatsApp session")
 			}
 		}
 	}

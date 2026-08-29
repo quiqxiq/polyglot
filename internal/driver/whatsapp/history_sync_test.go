@@ -72,7 +72,7 @@ func (f *fakeHistoryRepo) UpsertMessagesBatch(_ context.Context, msgs []*bot.WAM
 }
 
 func (f *fakeHistoryRepo) IncrementUnread(_ context.Context, _ uint, _ string) error { return nil }
-func (f *fakeHistoryRepo) MarkChatRead(_ context.Context, _ uint, _ string) error          { return nil }
+func (f *fakeHistoryRepo) MarkChatRead(_ context.Context, _ uint, _ string) error    { return nil }
 func (f *fakeHistoryRepo) SetChatUnread(_ context.Context, _ uint, chatJID string, count uint32) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
@@ -85,8 +85,12 @@ func (f *fakeHistoryRepo) ListChats(_ context.Context, _ uint, _, _ int, _ strin
 func (f *fakeHistoryRepo) ListChatMessages(_ context.Context, _ uint, _ string, _, _ int) ([]bot.WAMessage, error) {
 	return nil, nil
 }
-func (f *fakeHistoryRepo) SetChatBotEnabled(_ context.Context, _ uint, _ string, _ bool) error { return nil }
-func (f *fakeHistoryRepo) IsChatBotEnabled(_ context.Context, _ uint, _ string) (bool, error)  { return true, nil }
+func (f *fakeHistoryRepo) SetChatBotEnabled(_ context.Context, _ uint, _ string, _ bool) error {
+	return nil
+}
+func (f *fakeHistoryRepo) IsChatBotEnabled(_ context.Context, _ uint, _ string) (bool, error) {
+	return true, nil
+}
 func (f *fakeHistoryRepo) MarkMessagesStatus(_ context.Context, _ uint, chatJID string, messageIDs []string, status string) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()

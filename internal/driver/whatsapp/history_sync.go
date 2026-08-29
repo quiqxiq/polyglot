@@ -32,7 +32,7 @@ func (c *Client) handleHistorySync(evt *events.HistorySync) {
 		// dan dicatat saja.
 		defer func() {
 			if r := recover(); r != nil {
-				logger.WithComponent("HistorySync").Errorf("Panic during history sync mirror (session %d): %v", c.SessionID, r)
+				logger.WithComponent("HistorySync").WithFields(map[string]any{"session_id": c.SessionID, "panic": r}).Error("panic during history sync mirror")
 			}
 		}()
 		switch evt.Data.GetSyncType() {
@@ -59,7 +59,7 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 	if len(conversations) == 0 {
 		return
 	}
-	logger.WithComponent("HistorySync").Infof("Session %d: mirroring %d conversations", c.SessionID, len(conversations))
+	logger.WithComponent("HistorySync").WithFields(map[string]any{"session_id": c.SessionID, "conversation_count": len(conversations)}).Info("mirroring history conversations")
 
 	selfJID := ""
 	if c.waClient != nil && c.waClient.Store != nil && c.waClient.Store.ID != nil {
@@ -73,7 +73,7 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 		}
 		jid, err := types.ParseJID(rawJID)
 		if err != nil {
-			logger.WithComponent("HistorySync").Warnf("Session %d: skip chat %q (invalid JID): %v", c.SessionID, rawJID, err)
+			logger.WithComponent("HistorySync").WithError(err).WithField("session_id", c.SessionID).Warn("skipping chat with invalid JID")
 			continue
 		}
 		// Fase 1: normalisasi LID → nomor HP untuk CHAT JID (bukan hanya sender).
@@ -108,7 +108,7 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 				return
 			}
 			if _, err := c.chatRepo.UpsertMessagesBatch(context.Background(), batch); err != nil {
-				logger.WithComponent("HistorySync").Errorf("Session %d: failed to mirror %d messages of %s: %v", c.SessionID, len(batch), chatJID, err)
+				logger.WithComponent("HistorySync").WithError(err).WithFields(map[string]any{"session_id": c.SessionID, "message_count": len(batch), "chat_jid": chatJID}).Error("failed to mirror message batch")
 			}
 			batch = batch[:0]
 		}
@@ -211,13 +211,13 @@ func (c *Client) processHistoryConversations(data *waHistorySync.HistorySync) {
 			LastMessageTime:    latest,
 		}
 		if err := c.chatRepo.UpsertChat(context.Background(), chat); err != nil {
-			logger.WithComponent("HistorySync").Errorf("Session %d: failed to mirror chat %s: %v", c.SessionID, chatJID, err)
+			logger.WithComponent("HistorySync").WithError(err).WithFields(map[string]any{"session_id": c.SessionID, "chat_jid": chatJID}).Error("failed to mirror chat")
 		} else {
 			// History sync otoritatif untuk unread — set selalu (termasuk 0)
 			// agar angka di DB tidak menyimpan nilai basi dari sinkronisasi
 			// sebelumnya.
 			if err := c.chatRepo.SetChatUnread(context.Background(), c.SessionID, chatJID, conv.GetUnreadCount()); err != nil {
-				logger.WithComponent("HistorySync").Warnf("Session %d: failed to set unread for %s: %v", c.SessionID, chatJID, err)
+				logger.WithComponent("HistorySync").WithError(err).WithFields(map[string]any{"session_id": c.SessionID, "chat_jid": chatJID}).Warn("failed to set unread count")
 			}
 		}
 		// Beri tahu UI (via SSE) bahwa mirror chat berubah — Inbox refresh.
@@ -263,7 +263,7 @@ func (c *Client) processHistoryPushNames(data *waHistorySync.HistorySync) {
 			DisplayName: name,
 		}
 		if err := c.chatRepo.UpsertChat(context.Background(), chat); err != nil {
-			logger.WithComponent("HistorySync").Warnf("Session %d: failed to save push name for %s: %v", c.SessionID, rawJID, err)
+			logger.WithComponent("HistorySync").WithError(err).WithField("session_id", c.SessionID).Warn("failed to save push name")
 		}
 	}
 }

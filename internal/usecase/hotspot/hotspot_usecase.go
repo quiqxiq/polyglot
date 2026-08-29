@@ -2,12 +2,12 @@ package hotspot
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -108,7 +108,7 @@ func (u *UseCase) DisableExpireMonitor(ctx context.Context, driver port.DeviceDr
 		return command.Result{}, err
 	}
 	if !status.IsInstalled {
-		return command.Result{}, fmt.Errorf("expire monitor is not installed")
+		return command.Result{}, domainHotspot.ErrExpireMonitorNotInstalled
 	}
 	return u.gateway.SetExpireMonitorDisabled(ctx, driver, status.SchedulerID, disabled)
 }
@@ -121,7 +121,7 @@ func (u *UseCase) RemoveExpireMonitor(ctx context.Context, driver port.DeviceDri
 		return command.Result{}, err
 	}
 	if !status.IsInstalled {
-		return command.Result{}, fmt.Errorf("expire monitor is not installed")
+		return command.Result{}, domainHotspot.ErrExpireMonitorNotInstalled
 	}
 	return u.gateway.RemoveExpireMonitor(ctx, driver, status.SchedulerID)
 }

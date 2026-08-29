@@ -30,6 +30,7 @@ var (
 
 	// Customer and portal errors.
 	ErrCustomerNotFound     = fault.New(fault.KindNotFound, "customer: not found")
+	ErrInvalidInput         = fault.New(fault.KindInvalidInput, "customer: invalid input")
 	ErrPortalBadCredentials = fault.New(fault.KindUnauthenticated, "portal: invalid portal code, phone number, or OTP")
 	ErrOTPLocked            = fault.New(fault.KindResourceExhausted, "portal: otp locked: too many failed attempts")
 	ErrOTPExpired           = fault.New(fault.KindUnauthenticated, "portal: otp expired")

@@ -106,6 +106,39 @@ func WriteHTTPError(w http.ResponseWriter, err error) {
 	writeHTTPJSON(w, status, payload)
 }
 
+// WriteHTTPStatusError writes a stable envelope when a legacy HTTP handler
+// already has a transport status and a safe public message.
+func WriteHTTPStatusError(w http.ResponseWriter, status int, message string) {
+	payload := HTTPErrorResponse{Error: HTTPError{
+		Code:    httpCodeForStatus(status),
+		Message: message,
+	}}
+	writeHTTPJSON(w, status, payload)
+}
+
+func httpCodeForStatus(status int) string {
+	switch status {
+	case http.StatusBadRequest:
+		return "INVALID_ARGUMENT"
+	case http.StatusUnauthorized:
+		return "UNAUTHENTICATED"
+	case http.StatusForbidden:
+		return "PERMISSION_DENIED"
+	case http.StatusNotFound:
+		return "NOT_FOUND"
+	case http.StatusConflict:
+		return "CONFLICT"
+	case http.StatusPreconditionFailed:
+		return "FAILED_PRECONDITION"
+	case http.StatusTooManyRequests:
+		return "RESOURCE_EXHAUSTED"
+	case http.StatusServiceUnavailable:
+		return "UNAVAILABLE"
+	default:
+		return "INTERNAL"
+	}
+}
+
 func writeHTTPJSON(w http.ResponseWriter, status int, value any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)

@@ -2,7 +2,6 @@ package billing
 
 import (
 	"context"
-	"fmt"
 
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	"github.com/quixiq/polyglot/internal/port"
@@ -19,7 +18,7 @@ func NewInvoiceUseCase(repo port.InvoiceRepository) *InvoiceUseCase {
 
 func (u *InvoiceUseCase) ListInvoices(ctx context.Context, customerID string) ([]domainBilling.Invoice, error) {
 	if u.repo == nil {
-		return nil, fmt.Errorf("invoice repository unavailable")
+		return nil, domainBilling.ErrRepositoryUnavailable
 	}
 	if customerID != "" {
 		return u.repo.FindByCustomerID(ctx, customerID)
@@ -29,17 +28,17 @@ func (u *InvoiceUseCase) ListInvoices(ctx context.Context, customerID string) ([
 
 func (u *InvoiceUseCase) GetInvoice(ctx context.Context, id string) (domainBilling.Invoice, error) {
 	if u.repo == nil {
-		return domainBilling.Invoice{}, fmt.Errorf("invoice repository unavailable")
+		return domainBilling.Invoice{}, domainBilling.ErrRepositoryUnavailable
 	}
 	return u.repo.FindByID(ctx, id)
 }
 
 func (u *InvoiceUseCase) CreateInvoice(ctx context.Context, inv domainBilling.Invoice) (domainBilling.Invoice, error) {
 	if u.repo == nil {
-		return domainBilling.Invoice{}, fmt.Errorf("invoice repository unavailable")
+		return domainBilling.Invoice{}, domainBilling.ErrRepositoryUnavailable
 	}
 	if inv.CustomerID == "" || inv.Total <= 0 {
-		return domainBilling.Invoice{}, fmt.Errorf("customer_id and valid total amount are required")
+		return domainBilling.Invoice{}, domainBilling.ErrInvalidInput
 	}
 	if inv.Status == "" {
 		inv.Status = domainBilling.StatusUnpaid
@@ -52,7 +51,7 @@ func (u *InvoiceUseCase) CreateInvoice(ctx context.Context, inv domainBilling.In
 
 func (u *InvoiceUseCase) PayInvoice(ctx context.Context, id string) (domainBilling.Invoice, error) {
 	if u.repo == nil {
-		return domainBilling.Invoice{}, fmt.Errorf("invoice repository unavailable")
+		return domainBilling.Invoice{}, domainBilling.ErrRepositoryUnavailable
 	}
 	inv, err := u.repo.FindByID(ctx, id)
 	if err != nil {

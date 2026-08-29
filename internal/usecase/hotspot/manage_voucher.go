@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -16,7 +17,7 @@ func (u *UseCase) GenerateVouchers(ctx context.Context, driver port.DeviceDriver
 // CheckVoucherStatus inspects a voucher username and aggregates all relevant status.
 func (u *UseCase) CheckVoucherStatus(ctx context.Context, driver port.DeviceDriver, username string) (*port.VoucherStatusDetails, error) {
 	if strings.TrimSpace(username) == "" {
-		return nil, fmt.Errorf("username is required")
+		return nil, domainHotspot.ErrInvalidInput
 	}
 
 	users, err := u.gateway.ListUsers(ctx, driver, port.ListUsersFilter{Name: username})

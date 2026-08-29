@@ -2,8 +2,8 @@ package billing
 
 import (
 	"context"
-	"fmt"
 
+	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -20,7 +20,7 @@ func NewSubscriptionUseCase(repo port.SubscriptionRepository) *SubscriptionUseCa
 
 func (u *SubscriptionUseCase) ListSubscriptions(ctx context.Context, customerID string) ([]domainSub.Subscription, error) {
 	if u.repo == nil {
-		return nil, fmt.Errorf("subscription repository unavailable")
+		return nil, domainBilling.ErrRepositoryUnavailable
 	}
 	if customerID != "" {
 		return u.repo.FindByCustomerID(ctx, customerID)
@@ -30,17 +30,17 @@ func (u *SubscriptionUseCase) ListSubscriptions(ctx context.Context, customerID 
 
 func (u *SubscriptionUseCase) GetSubscription(ctx context.Context, id string) (domainSub.Subscription, error) {
 	if u.repo == nil {
-		return domainSub.Subscription{}, fmt.Errorf("subscription repository unavailable")
+		return domainSub.Subscription{}, domainBilling.ErrRepositoryUnavailable
 	}
 	return u.repo.FindByID(ctx, id)
 }
 
 func (u *SubscriptionUseCase) CreateSubscription(ctx context.Context, sub domainSub.Subscription) (domainSub.Subscription, error) {
 	if u.repo == nil {
-		return domainSub.Subscription{}, fmt.Errorf("subscription repository unavailable")
+		return domainSub.Subscription{}, domainBilling.ErrRepositoryUnavailable
 	}
 	if sub.CustomerID == "" || sub.PlanID == "" {
-		return domainSub.Subscription{}, fmt.Errorf("customer_id and plan_id are required")
+		return domainSub.Subscription{}, domainBilling.ErrInvalidInput
 	}
 	if sub.Status == "" {
 		sub.Status = domainSub.StatusActive
@@ -53,7 +53,7 @@ func (u *SubscriptionUseCase) CreateSubscription(ctx context.Context, sub domain
 
 func (u *SubscriptionUseCase) CancelSubscription(ctx context.Context, id string) (domainSub.Subscription, error) {
 	if u.repo == nil {
-		return domainSub.Subscription{}, fmt.Errorf("subscription repository unavailable")
+		return domainSub.Subscription{}, domainBilling.ErrRepositoryUnavailable
 	}
 	sub, err := u.repo.FindByID(ctx, id)
 	if err != nil {

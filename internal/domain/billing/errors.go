@@ -27,4 +27,6 @@ var (
 	ErrGatewayDisabled   = fault.New(fault.KindFailedPrecondition, "billing: payment gateway disabled")
 	ErrGatewayBadSign    = fault.New(fault.KindPermissionDenied, "billing: invalid callback signature")
 	ErrGatewayUnknownRef = fault.New(fault.KindNotFound, "billing: unknown external_id")
+	// ErrRepositoryUnavailable indicates a missing billing repository dependency.
+	ErrRepositoryUnavailable = fault.New(fault.KindUnavailable, "billing: repository unavailable")
 )

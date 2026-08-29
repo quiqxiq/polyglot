@@ -100,7 +100,7 @@ func (eh *EventHandler) MakeMessageCallback(engineHandler func(ctx context.Conte
 		go func() {
 			ctx := context.Background()
 			if err := engineHandler(ctx, sessionID, chatJID, customerNumber, content); err != nil {
-				logger.WithComponent("EventHandler").Errorf("Error processing message from %s: %v", customerNumber, err)
+				logger.WithComponent("EventHandler").WithError(err).WithField("session_id", sessionID).Error("failed to process incoming message")
 			}
 		}()
 	}

@@ -18,6 +18,7 @@ var (
 func init() {
 	once.Do(func() {
 		defaultLogger = logrus.New()
+		defaultLogger.AddHook(redactionHook{})
 		defaultLogger.SetOutput(os.Stdout)
 		defaultLogger.SetFormatter(&logrus.TextFormatter{
 			FullTimestamp:   true,
@@ -70,12 +71,16 @@ func WithComponent(component string) *logrus.Entry {
 
 // WithField adds a single field to the log entry.
 func WithField(key string, value any) *logrus.Entry {
-	return defaultLogger.WithField(key, value)
+	return defaultLogger.WithField(key, redactField(key, value))
 }
 
 // WithFields adds multiple fields to the log entry.
 func WithFields(fields logrus.Fields) *logrus.Entry {
-	return defaultLogger.WithFields(fields)
+	redacted := make(logrus.Fields, len(fields))
+	for key, value := range fields {
+		redacted[key] = redactField(key, value)
+	}
+	return defaultLogger.WithFields(redacted)
 }
 
 // WithContext returns a log entry with context attached.
@@ -85,7 +90,51 @@ func WithContext(ctx context.Context) *logrus.Entry {
 
 // WithError returns a log entry with an error attached.
 func WithError(err error) *logrus.Entry {
-	return defaultLogger.WithError(err)
+	if err == nil {
+		return defaultLogger.WithFields(nil)
+	}
+	return defaultLogger.WithError(redactError(err))
+}
+
+type redactedError struct{ message string }
+
+func (e redactedError) Error() string { return e.message }
+
+func redactError(err error) error {
+	message := err.Error()
+	for _, marker := range []string{"token=", "password=", "secret=", "api_key=", "phone=", "jid="} {
+		if strings.Contains(strings.ToLower(message), marker) {
+			return redactedError{message: "[REDACTED]"}
+		}
+	}
+	return err
+}
+
+type redactionHook struct{}
+
+func (redactionHook) Levels() []logrus.Level { return logrus.AllLevels }
+
+func (redactionHook) Fire(entry *logrus.Entry) error {
+	for key, value := range entry.Data {
+		entry.Data[key] = redactField(key, value)
+	}
+	if errValue, ok := entry.Data[logrus.ErrorKey].(error); ok {
+		entry.Data[logrus.ErrorKey] = redactError(errValue)
+	}
+	return nil
+}
+
+func redactField(key string, value any) any {
+	key = strings.ToLower(strings.ReplaceAll(key, "-", "_"))
+	for _, sensitive := range []string{
+		"password", "token", "secret", "api_key", "private_key", "cookie",
+		"authorization", "payload", "jid", "phone",
+	} {
+		if strings.Contains(key, sensitive) {
+			return "[REDACTED]"
+		}
+	}
+	return value
 }
 
 // Info logs a message at level Info on the standard logger.

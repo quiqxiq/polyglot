@@ -53,6 +53,38 @@ func TestLoggerWithComponentAndFields(t *testing.T) {
 	}
 }
 
+func TestSensitiveFieldsAreRedacted(t *testing.T) {
+	var buf bytes.Buffer
+	logger.Init("info", "production", &buf)
+	t.Cleanup(func() { logger.Init("info", "development") })
+
+	logger.WithComponent("WhatsAppDriver").WithFields(logrus.Fields{
+		"token":           "access-token",
+		"jid":             "6281234567890@s.whatsapp.net",
+		"phone_number":    "+6281234567890",
+		"password":        "router-password",
+		"request_payload": `{"message":"private"}`,
+	}).Info("test log")
+	logger.WithComponent("WhatsAppDriver").WithField("error_payload", "sensitive-body").Info("payload test")
+
+	output := buf.String()
+	for _, secret := range []string{
+		"access-token",
+		"6281234567890@s.whatsapp.net",
+		"+6281234567890",
+		"router-password",
+		`{"message":"private"}`,
+		"sensitive-body",
+	} {
+		if strings.Contains(output, secret) {
+			t.Errorf("sensitive value %q found in log output %q", secret, output)
+		}
+	}
+	if !strings.Contains(output, "[REDACTED]") {
+		t.Errorf("redacted log = %q, want redaction marker", output)
+	}
+}
+
 func TestLoggerWithErrorAndContext(t *testing.T) {
 	var buf bytes.Buffer
 	logger.Init("info", "development", &buf)
