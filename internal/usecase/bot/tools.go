@@ -64,7 +64,7 @@ func NewRequestSkillTool(skillProv SkillProvider) llm.Tool {
 
 			content, err := skillProv.GetSkillContent(ctx, skillName)
 			if err != nil {
-					logger.WithComponent("BotTool").WithError(err).WithField("skill_name", skillName).Warn("failed to load skill content")
+				logger.WithComponent("BotTool").WithError(err).WithField("skill_name", skillName).Warn("failed to load skill content")
 				return fmt.Sprintf("Gagal memuat skill '%s': %v", skillName, err), nil
 			}
 

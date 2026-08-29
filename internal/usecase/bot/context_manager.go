@@ -118,7 +118,10 @@ func (cm *ContextManager) SaveMessageToSession(ctx context.Context, convID uint,
 	if err != nil {
 		return fmt.Errorf("marshal session history: %w", err)
 	}
-	return cm.cache.Set(ctx, key, string(data), historyCacheTTL)
+	if err := cm.cache.Set(ctx, key, string(data), historyCacheTTL); err != nil {
+		return fmt.Errorf("store session history: %w", err)
+	}
+	return nil
 }
 
 // GetSummary returns the stored per-conversation summary (if any) — dipakai
@@ -161,5 +164,8 @@ func (cm *ContextManager) SummarizeSessionIfLong(ctx context.Context, convID uin
 	if err := cm.cache.Set(ctx, fmt.Sprintf(summaryCacheKeyFmt, convID), resp.Content, summaryCacheTTL); err != nil {
 		return fmt.Errorf("store session summary: %w", err)
 	}
-	return cm.cache.Delete(ctx, key)
+	if err := cm.cache.Delete(ctx, key); err != nil {
+		return fmt.Errorf("delete session history: %w", err)
+	}
+	return nil
 }

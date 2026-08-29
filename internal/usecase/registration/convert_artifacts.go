@@ -124,7 +124,7 @@ func (u *ConvertUseCase) createSubscription(ctx context.Context, reg domainRegis
 			sub.ProvisionStatus = domainSubscription.ProvisionOK
 			sub.RouterProfile = pl.Name
 			if serr := u.deps.Subs.Save(ctx, sub); serr != nil {
-				return domainSubscription.Subscription{}, serr
+				return domainSubscription.Subscription{}, fmt.Errorf("save provision status: %w", serr)
 			}
 		}
 	}

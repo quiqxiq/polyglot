@@ -1,6 +1,7 @@
 package reports
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -21,7 +22,15 @@ func TestDailyInvalidDateReturnsErrorEnvelope(t *testing.T) {
 	if recorder.Header().Get("Content-Type") != "application/json" {
 		t.Errorf("daily invalid date content type = %q, want application/json", recorder.Header().Get("Content-Type"))
 	}
-	if body := recorder.Body.String(); body == "" || body[0] != '{' {
-		t.Errorf("daily invalid date body = %q, want JSON object", body)
+	var payload struct {
+		Error struct {
+			Code string `json:"code"`
+		} `json:"error"`
+	}
+	if err := json.Unmarshal(recorder.Body.Bytes(), &payload); err != nil {
+		t.Fatalf("decode daily error envelope: %v", err)
+	}
+	if payload.Error.Code != "INVALID_ARGUMENT" {
+		t.Errorf("daily invalid date code = %q, want %q", payload.Error.Code, "INVALID_ARGUMENT")
 	}
 }

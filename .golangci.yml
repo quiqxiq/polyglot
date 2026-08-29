@@ -2,6 +2,12 @@ version: "2"
 
 run:
   timeout: 5m
+  relative-path-mode: gomod
+
+issues:
+  # Adopt linting incrementally: legacy findings remain visible in full scans,
+  # but new changes cannot add to the existing backlog.
+  new-from-rev: 17e6090
 
 linters:
   # "standard" sudah mencakup: errcheck, govet, ineffassign, staticcheck,
@@ -12,6 +18,12 @@ linters:
     - exhaustive
     - bodyclose
     - errorlint
+    - wrapcheck
+  exclusions:
+    rules:
+      - linters:
+          - wrapcheck
+        path: ^(pkg/response/|internal/adapter/connect/|internal/adapter/postgres/model/|internal/adapter/|internal/driver/)
   settings:
     exhaustive:
       # Ditegakkan karena CLAUDE.md §3.3 mewajibkan `default` eksplisit di

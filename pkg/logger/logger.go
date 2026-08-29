@@ -100,6 +100,8 @@ type redactedError struct{ message string }
 
 func (e redactedError) Error() string { return e.message }
 
+func (e redactedError) Unwrap() error { return nil }
+
 func redactError(err error) error {
 	message := err.Error()
 	for _, marker := range []string{"token=", "password=", "secret=", "api_key=", "phone=", "jid="} {

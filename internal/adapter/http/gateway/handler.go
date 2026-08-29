@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	uc "github.com/quixiq/polyglot/internal/usecase/billing"
+	"github.com/quixiq/polyglot/pkg/fault"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
@@ -37,11 +38,11 @@ func (h *Handler) tripayWebhook(w http.ResponseWriter, r *http.Request) {
 	}
 	invoiceID, settled, err := h.usecase.HandleWebhook(r.Context(), body, r.Header.Get("X-Callback-Signature"))
 	if err != nil {
-		code := http.StatusUnauthorized
 		if invoiceID != "" || settled {
-			code = http.StatusInternalServerError
+			writeMappedError(w, err)
+			return
 		}
-		respond(w, code, false, err.Error())
+		response.WriteHTTPStatusError(w, http.StatusUnauthorized, "callback signature is invalid")
 		return
 	}
 	payload := map[string]any{"success": true}
@@ -63,7 +64,7 @@ func (h *Handler) charge(w http.ResponseWriter, r *http.Request) {
 	}
 	res, tx, err := h.usecase.CreateForInvoice(r.Context(), req.InvoiceID, req.Channel, req.ExpireMinutes)
 	if err != nil {
-		respond(w, http.StatusBadRequest, false, err.Error())
+		writeMappedError(w, err)
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]any{
@@ -86,6 +87,14 @@ func respond(w http.ResponseWriter, code int, success bool, errMsg string) {
 		return
 	}
 	writeJSON(w, code, map[string]any{"success": true})
+}
+
+func writeMappedError(w http.ResponseWriter, err error) {
+	if fault.KindOf(err) != fault.KindUnknown {
+		response.WriteHTTPError(w, err)
+		return
+	}
+	response.WriteHTTPStatusError(w, http.StatusInternalServerError, "internal server error")
 }
 
 func writeJSON(w http.ResponseWriter, code int, v any) {

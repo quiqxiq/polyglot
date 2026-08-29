@@ -95,7 +95,7 @@ func (h *Handler) yearly(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) rangeSummary(w http.ResponseWriter, r *http.Request, period string, from, to time.Time) {
 	snaps, err := h.repo.ListRange(r.Context(), defaultTenant, from, to)
 	if err != nil {
-		httpError(w, http.StatusInternalServerError, err.Error())
+		httpError(w, http.StatusInternalServerError, "internal server error")
 		return
 	}
 	sum := summary{Period: period}

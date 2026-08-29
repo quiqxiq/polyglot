@@ -77,7 +77,7 @@ func (h *Handler) importFile(w http.ResponseWriter, r *http.Request) {
 		rows, err = importer.ParseCSV(file)
 	}
 	if err != nil {
-		writeErr(w, http.StatusBadRequest, err.Error())
+		writeErr(w, http.StatusBadRequest, "uploaded file could not be parsed")
 		return
 	}
 	if verrs := importer.ValidateRows(rows); len(verrs) > 0 {
@@ -88,7 +88,7 @@ func (h *Handler) importFile(w http.ResponseWriter, r *http.Request) {
 	}
 	res, uerr := h.upsert.Import(r.Context(), rows)
 	if uerr != nil {
-		writeErr(w, http.StatusInternalServerError, uerr.Error())
+		writeErr(w, http.StatusInternalServerError, "internal server error")
 		return
 	}
 	writeJSON(w, http.StatusOK, res)
@@ -109,7 +109,7 @@ func (h *Handler) importRouter(w http.ResponseWriter, r *http.Request) {
 	deviceName := orDefault(r.URL.Query().Get("device_name"), deviceID)
 	rows, err := h.routerSrc.PullPPPoERows(r.Context(), driver, deviceName)
 	if err != nil {
-		writeErr(w, http.StatusInternalServerError, err.Error())
+		writeErr(w, http.StatusInternalServerError, "internal server error")
 		return
 	}
 	if verrs := importer.ValidateRows(rows); len(verrs) > 0 {
@@ -122,7 +122,7 @@ func (h *Handler) importRouter(w http.ResponseWriter, r *http.Request) {
 	}
 	res, uerr := h.upsert.Import(r.Context(), rows)
 	if uerr != nil {
-		writeErr(w, http.StatusInternalServerError, uerr.Error())
+		writeErr(w, http.StatusInternalServerError, "internal server error")
 		return
 	}
 	writeJSON(w, http.StatusOK, res)
@@ -140,7 +140,7 @@ func (h *Handler) reconcile(w http.ResponseWriter, r *http.Request) {
 	}
 	report, err := h.reconciler.Compare(r.Context(), deviceID, driver)
 	if err != nil {
-		writeErr(w, http.StatusInternalServerError, err.Error())
+		writeErr(w, http.StatusInternalServerError, "internal server error")
 		return
 	}
 	writeJSON(w, http.StatusOK, report)
@@ -159,7 +159,7 @@ func (h *Handler) snapshotRefresh(w http.ResponseWriter, r *http.Request) {
 		day = d
 	}
 	if err := h.snapshotter.RecomputeDaily(r.Context(), tenantDefault(), day); err != nil {
-		writeErr(w, http.StatusInternalServerError, err.Error())
+		writeErr(w, http.StatusInternalServerError, "internal server error")
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]string{
@@ -173,7 +173,7 @@ func (h *Handler) export(w http.ResponseWriter, r *http.Request) {
 	format := orDefault(r.URL.Query().Get("format"), "csv")
 	data, err := h.exporter.ExportAll(r.Context(), format)
 	if err != nil {
-		writeErr(w, http.StatusInternalServerError, err.Error())
+		writeErr(w, http.StatusInternalServerError, "internal server error")
 		return
 	}
 	if format == "xlsx" {

@@ -88,12 +88,20 @@ func (uc *ManageDeviceUseCase) CreateDevice(ctx context.Context, d device.Device
 
 // GetDevice fetches a single device inventory record by ID.
 func (uc *ManageDeviceUseCase) GetDevice(ctx context.Context, id string) (device.Device, error) {
-	return uc.repo.FindByID(ctx, id)
+	result, err := uc.repo.FindByID(ctx, id)
+	if err != nil {
+		return device.Device{}, fmt.Errorf("find device %s: %w", id, err)
+	}
+	return result, nil
 }
 
 // ListDevices returns all registered device inventory records.
 func (uc *ManageDeviceUseCase) ListDevices(ctx context.Context) ([]device.Device, error) {
-	return uc.repo.FindAll(ctx)
+	devices, err := uc.repo.FindAll(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("list devices: %w", err)
+	}
+	return devices, nil
 }
 
 // ListDevicesForUser returns device inventory records accessible to the specified user.
@@ -101,7 +109,11 @@ func (uc *ManageDeviceUseCase) ListDevices(ctx context.Context) ([]device.Device
 func (uc *ManageDeviceUseCase) ListDevicesForUser(ctx context.Context, userID uint, userRoles []string) ([]device.Device, error) {
 	for _, r := range userRoles {
 		if strings.EqualFold(r, "owner") {
-			return uc.repo.FindAll(ctx)
+			devices, err := uc.repo.FindAll(ctx)
+			if err != nil {
+				return nil, fmt.Errorf("list devices for owner: %w", err)
+			}
+			return devices, nil
 		}
 	}
 	if userID == 0 {

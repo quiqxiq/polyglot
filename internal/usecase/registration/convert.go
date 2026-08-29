@@ -100,7 +100,7 @@ func (u *ConvertUseCase) ConvertWithDevice(ctx context.Context, regID, deviceID,
 	reg.InvoiceID = inv.ID
 	reg.Status = domainRegistration.StatusActive
 	if err := u.deps.Repo.Save(ctx, reg); err != nil {
-		return domainRegistration.Registration{}, err
+		return domainRegistration.Registration{}, fmt.Errorf("save registration: %w", err)
 	}
 	writeAudit(ctx, u.deps.Audit, actorID, "CONVERT_REGISTRATION", "registration", reg.ID)
 	return reg, nil

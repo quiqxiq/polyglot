@@ -1,6 +1,7 @@
 package response
 
 import (
+	"errors"
 	"testing"
 
 	"connectrpc.com/connect"
@@ -22,8 +23,8 @@ func TestTransportErrorsUseExpectedCodes(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			connectErr, ok := tt.err.(*connect.Error)
-			if !ok {
+			var connectErr *connect.Error
+			if !errors.As(tt.err, &connectErr) {
 				t.Fatalf("%s error type = %T, want *connect.Error", tt.name, tt.err)
 			}
 			if got := connectErr.Code(); got != tt.want {

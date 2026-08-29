@@ -87,9 +87,9 @@ func (w *MediaCleanerWorker) Start(ctx context.Context) {
 			return
 		case <-ticker.C:
 			if n, err := w.CleanOnce(ctx); err != nil {
-					logger.WithComponent("MediaCleaner").WithError(err).Error("media cleanup failed")
+				logger.WithComponent("MediaCleaner").WithError(err).Error("media cleanup failed")
 			} else if n > 0 {
-					logger.WithComponent("MediaCleaner").WithField("cleaned_count", n).Info("expired media cleaned")
+				logger.WithComponent("MediaCleaner").WithField("cleaned_count", n).Info("expired media cleaned")
 			}
 		}
 	}
