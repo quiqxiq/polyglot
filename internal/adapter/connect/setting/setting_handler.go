@@ -33,10 +33,6 @@ func (h *SettingConnectHandler) GetAllSettings(ctx context.Context, req *connect
 }
 
 func (h *SettingConnectHandler) GetSettingsByCategory(ctx context.Context, req *connect.Request[devicepb.GetSettingsByCategoryRequest]) (*connect.Response[devicepb.GetSettingsByCategoryResponse], error) {
-	if req.Msg.Category == "" {
-		return nil, response.InvalidArgument("category is required")
-	}
-
 	settings, err := h.settingUC.GetSettingsByCategory(ctx, req.Msg.Category)
 	if err != nil {
 		return nil, response.MapDomainError(err)
@@ -48,10 +44,6 @@ func (h *SettingConnectHandler) GetSettingsByCategory(ctx context.Context, req *
 }
 
 func (h *SettingConnectHandler) UpdateSetting(ctx context.Context, req *connect.Request[devicepb.UpdateSettingRequest]) (*connect.Response[devicepb.UpdateSettingResponse], error) {
-	if req.Msg.Key == "" {
-		return nil, response.InvalidArgument("key is required")
-	}
-
 	updated, err := h.settingUC.UpdateSetting(ctx, req.Msg.Key, req.Msg.Value)
 	if err != nil {
 		return nil, response.MapDomainError(err)
@@ -96,10 +88,6 @@ func (h *SettingConnectHandler) GetBotSettings(ctx context.Context, req *connect
 }
 
 func (h *SettingConnectHandler) UpdateBotSettings(ctx context.Context, req *connect.Request[devicepb.UpdateBotSettingsRequest]) (*connect.Response[devicepb.UpdateBotSettingsResponse], error) {
-	if req.Msg.Settings == nil {
-		return nil, response.InvalidArgument("settings is required")
-	}
-
 	domainSettings := PbBotSettingsToDomain(req.Msg.Settings)
 	if err := h.settingUC.UpdateBotSettings(ctx, domainSettings); err != nil {
 		return nil, response.MapDomainError(err)

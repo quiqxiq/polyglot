@@ -32,9 +32,6 @@ func (h *CustomerConnectHandler) ListCustomers(ctx context.Context, req *connect
 }
 
 func (h *CustomerConnectHandler) GetCustomer(ctx context.Context, req *connect.Request[devicepb.GetCustomerRequest]) (*connect.Response[devicepb.GetCustomerResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, response.InvalidArgument("customer id is required")
-	}
 	if h.customerUC == nil {
 		return nil, response.Unavailable("customer usecase unavailable")
 	}
@@ -76,9 +73,6 @@ func (h *CustomerConnectHandler) UpdateCustomer(ctx context.Context, req *connec
 }
 
 func (h *CustomerConnectHandler) DeleteCustomer(ctx context.Context, req *connect.Request[devicepb.DeleteCustomerRequest]) (*connect.Response[devicepb.DeleteCustomerResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, response.InvalidArgument("customer id is required")
-	}
 	if h.customerUC == nil {
 		return nil, response.Unavailable("customer usecase unavailable")
 	}
@@ -91,9 +85,6 @@ func (h *CustomerConnectHandler) DeleteCustomer(ctx context.Context, req *connec
 }
 
 func (h *CustomerConnectHandler) FindByPhone(ctx context.Context, req *connect.Request[devicepb.FindCustomerByPhoneRequest]) (*connect.Response[devicepb.FindCustomerResponse], error) {
-	if req.Msg.Phone == "" {
-		return nil, response.InvalidArgument("phone is required")
-	}
 	c, err := h.customerUC.FindByPhone(ctx, req.Msg.Phone)
 	if err != nil {
 		return nil, response.MapDomainError(err)
@@ -102,9 +93,6 @@ func (h *CustomerConnectHandler) FindByPhone(ctx context.Context, req *connect.R
 }
 
 func (h *CustomerConnectHandler) FindByCustomerCode(ctx context.Context, req *connect.Request[devicepb.FindCustomerByCodeRequest]) (*connect.Response[devicepb.FindCustomerResponse], error) {
-	if req.Msg.CustomerCode == "" {
-		return nil, response.InvalidArgument("customer_code is required")
-	}
 	c, err := h.customerUC.FindByCustomerCode(ctx, req.Msg.CustomerCode)
 	if err != nil {
 		return nil, response.MapDomainError(err)
@@ -113,9 +101,6 @@ func (h *CustomerConnectHandler) FindByCustomerCode(ctx context.Context, req *co
 }
 
 func (h *CustomerConnectHandler) FindByPortalCode(ctx context.Context, req *connect.Request[devicepb.FindCustomerByPortalCodeRequest]) (*connect.Response[devicepb.FindCustomerResponse], error) {
-	if req.Msg.PortalAccessCode == "" {
-		return nil, response.InvalidArgument("portal_access_code is required")
-	}
 	c, err := h.customerUC.FindByPortalCode(ctx, req.Msg.PortalAccessCode)
 	if err != nil {
 		return nil, response.MapDomainError(err)
