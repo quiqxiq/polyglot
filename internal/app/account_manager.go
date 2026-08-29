@@ -3,7 +3,6 @@ package app
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"strings"
 	"time"
 
@@ -429,17 +428,6 @@ func (m *routerAccountManager) activeAddress(ctx context.Context, driver port.De
 		}
 	}
 	return ""
-}
-
-// kbpsToMikrotikRate converts kbps → RouterOS rate string ("5M", "512k").
-func kbpsToMikrotikRate(kbps int) string {
-	if kbps <= 0 {
-		return ""
-	}
-	if kbps >= 1000 {
-		return strconv.Itoa((kbps+500)/1000) + "M"
-	}
-	return strconv.Itoa(kbps) + "k"
 }
 
 // ─── Hook un-isolir otomatis pasca-lunas ────────────────────────────────

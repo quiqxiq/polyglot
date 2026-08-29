@@ -72,8 +72,6 @@ func (f *fakeProvider) ChatWithTools(ctx context.Context, systemPrompt string, m
 
 func (f *fakeProvider) TestConnection(context.Context) error { return nil }
 
-const testSystemPrompt = "Kamu adalah asisten layanan GNET."
-
 func TestBuildPromptContextRolesAndSummary(t *testing.T) {
 	cache := newFakeCache()
 	cm := NewContextManager(cache)

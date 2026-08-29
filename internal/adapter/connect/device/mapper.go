@@ -89,14 +89,6 @@ func ToProtoInterfaceDetails(details []deviceUC.DeviceInterfaceDetail) []*device
 	return list
 }
 
-func domainToPb(d device.Device) *devicepb.Device {
-	return DomainToPb(d)
-}
-
-func pbToDomain(pb *devicepb.Device) device.Device {
-	return PbToDomain(pb)
-}
-
 func parsePingLatency(row map[string]string) (int64, string) {
 	return ping.ParsePingLatency(row)
 }

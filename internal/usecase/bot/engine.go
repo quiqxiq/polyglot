@@ -383,12 +383,3 @@ func (e *Engine) sendBotReply(ctx context.Context, convID uint, sessionID uint, 
 	}
 	return nil
 }
-
-// escalateWithFallback marks the conversation as needing a human agent, sends
-// a fallback reply and persists it.
-func (e *Engine) escalateWithFallback(ctx context.Context, convID uint, sessionID uint, targetJID string, reply string) error {
-	if err := e.convService.Escalate(ctx, convID); err != nil {
-		logger.WithComponent("BotEngine").WithError(err).WithField("conversation_id", convID).Error("failed to escalate conversation")
-	}
-	return e.sendBotReply(ctx, convID, sessionID, targetJID, reply, 0, 0, nil)
-}

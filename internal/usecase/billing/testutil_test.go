@@ -42,7 +42,6 @@ func customerWithPortal(id, portal string) domainCustomer.Customer {
 	}
 }
 
-func assert_AnError2() error { return errors.New("parse gagal") }
 func firstGwtID(g *mocktest.FakeGatewayTxRepo) string {
 	for _, t := range g.All() {
 		return t.ID

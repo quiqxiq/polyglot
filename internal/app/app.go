@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 
@@ -466,13 +465,6 @@ func (a *App) Shutdown(ctx context.Context) error {
 	}
 	logger.WithComponent("Polyglot").Info("shutdown complete")
 	return nil
-}
-
-func envOr(key, fallback string) string {
-	if v := os.Getenv(key); v != "" {
-		return v
-	}
-	return fallback
 }
 
 func loadInitialDevices(pgStore *postgres.Store) (port.DeviceRepository, port.CredentialVault) {

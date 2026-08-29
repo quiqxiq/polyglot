@@ -52,21 +52,6 @@ func TestRequestOTP_UnknownIdentifier_GenericError(t *testing.T) {
 	assert.Empty(t, sender.Messages)
 }
 
-func extractCode(content string) string {
-	fields := strings.Fields(content)
-	for i, f := range fields {
-		if f == ":" && i > 0 {
-			return fields[i-1]
-		}
-	}
-	for _, f := range fields {
-		if len(f) == 6 && isDigits(f) {
-			return f
-		}
-	}
-	return ""
-}
-
 func isDigits(s string) bool {
 	for _, c := range s {
 		if c < '0' || c > '9' {

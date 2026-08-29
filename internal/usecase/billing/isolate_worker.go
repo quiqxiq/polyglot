@@ -236,17 +236,6 @@ func (w *IsolateWorker) normalProfile(ctx context.Context, sub domainSubscriptio
 	return sub.PlanID
 }
 
-func (w *IsolateWorker) planRateLimit(ctx context.Context, sub domainSubscription.Subscription) string {
-	if sub.RateLimit != "" {
-		return sub.RateLimit
-	}
-	pl, err := w.plans.FindByID(ctx, sub.PlanID)
-	if err != nil {
-		return ""
-	}
-	return subscriberAccountFromPlan(sub, pl).RateLimit
-}
-
 // accountForRetry membangun akun lengkap dari plan untuk retry provisioning.
 func (w *IsolateWorker) accountForRetry(ctx context.Context, sub domainSubscription.Subscription) port.SubscriberAccount {
 	acct := port.SubscriberAccount{
