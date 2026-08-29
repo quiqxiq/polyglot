@@ -2,7 +2,6 @@ package registration
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 	"time"
 
@@ -32,7 +31,7 @@ func NewRegistrationConnectHandler(
 // SubmitRegistration — PUBLIC (calon pelanggan).
 func (h *RegistrationConnectHandler) SubmitRegistration(ctx context.Context, req *connect.Request[devicepb.SubmitRegistrationRequest]) (*connect.Response[devicepb.SubmitRegistrationResponse], error) {
 	if h.managerUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration usecase unavailable"))
+		return nil, response.Unavailable("registration usecase unavailable")
 	}
 	var lat, lon *float64
 	if req.Msg.HasCoordinates {
@@ -60,7 +59,7 @@ func (h *RegistrationConnectHandler) SubmitRegistration(ctx context.Context, req
 
 func (h *RegistrationConnectHandler) ListRegistrations(ctx context.Context, req *connect.Request[devicepb.ListRegistrationsRequest]) (*connect.Response[devicepb.ListRegistrationsResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration repository unavailable"))
+		return nil, response.Unavailable("registration repository unavailable")
 	}
 	list, err := h.repo.List(ctx, port.RegistrationFilter{
 		Status: req.Msg.Status,
@@ -76,7 +75,7 @@ func (h *RegistrationConnectHandler) ListRegistrations(ctx context.Context, req 
 
 func (h *RegistrationConnectHandler) GetRegistration(ctx context.Context, req *connect.Request[devicepb.GetRegistrationRequest]) (*connect.Response[devicepb.GetRegistrationResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration repository unavailable"))
+		return nil, response.Unavailable("registration repository unavailable")
 	}
 	reg, err := h.repo.FindByID(ctx, req.Msg.Id)
 	if err != nil {
@@ -89,7 +88,7 @@ func (h *RegistrationConnectHandler) GetRegistration(ctx context.Context, req *c
 
 func (h *RegistrationConnectHandler) ApproveRegistration(ctx context.Context, req *connect.Request[devicepb.ApproveRegistrationRequest]) (*connect.Response[devicepb.ApproveRegistrationResponse], error) {
 	if h.managerUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration usecase unavailable"))
+		return nil, response.Unavailable("registration usecase unavailable")
 	}
 	approved, err := h.managerUC.Approve(ctx, req.Msg.Id, 1, req.Msg.AdminNotes)
 	if err != nil {
@@ -102,7 +101,7 @@ func (h *RegistrationConnectHandler) ApproveRegistration(ctx context.Context, re
 
 func (h *RegistrationConnectHandler) ScheduleInstall(ctx context.Context, req *connect.Request[devicepb.ScheduleInstallRequest]) (*connect.Response[devicepb.ScheduleInstallResponse], error) {
 	if h.managerUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration usecase unavailable"))
+		return nil, response.Unavailable("registration usecase unavailable")
 	}
 	date := time.Unix(req.Msg.InstallDateUnix, 0).UTC()
 	var timeOfDay *time.Time
@@ -129,7 +128,7 @@ func (h *RegistrationConnectHandler) ScheduleInstall(ctx context.Context, req *c
 
 func (h *RegistrationConnectHandler) MarkInstalled(ctx context.Context, req *connect.Request[devicepb.MarkInstalledRequest]) (*connect.Response[devicepb.MarkInstalledResponse], error) {
 	if h.managerUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration usecase unavailable"))
+		return nil, response.Unavailable("registration usecase unavailable")
 	}
 	installed, err := h.managerUC.MarkInstalled(ctx, req.Msg.Id, nil, req.Msg.TechnicianNotes)
 	if err != nil {
@@ -142,7 +141,7 @@ func (h *RegistrationConnectHandler) MarkInstalled(ctx context.Context, req *con
 
 func (h *RegistrationConnectHandler) RejectRegistration(ctx context.Context, req *connect.Request[devicepb.RejectRegistrationRequest]) (*connect.Response[devicepb.RejectRegistrationResponse], error) {
 	if h.managerUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration usecase unavailable"))
+		return nil, response.Unavailable("registration usecase unavailable")
 	}
 	rejected, err := h.managerUC.Reject(ctx, req.Msg.Id, req.Msg.Reason, 1)
 	if err != nil {
@@ -155,7 +154,7 @@ func (h *RegistrationConnectHandler) RejectRegistration(ctx context.Context, req
 
 func (h *RegistrationConnectHandler) CancelRegistration(ctx context.Context, req *connect.Request[devicepb.CancelRegistrationRequest]) (*connect.Response[devicepb.CancelRegistrationResponse], error) {
 	if h.managerUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration usecase unavailable"))
+		return nil, response.Unavailable("registration usecase unavailable")
 	}
 	cancelled, err := h.managerUC.Cancel(ctx, req.Msg.Id, req.Msg.Reason)
 	if err != nil {
@@ -168,7 +167,7 @@ func (h *RegistrationConnectHandler) CancelRegistration(ctx context.Context, req
 
 func (h *RegistrationConnectHandler) ConvertRegistration(ctx context.Context, req *connect.Request[devicepb.ConvertRegistrationRequest]) (*connect.Response[devicepb.ConvertRegistrationResponse], error) {
 	if h.convertUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("convert usecase unavailable"))
+		return nil, response.Unavailable("convert usecase unavailable")
 	}
 	converted, err := h.convertUC.ConvertWithDevice(ctx, req.Msg.Id, req.Msg.DeviceId, "1")
 	if err != nil {

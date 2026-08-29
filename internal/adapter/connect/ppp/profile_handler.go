@@ -61,7 +61,7 @@ func (h *PPPConnectHandler) CreateProfile(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 	if len(profiles) == 0 {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("profile %q created but not found", req.Msg.Name))
+		return nil, response.Internal("profile created but could not be loaded")
 	}
 
 	return connect.NewResponse(&devicepb.CreatePPPProfileResponse{

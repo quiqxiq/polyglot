@@ -2,7 +2,6 @@ package bot
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"time"
 
@@ -88,10 +87,10 @@ func (h *BotConnectHandler) GetConversation(ctx context.Context, req *connect.Re
 func (h *BotConnectHandler) GetConversationContext(ctx context.Context, req *connect.Request[devicepb.GetConversationContextRequest]) (*connect.Response[devicepb.GetConversationContextResponse], error) {
 	convID := parseID(req.Msg.Id)
 	if convID == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("conversation id is required"))
+		return nil, response.InvalidArgument("conversation id is required")
 	}
 	if h.contextProvider == nil {
-		return nil, connect.NewError(connect.CodeUnimplemented, errors.New("conversation context provider is not available"))
+		return nil, response.Unimplemented("conversation context provider is not available")
 	}
 
 	info, err := h.contextProvider.GetConversationContext(ctx, convID)

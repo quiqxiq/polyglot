@@ -60,7 +60,7 @@ func (h *WhatsAppConnectHandler) ListSessions(ctx context.Context, req *connect.
 
 func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect.Request[devicepb.CreateWASessionRequest]) (*connect.Response[devicepb.CreateWASessionResponse], error) {
 	if h.sessionRepo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("session repo not initialized"))
+		return nil, response.Unavailable("session repo not initialized")
 	}
 
 	sess := &bot.WASession{
@@ -100,11 +100,11 @@ func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect
 func (h *WhatsAppConnectHandler) GetQRCode(ctx context.Context, req *connect.Request[devicepb.GetWASessionQRRequest]) (*connect.Response[devicepb.GetWASessionQRResponse], error) {
 	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
 	if err != nil || idUint == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid session_id"))
+		return nil, response.InvalidArgument("invalid session_id")
 	}
 
 	if h.waGateway == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("whatsapp gateway not initialized"))
+		return nil, response.Unavailable("whatsapp gateway not initialized")
 	}
 
 	sessionID := uint(idUint)
@@ -135,11 +135,11 @@ func (h *WhatsAppConnectHandler) GetQRCode(ctx context.Context, req *connect.Req
 func (h *WhatsAppConnectHandler) GetPairingCode(ctx context.Context, req *connect.Request[devicepb.GetWASessionPairingRequest]) (*connect.Response[devicepb.GetWASessionPairingResponse], error) {
 	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
 	if err != nil || idUint == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid session_id"))
+		return nil, response.InvalidArgument("invalid session_id")
 	}
 
 	if h.waGateway == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("whatsapp gateway not initialized"))
+		return nil, response.Unavailable("whatsapp gateway not initialized")
 	}
 
 	sessionID := uint(idUint)
@@ -171,13 +171,13 @@ func (h *WhatsAppConnectHandler) ToggleBot(ctx context.Context, req *connect.Req
 func (h *WhatsAppConnectHandler) ReconnectSession(ctx context.Context, req *connect.Request[devicepb.ReconnectWASessionRequest]) (*connect.Response[devicepb.ReconnectWASessionResponse], error) {
 	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
 	if err != nil || idUint == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid session_id"))
+		return nil, response.InvalidArgument("invalid session_id")
 	}
 	if h.waGateway == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("whatsapp gateway not initialized"))
+		return nil, response.Unavailable("whatsapp gateway not initialized")
 	}
 	if err := h.waGateway.Reconnect(uint(idUint)); err != nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("reconnect failed: %w", err))
+		return nil, response.Internal("reconnect failed")
 	}
 	return connect.NewResponse(&devicepb.ReconnectWASessionResponse{
 		Message: "manual reconnect initiated (auto-reconnect active)",
@@ -188,16 +188,16 @@ func (h *WhatsAppConnectHandler) ReconnectSession(ctx context.Context, req *conn
 func (h *WhatsAppConnectHandler) LogoutSession(ctx context.Context, req *connect.Request[devicepb.LogoutWASessionRequest]) (*connect.Response[devicepb.LogoutWASessionResponse], error) {
 	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
 	if err != nil || idUint == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid session_id"))
+		return nil, response.InvalidArgument("invalid session_id")
 	}
 	if h.waGateway == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("whatsapp gateway not initialized"))
+		return nil, response.Unavailable("whatsapp gateway not initialized")
 	}
 
 	// Logout = unlink dari WhatsApp + hapus session lokal, tapi slot di DB
 	// TETAP (keep-slot) sehingga device masih tampil dan bisa di-pair ulang.
 	if err := h.waGateway.Logout(uint(idUint)); err != nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("logout failed: %w", err))
+		return nil, response.Internal("logout failed")
 	}
 	return connect.NewResponse(&devicepb.LogoutWASessionResponse{Message: "session logged out (slot kept for re-pairing)"}), nil
 }
@@ -205,19 +205,19 @@ func (h *WhatsAppConnectHandler) LogoutSession(ctx context.Context, req *connect
 func (h *WhatsAppConnectHandler) PurgeSession(ctx context.Context, req *connect.Request[devicepb.PurgeWASessionRequest]) (*connect.Response[devicepb.PurgeWASessionResponse], error) {
 	idUint, err := strconv.ParseUint(req.Msg.SessionId, 10, 64)
 	if err != nil || idUint == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid session_id"))
+		return nil, response.InvalidArgument("invalid session_id")
 	}
 
 	// Purge = logout + hapus baris session di DB (mirror chat terhapus otomatis
 	// via ON DELETE CASCADE pada wa_chats / wa_messages).
 	if h.waGateway != nil {
 		if err := h.waGateway.Purge(uint(idUint)); err != nil {
-			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("purge session: %w", err))
+			return nil, response.Internal("purge session failed")
 		}
 	}
 	if h.sessionRepo != nil {
 		if err := h.sessionRepo.DeleteSession(ctx, uint(idUint)); err != nil {
-			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("delete session record: %w", err))
+			return nil, response.Internal("delete session record failed")
 		}
 	}
 	return connect.NewResponse(&devicepb.PurgeWASessionResponse{Message: "session purged permanently"}), nil
@@ -230,7 +230,7 @@ func (h *WhatsAppConnectHandler) SendTextMessage(ctx context.Context, req *conne
 		err = h.waGateway.SendMessage(uint(idUint), req.Msg.RecipientPhone, req.Msg.MessageText)
 	}
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("send text message failed: %w", err))
+		return nil, response.Internal("send text message failed")
 	}
 	return connect.NewResponse(&devicepb.SendWATextMessageResponse{
 		MessageId: "msg-sent-ok",

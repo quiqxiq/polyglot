@@ -2,13 +2,12 @@ package hotspot
 
 import (
 	"context"
-	"fmt"
-
-	"connectrpc.com/connect"
 
 	"github.com/quixiq/polyglot/internal/port"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	"github.com/quixiq/polyglot/internal/usecase/network"
+	"github.com/quixiq/polyglot/pkg/fault"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // ConnectDriverProvider signature to obtain a port.DeviceDriver for a given deviceId.
@@ -34,11 +33,11 @@ func NewHotspotConnectHandler(uc *hotspotUC.UseCase, activeUC *network.ActiveSes
 
 func (h *HotspotConnectHandler) getDriver(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
 	if deviceID == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device_id is required"))
+		return nil, response.InvalidArgument("device_id is required")
 	}
 	driver, err := h.driverProvider(ctx, deviceID)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to get device driver for %s: %w", deviceID, err))
+		return nil, response.MapDomainError(fault.Wrap(fault.KindUnavailable, err))
 	}
 	return driver, nil
 }

@@ -29,14 +29,14 @@ func (h *BotConnectHandler) ListLLMConfigs(ctx context.Context, req *connect.Req
 
 func (h *BotConnectHandler) CreateLLMConfig(ctx context.Context, req *connect.Request[devicepb.CreateLLMConfigRequest]) (*connect.Response[devicepb.CreateLLMConfigResponse], error) {
 	if h.llmRepo == nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("llm repository not initialized"))
+		return nil, response.Unavailable("llm repository not initialized")
 	}
 
 	var encryptedKey string
 	if req.Msg.ApiKey != "" {
 		enc, err := config.Encrypt(req.Msg.ApiKey, h.encryptionKey)
 		if err != nil {
-			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to encrypt api key: %w", err))
+			return nil, response.Internal("failed to encrypt api key")
 		}
 		encryptedKey = enc
 	}
@@ -76,7 +76,7 @@ func (h *BotConnectHandler) CreateLLMConfig(ctx context.Context, req *connect.Re
 
 func (h *BotConnectHandler) UpdateLLMConfig(ctx context.Context, req *connect.Request[devicepb.UpdateLLMConfigRequest]) (*connect.Response[devicepb.UpdateLLMConfigResponse], error) {
 	if h.llmRepo == nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("llm repository not initialized"))
+		return nil, response.Unavailable("llm repository not initialized")
 	}
 	idNum, _ := strconv.ParseUint(req.Msg.Id, 10, 32)
 	cfg, err := h.llmRepo.FindByID(ctx, uint(idNum))
@@ -104,7 +104,7 @@ func (h *BotConnectHandler) UpdateLLMConfig(ctx context.Context, req *connect.Re
 	if req.Msg.ApiKey != "" {
 		enc, err := config.Encrypt(req.Msg.ApiKey, h.encryptionKey)
 		if err != nil {
-			return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("failed to encrypt api key: %w", err))
+			return nil, response.Internal("failed to encrypt api key")
 		}
 		cfg.APIKeyEncrypted = enc
 	}
@@ -120,7 +120,7 @@ func (h *BotConnectHandler) UpdateLLMConfig(ctx context.Context, req *connect.Re
 
 func (h *BotConnectHandler) ActivateLLMConfig(ctx context.Context, req *connect.Request[devicepb.ActivateLLMConfigRequest]) (*connect.Response[devicepb.ActivateLLMConfigResponse], error) {
 	if h.llmRepo == nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("llm repository not initialized"))
+		return nil, response.Unavailable("llm repository not initialized")
 	}
 	idNum, _ := strconv.ParseUint(req.Msg.Id, 10, 32)
 	if err := h.llmRepo.SetActive(ctx, uint(idNum)); err != nil {
@@ -133,7 +133,7 @@ func (h *BotConnectHandler) ActivateLLMConfig(ctx context.Context, req *connect.
 
 func (h *BotConnectHandler) TestLLMConfig(ctx context.Context, req *connect.Request[devicepb.TestLLMConfigRequest]) (*connect.Response[devicepb.TestLLMConfigResponse], error) {
 	if h.llmRepo == nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("llm repository not initialized"))
+		return nil, response.Unavailable("llm repository not initialized")
 	}
 	idNum, _ := strconv.ParseUint(req.Msg.Id, 10, 32)
 	cfg, err := h.llmRepo.FindByID(ctx, uint(idNum))
@@ -176,7 +176,7 @@ func (h *BotConnectHandler) TestLLMConfig(ctx context.Context, req *connect.Requ
 
 func (h *BotConnectHandler) DeleteLLMConfig(ctx context.Context, req *connect.Request[devicepb.DeleteLLMConfigRequest]) (*connect.Response[devicepb.DeleteLLMConfigResponse], error) {
 	if h.llmRepo == nil {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("llm repository not initialized"))
+		return nil, response.Unavailable("llm repository not initialized")
 	}
 	idNum, _ := strconv.ParseUint(req.Msg.Id, 10, 32)
 	if err := h.llmRepo.Delete(ctx, uint(idNum)); err != nil {

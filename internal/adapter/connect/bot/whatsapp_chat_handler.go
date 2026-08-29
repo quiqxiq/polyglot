@@ -31,7 +31,7 @@ func (h *WhatsAppConnectHandler) ListChats(ctx context.Context, req *connect.Req
 
 	sessionID, err := parseSessionID(req.Msg.SessionId)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+		return nil, response.InvalidArgument("invalid session_id")
 	}
 
 	chats, err := h.chatService.ListChats(ctx, sessionID, int(req.Msg.Limit), int(req.Msg.Offset), req.Msg.Search)
@@ -69,7 +69,7 @@ func (h *WhatsAppConnectHandler) GetChatMessages(ctx context.Context, req *conne
 
 	sessionID, err := parseSessionID(req.Msg.SessionId)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+		return nil, response.InvalidArgument("invalid session_id")
 	}
 
 	msgs, err := h.chatService.GetChatMessages(ctx, sessionID, req.Msg.ChatJid, int(req.Msg.Limit), int(req.Msg.Offset))
@@ -107,7 +107,7 @@ func (h *WhatsAppConnectHandler) ToggleChatBot(ctx context.Context, req *connect
 
 	sessionID, err := parseSessionID(req.Msg.SessionId)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+		return nil, response.InvalidArgument("invalid session_id")
 	}
 
 	if err := h.chatService.ToggleChatBot(ctx, sessionID, req.Msg.ChatJid, req.Msg.IsActive); err != nil {
@@ -127,7 +127,7 @@ func (h *WhatsAppConnectHandler) MarkChatRead(ctx context.Context, req *connect.
 
 	sessionID, err := parseSessionID(req.Msg.SessionId)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+		return nil, response.InvalidArgument("invalid session_id")
 	}
 
 	if err := h.chatService.MarkRead(ctx, sessionID, req.Msg.ChatJid); err != nil {

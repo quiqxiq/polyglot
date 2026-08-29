@@ -2,7 +2,6 @@ package hotspot
 
 import (
 	"context"
-	"fmt"
 	"regexp"
 
 	"connectrpc.com/connect"
@@ -52,7 +51,7 @@ func (h *HotspotConnectHandler) SetupExpireMonitor(ctx context.Context, req *con
 
 	interval := req.Msg.Interval
 	if interval != "" && !expireIntervalRe.MatchString(interval) {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("interval must be HH:MM:SS (e.g. 00:01:00)"))
+		return nil, response.InvalidArgument("interval must be HH:MM:SS (e.g. 00:01:00)")
 	}
 
 	if _, err := h.useCase.SetupExpireMonitor(ctx, driver, interval); err != nil {

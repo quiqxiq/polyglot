@@ -27,7 +27,7 @@ func NewCashbookConnectHandler(repo port.CashbookRepository) *CashbookConnectHan
 // ListAccounts returns cash accounts.
 func (h *CashbookConnectHandler) ListAccounts(ctx context.Context, req *connect.Request[devicepb.ListAccountsRequest]) (*connect.Response[devicepb.ListAccountsResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
+		return nil, response.Unavailable("cashbook repository unavailable")
 	}
 	list, err := h.repo.FindAccounts(ctx, req.Msg.ActiveOnly)
 	if err != nil {
@@ -41,7 +41,7 @@ func (h *CashbookConnectHandler) ListAccounts(ctx context.Context, req *connect.
 // SaveAccount creates or updates a cash account.
 func (h *CashbookConnectHandler) SaveAccount(ctx context.Context, req *connect.Request[devicepb.SaveAccountRequest]) (*connect.Response[devicepb.SaveAccountResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
+		return nil, response.Unavailable("cashbook repository unavailable")
 	}
 	pb := req.Msg.Account
 	id := pb.Id
@@ -66,7 +66,7 @@ func (h *CashbookConnectHandler) SaveAccount(ctx context.Context, req *connect.R
 // ListCategories returns cash categories.
 func (h *CashbookConnectHandler) ListCategories(ctx context.Context, req *connect.Request[devicepb.ListCategoriesRequest]) (*connect.Response[devicepb.ListCategoriesResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
+		return nil, response.Unavailable("cashbook repository unavailable")
 	}
 	list, err := h.repo.FindCategories(ctx, req.Msg.ActiveOnly)
 	if err != nil {
@@ -80,7 +80,7 @@ func (h *CashbookConnectHandler) ListCategories(ctx context.Context, req *connec
 // SaveCategory creates or updates a cash category.
 func (h *CashbookConnectHandler) SaveCategory(ctx context.Context, req *connect.Request[devicepb.SaveCategoryRequest]) (*connect.Response[devicepb.SaveCategoryResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
+		return nil, response.Unavailable("cashbook repository unavailable")
 	}
 	pb := req.Msg.Category
 	id := pb.Id
@@ -105,7 +105,7 @@ func (h *CashbookConnectHandler) SaveCategory(ctx context.Context, req *connect.
 // AddTransaction records a cash transaction.
 func (h *CashbookConnectHandler) AddTransaction(ctx context.Context, req *connect.Request[devicepb.AddTransactionRequest]) (*connect.Response[devicepb.AddTransactionResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
+		return nil, response.Unavailable("cashbook repository unavailable")
 	}
 	now := time.Now()
 	dir := req.Msg.Direction
@@ -136,7 +136,7 @@ func (h *CashbookConnectHandler) AddTransaction(ctx context.Context, req *connec
 // ListTransactions returns cash transactions matching the filter.
 func (h *CashbookConnectHandler) ListTransactions(ctx context.Context, req *connect.Request[devicepb.ListTransactionsFilter]) (*connect.Response[devicepb.ListTransactionsResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
+		return nil, response.Unavailable("cashbook repository unavailable")
 	}
 	f := port.CashTransactionFilter{
 		AccountID:  req.Msg.AccountId,
@@ -162,7 +162,7 @@ func (h *CashbookConnectHandler) ListTransactions(ctx context.Context, req *conn
 // Balances returns account balances for the selected period.
 func (h *CashbookConnectHandler) Balances(ctx context.Context, req *connect.Request[devicepb.BalancesRequest]) (*connect.Response[devicepb.BalancesResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
+		return nil, response.Unavailable("cashbook repository unavailable")
 	}
 	f := port.CashTransactionFilter{}
 	if req.Msg.FromUnix > 0 {

@@ -3,13 +3,14 @@ package ispadmin
 import (
 	"bytes"
 	"context"
-	"fmt"
 
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
+	"github.com/quixiq/polyglot/pkg/fault"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
@@ -36,7 +37,7 @@ func NewIspAdminConnectHandler(
 
 func (h *IspAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Request[devicepb.ImportFileRequest]) (*connect.Response[devicepb.ImportFileResponse], error) {
 	if h.upsert == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("importer unavailable"))
+		return nil, response.Unavailable("importer unavailable")
 	}
 	var rows []importer.Row
 	var err error
@@ -46,7 +47,7 @@ func (h *IspAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Re
 		rows, err = importer.ParseCSV(bytes.NewReader(req.Msg.Payload))
 	}
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("parse file: %w", err))
+		return nil, response.MapDomainError(fault.Wrap(fault.KindInvalidInput, err))
 	}
 	res, uerr := h.upsert.Import(ctx, rows)
 	if uerr != nil {
@@ -60,7 +61,7 @@ func (h *IspAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Re
 func (h *IspAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.Request[devicepb.ImportRouterRequest]) (*connect.Response[devicepb.ImportRouterResponse], error) {
 	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
 	if !ok || driver == nil {
-		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("device %s not found or driver unavailable", req.Msg.DeviceId))
+		return nil, response.MapDomainError(device.ErrNotFound)
 	}
 	devName := req.Msg.DeviceName
 	if devName == "" {
@@ -103,7 +104,7 @@ func (h *IspAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.
 
 func (h *IspAdminConnectHandler) ExportCustomers(ctx context.Context, req *connect.Request[devicepb.ExportCustomersRequest]) (*connect.Response[devicepb.ExportCustomersResponse], error) {
 	if h.exporter == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("exporter unavailable"))
+		return nil, response.Unavailable("exporter unavailable")
 	}
 	format := "csv"
 	contentType := "text/csv"
@@ -125,7 +126,7 @@ func (h *IspAdminConnectHandler) ExportCustomers(ctx context.Context, req *conne
 func (h *IspAdminConnectHandler) Reconcile(ctx context.Context, req *connect.Request[devicepb.ReconcileRequest]) (*connect.Response[devicepb.ReconcileResponse], error) {
 	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
 	if !ok || driver == nil {
-		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("device %s not found or driver unavailable", req.Msg.DeviceId))
+		return nil, response.MapDomainError(device.ErrNotFound)
 	}
 	report, err := h.reconciler.Compare(ctx, req.Msg.DeviceId, driver)
 	if err != nil {

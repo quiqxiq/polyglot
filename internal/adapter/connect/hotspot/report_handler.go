@@ -2,7 +2,6 @@ package hotspot
 
 import (
 	"context"
-	"fmt"
 
 	"connectrpc.com/connect"
 
@@ -44,7 +43,7 @@ func (h *HotspotConnectHandler) DeleteReport(ctx context.Context, req *connect.R
 		return nil, err
 	}
 	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id required"))
+		return nil, response.InvalidArgument("ros_id required")
 	}
 
 	if _, err := h.useCase.DeleteReport(ctx, driver, req.Msg.RosId); err != nil {

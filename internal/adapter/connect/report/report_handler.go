@@ -3,7 +3,6 @@ package report
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"strconv"
 	"time"
 
@@ -26,13 +25,13 @@ func NewReportConnectHandler(repo port.ReportingRepository, snapshotter port.Sna
 
 func (h *ReportConnectHandler) DailyReport(ctx context.Context, req *connect.Request[devicepb.DailyReportRequest]) (*connect.Response[devicepb.DailyReportResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("reporting repository unavailable"))
+		return nil, response.Unavailable("reporting repository unavailable")
 	}
 	day := time.Now().UTC()
 	if req.Msg.Date != "" {
 		d, err := time.Parse("2006-01-02", req.Msg.Date)
 		if err != nil {
-			return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("date must be YYYY-MM-DD"))
+			return nil, response.InvalidArgument("date must be YYYY-MM-DD")
 		}
 		day = d
 	}
@@ -47,7 +46,7 @@ func (h *ReportConnectHandler) DailyReport(ctx context.Context, req *connect.Req
 
 func (h *ReportConnectHandler) MonthlyReport(ctx context.Context, req *connect.Request[devicepb.MonthlyReportRequest]) (*connect.Response[devicepb.MonthlyReportResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("reporting repository unavailable"))
+		return nil, response.Unavailable("reporting repository unavailable")
 	}
 	month := req.Msg.Month
 	if month == "" {
@@ -55,7 +54,7 @@ func (h *ReportConnectHandler) MonthlyReport(ctx context.Context, req *connect.R
 	}
 	from, err := time.Parse("2006-01", month)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("month must be YYYY-MM"))
+		return nil, response.InvalidArgument("month must be YYYY-MM")
 	}
 	to := from.AddDate(0, 1, -1)
 	snaps, err := h.repo.ListRange(ctx, "tenant-default", from, to)
@@ -69,7 +68,7 @@ func (h *ReportConnectHandler) MonthlyReport(ctx context.Context, req *connect.R
 
 func (h *ReportConnectHandler) YearlyReport(ctx context.Context, req *connect.Request[devicepb.YearlyReportRequest]) (*connect.Response[devicepb.YearlyReportResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("reporting repository unavailable"))
+		return nil, response.Unavailable("reporting repository unavailable")
 	}
 	year := int(req.Msg.Year)
 	if year == 0 {
@@ -88,13 +87,13 @@ func (h *ReportConnectHandler) YearlyReport(ctx context.Context, req *connect.Re
 
 func (h *ReportConnectHandler) RefreshSnapshot(ctx context.Context, req *connect.Request[devicepb.RefreshSnapshotRequest]) (*connect.Response[devicepb.RefreshSnapshotResponse], error) {
 	if h.snapshotter == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("snapshotter unavailable"))
+		return nil, response.Unavailable("snapshotter unavailable")
 	}
 	day := time.Now().UTC()
 	if req.Msg.Date != "" {
 		d, err := time.Parse("2006-01-02", req.Msg.Date)
 		if err != nil {
-			return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("date must be YYYY-MM-DD"))
+			return nil, response.InvalidArgument("date must be YYYY-MM-DD")
 		}
 		day = d
 	}

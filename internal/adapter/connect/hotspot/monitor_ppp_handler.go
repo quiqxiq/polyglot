@@ -2,7 +2,6 @@ package hotspot
 
 import (
 	"context"
-	"fmt"
 	"strings"
 	"sync"
 	"time"
@@ -27,7 +26,7 @@ func (h *HotspotConnectHandler) StreamPPPActive(ctx context.Context, req *connec
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	activeMap := make(map[string]port.PPPActiveSession)
@@ -223,7 +222,7 @@ func (h *HotspotConnectHandler) StreamPPPInactive(ctx context.Context, req *conn
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	state := newPPPSessionState()

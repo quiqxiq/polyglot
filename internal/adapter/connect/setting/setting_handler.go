@@ -2,7 +2,6 @@ package setting
 
 import (
 	"context"
-	"fmt"
 
 	"connectrpc.com/connect"
 
@@ -35,7 +34,7 @@ func (h *SettingConnectHandler) GetAllSettings(ctx context.Context, req *connect
 
 func (h *SettingConnectHandler) GetSettingsByCategory(ctx context.Context, req *connect.Request[devicepb.GetSettingsByCategoryRequest]) (*connect.Response[devicepb.GetSettingsByCategoryResponse], error) {
 	if req.Msg.Category == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("category is required"))
+		return nil, response.InvalidArgument("category is required")
 	}
 
 	settings, err := h.settingUC.GetSettingsByCategory(ctx, req.Msg.Category)
@@ -50,7 +49,7 @@ func (h *SettingConnectHandler) GetSettingsByCategory(ctx context.Context, req *
 
 func (h *SettingConnectHandler) UpdateSetting(ctx context.Context, req *connect.Request[devicepb.UpdateSettingRequest]) (*connect.Response[devicepb.UpdateSettingResponse], error) {
 	if req.Msg.Key == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("key is required"))
+		return nil, response.InvalidArgument("key is required")
 	}
 
 	updated, err := h.settingUC.UpdateSetting(ctx, req.Msg.Key, req.Msg.Value)
@@ -98,7 +97,7 @@ func (h *SettingConnectHandler) GetBotSettings(ctx context.Context, req *connect
 
 func (h *SettingConnectHandler) UpdateBotSettings(ctx context.Context, req *connect.Request[devicepb.UpdateBotSettingsRequest]) (*connect.Response[devicepb.UpdateBotSettingsResponse], error) {
 	if req.Msg.Settings == nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("settings is required"))
+		return nil, response.InvalidArgument("settings is required")
 	}
 
 	domainSettings := PbBotSettingsToDomain(req.Msg.Settings)

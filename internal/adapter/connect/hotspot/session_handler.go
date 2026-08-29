@@ -33,7 +33,7 @@ func (h *HotspotConnectHandler) KickActiveSession(ctx context.Context, req *conn
 	}
 
 	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id required"))
+		return nil, response.InvalidArgument("ros_id required")
 	}
 
 	res, err := h.useCase.RemoveActiveSession(ctx, driver, req.Msg.RosId)

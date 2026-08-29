@@ -13,6 +13,7 @@ import (
 	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	templatefs "github.com/quixiq/polyglot/internal/template"
+	"github.com/quixiq/polyglot/pkg/fault"
 	"github.com/quixiq/polyglot/pkg/response"
 	"github.com/quixiq/polyglot/pkg/voucher"
 )
@@ -33,16 +34,16 @@ func (h *HotspotConnectHandler) ListTemplates(ctx context.Context, req *connect.
 func (h *HotspotConnectHandler) GetTemplateSection(ctx context.Context, req *connect.Request[devicepb.GetTemplateSectionRequest]) (*connect.Response[devicepb.GetTemplateSectionResponse], error) {
 	layout, err := normalizeTemplateLayout(req.Msg.TemplateName)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+		return nil, response.InvalidArgument(err.Error())
 	}
 	section, err := normalizeTemplateSection(req.Msg.Section)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+		return nil, response.InvalidArgument(err.Error())
 	}
 
 	data, err := templatefs.FS.ReadFile(voucher.TemplateFile(layout, section))
 	if err != nil {
-		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("template section %s.%s not found: %w", section, layout, err))
+		return nil, response.MapDomainError(fault.Wrap(fault.KindNotFound, err))
 	}
 	return connect.NewResponse(&devicepb.GetTemplateSectionResponse{Content: string(data)}), nil
 }
@@ -55,7 +56,7 @@ func (h *HotspotConnectHandler) GetTemplateSection(ctx context.Context, req *con
 func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect.Request[devicepb.RenderVouchersRequest]) (*connect.Response[devicepb.RenderVouchersResponse], error) {
 	layout, err := normalizeTemplateLayout(req.Msg.TemplateName)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, err)
+		return nil, response.InvalidArgument(err.Error())
 	}
 
 	// Preview: dummy data, no router access needed.
@@ -68,10 +69,10 @@ func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect
 	}
 
 	if req.Msg.UserId == "" && req.Msg.Comment == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("user_id or comment (batch tag) required"))
+		return nil, response.InvalidArgument("user_id or comment (batch tag) required")
 	}
 	if req.Msg.UserId != "" && req.Msg.Comment != "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("user_id and comment are mutually exclusive"))
+		return nil, response.InvalidArgument("user_id and comment are mutually exclusive")
 	}
 
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
@@ -119,7 +120,7 @@ func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect
 		}
 	}
 	if len(users) == 0 {
-		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("no vouchers found for the given filter"))
+		return nil, response.MapDomainError(fault.New(fault.KindNotFound, "hotspot: no vouchers found for the given filter"))
 	}
 
 	// Scope-down metadata: identity + first hotspot server + profile on-login.

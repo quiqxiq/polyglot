@@ -62,7 +62,7 @@ func (h *PPPConnectHandler) CreateSecret(ctx context.Context, req *connect.Reque
 		return nil, response.MapDomainError(err)
 	}
 	if len(secrets) == 0 {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("secret %q created but not found", req.Msg.Name))
+		return nil, response.Internal("secret created but could not be loaded")
 	}
 
 	return connect.NewResponse(&devicepb.CreatePPPSecretResponse{

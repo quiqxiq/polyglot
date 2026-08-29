@@ -48,7 +48,7 @@ func (h *HotspotConnectHandler) CreateUser(ctx context.Context, req *connect.Req
 		return nil, response.MapDomainError(err)
 	}
 	if len(users) == 0 {
-		return nil, connect.NewError(connect.CodeInternal, fmt.Errorf("user %q created but not found", req.Msg.Name))
+		return nil, response.Internal("user created but could not be loaded")
 	}
 
 	return connect.NewResponse(&devicepb.CreateHotspotUserResponse{
