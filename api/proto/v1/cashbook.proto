@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 message CashAccount {
@@ -35,20 +37,24 @@ message CashTransaction {
 message ListAccountsRequest { bool active_only = 1; }
 message ListAccountsResponse { repeated CashAccount accounts = 1; }
 
-message SaveAccountRequest { CashAccount account = 1; }
+message SaveAccountRequest {
+  CashAccount account = 1 [(buf.validate.field).required = true];
+}
 message SaveAccountResponse { CashAccount account = 1; }
 
 message ListCategoriesRequest { bool active_only = 1; }
 message ListCategoriesResponse { repeated CashCategory categories = 1; }
 
-message SaveCategoryRequest { CashCategory category = 1; }
+message SaveCategoryRequest {
+  CashCategory category = 1 [(buf.validate.field).required = true];
+}
 message SaveCategoryResponse { CashCategory category = 1; }
 
 message AddTransactionRequest {
-  string account_id = 1;
-  string category_id = 2;
-  string direction = 3; // IN | OUT
-  double amount = 4;
+  string account_id = 1 [(buf.validate.field).string.min_len = 1];
+  string category_id = 2 [(buf.validate.field).string.min_len = 1];
+  string direction = 3 [(buf.validate.field).string = {in: ["IN", "OUT"]}];
+  double amount = 4 [(buf.validate.field).double.gt = 0];
   string description = 5;
 }
 message AddTransactionResponse { CashTransaction transaction = 1; }

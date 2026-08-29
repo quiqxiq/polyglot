@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 
+	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
@@ -54,7 +55,7 @@ func (u *PlanUseCase) Create(ctx context.Context, p domainPlan.ServicePlan) (dom
 	p.IsActive = true
 
 	if _, err := u.plans.FindByName(ctx, p.TenantID, p.Name); err == nil {
-		return domainPlan.ServicePlan{}, fmt.Errorf("%w: plan name %q already exists", ErrValidation, p.Name)
+		return domainPlan.ServicePlan{}, fmt.Errorf("%w: plan name %q already exists", domainBilling.ErrInvalidInput, p.Name)
 	}
 	if err := u.plans.Save(ctx, p); err != nil {
 		return domainPlan.ServicePlan{}, err
@@ -65,11 +66,11 @@ func (u *PlanUseCase) Create(ctx context.Context, p domainPlan.ServicePlan) (dom
 // Update replaces the stored plan after validation.
 func (u *PlanUseCase) Update(ctx context.Context, p domainPlan.ServicePlan) (domainPlan.ServicePlan, error) {
 	if p.ID == "" {
-		return domainPlan.ServicePlan{}, fmt.Errorf("%w: plan id is required", ErrValidation)
+		return domainPlan.ServicePlan{}, fmt.Errorf("%w: plan id is required", domainBilling.ErrInvalidInput)
 	}
 	old, err := u.plans.FindByID(ctx, p.ID)
 	if err != nil {
-		return domainPlan.ServicePlan{}, fmt.Errorf("plan %s not found: %w", p.ID, ErrNotFoundBilling)
+		return domainPlan.ServicePlan{}, fmt.Errorf("plan %s not found: %w", p.ID, domainBilling.ErrNotFound)
 	}
 	if err := validatePlan(p); err != nil {
 		return domainPlan.ServicePlan{}, err
@@ -88,7 +89,7 @@ func (u *PlanUseCase) Delete(ctx context.Context, id string) error {
 		return err
 	}
 	if inUse {
-		return fmt.Errorf("plan %s masih dipakai langganan aktif; nonaktifkan alih-alih hapus", id)
+		return fmt.Errorf("%w: %s; deactivate instead of delete", domainBilling.ErrPlanInUse, id)
 	}
 	return u.plans.Delete(ctx, id)
 }
@@ -105,18 +106,18 @@ func (u *PlanUseCase) List(ctx context.Context, activeOnly bool) ([]domainPlan.S
 
 func validatePlan(p domainPlan.ServicePlan) error {
 	if strings.TrimSpace(p.Name) == "" {
-		return fmt.Errorf("%w: name is required", ErrValidation)
+		return fmt.Errorf("%w: name is required", domainBilling.ErrInvalidInput)
 	}
 	switch strings.ToUpper(p.ServiceType) {
 	case domainPlan.TypePPPoE, domainPlan.TypeHotspot, domainPlan.TypeDedicated:
 	default:
-		return fmt.Errorf("%w: service_type must be PPPOE|HOTSPOT|DEDICATED", ErrValidation)
+		return fmt.Errorf("%w: service_type must be PPPOE|HOTSPOT|DEDICATED", domainBilling.ErrInvalidInput)
 	}
 	if p.BandwidthDownloadKbps <= 0 || p.BandwidthUploadKbps <= 0 {
-		return fmt.Errorf("%w: bandwidth must be positive", ErrValidation)
+		return fmt.Errorf("%w: bandwidth must be positive", domainBilling.ErrInvalidInput)
 	}
 	if p.Price < 0 {
-		return fmt.Errorf("%w: price cannot be negative", ErrValidation)
+		return fmt.Errorf("%w: price cannot be negative", domainBilling.ErrInvalidInput)
 	}
 	return nil
 }

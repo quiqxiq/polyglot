@@ -38,9 +38,6 @@ func (h *IspAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Re
 	if h.upsert == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("importer unavailable"))
 	}
-	if len(req.Msg.Payload) == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("payload bytes are required"))
-	}
 	var rows []importer.Row
 	var err error
 	if req.Msg.Format == devicepb.ImportFormat_IMPORT_FORMAT_XLSX {
@@ -61,9 +58,6 @@ func (h *IspAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Re
 }
 
 func (h *IspAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.Request[devicepb.ImportRouterRequest]) (*connect.Response[devicepb.ImportRouterResponse], error) {
-	if req.Msg.DeviceId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device_id is required"))
-	}
 	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
 	if !ok || driver == nil {
 		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("device %s not found or driver unavailable", req.Msg.DeviceId))
@@ -129,9 +123,6 @@ func (h *IspAdminConnectHandler) ExportCustomers(ctx context.Context, req *conne
 }
 
 func (h *IspAdminConnectHandler) Reconcile(ctx context.Context, req *connect.Request[devicepb.ReconcileRequest]) (*connect.Response[devicepb.ReconcileResponse], error) {
-	if req.Msg.DeviceId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device_id is required"))
-	}
 	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
 	if !ok || driver == nil {
 		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("device %s not found or driver unavailable", req.Msg.DeviceId))

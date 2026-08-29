@@ -7,6 +7,7 @@ import (
 	"time"
 
 	domainAudit "github.com/quixiq/polyglot/internal/domain/audit"
+	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
@@ -77,25 +78,25 @@ func NewManageSubscriptionUseCase(
 // diberikan) memprovisikan akun PPP/hotspot ke router target.
 func (u *ManageSubscriptionUseCase) Create(ctx context.Context, in CreateInput) (domainSubscription.Subscription, error) {
 	if in.CustomerID == "" || in.PlanID == "" {
-		return domainSubscription.Subscription{}, fmt.Errorf("%w: customer_id dan plan_id wajib", ErrValidation)
+		return domainSubscription.Subscription{}, fmt.Errorf("%w: customer_id and plan_id are required", domainBilling.ErrInvalidInput)
 	}
 	if _, err := u.customers.FindByID(ctx, in.CustomerID); err != nil {
-		return domainSubscription.Subscription{}, fmt.Errorf("%w: customer %s tidak ditemukan", ErrValidation, in.CustomerID)
+		return domainSubscription.Subscription{}, fmt.Errorf("%w: customer %s not found", domainBilling.ErrInvalidInput, in.CustomerID)
 	}
 	pl, err := u.plans.FindByID(ctx, in.PlanID)
 	if err != nil {
-		return domainSubscription.Subscription{}, fmt.Errorf("%w: plan %s tidak ditemukan", ErrValidation, in.PlanID)
+		return domainSubscription.Subscription{}, fmt.Errorf("%w: plan %s not found", domainBilling.ErrInvalidInput, in.PlanID)
 	}
 	if !pl.IsActive {
-		return domainSubscription.Subscription{}, fmt.Errorf("%w: plan %s tidak aktif", ErrValidation, pl.ID)
+		return domainSubscription.Subscription{}, fmt.Errorf("%w: plan %s is inactive", domainBilling.ErrInvalidInput, pl.ID)
 	}
 	serviceType := in.ServiceType
 	if serviceType == "" {
 		serviceType = pl.ServiceType
 	}
 	if !strings.EqualFold(serviceType, pl.ServiceType) {
-		return domainSubscription.Subscription{}, fmt.Errorf("%w: service_type %s tidak cocok dengan plan (%s)",
-			ErrValidation, serviceType, pl.ServiceType)
+		return domainSubscription.Subscription{}, fmt.Errorf("%w: service_type %s does not match plan (%s)",
+			domainBilling.ErrInvalidInput, serviceType, pl.ServiceType)
 	}
 
 	username, password := in.RemoteUsername, in.RemotePassword
@@ -155,7 +156,7 @@ func (u *ManageSubscriptionUseCase) Create(ctx context.Context, in CreateInput) 
 func (u *ManageSubscriptionUseCase) Update(ctx context.Context, subID string, in UpdateInput) (domainSubscription.Subscription, error) {
 	sub, err := u.subs.FindByID(ctx, subID)
 	if err != nil {
-		return domainSubscription.Subscription{}, ErrNotFoundBilling
+		return domainSubscription.Subscription{}, domainBilling.ErrNotFound
 	}
 
 	if in.RemoteUsername != nil && *in.RemoteUsername != "" {
@@ -193,15 +194,15 @@ func (u *ManageSubscriptionUseCase) Update(ctx context.Context, subID string, in
 func (u *ManageSubscriptionUseCase) Delete(ctx context.Context, subID string) error {
 	hasInvoice, err := u.invoices.HasForSubscription(ctx, subID)
 	if err != nil {
-		return fmt.Errorf("cek tagihan langganan %s: %w", subID, err)
+		return fmt.Errorf("check subscription invoices %s: %w", subID, err)
 	}
 	if hasInvoice {
-		return fmt.Errorf("%w: langganan masih memiliki tagihan", ErrValidation)
+		return fmt.Errorf("%w: subscription still has invoices", domainBilling.ErrInvalidInput)
 	}
 
 	sub, err := u.subs.FindByID(ctx, subID)
 	if err != nil {
-		return ErrNotFoundBilling
+		return domainBilling.ErrNotFound
 	}
 	if provisioned(sub) {
 		if terr := u.manager.Terminate(ctx, derefDevice(sub.DeviceID), sub.ServiceType, sub.RemoteUsername); terr != nil {

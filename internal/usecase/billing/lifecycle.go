@@ -6,6 +6,7 @@ import (
 	"time"
 
 	domainAudit "github.com/quixiq/polyglot/internal/domain/audit"
+	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -39,7 +40,7 @@ func NewSubscriptionLifecycleUseCase(
 // provisi PENDING agar worker mencoba ulang.
 func (u *SubscriptionLifecycleUseCase) Activate(ctx context.Context, subID, deviceID string) (domainSubscription.Subscription, error) {
 	if deviceID == "" {
-		return domainSubscription.Subscription{}, fmt.Errorf("%w: device id is required", ErrValidation)
+		return domainSubscription.Subscription{}, fmt.Errorf("%w: device id is required", domainBilling.ErrInvalidInput)
 	}
 	sub, err := u.mustGet(ctx, subID)
 	if err != nil {
@@ -81,10 +82,10 @@ func (u *SubscriptionLifecycleUseCase) ChangePlan(ctx context.Context, subID, ne
 	}
 	pl, err := u.plans.FindByID(ctx, newPlanID)
 	if err != nil {
-		return sub, fmt.Errorf("plan tujuan %s: %w", newPlanID, err)
+		return sub, fmt.Errorf("target plan %s: %w", newPlanID, err)
 	}
 	if !pl.IsActive {
-		return sub, fmt.Errorf("%w: plan tujuan tidak aktif", ErrValidation)
+		return sub, fmt.Errorf("%w: target plan is inactive", domainBilling.ErrInvalidInput)
 	}
 
 	provisioned := sub.ProvisionStatus == domainSubscription.ProvisionOK && sub.DeviceID != nil && *sub.DeviceID != ""
@@ -180,7 +181,7 @@ func (u *SubscriptionLifecycleUseCase) Terminate(ctx context.Context, subID, rea
 func (u *SubscriptionLifecycleUseCase) mustGet(ctx context.Context, id string) (domainSubscription.Subscription, error) {
 	sub, err := u.subs.FindByID(ctx, id)
 	if err != nil {
-		return domainSubscription.Subscription{}, ErrNotFoundBilling
+		return domainSubscription.Subscription{}, domainBilling.ErrNotFound
 	}
 	return sub, nil
 }
@@ -195,8 +196,8 @@ func (u *SubscriptionLifecycleUseCase) mustGetAny(ctx context.Context, id string
 			return sub, nil
 		}
 	}
-	return domainSubscription.Subscription{}, fmt.Errorf("%w: status %s tidak diizinkan untuk operasi ini",
-		ErrInvalidTransitionBilling, sub.Status)
+	return domainSubscription.Subscription{}, fmt.Errorf("%w: status %s is not allowed for this operation",
+		domainBilling.ErrInvalidTransition, sub.Status)
 }
 
 func (u *SubscriptionLifecycleUseCase) normalProfile(ctx context.Context, sub domainSubscription.Subscription) string {

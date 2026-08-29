@@ -26,9 +26,6 @@ func (h *PortalConnectHandler) RequestOTP(ctx context.Context, req *connect.Requ
 	if h.usecase == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("portal usecase unavailable"))
 	}
-	if req.Msg.Identifier == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("identifier is required"))
-	}
 	masked, err := h.usecase.RequestOTP(ctx, req.Msg.Identifier)
 	if err != nil {
 		return nil, response.MapDomainError(err)
@@ -42,9 +39,6 @@ func (h *PortalConnectHandler) RequestOTP(ctx context.Context, req *connect.Requ
 func (h *PortalConnectHandler) Login(ctx context.Context, req *connect.Request[devicepb.PortalLoginRequest]) (*connect.Response[devicepb.PortalLoginResponse], error) {
 	if h.usecase == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("portal usecase unavailable"))
-	}
-	if req.Msg.Identifier == "" || req.Msg.Otp == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("identifier and otp are required"))
 	}
 	token, cust, err := h.usecase.Login(ctx, req.Msg.Identifier, req.Msg.Otp)
 	if err != nil {

@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 message Policy {
@@ -21,14 +23,14 @@ message ListPoliciesResponse {
 }
 
 message AddPolicyRequest {
-  Policy policy = 1;
+  Policy policy = 1 [(buf.validate.field).required = true];
 }
 message AddPolicyResponse {
   bool success = 1;
 }
 
 message RemovePolicyRequest {
-  Policy policy = 1;
+  Policy policy = 1 [(buf.validate.field).required = true];
 }
 message RemovePolicyResponse {
   bool success = 1;
@@ -40,21 +42,21 @@ message ListRoleAssignmentsResponse {
 }
 
 message AssignRoleRequest {
-  RoleAssignment assignment = 1;
+  RoleAssignment assignment = 1 [(buf.validate.field).required = true];
 }
 message AssignRoleResponse {
   bool success = 1;
 }
 
 message UnassignRoleRequest {
-  RoleAssignment assignment = 1;
+  RoleAssignment assignment = 1 [(buf.validate.field).required = true];
 }
 message UnassignRoleResponse {
   bool success = 1;
 }
 
 message SyncRolePermissionsRequest {
-  string role = 1;
+  string role = 1 [(buf.validate.field).string.min_len = 1];
   repeated string permissions = 2;
 }
 
@@ -64,7 +66,7 @@ message SyncRolePermissionsResponse {
 }
 
 message DeleteRoleRequest {
-  string role = 1;
+  string role = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeleteRoleResponse {

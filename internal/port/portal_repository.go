@@ -2,17 +2,13 @@ package port
 
 import (
 	"context"
-	"errors"
 
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 )
 
-// Kesalahan alur OTP portal.
-var (
-	ErrOTPLocked   = errors.New("otp locked: too many failed attempts")
-	ErrOTPExpired  = errors.New("otp expired")
-	ErrOTPNotFound = errors.New("otp not found or already used")
-)
+// Error sentinels untuk alur OTP portal tinggal di
+// internal/domain/customer/errors.go (ErrOTPLocked, ErrOTPExpired,
+// ErrOTPNotFound) per DEVELOPMENT-GUIDELINES.md §6.
 
 // NotificationSender mengirim pesan WhatsApp secara langsung (bypass
 // antrean) — dipakai OTP interaktif dan fallback worker.

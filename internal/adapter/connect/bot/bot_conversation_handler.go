@@ -162,10 +162,6 @@ func (h *BotConnectHandler) CloseConversation(ctx context.Context, req *connect.
 }
 
 func (h *BotConnectHandler) ResetRateLimit(ctx context.Context, req *connect.Request[devicepb.ResetRateLimitRequest]) (*connect.Response[devicepb.ResetRateLimitResponse], error) {
-	if req.Msg.PhoneNumber == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("phone_number is required"))
-	}
-
 	if h.contextProvider != nil {
 		if err := h.contextProvider.ResetRateLimit(ctx, req.Msg.PhoneNumber); err != nil {
 			return nil, response.MapDomainError(err)
@@ -179,10 +175,6 @@ func (h *BotConnectHandler) ResetRateLimit(ctx context.Context, req *connect.Req
 }
 
 func (h *BotConnectHandler) GetRateLimitStatus(ctx context.Context, req *connect.Request[devicepb.GetRateLimitStatusRequest]) (*connect.Response[devicepb.GetRateLimitStatusResponse], error) {
-	if req.Msg.PhoneNumber == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, errors.New("phone_number is required"))
-	}
-
 	if h.contextProvider == nil {
 		return connect.NewResponse(&devicepb.GetRateLimitStatusResponse{
 			PhoneNumber: req.Msg.PhoneNumber,

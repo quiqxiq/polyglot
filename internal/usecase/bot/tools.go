@@ -11,8 +11,8 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
-	"github.com/quixiq/polyglot/pkg/ping"
 	"github.com/quixiq/polyglot/pkg/phone"
+	"github.com/quixiq/polyglot/pkg/ping"
 )
 
 // RequestSkillInput adalah argumen untuk pemanggilan tool request_skill.

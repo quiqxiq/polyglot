@@ -188,7 +188,7 @@ func (a *Adapter) ParseWebhook(ctx context.Context, body []byte, signatureHeader
 	}
 	expect := signHMAC(cfg.PrivateKey, p.MerchantRef+p.Status+fmt.Sprintf("%.0f", p.TotalAmount))
 	if !hmac.Equal([]byte(expect), []byte(strings.ToLower(signatureHeader))) {
-		return port.WebhookEvent{}, port.ErrGatewayBadSign
+		return port.WebhookEvent{}, domainBilling.ErrGatewayBadSign
 	}
 	status := domainBilling.GatewayStatusPending
 	switch strings.ToUpper(p.Status) {

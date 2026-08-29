@@ -46,10 +46,6 @@ func (h *RBACConnectHandler) ListPolicies(ctx context.Context, req *connect.Requ
 }
 
 func (h *RBACConnectHandler) AddPolicy(ctx context.Context, req *connect.Request[devicepb.AddPolicyRequest]) (*connect.Response[devicepb.AddPolicyResponse], error) {
-	if req.Msg.Policy == nil || req.Msg.Policy.Sub == "" || req.Msg.Policy.Obj == "" || req.Msg.Policy.Act == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("sub, obj, and act are required"))
-	}
-
 	if h.enforcer == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
 	}
@@ -63,10 +59,6 @@ func (h *RBACConnectHandler) AddPolicy(ctx context.Context, req *connect.Request
 }
 
 func (h *RBACConnectHandler) RemovePolicy(ctx context.Context, req *connect.Request[devicepb.RemovePolicyRequest]) (*connect.Response[devicepb.RemovePolicyResponse], error) {
-	if req.Msg.Policy == nil || req.Msg.Policy.Sub == "" || req.Msg.Policy.Obj == "" || req.Msg.Policy.Act == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("sub, obj, and act are required"))
-	}
-
 	if h.enforcer == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
 	}
@@ -103,10 +95,6 @@ func (h *RBACConnectHandler) ListRoleAssignments(ctx context.Context, req *conne
 }
 
 func (h *RBACConnectHandler) AssignRole(ctx context.Context, req *connect.Request[devicepb.AssignRoleRequest]) (*connect.Response[devicepb.AssignRoleResponse], error) {
-	if req.Msg.Assignment == nil || req.Msg.Assignment.User == "" || req.Msg.Assignment.Role == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("user and role are required"))
-	}
-
 	if h.enforcer == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
 	}
@@ -120,10 +108,6 @@ func (h *RBACConnectHandler) AssignRole(ctx context.Context, req *connect.Reques
 }
 
 func (h *RBACConnectHandler) UnassignRole(ctx context.Context, req *connect.Request[devicepb.UnassignRoleRequest]) (*connect.Response[devicepb.UnassignRoleResponse], error) {
-	if req.Msg.Assignment == nil || req.Msg.Assignment.User == "" || req.Msg.Assignment.Role == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("user and role are required"))
-	}
-
 	if h.enforcer == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
 	}
@@ -137,10 +121,6 @@ func (h *RBACConnectHandler) UnassignRole(ctx context.Context, req *connect.Requ
 }
 
 func (h *RBACConnectHandler) SyncRolePermissions(ctx context.Context, req *connect.Request[devicepb.SyncRolePermissionsRequest]) (*connect.Response[devicepb.SyncRolePermissionsResponse], error) {
-	if req.Msg.Role == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("role is required"))
-	}
-
 	if h.enforcer == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
 	}
@@ -156,9 +136,6 @@ func (h *RBACConnectHandler) SyncRolePermissions(ctx context.Context, req *conne
 }
 
 func (h *RBACConnectHandler) DeleteRole(ctx context.Context, req *connect.Request[devicepb.DeleteRoleRequest]) (*connect.Response[devicepb.DeleteRoleResponse], error) {
-	if req.Msg.Role == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("role is required"))
-	}
 	if req.Msg.Role == "owner" {
 		return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("role owner cannot be deleted"))
 	}
@@ -180,17 +157,17 @@ func (h *RBACConnectHandler) DeleteRole(ctx context.Context, req *connect.Reques
 func NewRBACServiceHandler(enforcer *auth.CasbinEnforcer) (string, http.Handler) {
 	handler := NewRBACConnectHandler(enforcer)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
+	opts := iconnect.DefaultHandlerOptions()
 
 	serviceName := "polyglot.v1.RBACService"
-	mux.Handle("/"+serviceName+"/ListPolicies", connect.NewUnaryHandler("/"+serviceName+"/ListPolicies", handler.ListPolicies, codecOpt))
-	mux.Handle("/"+serviceName+"/AddPolicy", connect.NewUnaryHandler("/"+serviceName+"/AddPolicy", handler.AddPolicy, codecOpt))
-	mux.Handle("/"+serviceName+"/RemovePolicy", connect.NewUnaryHandler("/"+serviceName+"/RemovePolicy", handler.RemovePolicy, codecOpt))
-	mux.Handle("/"+serviceName+"/ListRoleAssignments", connect.NewUnaryHandler("/"+serviceName+"/ListRoleAssignments", handler.ListRoleAssignments, codecOpt))
-	mux.Handle("/"+serviceName+"/AssignRole", connect.NewUnaryHandler("/"+serviceName+"/AssignRole", handler.AssignRole, codecOpt))
-	mux.Handle("/"+serviceName+"/UnassignRole", connect.NewUnaryHandler("/"+serviceName+"/UnassignRole", handler.UnassignRole, codecOpt))
-	mux.Handle("/"+serviceName+"/SyncRolePermissions", connect.NewUnaryHandler("/"+serviceName+"/SyncRolePermissions", handler.SyncRolePermissions, codecOpt))
-	mux.Handle("/"+serviceName+"/DeleteRole", connect.NewUnaryHandler("/"+serviceName+"/DeleteRole", handler.DeleteRole, codecOpt))
+	mux.Handle("/"+serviceName+"/ListPolicies", connect.NewUnaryHandler("/"+serviceName+"/ListPolicies", handler.ListPolicies, opts...))
+	mux.Handle("/"+serviceName+"/AddPolicy", connect.NewUnaryHandler("/"+serviceName+"/AddPolicy", handler.AddPolicy, opts...))
+	mux.Handle("/"+serviceName+"/RemovePolicy", connect.NewUnaryHandler("/"+serviceName+"/RemovePolicy", handler.RemovePolicy, opts...))
+	mux.Handle("/"+serviceName+"/ListRoleAssignments", connect.NewUnaryHandler("/"+serviceName+"/ListRoleAssignments", handler.ListRoleAssignments, opts...))
+	mux.Handle("/"+serviceName+"/AssignRole", connect.NewUnaryHandler("/"+serviceName+"/AssignRole", handler.AssignRole, opts...))
+	mux.Handle("/"+serviceName+"/UnassignRole", connect.NewUnaryHandler("/"+serviceName+"/UnassignRole", handler.UnassignRole, opts...))
+	mux.Handle("/"+serviceName+"/SyncRolePermissions", connect.NewUnaryHandler("/"+serviceName+"/SyncRolePermissions", handler.SyncRolePermissions, opts...))
+	mux.Handle("/"+serviceName+"/DeleteRole", connect.NewUnaryHandler("/"+serviceName+"/DeleteRole", handler.DeleteRole, opts...))
 
 	return "/" + serviceName + "/", mux
 }

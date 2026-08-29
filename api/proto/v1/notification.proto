@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 message NotificationTemplate {
@@ -31,10 +33,10 @@ message WANotification {
 message ListNotificationTemplatesRequest { bool active_only = 1; }
 message ListNotificationTemplatesResponse { repeated NotificationTemplate templates = 1; }
 
-message GetNotificationTemplateRequest { string template_key = 1; }
+message GetNotificationTemplateRequest { string template_key = 1 [(buf.validate.field).string.min_len = 1]; }
 message GetNotificationTemplateResponse { NotificationTemplate template = 1; }
 
-message SaveNotificationTemplateRequest { NotificationTemplate template = 1; }
+message SaveNotificationTemplateRequest { NotificationTemplate template = 1 [(buf.validate.field).required = true]; }
 message SaveNotificationTemplateResponse { NotificationTemplate template = 1; }
 
 message ListNotificationsRequest {
@@ -50,19 +52,19 @@ message PendingCountResponse {
   int32 failed_recent = 2;
 }
 
-message MarkNotificationSentRequest { string id = 1; }
+message MarkNotificationSentRequest { string id = 1 [(buf.validate.field).string.min_len = 1]; }
 message MarkNotificationSentResponse {}
 
 message MarkNotificationFailedRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string error_message = 2;
 }
 message MarkNotificationFailedResponse {}
 
 // Util admin: kirim pesan uji langsung (bypass antrean).
 message TestSendRequest {
-  string phone = 1;
-  string content = 2;
+  string phone = 1 [(buf.validate.field).string.min_len = 1];
+  string content = 2 [(buf.validate.field).string.min_len = 1];
 }
 message TestSendResponse { bool sent = 1; }
 

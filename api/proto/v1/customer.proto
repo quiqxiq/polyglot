@@ -3,6 +3,7 @@ syntax = "proto3";
 package polyglot.v1;
 
 import "v1/billing.proto";
+import "buf/validate/validate.proto";
 
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
@@ -27,28 +28,28 @@ message Customer {
 message ListCustomersRequest {}
 message ListCustomersResponse { repeated Customer customers = 1; }
 
-message GetCustomerRequest { string id = 1; }
+message GetCustomerRequest { string id = 1 [(buf.validate.field).string.min_len = 1]; }
 message GetCustomerResponse { Customer customer = 1; }
 
-message CreateCustomerRequest { Customer customer = 1; }
+message CreateCustomerRequest { Customer customer = 1 [(buf.validate.field).required = true]; }
 message CreateCustomerResponse {
   Customer customer = 1;
   string message = 2;
 }
 
-message UpdateCustomerRequest { Customer customer = 1; }
+message UpdateCustomerRequest { Customer customer = 1 [(buf.validate.field).required = true]; }
 message UpdateCustomerResponse {
   Customer customer = 1;
   string message = 2;
 }
 
-message DeleteCustomerRequest { string id = 1; }
+message DeleteCustomerRequest { string id = 1 [(buf.validate.field).string.min_len = 1]; }
 message DeleteCustomerResponse { string message = 1; }
 
 // Pencarian cepat untuk kasir & portal.
-message FindCustomerByPhoneRequest { string phone = 1; }
-message FindCustomerByCodeRequest { string customer_code = 1; }
-message FindCustomerByPortalCodeRequest { string portal_access_code = 1; }
+message FindCustomerByPhoneRequest { string phone = 1 [(buf.validate.field).string.min_len = 1]; }
+message FindCustomerByCodeRequest { string customer_code = 1 [(buf.validate.field).string.min_len = 1]; }
+message FindCustomerByPortalCodeRequest { string portal_access_code = 1 [(buf.validate.field).string.min_len = 1]; }
 message FindCustomerResponse { Customer customer = 1; }
 
 service CustomerService {

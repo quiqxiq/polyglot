@@ -137,9 +137,6 @@ func (h *WhatsAppConnectHandler) GetPairingCode(ctx context.Context, req *connec
 	if err != nil || idUint == 0 {
 		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invalid session_id"))
 	}
-	if req.Msg.PhoneNumber == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("phone_number is required"))
-	}
 
 	if h.waGateway == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("whatsapp gateway not initialized"))

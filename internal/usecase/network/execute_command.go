@@ -2,18 +2,13 @@ package network
 
 import (
 	"context"
-	"errors"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-// ErrApprovalRequired indicates cmd was classified as destructive and needs
-// human approval (HITL) before ExecuteCommand may proceed.
-var ErrApprovalRequired = errors.New("execute_command: approval required")
-
-// ErrDenied indicates cmd was denied by policy outright.
-var ErrDenied = errors.New("execute_command: denied by policy")
+// Error sentinels (command.ErrApprovalRequired, command.ErrDenied) live in
+// internal/domain/command/errors.go per DEVELOPMENT-GUIDELINES.md §6.
 
 // ExecuteCommand runs cmd against a device via driver, after checking policy.
 // usecase/ never inspects vendor command syntax — it only asks driver to
@@ -42,9 +37,9 @@ func ExecuteCommand(ctx context.Context, driver port.DeviceDriver, cmd command.C
 	}
 	switch command.Decide(driver.Classify(cmd)) {
 	case command.DecisionDeny:
-		return command.Result{}, ErrDenied
+		return command.Result{}, command.ErrDenied
 	case command.DecisionRequireApproval:
-		return command.Result{}, ErrApprovalRequired
+		return command.Result{}, command.ErrApprovalRequired
 	}
 	return driver.Execute(ctx, cmd)
 }
@@ -60,7 +55,7 @@ func ExecuteCommand(ctx context.Context, driver port.DeviceDriver, cmd command.C
 // malicious client calls a denied tool, the server refuses.
 func ExecuteCommandPreApproved(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
 	if command.Decide(driver.Classify(cmd)) == command.DecisionDeny {
-		return command.Result{}, ErrDenied
+		return command.Result{}, command.ErrDenied
 	}
 	return driver.Execute(ctx, cmd)
 }

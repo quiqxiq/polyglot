@@ -32,7 +32,7 @@ func TestRunBilling_PeriodValidation(t *testing.T) {
 	usecase := uc.NewRunBillingUseCase(mocktest.NewFakeSubscriptionRepo(), mocktest.NewFakeServicePlanRepo(), mocktest.NewFakeInvoiceRepo())
 	for _, bad := range []string{"2026-13", "26-08", "abc", "", "2026-8"} {
 		_, err := usecase.Run(context.Background(), "tenant-default", bad)
-		assert.ErrorIs(t, err, uc.ErrValidation, "period %q harus ditolak", bad)
+		assert.ErrorIs(t, err, domainBilling.ErrInvalidInput, "period %q harus ditolak", bad)
 	}
 }
 

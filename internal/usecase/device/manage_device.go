@@ -2,7 +2,6 @@ package device
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -47,9 +46,8 @@ type DriverEvicter interface {
 	Evict(deviceID string) error
 }
 
-// ErrDiagnosticsUnconfigured indicates TestConnection was called without a
+// device.ErrDiagnosticsUnconfigured indicates TestConnection was called without a
 // port.DeviceDiagnostics gateway — inventory CRUD still works without it.
-var ErrDiagnosticsUnconfigured = errors.New("device: diagnostics gateway not configured")
 
 // ManageDeviceUseCase manages device inventory CRUD and live connectivity testing.
 type ManageDeviceUseCase struct {
@@ -61,7 +59,7 @@ type ManageDeviceUseCase struct {
 
 // NewManageDeviceUseCase constructs a new ManageDeviceUseCase. diag may be
 // nil when only inventory CRUD is needed; TestConnection then returns
-// ErrDiagnosticsUnconfigured instead of panicking.
+// device.ErrDiagnosticsUnconfigured instead of panicking.
 func NewManageDeviceUseCase(repo port.DeviceRepository, vault port.CredentialVault, evicter DriverEvicter, diag port.DeviceDiagnostics) *ManageDeviceUseCase {
 	return &ManageDeviceUseCase{
 		repo:    repo,
@@ -161,7 +159,7 @@ func (uc *ManageDeviceUseCase) TestConnection(
 	nameFilter string,
 ) (DeviceTestResult, error) {
 	if uc.diag == nil {
-		return DeviceTestResult{}, ErrDiagnosticsUnconfigured
+		return DeviceTestResult{}, device.ErrDiagnosticsUnconfigured
 	}
 	start := time.Now()
 

@@ -64,10 +64,6 @@ func (h *DeviceConnectHandler) ListDevices(ctx context.Context, req *connect.Req
 }
 
 func (h *DeviceConnectHandler) GetDevice(ctx context.Context, req *connect.Request[devicepb.GetDeviceRequest]) (*connect.Response[devicepb.GetDeviceResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device id is required"))
-	}
-
 	callerID, callerRoles, hasIdentity := iauth.IdentityFromContext(ctx)
 	if hasIdentity && !isOwnerRole(callerRoles) {
 		accessible, err := h.useCase.ListDevicesForUser(ctx, callerID, callerRoles)
@@ -104,10 +100,6 @@ func isOwnerRole(roles []string) bool {
 }
 
 func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Request[devicepb.UpdateDeviceRequest]) (*connect.Response[devicepb.UpdateDeviceResponse], error) {
-	if req.Msg.Device == nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device payload is required"))
-	}
-
 	d := PbToDomain(req.Msg.Device)
 	c := device.Credentials{
 		Username: req.Msg.Username,
@@ -147,10 +139,6 @@ func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Re
 }
 
 func (h *DeviceConnectHandler) DeleteDevice(ctx context.Context, req *connect.Request[devicepb.DeleteDeviceRequest]) (*connect.Response[devicepb.DeleteDeviceResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device id is required"))
-	}
-
 	if err := h.useCase.DeleteDevice(ctx, req.Msg.Id); err != nil {
 		return nil, response.MapDomainError(err)
 	}
@@ -161,10 +149,6 @@ func (h *DeviceConnectHandler) DeleteDevice(ctx context.Context, req *connect.Re
 }
 
 func (h *DeviceConnectHandler) TestDeviceConnection(ctx context.Context, req *connect.Request[devicepb.TestDeviceConnectionRequest]) (*connect.Response[devicepb.TestDeviceConnectionResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device id is required"))
-	}
-
 	var drv port.DeviceDriver
 	if h.driverGetter != nil {
 		d, err := h.driverGetter(ctx, req.Msg.Id)

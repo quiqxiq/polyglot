@@ -26,9 +26,9 @@ func ProfileParamsFromProto(p *devicepb.HotspotProfileParams) port.MikhmonProfil
 	}
 }
 
-// ToProtoHotspotProfile converts a single hotspot profile to proto, parsing
+// toProtoHotspotProfile converts a single hotspot profile to proto, parsing
 // the Mikhmon metadata out of the on-login script (mode/price/validity/locks).
-func ToProtoHotspotProfile(p port.HotspotUserProfile) *devicepb.HotspotProfile {
+func toProtoHotspotProfile(p port.HotspotUserProfile) *devicepb.HotspotProfile {
 	meta, _ := hotspot.ParseOnLoginScript(p.OnLogin)
 	return &devicepb.HotspotProfile{
 		Id:           p.RosID,
@@ -47,11 +47,11 @@ func ToProtoHotspotProfile(p port.HotspotUserProfile) *devicepb.HotspotProfile {
 	}
 }
 
-// ToProtoHotspotProfiles converts hotspot profile list to proto list.
-func ToProtoHotspotProfiles(profiles []port.HotspotUserProfile) []*devicepb.HotspotProfile {
+// toProtoHotspotProfiles converts hotspot profile list to proto list.
+func toProtoHotspotProfiles(profiles []port.HotspotUserProfile) []*devicepb.HotspotProfile {
 	pbProfiles := make([]*devicepb.HotspotProfile, len(profiles))
 	for i, p := range profiles {
-		pbProfiles[i] = ToProtoHotspotProfile(p)
+		pbProfiles[i] = toProtoHotspotProfile(p)
 	}
 	return pbProfiles
 }

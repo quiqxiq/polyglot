@@ -208,7 +208,7 @@ func TestUpdateSubscription_AppliesOnlyProvidedFields(t *testing.T) {
 func TestUpdateSubscription_NotFound(t *testing.T) {
 	fx := newManageFixture(t)
 	_, err := fx.usecase.Update(context.Background(), "missing", uc.UpdateInput{})
-	assert.ErrorIs(t, err, uc.ErrNotFoundBilling)
+	assert.ErrorIs(t, err, domainBilling.ErrNotFound)
 }
 
 // ─── Delete ─────────────────────────────────────────────────────────────
@@ -230,8 +230,8 @@ func TestDeleteSubscription_BlockedWhenInvoiced(t *testing.T) {
 
 	err = fx.usecase.Delete(ctx, sub.ID)
 	require.Error(t, err)
-	assert.ErrorContains(t, err, "masih memiliki tagihan")
-	assert.ErrorIs(t, err, uc.ErrValidation)
+	assert.ErrorContains(t, err, "still has invoices")
+	assert.ErrorIs(t, err, domainBilling.ErrInvalidInput)
 
 	// Sub masih ada.
 	_, ferr := fx.subs.FindByID(ctx, sub.ID)

@@ -2,7 +2,6 @@ package network
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strconv"
 	"time"
@@ -11,8 +10,6 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/ping"
 )
-
-var ErrDriverNotStreaming = errors.New("device driver does not support streaming")
 
 type PingStreamItem struct {
 	Seq           int32
@@ -28,7 +25,7 @@ type PingStreamItem struct {
 func StreamPing(ctx context.Context, driver port.DeviceDriver, host string, onResult func(item PingStreamItem) error) error {
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return ErrDriverNotStreaming
+		return command.ErrDriverNotStreaming
 	}
 
 	cmd := command.Command{

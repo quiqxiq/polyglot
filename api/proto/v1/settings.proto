@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 message SettingItem {
@@ -32,7 +34,7 @@ message GetAllSettingsResponse {
 }
 
 message GetSettingsByCategoryRequest {
-  string category = 1;
+  string category = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetSettingsByCategoryResponse {
@@ -40,7 +42,7 @@ message GetSettingsByCategoryResponse {
 }
 
 message UpdateSettingRequest {
-  string key = 1;
+  string key = 1 [(buf.validate.field).string.min_len = 1];
   string value = 2;
 }
 
@@ -49,7 +51,7 @@ message UpdateSettingResponse {
 }
 
 message BatchUpdateSettingsRequest {
-  repeated SettingItem settings = 1;
+  repeated SettingItem settings = 1 [(buf.validate.field).repeated.min_items = 1];
 }
 
 message BatchUpdateSettingsResponse {
@@ -63,7 +65,7 @@ message GetBotSettingsResponse {
 }
 
 message UpdateBotSettingsRequest {
-  BotSettings settings = 1;
+  BotSettings settings = 1 [(buf.validate.field).required = true];
 }
 
 message UpdateBotSettingsResponse {

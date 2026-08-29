@@ -445,33 +445,61 @@ fmt.Println("Error:", err)
 
 ## 6. Manajemen Error & Response Mapping
 
-1. **Domain Sentinel Error**: Didefinisikan di `internal/domain/<domain>/errors.go` dengan prefix nama domain (mis. `var ErrDeviceNotFound = errors.New("device: not found")`).
-2. **Use Case Error Wrapping**: Gunakan `fmt.Errorf("...: %w", err)` untuk mempertahankan context error asli.
-3. **Response Error Mapping**: Gunakan `pkg/response/errors.go` di layer adapter ConnectRPC untuk menerjemahkan error domain ke `connect.Code`.
+Arsitektur error terdiri dari tiga komponen: **`pkg/fault`** (kind), **sentinel domain**, dan **`pkg/response`** (mapping). Aturannya:
+
+1. **Domain Sentinel Error**: Didefinisikan di `internal/domain/<domain>/errors.go` dengan `fault.New`, prefix nama domain, dan pesan **bahasa Inggris** lowercase tanpa tanda baca akhir:
 
 ```go
-// pkg/response/errors.go
-package response
+// internal/domain/billing/errors.go
+package billing
 
-import (
-	"errors"
-	"connectrpc.com/connect"
-	"github.com/quixiq/polyglot/internal/domain/device"
-)
+import "github.com/quixiq/polyglot/pkg/fault"
 
+var ErrNotFound = fault.New(fault.KindNotFound, "billing: not found")
+```
+
+2. **Use Case Error Wrapping**: Gunakan `fmt.Errorf("...: %w", err)` untuk mempertahankan sentinel dan kind-nya di dalam chain. Untuk error tanpa sentinel yang tetap butuh klasifikasi, gunakan `fault.Wrap(fault.KindUnavailable, err)`. Jangan mendeklarasikan sentinel di package `usecase` atau `port`.
+
+3. **Response Error Mapping**: Gunakan `response.MapDomainError(err)` di layer adapter ConnectRPC. Fungsi ini membaca `fault.KindOf(err)` — **tanpa mengimpor package internal apa pun** — sehingga error domain baru tidak pernah memerlukan perubahan pada `pkg/response`.
+
+```go
+// pkg/response/errors.go (ringkas)
 func MapDomainError(err error) error {
 	if err == nil {
 		return nil
 	}
-	if errors.Is(err, device.ErrNotFound) {
+	var connErr *connect.Error
+	if errors.As(err, &connErr) {
+		return connErr
+	}
+	switch fault.KindOf(err) {
+	case fault.KindNotFound:
 		return connect.NewError(connect.CodeNotFound, err)
+	case fault.KindInvalidInput:
+		return connect.NewError(connect.CodeInvalidArgument, err)
+	// ... lihat tabel lengkap di pkg/response/errors.go
+	default:
+		return connect.NewError(connect.CodeInternal, err)
 	}
-	if errors.Is(err, device.ErrUnauthorized) {
-		return connect.NewError(connect.CodeUnauthenticated, err)
-	}
-	return connect.NewError(connect.CodeInternal, err)
 }
 ```
+
+4. **Handler tidak boleh mengklasifikasi error**: dilarang menulis `errors.Is(err, someUC.ErrX)` di `internal/adapter/connect/` untuk menentukan `connect.Code`. Kind pada sentinel domain sudah membawa klasifikasinya; handler cukup `return nil, response.MapDomainError(err)`.
+
+Tabel kind → code:
+
+| fault.Kind | connect.Code |
+|---|---|
+| KindNotFound | CodeNotFound |
+| KindInvalidInput | CodeInvalidArgument |
+| KindAlreadyExists | CodeAlreadyExists |
+| KindPermissionDenied | CodePermissionDenied |
+| KindUnauthenticated | CodeUnauthenticated |
+| KindFailedPrecondition | CodeFailedPrecondition |
+| KindConflict | CodeAborted |
+| KindUnavailable | CodeUnavailable |
+| KindResourceExhausted | CodeResourceExhausted |
+| KindUnknown / tanpa kind | CodeInternal |
 
 ---
 

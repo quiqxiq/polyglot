@@ -13,7 +13,6 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
-	"github.com/quixiq/polyglot/internal/port"
 )
 
 func TestPortalRepository_OTPLifecycle(t *testing.T) {
@@ -44,7 +43,7 @@ func TestPortalRepository_OTPLifecycle(t *testing.T) {
 
 	// Sudah dipakai → not found.
 	_, err = repo.ConsumeOTP(ctx, "0812", hash, 5)
-	assert.ErrorIs(t, err, port.ErrOTPNotFound)
+	assert.ErrorIs(t, err, domainCustomer.ErrOTPNotFound)
 }
 
 func TestPortalRepository_OTPLocked(t *testing.T) {
@@ -66,7 +65,7 @@ func TestPortalRepository_OTPLocked(t *testing.T) {
 	}
 	// Percobaan ke-5 salah → terkunci.
 	_, err := repo.ConsumeOTP(ctx, "0813", "wrong", 5)
-	assert.ErrorIs(t, err, port.ErrOTPLocked)
+	assert.ErrorIs(t, err, domainCustomer.ErrOTPLocked)
 }
 
 func TestNotificationRetry_PendingLimit_AndAttempts(t *testing.T) {

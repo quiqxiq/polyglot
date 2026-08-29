@@ -240,14 +240,14 @@ func TestPaymentProcessor_HappyPath_AllFourArtifacts(t *testing.T) {
 	_, err = proc.ProcessCashPayment(ctx, port.CashPaymentCommand{
 		InvoiceID: "inv-pay", Amount: 1000, CashAccountID: "ca-1", IncomeCategoryID: "cc-1",
 	})
-	assert.ErrorIs(t, err, port.ErrInvoiceAlreadyPaid)
+	assert.ErrorIs(t, err, domainBilling.ErrInvoiceAlreadyPaid)
 
 	// Guard overpayment pada invoice lain.
 	_, err = proc.ProcessCashPayment(ctx, port.CashPaymentCommand{
 		TenantID: "tenant-default", InvoiceID: "inv-partial", Amount: 500000,
 		CashAccountID: "ca-1", IncomeCategoryID: "cc-1",
 	})
-	assert.ErrorIs(t, err, port.ErrOverpayment)
+	assert.ErrorIs(t, err, domainBilling.ErrOverpayment)
 }
 
 func TestCashbookRepository_Filters_And_Balance(t *testing.T) {

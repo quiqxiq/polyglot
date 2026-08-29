@@ -40,9 +40,6 @@ func (h *CashbookConnectHandler) SaveAccount(ctx context.Context, req *connect.R
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
 	}
 	pb := req.Msg.Account
-	if pb == nil || pb.Name == "" || pb.AccountCode == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("account_code and name are required"))
-	}
 	id := pb.Id
 	if id == "" {
 		id = idgen.New("ca")
@@ -80,9 +77,6 @@ func (h *CashbookConnectHandler) SaveCategory(ctx context.Context, req *connect.
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
 	}
 	pb := req.Msg.Category
-	if pb == nil || pb.Name == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("category name is required"))
-	}
 	id := pb.Id
 	if id == "" {
 		id = idgen.New("cc")
@@ -105,9 +99,6 @@ func (h *CashbookConnectHandler) SaveCategory(ctx context.Context, req *connect.
 func (h *CashbookConnectHandler) AddTransaction(ctx context.Context, req *connect.Request[devicepb.AddTransactionRequest]) (*connect.Response[devicepb.AddTransactionResponse], error) {
 	if h.repo == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
-	}
-	if req.Msg.AccountId == "" || req.Msg.CategoryId == "" || req.Msg.Amount <= 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("account_id, category_id and amount > 0 are required"))
 	}
 	now := time.Now()
 	dir := req.Msg.Direction

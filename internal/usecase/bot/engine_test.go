@@ -71,7 +71,7 @@ func TestEngineEscalationMode(t *testing.T) {
 	prov := &fakeProvider{reply: "balasan"}
 	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
 	convRepo := newFakeConvRepo()
-	svc := convUC.NewConversationService(convRepo)
+	svc := convUC.NewConversationUseCase(convRepo)
 
 	conv, err := svc.GetOrCreateConversation(context.Background(), 1, "628123456789")
 	if err != nil {
@@ -136,7 +136,7 @@ func TestEngineGetConversationContext(t *testing.T) {
 	prov := &fakeProvider{reply: "oke"}
 	llmRepo := &fakeLLMConfigRepo{active: &llm.Config{ID: 1}}
 	convRepo := newFakeConvRepo()
-	svc := convUC.NewConversationService(convRepo)
+	svc := convUC.NewConversationUseCase(convRepo)
 
 	conv, err := svc.GetOrCreateConversation(context.Background(), 1, "628123456789")
 	if err != nil {
@@ -338,7 +338,7 @@ func TestEngineSkillsInjection(t *testing.T) {
 		},
 	}
 
-	svc := convUC.NewConversationService(convRepo)
+	svc := convUC.NewConversationUseCase(convRepo)
 	e := NewEngine(
 		cache,
 		gw,
@@ -390,7 +390,7 @@ func TestEngineSkillsMode_Tools_LazyLoad(t *testing.T) {
 		},
 	}
 
-	svc := convUC.NewConversationService(convRepo)
+	svc := convUC.NewConversationUseCase(convRepo)
 	e := NewEngine(
 		cache,
 		gw,
@@ -531,12 +531,12 @@ func TestBotBuiltinTools_NotifyTechnician(t *testing.T) {
 				IsActive:       true,
 			},
 			{
-				ID:             3,
-				Username:       "admin_user",
-				FullName:       "Admin Sistem",
-				PhoneNumber:    "6289999999999",
-				Role:           "admin",
-				IsActive:       true,
+				ID:          3,
+				Username:    "admin_user",
+				FullName:    "Admin Sistem",
+				PhoneNumber: "6289999999999",
+				Role:        "admin",
+				IsActive:    true,
 			},
 		},
 	}
@@ -570,4 +570,3 @@ func TestBotBuiltinTools_NotifyTechnician(t *testing.T) {
 	assert.Contains(t, gw.sent[0], "Jl. Mawar No. 12 RT 02/03 Sukajadi")
 	assert.Contains(t, gw.sent[0], "Kabel Fiber Putus")
 }
-

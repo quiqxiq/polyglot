@@ -305,4 +305,3 @@ func (r *RateLimiter) GetRateLimitStatus(ctx context.Context, customerNumber str
 		IsWhitelisted:   false,
 	}, nil
 }
-

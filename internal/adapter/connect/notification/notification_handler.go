@@ -37,9 +37,6 @@ func (h *NotificationConnectHandler) ListTemplates(ctx context.Context, req *con
 }
 
 func (h *NotificationConnectHandler) GetTemplate(ctx context.Context, req *connect.Request[devicepb.GetNotificationTemplateRequest]) (*connect.Response[devicepb.GetNotificationTemplateResponse], error) {
-	if req.Msg.TemplateKey == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("template_key is required"))
-	}
 	if h.repo == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("notification repository unavailable"))
 	}
@@ -57,9 +54,6 @@ func (h *NotificationConnectHandler) SaveTemplate(ctx context.Context, req *conn
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("notification repository unavailable"))
 	}
 	pb := req.Msg.Template
-	if pb == nil || pb.TemplateKey == "" || pb.Content == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("template_key and content are required"))
-	}
 	id := pb.Id
 	if id == "" {
 		id = idgen.New("nt")
@@ -110,9 +104,6 @@ func (h *NotificationConnectHandler) PendingCount(ctx context.Context, _ *connec
 }
 
 func (h *NotificationConnectHandler) MarkNotificationSent(ctx context.Context, req *connect.Request[devicepb.MarkNotificationSentRequest]) (*connect.Response[devicepb.MarkNotificationSentResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("id is required"))
-	}
 	if err := h.repo.MarkSent(ctx, req.Msg.Id, time.Now()); err != nil {
 		return nil, response.MapDomainError(err)
 	}
@@ -120,9 +111,6 @@ func (h *NotificationConnectHandler) MarkNotificationSent(ctx context.Context, r
 }
 
 func (h *NotificationConnectHandler) MarkNotificationFailed(ctx context.Context, req *connect.Request[devicepb.MarkNotificationFailedRequest]) (*connect.Response[devicepb.MarkNotificationFailedResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("id is required"))
-	}
 	if err := h.repo.MarkFailed(ctx, req.Msg.Id, req.Msg.ErrorMessage); err != nil {
 		return nil, response.MapDomainError(err)
 	}
@@ -132,9 +120,6 @@ func (h *NotificationConnectHandler) MarkNotificationFailed(ctx context.Context,
 func (h *NotificationConnectHandler) TestSend(ctx context.Context, req *connect.Request[devicepb.TestSendRequest]) (*connect.Response[devicepb.TestSendResponse], error) {
 	if h.sender == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("notification sender unavailable"))
-	}
-	if req.Msg.Phone == "" || req.Msg.Content == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("phone and content are required"))
 	}
 	if err := h.sender.Send(ctx, req.Msg.Phone, req.Msg.Content); err != nil {
 		return nil, response.MapDomainError(err)

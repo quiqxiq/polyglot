@@ -20,13 +20,13 @@ func NewIspAdminServiceHandler(
 ) (string, http.Handler) {
 	handler := NewIspAdminConnectHandler(upsert, routerSrc, reconciler, exporter, resolver)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
+	opts := iconnect.DefaultHandlerOptions()
 
 	serviceName := "polyglot.v1.IspAdminService"
-	mux.Handle("/"+serviceName+"/ImportFile", connect.NewUnaryHandler("/"+serviceName+"/ImportFile", handler.ImportFile, codecOpt))
-	mux.Handle("/"+serviceName+"/ImportRouter", connect.NewUnaryHandler("/"+serviceName+"/ImportRouter", handler.ImportRouter, codecOpt))
-	mux.Handle("/"+serviceName+"/ExportCustomers", connect.NewUnaryHandler("/"+serviceName+"/ExportCustomers", handler.ExportCustomers, codecOpt))
-	mux.Handle("/"+serviceName+"/Reconcile", connect.NewUnaryHandler("/"+serviceName+"/Reconcile", handler.Reconcile, codecOpt))
+	mux.Handle("/"+serviceName+"/ImportFile", connect.NewUnaryHandler("/"+serviceName+"/ImportFile", handler.ImportFile, opts...))
+	mux.Handle("/"+serviceName+"/ImportRouter", connect.NewUnaryHandler("/"+serviceName+"/ImportRouter", handler.ImportRouter, opts...))
+	mux.Handle("/"+serviceName+"/ExportCustomers", connect.NewUnaryHandler("/"+serviceName+"/ExportCustomers", handler.ExportCustomers, opts...))
+	mux.Handle("/"+serviceName+"/Reconcile", connect.NewUnaryHandler("/"+serviceName+"/Reconcile", handler.Reconcile, opts...))
 
 	return "/" + serviceName + "/", mux
 }

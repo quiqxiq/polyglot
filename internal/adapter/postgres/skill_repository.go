@@ -13,11 +13,21 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-var _ port.SkillRepository = (*Store)(nil)
+// SkillRepository implements port.SkillRepository for GORM/Postgres.
+type SkillRepository struct {
+	db *gorm.DB
+}
 
-func (s *Store) ListSkills(ctx context.Context, userID string) ([]skill.SkillMetadataRecord, error) {
+var _ port.SkillRepository = (*SkillRepository)(nil)
+
+// NewSkillRepository creates a new SkillRepository.
+func NewSkillRepository(db *gorm.DB) *SkillRepository {
+	return &SkillRepository{db: db}
+}
+
+func (r *SkillRepository) ListSkills(ctx context.Context, userID string) ([]skill.SkillMetadataRecord, error) {
 	var models []model.SkillMetadataModel
-	q := s.db.WithContext(ctx).Order("name ASC")
+	q := r.db.WithContext(ctx).Order("name ASC")
 	if userID != "" {
 		q = q.Where("user_id = ?", userID)
 	}
@@ -34,9 +44,9 @@ func (s *Store) ListSkills(ctx context.Context, userID string) ([]skill.SkillMet
 	return result, nil
 }
 
-func (s *Store) GetSkill(ctx context.Context, userID, name string) (*skill.SkillMetadataRecord, error) {
+func (r *SkillRepository) GetSkill(ctx context.Context, userID, name string) (*skill.SkillMetadataRecord, error) {
 	var m model.SkillMetadataModel
-	q := s.db.WithContext(ctx).Where("name = ?", name)
+	q := r.db.WithContext(ctx).Where("name = ?", name)
 	if userID != "" {
 		q = q.Where("user_id = ?", userID)
 	}
@@ -49,7 +59,7 @@ func (s *Store) GetSkill(ctx context.Context, userID, name string) (*skill.Skill
 	return m.ToDomain(), nil
 }
 
-func (s *Store) SaveSkillMetadata(ctx context.Context, rec *skill.SkillMetadataRecord) error {
+func (r *SkillRepository) SaveSkillMetadata(ctx context.Context, rec *skill.SkillMetadataRecord) error {
 	if rec == nil {
 		return errors.New("skill metadata record cannot be nil")
 	}
@@ -67,7 +77,7 @@ func (s *Store) SaveSkillMetadata(ctx context.Context, rec *skill.SkillMetadataR
 	}
 
 	var existing model.SkillMetadataModel
-	q := s.db.WithContext(ctx).Where("name = ?", rec.Name)
+	q := r.db.WithContext(ctx).Where("name = ?", rec.Name)
 	if rec.UserID != "" {
 		q = q.Where("user_id = ?", rec.UserID)
 	}
@@ -76,24 +86,24 @@ func (s *Store) SaveSkillMetadata(ctx context.Context, rec *skill.SkillMetadataR
 		rec.ID = existing.ID
 		rec.CreatedAt = existing.CreatedAt
 		m := model.SkillMetadataModelFromDomain(rec)
-		return s.db.WithContext(ctx).Model(&existing).Updates(m).Error
+		return r.db.WithContext(ctx).Model(&existing).Updates(m).Error
 	}
 
 	m := model.SkillMetadataModelFromDomain(rec)
-	return s.db.WithContext(ctx).Create(m).Error
+	return r.db.WithContext(ctx).Create(m).Error
 }
 
-func (s *Store) DeleteSkillMetadata(ctx context.Context, userID, name string) error {
-	q := s.db.WithContext(ctx).Where("name = ?", name)
+func (r *SkillRepository) DeleteSkillMetadata(ctx context.Context, userID, name string) error {
+	q := r.db.WithContext(ctx).Where("name = ?", name)
 	if userID != "" {
 		q = q.Where("user_id = ?", userID)
 	}
 	return q.Delete(&model.SkillMetadataModel{}).Error
 }
 
-func (s *Store) ListGitSkills(ctx context.Context) ([]skill.SkillMetadataRecord, error) {
+func (r *SkillRepository) ListGitSkills(ctx context.Context) ([]skill.SkillMetadataRecord, error) {
 	var models []model.SkillMetadataModel
-	if err := s.db.WithContext(ctx).Where("source_type = ? AND enabled = true", "git").Order("name ASC").Find(&models).Error; err != nil {
+	if err := r.db.WithContext(ctx).Where("source_type = ? AND enabled = true", "git").Order("name ASC").Find(&models).Error; err != nil {
 		return nil, err
 	}
 	result := make([]skill.SkillMetadataRecord, 0, len(models))
@@ -105,8 +115,8 @@ func (s *Store) ListGitSkills(ctx context.Context) ([]skill.SkillMetadataRecord,
 	return result, nil
 }
 
-func (s *Store) ToggleSkillEnabled(ctx context.Context, userID, name string, enabled bool) error {
-	q := s.db.WithContext(ctx).Model(&model.SkillMetadataModel{}).Where("name = ?", name)
+func (r *SkillRepository) ToggleSkillEnabled(ctx context.Context, userID, name string, enabled bool) error {
+	q := r.db.WithContext(ctx).Model(&model.SkillMetadataModel{}).Where("name = ?", name)
 	if userID != "" {
 		q = q.Where("user_id = ?", userID)
 	}
@@ -120,9 +130,9 @@ func (s *Store) ToggleSkillEnabled(ctx context.Context, userID, name string, ena
 	return nil
 }
 
-func (s *Store) GetGlobalSystemPrompt(ctx context.Context) (string, error) {
+func (r *SkillRepository) GetGlobalSystemPrompt(ctx context.Context) (string, error) {
 	var m model.GlobalPromptModel
-	if err := s.db.WithContext(ctx).Where("key = ?", "default").First(&m).Error; err != nil {
+	if err := r.db.WithContext(ctx).Where("key = ?", "default").First(&m).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return "", nil
 		}
@@ -131,20 +141,54 @@ func (s *Store) GetGlobalSystemPrompt(ctx context.Context) (string, error) {
 	return m.Content, nil
 }
 
-func (s *Store) SaveGlobalSystemPrompt(ctx context.Context, content string) error {
+func (r *SkillRepository) SaveGlobalSystemPrompt(ctx context.Context, content string) error {
 	var m model.GlobalPromptModel
-	err := s.db.WithContext(ctx).Where("key = ?", "default").First(&m).Error
+	err := r.db.WithContext(ctx).Where("key = ?", "default").First(&m).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			m = model.GlobalPromptModel{
 				Key:     "default",
 				Content: content,
 			}
-			return s.db.WithContext(ctx).Create(&m).Error
+			return r.db.WithContext(ctx).Create(&m).Error
 		}
 		return err
 	}
 
 	m.Content = content
-	return s.db.WithContext(ctx).Save(&m).Error
+	return r.db.WithContext(ctx).Save(&m).Error
+}
+
+// ─── Backward compatibility delegations on Store ──────────────────────────────
+
+func (s *Store) ListSkills(ctx context.Context, userID string) ([]skill.SkillMetadataRecord, error) {
+	return NewSkillRepository(s.db).ListSkills(ctx, userID)
+}
+
+func (s *Store) GetSkill(ctx context.Context, userID, name string) (*skill.SkillMetadataRecord, error) {
+	return NewSkillRepository(s.db).GetSkill(ctx, userID, name)
+}
+
+func (s *Store) SaveSkillMetadata(ctx context.Context, rec *skill.SkillMetadataRecord) error {
+	return NewSkillRepository(s.db).SaveSkillMetadata(ctx, rec)
+}
+
+func (s *Store) DeleteSkillMetadata(ctx context.Context, userID, name string) error {
+	return NewSkillRepository(s.db).DeleteSkillMetadata(ctx, userID, name)
+}
+
+func (s *Store) ListGitSkills(ctx context.Context) ([]skill.SkillMetadataRecord, error) {
+	return NewSkillRepository(s.db).ListGitSkills(ctx)
+}
+
+func (s *Store) ToggleSkillEnabled(ctx context.Context, userID, name string, enabled bool) error {
+	return NewSkillRepository(s.db).ToggleSkillEnabled(ctx, userID, name, enabled)
+}
+
+func (s *Store) GetGlobalSystemPrompt(ctx context.Context) (string, error) {
+	return NewSkillRepository(s.db).GetGlobalSystemPrompt(ctx)
+}
+
+func (s *Store) SaveGlobalSystemPrompt(ctx context.Context, content string) error {
+	return NewSkillRepository(s.db).SaveGlobalSystemPrompt(ctx, content)
 }

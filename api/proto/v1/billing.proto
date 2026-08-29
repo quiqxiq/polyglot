@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 // ─── Pesan inti billing ─────────────────────────────────────────────────
@@ -60,12 +62,11 @@ message Subscription {
   string notes = 19;
 }
 
-
 // ─── CRUD Langganan ─────────────────────────────────────────────────────
 
 message CreateSubscriptionRequest {
-  string customer_id = 1;
-  string plan_id = 2;
+  string customer_id = 1 [(buf.validate.field).string.min_len = 1];
+  string plan_id = 2 [(buf.validate.field).string.min_len = 1];
   string device_id = 3;       // kosong = belum ditugaskan (provision PENDING)
   string service_type = 4;    // PPPOE | HOTSPOT | DEDICATED (default dari plan)
   string remote_username = 5; // kosong = auto-generate
@@ -78,7 +79,7 @@ message CreateSubscriptionRequest {
 message CreateSubscriptionResponse { Subscription subscription = 1; }
 
 message UpdateSubscriptionRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string remote_username = 2;
   string remote_password = 3; // kosong = tidak diubah
   double custom_price = 4;
@@ -89,7 +90,9 @@ message UpdateSubscriptionRequest {
 }
 message UpdateSubscriptionResponse { Subscription subscription = 1; }
 
-message DeleteSubscriptionRequest { string id = 1; }
+message DeleteSubscriptionRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
 message DeleteSubscriptionResponse { string message = 1; }
 
 message Plan {
@@ -129,7 +132,9 @@ message ListInvoicesRequest {
 }
 message ListInvoicesResponse { repeated Invoice invoices = 1; }
 
-message GetInvoiceRequest { string id = 1; }
+message GetInvoiceRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
 message GetInvoiceResponse { Invoice invoice = 1; }
 
 // ─── Kasir: resolve & bayar cepat ───────────────────────────────────────
@@ -141,7 +146,7 @@ enum ResolveMethod {
 }
 
 message CashierResolveRequest {
-  string identifier = 1;
+  string identifier = 1 [(buf.validate.field).string.min_len = 1];
   ResolveMethod method = 2;
 }
 message CashierResolveResponse {
@@ -152,10 +157,10 @@ message CashierResolveResponse {
 }
 
 message CashierPayRequest {
-  string invoice_id = 1;
-  double amount = 2;
-  string cash_account_id = 3;
-  string income_category_id = 4;
+  string invoice_id = 1 [(buf.validate.field).string.min_len = 1];
+  double amount = 2 [(buf.validate.field).double.gt = 0];
+  string cash_account_id = 3 [(buf.validate.field).string.min_len = 1];
+  string income_category_id = 4 [(buf.validate.field).string.min_len = 1];
   string scan_method = 5;    // QR_SCAN | CODE_INPUT | MANUAL | PAYMENT_GATEWAY
   string reference = 6;
   string notes = 7;
@@ -173,32 +178,36 @@ message ListSubscriptionsRequest {
 }
 message ListSubscriptionsResponse { repeated Subscription subscriptions = 1; }
 
-message GetSubscriptionRequest { string id = 1; }
+message GetSubscriptionRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
 message GetSubscriptionResponse { Subscription subscription = 1; }
 
 message ChangePlanRequest {
-  string subscription_id = 1;
-  string new_plan_id = 2;
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
+  string new_plan_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 message ChangePlanResponse { Subscription subscription = 1; }
 
 message SuspendSubscriptionRequest {
-  string subscription_id = 1;
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
   string reason = 2;
 }
 message SuspendSubscriptionResponse { Subscription subscription = 1; }
 
-message ResumeSubscriptionRequest { string subscription_id = 1; }
+message ResumeSubscriptionRequest {
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
+}
 message ResumeSubscriptionResponse { Subscription subscription = 1; }
 
 message TerminateSubscriptionRequest {
-  string subscription_id = 1;
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
   string reason = 2;
 }
 message TerminateSubscriptionResponse { Subscription subscription = 1; }
 
 message ActivateSubscriptionRequest {
-  string subscription_id = 1;
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
   string device_id = 2;
 }
 message ActivateSubscriptionResponse { Subscription subscription = 1; }
@@ -208,16 +217,24 @@ message ActivateSubscriptionResponse { Subscription subscription = 1; }
 message ListPlansRequest { bool active_only = 1; }
 message ListPlansResponse { repeated Plan plans = 1; }
 
-message GetPlanRequest { string id = 1; }
+message GetPlanRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
 message GetPlanResponse { Plan plan = 1; }
 
-message CreatePlanRequest { Plan plan = 1; }
+message CreatePlanRequest {
+  Plan plan = 1 [(buf.validate.field).required = true];
+}
 message CreatePlanResponse { Plan plan = 1; }
 
-message UpdatePlanRequest { Plan plan = 1; }
+message UpdatePlanRequest {
+  Plan plan = 1 [(buf.validate.field).required = true];
+}
 message UpdatePlanResponse { Plan plan = 1; }
 
-message DeletePlanRequest { string id = 1; }
+message DeletePlanRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
 message DeletePlanResponse { string message = 1; }
 
 // ─── Generator tagihan bulanan ──────────────────────────────────────────

@@ -31,7 +31,7 @@ func (h *HotspotConnectHandler) ListReports(ctx context.Context, req *connect.Re
 		Total:       int32(len(records)),
 	}
 	if !req.Msg.SummaryOnly {
-		resp.Reports = ToProtoHotspotReports(records)
+		resp.Reports = toProtoHotspotReports(records)
 	}
 	return connect.NewResponse(resp), nil
 }

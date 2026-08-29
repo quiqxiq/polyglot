@@ -2,11 +2,11 @@ package device
 
 import (
 	"context"
-	"fmt"
-	"github.com/quixiq/polyglot/pkg/logger"
 	"io"
 	"net/http"
 	"time"
+
+	"github.com/quixiq/polyglot/pkg/logger"
 
 	"connectrpc.com/connect"
 
@@ -21,10 +21,6 @@ func NewProbeConnectHandler() *ProbeConnectHandler {
 }
 
 func (h *ProbeConnectHandler) ReportStatus(ctx context.Context, req *connect.Request[devicepb.ProbeStatusRequest]) (*connect.Response[devicepb.ProbeStatusResponse], error) {
-	if req.Msg.ProbeId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("probe_id is required"))
-	}
-
 	logger.WithComponent("ProbeServer").Infof("Received heartbeat from Probe %s (Version: %s, Uptime: %ds)", req.Msg.ProbeId, req.Msg.Version, req.Msg.UptimeSeconds)
 
 	return connect.NewResponse(&devicepb.ProbeStatusResponse{
@@ -51,18 +47,18 @@ func (h *ProbeConnectHandler) StreamTelemetry(ctx context.Context, stream *conne
 func NewProbeServiceHandler() (string, http.Handler) {
 	handler := NewProbeConnectHandler()
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
+	opts := iconnect.DefaultHandlerOptions()
 
 	serviceName := "polyglot.v1.ProbeService"
 	mux.Handle("/"+serviceName+"/ReportStatus", connect.NewUnaryHandler(
 		"/"+serviceName+"/ReportStatus",
 		handler.ReportStatus,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/StreamTelemetry", connect.NewBidiStreamHandler(
 		"/"+serviceName+"/StreamTelemetry",
 		handler.StreamTelemetry,
-		codecOpt,
+		opts...,
 	))
 
 	return "/" + serviceName + "/", mux

@@ -2,7 +2,6 @@ package bot
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strconv"
 	"time"
@@ -10,7 +9,6 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	chatUC "github.com/quixiq/polyglot/internal/usecase/chat"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
@@ -76,9 +74,6 @@ func (h *WhatsAppConnectHandler) GetChatMessages(ctx context.Context, req *conne
 
 	msgs, err := h.chatService.GetChatMessages(ctx, sessionID, req.Msg.ChatJid, int(req.Msg.Limit), int(req.Msg.Offset))
 	if err != nil {
-		if errors.Is(err, chatUC.ErrEmptyChatJID) {
-			return nil, connect.NewError(connect.CodeInvalidArgument, err)
-		}
 		return nil, response.MapDomainError(err)
 	}
 
@@ -116,9 +111,6 @@ func (h *WhatsAppConnectHandler) ToggleChatBot(ctx context.Context, req *connect
 	}
 
 	if err := h.chatService.ToggleChatBot(ctx, sessionID, req.Msg.ChatJid, req.Msg.IsActive); err != nil {
-		if errors.Is(err, chatUC.ErrEmptyChatJID) {
-			return nil, connect.NewError(connect.CodeInvalidArgument, err)
-		}
 		return nil, response.MapDomainError(err)
 	}
 
@@ -139,9 +131,6 @@ func (h *WhatsAppConnectHandler) MarkChatRead(ctx context.Context, req *connect.
 	}
 
 	if err := h.chatService.MarkRead(ctx, sessionID, req.Msg.ChatJid); err != nil {
-		if errors.Is(err, chatUC.ErrEmptyChatJID) {
-			return nil, connect.NewError(connect.CodeInvalidArgument, err)
-		}
 		return nil, response.MapDomainError(err)
 	}
 

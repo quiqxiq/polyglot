@@ -38,7 +38,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 
 	initialItems := make([]*devicepb.PPPActiveSession, 0, len(activeMap))
 	for _, s := range activeMap {
-		initialItems = append(initialItems, ToProtoPPPActiveSession(s))
+		initialItems = append(initialItems, toProtoPPPActiveSession(s))
 	}
 
 	// Immediately send an initial frame
@@ -119,7 +119,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 
 			items := make([]*devicepb.PPPActiveSession, 0, len(activeMap))
 			for _, s := range activeMap {
-				items = append(items, ToProtoPPPActiveSession(s))
+				items = append(items, toProtoPPPActiveSession(s))
 			}
 			sort.Slice(items, func(i, j int) bool {
 				return items[i].Name < items[j].Name
@@ -176,7 +176,7 @@ func (h *PPPConnectHandler) StreamActiveStats(ctx context.Context, req *connect.
 			if err := stream.Send(&devicepb.PPPActiveStatsFrame{
 				DeviceId:      req.Msg.DeviceId,
 				TimestampUnix: time.Now().Unix(),
-				Stats:         ToProtoPPPActiveStats(stats),
+				Stats:         toProtoPPPActiveStats(stats),
 			}); err != nil {
 				return err
 			}
@@ -199,7 +199,7 @@ func (h *PPPConnectHandler) StreamInactiveSecrets(ctx context.Context, req *conn
 		return stream.Send(&devicepb.PPPInactiveSecretsFrame{
 			DeviceId:      req.Msg.DeviceId,
 			TimestampUnix: time.Now().Unix(),
-			Secrets:       ToProtoPPPSecrets(inactive),
+			Secrets:       toProtoPPPSecrets(inactive),
 		})
 	}
 

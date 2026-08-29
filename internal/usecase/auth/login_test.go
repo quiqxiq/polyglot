@@ -39,7 +39,7 @@ func (m *mockUserRepo) FindByID(ctx context.Context, id uint) (*customer.User, e
 	if u, ok := m.users[id]; ok {
 		return u, nil
 	}
-	return nil, authUC.ErrUserNotFound
+	return nil, customer.ErrUserNotFound
 }
 
 func (m *mockUserRepo) FindByUsername(ctx context.Context, username string) (*customer.User, error) {
@@ -48,7 +48,7 @@ func (m *mockUserRepo) FindByUsername(ctx context.Context, username string) (*cu
 			return u, nil
 		}
 	}
-	return nil, authUC.ErrUserNotFound
+	return nil, customer.ErrUserNotFound
 }
 
 func (m *mockUserRepo) FindByEmail(ctx context.Context, email string) (*customer.User, error) {
@@ -87,7 +87,7 @@ func (m *mockUserRepo) UpdateStatus(ctx context.Context, id uint, isActive bool)
 		u.IsActive = isActive
 		return nil
 	}
-	return authUC.ErrUserNotFound
+	return customer.ErrUserNotFound
 }
 
 func (m *mockUserRepo) UpdatePassword(ctx context.Context, id uint, hash string) error {
@@ -95,7 +95,7 @@ func (m *mockUserRepo) UpdatePassword(ctx context.Context, id uint, hash string)
 		u.PasswordHash = hash
 		return nil
 	}
-	return authUC.ErrUserNotFound
+	return customer.ErrUserNotFound
 }
 
 func (m *mockUserRepo) SetActive(ctx context.Context, id uint, active bool) error {
@@ -124,7 +124,7 @@ func (m *mockUserRepo) AssignDevices(ctx context.Context, userID uint, deviceIDs
 		u.AssignedDeviceIDs = deviceIDs
 		return nil
 	}
-	return authUC.ErrUserNotFound
+	return customer.ErrUserNotFound
 }
 
 func (m *mockUserRepo) GetAssignedDeviceIDs(ctx context.Context, userID uint) ([]string, error) {

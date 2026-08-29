@@ -65,14 +65,14 @@ func (u *ConvertUseCase) Convert(ctx context.Context, regID, actorID string) (do
 func (u *ConvertUseCase) ConvertWithDevice(ctx context.Context, regID, deviceID, actorID string) (domainRegistration.Registration, error) {
 	reg, err := u.deps.Repo.FindByID(ctx, regID)
 	if err != nil {
-		return domainRegistration.Registration{}, ErrNotFound
+		return domainRegistration.Registration{}, domainRegistration.ErrNotFound
 	}
 	if reg.Status != domainRegistration.StatusInstalled {
 		return domainRegistration.Registration{}, fmt.Errorf("%w: want %s, got %s",
-			ErrInvalidTransition, domainRegistration.StatusInstalled, reg.Status)
+			domainRegistration.ErrInvalidTransition, domainRegistration.StatusInstalled, reg.Status)
 	}
 	if reg.CustomerID != "" {
-		return domainRegistration.Registration{}, fmt.Errorf("%w: already converted (%s)", ErrInvalidTransition, reg.CustomerID)
+		return domainRegistration.Registration{}, fmt.Errorf("%w: already converted (%s)", domainRegistration.ErrInvalidTransition, reg.CustomerID)
 	}
 
 	pl, err := u.deps.Plans.FindByID(ctx, reg.PlanID)

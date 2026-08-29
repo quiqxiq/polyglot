@@ -15,7 +15,7 @@ import (
 type schedulerJobs struct {
 	billing  *billingUC.RunBillingUseCase
 	isolate  *billingUC.IsolateWorker
-	waSend   *notificationUC.WaSenderWorker
+	waSend   *notificationUC.WASenderWorker
 	snapshot func(ctx context.Context) error
 }
 

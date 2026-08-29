@@ -2,17 +2,16 @@ package auth
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
+	"github.com/quixiq/polyglot/internal/domain/customer"
+	"github.com/quixiq/polyglot/internal/domain/session"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
 
-var (
-	ErrRefreshTokenRequired = errors.New("refresh token is required")
-	ErrInvalidRefreshToken  = errors.New("invalid or expired refresh token")
-)
+// Error sentinels live in the domain layer (internal/domain/session,
+// internal/domain/customer) per DEVELOPMENT-GUIDELINES.md §6.
 
 type RefreshResult struct {
 	AccessToken  string
@@ -47,22 +46,22 @@ func NewRefreshTokenUseCase(
 
 func (u *RefreshTokenUseCase) Refresh(ctx context.Context, currentRefreshToken string) (*RefreshResult, error) {
 	if u.refreshMgr == nil {
-		return nil, errors.New("refresh token service not available")
+		return nil, session.ErrRefreshUnavailable
 	}
 	if currentRefreshToken == "" {
-		return nil, ErrRefreshTokenRequired
+		return nil, session.ErrRefreshTokenRequired
 	}
 
 	newRefreshToken, userID, _, _, err := u.refreshMgr.RotateToken(ctx, currentRefreshToken)
 	if err != nil {
 		logger.WithComponent("RefreshTokenUseCase").WithError(err).Warn("refresh token rotation failed")
-		return nil, ErrInvalidRefreshToken
+		return nil, session.ErrInvalidRefreshToken
 	}
 
 	user, err := u.userRepo.FindByID(ctx, userID)
 	if err != nil || !user.IsActive {
 		_ = u.refreshMgr.RevokeToken(ctx, newRefreshToken)
-		return nil, ErrUserNotFound
+		return nil, customer.ErrUserNotFound
 	}
 
 	var userRoles []string

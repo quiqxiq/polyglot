@@ -52,7 +52,7 @@ func (u *RunBillingUseCase) WithSettings(r port.SettingReader) *RunBillingUseCas
 // Run creates invoices for the given 'YYYY-MM' period.
 func (u *RunBillingUseCase) Run(ctx context.Context, tenantID, period string) (BillingRunResult, error) {
 	if !periodRe.MatchString(period) {
-		return BillingRunResult{}, fmt.Errorf("%w: period must be YYYY-MM", ErrValidation)
+		return BillingRunResult{}, fmt.Errorf("%w: period must be YYYY-MM", domainBilling.ErrInvalidInput)
 	}
 	active, err := u.subs.ListActive(ctx)
 	if err != nil {

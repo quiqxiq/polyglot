@@ -1,19 +1,11 @@
 package port
 
-// HotspotUserProfile represents one row returned by
-// /ip/hotspot/user/profile/print.
-type HotspotUserProfile struct {
-	RosID          string
-	Name           string
-	RateLimit      string
-	SessionTimeout string
-	IdleTimeout    string
-	SharedUsers    string
-	ParentQueue    string
-	AddressPool    string
-	Comment        string
-	OnLogin        string
-}
+import (
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
+)
+
+// HotspotUserProfile alias to domain model.
+type HotspotUserProfile = domainHotspot.HotspotUserProfile
 
 // ExpireMode defines how expired vouchers are handled by Mikhmon's expire monitor script.
 type ExpireMode string

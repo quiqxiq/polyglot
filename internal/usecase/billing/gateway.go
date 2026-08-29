@@ -42,21 +42,21 @@ func NewGatewayChargeUseCase(
 // CreateForInvoice membuat transaksi online untuk satu invoice UNPAID.
 func (u *GatewayChargeUseCase) CreateForInvoice(ctx context.Context, invoiceID, channel string, expireMinutes int) (port.ChargeResult, domainBilling.GatewayTransaction, error) {
 	if !u.gateway.Enabled(ctx) {
-		return port.ChargeResult{}, domainBilling.GatewayTransaction{}, port.ErrGatewayDisabled
+		return port.ChargeResult{}, domainBilling.GatewayTransaction{}, domainBilling.ErrGatewayDisabled
 	}
 	inv, err := u.invoices.FindByID(ctx, invoiceID)
 	if err != nil {
-		return port.ChargeResult{}, domainBilling.GatewayTransaction{}, ErrNotFoundBilling
+		return port.ChargeResult{}, domainBilling.GatewayTransaction{}, domainBilling.ErrNotFound
 	}
 	switch inv.Status {
 	case domainBilling.StatusPaid:
-		return port.ChargeResult{}, domainBilling.GatewayTransaction{}, port.ErrInvoiceAlreadyPaid
+		return port.ChargeResult{}, domainBilling.GatewayTransaction{}, domainBilling.ErrInvoiceAlreadyPaid
 	case domainBilling.StatusCancelled:
-		return port.ChargeResult{}, domainBilling.GatewayTransaction{}, port.ErrInvoiceCancelled
+		return port.ChargeResult{}, domainBilling.GatewayTransaction{}, domainBilling.ErrInvoiceCancelled
 	}
 	outstanding := inv.Total - inv.PaidAmount
 	if outstanding <= 0 {
-		return port.ChargeResult{}, domainBilling.GatewayTransaction{}, port.ErrInvoiceAlreadyPaid
+		return port.ChargeResult{}, domainBilling.GatewayTransaction{}, domainBilling.ErrInvoiceAlreadyPaid
 	}
 	cust, err := u.customs.FindByID(ctx, inv.CustomerID)
 	if err != nil {
@@ -97,7 +97,7 @@ func (u *GatewayChargeUseCase) HandleWebhook(ctx context.Context, body []byte, s
 	}
 	tx, err := u.gwt.FindByExternalID(ctx, u.gateway.Name(), ev.ExternalID)
 	if err != nil {
-		return "", false, fmt.Errorf("%w: %s/%s", port.ErrGatewayUnknownRef, u.gateway.Name(), ev.ExternalID)
+		return "", false, fmt.Errorf("%w: %s/%s", domainBilling.ErrGatewayUnknownRef, u.gateway.Name(), ev.ExternalID)
 	}
 	tx.RawCallback = json.RawMessage(ev.Raw)
 	tx.UpdatedAt = time.Now()
@@ -105,7 +105,7 @@ func (u *GatewayChargeUseCase) HandleWebhook(ctx context.Context, body []byte, s
 	switch ev.Status {
 	case domainBilling.GatewayStatusSettled:
 		if tx.InvoiceID == nil {
-			return "", false, fmt.Errorf("transaksi %s tanpa invoice", tx.ID)
+			return "", false, fmt.Errorf("%w: %s", domainBilling.ErrGatewayTxMissingInvoice, tx.ID)
 		}
 		pay, perr := u.processor.ProcessCashPayment(ctx, port.CashPaymentCommand{
 			TenantID:         tx.TenantID,
@@ -116,7 +116,7 @@ func (u *GatewayChargeUseCase) HandleWebhook(ctx context.Context, body []byte, s
 			ScanMethod:       domainBilling.ScanPaymentGateway,
 			Reference:        tx.ExternalID,
 		})
-		if perr != nil && !errors.Is(perr, port.ErrInvoiceAlreadyPaid) {
+		if perr != nil && !errors.Is(perr, domainBilling.ErrInvoiceAlreadyPaid) {
 			return "", false, perr
 		}
 		if perr == nil {

@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -40,22 +39,9 @@ func NewAuthConnectHandler(
 }
 
 func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[devicepb.LoginRequest]) (*connect.Response[devicepb.LoginResponse], error) {
-	if req.Msg.Username == "" || req.Msg.Password == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("username and password are required"))
-	}
-
 	clientIP := clientIPFromRequest(req)
 	res, err := h.authUC.Login(ctx, req.Msg.Username, req.Msg.Password, clientIP)
 	if err != nil {
-		if errors.Is(err, authUC.ErrTooManyAttempts) {
-			return nil, connect.NewError(connect.CodeResourceExhausted, err)
-		}
-		if errors.Is(err, authUC.ErrInvalidCredentials) {
-			return nil, connect.NewError(connect.CodeUnauthenticated, err)
-		}
-		if errors.Is(err, authUC.ErrAccountInactive) {
-			return nil, connect.NewError(connect.CodePermissionDenied, err)
-		}
 		return nil, response.MapDomainError(err)
 	}
 
@@ -138,10 +124,6 @@ func (h *AuthConnectHandler) UpdateMe(ctx context.Context, req *connect.Request[
 }
 
 func (h *AuthConnectHandler) ChangePassword(ctx context.Context, req *connect.Request[devicepb.ChangePasswordRequest]) (*connect.Response[devicepb.ChangePasswordResponse], error) {
-	if req.Msg.OldPassword == "" || req.Msg.NewPassword == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("old_password and new_password are required"))
-	}
-
 	authHeader := req.Header().Get("Authorization")
 	if authHeader == "" {
 		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("authorization header missing"))
@@ -180,9 +162,6 @@ func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Requ
 
 	res, err := h.refreshUC.Refresh(ctx, rawToken)
 	if err != nil {
-		if errors.Is(err, authUC.ErrInvalidRefreshToken) {
-			return nil, connect.NewError(connect.CodeUnauthenticated, err)
-		}
 		return nil, response.MapDomainError(err)
 	}
 

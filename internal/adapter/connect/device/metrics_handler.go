@@ -2,7 +2,6 @@ package device
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"connectrpc.com/connect"
@@ -18,10 +17,6 @@ func (h *DeviceConnectHandler) GetDevicePingConfig(
 	ctx context.Context,
 	req *connect.Request[devicepb.GetDevicePingConfigRequest],
 ) (*connect.Response[devicepb.GetDevicePingConfigResponse], error) {
-	if req.Msg.DeviceId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device_id is required"))
-	}
-
 	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
 	cfg, timescaleAvailable, err := h.metricsUC.GetPingConfig(ctx, req.Msg.DeviceId, callerID, callerRoles)
 	if err != nil {
@@ -44,13 +39,6 @@ func (h *DeviceConnectHandler) UpdateDevicePingConfig(
 	ctx context.Context,
 	req *connect.Request[devicepb.UpdateDevicePingConfigRequest],
 ) (*connect.Response[devicepb.UpdateDevicePingConfigResponse], error) {
-	if req.Msg.DeviceId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device_id is required"))
-	}
-	if req.Msg.Config == nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("config payload is required"))
-	}
-
 	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
 	cfg := device.DevicePingConfig{
 		Enabled:       req.Msg.Config.Enabled,
@@ -79,10 +67,6 @@ func (h *DeviceConnectHandler) QueryDevicePingMetrics(
 	ctx context.Context,
 	req *connect.Request[devicepb.QueryDevicePingMetricsRequest],
 ) (*connect.Response[devicepb.QueryDevicePingMetricsResponse], error) {
-	if req.Msg.DeviceId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device_id is required"))
-	}
-
 	var startTime, endTime time.Time
 	if req.Msg.StartTime != "" {
 		if t, err := time.Parse(time.RFC3339, req.Msg.StartTime); err == nil {
@@ -122,19 +106,19 @@ func (h *DeviceConnectHandler) QueryDevicePingMetrics(
 		}
 
 		pbPoints[i] = &devicepb.PingMetricPointData{
-			Timestamp:     p.RecordedAt.Format(time.RFC3339),
-			Target:        p.Target,
-			Seq:           int32(p.Seq),
-			Size:          int32(p.Size),
-			Ttl:           int32(p.TTL),
-			RttMs:         p.RTTMS,
-			Status:        p.Status,
-			Sent:          int32(p.Sent),
-			Received:      int32(p.Received),
-			PacketLoss:    int32(p.PacketLoss),
-			MinRttMs:      minRTT,
-			AvgRttMs:      avgRTT,
-			MaxRttMs:      maxRTT,
+			Timestamp:  p.RecordedAt.Format(time.RFC3339),
+			Target:     p.Target,
+			Seq:        int32(p.Seq),
+			Size:       int32(p.Size),
+			Ttl:        int32(p.TTL),
+			RttMs:      p.RTTMS,
+			Status:     p.Status,
+			Sent:       int32(p.Sent),
+			Received:   int32(p.Received),
+			PacketLoss: int32(p.PacketLoss),
+			MinRttMs:   minRTT,
+			AvgRttMs:   avgRTT,
+			MaxRttMs:   maxRTT,
 		}
 	}
 

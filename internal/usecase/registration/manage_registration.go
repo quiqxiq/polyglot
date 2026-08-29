@@ -2,7 +2,6 @@ package registration
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"regexp"
 	"strings"
@@ -16,12 +15,8 @@ import (
 	"github.com/quixiq/polyglot/pkg/logger"
 )
 
-// Kesalahan alur pendaftaran.
-var (
-	ErrInvalidTransition = errors.New("invalid registration status transition")
-	ErrNotFound          = errors.New("registration not found")
-	ErrValidation        = errors.New("validation failed")
-)
+// Error sentinels untuk alur pendaftaran tinggal di
+// internal/domain/registration/errors.go per DEVELOPMENT-GUIDELINES.md §6.
 
 var phoneRe = regexp.MustCompile(`^(\+?62|0)8\d{7,12}$`)
 
@@ -47,13 +42,13 @@ func NewManageRegistrationUseCase(
 // Submit validates and stores a new signup (ringkas tanpa NIK/KTP).
 func (u *ManageRegistrationUseCase) Submit(ctx context.Context, reg domainRegistration.Registration) (domainRegistration.Registration, error) {
 	if strings.TrimSpace(reg.FullName) == "" || strings.TrimSpace(reg.Address) == "" {
-		return domainRegistration.Registration{}, fmt.Errorf("%w: full_name and address are required", ErrValidation)
+		return domainRegistration.Registration{}, fmt.Errorf("%w: full_name and address are required", domainRegistration.ErrInvalidInput)
 	}
 	if !phoneRe.MatchString(reg.Phone) {
-		return domainRegistration.Registration{}, fmt.Errorf("%w: phone must be an Indonesian mobile number", ErrValidation)
+		return domainRegistration.Registration{}, fmt.Errorf("%w: phone must be an Indonesian mobile number", domainRegistration.ErrInvalidInput)
 	}
 	if reg.PlanID == "" {
-		return domainRegistration.Registration{}, fmt.Errorf("%w: plan_id is required", ErrValidation)
+		return domainRegistration.Registration{}, fmt.Errorf("%w: plan_id is required", domainRegistration.ErrInvalidInput)
 	}
 
 	now := u.now()
@@ -100,7 +95,7 @@ func (u *ManageRegistrationUseCase) ScheduleInstall(ctx context.Context, id stri
 		return domainRegistration.Registration{}, err
 	}
 	if date.IsZero() {
-		return domainRegistration.Registration{}, fmt.Errorf("%w: install date is required", ErrValidation)
+		return domainRegistration.Registration{}, fmt.Errorf("%w: install date is required", domainRegistration.ErrInvalidInput)
 	}
 	reg.ScheduledInstallDate = &date
 	reg.ScheduledInstallTime = installTime
@@ -161,11 +156,11 @@ func (u *ManageRegistrationUseCase) Reject(ctx context.Context, id, reason strin
 func (u *ManageRegistrationUseCase) Cancel(ctx context.Context, id, reason string) (domainRegistration.Registration, error) {
 	reg, err := u.repo.FindByID(ctx, id)
 	if err != nil {
-		return domainRegistration.Registration{}, ErrNotFound
+		return domainRegistration.Registration{}, domainRegistration.ErrNotFound
 	}
 	switch reg.Status {
 	case domainRegistration.StatusActive, domainRegistration.StatusCancelled, domainRegistration.StatusRejected:
-		return domainRegistration.Registration{}, fmt.Errorf("%w: cannot cancel from %s", ErrInvalidTransition, reg.Status)
+		return domainRegistration.Registration{}, fmt.Errorf("%w: cannot cancel from %s", domainRegistration.ErrInvalidTransition, reg.Status)
 	}
 	now := u.now()
 	reg.Status = domainRegistration.StatusCancelled
@@ -181,10 +176,10 @@ func (u *ManageRegistrationUseCase) Cancel(ctx context.Context, id, reason strin
 func (u *ManageRegistrationUseCase) mustGet(ctx context.Context, id, wantStatus string) (domainRegistration.Registration, error) {
 	reg, err := u.repo.FindByID(ctx, id)
 	if err != nil {
-		return domainRegistration.Registration{}, ErrNotFound
+		return domainRegistration.Registration{}, domainRegistration.ErrNotFound
 	}
 	if reg.Status != wantStatus {
-		return domainRegistration.Registration{}, fmt.Errorf("%w: want %s, got %s", ErrInvalidTransition, wantStatus, reg.Status)
+		return domainRegistration.Registration{}, fmt.Errorf("%w: want %s, got %s", domainRegistration.ErrInvalidTransition, wantStatus, reg.Status)
 	}
 	return reg, nil
 }

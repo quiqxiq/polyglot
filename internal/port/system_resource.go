@@ -1,24 +1,8 @@
 package port
 
-// SystemResource holds the parsed data from /system/resource/print.
-// It is the vendor-neutral representation of a router's system resource
-// snapshot, produced by the mikrotik driver and consumed by usecases.
-type SystemResource struct {
-	CPULoad       int
-	CPUCount      int
-	CPUFrequency  string // MHz
-	FreeMemory    string // bytes
-	TotalMemory   string // bytes
-	FreeHDDSpace  string // bytes
-	TotalHDDSpace string // bytes
-	Architecture  string
-	Model         string
-	SerialNumber  string
-	FirmwareType  string
-	Voltage       string // millivolts, may be empty
-	Temperature   string // Celsius, may be empty
-	BadBlocks     string
-	Uptime        string
-	Version       string
-	BoardName     string
-}
+import (
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+)
+
+// SystemResource alias to domain device model.
+type SystemResource = domainDevice.SystemResource

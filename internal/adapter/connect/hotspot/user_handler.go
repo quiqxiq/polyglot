@@ -19,15 +19,12 @@ func (h *HotspotConnectHandler) GetUser(ctx context.Context, req *connect.Reques
 	if err != nil {
 		return nil, err
 	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id required"))
-	}
 
 	user, err := h.useCase.GetUser(ctx, driver, req.Msg.RosId)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.GetHotspotUserResponse{User: ToProtoHotspotUser(user)}), nil
+	return connect.NewResponse(&devicepb.GetHotspotUserResponse{User: toProtoHotspotUser(user)}), nil
 }
 
 // CreateUser adds a single hotspot user, auto-prefixing the comment with
@@ -36,9 +33,6 @@ func (h *HotspotConnectHandler) CreateUser(ctx context.Context, req *connect.Req
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.Name == "" || req.Msg.Profile == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("name and profile are required"))
 	}
 
 	comment := hotspot.BuildCreateUserComment(req.Msg.Name, req.Msg.Password, req.Msg.Comment, time.Now())
@@ -58,7 +52,7 @@ func (h *HotspotConnectHandler) CreateUser(ctx context.Context, req *connect.Req
 	}
 
 	return connect.NewResponse(&devicepb.CreateHotspotUserResponse{
-		User:    ToProtoHotspotUser(users[0]),
+		User:    toProtoHotspotUser(users[0]),
 		Message: fmt.Sprintf("user %q created", req.Msg.Name),
 	}), nil
 }
@@ -70,9 +64,6 @@ func (h *HotspotConnectHandler) UpdateUser(ctx context.Context, req *connect.Req
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id required"))
 	}
 
 	if req.Msg.ResetCounter {
@@ -94,7 +85,7 @@ func (h *HotspotConnectHandler) UpdateUser(ctx context.Context, req *connect.Req
 	}
 
 	return connect.NewResponse(&devicepb.UpdateHotspotUserResponse{
-		User:    ToProtoHotspotUser(user),
+		User:    toProtoHotspotUser(user),
 		Message: fmt.Sprintf("user %q updated", user.Name),
 	}), nil
 }
@@ -104,9 +95,6 @@ func (h *HotspotConnectHandler) ResetUserCounters(ctx context.Context, req *conn
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id required"))
 	}
 
 	res, err := h.useCase.ResetUserCounters(ctx, driver, req.Msg.RosId)
@@ -124,9 +112,6 @@ func (h *HotspotConnectHandler) DeleteUser(ctx context.Context, req *connect.Req
 	if err != nil {
 		return nil, err
 	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id required"))
-	}
 
 	res, err := h.useCase.RemoveUser(ctx, driver, req.Msg.RosId)
 	if err != nil {
@@ -142,9 +127,6 @@ func (h *HotspotConnectHandler) DeleteHotspotUsers(ctx context.Context, req *con
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.Mode == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("mode is required (profile, comment, or expired)"))
 	}
 
 	count, err := h.useCase.DeleteUsersByFilter(ctx, driver, req.Msg.Mode, req.Msg.Value)
@@ -163,9 +145,6 @@ func (h *HotspotConnectHandler) CheckVoucherStatus(ctx context.Context, req *con
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.Username == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("username is required"))
 	}
 
 	details, err := h.useCase.CheckVoucherStatus(ctx, driver, req.Msg.Username)
@@ -186,13 +165,13 @@ func (h *HotspotConnectHandler) CheckVoucherStatus(ctx context.Context, req *con
 	}
 
 	if details.User != nil {
-		resp.User = ToProtoHotspotUser(*details.User)
+		resp.User = toProtoHotspotUser(*details.User)
 	}
 	if details.Profile != nil {
-		resp.Profile = ToProtoHotspotProfile(*details.Profile)
+		resp.Profile = toProtoHotspotProfile(*details.Profile)
 	}
 	if details.ActiveSession != nil {
-		resp.ActiveSession = ToProtoHotspotActiveSession(*details.ActiveSession)
+		resp.ActiveSession = toProtoHotspotActiveSession(*details.ActiveSession)
 	}
 	if details.Cookie != nil {
 		resp.Cookie = &devicepb.HotspotCookie{

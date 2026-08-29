@@ -57,25 +57,17 @@ WEB_GEN_OUT := web/src/gen
 
 proto:
 	mkdir -p $(PROTO_OUT)
-	protoc \
-		--proto_path=$(PROTO_ROOT) \
-		--go_out=$(PROTO_OUT) --go_opt=paths=source_relative \
-		--go-grpc_out=$(PROTO_OUT) --go-grpc_opt=paths=source_relative \
-		$(PROTO_FILES)
+	buf dep update
+	buf generate
 
 proto-web:
 	mkdir -p $(WEB_GEN_OUT)
-	protoc \
-		--proto_path=$(PROTO_ROOT) \
-		--plugin=protoc-gen-es=web/node_modules/.bin/protoc-gen-es \
-		--es_out=$(WEB_GEN_OUT) --es_opt=target=ts \
-		--plugin=protoc-gen-connect-es=web/node_modules/.bin/protoc-gen-connect-es \
-		--connect-es_out=$(WEB_GEN_OUT) --connect-es_opt=target=ts \
-		$(PROTO_FILES)
+	buf generate --template buf.gen.yaml
 
 proto-tools:
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+	go install github.com/bufbuild/buf/cmd/buf@latest
 
 proto-clean:
 	rm -rf $(PROTO_OUT) $(WEB_GEN_OUT)

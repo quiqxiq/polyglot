@@ -48,7 +48,7 @@ func TestRequestOTP_SendsViaWA_MaskedPhone(t *testing.T) {
 func TestRequestOTP_UnknownIdentifier_GenericError(t *testing.T) {
 	usecase, _, _, sender := fixture(t, "085606846141")
 	_, err := usecase.RequestOTP(context.Background(), "089900000000")
-	assert.ErrorIs(t, err, uc.ErrInvalidCredentials)
+	assert.ErrorIs(t, err, domainCustomer.ErrPortalBadCredentials)
 	assert.Empty(t, sender.Messages)
 }
 
@@ -99,7 +99,7 @@ func TestLogin_FullFlow_AndWrongOTP(t *testing.T) {
 
 	require.NoError(t, usecase.Logout(ctx, token))
 	_, err = usecase.Authenticate(ctx, token)
-	assert.ErrorIs(t, err, uc.ErrInvalidCredentials)
+	assert.ErrorIs(t, err, domainCustomer.ErrPortalBadCredentials)
 
 	// OTP salah pada permintaan baru → login gagal.
 	_, err = usecase.RequestOTP(ctx, "085606846141")

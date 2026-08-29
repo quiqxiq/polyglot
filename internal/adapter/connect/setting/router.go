@@ -13,15 +13,15 @@ import (
 func NewSettingServiceHandler(uc *settingUC.ManageSettingUseCase) (string, http.Handler) {
 	handler := NewSettingConnectHandler(uc)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
+	opts := iconnect.DefaultHandlerOptions()
 
 	serviceName := "polyglot.v1.SettingService"
-	mux.Handle("/"+serviceName+"/GetAllSettings", connect.NewUnaryHandler("/"+serviceName+"/GetAllSettings", handler.GetAllSettings, codecOpt))
-	mux.Handle("/"+serviceName+"/GetSettingsByCategory", connect.NewUnaryHandler("/"+serviceName+"/GetSettingsByCategory", handler.GetSettingsByCategory, codecOpt))
-	mux.Handle("/"+serviceName+"/UpdateSetting", connect.NewUnaryHandler("/"+serviceName+"/UpdateSetting", handler.UpdateSetting, codecOpt))
-	mux.Handle("/"+serviceName+"/BatchUpdateSettings", connect.NewUnaryHandler("/"+serviceName+"/BatchUpdateSettings", handler.BatchUpdateSettings, codecOpt))
-	mux.Handle("/"+serviceName+"/GetBotSettings", connect.NewUnaryHandler("/"+serviceName+"/GetBotSettings", handler.GetBotSettings, codecOpt))
-	mux.Handle("/"+serviceName+"/UpdateBotSettings", connect.NewUnaryHandler("/"+serviceName+"/UpdateBotSettings", handler.UpdateBotSettings, codecOpt))
+	mux.Handle("/"+serviceName+"/GetAllSettings", connect.NewUnaryHandler("/"+serviceName+"/GetAllSettings", handler.GetAllSettings, opts...))
+	mux.Handle("/"+serviceName+"/GetSettingsByCategory", connect.NewUnaryHandler("/"+serviceName+"/GetSettingsByCategory", handler.GetSettingsByCategory, opts...))
+	mux.Handle("/"+serviceName+"/UpdateSetting", connect.NewUnaryHandler("/"+serviceName+"/UpdateSetting", handler.UpdateSetting, opts...))
+	mux.Handle("/"+serviceName+"/BatchUpdateSettings", connect.NewUnaryHandler("/"+serviceName+"/BatchUpdateSettings", handler.BatchUpdateSettings, opts...))
+	mux.Handle("/"+serviceName+"/GetBotSettings", connect.NewUnaryHandler("/"+serviceName+"/GetBotSettings", handler.GetBotSettings, opts...))
+	mux.Handle("/"+serviceName+"/UpdateBotSettings", connect.NewUnaryHandler("/"+serviceName+"/UpdateBotSettings", handler.UpdateBotSettings, opts...))
 
 	return "/" + serviceName + "/", mux
 }

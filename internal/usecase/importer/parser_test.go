@@ -82,7 +82,7 @@ func TestCSXXLSX_RoundTrip(t *testing.T) {
 
 func TestParseCSV_BadHeader(t *testing.T) {
 	_, err := importer.ParseCSV(strings.NewReader("kolom_asal,kolom_ngasal\n1,2\n"))
-	assert.ErrorContains(t, err, "header tidak dikenali")
+	assert.ErrorContains(t, err, "unrecognized header")
 }
 
 func TestParseCSV_EmptyFile(t *testing.T) {

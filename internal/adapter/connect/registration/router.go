@@ -19,17 +19,17 @@ func NewRegistrationServiceHandler(
 ) (string, http.Handler) {
 	handler := NewRegistrationConnectHandler(managerUC, convertUC, repo)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
+	opts := iconnect.DefaultHandlerOptions()
 
 	serviceName := "polyglot.v1.RegistrationService"
-	mux.Handle("/"+serviceName+"/ListRegistrations", connect.NewUnaryHandler("/"+serviceName+"/ListRegistrations", handler.ListRegistrations, codecOpt))
-	mux.Handle("/"+serviceName+"/GetRegistration", connect.NewUnaryHandler("/"+serviceName+"/GetRegistration", handler.GetRegistration, codecOpt))
-	mux.Handle("/"+serviceName+"/ApproveRegistration", connect.NewUnaryHandler("/"+serviceName+"/ApproveRegistration", handler.ApproveRegistration, codecOpt))
-	mux.Handle("/"+serviceName+"/ScheduleInstall", connect.NewUnaryHandler("/"+serviceName+"/ScheduleInstall", handler.ScheduleInstall, codecOpt))
-	mux.Handle("/"+serviceName+"/MarkInstalled", connect.NewUnaryHandler("/"+serviceName+"/MarkInstalled", handler.MarkInstalled, codecOpt))
-	mux.Handle("/"+serviceName+"/RejectRegistration", connect.NewUnaryHandler("/"+serviceName+"/RejectRegistration", handler.RejectRegistration, codecOpt))
-	mux.Handle("/"+serviceName+"/CancelRegistration", connect.NewUnaryHandler("/"+serviceName+"/CancelRegistration", handler.CancelRegistration, codecOpt))
-	mux.Handle("/"+serviceName+"/ConvertRegistration", connect.NewUnaryHandler("/"+serviceName+"/ConvertRegistration", handler.ConvertRegistration, codecOpt))
+	mux.Handle("/"+serviceName+"/ListRegistrations", connect.NewUnaryHandler("/"+serviceName+"/ListRegistrations", handler.ListRegistrations, opts...))
+	mux.Handle("/"+serviceName+"/GetRegistration", connect.NewUnaryHandler("/"+serviceName+"/GetRegistration", handler.GetRegistration, opts...))
+	mux.Handle("/"+serviceName+"/ApproveRegistration", connect.NewUnaryHandler("/"+serviceName+"/ApproveRegistration", handler.ApproveRegistration, opts...))
+	mux.Handle("/"+serviceName+"/ScheduleInstall", connect.NewUnaryHandler("/"+serviceName+"/ScheduleInstall", handler.ScheduleInstall, opts...))
+	mux.Handle("/"+serviceName+"/MarkInstalled", connect.NewUnaryHandler("/"+serviceName+"/MarkInstalled", handler.MarkInstalled, opts...))
+	mux.Handle("/"+serviceName+"/RejectRegistration", connect.NewUnaryHandler("/"+serviceName+"/RejectRegistration", handler.RejectRegistration, opts...))
+	mux.Handle("/"+serviceName+"/CancelRegistration", connect.NewUnaryHandler("/"+serviceName+"/CancelRegistration", handler.CancelRegistration, opts...))
+	mux.Handle("/"+serviceName+"/ConvertRegistration", connect.NewUnaryHandler("/"+serviceName+"/ConvertRegistration", handler.ConvertRegistration, opts...))
 
 	return "/" + serviceName + "/", mux
 }
@@ -39,11 +39,11 @@ func NewRegistrationServiceHandler(
 func NewPublicSubmitHandler(managerUC *uc.ManageRegistrationUseCase) (string, http.Handler) {
 	handler := NewRegistrationConnectHandler(managerUC, nil, nil)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
+	opts := iconnect.DefaultHandlerOptions()
 
 	serviceName := "polyglot.v1.RegistrationService"
 	mux.Handle("/"+serviceName+"/SubmitRegistration", connect.NewUnaryHandler(
-		"/"+serviceName+"/SubmitRegistration", handler.SubmitRegistration, codecOpt))
+		"/"+serviceName+"/SubmitRegistration", handler.SubmitRegistration, opts...))
 
 	return "/" + serviceName + "/SubmitRegistration", mux
 }

@@ -3,8 +3,9 @@ package billing
 import (
 	"context"
 	"fmt"
-	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	"time"
+
+	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 
 	"connectrpc.com/connect"
 
@@ -70,9 +71,6 @@ func (h *BillingConnectHandler) ListInvoices(ctx context.Context, req *connect.R
 }
 
 func (h *BillingConnectHandler) GetInvoice(ctx context.Context, req *connect.Request[devicepb.GetInvoiceRequest]) (*connect.Response[devicepb.GetInvoiceResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invoice id is required"))
-	}
 	if h.invoiceUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("invoice usecase unavailable"))
 	}
@@ -92,9 +90,6 @@ func (h *BillingConnectHandler) CashierResolve(ctx context.Context, req *connect
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("checkout usecase unavailable"))
 	}
 	ident := req.Msg.Identifier
-	if ident == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("identifier is required"))
-	}
 
 	var inv domainBillingInvoiceAlias
 	var err error
@@ -117,9 +112,6 @@ func (h *BillingConnectHandler) CashierResolve(ctx context.Context, req *connect
 func (h *BillingConnectHandler) CashierPay(ctx context.Context, req *connect.Request[devicepb.CashierPayRequest]) (*connect.Response[devicepb.CashierPayResponse], error) {
 	if h.checkoutUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("checkout usecase unavailable"))
-	}
-	if req.Msg.InvoiceId == "" || req.Msg.Amount <= 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("invoice_id and amount > 0 are required"))
 	}
 	scanMethod := req.Msg.ScanMethod
 	if scanMethod == "" {
@@ -172,9 +164,6 @@ func (h *BillingConnectHandler) ListSubscriptions(ctx context.Context, req *conn
 }
 
 func (h *BillingConnectHandler) GetSubscription(ctx context.Context, req *connect.Request[devicepb.GetSubscriptionRequest]) (*connect.Response[devicepb.GetSubscriptionResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("subscription id is required"))
-	}
 	if h.subUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription usecase unavailable"))
 	}
@@ -322,9 +311,6 @@ func (h *BillingConnectHandler) UpdateSubscription(ctx context.Context, req *con
 }
 
 func (h *BillingConnectHandler) DeleteSubscription(ctx context.Context, req *connect.Request[devicepb.DeleteSubscriptionRequest]) (*connect.Response[devicepb.DeleteSubscriptionResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("subscription id is required"))
-	}
 	if h.manageSubUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription manager usecase unavailable"))
 	}
@@ -352,9 +338,6 @@ func (h *BillingConnectHandler) ListPlans(ctx context.Context, req *connect.Requ
 }
 
 func (h *BillingConnectHandler) GetPlan(ctx context.Context, req *connect.Request[devicepb.GetPlanRequest]) (*connect.Response[devicepb.GetPlanResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("plan id is required"))
-	}
 	if h.planUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("plan usecase unavailable"))
 	}
@@ -396,9 +379,6 @@ func (h *BillingConnectHandler) UpdatePlan(ctx context.Context, req *connect.Req
 }
 
 func (h *BillingConnectHandler) DeletePlan(ctx context.Context, req *connect.Request[devicepb.DeletePlanRequest]) (*connect.Response[devicepb.DeletePlanResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("plan id is required"))
-	}
 	if h.planUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("plan usecase unavailable"))
 	}

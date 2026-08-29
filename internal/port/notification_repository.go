@@ -2,7 +2,6 @@ package port
 
 import (
 	"context"
-	"errors"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/notification"
@@ -27,9 +26,9 @@ type NotificationRepository interface {
 	ListByCustomer(ctx context.Context, customerID string, limit int) ([]notification.WANotification, error)
 }
 
-// ErrNoWASession menandai tidak ada sesi WhatsApp terhubung — worker
-// memperlakukan ini sebagai infrastruktur mati (tidak membakar attempts).
-var ErrNoWASession = errors.New("no connected whatsapp session")
+// ErrNoWASession kini tinggal di internal/domain/notification/errors.go —
+// worker memperlakukan ini sebagai infrastruktur mati (tidak membakar
+// attempts).
 
 // Varian sadar-retry untuk worker pengirim.
 type NotificationRetryRepository interface {

@@ -75,9 +75,6 @@ func (h *RegistrationConnectHandler) ListRegistrations(ctx context.Context, req 
 }
 
 func (h *RegistrationConnectHandler) GetRegistration(ctx context.Context, req *connect.Request[devicepb.GetRegistrationRequest]) (*connect.Response[devicepb.GetRegistrationResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("registration id is required"))
-	}
 	if h.repo == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration repository unavailable"))
 	}
@@ -91,9 +88,6 @@ func (h *RegistrationConnectHandler) GetRegistration(ctx context.Context, req *c
 }
 
 func (h *RegistrationConnectHandler) ApproveRegistration(ctx context.Context, req *connect.Request[devicepb.ApproveRegistrationRequest]) (*connect.Response[devicepb.ApproveRegistrationResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("registration id is required"))
-	}
 	if h.managerUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration usecase unavailable"))
 	}
@@ -107,9 +101,6 @@ func (h *RegistrationConnectHandler) ApproveRegistration(ctx context.Context, re
 }
 
 func (h *RegistrationConnectHandler) ScheduleInstall(ctx context.Context, req *connect.Request[devicepb.ScheduleInstallRequest]) (*connect.Response[devicepb.ScheduleInstallResponse], error) {
-	if req.Msg.Id == "" || req.Msg.InstallDateUnix <= 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("registration id and install_date_unix are required"))
-	}
 	if h.managerUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration usecase unavailable"))
 	}
@@ -137,9 +128,6 @@ func (h *RegistrationConnectHandler) ScheduleInstall(ctx context.Context, req *c
 }
 
 func (h *RegistrationConnectHandler) MarkInstalled(ctx context.Context, req *connect.Request[devicepb.MarkInstalledRequest]) (*connect.Response[devicepb.MarkInstalledResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("registration id is required"))
-	}
 	if h.managerUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration usecase unavailable"))
 	}
@@ -153,9 +141,6 @@ func (h *RegistrationConnectHandler) MarkInstalled(ctx context.Context, req *con
 }
 
 func (h *RegistrationConnectHandler) RejectRegistration(ctx context.Context, req *connect.Request[devicepb.RejectRegistrationRequest]) (*connect.Response[devicepb.RejectRegistrationResponse], error) {
-	if req.Msg.Id == "" || req.Msg.Reason == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("registration id and reason are required"))
-	}
 	if h.managerUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration usecase unavailable"))
 	}
@@ -169,9 +154,6 @@ func (h *RegistrationConnectHandler) RejectRegistration(ctx context.Context, req
 }
 
 func (h *RegistrationConnectHandler) CancelRegistration(ctx context.Context, req *connect.Request[devicepb.CancelRegistrationRequest]) (*connect.Response[devicepb.CancelRegistrationResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("registration id is required"))
-	}
 	if h.managerUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("registration usecase unavailable"))
 	}
@@ -185,9 +167,6 @@ func (h *RegistrationConnectHandler) CancelRegistration(ctx context.Context, req
 }
 
 func (h *RegistrationConnectHandler) ConvertRegistration(ctx context.Context, req *connect.Request[devicepb.ConvertRegistrationRequest]) (*connect.Response[devicepb.ConvertRegistrationResponse], error) {
-	if req.Msg.Id == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("registration id is required"))
-	}
 	if h.convertUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("convert usecase unavailable"))
 	}

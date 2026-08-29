@@ -59,13 +59,13 @@ func (p *PaymentProcessor) ProcessCashPayment(ctx context.Context, cmd port.Cash
 		}
 		switch inv.Status {
 		case billing.StatusPaid:
-			return port.ErrInvoiceAlreadyPaid
+			return billing.ErrInvoiceAlreadyPaid
 		case billing.StatusCancelled:
-			return port.ErrInvoiceCancelled
+			return billing.ErrInvoiceCancelled
 		}
 		outstanding := inv.Total - inv.PaidAmount
 		if cmd.Amount > outstanding+1e-9 {
-			return fmt.Errorf("%w: outstanding %.2f, got %.2f", port.ErrOverpayment, outstanding, cmd.Amount)
+			return fmt.Errorf("%w: outstanding %.2f, got %.2f", billing.ErrOverpayment, outstanding, cmd.Amount)
 		}
 
 		now := time.Now()

@@ -22,7 +22,7 @@ func (h *HotspotConnectHandler) ListActiveSessions(ctx context.Context, req *con
 	}
 
 	return connect.NewResponse(&devicepb.ListHotspotActiveSessionsResponse{
-		Sessions: ToProtoActiveSessions(sessions),
+		Sessions: toProtoActiveSessions(sessions),
 	}), nil
 }
 
@@ -58,7 +58,7 @@ func (h *HotspotConnectHandler) ListDHCPLeases(ctx context.Context, req *connect
 	}
 
 	return connect.NewResponse(&devicepb.ListDHCPLeasesResponse{
-		Leases: ToProtoDHCPLeases(leases),
+		Leases: toProtoDHCPLeases(leases),
 	}), nil
 }
 

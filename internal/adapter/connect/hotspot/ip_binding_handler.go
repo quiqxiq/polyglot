@@ -2,7 +2,6 @@ package hotspot
 
 import (
 	"context"
-	"fmt"
 
 	"connectrpc.com/connect"
 
@@ -85,9 +84,6 @@ func (h *HotspotConnectHandler) UpdateHotspotIPBinding(ctx context.Context, req 
 	if err != nil {
 		return nil, err
 	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id is required"))
-	}
 
 	p := port.HotspotIPBindingParams{
 		MACAddress: req.Msg.MacAddress,
@@ -123,9 +119,6 @@ func (h *HotspotConnectHandler) DeleteHotspotIPBinding(ctx context.Context, req 
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id is required"))
 	}
 
 	if _, err := h.useCase.DeleteIPBinding(ctx, driver, req.Msg.RosId); err != nil {

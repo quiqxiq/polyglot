@@ -2,9 +2,10 @@ package postgres
 
 import (
 	"fmt"
-	"github.com/quixiq/polyglot/pkg/logger"
 	"os"
 	"strings"
+
+	"github.com/quixiq/polyglot/pkg/logger"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

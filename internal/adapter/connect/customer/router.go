@@ -13,20 +13,20 @@ import (
 func NewCustomerServiceHandler(uc *customerUC.ManageCustomerUseCase) (string, http.Handler) {
 	handler := NewCustomerConnectHandler(uc)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
+	opts := iconnect.DefaultHandlerOptions()
 
 	serviceName := "polyglot.v1.CustomerService"
-	mux.Handle("/"+serviceName+"/ListCustomers", connect.NewUnaryHandler("/"+serviceName+"/ListCustomers", handler.ListCustomers, codecOpt))
-	mux.Handle("/"+serviceName+"/GetCustomer", connect.NewUnaryHandler("/"+serviceName+"/GetCustomer", handler.GetCustomer, codecOpt))
-	mux.Handle("/"+serviceName+"/CreateCustomer", connect.NewUnaryHandler("/"+serviceName+"/CreateCustomer", handler.CreateCustomer, codecOpt))
-	mux.Handle("/"+serviceName+"/UpdateCustomer", connect.NewUnaryHandler("/"+serviceName+"/UpdateCustomer", handler.UpdateCustomer, codecOpt))
-	mux.Handle("/"+serviceName+"/DeleteCustomer", connect.NewUnaryHandler("/"+serviceName+"/DeleteCustomer", handler.DeleteCustomer, codecOpt))
+	mux.Handle("/"+serviceName+"/ListCustomers", connect.NewUnaryHandler("/"+serviceName+"/ListCustomers", handler.ListCustomers, opts...))
+	mux.Handle("/"+serviceName+"/GetCustomer", connect.NewUnaryHandler("/"+serviceName+"/GetCustomer", handler.GetCustomer, opts...))
+	mux.Handle("/"+serviceName+"/CreateCustomer", connect.NewUnaryHandler("/"+serviceName+"/CreateCustomer", handler.CreateCustomer, opts...))
+	mux.Handle("/"+serviceName+"/UpdateCustomer", connect.NewUnaryHandler("/"+serviceName+"/UpdateCustomer", handler.UpdateCustomer, opts...))
+	mux.Handle("/"+serviceName+"/DeleteCustomer", connect.NewUnaryHandler("/"+serviceName+"/DeleteCustomer", handler.DeleteCustomer, opts...))
 
-	mux.Handle("/"+serviceName+"/FindByPhone", connect.NewUnaryHandler("/"+serviceName+"/FindByPhone", handler.FindByPhone, codecOpt))
-	mux.Handle("/"+serviceName+"/FindByCustomerCode", connect.NewUnaryHandler("/"+serviceName+"/FindByCustomerCode", handler.FindByCustomerCode, codecOpt))
-	mux.Handle("/"+serviceName+"/FindByPortalCode", connect.NewUnaryHandler("/"+serviceName+"/FindByPortalCode", handler.FindByPortalCode, codecOpt))
+	mux.Handle("/"+serviceName+"/FindByPhone", connect.NewUnaryHandler("/"+serviceName+"/FindByPhone", handler.FindByPhone, opts...))
+	mux.Handle("/"+serviceName+"/FindByCustomerCode", connect.NewUnaryHandler("/"+serviceName+"/FindByCustomerCode", handler.FindByCustomerCode, opts...))
+	mux.Handle("/"+serviceName+"/FindByPortalCode", connect.NewUnaryHandler("/"+serviceName+"/FindByPortalCode", handler.FindByPortalCode, opts...))
 
-	mux.Handle("/"+serviceName+"/ListSubscriptions", connect.NewUnaryHandler("/"+serviceName+"/ListSubscriptions", handler.ListSubscriptions, codecOpt))
+	mux.Handle("/"+serviceName+"/ListSubscriptions", connect.NewUnaryHandler("/"+serviceName+"/ListSubscriptions", handler.ListSubscriptions, opts...))
 
 	return "/" + serviceName + "/", mux
 }

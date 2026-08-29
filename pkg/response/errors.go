@@ -1,22 +1,36 @@
+// Package response translates errors from the domain and usecase layers into
+// ConnectRPC typed errors. It depends only on pkg/fault — never on
+// internal/* — so adding a new domain error never requires editing this
+// package: declare the sentinel with the right fault.Kind and the mapping
+// follows automatically.
 package response
 
 import (
 	"errors"
 
 	"connectrpc.com/connect"
-	"github.com/quixiq/polyglot/internal/domain/device"
-	"github.com/quixiq/polyglot/internal/domain/skill"
-	authuc "github.com/quixiq/polyglot/internal/usecase/auth"
-	chatuc "github.com/quixiq/polyglot/internal/usecase/chat"
-	convuc "github.com/quixiq/polyglot/internal/usecase/conversation"
-	networkuc "github.com/quixiq/polyglot/internal/usecase/network"
-	useruc "github.com/quixiq/polyglot/internal/usecase/user"
+
+	"github.com/quixiq/polyglot/pkg/fault"
 )
 
 // MapDomainError converts domain and usecase errors into standard ConnectRPC
-// typed errors with proper status codes. Every ConnectRPC handler in
+// typed errors with proper status codes, based on the fault.Kind carried by
+// the error (see pkg/fault). Every ConnectRPC handler in
 // internal/adapter/connect/ MUST use this single function for error mapping
 // (DEVELOPMENT-GUIDELINES.md §6).
+//
+// Mapping table:
+//
+//	KindNotFound           → CodeNotFound
+//	KindInvalidInput       → CodeInvalidArgument
+//	KindAlreadyExists      → CodeAlreadyExists
+//	KindPermissionDenied   → CodePermissionDenied
+//	KindUnauthenticated    → CodeUnauthenticated
+//	KindFailedPrecondition → CodeFailedPrecondition
+//	KindConflict           → CodeAborted
+//	KindUnavailable        → CodeUnavailable
+//	KindResourceExhausted  → CodeResourceExhausted
+//	KindUnknown / none     → CodeInternal
 func MapDomainError(err error) error {
 	if err == nil {
 		return nil
@@ -28,43 +42,26 @@ func MapDomainError(err error) error {
 		return connErr
 	}
 
-	// PermissionDenied: kebijakan usecase menolak eksekusi.
-	if errors.Is(err, networkuc.ErrDenied) ||
-		errors.Is(err, device.ErrUnauthorized) {
-		return connect.NewError(connect.CodePermissionDenied, err)
-	}
-
-	// FailedPrecondition: aksi belum bisa dijalankan karena prasyarat
-	// (approval, streaming capability) belum terpenuhi.
-	if errors.Is(err, networkuc.ErrApprovalRequired) ||
-		errors.Is(err, networkuc.ErrDriverNotStreaming) {
-		return connect.NewError(connect.CodeFailedPrecondition, err)
-	}
-
-	// Unauthenticated: kredensial salah / token tidak sah.
-	if errors.Is(err, authuc.ErrInvalidCredentials) {
-		return connect.NewError(connect.CodeUnauthenticated, err)
-	}
-
-	// AlreadyExists: entitas duplikat saat create.
-	if errors.Is(err, useruc.ErrUserAlreadyExists) ||
-		errors.Is(err, skill.ErrSkillAlreadyExists) {
-		return connect.NewError(connect.CodeAlreadyExists, err)
-	}
-
-	// InvalidArgument (validation errors dari usecase layer).
-	if errors.Is(err, authuc.ErrRefreshTokenRequired) ||
-		errors.Is(err, chatuc.ErrEmptyChatJID) ||
-		errors.Is(err, skill.ErrInvalidSlug) {
-		return connect.NewError(connect.CodeInvalidArgument, err)
-	}
-
-	// NotFound.
-	if errors.Is(err, convuc.ErrNotFound) ||
-		errors.Is(err, device.ErrNotFound) ||
-		errors.Is(err, skill.ErrSkillNotFound) {
+	switch fault.KindOf(err) {
+	case fault.KindNotFound:
 		return connect.NewError(connect.CodeNotFound, err)
+	case fault.KindInvalidInput:
+		return connect.NewError(connect.CodeInvalidArgument, err)
+	case fault.KindAlreadyExists:
+		return connect.NewError(connect.CodeAlreadyExists, err)
+	case fault.KindPermissionDenied:
+		return connect.NewError(connect.CodePermissionDenied, err)
+	case fault.KindUnauthenticated:
+		return connect.NewError(connect.CodeUnauthenticated, err)
+	case fault.KindFailedPrecondition:
+		return connect.NewError(connect.CodeFailedPrecondition, err)
+	case fault.KindConflict:
+		return connect.NewError(connect.CodeAborted, err)
+	case fault.KindUnavailable:
+		return connect.NewError(connect.CodeUnavailable, err)
+	case fault.KindResourceExhausted:
+		return connect.NewError(connect.CodeResourceExhausted, err)
+	default:
+		return connect.NewError(connect.CodeInternal, err)
 	}
-
-	return connect.NewError(connect.CodeInternal, err)
 }

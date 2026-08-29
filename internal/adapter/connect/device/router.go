@@ -22,68 +22,68 @@ func NewDeviceServiceHandler(
 		metricsUC:    metricsUC,
 	}
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
+	opts := iconnect.DefaultHandlerOptions()
 
 	serviceName := "polyglot.v1.DeviceService"
 	mux.Handle("/"+serviceName+"/ListDevices", connect.NewUnaryHandler(
 		"/"+serviceName+"/ListDevices",
 		handler.ListDevices,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/GetDevice", connect.NewUnaryHandler(
 		"/"+serviceName+"/GetDevice",
 		handler.GetDevice,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/UpdateDevice", connect.NewUnaryHandler(
 		"/"+serviceName+"/UpdateDevice",
 		handler.UpdateDevice,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/DeleteDevice", connect.NewUnaryHandler(
 		"/"+serviceName+"/DeleteDevice",
 		handler.DeleteDevice,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/TestDeviceConnection", connect.NewUnaryHandler(
 		"/"+serviceName+"/TestDeviceConnection",
 		handler.TestDeviceConnection,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/StreamDeviceStatus", connect.NewServerStreamHandler(
 		"/"+serviceName+"/StreamDeviceStatus",
 		handler.StreamDeviceStatus,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/StreamPing", connect.NewServerStreamHandler(
 		"/"+serviceName+"/StreamPing",
 		handler.StreamPing,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/StreamInterfaceTraffic", connect.NewServerStreamHandler(
 		"/"+serviceName+"/StreamInterfaceTraffic",
 		handler.StreamInterfaceTraffic,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/StreamTerminal", connect.NewBidiStreamHandler(
 		"/"+serviceName+"/StreamTerminal",
 		handler.StreamTerminal,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/GetDevicePingConfig", connect.NewUnaryHandler(
 		"/"+serviceName+"/GetDevicePingConfig",
 		handler.GetDevicePingConfig,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/UpdateDevicePingConfig", connect.NewUnaryHandler(
 		"/"+serviceName+"/UpdateDevicePingConfig",
 		handler.UpdateDevicePingConfig,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/QueryDevicePingMetrics", connect.NewUnaryHandler(
 		"/"+serviceName+"/QueryDevicePingMetrics",
 		handler.QueryDevicePingMetrics,
-		codecOpt,
+		opts...,
 	))
 
 	return "/" + serviceName + "/", mux

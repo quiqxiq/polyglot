@@ -21,7 +21,7 @@ type TrafficStreamItem struct {
 func StreamTraffic(ctx context.Context, driver port.DeviceDriver, iface string, onResult func(item TrafficStreamItem) error) error {
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return ErrDriverNotStreaming
+		return command.ErrDriverNotStreaming
 	}
 
 	if iface == "" {

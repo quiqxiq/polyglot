@@ -4,6 +4,7 @@ package polyglot.v1;
 
 import "v1/customer.proto";
 import "v1/billing.proto";
+import "buf/validate/validate.proto";
 
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
@@ -12,7 +13,7 @@ option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 // customer_portal_sessions).
 
 message RequestOTPRequest {
-  string identifier = 1; // nomor HP atau portal_access_code
+  string identifier = 1 [(buf.validate.field).string.min_len = 1]; // nomor HP atau portal_access_code
 }
 message RequestOTPResponse {
   string message = 1;
@@ -20,8 +21,8 @@ message RequestOTPResponse {
 }
 
 message PortalLoginRequest {
-  string identifier = 1;
-  string otp = 2;
+  string identifier = 1 [(buf.validate.field).string.min_len = 1];
+  string otp = 2 [(buf.validate.field).string.min_len = 1];
 }
 message PortalLoginResponse {
   string token = 1;

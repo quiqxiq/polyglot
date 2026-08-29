@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port/mocktest"
@@ -35,7 +36,7 @@ func TestPlanCreate_Defaults_AndDuplicate(t *testing.T) {
 		Name: "100-RB-100", ServiceType: "PPPOE",
 		BandwidthDownloadKbps: 5120, BandwidthUploadKbps: 5120, Price: 1,
 	})
-	assert.ErrorIs(t, err, uc.ErrValidation)
+	assert.ErrorIs(t, err, domainBilling.ErrInvalidInput)
 
 	_, err = usecase.Create(ctx, domainPlan.ServicePlan{
 		Name: "BAD", ServiceType: "WIFI",
@@ -67,7 +68,7 @@ func TestPlanDelete_GuardAktif(t *testing.T) {
 	}
 	require.NoError(t, subs.Save(ctx, sub))
 	err := usecase.Delete(ctx, p.ID)
-	assert.ErrorContains(t, err, "masih dipakai")
+	assert.ErrorIs(t, err, domainBilling.ErrPlanInUse)
 
 	// Tidak ada langganan aktif lagi → terhapus.
 	_ = deviceID
@@ -201,7 +202,7 @@ func TestSuspendResumeTerminate_Flow(t *testing.T) {
 
 	// Transisi ilegal dari TERMINATED.
 	_, err = fx.usecase.Suspend(ctx, "sub-lc", "again")
-	assert.ErrorIs(t, err, uc.ErrInvalidTransitionBilling)
+	assert.ErrorIs(t, err, domainBilling.ErrInvalidTransition)
 }
 
 func TestLifecycle_NotProvisioned_SkipsRouterCalls(t *testing.T) {
@@ -260,7 +261,7 @@ func TestPlanUpdateAndGet(t *testing.T) {
 
 	// ID kosong / tidak ada.
 	_, err = usecase.Update(ctx, domainPlan.ServicePlan{})
-	assert.ErrorIs(t, err, uc.ErrValidation)
+	assert.ErrorIs(t, err, domainBilling.ErrInvalidInput)
 	_, err = usecase.Get(ctx, "missing")
 	assert.ErrorIs(t, err, mocktest.ErrFakeNotFound)
 }

@@ -113,7 +113,7 @@ func (f *fakeConvRepo) FindActiveConversationByCustomer(_ context.Context, sessi
 			return c, nil
 		}
 	}
-	return nil, convUC.ErrNotFound
+	return nil, bot.ErrConversationNotFound
 }
 
 func (f *fakeConvRepo) CreateConversation(_ context.Context, conv *bot.Conversation) error {
@@ -126,7 +126,7 @@ func (f *fakeConvRepo) CreateConversation(_ context.Context, conv *bot.Conversat
 func (f *fakeConvRepo) FindConversationByID(_ context.Context, id uint) (*bot.Conversation, error) {
 	c, ok := f.convs[id]
 	if !ok {
-		return nil, convUC.ErrNotFound
+		return nil, bot.ErrConversationNotFound
 	}
 	return c, nil
 }
@@ -134,7 +134,7 @@ func (f *fakeConvRepo) FindConversationByID(_ context.Context, id uint) (*bot.Co
 func (f *fakeConvRepo) FindConversationByIDWithMessages(_ context.Context, id uint) (*bot.Conversation, error) {
 	c, ok := f.convs[id]
 	if !ok {
-		return nil, convUC.ErrNotFound
+		return nil, bot.ErrConversationNotFound
 	}
 	c.Messages = f.msgs[id]
 	return c, nil
@@ -229,11 +229,19 @@ type fakeUserRepo struct {
 }
 
 func (f *fakeUserRepo) Create(ctx context.Context, user *customer.User) error { return nil }
-func (f *fakeUserRepo) FindByID(ctx context.Context, id uint) (*customer.User, error) { return nil, nil }
-func (f *fakeUserRepo) FindByUsername(ctx context.Context, username string) (*customer.User, error) { return nil, nil }
-func (f *fakeUserRepo) FindByEmail(ctx context.Context, email string) (*customer.User, error) { return nil, nil }
+func (f *fakeUserRepo) FindByID(ctx context.Context, id uint) (*customer.User, error) {
+	return nil, nil
+}
+func (f *fakeUserRepo) FindByUsername(ctx context.Context, username string) (*customer.User, error) {
+	return nil, nil
+}
+func (f *fakeUserRepo) FindByEmail(ctx context.Context, email string) (*customer.User, error) {
+	return nil, nil
+}
 func (f *fakeUserRepo) Count(ctx context.Context) (int64, error) { return int64(len(f.users)), nil }
-func (f *fakeUserRepo) List(ctx context.Context, page, pageSize int, search string) ([]*customer.User, int64, error) { return f.users, int64(len(f.users)), nil }
+func (f *fakeUserRepo) List(ctx context.Context, page, pageSize int, search string) ([]*customer.User, int64, error) {
+	return f.users, int64(len(f.users)), nil
+}
 func (f *fakeUserRepo) FindAll(ctx context.Context) ([]*customer.User, error) { return f.users, nil }
 func (f *fakeUserRepo) FindByRoles(ctx context.Context, roles []string, activeOnly bool) ([]*customer.User, error) {
 	var result []*customer.User
@@ -254,19 +262,27 @@ func (f *fakeUserRepo) FindByRoles(ctx context.Context, roles []string, activeOn
 	return result, nil
 }
 func (f *fakeUserRepo) Update(ctx context.Context, user *customer.User) error { return nil }
-func (f *fakeUserRepo) Delete(ctx context.Context, id uint) error { return nil }
-func (f *fakeUserRepo) UpdatePassword(ctx context.Context, id uint, passwordHash string) error { return nil }
+func (f *fakeUserRepo) Delete(ctx context.Context, id uint) error             { return nil }
+func (f *fakeUserRepo) UpdatePassword(ctx context.Context, id uint, passwordHash string) error {
+	return nil
+}
 func (f *fakeUserRepo) UpdateStatus(ctx context.Context, id uint, isActive bool) error { return nil }
-func (f *fakeUserRepo) AssignDevices(ctx context.Context, userID uint, deviceIDs []string, assignedBy *uint) error { return nil }
-func (f *fakeUserRepo) GetAssignedDeviceIDs(ctx context.Context, userID uint) ([]string, error) { return nil, nil }
-func (f *fakeUserRepo) IsDeviceAccessibleByUser(ctx context.Context, userID uint, deviceID string) (bool, error) { return true, nil }
+func (f *fakeUserRepo) AssignDevices(ctx context.Context, userID uint, deviceIDs []string, assignedBy *uint) error {
+	return nil
+}
+func (f *fakeUserRepo) GetAssignedDeviceIDs(ctx context.Context, userID uint) ([]string, error) {
+	return nil, nil
+}
+func (f *fakeUserRepo) IsDeviceAccessibleByUser(ctx context.Context, userID uint, deviceID string) (bool, error) {
+	return true, nil
+}
 
 func newTestEngine(cache port.CacheStore, gw *fakeGateway, llmRepo *fakeLLMConfigRepo, prov *fakeProvider, convRepo *fakeConvRepo) *Engine {
 	return newTestEngineWithChatRepo(cache, gw, llmRepo, prov, convRepo, newFakeChatRepo())
 }
 
 func newTestEngineWithChatRepo(cache port.CacheStore, gw *fakeGateway, llmRepo *fakeLLMConfigRepo, prov *fakeProvider, convRepo *fakeConvRepo, chatRepo *fakeChatRepo) *Engine {
-	svc := convUC.NewConversationService(convRepo)
+	svc := convUC.NewConversationUseCase(convRepo)
 	return NewEngine(
 		cache,
 		gw,

@@ -5,8 +5,8 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-// ToProtoPPPSecret converts a domain port.PPPoESecret to protobuf PPPSecret.
-func ToProtoPPPSecret(s port.PPPoESecret) *devicepb.PPPSecret {
+// toProtoPPPSecret converts a domain port.PPPoESecret to protobuf PPPSecret.
+func toProtoPPPSecret(s port.PPPoESecret) *devicepb.PPPSecret {
 	return &devicepb.PPPSecret{
 		Id:            s.RosID,
 		Name:          s.Name,
@@ -22,17 +22,17 @@ func ToProtoPPPSecret(s port.PPPoESecret) *devicepb.PPPSecret {
 	}
 }
 
-// ToProtoPPPSecrets converts a slice of domain port.PPPoESecret to protobuf PPPSecrets.
-func ToProtoPPPSecrets(secrets []port.PPPoESecret) []*devicepb.PPPSecret {
+// toProtoPPPSecrets converts a slice of domain port.PPPoESecret to protobuf PPPSecrets.
+func toProtoPPPSecrets(secrets []port.PPPoESecret) []*devicepb.PPPSecret {
 	res := make([]*devicepb.PPPSecret, len(secrets))
 	for i, s := range secrets {
-		res[i] = ToProtoPPPSecret(s)
+		res[i] = toProtoPPPSecret(s)
 	}
 	return res
 }
 
-// ToProtoPPPProfile converts a domain port.PPPProfile to protobuf PPPProfile.
-func ToProtoPPPProfile(p port.PPPProfile) *devicepb.PPPProfile {
+// toProtoPPPProfile converts a domain port.PPPProfile to protobuf PPPProfile.
+func toProtoPPPProfile(p port.PPPProfile) *devicepb.PPPProfile {
 	return &devicepb.PPPProfile{
 		Id:             p.RosID,
 		Name:           p.Name,
@@ -53,17 +53,17 @@ func ToProtoPPPProfile(p port.PPPProfile) *devicepb.PPPProfile {
 	}
 }
 
-// ToProtoPPPProfiles converts a slice of domain port.PPPProfile to protobuf PPPProfiles.
-func ToProtoPPPProfiles(profiles []port.PPPProfile) []*devicepb.PPPProfile {
+// toProtoPPPProfiles converts a slice of domain port.PPPProfile to protobuf PPPProfiles.
+func toProtoPPPProfiles(profiles []port.PPPProfile) []*devicepb.PPPProfile {
 	res := make([]*devicepb.PPPProfile, len(profiles))
 	for i, p := range profiles {
-		res[i] = ToProtoPPPProfile(p)
+		res[i] = toProtoPPPProfile(p)
 	}
 	return res
 }
 
-// ToProtoPPPActiveSession converts a domain port.PPPActiveSession to protobuf PPPActiveSession.
-func ToProtoPPPActiveSession(s port.PPPActiveSession) *devicepb.PPPActiveSession {
+// toProtoPPPActiveSession converts a domain port.PPPActiveSession to protobuf PPPActiveSession.
+func toProtoPPPActiveSession(s port.PPPActiveSession) *devicepb.PPPActiveSession {
 	return &devicepb.PPPActiveSession{
 		Id:        s.RosID,
 		Name:      s.Name,
@@ -77,17 +77,17 @@ func ToProtoPPPActiveSession(s port.PPPActiveSession) *devicepb.PPPActiveSession
 	}
 }
 
-// ToProtoPPPActiveSessions converts a slice of domain port.PPPActiveSession to protobuf PPPActiveSessions.
-func ToProtoPPPActiveSessions(sessions []port.PPPActiveSession) []*devicepb.PPPActiveSession {
+// toProtoPPPActiveSessions converts a slice of domain port.PPPActiveSession to protobuf PPPActiveSessions.
+func toProtoPPPActiveSessions(sessions []port.PPPActiveSession) []*devicepb.PPPActiveSession {
 	res := make([]*devicepb.PPPActiveSession, len(sessions))
 	for i, s := range sessions {
-		res[i] = ToProtoPPPActiveSession(s)
+		res[i] = toProtoPPPActiveSession(s)
 	}
 	return res
 }
 
-// ToProtoPPPActiveStat converts a domain port.PPPActiveStat to protobuf PPPActiveStat.
-func ToProtoPPPActiveStat(s port.PPPActiveStat) *devicepb.PPPActiveStat {
+// toProtoPPPActiveStat converts a domain port.PPPActiveStat to protobuf PPPActiveStat.
+func toProtoPPPActiveStat(s port.PPPActiveStat) *devicepb.PPPActiveStat {
 	return &devicepb.PPPActiveStat{
 		Id:            s.RosID,
 		Uptime:        s.Uptime,
@@ -96,11 +96,11 @@ func ToProtoPPPActiveStat(s port.PPPActiveStat) *devicepb.PPPActiveStat {
 	}
 }
 
-// ToProtoPPPActiveStats converts a slice of domain port.PPPActiveStat to protobuf PPPActiveStats.
-func ToProtoPPPActiveStats(stats []port.PPPActiveStat) []*devicepb.PPPActiveStat {
+// toProtoPPPActiveStats converts a slice of domain port.PPPActiveStat to protobuf PPPActiveStats.
+func toProtoPPPActiveStats(stats []port.PPPActiveStat) []*devicepb.PPPActiveStat {
 	res := make([]*devicepb.PPPActiveStat, len(stats))
 	for i, s := range stats {
-		res[i] = ToProtoPPPActiveStat(s)
+		res[i] = toProtoPPPActiveStat(s)
 	}
 	return res
 }

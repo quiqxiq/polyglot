@@ -49,43 +49,6 @@ func (u *UseCase) GetSystemIdentity(ctx context.Context, driver port.DeviceDrive
 	return u.gateway.GetSystemIdentity(ctx, driver)
 }
 
-// CreateProfile builds and executes the /ip/hotspot/user/profile/add command
-func (u *UseCase) CreateProfile(ctx context.Context, driver port.DeviceDriver, p port.MikhmonProfileParams) (command.Result, error) {
-	return u.gateway.CreateUserProfile(ctx, driver, p)
-}
-
-// GetProfiles fetches all Hotspot User Profiles.
-func (u *UseCase) GetProfiles(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotUserProfile, error) {
-	return u.gateway.GetUserProfiles(ctx, driver)
-}
-
-// GenerateVouchers generates a batch of count vouchers and executes their creation commands.
-func (u *UseCase) GenerateVouchers(ctx context.Context, driver port.DeviceDriver, p port.VoucherGenerateParams, count int) (port.VoucherBatch, error) {
-	return u.gateway.GenerateVouchers(ctx, driver, p, count)
-}
-
-// GetUsers lists hotspot users, optionally filtered (profile, comment batch
-// tag, exact name, only-unused). Pass zero-value port.ListUsersFilter to
-// list all users.
-func (u *UseCase) GetUsers(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error) {
-	return u.gateway.ListUsers(ctx, driver, f)
-}
-
-// GetUser fetches a single hotspot user by RouterOS .id.
-func (u *UseCase) GetUser(ctx context.Context, driver port.DeviceDriver, rosID string) (port.HotspotUser, error) {
-	return u.gateway.GetUser(ctx, driver, rosID)
-}
-
-// RemoveUser deletes a hotspot user by RouterOS .id.
-func (u *UseCase) RemoveUser(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
-	return u.gateway.RemoveUser(ctx, driver, rosID)
-}
-
-// ResetUserCounters resets byte/time counters for a hotspot user by RouterOS .id.
-func (u *UseCase) ResetUserCounters(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
-	return u.gateway.ResetUserCounters(ctx, driver, rosID)
-}
-
 // GetActiveSessions fetches all currently connected hotspot active sessions.
 func (u *UseCase) GetActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotActiveSession, error) {
 	return u.gateway.ListActiveSessions(ctx, driver)
@@ -193,56 +156,6 @@ func (u *UseCase) GetTodayIncome(ctx context.Context, driver port.DeviceDriver) 
 	return total, nil
 }
 
-// UpdateProfile updates an existing profile by RouterOS .id.
-func (u *UseCase) UpdateProfile(ctx context.Context, driver port.DeviceDriver, rosID string, p port.MikhmonProfileParams) (command.Result, error) {
-	return u.gateway.UpdateUserProfile(ctx, driver, rosID, p)
-}
-
-// DeleteProfile removes a user profile by RouterOS .id.
-func (u *UseCase) DeleteProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
-	return u.gateway.DeleteUserProfile(ctx, driver, rosID)
-}
-
-// AddUser creates a new hotspot user directly (non-batch).
-func (u *UseCase) AddUser(ctx context.Context, driver port.DeviceDriver, p port.HotspotUserParams) (command.Result, error) {
-	res, err := u.gateway.AddUser(ctx, driver, p)
-	if err != nil {
-		return res, err
-	}
-	if p.Comment != "" {
-		_, _ = u.gateway.ParseUserComment(p.Comment) // validasi komentar best-effort, hasil tidak dipakai
-	}
-	return res, nil
-}
-
-// UpdateUser modifies an existing hotspot user by RouterOS .id.
-func (u *UseCase) UpdateUser(ctx context.Context, driver port.DeviceDriver, rosID string, p port.HotspotUserParams) (command.Result, error) {
-	return u.gateway.UpdateUser(ctx, driver, rosID, p)
-}
-
-// GetUsersByTag fetches all hotspot users whose comment contains tag.
-func (u *UseCase) GetUsersByTag(ctx context.Context, driver port.DeviceDriver, tag string) ([]port.HotspotUser, error) {
-	users, err := u.GetUsers(ctx, driver, port.ListUsersFilter{})
-	if err != nil {
-		return nil, err
-	}
-
-	filtered := make([]port.HotspotUser, 0)
-	for _, usr := range users {
-		if usr.Comment == "" {
-			continue
-		}
-		parsed, parseErr := u.gateway.ParseUserComment(usr.Comment)
-		if parseErr != nil {
-			continue
-		}
-		if tag == "" || strings.EqualFold(parsed.Tag, tag) {
-			filtered = append(filtered, usr)
-		}
-	}
-	return filtered, nil
-}
-
 // GetReportsByFilter delegates report filtering to the gateway using legacy
 // Mikhmon semantics: date → ?source=, month (owner "aug2026") → ?owner=,
 // year → date-suffix post-filter. All three empty returns every mikhmon record.
@@ -289,11 +202,6 @@ func (u *UseCase) GetDashboardSummary(ctx context.Context, driver port.DeviceDri
 	return summary, nil
 }
 
-// DeleteUsersByFilter deletes hotspot users matching mode (by_profile, by_comment, expired).
-func (u *UseCase) DeleteUsersByFilter(ctx context.Context, driver port.DeviceDriver, mode, value string) (int, error) {
-	return u.gateway.DeleteUsersByFilter(ctx, driver, mode, value)
-}
-
 // GetIPBindings fetches all /ip/hotspot/ip-binding entries.
 func (u *UseCase) GetIPBindings(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotIPBinding, error) {
 	return u.gateway.ListIPBindings(ctx, driver)
@@ -322,100 +230,4 @@ func (u *UseCase) GetCookies(ctx context.Context, driver port.DeviceDriver) ([]p
 // DeleteCookie removes a cookie by RouterOS .id (or all cookies if rosID is empty or "all").
 func (u *UseCase) DeleteCookie(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	return u.gateway.DeleteCookie(ctx, driver, rosID)
-}
-
-// CheckVoucherStatus inspects a voucher username and aggregates all relevant status.
-func (u *UseCase) CheckVoucherStatus(ctx context.Context, driver port.DeviceDriver, username string) (*port.VoucherStatusDetails, error) {
-	if strings.TrimSpace(username) == "" {
-		return nil, fmt.Errorf("username is required")
-	}
-
-	users, err := u.gateway.ListUsers(ctx, driver, port.ListUsersFilter{Name: username})
-	if err != nil {
-		return nil, fmt.Errorf("lookup user %q: %w", username, err)
-	}
-	if len(users) == 0 {
-		return &port.VoucherStatusDetails{
-			Found:   false,
-			Status:  "not_found",
-			Message: fmt.Sprintf("Voucher %q not found on router", username),
-		}, nil
-	}
-
-	user := users[0]
-	details := &port.VoucherStatusDetails{
-		Found:   true,
-		User:    &user,
-		Status:  "unused",
-		Message: "Voucher valid",
-	}
-
-	if user.Disabled {
-		details.Status = "disabled"
-		details.Message = "User is currently disabled"
-	}
-
-	// 1. Fetch Profile info
-	if user.Profile != "" {
-		if profiles, err := u.gateway.GetUserProfiles(ctx, driver); err == nil {
-			for _, p := range profiles {
-				if p.Name == user.Profile {
-					profileCopy := p
-					details.Profile = &profileCopy
-					break
-				}
-			}
-		}
-	}
-
-	// 2. Check Active Sessions (Online status)
-	if activeSessions, err := u.gateway.ListActiveSessions(ctx, driver); err == nil {
-		for _, s := range activeSessions {
-			if s.User == username {
-				sessionCopy := s
-				details.IsOnline = true
-				details.ActiveSession = &sessionCopy
-				details.Status = "active"
-				break
-			}
-		}
-	}
-
-	// 3. Check Cookies
-	if cookies, err := u.gateway.ListCookies(ctx, driver); err == nil {
-		for _, c := range cookies {
-			if c.User == username {
-				cookieCopy := c
-				details.HasCookie = true
-				details.Cookie = &cookieCopy
-				break
-			}
-		}
-	}
-
-	// 4. Parse Comment for Validity and Expire info
-	if user.Comment != "" {
-		if mc, err := u.gateway.ParseUserComment(user.Comment); err == nil {
-			if mc.ExpireDate != "" {
-				details.ExpireDate = mc.ExpireDate
-			}
-		}
-		if strings.Contains(strings.ToLower(user.Comment), "expired") || user.LimitUptime == "1s" {
-			details.Status = "expired"
-			details.Message = "Voucher has expired"
-		}
-	}
-
-	// 5. Calculate remaining uptime & bytes
-	if user.LimitUptime != "" {
-		details.SisaWaktu = user.LimitUptime
-	}
-	if user.LimitBytesIn != "" || user.LimitBytesOut != "" {
-		details.SisaKuota = user.LimitBytesIn + "/" + user.LimitBytesOut
-	}
-	if user.MACAddress != "" {
-		details.MACLocked = user.MACAddress
-	}
-
-	return details, nil
 }

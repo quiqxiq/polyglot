@@ -76,7 +76,7 @@ func main() {
 	}
 
 	skillUseCase := usecaseSkill.NewManageSkillUseCase(pgStore, fsSkillStore, nil)
-	convService := usecaseConv.NewConversationService(pgStore)
+	convService := usecaseConv.NewConversationUseCase(pgStore)
 
 	gw := &mockGateway{
 		sentMessages: make(map[string][]string),

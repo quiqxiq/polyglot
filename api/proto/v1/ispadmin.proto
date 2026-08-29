@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 // Operasi admin migrasi Mikhmon & data pelanggan (CSV/XLSX/live-router).
@@ -14,7 +16,7 @@ enum ImportFormat {
 // bytes dibatasi secara efektif ±15MB setelah overhead JSON/base64 oleh
 // transport Connect — cukup untuk file pelanggan ISP tipikal.
 message ImportFileRequest {
-  bytes payload = 1;
+  bytes payload = 1 [(buf.validate.field).bytes.min_len = 1];
   ImportFormat format = 2;
 }
 message ImportResult {
@@ -29,7 +31,7 @@ message ImportFileResponse { ImportResult result = 1; }
 
 // Tarik akun langsung dari router (read-only di router).
 message ImportRouterRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string device_name = 2; // nama server untuk baris impor (label)
   bool dry_run = 3;       // true = preview tanpa menulis DB
 }
@@ -48,7 +50,9 @@ message ExportCustomersResponse {
   string filename = 3;
 }
 
-message ReconcileRequest { string device_id = 1; }
+message ReconcileRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+}
 message ReconcileResponse {
   repeated string missing_in_db = 1;      // ada di router, tak ada di DB
   repeated string missing_in_router = 2;  // ada di DB, tak ada di router

@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 message PingTelemetry {
@@ -19,7 +21,7 @@ message ProbeControlCommand {
 }
 
 message ProbeStatusRequest {
-  string probe_id = 1;
+  string probe_id = 1 [(buf.validate.field).string.min_len = 1];
   string version = 2;
   int64 uptime_seconds = 3;
 }

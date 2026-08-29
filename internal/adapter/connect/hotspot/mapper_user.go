@@ -8,8 +8,8 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-// ToProtoHotspotUser converts a single mikrotik user to proto.
-func ToProtoHotspotUser(u port.HotspotUser) *devicepb.HotspotUser {
+// toProtoHotspotUser converts a single mikrotik user to proto.
+func toProtoHotspotUser(u port.HotspotUser) *devicepb.HotspotUser {
 	limitBytes := u.LimitBytesOut
 	if limitBytes == "" {
 		limitBytes = u.LimitBytesIn

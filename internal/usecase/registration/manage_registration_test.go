@@ -113,7 +113,7 @@ func TestTransitions_InvalidPaths(t *testing.T) {
 			sub, err := usecase.Submit(context.Background(), validRegistration())
 			require.NoError(t, err)
 			err = tt.run(usecase, sub.ID)
-			assert.ErrorIs(t, err, uc.ErrInvalidTransition)
+			assert.ErrorIs(t, err, domainRegistration.ErrInvalidTransition)
 		})
 	}
 }
@@ -150,7 +150,7 @@ func TestCancel_FromActiveRejected(t *testing.T) {
 		_, err := usecase.Cancel(context.Background(), sub.ID, "again")
 		return err
 	}()
-	assert.ErrorIs(t, err, uc.ErrInvalidTransition)
+	assert.ErrorIs(t, err, domainRegistration.ErrInvalidTransition)
 }
 
 func TestConvert_FullFlow_CreatesArtifactsAndLinksBack(t *testing.T) {
@@ -237,7 +237,7 @@ func TestConvert_Guards(t *testing.T) {
 	sub, err := uc.NewManageRegistrationUseCase(repo, nil, nil).Submit(ctx, validRegistration())
 	require.NoError(t, err)
 	_, err = conv.Convert(ctx, sub.ID, "1")
-	assert.ErrorIs(t, err, uc.ErrInvalidTransition)
+	assert.ErrorIs(t, err, domainRegistration.ErrInvalidTransition)
 
 	// Plan hilang → error jelas.
 	reg, err := repo.FindByID(ctx, sub.ID)

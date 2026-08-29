@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 // Laporan finansial dari daily_financial_snapshots (agregat siap pakai).
@@ -35,7 +37,7 @@ message YearlyReportResponse { ReportSummary summary = 1; }
 
 // Pemicu manual rebuild snapshot untuk satu tanggal.
 message RefreshSnapshotRequest {
-  string date = 1; // 'YYYY-MM-DD'; kosong = hari ini
+  string date = 1 [(buf.validate.field).string.min_len = 1]; // 'YYYY-MM-DD'; kosong = hari ini
 }
 message RefreshSnapshotResponse {
   string message = 1;

@@ -11,6 +11,7 @@ linters:
     - revive
     - exhaustive
     - bodyclose
+    - errorlint
   settings:
     exhaustive:
       # Ditegakkan karena CLAUDE.md §3.3 mewajibkan `default` eksplisit di

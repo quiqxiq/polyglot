@@ -79,7 +79,7 @@ func TestProfileParamsFromProto(t *testing.T) {
 }
 
 func TestToProtoHotspotHosts(t *testing.T) {
-	hosts := ToProtoHotspotHosts([]map[string]string{
+	hosts := toProtoHotspotHosts([]map[string]string{
 		{".id": "*1", "mac-address": "00:11:22:33:44:55", "address": "10.0.0.2",
 			"to-address": "10.0.0.2", "server": "hotspot1", "bypassed": "true",
 			"authorized": "false", "comment": "laptop"},
@@ -93,7 +93,7 @@ func TestToProtoHotspotHosts(t *testing.T) {
 }
 
 func TestToProtoHotspotServers(t *testing.T) {
-	servers := ToProtoHotspotServers([]map[string]string{
+	servers := toProtoHotspotServers([]map[string]string{
 		{".id": "*2", "name": "hotspot1", "interface": "bridge1",
 			"address-pool": "hs-pool", "disabled": "false", "comment": "utama"},
 		{"name": "tanpa-id"}, // tanpa .id -> skip
@@ -105,7 +105,7 @@ func TestToProtoHotspotServers(t *testing.T) {
 }
 
 func TestToProtoHotspotProfile(t *testing.T) {
-	p := ToProtoHotspotProfile(port.HotspotUserProfile{
+	p := toProtoHotspotProfile(port.HotspotUserProfile{
 		RosID:       "*1",
 		Name:        "1Day_10K",
 		SharedUsers: "1",

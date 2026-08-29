@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port/mocktest"
@@ -20,13 +21,13 @@ func TestCheckout_Guards(t *testing.T) {
 	ctx := context.Background()
 
 	_, err := usecase.ResolveByPaymentCode(ctx, "")
-	assert.ErrorIs(t, err, uc.ErrValidation)
+	assert.ErrorIs(t, err, domainBilling.ErrInvalidInput)
 
 	_, err = usecase.ResolveByQR(ctx, "")
-	assert.ErrorIs(t, err, uc.ErrValidation)
+	assert.ErrorIs(t, err, domainBilling.ErrInvalidInput)
 
 	_, err = usecase.ResolveByPortalCode(ctx, "")
-	assert.ErrorIs(t, err, uc.ErrValidation)
+	assert.ErrorIs(t, err, domainBilling.ErrInvalidInput)
 }
 
 func TestIsolateWorker_TemplateRendered(t *testing.T) {

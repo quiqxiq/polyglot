@@ -2,7 +2,6 @@ package user
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strings"
 
@@ -14,21 +13,8 @@ import (
 	"github.com/quixiq/polyglot/pkg/phone"
 )
 
-var (
-	ErrUserNotFound                   = errors.New("user not found")
-	ErrUsernameRequired               = errors.New("username is required")
-	ErrPasswordTooShort               = errors.New("password must be at least 8 characters")
-	ErrInvalidRole                    = errors.New("invalid role")
-	ErrUserAlreadyExists              = errors.New("username or email already taken")
-	ErrSelfOperation                  = errors.New("cannot perform this operation on your own account")
-	ErrCannotModifyOwner              = errors.New("owner account can only be modified by itself")
-	ErrCannotModifyAdmin              = errors.New("admin account can only be modified by itself or owner")
-	ErrAdminCannotCreateAdminOrOwner  = errors.New("admin can only create accounts with role agent or teknisi")
-	ErrAdminCannotAssignAdminOrOwner  = errors.New("admin can only assign role agent or teknisi")
-	ErrCannotAssignOwnerRole         = errors.New("only owner can assign owner role")
-	ErrLastOwnerDemotion             = errors.New("system requires at least one active owner account")
-	ErrUnauthorizedDeviceAssignment  = errors.New("cannot assign device outside your assigned devices")
-)
+// Error sentinels for this use case live in internal/domain/customer
+// (errors.go) per DEVELOPMENT-GUIDELINES.md §6.
 
 var KnownRoles = map[string]bool{
 	"owner":      true,
@@ -63,7 +49,7 @@ func (u *ManageUserUseCase) ListUsers(ctx context.Context, page, pageSize int, s
 func (u *ManageUserUseCase) GetUser(ctx context.Context, id uint) (*customer.User, error) {
 	user, err := u.repo.FindByID(ctx, id)
 	if err != nil {
-		return nil, ErrUserNotFound
+		return nil, customer.ErrUserNotFound
 	}
 	return user, nil
 }
@@ -119,7 +105,7 @@ func (u *ManageUserUseCase) validateDeviceAssignments(ctx context.Context, actor
 			return err
 		}
 		if !accessible {
-			return fmt.Errorf("%w: device %s", ErrUnauthorizedDeviceAssignment, devID)
+			return fmt.Errorf("%w: device %s", customer.ErrUnauthorizedDeviceAssign, devID)
 		}
 	}
 	return nil
@@ -137,19 +123,19 @@ func (u *ManageUserUseCase) CreateUser(
 	role = strings.ToLower(strings.TrimSpace(role))
 
 	if username == "" {
-		return nil, ErrUsernameRequired
+		return nil, customer.ErrUsernameRequired
 	}
 	if len(password) < 8 {
-		return nil, ErrPasswordTooShort
+		return nil, customer.ErrPasswordTooShort
 	}
 	if !KnownRoles[role] {
-		return nil, ErrInvalidRole
+		return nil, customer.ErrInvalidRole
 	}
 
 	// Hierarchy check: Non-owner (admin) can only create agent or teknisi
 	if !isOwnerRole(actorRoles) {
 		if role == "owner" || role == "admin" {
-			return nil, ErrAdminCannotCreateAdminOrOwner
+			return nil, customer.ErrAdminCannotCreateAdmin
 		}
 	}
 
@@ -158,11 +144,11 @@ func (u *ManageUserUseCase) CreateUser(
 	}
 
 	if existing, _ := u.repo.FindByUsername(ctx, username); existing != nil {
-		return nil, ErrUserAlreadyExists
+		return nil, customer.ErrUserAlreadyExists
 	}
 	if email != "" {
 		if existing, _ := u.repo.FindByEmail(ctx, email); existing != nil {
-			return nil, ErrUserAlreadyExists
+			return nil, customer.ErrUserAlreadyExists
 		}
 	}
 
@@ -220,7 +206,7 @@ func (u *ManageUserUseCase) UpdateUser(
 ) (*customer.User, error) {
 	targetUser, err := u.repo.FindByID(ctx, targetID)
 	if err != nil {
-		return nil, ErrUserNotFound
+		return nil, customer.ErrUserNotFound
 	}
 
 	isSelf := actorID > 0 && actorID == targetID
@@ -228,13 +214,13 @@ func (u *ManageUserUseCase) UpdateUser(
 
 	// Rule 1: Owner account protection - ONLY the owner account itself can modify its data.
 	if strings.EqualFold(targetUser.Role, "owner") && !isSelf {
-		return nil, ErrCannotModifyOwner
+		return nil, customer.ErrCannotModifyOwner
 	}
 
 	// Rule 2: Admin account protection - Admin can modify self; Owner can modify admin;
 	// Another admin (or lower role) CANNOT modify an admin.
 	if strings.EqualFold(targetUser.Role, "admin") && !isSelf && !actorIsOwner {
-		return nil, ErrCannotModifyAdmin
+		return nil, customer.ErrCannotModifyAdmin
 	}
 
 	username = strings.TrimSpace(username)
@@ -244,17 +230,17 @@ func (u *ManageUserUseCase) UpdateUser(
 	// Rule 3: Role assignment restrictions
 	if role != "" {
 		if !KnownRoles[role] {
-			return nil, ErrInvalidRole
+			return nil, customer.ErrInvalidRole
 		}
 
 		if !actorIsOwner {
 			// Non-owner (admin) cannot assign "owner" role to anyone (including self)
 			if role == "owner" {
-				return nil, ErrCannotAssignOwnerRole
+				return nil, customer.ErrCannotAssignOwnerRole
 			}
 			// When modifying other users (agent/teknisi), admin cannot promote them to "admin" or "owner"
 			if !isSelf && role == "admin" {
-				return nil, ErrAdminCannotAssignAdminOrOwner
+				return nil, customer.ErrAdminCannotAssignElevated
 			}
 		}
 
@@ -263,7 +249,7 @@ func (u *ManageUserUseCase) UpdateUser(
 		if isSelf && strings.EqualFold(targetUser.Role, "owner") && !strings.EqualFold(role, "owner") {
 			ownersCount, err := u.countActiveOwners(ctx)
 			if err == nil && ownersCount <= 1 {
-				return nil, ErrLastOwnerDemotion
+				return nil, customer.ErrLastOwnerDemotion
 			}
 		}
 
@@ -325,19 +311,19 @@ func (u *ManageUserUseCase) AssignDevicesToUser(
 	deviceIDs []string,
 ) ([]string, error) {
 	if targetUserID == 0 {
-		return nil, ErrUserNotFound
+		return nil, customer.ErrUserNotFound
 	}
 	targetUser, err := u.repo.FindByID(ctx, targetUserID)
 	if err != nil {
-		return nil, ErrUserNotFound
+		return nil, customer.ErrUserNotFound
 	}
 
 	actorIsOwner := isOwnerRole(actorRoles)
 	if strings.EqualFold(targetUser.Role, "owner") && !actorIsOwner {
-		return nil, ErrCannotModifyOwner
+		return nil, customer.ErrCannotModifyOwner
 	}
 	if strings.EqualFold(targetUser.Role, "admin") && !actorIsOwner && actorID != targetUserID {
-		return nil, ErrCannotModifyAdmin
+		return nil, customer.ErrCannotModifyAdmin
 	}
 
 	if err := u.validateDeviceAssignments(ctx, actorID, actorRoles, deviceIDs); err != nil {
@@ -366,7 +352,7 @@ func (u *ManageUserUseCase) ListUserAccessibleDevices(
 	}
 	targetUser, err := u.repo.FindByID(ctx, targetUserID)
 	if err != nil {
-		return nil, ErrUserNotFound
+		return nil, customer.ErrUserNotFound
 	}
 	if strings.EqualFold(targetUser.Role, "owner") {
 		return []string{"*"}, nil
@@ -376,22 +362,22 @@ func (u *ManageUserUseCase) ListUserAccessibleDevices(
 
 func (u *ManageUserUseCase) DeleteUser(ctx context.Context, actorID uint, actorRoles []string, targetID uint) error {
 	if actorID > 0 && actorID == targetID {
-		return ErrSelfOperation
+		return customer.ErrSelfOperation
 	}
 
 	targetUser, err := u.repo.FindByID(ctx, targetID)
 	if err != nil {
-		return ErrUserNotFound
+		return customer.ErrUserNotFound
 	}
 
 	// Owner account cannot be deleted by anyone
 	if strings.EqualFold(targetUser.Role, "owner") {
-		return ErrCannotModifyOwner
+		return customer.ErrCannotModifyOwner
 	}
 
 	// Admin account can only be deleted by owner
 	if strings.EqualFold(targetUser.Role, "admin") && !isOwnerRole(actorRoles) {
-		return ErrCannotModifyAdmin
+		return customer.ErrCannotModifyAdmin
 	}
 
 	if err := u.repo.Delete(ctx, targetID); err != nil {
@@ -409,16 +395,16 @@ func (u *ManageUserUseCase) DeleteUser(ctx context.Context, actorID uint, actorR
 
 func (u *ManageUserUseCase) ChangePassword(ctx context.Context, id uint, oldPassword, newPassword string) error {
 	if len(newPassword) < 8 {
-		return ErrPasswordTooShort
+		return customer.ErrPasswordTooShort
 	}
 
 	user, err := u.repo.FindByID(ctx, id)
 	if err != nil {
-		return ErrUserNotFound
+		return customer.ErrUserNotFound
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(oldPassword)); err != nil {
-		return errors.New("current password does not match")
+		return customer.ErrWrongPassword
 	}
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
@@ -431,24 +417,24 @@ func (u *ManageUserUseCase) ChangePassword(ctx context.Context, id uint, oldPass
 
 func (u *ManageUserUseCase) AdminResetPassword(ctx context.Context, actorID uint, actorRoles []string, targetID uint, newPassword string) error {
 	if len(newPassword) < 8 {
-		return ErrPasswordTooShort
+		return customer.ErrPasswordTooShort
 	}
 
 	targetUser, err := u.repo.FindByID(ctx, targetID)
 	if err != nil {
-		return ErrUserNotFound
+		return customer.ErrUserNotFound
 	}
 
 	isSelf := actorID > 0 && actorID == targetID
 
 	// Owner account password can only be reset by self
 	if strings.EqualFold(targetUser.Role, "owner") && !isSelf {
-		return ErrCannotModifyOwner
+		return customer.ErrCannotModifyOwner
 	}
 
 	// Admin account password can only be reset by self or owner
 	if strings.EqualFold(targetUser.Role, "admin") && !isSelf && !isOwnerRole(actorRoles) {
-		return ErrCannotModifyAdmin
+		return customer.ErrCannotModifyAdmin
 	}
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
@@ -461,22 +447,22 @@ func (u *ManageUserUseCase) AdminResetPassword(ctx context.Context, actorID uint
 
 func (u *ManageUserUseCase) ToggleStatus(ctx context.Context, actorID uint, actorRoles []string, targetID uint, isActive bool) error {
 	if actorID > 0 && actorID == targetID {
-		return ErrSelfOperation
+		return customer.ErrSelfOperation
 	}
 
 	targetUser, err := u.repo.FindByID(ctx, targetID)
 	if err != nil {
-		return ErrUserNotFound
+		return customer.ErrUserNotFound
 	}
 
 	// Owner account cannot be deactivated
 	if strings.EqualFold(targetUser.Role, "owner") {
-		return ErrCannotModifyOwner
+		return customer.ErrCannotModifyOwner
 	}
 
 	// Admin account can only be toggled by owner
 	if strings.EqualFold(targetUser.Role, "admin") && !isOwnerRole(actorRoles) {
-		return ErrCannotModifyAdmin
+		return customer.ErrCannotModifyAdmin
 	}
 
 	return u.repo.UpdateStatus(ctx, targetID, isActive)

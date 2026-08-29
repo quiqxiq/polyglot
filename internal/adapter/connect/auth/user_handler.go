@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
 	"connectrpc.com/connect"
@@ -69,15 +68,6 @@ func (h *UserConnectHandler) CreateUser(ctx context.Context, req *connect.Reques
 		req.Msg.AssignedDeviceIds,
 	)
 	if err != nil {
-		if errors.Is(err, userUC.ErrUserAlreadyExists) {
-			return nil, connect.NewError(connect.CodeAlreadyExists, err)
-		}
-		if errors.Is(err, userUC.ErrAdminCannotCreateAdminOrOwner) || errors.Is(err, userUC.ErrUnauthorizedDeviceAssignment) {
-			return nil, connect.NewError(connect.CodePermissionDenied, err)
-		}
-		if errors.Is(err, userUC.ErrInvalidRole) || errors.Is(err, userUC.ErrUsernameRequired) || errors.Is(err, userUC.ErrPasswordTooShort) {
-			return nil, connect.NewError(connect.CodeInvalidArgument, err)
-		}
 		return nil, response.MapDomainError(err)
 	}
 
@@ -88,10 +78,6 @@ func (h *UserConnectHandler) CreateUser(ctx context.Context, req *connect.Reques
 }
 
 func (h *UserConnectHandler) UpdateUser(ctx context.Context, req *connect.Request[devicepb.UpdateUserRequest]) (*connect.Response[devicepb.UpdateUserResponse], error) {
-	if req.Msg.Id == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("user id is required"))
-	}
-
 	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
 
 	u, err := h.userUC.UpdateUser(
@@ -108,16 +94,6 @@ func (h *UserConnectHandler) UpdateUser(ctx context.Context, req *connect.Reques
 		req.Msg.AssignedDeviceIds,
 	)
 	if err != nil {
-		if errors.Is(err, userUC.ErrCannotModifyOwner) ||
-			errors.Is(err, userUC.ErrCannotModifyAdmin) ||
-			errors.Is(err, userUC.ErrAdminCannotAssignAdminOrOwner) ||
-			errors.Is(err, userUC.ErrCannotAssignOwnerRole) ||
-			errors.Is(err, userUC.ErrUnauthorizedDeviceAssignment) {
-			return nil, connect.NewError(connect.CodePermissionDenied, err)
-		}
-		if errors.Is(err, userUC.ErrInvalidRole) || errors.Is(err, userUC.ErrLastOwnerDemotion) {
-			return nil, connect.NewError(connect.CodeInvalidArgument, err)
-		}
 		return nil, response.MapDomainError(err)
 	}
 
@@ -128,21 +104,9 @@ func (h *UserConnectHandler) UpdateUser(ctx context.Context, req *connect.Reques
 }
 
 func (h *UserConnectHandler) AssignDevicesToUser(ctx context.Context, req *connect.Request[devicepb.AssignDevicesRequest]) (*connect.Response[devicepb.AssignDevicesResponse], error) {
-	if req.Msg.UserId == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("user_id is required"))
-	}
-
 	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
 	assigned, err := h.userUC.AssignDevicesToUser(ctx, callerID, callerRoles, uint(req.Msg.UserId), req.Msg.DeviceIds)
 	if err != nil {
-		if errors.Is(err, userUC.ErrCannotModifyOwner) ||
-			errors.Is(err, userUC.ErrCannotModifyAdmin) ||
-			errors.Is(err, userUC.ErrUnauthorizedDeviceAssignment) {
-			return nil, connect.NewError(connect.CodePermissionDenied, err)
-		}
-		if errors.Is(err, userUC.ErrUserNotFound) {
-			return nil, connect.NewError(connect.CodeNotFound, err)
-		}
 		return nil, response.MapDomainError(err)
 	}
 
@@ -161,9 +125,6 @@ func (h *UserConnectHandler) ListUserAccessibleDevices(ctx context.Context, req 
 
 	devices, err := h.userUC.ListUserAccessibleDevices(ctx, callerID, callerRoles, targetID)
 	if err != nil {
-		if errors.Is(err, userUC.ErrUserNotFound) {
-			return nil, connect.NewError(connect.CodeNotFound, err)
-		}
 		return nil, response.MapDomainError(err)
 	}
 
@@ -173,19 +134,9 @@ func (h *UserConnectHandler) ListUserAccessibleDevices(ctx context.Context, req 
 }
 
 func (h *UserConnectHandler) ResetPassword(ctx context.Context, req *connect.Request[devicepb.ResetPasswordRequest]) (*connect.Response[devicepb.ResetPasswordResponse], error) {
-	if req.Msg.Id == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("user id is required"))
-	}
-
 	callerID, callerRoles, _ := iauth.IdentityFromContext(ctx)
 
 	if err := h.userUC.AdminResetPassword(ctx, callerID, callerRoles, uint(req.Msg.Id), req.Msg.NewPassword); err != nil {
-		if errors.Is(err, userUC.ErrCannotModifyOwner) || errors.Is(err, userUC.ErrCannotModifyAdmin) {
-			return nil, connect.NewError(connect.CodePermissionDenied, err)
-		}
-		if errors.Is(err, userUC.ErrPasswordTooShort) {
-			return nil, connect.NewError(connect.CodeInvalidArgument, err)
-		}
 		return nil, response.MapDomainError(err)
 	}
 
@@ -195,10 +146,6 @@ func (h *UserConnectHandler) ResetPassword(ctx context.Context, req *connect.Req
 }
 
 func (h *UserConnectHandler) ToggleActive(ctx context.Context, req *connect.Request[devicepb.ToggleActiveRequest]) (*connect.Response[devicepb.ToggleActiveResponse], error) {
-	if req.Msg.Id == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("user id is required"))
-	}
-
 	callerID, callerRoles, exists := iauth.IdentityFromContext(ctx)
 	if exists && callerID == uint(req.Msg.Id) {
 		return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("cannot toggle your own active status"))
@@ -211,9 +158,6 @@ func (h *UserConnectHandler) ToggleActive(ctx context.Context, req *connect.Requ
 
 	newActive := !user.IsActive
 	if err := h.userUC.ToggleStatus(ctx, callerID, callerRoles, uint(req.Msg.Id), newActive); err != nil {
-		if errors.Is(err, userUC.ErrCannotModifyOwner) || errors.Is(err, userUC.ErrCannotModifyAdmin) || errors.Is(err, userUC.ErrSelfOperation) {
-			return nil, connect.NewError(connect.CodePermissionDenied, err)
-		}
 		return nil, response.MapDomainError(err)
 	}
 
@@ -230,19 +174,12 @@ func (h *UserConnectHandler) ToggleActive(ctx context.Context, req *connect.Requ
 }
 
 func (h *UserConnectHandler) DeleteUser(ctx context.Context, req *connect.Request[devicepb.DeleteUserRequest]) (*connect.Response[devicepb.DeleteUserResponse], error) {
-	if req.Msg.Id == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("user id is required"))
-	}
-
 	callerID, callerRoles, exists := iauth.IdentityFromContext(ctx)
 	if exists && callerID == uint(req.Msg.Id) {
 		return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("cannot delete your own account"))
 	}
 
 	if err := h.userUC.DeleteUser(ctx, callerID, callerRoles, uint(req.Msg.Id)); err != nil {
-		if errors.Is(err, userUC.ErrCannotModifyOwner) || errors.Is(err, userUC.ErrCannotModifyAdmin) || errors.Is(err, userUC.ErrSelfOperation) {
-			return nil, connect.NewError(connect.CodePermissionDenied, err)
-		}
 		return nil, response.MapDomainError(err)
 	}
 

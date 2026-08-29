@@ -119,7 +119,11 @@ func (r *UserRepository) List(ctx context.Context, page, pageSize int, search st
 	q := r.db.WithContext(ctx).Model(&model.UserModel{})
 	if s := strings.TrimSpace(search); s != "" {
 		like := "%" + s + "%"
-		q = q.Where("username ILIKE ? OR email ILIKE ?", like, like)
+		if r.db.Dialector.Name() == "postgres" {
+			q = q.Where("username ILIKE ? OR email ILIKE ?", like, like)
+		} else {
+			q = q.Where("username LIKE ? OR email LIKE ?", like, like)
+		}
 	}
 
 	var total int64

@@ -34,7 +34,7 @@ func (f *fakeRepo) FindActiveConversationByCustomer(ctx context.Context, session
 			return c, nil
 		}
 	}
-	return nil, ErrNotFound
+	return nil, bot.ErrConversationNotFound
 }
 
 func (f *fakeRepo) CreateConversation(ctx context.Context, conv *bot.Conversation) error {
@@ -47,7 +47,7 @@ func (f *fakeRepo) CreateConversation(ctx context.Context, conv *bot.Conversatio
 func (f *fakeRepo) FindConversationByID(ctx context.Context, id uint) (*bot.Conversation, error) {
 	c, ok := f.convs[id]
 	if !ok {
-		return nil, ErrNotFound
+		return nil, bot.ErrConversationNotFound
 	}
 	return c, nil
 }
@@ -55,7 +55,7 @@ func (f *fakeRepo) FindConversationByID(ctx context.Context, id uint) (*bot.Conv
 func (f *fakeRepo) FindConversationByIDWithMessages(ctx context.Context, id uint) (*bot.Conversation, error) {
 	c, ok := f.convs[id]
 	if !ok {
-		return nil, ErrNotFound
+		return nil, bot.ErrConversationNotFound
 	}
 	c.Messages = f.msgs[id]
 	return c, nil
@@ -119,7 +119,7 @@ func (f *fakeRepo) FindRecentMessages(ctx context.Context, conversationID uint, 
 func TestAddMessageWithConfigPersists(t *testing.T) {
 	ctx := context.Background()
 	repo := newFakeRepo()
-	svc := NewConversationService(repo)
+	svc := NewConversationUseCase(repo)
 
 	conv, err := svc.GetOrCreateConversation(ctx, 1, "628123456789")
 	if err != nil {
@@ -164,7 +164,7 @@ func TestAddMessageWithConfigPersists(t *testing.T) {
 
 func TestAddMessageWithConfigValidation(t *testing.T) {
 	ctx := context.Background()
-	svc := NewConversationService(newFakeRepo())
+	svc := NewConversationUseCase(newFakeRepo())
 
 	if _, err := svc.AddMessageWithConfig(ctx, 0, "customer", "halo", 0, 0, nil); err == nil {
 		t.Fatal("expected error for convID == 0")
@@ -172,7 +172,7 @@ func TestAddMessageWithConfigValidation(t *testing.T) {
 
 	repo := newFakeRepo()
 	repo.createErr = errors.New("db down")
-	failing := NewConversationService(repo)
+	failing := NewConversationUseCase(repo)
 	if _, err := failing.AddMessageWithConfig(ctx, 1, "customer", "halo", 0, 0, nil); err == nil {
 		t.Fatal("expected repo error to propagate")
 	}
@@ -181,7 +181,7 @@ func TestAddMessageWithConfigValidation(t *testing.T) {
 func TestGetRecentHistory(t *testing.T) {
 	ctx := context.Background()
 	repo := newFakeRepo()
-	svc := NewConversationService(repo)
+	svc := NewConversationUseCase(repo)
 
 	conv, _ := svc.GetOrCreateConversation(ctx, 1, "628123456789")
 	for i := 0; i < 5; i++ {
@@ -201,4 +201,3 @@ func TestGetRecentHistory(t *testing.T) {
 		t.Fatal("expected ascending chronological order")
 	}
 }
-

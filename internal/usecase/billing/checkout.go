@@ -26,7 +26,7 @@ func NewCheckoutUseCase(inv port.InvoiceRepository, cust port.CustomerRepository
 // ResolveByPaymentCode finds an invoice by its short manual payment code.
 func (u *CheckoutUseCase) ResolveByPaymentCode(ctx context.Context, code string) (domainBilling.Invoice, error) {
 	if code == "" {
-		return domainBilling.Invoice{}, fmt.Errorf("%w: payment code is required", ErrValidation)
+		return domainBilling.Invoice{}, fmt.Errorf("%w: payment code is required", domainBilling.ErrInvalidInput)
 	}
 	return u.invoices.FindByPaymentCode(ctx, code)
 }
@@ -34,7 +34,7 @@ func (u *CheckoutUseCase) ResolveByPaymentCode(ctx context.Context, code string)
 // ResolveByQR finds an invoice by its QR payload.
 func (u *CheckoutUseCase) ResolveByQR(ctx context.Context, qr string) (domainBilling.Invoice, error) {
 	if qr == "" {
-		return domainBilling.Invoice{}, fmt.Errorf("%w: qr payload is required", ErrValidation)
+		return domainBilling.Invoice{}, fmt.Errorf("%w: qr payload is required", domainBilling.ErrInvalidInput)
 	}
 	return u.invoices.FindByQRPayload(ctx, qr)
 }
@@ -43,7 +43,7 @@ func (u *CheckoutUseCase) ResolveByQR(ctx context.Context, qr string) (domainBil
 // owns the given portal access code.
 func (u *CheckoutUseCase) ResolveByPortalCode(ctx context.Context, portalCode string) (domainBilling.Invoice, error) {
 	if portalCode == "" {
-		return domainBilling.Invoice{}, fmt.Errorf("%w: portal access code is required", ErrValidation)
+		return domainBilling.Invoice{}, fmt.Errorf("%w: portal access code is required", domainBilling.ErrInvalidInput)
 	}
 	cust, err := u.customers.FindByPortalAccessCode(ctx, portalCode)
 	if err != nil {
@@ -61,7 +61,7 @@ func (u *CheckoutUseCase) ResolveByPortalCode(ctx context.Context, portalCode st
 		}
 	}
 	if len(unpaid) == 0 {
-		return domainBilling.Invoice{}, fmt.Errorf("no unpaid invoice for customer %s", cust.CustomerCode)
+		return domainBilling.Invoice{}, fmt.Errorf("%w: no unpaid invoice for customer %s", domainBilling.ErrNotFound, cust.CustomerCode)
 	}
 	sort.Slice(unpaid, func(i, j int) bool { return unpaid[i].DueDate.Before(unpaid[j].DueDate) })
 	return unpaid[0], nil

@@ -93,7 +93,7 @@ func (f *FakePortalRepo) ConsumeOTP(_ context.Context, phoneN, codeHash string, 
 			continue
 		}
 		if o.Attempts >= maxAttempts {
-			return false, port.ErrOTPLocked
+			return false, domainCustomer.ErrOTPLocked
 		}
 		if o.CodeHash == codeHash {
 			now := time.Now()
@@ -104,11 +104,11 @@ func (f *FakePortalRepo) ConsumeOTP(_ context.Context, phoneN, codeHash string, 
 		if o.Attempts >= maxAttempts {
 			now := time.Now()
 			o.ConsumedAt = &now
-			return false, port.ErrOTPLocked
+			return false, domainCustomer.ErrOTPLocked
 		}
 		return false, nil
 	}
-	return false, port.ErrOTPNotFound
+	return false, domainCustomer.ErrOTPNotFound
 }
 
 // ─── GatewayTransactionRepository ───────────────────────────────────────

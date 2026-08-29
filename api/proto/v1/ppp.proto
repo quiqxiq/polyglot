@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 // ── Models ─────────────────────────────────────────────────────────────
@@ -54,7 +56,7 @@ message PPPActiveSession {
 // ── Secret Messages ───────────────────────────────────────────────────
 
 message ListPPPSecretsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string name_filter = 2;
 }
 
@@ -63,8 +65,8 @@ message ListPPPSecretsResponse {
 }
 
 message GetPPPSecretRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetPPPSecretResponse {
@@ -72,10 +74,10 @@ message GetPPPSecretResponse {
 }
 
 message CreatePPPSecretRequest {
-  string device_id = 1;
-  string name = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string name = 2 [(buf.validate.field).string.min_len = 1];
   string password = 3;
-  string profile = 4;
+  string profile = 4 [(buf.validate.field).string.min_len = 1];
   string service = 5;
   string local_address = 6;
   string remote_address = 7;
@@ -90,8 +92,8 @@ message CreatePPPSecretResponse {
 }
 
 message UpdatePPPSecretRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
   string name = 3;
   string password = 4;
   string profile = 5;
@@ -108,8 +110,8 @@ message UpdatePPPSecretResponse {
 }
 
 message DeletePPPSecretRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeletePPPSecretResponse {
@@ -117,8 +119,8 @@ message DeletePPPSecretResponse {
 }
 
 message SetPPPSecretDisabledRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
   bool disabled = 3;
 }
 
@@ -129,7 +131,7 @@ message SetPPPSecretDisabledResponse {
 // ── Profile Messages ──────────────────────────────────────────────────
 
 message ListPPPProfilesRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string name_filter = 2;
 }
 
@@ -138,8 +140,8 @@ message ListPPPProfilesResponse {
 }
 
 message GetPPPProfileRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetPPPProfileResponse {
@@ -147,8 +149,8 @@ message GetPPPProfileResponse {
 }
 
 message CreatePPPProfileRequest {
-  string device_id = 1;
-  string name = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string name = 2 [(buf.validate.field).string.min_len = 1];
   string rate_limit = 3;
   string local_address = 4;
   string remote_address = 5;
@@ -171,8 +173,8 @@ message CreatePPPProfileResponse {
 }
 
 message UpdatePPPProfileRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
   string name = 3;
   string rate_limit = 4;
   string local_address = 5;
@@ -196,8 +198,8 @@ message UpdatePPPProfileResponse {
 }
 
 message DeletePPPProfileRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeletePPPProfileResponse {
@@ -207,7 +209,7 @@ message DeletePPPProfileResponse {
 // ── Active Sessions Messages ──────────────────────────────────────────
 
 message ListPPPActiveSessionsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string name_filter = 2;
 }
 
@@ -216,8 +218,8 @@ message ListPPPActiveSessionsResponse {
 }
 
 message KickPPPActiveSessionRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message KickPPPActiveSessionResponse {
@@ -225,8 +227,8 @@ message KickPPPActiveSessionResponse {
 }
 
 message KickPPPActiveSessionsRequest {
-  string device_id = 1;
-  repeated string ros_ids = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  repeated string ros_ids = 2 [(buf.validate.field).repeated.min_items = 1];
 }
 
 message KickPPPActiveSessionsResponse {
@@ -235,7 +237,7 @@ message KickPPPActiveSessionsResponse {
 }
 
 message ListPPPInactiveSecretsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ListPPPInactiveSecretsResponse {
@@ -245,7 +247,7 @@ message ListPPPInactiveSecretsResponse {
 // ── Streaming Messages ────────────────────────────────────────────────
 
 message StreamPPPActiveSessionsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string name_filter = 2;
 }
 
@@ -267,7 +269,7 @@ message PPPActiveStat {
 }
 
 message StreamPPPActiveStatsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string interval = 2;
 }
 
@@ -278,7 +280,7 @@ message PPPActiveStatsFrame {
 }
 
 message StreamPPPInactiveSecretsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message PPPInactiveSecretsFrame {
@@ -316,5 +318,3 @@ service PPPService {
   rpc StreamActiveStats(StreamPPPActiveStatsRequest) returns (stream PPPActiveStatsFrame);
   rpc StreamInactiveSecrets(StreamPPPInactiveSecretsRequest) returns (stream PPPInactiveSecretsFrame);
 }
-
-

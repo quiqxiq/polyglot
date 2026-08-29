@@ -12,18 +12,18 @@ import (
 func NewNotificationServiceHandler(repo port.NotificationRepository, sender port.NotificationSender) (string, http.Handler) {
 	handler := NewNotificationConnectHandler(repo, sender)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
+	opts := iconnect.DefaultHandlerOptions()
 
 	serviceName := "polyglot.v1.NotificationService"
-	mux.Handle("/"+serviceName+"/ListTemplates", connect.NewUnaryHandler("/"+serviceName+"/ListTemplates", handler.ListTemplates, codecOpt))
-	mux.Handle("/"+serviceName+"/GetTemplate", connect.NewUnaryHandler("/"+serviceName+"/GetTemplate", handler.GetTemplate, codecOpt))
-	mux.Handle("/"+serviceName+"/SaveTemplate", connect.NewUnaryHandler("/"+serviceName+"/SaveTemplate", handler.SaveTemplate, codecOpt))
+	mux.Handle("/"+serviceName+"/ListTemplates", connect.NewUnaryHandler("/"+serviceName+"/ListTemplates", handler.ListTemplates, opts...))
+	mux.Handle("/"+serviceName+"/GetTemplate", connect.NewUnaryHandler("/"+serviceName+"/GetTemplate", handler.GetTemplate, opts...))
+	mux.Handle("/"+serviceName+"/SaveTemplate", connect.NewUnaryHandler("/"+serviceName+"/SaveTemplate", handler.SaveTemplate, opts...))
 
-	mux.Handle("/"+serviceName+"/ListNotifications", connect.NewUnaryHandler("/"+serviceName+"/ListNotifications", handler.ListNotifications, codecOpt))
-	mux.Handle("/"+serviceName+"/PendingCount", connect.NewUnaryHandler("/"+serviceName+"/PendingCount", handler.PendingCount, codecOpt))
-	mux.Handle("/"+serviceName+"/MarkNotificationSent", connect.NewUnaryHandler("/"+serviceName+"/MarkNotificationSent", handler.MarkNotificationSent, codecOpt))
-	mux.Handle("/"+serviceName+"/MarkNotificationFailed", connect.NewUnaryHandler("/"+serviceName+"/MarkNotificationFailed", handler.MarkNotificationFailed, codecOpt))
-	mux.Handle("/"+serviceName+"/TestSend", connect.NewUnaryHandler("/"+serviceName+"/TestSend", handler.TestSend, codecOpt))
+	mux.Handle("/"+serviceName+"/ListNotifications", connect.NewUnaryHandler("/"+serviceName+"/ListNotifications", handler.ListNotifications, opts...))
+	mux.Handle("/"+serviceName+"/PendingCount", connect.NewUnaryHandler("/"+serviceName+"/PendingCount", handler.PendingCount, opts...))
+	mux.Handle("/"+serviceName+"/MarkNotificationSent", connect.NewUnaryHandler("/"+serviceName+"/MarkNotificationSent", handler.MarkNotificationSent, opts...))
+	mux.Handle("/"+serviceName+"/MarkNotificationFailed", connect.NewUnaryHandler("/"+serviceName+"/MarkNotificationFailed", handler.MarkNotificationFailed, opts...))
+	mux.Handle("/"+serviceName+"/TestSend", connect.NewUnaryHandler("/"+serviceName+"/TestSend", handler.TestSend, opts...))
 
 	return "/" + serviceName + "/", mux
 }

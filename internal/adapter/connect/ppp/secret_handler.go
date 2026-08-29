@@ -23,7 +23,7 @@ func (h *PPPConnectHandler) ListSecrets(ctx context.Context, req *connect.Reques
 	}
 
 	return connect.NewResponse(&devicepb.ListPPPSecretsResponse{
-		Secrets: ToProtoPPPSecrets(secrets),
+		Secrets: toProtoPPPSecrets(secrets),
 	}), nil
 }
 
@@ -33,9 +33,6 @@ func (h *PPPConnectHandler) GetSecret(ctx context.Context, req *connect.Request[
 	if err != nil {
 		return nil, err
 	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id is required"))
-	}
 
 	secret, err := h.useCase.GetSecret(ctx, driver, req.Msg.RosId)
 	if err != nil {
@@ -43,7 +40,7 @@ func (h *PPPConnectHandler) GetSecret(ctx context.Context, req *connect.Request[
 	}
 
 	return connect.NewResponse(&devicepb.GetPPPSecretResponse{
-		Secret: ToProtoPPPSecret(secret),
+		Secret: toProtoPPPSecret(secret),
 	}), nil
 }
 
@@ -52,9 +49,6 @@ func (h *PPPConnectHandler) CreateSecret(ctx context.Context, req *connect.Reque
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.Name == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("name is required"))
 	}
 
 	params := FromProtoCreateSecretRequest(req.Msg)
@@ -72,7 +66,7 @@ func (h *PPPConnectHandler) CreateSecret(ctx context.Context, req *connect.Reque
 	}
 
 	return connect.NewResponse(&devicepb.CreatePPPSecretResponse{
-		Secret:  ToProtoPPPSecret(secrets[0]),
+		Secret:  toProtoPPPSecret(secrets[0]),
 		Message: fmt.Sprintf("secret %q created successfully", req.Msg.Name),
 	}), nil
 }
@@ -82,9 +76,6 @@ func (h *PPPConnectHandler) UpdateSecret(ctx context.Context, req *connect.Reque
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id is required"))
 	}
 
 	params := FromProtoUpdateSecretRequest(req.Msg)
@@ -98,7 +89,7 @@ func (h *PPPConnectHandler) UpdateSecret(ctx context.Context, req *connect.Reque
 	}
 
 	return connect.NewResponse(&devicepb.UpdatePPPSecretResponse{
-		Secret:  ToProtoPPPSecret(secret),
+		Secret:  toProtoPPPSecret(secret),
 		Message: fmt.Sprintf("secret %q updated successfully", secret.Name),
 	}), nil
 }
@@ -108,9 +99,6 @@ func (h *PPPConnectHandler) DeleteSecret(ctx context.Context, req *connect.Reque
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id is required"))
 	}
 
 	res, err := h.useCase.RemoveSecret(ctx, driver, req.Msg.RosId)
@@ -128,9 +116,6 @@ func (h *PPPConnectHandler) SetSecretDisabled(ctx context.Context, req *connect.
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id is required"))
 	}
 
 	if _, err := h.useCase.SetSecretDisabled(ctx, driver, req.Msg.RosId, req.Msg.Disabled); err != nil {

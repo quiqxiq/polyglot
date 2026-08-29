@@ -9,15 +9,14 @@ import (
 	"github.com/stretchr/testify/require"
 
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
-	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/port/mocktest"
 	uc "github.com/quixiq/polyglot/internal/usecase/notification"
 )
 
-func newWorker(t *testing.T, notif *mocktest.FakeNotificationRepo, sender *mocktest.FakeNotificationSender) *uc.WaSenderWorker {
+func newWorker(t *testing.T, notif *mocktest.FakeNotificationRepo, sender *mocktest.FakeNotificationSender) *uc.WASenderWorker {
 	t.Helper()
 	settings := mocktest.NewFakeSettingReader(map[string]string{"isp.wa_send_max_retry": "3"})
-	return uc.NewWaSenderWorker(notif, sender, settings)
+	return uc.NewWASenderWorker(notif, sender, settings)
 }
 
 func queue(t *testing.T, notif *mocktest.FakeNotificationRepo, id, phone string) {
@@ -72,7 +71,7 @@ func TestWaSender_Failure_IncrementsAttempt_ThenGivesUp(t *testing.T) {
 
 func TestWaSender_NoSession_DoesNotBurnAttempts(t *testing.T) {
 	notif := mocktest.NewFakeNotificationRepo()
-	sender := &mocktest.FakeNotificationSender{Err: port.ErrNoWASession}
+	sender := &mocktest.FakeNotificationSender{Err: domainNotification.ErrNoWASession}
 	queue(t, notif, "wa-n", "081234567890")
 
 	res, err := newWorker(t, notif, sender).Run(context.Background())

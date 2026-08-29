@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 service WhatsAppService {
@@ -37,7 +39,7 @@ message ListWASessionsResponse {
 }
 
 message CreateWASessionRequest {
-  string name = 1;
+  string name = 1 [(buf.validate.field).string.min_len = 1];
   string phone_number = 2;
 }
 message CreateWASessionResponse {
@@ -45,7 +47,7 @@ message CreateWASessionResponse {
 }
 
 message GetWASessionQRRequest {
-  string session_id = 1;
+  string session_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message GetWASessionQRResponse {
   string qr_code_base64 = 1;
@@ -54,15 +56,15 @@ message GetWASessionQRResponse {
 }
 
 message GetWASessionPairingRequest {
-  string session_id = 1;
-  string phone_number = 2;
+  string session_id = 1 [(buf.validate.field).string.min_len = 1];
+  string phone_number = 2 [(buf.validate.field).string.min_len = 1];
 }
 message GetWASessionPairingResponse {
   string pairing_code = 1;
 }
 
 message ToggleWABotRequest {
-  string session_id = 1;
+  string session_id = 1 [(buf.validate.field).string.min_len = 1];
   bool is_active = 2;
 }
 message ToggleWABotResponse {
@@ -71,7 +73,7 @@ message ToggleWABotResponse {
 }
 
 message ReconnectWASessionRequest {
-  string session_id = 1;
+  string session_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message ReconnectWASessionResponse {
   string message = 1;
@@ -79,23 +81,23 @@ message ReconnectWASessionResponse {
 }
 
 message LogoutWASessionRequest {
-  string session_id = 1;
+  string session_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message LogoutWASessionResponse {
   string message = 1;
 }
 
 message PurgeWASessionRequest {
-  string session_id = 1;
+  string session_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message PurgeWASessionResponse {
   string message = 1;
 }
 
 message SendWATextMessageRequest {
-  string session_id = 1;
-  string recipient_phone = 2;
-  string message_text = 3;
+  string session_id = 1 [(buf.validate.field).string.min_len = 1];
+  string recipient_phone = 2 [(buf.validate.field).string.min_len = 1];
+  string message_text = 3 [(buf.validate.field).string.min_len = 1];
 }
 message SendWATextMessageResponse {
   string message_id = 1;
@@ -129,7 +131,7 @@ message WAChatMessage {
 }
 
 message ListChatsRequest {
-  string session_id = 1;
+  string session_id = 1 [(buf.validate.field).string.min_len = 1];
   int32 limit = 2;
   int32 offset = 3;
   string search = 4;
@@ -140,8 +142,8 @@ message ListChatsResponse {
 }
 
 message GetChatMessagesRequest {
-  string session_id = 1;
-  string chat_jid = 2;
+  string session_id = 1 [(buf.validate.field).string.min_len = 1];
+  string chat_jid = 2 [(buf.validate.field).string.min_len = 1];
   int32 limit = 3;
   int32 offset = 4;
 }
@@ -151,16 +153,16 @@ message GetChatMessagesResponse {
 }
 
 message MarkChatReadRequest {
-  string session_id = 1;
-  string chat_jid = 2;
+  string session_id = 1 [(buf.validate.field).string.min_len = 1];
+  string chat_jid = 2 [(buf.validate.field).string.min_len = 1];
 }
 message MarkChatReadResponse {
   string message = 1;
 }
 
 message ToggleChatBotRequest {
-  string session_id = 1;
-  string chat_jid = 2;
+  string session_id = 1 [(buf.validate.field).string.min_len = 1];
+  string chat_jid = 2 [(buf.validate.field).string.min_len = 1];
   bool is_active = 3;
 }
 message ToggleChatBotResponse {

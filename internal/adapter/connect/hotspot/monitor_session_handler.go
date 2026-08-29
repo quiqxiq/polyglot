@@ -51,7 +51,7 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 	// Immediately send initial snapshot frame so frontend has data right away
 	_ = stream.Send(&devicepb.ActiveSessionsStreamData{
 		DeviceId:      req.Msg.DeviceId,
-		Sessions:      ToProtoActiveSessions(initialSessions),
+		Sessions:      toProtoActiveSessions(initialSessions),
 		TimestampUnix: time.Now().Unix(),
 	})
 
@@ -116,7 +116,7 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 
 			err := stream.Send(&devicepb.ActiveSessionsStreamData{
 				DeviceId:      req.Msg.DeviceId,
-				Sessions:      ToProtoActiveSessions(sessions),
+				Sessions:      toProtoActiveSessions(sessions),
 				TimestampUnix: time.Now().Unix(),
 			})
 			if err != nil {
@@ -165,7 +165,7 @@ func (h *HotspotConnectHandler) StreamActiveStats(ctx context.Context, req *conn
 
 			if err := stream.Send(&devicepb.ActiveStatsStreamData{
 				DeviceId:      req.Msg.DeviceId,
-				Stats:         ToProtoActiveStats(stats),
+				Stats:         toProtoActiveStats(stats),
 				TimestampUnix: time.Now().Unix(),
 			}); err != nil {
 				return err
@@ -295,7 +295,7 @@ func (h *HotspotConnectHandler) StreamHotspotInactive(ctx context.Context, req *
 	_ = stream.Send(&devicepb.HotspotInactiveFrame{
 		DeviceId:      req.Msg.DeviceId,
 		TimestampUnix: time.Now().Unix(),
-		Users:         ToProtoHotspotUsers(initialInactive),
+		Users:         toProtoHotspotUsers(initialInactive),
 	})
 
 	notify := make(chan struct{}, 10)
@@ -364,7 +364,7 @@ func (h *HotspotConnectHandler) StreamHotspotInactive(ctx context.Context, req *
 			err := stream.Send(&devicepb.HotspotInactiveFrame{
 				DeviceId:      req.Msg.DeviceId,
 				TimestampUnix: time.Now().Unix(),
-				Users:         ToProtoHotspotUsers(inactive),
+				Users:         toProtoHotspotUsers(inactive),
 			})
 			if err != nil {
 				return err

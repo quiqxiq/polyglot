@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 // Device represents a network router/device inventory record.
@@ -31,7 +33,7 @@ message ListDevicesResponse {
 }
 
 message GetDeviceRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetDeviceResponse {
@@ -39,7 +41,7 @@ message GetDeviceResponse {
 }
 
 message UpdateDeviceRequest {
-  Device device = 1;
+  Device device = 1 [(buf.validate.field).required = true];
   string username = 2;
   string password = 3;
 }
@@ -50,7 +52,7 @@ message UpdateDeviceResponse {
 }
 
 message StreamDeviceStatusRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string selected_interface = 2;
   string ping_address = 3;
   string interface_type_filter = 4;
@@ -99,7 +101,7 @@ message TerminalFrame {
 }
 
 message DeleteDeviceRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeleteDeviceResponse {
@@ -107,7 +109,7 @@ message DeleteDeviceResponse {
 }
 
 message TestDeviceConnectionRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string selected_interface = 2;
   string interface_type_filter = 3;
   string interface_name_filter = 4;
@@ -135,8 +137,8 @@ message TestDeviceConnectionResponse {
 
 // StreamDevicePing requests continuous ping execution targeting address.
 message StreamDevicePingRequest {
-  string id = 1;
-  string address = 2;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string address = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message StreamDevicePingFrame {
@@ -157,8 +159,8 @@ message StreamDevicePingFrame {
 
 // StreamDeviceTraffic requests continuous interface traffic monitoring.
 message StreamDeviceTrafficRequest {
-  string id = 1;
-  string interface_name = 2;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string interface_name = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message StreamDeviceTrafficFrame {
@@ -175,7 +177,7 @@ message DevicePingConfig {
 }
 
 message GetDevicePingConfigRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetDevicePingConfigResponse {
@@ -184,8 +186,8 @@ message GetDevicePingConfigResponse {
 }
 
 message UpdateDevicePingConfigRequest {
-  string device_id = 1;
-  DevicePingConfig config = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  DevicePingConfig config = 2 [(buf.validate.field).required = true];
 }
 
 message UpdateDevicePingConfigResponse {
@@ -194,9 +196,9 @@ message UpdateDevicePingConfigResponse {
 }
 
 message QueryDevicePingMetricsRequest {
-  string device_id = 1;
-  string start_time = 2;
-  string end_time = 3;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string start_time = 2 [(buf.validate.field).string.min_len = 1];
+  string end_time = 3 [(buf.validate.field).string.min_len = 1];
   string bucket_interval = 4;
 }
 

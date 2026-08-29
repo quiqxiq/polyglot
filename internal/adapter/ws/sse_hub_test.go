@@ -7,7 +7,7 @@ import (
 func TestSSEHubCloseClosesAllClients(t *testing.T) {
 	h := NewSSEHub()
 
-	// Simulasikan 3 client terdaftar tanpa melibatkan gin.Context — akses
+	// Simulasikan 3 client terdaftar tanpa melibatkan HTTP request — akses
 	// langsung ke map internal sudah cukup untuk menguji kontrak Close().
 	chans := make([]chan SSEEvent, 0, 3)
 	h.mutex.Lock()

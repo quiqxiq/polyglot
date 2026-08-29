@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 message HotspotProfile {
@@ -65,7 +67,7 @@ message HotspotReport {
 }
 
 message ListHotspotProfilesRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ListHotspotProfilesResponse {
@@ -73,7 +75,7 @@ message ListHotspotProfilesResponse {
 }
 
 message ListHotspotUsersRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string profile = 2;
   string comment = 3;
   bool only_unused = 4;
@@ -84,7 +86,7 @@ message ListHotspotUsersResponse {
 }
 
 message ListHotspotActiveSessionsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ListHotspotActiveSessionsResponse {
@@ -92,8 +94,8 @@ message ListHotspotActiveSessionsResponse {
 }
 
 message KickHotspotSessionRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message KickHotspotSessionResponse {
@@ -101,7 +103,7 @@ message KickHotspotSessionResponse {
 }
 
 message ListDHCPLeasesRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string mac_filter = 2;
 }
 
@@ -110,8 +112,8 @@ message ListDHCPLeasesResponse {
 }
 
 message BlockDHCPLeaseRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
   bool blocked = 3;
   string comment = 4;
 }
@@ -121,9 +123,9 @@ message BlockDHCPLeaseResponse {
 }
 
 message GenerateVouchersRequest {
-  string device_id = 1;
-  string profile = 2;
-  int32 count = 3;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string profile = 2 [(buf.validate.field).string.min_len = 1];
+  int32 count = 3 [(buf.validate.field).int32.gt = 0];
   string user_type = 4;
   int32 user_length = 5;
   string prefix = 6;
@@ -141,8 +143,8 @@ message GenerateVouchersResponse {
 
 // ── Modul 04: Hotspot User CRUD ───────────────────────────────────────
 message GetHotspotUserRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetHotspotUserResponse {
@@ -150,11 +152,11 @@ message GetHotspotUserResponse {
 }
 
 message CreateHotspotUserRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string server = 2;
-  string name = 3;
+  string name = 3 [(buf.validate.field).string.min_len = 1];
   string password = 4;
-  string profile = 5;
+  string profile = 5 [(buf.validate.field).string.min_len = 1];
   string mac_address = 6;
   string time_limit = 7; // "8h", "30d"
   string data_limit = 8; // "1000M" -> byte via ParseDataLimit
@@ -167,8 +169,8 @@ message CreateHotspotUserResponse {
 }
 
 message UpdateHotspotUserRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
   bool reset_counter = 3; // reset-counters dulu sebelum set (legacy reset=yes)
   string server = 4;
   string name = 5;
@@ -188,8 +190,8 @@ message UpdateHotspotUserResponse {
 }
 
 message ResetHotspotUserCountersRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message ResetHotspotUserCountersResponse {
@@ -197,8 +199,8 @@ message ResetHotspotUserCountersResponse {
 }
 
 message DeleteHotspotUserRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeleteHotspotUserResponse {
@@ -207,7 +209,7 @@ message DeleteHotspotUserResponse {
 
 // ── Modul 05: Hotspot Profile CRUD ────────────────────────────────────
 message HotspotProfileParams {
-  string name = 1;
+  string name = 1 [(buf.validate.field).string.min_len = 1];
   string address_pool = 2;
   string shared_users = 3;
   string rate_limit = 4; // "5M/5M"
@@ -223,8 +225,8 @@ message HotspotProfileParams {
 }
 
 message CreateHotspotProfileRequest {
-  string device_id = 1;
-  HotspotProfileParams profile = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  HotspotProfileParams profile = 2 [(buf.validate.field).required = true];
 }
 
 message CreateHotspotProfileResponse {
@@ -233,9 +235,9 @@ message CreateHotspotProfileResponse {
 }
 
 message UpdateHotspotProfileRequest {
-  string device_id = 1;
-  string ros_id = 2;
-  HotspotProfileParams profile = 3;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
+  HotspotProfileParams profile = 3 [(buf.validate.field).required = true];
 }
 
 message UpdateHotspotProfileResponse {
@@ -244,8 +246,8 @@ message UpdateHotspotProfileResponse {
 }
 
 message DeleteHotspotProfileRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeleteHotspotProfileResponse {
@@ -265,7 +267,7 @@ message HotspotHost {
 }
 
 message ListHotspotHostsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ListHotspotHostsResponse {
@@ -273,8 +275,8 @@ message ListHotspotHostsResponse {
 }
 
 message RemoveHotspotHostRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message RemoveHotspotHostResponse {
@@ -291,7 +293,7 @@ message HotspotServerInfo {
 }
 
 message ListHotspotServersRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ListHotspotServersResponse {
@@ -300,8 +302,8 @@ message ListHotspotServersResponse {
 
 // ── Modul 07: Voucher batch query ─────────────────────────────────────
 message GetVoucherBatchRequest {
-  string device_id = 1;
-  string comment = 2; // tag batch (gcomment)
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string comment = 2 [(buf.validate.field).string.min_len = 1]; // tag batch (gcomment)
 }
 
 message GetVoucherBatchResponse {
@@ -310,7 +312,7 @@ message GetVoucherBatchResponse {
 }
 
 message StreamTrafficRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string interface = 2;
 }
 
@@ -323,7 +325,7 @@ message TrafficStreamData {
 }
 
 message StreamResourceRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ResourceStreamData {
@@ -335,7 +337,7 @@ message ResourceStreamData {
 }
 
 message StreamActiveSessionsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string user_filter = 2;
 }
 
@@ -357,7 +359,7 @@ message HotspotActiveStat {
 }
 
 message StreamActiveStatsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string interval = 2;
 }
 
@@ -369,7 +371,7 @@ message ActiveStatsStreamData {
 
 // ── Modul 08: Sales Report ────────────────────────────────────────────
 message ListHotspotReportsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string day = 2;   // legacy get_report: "aug/17/2026" (filter source)
   string month = 3; // legacy get_livereport: "aug2026" (filter owner)
   string year = 4;  // filter suffix tanggal ("2026")
@@ -383,8 +385,8 @@ message ListHotspotReportsResponse {
 }
 
 message DeleteHotspotReportRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeleteHotspotReportResponse {
@@ -393,7 +395,7 @@ message DeleteHotspotReportResponse {
 
 // ── Modul 09: Expire Monitor ──────────────────────────────────────────
 message GetExpireMonitorStatusRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ExpireMonitorStatusResponse {
@@ -404,7 +406,7 @@ message ExpireMonitorStatusResponse {
 }
 
 message SetupExpireMonitorRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string interval = 2; // "00:01:00" (HH:MM:SS)
 }
 
@@ -413,7 +415,7 @@ message SetupExpireMonitorResponse {
 }
 
 message DisableExpireMonitorRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message DisableExpireMonitorResponse {
@@ -421,7 +423,7 @@ message DisableExpireMonitorResponse {
 }
 
 message RemoveExpireMonitorRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message RemoveExpireMonitorResponse {
@@ -441,8 +443,8 @@ message ListTemplatesResponse {
 }
 
 message GetTemplateSectionRequest {
-  string template_name = 1; // default | small | thermal
-  string section = 2;       // header | row | footer
+  string template_name = 1 [(buf.validate.field).string.min_len = 1]; // default | small | thermal
+  string section = 2 [(buf.validate.field).string.min_len = 1];       // header | row | footer
 }
 
 message GetTemplateSectionResponse {
@@ -450,8 +452,8 @@ message GetTemplateSectionResponse {
 }
 
 message RenderVouchersRequest {
-  string device_id = 1;
-  string template_name = 2; // default | small | thermal
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string template_name = 2 [(buf.validate.field).string.min_len = 1]; // default | small | thermal
   string comment = 3;       // tag batch (eksklusif dengan user_id)
   string user_id = 4;       // single by .id (eksklusif dengan comment)
   bool preview = 5;         // data dummy tanpa koneksi router
@@ -464,7 +466,7 @@ message RenderVouchersResponse {
 
 // ── Form suggestions: parent queue & IP pool ──────────────────────────
 
-message ListParentQueuesRequest { string device_id = 1; }
+message ListParentQueuesRequest { string device_id = 1 [(buf.validate.field).string.min_len = 1]; }
 
 message ParentQueueEntry {
   string ros_id = 1;
@@ -474,7 +476,7 @@ message ParentQueueEntry {
 
 message ListParentQueuesResponse { repeated ParentQueueEntry queues = 1; }
 
-message ListIPPoolsRequest { string device_id = 1; }
+message ListIPPoolsRequest { string device_id = 1 [(buf.validate.field).string.min_len = 1]; }
 
 message IPPoolEntry {
   string ros_id = 1;
@@ -489,7 +491,7 @@ message ListIPPoolsResponse { repeated IPPoolEntry pools = 1; }
 // endpoint gabungan seperti GetDashboard legacy.
 
 message StreamSystemSnapshotRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string interval = 2; // RouterOS duration ("1s", "2s"). Default "1s".
 }
 
@@ -552,7 +554,7 @@ message SystemSnapshotFrame {
 }
 
 message StreamQueueStatsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string name = 2;        // filter by queue name (?name=)
   string parent = 3;      // filter by parent queue (?parent=)
   bool parents_only = 4;  // non-dynamic static parent queues (?dynamic=false)
@@ -582,7 +584,7 @@ message QueueStatsFrame {
 }
 
 message StreamLogsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string topics = 2; // filter (?topics~=)
 }
 
@@ -600,7 +602,7 @@ message LogsStreamFrame {
 }
 
 message StreamInterfaceEthernetRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string interval = 2; // default "1s"
   string type_filter = 3;
   string name_filter = 4;
@@ -630,7 +632,7 @@ message InterfaceEthernetFrame {
 // Inactive hotspot users = /ip/hotspot/user/print interval −
 // /ip/hotspot/active/print interval (users without an active session).
 message StreamHotspotInactiveRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string interval = 2; // default "1s"
 }
 
@@ -642,7 +644,7 @@ message HotspotInactiveFrame {
 
 // PPPoE active sessions (/ppp/active/print interval).
 message StreamPPPActiveRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string interval = 2; // default "1s"
 }
 
@@ -669,7 +671,7 @@ message PPPActiveFrame {
 // Inactive PPPoE = /ppp/secret/print interval − /ppp/active/print interval
 // (secrets without an active session).
 message StreamPPPInactiveRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string interval = 2; // default "1s"
 }
 
@@ -695,8 +697,8 @@ message PPPInactiveFrame {
 // ── Modul 11: Bulk Cleaner, IP Bindings, Cookies & Voucher Checker ───
 
 message DeleteHotspotUsersRequest {
-  string device_id = 1;
-  string mode = 2; // "profile" | "comment" | "expired"
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string mode = 2 [(buf.validate.field).string = {in: ["profile", "comment", "expired"]}]; // "profile" | "comment" | "expired"
   string value = 3; // nama profile atau batch comment
 }
 
@@ -717,7 +719,7 @@ message HotspotIPBinding {
 }
 
 message ListHotspotIPBindingsRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ListHotspotIPBindingsResponse {
@@ -725,12 +727,12 @@ message ListHotspotIPBindingsResponse {
 }
 
 message CreateHotspotIPBindingRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string mac_address = 2;
   string address = 3;
   string to_address = 4;
   string server = 5;
-  string type = 6;
+  string type = 6 [(buf.validate.field).string = {in: ["bypassed", "blocked", "regular"]}];
   string comment = 7;
   bool disabled = 8;
 }
@@ -741,8 +743,8 @@ message CreateHotspotIPBindingResponse {
 }
 
 message UpdateHotspotIPBindingRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
   string mac_address = 3;
   string address = 4;
   string to_address = 5;
@@ -758,8 +760,8 @@ message UpdateHotspotIPBindingResponse {
 }
 
 message DeleteHotspotIPBindingRequest {
-  string device_id = 1;
-  string ros_id = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeleteHotspotIPBindingResponse {
@@ -775,7 +777,7 @@ message HotspotCookie {
 }
 
 message ListHotspotCookiesRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ListHotspotCookiesResponse {
@@ -783,7 +785,7 @@ message ListHotspotCookiesResponse {
 }
 
 message DeleteHotspotCookieRequest {
-  string device_id = 1;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
   string ros_id = 2; // jika "all" atau kosong, hapus semua cookie
 }
 
@@ -792,8 +794,8 @@ message DeleteHotspotCookieResponse {
 }
 
 message CheckVoucherStatusRequest {
-  string device_id = 1;
-  string username = 2;
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string username = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message CheckVoucherStatusResponse {

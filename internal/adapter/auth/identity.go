@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-// Context keys for propagating the authenticated identity from the gin RBAC
+// Context keys for propagating the authenticated identity from the HTTP RBAC
 // middleware into downstream ConnectRPC handlers (via req.HTTP().Context()).
 // Handlers that need "who is calling" (audit, ownership checks) read it here.
 type ctxKey string

@@ -21,15 +21,9 @@ func (h *HotspotConnectHandler) CreateProfile(ctx context.Context, req *connect.
 	if err != nil {
 		return nil, err
 	}
-	if req.Msg.Profile == nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("profile required"))
-	}
 
 	params := ProfileParamsFromProto(req.Msg.Profile)
 	params.Name = hotspot.NormalizeProfileName(params.Name)
-	if params.Name == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("profile name required"))
-	}
 
 	if _, err := h.useCase.CreateProfile(ctx, driver, params); err != nil {
 		return nil, response.MapDomainError(err)
@@ -41,7 +35,7 @@ func (h *HotspotConnectHandler) CreateProfile(ctx context.Context, req *connect.
 	}
 
 	return connect.NewResponse(&devicepb.CreateHotspotProfileResponse{
-		Profile: ToProtoHotspotProfile(created),
+		Profile: toProtoHotspotProfile(created),
 		Message: fmt.Sprintf("profile %q created", params.Name),
 	}), nil
 }
@@ -51,12 +45,6 @@ func (h *HotspotConnectHandler) UpdateProfile(ctx context.Context, req *connect.
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id required"))
-	}
-	if req.Msg.Profile == nil {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("profile required"))
 	}
 
 	params := ProfileParamsFromProto(req.Msg.Profile)
@@ -70,7 +58,7 @@ func (h *HotspotConnectHandler) UpdateProfile(ctx context.Context, req *connect.
 	}
 
 	return connect.NewResponse(&devicepb.UpdateHotspotProfileResponse{
-		Profile: ToProtoHotspotProfile(updated),
+		Profile: toProtoHotspotProfile(updated),
 		Message: fmt.Sprintf("profile %q updated", updated.Name),
 	}), nil
 }
@@ -82,9 +70,6 @@ func (h *HotspotConnectHandler) DeleteProfile(ctx context.Context, req *connect.
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id required"))
 	}
 
 	res, err := h.useCase.DeleteProfile(ctx, driver, req.Msg.RosId)

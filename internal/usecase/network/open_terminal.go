@@ -49,4 +49,3 @@ func (u *OpenTerminalUseCase) Execute(ctx context.Context, deviceID string, cols
 	target := dev.ToTarget(creds)
 	return u.dialer(ctx, target, cols, rows)
 }
-

@@ -12,13 +12,13 @@ import (
 func NewReportServiceHandler(repo port.ReportingRepository, snapshotter port.SnapshotComputer) (string, http.Handler) {
 	handler := NewReportConnectHandler(repo, snapshotter)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
+	opts := iconnect.DefaultHandlerOptions()
 
 	serviceName := "polyglot.v1.ReportService"
-	mux.Handle("/"+serviceName+"/DailyReport", connect.NewUnaryHandler("/"+serviceName+"/DailyReport", handler.DailyReport, codecOpt))
-	mux.Handle("/"+serviceName+"/MonthlyReport", connect.NewUnaryHandler("/"+serviceName+"/MonthlyReport", handler.MonthlyReport, codecOpt))
-	mux.Handle("/"+serviceName+"/YearlyReport", connect.NewUnaryHandler("/"+serviceName+"/YearlyReport", handler.YearlyReport, codecOpt))
-	mux.Handle("/"+serviceName+"/RefreshSnapshot", connect.NewUnaryHandler("/"+serviceName+"/RefreshSnapshot", handler.RefreshSnapshot, codecOpt))
+	mux.Handle("/"+serviceName+"/DailyReport", connect.NewUnaryHandler("/"+serviceName+"/DailyReport", handler.DailyReport, opts...))
+	mux.Handle("/"+serviceName+"/MonthlyReport", connect.NewUnaryHandler("/"+serviceName+"/MonthlyReport", handler.MonthlyReport, opts...))
+	mux.Handle("/"+serviceName+"/YearlyReport", connect.NewUnaryHandler("/"+serviceName+"/YearlyReport", handler.YearlyReport, opts...))
+	mux.Handle("/"+serviceName+"/RefreshSnapshot", connect.NewUnaryHandler("/"+serviceName+"/RefreshSnapshot", handler.RefreshSnapshot, opts...))
 
 	return "/" + serviceName + "/", mux
 }

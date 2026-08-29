@@ -48,7 +48,6 @@ import (
 	"github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
-	metricsUC "github.com/quixiq/polyglot/internal/usecase/metrics"
 	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
@@ -58,6 +57,7 @@ import (
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
+	metricsUC "github.com/quixiq/polyglot/internal/usecase/metrics"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 	notificationUC "github.com/quixiq/polyglot/internal/usecase/notification"
 	portalUC "github.com/quixiq/polyglot/internal/usecase/portal"
@@ -77,7 +77,7 @@ type App struct {
 	pgStore       *postgres.Store
 	redisStore    *redisAdapter.Store
 	sseHub        *wsAdapter.SSEHub
-	pingStreamMgr *metricsUC.PingStreamManager
+	pingStreamMgr *metricsUC.PingStreamWorker
 }
 
 func New(ctx context.Context, cfg config.Config) (*App, error) {
@@ -122,13 +122,13 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	sseHub := wsAdapter.NewSSEHub()
 
 	eventHandler := whatsapp.NewEventHandler(pgStore, sseHub)
-	chatService := chatUC.NewChatService(pgStore)
+	chatService := chatUC.NewChatUseCase(pgStore)
 	waManager, err := whatsapp.NewSessionManager(cfg.DatabaseURL, pgStore, nil, eventHandler.MakeStatusCallback())
 	if err != nil {
 		logger.WithComponent("Polyglot").Warnf("failed to initialize WhatsApp SessionManager: %v", err)
 	}
 
-	convService := convUC.NewConversationService(pgStore)
+	convService := convUC.NewConversationUseCase(pgStore)
 	convService.SetPublisher(sseHub)
 
 	fsSkillStore, err := storageAdapter.NewFSSkillStore("data")
@@ -252,7 +252,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	metricsRepo := postgres.NewMetricsRepository(pgStore.DB())
 	metricsUseCase := deviceUC.NewManageMetricsUseCase(repo, metricsRepo, deviceAuthorizer)
 
-	pingStreamMgr := metricsUC.NewPingStreamManager(repo, metricsRepo, func(c context.Context, id string) (port.DeviceDriver, error) {
+	pingStreamMgr := metricsUC.NewPingStreamWorker(repo, metricsRepo, func(c context.Context, id string) (port.DeviceDriver, error) {
 		return reg.Get(c, id)
 	})
 	pingStreamMgr.Start(ctx)
@@ -393,7 +393,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		isolateWorker := billingUC.NewIsolateWorker(
 			subRepo, invRepo, customerRepo, planRepo, accountMgr, notifRepo, settingRepo,
 		)
-		waWorker := notificationUC.NewWaSenderWorker(notifRepo, waSender, settingRepo)
+		waWorker := notificationUC.NewWASenderWorker(notifRepo, waSender, settingRepo)
 		snapshotJob := func(ctx context.Context) error {
 			return reportingRepo.RecomputeDaily(ctx, "tenant-default", timeNowUTC())
 		}

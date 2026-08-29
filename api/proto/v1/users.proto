@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 // User adalah akun yang bisa mengakses sistem (owner/admin/agent/teknisi).
@@ -37,10 +39,10 @@ message ListUsersResponse {
 }
 
 message CreateUserRequest {
-  string username = 1;
-  string email = 2;
-  string password = 3;  // plaintext; di-hash bcrypt di server
-  string role = 4;      // role utama: owner|admin|agent|teknisi
+  string username = 1 [(buf.validate.field).string.min_len = 3];
+  string email = 2 [(buf.validate.field).string.email = true];
+  string password = 3 [(buf.validate.field).string.min_len = 8];  // plaintext; di-hash bcrypt di server
+  string role = 4 [(buf.validate.field).string.min_len = 1];      // role utama: owner|admin|agent|teknisi
   string full_name = 5;
   string phone_number = 6;
   string specialization = 7;
@@ -53,10 +55,10 @@ message CreateUserResponse {
 
 // UpdateUser bersifat full-update: kirim semua field yang ingin diubah.
 message UpdateUserRequest {
-  uint64 id = 1;
-  string username = 2;
-  string email = 3;
-  string role = 4;
+  uint64 id = 1 [(buf.validate.field).uint64.gt = 0];
+  string username = 2 [(buf.validate.field).string.min_len = 3];
+  string email = 3 [(buf.validate.field).string.email = true];
+  string role = 4 [(buf.validate.field).string.min_len = 1];
   string full_name = 5;
   string phone_number = 6;
   string specialization = 7;
@@ -68,8 +70,8 @@ message UpdateUserResponse {
 }
 
 message ResetPasswordRequest {
-  uint64 id = 1;
-  string new_password = 2;
+  uint64 id = 1 [(buf.validate.field).uint64.gt = 0];
+  string new_password = 2 [(buf.validate.field).string.min_len = 8];
 }
 
 message ResetPasswordResponse {
@@ -79,7 +81,7 @@ message ResetPasswordResponse {
 // ToggleActive membalik status is_active user; response mengembalikan user
 // dengan status terbaru.
 message ToggleActiveRequest {
-  uint64 id = 1;
+  uint64 id = 1 [(buf.validate.field).uint64.gt = 0];
 }
 
 message ToggleActiveResponse {
@@ -87,7 +89,7 @@ message ToggleActiveResponse {
 }
 
 message DeleteUserRequest {
-  uint64 id = 1;
+  uint64 id = 1 [(buf.validate.field).uint64.gt = 0];
 }
 
 message DeleteUserResponse {
@@ -95,7 +97,7 @@ message DeleteUserResponse {
 }
 
 message AssignDevicesRequest {
-  uint64 user_id = 1;
+  uint64 user_id = 1 [(buf.validate.field).uint64.gt = 0];
   repeated string device_ids = 2;
 }
 

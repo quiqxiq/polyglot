@@ -22,7 +22,7 @@ func (h *HotspotConnectHandler) ListProfiles(ctx context.Context, req *connect.R
 	}
 
 	return connect.NewResponse(&devicepb.ListHotspotProfilesResponse{
-		Profiles: ToProtoHotspotProfiles(profiles),
+		Profiles: toProtoHotspotProfiles(profiles),
 	}), nil
 }
 
@@ -42,6 +42,6 @@ func (h *HotspotConnectHandler) ListUsers(ctx context.Context, req *connect.Requ
 	}
 
 	return connect.NewResponse(&devicepb.ListHotspotUsersResponse{
-		Users: ToProtoHotspotUsers(users),
+		Users: toProtoHotspotUsers(users),
 	}), nil
 }

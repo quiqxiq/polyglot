@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 service BotService {
@@ -75,36 +77,36 @@ message Conversation {
 }
 
 message ListConversationsRequest {
-  string session_id = 1;
+  string session_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message ListConversationsResponse {
   repeated Conversation conversations = 1;
 }
 
 message GetConversationRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message GetConversationResponse {
   Conversation conversation = 1;
 }
 
 message TakeOverConversationRequest {
-  string id = 1;
-  string technician_id = 2;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string technician_id = 2 [(buf.validate.field).string.min_len = 1];
 }
 message TakeOverConversationResponse {
   string message = 1;
 }
 
 message ResetConversationBotRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message ResetConversationBotResponse {
   string message = 1;
 }
 
 message CloseConversationRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message CloseConversationResponse {
   string message = 1;
@@ -121,7 +123,7 @@ message ConversationContextMessage {
 }
 
 message GetConversationContextRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetConversationContextResponse {
@@ -137,7 +139,7 @@ message GetConversationContextResponse {
 }
 
 message ResetRateLimitRequest {
-  string phone_number = 1;
+  string phone_number = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ResetRateLimitResponse {
@@ -146,7 +148,7 @@ message ResetRateLimitResponse {
 }
 
 message GetRateLimitStatusRequest {
-  string phone_number = 1;
+  string phone_number = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetRateLimitStatusResponse {
@@ -212,7 +214,7 @@ message ListSkillsResponse {
 }
 
 message GetSkillRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string user_id = 2;
 }
 
@@ -222,7 +224,7 @@ message GetSkillResponse {
 
 message CreateSkillRequest {
   string user_id = 1;
-  string name = 2;
+  string name = 2 [(buf.validate.field).string.min_len = 1];
   string description = 3;
   string content = 4;
   string license = 5;
@@ -236,7 +238,7 @@ message CreateSkillResponse {
 }
 
 message UpdateSkillRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string user_id = 2;
   string name = 3;
   string description = 4;
@@ -252,7 +254,7 @@ message UpdateSkillResponse {
 }
 
 message DeleteSkillRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string user_id = 2;
 }
 
@@ -262,7 +264,7 @@ message DeleteSkillResponse {
 }
 
 message ExportSkillRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ExportSkillResponse {
@@ -271,7 +273,7 @@ message ExportSkillResponse {
 }
 
 message ImportSkillRequest {
-  bytes archive = 1;
+  bytes archive = 1 [(buf.validate.field).bytes.min_len = 1];
   string user_id = 2;
 }
 
@@ -280,7 +282,7 @@ message ImportSkillResponse {
 }
 
 message ListResourcesRequest {
-  string skill_id = 1;
+  string skill_id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ListResourcesResponse {
@@ -288,8 +290,8 @@ message ListResourcesResponse {
 }
 
 message GetResourceRequest {
-  string skill_id = 1;
-  string path = 2;
+  string skill_id = 1 [(buf.validate.field).string.min_len = 1];
+  string path = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message GetResourceResponse {
@@ -298,8 +300,8 @@ message GetResourceResponse {
 }
 
 message SaveResourceRequest {
-  string skill_id = 1;
-  string path = 2;
+  string skill_id = 1 [(buf.validate.field).string.min_len = 1];
+  string path = 2 [(buf.validate.field).string.min_len = 1];
   bytes data = 3;
 }
 
@@ -309,8 +311,8 @@ message SaveResourceResponse {
 }
 
 message DeleteResourceRequest {
-  string skill_id = 1;
-  string path = 2;
+  string skill_id = 1 [(buf.validate.field).string.min_len = 1];
+  string path = 2 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeleteResourceResponse {
@@ -325,7 +327,7 @@ message ListGitReposResponse {
 }
 
 message AddGitRepoRequest {
-  string url = 1;
+  string url = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message AddGitRepoResponse {
@@ -333,7 +335,7 @@ message AddGitRepoResponse {
 }
 
 message UpdateGitRepoRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string url = 2;
   optional bool enabled = 3;
 }
@@ -343,7 +345,7 @@ message UpdateGitRepoResponse {
 }
 
 message DeleteGitRepoRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message DeleteGitRepoResponse {
@@ -352,7 +354,7 @@ message DeleteGitRepoResponse {
 }
 
 message SyncGitRepoRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message SyncGitRepoResponse {
@@ -361,7 +363,7 @@ message SyncGitRepoResponse {
 }
 
 message ToggleGitRepoRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message ToggleGitRepoResponse {
@@ -369,7 +371,7 @@ message ToggleGitRepoResponse {
 }
 
 message ToggleSkillRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string user_id = 2;
   bool enabled = 3;
 }
@@ -386,7 +388,7 @@ message GetGlobalPromptResponse {
 }
 
 message SaveGlobalPromptRequest {
-  string content = 1;
+  string content = 1 [(buf.validate.field).string.min_len = 1];
 }
 
 message SaveGlobalPromptResponse {
@@ -420,8 +422,8 @@ message ListLLMConfigsResponse {
 }
 
 message CreateLLMConfigRequest {
-  string provider = 1;
-  string model_name = 2;
+  string provider = 1 [(buf.validate.field).string.min_len = 1];
+  string model_name = 2 [(buf.validate.field).string.min_len = 1];
   string api_key = 3;
   string base_url = 4;
   double temperature = 5;
@@ -437,7 +439,7 @@ message CreateLLMConfigResponse {
 }
 
 message UpdateLLMConfigRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string provider = 2;
   string model_name = 3;
   string api_key = 4;
@@ -455,14 +457,14 @@ message UpdateLLMConfigResponse {
 }
 
 message ActivateLLMConfigRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message ActivateLLMConfigResponse {
   string message = 1;
 }
 
 message TestLLMConfigRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string test_prompt = 2;
 }
 message TestLLMConfigResponse {
@@ -472,7 +474,7 @@ message TestLLMConfigResponse {
 }
 
 message DeleteLLMConfigRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message DeleteLLMConfigResponse {
   string message = 1;
@@ -497,7 +499,7 @@ message ListTechniciansResponse {
 }
 
 message CreateTechnicianRequest {
-  string name = 1;
+  string name = 1 [(buf.validate.field).string.min_len = 1];
   string phone_number = 2;
   string email = 3;
 }
@@ -506,8 +508,8 @@ message CreateTechnicianResponse {
 }
 
 message UpdateTechnicianRequest {
-  string id = 1;
-  string name = 2;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string name = 2 [(buf.validate.field).string.min_len = 1];
   string phone_number = 3;
   string email = 4;
 }
@@ -516,7 +518,7 @@ message UpdateTechnicianResponse {
 }
 
 message ToggleTechnicianActiveRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   bool is_active = 2;
 }
 message ToggleTechnicianActiveResponse {
@@ -525,7 +527,7 @@ message ToggleTechnicianActiveResponse {
 }
 
 message DeleteTechnicianRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
 }
 message DeleteTechnicianResponse {
   string message = 1;

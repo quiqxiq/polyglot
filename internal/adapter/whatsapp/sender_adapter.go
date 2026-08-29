@@ -14,7 +14,7 @@ import (
 	"github.com/quixiq/polyglot/pkg/phone"
 )
 
-var ErrNoConnectedSession = errors.New("tidak ada sesi WhatsApp yang terhubung")
+var ErrNoConnectedSession = errors.New("no connected whatsapp session")
 
 type SenderAdapter struct {
 	sessions *whatsapp.SessionManager
@@ -33,7 +33,7 @@ func NewSenderAdapter(sessions *whatsapp.SessionManager, list func(ctx context.C
 func (a *SenderAdapter) Send(ctx context.Context, rawPhone, content string) error {
 	to := phone.Normalize(rawPhone)
 	if to == "" {
-		return fmt.Errorf("nomor tujuan tidak valid: %q", rawPhone)
+		return fmt.Errorf("invalid destination number: %q", rawPhone)
 	}
 	sessionID, err := a.connectedSessionID(ctx)
 	if err != nil {

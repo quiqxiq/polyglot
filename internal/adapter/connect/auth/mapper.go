@@ -19,13 +19,13 @@ func DomainUserToPb(u *customer.User, roles []string) *devicepb.User {
 	}
 
 	return &devicepb.User{
-		Id:             uint64(u.ID),
-		Username:       u.Username,
-		Email:          u.Email,
-		Role:           primaryRole,
-		Roles:          roles,
-		IsActive:       u.IsActive,
-		FullName:       u.FullName,
+		Id:                uint64(u.ID),
+		Username:          u.Username,
+		Email:             u.Email,
+		Role:              primaryRole,
+		Roles:             roles,
+		IsActive:          u.IsActive,
+		FullName:          u.FullName,
 		PhoneNumber:       u.PhoneNumber,
 		Specialization:    u.Specialization,
 		AssignedDeviceIds: u.AssignedDeviceIDs,

@@ -23,7 +23,7 @@ func (h *PPPConnectHandler) ListProfiles(ctx context.Context, req *connect.Reque
 	}
 
 	return connect.NewResponse(&devicepb.ListPPPProfilesResponse{
-		Profiles: ToProtoPPPProfiles(profiles),
+		Profiles: toProtoPPPProfiles(profiles),
 	}), nil
 }
 
@@ -33,9 +33,6 @@ func (h *PPPConnectHandler) GetProfile(ctx context.Context, req *connect.Request
 	if err != nil {
 		return nil, err
 	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id is required"))
-	}
 
 	profile, err := h.useCase.GetProfile(ctx, driver, req.Msg.RosId)
 	if err != nil {
@@ -43,7 +40,7 @@ func (h *PPPConnectHandler) GetProfile(ctx context.Context, req *connect.Request
 	}
 
 	return connect.NewResponse(&devicepb.GetPPPProfileResponse{
-		Profile: ToProtoPPPProfile(profile),
+		Profile: toProtoPPPProfile(profile),
 	}), nil
 }
 
@@ -52,9 +49,6 @@ func (h *PPPConnectHandler) CreateProfile(ctx context.Context, req *connect.Requ
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.Name == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("name is required"))
 	}
 
 	params := FromProtoCreateProfileRequest(req.Msg)
@@ -71,7 +65,7 @@ func (h *PPPConnectHandler) CreateProfile(ctx context.Context, req *connect.Requ
 	}
 
 	return connect.NewResponse(&devicepb.CreatePPPProfileResponse{
-		Profile: ToProtoPPPProfile(profiles[0]),
+		Profile: toProtoPPPProfile(profiles[0]),
 		Message: fmt.Sprintf("profile %q created successfully", req.Msg.Name),
 	}), nil
 }
@@ -81,9 +75,6 @@ func (h *PPPConnectHandler) UpdateProfile(ctx context.Context, req *connect.Requ
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id is required"))
 	}
 
 	params := FromProtoUpdateProfileRequest(req.Msg)
@@ -97,7 +88,7 @@ func (h *PPPConnectHandler) UpdateProfile(ctx context.Context, req *connect.Requ
 	}
 
 	return connect.NewResponse(&devicepb.UpdatePPPProfileResponse{
-		Profile: ToProtoPPPProfile(profile),
+		Profile: toProtoPPPProfile(profile),
 		Message: fmt.Sprintf("profile %q updated successfully", profile.Name),
 	}), nil
 }
@@ -107,9 +98,6 @@ func (h *PPPConnectHandler) DeleteProfile(ctx context.Context, req *connect.Requ
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id is required"))
 	}
 
 	res, err := h.useCase.RemoveProfile(ctx, driver, req.Msg.RosId)

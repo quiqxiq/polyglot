@@ -2,13 +2,10 @@ package firewall
 
 import (
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik/internal/rosutil"
 )
 
-func setIfNonEmpty(args map[string]string, key, value string) {
-	if value != "" {
-		args[key] = value
-	}
-}
+var setIfNonEmpty = rosutil.SetIfNonEmpty
 
 // NewPrintFiltersCommand builds the command.Command for /ip/firewall/filter/print.
 func NewPrintFiltersCommand(p FirewallFilterPrintParams) command.Command {

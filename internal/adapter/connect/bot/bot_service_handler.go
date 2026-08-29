@@ -23,7 +23,7 @@ type ConversationContextProvider interface {
 }
 
 type BotConnectHandler struct {
-	convService     *convUC.ConversationService
+	convService     *convUC.ConversationUseCase
 	contextProvider ConversationContextProvider
 	skillHandler    *SkillConnectHandler
 	llmRepo         port.LLMConfigRepository
@@ -31,7 +31,7 @@ type BotConnectHandler struct {
 }
 
 func NewBotConnectHandler(
-	convService *convUC.ConversationService,
+	convService *convUC.ConversationUseCase,
 	contextProvider ConversationContextProvider,
 	skillUC *skillUC.ManageSkillUseCase,
 	llmRepo port.LLMConfigRepository,
@@ -47,7 +47,7 @@ func NewBotConnectHandler(
 }
 
 func NewBotServiceHandler(
-	convService *convUC.ConversationService,
+	convService *convUC.ConversationUseCase,
 	contextProvider ConversationContextProvider,
 	skillUC *skillUC.ManageSkillUseCase,
 	llmRepo port.LLMConfigRepository,
@@ -55,48 +55,48 @@ func NewBotServiceHandler(
 ) (string, http.Handler) {
 	handler := NewBotConnectHandler(convService, contextProvider, skillUC, llmRepo, encryptionKey)
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
+	opts := iconnect.DefaultHandlerOptions()
 
 	serviceName := "polyglot.v1.BotService"
 	mux.Handle("/"+serviceName+"/ListConversations", connect.NewUnaryHandler(
 		"/"+serviceName+"/ListConversations",
 		handler.ListConversations,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/GetConversation", connect.NewUnaryHandler(
 		"/"+serviceName+"/GetConversation",
 		handler.GetConversation,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/GetConversationContext", connect.NewUnaryHandler(
 		"/"+serviceName+"/GetConversationContext",
 		handler.GetConversationContext,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/TakeOverConversation", connect.NewUnaryHandler(
 		"/"+serviceName+"/TakeOverConversation",
 		handler.TakeOverConversation,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/ResetConversationBot", connect.NewUnaryHandler(
 		"/"+serviceName+"/ResetConversationBot",
 		handler.ResetConversationBot,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/CloseConversation", connect.NewUnaryHandler(
 		"/"+serviceName+"/CloseConversation",
 		handler.CloseConversation,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/ResetRateLimit", connect.NewUnaryHandler(
 		"/"+serviceName+"/ResetRateLimit",
 		handler.ResetRateLimit,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/GetRateLimitStatus", connect.NewUnaryHandler(
 		"/"+serviceName+"/GetRateLimitStatus",
 		handler.GetRateLimitStatus,
-		codecOpt,
+		opts...,
 	))
 
 	// Skill RPCs (LocalAI Standard)
@@ -104,102 +104,102 @@ func NewBotServiceHandler(
 		mux.Handle("/"+serviceName+"/ListSkills", connect.NewUnaryHandler(
 			"/"+serviceName+"/ListSkills",
 			handler.skillHandler.ListSkills,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/GetSkill", connect.NewUnaryHandler(
 			"/"+serviceName+"/GetSkill",
 			handler.skillHandler.GetSkill,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/CreateSkill", connect.NewUnaryHandler(
 			"/"+serviceName+"/CreateSkill",
 			handler.skillHandler.CreateSkill,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/UpdateSkill", connect.NewUnaryHandler(
 			"/"+serviceName+"/UpdateSkill",
 			handler.skillHandler.UpdateSkill,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/DeleteSkill", connect.NewUnaryHandler(
 			"/"+serviceName+"/DeleteSkill",
 			handler.skillHandler.DeleteSkill,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/ExportSkill", connect.NewUnaryHandler(
 			"/"+serviceName+"/ExportSkill",
 			handler.skillHandler.ExportSkill,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/ImportSkill", connect.NewUnaryHandler(
 			"/"+serviceName+"/ImportSkill",
 			handler.skillHandler.ImportSkill,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/ListResources", connect.NewUnaryHandler(
 			"/"+serviceName+"/ListResources",
 			handler.skillHandler.ListResources,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/GetResource", connect.NewUnaryHandler(
 			"/"+serviceName+"/GetResource",
 			handler.skillHandler.GetResource,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/SaveResource", connect.NewUnaryHandler(
 			"/"+serviceName+"/SaveResource",
 			handler.skillHandler.SaveResource,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/DeleteResource", connect.NewUnaryHandler(
 			"/"+serviceName+"/DeleteResource",
 			handler.skillHandler.DeleteResource,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/ListGitRepos", connect.NewUnaryHandler(
 			"/"+serviceName+"/ListGitRepos",
 			handler.skillHandler.ListGitRepos,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/AddGitRepo", connect.NewUnaryHandler(
 			"/"+serviceName+"/AddGitRepo",
 			handler.skillHandler.AddGitRepo,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/UpdateGitRepo", connect.NewUnaryHandler(
 			"/"+serviceName+"/UpdateGitRepo",
 			handler.skillHandler.UpdateGitRepo,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/DeleteGitRepo", connect.NewUnaryHandler(
 			"/"+serviceName+"/DeleteGitRepo",
 			handler.skillHandler.DeleteGitRepo,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/SyncGitRepo", connect.NewUnaryHandler(
 			"/"+serviceName+"/SyncGitRepo",
 			handler.skillHandler.SyncGitRepo,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/ToggleGitRepo", connect.NewUnaryHandler(
 			"/"+serviceName+"/ToggleGitRepo",
 			handler.skillHandler.ToggleGitRepo,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/ToggleSkill", connect.NewUnaryHandler(
 			"/"+serviceName+"/ToggleSkill",
 			handler.skillHandler.ToggleSkill,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/GetGlobalPrompt", connect.NewUnaryHandler(
 			"/"+serviceName+"/GetGlobalPrompt",
 			handler.skillHandler.GetGlobalPrompt,
-			codecOpt,
+			opts...,
 		))
 		mux.Handle("/"+serviceName+"/SaveGlobalPrompt", connect.NewUnaryHandler(
 			"/"+serviceName+"/SaveGlobalPrompt",
 			handler.skillHandler.SaveGlobalPrompt,
-			codecOpt,
+			opts...,
 		))
 	}
 
@@ -207,59 +207,59 @@ func NewBotServiceHandler(
 	mux.Handle("/"+serviceName+"/ListLLMConfigs", connect.NewUnaryHandler(
 		"/"+serviceName+"/ListLLMConfigs",
 		handler.ListLLMConfigs,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/CreateLLMConfig", connect.NewUnaryHandler(
 		"/"+serviceName+"/CreateLLMConfig",
 		handler.CreateLLMConfig,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/UpdateLLMConfig", connect.NewUnaryHandler(
 		"/"+serviceName+"/UpdateLLMConfig",
 		handler.UpdateLLMConfig,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/ActivateLLMConfig", connect.NewUnaryHandler(
 		"/"+serviceName+"/ActivateLLMConfig",
 		handler.ActivateLLMConfig,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/TestLLMConfig", connect.NewUnaryHandler(
 		"/"+serviceName+"/TestLLMConfig",
 		handler.TestLLMConfig,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/DeleteLLMConfig", connect.NewUnaryHandler(
 		"/"+serviceName+"/DeleteLLMConfig",
 		handler.DeleteLLMConfig,
-		codecOpt,
+		opts...,
 	))
 
 	// Technician RPCs
 	mux.Handle("/"+serviceName+"/ListTechnicians", connect.NewUnaryHandler(
 		"/"+serviceName+"/ListTechnicians",
 		handler.ListTechnicians,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/CreateTechnician", connect.NewUnaryHandler(
 		"/"+serviceName+"/CreateTechnician",
 		handler.CreateTechnician,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/UpdateTechnician", connect.NewUnaryHandler(
 		"/"+serviceName+"/UpdateTechnician",
 		handler.UpdateTechnician,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/ToggleTechnicianActive", connect.NewUnaryHandler(
 		"/"+serviceName+"/ToggleTechnicianActive",
 		handler.ToggleTechnicianActive,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/DeleteTechnician", connect.NewUnaryHandler(
 		"/"+serviceName+"/DeleteTechnician",
 		handler.DeleteTechnician,
-		codecOpt,
+		opts...,
 	))
 
 	return "/" + serviceName + "/", mux

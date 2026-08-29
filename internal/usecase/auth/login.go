@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -14,13 +13,9 @@ import (
 	"github.com/quixiq/polyglot/pkg/logger"
 )
 
-var (
-	ErrInvalidCredentials = errors.New("invalid username or password")
-	ErrAccountInactive    = errors.New("account is disabled")
-	ErrTooManyAttempts    = errors.New("too many login attempts, try again later")
-	ErrUserNotFound       = errors.New("user not found")
-)
-
+// Error sentinels for this use case live in the domain layer
+// (internal/domain/customer, internal/domain/session) per
+// DEVELOPMENT-GUIDELINES.md §6.
 const (
 	MaxLoginAttempts = 5
 	RateLimitWindow  = "15m"
@@ -65,7 +60,7 @@ func (u *AuthUseCase) TokenService() port.TokenService {
 
 func (u *AuthUseCase) Login(ctx context.Context, username, password, clientIP string) (*LoginResult, error) {
 	if username == "" || password == "" {
-		return nil, ErrInvalidCredentials
+		return nil, customer.ErrInvalidCredentials
 	}
 
 	// 1. Check rate limit
@@ -74,7 +69,7 @@ func (u *AuthUseCase) Login(ctx context.Context, username, password, clientIP st
 		attempts, err := u.rateLimit.GetRateLimitCount(ctx, rlScope, RateLimitWindow)
 		if err == nil && attempts >= MaxLoginAttempts {
 			logger.WithComponent("AuthUseCase").WithField("username", username).Warn("login blocked: too many failed attempts")
-			return nil, ErrTooManyAttempts
+			return nil, customer.ErrTooManyAttempts
 		}
 	}
 
@@ -84,11 +79,11 @@ func (u *AuthUseCase) Login(ctx context.Context, username, password, clientIP st
 		if u.rateLimit != nil {
 			_, _ = u.rateLimit.IncrementRateLimit(ctx, rlScope, RateLimitWindow, RateLimitTTL)
 		}
-		return nil, ErrInvalidCredentials
+		return nil, customer.ErrInvalidCredentials
 	}
 
 	if !user.IsActive {
-		return nil, ErrAccountInactive
+		return nil, customer.ErrAccountInactive
 	}
 
 	// 3. Verify password
@@ -96,7 +91,7 @@ func (u *AuthUseCase) Login(ctx context.Context, username, password, clientIP st
 		if u.rateLimit != nil {
 			_, _ = u.rateLimit.IncrementRateLimit(ctx, rlScope, RateLimitWindow, RateLimitTTL)
 		}
-		return nil, ErrInvalidCredentials
+		return nil, customer.ErrInvalidCredentials
 	}
 
 	// 4. Reset rate limit on success
@@ -151,13 +146,13 @@ func (u *AuthUseCase) Login(ctx context.Context, username, password, clientIP st
 func (u *AuthUseCase) UpdateProfile(ctx context.Context, userID uint, fullName, phone, email, specialization string) (*customer.User, error) {
 	user, err := u.userRepo.FindByID(ctx, userID)
 	if err != nil {
-		return nil, ErrUserNotFound
+		return nil, customer.ErrUserNotFound
 	}
 
 	email = strings.TrimSpace(email)
 	if email != "" && email != user.Email {
 		if existing, _ := u.userRepo.FindByEmail(ctx, email); existing != nil && existing.ID != userID {
-			return nil, errors.New("email already in use by another account")
+			return nil, customer.ErrEmailAlreadyUsed
 		}
 		user.Email = email
 	}
@@ -178,16 +173,16 @@ func (u *AuthUseCase) UpdateProfile(ctx context.Context, userID uint, fullName, 
 
 func (u *AuthUseCase) ChangePassword(ctx context.Context, userID uint, oldPassword, newPassword string) error {
 	if len(newPassword) < 8 {
-		return errors.New("new password must be at least 8 characters")
+		return customer.ErrPasswordTooShort
 	}
 
 	user, err := u.userRepo.FindByID(ctx, userID)
 	if err != nil {
-		return ErrUserNotFound
+		return customer.ErrUserNotFound
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(oldPassword)); err != nil {
-		return errors.New("current password is incorrect")
+		return customer.ErrWrongPassword
 	}
 
 	newHash, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
@@ -202,4 +197,3 @@ func (u *AuthUseCase) ChangePassword(ctx context.Context, userID uint, oldPasswo
 	logger.WithComponent("AuthUseCase").WithField("user_id", userID).Info("user password changed successfully")
 	return nil
 }
-

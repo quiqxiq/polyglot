@@ -2,13 +2,10 @@ package ppp
 
 import (
 	"github.com/quixiq/polyglot/internal/domain/command"
+	"github.com/quixiq/polyglot/internal/driver/mikrotik/internal/rosutil"
 )
 
-func setIfNonEmpty(args map[string]string, key, value string) {
-	if value != "" {
-		args[key] = value
-	}
-}
+var setIfNonEmpty = rosutil.SetIfNonEmpty
 
 // NewAddSecretCommand builds the command.Command for /ppp/secret/add.
 func NewAddSecretCommand(p PPPoESecretParams) command.Command {

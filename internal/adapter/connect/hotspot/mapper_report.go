@@ -7,9 +7,9 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-// ToProtoHotspotReports converts Mikhmon transaction records to proto list,
+// toProtoHotspotReports converts Mikhmon transaction records to proto list,
 // converting the Price string into a float64 (proto field is double).
-func ToProtoHotspotReports(records []port.MikhmonTransaction) []*devicepb.HotspotReport {
+func toProtoHotspotReports(records []port.MikhmonTransaction) []*devicepb.HotspotReport {
 	pbReports := make([]*devicepb.HotspotReport, len(records))
 	for i, r := range records {
 		price, _ := strconv.ParseFloat(r.Price, 64)

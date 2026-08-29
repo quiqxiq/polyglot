@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/ping"
@@ -18,8 +18,8 @@ import (
 // DriverGetter fetches an active port.DeviceDriver by device ID.
 type DriverGetter func(ctx context.Context, deviceID string) (port.DeviceDriver, error)
 
-// PingStreamManager oversees continuous background streaming ping collection for enabled routers.
-type PingStreamManager struct {
+// PingStreamWorker oversees continuous background streaming ping collection for enabled routers.
+type PingStreamWorker struct {
 	deviceRepo   port.DeviceRepository
 	metricsRepo  port.MetricsRepository
 	driverGetter DriverGetter
@@ -29,13 +29,13 @@ type PingStreamManager struct {
 	running  bool
 }
 
-// NewPingStreamManager constructs a new PingStreamManager.
-func NewPingStreamManager(
+// NewPingStreamWorker constructs a new PingStreamWorker.
+func NewPingStreamWorker(
 	deviceRepo port.DeviceRepository,
 	metricsRepo port.MetricsRepository,
 	getter DriverGetter,
-) *PingStreamManager {
-	return &PingStreamManager{
+) *PingStreamWorker {
+	return &PingStreamWorker{
 		deviceRepo:   deviceRepo,
 		metricsRepo:  metricsRepo,
 		driverGetter: getter,
@@ -44,7 +44,7 @@ func NewPingStreamManager(
 }
 
 // Start launches the supervisor loop and retention cleanup worker.
-func (m *PingStreamManager) Start(ctx context.Context) {
+func (m *PingStreamWorker) Start(ctx context.Context) {
 	m.mu.Lock()
 	if m.running {
 		m.mu.Unlock()
@@ -58,7 +58,7 @@ func (m *PingStreamManager) Start(ctx context.Context) {
 }
 
 // Stop terminates all active ping streams.
-func (m *PingStreamManager) Stop() {
+func (m *PingStreamWorker) Stop() {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	m.running = false
@@ -68,7 +68,7 @@ func (m *PingStreamManager) Stop() {
 	}
 }
 
-func (m *PingStreamManager) supervisorLoop(ctx context.Context) {
+func (m *PingStreamWorker) supervisorLoop(ctx context.Context) {
 	ticker := time.NewTicker(10 * time.Second)
 	defer ticker.Stop()
 
@@ -86,7 +86,7 @@ func (m *PingStreamManager) supervisorLoop(ctx context.Context) {
 	}
 }
 
-func (m *PingStreamManager) syncActiveStreams(ctx context.Context) {
+func (m *PingStreamWorker) syncActiveStreams(ctx context.Context) {
 	if m.deviceRepo == nil || m.metricsRepo == nil {
 		return
 	}
@@ -116,7 +116,7 @@ func (m *PingStreamManager) syncActiveStreams(ctx context.Context) {
 		if _, stillActive := activeDeviceMap[id]; !stillActive {
 			cancel()
 			delete(m.cancelFn, id)
-			logger.WithComponent("PingStreamManager").WithField("device_id", id).Info("background ping stream stopped")
+			logger.WithComponent("PingStreamWorker").WithField("device_id", id).Info("background ping stream stopped")
 		}
 	}
 
@@ -126,7 +126,7 @@ func (m *PingStreamManager) syncActiveStreams(ctx context.Context) {
 			streamCtx, cancel := context.WithCancel(ctx)
 			m.cancelFn[id] = cancel
 			go m.runDeviceStream(streamCtx, dev)
-			logger.WithComponent("PingStreamManager").WithFields(map[string]any{
+			logger.WithComponent("PingStreamWorker").WithFields(map[string]any{
 				"device_id": id,
 				"target":    dev.PingConfig().Target,
 			}).Info("background ping stream started")
@@ -134,7 +134,7 @@ func (m *PingStreamManager) syncActiveStreams(ctx context.Context) {
 	}
 }
 
-func (m *PingStreamManager) runDeviceStream(ctx context.Context, dev device.Device) {
+func (m *PingStreamWorker) runDeviceStream(ctx context.Context, dev device.Device) {
 	cfg := dev.PingConfig()
 	target := cfg.Target
 	if target == "" {
@@ -168,7 +168,13 @@ func (m *PingStreamManager) runDeviceStream(ctx context.Context, dev device.Devi
 			continue
 		}
 
-		pingCmd := system.NewPingStreamCommand(target)
+		pingCmd := command.Command{
+			Raw: "/ping",
+			Args: map[string]string{
+				"address":  target,
+				"interval": "1s",
+			},
+		}
 		handle, err := sDrv.Stream(ctx, pingCmd)
 		if err != nil {
 			time.Sleep(3 * time.Second)
@@ -187,7 +193,7 @@ func (m *PingStreamManager) runDeviceStream(ctx context.Context, dev device.Devi
 	}
 }
 
-func (m *PingStreamManager) consumeStream(
+func (m *PingStreamWorker) consumeStream(
 	ctx context.Context,
 	deviceID string,
 	target string,
@@ -268,7 +274,7 @@ func (m *PingStreamManager) consumeStream(
 	}
 }
 
-func (m *PingStreamManager) cleanupLoop(ctx context.Context) {
+func (m *PingStreamWorker) cleanupLoop(ctx context.Context) {
 	ticker := time.NewTicker(1 * time.Hour)
 	defer ticker.Stop()
 
@@ -287,7 +293,7 @@ func (m *PingStreamManager) cleanupLoop(ctx context.Context) {
 					retentionDays = 7
 				}
 				if err := m.metricsRepo.CleanupExpiredMetrics(ctx, dev.ID, retentionDays); err != nil {
-					logger.WithComponent("PingStreamManager").WithField("device_id", dev.ID).Warn(fmt.Sprintf("cleanup metrics error: %v", err))
+					logger.WithComponent("PingStreamWorker").WithField("device_id", dev.ID).Warn(fmt.Sprintf("cleanup metrics error: %v", err))
 				}
 			}
 		}

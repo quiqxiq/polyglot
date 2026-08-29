@@ -302,6 +302,8 @@ polyglot/
 │   └── templates/
 │
 ├── pkg/
+│   ├── fault/
+│   │   └── fault.go
 │   ├── logger/
 │   │   └── logger.go
 │   ├── ping/
@@ -431,7 +433,8 @@ func (u *ManageUserUseCase) GetUser(ctx context.Context, id int64) (*customer.Us
 - Tidak ada `else` setelah cabang `if` yang sudah `return`/`continue`/`break`.
 
 ### 3.2 Error Handling & Logging
-- Wrap error dengan `%w` dan konteks operasi: `fmt.Errorf("find user %d: %w", id, err)`.
+- Sentinel error **hanya** didefinisikan di `internal/domain/<domain>/errors.go` via `fault.New(fault.KindX, "domain: message")` — pesan bahasa Inggris, prefix domain. Dilarang mendeklarasikan sentinel di `usecase`/`port`/`adapter`.
+- Wrap error dengan `%w` dan konteks operasi: `fmt.Errorf("find user %d: %w", id, err)`. Untuk error tanpa sentinel yang perlu klasifikasi transport: `fault.Wrap(fault.KindUnavailable, err)`.
 - Jangan buang error dengan `_` tanpa komentar alasan.
 - Gunakan `pkg/logger`:
 ```go
@@ -439,7 +442,7 @@ logger.WithComponent("DeviceConnect").WithFields(map[string]any{
     "device_id": req.Msg.DeviceId,
 }).Info("fetching device status")
 ```
-- Pemetaan error domain ke ConnectRPC code via `pkg/response/errors.go` (`response.MapDomainError(err)`).
+- Pemetaan error domain ke ConnectRPC code **hanya** via `pkg/response/errors.go` (`response.MapDomainError(err)`), yang membaca `fault.KindOf`. Handler dilarang mengklasifikasi error dengan `errors.Is` + `connect.NewError` sendiri.
 
 ### 3.3 Concurrency & Context
 - `context.Context` **selalu** parameter pertama, **tidak pernah** field struct.

@@ -3,15 +3,11 @@ package port
 import (
 	"context"
 	"encoding/json"
-	"errors"
 )
 
-// Kesalahan umum payment gateway.
-var (
-	ErrGatewayDisabled   = errors.New("payment gateway tidak aktif")
-	ErrGatewayBadSign    = errors.New("signature callback tidak valid")
-	ErrGatewayUnknownRef = errors.New("external_id tidak dikenal")
-)
+// Error sentinels untuk payment gateway tinggal di
+// internal/domain/billing/errors.go (ErrGatewayDisabled, ErrGatewayBadSign,
+// ErrGatewayUnknownRef) per DEVELOPMENT-GUIDELINES.md §6.
 
 // ChargeRequest adalah permintaan pembuatan tagihan online.
 type ChargeRequest struct {

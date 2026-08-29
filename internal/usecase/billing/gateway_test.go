@@ -119,7 +119,7 @@ func TestWebhook_BadSignature_AndUnknownRef(t *testing.T) {
 	gateway.ParseErr = nil
 	_, _, err = usecase.HandleWebhook(context.Background(),
 		[]byte(`{"reference":"UNKNOWN","merchant_ref":"U","status":"PAID","total_amount":100}`), "sig")
-	assert.ErrorContains(t, err, "tidak dikenal")
+	assert.ErrorIs(t, err, domainBilling.ErrGatewayUnknownRef)
 }
 
 func TestCreateForInvoice_AlreadyPaid(t *testing.T) {
@@ -132,7 +132,7 @@ func TestCreateForInvoice_AlreadyPaid(t *testing.T) {
 	require.NoError(t, invoices.Save(context.Background(), paid))
 
 	_, _, err := usecase.CreateForInvoice(context.Background(), "inv-paid", "", 60)
-	assert.ErrorIs(t, err, port.ErrInvoiceAlreadyPaid)
+	assert.ErrorIs(t, err, domainBilling.ErrInvoiceAlreadyPaid)
 }
 
 func TestIsolateWorker_ProvisionStatusLifecycle(t *testing.T) {

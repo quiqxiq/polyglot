@@ -87,7 +87,7 @@ func (r *PortalRepository) ConsumeOTP(ctx context.Context, phone, codeHash strin
 			Where("phone = ? AND consumed_at IS NULL AND expires_at > ?", phone, time.Now()).
 			Order("created_at desc").First(&m).Error
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return port.ErrOTPNotFound
+			return domainCustomer.ErrOTPNotFound
 		}
 		if err != nil {
 			return err
@@ -96,7 +96,7 @@ func (r *PortalRepository) ConsumeOTP(ctx context.Context, phone, codeHash strin
 		if m.Attempts >= maxAttempts {
 			locked = true
 			tx.Model(&m).Update("consumed_at", now)
-			return port.ErrOTPLocked
+			return domainCustomer.ErrOTPLocked
 		}
 		if m.CodeHash != codeHash {
 			newAttempts := m.Attempts + 1
@@ -107,14 +107,14 @@ func (r *PortalRepository) ConsumeOTP(ctx context.Context, phone, codeHash strin
 			}
 			tx.Model(&m).Updates(updates)
 			if locked {
-				return port.ErrOTPLocked
+				return domainCustomer.ErrOTPLocked
 			}
 			return nil
 		}
 		matched = true
 		return tx.Model(&m).Update("consumed_at", now).Error
 	})
-	if errors.Is(err, port.ErrOTPNotFound) || errors.Is(err, port.ErrOTPLocked) {
+	if errors.Is(err, domainCustomer.ErrOTPNotFound) || errors.Is(err, domainCustomer.ErrOTPLocked) {
 		return matched, err
 	}
 	if err != nil {

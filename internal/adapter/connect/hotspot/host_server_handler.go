@@ -22,7 +22,7 @@ func (h *HotspotConnectHandler) ListHosts(ctx context.Context, req *connect.Requ
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.ListHotspotHostsResponse{
-		Hosts: ToProtoHotspotHosts(rows),
+		Hosts: toProtoHotspotHosts(rows),
 	}), nil
 }
 
@@ -32,9 +32,6 @@ func (h *HotspotConnectHandler) RemoveHost(ctx context.Context, req *connect.Req
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id required"))
 	}
 
 	res, err := h.useCase.RemoveHost(ctx, driver, req.Msg.RosId)
@@ -58,6 +55,6 @@ func (h *HotspotConnectHandler) ListHotspotServers(ctx context.Context, req *con
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.ListHotspotServersResponse{
-		Servers: ToProtoHotspotServers(rows),
+		Servers: toProtoHotspotServers(rows),
 	}), nil
 }

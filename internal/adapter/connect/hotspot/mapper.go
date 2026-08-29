@@ -5,17 +5,17 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-// ToProtoHotspotUsers converts hotspot user list to proto list.
-func ToProtoHotspotUsers(users []port.HotspotUser) []*devicepb.HotspotUser {
+// toProtoHotspotUsers converts hotspot user list to proto list.
+func toProtoHotspotUsers(users []port.HotspotUser) []*devicepb.HotspotUser {
 	pbUsers := make([]*devicepb.HotspotUser, len(users))
 	for i, u := range users {
-		pbUsers[i] = ToProtoHotspotUser(u)
+		pbUsers[i] = toProtoHotspotUser(u)
 	}
 	return pbUsers
 }
 
-// ToProtoHotspotActiveSession converts a single active session to proto.
-func ToProtoHotspotActiveSession(s port.HotspotActiveSession) *devicepb.HotspotActiveSession {
+// toProtoHotspotActiveSession converts a single active session to proto.
+func toProtoHotspotActiveSession(s port.HotspotActiveSession) *devicepb.HotspotActiveSession {
 	return &devicepb.HotspotActiveSession{
 		Id:         s.RosID,
 		Server:     s.Server,
@@ -25,17 +25,17 @@ func ToProtoHotspotActiveSession(s port.HotspotActiveSession) *devicepb.HotspotA
 	}
 }
 
-// ToProtoActiveSessions converts hotspot active sessions to proto list.
-func ToProtoActiveSessions(sessions []port.HotspotActiveSession) []*devicepb.HotspotActiveSession {
+// toProtoActiveSessions converts hotspot active sessions to proto list.
+func toProtoActiveSessions(sessions []port.HotspotActiveSession) []*devicepb.HotspotActiveSession {
 	pbSessions := make([]*devicepb.HotspotActiveSession, len(sessions))
 	for i, s := range sessions {
-		pbSessions[i] = ToProtoHotspotActiveSession(s)
+		pbSessions[i] = toProtoHotspotActiveSession(s)
 	}
 	return pbSessions
 }
 
-// ToProtoHotspotActiveStat converts a single active stat to proto.
-func ToProtoHotspotActiveStat(s port.HotspotActiveStat) *devicepb.HotspotActiveStat {
+// toProtoHotspotActiveStat converts a single active stat to proto.
+func toProtoHotspotActiveStat(s port.HotspotActiveStat) *devicepb.HotspotActiveStat {
 	return &devicepb.HotspotActiveStat{
 		Id:              s.RosID,
 		Uptime:          s.Uptime,
@@ -48,17 +48,17 @@ func ToProtoHotspotActiveStat(s port.HotspotActiveStat) *devicepb.HotspotActiveS
 	}
 }
 
-// ToProtoActiveStats converts hotspot active stats to proto list.
-func ToProtoActiveStats(stats []port.HotspotActiveStat) []*devicepb.HotspotActiveStat {
+// toProtoActiveStats converts hotspot active stats to proto list.
+func toProtoActiveStats(stats []port.HotspotActiveStat) []*devicepb.HotspotActiveStat {
 	pbStats := make([]*devicepb.HotspotActiveStat, len(stats))
 	for i, s := range stats {
-		pbStats[i] = ToProtoHotspotActiveStat(s)
+		pbStats[i] = toProtoHotspotActiveStat(s)
 	}
 	return pbStats
 }
 
-// ToProtoDHCPLease converts a single port.DHCPLease to proto.
-func ToProtoDHCPLease(l port.DHCPLease) *devicepb.DHCPLease {
+// toProtoDHCPLease converts a single port.DHCPLease to proto.
+func toProtoDHCPLease(l port.DHCPLease) *devicepb.DHCPLease {
 	return &devicepb.DHCPLease{
 		Id:         l.RosID,
 		Address:    l.Address,
@@ -70,11 +70,11 @@ func ToProtoDHCPLease(l port.DHCPLease) *devicepb.DHCPLease {
 	}
 }
 
-// ToProtoDHCPLeases converts a slice of port.DHCPLease to proto slice.
-func ToProtoDHCPLeases(leases []port.DHCPLease) []*devicepb.DHCPLease {
+// toProtoDHCPLeases converts a slice of port.DHCPLease to proto slice.
+func toProtoDHCPLeases(leases []port.DHCPLease) []*devicepb.DHCPLease {
 	pbLeases := make([]*devicepb.DHCPLease, len(leases))
 	for i, l := range leases {
-		pbLeases[i] = ToProtoDHCPLease(l)
+		pbLeases[i] = toProtoDHCPLease(l)
 	}
 	return pbLeases
 }

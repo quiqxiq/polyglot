@@ -2,17 +2,13 @@ package port
 
 import (
 	"context"
-	"errors"
 
 	"github.com/quixiq/polyglot/internal/domain/billing"
 )
 
-// Kesalahan alur pembayaran kasir.
-var (
-	ErrInvoiceAlreadyPaid = errors.New("invoice already paid")
-	ErrInvoiceCancelled   = errors.New("invoice cancelled")
-	ErrOverpayment        = errors.New("payment amount exceeds outstanding balance")
-)
+// Error sentinels untuk alur pembayaran kasir tinggal di
+// internal/domain/billing/errors.go (ErrInvoiceAlreadyPaid,
+// ErrInvoiceCancelled, ErrOverpayment) per DEVELOPMENT-GUIDELINES.md §6.
 
 // CashPaymentCommand is the atomic cashier payment request: satu transaksi
 // DB memproses invoice + kwitansi + jurnal kas + antrean WA sekaligus

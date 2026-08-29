@@ -42,7 +42,7 @@ type GlobalPromptProvider interface {
 type Engine struct {
 	cache         port.CacheStore
 	waGateway     port.WhatsAppGateway
-	convService   *convUC.ConversationService
+	convService   *convUC.ConversationUseCase
 	skillProvider SkillProvider
 	globalPromptP GlobalPromptProvider
 	llmConfigRepo port.LLMConfigRepository
@@ -60,7 +60,7 @@ type Engine struct {
 func NewEngine(
 	cache port.CacheStore,
 	waGateway port.WhatsAppGateway,
-	convService *convUC.ConversationService,
+	convService *convUC.ConversationUseCase,
 	skillProvider SkillProvider,
 	globalPromptP GlobalPromptProvider,
 	llmConfigRepo port.LLMConfigRepository,

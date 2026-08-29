@@ -23,7 +23,7 @@ func (h *PPPConnectHandler) ListActiveSessions(ctx context.Context, req *connect
 	}
 
 	return connect.NewResponse(&devicepb.ListPPPActiveSessionsResponse{
-		Sessions: ToProtoPPPActiveSessions(sessions),
+		Sessions: toProtoPPPActiveSessions(sessions),
 	}), nil
 }
 
@@ -32,9 +32,6 @@ func (h *PPPConnectHandler) KickActiveSession(ctx context.Context, req *connect.
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if req.Msg.RosId == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_id is required"))
 	}
 
 	res, err := h.useCase.KickActive(ctx, driver, req.Msg.RosId)
@@ -52,9 +49,6 @@ func (h *PPPConnectHandler) KickActiveSessions(ctx context.Context, req *connect
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return nil, err
-	}
-	if len(req.Msg.RosIds) == 0 {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("ros_ids cannot be empty"))
 	}
 
 	count, err := h.useCase.KickActiveBatch(ctx, driver, req.Msg.RosIds)
@@ -81,6 +75,6 @@ func (h *PPPConnectHandler) ListInactiveSecrets(ctx context.Context, req *connec
 	}
 
 	return connect.NewResponse(&devicepb.ListPPPInactiveSecretsResponse{
-		Secrets: ToProtoPPPSecrets(inactive),
+		Secrets: toProtoPPPSecrets(inactive),
 	}), nil
 }

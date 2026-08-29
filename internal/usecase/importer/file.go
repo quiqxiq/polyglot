@@ -18,7 +18,7 @@ func ParseCSV(r io.Reader) ([]Row, error) {
 	reader.FieldsPerRecord = -1 // kolom fleksibel; divalidasi header
 	records, err := reader.ReadAll()
 	if err != nil {
-		return nil, fmt.Errorf("baca CSV: %w", err)
+		return nil, fmt.Errorf("read CSV: %w", err)
 	}
 	return parseRecords(records)
 }
@@ -27,7 +27,7 @@ func ParseCSV(r io.Reader) ([]Row, error) {
 func ParseXLSX(data []byte) ([]Row, error) {
 	f, err := excelize.OpenReader(bytes.NewReader(data))
 	if err != nil {
-		return nil, fmt.Errorf("buka XLSX: %w", err)
+		return nil, fmt.Errorf("open XLSX: %w", err)
 	}
 	defer f.Close()
 	sheet := f.GetSheetList()
@@ -36,7 +36,7 @@ func ParseXLSX(data []byte) ([]Row, error) {
 	}
 	rows, err := f.GetRows(sheet[0])
 	if err != nil {
-		return nil, fmt.Errorf("baca XLSX: %w", err)
+		return nil, fmt.Errorf("read XLSX: %w", err)
 	}
 	return parseRecords(rows)
 }
@@ -101,11 +101,11 @@ func WriteXLSX(rows []Row) ([]byte, error) {
 
 func parseRecords(records [][]string) ([]Row, error) {
 	if len(records) < 2 {
-		return nil, errors.New("file kosong atau hanya header")
+		return nil, errors.New("importer: file empty or header only")
 	}
 	m := mapHeaders(records[0])
 	if len(m) == 0 {
-		return nil, errors.New("header tidak dikenali — unduh template export sebagai acuan")
+		return nil, errors.New("importer: unrecognized header: download the export template as reference")
 	}
 	rows := make([]Row, 0, len(records)-1)
 	for i, cells := range records[1:] {

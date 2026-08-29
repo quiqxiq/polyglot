@@ -5,6 +5,7 @@ import (
 	"errors"
 	"time"
 
+	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
@@ -15,10 +16,10 @@ type notificationRepo interface {
 	port.NotificationRetryRepository
 }
 
-// WaSenderWorker mengirim antrean wa_notifications QUEUED via
+// WASenderWorker mengirim antrean wa_notifications QUEUED via
 // port.NotificationSender. Percobaan gagal menaikkan attempts; melewati
 // maxRetry dianggap gagal permanen (tidak dipoll lagi).
-type WaSenderWorker struct {
+type WASenderWorker struct {
 	notif    notificationRepo
 	sender   port.NotificationSender
 	settings port.SettingReader
@@ -26,13 +27,13 @@ type WaSenderWorker struct {
 	now func() time.Time
 }
 
-// NewWaSenderWorker wires dependencies.
-func NewWaSenderWorker(
+// NewWASenderWorker wires dependencies.
+func NewWASenderWorker(
 	notif notificationRepo,
 	sender port.NotificationSender,
 	settings port.SettingReader,
-) *WaSenderWorker {
-	return &WaSenderWorker{notif: notif, sender: sender, settings: settings, now: time.Now}
+) *WASenderWorker {
+	return &WASenderWorker{notif: notif, sender: sender, settings: settings, now: time.Now}
 }
 
 // SendResult rekap satu siklus pengiriman.
@@ -44,7 +45,7 @@ type SendResult struct {
 }
 
 // Run executes one send pass.
-func (w *WaSenderWorker) Run(ctx context.Context) (SendResult, error) {
+func (w *WASenderWorker) Run(ctx context.Context) (SendResult, error) {
 	res := SendResult{}
 	maxRetry := atoiDefault(w.settings.GetValue(ctx, "isp.wa_send_max_retry", "3"), 3)
 
@@ -64,7 +65,7 @@ func (w *WaSenderWorker) Run(ctx context.Context) (SendResult, error) {
 		logger.WithComponent("WaSender").WithError(sendErr).WithFields(map[string]any{
 			"notification_id": n.ID,
 		}).Warn("kirim WA gagal")
-		if errors.Is(sendErr, port.ErrNoWASession) {
+		if errors.Is(sendErr, domainNotification.ErrNoWASession) {
 			res.NoSession = true
 			return res, nil // infrastruktur mati: jangan buang attempts
 		}

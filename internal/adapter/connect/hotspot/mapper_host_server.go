@@ -10,9 +10,9 @@ func parseRowBool(v string) bool {
 	return v == "true"
 }
 
-// ToProtoHotspotHosts converts raw /ip/hotspot/host/print rows into proto.
+// toProtoHotspotHosts converts raw /ip/hotspot/host/print rows into proto.
 // Rows missing ".id" or "mac-address" are skipped.
-func ToProtoHotspotHosts(rows []map[string]string) []*devicepb.HotspotHost {
+func toProtoHotspotHosts(rows []map[string]string) []*devicepb.HotspotHost {
 	hosts := make([]*devicepb.HotspotHost, 0, len(rows))
 	for _, row := range rows {
 		if row[".id"] == "" || row["mac-address"] == "" {
@@ -32,9 +32,9 @@ func ToProtoHotspotHosts(rows []map[string]string) []*devicepb.HotspotHost {
 	return hosts
 }
 
-// ToProtoHotspotServers converts raw /ip/hotspot/print rows into proto.
+// toProtoHotspotServers converts raw /ip/hotspot/print rows into proto.
 // Rows missing ".id" or "name" are skipped.
-func ToProtoHotspotServers(rows []map[string]string) []*devicepb.HotspotServerInfo {
+func toProtoHotspotServers(rows []map[string]string) []*devicepb.HotspotServerInfo {
 	servers := make([]*devicepb.HotspotServerInfo, 0, len(rows))
 	for _, row := range rows {
 		if row[".id"] == "" || row["name"] == "" {

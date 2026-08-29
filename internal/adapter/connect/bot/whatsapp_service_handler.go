@@ -13,10 +13,10 @@ import (
 type WhatsAppConnectHandler struct {
 	sessionRepo port.WASessionRepository
 	waGateway   port.WhatsAppGateway
-	chatService *chatUC.ChatService
+	chatService *chatUC.ChatUseCase
 }
 
-func NewWhatsAppConnectHandler(sessionRepo port.WASessionRepository, waGateway port.WhatsAppGateway, chatService *chatUC.ChatService) *WhatsAppConnectHandler {
+func NewWhatsAppConnectHandler(sessionRepo port.WASessionRepository, waGateway port.WhatsAppGateway, chatService *chatUC.ChatUseCase) *WhatsAppConnectHandler {
 	return &WhatsAppConnectHandler{
 		sessionRepo: sessionRepo,
 		waGateway:   waGateway,
@@ -24,77 +24,77 @@ func NewWhatsAppConnectHandler(sessionRepo port.WASessionRepository, waGateway p
 	}
 }
 
-func NewWhatsAppServiceHandler(sessionRepo port.WASessionRepository, waGateway port.WhatsAppGateway, chatService *chatUC.ChatService) (string, http.Handler) {
+func NewWhatsAppServiceHandler(sessionRepo port.WASessionRepository, waGateway port.WhatsAppGateway, chatService *chatUC.ChatUseCase) (string, http.Handler) {
 	handler := NewWhatsAppConnectHandler(sessionRepo, waGateway, chatService)
 
 	mux := http.NewServeMux()
-	codecOpt := connect.WithCodec(iconnect.JSONCodec())
+	opts := iconnect.DefaultHandlerOptions()
 
 	serviceName := "polyglot.v1.WhatsAppService"
 	mux.Handle("/"+serviceName+"/ListSessions", connect.NewUnaryHandler(
 		"/"+serviceName+"/ListSessions",
 		handler.ListSessions,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/CreateSession", connect.NewUnaryHandler(
 		"/"+serviceName+"/CreateSession",
 		handler.CreateSession,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/GetQRCode", connect.NewUnaryHandler(
 		"/"+serviceName+"/GetQRCode",
 		handler.GetQRCode,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/GetPairingCode", connect.NewUnaryHandler(
 		"/"+serviceName+"/GetPairingCode",
 		handler.GetPairingCode,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/ToggleBot", connect.NewUnaryHandler(
 		"/"+serviceName+"/ToggleBot",
 		handler.ToggleBot,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/ReconnectSession", connect.NewUnaryHandler(
 		"/"+serviceName+"/ReconnectSession",
 		handler.ReconnectSession,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/LogoutSession", connect.NewUnaryHandler(
 		"/"+serviceName+"/LogoutSession",
 		handler.LogoutSession,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/PurgeSession", connect.NewUnaryHandler(
 		"/"+serviceName+"/PurgeSession",
 		handler.PurgeSession,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/SendTextMessage", connect.NewUnaryHandler(
 		"/"+serviceName+"/SendTextMessage",
 		handler.SendTextMessage,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/ListChats", connect.NewUnaryHandler(
 		"/"+serviceName+"/ListChats",
 		handler.ListChats,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/GetChatMessages", connect.NewUnaryHandler(
 		"/"+serviceName+"/GetChatMessages",
 		handler.GetChatMessages,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/MarkChatRead", connect.NewUnaryHandler(
 		"/"+serviceName+"/MarkChatRead",
 		handler.MarkChatRead,
-		codecOpt,
+		opts...,
 	))
 	mux.Handle("/"+serviceName+"/ToggleChatBot", connect.NewUnaryHandler(
 		"/"+serviceName+"/ToggleChatBot",
 		handler.ToggleChatBot,
-		codecOpt,
+		opts...,
 	))
 
 	return "/" + serviceName + "/", mux

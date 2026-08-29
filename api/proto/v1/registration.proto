@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package polyglot.v1;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
 
 message Registration {
@@ -35,15 +37,15 @@ message Registration {
 
 // PUBLIC — dipanggil calon pelanggan tanpa JWT.
 message SubmitRegistrationRequest {
-  string full_name = 1;
-  string phone = 2;
+  string full_name = 1 [(buf.validate.field).string.min_len = 1];
+  string phone = 2 [(buf.validate.field).string.min_len = 1];
   string email = 3;
-  string address = 4;
+  string address = 4 [(buf.validate.field).string.min_len = 1];
   double latitude = 5;
   double longitude = 6;
   bool has_coordinates = 7;
   string notes = 8;
-  string plan_id = 9;
+  string plan_id = 9 [(buf.validate.field).string.min_len = 1];
 }
 message SubmitRegistrationResponse { Registration registration = 1; }
 
@@ -53,45 +55,47 @@ message ListRegistrationsRequest {
 }
 message ListRegistrationsResponse { repeated Registration registrations = 1; }
 
-message GetRegistrationRequest { string id = 1; }
+message GetRegistrationRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
 message GetRegistrationResponse { Registration registration = 1; }
 
 message ApproveRegistrationRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string admin_notes = 2;
 }
 message ApproveRegistrationResponse { Registration registration = 1; }
 
 message ScheduleInstallRequest {
-  string id = 1;
-  int64 install_date_unix = 2;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  int64 install_date_unix = 2 [(buf.validate.field).int64.gt = 0];
   string install_time_hhmm = 3; // "09:00"; kosong = tanpa jam
   string technician_id = 4;     // users.id, kosong = biarkan
 }
 message ScheduleInstallResponse { Registration registration = 1; }
 
 message MarkInstalledRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string technician_notes = 2;
 }
 message MarkInstalledResponse { Registration registration = 1; }
 
 message RejectRegistrationRequest {
-  string id = 1;
-  string reason = 2;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string reason = 2 [(buf.validate.field).string.min_len = 1];
 }
 message RejectRegistrationResponse { Registration registration = 1; }
 
 message CancelRegistrationRequest {
-  string id = 1;
-  string reason = 2;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string reason = 2 [(buf.validate.field).string.min_len = 1];
 }
 message CancelRegistrationResponse { Registration registration = 1; }
 
 // Konversi INSTALLED → ACTIVE: buat customer+subscription+invoice.
 // device_id opsional — bila diisi, akun langsung diprovisikan ke router.
 message ConvertRegistrationRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string.min_len = 1];
   string device_id = 2;
 }
 message ConvertRegistrationResponse {
