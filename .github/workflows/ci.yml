@@ -37,3 +37,6 @@ jobs:
         uses: golangci/golangci-lint-action@v7
         with:
           version: v2.1
+
+      - name: Check ConnectRPC Error Boundary
+        run: make check-connect-errors

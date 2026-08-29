@@ -182,7 +182,7 @@ func (u *ManageUserUseCase) CreateUser(
 			assignedBy = &actorID
 		}
 		if err := u.repo.AssignDevices(ctx, newUser.ID, assignedDeviceIDs, assignedBy); err != nil {
-			logger.WithComponent("UserUseCase").Errorf("failed to assign devices to new user %d: %v", newUser.ID, err)
+			logger.WithComponent("UserUseCase").WithError(err).WithField("user_id", newUser.ID).Error("failed to assign devices")
 		} else {
 			newUser.AssignedDeviceIDs = assignedDeviceIDs
 		}
@@ -290,7 +290,7 @@ func (u *ManageUserUseCase) UpdateUser(
 			assignedBy = &actorID
 		}
 		if err := u.repo.AssignDevices(ctx, targetID, assignedDeviceIDs, assignedBy); err != nil {
-			logger.WithComponent("UserUseCase").Errorf("failed to update device assignments for user %d: %v", targetID, err)
+			logger.WithComponent("UserUseCase").WithError(err).WithField("user_id", targetID).Error("failed to update device assignments")
 		} else {
 			targetUser.AssignedDeviceIDs = assignedDeviceIDs
 		}
