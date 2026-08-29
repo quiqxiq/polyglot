@@ -78,7 +78,7 @@ func (h *WhatsAppConnectHandler) CreateSession(ctx context.Context, req *connect
 	// flow; frontend langsung membuka modal QR setelah create.
 	if h.waGateway != nil {
 		if err := h.waGateway.Connect(sess); err != nil {
-			logger.WithComponent("WhatsApp").Warnf("CreateSession %d: connect failed (QR flow): %v", sess.ID, err)
+			logger.WithComponent("WhatsApp").WithError(err).WithField("session_id", sess.ID).Warn("session connect failed during QR flow")
 		}
 		sess.Status = bot.StatusConnecting
 		// best-effort: update status best-effort; response tetap berdasarkan sess di memori.

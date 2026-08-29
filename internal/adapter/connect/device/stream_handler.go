@@ -264,7 +264,7 @@ func (h *DeviceConnectHandler) StreamTerminal(
 
 	session, err := h.openTermUC.Execute(ctx, firstFrame.DeviceId, cols, rows)
 	if err != nil {
-		logger.WithComponent("DeviceConnectHandler").Errorf("SSH PTY connection failed for device %s: %v", firstFrame.DeviceId, err)
+		logger.WithComponent("DeviceConnectHandler").WithError(err).WithField("device_id", firstFrame.DeviceId).Error("SSH PTY connection failed")
 		return response.MapDomainError(fault.Wrap(fault.KindUnavailable, err))
 	}
 	defer func() { _ = session.Close() }()

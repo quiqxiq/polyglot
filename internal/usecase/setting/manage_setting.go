@@ -66,7 +66,7 @@ func (u *ManageSettingUseCase) BatchUpdateSettings(ctx context.Context, settings
 		return err
 	}
 
-	logger.WithComponent("SettingUseCase").Infof("batch updated %d settings", len(settings))
+	logger.WithComponent("SettingUseCase").WithField("setting_count", len(settings)).Info("settings batch updated")
 	return nil
 }
 

@@ -61,7 +61,7 @@ func (w *MediaCleanerWorker) CleanOnce(_ context.Context) (int, error) {
 				if removeErr := os.Remove(path); removeErr == nil {
 					cleanedCount++
 				} else {
-					logger.WithComponent("MediaCleaner").Warnf("Failed to remove %s: %v", path, removeErr)
+					logger.WithComponent("MediaCleaner").WithError(removeErr).WithField("path", path).Warn("failed to remove expired media")
 				}
 			}
 		}
@@ -87,9 +87,9 @@ func (w *MediaCleanerWorker) Start(ctx context.Context) {
 			return
 		case <-ticker.C:
 			if n, err := w.CleanOnce(ctx); err != nil {
-				logger.WithComponent("MediaCleaner").Errorf("Error during cleanup: %v", err)
+					logger.WithComponent("MediaCleaner").WithError(err).Error("media cleanup failed")
 			} else if n > 0 {
-				logger.WithComponent("MediaCleaner").Infof("Cleaned %d expired media files", n)
+					logger.WithComponent("MediaCleaner").WithField("cleaned_count", n).Info("expired media cleaned")
 			}
 		}
 	}

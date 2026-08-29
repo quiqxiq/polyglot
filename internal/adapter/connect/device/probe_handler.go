@@ -25,7 +25,11 @@ func NewProbeConnectHandler() *ProbeConnectHandler {
 
 // ReportStatus acknowledges a probe heartbeat.
 func (h *ProbeConnectHandler) ReportStatus(ctx context.Context, req *connect.Request[devicepb.ProbeStatusRequest]) (*connect.Response[devicepb.ProbeStatusResponse], error) {
-	logger.WithComponent("ProbeServer").Infof("Received heartbeat from Probe %s (Version: %s, Uptime: %ds)", req.Msg.ProbeId, req.Msg.Version, req.Msg.UptimeSeconds)
+	logger.WithComponent("ProbeServer").WithFields(map[string]any{
+		"probe_id":       req.Msg.ProbeId,
+		"version":        req.Msg.Version,
+		"uptime_seconds": req.Msg.UptimeSeconds,
+	}).Info("probe heartbeat received")
 
 	return connect.NewResponse(&devicepb.ProbeStatusResponse{
 		Acknowledged:   true,
@@ -44,8 +48,12 @@ func (h *ProbeConnectHandler) StreamTelemetry(ctx context.Context, stream *conne
 			return err
 		}
 
-		logger.WithComponent("ProbeServer").Infof("Telemetry from probe %s: Target=%s Latency=%dms Alive=%v",
-			msg.ProbeId, msg.TargetIp, msg.LatencyMs, msg.IsAlive)
+		logger.WithComponent("ProbeServer").WithFields(map[string]any{
+			"probe_id":   msg.ProbeId,
+			"target_ip":  msg.TargetIp,
+			"latency_ms": msg.LatencyMs,
+			"is_alive":   msg.IsAlive,
+		}).Info("probe telemetry received")
 	}
 }
 

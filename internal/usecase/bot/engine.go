@@ -103,7 +103,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 		strings.HasSuffix(chatJID, "@newsletter") ||
 		chatJID == "status@broadcast" ||
 		chatJID == "0@s.whatsapp.net" {
-		logger.WithComponent("BotEngine").Debugf("Ignoring non-direct message from %s (group/channel/broadcast)", chatJID)
+		logger.WithComponent("BotEngine").WithField("chat_jid", chatJID).Debug("ignoring non-direct message")
 		return nil
 	}
 
@@ -129,7 +129,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 
 	msg, err := e.convService.AddMessage(ctx, conv.ID, SenderCustomer, messageContent, 0, 0)
 	if err != nil {
-		logger.WithComponent("BotEngine").Warnf("Failed to persist incoming customer message: %v", err)
+		logger.WithComponent("BotEngine").WithError(err).WithField("conversation_id", conv.ID).Warn("failed to persist customer message")
 	}
 	if e.publisher != nil && msg != nil {
 		e.publisher.PublishEvent("new_message", msg)
@@ -137,12 +137,15 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 
 	if conv.Status == bot.StatusEscalation {
 		if conv.AssignedAgentID != nil {
-			logger.WithComponent("BotEngine").Infof("Conversation %d is assigned to human agent %d. Skipping automated bot reply.", conv.ID, *conv.AssignedAgentID)
+			logger.WithComponent("BotEngine").WithFields(map[string]any{
+				"conversation_id": conv.ID,
+				"agent_id":        *conv.AssignedAgentID,
+			}).Info("conversation assigned to human agent")
 			return nil
 		}
 		// Percakapan dieskalasi otomatis oleh sistem karena error sementara (tanpa admin manusia).
 		// Pulihkan status ke 'bot' agar pesan baru dari pelanggan langsung dilayani kembali oleh AI.
-		logger.WithComponent("BotEngine").Infof("Conversation %d was unassigned escalation. Auto-recovering to bot mode.", conv.ID)
+		logger.WithComponent("BotEngine").WithField("conversation_id", conv.ID).Info("recovering unassigned conversation to bot mode")
 		_ = e.convService.ResetBot(ctx, conv.ID)
 		conv.Status = bot.StatusBot
 	}
@@ -150,25 +153,25 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	if e.chatRepo != nil {
 		enabled, err := e.chatRepo.IsChatBotEnabled(ctx, sessionID, chatJID)
 		if err != nil {
-			logger.WithComponent("BotEngine").Warnf("Failed to query bot_enabled for chat %s: %v — assuming enabled", chatJID, err)
+			logger.WithComponent("BotEngine").WithError(err).WithField("chat_jid", chatJID).Warn("failed to query bot status; assuming enabled")
 			enabled = true
 		}
 		if !enabled {
-			logger.WithComponent("BotEngine").Infof("Bot nonaktif untuk chat %s. Pesan dicatat tanpa auto-reply.", chatJID)
+			logger.WithComponent("BotEngine").WithField("chat_jid", chatJID).Info("bot disabled for chat")
 			return nil
 		}
 	}
 
 	rateResult, err := e.rateLimiter.Check(ctx, customerNumber, messageContent)
 	if err != nil {
-		logger.WithComponent("BotEngine").Warnf("Rate limit check error: %v", err)
+		logger.WithComponent("BotEngine").WithError(err).Warn("rate limit check failed")
 	}
 
 	switch rateResult.Status {
 	case StatusAllowed:
 		// Continue with the normal bot flow.
 	case StatusWarned, StatusDailyQuotaExceeded, StatusMuted, StatusBlocked:
-		logger.WithComponent("BotEngine").Warnf("Number %s rate limit notification (%v).", customerNumber, rateResult.Status)
+		logger.WithComponent("BotEngine").WithField("rate_limit_status", rateResult.Status).Warn("rate limit notification sent")
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, rateResult.Message, 0, 0, nil)
 	}
 
@@ -182,7 +185,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	history, err := e.convService.GetRecentHistory(ctx, conv.ID, limit)
 	if err != nil || len(history) == 0 {
 		if err != nil {
-			logger.WithComponent("BotEngine").Warnf("Failed to fetch conversation history: %v", err)
+			logger.WithComponent("BotEngine").WithError(err).WithField("conversation_id", conv.ID).Warn("failed to fetch conversation history")
 		}
 		history = []bot.Message{{
 			ConversationID: conv.ID,
@@ -198,7 +201,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 
 	llmCfg, err := e.llmConfigRepo.FindActive(ctx)
 	if err != nil || llmCfg == nil {
-		logger.WithComponent("BotEngine").Warnf("No active LLM config found for conversation %d: %v", conv.ID, err)
+		logger.WithComponent("BotEngine").WithError(err).WithField("conversation_id", conv.ID).Warn("no active LLM configuration")
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Maaf, konfigurasi asisten AI belum aktif. Pesan Anda telah kami terima.", 0, 0, nil)
 	}
 
@@ -252,7 +255,7 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 
 	provider, err := e.providerF(llmCfg)
 	if err != nil {
-		logger.WithComponent("BotEngine").Errorf("Failed to build LLM provider for conversation %d: %v", conv.ID, err)
+		logger.WithComponent("BotEngine").WithError(err).WithField("conversation_id", conv.ID).Error("failed to build LLM provider")
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Maaf, sistem asisten AI sedang dalam pemeliharaan. Silakan coba kembali beberapa saat lagi.", 0, 0, nil)
 	}
 
@@ -268,13 +271,13 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 
 	resp, err := provider.ChatWithTools(ctx, systemPrompt, chatMessages, botTools, maxTokens)
 	if err != nil {
-		logger.WithComponent("BotEngine").Errorf("LLM call failed for conversation %d: %v", conv.ID, err)
+		logger.WithComponent("BotEngine").WithError(err).WithField("conversation_id", conv.ID).Error("LLM call failed")
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, "Mohon maaf, sistem AI kami sedang sibuk atau mengalami kendala koneksi. Silakan ulangi pesan Anda dalam beberapa saat.", 0, 0, nil)
 	}
 
 	reply := e.guardrail.SanitizeResponse(resp.Content)
 	if reply == "" {
-		logger.WithComponent("BotEngine").Warnf("Empty LLM reply for conversation %d", conv.ID)
+		logger.WithComponent("BotEngine").WithField("conversation_id", conv.ID).Warn("LLM returned an empty reply")
 		reply = "Maaf, saya tidak dapat memahami permintaan Anda. Bisakah Anda menjelaskan lebih detail?"
 	}
 
@@ -367,13 +370,13 @@ func (e *Engine) GetConversationContext(ctx context.Context, convID uint) (*bot.
 // sendBotReply sends a bot message via the WhatsApp gateway and persists it.
 func (e *Engine) sendBotReply(ctx context.Context, convID uint, sessionID uint, targetJID string, content string, tokenIn, tokenOut int, llmConfigID *uint) error {
 	if err := e.waGateway.SendMessage(sessionID, targetJID, content); err != nil {
-		logger.WithComponent("BotEngine").Errorf("Failed to send reply to %s: %v", targetJID, err)
+		logger.WithComponent("BotEngine").WithError(err).WithField("target_jid", targetJID).Error("failed to send bot reply")
 		return fmt.Errorf("failed to send bot reply: %w", err)
 	}
 
 	botMsg, err := e.convService.AddMessageWithConfig(ctx, convID, SenderBot, content, tokenIn, tokenOut, llmConfigID)
 	if err != nil {
-		logger.WithComponent("BotEngine").Warnf("Failed to persist bot message: %v", err)
+		logger.WithComponent("BotEngine").WithError(err).WithField("conversation_id", convID).Warn("failed to persist bot message")
 	}
 	if e.publisher != nil && botMsg != nil {
 		e.publisher.PublishEvent("new_message", botMsg)
@@ -385,7 +388,7 @@ func (e *Engine) sendBotReply(ctx context.Context, convID uint, sessionID uint, 
 // a fallback reply and persists it.
 func (e *Engine) escalateWithFallback(ctx context.Context, convID uint, sessionID uint, targetJID string, reply string) error {
 	if err := e.convService.Escalate(ctx, convID); err != nil {
-		logger.WithComponent("BotEngine").Errorf("Failed to escalate conversation %d: %v", convID, err)
+		logger.WithComponent("BotEngine").WithError(err).WithField("conversation_id", convID).Error("failed to escalate conversation")
 	}
 	return e.sendBotReply(ctx, convID, sessionID, targetJID, reply, 0, 0, nil)
 }

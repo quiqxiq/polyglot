@@ -49,7 +49,10 @@ func NewRequestSkillTool(skillProv SkillProvider) llm.Tool {
 				}); ok {
 					data, mime, err := getter.GetSkillResource(ctx, skillName, resPath)
 					if err != nil {
-						logger.WithComponent("BotTool").Warnf("Failed to get skill resource %s/%s: %v", skillName, resPath, err)
+						logger.WithComponent("BotTool").WithError(err).WithFields(map[string]any{
+							"skill_name": skillName,
+							"resource":   resPath,
+						}).Warn("failed to load skill resource")
 						return fmt.Sprintf("Gagal memuat referensi '%s' dari skill '%s': %v", resPath, skillName, err), nil
 					}
 					if strings.HasPrefix(mime, "text/") || strings.Contains(mime, "markdown") || strings.Contains(mime, "json") {
@@ -61,7 +64,7 @@ func NewRequestSkillTool(skillProv SkillProvider) llm.Tool {
 
 			content, err := skillProv.GetSkillContent(ctx, skillName)
 			if err != nil {
-				logger.WithComponent("BotTool").Warnf("Failed to get skill content for %s: %v", skillName, err)
+					logger.WithComponent("BotTool").WithError(err).WithField("skill_name", skillName).Warn("failed to load skill content")
 				return fmt.Sprintf("Gagal memuat skill '%s': %v", skillName, err), nil
 			}
 
