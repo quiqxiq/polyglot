@@ -35,12 +35,12 @@ Status berikut diverifikasi terhadap HEAD `77273db` dan hasil command terbaru.
 | F2 | **PARTIAL** | `pkg/fault`, Connect mapper, HTTP mapper, dan sentinel utama sudah ada; seluruh error domain belum dimigrasikan secara konsisten. |
 | F3 | **PARTIAL** | Protovalidate aktif pada router, inventory request tersedia, test unary/stream tersedia; inventory belum seluruhnya covered dan validasi manual masih tersisa. |
 | F4 | **PARTIAL** | Mapper dan HTTP error envelope sudah distandardisasi pada beberapa area; seluruh endpoint belum memiliki contract test dan pagination contract. |
-| F5 | **PARTIAL** | ConnectRPC dan layer boundary checker sudah ditegakkan; test usecase/import integration dan lifecycle worker belum seluruhnya selesai. |
+| F5 | **PARTIAL** | ConnectRPC, layer boundary checker, dan integration test compile sudah ditegakkan; seluruh unit-test dependency inversion dan lifecycle worker coverage belum selesai. |
 | F6 | **PARTIAL** | Beberapa rename/file split selesai; file besar dan naming stutter legacy masih ada. |
 | F7 | **PARTIAL** | Model domain mulai dipindahkan dan interface audit diperjelas; seluruh port/model belum selesai dibersihkan. |
 | F8 | **PARTIAL** | Modularisasi Mikrotik dan `rosutil` sudah ada; duplicate audit dan facade verification belum lengkap. |
-| F9 | **PARTIAL** | 650 test race lulus, tetapi coverage streaming/worker dan beberapa high-risk flow masih rendah atau belum ada. |
-| F10 | **PARTIAL** | CI lint, `make check`, `wrapcheck`, boundary check, `buf lint`, dan generated diff check sudah ada; documentation source of truth dan lint legacy cleanup masih berjalan. |
+| F9 | **PARTIAL** | 651 test race lulus, contract validation/HTTP/redaction/worker tests bertambah; coverage streaming/driver dan beberapa high-risk flow masih rendah. |
+| F10 | **PARTIAL** | CI lint, `make check`, `wrapcheck`, boundary check, `buf lint`, generated diff check, dan `go mod verify` sudah ada; documentation source of truth dan lint legacy cleanup masih berjalan. |
 
 **Catatan verifikasi:** `go build ./...`, `go vet ./...`, `go test ./... -race -count=1`, golangci-lint v2.1.6, `buf lint`, `buf generate --template buf.gen.yaml`, dan boundary checks lulus. Knowledge graph perlu rebuild setelah commit terbaru sebelum dipakai sebagai bukti coverage berikutnya.
 
@@ -726,8 +726,8 @@ Jika generated output harus committed, CI harus gagal ketika hasil generate berb
 | Task | Status | Bukti atau sisa |
 |---|---|---|
 | 5.1 Static boundary check | **PARTIAL** | `check-connect-errors.sh` tersedia; static check domain/usecase imports adapter/driver belum dibuat menyeluruh. |
-| 5.2 Pindahkan integration test | **TODO** | `router_live_e2e_test.go` dan beberapa test usecase masih perlu dipindahkan/diisolasi sesuai plan. |
-| 5.3 Metrics worker | **PARTIAL** | Resolver melalui port/function dan lifecycle worker sudah ada; coverage cancel/restart/leak masih perlu ditambah. |
+| 5.2 Pindahkan integration test | **PARTIAL** | `router_live_e2e_test.go` sudah berada di `test/integration` dengan tag `integration`; beberapa unit test usecase masih perlu dipisahkan dari adapter/driver. |
+| 5.3 Metrics worker | **PARTIAL** | Resolver melalui port/function, lifecycle test Start/Stop, dan integration compile sudah ada; coverage restart/leak/active stream masih perlu ditambah. |
 | 5.4 Composition root | **PARTIAL** | `app.go` tetap composition root dan logging lifecycle sudah dirapikan; file masih besar dan perlu pemisahan wiring bila bertambah. |
 
 ### F6: Naming dan Package Structure
@@ -766,7 +766,7 @@ Jika generated output harus committed, CI harus gagal ketika hasil generate berb
 | Task | Status | Bukti atau sisa |
 |---|---|---|
 | 10.1 Lint enforcement | **DONE** | `errorlint`, `wrapcheck`, `revive`, `bodyclose`, `exhaustive`, dan custom Connect boundary check aktif; full lint terakhir `0 issues`. |
-| 10.2 CI | **PARTIAL** | CI menjalankan build/vet/race test/lint/boundary, `go mod verify`, `buf lint`, dan generated diff check; workflow matrix/security/integration terpisah belum lengkap. |
+| 10.2 CI | **PARTIAL** | CI menjalankan build/vet/race test/lint/boundary, `go mod verify`, `buf lint`, dan generated diff check; workflow matrix/security/integration execution terpisah belum lengkap. |
 | 10.3 Documentation source of truth | **PARTIAL** | Plan v2 dan guidelines sudah tersedia; `AGENTS.md` masih memuat struktur duplikat yang dapat stale. |
 
 ---

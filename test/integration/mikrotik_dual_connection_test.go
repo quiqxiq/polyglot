@@ -29,6 +29,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -128,9 +129,9 @@ func TestMikrotikDual_ValidateRealDevice(t *testing.T) {
 	require.True(t, ok, "mikrotik.Driver harus implement port.ValidatingDeviceDriver")
 
 	// Deteksi versi RouterOS — perilaku Validate berbeda antara v6 dan v7.
-	res, err := drv.Execute(ctx, mikrotik.NewPrintSystemResourceCommand())
+	res, err := drv.Execute(ctx, mikrotiksystem.NewPrintResourceCommand())
 	require.NoError(t, err)
-	sys := mikrotik.ParseSystemResource(res)
+	sys := mikrotiksystem.ParseResource(res)
 	isV6 := strings.HasPrefix(sys.Version, "6.")
 	t.Logf("RouterOS version: %s (v6=%v) — Validate aktif penuh hanya di v7", sys.Version, isV6)
 

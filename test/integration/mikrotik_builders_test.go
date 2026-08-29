@@ -10,12 +10,14 @@
 // test yang tidak konflik dengan konfigurasi router production:
 //   - PPPoE secret: "polyglot-test-user"
 //   - Simple Queue: "polyglot-test-queue"
+//
 // Semua entry yang dibuat di-cleanup di t.Cleanup, jadi test bersih
 // meskipun gagal di tengah jalan.
 package integration
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"testing"
 	"time"
@@ -23,8 +25,13 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	mikrotikiface "github.com/quixiq/polyglot/internal/driver/mikrotik/iface"
+	mikrotikppp "github.com/quixiq/polyglot/internal/driver/mikrotik/ppp"
+	mikrotikqueue "github.com/quixiq/polyglot/internal/driver/mikrotik/queue"
+	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -46,18 +53,27 @@ func newTestDriver(t *testing.T) *mikrotik.Driver {
 	return drv
 }
 
+func findPPPSecretID(result command.Result, username string) (string, error) {
+	for _, secret := range mikrotikppp.ParseSecrets(result) {
+		if secret.Name == username {
+			return secret.RosID, nil
+		}
+	}
+	return "", fmt.Errorf("ppp secret %q not found", username)
+}
+
 // ─── /system/resource — one-shot ─────────────────────────────────────────
 
 func TestMikrotikBuilders_SystemResource(t *testing.T) {
 	drv := newTestDriver(t)
 	ctx := context.Background()
 
-	cmd := mikrotik.NewPrintSystemResourceCommand()
+	cmd := mikrotiksystem.NewPrintResourceCommand()
 	result, err := drv.Execute(ctx, cmd)
 	require.NoError(t, err)
 	require.NotEmpty(t, result.Rows)
 
-	res := mikrotik.ParseSystemResource(result)
+	res := mikrotiksystem.ParseResource(result)
 	t.Logf("RouterOS version: %s", res.Version)
 	t.Logf("Uptime: %s", res.Uptime)
 	t.Logf("CPU load: %d%%", res.CPULoad)
@@ -75,10 +91,10 @@ func TestMikrotikBuilders_SystemIdentity(t *testing.T) {
 	drv := newTestDriver(t)
 	ctx := context.Background()
 
-	result, err := drv.Execute(ctx, mikrotik.NewPrintSystemIdentityCommand())
+	result, err := drv.Execute(ctx, mikrotiksystem.NewPrintIdentityCommand())
 	require.NoError(t, err)
 
-	identity := mikrotik.ParseSystemIdentity(result)
+	identity := mikrotiksystem.ParseIdentity(result)
 	t.Logf("Router identity: %s", identity.Name)
 	assert.NotEmpty(t, identity.Name)
 }
@@ -90,19 +106,19 @@ func TestMikrotikBuilders_Interfaces(t *testing.T) {
 	ctx := context.Background()
 
 	// List interfaces
-	result, err := drv.Execute(ctx, mikrotik.NewPrintInterfacesCommand("", ""))
+	result, err := drv.Execute(ctx, mikrotikiface.NewPrintInterfacesCommand("", ""))
 	require.NoError(t, err)
 
-	ifaces := mikrotik.ParseInterfaces(result)
+	ifaces := mikrotikiface.ParseInterfaces(result)
 	require.NotEmpty(t, ifaces, "router harus punya minimal satu interface")
 	t.Logf("Interface pertama: %s (type=%s running=%v)", ifaces[0].Name, ifaces[0].Type, ifaces[0].Running)
 
 	// Monitor traffic one-shot pada interface pertama
 	ifaceName := ifaces[0].Name
-	onceResult, err := drv.Execute(ctx, mikrotik.NewMonitorTrafficOnceCommand(ifaceName))
+	onceResult, err := drv.Execute(ctx, mikrotikiface.NewMonitorTrafficOnceCommand(ifaceName))
 	require.NoError(t, err)
 
-	stats := mikrotik.ParseInterfaceTrafficStats(onceResult)
+	stats := mikrotikiface.ParseInterfaceTrafficStats(onceResult)
 	t.Logf("Traffic stats %s: rx=%s bps tx=%s bps", ifaceName, stats.RxBitsPerSecond, stats.TxBitsPerSecond)
 	// Hanya validasi field ada — nilai bisa nol jika interface idle
 	assert.NotNil(t, stats)
@@ -114,10 +130,10 @@ func TestMikrotikBuilders_PPPActive(t *testing.T) {
 	drv := newTestDriver(t)
 	ctx := context.Background()
 
-	result, err := drv.Execute(ctx, mikrotik.NewPrintPPPActiveCommand(""))
+	result, err := drv.Execute(ctx, mikrotikppp.NewPrintActiveCommand(""))
 	require.NoError(t, err)
 
-	sessions := mikrotik.ParsePPPActiveSessions(result)
+	sessions := mikrotikppp.ParseActiveSessions(result)
 	t.Logf("Sesi PPPoE aktif: %d", len(sessions))
 	// Tidak assert jumlah — mungkin memang tidak ada yang online
 }
@@ -131,32 +147,32 @@ func TestMikrotikBuilders_PPPoESecretCRUD(t *testing.T) {
 
 	// Cleanup: pastikan test user tidak ada di akhir, baik sukses atau gagal.
 	t.Cleanup(func() {
-		printResult, err := drv.Execute(context.Background(), mikrotik.NewPrintPPPoESecretsCommand(testUsername))
+		printResult, err := drv.Execute(context.Background(), mikrotikppp.NewPrintSecretsCommand(testUsername))
 		if err != nil {
 			return
 		}
-		rosID, err := mikrotik.FindPPPoESecretRosID(printResult, testUsername)
+		rosID, err := findPPPSecretID(printResult, testUsername)
 		if err != nil {
 			return // tidak ada — fine
 		}
 		_ = func() error {
-			_, e := drv.Execute(context.Background(), mikrotik.NewRemovePPPoESecretCommand(rosID))
+			_, e := drv.Execute(context.Background(), mikrotikppp.NewRemoveSecretCommand(rosID))
 			return e
 		}()
 	})
 
 	// 1. Pastikan test user belum ada
-	printResult, err := drv.Execute(ctx, mikrotik.NewPrintPPPoESecretsCommand(testUsername))
+	printResult, err := drv.Execute(ctx, mikrotikppp.NewPrintSecretsCommand(testUsername))
 	require.NoError(t, err)
-	_, errFind := mikrotik.FindPPPoESecretRosID(printResult, testUsername)
+	_, errFind := findPPPSecretID(printResult, testUsername)
 	if errFind == nil {
 		// User sudah ada dari test sebelumnya yang tidak bersih — remove dulu
-		rosID, _ := mikrotik.FindPPPoESecretRosID(printResult, testUsername)
-		_, _ = drv.Execute(ctx, mikrotik.NewRemovePPPoESecretCommand(rosID))
+		rosID, _ := findPPPSecretID(printResult, testUsername)
+		_, _ = drv.Execute(ctx, mikrotikppp.NewRemoveSecretCommand(rosID))
 	}
 
 	// 2. Add
-	addCmd := mikrotik.NewAddPPPoESecretCommand(mikrotik.PPPoESecretParams{
+	addCmd := mikrotikppp.NewAddSecretCommand(mikrotikppp.PPPoESecretParams{
 		Name:     testUsername,
 		Password: "testpass123",
 		Profile:  "default",
@@ -166,9 +182,9 @@ func TestMikrotikBuilders_PPPoESecretCRUD(t *testing.T) {
 	require.NoError(t, err, "gagal add PPPoE secret")
 
 	// 3. Print — verifikasi ada
-	printResult, err = drv.Execute(ctx, mikrotik.NewPrintPPPoESecretsCommand(testUsername))
+	printResult, err = drv.Execute(ctx, mikrotikppp.NewPrintSecretsCommand(testUsername))
 	require.NoError(t, err)
-	secrets := mikrotik.ParsePPPoESecrets(printResult)
+	secrets := mikrotikppp.ParseSecrets(printResult)
 	require.NotEmpty(t, secrets, "secret harus ditemukan setelah add")
 	found := secrets[0]
 	assert.Equal(t, testUsername, found.Name)
@@ -176,28 +192,28 @@ func TestMikrotikBuilders_PPPoESecretCRUD(t *testing.T) {
 	t.Logf("Secret dibuat: name=%s rosID=%s", found.Name, found.RosID)
 
 	// 4. Set — ganti password
-	setCmd := mikrotik.NewSetPPPoESecretCommand(found.RosID, mikrotik.PPPoESecretParams{
+	setCmd := mikrotikppp.NewSetSecretCommand(found.RosID, mikrotikppp.PPPoESecretParams{
 		Password: "newpass456",
 	})
 	_, err = drv.Execute(ctx, setCmd)
 	require.NoError(t, err, "gagal set PPPoE secret")
 
 	// 5. Verifikasi set berhasil
-	printResult2, err := drv.Execute(ctx, mikrotik.NewPrintPPPoESecretsCommand(testUsername))
+	printResult2, err := drv.Execute(ctx, mikrotikppp.NewPrintSecretsCommand(testUsername))
 	require.NoError(t, err)
-	secrets2 := mikrotik.ParsePPPoESecrets(printResult2)
+	secrets2 := mikrotikppp.ParseSecrets(printResult2)
 	require.NotEmpty(t, secrets2)
 	t.Logf("Secret setelah set: name=%s profile=%s", secrets2[0].Name, secrets2[0].Profile)
 
 	// 6. Remove
-	removeCmd := mikrotik.NewRemovePPPoESecretCommand(found.RosID)
+	removeCmd := mikrotikppp.NewRemoveSecretCommand(found.RosID)
 	_, err = drv.Execute(ctx, removeCmd)
 	require.NoError(t, err, "gagal remove PPPoE secret")
 
 	// 7. Verifikasi sudah tidak ada
-	printResult3, err := drv.Execute(ctx, mikrotik.NewPrintPPPoESecretsCommand(testUsername))
+	printResult3, err := drv.Execute(ctx, mikrotikppp.NewPrintSecretsCommand(testUsername))
 	require.NoError(t, err)
-	_, errNotFound := mikrotik.FindPPPoESecretRosID(printResult3, testUsername)
+	_, errNotFound := findPPPSecretID(printResult3, testUsername)
 	assert.ErrorIs(t, errNotFound, mikrotik.ErrSecretNotFound, "secret harus sudah terhapus")
 }
 
@@ -211,25 +227,25 @@ func TestMikrotikBuilders_SimpleQueueCRUD(t *testing.T) {
 
 	// Cleanup
 	t.Cleanup(func() {
-		printResult, err := drv.Execute(context.Background(), mikrotik.NewPrintSimpleQueuesCommand(testQueueName))
+		printResult, err := drv.Execute(context.Background(), mikrotikqueue.NewPrintSimpleQueuesCommand(testQueueName))
 		if err != nil {
 			return
 		}
-		queues := mikrotik.ParseSimpleQueues(printResult)
+		queues := mikrotikqueue.ParseSimpleQueues(printResult)
 		for _, q := range queues {
-			_, _ = drv.Execute(context.Background(), mikrotik.NewRemoveSimpleQueueCommand(q.RosID))
+			_, _ = drv.Execute(context.Background(), mikrotikqueue.NewRemoveSimpleQueueCommand(q.RosID))
 		}
 	})
 
 	// Pre-cleanup jika queue sudah ada dari test sebelumnya yang gagal
-	if printResult, err := drv.Execute(ctx, mikrotik.NewPrintSimpleQueuesCommand(testQueueName)); err == nil {
-		for _, q := range mikrotik.ParseSimpleQueues(printResult) {
-			_, _ = drv.Execute(ctx, mikrotik.NewRemoveSimpleQueueCommand(q.RosID))
+	if printResult, err := drv.Execute(ctx, mikrotikqueue.NewPrintSimpleQueuesCommand(testQueueName)); err == nil {
+		for _, q := range mikrotikqueue.ParseSimpleQueues(printResult) {
+			_, _ = drv.Execute(ctx, mikrotikqueue.NewRemoveSimpleQueueCommand(q.RosID))
 		}
 	}
 
 	// Add queue
-	addCmd := mikrotik.NewAddSimpleQueueCommand(mikrotik.SimpleQueueParams{
+	addCmd := mikrotikqueue.NewAddSimpleQueueCommand(mikrotikqueue.SimpleQueueParams{
 		Name:     testQueueName,
 		Target:   testTarget,
 		MaxLimit: "1M/1M",
@@ -239,9 +255,9 @@ func TestMikrotikBuilders_SimpleQueueCRUD(t *testing.T) {
 	require.NoError(t, err, "gagal add simple queue")
 
 	// Verifikasi ada
-	printResult, err := drv.Execute(ctx, mikrotik.NewPrintSimpleQueuesCommand(testQueueName))
+	printResult, err := drv.Execute(ctx, mikrotikqueue.NewPrintSimpleQueuesCommand(testQueueName))
 	require.NoError(t, err)
-	queues := mikrotik.ParseSimpleQueues(printResult)
+	queues := mikrotikqueue.ParseSimpleQueues(printResult)
 	require.NotEmpty(t, queues)
 	q := queues[0]
 	assert.Equal(t, testQueueName, q.Name)
@@ -249,7 +265,7 @@ func TestMikrotikBuilders_SimpleQueueCRUD(t *testing.T) {
 	t.Logf("Queue dibuat: name=%s rosID=%s maxLimit=%s", q.Name, q.RosID, q.MaxLimit)
 
 	// Remove
-	_, err = drv.Execute(ctx, mikrotik.NewRemoveSimpleQueueCommand(q.RosID))
+	_, err = drv.Execute(ctx, mikrotikqueue.NewRemoveSimpleQueueCommand(q.RosID))
 	require.NoError(t, err, "gagal remove simple queue")
 }
 
@@ -258,7 +274,7 @@ func TestMikrotikBuilders_StreamQueueStats(t *testing.T) {
 	ctx := context.Background()
 
 	testQueueName := "polyglot-stream-queue"
-	addCmd := mikrotik.NewAddSimpleQueueCommand(mikrotik.SimpleQueueParams{
+	addCmd := mikrotikqueue.NewAddSimpleQueueCommand(mikrotikqueue.SimpleQueueParams{
 		Name:     testQueueName,
 		Target:   "10.88.99.1/32",
 		MaxLimit: "2M/2M",
@@ -268,16 +284,16 @@ func TestMikrotikBuilders_StreamQueueStats(t *testing.T) {
 	require.NoError(t, err)
 
 	defer func() {
-		if res, err := drv.Execute(ctx, mikrotik.NewPrintSimpleQueuesCommand(testQueueName)); err == nil && len(res.Rows) > 0 {
+		if res, err := drv.Execute(ctx, mikrotikqueue.NewPrintSimpleQueuesCommand(testQueueName)); err == nil && len(res.Rows) > 0 {
 			rosID := res.Rows[0][".id"]
-			_, _ = drv.Execute(ctx, mikrotik.NewRemoveSimpleQueueCommand(rosID))
+			_, _ = drv.Execute(ctx, mikrotikqueue.NewRemoveSimpleQueueCommand(rosID))
 		}
 	}()
 
 	sd, ok := port.DeviceDriver(drv).(port.StreamingDeviceDriver)
 	require.True(t, ok)
 
-	streamCmd := mikrotik.NewStreamQueueStatsCommand(mikrotik.QueueStreamParams{
+	streamCmd := mikrotikqueue.NewStreamQueueStatsCommand(mikrotikqueue.QueueStreamParams{
 		NameFilter:  testQueueName,
 		ParentsOnly: true,
 		Interval:    "1s",
@@ -290,7 +306,7 @@ func TestMikrotikBuilders_StreamQueueStats(t *testing.T) {
 	select {
 	case res, ok := <-handle.Chan():
 		require.True(t, ok)
-		queues := mikrotik.ParseSimpleQueues(res)
+		queues := mikrotikqueue.ParseSimpleQueues(res)
 		require.NotEmpty(t, queues)
 		assert.Equal(t, testQueueName, queues[0].Name)
 		t.Logf("Queue stream tick: name=%s rate=%s packetRate=%s", queues[0].Name, queues[0].Rate, queues[0].PacketRate)
@@ -306,9 +322,9 @@ func TestMikrotikBuilders_MonitorTrafficStream(t *testing.T) {
 	ctx := context.Background()
 
 	// Ambil interface pertama
-	ifaceResult, err := drv.Execute(ctx, mikrotik.NewPrintInterfacesCommand("", ""))
+	ifaceResult, err := drv.Execute(ctx, mikrotikiface.NewPrintInterfacesCommand("", ""))
 	require.NoError(t, err)
-	ifaces := mikrotik.ParseInterfaces(ifaceResult)
+	ifaces := mikrotikiface.ParseInterfaces(ifaceResult)
 	require.NotEmpty(t, ifaces)
 	_ = ifaces[0].Name
 
@@ -319,7 +335,7 @@ func TestMikrotikBuilders_MonitorTrafficStream(t *testing.T) {
 	streamCtx, streamCancel := context.WithTimeout(ctx, 5*time.Second)
 	defer streamCancel()
 
-	handle, err := sd.Stream(streamCtx, mikrotik.NewMonitorTrafficStreamCommand(ifaces[0].Name))
+	handle, err := sd.Stream(streamCtx, mikrotikiface.NewMonitorTrafficStreamCommand(ifaces[0].Name))
 	require.NoError(t, err)
 	defer func() { _ = handle.Cancel() }()
 
@@ -332,7 +348,7 @@ loop:
 			if !ok {
 				break loop
 			}
-			stats := mikrotik.ParseInterfaceTrafficStats(result)
+			stats := mikrotikiface.ParseInterfaceTrafficStats(result)
 			t.Logf("tick %d: %s rx=%s tx=%s bps", received+1, ifaces[0].Name, stats.RxBitsPerSecond, stats.TxBitsPerSecond)
 			received++
 			if received >= 2 {
@@ -352,15 +368,15 @@ func TestMikrotikBuilders_MonitorTrafficNonRunning(t *testing.T) {
 	drv := newTestDriver(t)
 	ctx := context.Background()
 
-	result, err := drv.Execute(ctx, mikrotik.NewPrintInterfacesCommand("", ""))
+	result, err := drv.Execute(ctx, mikrotikiface.NewPrintInterfacesCommand("", ""))
 	require.NoError(t, err)
 
-	ifaces := mikrotik.ParseInterfaces(result)
+	ifaces := mikrotikiface.ParseInterfaces(result)
 	require.NotEmpty(t, ifaces)
 
 	for _, ifc := range ifaces {
 		t.Logf("=== Interface: %s (running=%v, disabled=%v) ===", ifc.Name, ifc.Running, ifc.Disabled)
-		onceResult, err := drv.Execute(ctx, mikrotik.NewMonitorTrafficOnceCommand(ifc.Name))
+		onceResult, err := drv.Execute(ctx, mikrotikiface.NewMonitorTrafficOnceCommand(ifc.Name))
 		if err != nil {
 			t.Logf("Error executing monitor-traffic for %s: %v", ifc.Name, err)
 			continue
@@ -368,7 +384,7 @@ func TestMikrotikBuilders_MonitorTrafficNonRunning(t *testing.T) {
 		t.Logf("Raw Rows count for %s: %d", ifc.Name, len(onceResult.Rows))
 		if len(onceResult.Rows) > 0 {
 			t.Logf("Raw Row[0] for %s: %#v", ifc.Name, onceResult.Rows[0])
-			stats := mikrotik.ParseInterfaceTrafficStats(onceResult)
+			stats := mikrotikiface.ParseInterfaceTrafficStats(onceResult)
 			rx, _ := strconv.ParseInt(stats.RxBitsPerSecond, 10, 64)
 			tx, _ := strconv.ParseInt(stats.TxBitsPerSecond, 10, 64)
 			t.Logf("Parsed stats for %s: rx_bps=%d (%q) tx_bps=%d (%q)", ifc.Name, rx, stats.RxBitsPerSecond, tx, stats.TxBitsPerSecond)
@@ -389,7 +405,7 @@ func TestMikrotikBuilders_PPPActiveStream(t *testing.T) {
 
 	// Stream PPP active — test hanya membuktikan stream bisa dibuka dan
 	// tidak langsung error. Jumlah row 0 sah jika tidak ada yang online.
-	handle, err := sd.Stream(streamCtx, mikrotik.NewStreamPPPActiveCommand(""))
+	handle, err := sd.Stream(streamCtx, mikrotikppp.NewStreamActiveCommand(""))
 	require.NoError(t, err, "gagal buka stream ppp active")
 
 	// Tunggu sebentar lalu cancel — stream yang valid harus masih terbuka
@@ -405,10 +421,10 @@ func TestMikrotikBuilders_LogPrint(t *testing.T) {
 	drv := newTestDriver(t)
 	ctx := context.Background()
 
-	result, err := drv.Execute(ctx, mikrotik.NewPrintLogCommand(""))
+	result, err := drv.Execute(ctx, mikrotiksystem.NewPrintLogsCommand(""))
 	require.NoError(t, err)
 
-	entries := mikrotik.ParseLogEntries(result)
+	entries := mikrotiksystem.ParseLogs(result)
 	t.Logf("Log entries: %d", len(entries))
 	// Log mungkin kosong di CHR baru — tidak di-assert jumlahnya
 	if len(entries) > 0 {

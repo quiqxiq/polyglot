@@ -48,7 +48,7 @@ func TestDeviceIntegration_TestConnection(t *testing.T) {
 		return d.Execute(ctx, cmd)
 	}
 	uc := deviceUC.NewManageDeviceUseCase(nil, nil, nil, mikrotik.NewGateway(exec))
-	result, err := uc.TestConnection(ctx, driver, "dev-integration", "")
+	result, err := uc.TestConnection(ctx, driver, "dev-integration", "", "", "")
 	require.NoError(t, err)
 
 	assert.Equal(t, "dev-integration", result.DeviceID)

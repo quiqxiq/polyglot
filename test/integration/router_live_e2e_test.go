@@ -1,10 +1,13 @@
-package importer_test
+//go:build integration
+
+package integration
 
 // E2E: tarik data PPP secret LANGSUNG dari MikroTik sungguhan (.env) lalu
 // upsert ke sqlite staging. Router hanya DIBACA — tidak ada perubahan state.
 
 import (
 	"context"
+	"errors"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -28,6 +31,25 @@ import (
 	"github.com/quixiq/polyglot/internal/usecase/network"
 )
 
+type integrationVault struct{}
+
+func (integrationVault) EncryptString(_ context.Context, plaintext string) (string, error) {
+	return "enc:" + plaintext, nil
+}
+
+func (integrationVault) DecryptString(_ context.Context, ciphertext string) (string, error) {
+	if strings.HasPrefix(ciphertext, "enc:") {
+		return strings.TrimPrefix(ciphertext, "enc:"), nil
+	}
+	return "", errors.New("not encrypted")
+}
+
+func (integrationVault) Get(context.Context, string) (device.Credentials, error) {
+	return device.Credentials{}, device.ErrNotFound
+}
+
+func (integrationVault) Save(context.Context, string, device.Credentials) error { return nil }
+
 var networkExecutePreApproved = func(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
 	return network.ExecuteCommandPreApproved(ctx, driver, cmd)
 }
@@ -36,7 +58,7 @@ func TestImportFromRouter_E2E(t *testing.T) {
 	if testing.Short() {
 		t.Skip("short mode")
 	}
-	_ = godotenv.Load(filepath.Join("..", "..", "..", ".env"))
+	_ = godotenv.Load(filepath.Join("..", "..", ".env"))
 	host := os.Getenv("MIKROTIK_TEST_HOST")
 	if host == "" {
 		t.Skip("MIKROTIK_TEST_HOST tidak diset — lewati E2E import router")
@@ -74,7 +96,7 @@ func TestImportFromRouter_E2E(t *testing.T) {
 	))
 	plansRepo := postgres.NewServicePlanRepository(db)
 	customsRepo := postgres.NewCustomerRepository(db)
-	subsRepo := postgres.NewSubscriptionRepository(db, e2eVault{})
+	subsRepo := postgres.NewSubscriptionRepository(db, integrationVault{})
 	upsert := importer.NewUpsertUseCase(plansRepo, customsRepo, subsRepo, nil, "e2e-device-id")
 
 	res, err := upsert.Import(ctx, rows)

@@ -12,6 +12,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 )
 
 func TestMikhmonIntegration_FullWorkflow(t *testing.T) {
@@ -29,23 +30,23 @@ func TestMikhmonIntegration_FullWorkflow(t *testing.T) {
 	// Cleanup
 	t.Cleanup(func() {
 		// Cleanup vouchers
-		if printUsers, err := drv.Execute(context.Background(), mikrotik.NewPrintHotspotUsersCommand("")); err == nil {
-			for _, u := range mikrotik.ParseHotspotUsers(printUsers) {
+		if printUsers, err := drv.Execute(context.Background(), mikhmon.NewPrintUsersCommand("")); err == nil {
+			for _, u := range mikhmon.ParseUsers(printUsers) {
 				if u.Profile == testProfileName {
-					_, _ = drv.Execute(context.Background(), mikrotik.NewRemoveHotspotUserCommand(u.RosID))
+					_, _ = drv.Execute(context.Background(), mikhmon.NewRemoveUserCommand(u.RosID))
 				}
 			}
 		}
 		// Cleanup profile
-		if printProfiles, err := drv.Execute(context.Background(), mikrotik.NewPrintHotspotUserProfilesCommand(testProfileName)); err == nil {
-			for _, p := range mikrotik.ParseHotspotUserProfiles(printProfiles) {
-				_, _ = drv.Execute(context.Background(), mikrotik.NewRemoveHotspotUserProfileCommand(p.RosID))
+		if printProfiles, err := drv.Execute(context.Background(), mikhmon.NewPrintUserProfilesCommand(testProfileName)); err == nil {
+			for _, p := range mikhmon.ParseUserProfiles(printProfiles) {
+				_, _ = drv.Execute(context.Background(), mikhmon.NewRemoveUserProfileCommand(p.RosID))
 			}
 		}
 		// Cleanup scheduler
-		if printSch, err := drv.Execute(context.Background(), mikrotik.NewPrintSystemSchedulersCommand(mikhmon.MikhmonExpireMonitorName)); err == nil {
-			for _, s := range mikrotik.ParseSystemSchedulers(printSch) {
-				_, _ = drv.Execute(context.Background(), mikrotik.NewSetSystemSchedulerCommand(s.RosID, mikrotik.SystemSchedulerParams{
+		if printSch, err := drv.Execute(context.Background(), mikrotiksystem.NewPrintSchedulerCommand(mikhmon.MikhmonExpireMonitorName)); err == nil {
+			for _, s := range mikrotiksystem.ParseScheduler(printSch) {
+				_, _ = drv.Execute(context.Background(), mikrotiksystem.NewSetSchedulerCommand(s.RosID, mikrotiksystem.SystemSchedulerParams{
 					Name:     mikhmon.MikhmonExpireMonitorName,
 					Disabled: true,
 				}))
@@ -67,9 +68,9 @@ func TestMikhmonIntegration_FullWorkflow(t *testing.T) {
 	require.NoError(t, err, "gagal create mikhmon profile")
 
 	// Verify profile creation & on-login script
-	printProfiles, err := drv.Execute(ctx, mikrotik.NewPrintHotspotUserProfilesCommand(testProfileName))
+	printProfiles, err := drv.Execute(ctx, mikhmon.NewPrintUserProfilesCommand(testProfileName))
 	require.NoError(t, err)
-	profiles := mikrotik.ParseHotspotUserProfiles(printProfiles)
+	profiles := mikhmon.ParseUserProfiles(printProfiles)
 	require.NotEmpty(t, profiles)
 	prof := profiles[0]
 	assert.Equal(t, testProfileName, prof.Name)
@@ -91,10 +92,10 @@ func TestMikhmonIntegration_FullWorkflow(t *testing.T) {
 	}
 
 	// Verify vouchers
-	printUsers, err := drv.Execute(ctx, mikrotik.NewPrintHotspotUsersCommand(""))
+	printUsers, err := drv.Execute(ctx, mikhmon.NewPrintUsersCommand(""))
 	require.NoError(t, err)
-	allUsers := mikrotik.ParseHotspotUsers(printUsers)
-	var createdUsers []mikrotik.HotspotUser
+	allUsers := mikhmon.ParseUsers(printUsers)
+	var createdUsers []mikhmon.HotspotUser
 	for _, u := range allUsers {
 		if u.Profile == testProfileName {
 			createdUsers = append(createdUsers, u)
@@ -112,20 +113,20 @@ func TestMikhmonIntegration_FullWorkflow(t *testing.T) {
 	assert.False(t, parsedComment.IsActivated)
 
 	// 3. Verify Inactive Hotspot Users comparison
-	activeCmd := mikrotik.NewPrintHotspotActiveCommand("")
+	activeCmd := mikhmon.NewPrintActiveCommand("")
 	activeRes, err := drv.Execute(ctx, activeCmd)
 	require.NoError(t, err)
-	activeSessions := mikrotik.ParseHotspotActiveSessions(activeRes)
+	activeSessions := mikhmon.ParseActiveSessions(activeRes)
 
-	inactiveUsers := mikrotik.FilterInactiveHotspotUsers(allUsers, activeSessions)
+	inactiveUsers := mikhmon.FilterInactiveUsers(allUsers, activeSessions)
 	require.NotEmpty(t, inactiveUsers, "karena tidak ada sesi aktif, semua user harus terdeteksi inactive")
 	t.Logf("Total registered users: %d, active: %d, inactive: %d", len(allUsers), len(activeSessions), len(inactiveUsers))
 
 	// 4. Setup Mikhmon Expire Monitor Scheduler
 	// Pre-cleanup if exists
-	printSch, err := drv.Execute(ctx, mikrotik.NewPrintSystemSchedulersCommand(mikhmon.MikhmonExpireMonitorName))
+	printSch, err := drv.Execute(ctx, mikrotiksystem.NewPrintSchedulerCommand(mikhmon.MikhmonExpireMonitorName))
 	if err == nil {
-		schedulers := mikrotik.ParseSystemSchedulers(printSch)
+		schedulers := mikrotiksystem.ParseScheduler(printSch)
 		if len(schedulers) > 0 {
 			// update existing
 			_, err = drv.Execute(ctx, mikhmon.NewUpdateMikhmonExpireMonitorCommand(schedulers[0].RosID, "00:01:00"))
@@ -138,9 +139,9 @@ func TestMikhmonIntegration_FullWorkflow(t *testing.T) {
 	}
 
 	// Verify scheduler
-	printSchFinal, err := drv.Execute(ctx, mikrotik.NewPrintSystemSchedulersCommand(mikhmon.MikhmonExpireMonitorName))
+	printSchFinal, err := drv.Execute(ctx, mikrotiksystem.NewPrintSchedulerCommand(mikhmon.MikhmonExpireMonitorName))
 	require.NoError(t, err)
-	finalSchedulers := mikrotik.ParseSystemSchedulers(printSchFinal)
+	finalSchedulers := mikrotiksystem.ParseScheduler(printSchFinal)
 	require.NotEmpty(t, finalSchedulers)
 	assert.Equal(t, mikhmon.MikhmonExpireMonitorName, finalSchedulers[0].Name)
 	assert.Contains(t, finalSchedulers[0].OnEvent, "dateint")

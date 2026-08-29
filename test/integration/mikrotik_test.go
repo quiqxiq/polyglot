@@ -27,6 +27,7 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
+	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -178,7 +179,7 @@ func TestMikrotikDriver_PingStreamDetails(t *testing.T) {
 	sd, ok := port.DeviceDriver(drv).(port.StreamingDeviceDriver)
 	require.True(t, ok)
 
-	cmd := mikrotik.NewPingStreamCommand("8.8.8.8")
+	cmd := mikrotiksystem.NewPingStreamCommand("8.8.8.8")
 	handle, err := sd.Stream(ctx, cmd)
 	require.NoError(t, err)
 	defer func() { assert.NoError(t, handle.Cancel()) }()
