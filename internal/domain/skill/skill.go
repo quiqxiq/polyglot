@@ -7,9 +7,9 @@ import (
 // Skill merepresentasikan satu paket kemampuan bot / agent modular (SKILL.md).
 type Skill struct {
 	ID            string            `json:"id"`
-	Name          string            `json:"name"`          // Nama unik / identifier folder (e.g. "troubleshoot-los-onu")
-	Description   string            `json:"description"`   // Penjelasan ringkas pemicu skill
-	Content       string            `json:"content"`       // Markdown body (tanpa frontmatter)
+	Name          string            `json:"name"`        // Nama unik / identifier folder (e.g. "troubleshoot-los-onu")
+	Description   string            `json:"description"` // Penjelasan ringkas pemicu skill
+	Content       string            `json:"content"`     // Markdown body (tanpa frontmatter)
 	License       string            `json:"license,omitempty"`
 	Compatibility string            `json:"compatibility,omitempty"`
 	AllowedTools  string            `json:"allowed_tools,omitempty"` // Daftar tool yang diizinkan (e.g. "bash, mcp_device")
@@ -23,6 +23,9 @@ type Skill struct {
 }
 
 // SkillResource merepresentasikan file aset atau skrip pendukung di dalam folder skill (misal: scripts/helper.rsc).
+// SkillResource represents one skill asset or supporting script.
+//
+//nolint:revive // Domain package context makes the explicit name clearer to callers.
 type SkillResource struct {
 	Path     string    `json:"path"`      // Relative path di dalam folder skill (e.g. "scripts/diag.rsc")
 	Name     string    `json:"name"`      // Nama file dasar (e.g. "diag.rsc")
@@ -35,8 +38,8 @@ type SkillResource struct {
 
 // ResourceContent merepresentasikan isi data dari file resource tertentu.
 type ResourceContent struct {
-	Content  string `json:"content"`   // Teks biasa atau string base64 jika biner
-	Encoding string `json:"encoding"`  // "raw" atau "base64"
+	Content  string `json:"content"`  // Teks biasa atau string base64 jika biner
+	Encoding string `json:"encoding"` // "raw" atau "base64"
 	MimeType string `json:"mime_type"`
 	Size     int64  `json:"size"`
 }
@@ -51,6 +54,9 @@ type GitRepoInfo struct {
 }
 
 // SkillInfo adalah representasi ringan skill untuk transfer data ke runtime agent / LLM prompt.
+// SkillInfo is the lightweight skill representation used by the runtime.
+//
+//nolint:revive // Domain package context makes the explicit name clearer to callers.
 type SkillInfo struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
@@ -58,6 +64,9 @@ type SkillInfo struct {
 }
 
 // SkillMetadataRecord merepresentasikan catatan metadata skill yang disimpan di PostgreSQL.
+// SkillMetadataRecord represents persisted skill metadata.
+//
+//nolint:revive // Domain package context makes the explicit name clearer to callers.
 type SkillMetadataRecord struct {
 	ID         string    `json:"id"`
 	UserID     string    `json:"user_id,omitempty"`

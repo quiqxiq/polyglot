@@ -157,4 +157,3 @@ func TestConversationRepository_CRUD(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, bot.StatusDone, updatedConv.Status)
 }
-

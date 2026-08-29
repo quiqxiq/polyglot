@@ -65,4 +65,3 @@ func TestParseNATRules(t *testing.T) {
 		t.Fatalf("unexpected nat rules parsed: %+v", rules)
 	}
 }
-

@@ -224,9 +224,11 @@ func TestDeleteSubscription_BlockedWhenInvoiced(t *testing.T) {
 	require.NoError(t, err)
 
 	subID := sub.ID
-	fx.invoices.Save(ctx, domainBilling.Invoice{
+	if err := fx.invoices.Save(ctx, domainBilling.Invoice{
 		ID: "inv-1", SubscriptionID: &subID, Status: "UNPAID",
-	})
+	}); err != nil {
+		t.Fatalf("save invoice: %v", err)
+	}
 
 	err = fx.usecase.Delete(ctx, sub.ID)
 	require.Error(t, err)

@@ -19,10 +19,12 @@ type PortalSessionModel struct {
 	CreatedAt    time.Time
 }
 
+// TableName returns the database table name for portal sessions.
 func (PortalSessionModel) TableName() string {
 	return "customer_portal_sessions"
 }
 
+// ToDomain converts a portal session database model to its domain representation.
 func (m *PortalSessionModel) ToDomain() customer.PortalSession {
 	if m == nil {
 		return customer.PortalSession{}
@@ -39,6 +41,7 @@ func (m *PortalSessionModel) ToDomain() customer.PortalSession {
 	}
 }
 
+// PortalSessionModelFromDomain converts a portal session domain entity to a database model.
 func PortalSessionModelFromDomain(s customer.PortalSession) *PortalSessionModel {
 	return &PortalSessionModel{
 		ID:           s.ID,

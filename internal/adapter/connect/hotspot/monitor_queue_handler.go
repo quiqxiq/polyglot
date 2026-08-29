@@ -42,7 +42,7 @@ func (h *HotspotConnectHandler) StreamQueueStats(ctx context.Context, req *conne
 	if err != nil {
 		return response.MapDomainError(err)
 	}
-	defer handle.Cancel()
+	defer func() { _ = handle.Cancel() }()
 
 	for {
 		select {

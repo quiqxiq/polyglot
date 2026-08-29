@@ -38,10 +38,12 @@ type GatewayTransactionModel struct {
 	UpdatedAt time.Time
 }
 
+// TableName returns the database table name for gateway transactions.
 func (GatewayTransactionModel) TableName() string {
 	return "gateway_transactions"
 }
 
+// ToDomain converts a gateway transaction database model to its domain representation.
 func (m *GatewayTransactionModel) ToDomain() billing.GatewayTransaction {
 	if m == nil {
 		return billing.GatewayTransaction{}
@@ -68,6 +70,7 @@ func (m *GatewayTransactionModel) ToDomain() billing.GatewayTransaction {
 	}
 }
 
+// GatewayTransactionModelFromDomain converts a gateway transaction domain entity to a database model.
 func GatewayTransactionModelFromDomain(t billing.GatewayTransaction) *GatewayTransactionModel {
 	return &GatewayTransactionModel{
 		ID:             t.ID,

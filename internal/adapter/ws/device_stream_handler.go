@@ -42,7 +42,7 @@ func (h *TerminalHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		logger.WithComponent("TerminalWS").Errorf("websocket accept failed: %v", err)
 		return
 	}
-	defer conn.CloseNow()
+	defer func() { _ = conn.CloseNow() }()
 
 	ctx := r.Context()
 
@@ -58,7 +58,7 @@ func (h *TerminalHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		_ = conn.Write(ctx, websocket.MessageText, []byte(fmt.Sprintf("\r\n\x1b[31m[SSH Connection Failed]: %v\x1b[0m\r\n\x1b[33m[Notice]: Ensure target device has SSH service enabled and credentials configured.\x1b[0m\r\n", err)))
 		return
 	}
-	defer termSession.Close()
+	defer func() { _ = termSession.Close() }()
 
 	_ = conn.Write(ctx, websocket.MessageText, []byte("\x1b[32m[SSH Connected - Native PTY Active]\x1b[0m\r\n\r\n"))
 

@@ -65,4 +65,3 @@ func NewPrintServersCommand() command.Command {
 		Args: map[string]string{},
 	}
 }
-

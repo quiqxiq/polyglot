@@ -36,6 +36,8 @@ func ExecuteCommand(ctx context.Context, driver port.DeviceDriver, cmd command.C
 		return command.Result{}, err
 	}
 	switch command.Decide(driver.Classify(cmd)) {
+	case command.DecisionAutoApprove:
+		// Continue with execution for explicitly safe commands.
 	case command.DecisionDeny:
 		return command.Result{}, command.ErrDenied
 	case command.DecisionRequireApproval:

@@ -229,7 +229,9 @@ func splitRate(rl string) (dl, ul int) {
 			num = strings.TrimSuffix(tok, "k")
 		}
 		var v int
-		fmt.Sscanf(num, "%d", &v)
+		if _, err := fmt.Sscanf(num, "%d", &v); err != nil {
+			return 0
+		}
 		return v * mult
 	}
 	dl = parse(parts[0])

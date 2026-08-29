@@ -107,4 +107,3 @@ func TestChatRepository_UpsertAndList(t *testing.T) {
 	require.NoError(t, err)
 	assert.False(t, enabled)
 }
-

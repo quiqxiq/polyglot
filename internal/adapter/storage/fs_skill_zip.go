@@ -89,8 +89,11 @@ func (s *FSSkillStore) ImportSkillZip(archiveData []byte) (*skill.Skill, error) 
 			if f.Name == "SKILL.md" {
 				rc, oErr := f.Open()
 				if oErr == nil {
-					data, _ := io.ReadAll(rc)
-					rc.Close()
+					data, readErr := io.ReadAll(rc)
+					_ = rc.Close()
+					if readErr != nil {
+						break
+					}
 					meta, _, _ := skill.ParseFrontmatter(string(data))
 					targetSkillName = meta.Name
 				}
@@ -140,9 +143,9 @@ func (s *FSSkillStore) ImportSkillZip(archiveData []byte) (*skill.Skill, error) 
 		destFile, cErr := os.OpenFile(destPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
 		if cErr == nil {
 			_, _ = io.Copy(destFile, rc)
-			destFile.Close()
+			_ = destFile.Close()
 		}
-		rc.Close()
+		_ = rc.Close()
 	}
 
 	return s.ReadSkillFromDisk(targetSkillName)

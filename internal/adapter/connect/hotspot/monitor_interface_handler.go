@@ -38,7 +38,7 @@ func (h *HotspotConnectHandler) StreamTraffic(ctx context.Context, req *connect.
 	if err != nil {
 		return response.MapDomainError(err)
 	}
-	defer handle.Cancel()
+	defer func() { _ = handle.Cancel() }()
 
 	for {
 		select {
@@ -88,7 +88,7 @@ func (h *HotspotConnectHandler) StreamInterfaceEthernet(ctx context.Context, req
 	if err != nil {
 		return response.MapDomainError(err)
 	}
-	defer handle.Cancel()
+	defer func() { _ = handle.Cancel() }()
 
 	for {
 		select {

@@ -148,7 +148,7 @@ func (h *HotspotConnectHandler) StreamSystemSnapshot(ctx context.Context, req *c
 			if err != nil {
 				return
 			}
-			defer handle.Cancel()
+			defer func() { _ = handle.Cancel() }()
 			for {
 				select {
 				case <-ctx.Done():
@@ -231,7 +231,7 @@ func (h *HotspotConnectHandler) StreamResource(ctx context.Context, req *connect
 	if err != nil {
 		return response.MapDomainError(err)
 	}
-	defer handle.Cancel()
+	defer func() { _ = handle.Cancel() }()
 
 	for {
 		select {

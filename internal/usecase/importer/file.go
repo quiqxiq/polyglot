@@ -29,7 +29,7 @@ func ParseXLSX(data []byte) ([]Row, error) {
 	if err != nil {
 		return nil, fmt.Errorf("open XLSX: %w", err)
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 	sheet := f.GetSheetList()
 	if len(sheet) == 0 {
 		return nil, errors.New("XLSX tanpa sheet")

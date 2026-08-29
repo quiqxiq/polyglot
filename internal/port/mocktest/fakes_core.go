@@ -2,27 +2,30 @@ package mocktest
 
 import (
 	"context"
+	"sync"
+	"time"
+
 	domainAudit "github.com/quixiq/polyglot/internal/domain/audit"
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
-	"sync"
-	"time"
 )
 
-// ─── CustomerRepository ─────────────────────────────────────────────────
+// FakeCustomerRepo is an in-memory customer repository for tests.
 
 type FakeCustomerRepo struct {
 	mu   sync.Mutex
 	byID map[string]domainCustomer.Customer
 }
 
+// NewFakeCustomerRepo constructs an empty fake customer repository.
 func NewFakeCustomerRepo() *FakeCustomerRepo {
 	return &FakeCustomerRepo{byID: map[string]domainCustomer.Customer{}}
 }
 
+// Save stores a customer in memory.
 func (f *FakeCustomerRepo) Save(_ context.Context, c domainCustomer.Customer) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
@@ -30,6 +33,7 @@ func (f *FakeCustomerRepo) Save(_ context.Context, c domainCustomer.Customer) er
 	return nil
 }
 
+// FindByID returns a customer by ID.
 func (f *FakeCustomerRepo) FindByID(_ context.Context, id string) (domainCustomer.Customer, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
@@ -40,6 +44,7 @@ func (f *FakeCustomerRepo) FindByID(_ context.Context, id string) (domainCustome
 	return c, nil
 }
 
+// FindAll returns all in-memory customers.
 func (f *FakeCustomerRepo) FindAll(_ context.Context) ([]domainCustomer.Customer, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()

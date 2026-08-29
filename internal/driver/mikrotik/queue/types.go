@@ -29,10 +29,12 @@ type SimpleQueueParams struct {
 }
 
 // QueueStreamParams defines filter and duration parameters for streaming queue statistics.
+// QueueStreamParams defines queue statistics filters and interval.
+//
+//nolint:revive // Queue is the bounded driver feature name, not redundant API noise.
 type QueueStreamParams struct {
 	NameFilter   string // filter by queue name, e.g. "sub-budi"
 	ParentFilter string // filter by parent queue name, e.g. "parent-total"
 	ParentsOnly  bool   // filter non-dynamic static parent queues (?dynamic=false)
 	Interval     string // RouterOS duration string (e.g. "1s", "500ms"). Defaults to "1s"
 }
-

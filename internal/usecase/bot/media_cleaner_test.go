@@ -15,7 +15,7 @@ import (
 func TestMediaCleanerWorker_CleanOnce(t *testing.T) {
 	tempDir, err := os.MkdirTemp("", "media_cleaner_test_*")
 	require.NoError(t, err)
-	defer os.RemoveAll(tempDir)
+	defer func() { _ = os.RemoveAll(tempDir) }()
 
 	oldFile := filepath.Join(tempDir, "old_voucher.pdf")
 	newFile := filepath.Join(tempDir, "new_voucher.png")

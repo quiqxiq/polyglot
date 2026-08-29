@@ -8,6 +8,7 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
+// InvoiceUseCase manages invoice queries and lifecycle operations.
 type InvoiceUseCase struct {
 	repo port.InvoiceRepository
 }

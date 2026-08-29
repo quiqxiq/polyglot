@@ -40,7 +40,7 @@ func StreamTraffic(ctx context.Context, driver port.DeviceDriver, iface string, 
 	if err != nil {
 		return fmt.Errorf("failed to initiate traffic stream: %w", err)
 	}
-	defer handle.Cancel()
+	defer func() { _ = handle.Cancel() }()
 
 	for {
 		select {

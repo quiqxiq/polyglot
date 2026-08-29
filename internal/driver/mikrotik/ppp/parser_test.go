@@ -65,4 +65,3 @@ func TestEnrichActiveSessionsWithProfiles(t *testing.T) {
 		t.Fatalf("expected profile premium, got %s", enriched[0].Profile)
 	}
 }
-

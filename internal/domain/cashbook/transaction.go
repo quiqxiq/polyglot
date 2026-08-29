@@ -10,8 +10,8 @@ const (
 
 // Sumber transaksi kas.
 const (
-	SourcePayment = "PAYMENT" // otomatis saat invoice lunas
-	SourceExpense = "EXPENSE" // pencatatan manual operasional
+	SourcePayment  = "PAYMENT" // otomatis saat invoice lunas
+	SourceExpense  = "EXPENSE" // pencatatan manual operasional
 	SourceTransfer = "TRANSFER"
 )
 

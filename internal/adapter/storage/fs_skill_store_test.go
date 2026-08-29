@@ -14,7 +14,7 @@ import (
 func TestFSSkillStore_CRUDAndResources(t *testing.T) {
 	tempDir, err := os.MkdirTemp("", "fs_skill_store_test")
 	require.NoError(t, err)
-	defer os.RemoveAll(tempDir)
+	defer func() { _ = os.RemoveAll(tempDir) }()
 
 	store, err := storage.NewFSSkillStore(tempDir)
 	require.NoError(t, err)
@@ -82,7 +82,7 @@ func TestFSSkillStore_CRUDAndResources(t *testing.T) {
 func TestFSSkillStore_GitRepoConfig(t *testing.T) {
 	tempDir, err := os.MkdirTemp("", "fs_skill_git_test")
 	require.NoError(t, err)
-	defer os.RemoveAll(tempDir)
+	defer func() { _ = os.RemoveAll(tempDir) }()
 
 	store, err := storage.NewFSSkillStore(tempDir)
 	require.NoError(t, err)

@@ -79,6 +79,8 @@ func (cm *ContextManager) BuildPromptContext(
 		switch m.SenderType {
 		case bot.SenderBot, bot.SenderAgent:
 			role = "assistant"
+		case bot.SenderCustomer:
+			// Customer messages use the default user role.
 		}
 		if strings.TrimSpace(m.Content) == "" {
 			continue

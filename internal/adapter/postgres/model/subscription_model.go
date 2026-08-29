@@ -51,10 +51,12 @@ type SubscriptionModel struct {
 	UpdatedAt time.Time
 }
 
+// TableName returns the database table name for subscriptions.
 func (SubscriptionModel) TableName() string {
 	return "subscriptions"
 }
 
+// ToDomain converts a subscription database model to its domain representation.
 func (m *SubscriptionModel) ToDomain() subscription.Subscription {
 	if m == nil {
 		return subscription.Subscription{}

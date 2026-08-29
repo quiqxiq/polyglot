@@ -46,4 +46,3 @@ func GetSystemRouterboard(ctx context.Context, driver port.DeviceDriver, exec po
 	}
 	return ParseRouterboard(res), nil
 }
-

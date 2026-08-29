@@ -40,7 +40,7 @@ func StreamPing(ctx context.Context, driver port.DeviceDriver, host string, onRe
 	if err != nil {
 		return fmt.Errorf("failed to initiate ping stream: %w", err)
 	}
-	defer handle.Cancel()
+	defer func() { _ = handle.Cancel() }()
 
 	for {
 		select {

@@ -23,7 +23,7 @@ func TestShutdownCompletesWithSSEClients(t *testing.T) {
 	if err != nil {
 		t.Fatalf("listen: %v", err)
 	}
-	defer ln.Close()
+	defer func() { _ = ln.Close() }()
 
 	httpSrv := &http.Server{Handler: mux}
 	serveErr := make(chan error, 1)
@@ -65,7 +65,7 @@ func TestShutdownCompletesWithSSEClients(t *testing.T) {
 		if err != nil {
 			t.Fatalf("open SSE connection %d: %v", i, err)
 		}
-		defer resp.Body.Close()
+		defer func() { _ = resp.Body.Close() }()
 
 		if resp.StatusCode != http.StatusOK {
 			t.Fatalf("SSE client %d: status = %d, want 200", i, resp.StatusCode)

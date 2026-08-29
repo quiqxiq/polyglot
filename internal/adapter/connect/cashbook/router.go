@@ -9,6 +9,7 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
+// NewCashbookServiceHandler creates the cashbook ConnectRPC service handler.
 func NewCashbookServiceHandler(repo port.CashbookRepository) (string, http.Handler) {
 	handler := NewCashbookConnectHandler(repo)
 	mux := http.NewServeMux()

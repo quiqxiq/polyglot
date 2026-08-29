@@ -30,10 +30,12 @@ type CustomerModel struct {
 	UpdatedAt        time.Time
 }
 
+// TableName returns the database table name for customers.
 func (CustomerModel) TableName() string {
 	return "customers"
 }
 
+// ToDomain converts a customer database model to its domain representation.
 func (m *CustomerModel) ToDomain() customer.Customer {
 	if m == nil {
 		return customer.Customer{}
@@ -58,6 +60,7 @@ func (m *CustomerModel) ToDomain() customer.Customer {
 	}
 }
 
+// CustomerModelFromDomain converts a customer domain entity to a database model.
 func CustomerModelFromDomain(c customer.Customer) *CustomerModel {
 	return &CustomerModel{
 		ID:               c.ID,

@@ -8,10 +8,10 @@ import (
 
 func TestParsePingLatency(t *testing.T) {
 	tests := []struct {
-		name         string
-		row          map[string]string
-		wantLatency  int64
-		wantStatus   string
+		name        string
+		row         map[string]string
+		wantLatency int64
+		wantStatus  string
 	}{
 		{
 			name:        "timeout status",

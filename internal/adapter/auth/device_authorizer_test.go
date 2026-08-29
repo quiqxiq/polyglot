@@ -11,7 +11,9 @@ type mockUserRepoForDeviceAuth struct {
 	accessibleMap map[string]bool
 }
 
-func (m *mockUserRepoForDeviceAuth) Create(ctx context.Context, user *customer.User) error { return nil }
+func (m *mockUserRepoForDeviceAuth) Create(ctx context.Context, user *customer.User) error {
+	return nil
+}
 func (m *mockUserRepoForDeviceAuth) FindByID(ctx context.Context, id uint) (*customer.User, error) {
 	return nil, nil
 }
@@ -31,8 +33,10 @@ func (m *mockUserRepoForDeviceAuth) FindAll(ctx context.Context) ([]*customer.Us
 func (m *mockUserRepoForDeviceAuth) FindByRoles(ctx context.Context, roles []string, activeOnly bool) ([]*customer.User, error) {
 	return nil, nil
 }
-func (m *mockUserRepoForDeviceAuth) Update(ctx context.Context, user *customer.User) error { return nil }
-func (m *mockUserRepoForDeviceAuth) Delete(ctx context.Context, id uint) error            { return nil }
+func (m *mockUserRepoForDeviceAuth) Update(ctx context.Context, user *customer.User) error {
+	return nil
+}
+func (m *mockUserRepoForDeviceAuth) Delete(ctx context.Context, id uint) error { return nil }
 func (m *mockUserRepoForDeviceAuth) UpdatePassword(ctx context.Context, id uint, passwordHash string) error {
 	return nil
 }

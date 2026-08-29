@@ -21,10 +21,12 @@ type InvoiceItemModel struct {
 	CreatedAt time.Time
 }
 
+// TableName returns the database table name for invoice items.
 func (InvoiceItemModel) TableName() string {
 	return "invoice_items"
 }
 
+// ToDomain converts an invoice item database model to its domain representation.
 func (m *InvoiceItemModel) ToDomain() billing.InvoiceItem {
 	if m == nil {
 		return billing.InvoiceItem{}
@@ -41,6 +43,7 @@ func (m *InvoiceItemModel) ToDomain() billing.InvoiceItem {
 	}
 }
 
+// InvoiceItemModelFromDomain converts an invoice item domain entity to a database model.
 func InvoiceItemModelFromDomain(i billing.InvoiceItem) *InvoiceItemModel {
 	return &InvoiceItemModel{
 		ID:          i.ID,

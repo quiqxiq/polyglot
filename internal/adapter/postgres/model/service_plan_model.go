@@ -51,10 +51,12 @@ type ServicePlanModel struct {
 	UpdatedAt time.Time
 }
 
+// TableName returns the database table name for service plans.
 func (ServicePlanModel) TableName() string {
 	return "service_plans"
 }
 
+// ToDomain converts a service plan database model to its domain representation.
 func (m *ServicePlanModel) ToDomain() plan.ServicePlan {
 	if m == nil {
 		return plan.ServicePlan{}
@@ -94,6 +96,7 @@ func (m *ServicePlanModel) ToDomain() plan.ServicePlan {
 	}
 }
 
+// ServicePlanModelFromDomain converts a service plan domain entity to a database model.
 func ServicePlanModelFromDomain(p plan.ServicePlan) *ServicePlanModel {
 	return &ServicePlanModel{
 		ID:                    p.ID,

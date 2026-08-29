@@ -9,6 +9,7 @@ import (
 	"github.com/quixiq/polyglot/internal/usecase/network"
 )
 
+// NewDeviceServiceHandler creates the device ConnectRPC service handler.
 func NewDeviceServiceHandler(
 	uc *deviceUC.ManageDeviceUseCase,
 	openTermUC *network.OpenTerminalUseCase,

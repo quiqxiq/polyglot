@@ -20,8 +20,10 @@ type PortalOTPModel struct {
 	CreatedAt  time.Time
 }
 
+// TableName returns the database table name for portal OTPs.
 func (PortalOTPModel) TableName() string { return "portal_otps" }
 
+// ToDomain converts a portal OTP database model to its domain representation.
 func (m *PortalOTPModel) ToDomain() domainCustomer.PortalOTP {
 	if m == nil {
 		return domainCustomer.PortalOTP{}

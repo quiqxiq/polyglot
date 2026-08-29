@@ -182,7 +182,7 @@ func (m *PingStreamWorker) runDeviceStream(ctx context.Context, dev device.Devic
 		}
 
 		m.consumeStream(ctx, dev.ID, target, handle)
-		handle.Cancel()
+		_ = handle.Cancel()
 
 		// Short backoff before reconnecting stream
 		select {

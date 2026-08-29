@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -33,7 +34,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to connect to gRPC server at %s: %v", target, err)
 	}
-	defer conn.Close()
+	defer func() { _ = conn.Close() }()
 
 	client := devicepb.NewDeviceServiceClient(conn)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -97,7 +98,7 @@ func main() {
 	frameCount := 0
 	for {
 		frame, err := stream.Recv()
-		if err == io.EOF || streamCtx.Err() != nil {
+		if errors.Is(err, io.EOF) || streamCtx.Err() != nil {
 			break
 		}
 		if err != nil {

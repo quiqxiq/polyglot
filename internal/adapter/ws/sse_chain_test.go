@@ -33,7 +33,7 @@ func TestSSEThroughMiddlewareChain(t *testing.T) {
 	if err != nil {
 		t.Fatalf("open SSE connection: %v", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		t.Fatalf("GET /events status = %d, want 200 (previous bug: 500 Streaming unsupported)", resp.StatusCode)

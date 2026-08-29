@@ -42,4 +42,3 @@ func (g *Gateway) RemoveQueue(ctx context.Context, driver port.DeviceDriver, ros
 func (g *Gateway) SetQueueEnabled(ctx context.Context, driver port.DeviceDriver, rosID string, enabled bool) (command.Result, error) {
 	return g.exec(ctx, driver, NewSetSimpleQueueEnabledCommand(rosID, enabled))
 }
-

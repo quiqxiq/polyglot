@@ -50,4 +50,3 @@ type HotspotProfileParams struct {
 	Comment        string
 	OnLogin        string
 }
-

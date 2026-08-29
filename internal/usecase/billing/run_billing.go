@@ -148,7 +148,9 @@ func atoiSafe(s string) int {
 func parsePeriod(p string) (int, time.Month) {
 	var y int
 	var m int
-	fmt.Sscanf(p, "%d-%d", &y, &m)
+	if _, err := fmt.Sscanf(p, "%d-%d", &y, &m); err != nil {
+		return 0, 0
+	}
 	return y, time.Month(m)
 }
 

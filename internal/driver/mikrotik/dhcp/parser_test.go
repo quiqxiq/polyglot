@@ -56,4 +56,3 @@ func TestParseServers(t *testing.T) {
 		t.Fatalf("unexpected server parsed: %+v", servers[0])
 	}
 }
-

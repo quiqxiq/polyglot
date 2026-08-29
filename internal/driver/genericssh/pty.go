@@ -47,7 +47,7 @@ func (s *SSHPtySession) Close() error {
 	var errs []error
 	s.closeOnce.Do(func() {
 		if s.session != nil {
-			if err := s.session.Close(); err != nil && err != io.EOF {
+			if err := s.session.Close(); err != nil && !errors.Is(err, io.EOF) {
 				errs = append(errs, err)
 			}
 		}

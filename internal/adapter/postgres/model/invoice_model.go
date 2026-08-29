@@ -40,10 +40,12 @@ type InvoiceModel struct {
 	UpdatedAt time.Time
 }
 
+// TableName returns the database table name for invoices.
 func (InvoiceModel) TableName() string {
 	return "invoices"
 }
 
+// ToDomain converts an invoice database model to its domain representation.
 func (m *InvoiceModel) ToDomain() billing.Invoice {
 	if m == nil {
 		return billing.Invoice{}
@@ -74,6 +76,7 @@ func (m *InvoiceModel) ToDomain() billing.Invoice {
 	}
 }
 
+// InvoiceModelFromDomain converts an invoice domain entity to a database model.
 func InvoiceModelFromDomain(inv billing.Invoice) *InvoiceModel {
 	return &InvoiceModel{
 		ID:                inv.ID,

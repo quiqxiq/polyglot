@@ -33,4 +33,3 @@ func ListServers(ctx context.Context, driver port.DeviceDriver, exec port.Comman
 	}
 	return ParseServers(res), nil
 }
-

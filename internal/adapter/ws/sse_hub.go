@@ -58,7 +58,9 @@ func (h *SSEHub) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	logger.WithComponent("SSEHub").Debug("new client connected")
 
 	// Event awal (ready) langsung ditulis + di-flush
-	fmt.Fprintf(w, "event: ready\ndata: {}\n\n")
+	if _, err := fmt.Fprintf(w, "event: ready\ndata: {}\n\n"); err != nil {
+		return
+	}
 	flusher.Flush()
 
 	ctx := r.Context()
@@ -72,7 +74,9 @@ func (h *SSEHub) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				continue
 			}
-			fmt.Fprintf(w, "event: %s\ndata: %s\n\n", event.Event, string(dataBytes))
+			if _, err := fmt.Fprintf(w, "event: %s\ndata: %s\n\n", event.Event, string(dataBytes)); err != nil {
+				return
+			}
 			flusher.Flush()
 		case <-ctx.Done():
 			return

@@ -30,4 +30,3 @@ func TestFirewallCommands(t *testing.T) {
 		t.Fatalf("unexpected print nat command: %+v", cmdNAT)
 	}
 }
-

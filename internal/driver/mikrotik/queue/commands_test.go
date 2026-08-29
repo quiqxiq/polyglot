@@ -34,4 +34,3 @@ func TestNewAddSimpleQueueCommand(t *testing.T) {
 		t.Fatalf("unexpected add command: %+v", cmd)
 	}
 }
-

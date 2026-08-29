@@ -21,10 +21,12 @@ type CashAccountModel struct {
 	UpdatedAt time.Time
 }
 
+// TableName returns the database table name for cash accounts.
 func (CashAccountModel) TableName() string {
 	return "cash_accounts"
 }
 
+// ToDomain converts a cash account database model to its domain representation.
 func (m *CashAccountModel) ToDomain() cashbook.CashAccount {
 	if m == nil {
 		return cashbook.CashAccount{}
@@ -41,6 +43,7 @@ func (m *CashAccountModel) ToDomain() cashbook.CashAccount {
 	}
 }
 
+// CashAccountModelFromDomain converts a cash account domain entity to a database model.
 func CashAccountModelFromDomain(a cashbook.CashAccount) *CashAccountModel {
 	return &CashAccountModel{
 		ID:          a.ID,
@@ -64,10 +67,12 @@ type CashCategoryModel struct {
 	IsActive bool   `gorm:"not null;default:true"`
 }
 
+// TableName returns the database table name for cash categories.
 func (CashCategoryModel) TableName() string {
 	return "cash_categories"
 }
 
+// ToDomain converts a cash category database model to its domain representation.
 func (m *CashCategoryModel) ToDomain() cashbook.CashCategory {
 	if m == nil {
 		return cashbook.CashCategory{}
@@ -81,6 +86,7 @@ func (m *CashCategoryModel) ToDomain() cashbook.CashCategory {
 	}
 }
 
+// CashCategoryModelFromDomain converts a cash category domain entity to a database model.
 func CashCategoryModelFromDomain(c cashbook.CashCategory) *CashCategoryModel {
 	return &CashCategoryModel{
 		ID:       c.ID,
@@ -116,10 +122,12 @@ type CashTransactionModel struct {
 	CreatedAt time.Time
 }
 
+// TableName returns the database table name for cash transactions.
 func (CashTransactionModel) TableName() string {
 	return "cash_transactions"
 }
 
+// ToDomain converts a cash transaction database model to its domain representation.
 func (m *CashTransactionModel) ToDomain() cashbook.CashTransaction {
 	if m == nil {
 		return cashbook.CashTransaction{}
@@ -141,6 +149,7 @@ func (m *CashTransactionModel) ToDomain() cashbook.CashTransaction {
 	}
 }
 
+// CashTransactionModelFromDomain converts a cash transaction domain entity to a database model.
 func CashTransactionModelFromDomain(t cashbook.CashTransaction) *CashTransactionModel {
 	return &CashTransactionModel{
 		ID:            t.ID,

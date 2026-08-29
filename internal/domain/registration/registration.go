@@ -34,17 +34,17 @@ type Registration struct {
 	AdminNotes           string     `json:"admin_notes,omitempty"`
 	ScheduledInstallDate *time.Time `json:"scheduled_install_date,omitempty"`
 	// Jam pemasangan (TIME). Fix review: bukan VARCHAR(20).
-	ScheduledInstallTime  *time.Time `json:"scheduled_install_time,omitempty"`
-	AssignedTechnicianID  *uint      `json:"assigned_technician_id,omitempty"` // users.id teknisi
-	InstalledAt           *time.Time `json:"installed_at,omitempty"`
-	TechnicianNotes       string     `json:"technician_notes,omitempty"`
-	CustomerID            string     `json:"customer_id,omitempty"` // hasil konversi
-	SubscriptionID        string     `json:"subscription_id,omitempty"`
-	InvoiceID             string     `json:"invoice_id,omitempty"`
-	RejectedAt            *time.Time `json:"rejected_at,omitempty"`
-	RejectedReason        string     `json:"rejected_reason,omitempty"`
-	CancelledAt           *time.Time `json:"cancelled_at,omitempty"`
-	CancelReason          string     `json:"cancel_reason,omitempty"`
-	CreatedAt             time.Time  `json:"created_at"`
-	UpdatedAt             time.Time  `json:"updated_at"`
+	ScheduledInstallTime *time.Time `json:"scheduled_install_time,omitempty"`
+	AssignedTechnicianID *uint      `json:"assigned_technician_id,omitempty"` // users.id teknisi
+	InstalledAt          *time.Time `json:"installed_at,omitempty"`
+	TechnicianNotes      string     `json:"technician_notes,omitempty"`
+	CustomerID           string     `json:"customer_id,omitempty"` // hasil konversi
+	SubscriptionID       string     `json:"subscription_id,omitempty"`
+	InvoiceID            string     `json:"invoice_id,omitempty"`
+	RejectedAt           *time.Time `json:"rejected_at,omitempty"`
+	RejectedReason       string     `json:"rejected_reason,omitempty"`
+	CancelledAt          *time.Time `json:"cancelled_at,omitempty"`
+	CancelReason         string     `json:"cancel_reason,omitempty"`
+	CreatedAt            time.Time  `json:"created_at"`
+	UpdatedAt            time.Time  `json:"updated_at"`
 }

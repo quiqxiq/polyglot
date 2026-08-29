@@ -14,14 +14,17 @@ import (
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
+// CashbookConnectHandler implements the cashbook ConnectRPC service.
 type CashbookConnectHandler struct {
 	repo port.CashbookRepository
 }
 
+// NewCashbookConnectHandler constructs a cashbook ConnectRPC handler.
 func NewCashbookConnectHandler(repo port.CashbookRepository) *CashbookConnectHandler {
 	return &CashbookConnectHandler{repo: repo}
 }
 
+// ListAccounts returns cash accounts.
 func (h *CashbookConnectHandler) ListAccounts(ctx context.Context, req *connect.Request[devicepb.ListAccountsRequest]) (*connect.Response[devicepb.ListAccountsResponse], error) {
 	if h.repo == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
@@ -35,6 +38,7 @@ func (h *CashbookConnectHandler) ListAccounts(ctx context.Context, req *connect.
 	}), nil
 }
 
+// SaveAccount creates or updates a cash account.
 func (h *CashbookConnectHandler) SaveAccount(ctx context.Context, req *connect.Request[devicepb.SaveAccountRequest]) (*connect.Response[devicepb.SaveAccountResponse], error) {
 	if h.repo == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
@@ -59,6 +63,7 @@ func (h *CashbookConnectHandler) SaveAccount(ctx context.Context, req *connect.R
 	}), nil
 }
 
+// ListCategories returns cash categories.
 func (h *CashbookConnectHandler) ListCategories(ctx context.Context, req *connect.Request[devicepb.ListCategoriesRequest]) (*connect.Response[devicepb.ListCategoriesResponse], error) {
 	if h.repo == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
@@ -72,6 +77,7 @@ func (h *CashbookConnectHandler) ListCategories(ctx context.Context, req *connec
 	}), nil
 }
 
+// SaveCategory creates or updates a cash category.
 func (h *CashbookConnectHandler) SaveCategory(ctx context.Context, req *connect.Request[devicepb.SaveCategoryRequest]) (*connect.Response[devicepb.SaveCategoryResponse], error) {
 	if h.repo == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
@@ -96,6 +102,7 @@ func (h *CashbookConnectHandler) SaveCategory(ctx context.Context, req *connect.
 	}), nil
 }
 
+// AddTransaction records a cash transaction.
 func (h *CashbookConnectHandler) AddTransaction(ctx context.Context, req *connect.Request[devicepb.AddTransactionRequest]) (*connect.Response[devicepb.AddTransactionResponse], error) {
 	if h.repo == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
@@ -126,6 +133,7 @@ func (h *CashbookConnectHandler) AddTransaction(ctx context.Context, req *connec
 	}), nil
 }
 
+// ListTransactions returns cash transactions matching the filter.
 func (h *CashbookConnectHandler) ListTransactions(ctx context.Context, req *connect.Request[devicepb.ListTransactionsFilter]) (*connect.Response[devicepb.ListTransactionsResponse], error) {
 	if h.repo == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))
@@ -151,6 +159,7 @@ func (h *CashbookConnectHandler) ListTransactions(ctx context.Context, req *conn
 	}), nil
 }
 
+// Balances returns account balances for the selected period.
 func (h *CashbookConnectHandler) Balances(ctx context.Context, req *connect.Request[devicepb.BalancesRequest]) (*connect.Response[devicepb.BalancesResponse], error) {
 	if h.repo == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("cashbook repository unavailable"))

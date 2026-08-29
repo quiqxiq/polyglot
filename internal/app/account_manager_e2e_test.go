@@ -1,3 +1,5 @@
+//go:build mikrotik_e2e
+
 package app
 
 // E2E test siklus hidup akun router terhadap MikroTik SUNGGUHAN.
@@ -153,7 +155,7 @@ func TestRouterAccountManager_E2E(t *testing.T) {
 	requireTrue(t, gone == nil, "secret harus terhapus setelah terminate")
 
 	// Rule redirect app tetap ada (disabled) untuk audit.
-	rules, err := gw.ListFirewallNATRules(ctx, drv, "dstnat", mikrotik.IsolationRedirectComment, "")
+	rules, err := gw.ListFirewallNATRules(ctx, drv, "dstnat", "", addressList)
 	requireNoErr(t, err, "list nat")
 	rules = mikrotik.FindIsolationRedirectRules(rules)
 	requireTrue(t, len(rules) >= 1, "rule redirect milik app harus ada (disabled)")

@@ -4,8 +4,11 @@ package command
 type Decision int
 
 const (
+	// DecisionAutoApprove permits a command without extra approval.
 	DecisionAutoApprove Decision = iota
+	// DecisionRequireApproval pauses a command pending approval.
 	DecisionRequireApproval
+	// DecisionDeny rejects a command.
 	DecisionDeny
 )
 

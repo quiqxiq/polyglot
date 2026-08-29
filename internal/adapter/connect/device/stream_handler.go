@@ -16,6 +16,7 @@ import (
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
+// StreamDeviceStatus streams device status updates.
 func (h *DeviceConnectHandler) StreamDeviceStatus(
 	ctx context.Context,
 	req *connect.Request[devicepb.StreamDeviceStatusRequest],
@@ -124,7 +125,7 @@ func (h *DeviceConnectHandler) StreamPing(
 	if err != nil {
 		return response.MapDomainError(fmt.Errorf("failed to start ping stream: %w", err))
 	}
-	defer pingHandle.Cancel()
+	defer func() { _ = pingHandle.Cancel() }()
 
 	for {
 		select {
@@ -209,7 +210,7 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 	if err != nil {
 		return response.MapDomainError(fmt.Errorf("failed to start traffic stream: %w", err))
 	}
-	defer trafficHandle.Cancel()
+	defer func() { _ = trafficHandle.Cancel() }()
 
 	for {
 		select {
@@ -265,7 +266,7 @@ func (h *DeviceConnectHandler) StreamTerminal(
 		logger.WithComponent("DeviceConnectHandler").Errorf("SSH PTY connection failed for device %s: %v", firstFrame.DeviceId, err)
 		return connect.NewError(connect.CodeUnavailable, fmt.Errorf("failed to open SSH terminal: %w", err))
 	}
-	defer session.Close()
+	defer func() { _ = session.Close() }()
 
 	errChan := make(chan error, 2)
 

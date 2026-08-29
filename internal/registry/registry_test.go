@@ -125,7 +125,7 @@ func newTestRegistry(t *testing.T) (*Registry, *mockDriver) {
 
 func TestRegistry_Get_CacheHit(t *testing.T) {
 	reg, _ := newTestRegistry(t)
-	defer reg.Close()
+	defer func() { _ = reg.Close() }()
 
 	ctx := context.Background()
 	d1, err := reg.Get(ctx, "dev1")
@@ -137,7 +137,7 @@ func TestRegistry_Get_CacheHit(t *testing.T) {
 
 func TestRegistry_Get_NotFound(t *testing.T) {
 	reg, _ := newTestRegistry(t)
-	defer reg.Close()
+	defer func() { _ = reg.Close() }()
 
 	_, err := reg.Get(context.Background(), "missing")
 	require.Error(t, err)
@@ -159,7 +159,7 @@ func TestRegistry_Get_DisabledDevice(t *testing.T) {
 	reg := New(repo, vault, map[string]DriverFactory{
 		"mikrotik": func(_ context.Context, _ device.Target) (port.DeviceDriver, error) { return drv, nil },
 	})
-	defer reg.Close()
+	defer func() { _ = reg.Close() }()
 
 	_, err := reg.Get(context.Background(), "disabled1")
 	require.Error(t, err)
@@ -178,7 +178,7 @@ func TestRegistry_Get_UnknownDriverType(t *testing.T) {
 		},
 	}
 	reg := New(repo, vault, map[string]DriverFactory{})
-	defer reg.Close()
+	defer func() { _ = reg.Close() }()
 
 	_, err := reg.Get(context.Background(), "dev2")
 	require.Error(t, err)

@@ -33,14 +33,14 @@ type Config struct {
 
 	CORSOrigins []string
 
-		// Scheduler ISP (fase 3).
-		BillingCronSpec   string
-		IsolationCronSpec string
-		SchedulerEnabled  bool
+	// Scheduler ISP (fase 3).
+	BillingCronSpec   string
+	IsolationCronSpec string
+	SchedulerEnabled  bool
 
-		// Scheduler fase 4: pengirim WA & snapshot harian.
-		WaSendCronSpec   string
-		SnapshotCronSpec string
+	// Scheduler fase 4: pengirim WA & snapshot harian.
+	WaSendCronSpec   string
+	SnapshotCronSpec string
 }
 
 // Load reads infrastructure secrets and settings from environment variables or .env files.

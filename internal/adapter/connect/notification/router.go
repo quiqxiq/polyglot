@@ -9,6 +9,7 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
+// NewNotificationServiceHandler creates the notification ConnectRPC service handler.
 func NewNotificationServiceHandler(repo port.NotificationRepository, sender port.NotificationSender) (string, http.Handler) {
 	handler := NewNotificationConnectHandler(repo, sender)
 	mux := http.NewServeMux()

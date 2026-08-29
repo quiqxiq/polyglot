@@ -1,8 +1,9 @@
 package auth
 
 import (
-	"github.com/quixiq/polyglot/pkg/logger"
 	"strings"
+
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 // SeedSystemPolicies seeds the default RBAC policies using the "resource:action"

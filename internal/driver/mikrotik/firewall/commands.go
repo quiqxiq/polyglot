@@ -164,4 +164,3 @@ func NewPrintIPRoutesCommand(dstFilter string) command.Command {
 	}
 	return command.Command{Raw: "/ip/route/print", Args: args}
 }
-

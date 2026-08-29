@@ -15,6 +15,7 @@ import (
 	"github.com/quixiq/polyglot/internal/usecase/importer"
 )
 
+// Handler exposes administrative HTTP endpoints for imports and reports.
 type Handler struct {
 	upsert      *importer.UpsertUseCase
 	routerSrc   *importer.RouterSource
@@ -24,6 +25,7 @@ type Handler struct {
 	resolve     func(ctx context.Context, deviceID string) (port.DeviceDriver, bool)
 }
 
+// NewHandler constructs an administrative HTTP handler.
 func NewHandler(
 	upsert *importer.UpsertUseCase,
 	routerSrc *importer.RouterSource,
@@ -59,7 +61,7 @@ func (h *Handler) importFile(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, http.StatusBadRequest, "field file wajib")
 		return
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	var rows []importer.Row
 	switch {

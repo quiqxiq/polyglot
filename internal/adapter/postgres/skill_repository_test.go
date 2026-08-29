@@ -82,4 +82,3 @@ func TestSkillRepository_CRUD(t *testing.T) {
 	_, err = repo.GetSkill(ctx, "", "mikrotik-doctor")
 	assert.Error(t, err)
 }
-

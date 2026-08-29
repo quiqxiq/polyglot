@@ -52,4 +52,3 @@ func ParseServers(result command.Result) []DHCPServer {
 	}
 	return servers
 }
-

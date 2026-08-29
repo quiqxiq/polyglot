@@ -22,4 +22,3 @@ type DHCPServer struct {
 	LeaseTime   string
 	Disabled    bool
 }
-

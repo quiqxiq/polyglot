@@ -22,10 +22,12 @@ type NotificationTemplateModel struct {
 	UpdatedAt time.Time
 }
 
+// TableName returns the database table name for notification templates.
 func (NotificationTemplateModel) TableName() string {
 	return "notification_templates"
 }
 
+// ToDomain converts a notification template database model to its domain representation.
 func (m *NotificationTemplateModel) ToDomain() notification.NotificationTemplate {
 	if m == nil {
 		return notification.NotificationTemplate{}
@@ -43,6 +45,7 @@ func (m *NotificationTemplateModel) ToDomain() notification.NotificationTemplate
 	}
 }
 
+// NotificationTemplateModelFromDomain converts a notification template domain entity to a database model.
 func NotificationTemplateModelFromDomain(t notification.NotificationTemplate) *NotificationTemplateModel {
 	return &NotificationTemplateModel{
 		ID:            t.ID,
@@ -78,10 +81,12 @@ type WANotificationModel struct {
 	CreatedAt time.Time
 }
 
+// TableName returns the database table name for WhatsApp notifications.
 func (WANotificationModel) TableName() string {
 	return "wa_notifications"
 }
 
+// ToDomain converts a WhatsApp notification database model to its domain representation.
 func (m *WANotificationModel) ToDomain() notification.WANotification {
 	if m == nil {
 		return notification.WANotification{}
@@ -102,6 +107,7 @@ func (m *WANotificationModel) ToDomain() notification.WANotification {
 	}
 }
 
+// WANotificationModelFromDomain converts a WhatsApp notification domain entity to a database model.
 func WANotificationModelFromDomain(n notification.WANotification) *WANotificationModel {
 	return &WANotificationModel{
 		ID:             n.ID,

@@ -34,4 +34,3 @@ func IsolirProfileParams() PPPProfileParams {
 		SharedUsers:   "1",
 	}
 }
-

@@ -206,7 +206,7 @@ func (u *ManageRegistrationUseCase) queueTemplate(ctx context.Context, tenantID,
 		return
 	}
 	tpl, err := u.notif.FindTemplateByKey(ctx, tenantID, key)
-	content := tpl.Content
+	var content string
 	if err != nil {
 		content = key // fallback teks polos bila template hilang
 	} else {

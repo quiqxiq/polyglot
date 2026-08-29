@@ -45,4 +45,3 @@ func TestNewPrintServersCommand(t *testing.T) {
 		t.Fatalf("expected /ip/dhcp-server/print, got %s", cmd.Raw)
 	}
 }
-

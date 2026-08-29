@@ -12,6 +12,9 @@ import (
 var validSkillNameRegex = regexp.MustCompile(`^[a-z0-9]+(-[a-z0-9]+)*$`)
 
 // SkillMetadata merepresentasikan struktur metadata di dalam YAML frontmatter SKILL.md.
+// SkillMetadata contains SKILL.md frontmatter.
+//
+//nolint:revive // Domain package context makes the explicit name clearer to callers.
 type SkillMetadata struct {
 	Name          string            `yaml:"name" json:"name"`
 	Description   string            `yaml:"description" json:"description"`

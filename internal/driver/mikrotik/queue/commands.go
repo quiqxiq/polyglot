@@ -149,4 +149,3 @@ func NewSetSimpleQueueEnabledCommand(rosID string, enabled bool) command.Command
 		Args: map[string]string{"numbers": rosID, "disabled": val},
 	}
 }
-

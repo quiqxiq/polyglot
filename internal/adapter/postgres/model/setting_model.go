@@ -18,6 +18,7 @@ type SystemSettingModel struct {
 // TableName maps SystemSettingModel to the migration table `system_settings`.
 func (SystemSettingModel) TableName() string { return "system_settings" }
 
+// ToDomain converts a setting database model to its domain representation.
 func (m *SystemSettingModel) ToDomain() *setting.Setting {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *SystemSettingModel) ToDomain() *setting.Setting {
 	}
 }
 
+// SystemSettingModelFromDomain converts a setting domain entity to a database model.
 func SystemSettingModelFromDomain(s *setting.Setting) *SystemSettingModel {
 	if s == nil {
 		return nil

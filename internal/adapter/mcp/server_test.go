@@ -163,7 +163,7 @@ func callToolViaInMemoryTransport(t *testing.T, s *Server, toolName string, args
 	client := mcp.NewClient(&mcp.Implementation{Name: "test-client", Version: "v0.1"}, nil)
 	session, err := client.Connect(ctx, trClient, nil)
 	require.NoError(t, err)
-	defer session.Close()
+	defer func() { _ = session.Close() }()
 
 	res, err := session.CallTool(ctx, &mcp.CallToolParams{Name: toolName, Arguments: args})
 	require.NoError(t, err)
@@ -183,7 +183,7 @@ func TestMCP_ListTools(t *testing.T) {
 	client := mcp.NewClient(&mcp.Implementation{Name: "test-client"}, nil)
 	session, err := client.Connect(ctx, trClient, nil)
 	require.NoError(t, err)
-	defer session.Close()
+	defer func() { _ = session.Close() }()
 
 	tools, err := session.ListTools(ctx, nil)
 	require.NoError(t, err)

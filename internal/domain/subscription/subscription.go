@@ -3,15 +3,22 @@ package subscription
 import "time"
 
 const (
-	StatusActive    = "ACTIVE"
+	// StatusActive indicates an active subscription.
+	StatusActive = "ACTIVE"
+	// StatusCancelled indicates a cancelled subscription.
 	StatusCancelled = "CANCELLED"
-	StatusExpired   = "EXPIRED"
-	StatusPending   = "PENDING"
-	StatusIsolated  = "ISOLATED"
+	// StatusExpired indicates an expired subscription.
+	StatusExpired = "EXPIRED"
+	// StatusPending indicates a pending subscription.
+	StatusPending = "PENDING"
+	// StatusIsolated indicates an isolated subscription.
+	StatusIsolated = "ISOLATED"
 
-	// StatusIsolated/Suspended/Terminated mengikuti skema ISP;
+	// StatusSuspended and StatusTerminated follow the ISP schema;
 	// StatusExpired/Pending dipertahankan untuk kompatibilitas kode eksisting.
-	StatusSuspended  = "SUSPENDED"
+	// StatusSuspended indicates a suspended subscription.
+	StatusSuspended = "SUSPENDED"
+	// StatusTerminated indicates a terminated subscription.
 	StatusTerminated = "TERMINATED"
 )
 

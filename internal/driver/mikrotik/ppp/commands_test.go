@@ -30,4 +30,3 @@ func TestNewPrintProfilesCommand(t *testing.T) {
 		t.Fatalf("unexpected print profile command: %+v", cmd)
 	}
 }
-

@@ -142,4 +142,3 @@ func (g *Gateway) ListInactive(ctx context.Context, driver port.DeviceDriver) ([
 	active := ParseActiveSessions(actRes)
 	return FilterInactiveSecrets(secrets, active), nil
 }
-

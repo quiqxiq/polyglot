@@ -39,4 +39,3 @@ func ParseSimpleQueues(result command.Result) []SimpleQueue {
 	}
 	return queues
 }
-

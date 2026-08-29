@@ -52,8 +52,8 @@ func classifyExpireMonitorSchedulers(schedulers []system.SystemScheduler) port.E
 // 2. Finds all Hotspot users with a comment containing the current or previous year.
 // 3. Parses the expiry date/time and mode ('N' or 'X') from the user's comment.
 // 4. If expired:
-//    - Mode 'N' (Notify): sets limit-uptime=1s and disconnects active session.
-//    - Mode 'X' (Remove): deletes user completely and disconnects active session.
+//   - Mode 'N' (Notify): sets limit-uptime=1s and disconnects active session.
+//   - Mode 'X' (Remove): deletes user completely and disconnects active session.
 func BuildExpireMonitorScript() string {
 	var sb strings.Builder
 	sb.WriteString(":local dateint do={\n")

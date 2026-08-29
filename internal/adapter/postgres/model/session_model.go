@@ -29,6 +29,7 @@ type WASessionModel struct {
 // TableName maps WASessionModel ke tabel migrasi `wa_sessions`.
 func (WASessionModel) TableName() string { return "wa_sessions" }
 
+// ToDomain converts a WhatsApp session database model to its domain representation.
 func (m *WASessionModel) ToDomain() *bot.WASession {
 	if m == nil {
 		return nil
@@ -46,6 +47,7 @@ func (m *WASessionModel) ToDomain() *bot.WASession {
 	}
 }
 
+// WASessionModelFromDomain converts a WhatsApp session domain entity to a database model.
 func WASessionModelFromDomain(s *bot.WASession) *WASessionModel {
 	if s == nil {
 		return nil

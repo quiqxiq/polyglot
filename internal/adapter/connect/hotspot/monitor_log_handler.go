@@ -32,7 +32,7 @@ func (h *HotspotConnectHandler) StreamLogs(ctx context.Context, req *connect.Req
 		logger.WithComponent("HotspotConnectHandler").WithError(err).Warn("starting log stream failed")
 		return response.MapDomainError(err)
 	}
-	defer handle.Cancel()
+	defer func() { _ = handle.Cancel() }()
 
 	for {
 		select {

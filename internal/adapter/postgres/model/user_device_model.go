@@ -14,9 +14,10 @@ type UserDeviceModel struct {
 	CreatedAt  time.Time `gorm:"not null;default:CURRENT_TIMESTAMP"`
 }
 
-// TableName explicitly maps UserDeviceModel to the `user_devices` migration table.
+// TableName explicitly maps UserDeviceModel to the user_devices migration table.
 func (UserDeviceModel) TableName() string { return "user_devices" }
 
+// ToDomain converts a user-device database model to its domain representation.
 func (m *UserDeviceModel) ToDomain() *customer.UserDeviceAssignment {
 	if m == nil {
 		return nil

@@ -25,6 +25,7 @@ type GatewayChargeUseCase struct {
 	reader    port.SettingReader
 }
 
+// NewGatewayChargeUseCase constructs the gateway charge use case.
 func NewGatewayChargeUseCase(
 	invoices port.InvoiceRepository,
 	customs port.CustomerRepository,

@@ -52,7 +52,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 	if err != nil {
 		return response.MapDomainError(err)
 	}
-	defer handle.Cancel()
+	defer func() { _ = handle.Cancel() }()
 
 	secretProfileMap := make(map[string]string)
 	if secrets, err := h.useCase.ListSecrets(ctx, driver, req.Msg.NameFilter); err == nil {
@@ -158,7 +158,7 @@ func (h *PPPConnectHandler) StreamActiveStats(ctx context.Context, req *connect.
 	if err != nil {
 		return response.MapDomainError(err)
 	}
-	defer handle.Cancel()
+	defer func() { _ = handle.Cancel() }()
 
 	for {
 		select {

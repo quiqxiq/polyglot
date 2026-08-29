@@ -68,7 +68,7 @@ func (m *mockSkillMetadataRepo) SaveGlobalSystemPrompt(ctx context.Context, cont
 func TestSkillConnectHandler_E2E(t *testing.T) {
 	tempDir, err := os.MkdirTemp("", "skill_connect_test")
 	require.NoError(t, err)
-	defer os.RemoveAll(tempDir)
+	defer func() { _ = os.RemoveAll(tempDir) }()
 
 	fsStore, err := storage.NewFSSkillStore(tempDir)
 	require.NoError(t, err)

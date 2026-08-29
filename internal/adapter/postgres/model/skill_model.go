@@ -20,10 +20,12 @@ type SkillMetadataModel struct {
 	UpdatedAt  time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 }
 
+// TableName returns the database table name for skill metadata.
 func (SkillMetadataModel) TableName() string {
 	return "skills_metadata"
 }
 
+// ToDomain converts a skill metadata database model to its domain representation.
 func (m *SkillMetadataModel) ToDomain() *skill.SkillMetadataRecord {
 	if m == nil {
 		return nil
@@ -42,6 +44,7 @@ func (m *SkillMetadataModel) ToDomain() *skill.SkillMetadataRecord {
 	}
 }
 
+// SkillMetadataModelFromDomain converts a skill metadata domain record to a database model.
 func SkillMetadataModelFromDomain(r *skill.SkillMetadataRecord) *SkillMetadataModel {
 	if r == nil {
 		return nil
@@ -68,6 +71,7 @@ type GlobalPromptModel struct {
 	UpdatedAt time.Time `gorm:"autoUpdateTime"`
 }
 
+// TableName returns the database table name for global prompts.
 func (GlobalPromptModel) TableName() string {
 	return "bot_global_prompts"
 }

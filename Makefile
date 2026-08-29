@@ -1,4 +1,4 @@
-.PHONY: build test test-integration lint fmt run setup seed \
+.PHONY: build vet test test-integration test-mikrotik-e2e lint check fmt run setup seed \
         proto proto-tools proto-clean \
         dev-up dev-down dev-logs dev-setup \
         prod-build prod-up prod-down prod-logs prod-setup \
@@ -35,11 +35,19 @@ setup: dev-setup
 build:
 	go build ./...
 
+vet:
+	go vet ./...
+
 test:
 	go test ./... -race -cover
 
+check: vet build lint test
+
 test-integration:
 	go test -tags=integration ./test/integration/... -v
+
+test-mikrotik-e2e:
+	go test -tags=mikrotik_e2e ./internal/app -run TestRouterAccountManager_E2E -v
 
 lint:
 	golangci-lint run ./...

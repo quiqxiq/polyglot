@@ -146,7 +146,7 @@ func BlockIPFilterParams(customerIP, reason string) FirewallFilterParams {
 
 // BlockAddressListFilterParams returns a pre-filled FirewallFilterParams for a list-based block rule.
 func BlockAddressListFilterParams(chain, listName string) FirewallFilterParams {
-	comment := "Block suspended customers"
+	var comment string
 	if chain == "input" {
 		comment = "Block suspended customers from accessing router (static IP)"
 	} else {

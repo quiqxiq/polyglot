@@ -28,7 +28,7 @@ func (d *Driver) execGetDevice(ctx context.Context, projection string) (command.
 	if err != nil {
 		return command.Result{}, fmt.Errorf("genieacs: get device %s: %w", d.deviceID, err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		return command.Result{}, fmt.Errorf("genieacs: get device %s: NBI %d", d.deviceID, resp.StatusCode)
@@ -66,7 +66,7 @@ func (d *Driver) postTask(ctx context.Context, body []byte, connectionRequest bo
 	if err != nil {
 		return "", false, fmt.Errorf("genieacs: post task: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	switch resp.StatusCode {
 	case http.StatusOK, http.StatusAccepted:
@@ -120,7 +120,7 @@ func (d *Driver) taskGone(ctx context.Context, taskID string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	if resp.StatusCode != http.StatusOK {
 		return false, fmt.Errorf("NBI %d", resp.StatusCode)
 	}
@@ -145,7 +145,7 @@ func (d *Driver) taskFaultDetail(ctx context.Context) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	if resp.StatusCode != http.StatusOK {
 		return "", fmt.Errorf("NBI %d", resp.StatusCode)
 	}

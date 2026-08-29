@@ -59,7 +59,7 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 	if err != nil {
 		return response.MapDomainError(err)
 	}
-	defer handle.Cancel()
+	defer func() { _ = handle.Cancel() }()
 
 	for {
 		select {
@@ -148,7 +148,7 @@ func (h *HotspotConnectHandler) StreamActiveStats(ctx context.Context, req *conn
 	if err != nil {
 		return response.MapDomainError(err)
 	}
-	defer handle.Cancel()
+	defer func() { _ = handle.Cancel() }()
 
 	for {
 		select {
@@ -310,7 +310,7 @@ func (h *HotspotConnectHandler) StreamHotspotInactive(ctx context.Context, req *
 			if err != nil {
 				return
 			}
-			defer handle.Cancel()
+			defer func() { _ = handle.Cancel() }()
 			for {
 				select {
 				case <-ctx.Done():

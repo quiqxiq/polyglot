@@ -133,4 +133,3 @@ func TestProvider_ChatWithTools_Structure(t *testing.T) {
 
 	assert.NotNil(t, tools)
 }
-

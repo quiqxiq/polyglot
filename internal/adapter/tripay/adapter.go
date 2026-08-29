@@ -20,8 +20,10 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
+// Name is the stable identifier for the Tripay payment gateway.
 const Name = "TRIPAY"
 
+// Config contains the Tripay gateway configuration.
 type Config struct {
 	Endpoint       string // https://tripay.co.id/api | api-sandbox
 	MerchantCode   string
@@ -31,7 +33,7 @@ type Config struct {
 	CallbackAction func(ctx context.Context, event port.WebhookEvent) error
 }
 
-// ConfigReader membaca konfigurasi dari system_settings tiap dipakai.
+// ReadConfig reads Tripay configuration values from the settings repository.
 func ReadConfig(ctx context.Context, reader port.SettingReader) Config {
 	endpoint := reader.GetValue(ctx, "gw.tripay.endpoint", "https://tripay.co.id/api")
 	return Config{
@@ -142,8 +144,11 @@ func (a *Adapter) CreateCharge(ctx context.Context, req port.ChargeRequest) (por
 	if err != nil {
 		return port.ChargeResult{}, fmt.Errorf("http tripay: %w", err)
 	}
-	defer resp.Body.Close()
-	raw, _ := io.ReadAll(io.LimitReader(resp.Body, 1<<20))
+	defer func() { _ = resp.Body.Close() }()
+	raw, err := io.ReadAll(io.LimitReader(resp.Body, 1<<20))
+	if err != nil {
+		return port.ChargeResult{}, fmt.Errorf("read tripay response: %w", err)
+	}
 
 	var out createResponse
 	if err := json.Unmarshal(raw, &out); err != nil {

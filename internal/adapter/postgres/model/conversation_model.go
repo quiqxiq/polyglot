@@ -25,6 +25,7 @@ type ConversationModel struct {
 // TableName maps ConversationModel ke tabel migrasi `conversations`.
 func (ConversationModel) TableName() string { return "conversations" }
 
+// ToDomain converts a conversation database model to its domain representation.
 func (m *ConversationModel) ToDomain() *bot.Conversation {
 	if m == nil {
 		return nil
@@ -48,6 +49,7 @@ func (m *ConversationModel) ToDomain() *bot.Conversation {
 	}
 }
 
+// ConversationModelFromDomain converts a conversation domain entity to a database model.
 func ConversationModelFromDomain(c *bot.Conversation) *ConversationModel {
 	if c == nil {
 		return nil
@@ -81,6 +83,7 @@ type MessageModel struct {
 // TableName maps MessageModel ke tabel migrasi `messages`.
 func (MessageModel) TableName() string { return "messages" }
 
+// ToDomain converts a message database model to its domain representation.
 func (m *MessageModel) ToDomain() *bot.Message {
 	if m == nil {
 		return nil
@@ -97,6 +100,7 @@ func (m *MessageModel) ToDomain() *bot.Message {
 	}
 }
 
+// MessageModelFromDomain converts a message domain entity to a database model.
 func MessageModelFromDomain(msg *bot.Message) *MessageModel {
 	if msg == nil {
 		return nil

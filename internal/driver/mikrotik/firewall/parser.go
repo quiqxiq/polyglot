@@ -145,4 +145,3 @@ func ParseIPRoutes(result command.Result) []IPRoute {
 	}
 	return routes
 }
-

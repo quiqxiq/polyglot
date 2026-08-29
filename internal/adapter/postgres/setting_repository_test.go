@@ -77,4 +77,3 @@ func TestSettingRepository_CRUD(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, 10, updatedBotSettings.BurstLimit)
 }
-

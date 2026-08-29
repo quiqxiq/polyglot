@@ -15,6 +15,9 @@ import (
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
+// BillingConnectHandler implements the billing ConnectRPC service.
+//
+//nolint:revive // Explicit transport role is part of the project naming convention.
 type BillingConnectHandler struct {
 	invoiceUC   *billingUC.InvoiceUseCase
 	checkoutUC  *billingUC.CheckoutUseCase
@@ -25,6 +28,7 @@ type BillingConnectHandler struct {
 	manageSubUC *billingUC.ManageSubscriptionUseCase
 }
 
+// NewBillingConnectHandler constructs a billing ConnectRPC handler.
 func NewBillingConnectHandler(
 	invUC *billingUC.InvoiceUseCase,
 	checkoutUC *billingUC.CheckoutUseCase,
@@ -47,6 +51,7 @@ func NewBillingConnectHandler(
 
 // ─── Faktur ─────────────────────────────────────────────────────────────
 
+// ListInvoices returns invoices matching the request filters.
 func (h *BillingConnectHandler) ListInvoices(ctx context.Context, req *connect.Request[devicepb.ListInvoicesRequest]) (*connect.Response[devicepb.ListInvoicesResponse], error) {
 	if h.invoiceUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("invoice usecase unavailable"))
@@ -70,6 +75,7 @@ func (h *BillingConnectHandler) ListInvoices(ctx context.Context, req *connect.R
 	}), nil
 }
 
+// GetInvoice returns one invoice by identifier.
 func (h *BillingConnectHandler) GetInvoice(ctx context.Context, req *connect.Request[devicepb.GetInvoiceRequest]) (*connect.Response[devicepb.GetInvoiceResponse], error) {
 	if h.invoiceUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("invoice usecase unavailable"))
@@ -85,6 +91,7 @@ func (h *BillingConnectHandler) GetInvoice(ctx context.Context, req *connect.Req
 
 // ─── Kasir: resolve & bayar ─────────────────────────────────────────────
 
+// CashierResolve resolves an invoice for cashier payment.
 func (h *BillingConnectHandler) CashierResolve(ctx context.Context, req *connect.Request[devicepb.CashierResolveRequest]) (*connect.Response[devicepb.CashierResolveResponse], error) {
 	if h.checkoutUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("checkout usecase unavailable"))
@@ -109,6 +116,7 @@ func (h *BillingConnectHandler) CashierResolve(ctx context.Context, req *connect
 	}), nil
 }
 
+// CashierPay records a cashier payment for an invoice.
 func (h *BillingConnectHandler) CashierPay(ctx context.Context, req *connect.Request[devicepb.CashierPayRequest]) (*connect.Response[devicepb.CashierPayResponse], error) {
 	if h.checkoutUC == nil {
 		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("checkout usecase unavailable"))

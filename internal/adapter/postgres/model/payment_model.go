@@ -17,10 +17,12 @@ type PaymentMethodModel struct {
 	CreatedAt time.Time
 }
 
+// TableName returns the database table name for payment methods.
 func (PaymentMethodModel) TableName() string {
 	return "payment_methods"
 }
 
+// ToDomain converts a payment method database model to its domain representation.
 func (m *PaymentMethodModel) ToDomain() billing.PaymentMethod {
 	if m == nil {
 		return billing.PaymentMethod{}
@@ -35,6 +37,7 @@ func (m *PaymentMethodModel) ToDomain() billing.PaymentMethod {
 	}
 }
 
+// PaymentMethodModelFromDomain converts a payment method domain entity to a database model.
 func PaymentMethodModelFromDomain(p billing.PaymentMethod) *PaymentMethodModel {
 	return &PaymentMethodModel{
 		ID:        p.ID,
@@ -65,10 +68,12 @@ type PaymentModel struct {
 	CreatedAt   time.Time
 }
 
+// TableName returns the database table name for payments.
 func (PaymentModel) TableName() string {
 	return "payments"
 }
 
+// ToDomain converts a payment database model to its domain representation.
 func (m *PaymentModel) ToDomain() billing.Payment {
 	if m == nil {
 		return billing.Payment{}
@@ -89,6 +94,7 @@ func (m *PaymentModel) ToDomain() billing.Payment {
 	}
 }
 
+// PaymentModelFromDomain converts a payment domain entity to a database model.
 func PaymentModelFromDomain(p billing.Payment) *PaymentModel {
 	return &PaymentModel{
 		ID:              p.ID,

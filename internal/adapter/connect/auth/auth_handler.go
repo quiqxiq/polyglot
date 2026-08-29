@@ -79,7 +79,9 @@ func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[dev
 	}
 
 	var uid uint
-	fmt.Sscanf(userIDStr, "%d", &uid)
+	if _, err := fmt.Sscanf(userIDStr, "%d", &uid); err != nil {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid user identity"))
+	}
 
 	user, err := h.userUC.GetUser(ctx, uid)
 	if err != nil {
@@ -109,7 +111,9 @@ func (h *AuthConnectHandler) UpdateMe(ctx context.Context, req *connect.Request[
 	}
 
 	var uid uint
-	fmt.Sscanf(userIDStr, "%d", &uid)
+	if _, err := fmt.Sscanf(userIDStr, "%d", &uid); err != nil {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid user identity"))
+	}
 
 	user, err := h.authUC.UpdateProfile(ctx, uid, req.Msg.FullName, req.Msg.PhoneNumber, req.Msg.Email, req.Msg.Specialization)
 	if err != nil {
@@ -139,7 +143,9 @@ func (h *AuthConnectHandler) ChangePassword(ctx context.Context, req *connect.Re
 	}
 
 	var uid uint
-	fmt.Sscanf(userIDStr, "%d", &uid)
+	if _, err := fmt.Sscanf(userIDStr, "%d", &uid); err != nil {
+		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid user identity"))
+	}
 
 	if err := h.authUC.ChangePassword(ctx, uid, req.Msg.OldPassword, req.Msg.NewPassword); err != nil {
 		return nil, response.MapDomainError(err)

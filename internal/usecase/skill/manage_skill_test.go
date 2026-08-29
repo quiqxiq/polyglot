@@ -81,7 +81,7 @@ func (f *fakeSkillRepo) SaveGlobalSystemPrompt(ctx context.Context, content stri
 func TestManageSkillUseCase_Lifecycle(t *testing.T) {
 	tempDir, err := os.MkdirTemp("", "manage_skill_uc_test")
 	require.NoError(t, err)
-	defer os.RemoveAll(tempDir)
+	defer func() { _ = os.RemoveAll(tempDir) }()
 
 	fsStore, err := storage.NewFSSkillStore(tempDir)
 	require.NoError(t, err)

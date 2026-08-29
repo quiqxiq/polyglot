@@ -136,4 +136,3 @@ func EnrichActiveSessionsWithProfiles(active []PPPActiveSession, secrets []PPPoE
 	}
 	return active
 }
-

@@ -64,7 +64,7 @@ func (h *HotspotConnectHandler) StreamPPPActive(ctx context.Context, req *connec
 	if err != nil {
 		return response.MapDomainError(err)
 	}
-	defer handle.Cancel()
+	defer func() { _ = handle.Cancel() }()
 
 	for {
 		select {
@@ -273,7 +273,7 @@ func (h *HotspotConnectHandler) StreamPPPInactive(ctx context.Context, req *conn
 			if err != nil {
 				return
 			}
-			defer handle.Cancel()
+			defer func() { _ = handle.Cancel() }()
 			for {
 				select {
 				case <-ctx.Done():

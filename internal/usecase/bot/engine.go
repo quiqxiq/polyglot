@@ -165,6 +165,8 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	}
 
 	switch rateResult.Status {
+	case StatusAllowed:
+		// Continue with the normal bot flow.
 	case StatusWarned, StatusDailyQuotaExceeded, StatusMuted, StatusBlocked:
 		logger.WithComponent("BotEngine").Warnf("Number %s rate limit notification (%v).", customerNumber, rateResult.Status)
 		return e.sendBotReply(ctx, conv.ID, sessionID, chatJID, rateResult.Message, 0, 0, nil)

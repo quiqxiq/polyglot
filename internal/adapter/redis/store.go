@@ -3,6 +3,7 @@ package redis
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"time"
 
@@ -11,6 +12,7 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/llm"
 )
 
+// Store provides Redis-backed cache and session operations.
 type Store struct {
 	client *redis.Client
 }
@@ -63,7 +65,7 @@ func (s *Store) SaveSessionMessages(ctx context.Context, customerNumber string, 
 func (s *Store) GetSessionMessages(ctx context.Context, customerNumber string) ([]llm.ChatMessage, error) {
 	data, err := s.client.Get(ctx, sessionKey(customerNumber)).Bytes()
 	if err != nil {
-		if err == redis.Nil {
+		if errors.Is(err, redis.Nil) {
 			return nil, nil
 		}
 		return nil, err
@@ -91,7 +93,7 @@ func (s *Store) SetSessionSummary(ctx context.Context, customerNumber string, su
 func (s *Store) GetSessionSummary(ctx context.Context, customerNumber string) (string, error) {
 	result, err := s.client.Get(ctx, summaryKey(customerNumber)).Result()
 	if err != nil {
-		if err == redis.Nil {
+		if errors.Is(err, redis.Nil) {
 			return "", nil
 		}
 		return "", err
@@ -134,7 +136,7 @@ func (s *Store) IncrementRateLimit(ctx context.Context, customerNumber string, w
 func (s *Store) GetRateLimitCount(ctx context.Context, customerNumber string, window string) (int64, error) {
 	count, err := s.client.Get(ctx, rateLimitKey(customerNumber, window)).Int64()
 	if err != nil {
-		if err == redis.Nil {
+		if errors.Is(err, redis.Nil) {
 			return 0, nil
 		}
 		return 0, err

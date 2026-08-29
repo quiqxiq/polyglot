@@ -161,13 +161,13 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.PPPService/StreamInactiveSecrets": "ppp:active:read",
 
 	// UserService — manajemen user (CRUD, reset password, aktif/nonaktif, device assignment).
-	"/polyglot.v1.UserService/ListUsers":                  "user:read",
-	"/polyglot.v1.UserService/CreateUser":                 "user:manage",
-	"/polyglot.v1.UserService/UpdateUser":                 "user:manage",
-	"/polyglot.v1.UserService/ResetPassword":              "user:manage",
-	"/polyglot.v1.UserService/ToggleActive":               "user:manage",
-	"/polyglot.v1.UserService/DeleteUser":                 "user:manage",
-	"/polyglot.v1.UserService/AssignDevicesToUser":        "user:manage",
+	"/polyglot.v1.UserService/ListUsers":                 "user:read",
+	"/polyglot.v1.UserService/CreateUser":                "user:manage",
+	"/polyglot.v1.UserService/UpdateUser":                "user:manage",
+	"/polyglot.v1.UserService/ResetPassword":             "user:manage",
+	"/polyglot.v1.UserService/ToggleActive":              "user:manage",
+	"/polyglot.v1.UserService/DeleteUser":                "user:manage",
+	"/polyglot.v1.UserService/AssignDevicesToUser":       "user:manage",
 	"/polyglot.v1.UserService/ListUserAccessibleDevices": "user:read",
 
 	// RBACService — manajemen policy & role assignment, owner-only (rbac:manage)

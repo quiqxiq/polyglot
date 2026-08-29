@@ -21,6 +21,9 @@ import (
 // DriverGetter fetches a connected port.DeviceDriver by device ID.
 type DriverGetter func(ctx context.Context, deviceID string) (port.DeviceDriver, error)
 
+// DeviceConnectHandler implements the device ConnectRPC service.
+//
+//nolint:revive // Explicit transport role is part of the project naming convention.
 type DeviceConnectHandler struct {
 	useCase      *deviceUC.ManageDeviceUseCase
 	openTermUC   *network.OpenTerminalUseCase
@@ -28,6 +31,7 @@ type DeviceConnectHandler struct {
 	driverGetter DriverGetter
 }
 
+// NewDeviceConnectHandler constructs a device ConnectRPC handler.
 func NewDeviceConnectHandler(
 	uc *deviceUC.ManageDeviceUseCase,
 	openTermUC *network.OpenTerminalUseCase,
@@ -42,6 +46,7 @@ func NewDeviceConnectHandler(
 	}
 }
 
+// ListDevices returns devices visible to the caller.
 func (h *DeviceConnectHandler) ListDevices(ctx context.Context, req *connect.Request[devicepb.ListDevicesRequest]) (*connect.Response[devicepb.ListDevicesResponse], error) {
 	callerID, callerRoles, hasIdentity := iauth.IdentityFromContext(ctx)
 	var devices []device.Device
@@ -63,6 +68,7 @@ func (h *DeviceConnectHandler) ListDevices(ctx context.Context, req *connect.Req
 	return connect.NewResponse(&devicepb.ListDevicesResponse{Devices: pbDevices}), nil
 }
 
+// GetDevice returns one device by identifier.
 func (h *DeviceConnectHandler) GetDevice(ctx context.Context, req *connect.Request[devicepb.GetDeviceRequest]) (*connect.Response[devicepb.GetDeviceResponse], error) {
 	callerID, callerRoles, hasIdentity := iauth.IdentityFromContext(ctx)
 	if hasIdentity && !isOwnerRole(callerRoles) {
@@ -99,6 +105,7 @@ func isOwnerRole(roles []string) bool {
 	return false
 }
 
+// UpdateDevice updates one device configuration.
 func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Request[devicepb.UpdateDeviceRequest]) (*connect.Response[devicepb.UpdateDeviceResponse], error) {
 	d := PbToDomain(req.Msg.Device)
 	c := device.Credentials{
@@ -138,6 +145,7 @@ func (h *DeviceConnectHandler) UpdateDevice(ctx context.Context, req *connect.Re
 	}), nil
 }
 
+// DeleteDevice removes one device configuration.
 func (h *DeviceConnectHandler) DeleteDevice(ctx context.Context, req *connect.Request[devicepb.DeleteDeviceRequest]) (*connect.Response[devicepb.DeleteDeviceResponse], error) {
 	if err := h.useCase.DeleteDevice(ctx, req.Msg.Id); err != nil {
 		return nil, response.MapDomainError(err)
@@ -148,6 +156,7 @@ func (h *DeviceConnectHandler) DeleteDevice(ctx context.Context, req *connect.Re
 	}), nil
 }
 
+// TestDeviceConnection checks connectivity to a device.
 func (h *DeviceConnectHandler) TestDeviceConnection(ctx context.Context, req *connect.Request[devicepb.TestDeviceConnectionRequest]) (*connect.Response[devicepb.TestDeviceConnectionResponse], error) {
 	var drv port.DeviceDriver
 	if h.driverGetter != nil {

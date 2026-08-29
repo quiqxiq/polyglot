@@ -10,11 +10,11 @@ func TestParseSimpleQueues(t *testing.T) {
 	res := command.Result{
 		Rows: []map[string]string{
 			{
-				".id":      "*10",
-				"name":     "sub-budi",
-				"target":   "192.168.1.50/32",
+				".id":       "*10",
+				"name":      "sub-budi",
+				"target":    "192.168.1.50/32",
 				"max-limit": "10M/10M",
-				"disabled": "false",
+				"disabled":  "false",
 			},
 		},
 	}
@@ -27,4 +27,3 @@ func TestParseSimpleQueues(t *testing.T) {
 		t.Fatalf("unexpected queue parsed: %+v", queues[0])
 	}
 }
-

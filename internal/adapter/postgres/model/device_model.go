@@ -31,6 +31,7 @@ type DeviceModel struct {
 	UpdatedAt      time.Time
 }
 
+// TableName returns the database table name for devices.
 func (DeviceModel) TableName() string {
 	return "devices"
 }
@@ -43,12 +44,14 @@ type CredentialModel struct {
 	UpdatedAt  time.Time `gorm:"column:updated_at"`
 }
 
+// TableName returns the database table name for credentials.
 func (CredentialModel) TableName() string {
 	return "credentials"
 }
 
 const defaultTestEncryptionKey = "12345678901234567890123456789012"
 
+// ToDomain converts a device database model to its domain representation.
 func (m *DeviceModel) ToDomain() device.Device {
 	if m == nil {
 		return device.Device{}
@@ -86,6 +89,7 @@ func (m *DeviceModel) ToDomain() device.Device {
 	}
 }
 
+// DeviceModelFromDomain converts a device domain entity to a database model.
 func DeviceModelFromDomain(d device.Device) *DeviceModel {
 	extraJSON, _ := json.Marshal(d.Extra)
 	tagsJSON, _ := json.Marshal(d.Tags)
@@ -117,6 +121,7 @@ func DeviceModelFromDomain(d device.Device) *DeviceModel {
 	}
 }
 
+// ToDomain decrypts credentials and converts them to the domain representation.
 func (c *CredentialModel) ToDomain(key string) (device.Credentials, error) {
 	if c == nil || len(c.Ciphertext) == 0 {
 		return device.Credentials{}, nil
@@ -150,6 +155,7 @@ func (c *CredentialModel) ToDomain(key string) (device.Credentials, error) {
 	return creds, nil
 }
 
+// CredentialModelFromDomain encrypts credentials into a database model.
 func CredentialModelFromDomain(deviceID string, c device.Credentials, key string) (*CredentialModel, error) {
 	if key == "" {
 		key = defaultTestEncryptionKey

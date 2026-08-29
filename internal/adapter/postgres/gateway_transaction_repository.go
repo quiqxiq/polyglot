@@ -11,20 +11,24 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
+// GatewayTransactionRepository persists payment gateway transactions in PostgreSQL.
 type GatewayTransactionRepository struct {
 	db *gorm.DB
 }
 
 var _ port.GatewayTransactionRepository = (*GatewayTransactionRepository)(nil)
 
+// NewGatewayTransactionRepository constructs a gateway transaction repository.
 func NewGatewayTransactionRepository(db *gorm.DB) *GatewayTransactionRepository {
 	return &GatewayTransactionRepository{db: db}
 }
 
+// Save creates or updates a gateway transaction.
 func (r *GatewayTransactionRepository) Save(ctx context.Context, t domainBilling.GatewayTransaction) error {
 	return r.db.WithContext(ctx).Save(model.GatewayTransactionModelFromDomain(t)).Error
 }
 
+// FindByExternalID returns a transaction by provider and external identifier.
 func (r *GatewayTransactionRepository) FindByExternalID(ctx context.Context, gateway, externalID string) (domainBilling.GatewayTransaction, error) {
 	var m model.GatewayTransactionModel
 	err := r.db.WithContext(ctx).
@@ -39,6 +43,7 @@ func (r *GatewayTransactionRepository) FindByExternalID(ctx context.Context, gat
 	return m.ToDomain(), nil
 }
 
+// FindByInvoice returns all transactions associated with an invoice.
 func (r *GatewayTransactionRepository) FindByInvoice(ctx context.Context, invoiceID string) ([]domainBilling.GatewayTransaction, error) {
 	var mList []model.GatewayTransactionModel
 	err := r.db.WithContext(ctx).Where("invoice_id = ?", invoiceID).Find(&mList).Error

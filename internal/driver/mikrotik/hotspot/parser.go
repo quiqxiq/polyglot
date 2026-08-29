@@ -139,4 +139,3 @@ func FilterInactiveUsers(users []HotspotUser, active []HotspotActiveSession) []H
 	}
 	return inactive
 }
-

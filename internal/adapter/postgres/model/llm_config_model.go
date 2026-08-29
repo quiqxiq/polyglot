@@ -28,6 +28,7 @@ type LLMConfigModel struct {
 // TableName maps LLMConfigModel ke tabel migrasi `llm_configs`.
 func (LLMConfigModel) TableName() string { return "llm_configs" }
 
+// ToDomain converts an LLM configuration database model to its domain representation.
 func (m *LLMConfigModel) ToDomain() *llm.Config {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *LLMConfigModel) ToDomain() *llm.Config {
 	}
 }
 
+// LLMConfigModelFromDomain converts an LLM configuration domain entity to a database model.
 func LLMConfigModelFromDomain(c *llm.Config) *LLMConfigModel {
 	if c == nil {
 		return nil

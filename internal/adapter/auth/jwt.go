@@ -11,9 +11,11 @@ import (
 )
 
 var (
+	// ErrInvalidToken indicates a missing, expired, or malformed JWT.
 	ErrInvalidToken = errors.New("invalid or expired JWT token")
 )
 
+// Claims contains the authenticated user claims stored in a JWT.
 type Claims struct {
 	UserID   uint     `json:"user_id"`
 	Email    string   `json:"email"`
@@ -23,6 +25,7 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
+// JWTService signs and validates access tokens.
 type JWTService struct {
 	secretKey []byte
 	expiry    time.Duration
@@ -30,6 +33,7 @@ type JWTService struct {
 
 var _ port.TokenService = (*JWTService)(nil)
 
+// NewJWTService creates a JWT service with the configured expiration period.
 func NewJWTService(secret string, expiryHours int) *JWTService {
 	if expiryHours <= 0 {
 		expiryHours = 24
@@ -40,6 +44,7 @@ func NewJWTService(secret string, expiryHours int) *JWTService {
 	}
 }
 
+// GenerateToken creates a signed JWT for a user and tenant.
 func (s *JWTService) GenerateToken(userID uint, email string, roles []string, tenantID string) (string, error) {
 	if len(roles) == 0 {
 		roles = []string{""}
@@ -68,11 +73,13 @@ func (s *JWTService) GenerateToken(userID uint, email string, roles []string, te
 	return tokenStr, nil
 }
 
+// GenerateAccessToken creates a signed access token from string identifiers.
 func (s *JWTService) GenerateAccessToken(userID, username, role string) (string, error) {
 	uid, _ := strconv.ParseUint(userID, 10, 64)
 	return s.GenerateToken(uint(uid), username, []string{role}, "")
 }
 
+// ValidateAccessToken validates an access token and returns its principal fields.
 func (s *JWTService) ValidateAccessToken(tokenString string) (string, string, string, error) {
 	claims, err := s.ValidateToken(tokenString)
 	if err != nil {
@@ -81,6 +88,7 @@ func (s *JWTService) ValidateAccessToken(tokenString string) (string, string, st
 	return fmt.Sprintf("%d", claims.UserID), claims.Email, claims.Role, nil
 }
 
+// ExpiryDuration returns the configured token lifetime or the default lifetime.
 func (s *JWTService) ExpiryDuration() time.Duration {
 	if s == nil || s.expiry <= 0 {
 		return 24 * time.Hour
@@ -88,6 +96,7 @@ func (s *JWTService) ExpiryDuration() time.Duration {
 	return s.expiry
 }
 
+// ValidateToken parses and validates a signed JWT.
 func (s *JWTService) ValidateToken(tokenStr string) (*Claims, error) {
 	token, err := jwt.ParseWithClaims(tokenStr, &Claims{}, func(t *jwt.Token) (any, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
