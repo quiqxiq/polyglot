@@ -49,5 +49,8 @@ jobs:
       - name: Check ConnectRPC Error Boundary
         run: make check-connect-errors
 
+      - name: Check Layer Boundaries
+        run: make check-layer-boundaries
+
       - name: Check Protobuf Contracts
         run: make proto-check

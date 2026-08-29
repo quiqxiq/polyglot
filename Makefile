@@ -1,4 +1,4 @@
-.PHONY: build vet test test-integration test-mikrotik-e2e check-connect-errors proto-check lint check fmt run setup seed \
+.PHONY: build vet test test-integration test-mikrotik-e2e check-connect-errors check-layer-boundaries proto-check lint check fmt run setup seed \
         proto proto-tools proto-clean \
         dev-up dev-down dev-logs dev-setup \
         prod-build prod-up prod-down prod-logs prod-setup \
@@ -55,6 +55,9 @@ test-mikrotik-e2e:
 check-connect-errors:
 	bash scripts/check-connect-errors.sh
 
+check-layer-boundaries:
+	bash scripts/check-layer-boundaries.sh
+
 proto-check:
 	@test -x "$$(command -v buf)" || (echo "buf is required; install Buf before running proto-check" >&2; exit 1)
 	buf lint
@@ -62,7 +65,7 @@ proto-check:
 	git diff --exit-code -- api/gen web/src/gen
 
 lint:
-	golangci-lint run ./... && $(MAKE) check-connect-errors
+	golangci-lint run ./... && $(MAKE) check-connect-errors check-layer-boundaries
 
 fmt:
 	gofmt -l .
