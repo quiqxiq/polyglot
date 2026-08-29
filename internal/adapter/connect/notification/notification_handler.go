@@ -2,7 +2,6 @@ package notification
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"connectrpc.com/connect"
@@ -31,7 +30,7 @@ func NewNotificationConnectHandler(repo port.NotificationRepository, sender port
 // ListTemplates returns notification templates.
 func (h *NotificationConnectHandler) ListTemplates(ctx context.Context, req *connect.Request[devicepb.ListNotificationTemplatesRequest]) (*connect.Response[devicepb.ListNotificationTemplatesResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("notification repository unavailable"))
+		return nil, response.Unavailable("notification repository unavailable")
 	}
 	list, err := h.repo.ListTemplates(ctx, req.Msg.ActiveOnly)
 	if err != nil {
@@ -45,7 +44,7 @@ func (h *NotificationConnectHandler) ListTemplates(ctx context.Context, req *con
 // GetTemplate returns one notification template.
 func (h *NotificationConnectHandler) GetTemplate(ctx context.Context, req *connect.Request[devicepb.GetNotificationTemplateRequest]) (*connect.Response[devicepb.GetNotificationTemplateResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("notification repository unavailable"))
+		return nil, response.Unavailable("notification repository unavailable")
 	}
 	t, err := h.repo.FindTemplateByKey(ctx, "tenant-default", req.Msg.TemplateKey)
 	if err != nil {
@@ -59,7 +58,7 @@ func (h *NotificationConnectHandler) GetTemplate(ctx context.Context, req *conne
 // SaveTemplate creates or updates a notification template.
 func (h *NotificationConnectHandler) SaveTemplate(ctx context.Context, req *connect.Request[devicepb.SaveNotificationTemplateRequest]) (*connect.Response[devicepb.SaveNotificationTemplateResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("notification repository unavailable"))
+		return nil, response.Unavailable("notification repository unavailable")
 	}
 	pb := req.Msg.Template
 	id := pb.Id
@@ -82,7 +81,7 @@ func (h *NotificationConnectHandler) SaveTemplate(ctx context.Context, req *conn
 // ListNotifications returns notification records.
 func (h *NotificationConnectHandler) ListNotifications(ctx context.Context, req *connect.Request[devicepb.ListNotificationsRequest]) (*connect.Response[devicepb.ListNotificationsResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("notification repository unavailable"))
+		return nil, response.Unavailable("notification repository unavailable")
 	}
 	var list []domainNotification.WANotification
 	var err error
@@ -102,7 +101,7 @@ func (h *NotificationConnectHandler) ListNotifications(ctx context.Context, req 
 // PendingCount returns the number of pending notifications.
 func (h *NotificationConnectHandler) PendingCount(ctx context.Context, _ *connect.Request[devicepb.PendingCountRequest]) (*connect.Response[devicepb.PendingCountResponse], error) {
 	if h.repo == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("notification repository unavailable"))
+		return nil, response.Unavailable("notification repository unavailable")
 	}
 	pending, err := h.repo.Pending(ctx, 0)
 	if err != nil {
@@ -132,7 +131,7 @@ func (h *NotificationConnectHandler) MarkNotificationFailed(ctx context.Context,
 // TestSend sends a test notification.
 func (h *NotificationConnectHandler) TestSend(ctx context.Context, req *connect.Request[devicepb.TestSendRequest]) (*connect.Response[devicepb.TestSendResponse], error) {
 	if h.sender == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("notification sender unavailable"))
+		return nil, response.Unavailable("notification sender unavailable")
 	}
 	if err := h.sender.Send(ctx, req.Msg.Phone, req.Msg.Content); err != nil {
 		return nil, response.MapDomainError(err)

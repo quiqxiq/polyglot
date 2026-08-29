@@ -2,7 +2,6 @@ package hotspot
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"connectrpc.com/connect"
@@ -25,7 +24,7 @@ func (h *HotspotConnectHandler) StreamQueueStats(ctx context.Context, req *conne
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	params := mikrotikqueue.QueueStreamParams{

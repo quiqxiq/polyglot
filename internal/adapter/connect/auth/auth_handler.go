@@ -10,6 +10,7 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
+	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -64,28 +65,28 @@ func (h *AuthConnectHandler) Login(ctx context.Context, req *connect.Request[dev
 func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[devicepb.GetMeRequest]) (*connect.Response[devicepb.GetMeResponse], error) {
 	authHeader := req.Header().Get("Authorization")
 	if authHeader == "" {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("authorization header missing"))
+		return nil, response.Unauthenticated("authorization header missing")
 	}
 
 	parts := strings.SplitN(authHeader, " ", 2)
 	if len(parts) != 2 || !strings.EqualFold(parts[0], BearerScheme) {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid authorization header format"))
+		return nil, response.Unauthenticated("invalid authorization header format")
 	}
 
 	tokenStr := parts[1]
 	userIDStr, _, _, err := h.authUC.TokenService().ValidateAccessToken(tokenStr)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid or expired token"))
+		return nil, response.Unauthenticated("invalid or expired token")
 	}
 
 	var uid uint
 	if _, err := fmt.Sscanf(userIDStr, "%d", &uid); err != nil {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid user identity"))
+		return nil, response.Unauthenticated("invalid user identity")
 	}
 
 	user, err := h.userUC.GetUser(ctx, uid)
 	if err != nil {
-		return nil, connect.NewError(connect.CodeNotFound, fmt.Errorf("user not found"))
+		return nil, response.MapDomainError(domainCustomer.ErrUserNotFound)
 	}
 
 	roles, _ := h.userUC.GetRoles(ctx, uid)
@@ -98,21 +99,21 @@ func (h *AuthConnectHandler) GetMe(ctx context.Context, req *connect.Request[dev
 func (h *AuthConnectHandler) UpdateMe(ctx context.Context, req *connect.Request[devicepb.UpdateMeRequest]) (*connect.Response[devicepb.UpdateMeResponse], error) {
 	authHeader := req.Header().Get("Authorization")
 	if authHeader == "" {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("authorization header missing"))
+		return nil, response.Unauthenticated("authorization header missing")
 	}
 	parts := strings.SplitN(authHeader, " ", 2)
 	if len(parts) != 2 || !strings.EqualFold(parts[0], BearerScheme) {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid authorization header format"))
+		return nil, response.Unauthenticated("invalid authorization header format")
 	}
 
 	userIDStr, _, _, err := h.authUC.TokenService().ValidateAccessToken(parts[1])
 	if err != nil {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid or expired token"))
+		return nil, response.Unauthenticated("invalid or expired token")
 	}
 
 	var uid uint
 	if _, err := fmt.Sscanf(userIDStr, "%d", &uid); err != nil {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid user identity"))
+		return nil, response.Unauthenticated("invalid user identity")
 	}
 
 	user, err := h.authUC.UpdateProfile(ctx, uid, req.Msg.FullName, req.Msg.PhoneNumber, req.Msg.Email, req.Msg.Specialization)
@@ -130,21 +131,21 @@ func (h *AuthConnectHandler) UpdateMe(ctx context.Context, req *connect.Request[
 func (h *AuthConnectHandler) ChangePassword(ctx context.Context, req *connect.Request[devicepb.ChangePasswordRequest]) (*connect.Response[devicepb.ChangePasswordResponse], error) {
 	authHeader := req.Header().Get("Authorization")
 	if authHeader == "" {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("authorization header missing"))
+		return nil, response.Unauthenticated("authorization header missing")
 	}
 	parts := strings.SplitN(authHeader, " ", 2)
 	if len(parts) != 2 || !strings.EqualFold(parts[0], BearerScheme) {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid authorization header format"))
+		return nil, response.Unauthenticated("invalid authorization header format")
 	}
 
 	userIDStr, _, _, err := h.authUC.TokenService().ValidateAccessToken(parts[1])
 	if err != nil {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid or expired token"))
+		return nil, response.Unauthenticated("invalid or expired token")
 	}
 
 	var uid uint
 	if _, err := fmt.Sscanf(userIDStr, "%d", &uid); err != nil {
-		return nil, connect.NewError(connect.CodeUnauthenticated, fmt.Errorf("invalid user identity"))
+		return nil, response.Unauthenticated("invalid user identity")
 	}
 
 	if err := h.authUC.ChangePassword(ctx, uid, req.Msg.OldPassword, req.Msg.NewPassword); err != nil {
@@ -163,7 +164,7 @@ func (h *AuthConnectHandler) RefreshToken(ctx context.Context, req *connect.Requ
 		rawToken = iauth.ExtractRefreshTokenCookie(req.Header())
 	}
 	if rawToken == "" {
-		return nil, connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("refresh token is required"))
+		return nil, response.InvalidArgument("refresh token is required")
 	}
 
 	res, err := h.refreshUC.Refresh(ctx, rawToken)

@@ -2,12 +2,12 @@ package auth
 
 import (
 	"context"
-	"fmt"
 
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
+	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -148,7 +148,7 @@ func (h *UserConnectHandler) ResetPassword(ctx context.Context, req *connect.Req
 func (h *UserConnectHandler) ToggleActive(ctx context.Context, req *connect.Request[devicepb.ToggleActiveRequest]) (*connect.Response[devicepb.ToggleActiveResponse], error) {
 	callerID, callerRoles, exists := iauth.IdentityFromContext(ctx)
 	if exists && callerID == uint(req.Msg.Id) {
-		return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("cannot toggle your own active status"))
+		return nil, response.MapDomainError(domainCustomer.ErrSelfOperation)
 	}
 
 	user, err := h.userUC.GetUser(ctx, uint(req.Msg.Id))
@@ -176,7 +176,7 @@ func (h *UserConnectHandler) ToggleActive(ctx context.Context, req *connect.Requ
 func (h *UserConnectHandler) DeleteUser(ctx context.Context, req *connect.Request[devicepb.DeleteUserRequest]) (*connect.Response[devicepb.DeleteUserResponse], error) {
 	callerID, callerRoles, exists := iauth.IdentityFromContext(ctx)
 	if exists && callerID == uint(req.Msg.Id) {
-		return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("cannot delete your own account"))
+		return nil, response.MapDomainError(domainCustomer.ErrSelfOperation)
 	}
 
 	if err := h.userUC.DeleteUser(ctx, callerID, callerRoles, uint(req.Msg.Id)); err != nil {

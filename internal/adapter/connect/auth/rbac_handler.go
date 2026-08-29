@@ -47,7 +47,7 @@ func (h *RBACConnectHandler) ListPolicies(ctx context.Context, req *connect.Requ
 
 func (h *RBACConnectHandler) AddPolicy(ctx context.Context, req *connect.Request[devicepb.AddPolicyRequest]) (*connect.Response[devicepb.AddPolicyResponse], error) {
 	if h.enforcer == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
+		return nil, response.Unavailable("casbin enforcer unavailable")
 	}
 
 	ok, err := h.enforcer.AddPolicy(req.Msg.Policy.Sub, req.Msg.Policy.Obj, req.Msg.Policy.Act)
@@ -60,7 +60,7 @@ func (h *RBACConnectHandler) AddPolicy(ctx context.Context, req *connect.Request
 
 func (h *RBACConnectHandler) RemovePolicy(ctx context.Context, req *connect.Request[devicepb.RemovePolicyRequest]) (*connect.Response[devicepb.RemovePolicyResponse], error) {
 	if h.enforcer == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
+		return nil, response.Unavailable("casbin enforcer unavailable")
 	}
 
 	ok, err := h.enforcer.RemovePolicy(req.Msg.Policy.Sub, req.Msg.Policy.Obj, req.Msg.Policy.Act)
@@ -96,7 +96,7 @@ func (h *RBACConnectHandler) ListRoleAssignments(ctx context.Context, req *conne
 
 func (h *RBACConnectHandler) AssignRole(ctx context.Context, req *connect.Request[devicepb.AssignRoleRequest]) (*connect.Response[devicepb.AssignRoleResponse], error) {
 	if h.enforcer == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
+		return nil, response.Unavailable("casbin enforcer unavailable")
 	}
 
 	ok, err := h.enforcer.AddRoleForUser(req.Msg.Assignment.User, req.Msg.Assignment.Role)
@@ -109,7 +109,7 @@ func (h *RBACConnectHandler) AssignRole(ctx context.Context, req *connect.Reques
 
 func (h *RBACConnectHandler) UnassignRole(ctx context.Context, req *connect.Request[devicepb.UnassignRoleRequest]) (*connect.Response[devicepb.UnassignRoleResponse], error) {
 	if h.enforcer == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
+		return nil, response.Unavailable("casbin enforcer unavailable")
 	}
 
 	ok, err := h.enforcer.DeleteRoleForUser(req.Msg.Assignment.User, req.Msg.Assignment.Role)
@@ -122,7 +122,7 @@ func (h *RBACConnectHandler) UnassignRole(ctx context.Context, req *connect.Requ
 
 func (h *RBACConnectHandler) SyncRolePermissions(ctx context.Context, req *connect.Request[devicepb.SyncRolePermissionsRequest]) (*connect.Response[devicepb.SyncRolePermissionsResponse], error) {
 	if h.enforcer == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
+		return nil, response.Unavailable("casbin enforcer unavailable")
 	}
 
 	if err := h.enforcer.SyncRolePermissions(req.Msg.Role, req.Msg.Permissions); err != nil {
@@ -137,11 +137,11 @@ func (h *RBACConnectHandler) SyncRolePermissions(ctx context.Context, req *conne
 
 func (h *RBACConnectHandler) DeleteRole(ctx context.Context, req *connect.Request[devicepb.DeleteRoleRequest]) (*connect.Response[devicepb.DeleteRoleResponse], error) {
 	if req.Msg.Role == "owner" {
-		return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("role owner cannot be deleted"))
+		return nil, response.PermissionDenied("role owner cannot be deleted")
 	}
 
 	if h.enforcer == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("casbin enforcer unavailable"))
+		return nil, response.Unavailable("casbin enforcer unavailable")
 	}
 
 	if err := h.enforcer.DeleteRole(req.Msg.Role); err != nil {

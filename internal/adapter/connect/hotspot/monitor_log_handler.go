@@ -2,7 +2,6 @@ package hotspot
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"connectrpc.com/connect"
@@ -24,7 +23,7 @@ func (h *HotspotConnectHandler) StreamLogs(ctx context.Context, req *connect.Req
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	handle, err := sd.Stream(ctx, mikrotiksystem.NewStreamLogsCommand(req.Msg.Topics))

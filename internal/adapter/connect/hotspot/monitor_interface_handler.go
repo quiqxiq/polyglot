@@ -2,7 +2,6 @@ package hotspot
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 	"time"
 
@@ -25,7 +24,7 @@ func (h *HotspotConnectHandler) StreamTraffic(ctx context.Context, req *connect.
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	ifaceName := req.Msg.Interface
@@ -76,7 +75,7 @@ func (h *HotspotConnectHandler) StreamInterfaceEthernet(ctx context.Context, req
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	interval := req.Msg.Interval

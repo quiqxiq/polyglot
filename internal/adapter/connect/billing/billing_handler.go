@@ -2,7 +2,6 @@ package billing
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
@@ -54,7 +53,7 @@ func NewBillingConnectHandler(
 // ListInvoices returns invoices matching the request filters.
 func (h *BillingConnectHandler) ListInvoices(ctx context.Context, req *connect.Request[devicepb.ListInvoicesRequest]) (*connect.Response[devicepb.ListInvoicesResponse], error) {
 	if h.invoiceUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("invoice usecase unavailable"))
+		return nil, response.Unavailable("invoice usecase unavailable")
 	}
 	invoices, err := h.invoiceUC.ListInvoices(ctx, req.Msg.CustomerId)
 	if err != nil {
@@ -78,7 +77,7 @@ func (h *BillingConnectHandler) ListInvoices(ctx context.Context, req *connect.R
 // GetInvoice returns one invoice by identifier.
 func (h *BillingConnectHandler) GetInvoice(ctx context.Context, req *connect.Request[devicepb.GetInvoiceRequest]) (*connect.Response[devicepb.GetInvoiceResponse], error) {
 	if h.invoiceUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("invoice usecase unavailable"))
+		return nil, response.Unavailable("invoice usecase unavailable")
 	}
 	inv, err := h.invoiceUC.GetInvoice(ctx, req.Msg.Id)
 	if err != nil {
@@ -94,7 +93,7 @@ func (h *BillingConnectHandler) GetInvoice(ctx context.Context, req *connect.Req
 // CashierResolve resolves an invoice for cashier payment.
 func (h *BillingConnectHandler) CashierResolve(ctx context.Context, req *connect.Request[devicepb.CashierResolveRequest]) (*connect.Response[devicepb.CashierResolveResponse], error) {
 	if h.checkoutUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("checkout usecase unavailable"))
+		return nil, response.Unavailable("checkout usecase unavailable")
 	}
 	ident := req.Msg.Identifier
 
@@ -119,7 +118,7 @@ func (h *BillingConnectHandler) CashierResolve(ctx context.Context, req *connect
 // CashierPay records a cashier payment for an invoice.
 func (h *BillingConnectHandler) CashierPay(ctx context.Context, req *connect.Request[devicepb.CashierPayRequest]) (*connect.Response[devicepb.CashierPayResponse], error) {
 	if h.checkoutUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("checkout usecase unavailable"))
+		return nil, response.Unavailable("checkout usecase unavailable")
 	}
 	scanMethod := req.Msg.ScanMethod
 	if scanMethod == "" {
@@ -160,7 +159,7 @@ func (h *BillingConnectHandler) CashierPay(ctx context.Context, req *connect.Req
 
 func (h *BillingConnectHandler) ListSubscriptions(ctx context.Context, req *connect.Request[devicepb.ListSubscriptionsRequest]) (*connect.Response[devicepb.ListSubscriptionsResponse], error) {
 	if h.subUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription usecase unavailable"))
+		return nil, response.Unavailable("subscription usecase unavailable")
 	}
 	subs, err := h.subUC.ListSubscriptions(ctx, req.Msg.CustomerId)
 	if err != nil {
@@ -173,7 +172,7 @@ func (h *BillingConnectHandler) ListSubscriptions(ctx context.Context, req *conn
 
 func (h *BillingConnectHandler) GetSubscription(ctx context.Context, req *connect.Request[devicepb.GetSubscriptionRequest]) (*connect.Response[devicepb.GetSubscriptionResponse], error) {
 	if h.subUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription usecase unavailable"))
+		return nil, response.Unavailable("subscription usecase unavailable")
 	}
 	sub, err := h.subUC.GetSubscription(ctx, req.Msg.Id)
 	if err != nil {
@@ -186,7 +185,7 @@ func (h *BillingConnectHandler) GetSubscription(ctx context.Context, req *connec
 
 func (h *BillingConnectHandler) ChangePlan(ctx context.Context, req *connect.Request[devicepb.ChangePlanRequest]) (*connect.Response[devicepb.ChangePlanResponse], error) {
 	if h.lifecycleUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("lifecycle usecase unavailable"))
+		return nil, response.Unavailable("lifecycle usecase unavailable")
 	}
 	sub, err := h.lifecycleUC.ChangePlan(ctx, req.Msg.SubscriptionId, req.Msg.NewPlanId)
 	if err != nil {
@@ -199,7 +198,7 @@ func (h *BillingConnectHandler) ChangePlan(ctx context.Context, req *connect.Req
 
 func (h *BillingConnectHandler) SuspendSubscription(ctx context.Context, req *connect.Request[devicepb.SuspendSubscriptionRequest]) (*connect.Response[devicepb.SuspendSubscriptionResponse], error) {
 	if h.lifecycleUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("lifecycle usecase unavailable"))
+		return nil, response.Unavailable("lifecycle usecase unavailable")
 	}
 	sub, err := h.lifecycleUC.Suspend(ctx, req.Msg.SubscriptionId, req.Msg.Reason)
 	if err != nil {
@@ -212,7 +211,7 @@ func (h *BillingConnectHandler) SuspendSubscription(ctx context.Context, req *co
 
 func (h *BillingConnectHandler) ResumeSubscription(ctx context.Context, req *connect.Request[devicepb.ResumeSubscriptionRequest]) (*connect.Response[devicepb.ResumeSubscriptionResponse], error) {
 	if h.lifecycleUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("lifecycle usecase unavailable"))
+		return nil, response.Unavailable("lifecycle usecase unavailable")
 	}
 	sub, err := h.lifecycleUC.Resume(ctx, req.Msg.SubscriptionId)
 	if err != nil {
@@ -225,7 +224,7 @@ func (h *BillingConnectHandler) ResumeSubscription(ctx context.Context, req *con
 
 func (h *BillingConnectHandler) TerminateSubscription(ctx context.Context, req *connect.Request[devicepb.TerminateSubscriptionRequest]) (*connect.Response[devicepb.TerminateSubscriptionResponse], error) {
 	if h.lifecycleUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("lifecycle usecase unavailable"))
+		return nil, response.Unavailable("lifecycle usecase unavailable")
 	}
 	sub, err := h.lifecycleUC.Terminate(ctx, req.Msg.SubscriptionId, req.Msg.Reason)
 	if err != nil {
@@ -238,7 +237,7 @@ func (h *BillingConnectHandler) TerminateSubscription(ctx context.Context, req *
 
 func (h *BillingConnectHandler) ActivateSubscription(ctx context.Context, req *connect.Request[devicepb.ActivateSubscriptionRequest]) (*connect.Response[devicepb.ActivateSubscriptionResponse], error) {
 	if h.lifecycleUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("lifecycle usecase unavailable"))
+		return nil, response.Unavailable("lifecycle usecase unavailable")
 	}
 	sub, err := h.lifecycleUC.Activate(ctx, req.Msg.SubscriptionId, req.Msg.DeviceId)
 	if err != nil {
@@ -253,7 +252,7 @@ func (h *BillingConnectHandler) ActivateSubscription(ctx context.Context, req *c
 
 func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *connect.Request[devicepb.CreateSubscriptionRequest]) (*connect.Response[devicepb.CreateSubscriptionResponse], error) {
 	if h.manageSubUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription manager usecase unavailable"))
+		return nil, response.Unavailable("subscription manager usecase unavailable")
 	}
 	msg := req.Msg
 	var deviceID *string
@@ -286,7 +285,7 @@ func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *con
 
 func (h *BillingConnectHandler) UpdateSubscription(ctx context.Context, req *connect.Request[devicepb.UpdateSubscriptionRequest]) (*connect.Response[devicepb.UpdateSubscriptionResponse], error) {
 	if h.manageSubUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription manager usecase unavailable"))
+		return nil, response.Unavailable("subscription manager usecase unavailable")
 	}
 	msg := req.Msg
 	in := billingUC.UpdateInput{Notes: &msg.Notes}
@@ -320,7 +319,7 @@ func (h *BillingConnectHandler) UpdateSubscription(ctx context.Context, req *con
 
 func (h *BillingConnectHandler) DeleteSubscription(ctx context.Context, req *connect.Request[devicepb.DeleteSubscriptionRequest]) (*connect.Response[devicepb.DeleteSubscriptionResponse], error) {
 	if h.manageSubUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("subscription manager usecase unavailable"))
+		return nil, response.Unavailable("subscription manager usecase unavailable")
 	}
 	if err := h.manageSubUC.Delete(ctx, req.Msg.Id); err != nil {
 		return nil, response.MapDomainError(err)
@@ -334,7 +333,7 @@ func (h *BillingConnectHandler) DeleteSubscription(ctx context.Context, req *con
 
 func (h *BillingConnectHandler) ListPlans(ctx context.Context, req *connect.Request[devicepb.ListPlansRequest]) (*connect.Response[devicepb.ListPlansResponse], error) {
 	if h.planUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("plan usecase unavailable"))
+		return nil, response.Unavailable("plan usecase unavailable")
 	}
 	plans, err := h.planUC.List(ctx, req.Msg.ActiveOnly)
 	if err != nil {
@@ -347,7 +346,7 @@ func (h *BillingConnectHandler) ListPlans(ctx context.Context, req *connect.Requ
 
 func (h *BillingConnectHandler) GetPlan(ctx context.Context, req *connect.Request[devicepb.GetPlanRequest]) (*connect.Response[devicepb.GetPlanResponse], error) {
 	if h.planUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("plan usecase unavailable"))
+		return nil, response.Unavailable("plan usecase unavailable")
 	}
 	pl, err := h.planUC.Get(ctx, req.Msg.Id)
 	if err != nil {
@@ -360,7 +359,7 @@ func (h *BillingConnectHandler) GetPlan(ctx context.Context, req *connect.Reques
 
 func (h *BillingConnectHandler) CreatePlan(ctx context.Context, req *connect.Request[devicepb.CreatePlanRequest]) (*connect.Response[devicepb.CreatePlanResponse], error) {
 	if h.planUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("plan usecase unavailable"))
+		return nil, response.Unavailable("plan usecase unavailable")
 	}
 	p := fromProtoPlan(req.Msg.Plan)
 	created, err := h.planUC.Create(ctx, p)
@@ -374,7 +373,7 @@ func (h *BillingConnectHandler) CreatePlan(ctx context.Context, req *connect.Req
 
 func (h *BillingConnectHandler) UpdatePlan(ctx context.Context, req *connect.Request[devicepb.UpdatePlanRequest]) (*connect.Response[devicepb.UpdatePlanResponse], error) {
 	if h.planUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("plan usecase unavailable"))
+		return nil, response.Unavailable("plan usecase unavailable")
 	}
 	p := fromProtoPlan(req.Msg.Plan)
 	updated, err := h.planUC.Update(ctx, p)
@@ -388,7 +387,7 @@ func (h *BillingConnectHandler) UpdatePlan(ctx context.Context, req *connect.Req
 
 func (h *BillingConnectHandler) DeletePlan(ctx context.Context, req *connect.Request[devicepb.DeletePlanRequest]) (*connect.Response[devicepb.DeletePlanResponse], error) {
 	if h.planUC == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("plan usecase unavailable"))
+		return nil, response.Unavailable("plan usecase unavailable")
 	}
 	if err := h.planUC.Delete(ctx, req.Msg.Id); err != nil {
 		return nil, response.MapDomainError(err)
@@ -402,7 +401,7 @@ func (h *BillingConnectHandler) DeletePlan(ctx context.Context, req *connect.Req
 
 func (h *BillingConnectHandler) GenerateInvoices(ctx context.Context, req *connect.Request[devicepb.GenerateInvoicesRequest]) (*connect.Response[devicepb.GenerateInvoicesResponse], error) {
 	if h.runBilling == nil {
-		return nil, connect.NewError(connect.CodeUnavailable, fmt.Errorf("billing runner unavailable"))
+		return nil, response.Unavailable("billing runner unavailable")
 	}
 	period := req.Msg.Period
 	if period == "" {

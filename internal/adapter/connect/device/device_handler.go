@@ -84,7 +84,7 @@ func (h *DeviceConnectHandler) GetDevice(ctx context.Context, req *connect.Reque
 			}
 		}
 		if !found {
-			return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("access to device %s denied", req.Msg.Id))
+			return nil, response.MapDomainError(device.ErrUnauthorized)
 		}
 	}
 

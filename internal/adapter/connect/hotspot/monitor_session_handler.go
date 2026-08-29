@@ -2,7 +2,6 @@ package hotspot
 
 import (
 	"context"
-	"fmt"
 	"sort"
 	"strings"
 	"sync"
@@ -28,7 +27,7 @@ func (h *HotspotConnectHandler) StreamActiveSessions(ctx context.Context, req *c
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	activeMap := make(map[string]port.HotspotActiveSession)
@@ -136,7 +135,7 @@ func (h *HotspotConnectHandler) StreamActiveStats(ctx context.Context, req *conn
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	interval := req.Msg.Interval
@@ -275,7 +274,7 @@ func (h *HotspotConnectHandler) StreamHotspotInactive(ctx context.Context, req *
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	state := newHotspotSessionState()

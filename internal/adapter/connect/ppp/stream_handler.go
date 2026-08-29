@@ -2,7 +2,6 @@ package ppp
 
 import (
 	"context"
-	"fmt"
 	"sort"
 	"strings"
 	"time"
@@ -24,7 +23,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	activeMap := make(map[string]port.PPPActiveSession)
@@ -146,7 +145,7 @@ func (h *PPPConnectHandler) StreamActiveStats(ctx context.Context, req *connect.
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	interval := req.Msg.Interval

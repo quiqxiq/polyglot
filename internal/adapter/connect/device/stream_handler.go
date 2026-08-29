@@ -11,6 +11,7 @@ import (
 	mikrotikiface "github.com/quixiq/polyglot/internal/driver/mikrotik/iface"
 	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/pkg/fault"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/ping"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -23,7 +24,7 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 	stream *connect.ServerStream[devicepb.DeviceStatusFrame],
 ) error {
 	if req.Msg.Id == "" {
-		return connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device id is required"))
+		return response.InvalidArgument("device id is required")
 	}
 
 	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
@@ -86,7 +87,7 @@ func (h *DeviceConnectHandler) StreamPing(
 	stream *connect.ServerStream[devicepb.StreamDevicePingFrame],
 ) error {
 	if req.Msg.Id == "" {
-		return connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device id is required"))
+		return response.InvalidArgument("device id is required")
 	}
 
 	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
@@ -177,7 +178,7 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 	stream *connect.ServerStream[devicepb.StreamDeviceTrafficFrame],
 ) error {
 	if req.Msg.Id == "" {
-		return connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device id is required"))
+		return response.InvalidArgument("device id is required")
 	}
 
 	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
@@ -245,11 +246,11 @@ func (h *DeviceConnectHandler) StreamTerminal(
 		return err
 	}
 	if firstFrame.DeviceId == "" {
-		return connect.NewError(connect.CodeInvalidArgument, fmt.Errorf("device_id is required in the initial frame"))
+		return response.InvalidArgument("device_id is required in the initial frame")
 	}
 
 	if h.openTermUC == nil {
-		return connect.NewError(connect.CodeUnavailable, fmt.Errorf("open terminal use case is not initialized"))
+		return response.Unavailable("open terminal use case is not initialized")
 	}
 
 	cols := int(firstFrame.Cols)
@@ -264,7 +265,7 @@ func (h *DeviceConnectHandler) StreamTerminal(
 	session, err := h.openTermUC.Execute(ctx, firstFrame.DeviceId, cols, rows)
 	if err != nil {
 		logger.WithComponent("DeviceConnectHandler").Errorf("SSH PTY connection failed for device %s: %v", firstFrame.DeviceId, err)
-		return connect.NewError(connect.CodeUnavailable, fmt.Errorf("failed to open SSH terminal: %w", err))
+		return response.MapDomainError(fault.Wrap(fault.KindUnavailable, err))
 	}
 	defer func() { _ = session.Close() }()
 

@@ -2,7 +2,6 @@ package hotspot
 
 import (
 	"context"
-	"fmt"
 	"sync"
 	"time"
 
@@ -127,7 +126,7 @@ func (h *HotspotConnectHandler) StreamSystemSnapshot(ctx context.Context, req *c
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	interval := req.Msg.Interval
@@ -224,7 +223,7 @@ func (h *HotspotConnectHandler) StreamResource(ctx context.Context, req *connect
 
 	sd, ok := driver.(port.StreamingDeviceDriver)
 	if !ok {
-		return connect.NewError(connect.CodeUnimplemented, fmt.Errorf("driver does not support streaming"))
+		return response.Unimplemented("driver does not support streaming")
 	}
 
 	handle, err := sd.Stream(ctx, mikrotiksystem.NewStreamResourceCommand("1s"))
