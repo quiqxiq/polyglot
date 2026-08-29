@@ -19,6 +19,9 @@ var ErrDiagnosticsUnconfigured = fault.New(fault.KindFailedPrecondition, "device
 // ErrInvalidInput indicates invalid device inventory input.
 var ErrInvalidInput = fault.New(fault.KindInvalidInput, "device: invalid input")
 
+// ErrMetricsUnavailable indicates that historical metrics are not configured.
+var ErrMetricsUnavailable = fault.New(fault.KindUnavailable, "device: metrics unavailable")
+
 // IsNotFound reports whether err is (or wraps) ErrNotFound.
 func IsNotFound(err error) bool {
 	return errors.Is(err, ErrNotFound)

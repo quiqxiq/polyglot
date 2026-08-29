@@ -2,13 +2,48 @@ package device_test
 
 import (
 	"bytes"
+	"context"
 	"encoding/binary"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
+	validatepb "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
+	"connectrpc.com/connect"
+	"connectrpc.com/validate"
+	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	connectDevice "github.com/quixiq/polyglot/internal/adapter/connect/device"
 )
+
+func TestValidationInterceptorPreservesViolationDetails(t *testing.T) {
+	interceptor := validate.NewInterceptor()
+	handler := interceptor.WrapUnary(func(_ context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
+		return connect.NewResponse(&devicepb.GetDeviceResponse{}), nil
+	})
+	_, err := handler(context.Background(), connect.NewRequest(&devicepb.GetDeviceRequest{}))
+	if err == nil {
+		t.Fatal("validation interceptor error = nil, want invalid request")
+	}
+	var connectErr *connect.Error
+	if !errors.As(err, &connectErr) {
+		t.Fatalf("validation error type = %T, want *connect.Error", err)
+	}
+	if connectErr.Code() != connect.CodeInvalidArgument {
+		t.Errorf("validation error code = %s, want %s", connectErr.Code(), connect.CodeInvalidArgument)
+	}
+	if len(connectErr.Details()) != 1 {
+		t.Fatalf("validation error details = %d, want 1", len(connectErr.Details()))
+	}
+	detail, err := connectErr.Details()[0].Value()
+	if err != nil {
+		t.Fatalf("decode validation detail: %v", err)
+	}
+	violations, ok := detail.(*validatepb.Violations)
+	if !ok || len(violations.Violations) == 0 {
+		t.Fatalf("validation detail = %T, want non-empty *validatepb.Violations", detail)
+	}
+}
 
 func TestDeviceServiceValidationRejectsInvalidUnaryRequest(t *testing.T) {
 	_, handler := connectDevice.NewDeviceServiceHandler(nil, nil, nil, nil)

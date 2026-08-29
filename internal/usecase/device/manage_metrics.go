@@ -2,7 +2,6 @@ package device
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strings"
 
@@ -52,7 +51,7 @@ func (uc *ManageMetricsUseCase) GetPingConfig(
 	callerRoles []string,
 ) (device.DevicePingConfig, bool, error) {
 	if deviceID == "" {
-		return device.DefaultPingConfig(), false, errors.New("device_id is required")
+		return device.DefaultPingConfig(), false, device.ErrInvalidInput
 	}
 
 	ok, err := uc.isDeviceAuthorized(ctx, deviceID, callerID, callerRoles)
@@ -85,7 +84,7 @@ func (uc *ManageMetricsUseCase) UpdatePingConfig(
 	callerRoles []string,
 ) (device.DevicePingConfig, error) {
 	if deviceID == "" {
-		return device.DefaultPingConfig(), errors.New("device_id is required")
+		return device.DefaultPingConfig(), device.ErrInvalidInput
 	}
 
 	ok, err := uc.isDeviceAuthorized(ctx, deviceID, callerID, callerRoles)
@@ -125,7 +124,7 @@ func (uc *ManageMetricsUseCase) QueryPingMetrics(
 	callerRoles []string,
 ) ([]device.PingMetricPoint, device.PingSummary, bool, error) {
 	if filter.DeviceID == "" {
-		return nil, device.PingSummary{}, false, errors.New("device_id is required")
+		return nil, device.PingSummary{}, false, device.ErrInvalidInput
 	}
 
 	ok, err := uc.isDeviceAuthorized(ctx, filter.DeviceID, callerID, callerRoles)
@@ -137,7 +136,7 @@ func (uc *ManageMetricsUseCase) QueryPingMetrics(
 	}
 
 	if uc.metricsRepo == nil {
-		return nil, device.PingSummary{}, false, errors.New("metrics repository is not configured")
+		return nil, device.PingSummary{}, false, device.ErrMetricsUnavailable
 	}
 
 	timescaleAvailable, err := uc.metricsRepo.IsTimescaleDBAvailable(ctx)
