@@ -3,6 +3,7 @@ package app
 import (
 	"strconv"
 
+	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -44,6 +45,45 @@ func pppProfileParams(a port.SubscriberAccount) port.PPPProfileParams {
 		AddressList:   a.AddressList,
 		RemoteAddress: a.RemoteAddressPool,
 		Comment:       planProfileComment,
+	}
+}
+
+// pppProfileParamsFromSpec membangun parameter PPP profile dari PPPoEProfileSpec.
+func pppProfileParamsFromSpec(spec domainSub.PPPoEProfileSpec) port.PPPProfileParams {
+	cmt := spec.Comment
+	if cmt == "" {
+		cmt = planProfileComment
+	}
+	return port.PPPProfileParams{
+		Name:          spec.Name,
+		RateLimit:     spec.RateLimit,
+		LocalAddress:  spec.LocalAddress,
+		RemoteAddress: spec.RemoteAddressPool,
+		ParentQueue:   spec.ParentQueue,
+		AddressList:   spec.AddressList,
+		Comment:       cmt,
+	}
+}
+
+// hotspotProfileParamsFromSpec membangun parameter Hotspot profile dari HotspotProfileSpec.
+func hotspotProfileParamsFromSpec(spec domainSub.HotspotProfileSpec) port.MikhmonProfileParams {
+	cmt := spec.Comment
+	if cmt == "" {
+		cmt = planProfileComment
+	}
+	return port.MikhmonProfileParams{
+		Name:         spec.Name,
+		AddressPool:  spec.AddressPool,
+		SharedUsers:  intToStrOr(spec.SharedUsers, "1"),
+		RateLimit:    spec.RateLimit,
+		ParentQueue:  spec.ParentQueue,
+		Price:        spec.Price,
+		SellingPrice: spec.SellingPrice,
+		Validity:     spec.Validity,
+		ExpireMode:   hotspotExpireMode(spec.ExpireMode),
+		LockUser:     spec.LockUser,
+		LockServer:   spec.LockServer,
+		Comment:      cmt,
 	}
 }
 

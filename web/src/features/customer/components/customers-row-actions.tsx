@@ -1,4 +1,4 @@
-import { MoreHorizontal, Pencil, Repeat, Trash2 } from 'lucide-react'
+import { Eye, MoreHorizontal, Pencil, Repeat, Trash2 } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +24,11 @@ export function CustomersRowActions({ customer }: CustomersRowActionsProps) {
 
   if (!canManage) return null
 
+  const handleDetail = () => {
+    setCurrentRow(customer)
+    setOpen('detail')
+  }
+
   const handleEdit = () => {
     setCurrentRow(customer)
     setOpen('update')
@@ -48,6 +53,10 @@ export function CustomersRowActions({ customer }: CustomersRowActionsProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-48'>
+        <DropdownMenuItem onClick={handleDetail}>
+          <Eye className='mr-2 h-4 w-4' />
+          Detail Pelanggan
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={handleEdit}>
           <Pencil className='mr-2 h-4 w-4' />
           Edit

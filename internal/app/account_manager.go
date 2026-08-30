@@ -7,6 +7,7 @@ import (
 	"time"
 
 	billing "github.com/quixiq/polyglot/internal/domain/billing"
+	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -42,6 +43,86 @@ const serviceHotspot = "HOTSPOT"
 func isHotspot(serviceType string) bool { return strings.EqualFold(serviceType, serviceHotspot) }
 
 // ─── Provision ──────────────────────────────────────────────────────────
+
+func (m *routerAccountManager) ProvisionPPPoE(ctx context.Context, deviceID string, spec domainSub.PPPoEProvisionSpec) error {
+	driver, err := m.resolve(ctx, deviceID)
+	if err != nil {
+		return fmt.Errorf("resolve driver %s: %w", deviceID, err)
+	}
+	if spec.Profile.Name != "" {
+		if err := m.ensurePPPProfileFromSpec(ctx, driver, spec.Profile); err != nil {
+			return fmt.Errorf("ensure ppp profile %s: %w", spec.Profile.Name, err)
+		}
+	}
+	secParams := port.PPPoESecretParams{
+		Name:          spec.Secret.Username,
+		Password:      spec.Secret.Password,
+		Profile:       spec.Secret.Profile,
+		Service:       spec.Secret.Service,
+		LocalAddress:  spec.Secret.LocalAddress,
+		RemoteAddress: spec.Secret.RemoteAddress,
+		Comment:       spec.Secret.Comment,
+		Disabled:      spec.Secret.Disabled,
+	}
+	if secParams.Service == "" {
+		secParams.Service = "pppoe"
+	}
+	if _, err := m.ppp.AddSecret(ctx, driver, secParams); err != nil {
+		return fmt.Errorf("add ppp secret %s: %w", spec.Secret.Username, err)
+	}
+	return nil
+}
+
+func (m *routerAccountManager) ProvisionHotspot(ctx context.Context, deviceID string, spec domainSub.HotspotProvisionSpec) error {
+	driver, err := m.resolve(ctx, deviceID)
+	if err != nil {
+		return fmt.Errorf("resolve driver %s: %w", deviceID, err)
+	}
+	if spec.Profile.Name != "" {
+		if err := m.ensureHotspotProfileFromSpec(ctx, driver, spec.Profile); err != nil {
+			return fmt.Errorf("ensure hotspot profile %s: %w", spec.Profile.Name, err)
+		}
+	}
+	userParams := port.HotspotUserParams{
+		Name:        spec.User.Username,
+		Password:    spec.User.Password,
+		Profile:     spec.User.Profile,
+		Server:      spec.User.Server,
+		LimitUptime: spec.User.LimitUptime,
+		Comment:     spec.User.Comment,
+		Disabled:    spec.User.Disabled,
+	}
+	if userParams.Server == "" {
+		userParams.Server = "all"
+	}
+	if _, err := m.hot.AddUser(ctx, driver, userParams); err != nil {
+		return fmt.Errorf("add hotspot user %s: %w", spec.User.Username, err)
+	}
+	return nil
+}
+
+func (m *routerAccountManager) ProvisionDedicated(ctx context.Context, deviceID string, spec domainSub.DedicatedProvisionSpec) error {
+	if err := m.ProvisionPPPoE(ctx, deviceID, spec.PPPoE); err != nil {
+		return err
+	}
+	driver, err := m.resolve(ctx, deviceID)
+	if err != nil {
+		return fmt.Errorf("resolve driver %s: %w", deviceID, err)
+	}
+	if m.q != nil && spec.Queue.QueueName != "" {
+		qParams := port.DedicatedQueueParams{
+			Name:     spec.Queue.QueueName,
+			Target:   spec.Queue.Target,
+			MaxLimit: spec.Queue.MaxLimit,
+			LimitAt:  spec.Queue.LimitAt,
+			Comment:  spec.Queue.Comment,
+		}
+		if _, err := m.q.AddQueue(ctx, driver, qParams); err != nil {
+			return fmt.Errorf("add dedicated queue %s: %w", spec.Queue.QueueName, err)
+		}
+	}
+	return nil
+}
 
 func (m *routerAccountManager) Provision(ctx context.Context, deviceID, serviceType string, acct port.SubscriberAccount) error {
 	driver, err := m.resolve(ctx, deviceID)
@@ -182,6 +263,40 @@ func (m *routerAccountManager) ensurePlanProfile(ctx context.Context, driver por
 	}
 	if _, err := m.hot.CreateUserProfile(ctx, driver, hotspotProfileParams(acct)); err != nil {
 		return fmt.Errorf("add hotspot profile %s: %w", acct.Profile, err)
+	}
+	return nil
+}
+
+func (m *routerAccountManager) ensurePPPProfileFromSpec(ctx context.Context, driver port.DeviceDriver, spec domainSub.PPPoEProfileSpec) error {
+	params := pppProfileParamsFromSpec(spec)
+	existing, err := m.ppp.ListProfiles(ctx, driver, params.Name)
+	if err != nil {
+		return fmt.Errorf("list ppp profiles: %w", err)
+	}
+	for _, pr := range existing {
+		if pr.Name == params.Name {
+			return nil
+		}
+	}
+	if _, err := m.ppp.AddProfile(ctx, driver, params); err != nil {
+		return fmt.Errorf("add ppp profile %s: %w", params.Name, err)
+	}
+	return nil
+}
+
+func (m *routerAccountManager) ensureHotspotProfileFromSpec(ctx context.Context, driver port.DeviceDriver, spec domainSub.HotspotProfileSpec) error {
+	params := hotspotProfileParamsFromSpec(spec)
+	existing, err := m.hot.GetUserProfiles(ctx, driver)
+	if err != nil {
+		return fmt.Errorf("list hotspot profiles: %w", err)
+	}
+	for _, pr := range existing {
+		if pr.Name == params.Name {
+			return nil
+		}
+	}
+	if _, err := m.hot.CreateUserProfile(ctx, driver, params); err != nil {
+		return fmt.Errorf("add hotspot profile %s: %w", params.Name, err)
 	}
 	return nil
 }

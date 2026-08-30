@@ -50,3 +50,57 @@ func Slug(name string) string {
 	}
 	return s
 }
+
+// Initials extracts lowercase initials from a name (e.g. "Budi Santoso" -> "bs", "Ahmad" -> "ah").
+func Initials(name string) string {
+	parts := strings.Fields(name)
+	if len(parts) == 0 {
+		return "user"
+	}
+	if len(parts) == 1 {
+		runes := []rune(strings.ToLower(parts[0]))
+		if len(runes) >= 2 {
+			return string(runes[:2])
+		}
+		return string(runes)
+	}
+	var b strings.Builder
+	for _, p := range parts {
+		r := []rune(p)
+		if len(r) > 0 {
+			b.WriteRune(r[0])
+		}
+	}
+	res := strings.ToLower(b.String())
+	if len(res) > 6 {
+		res = res[:6]
+	}
+	return res
+}
+
+// GenerateUsername generates a username using initials/name and random digits based on pattern.
+// Default pattern: "{initials}{digits4}" (e.g. "bs4829").
+func GenerateUsername(name, pattern, prefix, customerCode string) string {
+	if pattern == "" {
+		pattern = "{initials}{digits4}"
+	}
+	initials := Initials(name)
+	slug := strings.ToLower(Slug(name))
+	if slug == "" {
+		slug = "user"
+	}
+	res := pattern
+	res = strings.ReplaceAll(res, "{initials}", initials)
+	res = strings.ReplaceAll(res, "{name_slug}", slug)
+	res = strings.ReplaceAll(res, "{customer_code}", strings.ToLower(customerCode))
+	if strings.Contains(res, "{digits4}") {
+		res = strings.ReplaceAll(res, "{digits4}", Digits(4))
+	}
+	if strings.Contains(res, "{digits6}") {
+		res = strings.ReplaceAll(res, "{digits6}", Digits(6))
+	}
+	if prefix != "" {
+		res = prefix + res
+	}
+	return res
+}

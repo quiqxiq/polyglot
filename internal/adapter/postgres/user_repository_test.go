@@ -124,4 +124,3 @@ func TestUserRepository_CRUD(t *testing.T) {
 	_, err = repo.FindByID(ctx, user.ID)
 	assert.Error(t, err)
 }
-

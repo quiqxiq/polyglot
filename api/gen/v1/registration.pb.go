@@ -50,6 +50,8 @@ type Registration struct {
 	RejectedReason           string                 `protobuf:"bytes,24,opt,name=rejected_reason,json=rejectedReason,proto3" json:"rejected_reason,omitempty"`
 	CancelReason             string                 `protobuf:"bytes,25,opt,name=cancel_reason,json=cancelReason,proto3" json:"cancel_reason,omitempty"`
 	CreatedAtUnix            int64                  `protobuf:"varint,26,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
+	TargetDeviceId           string                 `protobuf:"bytes,27,opt,name=target_device_id,json=targetDeviceId,proto3" json:"target_device_id,omitempty"`       // Router yang dipilih teknisi saat pasang
+	TargetDeviceName         string                 `protobuf:"bytes,28,opt,name=target_device_name,json=targetDeviceName,proto3" json:"target_device_name,omitempty"` // Nama router BRAS
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
 }
@@ -264,6 +266,20 @@ func (x *Registration) GetCreatedAtUnix() int64 {
 		return x.CreatedAtUnix
 	}
 	return 0
+}
+
+func (x *Registration) GetTargetDeviceId() string {
+	if x != nil {
+		return x.TargetDeviceId
+	}
+	return ""
+}
+
+func (x *Registration) GetTargetDeviceName() string {
+	if x != nil {
+		return x.TargetDeviceName
+	}
+	return ""
 }
 
 // PUBLIC — dipanggil calon pelanggan tanpa JWT.
@@ -815,6 +831,7 @@ type MarkInstalledRequest struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	TechnicianNotes string                 `protobuf:"bytes,2,opt,name=technician_notes,json=technicianNotes,proto3" json:"technician_notes,omitempty"`
+	DeviceId        string                 `protobuf:"bytes,3,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"` // Router BRAS yang dipilih teknisi saat selesai pasang fisik
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -859,6 +876,13 @@ func (x *MarkInstalledRequest) GetId() string {
 func (x *MarkInstalledRequest) GetTechnicianNotes() string {
 	if x != nil {
 		return x.TechnicianNotes
+	}
+	return ""
+}
+
+func (x *MarkInstalledRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
 	}
 	return ""
 }
@@ -1100,13 +1124,14 @@ func (x *CancelRegistrationResponse) GetRegistration() *Registration {
 }
 
 // Konversi INSTALLED → ACTIVE: buat customer+subscription+invoice.
-// device_id opsional — bila diisi, akun langsung diprovisikan ke router.
+// device_id wajib saat aktivasi oleh teknisi agar akun diprovisikan ke router.
 type ConvertRegistrationRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	DeviceId      string                 `protobuf:"bytes,2,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	DeviceId        string                 `protobuf:"bytes,2,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	TechnicianNotes string                 `protobuf:"bytes,3,opt,name=technician_notes,json=technicianNotes,proto3" json:"technician_notes,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *ConvertRegistrationRequest) Reset() {
@@ -1149,6 +1174,13 @@ func (x *ConvertRegistrationRequest) GetId() string {
 func (x *ConvertRegistrationRequest) GetDeviceId() string {
 	if x != nil {
 		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *ConvertRegistrationRequest) GetTechnicianNotes() string {
+	if x != nil {
+		return x.TechnicianNotes
 	}
 	return ""
 }
@@ -1225,7 +1257,7 @@ var File_v1_registration_proto protoreflect.FileDescriptor
 
 const file_v1_registration_proto_rawDesc = "" +
 	"\n" +
-	"\x15v1/registration.proto\x12\vpolyglot.v1\x1a\x1bbuf/validate/validate.proto\"\x98\a\n" +
+	"\x15v1/registration.proto\x12\vpolyglot.v1\x1a\x1bbuf/validate/validate.proto\"\xf0\a\n" +
 	"\fRegistration\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12'\n" +
@@ -1255,7 +1287,9 @@ const file_v1_registration_proto_rawDesc = "" +
 	"invoice_id\x18\x17 \x01(\tR\tinvoiceId\x12'\n" +
 	"\x0frejected_reason\x18\x18 \x01(\tR\x0erejectedReason\x12#\n" +
 	"\rcancel_reason\x18\x19 \x01(\tR\fcancelReason\x12&\n" +
-	"\x0fcreated_at_unix\x18\x1a \x01(\x03R\rcreatedAtUnix\"\xb4\x02\n" +
+	"\x0fcreated_at_unix\x18\x1a \x01(\x03R\rcreatedAtUnix\x12(\n" +
+	"\x10target_device_id\x18\x1b \x01(\tR\x0etargetDeviceId\x12,\n" +
+	"\x12target_device_name\x18\x1c \x01(\tR\x10targetDeviceName\"\xb4\x02\n" +
 	"\x19SubmitRegistrationRequest\x12$\n" +
 	"\tfull_name\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bfullName\x12\x1d\n" +
 	"\x05phone\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05phone\x12\x14\n" +
@@ -1289,10 +1323,11 @@ const file_v1_registration_proto_rawDesc = "" +
 	"\x11install_time_hhmm\x18\x03 \x01(\tR\x0finstallTimeHhmm\x12#\n" +
 	"\rtechnician_id\x18\x04 \x01(\tR\ftechnicianId\"X\n" +
 	"\x17ScheduleInstallResponse\x12=\n" +
-	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\"Z\n" +
+	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\"w\n" +
 	"\x14MarkInstalledRequest\x12\x17\n" +
 	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\x12)\n" +
-	"\x10technician_notes\x18\x02 \x01(\tR\x0ftechnicianNotes\"V\n" +
+	"\x10technician_notes\x18\x02 \x01(\tR\x0ftechnicianNotes\x12\x1b\n" +
+	"\tdevice_id\x18\x03 \x01(\tR\bdeviceId\"V\n" +
 	"\x15MarkInstalledResponse\x12=\n" +
 	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\"U\n" +
 	"\x19RejectRegistrationRequest\x12\x17\n" +
@@ -1304,10 +1339,11 @@ const file_v1_registration_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\x12\x1f\n" +
 	"\x06reason\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x06reason\"[\n" +
 	"\x1aCancelRegistrationResponse\x12=\n" +
-	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\"R\n" +
+	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\"}\n" +
 	"\x1aConvertRegistrationRequest\x12\x17\n" +
 	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\x12\x1b\n" +
-	"\tdevice_id\x18\x02 \x01(\tR\bdeviceId\"\xc5\x01\n" +
+	"\tdevice_id\x18\x02 \x01(\tR\bdeviceId\x12)\n" +
+	"\x10technician_notes\x18\x03 \x01(\tR\x0ftechnicianNotes\"\xc5\x01\n" +
 	"\x1bConvertRegistrationResponse\x12=\n" +
 	"\fregistration\x18\x01 \x01(\v2\x19.polyglot.v1.RegistrationR\fregistration\x12\x1f\n" +
 	"\vcustomer_id\x18\x02 \x01(\tR\n" +

@@ -36,6 +36,27 @@ const (
 	ProvisionFailed  = "FAILED"
 )
 
+// PPPoESubscriptionConfig mendefinisikan parameter spesifik akun PPPoE.
+type PPPoESubscriptionConfig struct {
+	LocalAddress  string `json:"local_address,omitempty"`
+	RemoteAddress string `json:"remote_address,omitempty"`
+	CallerID      string `json:"caller_id,omitempty"`
+	Routes        string `json:"routes,omitempty"`
+	RateLimit     string `json:"rate_limit,omitempty"`
+	RouterProfile string `json:"router_profile,omitempty"`
+}
+
+// HotspotSubscriptionConfig mendefinisikan parameter spesifik user Hotspot tetap.
+type HotspotSubscriptionConfig struct {
+	Server        string `json:"server,omitempty"`
+	MacAddress    string `json:"mac_address,omitempty"`
+	IPAddress     string `json:"ip_address,omitempty"`
+	RateLimit     string `json:"rate_limit,omitempty"`
+	RouterProfile string `json:"router_profile,omitempty"`
+	LimitUptime   string `json:"limit_uptime,omitempty"`
+	LimitBytes    string `json:"limit_bytes,omitempty"`
+}
+
 // Subscription represents an active or historic plan subscription mapped to
 // a MikroTik router (PPPoE secret / hotspot user) — DATABASE-SCHEMA-ISP.md §2.5.
 type Subscription struct {
@@ -47,11 +68,6 @@ type Subscription struct {
 	ServiceType        string     `json:"service_type"`
 	RemoteUsername     string     `json:"remote_username"`
 	RemotePassword     string     `json:"-"` // plaintext hanya in-memory; persist sebagai ciphertext via vault
-	LocalAddress       string     `json:"local_address,omitempty"`
-	RemoteAddress      string     `json:"remote_address,omitempty"`
-	ParentQueue        string     `json:"parent_queue,omitempty"`
-	RateLimit          string     `json:"rate_limit,omitempty"`
-	RouterProfile      string     `json:"router_profile,omitempty"` // profil paket aktif di router (basis restore)
 	ProvisionStatus    string     `json:"provision_status"`
 	BillingCycle       string     `json:"billing_cycle"`
 	BillingDay         int        `json:"billing_day"`
@@ -67,4 +83,15 @@ type Subscription struct {
 	DeletedAt          *time.Time `json:"deleted_at,omitempty"`
 	CreatedAt          time.Time  `json:"created_at"`
 	UpdatedAt          time.Time  `json:"updated_at"`
+
+	// Sub-konfigurasi bertipe
+	PPPoE   *PPPoESubscriptionConfig   `json:"pppoe,omitempty"`
+	Hotspot *HotspotSubscriptionConfig `json:"hotspot,omitempty"`
+
+	// Flat fields dipertahankan untuk kompatibilitas DB & query
+	LocalAddress  string `json:"local_address,omitempty"`
+	RemoteAddress string `json:"remote_address,omitempty"`
+	ParentQueue   string `json:"parent_queue,omitempty"`
+	RateLimit     string `json:"rate_limit,omitempty"`
+	RouterProfile string `json:"router_profile,omitempty"`
 }

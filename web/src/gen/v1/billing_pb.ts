@@ -263,6 +263,280 @@ export class InvoiceItem extends Message<InvoiceItem> {
 }
 
 /**
+ * @generated from message polyglot.v1.PPPoEPlanConfig
+ */
+export class PPPoEPlanConfig extends Message<PPPoEPlanConfig> {
+  /**
+   * @generated from field: string remote_address_pool = 1;
+   */
+  remoteAddressPool = "";
+
+  /**
+   * @generated from field: string address_list = 2;
+   */
+  addressList = "";
+
+  constructor(data?: PartialMessage<PPPoEPlanConfig>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PPPoEPlanConfig";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "remote_address_pool", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "address_list", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PPPoEPlanConfig {
+    return new PPPoEPlanConfig().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PPPoEPlanConfig {
+    return new PPPoEPlanConfig().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PPPoEPlanConfig {
+    return new PPPoEPlanConfig().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PPPoEPlanConfig | PlainMessage<PPPoEPlanConfig> | undefined, b: PPPoEPlanConfig | PlainMessage<PPPoEPlanConfig> | undefined): boolean {
+    return proto3.util.equals(PPPoEPlanConfig, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.HotspotPlanConfig
+ */
+export class HotspotPlanConfig extends Message<HotspotPlanConfig> {
+  /**
+   * @generated from field: string ip_pool_name = 1;
+   */
+  ipPoolName = "";
+
+  /**
+   * @generated from field: int32 shared_users = 2;
+   */
+  sharedUsers = 0;
+
+  /**
+   * @generated from field: string validity = 3;
+   */
+  validity = "";
+
+  /**
+   * @generated from field: string validity_mode = 4;
+   */
+  validityMode = "";
+
+  /**
+   * @generated from field: string expire_mode = 5;
+   */
+  expireMode = "";
+
+  /**
+   * @generated from field: bool lock_user = 6;
+   */
+  lockUser = false;
+
+  /**
+   * @generated from field: bool lock_server = 7;
+   */
+  lockServer = false;
+
+  /**
+   * @generated from field: string limit_uptime = 8;
+   */
+  limitUptime = "";
+
+  /**
+   * @generated from field: string limit_bytes = 9;
+   */
+  limitBytes = "";
+
+  /**
+   * @generated from field: double selling_price = 10;
+   */
+  sellingPrice = 0;
+
+  constructor(data?: PartialMessage<HotspotPlanConfig>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.HotspotPlanConfig";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "ip_pool_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "shared_users", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "validity", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "validity_mode", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "expire_mode", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "lock_user", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 7, name: "lock_server", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 8, name: "limit_uptime", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "limit_bytes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 10, name: "selling_price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): HotspotPlanConfig {
+    return new HotspotPlanConfig().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): HotspotPlanConfig {
+    return new HotspotPlanConfig().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): HotspotPlanConfig {
+    return new HotspotPlanConfig().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: HotspotPlanConfig | PlainMessage<HotspotPlanConfig> | undefined, b: HotspotPlanConfig | PlainMessage<HotspotPlanConfig> | undefined): boolean {
+    return proto3.util.equals(HotspotPlanConfig, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.PPPoESubscriptionConfig
+ */
+export class PPPoESubscriptionConfig extends Message<PPPoESubscriptionConfig> {
+  /**
+   * @generated from field: string local_address = 1;
+   */
+  localAddress = "";
+
+  /**
+   * @generated from field: string remote_address = 2;
+   */
+  remoteAddress = "";
+
+  /**
+   * @generated from field: string caller_id = 3;
+   */
+  callerId = "";
+
+  /**
+   * @generated from field: string routes = 4;
+   */
+  routes = "";
+
+  /**
+   * @generated from field: string rate_limit = 5;
+   */
+  rateLimit = "";
+
+  /**
+   * @generated from field: string router_profile = 6;
+   */
+  routerProfile = "";
+
+  constructor(data?: PartialMessage<PPPoESubscriptionConfig>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PPPoESubscriptionConfig";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "local_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "remote_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "caller_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "routes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "rate_limit", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "router_profile", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PPPoESubscriptionConfig {
+    return new PPPoESubscriptionConfig().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PPPoESubscriptionConfig {
+    return new PPPoESubscriptionConfig().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PPPoESubscriptionConfig {
+    return new PPPoESubscriptionConfig().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PPPoESubscriptionConfig | PlainMessage<PPPoESubscriptionConfig> | undefined, b: PPPoESubscriptionConfig | PlainMessage<PPPoESubscriptionConfig> | undefined): boolean {
+    return proto3.util.equals(PPPoESubscriptionConfig, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.HotspotSubscriptionConfig
+ */
+export class HotspotSubscriptionConfig extends Message<HotspotSubscriptionConfig> {
+  /**
+   * @generated from field: string server = 1;
+   */
+  server = "";
+
+  /**
+   * @generated from field: string mac_address = 2;
+   */
+  macAddress = "";
+
+  /**
+   * @generated from field: string ip_address = 3;
+   */
+  ipAddress = "";
+
+  /**
+   * @generated from field: string rate_limit = 4;
+   */
+  rateLimit = "";
+
+  /**
+   * @generated from field: string router_profile = 5;
+   */
+  routerProfile = "";
+
+  /**
+   * @generated from field: string limit_uptime = 6;
+   */
+  limitUptime = "";
+
+  /**
+   * @generated from field: string limit_bytes = 7;
+   */
+  limitBytes = "";
+
+  constructor(data?: PartialMessage<HotspotSubscriptionConfig>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.HotspotSubscriptionConfig";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "server", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "mac_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "ip_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "rate_limit", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "router_profile", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "limit_uptime", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "limit_bytes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): HotspotSubscriptionConfig {
+    return new HotspotSubscriptionConfig().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): HotspotSubscriptionConfig {
+    return new HotspotSubscriptionConfig().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): HotspotSubscriptionConfig {
+    return new HotspotSubscriptionConfig().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: HotspotSubscriptionConfig | PlainMessage<HotspotSubscriptionConfig> | undefined, b: HotspotSubscriptionConfig | PlainMessage<HotspotSubscriptionConfig> | undefined): boolean {
+    return proto3.util.equals(HotspotSubscriptionConfig, a, b);
+  }
+}
+
+/**
  * @generated from message polyglot.v1.Subscription
  */
 export class Subscription extends Message<Subscription> {
@@ -294,7 +568,7 @@ export class Subscription extends Message<Subscription> {
   deviceId = "";
 
   /**
-   * PPPOE | HOTSPOT
+   * PPPOE | HOTSPOT | DEDICATED
    *
    * @generated from field: string service_type = 6;
    */
@@ -343,7 +617,7 @@ export class Subscription extends Message<Subscription> {
   isolationGraceDays = 0;
 
   /**
-   * ACTIVE | ISOLATED | SUSPENDED | TERMINATED | ...
+   * ACTIVE | ISOLATED | SUSPENDED | TERMINATED | PENDING
    *
    * @generated from field: string status = 15;
    */
@@ -368,6 +642,55 @@ export class Subscription extends Message<Subscription> {
    * @generated from field: string notes = 19;
    */
   notes = "";
+
+  /**
+   * Sub-messages bertipe (Opsi 2)
+   *
+   * @generated from field: polyglot.v1.PPPoESubscriptionConfig pppoe_config = 20;
+   */
+  pppoeConfig?: PPPoESubscriptionConfig;
+
+  /**
+   * @generated from field: polyglot.v1.HotspotSubscriptionConfig hotspot_config = 21;
+   */
+  hotspotConfig?: HotspotSubscriptionConfig;
+
+  /**
+   * Denormalisasi Tampilan (Zero Waterfall di Frontend)
+   *
+   * @generated from field: string customer_name = 22;
+   */
+  customerName = "";
+
+  /**
+   * @generated from field: string customer_phone = 23;
+   */
+  customerPhone = "";
+
+  /**
+   * @generated from field: string customer_code = 24;
+   */
+  customerCode = "";
+
+  /**
+   * @generated from field: string plan_name = 25;
+   */
+  planName = "";
+
+  /**
+   * @generated from field: double plan_price = 26;
+   */
+  planPrice = 0;
+
+  /**
+   * @generated from field: string device_name = 27;
+   */
+  deviceName = "";
+
+  /**
+   * @generated from field: string device_host = 28;
+   */
+  deviceHost = "";
 
   constructor(data?: PartialMessage<Subscription>) {
     super();
@@ -396,6 +719,15 @@ export class Subscription extends Message<Subscription> {
     { no: 17, name: "end_date_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
     { no: 18, name: "custom_price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
     { no: 19, name: "notes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 20, name: "pppoe_config", kind: "message", T: PPPoESubscriptionConfig },
+    { no: 21, name: "hotspot_config", kind: "message", T: HotspotSubscriptionConfig },
+    { no: 22, name: "customer_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 23, name: "customer_phone", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 24, name: "customer_code", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 25, name: "plan_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 26, name: "plan_price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 27, name: "device_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 28, name: "device_host", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Subscription {
@@ -444,7 +776,7 @@ export class CreateSubscriptionRequest extends Message<CreateSubscriptionRequest
   serviceType = "";
 
   /**
-   * kosong = auto-generate
+   * kosong = auto-generate dari setting
    *
    * @generated from field: string remote_username = 5;
    */
@@ -479,6 +811,16 @@ export class CreateSubscriptionRequest extends Message<CreateSubscriptionRequest
    */
   notes = "";
 
+  /**
+   * @generated from field: polyglot.v1.PPPoESubscriptionConfig pppoe_config = 11;
+   */
+  pppoeConfig?: PPPoESubscriptionConfig;
+
+  /**
+   * @generated from field: polyglot.v1.HotspotSubscriptionConfig hotspot_config = 12;
+   */
+  hotspotConfig?: HotspotSubscriptionConfig;
+
   constructor(data?: PartialMessage<CreateSubscriptionRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -497,6 +839,8 @@ export class CreateSubscriptionRequest extends Message<CreateSubscriptionRequest
     { no: 8, name: "billing_cycle", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 9, name: "billing_day", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 10, name: "notes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 11, name: "pppoe_config", kind: "message", T: PPPoESubscriptionConfig },
+    { no: 12, name: "hotspot_config", kind: "message", T: HotspotSubscriptionConfig },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateSubscriptionRequest {
@@ -601,6 +945,16 @@ export class UpdateSubscriptionRequest extends Message<UpdateSubscriptionRequest
    */
   notes = "";
 
+  /**
+   * @generated from field: polyglot.v1.PPPoESubscriptionConfig pppoe_config = 9;
+   */
+  pppoeConfig?: PPPoESubscriptionConfig;
+
+  /**
+   * @generated from field: polyglot.v1.HotspotSubscriptionConfig hotspot_config = 10;
+   */
+  hotspotConfig?: HotspotSubscriptionConfig;
+
   constructor(data?: PartialMessage<UpdateSubscriptionRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -617,6 +971,8 @@ export class UpdateSubscriptionRequest extends Message<UpdateSubscriptionRequest
     { no: 6, name: "billing_day", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 7, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 8, name: "notes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "pppoe_config", kind: "message", T: PPPoESubscriptionConfig },
+    { no: 10, name: "hotspot_config", kind: "message", T: HotspotSubscriptionConfig },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateSubscriptionRequest {
@@ -883,6 +1239,18 @@ export class Plan extends Message<Plan> {
    */
   description = "";
 
+  /**
+   * Sub-message spesifik (Opsi 2)
+   *
+   * @generated from field: polyglot.v1.PPPoEPlanConfig pppoe_config = 27;
+   */
+  pppoeConfig?: PPPoEPlanConfig;
+
+  /**
+   * @generated from field: polyglot.v1.HotspotPlanConfig hotspot_config = 28;
+   */
+  hotspotConfig?: HotspotPlanConfig;
+
   constructor(data?: PartialMessage<Plan>) {
     super();
     proto3.util.initPartial(data, this);
@@ -917,6 +1285,8 @@ export class Plan extends Message<Plan> {
     { no: 21, name: "lock_server", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 22, name: "is_active", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 23, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 27, name: "pppoe_config", kind: "message", T: PPPoEPlanConfig },
+    { no: 28, name: "hotspot_config", kind: "message", T: HotspotPlanConfig },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Plan {

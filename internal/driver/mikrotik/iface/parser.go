@@ -65,4 +65,3 @@ func ParseInterfaceTrafficStats(result command.Result) InterfaceTrafficStats {
 		TxErrorsPerSecond:  getRowField(row, "tx-errors-per-second"),
 	}
 }
-

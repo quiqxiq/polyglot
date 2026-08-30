@@ -33,9 +33,9 @@ func TestParseInterfaceTrafficStats(t *testing.T) {
 	res := command.Result{
 		Rows: []map[string]string{
 			{
-				"name":                "ether1",
-				"rx-bits-per-second":  "10485760",
-				"tx-bits-per-second":  "5242880",
+				"name":                  "ether1",
+				"rx-bits-per-second":    "10485760",
+				"tx-bits-per-second":    "5242880",
 				"rx-packets-per-second": "850",
 				"tx-packets-per-second": "420",
 			},
@@ -47,4 +47,3 @@ func TestParseInterfaceTrafficStats(t *testing.T) {
 		t.Fatalf("unexpected traffic stats parsed: %+v", stats)
 	}
 }
-

@@ -20,4 +20,3 @@ func TestNewMonitorTrafficOnceCommand(t *testing.T) {
 		t.Fatalf("expected once arg in monitor traffic command")
 	}
 }
-

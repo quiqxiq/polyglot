@@ -23,24 +23,26 @@ const (
 )
 
 type Customer struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	Id               string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	TenantId         string                 `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
-	CustomerCode     string                 `protobuf:"bytes,3,opt,name=customer_code,json=customerCode,proto3" json:"customer_code,omitempty"`
-	Name             string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
-	Phone            string                 `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
-	Email            string                 `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
-	Address          string                 `protobuf:"bytes,7,opt,name=address,proto3" json:"address,omitempty"`
-	Latitude         float64                `protobuf:"fixed64,8,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude        float64                `protobuf:"fixed64,9,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	HasCoordinates   bool                   `protobuf:"varint,10,opt,name=has_coordinates,json=hasCoordinates,proto3" json:"has_coordinates,omitempty"`
-	PortalAccessCode string                 `protobuf:"bytes,11,opt,name=portal_access_code,json=portalAccessCode,proto3" json:"portal_access_code,omitempty"`
-	Status           string                 `protobuf:"bytes,12,opt,name=status,proto3" json:"status,omitempty"` // ACTIVE | ISOLATED | SUSPENDED | TERMINATED
-	Notes            string                 `protobuf:"bytes,13,opt,name=notes,proto3" json:"notes,omitempty"`
-	RegisteredAtUnix int64                  `protobuf:"varint,14,opt,name=registered_at_unix,json=registeredAtUnix,proto3" json:"registered_at_unix,omitempty"`
-	CreatedAtUnix    int64                  `protobuf:"varint,15,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state                    protoimpl.MessageState `protogen:"open.v1"`
+	Id                       string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	TenantId                 string                 `protobuf:"bytes,2,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	CustomerCode             string                 `protobuf:"bytes,3,opt,name=customer_code,json=customerCode,proto3" json:"customer_code,omitempty"`
+	Name                     string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
+	Phone                    string                 `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
+	Email                    string                 `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
+	Address                  string                 `protobuf:"bytes,7,opt,name=address,proto3" json:"address,omitempty"`
+	Latitude                 float64                `protobuf:"fixed64,8,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Longitude                float64                `protobuf:"fixed64,9,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	HasCoordinates           bool                   `protobuf:"varint,10,opt,name=has_coordinates,json=hasCoordinates,proto3" json:"has_coordinates,omitempty"`
+	PortalAccessCode         string                 `protobuf:"bytes,11,opt,name=portal_access_code,json=portalAccessCode,proto3" json:"portal_access_code,omitempty"`
+	Status                   string                 `protobuf:"bytes,12,opt,name=status,proto3" json:"status,omitempty"` // ACTIVE | INACTIVE
+	Notes                    string                 `protobuf:"bytes,13,opt,name=notes,proto3" json:"notes,omitempty"`
+	RegisteredAtUnix         int64                  `protobuf:"varint,14,opt,name=registered_at_unix,json=registeredAtUnix,proto3" json:"registered_at_unix,omitempty"`
+	CreatedAtUnix            int64                  `protobuf:"varint,15,opt,name=created_at_unix,json=createdAtUnix,proto3" json:"created_at_unix,omitempty"`
+	ActiveSubscriptionsCount int32                  `protobuf:"varint,16,opt,name=active_subscriptions_count,json=activeSubscriptionsCount,proto3" json:"active_subscriptions_count,omitempty"`
+	UnpaidInvoicesCount      int32                  `protobuf:"varint,17,opt,name=unpaid_invoices_count,json=unpaidInvoicesCount,proto3" json:"unpaid_invoices_count,omitempty"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
 }
 
 func (x *Customer) Reset() {
@@ -174,6 +176,20 @@ func (x *Customer) GetRegisteredAtUnix() int64 {
 func (x *Customer) GetCreatedAtUnix() int64 {
 	if x != nil {
 		return x.CreatedAtUnix
+	}
+	return 0
+}
+
+func (x *Customer) GetActiveSubscriptionsCount() int32 {
+	if x != nil {
+		return x.ActiveSubscriptionsCount
+	}
+	return 0
+}
+
+func (x *Customer) GetUnpaidInvoicesCount() int32 {
+	if x != nil {
+		return x.UnpaidInvoicesCount
 	}
 	return 0
 }
@@ -807,7 +823,7 @@ var File_v1_customer_proto protoreflect.FileDescriptor
 
 const file_v1_customer_proto_rawDesc = "" +
 	"\n" +
-	"\x11v1/customer.proto\x12\vpolyglot.v1\x1a\x10v1/billing.proto\x1a\x1bbuf/validate/validate.proto\"\xcb\x03\n" +
+	"\x11v1/customer.proto\x12\vpolyglot.v1\x1a\x10v1/billing.proto\x1a\x1bbuf/validate/validate.proto\"\xbd\x04\n" +
 	"\bCustomer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12#\n" +
@@ -824,7 +840,9 @@ const file_v1_customer_proto_rawDesc = "" +
 	"\x06status\x18\f \x01(\tR\x06status\x12\x14\n" +
 	"\x05notes\x18\r \x01(\tR\x05notes\x12,\n" +
 	"\x12registered_at_unix\x18\x0e \x01(\x03R\x10registeredAtUnix\x12&\n" +
-	"\x0fcreated_at_unix\x18\x0f \x01(\x03R\rcreatedAtUnix\"\x16\n" +
+	"\x0fcreated_at_unix\x18\x0f \x01(\x03R\rcreatedAtUnix\x12<\n" +
+	"\x1aactive_subscriptions_count\x18\x10 \x01(\x05R\x18activeSubscriptionsCount\x122\n" +
+	"\x15unpaid_invoices_count\x18\x11 \x01(\x05R\x13unpaidInvoicesCount\"\x16\n" +
 	"\x14ListCustomersRequest\"L\n" +
 	"\x15ListCustomersResponse\x123\n" +
 	"\tcustomers\x18\x01 \x03(\v2\x15.polyglot.v1.CustomerR\tcustomers\"-\n" +

@@ -263,6 +263,12 @@ func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *con
 	if msg.CustomPrice > 0 {
 		customPrice = &msg.CustomPrice
 	}
+	var localAddr, remoteAddr, rateLimit string
+	if msg.PppoeConfig != nil {
+		localAddr = msg.PppoeConfig.LocalAddress
+		remoteAddr = msg.PppoeConfig.RemoteAddress
+		rateLimit = msg.PppoeConfig.RateLimit
+	}
 	sub, err := h.manageSubUC.Create(ctx, billingUC.CreateInput{
 		CustomerID:     msg.CustomerId,
 		PlanID:         msg.PlanId,
@@ -270,6 +276,9 @@ func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *con
 		ServiceType:    msg.ServiceType,
 		RemoteUsername: msg.RemoteUsername,
 		RemotePassword: msg.RemotePassword,
+		LocalAddress:   localAddr,
+		RemoteAddress:  remoteAddr,
+		RateLimit:      rateLimit,
 		CustomPrice:    customPrice,
 		BillingCycle:   msg.BillingCycle,
 		BillingDay:     int(msg.BillingDay),
@@ -307,6 +316,17 @@ func (h *BillingConnectHandler) UpdateSubscription(ctx context.Context, req *con
 	}
 	if msg.DeviceId != "" {
 		in.DeviceID = &msg.DeviceId
+	}
+	if msg.PppoeConfig != nil {
+		if msg.PppoeConfig.LocalAddress != "" {
+			in.LocalAddress = &msg.PppoeConfig.LocalAddress
+		}
+		if msg.PppoeConfig.RemoteAddress != "" {
+			in.RemoteAddress = &msg.PppoeConfig.RemoteAddress
+		}
+		if msg.PppoeConfig.RateLimit != "" {
+			in.RateLimit = &msg.PppoeConfig.RateLimit
+		}
 	}
 	sub, err := h.manageSubUC.Update(ctx, msg.Id, in)
 	if err != nil {

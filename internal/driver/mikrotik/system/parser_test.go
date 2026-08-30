@@ -10,13 +10,13 @@ func TestParseResource(t *testing.T) {
 	res := command.Result{
 		Rows: []map[string]string{
 			{
-				"cpu-load":      "15",
-				"cpu-count":     "4",
-				"free-memory":   "536870912",
-				"total-memory":  "1073741824",
-				"uptime":        "5d12h30m",
-				"version":       "7.12.1",
-				"board-name":    "RB4011iGS+",
+				"cpu-load":     "15",
+				"cpu-count":    "4",
+				"free-memory":  "536870912",
+				"total-memory": "1073741824",
+				"uptime":       "5d12h30m",
+				"version":      "7.12.1",
+				"board-name":   "RB4011iGS+",
 			},
 		},
 	}
@@ -47,4 +47,3 @@ func TestParsePing(t *testing.T) {
 		t.Fatalf("unexpected ping parsed: %+v", pings)
 	}
 }
-

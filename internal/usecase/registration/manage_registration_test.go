@@ -2,6 +2,7 @@ package registration_test
 
 import (
 	"context"
+	"strings"
 	"testing"
 	"time"
 
@@ -204,7 +205,7 @@ func TestConvert_FullFlow_CreatesArtifactsAndLinksBack(t *testing.T) {
 
 	storedSubRow, err := subs.FindByID(ctx, converted.SubscriptionID)
 	require.NoError(t, err)
-	assert.Equal(t, "BUDI-SANTOSO", storedSubRow.RemoteUsername)
+	assert.True(t, strings.HasPrefix(storedSubRow.RemoteUsername, "bs"))
 	assert.NotEmpty(t, storedSubRow.RemotePassword)
 
 	inv, err := invoices.FindByID(ctx, converted.InvoiceID)

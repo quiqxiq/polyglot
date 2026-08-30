@@ -110,4 +110,3 @@ type SystemScriptParams struct {
 	Comment    string
 	DontReqPwr bool
 }
-

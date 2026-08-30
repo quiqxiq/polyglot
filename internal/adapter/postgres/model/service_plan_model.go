@@ -61,7 +61,7 @@ func (m *ServicePlanModel) ToDomain() plan.ServicePlan {
 	if m == nil {
 		return plan.ServicePlan{}
 	}
-	return plan.ServicePlan{
+	p := plan.ServicePlan{
 		ID:                    m.ID,
 		TenantID:              m.TenantID,
 		Name:                  m.Name,
@@ -94,11 +94,32 @@ func (m *ServicePlanModel) ToDomain() plan.ServicePlan {
 		CreatedAt:             m.CreatedAt,
 		UpdatedAt:             m.UpdatedAt,
 	}
+
+	if m.ServiceType == plan.TypeHotspot {
+		p.Hotspot = &plan.HotspotPlanConfig{
+			IPPoolName:   m.IPPoolName,
+			SharedUsers:  m.SharedUsers,
+			Validity:     m.Validity,
+			ValidityMode: m.ValidityMode,
+			ExpireMode:   m.ExpireMode,
+			LockUser:     m.LockUser,
+			LockServer:   m.LockServer,
+			SellingPrice: m.SellingPrice,
+			LimitUptime:  m.LimitUptime,
+			LimitBytes:   m.LimitBytes,
+		}
+	} else {
+		p.PPPoE = &plan.PPPoEPlanConfig{
+			RemoteAddressPool: m.RemoteAddressPool,
+			AddressList:       m.AddressList,
+		}
+	}
+	return p
 }
 
 // ServicePlanModelFromDomain converts a service plan domain entity to a database model.
 func ServicePlanModelFromDomain(p plan.ServicePlan) *ServicePlanModel {
-	return &ServicePlanModel{
+	m := &ServicePlanModel{
 		ID:                    p.ID,
 		TenantID:              p.TenantID,
 		Name:                  p.Name,
@@ -131,4 +152,42 @@ func ServicePlanModelFromDomain(p plan.ServicePlan) *ServicePlanModel {
 		CreatedAt:             p.CreatedAt,
 		UpdatedAt:             p.UpdatedAt,
 	}
+
+	if p.PPPoE != nil {
+		if p.PPPoE.RemoteAddressPool != "" {
+			m.RemoteAddressPool = p.PPPoE.RemoteAddressPool
+		}
+		if p.PPPoE.AddressList != "" {
+			m.AddressList = p.PPPoE.AddressList
+		}
+	}
+	if p.Hotspot != nil {
+		if p.Hotspot.IPPoolName != "" {
+			m.IPPoolName = p.Hotspot.IPPoolName
+		}
+		if p.Hotspot.SharedUsers > 0 {
+			m.SharedUsers = p.Hotspot.SharedUsers
+		}
+		if p.Hotspot.Validity != "" {
+			m.Validity = p.Hotspot.Validity
+		}
+		if p.Hotspot.ValidityMode != "" {
+			m.ValidityMode = p.Hotspot.ValidityMode
+		}
+		if p.Hotspot.ExpireMode != "" {
+			m.ExpireMode = p.Hotspot.ExpireMode
+		}
+		m.LockUser = p.Hotspot.LockUser
+		m.LockServer = p.Hotspot.LockServer
+		if p.Hotspot.SellingPrice > 0 {
+			m.SellingPrice = p.Hotspot.SellingPrice
+		}
+		if p.Hotspot.LimitUptime != "" {
+			m.LimitUptime = p.Hotspot.LimitUptime
+		}
+		if p.Hotspot.LimitBytes != "" {
+			m.LimitBytes = p.Hotspot.LimitBytes
+		}
+	}
+	return m
 }

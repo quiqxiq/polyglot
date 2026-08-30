@@ -110,10 +110,11 @@ describe('PlansMutateDialog', () => {
     // HOTSPOT-only voucher fields must be absent on the PPPOE default.
     expect(getByText(/Expire Mode/i).elements()).toHaveLength(0)
     expect(getByText(/Shared Users/i).elements()).toHaveLength(0)
+    expect(getByText(/Validity Mode/i).elements()).toHaveLength(0)
 
     // PPPoE-relevant fields stay visible.
     await expect.element(getByText(/Parent Queue/i)).toBeInTheDocument()
-    await expect.element(getByText(/Validity Mode/i)).toBeInTheDocument()
+    await expect.element(getByText(/Address List/i)).toBeInTheDocument()
   })
 
   it('shows hotspot fields and hides pppoe routing after switching to HOTSPOT', async () => {

@@ -26,4 +26,3 @@ func MonitorTrafficOnce(ctx context.Context, driver port.DeviceDriver, exec port
 	}
 	return ParseInterfaceTrafficStats(res), nil
 }
-

@@ -28,6 +28,9 @@ type IsolationOptions struct {
 // ditandai address-list agar rule dst-nat redirect ke halaman bayar bekerja.
 type RouterAccountManager interface {
 	Provision(ctx context.Context, deviceID, serviceType string, acct SubscriberAccount) error
+	ProvisionPPPoE(ctx context.Context, deviceID string, spec domainSub.PPPoEProvisionSpec) error
+	ProvisionHotspot(ctx context.Context, deviceID string, spec domainSub.HotspotProvisionSpec) error
+	ProvisionDedicated(ctx context.Context, deviceID string, spec domainSub.DedicatedProvisionSpec) error
 	UpdateAccount(ctx context.Context, deviceID, serviceType, username, newProfile string) error
 	// EnsureProfile memastikan profil bernama profileName ada di router
 	// dengan rate tertentu (auto-create bila belum ada). Dipakai sebelum

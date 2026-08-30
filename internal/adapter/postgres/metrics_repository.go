@@ -272,7 +272,7 @@ func (r *MetricsRepository) QueryPingMetrics(ctx context.Context, filter device.
 }
 
 func validateMetricsRange(start, end time.Time, bucket string) error {
-	maxRange := 24 * time.Hour
+	var maxRange time.Duration
 	switch bucket {
 	case "", "raw":
 		maxRange = 24 * time.Hour

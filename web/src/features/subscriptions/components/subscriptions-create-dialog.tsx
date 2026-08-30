@@ -1,5 +1,6 @@
+import { useEffect } from 'react'
 import { z } from 'zod'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -42,6 +43,14 @@ const createSubscriptionSchema = z.object({
   remotePassword: z.string(),
   customPrice: z.coerce.number().min(0),
   notes: z.string(),
+  // PPPoE Specific
+  localAddress: z.string().optional(),
+  remoteAddress: z.string().optional(),
+  callerId: z.string().optional(),
+  // Hotspot Specific
+  server: z.string().optional(),
+  macAddress: z.string().optional(),
+  ipAddress: z.string().optional(),
 })
 
 type CreateSubscriptionValues = z.infer<typeof createSubscriptionSchema>
@@ -76,15 +85,37 @@ export function SubscriptionsCreateDialog({
       remotePassword: '',
       customPrice: 0,
       notes: '',
+      localAddress: '',
+      remoteAddress: '',
+      callerId: '',
+      server: 'all',
+      macAddress: '',
+      ipAddress: '',
     },
   })
+
+  const selectedPlanId = useWatch({ control: form.control, name: 'planId' })
+  const serviceType = useWatch({ control: form.control, name: 'serviceType' })
+
+  // Auto set service type when plan is picked
+  useEffect(() => {
+    if (selectedPlanId) {
+      const selectedPlan = plans.find((p) => p.id === selectedPlanId)
+      if (selectedPlan?.serviceType) {
+        form.setValue(
+          'serviceType',
+          selectedPlan.serviceType as (typeof SERVICE_TYPES)[number]
+        )
+      }
+    }
+  }, [selectedPlanId, plans, form])
 
   const customerItems = customers.map((c) => ({
     label: c.name ? `${c.name} (${c.id})` : c.id,
     value: c.id,
   }))
   const planItems = plans.map((p) => ({
-    label: `${p.name} — Rp${Number(p.price).toLocaleString('id-ID')}`,
+    label: `${p.name} — Rp${Number(p.price).toLocaleString('id-ID')} (${p.serviceType})`,
     value: p.id,
   }))
   const deviceItems = [
@@ -107,9 +138,25 @@ export function SubscriptionsCreateDialog({
           remotePassword: values.remotePassword,
           customPrice: values.customPrice,
           notes: values.notes,
+          pppoeConfig:
+            values.serviceType !== 'HOTSPOT'
+              ? {
+                  localAddress: values.localAddress || '',
+                  remoteAddress: values.remoteAddress || '',
+                  callerId: values.callerId || '',
+                }
+              : undefined,
+          hotspotConfig:
+            values.serviceType === 'HOTSPOT'
+              ? {
+                  server: values.server || 'all',
+                  macAddress: values.macAddress || '',
+                  ipAddress: values.ipAddress || '',
+                }
+              : undefined,
         })
       )
-      toast.success('Langganan dibuat')
+      toast.success('Langganan berhasil dibuat!')
       form.reset()
       onOpenChange(false)
     } catch (err) {
@@ -121,7 +168,7 @@ export function SubscriptionsCreateDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className='sm:max-w-lg'>
+      <DialogContent className='sm:max-w-lg max-h-[85vh] overflow-y-auto'>
         <DialogHeader>
           <DialogTitle>Tambah Langganan</DialogTitle>
           <DialogDescription>
@@ -148,7 +195,9 @@ export function SubscriptionsCreateDialog({
                       defaultValue={field.value || undefined}
                       onValueChange={field.onChange}
                       placeholder={
-                        customersLoading ? 'Memuat pelanggan...' : 'Pilih pelanggan'
+                        customersLoading
+                          ? 'Memuat pelanggan...'
+                          : 'Pilih pelanggan'
                       }
                       isPending={customersLoading}
                       items={customerItems}
@@ -165,7 +214,7 @@ export function SubscriptionsCreateDialog({
               name='planId'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Paket</FormLabel>
+                  <FormLabel>Paket Layanan</FormLabel>
                   <FormControl>
                     <SelectDropdown
                       isControlled
@@ -188,13 +237,13 @@ export function SubscriptionsCreateDialog({
               name='deviceId'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Device (opsional)</FormLabel>
+                  <FormLabel>Router BRAS (Opsional)</FormLabel>
                   <FormControl>
                     <SelectDropdown
                       isControlled
                       defaultValue={field.value}
                       onValueChange={field.onChange}
-                      placeholder='Pilih device'
+                      placeholder='Pilih Router BRAS'
                       items={deviceItems}
                     />
                   </FormControl>
@@ -229,7 +278,7 @@ export function SubscriptionsCreateDialog({
                 name='remoteUsername'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Username Kredensial</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -245,7 +294,7 @@ export function SubscriptionsCreateDialog({
                 name='remotePassword'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Password Kredensial</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -259,12 +308,106 @@ export function SubscriptionsCreateDialog({
               />
             </div>
 
+            {/* PPPoE Specific Fields */}
+            {serviceType !== 'HOTSPOT' && (
+              <div className='rounded-lg border bg-muted/30 p-3 space-y-3'>
+                <p className='text-xs font-semibold text-foreground'>
+                  Konfigurasi Jaringan PPPoE (Opsional)
+                </p>
+                <div className='grid grid-cols-2 gap-3'>
+                  <FormField
+                    control={form.control}
+                    name='localAddress'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className='text-xs'>Gateway (Local IP)</FormLabel>
+                        <FormControl>
+                          <Input placeholder='10.0.0.1' {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name='remoteAddress'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className='text-xs'>Static IP (Remote IP)</FormLabel>
+                        <FormControl>
+                          <Input placeholder='10.0.0.50' {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  control={form.control}
+                  name='callerId'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='text-xs'>Caller ID / MAC Binding</FormLabel>
+                      <FormControl>
+                        <Input placeholder='00:11:22:33:44:55' {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            )}
+
+            {/* Hotspot Specific Fields */}
+            {serviceType === 'HOTSPOT' && (
+              <div className='rounded-lg border bg-muted/30 p-3 space-y-3'>
+                <p className='text-xs font-semibold text-foreground'>
+                  Konfigurasi Hotspot Member (Opsional)
+                </p>
+                <div className='grid grid-cols-2 gap-3'>
+                  <FormField
+                    control={form.control}
+                    name='server'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className='text-xs'>Server Hotspot</FormLabel>
+                        <FormControl>
+                          <Input placeholder='all' {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name='ipAddress'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className='text-xs'>Static IP</FormLabel>
+                        <FormControl>
+                          <Input placeholder='192.168.88.50' {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  control={form.control}
+                  name='macAddress'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='text-xs'>MAC Address Lock</FormLabel>
+                      <FormControl>
+                        <Input placeholder='AA:BB:CC:DD:EE:FF' {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            )}
+
             <FormField
               control={form.control}
               name='customPrice'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Harga Custom</FormLabel>
+                  <FormLabel>Harga Khusus / Diskon (0 = Ikut Paket)</FormLabel>
                   <FormControl>
                     <Input {...field} type='number' step='any' min={0} />
                   </FormControl>

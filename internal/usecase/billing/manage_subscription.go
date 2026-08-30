@@ -15,8 +15,7 @@ import (
 )
 
 // CreateInput adalah payload pembuatan langganan baru. Kredensial boleh
-// kosong — akan di-generate otomatis (pola convert.go: "pg"+digits /
-// digits+"pg").
+// kosong — akan di-generate otomatis berbasis inisial/nama pelanggan.
 type CreateInput struct {
 	CustomerID     string
 	PlanID         string
@@ -24,6 +23,9 @@ type CreateInput struct {
 	ServiceType    string
 	RemoteUsername string
 	RemotePassword string
+	LocalAddress   string
+	RemoteAddress  string
+	RateLimit      string
 	CustomPrice    *float64
 	BillingCycle   string
 	BillingDay     int
@@ -35,12 +37,18 @@ type CreateInput struct {
 type UpdateInput struct {
 	RemoteUsername *string
 	RemotePassword *string // kosong = tidak diubah
+	LocalAddress   *string
+	RemoteAddress  *string
+	RateLimit      *string
 	CustomPrice    *float64
 	BillingCycle   *string
 	BillingDay     *int
 	DeviceID       *string
 	Notes          *string
 }
+
+func isHotspot(s string) bool   { return strings.EqualFold(s, "HOTSPOT") }
+func isDedicated(s string) bool { return strings.EqualFold(s, "DEDICATED") }
 
 // ManageSubscriptionUseCase mengelola CRUD langganan (Create/Update/Delete)
 // di atas proto billing v1. Create memvalidasi customer & plan, generate
@@ -80,7 +88,8 @@ func (u *ManageSubscriptionUseCase) Create(ctx context.Context, in CreateInput) 
 	if in.CustomerID == "" || in.PlanID == "" {
 		return domainSubscription.Subscription{}, fmt.Errorf("%w: customer_id and plan_id are required", domainBilling.ErrInvalidInput)
 	}
-	if _, err := u.customers.FindByID(ctx, in.CustomerID); err != nil {
+	cust, err := u.customers.FindByID(ctx, in.CustomerID)
+	if err != nil {
 		return domainSubscription.Subscription{}, fmt.Errorf("%w: customer %s not found", domainBilling.ErrInvalidInput, in.CustomerID)
 	}
 	pl, err := u.plans.FindByID(ctx, in.PlanID)
@@ -101,7 +110,7 @@ func (u *ManageSubscriptionUseCase) Create(ctx context.Context, in CreateInput) 
 
 	username, password := in.RemoteUsername, in.RemotePassword
 	if username == "" {
-		username = "pg" + idgen.Digits(6)
+		username = idgen.GenerateUsername(cust.Name, "{initials}{digits4}", "", cust.CustomerCode)
 	}
 	if password == "" {
 		password = idgen.Digits(6) + "pg"
@@ -117,6 +126,9 @@ func (u *ManageSubscriptionUseCase) Create(ctx context.Context, in CreateInput) 
 		ServiceType:     strings.ToUpper(serviceType),
 		RemoteUsername:  username,
 		RemotePassword:  password,
+		LocalAddress:    in.LocalAddress,
+		RemoteAddress:   in.RemoteAddress,
+		RateLimit:       in.RateLimit,
 		RouterProfile:   pl.Name,
 		ProvisionStatus: domainSubscription.ProvisionNone,
 		BillingCycle:    in.BillingCycle,
@@ -129,10 +141,19 @@ func (u *ManageSubscriptionUseCase) Create(ctx context.Context, in CreateInput) 
 		UpdatedAt:       now,
 	}
 
-	if sub.DeviceID != nil && *sub.DeviceID != "" {
-		acct := subscriberAccountFromPlan(sub, pl)
-		acct.Comment = "polyglot:" + sub.ID
-		if perr := u.manager.Provision(ctx, *sub.DeviceID, sub.ServiceType, acct); perr != nil {
+	if sub.DeviceID != nil && *sub.DeviceID != "" && u.manager != nil {
+		var perr error
+		if isHotspot(sub.ServiceType) {
+			hotSpec := BuildHotspotProvisionSpec(sub, pl)
+			perr = u.manager.ProvisionHotspot(ctx, *sub.DeviceID, hotSpec)
+		} else if isDedicated(sub.ServiceType) {
+			dedSpec := BuildDedicatedProvisionSpec(sub, pl)
+			perr = u.manager.ProvisionDedicated(ctx, *sub.DeviceID, dedSpec)
+		} else {
+			pppSpec := BuildPPPoEProvisionSpec(sub, pl)
+			perr = u.manager.ProvisionPPPoE(ctx, *sub.DeviceID, pppSpec)
+		}
+		if perr != nil {
 			// Gagal provisi bukan error: PENDING agar worker mencoba ulang.
 			logger.WithComponent("ManageSubscriptionUC").WithError(perr).WithFields(map[string]any{
 				"subscription_id": sub.ID,
@@ -176,6 +197,15 @@ func (u *ManageSubscriptionUseCase) Update(ctx context.Context, subID string, in
 	}
 	if in.DeviceID != nil {
 		sub.DeviceID = in.DeviceID
+	}
+	if in.LocalAddress != nil {
+		sub.LocalAddress = *in.LocalAddress
+	}
+	if in.RemoteAddress != nil {
+		sub.RemoteAddress = *in.RemoteAddress
+	}
+	if in.RateLimit != nil {
+		sub.RateLimit = *in.RateLimit
 	}
 	if in.Notes != nil {
 		sub.Notes = *in.Notes

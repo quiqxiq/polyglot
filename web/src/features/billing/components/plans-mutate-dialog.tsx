@@ -184,17 +184,42 @@ export function PlansMutateDialog() {
 
   const onSubmit = async (values: PlanFormValues) => {
     try {
+      const planPayload = new Plan({
+        ...values,
+        id: isUpdate && currentRow ? currentRow.id : '',
+        pppoeConfig:
+          values.serviceType !== 'HOTSPOT'
+            ? {
+                remoteAddressPool: values.remoteAddressPool || '',
+                addressList: values.addressList || '',
+              }
+            : undefined,
+        hotspotConfig:
+          values.serviceType === 'HOTSPOT'
+            ? {
+                ipPoolName: values.ipPoolName || '',
+                sharedUsers: values.sharedUsers || 1,
+                validity: values.validity || '',
+                validityMode: values.validityMode || '',
+                expireMode: values.expireMode || '',
+                lockUser: values.lockUser || false,
+                lockServer: values.lockServer || false,
+                sellingPrice: values.sellingPrice || 0,
+              }
+            : undefined,
+      })
+
       if (isUpdate && currentRow) {
         await updateMutation.mutateAsync(
           new UpdatePlanRequest({
-            plan: new Plan({ ...values, id: currentRow.id }),
+            plan: planPayload,
           })
         )
         toast.success('Paket diperbarui')
       } else {
         await createMutation.mutateAsync(
           new CreatePlanRequest({
-            plan: new Plan({ ...values }),
+            plan: planPayload,
           })
         )
         toast.success('Paket disimpan')

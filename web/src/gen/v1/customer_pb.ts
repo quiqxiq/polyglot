@@ -66,7 +66,7 @@ export class Customer extends Message<Customer> {
   portalAccessCode = "";
 
   /**
-   * ACTIVE | ISOLATED | SUSPENDED | TERMINATED
+   * ACTIVE | INACTIVE
    *
    * @generated from field: string status = 12;
    */
@@ -86,6 +86,16 @@ export class Customer extends Message<Customer> {
    * @generated from field: int64 created_at_unix = 15;
    */
   createdAtUnix = protoInt64.zero;
+
+  /**
+   * @generated from field: int32 active_subscriptions_count = 16;
+   */
+  activeSubscriptionsCount = 0;
+
+  /**
+   * @generated from field: int32 unpaid_invoices_count = 17;
+   */
+  unpaidInvoicesCount = 0;
 
   constructor(data?: PartialMessage<Customer>) {
     super();
@@ -110,6 +120,8 @@ export class Customer extends Message<Customer> {
     { no: 13, name: "notes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 14, name: "registered_at_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
     { no: 15, name: "created_at_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 16, name: "active_subscriptions_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 17, name: "unpaid_invoices_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Customer {

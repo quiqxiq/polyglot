@@ -15,7 +15,11 @@ import {
 import { billingClient } from '@/lib/api-client'
 import { billingKeys } from './keys'
 
-export function useInvoicesQuery(customerId = '', status = '') {
+export function useInvoicesQuery(
+  customerId = '',
+  status = '',
+  options?: { enabled?: boolean }
+) {
   return useQuery({
     queryKey: billingKeys.invoices.list(customerId, status),
     queryFn: async () => {
@@ -25,6 +29,7 @@ export function useInvoicesQuery(customerId = '', status = '') {
       })
       return res.invoices
     },
+    enabled: options?.enabled,
   })
 }
 
@@ -39,7 +44,10 @@ export function useInvoiceQuery(id: string) {
   })
 }
 
-export function useSubscriptionsQuery(customerId = '') {
+export function useSubscriptionsQuery(
+  customerId = '',
+  options?: { enabled?: boolean }
+) {
   return useQuery({
     queryKey: billingKeys.subscriptions.list(customerId),
     queryFn: async () => {
@@ -48,6 +56,7 @@ export function useSubscriptionsQuery(customerId = '') {
       })
       return res.subscriptions
     },
+    enabled: options?.enabled,
   })
 }
 

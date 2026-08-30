@@ -106,11 +106,10 @@ func TestPostgresMigrationsSmoke(t *testing.T) {
 	assertSeedCount(t, db, "cash_accounts", 1)
 	assertSeedCount(t, db, "notification_templates", 5)
 
-	// Migrasi 000018: seed settings ISP (kolom provisi diuji setelah fixture FK siap).
 	var ispKeys int
 	require.NoError(t, db.QueryRow(
 		`SELECT COUNT(*) FROM system_settings WHERE key LIKE 'isp.%'`).Scan(&ispKeys))
-	assert.Equal(t, 13, ispKeys, "seed key isp.+")
+	assert.Equal(t, 16, ispKeys, "seed key isp.+")
 
 	// Migrasi 000019: portal_otps + wa_notifications.attempts + seed gateway.
 	assertSeedCount(t, db, "portal_otps", 0)

@@ -2,6 +2,7 @@ package registration_test
 
 import (
 	"context"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -54,7 +55,7 @@ func TestConvert_DefaultGenerators(t *testing.T) {
 
 	srow, err := subs.FindByID(ctx, converted.SubscriptionID)
 	require.NoError(t, err)
-	assert.Equal(t, "BUDI-SANTOSO", srow.RemoteUsername)
+	assert.True(t, strings.HasPrefix(srow.RemoteUsername, "bs"))
 	assert.NotEmpty(t, srow.RemotePassword)
 }
 

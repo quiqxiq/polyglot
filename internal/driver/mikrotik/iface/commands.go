@@ -80,4 +80,3 @@ func NewDisableInterfaceCommand(rosID string) command.Command {
 		Args: map[string]string{".id": rosID},
 	}
 }
-

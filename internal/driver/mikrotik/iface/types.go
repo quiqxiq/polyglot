@@ -11,4 +11,3 @@ type Interface = port.Interface
 // InterfaceTrafficStats is the vendor-neutral interface traffic rate snapshot.
 // Canonical definition lives in internal/port.
 type InterfaceTrafficStats = port.InterfaceTrafficStats
-

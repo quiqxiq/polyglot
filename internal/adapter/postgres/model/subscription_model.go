@@ -8,11 +8,6 @@ import (
 
 // SubscriptionModel is the GORM model for customer plan subscriptions
 // mapped to a MikroTik router (DATABASE-SCHEMA-ISP.md §2.5).
-//
-// DEVIASI vs dokumen skema: kolom `remote_password` VARCHAR(100) plaintext
-// diganti `remote_password_cipher` — kredensial disimpan terenkripsi AES-GCM
-// via vault (prinsip arsitektur migrasi 000001). Enkripsi/dekripsi dilakukan
-// layer repository pada fase berikutnya; mapper di sini passthrough.
 type SubscriptionModel struct {
 	ID string `gorm:"primaryKey"`
 	// device_id UUID nullable → devices(id); tipe eksplisit agar cocok
@@ -61,7 +56,7 @@ func (m *SubscriptionModel) ToDomain() subscription.Subscription {
 	if m == nil {
 		return subscription.Subscription{}
 	}
-	return subscription.Subscription{
+	s := subscription.Subscription{
 		ID:                 m.ID,
 		TenantID:           m.TenantID,
 		CustomerID:         m.CustomerID,
@@ -91,10 +86,27 @@ func (m *SubscriptionModel) ToDomain() subscription.Subscription {
 		CreatedAt:          m.CreatedAt,
 		UpdatedAt:          m.UpdatedAt,
 	}
+
+	if m.ServiceType == "HOTSPOT" {
+		s.Hotspot = &subscription.HotspotSubscriptionConfig{
+			Server:        "all",
+			RateLimit:     m.RateLimit,
+			RouterProfile: m.RouterProfile,
+		}
+	} else {
+		s.PPPoE = &subscription.PPPoESubscriptionConfig{
+			LocalAddress:  m.LocalAddress,
+			RemoteAddress: m.RemoteAddress,
+			RateLimit:     m.RateLimit,
+			RouterProfile: m.RouterProfile,
+		}
+	}
+	return s
 }
 
+// SubscriptionModelFromDomain converts a subscription domain entity to a database model.
 func SubscriptionModelFromDomain(s subscription.Subscription) *SubscriptionModel {
-	return &SubscriptionModel{
+	m := &SubscriptionModel{
 		ID:                 s.ID,
 		TenantID:           s.TenantID,
 		CustomerID:         s.CustomerID,
@@ -124,4 +136,28 @@ func SubscriptionModelFromDomain(s subscription.Subscription) *SubscriptionModel
 		CreatedAt:          s.CreatedAt,
 		UpdatedAt:          s.UpdatedAt,
 	}
+
+	if s.PPPoE != nil {
+		if s.PPPoE.LocalAddress != "" {
+			m.LocalAddress = s.PPPoE.LocalAddress
+		}
+		if s.PPPoE.RemoteAddress != "" {
+			m.RemoteAddress = s.PPPoE.RemoteAddress
+		}
+		if s.PPPoE.RateLimit != "" {
+			m.RateLimit = s.PPPoE.RateLimit
+		}
+		if s.PPPoE.RouterProfile != "" {
+			m.RouterProfile = s.PPPoE.RouterProfile
+		}
+	}
+	if s.Hotspot != nil {
+		if s.Hotspot.RateLimit != "" {
+			m.RateLimit = s.Hotspot.RateLimit
+		}
+		if s.Hotspot.RouterProfile != "" {
+			m.RouterProfile = s.Hotspot.RouterProfile
+		}
+	}
+	return m
 }

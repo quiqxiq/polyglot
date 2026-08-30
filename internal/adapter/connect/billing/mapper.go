@@ -69,7 +69,7 @@ func toProtoSubscription(sub *domainSub.Subscription) *devicepb.Subscription {
 	if sub.CustomPrice != nil {
 		customPrice = *sub.CustomPrice
 	}
-	return &devicepb.Subscription{
+	pb := &devicepb.Subscription{
 		Id:              sub.ID,
 		TenantId:        sub.TenantID,
 		CustomerId:      sub.CustomerID,
@@ -77,8 +77,6 @@ func toProtoSubscription(sub *domainSub.Subscription) *devicepb.Subscription {
 		DeviceId:        devID,
 		ServiceType:     sub.ServiceType,
 		RemoteUsername:  sub.RemoteUsername,
-		RateLimit:       sub.RateLimit,
-		RouterProfile:   sub.RouterProfile,
 		ProvisionStatus: sub.ProvisionStatus,
 		BillingCycle:    sub.BillingCycle,
 		BillingDay:      int32(sub.BillingDay),
@@ -88,6 +86,55 @@ func toProtoSubscription(sub *domainSub.Subscription) *devicepb.Subscription {
 		CustomPrice:     customPrice,
 		Notes:           sub.Notes,
 	}
+
+	if sub.ServiceType == domainPlan.TypeHotspot {
+		cfg := &devicepb.HotspotSubscriptionConfig{
+			Server:        "all",
+			RateLimit:     sub.RateLimit,
+			RouterProfile: sub.RouterProfile,
+		}
+		if sub.Hotspot != nil {
+			if sub.Hotspot.Server != "" {
+				cfg.Server = sub.Hotspot.Server
+			}
+			cfg.MacAddress = sub.Hotspot.MacAddress
+			cfg.IpAddress = sub.Hotspot.IPAddress
+			cfg.LimitUptime = sub.Hotspot.LimitUptime
+			cfg.LimitBytes = sub.Hotspot.LimitBytes
+			if sub.Hotspot.RateLimit != "" {
+				cfg.RateLimit = sub.Hotspot.RateLimit
+			}
+			if sub.Hotspot.RouterProfile != "" {
+				cfg.RouterProfile = sub.Hotspot.RouterProfile
+			}
+		}
+		pb.HotspotConfig = cfg
+	} else {
+		cfg := &devicepb.PPPoESubscriptionConfig{
+			LocalAddress:  sub.LocalAddress,
+			RemoteAddress: sub.RemoteAddress,
+			RateLimit:     sub.RateLimit,
+			RouterProfile: sub.RouterProfile,
+		}
+		if sub.PPPoE != nil {
+			if sub.PPPoE.LocalAddress != "" {
+				cfg.LocalAddress = sub.PPPoE.LocalAddress
+			}
+			if sub.PPPoE.RemoteAddress != "" {
+				cfg.RemoteAddress = sub.PPPoE.RemoteAddress
+			}
+			cfg.CallerId = sub.PPPoE.CallerID
+			cfg.Routes = sub.PPPoE.Routes
+			if sub.PPPoE.RateLimit != "" {
+				cfg.RateLimit = sub.PPPoE.RateLimit
+			}
+			if sub.PPPoE.RouterProfile != "" {
+				cfg.RouterProfile = sub.PPPoE.RouterProfile
+			}
+		}
+		pb.PppoeConfig = cfg
+	}
+	return pb
 }
 
 func toProtoSubscriptionList(subs []domainSub.Subscription) []*devicepb.Subscription {
@@ -104,7 +151,7 @@ func toProtoPlan(p *domainPlan.ServicePlan) *devicepb.Plan {
 	if p == nil {
 		return nil
 	}
-	return &devicepb.Plan{
+	pb := &devicepb.Plan{
 		Id:                    p.ID,
 		Name:                  p.Name,
 		ServiceType:           p.ServiceType,
@@ -132,6 +179,61 @@ func toProtoPlan(p *domainPlan.ServicePlan) *devicepb.Plan {
 		IsActive:              p.IsActive,
 		Description:           p.Description,
 	}
+
+	if p.ServiceType == domainPlan.TypeHotspot {
+		cfg := &devicepb.HotspotPlanConfig{
+			IpPoolName:   p.IPPoolName,
+			SharedUsers:  int32(p.SharedUsers),
+			Validity:     p.Validity,
+			ValidityMode: p.ValidityMode,
+			ExpireMode:   p.ExpireMode,
+			LockUser:     p.LockUser,
+			LockServer:   p.LockServer,
+			LimitUptime:  p.LimitUptime,
+			LimitBytes:   p.LimitBytes,
+			SellingPrice: p.SellingPrice,
+		}
+		if p.Hotspot != nil {
+			if p.Hotspot.IPPoolName != "" {
+				cfg.IpPoolName = p.Hotspot.IPPoolName
+			}
+			if p.Hotspot.SharedUsers > 0 {
+				cfg.SharedUsers = int32(p.Hotspot.SharedUsers)
+			}
+			if p.Hotspot.Validity != "" {
+				cfg.Validity = p.Hotspot.Validity
+			}
+			if p.Hotspot.ValidityMode != "" {
+				cfg.ValidityMode = p.Hotspot.ValidityMode
+			}
+			if p.Hotspot.ExpireMode != "" {
+				cfg.ExpireMode = p.Hotspot.ExpireMode
+			}
+			cfg.LockUser = p.Hotspot.LockUser
+			cfg.LockServer = p.Hotspot.LockServer
+			cfg.LimitUptime = p.Hotspot.LimitUptime
+			cfg.LimitBytes = p.Hotspot.LimitBytes
+			if p.Hotspot.SellingPrice > 0 {
+				cfg.SellingPrice = p.Hotspot.SellingPrice
+			}
+		}
+		pb.HotspotConfig = cfg
+	} else {
+		cfg := &devicepb.PPPoEPlanConfig{
+			RemoteAddressPool: p.RemoteAddressPool,
+			AddressList:       p.AddressList,
+		}
+		if p.PPPoE != nil {
+			if p.PPPoE.RemoteAddressPool != "" {
+				cfg.RemoteAddressPool = p.PPPoE.RemoteAddressPool
+			}
+			if p.PPPoE.AddressList != "" {
+				cfg.AddressList = p.PPPoE.AddressList
+			}
+		}
+		pb.PppoeConfig = cfg
+	}
+	return pb
 }
 
 func toProtoPlanList(plans []domainPlan.ServicePlan) []*devicepb.Plan {
@@ -146,7 +248,7 @@ func fromProtoPlan(pb *devicepb.Plan) domainPlan.ServicePlan {
 	if pb == nil {
 		return domainPlan.ServicePlan{}
 	}
-	return domainPlan.ServicePlan{
+	p := domainPlan.ServicePlan{
 		ID:                    pb.Id,
 		Name:                  pb.Name,
 		ServiceType:           pb.ServiceType,
@@ -174,4 +276,58 @@ func fromProtoPlan(pb *devicepb.Plan) domainPlan.ServicePlan {
 		IsActive:              pb.IsActive,
 		Description:           pb.Description,
 	}
+
+	if pb.PppoeConfig != nil {
+		p.PPPoE = &domainPlan.PPPoEPlanConfig{
+			RemoteAddressPool: pb.PppoeConfig.RemoteAddressPool,
+			AddressList:       pb.PppoeConfig.AddressList,
+		}
+		if pb.PppoeConfig.RemoteAddressPool != "" {
+			p.RemoteAddressPool = pb.PppoeConfig.RemoteAddressPool
+		}
+		if pb.PppoeConfig.AddressList != "" {
+			p.AddressList = pb.PppoeConfig.AddressList
+		}
+	}
+	if pb.HotspotConfig != nil {
+		p.Hotspot = &domainPlan.HotspotPlanConfig{
+			IPPoolName:   pb.HotspotConfig.IpPoolName,
+			SharedUsers:  int(pb.HotspotConfig.SharedUsers),
+			Validity:     pb.HotspotConfig.Validity,
+			ValidityMode: pb.HotspotConfig.ValidityMode,
+			ExpireMode:   pb.HotspotConfig.ExpireMode,
+			LockUser:     pb.HotspotConfig.LockUser,
+			LockServer:   pb.HotspotConfig.LockServer,
+			LimitUptime:  pb.HotspotConfig.LimitUptime,
+			LimitBytes:   pb.HotspotConfig.LimitBytes,
+			SellingPrice: pb.HotspotConfig.SellingPrice,
+		}
+		if pb.HotspotConfig.IpPoolName != "" {
+			p.IPPoolName = pb.HotspotConfig.IpPoolName
+		}
+		if pb.HotspotConfig.SharedUsers > 0 {
+			p.SharedUsers = int(pb.HotspotConfig.SharedUsers)
+		}
+		if pb.HotspotConfig.Validity != "" {
+			p.Validity = pb.HotspotConfig.Validity
+		}
+		if pb.HotspotConfig.ValidityMode != "" {
+			p.ValidityMode = pb.HotspotConfig.ValidityMode
+		}
+		if pb.HotspotConfig.ExpireMode != "" {
+			p.ExpireMode = pb.HotspotConfig.ExpireMode
+		}
+		p.LockUser = pb.HotspotConfig.LockUser
+		p.LockServer = pb.HotspotConfig.LockServer
+		if pb.HotspotConfig.LimitUptime != "" {
+			p.LimitUptime = pb.HotspotConfig.LimitUptime
+		}
+		if pb.HotspotConfig.LimitBytes != "" {
+			p.LimitBytes = pb.HotspotConfig.LimitBytes
+		}
+		if pb.HotspotConfig.SellingPrice > 0 {
+			p.SellingPrice = pb.HotspotConfig.SellingPrice
+		}
+	}
+	return p
 }

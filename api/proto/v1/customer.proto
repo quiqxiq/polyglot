@@ -19,10 +19,12 @@ message Customer {
   double longitude = 9;
   bool has_coordinates = 10;
   string portal_access_code = 11;
-  string status = 12; // ACTIVE | ISOLATED | SUSPENDED | TERMINATED
+  string status = 12; // ACTIVE | INACTIVE
   string notes = 13;
   int64 registered_at_unix = 14;
   int64 created_at_unix = 15;
+  int32 active_subscriptions_count = 16;
+  int32 unpaid_invoices_count = 17;
 }
 
 message ListCustomersRequest {}

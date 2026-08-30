@@ -64,10 +64,9 @@ func TestCreateSubscription_AutoGeneratesCredentials(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.NotEmpty(t, sub.ID)
-	assert.True(t, strings.HasPrefix(sub.RemoteUsername, "pg"), "username = pgXXXXXX, got %s", sub.RemoteUsername)
-	assert.Len(t, sub.RemoteUsername, 8)
+	assert.True(t, strings.HasPrefix(sub.RemoteUsername, "pc"), "username starts with initials 'pc', got %s", sub.RemoteUsername)
+	assert.NotEmpty(t, sub.RemotePassword)
 	assert.True(t, strings.HasSuffix(sub.RemotePassword, "pg"), "password = XXXXXXpg, got %q", sub.RemotePassword)
-	assert.Len(t, sub.RemotePassword, 8)
 	assert.NotEqual(t, sub.RemoteUsername, sub.RemotePassword)
 	assert.Nil(t, sub.DeviceID)
 	assert.Equal(t, domainSubscription.ProvisionNone, sub.ProvisionStatus)
@@ -92,7 +91,7 @@ func TestCreateSubscription_WithDeviceProvisionsRouterFirst(t *testing.T) {
 	assert.Equal(t, domainSubscription.ProvisionOK, sub.ProvisionStatus)
 	assert.Equal(t, domainSubscription.StatusActive, sub.Status)
 	assert.Equal(t, "PLAN-A", sub.RouterProfile)
-	assert.Equal(t, 1, fx.manager.Count("Provision:"+sub.RemoteUsername+"@PLAN-A"))
+	assert.Equal(t, 1, fx.manager.Count("ProvisionPPPoE:"+sub.RemoteUsername+"@PLAN-A"))
 	assert.Equal(t, 1, fx.audit.Count("CREATE_SUBSCRIPTION"))
 }
 
@@ -103,7 +102,7 @@ func TestCreateSubscription_ProvisionFail_PendingNotError(t *testing.T) {
 
 	in := baseCreateInput()
 	in.DeviceID = &device
-	fx.manager.Fail = map[string]error{"Provision:": assert_AnError()}
+	fx.manager.Fail = map[string]error{"ProvisionPPPoE:": assert_AnError()}
 
 	sub, err := fx.usecase.Create(ctx, in)
 	require.NoError(t, err, "gagal provisi tidak boleh menggagalkan create")

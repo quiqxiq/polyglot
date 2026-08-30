@@ -150,6 +150,20 @@ export class Registration extends Message<Registration> {
    */
   createdAtUnix = protoInt64.zero;
 
+  /**
+   * Router yang dipilih teknisi saat pasang
+   *
+   * @generated from field: string target_device_id = 27;
+   */
+  targetDeviceId = "";
+
+  /**
+   * Nama router BRAS
+   *
+   * @generated from field: string target_device_name = 28;
+   */
+  targetDeviceName = "";
+
   constructor(data?: PartialMessage<Registration>) {
     super();
     proto3.util.initPartial(data, this);
@@ -184,6 +198,8 @@ export class Registration extends Message<Registration> {
     { no: 24, name: "rejected_reason", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 25, name: "cancel_reason", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 26, name: "created_at_unix", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+    { no: 27, name: "target_device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 28, name: "target_device_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Registration {
@@ -673,6 +689,13 @@ export class MarkInstalledRequest extends Message<MarkInstalledRequest> {
    */
   technicianNotes = "";
 
+  /**
+   * Router BRAS yang dipilih teknisi saat selesai pasang fisik
+   *
+   * @generated from field: string device_id = 3;
+   */
+  deviceId = "";
+
   constructor(data?: PartialMessage<MarkInstalledRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -683,6 +706,7 @@ export class MarkInstalledRequest extends Message<MarkInstalledRequest> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "technician_notes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): MarkInstalledRequest {
@@ -901,7 +925,7 @@ export class CancelRegistrationResponse extends Message<CancelRegistrationRespon
 
 /**
  * Konversi INSTALLED → ACTIVE: buat customer+subscription+invoice.
- * device_id opsional — bila diisi, akun langsung diprovisikan ke router.
+ * device_id wajib saat aktivasi oleh teknisi agar akun diprovisikan ke router.
  *
  * @generated from message polyglot.v1.ConvertRegistrationRequest
  */
@@ -916,6 +940,11 @@ export class ConvertRegistrationRequest extends Message<ConvertRegistrationReque
    */
   deviceId = "";
 
+  /**
+   * @generated from field: string technician_notes = 3;
+   */
+  technicianNotes = "";
+
   constructor(data?: PartialMessage<ConvertRegistrationRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -926,6 +955,7 @@ export class ConvertRegistrationRequest extends Message<ConvertRegistrationReque
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "technician_notes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ConvertRegistrationRequest {

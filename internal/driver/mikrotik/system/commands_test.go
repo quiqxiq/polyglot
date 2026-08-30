@@ -25,4 +25,3 @@ func TestSystemCommands(t *testing.T) {
 		t.Fatalf("unexpected ping command: %+v", cmdPing)
 	}
 }
-

@@ -70,10 +70,7 @@ func (u *ConvertUseCase) createCustomer(ctx context.Context, reg domainRegistrat
 }
 
 func (u *ConvertUseCase) createSubscription(ctx context.Context, reg domainRegistration.Registration, pl domainPlan.ServicePlan, customerID, deviceID string, now time.Time) (domainSubscription.Subscription, error) {
-	username := idgen.Slug(reg.FullName)
-	if username == "" {
-		username = "USER"
-	}
+	username := idgen.GenerateUsername(reg.FullName, "{initials}{digits4}", "", "")
 	endDate := now.AddDate(0, 0, 30)
 	billingDay := now.Day()
 	if billingDay > 28 {
@@ -111,15 +108,52 @@ func (u *ConvertUseCase) createSubscription(ctx context.Context, reg domainRegis
 
 	// Provisioning langsung bila manager tersedia & device ditugaskan.
 	if deviceID != "" && u.deps.Manager != nil {
-		err := u.deps.Manager.Provision(ctx, deviceID, sub.ServiceType, port.SubscriberAccount{
-			Username:  sub.RemoteUsername,
-			Password:  sub.RemotePassword,
-			Profile:   pl.Name,
-			RateLimit: planRate(pl),
-			Comment:   "polyglot:" + sub.ID,
-		})
-		if err != nil {
-			logger.WithComponent("ConvertUC").WithError(err).Warn("provisioning gagal; worker akan mencoba ulang")
+		var provErr error
+		if sub.ServiceType == "HOTSPOT" {
+			hotSpec := domainSubscription.HotspotProvisionSpec{
+				User: domainSubscription.HotspotUserSpec{
+					Username: sub.RemoteUsername,
+					Password: sub.RemotePassword,
+					Profile:  pl.Name,
+					Server:   "all",
+					Comment:  "polyglot:" + sub.ID,
+				},
+				Profile: domainSubscription.HotspotProfileSpec{
+					Name:        pl.Name,
+					RateLimit:   planRate(pl),
+					AddressPool: pl.IPPoolName,
+					SharedUsers: pl.SharedUsers,
+					ParentQueue: pl.ParentQueue,
+					Validity:    pl.Validity,
+					ExpireMode:  pl.ExpireMode,
+					LockUser:    pl.LockUser,
+					LockServer:  pl.LockServer,
+					Comment:     "AUTO plan profile",
+				},
+			}
+			provErr = u.deps.Manager.ProvisionHotspot(ctx, deviceID, hotSpec)
+		} else {
+			pppSpec := domainSubscription.PPPoEProvisionSpec{
+				Secret: domainSubscription.PPPoESecretSpec{
+					Username: sub.RemoteUsername,
+					Password: sub.RemotePassword,
+					Profile:  pl.Name,
+					Service:  "pppoe",
+					Comment:  "polyglot:" + sub.ID,
+				},
+				Profile: domainSubscription.PPPoEProfileSpec{
+					Name:              pl.Name,
+					RateLimit:         planRate(pl),
+					RemoteAddressPool: pl.RemoteAddressPool,
+					ParentQueue:       pl.ParentQueue,
+					AddressList:       pl.AddressList,
+					Comment:           "AUTO plan profile",
+				},
+			}
+			provErr = u.deps.Manager.ProvisionPPPoE(ctx, deviceID, pppSpec)
+		}
+		if provErr != nil {
+			logger.WithComponent("ConvertUC").WithError(provErr).Warn("provisioning gagal; worker akan mencoba ulang")
 		} else {
 			sub.ProvisionStatus = domainSubscription.ProvisionOK
 			sub.RouterProfile = pl.Name

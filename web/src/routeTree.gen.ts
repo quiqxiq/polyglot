@@ -28,6 +28,7 @@ import { Route as AuthenticatedSubscriptionsIndexRouteImport } from './routes/_a
 import { Route as AuthenticatedSkillsIndexRouteImport } from './routes/_authenticated/skills/index'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
 import { Route as AuthenticatedReportsIndexRouteImport } from './routes/_authenticated/reports/index'
+import { Route as AuthenticatedRegistrationsIndexRouteImport } from './routes/_authenticated/registrations/index'
 import { Route as AuthenticatedRbacIndexRouteImport } from './routes/_authenticated/rbac/index'
 import { Route as AuthenticatedPppIndexRouteImport } from './routes/_authenticated/ppp/index'
 import { Route as AuthenticatedPlansIndexRouteImport } from './routes/_authenticated/plans/index'
@@ -143,6 +144,12 @@ const AuthenticatedReportsIndexRoute =
   AuthenticatedReportsIndexRouteImport.update({
     id: '/reports/',
     path: '/reports/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRegistrationsIndexRoute =
+  AuthenticatedRegistrationsIndexRouteImport.update({
+    id: '/registrations/',
+    path: '/registrations/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedRbacIndexRoute = AuthenticatedRbacIndexRouteImport.update({
@@ -265,6 +272,7 @@ export interface FileRoutesByFullPath {
   '/plans/': typeof AuthenticatedPlansIndexRoute
   '/ppp/': typeof AuthenticatedPppIndexRoute
   '/rbac/': typeof AuthenticatedRbacIndexRoute
+  '/registrations/': typeof AuthenticatedRegistrationsIndexRoute
   '/reports/': typeof AuthenticatedReportsIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
   '/skills/': typeof AuthenticatedSkillsIndexRoute
@@ -300,6 +308,7 @@ export interface FileRoutesByTo {
   '/plans': typeof AuthenticatedPlansIndexRoute
   '/ppp': typeof AuthenticatedPppIndexRoute
   '/rbac': typeof AuthenticatedRbacIndexRoute
+  '/registrations': typeof AuthenticatedRegistrationsIndexRoute
   '/reports': typeof AuthenticatedReportsIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
   '/skills': typeof AuthenticatedSkillsIndexRoute
@@ -338,6 +347,7 @@ export interface FileRoutesById {
   '/_authenticated/plans/': typeof AuthenticatedPlansIndexRoute
   '/_authenticated/ppp/': typeof AuthenticatedPppIndexRoute
   '/_authenticated/rbac/': typeof AuthenticatedRbacIndexRoute
+  '/_authenticated/registrations/': typeof AuthenticatedRegistrationsIndexRoute
   '/_authenticated/reports/': typeof AuthenticatedReportsIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
   '/_authenticated/skills/': typeof AuthenticatedSkillsIndexRoute
@@ -376,6 +386,7 @@ export interface FileRouteTypes {
     | '/plans/'
     | '/ppp/'
     | '/rbac/'
+    | '/registrations/'
     | '/reports/'
     | '/settings/'
     | '/skills/'
@@ -411,6 +422,7 @@ export interface FileRouteTypes {
     | '/plans'
     | '/ppp'
     | '/rbac'
+    | '/registrations'
     | '/reports'
     | '/settings'
     | '/skills'
@@ -448,6 +460,7 @@ export interface FileRouteTypes {
     | '/_authenticated/plans/'
     | '/_authenticated/ppp/'
     | '/_authenticated/rbac/'
+    | '/_authenticated/registrations/'
     | '/_authenticated/reports/'
     | '/_authenticated/settings/'
     | '/_authenticated/skills/'
@@ -605,6 +618,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReportsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/registrations/': {
+      id: '/_authenticated/registrations/'
+      path: '/registrations'
+      fullPath: '/registrations/'
+      preLoaderRoute: typeof AuthenticatedRegistrationsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/rbac/': {
       id: '/_authenticated/rbac/'
       path: '/rbac'
@@ -759,6 +779,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPlansIndexRoute: typeof AuthenticatedPlansIndexRoute
   AuthenticatedPppIndexRoute: typeof AuthenticatedPppIndexRoute
   AuthenticatedRbacIndexRoute: typeof AuthenticatedRbacIndexRoute
+  AuthenticatedRegistrationsIndexRoute: typeof AuthenticatedRegistrationsIndexRoute
   AuthenticatedReportsIndexRoute: typeof AuthenticatedReportsIndexRoute
   AuthenticatedSkillsIndexRoute: typeof AuthenticatedSkillsIndexRoute
   AuthenticatedSubscriptionsIndexRoute: typeof AuthenticatedSubscriptionsIndexRoute
@@ -780,6 +801,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPlansIndexRoute: AuthenticatedPlansIndexRoute,
   AuthenticatedPppIndexRoute: AuthenticatedPppIndexRoute,
   AuthenticatedRbacIndexRoute: AuthenticatedRbacIndexRoute,
+  AuthenticatedRegistrationsIndexRoute: AuthenticatedRegistrationsIndexRoute,
   AuthenticatedReportsIndexRoute: AuthenticatedReportsIndexRoute,
   AuthenticatedSkillsIndexRoute: AuthenticatedSkillsIndexRoute,
   AuthenticatedSubscriptionsIndexRoute: AuthenticatedSubscriptionsIndexRoute,

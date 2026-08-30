@@ -6,6 +6,7 @@ import (
 	"strings"
 	"sync"
 
+	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -33,6 +34,21 @@ func (f *FakeRouterAccountManager) record(op string) error {
 
 func (f *FakeRouterAccountManager) Provision(_ context.Context, _, _ string, a port.SubscriberAccount) error {
 	return f.record("Provision:" + a.Username + "@" + a.Profile)
+}
+
+// ProvisionPPPoE records a mock PPPoE provisioning call.
+func (f *FakeRouterAccountManager) ProvisionPPPoE(_ context.Context, _ string, spec domainSub.PPPoEProvisionSpec) error {
+	return f.record("ProvisionPPPoE:" + spec.Secret.Username + "@" + spec.Secret.Profile)
+}
+
+// ProvisionHotspot records a mock Hotspot provisioning call.
+func (f *FakeRouterAccountManager) ProvisionHotspot(_ context.Context, _ string, spec domainSub.HotspotProvisionSpec) error {
+	return f.record("ProvisionHotspot:" + spec.User.Username + "@" + spec.User.Profile)
+}
+
+// ProvisionDedicated records a mock Dedicated provisioning call.
+func (f *FakeRouterAccountManager) ProvisionDedicated(_ context.Context, _ string, spec domainSub.DedicatedProvisionSpec) error {
+	return f.record("ProvisionDedicated:" + spec.PPPoE.Secret.Username + "@" + spec.PPPoE.Secret.Profile)
 }
 
 func (f *FakeRouterAccountManager) UpdateAccount(_ context.Context, _, _, username, newProfile string) error {

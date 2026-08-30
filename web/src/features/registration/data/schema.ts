@@ -1,59 +1,54 @@
 import { z } from 'zod'
 
 export const submitRegistrationSchema = z.object({
-  fullName: z.string().min(1, 'Nama lengkap wajib diisi'),
-  phone: z.string().min(8, 'Nomor WhatsApp minimal 8 digit'),
+  fullName: z.string().min(2, 'Nama lengkap minimal 2 karakter'),
+  phone: z.string().min(8, 'Nomor WhatsApp / telepon wajib diisi'),
   email: z.string().email('Format email tidak valid').or(z.literal('')),
-  address: z.string().min(1, 'Alamat pemasangan wajib diisi'),
-  latitude: z.number().default(0),
-  longitude: z.number().default(0),
-  hasCoordinates: z.boolean().default(false),
-  notes: z.string().default(''),
-  planId: z.string().min(1, 'Pilih paket internet yang diinginkan'),
+  address: z.string().min(3, 'Alamat pemasangan wajib diisi'),
+  planId: z.string().min(1, 'Paket layanan wajib dipilih'),
+  latitude: z.coerce.number().optional(),
+  longitude: z.coerce.number().optional(),
+  notes: z.string().optional(),
 })
 
-export type SubmitRegistrationFormValues = z.infer<typeof submitRegistrationSchema>
-
-export const approveRegistrationSchema = z.object({
-  id: z.string().min(1, 'ID registrasi wajib ada'),
-  adminNotes: z.string().default(''),
-})
-
-export type ApproveRegistrationFormValues = z.infer<typeof approveRegistrationSchema>
+export type SubmitRegistrationValues = z.infer<typeof submitRegistrationSchema>
 
 export const scheduleInstallSchema = z.object({
-  id: z.string().min(1, 'ID registrasi wajib ada'),
-  installDateUnix: z.number().positive('Pilih tanggal pemasangan'),
-  installTimeHhmm: z.string().default('09:00'),
-  technicianId: z.string().default(''),
+  id: z.string().min(1),
+  installDate: z.string().min(1, 'Tanggal pasang wajib diisi'),
+  installTimeHhmm: z.string().optional(),
+  technicianId: z.string().optional(),
+  adminNotes: z.string().optional(),
 })
 
-export type ScheduleInstallFormValues = z.infer<typeof scheduleInstallSchema>
+export type ScheduleInstallValues = z.infer<typeof scheduleInstallSchema>
 
 export const markInstalledSchema = z.object({
-  id: z.string().min(1, 'ID registrasi wajib ada'),
-  technicianNotes: z.string().min(1, 'Catatan teknisi / redaman ODP wajib diisi'),
+  id: z.string().min(1),
+  deviceId: z.string().min(1, 'Router BRAS target wajib dipilih saat pemasangan'),
+  technicianNotes: z.string().min(1, 'Catatan teknisi (redaman ODP, port, nomor tiang) wajib diisi'),
 })
 
-export type MarkInstalledFormValues = z.infer<typeof markInstalledSchema>
+export type MarkInstalledValues = z.infer<typeof markInstalledSchema>
 
 export const convertRegistrationSchema = z.object({
-  id: z.string().min(1, 'ID registrasi wajib ada'),
-  deviceId: z.string().default(''),
+  id: z.string().min(1),
+  deviceId: z.string().min(1, 'Router BRAS target wajib dipilih untuk aktivasi'),
+  technicianNotes: z.string().optional(),
 })
 
-export type ConvertRegistrationFormValues = z.infer<typeof convertRegistrationSchema>
+export type ConvertRegistrationValues = z.infer<typeof convertRegistrationSchema>
 
 export const rejectRegistrationSchema = z.object({
-  id: z.string().min(1, 'ID registrasi wajib ada'),
-  reason: z.string().min(1, 'Alasan penolakan wajib diisi'),
+  id: z.string().min(1),
+  reason: z.string().min(3, 'Alasan penolakan minimal 3 karakter'),
 })
 
-export type RejectRegistrationFormValues = z.infer<typeof rejectRegistrationSchema>
+export type RejectRegistrationValues = z.infer<typeof rejectRegistrationSchema>
 
 export const cancelRegistrationSchema = z.object({
-  id: z.string().min(1, 'ID registrasi wajib ada'),
-  reason: z.string().min(1, 'Alasan pembatalan wajib diisi'),
+  id: z.string().min(1),
+  reason: z.string().min(3, 'Alasan pembatalan minimal 3 karakter'),
 })
 
-export type CancelRegistrationFormValues = z.infer<typeof cancelRegistrationSchema>
+export type CancelRegistrationValues = z.infer<typeof cancelRegistrationSchema>

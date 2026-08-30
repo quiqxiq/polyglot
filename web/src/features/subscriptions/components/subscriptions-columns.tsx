@@ -49,20 +49,26 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title='Pelanggan' />
         ),
-        cell: ({ row }) => (
-          <span className='font-semibold'>
-            {customerNameById.get(row.original.customerId) || '-'}
-          </span>
-        ),
+        cell: ({ row }) => {
+          const name = row.original.customerName || customerNameById.get(row.original.customerId) || '-'
+          const phone = row.original.customerPhone || ''
+          return (
+            <div>
+              <div className='font-semibold'>{name}</div>
+              {phone ? <div className='font-mono text-[11px] text-muted-foreground'>{phone}</div> : null}
+            </div>
+          )
+        },
       },
       {
         accessorKey: 'planId',
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title='Paket' />
         ),
-        cell: ({ row }) => (
-          <span>{planNameById.get(row.original.planId) || '-'}</span>
-        ),
+        cell: ({ row }) => {
+          const planName = row.original.planName || planNameById.get(row.original.planId) || '-'
+          return <span>{planName}</span>
+        },
       },
       {
         accessorKey: 'serviceType',
@@ -81,10 +87,10 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
       {
         accessorKey: 'remoteUsername',
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title='Username' />
+          <DataTableColumnHeader column={column} title='Username Kredensial' />
         ),
         cell: ({ row }) => (
-          <span className='font-mono text-xs'>
+          <span className='font-mono text-xs font-semibold'>
             {row.original.remoteUsername || '-'}
           </span>
         ),
@@ -92,11 +98,11 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
       {
         accessorKey: 'rateLimit',
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title='Rate Limit' />
+          <DataTableColumnHeader column={column} title='Rate Limit / Profile' />
         ),
         cell: ({ row }) => (
           <span className='font-mono text-xs'>
-            {row.original.rateLimit || '-'}
+            {row.original.rateLimit || row.original.routerProfile || '-'}
           </span>
         ),
         meta: { className: 'hidden lg:table-cell' },
@@ -104,13 +110,16 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
       {
         accessorKey: 'deviceId',
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title='Device' />
+          <DataTableColumnHeader column={column} title='Router BRAS' />
         ),
-        cell: ({ row }) => (
-          <span className='font-mono text-xs'>
-            {row.original.deviceId || '-'}
-          </span>
-        ),
+        cell: ({ row }) => {
+          const deviceLabel = row.original.deviceName || row.original.deviceId || '-'
+          return (
+            <span className='text-xs font-medium'>
+              {deviceLabel}
+            </span>
+          )
+        },
         meta: { className: 'hidden md:table-cell' },
       },
       {
@@ -120,7 +129,7 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
         ),
         cell: ({ row }) => {
           const meta =
-            PROVISION_STATUS_META[row.original.provisionStatus] ||
+            PROVISION_STATUS_META[row.original.provisionStatus as keyof typeof PROVISION_STATUS_META] ||
             PROVISION_STATUS_META.NONE
           return (
             <Badge variant='outline' className={`text-xs ${meta.className}`}>
@@ -132,7 +141,7 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
       {
         accessorKey: 'status',
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title='Status' />
+          <DataTableColumnHeader column={column} title='Status Jaringan' />
         ),
         cell: ({ row }) => {
           const badge = subscriptionStatusBadge(row.original.status)
