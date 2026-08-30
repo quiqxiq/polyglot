@@ -11,6 +11,6 @@ func DefaultHandlerOptions() []connect.HandlerOption {
 	validateInterceptor := validate.NewInterceptor()
 	return []connect.HandlerOption{
 		connect.WithCodec(JSONCodec()),
-		connect.WithInterceptors(validateInterceptor),
+		connect.WithInterceptors(validateInterceptor, requestIDInterceptor{}),
 	}
 }

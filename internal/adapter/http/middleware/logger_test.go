@@ -35,3 +35,35 @@ func TestRequestLoggerPreservesStreamingInterfaces(t *testing.T) {
 		t.Error("RequestLogger wrapper no longer exposes Unwrap() — websocket hijack will fail")
 	}
 }
+
+func TestRequestIDPreservesIncomingID(t *testing.T) {
+	rec := httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodGet, "/health", nil)
+	req.Header.Set(requestIDHeader, "client-request-42")
+
+	Chain(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if got := RequestIDFromContext(r.Context()); got != "client-request-42" {
+			t.Fatalf("request ID = %q, want client-request-42", got)
+		}
+	}), RequestID()).ServeHTTP(rec, req)
+
+	if got := rec.Header().Get(requestIDHeader); got != "client-request-42" {
+		t.Fatalf("response request ID = %q, want client-request-42", got)
+	}
+}
+
+func TestRequestIDGeneratesMissingID(t *testing.T) {
+	rec := httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodGet, "/health", nil)
+
+	RequestID()(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if RequestIDFromContext(r.Context()) == "" {
+			t.Fatal("request ID is empty")
+		}
+		w.WriteHeader(http.StatusNoContent)
+	})).ServeHTTP(rec, req)
+
+	if rec.Header().Get(requestIDHeader) == "" {
+		t.Fatal("response request ID is empty")
+	}
+}

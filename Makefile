@@ -1,4 +1,4 @@
-.PHONY: build vet test test-integration test-mikrotik-e2e check-connect-errors check-layer-boundaries proto-check lint check fmt run setup seed \
+.PHONY: build vet test test-integration test-mikrotik-e2e security check-connect-errors check-layer-boundaries proto-check lint check fmt run setup seed \
         proto proto-tools proto-clean \
         dev-up dev-down dev-logs dev-setup \
         prod-build prod-up prod-down prod-logs prod-setup \
@@ -48,6 +48,9 @@ verify-mod:
 
 test-integration:
 	go test -tags=integration ./test/integration/... -v
+
+security:
+	go run golang.org/x/vuln/cmd/govulncheck@latest ./...
 
 test-mikrotik-e2e:
 	go test -tags=mikrotik_e2e ./internal/app -run TestRouterAccountManager_E2E -v

@@ -31,7 +31,7 @@ Status berikut diverifikasi terhadap HEAD `77273db` dan hasil command terbaru.
 | Fase | Status | Ringkasan |
 |---|---|---|
 | F0 | **DONE** | Toolchain CI sudah Go 1.26, baseline test/build/vet lulus, E2E router diberi tag eksplisit, `make check` tersedia. |
-| F1 | **PARTIAL** | Logrus `pkg/logger`, structured logging, redaction hook, dan test sudah ada; request correlation dan seluruh log repository belum selesai. |
+| F1 | **PARTIAL** | Logrus `pkg/logger`, structured logging, redaction hook, test, dan request ID middleware sudah ada; audit seluruh log repository belum selesai. |
 | F2 | **PARTIAL** | `pkg/fault`, Connect mapper, HTTP mapper, dan sentinel utama sudah ada; seluruh error domain belum dimigrasikan secara konsisten. |
 | F3 | **PARTIAL** | Protovalidate aktif pada router, inventory request tersedia, test unary/stream tersedia; inventory belum seluruhnya covered dan validasi manual masih tersisa. |
 | F4 | **PARTIAL** | Mapper dan HTTP error envelope sudah distandardisasi pada beberapa area; seluruh endpoint belum memiliki contract test dan pagination contract. |
@@ -40,7 +40,7 @@ Status berikut diverifikasi terhadap HEAD `77273db` dan hasil command terbaru.
 | F7 | **PARTIAL** | Model domain mulai dipindahkan dan interface audit diperjelas; seluruh port/model belum selesai dibersihkan. |
 | F8 | **PARTIAL** | Modularisasi Mikrotik dan `rosutil` sudah ada; duplicate audit dan facade verification belum lengkap. |
 | F9 | **PARTIAL** | 651 test race lulus, contract validation/HTTP/redaction/worker tests bertambah; coverage streaming/driver dan beberapa high-risk flow masih rendah. |
-| F10 | **PARTIAL** | CI lint, `make check`, `wrapcheck`, boundary check, `buf lint`, generated diff check, dan `go mod verify` sudah ada; documentation source of truth dan lint legacy cleanup masih berjalan. |
+| F10 | **PARTIAL** | CI lint, `make check`, `wrapcheck`, boundary check, `buf lint`, generated diff check, `go mod verify`, integration workflow, dan security workflow sudah ada; documentation source of truth dan lint legacy cleanup masih berjalan. |
 
 **Catatan verifikasi:** `go build ./...`, `go vet ./...`, `go test ./... -race -count=1`, golangci-lint v2.1.6, `buf lint`, `buf generate --template buf.gen.yaml`, dan boundary checks lulus. Knowledge graph perlu rebuild setelah commit terbaru sebelum dipakai sebagai bukti coverage berikutnya.
 
@@ -687,7 +687,7 @@ Jika generated output harus committed, CI harus gagal ketika hasil generate berb
 
 | Task | Status | Bukti atau sisa |
 |---|---|---|
-| 1.1 Logging contract | **PARTIAL** | `pkg/logger` tetap Logrus dan structured fields sudah digunakan; request correlation ID belum diterapkan menyeluruh. |
+| 1.1 Logging contract | **PARTIAL** | `pkg/logger` tetap Logrus dan structured fields sudah digunakan; HTTP request correlation ID tersedia, tetapi propagasi lintas semua entry point belum diaudit. |
 | 1.2 API pemakaian | **PARTIAL** | Driver WhatsApp, BotEngine, app lifecycle, probe, user, dan beberapa adapter sudah migrated; audit seluruh repository masih diperlukan. |
 | 1.3 Request logging middleware | **PARTIAL** | Middleware logger sudah ada, tetapi field schema, redaction, dan streaming lifecycle belum diverifikasi di semua route. |
 | 1.4 Test logger | **DONE** | Test JSON/text, fields, errors, dan redaction token/JID/phone/password/payload sudah ada. |
@@ -766,7 +766,7 @@ Jika generated output harus committed, CI harus gagal ketika hasil generate berb
 | Task | Status | Bukti atau sisa |
 |---|---|---|
 | 10.1 Lint enforcement | **DONE** | `errorlint`, `wrapcheck`, `revive`, `bodyclose`, `exhaustive`, dan custom Connect boundary check aktif; full lint terakhir `0 issues`. |
-| 10.2 CI | **PARTIAL** | CI menjalankan build/vet/race test/lint/boundary, `go mod verify`, `buf lint`, dan generated diff check; workflow matrix/security/integration execution terpisah belum lengkap. |
+| 10.2 CI | **PARTIAL** | CI menjalankan build/vet/race test/lint/boundary, `go mod verify`, `buf lint`, dan generated diff check; workflow integration dengan service dependency dan security dengan `govulncheck` sudah dipisah. |
 | 10.3 Documentation source of truth | **PARTIAL** | Plan v2 dan guidelines sudah tersedia; `AGENTS.md` masih memuat struktur duplikat yang dapat stale. |
 
 ---

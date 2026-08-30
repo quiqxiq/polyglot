@@ -1,6 +1,6 @@
 # Arsitektur NetOps + ISP Management Platform — Go Backend (Independen) + LibreChat
 
-> **Status:** Draft Arsitektur v2 — revisi setelah klarifikasi independensi backend
+> **Status:** Arsitektur v2 — desain target dan batasan implementasi
 > **Cakupan:** Backend Go standalone untuk NetOps & manajemen bisnis ISP, dikonsumsi oleh LibreChat (dipilih karena kesiapan chat UI, RAG, dan admin panel scaffolding) — tapi tidak bergantung padanya.
 
 ### Perubahan dari v1
@@ -74,7 +74,7 @@ end
 
 ChatUI --> LC_BE
 LC_BE -- "MCP protokol, OAuth/OBO per user" --> MCPSrv
-RAG -. "tidak menyentuh Go Backend" .-> RAG
+RAG -. "tidak menyentuh Go Backend" .-> ChatUI
 
 AdminPages -- "REST langsung dari browser" --> RESTSrv
 AdminPages -. "subscribe" .-> WSSrv
@@ -161,11 +161,11 @@ UC4 & UC5 & UC6 & UC7 --> D4
 
 ### 5.2 Struktur Folder Proyek
 
-**Struktur folder definitif — termasuk aturan penempatan file per jenis perubahan, konvensi penamaan, dan larangan terkait struktur — ada sepenuhnya di `CLAUDE.md`.** Sengaja tidak diduplikasi di sini: dua dokumen yang masing-masing punya versi struktur folder sendiri gampang jadi tidak sinkron begitu salah satu diubah. `CLAUDE.md` adalah satu-satunya sumber kebenaran untuk struktur folder/file — dokumen ini hanya menjelaskan *mengapa* pembagian domain jaringan vs bisnis ada (§5.1), bukan *di path mana* persis setiap file diletakkan.
+**Aturan struktur folder dan penempatan file ada di `AGENTS.md` dan `DEVELOPMENT-GUIDELINES.md`.** Dokumen ini tidak menduplikasi tree folder. Fokusnya menjelaskan alasan pembagian domain jaringan, domain bisnis, transport, port, adapter, dan driver.
 
 ### 5.3 Interface `DeviceDriver` — Desain Final (Sudah Divalidasi Compile)
 
-> Ini desain **final** untuk fase sekarang — didokumentasikan di `docs/adr/0002-devicedriver-tanpa-session-terpisah.md` pada hasil scaffold, dan sudah dibuktikan benar secara mekanis (bukan cuma "kelihatannya benar") lewat `var _ port.DeviceDriver = (*Driver)(nil)` di ketujuh vendor — lihat §5.4. Kalau ada kebutuhan baru yang tampak butuh mengubah interface ini lagi (menambah `Connect`/`Session` terpisah, menambah `Stream`), itu perubahan interface yang harus lewat ADR baru, bukan diam-diam ditambah di satu driver saja.
+> Ini desain **final untuk fase sekarang** — didokumentasikan di `docs/adr/0002-devicedriver-tanpa-session-terpisah.md`. Perubahan interface ini, seperti menambah `Connect`, `Session`, atau `Stream`, wajib melalui ADR baru dan verifikasi implementor.
 
 Interface ini didefinisikan di `internal/port/device_driver.go` (`package port`):
 
@@ -178,9 +178,9 @@ package port
 // langsung dan mengembalikan *Driver yang sudah terhubung. Tidak ada tipe
 // Session terpisah (lihat ADR 0002).
 //
-// Stream (command jangka panjang dengan output live) SENGAJA tidak ada di
-// sini — ditunda sampai Fase 7 (streaming) benar-benar dikerjakan, supaya
-// tidak ada method separuh jadi hari ini.
+// Stream (command jangka panjang dengan output live) tetap berada di adapter
+// streaming khusus. DeviceDriver menangani operasi perangkat dasar; stream
+// memiliki lifecycle dan contract terpisah.
 type DeviceDriver interface {
 Execute(ctx context.Context, cmd command.Command) (command.Result, error)
 Classify(cmd command.Command) command.Class
@@ -189,7 +189,7 @@ Close() error
 }
 ```
 
-`Command`, `Result`, `Operation`, `Class` generik, didefinisikan di `internal/domain/command/command.go`. Parameter koneksi (`Target`) didefinisikan di `internal/domain/device/device.go` — dipisah dari entity `Device` (record inventory) karena `Target` cuma berisi yang genuinely dibutuhkan driver untuk connect (host, port, kredensial, timeout, plus `Extra map[string]string` untuk parameter vendor-spesifik seperti community string SNMP):
+`Command`, `Result`, `Operation`, dan `Class` generik didefinisikan di `internal/domain/command/command.go`. Parameter koneksi (`Target`) didefinisikan di `internal/domain/device/device.go` dan dipisah dari entity `Device` inventory. `Target` berisi data yang dibutuhkan driver untuk koneksi, termasuk parameter vendor melalui `Extra map[string]string`.
 
 ```go
 package command
@@ -236,7 +236,7 @@ Extra    map[string]string
 1. **Katalog/terjemahan (`Translate`)** — "operasi abstrak X, jadi command native apa untuk vendor ini". Tanpa ini, `usecase/network/get_device_status.go` terpaksa menaruh string command Mikrotik/Cisco langsung di kodenya sendiri — kebocoran boundary yang coba dihindari sejak awal.
 2. **Klasifikasi risiko (`Classify`)** — "command ini (hasil `Translate` maupun raw dari `run_command`) destruktif atau tidak".
 
-Urutan pemanggilan yang benar dari `usecase/`: `Translate` (kalau operasi abstrak) → `Classify` → `domain/command/policy.Decide` → `Execute` kalau diizinkan — persis yang diimplementasikan di `usecase/network/execute_command.go` dan `get_device_status.go` pada hasil scaffold, dan sudah lolos `go build`+`go vet`+`gofmt` di seluruh 66 file yang dihasilkan.
+Urutan pemanggilan dari `usecase/`: `Translate` bila operasi abstrak, `Classify`, `domain/command/policy.Decide`, lalu `Execute` bila diizinkan. Usecase tidak boleh menanam command vendor langsung.
 
 ### 5.4 Pemetaan Driver per Vendor
 
@@ -396,7 +396,7 @@ UI->>WS: unsubscribe saat halaman ditutup
 |---|---|
 | `customers` | Data pelanggan |
 | `subscriptions` | Langganan aktif per customer, terhubung ke `packages` dan opsional ke `devices` (mis. PPPoE profile) |
-| `plans` | Definisi paket layanan (kecepatan, harga, dst) — dinamai `plans`, bukan `packages`, karena `package` reserved keyword di Go (lihat `CLAUDE.md`) |
+| `plans` | Definisi paket layanan (kecepatan, harga, dst) — dinamai `plans`, bukan `packages`, karena `package` adalah keyword Go |
 | `invoices` / `payments` | Siklus billing — bisa mulai sederhana, diperluas sesuai kebutuhan |
 
 **Domain monitoring:** metrik time-series (CPU, traffic, dst) sebaiknya tetap di **time-series DB terpisah** (InfluxDB/Prometheus) — bukan Postgres, karena karakteristik data dan query-nya berbeda jauh dari data relasional di atas.
@@ -471,14 +471,11 @@ Catatan: `Browser` punya dua jalur independen — satu ke LibreChat (chat), satu
 
 | Fase | Fokus | Output |
 |---|---|---|
-| **Fase 1** | Go backend inti — auth (JWT/Casbin), device Mikrotik, MCP dasar | `go-routeros`, 1 MCP tool read-only, REST CRUD device, HITL wiring |
-| **Fase 2** | Admin panel dasar di LibreChat | Halaman device inventory, konsumsi REST langsung dari browser |
-| **Fase 3** | Domain bisnis ISP | Customer, subscription, package, REST CRUD lengkap |
-| **Fase 4** | Perluas vendor jaringan | Cisco (`scrapligo`), ZTE (`gosnmp`+Telnet), Huawei (`scrapligo` v1.3.3 mainline, sudah dukung VRP CLI) |
-| **Fase 5** | Command destruktif + HITL penuh | Command policy allow/deny/ask, audit lengkap |
-| **Fase 6** | Monitoring real-time | Poller, TSDB, WS streaming ke admin panel |
-| **Fase 7** | Integrasi GenieACS | REST client ke NBI, isolasi jaringan |
-| **Fase 8** | Billing/invoice | Modul `business/billing`, evaluasi kompleksitas lanjutan (prorate, pajak, dst) |
+| **Fase 1** | Backend inti | Auth JWT/Casbin, device, ConnectRPC, HTTP, MCP, dan wiring aplikasi |
+| **Fase 2** | Domain jaringan | Driver Mikrotik dan vendor lain melalui port, command policy, audit, dan streaming |
+| **Fase 3** | Domain bisnis ISP | Customer, subscription, plan, billing, cashbook, dan reporting |
+| **Fase 4** | Integrasi eksternal | WhatsApp, LLM, GenieACS, OLT, dan vendor tambahan |
+| **Fase 5** | Reliability dan enforcement | Contract tests, integration workflow, security workflow, boundary checks, logging, dan error taxonomy |
 
 ---
 
@@ -495,7 +492,7 @@ Catatan: `Browser` punya dua jalur independen — satu ke LibreChat (chat), satu
 | OLT/Router Huawei | `scrapligo` v1.3.3 (mainline, sudah dukung VRP CLI) |
 | ACS/TR-069 | GenieACS (Node.js, deploy terpisah) + REST client Go |
 | Protokol tool-calling AI | MCP |
-| API non-AI | REST (`gin`/`echo`/`chi`) |
+| API non-AI | HTTP JSON via `net/http.ServeMux` |
 | Streaming real-time | WebSocket/SSE |
 | Data relasional (device metadata, customer, subscription, billing) | PostgreSQL |
 | Data monitoring time-series | InfluxDB/Prometheus |

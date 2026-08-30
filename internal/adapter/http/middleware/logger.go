@@ -61,13 +61,14 @@ func RequestLogger() Middleware {
 			duration := time.Since(start)
 
 			logger.WithComponent("HTTP").WithFields(logrus.Fields{
-				"method":   r.Method,
-				"path":     r.URL.Path,
-				"status":   wrapper.statusCode,
-				"duration": duration.String(),
-				"remote":   r.RemoteAddr,
-				"size":     wrapper.bytesCount,
-			}).Infof("%s %s %d (%s)", r.Method, r.URL.Path, wrapper.statusCode, duration)
+				"request_id":  RequestIDFromContext(r.Context()),
+				"method":      r.Method,
+				"path":        r.URL.Path,
+				"status":      wrapper.statusCode,
+				"duration_ms": duration.Milliseconds(),
+				"remote":      r.RemoteAddr,
+				"size":        wrapper.bytesCount,
+			}).Info("request completed")
 		})
 	}
 }
