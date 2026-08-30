@@ -68,15 +68,15 @@ func (h *DeviceConnectHandler) QueryDevicePingMetrics(
 	req *connect.Request[devicepb.QueryDevicePingMetricsRequest],
 ) (*connect.Response[devicepb.QueryDevicePingMetricsResponse], error) {
 	var startTime, endTime time.Time
-	if req.Msg.StartTime != "" {
-		if t, err := time.Parse(time.RFC3339, req.Msg.StartTime); err == nil {
-			startTime = t
-		}
+	var err error
+	if startTime, err = time.Parse(time.RFC3339, req.Msg.StartTime); err != nil {
+		return nil, response.MapDomainError(device.ErrInvalidMetricsRange)
 	}
-	if req.Msg.EndTime != "" {
-		if t, err := time.Parse(time.RFC3339, req.Msg.EndTime); err == nil {
-			endTime = t
-		}
+	if endTime, err = time.Parse(time.RFC3339, req.Msg.EndTime); err != nil {
+		return nil, response.MapDomainError(device.ErrInvalidMetricsRange)
+	}
+	if !startTime.Before(endTime) {
+		return nil, response.MapDomainError(device.ErrInvalidMetricsRange)
 	}
 
 	filter := device.PingMetricsFilter{

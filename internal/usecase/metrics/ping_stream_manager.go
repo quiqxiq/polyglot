@@ -202,6 +202,7 @@ func (m *PingStreamWorker) consumeStream(
 	buffer := make([]device.PingMetricPoint, 0, 10)
 	flushTicker := time.NewTicker(3 * time.Second)
 	defer flushTicker.Stop()
+	streamSeq := 0
 
 	flush := func() {
 		if len(buffer) == 0 {
@@ -226,6 +227,15 @@ func (m *PingStreamWorker) consumeStream(
 				row := res.Rows[0]
 				latency, status := ping.ParsePingLatency(row)
 				seq, _ := strconv.Atoi(row["seq"])
+				if seq == 0 {
+					if s, ok := row["sequence"]; ok {
+						seq, _ = strconv.Atoi(s)
+					}
+					if seq == 0 {
+						seq = streamSeq
+					}
+				}
+				streamSeq = seq + 1
 				ttl, _ := strconv.Atoi(row["ttl"])
 				size, _ := strconv.Atoi(row["size"])
 				sent, _ := strconv.Atoi(row["sent"])

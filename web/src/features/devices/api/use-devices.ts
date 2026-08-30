@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { deviceClient } from '@/lib/api-client'
 import { deviceKeys } from './keys'
 import type {
@@ -106,6 +106,8 @@ export function useDevicePingMetricsQuery(
   },
   enabled = true
 ) {
+	const hasRange = Boolean(req.startTime && req.endTime && req.startTime < req.endTime)
+
   return useQuery({
     queryKey: [
       ...deviceKeys.detail(req.deviceId),
@@ -122,6 +124,8 @@ export function useDevicePingMetricsQuery(
         bucketInterval: req.bucketInterval,
       })
     },
-    enabled: Boolean(req.deviceId) && enabled,
+    placeholderData: keepPreviousData,
+    enabled: Boolean(req.deviceId) && hasRange && enabled,
+    retry: 1,
   })
 }

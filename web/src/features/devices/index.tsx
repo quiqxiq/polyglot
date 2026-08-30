@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   MixerHorizontalIcon,
   Cross2Icon,
@@ -34,7 +34,7 @@ function DevicesContent() {
   const [vendorFilter, setVendorFilter] = useState<VendorFilter>('all')
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc')
 
-  const filteredDevices = devices
+  const filteredDevices = useMemo(() => [...devices]
     .filter((device) => {
       if (vendorFilter !== 'all' && device.vendor.toLowerCase() !== vendorFilter) {
         return false
@@ -53,7 +53,7 @@ function DevicesContent() {
         return a.name.localeCompare(b.name)
       }
       return b.name.localeCompare(a.name)
-    })
+    }), [devices, searchTerm, sortOrder, vendorFilter])
 
   return (
     <>

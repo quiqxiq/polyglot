@@ -32,6 +32,7 @@ interface PingAnalyticsControlsProps {
   onEndTimeChange: (val: string) => void
   bucketInterval: string
   onBucketIntervalChange: (val: string) => void
+  onApply: () => void
 }
 
 const PRESETS: { id: TimePreset; label: string }[] = [
@@ -55,6 +56,7 @@ export function PingAnalyticsControls({
   onEndTimeChange,
   bucketInterval,
   onBucketIntervalChange,
+  onApply,
 }: PingAnalyticsControlsProps) {
   const [popoverOpen, setPopoverOpen] = useState(false)
 
@@ -174,6 +176,9 @@ export function PingAnalyticsControls({
             <SelectItem value='1h'>1 Jam</SelectItem>
           </SelectContent>
         </Select>
+        <Button size='sm' className='h-8 text-xs' onClick={onApply}>
+          Terapkan
+        </Button>
       </div>
     </div>
   )

@@ -77,7 +77,7 @@ message Conversation {
 }
 
 message ListConversationsRequest {
-  string session_id = 1 [(buf.validate.field).string.min_len = 1];
+  string session_id = 1;
 }
 message ListConversationsResponse {
   repeated Conversation conversations = 1;

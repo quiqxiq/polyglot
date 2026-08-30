@@ -7,7 +7,7 @@ import { Activity } from 'lucide-react'
 
 interface DeviceCardPingProps {
   device: Device
-  pingMs: number
+  pingMs: number | null
   pingHistory: PingDataPoint[]
   pingTarget: string
 }
@@ -42,7 +42,7 @@ export function DeviceCardPing({
         >
           <Activity className='h-3.5 w-3.5 text-muted-foreground shrink-0 self-center' />
           <span className='font-mono font-bold text-sm text-foreground'>
-            {pingMs}
+            {pingMs === null ? '--' : pingMs}
           </span>
           <span className='text-[10px] text-muted-foreground'>ms</span>
           <span className='text-[10px] text-muted-foreground ml-1 truncate max-w-[110px] sm:max-w-[140px]'>
@@ -84,4 +84,3 @@ export function DeviceCardPing({
     </section>
   )
 }
-

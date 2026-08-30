@@ -3,13 +3,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Activity,
-  AlertTriangle,
-  CheckCircle2,
-  Radio,
   RefreshCw,
 } from 'lucide-react'
 
@@ -17,8 +13,6 @@ interface PingAnalyticsHeaderProps {
   deviceName: string
   host: string
   pingTarget: string
-  isStreaming: boolean
-  timescaledbAvailable: boolean
   isFetching: boolean
   onRefresh: () => void
 }
@@ -27,8 +21,6 @@ export function PingAnalyticsHeader({
   deviceName,
   host,
   pingTarget,
-  isStreaming,
-  timescaledbAvailable,
   isFetching,
   onRefresh,
 }: PingAnalyticsHeaderProps) {
@@ -41,16 +33,7 @@ export function PingAnalyticsHeader({
           </div>
           <div className='min-w-0'>
             <DialogTitle className='text-base font-semibold flex items-center gap-2 flex-wrap'>
-              <span className='truncate'>Analisis Ping Streaming — {deviceName}</span>
-              {isStreaming && (
-                <Badge
-                  variant='outline'
-                  className='text-[10px] bg-emerald-500/10 text-emerald-600 border-emerald-300 dark:border-emerald-700/50 gap-1 animate-pulse'
-                >
-                  <Radio className='h-2.5 w-2.5' />
-                  Live Stream
-                </Badge>
-              )}
+              <span className='truncate'>Analisis Riwayat Ping — {deviceName}</span>
             </DialogTitle>
             <DialogDescription className='text-xs text-muted-foreground flex items-center gap-2 mt-0.5'>
               <span>
@@ -65,20 +48,6 @@ export function PingAnalyticsHeader({
         </div>
 
         <div className='flex items-center gap-2 shrink-0'>
-          {timescaledbAvailable ? (
-            <Badge
-              variant='outline'
-              className='bg-emerald-500/10 text-emerald-600 border-emerald-200 dark:border-emerald-800 text-xs gap-1 hidden sm:inline-flex'
-            >
-              <CheckCircle2 className='h-3 w-3' />
-              TimescaleDB Aktif
-            </Badge>
-          ) : (
-            <Badge variant='destructive' className='text-xs gap-1 hidden sm:inline-flex'>
-              <AlertTriangle className='h-3 w-3' />
-              TimescaleDB Nonaktif
-            </Badge>
-          )}
           <Button
             variant='outline'
             size='icon'
@@ -94,4 +63,3 @@ export function PingAnalyticsHeader({
     </DialogHeader>
   )
 }
-

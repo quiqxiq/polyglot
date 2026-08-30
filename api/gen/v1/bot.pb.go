@@ -4951,10 +4951,10 @@ const file_v1_bot_proto_rawDesc = "" +
 	"\x13assigned_technician\x18\x06 \x01(\tR\x12assignedTechnician\x12<\n" +
 	"\bmessages\x18\a \x03(\v2 .polyglot.v1.ConversationMessageR\bmessages\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\b \x01(\tR\tupdatedAt\"B\n" +
-	"\x18ListConversationsRequest\x12&\n" +
+	"updated_at\x18\b \x01(\tR\tupdatedAt\"9\n" +
+	"\x18ListConversationsRequest\x12\x1d\n" +
 	"\n" +
-	"session_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\tsessionId\"\\\n" +
+	"session_id\x18\x01 \x01(\tR\tsessionId\"\\\n" +
 	"\x19ListConversationsResponse\x12?\n" +
 	"\rconversations\x18\x01 \x03(\v2\x19.polyglot.v1.ConversationR\rconversations\"1\n" +
 	"\x16GetConversationRequest\x12\x17\n" +

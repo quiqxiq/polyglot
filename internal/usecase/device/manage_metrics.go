@@ -126,6 +126,9 @@ func (uc *ManageMetricsUseCase) QueryPingMetrics(
 	if filter.DeviceID == "" {
 		return nil, device.PingSummary{}, false, device.ErrInvalidInput
 	}
+	if filter.StartTime.IsZero() || filter.EndTime.IsZero() || !filter.StartTime.Before(filter.EndTime) {
+		return nil, device.PingSummary{}, false, device.ErrInvalidMetricsRange
+	}
 
 	ok, err := uc.isDeviceAuthorized(ctx, filter.DeviceID, callerID, callerRoles)
 	if err != nil {

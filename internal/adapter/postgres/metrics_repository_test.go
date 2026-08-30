@@ -91,17 +91,51 @@ func TestMetricsRepository_SaveAndQuery(t *testing.T) {
 	assert.Equal(t, int64(3), summary.TotalSamples)
 	assert.InDelta(t, 24.5, float64(summary.MinRTT), 0.1)
 	assert.InDelta(t, 25.5, float64(summary.MaxRTT), 0.1)
-	assert.InDelta(t, 11.0, float64(summary.PacketLossPct), 1.0)
+	assert.InDelta(t, 16.67, float64(summary.PacketLossPct), 0.01)
 
 	// 3. Test Cleanup
 	err = repo.CleanupExpiredMetrics(ctx, deviceID, 1) // Retention 1 day -> points within 10 min are kept
 	require.NoError(t, err)
 
 	resAfter, _, err := repo.QueryPingMetrics(ctx, device.PingMetricsFilter{
-		DeviceID:  deviceID,
-		StartTime: now.Add(-15 * time.Minute),
-		EndTime:   now,
+		DeviceID:       deviceID,
+		StartTime:      now.Add(-15 * time.Minute),
+		EndTime:        now,
+		BucketInterval: "raw",
 	})
 	require.NoError(t, err)
 	assert.Len(t, resAfter, 3)
+}
+
+func TestMetricsRepositoryRejectsInvalidRange(t *testing.T) {
+	repo := postgres.NewMetricsRepository(setupMetricsTestDB(t))
+	now := time.Now().UTC()
+
+	_, _, err := repo.QueryPingMetrics(context.Background(), device.PingMetricsFilter{
+		DeviceID:  "dev-ping-01",
+		StartTime: now,
+		EndTime:   now,
+	})
+	require.ErrorIs(t, err, device.ErrInvalidMetricsRange)
+}
+
+func TestMetricsRepositoryRejectsUnknownBucket(t *testing.T) {
+	repo := postgres.NewMetricsRepository(setupMetricsTestDB(t))
+	now := time.Now().UTC()
+	require.NoError(t, repo.SavePingMetric(context.Background(), device.PingMetricPoint{
+		RecordedAt: now.Add(-time.Minute),
+		DeviceID:   "dev-ping-01",
+		Target:     "8.8.8.8",
+		RTTMS:      10,
+		Sent:       1,
+		Received:   1,
+	}))
+
+	_, _, err := repo.QueryPingMetrics(context.Background(), device.PingMetricsFilter{
+		DeviceID:       "dev-ping-01",
+		StartTime:      now.Add(-time.Hour),
+		EndTime:        now,
+		BucketInterval: "unknown",
+	})
+	require.ErrorIs(t, err, device.ErrInvalidMetricsBucket)
 }

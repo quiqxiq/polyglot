@@ -120,7 +120,9 @@ func TestManageMetricsUseCase_QueryMetrics(t *testing.T) {
 	uc := NewManageMetricsUseCase(devRepo, metricsRepo, authorizer)
 
 	points, summary, available, err := uc.QueryPingMetrics(ctx, device.PingMetricsFilter{
-		DeviceID: "router-01",
+		DeviceID:  "router-01",
+		StartTime: time.Now().UTC().Add(-time.Hour),
+		EndTime:   time.Now().UTC(),
 	}, 1, []string{"owner"})
 
 	require.NoError(t, err)

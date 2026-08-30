@@ -23,14 +23,14 @@ export function DeviceCard({ device }: DeviceCardProps) {
     setSelectedIface,
   } = useDeviceStatusStream({ device })
 
-  // 2. Real-Time Traffic Stream
+  // 2. Real-Time Traffic Stream (Always active when device is enabled)
   const { rxBps, txBps, trafficHistory } = useDeviceTrafficStream({
     deviceId: device.id,
     enabled: device.enabled,
     selectedIface,
   })
 
-  // 3. Real-Time Ping Stream
+  // 3. Real-Time Ping Stream (Always active when device is enabled)
   const { pingMs, pingHistory } = useDevicePingStream({
     deviceId: device.id,
     enabled: device.enabled,
@@ -74,4 +74,3 @@ export function DeviceCard({ device }: DeviceCardProps) {
     </article>
   )
 }
-

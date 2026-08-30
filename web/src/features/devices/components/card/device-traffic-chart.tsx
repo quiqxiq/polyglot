@@ -38,7 +38,7 @@ export function DeviceTrafficChart({
       ctx.fillStyle = '#94a3b8'
       ctx.font = '11px ui-sans-serif, system-ui, sans-serif'
       ctx.textAlign = 'center'
-      ctx.fillText('Live traffic stream inactive', w / 2, h / 2 + 4)
+      ctx.fillText('Menghubungkan ke traffic stream...', w / 2, h / 2 + 4)
       return
     }
 
@@ -50,8 +50,17 @@ export function DeviceTrafficChart({
     // Find max peak
     const actualMax = Math.max(0, ...trafficHistory.map((s) => Math.max(s.rx, s.tx)))
     const scale = Math.max(1000, actualMax * 1.1)
-    const stepX = (w - padX * 2) / (maxSamples - 1)
-    const startI = maxSamples - trafficHistory.length
+    const latestTime = trafficHistory[trafficHistory.length - 1]?.time ?? Date.now()
+    const firstTime = trafficHistory[0]?.time ?? latestTime
+    const sampleInterval = Math.max(
+      1000,
+      trafficHistory.length > 1
+        ? (latestTime - firstTime) / (trafficHistory.length - 1)
+        : 1000
+    )
+    const windowMs = sampleInterval * Math.max(maxSamples - 1, 1)
+    const xFor = (time: number) =>
+      padX + Math.max(0, Math.min(1, (time - (latestTime - windowMs)) / windowMs)) * (w - padX * 2)
 
     // Draw subtle grid lines
     ctx.strokeStyle = 'rgba(148, 163, 184, 0.12)'
@@ -80,16 +89,16 @@ export function DeviceTrafficChart({
       grad.addColorStop(1, fillColorBottom)
 
       ctx.beginPath()
-      const firstX = padX + startI * stepX
+       const firstX = xFor(trafficHistory[0].time)
       ctx.moveTo(firstX, h - padBottom)
 
-      trafficHistory.forEach((s, i) => {
-        const x = padX + (startI + i) * stepX
+       trafficHistory.forEach((s) => {
+         const x = xFor(s.time)
         const y = h - padBottom - (s[key] / scale) * chartH
         ctx.lineTo(x, y)
       })
 
-      const lastX = padX + (startI + trafficHistory.length - 1) * stepX
+       const lastX = xFor(trafficHistory[trafficHistory.length - 1].time)
       ctx.lineTo(lastX, h - padBottom)
       ctx.closePath()
       ctx.fillStyle = grad
@@ -98,7 +107,7 @@ export function DeviceTrafficChart({
       // Stroke line
       ctx.beginPath()
       trafficHistory.forEach((s, i) => {
-        const x = padX + (startI + i) * stepX
+         const x = xFor(s.time)
         const y = h - padBottom - (s[key] / scale) * chartH
         if (i === 0) ctx.moveTo(x, y)
         else ctx.lineTo(x, y)
@@ -132,4 +141,3 @@ export function DeviceTrafficChart({
 
   return <canvas ref={canvasRef} className={className} />
 }
-

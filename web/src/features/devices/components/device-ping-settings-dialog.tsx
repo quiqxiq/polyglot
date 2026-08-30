@@ -226,13 +226,13 @@ export function DevicePingSettingsDialog({
           </div>
         </DialogHeader>
 
-        {isConfigLoading ? (
+        {isConfigLoading && !configData ? (
           <div className='flex h-36 items-center justify-center'>
             <Loader2 className='h-6 w-6 animate-spin text-muted-foreground' />
           </div>
         ) : (
           <PingSettingsForm
-            key={`${device.id}_${configData?.config?.target || 'init'}`}
+            key={`${device.id}_${configData?.config?.target || device.pingTarget || 'init'}`}
             device={device}
             configData={configData}
             onOpenChange={onOpenChange}

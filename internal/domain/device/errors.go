@@ -22,6 +22,12 @@ var ErrInvalidInput = fault.New(fault.KindInvalidInput, "device: invalid input")
 // ErrMetricsUnavailable indicates that historical metrics are not configured.
 var ErrMetricsUnavailable = fault.New(fault.KindUnavailable, "device: metrics unavailable")
 
+// ErrInvalidMetricsRange indicates an invalid historical metrics time range.
+var ErrInvalidMetricsRange = fault.New(fault.KindInvalidInput, "device: invalid metrics time range")
+
+// ErrInvalidMetricsBucket indicates an unsupported historical metrics bucket.
+var ErrInvalidMetricsBucket = fault.New(fault.KindInvalidInput, "device: invalid metrics bucket interval")
+
 // IsNotFound reports whether err is (or wraps) ErrNotFound.
 func IsNotFound(err error) bool {
 	return errors.Is(err, ErrNotFound)

@@ -32,7 +32,6 @@ func StreamTraffic(ctx context.Context, driver port.DeviceDriver, iface string, 
 		Raw: "/interface/monitor-traffic",
 		Args: map[string]string{
 			"interface": iface,
-			"once":      "",
 		},
 	}
 

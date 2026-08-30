@@ -1,12 +1,5 @@
--- 1. Inisialisasi ekstensi TimescaleDB jika terpasang pada PostgreSQL server
-DO $$ BEGIN
-    BEGIN
-        CREATE EXTENSION IF NOT EXISTS timescaledb;
-    EXCEPTION
-        WHEN OTHERS THEN
-            NULL; -- Lewati jika binary ekstensi belum terpasang di OS Postgres host
-    END;
-END $$;
+-- TimescaleDB is required for production ping history.
+CREATE EXTENSION IF NOT EXISTS timescaledb;
 
 -- 2. Buat tabel device_ping_metrics dengan seluruh field telemetri MikroTik
 CREATE TABLE IF NOT EXISTS device_ping_metrics (
@@ -26,12 +19,8 @@ CREATE TABLE IF NOT EXISTS device_ping_metrics (
     max_rtt_ms     REAL
 );
 
--- 3. Inisialisasi Hypertable TimescaleDB jika ekstensi aktif
-DO $$ BEGIN
-    IF EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'timescaledb') THEN
-        PERFORM create_hypertable('device_ping_metrics', 'recorded_at', if_not_exists => TRUE);
-    END IF;
-END $$;
+-- 3. Inisialisasi Hypertable TimescaleDB
+SELECT create_hypertable('device_ping_metrics', 'recorded_at', if_not_exists => TRUE);
 
 -- 4. Indeks komposit untuk optimasi query filter rentang waktu per perangkat
 CREATE INDEX IF NOT EXISTS idx_device_ping_metrics_device_time 

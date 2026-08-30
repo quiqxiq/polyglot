@@ -418,11 +418,10 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	}
 
 	server := &http.Server{
-		Addr:         ":" + cfg.Port,
-		Handler:      middleware.Chain(rootMux, middleware.RequestID(), middleware.CORS(cfg.CORSOrigins, cfg.AppEnv), middleware.Recovery()),
-		ReadTimeout:  30 * time.Second,
-		WriteTimeout: 60 * time.Second,
-		IdleTimeout:  120 * time.Second,
+		Addr:        ":" + cfg.Port,
+		Handler:     middleware.Chain(rootMux, middleware.RequestID(), middleware.CORS(cfg.CORSOrigins, cfg.AppEnv), middleware.Recovery()),
+		ReadTimeout: 30 * time.Second,
+		IdleTimeout: 120 * time.Second,
 	}
 
 	return &App{

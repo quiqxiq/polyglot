@@ -4,6 +4,7 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"testing"
 	"time"
 
@@ -24,29 +25,31 @@ func TestMikhmonIntegration_FullWorkflow(t *testing.T) {
 	require.NoError(t, err, "gagal konek ke Mikrotik test")
 	defer func() { assert.NoError(t, drv.Close()) }()
 
-	const testProfileName = "polyglot-mikhmon-profile"
-	const testVoucherPrefix = "testvc_"
+	testProfileName := fmt.Sprintf("polyglot-mikhmon-%d", time.Now().UnixNano())
+	testVoucherPrefix := fmt.Sprintf("tv%d_", time.Now().UnixNano()%1000000)
 
 	// Cleanup
 	t.Cleanup(func() {
+		cleanupCtx, cleanupCancel := context.WithTimeout(context.Background(), 20*time.Second)
+		defer cleanupCancel()
 		// Cleanup vouchers
-		if printUsers, err := drv.Execute(context.Background(), mikhmon.NewPrintUsersCommand("")); err == nil {
+		if printUsers, err := drv.Execute(cleanupCtx, mikhmon.NewPrintUsersCommand("")); err == nil {
 			for _, u := range mikhmon.ParseUsers(printUsers) {
 				if u.Profile == testProfileName {
-					_, _ = drv.Execute(context.Background(), mikhmon.NewRemoveUserCommand(u.RosID))
+					_, _ = drv.Execute(cleanupCtx, mikhmon.NewRemoveUserCommand(u.RosID))
 				}
 			}
 		}
 		// Cleanup profile
-		if printProfiles, err := drv.Execute(context.Background(), mikhmon.NewPrintUserProfilesCommand(testProfileName)); err == nil {
+		if printProfiles, err := drv.Execute(cleanupCtx, mikhmon.NewPrintUserProfilesCommand(testProfileName)); err == nil {
 			for _, p := range mikhmon.ParseUserProfiles(printProfiles) {
-				_, _ = drv.Execute(context.Background(), mikhmon.NewRemoveUserProfileCommand(p.RosID))
+				_, _ = drv.Execute(cleanupCtx, mikhmon.NewRemoveUserProfileCommand(p.RosID))
 			}
 		}
 		// Cleanup scheduler
-		if printSch, err := drv.Execute(context.Background(), mikrotiksystem.NewPrintSchedulerCommand(mikhmon.MikhmonExpireMonitorName)); err == nil {
+		if printSch, err := drv.Execute(cleanupCtx, mikrotiksystem.NewPrintSchedulerCommand(mikhmon.MikhmonExpireMonitorName)); err == nil {
 			for _, s := range mikrotiksystem.ParseScheduler(printSch) {
-				_, _ = drv.Execute(context.Background(), mikrotiksystem.NewSetSchedulerCommand(s.RosID, mikrotiksystem.SystemSchedulerParams{
+				_, _ = drv.Execute(cleanupCtx, mikrotiksystem.NewSetSchedulerCommand(s.RosID, mikrotiksystem.SystemSchedulerParams{
 					Name:     mikhmon.MikhmonExpireMonitorName,
 					Disabled: true,
 				}))

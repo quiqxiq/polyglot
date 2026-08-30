@@ -23,22 +23,30 @@ export function useDeviceTrafficStream({
   const [trafficHistory, setTrafficHistory] = useState<TrafficDataPoint[]>([])
 
   useEffect(() => {
-    if (!deviceId || !enabled || !selectedIface || selectedIface === 'default') {
+    if (!deviceId || !enabled) {
       return
     }
 
+    const ifaceToStream =
+      selectedIface && selectedIface !== 'default' ? selectedIface : 'ether1'
+
     const controller = new AbortController()
     let active = true
+    let retryTimer: ReturnType<typeof setTimeout> | undefined
+
+    const retry = () => {
+      if (active && !controller.signal.aborted) {
+        retryTimer = setTimeout(() => {
+          retryTimer = undefined
+          void startTrafficStream()
+        }, 3000)
+      }
+    }
 
     async function startTrafficStream() {
-      // Reset traffic state for the new interface
-      setRxBps(0)
-      setTxBps(0)
-      setTrafficHistory([])
-
       try {
         const stream = deviceClient.streamInterfaceTraffic(
-          { id: deviceId, interfaceName: selectedIface },
+          { id: deviceId, interfaceName: ifaceToStream },
           { signal: controller.signal }
         )
 
@@ -53,13 +61,10 @@ export function useDeviceTrafficStream({
             return next.slice(-maxHistory)
           })
         }
+			if (active) retry()
       } catch (err: unknown) {
         if (!isStreamAbortedError(err, controller.signal, active) && active) {
-          setTimeout(() => {
-            if (active && !controller.signal.aborted) {
-              startTrafficStream()
-            }
-          }, 3000)
+				retry()
         }
       }
     }
@@ -69,6 +74,7 @@ export function useDeviceTrafficStream({
     return () => {
       active = false
       controller.abort()
+	  if (retryTimer) clearTimeout(retryTimer)
     }
   }, [deviceId, enabled, selectedIface, maxHistory])
 
@@ -78,4 +84,3 @@ export function useDeviceTrafficStream({
     trafficHistory,
   }
 }
-

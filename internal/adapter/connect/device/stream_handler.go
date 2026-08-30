@@ -4,10 +4,16 @@ import (
 	"context"
 	"fmt"
 	"net"
+	"sort"
 	"strconv"
+	"sync"
+	"time"
 
 	"connectrpc.com/connect"
+	"google.golang.org/protobuf/proto"
+
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	"github.com/quixiq/polyglot/internal/domain/command"
 	mikrotikiface "github.com/quixiq/polyglot/internal/driver/mikrotik/iface"
 	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
@@ -17,7 +23,13 @@ import (
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
-// StreamDeviceStatus streams device status updates.
+type deviceStatusStreamState struct {
+	mu       sync.Mutex
+	metrics  *devicepb.DeviceTestMetrics
+	ifaceMap map[string]*devicepb.DeviceInterfaceInfo
+}
+
+// StreamDeviceStatus streams device status updates continuously using native RouterOS events.
 func (h *DeviceConnectHandler) StreamDeviceStatus(
 	ctx context.Context,
 	req *connect.Request[devicepb.StreamDeviceStatusRequest],
@@ -77,8 +89,168 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 		return err
 	}
 
-	<-ctx.Done()
-	return nil
+	sDrv, ok := drv.(port.StreamingDeviceDriver)
+	if !ok || !dev.Enabled {
+		<-ctx.Done()
+		return nil
+	}
+
+	ifaceMap := make(map[string]*devicepb.DeviceInterfaceInfo, len(pbIfaces))
+	for _, ifc := range pbIfaces {
+		if ifc != nil && ifc.Name != "" {
+			ifaceMap[ifc.Name] = ifc
+		}
+	}
+
+	state := &deviceStatusStreamState{
+		metrics:  metrics,
+		ifaceMap: ifaceMap,
+	}
+
+	notify := make(chan struct{}, 16)
+	doneCh := make(chan struct{})
+	var wg sync.WaitGroup
+
+	startStream := func(cmd command.Command, apply func(res command.Result)) {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			handle, sErr := sDrv.Stream(ctx, cmd)
+			if sErr != nil {
+				return
+			}
+			defer func() { _ = handle.Cancel() }()
+
+			for {
+				select {
+				case <-ctx.Done():
+					return
+				case res, channelOpen := <-handle.Chan():
+					if !channelOpen {
+						return
+					}
+					apply(res)
+					select {
+					case notify <- struct{}{}:
+					default:
+					}
+				}
+			}
+		}()
+	}
+
+	// 1. Native stream /system/resource/print interval=1s (CPU, memory, uptime, version)
+	startStream(mikrotiksystem.NewStreamResourceCommand("1s"), func(res command.Result) {
+		sysRes := mikrotiksystem.ParseResource(res)
+		freeMem, _ := strconv.ParseInt(sysRes.FreeMemory, 10, 64)
+		totalMem, _ := strconv.ParseInt(sysRes.TotalMemory, 10, 64)
+
+		state.mu.Lock()
+		state.metrics.Status = "connected"
+		state.metrics.CpuLoad = int32(sysRes.CPULoad)
+		state.metrics.FreeMemory = freeMem
+		state.metrics.TotalMemory = totalMem
+		if sysRes.Uptime != "" {
+			state.metrics.Uptime = sysRes.Uptime
+		}
+		if sysRes.Version != "" {
+			state.metrics.Version = sysRes.Version
+		}
+		if sysRes.BoardName != "" {
+			state.metrics.BoardName = sysRes.BoardName
+		}
+		state.mu.Unlock()
+	})
+
+	// 2. Native stream /interface/print interval=2s (Interface list & running status)
+	startStream(mikrotikiface.NewStreamInterfacesCommand(req.Msg.InterfaceTypeFilter, req.Msg.InterfaceNameFilter, "2s"), func(res command.Result) {
+		ifaces := mikrotikiface.ParseInterfaces(res)
+		if len(ifaces) == 0 {
+			return
+		}
+
+		state.mu.Lock()
+		for _, ifc := range ifaces {
+			if ifc.Name == "" {
+				continue
+			}
+			state.ifaceMap[ifc.Name] = &devicepb.DeviceInterfaceInfo{
+				Name:       ifc.Name,
+				Type:       ifc.Type,
+				Disabled:   ifc.Disabled,
+				Running:    ifc.Running,
+				MacAddress: ifc.MACAddress,
+			}
+		}
+
+		names := make([]string, 0, len(state.ifaceMap))
+		details := make([]*devicepb.DeviceInterfaceInfo, 0, len(state.ifaceMap))
+		for _, ifc := range state.ifaceMap {
+			names = append(names, ifc.Name)
+			details = append(details, ifc)
+		}
+		sort.Strings(names)
+		sort.Slice(details, func(i, j int) bool {
+			return details[i].Name < details[j].Name
+		})
+
+		state.metrics.Interfaces = names
+		state.metrics.InterfaceList = details
+		state.mu.Unlock()
+	})
+
+	// 3. Native stream /system/identity/print interval=5s (Identity update)
+	startStream(mikrotiksystem.NewStreamIdentityCommand("5s"), func(res command.Result) {
+		ident := mikrotiksystem.ParseIdentity(res)
+		if ident.Name != "" {
+			state.mu.Lock()
+			state.metrics.Identity = ident.Name
+			state.mu.Unlock()
+		}
+	})
+
+	go func() {
+		wg.Wait()
+		close(doneCh)
+	}()
+
+	for {
+		select {
+		case <-ctx.Done():
+			return nil
+		case <-doneCh:
+			return nil
+		case <-notify:
+			timer := time.NewTimer(50 * time.Millisecond)
+		coalesce:
+			for {
+				select {
+				case <-notify:
+				case <-timer.C:
+					break coalesce
+				case <-ctx.Done():
+					return nil
+				case <-doneCh:
+					return nil
+				}
+			}
+
+			state.mu.Lock()
+			clonedMetrics, ok := proto.Clone(state.metrics).(*devicepb.DeviceTestMetrics)
+			state.mu.Unlock()
+
+			if !ok || clonedMetrics == nil {
+				continue
+			}
+
+			if err := stream.Send(&devicepb.DeviceStatusFrame{
+				Device: DomainToPb(dev),
+				Test:   clonedMetrics,
+			}); err != nil {
+				return err
+			}
+		}
+	}
 }
 
 func (h *DeviceConnectHandler) StreamPing(
@@ -96,18 +268,20 @@ func (h *DeviceConnectHandler) StreamPing(
 	}
 
 	if !dev.Enabled || h.driverGetter == nil {
-		return nil
+		return response.Unavailable("device streaming is unavailable")
 	}
 
 	drv, err := h.driverGetter(ctx, dev.ID)
 	if err != nil || drv == nil {
-		return nil
+		if err != nil {
+			return response.MapDomainError(fault.Wrap(fault.KindUnavailable, err))
+		}
+		return response.Unavailable("device driver is unavailable")
 	}
 
 	sDrv, ok := drv.(port.StreamingDeviceDriver)
 	if !ok {
-		<-ctx.Done()
-		return nil
+		return response.Unavailable("device driver does not support streaming")
 	}
 
 	pingTarget := req.Msg.Address
@@ -128,18 +302,31 @@ func (h *DeviceConnectHandler) StreamPing(
 	}
 	defer func() { _ = pingHandle.Cancel() }()
 
+	streamSeq := int32(0)
 	for {
 		select {
 		case <-ctx.Done():
 			return nil
 		case res, ok := <-pingHandle.Chan():
 			if !ok {
+				if err := pingHandle.Err(); err != nil {
+					return response.MapDomainError(fault.Wrap(fault.KindUnavailable, err))
+				}
 				return nil
 			}
 			if len(res.Rows) > 0 {
 				row := res.Rows[0]
 				latency, status := ping.ParsePingLatency(row)
 				seq, _ := strconv.ParseInt(row["seq"], 10, 32)
+				if seq == 0 {
+					if s, ok := row["sequence"]; ok {
+						seq, _ = strconv.ParseInt(s, 10, 32)
+					}
+					if seq == 0 {
+						seq = int64(streamSeq)
+					}
+				}
+				streamSeq = int32(seq + 1)
 				ttl, _ := strconv.ParseInt(row["ttl"], 10, 32)
 				size, _ := strconv.ParseInt(row["size"], 10, 32)
 				sent, _ := strconv.ParseInt(row["sent"], 10, 32)
@@ -187,18 +374,20 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 	}
 
 	if !dev.Enabled || h.driverGetter == nil {
-		return nil
+		return response.Unavailable("device streaming is unavailable")
 	}
 
 	drv, err := h.driverGetter(ctx, dev.ID)
 	if err != nil || drv == nil {
-		return nil
+		if err != nil {
+			return response.MapDomainError(fault.Wrap(fault.KindUnavailable, err))
+		}
+		return response.Unavailable("device driver is unavailable")
 	}
 
 	sDrv, ok := drv.(port.StreamingDeviceDriver)
 	if !ok {
-		<-ctx.Done()
-		return nil
+		return response.Unavailable("device driver does not support streaming")
 	}
 
 	ifaceName := req.Msg.InterfaceName
@@ -219,6 +408,9 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 			return nil
 		case res, ok := <-trafficHandle.Chan():
 			if !ok {
+				if err := trafficHandle.Err(); err != nil {
+					return response.MapDomainError(fault.Wrap(fault.KindUnavailable, err))
+				}
 				return nil
 			}
 			stats := mikrotikiface.ParseInterfaceTrafficStats(res)

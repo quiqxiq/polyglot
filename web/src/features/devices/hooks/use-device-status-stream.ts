@@ -22,13 +22,23 @@ export function useDeviceStatusStream({ device }: UseDeviceStatusStreamOptions) 
     if (!device.id || !device.enabled) return
     const controller = new AbortController()
     let active = true
+    let retryTimer: ReturnType<typeof setTimeout> | undefined
+
+    const retry = () => {
+      if (active && !controller.signal.aborted) {
+        retryTimer = setTimeout(() => {
+          retryTimer = undefined
+          void startStatusStream()
+        }, 3000)
+      }
+    }
 
     async function startStatusStream() {
       try {
         const stream = deviceClient.streamDeviceStatus(
           {
             id: device.id,
-            selectedInterface: selectedIface,
+            selectedInterface: 'default',
             interfaceTypeFilter: 'ether',
           },
           { signal: controller.signal }
@@ -91,14 +101,11 @@ export function useDeviceStatusStream({ device }: UseDeviceStatusStreamOptions) 
             }
           }
         }
+			if (active) retry()
       } catch (err: unknown) {
         if (!isStreamAbortedError(err, controller.signal, active) && active) {
           setIsOnline(false)
-          setTimeout(() => {
-            if (active && !controller.signal.aborted) {
-              startStatusStream()
-            }
-          }, 3000)
+			retry()
         }
       }
     }
@@ -108,8 +115,9 @@ export function useDeviceStatusStream({ device }: UseDeviceStatusStreamOptions) 
     return () => {
       active = false
       controller.abort()
+	  if (retryTimer) clearTimeout(retryTimer)
     }
-  }, [device.id, device.enabled, selectedIface])
+  }, [device.id, device.enabled])
 
   return {
     isOnline,
@@ -123,4 +131,3 @@ export function useDeviceStatusStream({ device }: UseDeviceStatusStreamOptions) 
     setSelectedIface,
   }
 }
-

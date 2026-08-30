@@ -71,8 +71,9 @@ func (d *Driver) Stream(ctx context.Context, cmd command.Command) (port.StreamHa
 type streamHandle struct {
 	listen *routeros.ListenReply
 
-	out    chan command.Result
-	doneCh chan struct{} // closed once pump has fully exited
+	out      chan command.Result
+	doneCh   chan struct{} // closed once pump has fully exited
+	cancelCh chan struct{}
 
 	mu     sync.Mutex
 	err    error
@@ -85,8 +86,9 @@ func newStreamHandle(listen *routeros.ListenReply) *streamHandle {
 		// Buffered generously so a momentarily slow consumer never stalls
 		// the shared asyncLoop dispatcher for the whole stream connection
 		// — same rationale as Client.Queue in connect.go.
-		out:    make(chan command.Result, 1000),
-		doneCh: make(chan struct{}),
+		out:      make(chan command.Result, 1000),
+		doneCh:   make(chan struct{}),
+		cancelCh: make(chan struct{}),
 	}
 }
 
@@ -107,6 +109,7 @@ func (h *streamHandle) Cancel() error {
 		return nil
 	}
 	h.closed = true
+	close(h.cancelCh)
 	h.mu.Unlock()
 
 	_, err := h.listen.CancelContext(context.Background())
@@ -135,13 +138,24 @@ func (h *streamHandle) pump(d *Driver) {
 	defer close(h.doneCh)
 	defer d.unregisterStream(h)
 
-	for sen := range h.listen.Chan() {
-		h.out <- command.Result{Rows: []map[string]string{sen.Map}}
-	}
-
-	if h.listen.Done != nil && h.listen.Done.Word == "!trap" {
-		h.mu.Lock()
-		h.err = fmt.Errorf("mikrotik: device reported error ending stream: %v", h.listen.Done.Map)
-		h.mu.Unlock()
+	for {
+		select {
+		case <-h.cancelCh:
+			return
+		case sen, ok := <-h.listen.Chan():
+			if !ok {
+				if h.listen.Done != nil && h.listen.Done.Word == "!trap" {
+					h.mu.Lock()
+					h.err = fmt.Errorf("mikrotik: device reported error ending stream: %v", h.listen.Done.Map)
+					h.mu.Unlock()
+				}
+				return
+			}
+			select {
+			case h.out <- command.Result{Rows: []map[string]string{sen.Map}}:
+			case <-h.cancelCh:
+				return
+			}
+		}
 	}
 }

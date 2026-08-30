@@ -40,7 +40,7 @@ func startMigratedPostgres(t *testing.T) (*sql.DB, *migrate.Migrate, string) {
 	ctx := context.Background()
 
 	req := testcontainers.ContainerRequest{
-		Image:        "postgres:16-alpine",
+		Image:        "timescale/timescaledb:latest-pg16",
 		ExposedPorts: []string{"5432/tcp"},
 		Env: map[string]string{
 			"POSTGRES_PASSWORD": "test",

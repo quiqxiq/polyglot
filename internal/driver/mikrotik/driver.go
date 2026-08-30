@@ -229,10 +229,14 @@ func (d *Driver) Translate(op command.Operation) (command.Command, error) {
 func (d *Driver) Close() error {
 	d.closeOnce.Do(func() {
 		d.streamsMu.Lock()
+		streams := make([]*streamHandle, 0, len(d.streams))
 		for h := range d.streams {
-			_ = h.Cancel()
+			streams = append(streams, h)
 		}
 		d.streamsMu.Unlock()
+		for _, h := range streams {
+			_ = h.Cancel()
+		}
 
 		close(d.stopCh)
 

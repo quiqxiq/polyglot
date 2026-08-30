@@ -36,7 +36,7 @@ export function DevicePingSparkline({
     if (pingHistory.length === 0) {
       ctx.fillStyle = '#94a3b8'
       ctx.font = '10px ui-sans-serif, system-ui, sans-serif'
-      ctx.fillText('Live ping...', 4, h / 2 + 3)
+      ctx.fillText('Menghubungkan ping...', 4, h / 2 + 3)
       return
     }
 
@@ -45,22 +45,26 @@ export function DevicePingSparkline({
 
     pingHistory.forEach((p, i) => {
       const x = w - (pingHistory.length - i) * barW
-      const barH = Math.max(2, Math.min(h, (p.ms / maxMs) * h))
+      if (!p.alive) {
+        ctx.fillStyle = '#f43f5e' // Rose for timeout / packet loss
+        ctx.fillRect(x + 0.5, 0, Math.max(1, barW - 1.5), h)
+      } else {
+        const barH = Math.max(2, Math.min(h, (p.ms / maxMs) * h))
 
-      let color = '#2fb8ac' // Emerald/Teal normal
-      if (p.ms > 100) {
-        color = '#f43f5e' // Rose high latency
-      } else if (p.ms > 50) {
-        color = '#e8a33d' // Amber moderate latency
+        let color = '#2fb8ac' // Emerald/Teal normal
+        if (p.ms > 100) {
+          color = '#f43f5e' // Rose high latency
+        } else if (p.ms > 50) {
+          color = '#e8a33d' // Amber moderate latency
+        }
+
+        ctx.fillStyle = color
+        ctx.globalAlpha = 0.35 + 0.65 * ((i + 1) / pingHistory.length)
+        ctx.fillRect(x + 0.5, h - barH, Math.max(1, barW - 1.5), barH)
       }
-
-      ctx.fillStyle = color
-      ctx.globalAlpha = 0.35 + 0.65 * ((i + 1) / pingHistory.length)
-      ctx.fillRect(x + 0.5, h - barH, Math.max(1, barW - 1.5), barH)
     })
     ctx.globalAlpha = 1
   }, [pingHistory, maxSamples])
 
   return <canvas ref={canvasRef} className={className} />
 }
-
