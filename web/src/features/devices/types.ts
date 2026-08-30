@@ -15,7 +15,18 @@ export type VendorFilter = 'all' | 'mikrotik' | 'cisco' | 'huawei' | 'genieacs'
 
 export type SortOrder = 'asc' | 'desc'
 
-export type TimePreset = '1h' | '6h' | 'today' | '24h' | '7d' | 'custom'
+export type TimePreset =
+  | '1h'
+  | '6h'
+  | '12h'
+  | '24h'
+  | 'today'
+  | '3d'
+  | '7d'
+  | '15d'
+  | '30d'
+  | 'custom'
+
 
 export type BucketInterval = '' | 'raw' | '1m' | '5m' | '1h'
 

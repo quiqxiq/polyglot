@@ -41,13 +41,6 @@ export function DevicePingAnalyticsDialog({
 	const [endTime, setEndTime] = useState<string>(() => formatTimeInput(initialEnd))
 	const [bucketInterval, setBucketInterval] = useState<string>('1m')
 	const [selectedPreset, setSelectedPreset] = useState<TimePreset>('1h')
-	const [appliedFilters, setAppliedFilters] = useState(() => ({
-		startDate: formatDateInput(initialStart),
-		startTime: formatTimeInput(initialStart),
-		endDate: formatDateInput(initialEnd),
-		endTime: formatTimeInput(initialEnd),
-		bucketInterval: '1m',
-	}))
 
   const pingTarget = device?.pingTarget || device?.extra?.ping_target || '8.8.8.8'
 
@@ -59,85 +52,67 @@ export function DevicePingAnalyticsDialog({
 		let nextBucket = '1m'
 		if (preset === '1h') {
 			past = new Date(cur.getTime() - 60 * 60 * 1000)
+			nextBucket = '1m'
 		} else if (preset === '6h') {
 			past = new Date(cur.getTime() - 6 * 60 * 60 * 1000)
+			nextBucket = '1m'
+		} else if (preset === '12h') {
+			past = new Date(cur.getTime() - 12 * 60 * 60 * 1000)
+			nextBucket = '5m'
 		} else if (preset === 'today') {
 			past = new Date(cur.getFullYear(), cur.getMonth(), cur.getDate(), 0, 0, 0)
+			nextBucket = '5m'
 		} else if (preset === '24h') {
 			past = new Date(cur.getTime() - 24 * 60 * 60 * 1000)
+			nextBucket = '5m'
+		} else if (preset === '3d') {
+			past = new Date(cur.getTime() - 3 * 24 * 60 * 60 * 1000)
 			nextBucket = '5m'
 		} else if (preset === '7d') {
 			past = new Date(cur.getTime() - 7 * 24 * 60 * 60 * 1000)
 			nextBucket = '5m'
+		} else if (preset === '15d') {
+			past = new Date(cur.getTime() - 15 * 24 * 60 * 60 * 1000)
+			nextBucket = '1h'
+		} else if (preset === '30d') {
+			past = new Date(cur.getTime() - 30 * 24 * 60 * 60 * 1000)
+			nextBucket = '1h'
 		}
 		setStartDate(formatDateInput(past))
 		setStartTime(formatTimeInput(past))
 		setEndDate(formatDateInput(cur))
 		setEndTime(formatTimeInput(cur))
 		setBucketInterval(nextBucket)
-		setAppliedFilters({
-			startDate: formatDateInput(past),
-			startTime: formatTimeInput(past),
-			endDate: formatDateInput(cur),
-			endTime: formatTimeInput(cur),
-			bucketInterval: nextBucket,
-		})
 	}, [])
 
-	const applyFilters = useCallback(() => {
-		const sTime = startTime.includes(':') ? startTime : `${startTime}:00`
-		const eTime = endTime.includes(':') ? endTime : `${endTime}:00`
-		const startObj = new Date(`${startDate}T${sTime}`)
-		const endObj = new Date(`${endDate}T${eTime}`)
-
-		if (isNaN(startObj.getTime()) || isNaN(endObj.getTime()) || ! (startObj < endObj)) {
-			// Adjust start to be 1 hour prior to end if inverted
-			const fixedPast = new Date(endObj.getTime() - 60 * 60 * 1000)
-			const fixedStartD = formatDateInput(fixedPast)
-			const fixedStartT = formatTimeInput(fixedPast)
-			setStartDate(fixedStartD)
-			setStartTime(fixedStartT)
-			setAppliedFilters({
-				startDate: fixedStartD,
-				startTime: fixedStartT,
-				endDate,
-				endTime,
-				bucketInterval,
-			})
-			return
-		}
-
-		setAppliedFilters({ startDate, startTime, endDate, endTime, bucketInterval })
-	}, [startDate, startTime, endDate, endTime, bucketInterval])
-
-	// Calculate RFC3339 timestamps for historical initial load
+	// Calculate RFC3339 timestamps for historical query
 	const startRFC = useMemo(() => {
 		try {
-			const sTime = appliedFilters.startTime.includes(':') ? appliedFilters.startTime : `${appliedFilters.startTime}:00`
+			const sTime = startTime.includes(':') ? startTime : `${startTime}:00`
 			const parts = sTime.split(':')
 			const hh = (parts[0] || '00').padStart(2, '0')
 			const mm = (parts[1] || '00').padStart(2, '0')
 			const ss = (parts[2] || '00').padStart(2, '0')
-			const d = new Date(`${appliedFilters.startDate}T${hh}:${mm}:${ss}`)
+			const d = new Date(`${startDate}T${hh}:${mm}:${ss}`)
 			return isNaN(d.getTime()) ? undefined : d.toISOString()
 		} catch {
 			return undefined
 		}
-	}, [appliedFilters.startDate, appliedFilters.startTime])
+	}, [startDate, startTime])
 
 	const endRFC = useMemo(() => {
 		try {
-			const eTime = appliedFilters.endTime.includes(':') ? appliedFilters.endTime : `${appliedFilters.endTime}:00`
+			const eTime = endTime.includes(':') ? endTime : `${endTime}:00`
 			const parts = eTime.split(':')
 			const hh = (parts[0] || '23').padStart(2, '0')
 			const mm = (parts[1] || '59').padStart(2, '0')
 			const ss = (parts[2] || '59').padStart(2, '0')
-			const d = new Date(`${appliedFilters.endDate}T${hh}:${mm}:${ss}.999`)
+			const d = new Date(`${endDate}T${hh}:${mm}:${ss}.999`)
 			return isNaN(d.getTime()) ? undefined : d.toISOString()
 		} catch {
 			return undefined
 		}
-	}, [appliedFilters.endDate, appliedFilters.endTime])
+	}, [endDate, endTime])
 
   const {
     data: metricsData,
@@ -149,7 +124,7 @@ export function DevicePingAnalyticsDialog({
       deviceId: device?.id || '',
       startTime: startRFC,
       endTime: endRFC,
-			bucketInterval: appliedFilters.bucketInterval === 'raw' ? '' : appliedFilters.bucketInterval,
+			bucketInterval: bucketInterval === 'raw' ? '' : bucketInterval,
     },
     open && Boolean(device?.id)
   )
@@ -191,7 +166,6 @@ export function DevicePingAnalyticsDialog({
           onEndTimeChange={setEndTime}
           bucketInterval={bucketInterval}
           onBucketIntervalChange={setBucketInterval}
-          onApply={applyFilters}
         />
 
         {/* Main Content Area */}
