@@ -1,16 +1,15 @@
 //go:build mikrotik_e2e
 
-package app
+package provisioner
 
 // E2E test siklus hidup akun router terhadap MikroTik SUNGGUHAN.
 //
 // Gate:
-//   - Hanya jalan bila MIKROTIK_TEST_HOST terisi (.env project sudah
-//     menyediakannya). Selain itu test di-skip — `go test ./...` tetap hijau.
+//   - Hanya jalan bila MIKROTIK_TEST_HOST terisi (.env project sudah menyediakannya). Selain itu test di-skip.
 //   - Semua artefak memakai prefix "e2e-" dan dibersihkan di cleanup.
 //   - Rule NAT redirect dibuat Disabled=true (tak mengganggu trafik).
 //
-// Jalankan eksplisit:  go test ./internal/app/ -run TestRouterAccountManagerE2E -v
+// Jalankan eksplisit: go test -tags=mikrotik_e2e ./internal/adapter/provisioner/ -run TestProvisioner_E2E -v
 
 import (
 	"context"
@@ -23,17 +22,16 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
-	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
+	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 )
 
 func e2eTarget(t *testing.T) device.Target {
 	t.Helper()
-	// Muat .env repo (path ../../.env dari internal/app) bila ada.
-	_ = godotenv.Load(filepath.Join("..", "..", ".env"))
+	_ = godotenv.Load(filepath.Join("..", "..", "..", ".env"))
 	host := os.Getenv("MIKROTIK_TEST_HOST")
 	if host == "" {
 		t.Skip("MIKROTIK_TEST_HOST tidak diset — lewati E2E real router")
@@ -53,7 +51,7 @@ func e2eTarget(t *testing.T) device.Target {
 	}
 }
 
-func TestRouterAccountManager_E2E(t *testing.T) {
+func TestProvisioner_E2E(t *testing.T) {
 	if testing.Short() {
 		t.Skip("short mode")
 	}
@@ -66,16 +64,16 @@ func TestRouterAccountManager_E2E(t *testing.T) {
 	}
 	requireNoErr(t, err, "connect driver")
 
-	// Executor pre-approved: E2E butuh command destruktif (remove secret).
 	exec := networkUC.ExecuteCommandPreApproved
 
 	gw := mikrotik.NewGateway(exec)
-	mgr := &routerAccountManager{
-		resolve: func(context.Context, string) (port.DeviceDriver, error) { return drv, nil },
-		ppp:     gw,
-		hot:     nil, // jalur hotspot tidak dieksekusi di E2E PPPoE ini
-		fw:      gw,
-	}
+	mgr := NewWithResolver(
+		func(context.Context, string) (port.DeviceDriver, error) { return drv, nil },
+		gw,
+		nil,
+		gw,
+		nil,
+	)
 
 	const (
 		deviceID      = "e2e-direct"
@@ -91,7 +89,6 @@ func TestRouterAccountManager_E2E(t *testing.T) {
 		Comment: "polyglot:e2e",
 	}
 
-	// Cleanup best-effort apa pun hasil test.
 	t.Cleanup(func() {
 		cctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cancel()
@@ -128,7 +125,7 @@ func TestRouterAccountManager_E2E(t *testing.T) {
 			PaymentPort:    "8080",
 			Protocols:      []string{"tcp"},
 			DstPorts:       []string{"80", "443"},
-			Disabled:       true, // aman: rule nonaktif
+			Disabled:       true,
 		},
 	}
 	requireNoErr(t, mgr.Isolate(ctx, deviceID, "PPPOE", username, opt), "isolate")
@@ -142,7 +139,7 @@ func TestRouterAccountManager_E2E(t *testing.T) {
 		return s.Profile == planProfile
 	}, "setelah restore")
 
-	// 4. Suspend: disabled=true (bukan pindah profil).
+	// 4. Suspend: disabled=true.
 	requireNoErr(t, mgr.Suspend(ctx, deviceID, "PPPOE", username), "suspend")
 	assertSecret(t, ctx, gw, drv, username, func(s port.PPPoESecret) bool {
 		return s.Disabled
@@ -154,7 +151,7 @@ func TestRouterAccountManager_E2E(t *testing.T) {
 	requireNoErr(t, err, "find after terminate")
 	requireTrue(t, gone == nil, "secret harus terhapus setelah terminate")
 
-	// Rule redirect app tetap ada (disabled) untuk audit.
+	// Rule redirect tetap ada (disabled) untuk audit.
 	rules, err := gw.ListFirewallNATRules(ctx, drv, "dstnat", "", addressList)
 	requireNoErr(t, err, "list nat")
 	rules = mikrotik.FindIsolationRedirectRules(rules)
@@ -163,8 +160,6 @@ func TestRouterAccountManager_E2E(t *testing.T) {
 		requireTrue(t, r.Disabled, "rule redirect E2E wajib disabled")
 	}
 }
-
-// ─── helpers ────────────────────────────────────────────────────────────
 
 func requireNoErr(t *testing.T, err error, what string) {
 	t.Helper()

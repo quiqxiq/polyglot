@@ -53,7 +53,7 @@ security:
 	go run golang.org/x/vuln/cmd/govulncheck@latest ./...
 
 test-mikrotik-e2e:
-	go test -tags=mikrotik_e2e ./internal/app -run TestRouterAccountManager_E2E -v
+	go test -tags=mikrotik_e2e ./internal/adapter/provisioner -run TestProvisioner_E2E -v
 
 check-connect-errors:
 	bash scripts/check-connect-errors.sh

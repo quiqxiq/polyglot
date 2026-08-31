@@ -34,6 +34,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
+	"github.com/quixiq/polyglot/internal/adapter/provisioner"
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
 	storageAdapter "github.com/quixiq/polyglot/internal/adapter/storage"
 	tripay "github.com/quixiq/polyglot/internal/adapter/tripay"
@@ -198,9 +199,9 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	gwtxRepo := postgres.NewGatewayTransactionRepository(pgStore.DB())
 	paymentReader := postgres.NewPaymentReader(pgStore.DB())
 
-	accountMgr := newRouterAccountManager(reg, sessionGateway, hotGateway, sessionGateway, queueGateway)
+	accountMgr := provisioner.New(reg, sessionGateway, hotGateway, sessionGateway, queueGateway)
 	paymentProc := postgres.NewPaymentProcessor(pgStore.DB())
-	paymentProc.OnPaid = buildOnPaidRestore(accountMgr, subRepo, planRepo, settingRepo)
+	paymentProc.OnPaid = provisioner.BuildOnPaidRestore(accountMgr, subRepo, planRepo, settingRepo)
 	waSender := whatsappadapter.NewSenderAdapter(waManager, pgStore.FindAllSessions)
 	tripayAdapter := tripay.NewAdapter(settingRepo)
 
@@ -474,6 +475,11 @@ func (a *App) Shutdown(ctx context.Context) error {
 
 func loadInitialDevices(pgStore *postgres.Store, encKey string) (port.DeviceRepository, port.CredentialVault) {
 	return postgres.NewDeviceRepository(pgStore.DB()), postgres.NewCredentialVault(pgStore.DB(), encKey)
+}
+
+func timeNowUTC() time.Time {
+	n := time.Now().UTC()
+	return time.Date(n.Year(), n.Month(), n.Day(), 0, 0, 0, 0, time.UTC)
 }
 
 var _ = devicepb.Registration{}
