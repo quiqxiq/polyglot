@@ -41,6 +41,8 @@ func NewBillingServiceHandler(
 	mux.Handle("/"+serviceName+"/ResumeSubscription", connect.NewUnaryHandler("/"+serviceName+"/ResumeSubscription", handler.ResumeSubscription, opts...))
 	mux.Handle("/"+serviceName+"/TerminateSubscription", connect.NewUnaryHandler("/"+serviceName+"/TerminateSubscription", handler.TerminateSubscription, opts...))
 	mux.Handle("/"+serviceName+"/ActivateSubscription", connect.NewUnaryHandler("/"+serviceName+"/ActivateSubscription", handler.ActivateSubscription, opts...))
+	mux.Handle("/"+serviceName+"/IsolateSubscription", connect.NewUnaryHandler("/"+serviceName+"/IsolateSubscription", handler.IsolateSubscription, opts...))
+	mux.Handle("/"+serviceName+"/RestoreSubscription", connect.NewUnaryHandler("/"+serviceName+"/RestoreSubscription", handler.RestoreSubscription, opts...))
 
 	mux.Handle("/"+serviceName+"/ListPlans", connect.NewUnaryHandler("/"+serviceName+"/ListPlans", handler.ListPlans, opts...))
 	mux.Handle("/"+serviceName+"/GetPlan", connect.NewUnaryHandler("/"+serviceName+"/GetPlan", handler.GetPlan, opts...))
