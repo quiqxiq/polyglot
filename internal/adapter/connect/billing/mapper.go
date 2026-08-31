@@ -5,6 +5,7 @@ import (
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
+	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 )
 
 // ─── Invoice ────────────────────────────────────────────────────────────
@@ -77,6 +78,8 @@ func toProtoSubscription(sub *domainSub.Subscription) *devicepb.Subscription {
 		DeviceId:        devID,
 		ServiceType:     sub.ServiceType,
 		RemoteUsername:  sub.RemoteUsername,
+		RateLimit:       sub.RateLimit,
+		RouterProfile:   sub.RouterProfile,
 		ProvisionStatus: sub.ProvisionStatus,
 		BillingCycle:    sub.BillingCycle,
 		BillingDay:      int32(sub.BillingDay),
@@ -141,6 +144,64 @@ func toProtoSubscriptionList(subs []domainSub.Subscription) []*devicepb.Subscrip
 	out := make([]*devicepb.Subscription, len(subs))
 	for i := range subs {
 		out[i] = toProtoSubscription(&subs[i])
+	}
+	return out
+}
+
+func toProtoSubscriptionDetail(detail *billingUC.SubscriptionDetail) *devicepb.Subscription {
+	if detail == nil {
+		return nil
+	}
+	pb := toProtoSubscription(&detail.Subscription)
+	if pb == nil {
+		return nil
+	}
+	if detail.Plan != nil {
+		pb.PlanName = detail.Plan.Name
+		pb.PlanPrice = detail.Plan.Price
+		rateLimit := detail.Plan.RateLimitWithBurst()
+		if rateLimit == "" {
+			rateLimit = detail.Plan.RateLimit()
+		}
+		if pb.RateLimit == "" {
+			pb.RateLimit = rateLimit
+		}
+		if pb.RouterProfile == "" {
+			pb.RouterProfile = detail.Plan.Name
+		}
+		if pb.PppoeConfig != nil {
+			if pb.PppoeConfig.RateLimit == "" {
+				pb.PppoeConfig.RateLimit = rateLimit
+			}
+			if pb.PppoeConfig.RouterProfile == "" {
+				pb.PppoeConfig.RouterProfile = detail.Plan.Name
+			}
+		}
+		if pb.HotspotConfig != nil {
+			if pb.HotspotConfig.RateLimit == "" {
+				pb.HotspotConfig.RateLimit = rateLimit
+			}
+			if pb.HotspotConfig.RouterProfile == "" {
+				pb.HotspotConfig.RouterProfile = detail.Plan.Name
+			}
+		}
+	}
+	if detail.Customer != nil {
+		pb.CustomerName = detail.Customer.Name
+		pb.CustomerPhone = detail.Customer.Phone
+		pb.CustomerCode = detail.Customer.CustomerCode
+	}
+	if detail.Device != nil {
+		pb.DeviceName = detail.Device.Name
+		pb.DeviceHost = detail.Device.Host
+	}
+	return pb
+}
+
+func toProtoSubscriptionDetailList(details []billingUC.SubscriptionDetail) []*devicepb.Subscription {
+	out := make([]*devicepb.Subscription, len(details))
+	for i := range details {
+		out[i] = toProtoSubscriptionDetail(&details[i])
 	}
 	return out
 }

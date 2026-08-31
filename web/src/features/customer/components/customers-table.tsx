@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/table'
 import { DataTablePagination } from '@/components/data-table'
 import type { Customer } from '@/gen/v1/customer_pb'
-import { customersColumns as columns } from './customers-columns'
+import { useCustomersColumns } from './customers-columns'
 
 interface CustomersTableProps {
   data: Customer[]
@@ -31,6 +31,7 @@ interface CustomersTableProps {
 }
 
 export function CustomersTable({ data, isLoading }: CustomersTableProps) {
+  const columns = useCustomersColumns()
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [globalFilter, setGlobalFilter] = useState('')

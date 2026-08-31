@@ -7,7 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
+	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port/mocktest"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 )
@@ -15,7 +17,7 @@ import (
 func TestManageCustomerUseCase_CreateCustomer(t *testing.T) {
 	ctx := context.Background()
 	repo := mocktest.NewFakeCustomerRepo()
-	uc := customerUC.NewManageCustomerUseCase(repo)
+	uc := customerUC.NewManageCustomerUseCase(repo, nil, nil)
 
 	t.Run("creates customer with auto-generated id, customer_code, and portal_code", func(t *testing.T) {
 		lat := -6.2088
@@ -43,8 +45,8 @@ func TestManageCustomerUseCase_CreateCustomer(t *testing.T) {
 		// Verify stored in repo
 		stored, err := uc.GetCustomer(ctx, created.ID)
 		require.NoError(t, err)
-		assert.Equal(t, created.ID, stored.ID)
-		assert.Equal(t, created.CustomerCode, stored.CustomerCode)
+		assert.Equal(t, created.ID, stored.Customer.ID)
+		assert.Equal(t, created.CustomerCode, stored.Customer.CustomerCode)
 	})
 
 	t.Run("returns error when name is empty", func(t *testing.T) {
@@ -59,7 +61,7 @@ func TestManageCustomerUseCase_CreateCustomer(t *testing.T) {
 func TestManageCustomerUseCase_UpdateCustomer(t *testing.T) {
 	ctx := context.Background()
 	repo := mocktest.NewFakeCustomerRepo()
-	uc := customerUC.NewManageCustomerUseCase(repo)
+	uc := customerUC.NewManageCustomerUseCase(repo, nil, nil)
 
 	c := domainCustomer.Customer{
 		Name:    "Joko",
@@ -88,7 +90,7 @@ func TestManageCustomerUseCase_UpdateCustomer(t *testing.T) {
 func TestManageCustomerUseCase_DeleteCustomer(t *testing.T) {
 	ctx := context.Background()
 	repo := mocktest.NewFakeCustomerRepo()
-	uc := customerUC.NewManageCustomerUseCase(repo)
+	uc := customerUC.NewManageCustomerUseCase(repo, nil, nil)
 
 	created, err := uc.CreateCustomer(ctx, domainCustomer.Customer{Name: "Ahmad", Phone: "0822222222"})
 	require.NoError(t, err)
@@ -98,4 +100,55 @@ func TestManageCustomerUseCase_DeleteCustomer(t *testing.T) {
 
 	_, err = uc.GetCustomer(ctx, created.ID)
 	assert.Error(t, err)
+}
+
+func TestManageCustomerUseCase_ListAndGetEnriched(t *testing.T) {
+	ctx := context.Background()
+	custRepo := mocktest.NewFakeCustomerRepo()
+	subRepo := mocktest.NewFakeSubscriptionRepo()
+	invRepo := mocktest.NewFakeInvoiceRepo()
+
+	uc := customerUC.NewManageCustomerUseCase(custRepo, subRepo, invRepo)
+
+	c1, err := uc.CreateCustomer(ctx, domainCustomer.Customer{Name: "Pelanggan 1", Phone: "081111111"})
+	require.NoError(t, err)
+
+	// Tambah 2 subscription aktif untuk c1
+	err = subRepo.Save(ctx, domainSub.Subscription{
+		ID:         "sub-1",
+		CustomerID: c1.ID,
+		Status:     domainSub.StatusActive,
+	})
+	require.NoError(t, err)
+	err = subRepo.Save(ctx, domainSub.Subscription{
+		ID:         "sub-2",
+		CustomerID: c1.ID,
+		Status:     domainSub.StatusIsolated,
+	})
+	require.NoError(t, err)
+
+	// Tambah 1 invoice unpaid
+	err = invRepo.Save(ctx, domainBilling.Invoice{
+		ID:         "inv-1",
+		CustomerID: c1.ID,
+		Status:     domainBilling.StatusUnpaid,
+	})
+	require.NoError(t, err)
+
+	t.Run("ListCustomers returns populated counters", func(t *testing.T) {
+		list, err := uc.ListCustomers(ctx)
+		require.NoError(t, err)
+		require.Len(t, list, 1)
+		assert.Equal(t, c1.ID, list[0].Customer.ID)
+		assert.Equal(t, 2, list[0].ActiveSubscriptionsCount)
+		assert.Equal(t, 1, list[0].UnpaidInvoicesCount)
+	})
+
+	t.Run("GetCustomer returns populated counters", func(t *testing.T) {
+		detail, err := uc.GetCustomer(ctx, c1.ID)
+		require.NoError(t, err)
+		assert.Equal(t, c1.ID, detail.Customer.ID)
+		assert.Equal(t, 2, detail.ActiveSubscriptionsCount)
+		assert.Equal(t, 1, detail.UnpaidInvoicesCount)
+	})
 }

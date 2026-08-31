@@ -209,7 +209,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	refreshUseCase := authUC.NewRefreshTokenUseCase(userRepo, jwtService, refreshSvc, casbinEnforcer)
 	manageUserUseCase := userUC.NewManageUserUseCase(userRepo, casbinEnforcer)
 	manageSettingUseCase := settingUC.NewManageSettingUseCase(settingRepo)
-	custUC := customerUC.NewManageCustomerUseCase(customerRepo)
+	custUC := customerUC.NewManageCustomerUseCase(customerRepo, subRepo, invRepo)
 	devUC := deviceUC.NewManageDeviceUseCase(repo, vault, reg, sessionGateway)
 	openTermUC := networkUC.NewOpenTerminalUseCase(repo, vault, genericssh.DialSSHPty)
 	hotUC := hotspotUC.New("internal/template", hotGateway)
@@ -217,7 +217,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	pppUseCase := pppUC.New(sessionGateway)
 
 	invUC := billingUC.NewInvoiceUseCase(invRepo)
-	subUC := billingUC.NewSubscriptionUseCase(subRepo)
+	subUC := billingUC.NewSubscriptionUseCase(subRepo, planRepo, customerRepo, repo)
 	planUC := billingUC.NewPlanUseCase(planRepo, subRepo, accountMgr)
 	checkoutUC := billingUC.NewCheckoutUseCase(invRepo, customerRepo, paymentProc)
 	lifecycleUC := billingUC.NewSubscriptionLifecycleUseCase(subRepo, planRepo, accountMgr, auditLogRepo)

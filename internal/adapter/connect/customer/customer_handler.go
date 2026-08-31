@@ -6,6 +6,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -18,6 +19,17 @@ func NewCustomerConnectHandler(uc *customerUC.ManageCustomerUseCase) *CustomerCo
 	return &CustomerConnectHandler{customerUC: uc}
 }
 
+func (h *CustomerConnectHandler) toEnrichedProto(ctx context.Context, c *domainCustomer.Customer) *devicepb.Customer {
+	if c == nil {
+		return nil
+	}
+	if h.customerUC != nil {
+		detail := h.customerUC.Enrich(ctx, *c)
+		return toProtoCustomerDetail(&detail)
+	}
+	return toProtoCustomer(c)
+}
+
 func (h *CustomerConnectHandler) ListCustomers(ctx context.Context, req *connect.Request[devicepb.ListCustomersRequest]) (*connect.Response[devicepb.ListCustomersResponse], error) {
 	if h.customerUC == nil {
 		return nil, response.Unavailable("customer usecase unavailable")
@@ -27,7 +39,7 @@ func (h *CustomerConnectHandler) ListCustomers(ctx context.Context, req *connect
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.ListCustomersResponse{
-		Customers: toProtoCustomerList(customers),
+		Customers: toProtoCustomerDetailList(customers),
 	}), nil
 }
 
@@ -35,12 +47,12 @@ func (h *CustomerConnectHandler) GetCustomer(ctx context.Context, req *connect.R
 	if h.customerUC == nil {
 		return nil, response.Unavailable("customer usecase unavailable")
 	}
-	c, err := h.customerUC.GetCustomer(ctx, req.Msg.Id)
+	detail, err := h.customerUC.GetCustomer(ctx, req.Msg.Id)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.GetCustomerResponse{
-		Customer: toProtoCustomer(&c),
+		Customer: toProtoCustomerDetail(&detail),
 	}), nil
 }
 
@@ -54,7 +66,7 @@ func (h *CustomerConnectHandler) CreateCustomer(ctx context.Context, req *connec
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.CreateCustomerResponse{
-		Customer: toProtoCustomer(&created),
+		Customer: h.toEnrichedProto(ctx, &created),
 		Message:  "Customer created successfully",
 	}), nil
 }
@@ -69,7 +81,7 @@ func (h *CustomerConnectHandler) UpdateCustomer(ctx context.Context, req *connec
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.UpdateCustomerResponse{
-		Customer: toProtoCustomer(&updated),
+		Customer: h.toEnrichedProto(ctx, &updated),
 		Message:  "Customer updated successfully",
 	}), nil
 }
@@ -91,7 +103,7 @@ func (h *CustomerConnectHandler) FindByPhone(ctx context.Context, req *connect.R
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.FindCustomerResponse{Customer: toProtoCustomer(&c)}), nil
+	return connect.NewResponse(&devicepb.FindCustomerResponse{Customer: h.toEnrichedProto(ctx, &c)}), nil
 }
 
 func (h *CustomerConnectHandler) FindByCustomerCode(ctx context.Context, req *connect.Request[devicepb.FindCustomerByCodeRequest]) (*connect.Response[devicepb.FindCustomerResponse], error) {
@@ -99,7 +111,7 @@ func (h *CustomerConnectHandler) FindByCustomerCode(ctx context.Context, req *co
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.FindCustomerResponse{Customer: toProtoCustomer(&c)}), nil
+	return connect.NewResponse(&devicepb.FindCustomerResponse{Customer: h.toEnrichedProto(ctx, &c)}), nil
 }
 
 func (h *CustomerConnectHandler) FindByPortalCode(ctx context.Context, req *connect.Request[devicepb.FindCustomerByPortalCodeRequest]) (*connect.Response[devicepb.FindCustomerResponse], error) {
@@ -107,7 +119,7 @@ func (h *CustomerConnectHandler) FindByPortalCode(ctx context.Context, req *conn
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	return connect.NewResponse(&devicepb.FindCustomerResponse{Customer: toProtoCustomer(&c)}), nil
+	return connect.NewResponse(&devicepb.FindCustomerResponse{Customer: h.toEnrichedProto(ctx, &c)}), nil
 }
 
 func (h *CustomerConnectHandler) ListSubscriptions(ctx context.Context, req *connect.Request[devicepb.ListSubscriptionsRequest]) (*connect.Response[devicepb.ListSubscriptionsResponse], error) {

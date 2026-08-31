@@ -31,7 +31,7 @@ func newBillingConnectFixture(t *testing.T) (*connectBilling.BillingConnectHandl
 
 	invUC := billingUC.NewInvoiceUseCase(invRepo)
 	checkoutUC := billingUC.NewCheckoutUseCase(invRepo, custRepo, paymentProc)
-	subUC := billingUC.NewSubscriptionUseCase(subRepo)
+	subUC := billingUC.NewSubscriptionUseCase(subRepo, planRepo, custRepo, nil)
 	lifecycleUC := billingUC.NewSubscriptionLifecycleUseCase(subRepo, planRepo, manager, audit)
 	planUC := billingUC.NewPlanUseCase(planRepo, subRepo, manager)
 	runBillingUC := billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo)
@@ -137,4 +137,45 @@ func TestBillingConnectHandler_GenerateInvoices(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, int32(1), genResp.Msg.Created)
 	assert.Equal(t, int32(0), genResp.Msg.Skipped)
+}
+
+func TestBillingConnectHandler_SubscriptionEnrichment(t *testing.T) {
+	handler, _, subRepo, planRepo := newBillingConnectFixture(t)
+	ctx := context.Background()
+
+	planRepo.Seed(domainPlan.ServicePlan{
+		ID:                    "plan-50m",
+		Name:                  "PAKET-50M",
+		ServiceType:           "PPPOE",
+		BandwidthDownloadKbps: 50000,
+		BandwidthUploadKbps:   50000,
+		Price:                 250000,
+		IsActive:              true,
+	})
+	subRepo.Seed(domainSub.Subscription{
+		ID:             "sub-100",
+		CustomerID:     "cust-1",
+		PlanID:         "plan-50m",
+		ServiceType:    "PPPOE",
+		RemoteUsername: "user_pppoe",
+		Status:         domainSub.StatusActive,
+	})
+
+	// 1. GetSubscription
+	getResp, err := handler.GetSubscription(ctx, connect.NewRequest(&devicepb.GetSubscriptionRequest{Id: "sub-100"}))
+	require.NoError(t, err)
+	sub := getResp.Msg.Subscription
+	assert.Equal(t, "sub-100", sub.Id)
+	assert.Equal(t, "PAKET-50M", sub.PlanName)
+	assert.Equal(t, "50M/50M", sub.RateLimit)
+	require.NotNil(t, sub.PppoeConfig)
+	assert.Equal(t, "50M/50M", sub.PppoeConfig.RateLimit)
+	assert.Equal(t, "PAKET-50M", sub.PppoeConfig.RouterProfile)
+
+	// 2. ListSubscriptions
+	listResp, err := handler.ListSubscriptions(ctx, connect.NewRequest(&devicepb.ListSubscriptionsRequest{CustomerId: "cust-1"}))
+	require.NoError(t, err)
+	require.Len(t, listResp.Msg.Subscriptions, 1)
+	assert.Equal(t, "PAKET-50M", listResp.Msg.Subscriptions[0].PlanName)
+	assert.Equal(t, "50M/50M", listResp.Msg.Subscriptions[0].RateLimit)
 }

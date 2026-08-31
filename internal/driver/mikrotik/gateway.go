@@ -176,14 +176,17 @@ func (g *Gateway) MonitorTrafficOnce(ctx context.Context, driver port.DeviceDriv
 
 // ─── port.FirewallGateway Delegation ──────────────────────────────────────────
 
+// EnsureIsolationRedirect ensures isolation redirect rule is in place.
 func (g *Gateway) EnsureIsolationRedirect(ctx context.Context, driver port.DeviceDriver, cfg port.IsolationRedirectConfig) error {
 	return g.fireGW.EnsureIsolationRedirect(ctx, driver, cfg)
 }
 
+// EnsureIsolationFilter ensures isolation filter rule is in place.
 func (g *Gateway) EnsureIsolationFilter(ctx context.Context, driver port.DeviceDriver, srcAddressList, paymentHost string) error {
 	return g.fireGW.EnsureIsolationFilter(ctx, driver, srcAddressList, paymentHost)
 }
 
+// DisableIsolationRedirect disables isolation redirect rule.
 func (g *Gateway) DisableIsolationRedirect(ctx context.Context, driver port.DeviceDriver) error {
 	return g.fireGW.DisableIsolationRedirect(ctx, driver)
 }

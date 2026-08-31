@@ -5,6 +5,7 @@ import (
 	"time"
 
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
+	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 
 	"connectrpc.com/connect"
 
@@ -157,16 +158,27 @@ func (h *BillingConnectHandler) CashierPay(ctx context.Context, req *connect.Req
 
 // ─── Langganan & lifecycle ──────────────────────────────────────────────
 
+func (h *BillingConnectHandler) toEnrichedProto(ctx context.Context, sub *domainSub.Subscription) *devicepb.Subscription {
+	if sub == nil {
+		return nil
+	}
+	if h.subUC != nil {
+		detail := h.subUC.Enrich(ctx, *sub)
+		return toProtoSubscriptionDetail(&detail)
+	}
+	return toProtoSubscription(sub)
+}
+
 func (h *BillingConnectHandler) ListSubscriptions(ctx context.Context, req *connect.Request[devicepb.ListSubscriptionsRequest]) (*connect.Response[devicepb.ListSubscriptionsResponse], error) {
 	if h.subUC == nil {
 		return nil, response.Unavailable("subscription usecase unavailable")
 	}
-	subs, err := h.subUC.ListSubscriptions(ctx, req.Msg.CustomerId)
+	details, err := h.subUC.ListSubscriptions(ctx, req.Msg.CustomerId)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.ListSubscriptionsResponse{
-		Subscriptions: toProtoSubscriptionList(subs),
+		Subscriptions: toProtoSubscriptionDetailList(details),
 	}), nil
 }
 
@@ -174,12 +186,12 @@ func (h *BillingConnectHandler) GetSubscription(ctx context.Context, req *connec
 	if h.subUC == nil {
 		return nil, response.Unavailable("subscription usecase unavailable")
 	}
-	sub, err := h.subUC.GetSubscription(ctx, req.Msg.Id)
+	detail, err := h.subUC.GetSubscription(ctx, req.Msg.Id)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.GetSubscriptionResponse{
-		Subscription: toProtoSubscription(&sub),
+		Subscription: toProtoSubscriptionDetail(&detail),
 	}), nil
 }
 
@@ -192,7 +204,7 @@ func (h *BillingConnectHandler) ChangePlan(ctx context.Context, req *connect.Req
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.ChangePlanResponse{
-		Subscription: toProtoSubscription(&sub),
+		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
@@ -205,7 +217,7 @@ func (h *BillingConnectHandler) SuspendSubscription(ctx context.Context, req *co
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.SuspendSubscriptionResponse{
-		Subscription: toProtoSubscription(&sub),
+		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
@@ -218,7 +230,7 @@ func (h *BillingConnectHandler) ResumeSubscription(ctx context.Context, req *con
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.ResumeSubscriptionResponse{
-		Subscription: toProtoSubscription(&sub),
+		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
@@ -231,7 +243,7 @@ func (h *BillingConnectHandler) TerminateSubscription(ctx context.Context, req *
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.TerminateSubscriptionResponse{
-		Subscription: toProtoSubscription(&sub),
+		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
@@ -244,7 +256,7 @@ func (h *BillingConnectHandler) ActivateSubscription(ctx context.Context, req *c
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.ActivateSubscriptionResponse{
-		Subscription: toProtoSubscription(&sub),
+		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
@@ -258,7 +270,7 @@ func (h *BillingConnectHandler) IsolateSubscription(ctx context.Context, req *co
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.IsolateSubscriptionResponse{
-		Subscription: toProtoSubscription(&sub),
+		Subscription: h.toEnrichedProto(ctx, &sub),
 		Message:      "Pelanggan berhasil diisolir",
 	}), nil
 }
@@ -273,7 +285,7 @@ func (h *BillingConnectHandler) RestoreSubscription(ctx context.Context, req *co
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.RestoreSubscriptionResponse{
-		Subscription: toProtoSubscription(&sub),
+		Subscription: h.toEnrichedProto(ctx, &sub),
 		Message:      "Layanan pelanggan berhasil dipulihkan",
 	}), nil
 }
@@ -318,7 +330,7 @@ func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *con
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.CreateSubscriptionResponse{
-		Subscription: toProtoSubscription(&sub),
+		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 
@@ -363,7 +375,7 @@ func (h *BillingConnectHandler) UpdateSubscription(ctx context.Context, req *con
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.UpdateSubscriptionResponse{
-		Subscription: toProtoSubscription(&sub),
+		Subscription: h.toEnrichedProto(ctx, &sub),
 	}), nil
 }
 

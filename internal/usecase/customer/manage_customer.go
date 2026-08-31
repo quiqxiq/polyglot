@@ -5,39 +5,120 @@ import (
 	"fmt"
 	"time"
 
+	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
 )
 
+// Detail menggabungkan domain Customer dengan agregasi counter aktif
+// (Zero Waterfall untuk tampilan tabel & CRM).
+type Detail struct {
+	Customer                 customer.Customer
+	ActiveSubscriptionsCount int
+	UnpaidInvoicesCount      int
+}
+
 // ManageCustomerUseCase orchestrates customer CRUD and subscription management.
 type ManageCustomerUseCase struct {
-	repo port.CustomerRepository
+	repo    port.CustomerRepository
+	subRepo port.SubscriptionRepository
+	invRepo port.InvoiceRepository
 }
 
 // NewManageCustomerUseCase constructs a new ManageCustomerUseCase.
-func NewManageCustomerUseCase(repo port.CustomerRepository) *ManageCustomerUseCase {
-	return &ManageCustomerUseCase{repo: repo}
+func NewManageCustomerUseCase(
+	repo port.CustomerRepository,
+	subRepo port.SubscriptionRepository,
+	invRepo port.InvoiceRepository,
+) *ManageCustomerUseCase {
+	return &ManageCustomerUseCase{
+		repo:    repo,
+		subRepo: subRepo,
+		invRepo: invRepo,
+	}
 }
 
-func (uc *ManageCustomerUseCase) ListCustomers(ctx context.Context) ([]customer.Customer, error) {
+// Enrich menghitung activeSubscriptionsCount dan unpaidInvoicesCount untuk 1 customer.
+func (uc *ManageCustomerUseCase) Enrich(ctx context.Context, c customer.Customer) Detail {
+	var activeSubs int
+	if uc.subRepo != nil {
+		if subs, err := uc.subRepo.FindByCustomerID(ctx, c.ID); err == nil {
+			for _, sub := range subs {
+				if sub.Status != subscription.StatusTerminated && sub.Status != subscription.StatusCancelled {
+					activeSubs++
+				}
+			}
+		}
+	}
+	var unpaidInvs int
+	if uc.invRepo != nil {
+		if invoices, err := uc.invRepo.FindByCustomerID(ctx, c.ID); err == nil {
+			for _, inv := range invoices {
+				if inv.Status != domainBilling.StatusPaid {
+					unpaidInvs++
+				}
+			}
+		}
+	}
+	return Detail{
+		Customer:                 c,
+		ActiveSubscriptionsCount: activeSubs,
+		UnpaidInvoicesCount:      unpaidInvs,
+	}
+}
+
+// ListCustomers mengembalikan daftar pelanggan beserta counter langganan dan tagihan aktif.
+func (uc *ManageCustomerUseCase) ListCustomers(ctx context.Context) ([]Detail, error) {
 	customers, err := uc.repo.FindAll(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("list customers: %w", err)
 	}
-	return customers, nil
+
+	subCountByCust := make(map[string]int)
+	if uc.subRepo != nil {
+		if subs, err := uc.subRepo.FindAll(ctx); err == nil {
+			for _, sub := range subs {
+				if sub.Status != subscription.StatusTerminated && sub.Status != subscription.StatusCancelled {
+					subCountByCust[sub.CustomerID]++
+				}
+			}
+		}
+	}
+
+	unpaidCountByCust := make(map[string]int)
+	if uc.invRepo != nil {
+		if invoices, err := uc.invRepo.FindAll(ctx); err == nil {
+			for _, inv := range invoices {
+				if inv.Status != domainBilling.StatusPaid {
+					unpaidCountByCust[inv.CustomerID]++
+				}
+			}
+		}
+	}
+
+	details := make([]Detail, len(customers))
+	for i, c := range customers {
+		details[i] = Detail{
+			Customer:                 c,
+			ActiveSubscriptionsCount: subCountByCust[c.ID],
+			UnpaidInvoicesCount:      unpaidCountByCust[c.ID],
+		}
+	}
+	return details, nil
 }
 
-func (uc *ManageCustomerUseCase) GetCustomer(ctx context.Context, id string) (customer.Customer, error) {
+// GetCustomer mengambil detail pelanggan beserta counternya.
+func (uc *ManageCustomerUseCase) GetCustomer(ctx context.Context, id string) (Detail, error) {
 	if id == "" {
-		return customer.Customer{}, customer.ErrInvalidInput
+		return Detail{}, customer.ErrInvalidInput
 	}
 	result, err := uc.repo.FindByID(ctx, id)
 	if err != nil {
-		return customer.Customer{}, fmt.Errorf("find customer %s: %w", id, err)
+		return Detail{}, fmt.Errorf("find customer %s: %w", id, err)
 	}
-	return result, nil
+	return uc.Enrich(ctx, result), nil
 }
 
 // CreateCustomer creates a new customer entity with generated codes and defaults.

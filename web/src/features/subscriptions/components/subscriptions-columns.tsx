@@ -5,6 +5,7 @@ import { DataTableColumnHeader } from '@/components/data-table'
 import type { Subscription } from '@/gen/v1/billing_pb'
 import { useCustomersQuery } from '@/features/customer/api/use-customer'
 import { usePlansQuery } from '@/features/billing/api/use-plans'
+import { useDevicesQuery } from '@/features/devices/api/use-devices'
 import {
   PROVISION_STATUS_META,
   subscriptionStatusBadge,
@@ -19,6 +20,13 @@ function serviceTypeBadge(serviceType: string) {
         'bg-purple-500/15 text-purple-700 dark:text-purple-400 border-purple-500/30',
     }
   }
+  if (serviceType === 'DEDICATED') {
+    return {
+      label: 'Dedicated',
+      className:
+        'bg-orange-500/15 text-orange-700 dark:text-orange-400 border-orange-500/30',
+    }
+  }
   return {
     label: 'PPPoE',
     className:
@@ -26,9 +34,23 @@ function serviceTypeBadge(serviceType: string) {
   }
 }
 
+function formatPlanRate(downloadKbps?: number, uploadKbps?: number) {
+  if (!downloadKbps && !uploadKbps) return ''
+  const formatSide = (kbps?: number) => {
+    if (!kbps || kbps <= 0) return ''
+    if (kbps >= 1000) return `${Math.round(kbps / 1000)}M`
+    return `${kbps}k`
+  }
+  const dl = formatSide(downloadKbps)
+  const ul = formatSide(uploadKbps)
+  if (!dl && !ul) return ''
+  return `${dl || '0'}/${ul || '0'}`
+}
+
 export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
   const { data: customers = [] } = useCustomersQuery()
   const { data: plans = [] } = usePlansQuery(false)
+  const { data: devices = [] } = useDevicesQuery()
 
   const customerNameById = useMemo(() => {
     const map = new Map<string, string>()
@@ -36,11 +58,20 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
     return map
   }, [customers])
 
-  const planNameById = useMemo(() => {
-    const map = new Map<string, string>()
-    for (const plan of plans) map.set(plan.id, plan.name)
+  const planById = useMemo(() => {
+    const map = new Map<string, (typeof plans)[0]>()
+    for (const plan of plans) map.set(plan.id, plan)
     return map
   }, [plans])
+
+  /** ID → nama router */
+  const deviceNameById = useMemo(() => {
+    const map = new Map<string, string>()
+    for (const device of devices) {
+      if (device.id && device.name) map.set(device.id, device.name)
+    }
+    return map
+  }, [devices])
 
   return useMemo(
     () => [
@@ -66,7 +97,8 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
           <DataTableColumnHeader column={column} title='Paket' />
         ),
         cell: ({ row }) => {
-          const planName = row.original.planName || planNameById.get(row.original.planId) || '-'
+          const plan = planById.get(row.original.planId)
+          const planName = row.original.planName || plan?.name || row.original.planId || '-'
           return <span>{planName}</span>
         },
       },
@@ -87,7 +119,7 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
       {
         accessorKey: 'remoteUsername',
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title='Username Kredensial' />
+          <DataTableColumnHeader column={column} title='Username' />
         ),
         cell: ({ row }) => (
           <span className='font-mono text-xs font-semibold'>
@@ -98,13 +130,23 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
       {
         accessorKey: 'rateLimit',
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title='Rate Limit / Profile' />
+          <DataTableColumnHeader column={column} title='Rate Limit' />
         ),
-        cell: ({ row }) => (
-          <span className='font-mono text-xs'>
-            {row.original.rateLimit || row.original.routerProfile || '-'}
-          </span>
-        ),
+        cell: ({ row }) => {
+          const sub = row.original
+          const plan = planById.get(sub.planId)
+          const rateLimit =
+            sub.pppoeConfig?.rateLimit ||
+            sub.hotspotConfig?.rateLimit ||
+            sub.rateLimit ||
+            formatPlanRate(plan?.bandwidthDownloadKbps, plan?.bandwidthUploadKbps) ||
+            '-'
+          return (
+            <span className='font-mono text-xs font-semibold text-foreground'>
+              {rateLimit}
+            </span>
+          )
+        },
         meta: { className: 'hidden lg:table-cell' },
       },
       {
@@ -113,7 +155,13 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
           <DataTableColumnHeader column={column} title='Router' />
         ),
         cell: ({ row }) => {
-          const deviceLabel = row.original.deviceName || row.original.deviceId || '-'
+          const sub = row.original
+          // Coba deviceName dari backend, lalu dari devices query, lalu deviceId sebagai last resort
+          const deviceLabel =
+            sub.deviceName ||
+            deviceNameById.get(sub.deviceId) ||
+            sub.deviceId ||
+            '-'
           return (
             <span className='text-xs font-medium'>
               {deviceLabel}
@@ -125,7 +173,7 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
       {
         accessorKey: 'provisionStatus',
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title='Provisi' />
+          <DataTableColumnHeader column={column} title='Status Router' />
         ),
         cell: ({ row }) => {
           const meta =
@@ -141,7 +189,7 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
       {
         accessorKey: 'status',
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title='Status Jaringan' />
+          <DataTableColumnHeader column={column} title='Status' />
         ),
         cell: ({ row }) => {
           const badge = subscriptionStatusBadge(row.original.status)
@@ -158,6 +206,6 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
         enableSorting: false,
       },
     ],
-    [customerNameById, planNameById]
+    [customerNameById, planById, deviceNameById]
   )
 }

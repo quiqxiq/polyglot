@@ -3,6 +3,7 @@ package customer
 import (
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
+	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 )
 
 func toProtoCustomer(c *domainCustomer.Customer) *devicepb.Customer {
@@ -39,6 +40,27 @@ func toProtoCustomer(c *domainCustomer.Customer) *devicepb.Customer {
 		RegisteredAtUnix: registeredAtUnix,
 		CreatedAtUnix:    c.CreatedAt.Unix(),
 	}
+}
+
+func toProtoCustomerDetail(cd *customerUC.Detail) *devicepb.Customer {
+	if cd == nil {
+		return nil
+	}
+	pb := toProtoCustomer(&cd.Customer)
+	if pb == nil {
+		return nil
+	}
+	pb.ActiveSubscriptionsCount = int32(cd.ActiveSubscriptionsCount)
+	pb.UnpaidInvoicesCount = int32(cd.UnpaidInvoicesCount)
+	return pb
+}
+
+func toProtoCustomerDetailList(details []customerUC.Detail) []*devicepb.Customer {
+	out := make([]*devicepb.Customer, len(details))
+	for i := range details {
+		out[i] = toProtoCustomerDetail(&details[i])
+	}
+	return out
 }
 
 func toProtoCustomerList(customers []domainCustomer.Customer) []*devicepb.Customer {
