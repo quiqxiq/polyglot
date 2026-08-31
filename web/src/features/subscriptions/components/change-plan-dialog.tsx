@@ -10,7 +10,13 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
-import { SelectDropdown } from '@/components/select-dropdown'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import {
   ChangePlanRequest,
   type Subscription,
@@ -70,13 +76,24 @@ export function ChangePlanDialog({
 
         <div className='flex flex-col gap-2 py-2'>
           <Label>Paket Baru</Label>
-          <SelectDropdown
-            defaultValue={newPlanId || undefined}
+          <Select
+            value={newPlanId}
             onValueChange={setNewPlanId}
-            placeholder={plansLoading ? 'Memuat paket...' : 'Pilih paket'}
-            isPending={plansLoading}
-            items={items}
-          />
+            disabled={plansLoading}
+          >
+            <SelectTrigger>
+              <SelectValue
+                placeholder={plansLoading ? 'Memuat paket...' : 'Pilih paket'}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {items.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         <DialogFooter>
