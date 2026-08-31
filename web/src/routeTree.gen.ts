@@ -34,11 +34,13 @@ import { Route as AuthenticatedRbacIndexRouteImport } from './routes/_authentica
 import { Route as AuthenticatedPppIndexRouteImport } from './routes/_authenticated/ppp/index'
 import { Route as AuthenticatedPlansIndexRouteImport } from './routes/_authenticated/plans/index'
 import { Route as AuthenticatedLogsIndexRouteImport } from './routes/_authenticated/logs/index'
+import { Route as AuthenticatedInvoicesIndexRouteImport } from './routes/_authenticated/invoices/index'
 import { Route as AuthenticatedHotspotIndexRouteImport } from './routes/_authenticated/hotspot/index'
 import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_authenticated/help-center/index'
 import { Route as AuthenticatedDevicesIndexRouteImport } from './routes/_authenticated/devices/index'
 import { Route as AuthenticatedCustomersIndexRouteImport } from './routes/_authenticated/customers/index'
 import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
+import { Route as AuthenticatedCashbookIndexRouteImport } from './routes/_authenticated/cashbook/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
 import { Route as PortalIsolatePppoeRouteImport } from './routes/portal/isolate/pppoe'
 import { Route as PortalIsolateHotspotRouteImport } from './routes/portal/isolate/hotspot'
@@ -180,6 +182,12 @@ const AuthenticatedLogsIndexRoute = AuthenticatedLogsIndexRouteImport.update({
   path: '/logs/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedInvoicesIndexRoute =
+  AuthenticatedInvoicesIndexRouteImport.update({
+    id: '/invoices/',
+    path: '/invoices/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedHotspotIndexRoute =
   AuthenticatedHotspotIndexRouteImport.update({
     id: '/hotspot/',
@@ -209,6 +217,12 @@ const AuthenticatedChatsIndexRoute = AuthenticatedChatsIndexRouteImport.update({
   path: '/chats/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCashbookIndexRoute =
+  AuthenticatedCashbookIndexRouteImport.update({
+    id: '/cashbook/',
+    path: '/cashbook/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAppsIndexRoute = AuthenticatedAppsIndexRouteImport.update({
   id: '/apps/',
   path: '/apps/',
@@ -283,11 +297,13 @@ export interface FileRoutesByFullPath {
   '/portal/isolate/hotspot': typeof PortalIsolateHotspotRoute
   '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
   '/apps/': typeof AuthenticatedAppsIndexRoute
+  '/cashbook/': typeof AuthenticatedCashbookIndexRoute
   '/chats/': typeof AuthenticatedChatsIndexRoute
   '/customers/': typeof AuthenticatedCustomersIndexRoute
   '/devices/': typeof AuthenticatedDevicesIndexRoute
   '/help-center/': typeof AuthenticatedHelpCenterIndexRoute
   '/hotspot/': typeof AuthenticatedHotspotIndexRoute
+  '/invoices/': typeof AuthenticatedInvoicesIndexRoute
   '/logs/': typeof AuthenticatedLogsIndexRoute
   '/plans/': typeof AuthenticatedPlansIndexRoute
   '/ppp/': typeof AuthenticatedPppIndexRoute
@@ -322,11 +338,13 @@ export interface FileRoutesByTo {
   '/portal/isolate/hotspot': typeof PortalIsolateHotspotRoute
   '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
+  '/cashbook': typeof AuthenticatedCashbookIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
   '/customers': typeof AuthenticatedCustomersIndexRoute
   '/devices': typeof AuthenticatedDevicesIndexRoute
   '/help-center': typeof AuthenticatedHelpCenterIndexRoute
   '/hotspot': typeof AuthenticatedHotspotIndexRoute
+  '/invoices': typeof AuthenticatedInvoicesIndexRoute
   '/logs': typeof AuthenticatedLogsIndexRoute
   '/plans': typeof AuthenticatedPlansIndexRoute
   '/ppp': typeof AuthenticatedPppIndexRoute
@@ -364,11 +382,13 @@ export interface FileRoutesById {
   '/portal/isolate/hotspot': typeof PortalIsolateHotspotRoute
   '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
+  '/_authenticated/cashbook/': typeof AuthenticatedCashbookIndexRoute
   '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
   '/_authenticated/customers/': typeof AuthenticatedCustomersIndexRoute
   '/_authenticated/devices/': typeof AuthenticatedDevicesIndexRoute
   '/_authenticated/help-center/': typeof AuthenticatedHelpCenterIndexRoute
   '/_authenticated/hotspot/': typeof AuthenticatedHotspotIndexRoute
+  '/_authenticated/invoices/': typeof AuthenticatedInvoicesIndexRoute
   '/_authenticated/logs/': typeof AuthenticatedLogsIndexRoute
   '/_authenticated/plans/': typeof AuthenticatedPlansIndexRoute
   '/_authenticated/ppp/': typeof AuthenticatedPppIndexRoute
@@ -406,11 +426,13 @@ export interface FileRouteTypes {
     | '/portal/isolate/hotspot'
     | '/portal/isolate/pppoe'
     | '/apps/'
+    | '/cashbook/'
     | '/chats/'
     | '/customers/'
     | '/devices/'
     | '/help-center/'
     | '/hotspot/'
+    | '/invoices/'
     | '/logs/'
     | '/plans/'
     | '/ppp/'
@@ -445,11 +467,13 @@ export interface FileRouteTypes {
     | '/portal/isolate/hotspot'
     | '/portal/isolate/pppoe'
     | '/apps'
+    | '/cashbook'
     | '/chats'
     | '/customers'
     | '/devices'
     | '/help-center'
     | '/hotspot'
+    | '/invoices'
     | '/logs'
     | '/plans'
     | '/ppp'
@@ -486,11 +510,13 @@ export interface FileRouteTypes {
     | '/portal/isolate/hotspot'
     | '/portal/isolate/pppoe'
     | '/_authenticated/apps/'
+    | '/_authenticated/cashbook/'
     | '/_authenticated/chats/'
     | '/_authenticated/customers/'
     | '/_authenticated/devices/'
     | '/_authenticated/help-center/'
     | '/_authenticated/hotspot/'
+    | '/_authenticated/invoices/'
     | '/_authenticated/logs/'
     | '/_authenticated/plans/'
     | '/_authenticated/ppp/'
@@ -699,6 +725,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLogsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/invoices/': {
+      id: '/_authenticated/invoices/'
+      path: '/invoices'
+      fullPath: '/invoices/'
+      preLoaderRoute: typeof AuthenticatedInvoicesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/hotspot/': {
       id: '/_authenticated/hotspot/'
       path: '/hotspot'
@@ -732,6 +765,13 @@ declare module '@tanstack/react-router' {
       path: '/chats'
       fullPath: '/chats/'
       preLoaderRoute: typeof AuthenticatedChatsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/cashbook/': {
+      id: '/_authenticated/cashbook/'
+      path: '/cashbook'
+      fullPath: '/cashbook/'
+      preLoaderRoute: typeof AuthenticatedCashbookIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/apps/': {
@@ -830,11 +870,13 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
+  AuthenticatedCashbookIndexRoute: typeof AuthenticatedCashbookIndexRoute
   AuthenticatedChatsIndexRoute: typeof AuthenticatedChatsIndexRoute
   AuthenticatedCustomersIndexRoute: typeof AuthenticatedCustomersIndexRoute
   AuthenticatedDevicesIndexRoute: typeof AuthenticatedDevicesIndexRoute
   AuthenticatedHelpCenterIndexRoute: typeof AuthenticatedHelpCenterIndexRoute
   AuthenticatedHotspotIndexRoute: typeof AuthenticatedHotspotIndexRoute
+  AuthenticatedInvoicesIndexRoute: typeof AuthenticatedInvoicesIndexRoute
   AuthenticatedLogsIndexRoute: typeof AuthenticatedLogsIndexRoute
   AuthenticatedPlansIndexRoute: typeof AuthenticatedPlansIndexRoute
   AuthenticatedPppIndexRoute: typeof AuthenticatedPppIndexRoute
@@ -852,11 +894,13 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
+  AuthenticatedCashbookIndexRoute: AuthenticatedCashbookIndexRoute,
   AuthenticatedChatsIndexRoute: AuthenticatedChatsIndexRoute,
   AuthenticatedCustomersIndexRoute: AuthenticatedCustomersIndexRoute,
   AuthenticatedDevicesIndexRoute: AuthenticatedDevicesIndexRoute,
   AuthenticatedHelpCenterIndexRoute: AuthenticatedHelpCenterIndexRoute,
   AuthenticatedHotspotIndexRoute: AuthenticatedHotspotIndexRoute,
+  AuthenticatedInvoicesIndexRoute: AuthenticatedInvoicesIndexRoute,
   AuthenticatedLogsIndexRoute: AuthenticatedLogsIndexRoute,
   AuthenticatedPlansIndexRoute: AuthenticatedPlansIndexRoute,
   AuthenticatedPppIndexRoute: AuthenticatedPppIndexRoute,

@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { render } from 'vitest-browser-react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Subscription } from '@/gen/v1/billing_pb'
 import { SubscriptionsProvider } from './subscriptions-provider'
 import { SubscriptionsTable } from './subscriptions-table'
@@ -20,6 +21,13 @@ vi.mock('@/features/billing/api/use-plans', () => ({
       { id: 'p-001', name: 'Home 20M' },
       { id: 'p-002', name: 'Hotspot Bulanan' },
     ],
+    isPending: false,
+  }),
+}))
+
+vi.mock('@/features/devices/api/use-devices', () => ({
+  useDevicesQuery: () => ({
+    data: [],
     isPending: false,
   }),
 }))
@@ -50,10 +58,16 @@ const subscriptions = [
 ]
 
 function renderTable(props: { data: Subscription[]; isLoading?: boolean }) {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  })
+
   return render(
-    <SubscriptionsProvider>
-      <SubscriptionsTable {...props} />
-    </SubscriptionsProvider>
+    <QueryClientProvider client={queryClient}>
+      <SubscriptionsProvider>
+        <SubscriptionsTable {...props} />
+      </SubscriptionsProvider>
+    </QueryClientProvider>
   )
 }
 

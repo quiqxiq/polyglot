@@ -117,16 +117,12 @@ export const sidebarData: SidebarData = {
           url: '/invoices',
           icon: Receipt,
           permission: 'billing:read',
-          disabled: true,
-          badge: 'Pengembangan',
         },
         {
           title: 'Cashbook',
           url: '/cashbook',
           icon: Wallet,
           permission: 'cashbook:read',
-          disabled: true,
-          badge: 'Pengembangan',
         },
         {
           title: 'Customer Portal',

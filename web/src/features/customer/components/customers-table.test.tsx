@@ -1,8 +1,24 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { render } from 'vitest-browser-react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Customer } from '@/gen/v1/customer_pb'
 import { CustomersProvider } from './customers-provider'
 import { CustomersTable } from './customers-table'
+
+vi.mock('@/features/billing/api/use-billing', async (importOriginal) => {
+  const actual = await importOriginal<Record<string, unknown>>()
+  return {
+    ...actual,
+    useSubscriptionsQuery: () => ({
+      data: [],
+      isPending: false,
+    }),
+    useInvoicesQuery: () => ({
+      data: [],
+      isPending: false,
+    }),
+  }
+})
 
 const customers = [
   new Customer({
@@ -26,10 +42,16 @@ const customers = [
 ]
 
 function renderTable(props: { data: Customer[]; isLoading?: boolean }) {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  })
+
   return render(
-    <CustomersProvider>
-      <CustomersTable {...props} />
-    </CustomersProvider>
+    <QueryClientProvider client={queryClient}>
+      <CustomersProvider>
+        <CustomersTable {...props} />
+      </CustomersProvider>
+    </QueryClientProvider>
   )
 }
 

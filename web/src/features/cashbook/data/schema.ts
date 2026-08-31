@@ -4,8 +4,8 @@ export const cashAccountSchema = z.object({
   id: z.string().optional(),
   accountCode: z.string().min(1, 'Kode akun wajib diisi'),
   name: z.string().min(1, 'Nama rekening wajib diisi'),
-  type: z.enum(['CASH', 'BANK']).default('CASH'),
-  isActive: z.boolean().default(true),
+  type: z.enum(['CASH', 'BANK']),
+  isActive: z.boolean(),
 })
 
 export type CashAccountFormValues = z.infer<typeof cashAccountSchema>
@@ -13,8 +13,8 @@ export type CashAccountFormValues = z.infer<typeof cashAccountSchema>
 export const cashCategorySchema = z.object({
   id: z.string().optional(),
   name: z.string().min(1, 'Nama kategori wajib diisi'),
-  type: z.enum(['INCOME', 'EXPENSE']).default('INCOME'),
-  isActive: z.boolean().default(true),
+  type: z.enum(['INCOME', 'EXPENSE']),
+  isActive: z.boolean(),
 })
 
 export type CashCategoryFormValues = z.infer<typeof cashCategorySchema>
