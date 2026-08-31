@@ -22,4 +22,6 @@ type SubscriberAccount struct {
 
 	BaseRateLimit     string // rate tanpa burst ("10M/5M") — CIR untuk queue DEDICATED
 	RemoteAddressPool string // ppp profile: pool IP sumber alamat pelanggan (remote-address)
+	LocalAddress      string // ppp profile: IP gateway router (local-address)
+	DNSServer         string // ppp profile: DNS server
 }

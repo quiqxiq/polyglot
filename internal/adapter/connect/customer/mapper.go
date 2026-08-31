@@ -54,7 +54,7 @@ func fromProtoCustomer(pb *devicepb.Customer) domainCustomer.Customer {
 		return domainCustomer.Customer{}
 	}
 	var lat, lon *float64
-	if pb.HasCoordinates {
+	if pb.HasCoordinates || pb.Latitude != 0 || pb.Longitude != 0 {
 		vLat, vLon := pb.Latitude, pb.Longitude
 		lat, lon = &vLat, &vLon
 	}

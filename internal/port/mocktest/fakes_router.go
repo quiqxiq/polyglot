@@ -6,6 +6,8 @@ import (
 	"strings"
 	"sync"
 
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 )
@@ -71,8 +73,38 @@ func (f *FakeRouterAccountManager) Suspend(_ context.Context, _, _, username str
 	return f.record("Suspend:" + username)
 }
 
+// Terminate records account termination.
 func (f *FakeRouterAccountManager) Terminate(_ context.Context, _, _, username string) error {
 	return f.record("Terminate:" + username)
+}
+
+// EnsureIsolationInfrastructure records isolation infrastructure provisioning.
+func (f *FakeRouterAccountManager) EnsureIsolationInfrastructure(_ context.Context, deviceID string, _ domainDevice.IsolationConfig) error {
+	return f.record("EnsureIsolationInfrastructure:" + deviceID)
+}
+
+// GetIsolationInfrastructureStatus returns stub isolation infrastructure status.
+func (f *FakeRouterAccountManager) GetIsolationInfrastructureStatus(_ context.Context, _ string) (domainDevice.IsolationStatus, error) {
+	return domainDevice.IsolationStatus{
+		PPPoEProfileExists:   true,
+		HotspotProfileExists: true,
+		Config:               domainDevice.DefaultIsolationConfig(),
+	}, nil
+}
+
+// ApplyIntegrationScript records applying integration script.
+func (f *FakeRouterAccountManager) ApplyIntegrationScript(_ context.Context, deviceID, profileName, serviceType, scriptType, _ string) error {
+	return f.record(fmt.Sprintf("ApplyIntegrationScript:%s->%s:%s:%s", deviceID, profileName, serviceType, scriptType))
+}
+
+// SyncPlanProfile records syncing plan profile to router.
+func (f *FakeRouterAccountManager) SyncPlanProfile(_ context.Context, deviceID string, plan domainPlan.ServicePlan) error {
+	return f.record(fmt.Sprintf("SyncPlanProfile:%s:%s", deviceID, plan.Name))
+}
+
+// DeletePlanProfile records deleting plan profile from router.
+func (f *FakeRouterAccountManager) DeletePlanProfile(_ context.Context, deviceID string, serviceType, profileName string) error {
+	return f.record(fmt.Sprintf("DeletePlanProfile:%s:%s:%s", deviceID, serviceType, profileName))
 }
 
 // Count returns how many calls start with the given prefix.

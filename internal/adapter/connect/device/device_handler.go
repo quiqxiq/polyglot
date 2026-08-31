@@ -28,6 +28,7 @@ type DeviceConnectHandler struct {
 	useCase      *deviceUC.ManageDeviceUseCase
 	openTermUC   *network.OpenTerminalUseCase
 	metricsUC    *deviceUC.ManageMetricsUseCase
+	isolationUC  *deviceUC.ManageIsolationUseCase
 	driverGetter DriverGetter
 }
 
@@ -37,12 +38,14 @@ func NewDeviceConnectHandler(
 	openTermUC *network.OpenTerminalUseCase,
 	getter DriverGetter,
 	metricsUC *deviceUC.ManageMetricsUseCase,
+	isolationUC *deviceUC.ManageIsolationUseCase,
 ) *DeviceConnectHandler {
 	return &DeviceConnectHandler{
 		useCase:      uc,
 		openTermUC:   openTermUC,
 		driverGetter: getter,
 		metricsUC:    metricsUC,
+		isolationUC:  isolationUC,
 	}
 }
 
@@ -206,5 +209,95 @@ func (h *DeviceConnectHandler) TestDeviceConnection(ctx context.Context, req *co
 		InterfaceList: pbIfaces,
 		Success:       true,
 		Message:       res.Message,
+	}), nil
+}
+
+// GetIsolationStatus retrieves the router isolation infrastructure status.
+func (h *DeviceConnectHandler) GetIsolationStatus(ctx context.Context, req *connect.Request[devicepb.GetIsolationStatusRequest]) (*connect.Response[devicepb.GetIsolationStatusResponse], error) {
+	if h.isolationUC == nil {
+		return nil, response.Unavailable("isolation usecase unavailable")
+	}
+	status, err := h.isolationUC.GetIsolationStatus(ctx, req.Msg.DeviceId)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.GetIsolationStatusResponse{
+		Status: IsolationStatusToPb(status),
+	}), nil
+}
+
+// CreateIsolationProfile provisions isolation profiles on the target router.
+func (h *DeviceConnectHandler) CreateIsolationProfile(ctx context.Context, req *connect.Request[devicepb.CreateIsolationProfileRequest]) (*connect.Response[devicepb.CreateIsolationProfileResponse], error) {
+	if h.isolationUC == nil {
+		return nil, response.Unavailable("isolation usecase unavailable")
+	}
+	cfg := IsolationConfigToDomain(req.Msg.Config)
+	status, err := h.isolationUC.CreateIsolationProfile(ctx, req.Msg.DeviceId, cfg)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.CreateIsolationProfileResponse{
+		Status:  IsolationStatusToPb(status),
+		Message: "Profil isolir dan firewall redirect berhasil dipasang di router",
+	}), nil
+}
+
+// UpdateIsolationProfile updates isolation profiles and configuration on the target router.
+func (h *DeviceConnectHandler) UpdateIsolationProfile(ctx context.Context, req *connect.Request[devicepb.UpdateIsolationProfileRequest]) (*connect.Response[devicepb.UpdateIsolationProfileResponse], error) {
+	if h.isolationUC == nil {
+		return nil, response.Unavailable("isolation usecase unavailable")
+	}
+	cfg := IsolationConfigToDomain(req.Msg.Config)
+	status, err := h.isolationUC.UpdateIsolationProfile(ctx, req.Msg.DeviceId, cfg)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.UpdateIsolationProfileResponse{
+		Status:  IsolationStatusToPb(status),
+		Message: "Profil isolir berhasil diperbarui",
+	}), nil
+}
+
+// DeleteIsolationProfile removes the isolation profile from the target router.
+func (h *DeviceConnectHandler) DeleteIsolationProfile(ctx context.Context, req *connect.Request[devicepb.DeleteIsolationProfileRequest]) (*connect.Response[devicepb.DeleteIsolationProfileResponse], error) {
+	if h.isolationUC == nil {
+		return nil, response.Unavailable("isolation usecase unavailable")
+	}
+	if err := h.isolationUC.DeleteIsolationProfile(ctx, req.Msg.DeviceId, req.Msg.RemoveFirewallRules); err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.DeleteIsolationProfileResponse{
+		Message: "Profil isolir berhasil dihapus",
+	}), nil
+}
+
+// GetRouterIntegrationScript generates webhook integration scripts for the router.
+func (h *DeviceConnectHandler) GetRouterIntegrationScript(ctx context.Context, req *connect.Request[devicepb.GetRouterIntegrationScriptRequest]) (*connect.Response[devicepb.GetRouterIntegrationScriptResponse], error) {
+	if h.isolationUC == nil {
+		return nil, response.Unavailable("isolation usecase unavailable")
+	}
+	scripts, err := h.isolationUC.GetRouterIntegrationScript(ctx, req.Msg.DeviceId, req.Msg.ServiceType, req.Msg.WebhookUrl)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.GetRouterIntegrationScriptResponse{
+		PppOnUpScript:         scripts.PPPOnUpScript,
+		PppOnDownScript:       scripts.PPPOnDownScript,
+		HotspotOnLoginScript:  scripts.HotspotOnLoginScript,
+		HotspotOnLogoutScript: scripts.HotspotOnLogoutScript,
+		WebhookToken:          scripts.WebhookToken,
+	}), nil
+}
+
+// ApplyRouterIntegrationScript applies webhook integration scripts to a profile on the router.
+func (h *DeviceConnectHandler) ApplyRouterIntegrationScript(ctx context.Context, req *connect.Request[devicepb.ApplyRouterIntegrationScriptRequest]) (*connect.Response[devicepb.ApplyRouterIntegrationScriptResponse], error) {
+	if h.isolationUC == nil {
+		return nil, response.Unavailable("isolation usecase unavailable")
+	}
+	if err := h.isolationUC.ApplyRouterIntegrationScript(ctx, req.Msg.DeviceId, req.Msg.ProfileName, req.Msg.ServiceType); err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.ApplyRouterIntegrationScriptResponse{
+		Message: fmt.Sprintf("Script webhook berhasil diterapkan pada profile %s", req.Msg.ProfileName),
 	}), nil
 }

@@ -6,6 +6,8 @@ import {
   Pencil,
   PlayCircle,
   Repeat,
+  ShieldAlert,
+  ShieldCheck,
   Trash2,
 } from 'lucide-react'
 import {
@@ -42,6 +44,8 @@ export function SubscriptionsRowActions({ subscription }: SubscriptionsRowAction
       | 'resume'
       | 'terminate'
       | 'activate'
+      | 'isolate'
+      | 'restore'
   ) => {
     setCurrentRow(subscription)
     setOpen(dialog)
@@ -59,7 +63,7 @@ export function SubscriptionsRowActions({ subscription }: SubscriptionsRowAction
           <MoreHorizontal className='h-4 w-4' />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align='end' className='w-48'>
+      <DropdownMenuContent align='end' className='w-52'>
         {status === 'ACTIVE' && (
           <>
             <DropdownMenuItem onClick={() => act('change-plan')}>
@@ -67,6 +71,13 @@ export function SubscriptionsRowActions({ subscription }: SubscriptionsRowAction
               Change Plan
             </DropdownMenuItem>
             <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => act('isolate')}
+              className='text-amber-600 focus:text-amber-600 dark:text-amber-400'
+            >
+              <ShieldAlert className='mr-2 h-4 w-4' />
+              Isolir Pelanggan
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => act('suspend')}>
               <PauseCircle className='mr-2 h-4 w-4' />
               Suspend
@@ -75,9 +86,12 @@ export function SubscriptionsRowActions({ subscription }: SubscriptionsRowAction
         )}
         {status === 'ISOLATED' && (
           <>
-            <DropdownMenuItem onClick={() => act('resume')}>
-              <PlayCircle className='mr-2 h-4 w-4' />
-              Resume (Pulihkan)
+            <DropdownMenuItem
+              onClick={() => act('restore')}
+              className='text-emerald-600 focus:text-emerald-600 font-semibold dark:text-emerald-400'
+            >
+              <ShieldCheck className='mr-2 h-4 w-4' />
+              Buka Isolir (Restore)
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => act('suspend')}>
               <PauseCircle className='mr-2 h-4 w-4' />

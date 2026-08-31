@@ -1,9 +1,6 @@
 package billing
 
 import (
-	"strconv"
-	"strings"
-
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
@@ -14,6 +11,22 @@ func BuildPPPoEProvisionSpec(sub domainSubscription.Subscription, pl domainPlan.
 	rate := pl.RateLimitWithBurst()
 	if sub.RateLimit != "" {
 		rate = sub.RateLimit
+	}
+	remotePool := pl.RemoteAddressPool
+	if pl.PPPoE != nil && pl.PPPoE.RemoteAddressPool != "" {
+		remotePool = pl.PPPoE.RemoteAddressPool
+	}
+	addrList := pl.AddressList
+	if pl.PPPoE != nil && pl.PPPoE.AddressList != "" {
+		addrList = pl.PPPoE.AddressList
+	}
+	sessionTimeout := pl.SessionTimeout
+	if pl.PPPoE != nil && pl.PPPoE.SessionTimeout != "" {
+		sessionTimeout = pl.PPPoE.SessionTimeout
+	}
+	idleTimeout := pl.IdleTimeout
+	if pl.PPPoE != nil && pl.PPPoE.IdleTimeout != "" {
+		idleTimeout = pl.PPPoE.IdleTimeout
 	}
 	return domainSubscription.PPPoEProvisionSpec{
 		Secret: domainSubscription.PPPoESecretSpec{
@@ -29,49 +42,64 @@ func BuildPPPoEProvisionSpec(sub domainSubscription.Subscription, pl domainPlan.
 		Profile: domainSubscription.PPPoEProfileSpec{
 			Name:              pl.Name,
 			RateLimit:         rate,
-			RemoteAddressPool: pl.RemoteAddressPool,
+			RemoteAddressPool: remotePool,
 			ParentQueue:       pl.ParentQueue,
-			AddressList:       pl.AddressList,
+			AddressList:       addrList,
+			SessionTimeout:    sessionTimeout,
+			IdleTimeout:       idleTimeout,
 			Comment:           "AUTO plan profile",
 		},
 	}
 }
 
-// BuildHotspotProvisionSpec membangun spesifikasi terisolasi untuk provisi Hotspot.
+// BuildHotspotProvisionSpec membangun spesifikasi terisolasi untuk provisi Hotspot Permanent.
 func BuildHotspotProvisionSpec(sub domainSubscription.Subscription, pl domainPlan.ServicePlan) domainSubscription.HotspotProvisionSpec {
 	rate := pl.RateLimitWithBurst()
 	if sub.RateLimit != "" {
 		rate = sub.RateLimit
 	}
-	hargaJual, hargaModal := formatMoney(pl.SellingPrice, pl.Price)
-	validity := pl.Validity
-	if strings.EqualFold(pl.ExpireMode, domainPlan.ExpireNone) {
-		validity = ""
+	ipPool := pl.IPPoolName
+	if pl.Hotspot != nil && pl.Hotspot.IPPoolName != "" {
+		ipPool = pl.Hotspot.IPPoolName
 	}
+	addrList := pl.AddressList
+	if pl.Hotspot != nil && pl.Hotspot.AddressList != "" {
+		addrList = pl.Hotspot.AddressList
+	}
+	sharedUsers := 1
+	if pl.Hotspot != nil && pl.Hotspot.SharedUsers > 0 {
+		sharedUsers = pl.Hotspot.SharedUsers
+	} else if pl.SharedUsers > 0 {
+		sharedUsers = pl.SharedUsers
+	}
+	sessionTimeout := pl.SessionTimeout
+	if pl.Hotspot != nil && pl.Hotspot.SessionTimeout != "" {
+		sessionTimeout = pl.Hotspot.SessionTimeout
+	}
+	idleTimeout := pl.IdleTimeout
+	if pl.Hotspot != nil && pl.Hotspot.IdleTimeout != "" {
+		idleTimeout = pl.Hotspot.IdleTimeout
+	}
+
 	return domainSubscription.HotspotProvisionSpec{
 		User: domainSubscription.HotspotUserSpec{
-			Username:    sub.RemoteUsername,
-			Password:    sub.RemotePassword,
-			Profile:     pl.Name,
-			Server:      "all",
-			LimitUptime: pl.LimitUptime,
-			LimitBytes:  pl.LimitBytes,
-			Comment:     "polyglot:" + sub.ID,
-			Disabled:    sub.Status == domainSubscription.StatusSuspended,
+			Username: sub.RemoteUsername,
+			Password: sub.RemotePassword,
+			Profile:  pl.Name,
+			Server:   "all",
+			Comment:  "polyglot:" + sub.ID,
+			Disabled: sub.Status == domainSubscription.StatusSuspended,
 		},
 		Profile: domainSubscription.HotspotProfileSpec{
-			Name:         pl.Name,
-			RateLimit:    rate,
-			AddressPool:  pl.IPPoolName,
-			SharedUsers:  pl.SharedUsers,
-			ParentQueue:  pl.ParentQueue,
-			Price:        hargaJual,
-			SellingPrice: hargaModal,
-			Validity:     validity,
-			ExpireMode:   pl.ExpireMode,
-			LockUser:     pl.LockUser,
-			LockServer:   pl.LockServer,
-			Comment:      "AUTO plan profile",
+			Name:           pl.Name,
+			RateLimit:      rate,
+			AddressPool:    ipPool,
+			AddressList:    addrList,
+			SharedUsers:    sharedUsers,
+			ParentQueue:    pl.ParentQueue,
+			SessionTimeout: sessionTimeout,
+			IdleTimeout:    idleTimeout,
+			Comment:        "AUTO plan profile",
 		},
 	}
 }
@@ -97,10 +125,7 @@ func BuildDedicatedProvisionSpec(sub domainSubscription.Subscription, pl domainP
 	}
 }
 
-// subscriberAccountFromPlan adalah SATU-SATUNYA titik mapping
-// ServicePlan + Subscription -> port.SubscriberAccount (kompatibilitas backward).
-// Rate: custom sub.RateLimit menang atas nilai plan; burst dipakai penuh
-// bila seluruh komponen burst terdefinisi.
+// subscriberAccountFromPlan adalah titik mapping ServicePlan + Subscription -> port.SubscriberAccount.
 func subscriberAccountFromPlan(
 	sub domainSubscription.Subscription, pl domainPlan.ServicePlan,
 ) port.SubscriberAccount {
@@ -108,45 +133,37 @@ func subscriberAccountFromPlan(
 	if sub.RateLimit != "" {
 		rate = sub.RateLimit
 	}
-	hargaJual, hargaModal := formatMoney(pl.SellingPrice, pl.Price)
-	validity := pl.Validity
-	if strings.EqualFold(pl.ExpireMode, domainPlan.ExpireNone) {
-		// Mode 0 = tanpa auto-expire: profil hotspot tidak membawa validity
-		// agar script expire monitor Mikhmon tidak pernah menandai user.
-		validity = ""
+	ipPool := pl.IPPoolName
+	if pl.Hotspot != nil && pl.Hotspot.IPPoolName != "" {
+		ipPool = pl.Hotspot.IPPoolName
 	}
+	remotePool := pl.RemoteAddressPool
+	if pl.PPPoE != nil && pl.PPPoE.RemoteAddressPool != "" {
+		remotePool = pl.PPPoE.RemoteAddressPool
+	}
+	addrList := pl.AddressList
+	if pl.Hotspot != nil && pl.Hotspot.AddressList != "" {
+		addrList = pl.Hotspot.AddressList
+	} else if pl.PPPoE != nil && pl.PPPoE.AddressList != "" {
+		addrList = pl.PPPoE.AddressList
+	}
+	sharedUsers := 1
+	if pl.Hotspot != nil && pl.Hotspot.SharedUsers > 0 {
+		sharedUsers = pl.Hotspot.SharedUsers
+	} else if pl.SharedUsers > 0 {
+		sharedUsers = pl.SharedUsers
+	}
+
 	return port.SubscriberAccount{
 		Username:          sub.RemoteUsername,
 		Password:          sub.RemotePassword,
 		Profile:           pl.Name,
 		RateLimit:         rate,
-		AddressPool:       pl.IPPoolName,
+		AddressPool:       ipPool,
 		ParentQueue:       pl.ParentQueue,
-		AddressList:       pl.AddressList,
-		SharedUsers:       pl.SharedUsers,
-		Price:             hargaJual,
-		SellingPrice:      hargaModal,
-		Validity:          validity,
-		ExpireMode:        pl.ExpireMode,
-		LockUser:          pl.LockUser,
-		LockServer:        pl.LockServer,
+		AddressList:       addrList,
+		SharedUsers:       sharedUsers,
 		BaseRateLimit:     pl.RateLimit(),
-		RemoteAddressPool: pl.RemoteAddressPool,
+		RemoteAddressPool: remotePool,
 	}
-}
-
-// formatMoney memetakan harga ke kolom profil hotspot mengikuti konvensi
-// Mikhmon: Price = harga jual ke pelanggan (SellingPrice bila terisi, else
-// harga dasar plan); SellingPrice = harga modal (harga dasar plan).
-// Keduanya "" bila nol agar parameter diabaikan RouterOS.
-func formatMoney(selling, base float64) (string, string) {
-	jual := selling
-	if jual <= 0 {
-		jual = base
-	}
-	if jual <= 0 {
-		return "", ""
-	}
-	return strconv.FormatFloat(jual, 'f', -1, 64),
-		strconv.FormatFloat(base, 'f', -1, 64)
 }

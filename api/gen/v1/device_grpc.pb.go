@@ -19,18 +19,24 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DeviceService_ListDevices_FullMethodName            = "/polyglot.v1.DeviceService/ListDevices"
-	DeviceService_GetDevice_FullMethodName              = "/polyglot.v1.DeviceService/GetDevice"
-	DeviceService_UpdateDevice_FullMethodName           = "/polyglot.v1.DeviceService/UpdateDevice"
-	DeviceService_DeleteDevice_FullMethodName           = "/polyglot.v1.DeviceService/DeleteDevice"
-	DeviceService_TestDeviceConnection_FullMethodName   = "/polyglot.v1.DeviceService/TestDeviceConnection"
-	DeviceService_StreamDeviceStatus_FullMethodName     = "/polyglot.v1.DeviceService/StreamDeviceStatus"
-	DeviceService_StreamPing_FullMethodName             = "/polyglot.v1.DeviceService/StreamPing"
-	DeviceService_StreamInterfaceTraffic_FullMethodName = "/polyglot.v1.DeviceService/StreamInterfaceTraffic"
-	DeviceService_StreamTerminal_FullMethodName         = "/polyglot.v1.DeviceService/StreamTerminal"
-	DeviceService_GetDevicePingConfig_FullMethodName    = "/polyglot.v1.DeviceService/GetDevicePingConfig"
-	DeviceService_UpdateDevicePingConfig_FullMethodName = "/polyglot.v1.DeviceService/UpdateDevicePingConfig"
-	DeviceService_QueryDevicePingMetrics_FullMethodName = "/polyglot.v1.DeviceService/QueryDevicePingMetrics"
+	DeviceService_ListDevices_FullMethodName                  = "/polyglot.v1.DeviceService/ListDevices"
+	DeviceService_GetDevice_FullMethodName                    = "/polyglot.v1.DeviceService/GetDevice"
+	DeviceService_UpdateDevice_FullMethodName                 = "/polyglot.v1.DeviceService/UpdateDevice"
+	DeviceService_DeleteDevice_FullMethodName                 = "/polyglot.v1.DeviceService/DeleteDevice"
+	DeviceService_TestDeviceConnection_FullMethodName         = "/polyglot.v1.DeviceService/TestDeviceConnection"
+	DeviceService_StreamDeviceStatus_FullMethodName           = "/polyglot.v1.DeviceService/StreamDeviceStatus"
+	DeviceService_StreamPing_FullMethodName                   = "/polyglot.v1.DeviceService/StreamPing"
+	DeviceService_StreamInterfaceTraffic_FullMethodName       = "/polyglot.v1.DeviceService/StreamInterfaceTraffic"
+	DeviceService_StreamTerminal_FullMethodName               = "/polyglot.v1.DeviceService/StreamTerminal"
+	DeviceService_GetDevicePingConfig_FullMethodName          = "/polyglot.v1.DeviceService/GetDevicePingConfig"
+	DeviceService_UpdateDevicePingConfig_FullMethodName       = "/polyglot.v1.DeviceService/UpdateDevicePingConfig"
+	DeviceService_QueryDevicePingMetrics_FullMethodName       = "/polyglot.v1.DeviceService/QueryDevicePingMetrics"
+	DeviceService_GetIsolationStatus_FullMethodName           = "/polyglot.v1.DeviceService/GetIsolationStatus"
+	DeviceService_CreateIsolationProfile_FullMethodName       = "/polyglot.v1.DeviceService/CreateIsolationProfile"
+	DeviceService_UpdateIsolationProfile_FullMethodName       = "/polyglot.v1.DeviceService/UpdateIsolationProfile"
+	DeviceService_DeleteIsolationProfile_FullMethodName       = "/polyglot.v1.DeviceService/DeleteIsolationProfile"
+	DeviceService_GetRouterIntegrationScript_FullMethodName   = "/polyglot.v1.DeviceService/GetRouterIntegrationScript"
+	DeviceService_ApplyRouterIntegrationScript_FullMethodName = "/polyglot.v1.DeviceService/ApplyRouterIntegrationScript"
 )
 
 // DeviceServiceClient is the client API for DeviceService service.
@@ -51,6 +57,13 @@ type DeviceServiceClient interface {
 	GetDevicePingConfig(ctx context.Context, in *GetDevicePingConfigRequest, opts ...grpc.CallOption) (*GetDevicePingConfigResponse, error)
 	UpdateDevicePingConfig(ctx context.Context, in *UpdateDevicePingConfigRequest, opts ...grpc.CallOption) (*UpdateDevicePingConfigResponse, error)
 	QueryDevicePingMetrics(ctx context.Context, in *QueryDevicePingMetricsRequest, opts ...grpc.CallOption) (*QueryDevicePingMetricsResponse, error)
+	// Profil Isolir & Integrasi Script Router
+	GetIsolationStatus(ctx context.Context, in *GetIsolationStatusRequest, opts ...grpc.CallOption) (*GetIsolationStatusResponse, error)
+	CreateIsolationProfile(ctx context.Context, in *CreateIsolationProfileRequest, opts ...grpc.CallOption) (*CreateIsolationProfileResponse, error)
+	UpdateIsolationProfile(ctx context.Context, in *UpdateIsolationProfileRequest, opts ...grpc.CallOption) (*UpdateIsolationProfileResponse, error)
+	DeleteIsolationProfile(ctx context.Context, in *DeleteIsolationProfileRequest, opts ...grpc.CallOption) (*DeleteIsolationProfileResponse, error)
+	GetRouterIntegrationScript(ctx context.Context, in *GetRouterIntegrationScriptRequest, opts ...grpc.CallOption) (*GetRouterIntegrationScriptResponse, error)
+	ApplyRouterIntegrationScript(ctx context.Context, in *ApplyRouterIntegrationScriptRequest, opts ...grpc.CallOption) (*ApplyRouterIntegrationScriptResponse, error)
 }
 
 type deviceServiceClient struct {
@@ -211,6 +224,66 @@ func (c *deviceServiceClient) QueryDevicePingMetrics(ctx context.Context, in *Qu
 	return out, nil
 }
 
+func (c *deviceServiceClient) GetIsolationStatus(ctx context.Context, in *GetIsolationStatusRequest, opts ...grpc.CallOption) (*GetIsolationStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetIsolationStatusResponse)
+	err := c.cc.Invoke(ctx, DeviceService_GetIsolationStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceServiceClient) CreateIsolationProfile(ctx context.Context, in *CreateIsolationProfileRequest, opts ...grpc.CallOption) (*CreateIsolationProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateIsolationProfileResponse)
+	err := c.cc.Invoke(ctx, DeviceService_CreateIsolationProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceServiceClient) UpdateIsolationProfile(ctx context.Context, in *UpdateIsolationProfileRequest, opts ...grpc.CallOption) (*UpdateIsolationProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateIsolationProfileResponse)
+	err := c.cc.Invoke(ctx, DeviceService_UpdateIsolationProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceServiceClient) DeleteIsolationProfile(ctx context.Context, in *DeleteIsolationProfileRequest, opts ...grpc.CallOption) (*DeleteIsolationProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteIsolationProfileResponse)
+	err := c.cc.Invoke(ctx, DeviceService_DeleteIsolationProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceServiceClient) GetRouterIntegrationScript(ctx context.Context, in *GetRouterIntegrationScriptRequest, opts ...grpc.CallOption) (*GetRouterIntegrationScriptResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRouterIntegrationScriptResponse)
+	err := c.cc.Invoke(ctx, DeviceService_GetRouterIntegrationScript_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceServiceClient) ApplyRouterIntegrationScript(ctx context.Context, in *ApplyRouterIntegrationScriptRequest, opts ...grpc.CallOption) (*ApplyRouterIntegrationScriptResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ApplyRouterIntegrationScriptResponse)
+	err := c.cc.Invoke(ctx, DeviceService_ApplyRouterIntegrationScript_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeviceServiceServer is the server API for DeviceService service.
 // All implementations must embed UnimplementedDeviceServiceServer
 // for forward compatibility.
@@ -229,6 +302,13 @@ type DeviceServiceServer interface {
 	GetDevicePingConfig(context.Context, *GetDevicePingConfigRequest) (*GetDevicePingConfigResponse, error)
 	UpdateDevicePingConfig(context.Context, *UpdateDevicePingConfigRequest) (*UpdateDevicePingConfigResponse, error)
 	QueryDevicePingMetrics(context.Context, *QueryDevicePingMetricsRequest) (*QueryDevicePingMetricsResponse, error)
+	// Profil Isolir & Integrasi Script Router
+	GetIsolationStatus(context.Context, *GetIsolationStatusRequest) (*GetIsolationStatusResponse, error)
+	CreateIsolationProfile(context.Context, *CreateIsolationProfileRequest) (*CreateIsolationProfileResponse, error)
+	UpdateIsolationProfile(context.Context, *UpdateIsolationProfileRequest) (*UpdateIsolationProfileResponse, error)
+	DeleteIsolationProfile(context.Context, *DeleteIsolationProfileRequest) (*DeleteIsolationProfileResponse, error)
+	GetRouterIntegrationScript(context.Context, *GetRouterIntegrationScriptRequest) (*GetRouterIntegrationScriptResponse, error)
+	ApplyRouterIntegrationScript(context.Context, *ApplyRouterIntegrationScriptRequest) (*ApplyRouterIntegrationScriptResponse, error)
 	mustEmbedUnimplementedDeviceServiceServer()
 }
 
@@ -274,6 +354,24 @@ func (UnimplementedDeviceServiceServer) UpdateDevicePingConfig(context.Context, 
 }
 func (UnimplementedDeviceServiceServer) QueryDevicePingMetrics(context.Context, *QueryDevicePingMetricsRequest) (*QueryDevicePingMetricsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method QueryDevicePingMetrics not implemented")
+}
+func (UnimplementedDeviceServiceServer) GetIsolationStatus(context.Context, *GetIsolationStatusRequest) (*GetIsolationStatusResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetIsolationStatus not implemented")
+}
+func (UnimplementedDeviceServiceServer) CreateIsolationProfile(context.Context, *CreateIsolationProfileRequest) (*CreateIsolationProfileResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateIsolationProfile not implemented")
+}
+func (UnimplementedDeviceServiceServer) UpdateIsolationProfile(context.Context, *UpdateIsolationProfileRequest) (*UpdateIsolationProfileResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateIsolationProfile not implemented")
+}
+func (UnimplementedDeviceServiceServer) DeleteIsolationProfile(context.Context, *DeleteIsolationProfileRequest) (*DeleteIsolationProfileResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteIsolationProfile not implemented")
+}
+func (UnimplementedDeviceServiceServer) GetRouterIntegrationScript(context.Context, *GetRouterIntegrationScriptRequest) (*GetRouterIntegrationScriptResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetRouterIntegrationScript not implemented")
+}
+func (UnimplementedDeviceServiceServer) ApplyRouterIntegrationScript(context.Context, *ApplyRouterIntegrationScriptRequest) (*ApplyRouterIntegrationScriptResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ApplyRouterIntegrationScript not implemented")
 }
 func (UnimplementedDeviceServiceServer) mustEmbedUnimplementedDeviceServiceServer() {}
 func (UnimplementedDeviceServiceServer) testEmbeddedByValue()                       {}
@@ -480,6 +578,114 @@ func _DeviceService_QueryDevicePingMetrics_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeviceService_GetIsolationStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetIsolationStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServiceServer).GetIsolationStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeviceService_GetIsolationStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServiceServer).GetIsolationStatus(ctx, req.(*GetIsolationStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeviceService_CreateIsolationProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateIsolationProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServiceServer).CreateIsolationProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeviceService_CreateIsolationProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServiceServer).CreateIsolationProfile(ctx, req.(*CreateIsolationProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeviceService_UpdateIsolationProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateIsolationProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServiceServer).UpdateIsolationProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeviceService_UpdateIsolationProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServiceServer).UpdateIsolationProfile(ctx, req.(*UpdateIsolationProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeviceService_DeleteIsolationProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteIsolationProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServiceServer).DeleteIsolationProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeviceService_DeleteIsolationProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServiceServer).DeleteIsolationProfile(ctx, req.(*DeleteIsolationProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeviceService_GetRouterIntegrationScript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRouterIntegrationScriptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServiceServer).GetRouterIntegrationScript(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeviceService_GetRouterIntegrationScript_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServiceServer).GetRouterIntegrationScript(ctx, req.(*GetRouterIntegrationScriptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeviceService_ApplyRouterIntegrationScript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApplyRouterIntegrationScriptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServiceServer).ApplyRouterIntegrationScript(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeviceService_ApplyRouterIntegrationScript_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServiceServer).ApplyRouterIntegrationScript(ctx, req.(*ApplyRouterIntegrationScriptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DeviceService_ServiceDesc is the grpc.ServiceDesc for DeviceService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -518,6 +724,30 @@ var DeviceService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryDevicePingMetrics",
 			Handler:    _DeviceService_QueryDevicePingMetrics_Handler,
+		},
+		{
+			MethodName: "GetIsolationStatus",
+			Handler:    _DeviceService_GetIsolationStatus_Handler,
+		},
+		{
+			MethodName: "CreateIsolationProfile",
+			Handler:    _DeviceService_CreateIsolationProfile_Handler,
+		},
+		{
+			MethodName: "UpdateIsolationProfile",
+			Handler:    _DeviceService_UpdateIsolationProfile_Handler,
+		},
+		{
+			MethodName: "DeleteIsolationProfile",
+			Handler:    _DeviceService_DeleteIsolationProfile_Handler,
+		},
+		{
+			MethodName: "GetRouterIntegrationScript",
+			Handler:    _DeviceService_GetRouterIntegrationScript_Handler,
+		},
+		{
+			MethodName: "ApplyRouterIntegrationScript",
+			Handler:    _DeviceService_ApplyRouterIntegrationScript_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

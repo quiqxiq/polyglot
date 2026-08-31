@@ -9,7 +9,10 @@ import {
   type ResumeSubscriptionRequest,
   type TerminateSubscriptionRequest,
   type ActivateSubscriptionRequest,
+  type IsolateSubscriptionRequest,
+  type RestoreSubscriptionRequest,
   type GenerateInvoicesRequest,
+
   ResolveMethod,
 } from '@/gen/v1/billing_pb'
 import { billingClient } from '@/lib/api-client'
@@ -166,6 +169,35 @@ export function useActivateSubscriptionMutation() {
     },
   })
 }
+
+export function useIsolateSubscriptionMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: IsolateSubscriptionRequest) => {
+      return await billingClient.isolateSubscription(req)
+    },
+    onSuccess: (_, vars) => {
+      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.detail(vars.subscriptionId) })
+    },
+  })
+}
+
+export function useRestoreSubscriptionMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: RestoreSubscriptionRequest) => {
+      return await billingClient.restoreSubscription(req)
+    },
+    onSuccess: (_, vars) => {
+      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.detail(vars.subscriptionId) })
+    },
+  })
+}
+
 
 export function useCreateSubscriptionMutation() {
   const queryClient = useQueryClient()

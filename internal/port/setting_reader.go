@@ -30,11 +30,13 @@ func LoadISPSettings(ctx context.Context, r SettingReader) ISPSettings {
 		BillingDueDays:       atoiOr(r.GetValue(ctx, "isp.billing_due_days", "20"), 20),
 		AutoIsolate:          r.GetValue(ctx, "isp.auto_isolate", "true") == "true",
 		IsolateGraceDays:     atoiOr(r.GetValue(ctx, "isp.isolate_grace_days", "3"), 3),
-		PPPoEIsolirProfile:   r.GetValue(ctx, "isp.pppoe_isolir_profile", "isolir"),
-		HotspotIsolirProfile: r.GetValue(ctx, "isp.hotspot_isolir_profile", "isolir"),
-		PaymentRedirectURL:   r.GetValue(ctx, "isp.payment_redirect_url", ""),
-		SuspendAfterDays:     atoiOr(r.GetValue(ctx, "isp.suspend_after_days", "90"), 90),
-		IsolirAddressList:    r.GetValue(ctx, "isp.isolir_address_list", "ISOLIR_USERS"),
+		PPPoEIsolirProfile:   r.GetValue(ctx, "isp.pppoe_isolir_profile", "ISOLIR"),
+		HotspotIsolirProfile: r.GetValue(ctx, "isp.hotspot_isolir_profile", "ISOLIR"),
+		// PaymentRedirectURL: IP atau host:port tujuan redirect halaman bayar.
+		// Default ke dev server 192.168.233.195:5176 (frontend Vite).
+		PaymentRedirectURL: r.GetValue(ctx, "isp.payment_redirect_url", "192.168.233.195:5176"),
+		SuspendAfterDays:   atoiOr(r.GetValue(ctx, "isp.suspend_after_days", "90"), 90),
+		IsolirAddressList:  r.GetValue(ctx, "isp.isolir_address_list", "ISOLIR_USERS"),
 	}
 }
 

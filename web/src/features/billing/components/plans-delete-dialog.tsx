@@ -1,26 +1,29 @@
 import { toast } from 'sonner'
 import { ConfirmDialog } from '@/components/confirm-dialog'
 import { DeletePlanRequest } from '@/gen/v1/billing_pb'
+import { useDeviceStore } from '@/stores/device-store'
 import { useDeletePlanMutation } from '../api/use-plans'
 import { usePlans } from './plans-provider'
 
 export function PlansDeleteDialog() {
   const { open, setOpen, currentRow, setCurrentRow } = usePlans()
   const deleteMutation = useDeletePlanMutation()
+  const selectedDeviceId = useDeviceStore((s) => s.selectedDeviceId)
 
   const handleDelete = async () => {
     if (!currentRow) return
 
     try {
       await deleteMutation.mutateAsync(
-        new DeletePlanRequest({ id: currentRow.id })
+        new DeletePlanRequest({
+          id: currentRow.id,
+          deviceId: selectedDeviceId || '',
+        })
       )
-      toast.success('Paket dihapus')
+      toast.success('Paket berhasil dihapus')
       setOpen(null)
       setCurrentRow(null)
     } catch (err: unknown) {
-      // Surface the backend message verbatim (e.g. plan masih dipakai
-      // langganan aktif) so the admin sees the real blocker.
       const errorMessage =
         err instanceof Error ? err.message : 'Gagal menghapus paket'
       toast.error(errorMessage)
@@ -40,7 +43,7 @@ export function PlansDeleteDialog() {
           tidak dapat dibatalkan.
         </>
       }
-      confirmText='Delete'
+      confirmText='Hapus'
       destructive
       isLoading={deleteMutation.isPending}
     />

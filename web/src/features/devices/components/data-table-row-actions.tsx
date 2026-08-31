@@ -9,6 +9,8 @@ import {
   BarChart2,
   Settings2,
   Terminal,
+  ShieldAlert,
+  Code,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -20,6 +22,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useDevicesContext } from './devices-provider'
 import type { Device } from '@/gen/v1/device_pb'
+import type { DevicesDialogType } from '../types'
 
 interface DataTableRowActionsProps {
   row: Row<Device>
@@ -29,15 +32,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const { setOpen, setCurrentRow } = useDevicesContext()
   const device = row.original
 
-  const handleSelectAction = (
-    action:
-      | 'terminal'
-      | 'test'
-      | 'edit'
-      | 'delete'
-      | 'ping-analytics'
-      | 'ping-settings'
-  ) => {
+  const handleSelectAction = (action: DevicesDialogType) => {
     setCurrentRow(device)
     setOpen(action)
   }
@@ -53,7 +48,16 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           <span className='sr-only'>Buka menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align='end' className='w-[180px]'>
+      <DropdownMenuContent align='end' className='w-[200px]'>
+        <DropdownMenuItem onClick={() => handleSelectAction('isolation')}>
+          <ShieldAlert className='me-2 h-3.5 w-3.5 text-amber-500' />
+          Profil Isolir Router
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => handleSelectAction('webhook-scripts')}>
+          <Code className='me-2 h-3.5 w-3.5 text-blue-500' />
+          Script Webhook Event
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => handleSelectAction('ping-analytics')}>
           <BarChart2 className='me-2 h-3.5 w-3.5 text-blue-500' />
           Ping Analytics

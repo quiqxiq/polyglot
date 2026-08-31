@@ -12,19 +12,21 @@ import (
 )
 
 // PlanUseCase orchestrates ISP service plan CRUD
-// (tabel service_plans, DATABASE-SCHEMA-ISP.md §2.2).
+// (tabel service_plans, DATABASE-SCHEMA-ISP.md §2.2) and synchronization
+// to MikroTik BRAS router profiles.
 type PlanUseCase struct {
-	plans port.ServicePlanRepository
-	subs  port.SubscriptionRepository
+	plans  port.ServicePlanRepository
+	subs   port.SubscriptionRepository
+	router port.RouterAccountManager
 }
 
 // NewPlanUseCase wires dependencies.
-func NewPlanUseCase(plans port.ServicePlanRepository, subs port.SubscriptionRepository) *PlanUseCase {
-	return &PlanUseCase{plans: plans, subs: subs}
+func NewPlanUseCase(plans port.ServicePlanRepository, subs port.SubscriptionRepository, router port.RouterAccountManager) *PlanUseCase {
+	return &PlanUseCase{plans: plans, subs: subs, router: router}
 }
 
-// Create validates and persists a new service plan with safe defaults.
-func (u *PlanUseCase) Create(ctx context.Context, p domainPlan.ServicePlan) (domainPlan.ServicePlan, error) {
+// Create validates, persists a new service plan, and optionally syncs it to a target router.
+func (u *PlanUseCase) Create(ctx context.Context, p domainPlan.ServicePlan, deviceID string) (domainPlan.ServicePlan, error) {
 	if err := validatePlan(p); err != nil {
 		return domainPlan.ServicePlan{}, err
 	}
@@ -34,23 +36,17 @@ func (u *PlanUseCase) Create(ctx context.Context, p domainPlan.ServicePlan) (dom
 	if p.TenantID == "" {
 		p.TenantID = "tenant-default"
 	}
-	if p.Validity == "" {
-		p.Validity = "30d"
-	}
-	if p.ValidityMode == "" {
-		p.ValidityMode = domainPlan.ValidityCalendar
-	}
-	if p.ExpireMode == "" {
-		p.ExpireMode = domainPlan.ExpireNotFiltered
-	}
 	if p.ParentQueue == "" {
 		p.ParentQueue = "none"
 	}
-	if p.SimultaneousUse <= 0 {
-		p.SimultaneousUse = 1
-	}
-	if p.SharedUsers <= 0 {
-		p.SharedUsers = 1
+	if p.ServiceType == domainPlan.TypeHotspot {
+		if p.SharedUsers <= 0 {
+			if p.Hotspot != nil && p.Hotspot.SharedUsers > 0 {
+				p.SharedUsers = p.Hotspot.SharedUsers
+			} else {
+				p.SharedUsers = 1
+			}
+		}
 	}
 	p.IsActive = true
 
@@ -60,11 +56,19 @@ func (u *PlanUseCase) Create(ctx context.Context, p domainPlan.ServicePlan) (dom
 	if err := u.plans.Save(ctx, p); err != nil {
 		return domainPlan.ServicePlan{}, err
 	}
+
+	// Sync profile to MikroTik router if deviceID is provided
+	if deviceID != "" && u.router != nil {
+		if err := u.router.SyncPlanProfile(ctx, deviceID, p); err != nil {
+			return p, fmt.Errorf("plan saved to database but failed to sync to router: %w", err)
+		}
+	}
+
 	return p, nil
 }
 
-// Update replaces the stored plan after validation.
-func (u *PlanUseCase) Update(ctx context.Context, p domainPlan.ServicePlan) (domainPlan.ServicePlan, error) {
+// Update replaces the stored plan and optionally syncs changes to the target router.
+func (u *PlanUseCase) Update(ctx context.Context, p domainPlan.ServicePlan, deviceID string) (domainPlan.ServicePlan, error) {
 	if p.ID == "" {
 		return domainPlan.ServicePlan{}, fmt.Errorf("%w: plan id is required", domainBilling.ErrInvalidInput)
 	}
@@ -76,14 +80,29 @@ func (u *PlanUseCase) Update(ctx context.Context, p domainPlan.ServicePlan) (dom
 		return domainPlan.ServicePlan{}, err
 	}
 	p.CreatedAt = old.CreatedAt
+	if p.ServiceType == domainPlan.TypeHotspot && p.SharedUsers <= 0 {
+		if p.Hotspot != nil && p.Hotspot.SharedUsers > 0 {
+			p.SharedUsers = p.Hotspot.SharedUsers
+		} else {
+			p.SharedUsers = 1
+		}
+	}
 	if err := u.plans.Save(ctx, p); err != nil {
 		return domainPlan.ServicePlan{}, err
 	}
+
+	// Sync profile to MikroTik router if deviceID is provided
+	if deviceID != "" && u.router != nil {
+		if err := u.router.SyncPlanProfile(ctx, deviceID, p); err != nil {
+			return p, fmt.Errorf("plan updated in database but failed to sync to router: %w", err)
+		}
+	}
+
 	return p, nil
 }
 
-// Delete removes a plan unless active subscriptions still reference it.
-func (u *PlanUseCase) Delete(ctx context.Context, id string) error {
+// Delete removes a plan unless active subscriptions still reference it, and optionally deletes from router.
+func (u *PlanUseCase) Delete(ctx context.Context, id string, deviceID string) error {
 	inUse, err := u.subs.HasActiveForPlan(ctx, id)
 	if err != nil {
 		return err
@@ -91,7 +110,21 @@ func (u *PlanUseCase) Delete(ctx context.Context, id string) error {
 	if inUse {
 		return fmt.Errorf("%w: %s; deactivate instead of delete", domainBilling.ErrPlanInUse, id)
 	}
-	return u.plans.Delete(ctx, id)
+	old, err := u.plans.FindByID(ctx, id)
+	if err != nil {
+		return fmt.Errorf("plan %s not found: %w", id, domainBilling.ErrNotFound)
+	}
+
+	if err := u.plans.Delete(ctx, id); err != nil {
+		return fmt.Errorf("delete plan: %w", err)
+	}
+
+	// Remove profile from MikroTik router if deviceID is provided
+	if deviceID != "" && u.router != nil {
+		_ = u.router.DeletePlanProfile(ctx, deviceID, old.ServiceType, old.Name)
+	}
+
+	return nil
 }
 
 // Get returns one plan by ID.

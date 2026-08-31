@@ -29,6 +29,7 @@ type HotspotUserProfile struct {
 	SharedUsers    string
 	ParentQueue    string
 	AddressPool    string
+	AddressList    string
 	Comment        string
 	OnLogin        string
 }

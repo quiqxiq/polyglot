@@ -16,18 +16,17 @@ type HotspotUserSpec struct {
 
 // HotspotProfileSpec mendefinisikan parameter pembuatan/pemastian profil /ip/hotspot/user/profile di MikroTik.
 type HotspotProfileSpec struct {
-	Name         string // nama profil (sama dengan nama ServicePlan)
-	RateLimit    string // "10M/5M" atau 8-segmen burst
-	AddressPool  string // nama IP pool di router (ip_pool_name)
-	SharedUsers  int    // batas perangkat bersamaan (default 1)
-	ParentQueue  string // nama parent queue
-	Price        string // harga voucher (format string desimal)
-	SellingPrice string // harga modal/reseller
-	Validity     string // masa aktif (mis. "30d")
-	ExpireMode   string // mode expire Mikhmon ("ntf", "ntfc", "rem", "remc", "0")
-	LockUser     bool   // kunci user ke MAC perangkat
-	LockServer   bool   // kunci user ke server hotspot
-	Comment      string
+	Name           string // nama profil (sama dengan nama ServicePlan)
+	RateLimit      string // "10M/5M" atau 8-segmen burst
+	AddressPool    string // nama IP pool di router (ip_pool_name)
+	AddressList    string // firewall address-list (mis. "ISOLIR_USERS", "VIP")
+	SharedUsers    int    // batas perangkat bersamaan (default 1)
+	ParentQueue    string // nama parent queue
+	SessionTimeout string // session-timeout di MikroTik (opsional)
+	IdleTimeout    string // idle-timeout di MikroTik (opsional)
+	Comment        string
+	OnLogin        string
+	OnLogout       string
 }
 
 // HotspotProvisionSpec adalah paket spesifikasi lengkap untuk provisi layanan Hotspot ke router.

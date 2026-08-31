@@ -276,6 +276,16 @@ export class PPPoEPlanConfig extends Message<PPPoEPlanConfig> {
    */
   addressList = "";
 
+  /**
+   * @generated from field: string session_timeout = 3;
+   */
+  sessionTimeout = "";
+
+  /**
+   * @generated from field: string idle_timeout = 4;
+   */
+  idleTimeout = "";
+
   constructor(data?: PartialMessage<PPPoEPlanConfig>) {
     super();
     proto3.util.initPartial(data, this);
@@ -286,6 +296,8 @@ export class PPPoEPlanConfig extends Message<PPPoEPlanConfig> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "remote_address_pool", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "address_list", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "session_timeout", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "idle_timeout", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PPPoEPlanConfig {
@@ -315,49 +327,24 @@ export class HotspotPlanConfig extends Message<HotspotPlanConfig> {
   ipPoolName = "";
 
   /**
-   * @generated from field: int32 shared_users = 2;
+   * @generated from field: string address_list = 2;
+   */
+  addressList = "";
+
+  /**
+   * @generated from field: int32 shared_users = 3;
    */
   sharedUsers = 0;
 
   /**
-   * @generated from field: string validity = 3;
+   * @generated from field: string session_timeout = 4;
    */
-  validity = "";
+  sessionTimeout = "";
 
   /**
-   * @generated from field: string validity_mode = 4;
+   * @generated from field: string idle_timeout = 5;
    */
-  validityMode = "";
-
-  /**
-   * @generated from field: string expire_mode = 5;
-   */
-  expireMode = "";
-
-  /**
-   * @generated from field: bool lock_user = 6;
-   */
-  lockUser = false;
-
-  /**
-   * @generated from field: bool lock_server = 7;
-   */
-  lockServer = false;
-
-  /**
-   * @generated from field: string limit_uptime = 8;
-   */
-  limitUptime = "";
-
-  /**
-   * @generated from field: string limit_bytes = 9;
-   */
-  limitBytes = "";
-
-  /**
-   * @generated from field: double selling_price = 10;
-   */
-  sellingPrice = 0;
+  idleTimeout = "";
 
   constructor(data?: PartialMessage<HotspotPlanConfig>) {
     super();
@@ -368,15 +355,10 @@ export class HotspotPlanConfig extends Message<HotspotPlanConfig> {
   static readonly typeName = "polyglot.v1.HotspotPlanConfig";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "ip_pool_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "shared_users", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 3, name: "validity", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "validity_mode", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 5, name: "expire_mode", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 6, name: "lock_user", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 7, name: "lock_server", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 8, name: "limit_uptime", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 9, name: "limit_bytes", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 10, name: "selling_price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 2, name: "address_list", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "shared_users", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "session_timeout", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "idle_timeout", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): HotspotPlanConfig {
@@ -1165,11 +1147,6 @@ export class Plan extends Message<Plan> {
   price = 0;
 
   /**
-   * @generated from field: double selling_price = 9;
-   */
-  sellingPrice = 0;
-
-  /**
    * @generated from field: double installation_fee = 10;
    */
   installationFee = 0;
@@ -1178,21 +1155,6 @@ export class Plan extends Message<Plan> {
    * @generated from field: double tax_percent = 11;
    */
   taxPercent = 0;
-
-  /**
-   * @generated from field: string validity = 12;
-   */
-  validity = "";
-
-  /**
-   * @generated from field: string validity_mode = 13;
-   */
-  validityMode = "";
-
-  /**
-   * @generated from field: int32 simultaneous_use = 14;
-   */
-  simultaneousUse = 0;
 
   /**
    * @generated from field: string ip_pool_name = 15;
@@ -1213,21 +1175,6 @@ export class Plan extends Message<Plan> {
    * @generated from field: int32 shared_users = 18;
    */
   sharedUsers = 0;
-
-  /**
-   * @generated from field: string expire_mode = 19;
-   */
-  expireMode = "";
-
-  /**
-   * @generated from field: bool lock_user = 20;
-   */
-  lockUser = false;
-
-  /**
-   * @generated from field: bool lock_server = 21;
-   */
-  lockServer = false;
 
   /**
    * @generated from field: bool is_active = 22;
@@ -1251,6 +1198,16 @@ export class Plan extends Message<Plan> {
    */
   hotspotConfig?: HotspotPlanConfig;
 
+  /**
+   * @generated from field: string session_timeout = 29;
+   */
+  sessionTimeout = "";
+
+  /**
+   * @generated from field: string idle_timeout = 30;
+   */
+  idleTimeout = "";
+
   constructor(data?: PartialMessage<Plan>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1270,23 +1227,18 @@ export class Plan extends Message<Plan> {
     { no: 25, name: "burst_time_seconds", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 26, name: "remote_address_pool", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 8, name: "price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
-    { no: 9, name: "selling_price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
     { no: 10, name: "installation_fee", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
     { no: 11, name: "tax_percent", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
-    { no: 12, name: "validity", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 13, name: "validity_mode", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 14, name: "simultaneous_use", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 15, name: "ip_pool_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 16, name: "parent_queue", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 17, name: "address_list", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 18, name: "shared_users", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
-    { no: 19, name: "expire_mode", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 20, name: "lock_user", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 21, name: "lock_server", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 22, name: "is_active", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 23, name: "description", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 27, name: "pppoe_config", kind: "message", T: PPPoEPlanConfig },
     { no: 28, name: "hotspot_config", kind: "message", T: HotspotPlanConfig },
+    { no: 29, name: "session_timeout", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 30, name: "idle_timeout", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Plan {
@@ -2229,6 +2181,172 @@ export class ActivateSubscriptionResponse extends Message<ActivateSubscriptionRe
 }
 
 /**
+ * @generated from message polyglot.v1.IsolateSubscriptionRequest
+ */
+export class IsolateSubscriptionRequest extends Message<IsolateSubscriptionRequest> {
+  /**
+   * @generated from field: string subscription_id = 1;
+   */
+  subscriptionId = "";
+
+  /**
+   * @generated from field: string reason = 2;
+   */
+  reason = "";
+
+  constructor(data?: PartialMessage<IsolateSubscriptionRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.IsolateSubscriptionRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "subscription_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "reason", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): IsolateSubscriptionRequest {
+    return new IsolateSubscriptionRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): IsolateSubscriptionRequest {
+    return new IsolateSubscriptionRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): IsolateSubscriptionRequest {
+    return new IsolateSubscriptionRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: IsolateSubscriptionRequest | PlainMessage<IsolateSubscriptionRequest> | undefined, b: IsolateSubscriptionRequest | PlainMessage<IsolateSubscriptionRequest> | undefined): boolean {
+    return proto3.util.equals(IsolateSubscriptionRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.IsolateSubscriptionResponse
+ */
+export class IsolateSubscriptionResponse extends Message<IsolateSubscriptionResponse> {
+  /**
+   * @generated from field: polyglot.v1.Subscription subscription = 1;
+   */
+  subscription?: Subscription;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<IsolateSubscriptionResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.IsolateSubscriptionResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "subscription", kind: "message", T: Subscription },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): IsolateSubscriptionResponse {
+    return new IsolateSubscriptionResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): IsolateSubscriptionResponse {
+    return new IsolateSubscriptionResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): IsolateSubscriptionResponse {
+    return new IsolateSubscriptionResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: IsolateSubscriptionResponse | PlainMessage<IsolateSubscriptionResponse> | undefined, b: IsolateSubscriptionResponse | PlainMessage<IsolateSubscriptionResponse> | undefined): boolean {
+    return proto3.util.equals(IsolateSubscriptionResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.RestoreSubscriptionRequest
+ */
+export class RestoreSubscriptionRequest extends Message<RestoreSubscriptionRequest> {
+  /**
+   * @generated from field: string subscription_id = 1;
+   */
+  subscriptionId = "";
+
+  constructor(data?: PartialMessage<RestoreSubscriptionRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.RestoreSubscriptionRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "subscription_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RestoreSubscriptionRequest {
+    return new RestoreSubscriptionRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RestoreSubscriptionRequest {
+    return new RestoreSubscriptionRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RestoreSubscriptionRequest {
+    return new RestoreSubscriptionRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RestoreSubscriptionRequest | PlainMessage<RestoreSubscriptionRequest> | undefined, b: RestoreSubscriptionRequest | PlainMessage<RestoreSubscriptionRequest> | undefined): boolean {
+    return proto3.util.equals(RestoreSubscriptionRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.RestoreSubscriptionResponse
+ */
+export class RestoreSubscriptionResponse extends Message<RestoreSubscriptionResponse> {
+  /**
+   * @generated from field: polyglot.v1.Subscription subscription = 1;
+   */
+  subscription?: Subscription;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<RestoreSubscriptionResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.RestoreSubscriptionResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "subscription", kind: "message", T: Subscription },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): RestoreSubscriptionResponse {
+    return new RestoreSubscriptionResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): RestoreSubscriptionResponse {
+    return new RestoreSubscriptionResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): RestoreSubscriptionResponse {
+    return new RestoreSubscriptionResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: RestoreSubscriptionResponse | PlainMessage<RestoreSubscriptionResponse> | undefined, b: RestoreSubscriptionResponse | PlainMessage<RestoreSubscriptionResponse> | undefined): boolean {
+    return proto3.util.equals(RestoreSubscriptionResponse, a, b);
+  }
+}
+
+/**
  * @generated from message polyglot.v1.ListPlansRequest
  */
 export class ListPlansRequest extends Message<ListPlansRequest> {
@@ -2385,6 +2503,11 @@ export class CreatePlanRequest extends Message<CreatePlanRequest> {
    */
   plan?: Plan;
 
+  /**
+   * @generated from field: string device_id = 2;
+   */
+  deviceId = "";
+
   constructor(data?: PartialMessage<CreatePlanRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2394,6 +2517,7 @@ export class CreatePlanRequest extends Message<CreatePlanRequest> {
   static readonly typeName = "polyglot.v1.CreatePlanRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "plan", kind: "message", T: Plan },
+    { no: 2, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreatePlanRequest {
@@ -2459,6 +2583,11 @@ export class UpdatePlanRequest extends Message<UpdatePlanRequest> {
    */
   plan?: Plan;
 
+  /**
+   * @generated from field: string device_id = 2;
+   */
+  deviceId = "";
+
   constructor(data?: PartialMessage<UpdatePlanRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2468,6 +2597,7 @@ export class UpdatePlanRequest extends Message<UpdatePlanRequest> {
   static readonly typeName = "polyglot.v1.UpdatePlanRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "plan", kind: "message", T: Plan },
+    { no: 2, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdatePlanRequest {
@@ -2533,6 +2663,11 @@ export class DeletePlanRequest extends Message<DeletePlanRequest> {
    */
   id = "";
 
+  /**
+   * @generated from field: string device_id = 2;
+   */
+  deviceId = "";
+
   constructor(data?: PartialMessage<DeletePlanRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2542,6 +2677,7 @@ export class DeletePlanRequest extends Message<DeletePlanRequest> {
   static readonly typeName = "polyglot.v1.DeletePlanRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeletePlanRequest {

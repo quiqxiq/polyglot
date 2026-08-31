@@ -27,8 +27,8 @@ import {
   UpdateSubscriptionRequest,
   type Subscription,
 } from '@/gen/v1/billing_pb'
-import { useDevicesQuery } from '@/features/devices/api/use-devices'
 import { useUpdateSubscriptionMutation } from '@/features/billing/api/use-billing'
+import { useDeviceStore } from '@/stores/device-store'
 
 const editSubscriptionSchema = z.object({
   remoteUsername: z.string(),
@@ -36,14 +36,10 @@ const editSubscriptionSchema = z.object({
   customPrice: z.coerce.number().min(0),
   billingCycle: z.string(),
   billingDay: z.coerce.number().int().min(1).max(31),
-  deviceId: z.string(),
   notes: z.string(),
 })
 
 type EditSubscriptionValues = z.infer<typeof editSubscriptionSchema>
-
-// Radix Select melarang value string kosong — pakai sentinel.
-export const NO_DEVICE = '__none__'
 
 interface SubscriptionsEditDialogProps {
   open: boolean
@@ -56,7 +52,7 @@ export function SubscriptionsEditDialog({
   onOpenChange,
   currentRow: subscription,
 }: SubscriptionsEditDialogProps) {
-  const { data: devices = [] } = useDevicesQuery()
+  const selectedDeviceId = useDeviceStore((s) => s.selectedDeviceId)
   const updateMutation = useUpdateSubscriptionMutation()
 
   const form = useForm<EditSubscriptionValues>({
@@ -67,7 +63,6 @@ export function SubscriptionsEditDialog({
       customPrice: 0,
       billingCycle: 'MONTHLY',
       billingDay: 1,
-      deviceId: '',
       notes: '',
     },
   })
@@ -81,18 +76,9 @@ export function SubscriptionsEditDialog({
       customPrice: Number(subscription.customPrice) || 0,
       billingCycle: subscription.billingCycle || 'MONTHLY',
       billingDay: subscription.billingDay || 1,
-      deviceId: subscription.deviceId || NO_DEVICE,
       notes: subscription.notes || '',
     })
   }, [open, subscription, form])
-
-  const deviceItems = [
-    { label: '— tanpa perubahan —', value: NO_DEVICE },
-    ...devices.map((d) => ({
-      label: d.name ? `${d.name} (${d.id})` : d.id,
-      value: d.id,
-    })),
-  ]
 
   const handleSubmit = async (values: EditSubscriptionValues) => {
     try {
@@ -105,10 +91,7 @@ export function SubscriptionsEditDialog({
           customPrice: values.customPrice,
           billingCycle: values.billingCycle,
           billingDay: values.billingDay,
-          deviceId:
-            values.deviceId === NO_DEVICE
-              ? subscription.deviceId || ''
-              : values.deviceId,
+          deviceId: selectedDeviceId || subscription.deviceId || '',
           notes: values.notes,
         })
       )
@@ -223,26 +206,6 @@ export function SubscriptionsEditDialog({
                 )}
               />
             </div>
-
-            <FormField
-              control={form.control}
-              name='deviceId'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Device</FormLabel>
-                  <FormControl>
-                    <SelectDropdown
-                      isControlled
-                      defaultValue={field.value}
-                      onValueChange={field.onChange}
-                      placeholder='Pilih device'
-                      items={deviceItems}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
             <FormField
               control={form.control}

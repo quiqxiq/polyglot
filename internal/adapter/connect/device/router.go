@@ -15,12 +15,14 @@ func NewDeviceServiceHandler(
 	openTermUC *network.OpenTerminalUseCase,
 	getter DriverGetter,
 	metricsUC *deviceUC.ManageMetricsUseCase,
+	isolationUC *deviceUC.ManageIsolationUseCase,
 ) (string, http.Handler) {
 	handler := &DeviceConnectHandler{
 		useCase:      uc,
 		openTermUC:   openTermUC,
 		driverGetter: getter,
 		metricsUC:    metricsUC,
+		isolationUC:  isolationUC,
 	}
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()
@@ -84,6 +86,38 @@ func NewDeviceServiceHandler(
 	mux.Handle("/"+serviceName+"/QueryDevicePingMetrics", connect.NewUnaryHandler(
 		"/"+serviceName+"/QueryDevicePingMetrics",
 		handler.QueryDevicePingMetrics,
+		opts...,
+	))
+
+	// Profil Isolir & Integrasi Script Router
+	mux.Handle("/"+serviceName+"/GetIsolationStatus", connect.NewUnaryHandler(
+		"/"+serviceName+"/GetIsolationStatus",
+		handler.GetIsolationStatus,
+		opts...,
+	))
+	mux.Handle("/"+serviceName+"/CreateIsolationProfile", connect.NewUnaryHandler(
+		"/"+serviceName+"/CreateIsolationProfile",
+		handler.CreateIsolationProfile,
+		opts...,
+	))
+	mux.Handle("/"+serviceName+"/UpdateIsolationProfile", connect.NewUnaryHandler(
+		"/"+serviceName+"/UpdateIsolationProfile",
+		handler.UpdateIsolationProfile,
+		opts...,
+	))
+	mux.Handle("/"+serviceName+"/DeleteIsolationProfile", connect.NewUnaryHandler(
+		"/"+serviceName+"/DeleteIsolationProfile",
+		handler.DeleteIsolationProfile,
+		opts...,
+	))
+	mux.Handle("/"+serviceName+"/GetRouterIntegrationScript", connect.NewUnaryHandler(
+		"/"+serviceName+"/GetRouterIntegrationScript",
+		handler.GetRouterIntegrationScript,
+		opts...,
+	))
+	mux.Handle("/"+serviceName+"/ApplyRouterIntegrationScript", connect.NewUnaryHandler(
+		"/"+serviceName+"/ApplyRouterIntegrationScript",
+		handler.ApplyRouterIntegrationScript,
 		opts...,
 	))
 

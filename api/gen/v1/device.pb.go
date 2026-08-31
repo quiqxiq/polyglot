@@ -2121,6 +2121,854 @@ func (x *QueryDevicePingMetricsResponse) GetTimescaledbAvailable() bool {
 	return false
 }
 
+type IsolationConfig struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	PppoeProfileName    string                 `protobuf:"bytes,1,opt,name=pppoe_profile_name,json=pppoeProfileName,proto3" json:"pppoe_profile_name,omitempty"`           // e.g. "ISOLIR" (default)
+	HotspotProfileName  string                 `protobuf:"bytes,2,opt,name=hotspot_profile_name,json=hotspotProfileName,proto3" json:"hotspot_profile_name,omitempty"`     // e.g. "ISOLIR" (default)
+	AddressListName     string                 `protobuf:"bytes,3,opt,name=address_list_name,json=addressListName,proto3" json:"address_list_name,omitempty"`              // e.g. "ISOLIR_USERS"
+	RateLimit           string                 `protobuf:"bytes,4,opt,name=rate_limit,json=rateLimit,proto3" json:"rate_limit,omitempty"`                                  // e.g. "0/0" or "512k/512k"
+	LocalAddress        string                 `protobuf:"bytes,5,opt,name=local_address,json=localAddress,proto3" json:"local_address,omitempty"`                         // e.g. "10.0.99.1"
+	RemoteAddressPool   string                 `protobuf:"bytes,6,opt,name=remote_address_pool,json=remoteAddressPool,proto3" json:"remote_address_pool,omitempty"`        // e.g. "pool-isolir"
+	RedirectIp          string                 `protobuf:"bytes,7,opt,name=redirect_ip,json=redirectIp,proto3" json:"redirect_ip,omitempty"`                               // e.g. "192.168.1.10"
+	RedirectPort        int32                  `protobuf:"varint,8,opt,name=redirect_port,json=redirectPort,proto3" json:"redirect_port,omitempty"`                        // e.g. 80
+	NatRedirectEnabled  bool                   `protobuf:"varint,9,opt,name=nat_redirect_enabled,json=natRedirectEnabled,proto3" json:"nat_redirect_enabled,omitempty"`    // Pasang dst-nat redirect rule
+	PppoeRedirectUrl    string                 `protobuf:"bytes,10,opt,name=pppoe_redirect_url,json=pppoeRedirectUrl,proto3" json:"pppoe_redirect_url,omitempty"`          // e.g. "/portal/isolate/pppoe" or "https://portal.isp.id/isolated/pppoe"
+	HotspotRedirectUrl  string                 `protobuf:"bytes,11,opt,name=hotspot_redirect_url,json=hotspotRedirectUrl,proto3" json:"hotspot_redirect_url,omitempty"`    // e.g. "/portal/isolate/hotspot" or "https://portal.isp.id/isolated/hotspot"
+	WalledGardenDomains []string               `protobuf:"bytes,12,rep,name=walled_garden_domains,json=walledGardenDomains,proto3" json:"walled_garden_domains,omitempty"` // e.g. ["tripay.co.id", "api.tripay.co.id", "midtrans.com", "whatsapp.com"]
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *IsolationConfig) Reset() {
+	*x = IsolationConfig{}
+	mi := &file_v1_device_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IsolationConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IsolationConfig) ProtoMessage() {}
+
+func (x *IsolationConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IsolationConfig.ProtoReflect.Descriptor instead.
+func (*IsolationConfig) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *IsolationConfig) GetPppoeProfileName() string {
+	if x != nil {
+		return x.PppoeProfileName
+	}
+	return ""
+}
+
+func (x *IsolationConfig) GetHotspotProfileName() string {
+	if x != nil {
+		return x.HotspotProfileName
+	}
+	return ""
+}
+
+func (x *IsolationConfig) GetAddressListName() string {
+	if x != nil {
+		return x.AddressListName
+	}
+	return ""
+}
+
+func (x *IsolationConfig) GetRateLimit() string {
+	if x != nil {
+		return x.RateLimit
+	}
+	return ""
+}
+
+func (x *IsolationConfig) GetLocalAddress() string {
+	if x != nil {
+		return x.LocalAddress
+	}
+	return ""
+}
+
+func (x *IsolationConfig) GetRemoteAddressPool() string {
+	if x != nil {
+		return x.RemoteAddressPool
+	}
+	return ""
+}
+
+func (x *IsolationConfig) GetRedirectIp() string {
+	if x != nil {
+		return x.RedirectIp
+	}
+	return ""
+}
+
+func (x *IsolationConfig) GetRedirectPort() int32 {
+	if x != nil {
+		return x.RedirectPort
+	}
+	return 0
+}
+
+func (x *IsolationConfig) GetNatRedirectEnabled() bool {
+	if x != nil {
+		return x.NatRedirectEnabled
+	}
+	return false
+}
+
+func (x *IsolationConfig) GetPppoeRedirectUrl() string {
+	if x != nil {
+		return x.PppoeRedirectUrl
+	}
+	return ""
+}
+
+func (x *IsolationConfig) GetHotspotRedirectUrl() string {
+	if x != nil {
+		return x.HotspotRedirectUrl
+	}
+	return ""
+}
+
+func (x *IsolationConfig) GetWalledGardenDomains() []string {
+	if x != nil {
+		return x.WalledGardenDomains
+	}
+	return nil
+}
+
+type IsolationStatus struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	PppoeProfileExists   bool                   `protobuf:"varint,1,opt,name=pppoe_profile_exists,json=pppoeProfileExists,proto3" json:"pppoe_profile_exists,omitempty"`
+	HotspotProfileExists bool                   `protobuf:"varint,2,opt,name=hotspot_profile_exists,json=hotspotProfileExists,proto3" json:"hotspot_profile_exists,omitempty"`
+	AddressListExists    bool                   `protobuf:"varint,3,opt,name=address_list_exists,json=addressListExists,proto3" json:"address_list_exists,omitempty"`
+	NatRedirectExists    bool                   `protobuf:"varint,4,opt,name=nat_redirect_exists,json=natRedirectExists,proto3" json:"nat_redirect_exists,omitempty"`
+	IsolatedUsersCount   int32                  `protobuf:"varint,5,opt,name=isolated_users_count,json=isolatedUsersCount,proto3" json:"isolated_users_count,omitempty"`
+	Config               *IsolationConfig       `protobuf:"bytes,6,opt,name=config,proto3" json:"config,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *IsolationStatus) Reset() {
+	*x = IsolationStatus{}
+	mi := &file_v1_device_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IsolationStatus) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IsolationStatus) ProtoMessage() {}
+
+func (x *IsolationStatus) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IsolationStatus.ProtoReflect.Descriptor instead.
+func (*IsolationStatus) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *IsolationStatus) GetPppoeProfileExists() bool {
+	if x != nil {
+		return x.PppoeProfileExists
+	}
+	return false
+}
+
+func (x *IsolationStatus) GetHotspotProfileExists() bool {
+	if x != nil {
+		return x.HotspotProfileExists
+	}
+	return false
+}
+
+func (x *IsolationStatus) GetAddressListExists() bool {
+	if x != nil {
+		return x.AddressListExists
+	}
+	return false
+}
+
+func (x *IsolationStatus) GetNatRedirectExists() bool {
+	if x != nil {
+		return x.NatRedirectExists
+	}
+	return false
+}
+
+func (x *IsolationStatus) GetIsolatedUsersCount() int32 {
+	if x != nil {
+		return x.IsolatedUsersCount
+	}
+	return 0
+}
+
+func (x *IsolationStatus) GetConfig() *IsolationConfig {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+type GetIsolationStatusRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetIsolationStatusRequest) Reset() {
+	*x = GetIsolationStatusRequest{}
+	mi := &file_v1_device_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetIsolationStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetIsolationStatusRequest) ProtoMessage() {}
+
+func (x *GetIsolationStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetIsolationStatusRequest.ProtoReflect.Descriptor instead.
+func (*GetIsolationStatusRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *GetIsolationStatusRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+type GetIsolationStatusResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Status        *IsolationStatus       `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetIsolationStatusResponse) Reset() {
+	*x = GetIsolationStatusResponse{}
+	mi := &file_v1_device_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetIsolationStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetIsolationStatusResponse) ProtoMessage() {}
+
+func (x *GetIsolationStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetIsolationStatusResponse.ProtoReflect.Descriptor instead.
+func (*GetIsolationStatusResponse) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *GetIsolationStatusResponse) GetStatus() *IsolationStatus {
+	if x != nil {
+		return x.Status
+	}
+	return nil
+}
+
+type CreateIsolationProfileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Config        *IsolationConfig       `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateIsolationProfileRequest) Reset() {
+	*x = CreateIsolationProfileRequest{}
+	mi := &file_v1_device_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateIsolationProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateIsolationProfileRequest) ProtoMessage() {}
+
+func (x *CreateIsolationProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateIsolationProfileRequest.ProtoReflect.Descriptor instead.
+func (*CreateIsolationProfileRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *CreateIsolationProfileRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *CreateIsolationProfileRequest) GetConfig() *IsolationConfig {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+type CreateIsolationProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Status        *IsolationStatus       `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateIsolationProfileResponse) Reset() {
+	*x = CreateIsolationProfileResponse{}
+	mi := &file_v1_device_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateIsolationProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateIsolationProfileResponse) ProtoMessage() {}
+
+func (x *CreateIsolationProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateIsolationProfileResponse.ProtoReflect.Descriptor instead.
+func (*CreateIsolationProfileResponse) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *CreateIsolationProfileResponse) GetStatus() *IsolationStatus {
+	if x != nil {
+		return x.Status
+	}
+	return nil
+}
+
+func (x *CreateIsolationProfileResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type UpdateIsolationProfileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Config        *IsolationConfig       `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateIsolationProfileRequest) Reset() {
+	*x = UpdateIsolationProfileRequest{}
+	mi := &file_v1_device_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateIsolationProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateIsolationProfileRequest) ProtoMessage() {}
+
+func (x *UpdateIsolationProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateIsolationProfileRequest.ProtoReflect.Descriptor instead.
+func (*UpdateIsolationProfileRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *UpdateIsolationProfileRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *UpdateIsolationProfileRequest) GetConfig() *IsolationConfig {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+type UpdateIsolationProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Status        *IsolationStatus       `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateIsolationProfileResponse) Reset() {
+	*x = UpdateIsolationProfileResponse{}
+	mi := &file_v1_device_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateIsolationProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateIsolationProfileResponse) ProtoMessage() {}
+
+func (x *UpdateIsolationProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateIsolationProfileResponse.ProtoReflect.Descriptor instead.
+func (*UpdateIsolationProfileResponse) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *UpdateIsolationProfileResponse) GetStatus() *IsolationStatus {
+	if x != nil {
+		return x.Status
+	}
+	return nil
+}
+
+func (x *UpdateIsolationProfileResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type DeleteIsolationProfileRequest struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId            string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	RemoveFirewallRules bool                   `protobuf:"varint,2,opt,name=remove_firewall_rules,json=removeFirewallRules,proto3" json:"remove_firewall_rules,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *DeleteIsolationProfileRequest) Reset() {
+	*x = DeleteIsolationProfileRequest{}
+	mi := &file_v1_device_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteIsolationProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteIsolationProfileRequest) ProtoMessage() {}
+
+func (x *DeleteIsolationProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteIsolationProfileRequest.ProtoReflect.Descriptor instead.
+func (*DeleteIsolationProfileRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *DeleteIsolationProfileRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *DeleteIsolationProfileRequest) GetRemoveFirewallRules() bool {
+	if x != nil {
+		return x.RemoveFirewallRules
+	}
+	return false
+}
+
+type DeleteIsolationProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteIsolationProfileResponse) Reset() {
+	*x = DeleteIsolationProfileResponse{}
+	mi := &file_v1_device_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteIsolationProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteIsolationProfileResponse) ProtoMessage() {}
+
+func (x *DeleteIsolationProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteIsolationProfileResponse.ProtoReflect.Descriptor instead.
+func (*DeleteIsolationProfileResponse) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *DeleteIsolationProfileResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type GetRouterIntegrationScriptRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	ServiceType   string                 `protobuf:"bytes,2,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"` // "pppoe" | "hotspot" | "all"
+	WebhookUrl    string                 `protobuf:"bytes,3,opt,name=webhook_url,json=webhookUrl,proto3" json:"webhook_url,omitempty"`    // optional override
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRouterIntegrationScriptRequest) Reset() {
+	*x = GetRouterIntegrationScriptRequest{}
+	mi := &file_v1_device_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRouterIntegrationScriptRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRouterIntegrationScriptRequest) ProtoMessage() {}
+
+func (x *GetRouterIntegrationScriptRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRouterIntegrationScriptRequest.ProtoReflect.Descriptor instead.
+func (*GetRouterIntegrationScriptRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *GetRouterIntegrationScriptRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *GetRouterIntegrationScriptRequest) GetServiceType() string {
+	if x != nil {
+		return x.ServiceType
+	}
+	return ""
+}
+
+func (x *GetRouterIntegrationScriptRequest) GetWebhookUrl() string {
+	if x != nil {
+		return x.WebhookUrl
+	}
+	return ""
+}
+
+type GetRouterIntegrationScriptResponse struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	PppOnUpScript         string                 `protobuf:"bytes,1,opt,name=ppp_on_up_script,json=pppOnUpScript,proto3" json:"ppp_on_up_script,omitempty"`
+	PppOnDownScript       string                 `protobuf:"bytes,2,opt,name=ppp_on_down_script,json=pppOnDownScript,proto3" json:"ppp_on_down_script,omitempty"`
+	HotspotOnLoginScript  string                 `protobuf:"bytes,3,opt,name=hotspot_on_login_script,json=hotspotOnLoginScript,proto3" json:"hotspot_on_login_script,omitempty"`
+	HotspotOnLogoutScript string                 `protobuf:"bytes,4,opt,name=hotspot_on_logout_script,json=hotspotOnLogoutScript,proto3" json:"hotspot_on_logout_script,omitempty"`
+	WebhookToken          string                 `protobuf:"bytes,5,opt,name=webhook_token,json=webhookToken,proto3" json:"webhook_token,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *GetRouterIntegrationScriptResponse) Reset() {
+	*x = GetRouterIntegrationScriptResponse{}
+	mi := &file_v1_device_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRouterIntegrationScriptResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRouterIntegrationScriptResponse) ProtoMessage() {}
+
+func (x *GetRouterIntegrationScriptResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRouterIntegrationScriptResponse.ProtoReflect.Descriptor instead.
+func (*GetRouterIntegrationScriptResponse) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *GetRouterIntegrationScriptResponse) GetPppOnUpScript() string {
+	if x != nil {
+		return x.PppOnUpScript
+	}
+	return ""
+}
+
+func (x *GetRouterIntegrationScriptResponse) GetPppOnDownScript() string {
+	if x != nil {
+		return x.PppOnDownScript
+	}
+	return ""
+}
+
+func (x *GetRouterIntegrationScriptResponse) GetHotspotOnLoginScript() string {
+	if x != nil {
+		return x.HotspotOnLoginScript
+	}
+	return ""
+}
+
+func (x *GetRouterIntegrationScriptResponse) GetHotspotOnLogoutScript() string {
+	if x != nil {
+		return x.HotspotOnLogoutScript
+	}
+	return ""
+}
+
+func (x *GetRouterIntegrationScriptResponse) GetWebhookToken() string {
+	if x != nil {
+		return x.WebhookToken
+	}
+	return ""
+}
+
+type ApplyRouterIntegrationScriptRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	ProfileName   string                 `protobuf:"bytes,2,opt,name=profile_name,json=profileName,proto3" json:"profile_name,omitempty"`
+	ServiceType   string                 `protobuf:"bytes,3,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"` // "pppoe" | "hotspot"
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ApplyRouterIntegrationScriptRequest) Reset() {
+	*x = ApplyRouterIntegrationScriptRequest{}
+	mi := &file_v1_device_proto_msgTypes[40]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ApplyRouterIntegrationScriptRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApplyRouterIntegrationScriptRequest) ProtoMessage() {}
+
+func (x *ApplyRouterIntegrationScriptRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[40]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApplyRouterIntegrationScriptRequest.ProtoReflect.Descriptor instead.
+func (*ApplyRouterIntegrationScriptRequest) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{40}
+}
+
+func (x *ApplyRouterIntegrationScriptRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *ApplyRouterIntegrationScriptRequest) GetProfileName() string {
+	if x != nil {
+		return x.ProfileName
+	}
+	return ""
+}
+
+func (x *ApplyRouterIntegrationScriptRequest) GetServiceType() string {
+	if x != nil {
+		return x.ServiceType
+	}
+	return ""
+}
+
+type ApplyRouterIntegrationScriptResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ApplyRouterIntegrationScriptResponse) Reset() {
+	*x = ApplyRouterIntegrationScriptResponse{}
+	mi := &file_v1_device_proto_msgTypes[41]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ApplyRouterIntegrationScriptResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApplyRouterIntegrationScriptResponse) ProtoMessage() {}
+
+func (x *ApplyRouterIntegrationScriptResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_device_proto_msgTypes[41]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApplyRouterIntegrationScriptResponse.ProtoReflect.Descriptor instead.
+func (*ApplyRouterIntegrationScriptResponse) Descriptor() ([]byte, []int) {
+	return file_v1_device_proto_rawDescGZIP(), []int{41}
+}
+
+func (x *ApplyRouterIntegrationScriptResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_v1_device_proto protoreflect.FileDescriptor
 
 const file_v1_device_proto_rawDesc = "" +
@@ -2324,7 +3172,68 @@ const file_v1_device_proto_rawDesc = "" +
 	"\amax_rtt\x18\x04 \x01(\x02R\x06maxRtt\x12&\n" +
 	"\x0fpacket_loss_pct\x18\x05 \x01(\x02R\rpacketLossPct\x12#\n" +
 	"\rtotal_samples\x18\x06 \x01(\x03R\ftotalSamples\x123\n" +
-	"\x15timescaledb_available\x18\a \x01(\bR\x14timescaledbAvailable2\x88\t\n" +
+	"\x15timescaledb_available\x18\a \x01(\bR\x14timescaledbAvailable\"\x9d\x04\n" +
+	"\x0fIsolationConfig\x12,\n" +
+	"\x12pppoe_profile_name\x18\x01 \x01(\tR\x10pppoeProfileName\x120\n" +
+	"\x14hotspot_profile_name\x18\x02 \x01(\tR\x12hotspotProfileName\x12*\n" +
+	"\x11address_list_name\x18\x03 \x01(\tR\x0faddressListName\x12\x1d\n" +
+	"\n" +
+	"rate_limit\x18\x04 \x01(\tR\trateLimit\x12#\n" +
+	"\rlocal_address\x18\x05 \x01(\tR\flocalAddress\x12.\n" +
+	"\x13remote_address_pool\x18\x06 \x01(\tR\x11remoteAddressPool\x12\x1f\n" +
+	"\vredirect_ip\x18\a \x01(\tR\n" +
+	"redirectIp\x12#\n" +
+	"\rredirect_port\x18\b \x01(\x05R\fredirectPort\x120\n" +
+	"\x14nat_redirect_enabled\x18\t \x01(\bR\x12natRedirectEnabled\x12,\n" +
+	"\x12pppoe_redirect_url\x18\n" +
+	" \x01(\tR\x10pppoeRedirectUrl\x120\n" +
+	"\x14hotspot_redirect_url\x18\v \x01(\tR\x12hotspotRedirectUrl\x122\n" +
+	"\x15walled_garden_domains\x18\f \x03(\tR\x13walledGardenDomains\"\xc1\x02\n" +
+	"\x0fIsolationStatus\x120\n" +
+	"\x14pppoe_profile_exists\x18\x01 \x01(\bR\x12pppoeProfileExists\x124\n" +
+	"\x16hotspot_profile_exists\x18\x02 \x01(\bR\x14hotspotProfileExists\x12.\n" +
+	"\x13address_list_exists\x18\x03 \x01(\bR\x11addressListExists\x12.\n" +
+	"\x13nat_redirect_exists\x18\x04 \x01(\bR\x11natRedirectExists\x120\n" +
+	"\x14isolated_users_count\x18\x05 \x01(\x05R\x12isolatedUsersCount\x124\n" +
+	"\x06config\x18\x06 \x01(\v2\x1c.polyglot.v1.IsolationConfigR\x06config\"A\n" +
+	"\x19GetIsolationStatusRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"R\n" +
+	"\x1aGetIsolationStatusResponse\x124\n" +
+	"\x06status\x18\x01 \x01(\v2\x1c.polyglot.v1.IsolationStatusR\x06status\"{\n" +
+	"\x1dCreateIsolationProfileRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x124\n" +
+	"\x06config\x18\x02 \x01(\v2\x1c.polyglot.v1.IsolationConfigR\x06config\"p\n" +
+	"\x1eCreateIsolationProfileResponse\x124\n" +
+	"\x06status\x18\x01 \x01(\v2\x1c.polyglot.v1.IsolationStatusR\x06status\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"{\n" +
+	"\x1dUpdateIsolationProfileRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x124\n" +
+	"\x06config\x18\x02 \x01(\v2\x1c.polyglot.v1.IsolationConfigR\x06config\"p\n" +
+	"\x1eUpdateIsolationProfileResponse\x124\n" +
+	"\x06status\x18\x01 \x01(\v2\x1c.polyglot.v1.IsolationStatusR\x06status\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"y\n" +
+	"\x1dDeleteIsolationProfileRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x122\n" +
+	"\x15remove_firewall_rules\x18\x02 \x01(\bR\x13removeFirewallRules\":\n" +
+	"\x1eDeleteIsolationProfileResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\x8d\x01\n" +
+	"!GetRouterIntegrationScriptRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12!\n" +
+	"\fservice_type\x18\x02 \x01(\tR\vserviceType\x12\x1f\n" +
+	"\vwebhook_url\x18\x03 \x01(\tR\n" +
+	"webhookUrl\"\x8f\x02\n" +
+	"\"GetRouterIntegrationScriptResponse\x12'\n" +
+	"\x10ppp_on_up_script\x18\x01 \x01(\tR\rpppOnUpScript\x12+\n" +
+	"\x12ppp_on_down_script\x18\x02 \x01(\tR\x0fpppOnDownScript\x125\n" +
+	"\x17hotspot_on_login_script\x18\x03 \x01(\tR\x14hotspotOnLoginScript\x127\n" +
+	"\x18hotspot_on_logout_script\x18\x04 \x01(\tR\x15hotspotOnLogoutScript\x12#\n" +
+	"\rwebhook_token\x18\x05 \x01(\tR\fwebhookToken\"\xa3\x01\n" +
+	"#ApplyRouterIntegrationScriptRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12*\n" +
+	"\fprofile_name\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vprofileName\x12*\n" +
+	"\fservice_type\x18\x03 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\vserviceType\"@\n" +
+	"$ApplyRouterIntegrationScriptResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage2\xcd\x0e\n" +
 	"\rDeviceService\x12P\n" +
 	"\vListDevices\x12\x1f.polyglot.v1.ListDevicesRequest\x1a .polyglot.v1.ListDevicesResponse\x12J\n" +
 	"\tGetDevice\x12\x1d.polyglot.v1.GetDeviceRequest\x1a\x1e.polyglot.v1.GetDeviceResponse\x12S\n" +
@@ -2338,7 +3247,13 @@ const file_v1_device_proto_rawDesc = "" +
 	"\x0eStreamTerminal\x12\x1a.polyglot.v1.TerminalFrame\x1a\x1a.polyglot.v1.TerminalFrame(\x010\x01\x12h\n" +
 	"\x13GetDevicePingConfig\x12'.polyglot.v1.GetDevicePingConfigRequest\x1a(.polyglot.v1.GetDevicePingConfigResponse\x12q\n" +
 	"\x16UpdateDevicePingConfig\x12*.polyglot.v1.UpdateDevicePingConfigRequest\x1a+.polyglot.v1.UpdateDevicePingConfigResponse\x12q\n" +
-	"\x16QueryDevicePingMetrics\x12*.polyglot.v1.QueryDevicePingMetricsRequest\x1a+.polyglot.v1.QueryDevicePingMetricsResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x16QueryDevicePingMetrics\x12*.polyglot.v1.QueryDevicePingMetricsRequest\x1a+.polyglot.v1.QueryDevicePingMetricsResponse\x12e\n" +
+	"\x12GetIsolationStatus\x12&.polyglot.v1.GetIsolationStatusRequest\x1a'.polyglot.v1.GetIsolationStatusResponse\x12q\n" +
+	"\x16CreateIsolationProfile\x12*.polyglot.v1.CreateIsolationProfileRequest\x1a+.polyglot.v1.CreateIsolationProfileResponse\x12q\n" +
+	"\x16UpdateIsolationProfile\x12*.polyglot.v1.UpdateIsolationProfileRequest\x1a+.polyglot.v1.UpdateIsolationProfileResponse\x12q\n" +
+	"\x16DeleteIsolationProfile\x12*.polyglot.v1.DeleteIsolationProfileRequest\x1a+.polyglot.v1.DeleteIsolationProfileResponse\x12}\n" +
+	"\x1aGetRouterIntegrationScript\x12..polyglot.v1.GetRouterIntegrationScriptRequest\x1a/.polyglot.v1.GetRouterIntegrationScriptResponse\x12\x83\x01\n" +
+	"\x1cApplyRouterIntegrationScript\x120.polyglot.v1.ApplyRouterIntegrationScriptRequest\x1a1.polyglot.v1.ApplyRouterIntegrationScriptResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_device_proto_rawDescOnce sync.Once
@@ -2352,40 +3267,54 @@ func file_v1_device_proto_rawDescGZIP() []byte {
 	return file_v1_device_proto_rawDescData
 }
 
-var file_v1_device_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
+var file_v1_device_proto_msgTypes = make([]protoimpl.MessageInfo, 43)
 var file_v1_device_proto_goTypes = []any{
-	(*Device)(nil),                         // 0: polyglot.v1.Device
-	(*ListDevicesRequest)(nil),             // 1: polyglot.v1.ListDevicesRequest
-	(*ListDevicesResponse)(nil),            // 2: polyglot.v1.ListDevicesResponse
-	(*GetDeviceRequest)(nil),               // 3: polyglot.v1.GetDeviceRequest
-	(*GetDeviceResponse)(nil),              // 4: polyglot.v1.GetDeviceResponse
-	(*UpdateDeviceRequest)(nil),            // 5: polyglot.v1.UpdateDeviceRequest
-	(*UpdateDeviceResponse)(nil),           // 6: polyglot.v1.UpdateDeviceResponse
-	(*StreamDeviceStatusRequest)(nil),      // 7: polyglot.v1.StreamDeviceStatusRequest
-	(*DeviceInterfaceInfo)(nil),            // 8: polyglot.v1.DeviceInterfaceInfo
-	(*DeviceTestMetrics)(nil),              // 9: polyglot.v1.DeviceTestMetrics
-	(*DeviceStatusFrame)(nil),              // 10: polyglot.v1.DeviceStatusFrame
-	(*TerminalFrame)(nil),                  // 11: polyglot.v1.TerminalFrame
-	(*DeleteDeviceRequest)(nil),            // 12: polyglot.v1.DeleteDeviceRequest
-	(*DeleteDeviceResponse)(nil),           // 13: polyglot.v1.DeleteDeviceResponse
-	(*TestDeviceConnectionRequest)(nil),    // 14: polyglot.v1.TestDeviceConnectionRequest
-	(*TestDeviceConnectionResponse)(nil),   // 15: polyglot.v1.TestDeviceConnectionResponse
-	(*StreamDevicePingRequest)(nil),        // 16: polyglot.v1.StreamDevicePingRequest
-	(*StreamDevicePingFrame)(nil),          // 17: polyglot.v1.StreamDevicePingFrame
-	(*StreamDeviceTrafficRequest)(nil),     // 18: polyglot.v1.StreamDeviceTrafficRequest
-	(*StreamDeviceTrafficFrame)(nil),       // 19: polyglot.v1.StreamDeviceTrafficFrame
-	(*DevicePingConfig)(nil),               // 20: polyglot.v1.DevicePingConfig
-	(*GetDevicePingConfigRequest)(nil),     // 21: polyglot.v1.GetDevicePingConfigRequest
-	(*GetDevicePingConfigResponse)(nil),    // 22: polyglot.v1.GetDevicePingConfigResponse
-	(*UpdateDevicePingConfigRequest)(nil),  // 23: polyglot.v1.UpdateDevicePingConfigRequest
-	(*UpdateDevicePingConfigResponse)(nil), // 24: polyglot.v1.UpdateDevicePingConfigResponse
-	(*QueryDevicePingMetricsRequest)(nil),  // 25: polyglot.v1.QueryDevicePingMetricsRequest
-	(*PingMetricPointData)(nil),            // 26: polyglot.v1.PingMetricPointData
-	(*QueryDevicePingMetricsResponse)(nil), // 27: polyglot.v1.QueryDevicePingMetricsResponse
-	nil,                                    // 28: polyglot.v1.Device.ExtraEntry
+	(*Device)(nil),                               // 0: polyglot.v1.Device
+	(*ListDevicesRequest)(nil),                   // 1: polyglot.v1.ListDevicesRequest
+	(*ListDevicesResponse)(nil),                  // 2: polyglot.v1.ListDevicesResponse
+	(*GetDeviceRequest)(nil),                     // 3: polyglot.v1.GetDeviceRequest
+	(*GetDeviceResponse)(nil),                    // 4: polyglot.v1.GetDeviceResponse
+	(*UpdateDeviceRequest)(nil),                  // 5: polyglot.v1.UpdateDeviceRequest
+	(*UpdateDeviceResponse)(nil),                 // 6: polyglot.v1.UpdateDeviceResponse
+	(*StreamDeviceStatusRequest)(nil),            // 7: polyglot.v1.StreamDeviceStatusRequest
+	(*DeviceInterfaceInfo)(nil),                  // 8: polyglot.v1.DeviceInterfaceInfo
+	(*DeviceTestMetrics)(nil),                    // 9: polyglot.v1.DeviceTestMetrics
+	(*DeviceStatusFrame)(nil),                    // 10: polyglot.v1.DeviceStatusFrame
+	(*TerminalFrame)(nil),                        // 11: polyglot.v1.TerminalFrame
+	(*DeleteDeviceRequest)(nil),                  // 12: polyglot.v1.DeleteDeviceRequest
+	(*DeleteDeviceResponse)(nil),                 // 13: polyglot.v1.DeleteDeviceResponse
+	(*TestDeviceConnectionRequest)(nil),          // 14: polyglot.v1.TestDeviceConnectionRequest
+	(*TestDeviceConnectionResponse)(nil),         // 15: polyglot.v1.TestDeviceConnectionResponse
+	(*StreamDevicePingRequest)(nil),              // 16: polyglot.v1.StreamDevicePingRequest
+	(*StreamDevicePingFrame)(nil),                // 17: polyglot.v1.StreamDevicePingFrame
+	(*StreamDeviceTrafficRequest)(nil),           // 18: polyglot.v1.StreamDeviceTrafficRequest
+	(*StreamDeviceTrafficFrame)(nil),             // 19: polyglot.v1.StreamDeviceTrafficFrame
+	(*DevicePingConfig)(nil),                     // 20: polyglot.v1.DevicePingConfig
+	(*GetDevicePingConfigRequest)(nil),           // 21: polyglot.v1.GetDevicePingConfigRequest
+	(*GetDevicePingConfigResponse)(nil),          // 22: polyglot.v1.GetDevicePingConfigResponse
+	(*UpdateDevicePingConfigRequest)(nil),        // 23: polyglot.v1.UpdateDevicePingConfigRequest
+	(*UpdateDevicePingConfigResponse)(nil),       // 24: polyglot.v1.UpdateDevicePingConfigResponse
+	(*QueryDevicePingMetricsRequest)(nil),        // 25: polyglot.v1.QueryDevicePingMetricsRequest
+	(*PingMetricPointData)(nil),                  // 26: polyglot.v1.PingMetricPointData
+	(*QueryDevicePingMetricsResponse)(nil),       // 27: polyglot.v1.QueryDevicePingMetricsResponse
+	(*IsolationConfig)(nil),                      // 28: polyglot.v1.IsolationConfig
+	(*IsolationStatus)(nil),                      // 29: polyglot.v1.IsolationStatus
+	(*GetIsolationStatusRequest)(nil),            // 30: polyglot.v1.GetIsolationStatusRequest
+	(*GetIsolationStatusResponse)(nil),           // 31: polyglot.v1.GetIsolationStatusResponse
+	(*CreateIsolationProfileRequest)(nil),        // 32: polyglot.v1.CreateIsolationProfileRequest
+	(*CreateIsolationProfileResponse)(nil),       // 33: polyglot.v1.CreateIsolationProfileResponse
+	(*UpdateIsolationProfileRequest)(nil),        // 34: polyglot.v1.UpdateIsolationProfileRequest
+	(*UpdateIsolationProfileResponse)(nil),       // 35: polyglot.v1.UpdateIsolationProfileResponse
+	(*DeleteIsolationProfileRequest)(nil),        // 36: polyglot.v1.DeleteIsolationProfileRequest
+	(*DeleteIsolationProfileResponse)(nil),       // 37: polyglot.v1.DeleteIsolationProfileResponse
+	(*GetRouterIntegrationScriptRequest)(nil),    // 38: polyglot.v1.GetRouterIntegrationScriptRequest
+	(*GetRouterIntegrationScriptResponse)(nil),   // 39: polyglot.v1.GetRouterIntegrationScriptResponse
+	(*ApplyRouterIntegrationScriptRequest)(nil),  // 40: polyglot.v1.ApplyRouterIntegrationScriptRequest
+	(*ApplyRouterIntegrationScriptResponse)(nil), // 41: polyglot.v1.ApplyRouterIntegrationScriptResponse
+	nil, // 42: polyglot.v1.Device.ExtraEntry
 }
 var file_v1_device_proto_depIdxs = []int32{
-	28, // 0: polyglot.v1.Device.extra:type_name -> polyglot.v1.Device.ExtraEntry
+	42, // 0: polyglot.v1.Device.extra:type_name -> polyglot.v1.Device.ExtraEntry
 	0,  // 1: polyglot.v1.ListDevicesResponse.devices:type_name -> polyglot.v1.Device
 	0,  // 2: polyglot.v1.GetDeviceResponse.device:type_name -> polyglot.v1.Device
 	0,  // 3: polyglot.v1.UpdateDeviceRequest.device:type_name -> polyglot.v1.Device
@@ -2399,35 +3328,53 @@ var file_v1_device_proto_depIdxs = []int32{
 	20, // 11: polyglot.v1.UpdateDevicePingConfigRequest.config:type_name -> polyglot.v1.DevicePingConfig
 	20, // 12: polyglot.v1.UpdateDevicePingConfigResponse.config:type_name -> polyglot.v1.DevicePingConfig
 	26, // 13: polyglot.v1.QueryDevicePingMetricsResponse.points:type_name -> polyglot.v1.PingMetricPointData
-	1,  // 14: polyglot.v1.DeviceService.ListDevices:input_type -> polyglot.v1.ListDevicesRequest
-	3,  // 15: polyglot.v1.DeviceService.GetDevice:input_type -> polyglot.v1.GetDeviceRequest
-	5,  // 16: polyglot.v1.DeviceService.UpdateDevice:input_type -> polyglot.v1.UpdateDeviceRequest
-	12, // 17: polyglot.v1.DeviceService.DeleteDevice:input_type -> polyglot.v1.DeleteDeviceRequest
-	14, // 18: polyglot.v1.DeviceService.TestDeviceConnection:input_type -> polyglot.v1.TestDeviceConnectionRequest
-	7,  // 19: polyglot.v1.DeviceService.StreamDeviceStatus:input_type -> polyglot.v1.StreamDeviceStatusRequest
-	16, // 20: polyglot.v1.DeviceService.StreamPing:input_type -> polyglot.v1.StreamDevicePingRequest
-	18, // 21: polyglot.v1.DeviceService.StreamInterfaceTraffic:input_type -> polyglot.v1.StreamDeviceTrafficRequest
-	11, // 22: polyglot.v1.DeviceService.StreamTerminal:input_type -> polyglot.v1.TerminalFrame
-	21, // 23: polyglot.v1.DeviceService.GetDevicePingConfig:input_type -> polyglot.v1.GetDevicePingConfigRequest
-	23, // 24: polyglot.v1.DeviceService.UpdateDevicePingConfig:input_type -> polyglot.v1.UpdateDevicePingConfigRequest
-	25, // 25: polyglot.v1.DeviceService.QueryDevicePingMetrics:input_type -> polyglot.v1.QueryDevicePingMetricsRequest
-	2,  // 26: polyglot.v1.DeviceService.ListDevices:output_type -> polyglot.v1.ListDevicesResponse
-	4,  // 27: polyglot.v1.DeviceService.GetDevice:output_type -> polyglot.v1.GetDeviceResponse
-	6,  // 28: polyglot.v1.DeviceService.UpdateDevice:output_type -> polyglot.v1.UpdateDeviceResponse
-	13, // 29: polyglot.v1.DeviceService.DeleteDevice:output_type -> polyglot.v1.DeleteDeviceResponse
-	15, // 30: polyglot.v1.DeviceService.TestDeviceConnection:output_type -> polyglot.v1.TestDeviceConnectionResponse
-	10, // 31: polyglot.v1.DeviceService.StreamDeviceStatus:output_type -> polyglot.v1.DeviceStatusFrame
-	17, // 32: polyglot.v1.DeviceService.StreamPing:output_type -> polyglot.v1.StreamDevicePingFrame
-	19, // 33: polyglot.v1.DeviceService.StreamInterfaceTraffic:output_type -> polyglot.v1.StreamDeviceTrafficFrame
-	11, // 34: polyglot.v1.DeviceService.StreamTerminal:output_type -> polyglot.v1.TerminalFrame
-	22, // 35: polyglot.v1.DeviceService.GetDevicePingConfig:output_type -> polyglot.v1.GetDevicePingConfigResponse
-	24, // 36: polyglot.v1.DeviceService.UpdateDevicePingConfig:output_type -> polyglot.v1.UpdateDevicePingConfigResponse
-	27, // 37: polyglot.v1.DeviceService.QueryDevicePingMetrics:output_type -> polyglot.v1.QueryDevicePingMetricsResponse
-	26, // [26:38] is the sub-list for method output_type
-	14, // [14:26] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	28, // 14: polyglot.v1.IsolationStatus.config:type_name -> polyglot.v1.IsolationConfig
+	29, // 15: polyglot.v1.GetIsolationStatusResponse.status:type_name -> polyglot.v1.IsolationStatus
+	28, // 16: polyglot.v1.CreateIsolationProfileRequest.config:type_name -> polyglot.v1.IsolationConfig
+	29, // 17: polyglot.v1.CreateIsolationProfileResponse.status:type_name -> polyglot.v1.IsolationStatus
+	28, // 18: polyglot.v1.UpdateIsolationProfileRequest.config:type_name -> polyglot.v1.IsolationConfig
+	29, // 19: polyglot.v1.UpdateIsolationProfileResponse.status:type_name -> polyglot.v1.IsolationStatus
+	1,  // 20: polyglot.v1.DeviceService.ListDevices:input_type -> polyglot.v1.ListDevicesRequest
+	3,  // 21: polyglot.v1.DeviceService.GetDevice:input_type -> polyglot.v1.GetDeviceRequest
+	5,  // 22: polyglot.v1.DeviceService.UpdateDevice:input_type -> polyglot.v1.UpdateDeviceRequest
+	12, // 23: polyglot.v1.DeviceService.DeleteDevice:input_type -> polyglot.v1.DeleteDeviceRequest
+	14, // 24: polyglot.v1.DeviceService.TestDeviceConnection:input_type -> polyglot.v1.TestDeviceConnectionRequest
+	7,  // 25: polyglot.v1.DeviceService.StreamDeviceStatus:input_type -> polyglot.v1.StreamDeviceStatusRequest
+	16, // 26: polyglot.v1.DeviceService.StreamPing:input_type -> polyglot.v1.StreamDevicePingRequest
+	18, // 27: polyglot.v1.DeviceService.StreamInterfaceTraffic:input_type -> polyglot.v1.StreamDeviceTrafficRequest
+	11, // 28: polyglot.v1.DeviceService.StreamTerminal:input_type -> polyglot.v1.TerminalFrame
+	21, // 29: polyglot.v1.DeviceService.GetDevicePingConfig:input_type -> polyglot.v1.GetDevicePingConfigRequest
+	23, // 30: polyglot.v1.DeviceService.UpdateDevicePingConfig:input_type -> polyglot.v1.UpdateDevicePingConfigRequest
+	25, // 31: polyglot.v1.DeviceService.QueryDevicePingMetrics:input_type -> polyglot.v1.QueryDevicePingMetricsRequest
+	30, // 32: polyglot.v1.DeviceService.GetIsolationStatus:input_type -> polyglot.v1.GetIsolationStatusRequest
+	32, // 33: polyglot.v1.DeviceService.CreateIsolationProfile:input_type -> polyglot.v1.CreateIsolationProfileRequest
+	34, // 34: polyglot.v1.DeviceService.UpdateIsolationProfile:input_type -> polyglot.v1.UpdateIsolationProfileRequest
+	36, // 35: polyglot.v1.DeviceService.DeleteIsolationProfile:input_type -> polyglot.v1.DeleteIsolationProfileRequest
+	38, // 36: polyglot.v1.DeviceService.GetRouterIntegrationScript:input_type -> polyglot.v1.GetRouterIntegrationScriptRequest
+	40, // 37: polyglot.v1.DeviceService.ApplyRouterIntegrationScript:input_type -> polyglot.v1.ApplyRouterIntegrationScriptRequest
+	2,  // 38: polyglot.v1.DeviceService.ListDevices:output_type -> polyglot.v1.ListDevicesResponse
+	4,  // 39: polyglot.v1.DeviceService.GetDevice:output_type -> polyglot.v1.GetDeviceResponse
+	6,  // 40: polyglot.v1.DeviceService.UpdateDevice:output_type -> polyglot.v1.UpdateDeviceResponse
+	13, // 41: polyglot.v1.DeviceService.DeleteDevice:output_type -> polyglot.v1.DeleteDeviceResponse
+	15, // 42: polyglot.v1.DeviceService.TestDeviceConnection:output_type -> polyglot.v1.TestDeviceConnectionResponse
+	10, // 43: polyglot.v1.DeviceService.StreamDeviceStatus:output_type -> polyglot.v1.DeviceStatusFrame
+	17, // 44: polyglot.v1.DeviceService.StreamPing:output_type -> polyglot.v1.StreamDevicePingFrame
+	19, // 45: polyglot.v1.DeviceService.StreamInterfaceTraffic:output_type -> polyglot.v1.StreamDeviceTrafficFrame
+	11, // 46: polyglot.v1.DeviceService.StreamTerminal:output_type -> polyglot.v1.TerminalFrame
+	22, // 47: polyglot.v1.DeviceService.GetDevicePingConfig:output_type -> polyglot.v1.GetDevicePingConfigResponse
+	24, // 48: polyglot.v1.DeviceService.UpdateDevicePingConfig:output_type -> polyglot.v1.UpdateDevicePingConfigResponse
+	27, // 49: polyglot.v1.DeviceService.QueryDevicePingMetrics:output_type -> polyglot.v1.QueryDevicePingMetricsResponse
+	31, // 50: polyglot.v1.DeviceService.GetIsolationStatus:output_type -> polyglot.v1.GetIsolationStatusResponse
+	33, // 51: polyglot.v1.DeviceService.CreateIsolationProfile:output_type -> polyglot.v1.CreateIsolationProfileResponse
+	35, // 52: polyglot.v1.DeviceService.UpdateIsolationProfile:output_type -> polyglot.v1.UpdateIsolationProfileResponse
+	37, // 53: polyglot.v1.DeviceService.DeleteIsolationProfile:output_type -> polyglot.v1.DeleteIsolationProfileResponse
+	39, // 54: polyglot.v1.DeviceService.GetRouterIntegrationScript:output_type -> polyglot.v1.GetRouterIntegrationScriptResponse
+	41, // 55: polyglot.v1.DeviceService.ApplyRouterIntegrationScript:output_type -> polyglot.v1.ApplyRouterIntegrationScriptResponse
+	38, // [38:56] is the sub-list for method output_type
+	20, // [20:38] is the sub-list for method input_type
+	20, // [20:20] is the sub-list for extension type_name
+	20, // [20:20] is the sub-list for extension extendee
+	0,  // [0:20] is the sub-list for field type_name
 }
 
 func init() { file_v1_device_proto_init() }
@@ -2441,7 +3388,7 @@ func file_v1_device_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_device_proto_rawDesc), len(file_v1_device_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   29,
+			NumMessages:   43,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -3,10 +3,12 @@ package customer
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/pkg/idgen"
 )
 
 // ManageCustomerUseCase orchestrates customer CRUD and subscription management.
@@ -38,24 +40,82 @@ func (uc *ManageCustomerUseCase) GetCustomer(ctx context.Context, id string) (cu
 	return result, nil
 }
 
-func (uc *ManageCustomerUseCase) CreateCustomer(ctx context.Context, c customer.Customer) error {
-	if c.ID == "" || c.Name == "" {
-		return customer.ErrInvalidInput
+// CreateCustomer creates a new customer entity with generated codes and defaults.
+func (uc *ManageCustomerUseCase) CreateCustomer(ctx context.Context, c customer.Customer) (customer.Customer, error) {
+	if c.Name == "" {
+		return customer.Customer{}, customer.ErrInvalidInput
 	}
+	if c.ID == "" {
+		c.ID = idgen.New("cust")
+	}
+	if c.TenantID == "" {
+		c.TenantID = "tenant-default"
+	}
+	if c.Status == "" {
+		c.Status = customer.StatusActive
+	}
+	if c.CustomerCode == "" {
+		for attempt := 0; attempt < 8; attempt++ {
+			code := "CUST-" + idgen.Digits(5)
+			if _, err := uc.repo.FindByCustomerCode(ctx, code); err != nil {
+				c.CustomerCode = code
+				break
+			}
+		}
+	}
+	if c.PortalAccessCode == "" {
+		for attempt := 0; attempt < 8; attempt++ {
+			portal := idgen.Digits(8)
+			if _, err := uc.repo.FindByPortalAccessCode(ctx, portal); err != nil {
+				c.PortalAccessCode = portal
+				break
+			}
+		}
+	}
+	now := time.Now().UTC()
+	if c.RegisteredAt.IsZero() {
+		c.RegisteredAt = time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.UTC)
+	}
+	c.CreatedAt = now
+	c.UpdatedAt = now
+
 	if err := uc.repo.Save(ctx, c); err != nil {
-		return fmt.Errorf("save customer: %w", err)
+		return customer.Customer{}, fmt.Errorf("save customer: %w", err)
 	}
-	return nil
+	return c, nil
 }
 
-func (uc *ManageCustomerUseCase) UpdateCustomer(ctx context.Context, c customer.Customer) error {
-	if c.ID == "" {
-		return customer.ErrInvalidInput
+// UpdateCustomer updates an existing customer entity.
+func (uc *ManageCustomerUseCase) UpdateCustomer(ctx context.Context, c customer.Customer) (customer.Customer, error) {
+	if c.ID == "" || c.Name == "" {
+		return customer.Customer{}, customer.ErrInvalidInput
 	}
+	existing, err := uc.repo.FindByID(ctx, c.ID)
+	if err != nil {
+		return customer.Customer{}, fmt.Errorf("find customer %s: %w", c.ID, err)
+	}
+	if c.TenantID == "" {
+		c.TenantID = existing.TenantID
+	}
+	if c.CustomerCode == "" {
+		c.CustomerCode = existing.CustomerCode
+	}
+	if c.PortalAccessCode == "" {
+		c.PortalAccessCode = existing.PortalAccessCode
+	}
+	if c.Status == "" {
+		c.Status = existing.Status
+	}
+	if c.RegisteredAt.IsZero() {
+		c.RegisteredAt = existing.RegisteredAt
+	}
+	c.CreatedAt = existing.CreatedAt
+	c.UpdatedAt = time.Now().UTC()
+
 	if err := uc.repo.Save(ctx, c); err != nil {
-		return fmt.Errorf("update customer: %w", err)
+		return customer.Customer{}, fmt.Errorf("update customer: %w", err)
 	}
-	return nil
+	return c, nil
 }
 
 func (uc *ManageCustomerUseCase) DeleteCustomer(ctx context.Context, id string) error {

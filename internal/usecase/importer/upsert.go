@@ -145,10 +145,10 @@ func (u *UpsertUseCase) ensurePlan(ctx context.Context, r Row) (string, error) {
 		ID: idgen.New("plan"), TenantID: "tenant-default", Name: planName,
 		ServiceType:           serviceTypeOf(r.ServiceType),
 		BandwidthDownloadKbps: dl, BandwidthUploadKbps: ul,
-		Price: r.Price, IsActive: true,
-		Validity: "30d", ValidityMode: domainPlan.ValidityCalendar,
-		ExpireMode: domainPlan.ExpireNotFiltered, ParentQueue: orValue(r.ParentQueue, "none"),
-		CreatedAt: time.Now(), UpdatedAt: time.Now(),
+		Price:       r.Price,
+		IsActive:    true,
+		ParentQueue: orValue(r.ParentQueue, "none"),
+		CreatedAt:   time.Now(), UpdatedAt: time.Now(),
 	}
 	if err := u.plans.Save(ctx, pl); err != nil {
 		return "", err

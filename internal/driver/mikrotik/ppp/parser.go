@@ -99,6 +99,8 @@ func ParseProfiles(result command.Result) []PPPProfile {
 			UseEncryption:  row["use-encryption"],
 			ChangeTCPMSS:   row["change-tcp-mss"],
 			BridgeLearning: row["bridge-learning"],
+			OnUp:           row["on-up"],
+			OnDown:         row["on-down"],
 		})
 	}
 	return profiles

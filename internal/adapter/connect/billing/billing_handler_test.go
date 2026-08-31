@@ -33,7 +33,7 @@ func newBillingConnectFixture(t *testing.T) (*connectBilling.BillingConnectHandl
 	checkoutUC := billingUC.NewCheckoutUseCase(invRepo, custRepo, paymentProc)
 	subUC := billingUC.NewSubscriptionUseCase(subRepo)
 	lifecycleUC := billingUC.NewSubscriptionLifecycleUseCase(subRepo, planRepo, manager, audit)
-	planUC := billingUC.NewPlanUseCase(planRepo, subRepo)
+	planUC := billingUC.NewPlanUseCase(planRepo, subRepo, manager)
 	runBillingUC := billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo)
 
 	handler := connectBilling.NewBillingConnectHandler(

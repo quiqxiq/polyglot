@@ -39,12 +39,15 @@ func NewSubscriptionLifecycleUseCase(
 // teknisi memasang / admin menugaskan router). Gagal router = error, status
 // provisi PENDING agar worker mencoba ulang.
 func (u *SubscriptionLifecycleUseCase) Activate(ctx context.Context, subID, deviceID string) (domainSubscription.Subscription, error) {
-	if deviceID == "" {
-		return domainSubscription.Subscription{}, fmt.Errorf("%w: device id is required", domainBilling.ErrInvalidInput)
-	}
 	sub, err := u.mustGet(ctx, subID)
 	if err != nil {
 		return sub, err
+	}
+	if deviceID == "" && sub.DeviceID != nil && *sub.DeviceID != "" {
+		deviceID = *sub.DeviceID
+	}
+	if deviceID == "" {
+		return domainSubscription.Subscription{}, fmt.Errorf("%w: device id is required", domainBilling.ErrInvalidInput)
 	}
 	pl, err := u.plans.FindByID(ctx, sub.PlanID)
 	if err != nil {
@@ -52,19 +55,31 @@ func (u *SubscriptionLifecycleUseCase) Activate(ctx context.Context, subID, devi
 	}
 
 	sub.DeviceID = &deviceID
-	acct := subscriberAccountFromPlan(sub, pl)
-	acct.Comment = "polyglot:" + sub.ID
-	if err := u.manager.Provision(ctx, deviceID, sub.ServiceType, acct); err != nil {
-		sub.ProvisionStatus = domainSubscription.ProvisionPending
-		if serr := u.subs.Save(ctx, sub); serr != nil {
-			return sub, serr
+	if u.manager != nil {
+		var perr error
+		if isHotspot(sub.ServiceType) {
+			hotSpec := BuildHotspotProvisionSpec(sub, pl)
+			perr = u.manager.ProvisionHotspot(ctx, deviceID, hotSpec)
+		} else if isDedicated(sub.ServiceType) {
+			dedSpec := BuildDedicatedProvisionSpec(sub, pl)
+			perr = u.manager.ProvisionDedicated(ctx, deviceID, dedSpec)
+		} else {
+			pppSpec := BuildPPPoEProvisionSpec(sub, pl)
+			perr = u.manager.ProvisionPPPoE(ctx, deviceID, pppSpec)
 		}
-		return sub, fmt.Errorf("provision ke router: %w", err)
+		if perr != nil {
+			sub.ProvisionStatus = domainSubscription.ProvisionPending
+			if serr := u.subs.Save(ctx, sub); serr != nil {
+				return sub, fmt.Errorf("save subscription: %w", serr)
+			}
+			return sub, fmt.Errorf("provision ke router: %w", perr)
+		}
 	}
 	sub.ProvisionStatus = domainSubscription.ProvisionOK
+	sub.Status = domainSubscription.StatusActive
 	sub.RouterProfile = pl.Name
 	if err := u.subs.Save(ctx, sub); err != nil {
-		return sub, err
+		return sub, fmt.Errorf("save subscription: %w", err)
 	}
 	u.writeAudit(ctx, "", "ACTIVATE_SUBSCRIPTION", "subscription", sub.ID)
 	return sub, nil
@@ -173,6 +188,54 @@ func (u *SubscriptionLifecycleUseCase) Terminate(ctx context.Context, subID, rea
 		return sub, err
 	}
 	u.writeAudit(ctx, "", "TERMINATE_SUBSCRIPTION", "subscription", sub.ID)
+	return sub, nil
+}
+
+// Isolate mengisolasi langganan secara manual (mis. isolir darurat/kebijakan admin):
+// pindahkan akun ke profil isolir + status ISOLATED. Boleh dari ACTIVE.
+func (u *SubscriptionLifecycleUseCase) Isolate(ctx context.Context, subID, reason string) (domainSubscription.Subscription, error) {
+	sub, err := u.mustGetAny(ctx, subID, domainSubscription.StatusActive)
+	if err != nil {
+		return sub, err
+	}
+	if provisioned(sub) {
+		opt := port.IsolationOptions{
+			IsolirProfile: "ISOLIR",
+			AddressList:   "ISOLIR_USERS",
+		}
+		if err := u.manager.Isolate(ctx, derefDevice(sub.DeviceID), sub.ServiceType, sub.RemoteUsername, opt); err != nil {
+			return sub, fmt.Errorf("isolate akun router: %w", err)
+		}
+	}
+	sub.Status = domainSubscription.StatusIsolated
+	if reason != "" {
+		sub.Notes = appendNote(sub.Notes, "MANUAL_ISOLATED: "+reason)
+	}
+	if err := u.subs.Save(ctx, sub); err != nil {
+		return sub, fmt.Errorf("save subscription: %w", err)
+	}
+	u.writeAudit(ctx, "", "ISOLATE_SUBSCRIPTION", "subscription", sub.ID)
+	return sub, nil
+}
+
+// Restore memulihkan pelanggan terisolir kembali ke ACTIVE dan mengembalikan profil router ke profil paket asli.
+func (u *SubscriptionLifecycleUseCase) Restore(ctx context.Context, subID string) (domainSubscription.Subscription, error) {
+	sub, err := u.mustGetAny(ctx, subID, domainSubscription.StatusIsolated)
+	if err != nil {
+		return sub, err
+	}
+	if provisioned(sub) {
+		normalProfile := u.normalProfile(ctx, sub)
+		if err := u.manager.Restore(ctx, derefDevice(sub.DeviceID), sub.ServiceType,
+			sub.RemoteUsername, normalProfile, "ISOLIR_USERS"); err != nil {
+			return sub, fmt.Errorf("restore akun router: %w", err)
+		}
+	}
+	sub.Status = domainSubscription.StatusActive
+	if err := u.subs.Save(ctx, sub); err != nil {
+		return sub, fmt.Errorf("save subscription: %w", err)
+	}
+	u.writeAudit(ctx, "", "RESTORE_SUBSCRIPTION", "subscription", sub.ID)
 	return sub, nil
 }
 

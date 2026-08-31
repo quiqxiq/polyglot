@@ -122,12 +122,9 @@ func (u *ConvertUseCase) createSubscription(ctx context.Context, reg domainRegis
 					Name:        pl.Name,
 					RateLimit:   planRate(pl),
 					AddressPool: pl.IPPoolName,
+					AddressList: pl.AddressList,
 					SharedUsers: pl.SharedUsers,
 					ParentQueue: pl.ParentQueue,
-					Validity:    pl.Validity,
-					ExpireMode:  pl.ExpireMode,
-					LockUser:    pl.LockUser,
-					LockServer:  pl.LockServer,
 					Comment:     "AUTO plan profile",
 				},
 			}

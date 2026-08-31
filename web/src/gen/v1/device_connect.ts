@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteDeviceRequest, DeleteDeviceResponse, DeviceStatusFrame, GetDevicePingConfigRequest, GetDevicePingConfigResponse, GetDeviceRequest, GetDeviceResponse, ListDevicesRequest, ListDevicesResponse, QueryDevicePingMetricsRequest, QueryDevicePingMetricsResponse, StreamDevicePingFrame, StreamDevicePingRequest, StreamDeviceStatusRequest, StreamDeviceTrafficFrame, StreamDeviceTrafficRequest, TerminalFrame, TestDeviceConnectionRequest, TestDeviceConnectionResponse, UpdateDevicePingConfigRequest, UpdateDevicePingConfigResponse, UpdateDeviceRequest, UpdateDeviceResponse } from "./device_pb.js";
+import { ApplyRouterIntegrationScriptRequest, ApplyRouterIntegrationScriptResponse, CreateIsolationProfileRequest, CreateIsolationProfileResponse, DeleteDeviceRequest, DeleteDeviceResponse, DeleteIsolationProfileRequest, DeleteIsolationProfileResponse, DeviceStatusFrame, GetDevicePingConfigRequest, GetDevicePingConfigResponse, GetDeviceRequest, GetDeviceResponse, GetIsolationStatusRequest, GetIsolationStatusResponse, GetRouterIntegrationScriptRequest, GetRouterIntegrationScriptResponse, ListDevicesRequest, ListDevicesResponse, QueryDevicePingMetricsRequest, QueryDevicePingMetricsResponse, StreamDevicePingFrame, StreamDevicePingRequest, StreamDeviceStatusRequest, StreamDeviceTrafficFrame, StreamDeviceTrafficRequest, TerminalFrame, TestDeviceConnectionRequest, TestDeviceConnectionResponse, UpdateDevicePingConfigRequest, UpdateDevicePingConfigResponse, UpdateDeviceRequest, UpdateDeviceResponse, UpdateIsolationProfileRequest, UpdateIsolationProfileResponse } from "./device_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -120,6 +120,62 @@ export const DeviceService = {
       name: "QueryDevicePingMetrics",
       I: QueryDevicePingMetricsRequest,
       O: QueryDevicePingMetricsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Profil Isolir & Integrasi Script Router
+     *
+     * @generated from rpc polyglot.v1.DeviceService.GetIsolationStatus
+     */
+    getIsolationStatus: {
+      name: "GetIsolationStatus",
+      I: GetIsolationStatusRequest,
+      O: GetIsolationStatusResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.DeviceService.CreateIsolationProfile
+     */
+    createIsolationProfile: {
+      name: "CreateIsolationProfile",
+      I: CreateIsolationProfileRequest,
+      O: CreateIsolationProfileResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.DeviceService.UpdateIsolationProfile
+     */
+    updateIsolationProfile: {
+      name: "UpdateIsolationProfile",
+      I: UpdateIsolationProfileRequest,
+      O: UpdateIsolationProfileResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.DeviceService.DeleteIsolationProfile
+     */
+    deleteIsolationProfile: {
+      name: "DeleteIsolationProfile",
+      I: DeleteIsolationProfileRequest,
+      O: DeleteIsolationProfileResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.DeviceService.GetRouterIntegrationScript
+     */
+    getRouterIntegrationScript: {
+      name: "GetRouterIntegrationScript",
+      I: GetRouterIntegrationScriptRequest,
+      O: GetRouterIntegrationScriptResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.DeviceService.ApplyRouterIntegrationScript
+     */
+    applyRouterIntegrationScript: {
+      name: "ApplyRouterIntegrationScript",
+      I: ApplyRouterIntegrationScriptRequest,
+      O: ApplyRouterIntegrationScriptResponse,
       kind: MethodKind.Unary,
     },
   }

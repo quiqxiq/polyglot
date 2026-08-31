@@ -318,7 +318,7 @@ export function CustomersDetailSheet({
                         </CardHeader>
                         <CardContent className='grid grid-cols-2 gap-2 p-4 pt-2 text-xs'>
                           <div>
-                            <span className='text-muted-foreground'>Router BRAS:</span>{' '}
+                            <span className='text-muted-foreground'>Router:</span>{' '}
                             <span className='font-semibold'>{sub.deviceName || sub.deviceId || '-'}</span>
                           </div>
                           <div>

@@ -1,12 +1,17 @@
+// DEVIASI: RouterAccountManager menyatukan seluruh operasi provisi lifecycle PPP, Hotspot, Firewall, Plan Profile Sync & Script router.
 package app
 
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
 	billing "github.com/quixiq/polyglot/internal/domain/billing"
+	domainCommand "github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/registry"
@@ -244,6 +249,13 @@ func (m *routerAccountManager) ensurePlanProfile(ctx context.Context, driver por
 		}
 		for _, pr := range existing {
 			if pr.Name == acct.Profile {
+				// Profil sudah ada — pastikan address-list sesuai bila diisi.
+				if acct.AddressList != "" && pr.AddressList != acct.AddressList {
+					p := pppProfileParams(acct)
+					if _, err := m.ppp.UpdateProfile(ctx, driver, pr.RosID, p); err != nil {
+						return fmt.Errorf("update profile %s address-list: %w", acct.Profile, err)
+					}
+				}
 				return nil
 			}
 		}
@@ -258,6 +270,13 @@ func (m *routerAccountManager) ensurePlanProfile(ctx context.Context, driver por
 	}
 	for _, pr := range existing {
 		if pr.Name == acct.Profile {
+			// Profil sudah ada — pastikan address-list sesuai bila diisi.
+			if acct.AddressList != "" && pr.AddressList != acct.AddressList {
+				p := hotspotProfileParams(acct)
+				if _, err := m.hot.UpdateUserProfile(ctx, driver, pr.RosID, p); err != nil {
+					return fmt.Errorf("update hotspot profile %s address-list: %w", acct.Profile, err)
+				}
+			}
 			return nil
 		}
 	}
@@ -356,6 +375,8 @@ func (m *routerAccountManager) Isolate(ctx context.Context, deviceID, serviceTyp
 		}
 	}
 	isolirProfile := opt.IsolirProfile
+	// Ambil IP sesi aktif sebelum akun dipindah dan sesi di-kick
+	ip := m.activeAddress(ctx, driver, serviceType, username)
 	if err := m.UpdateAccount(ctx, deviceID, serviceType, username, isolirProfile); err != nil {
 		return err
 	}
@@ -365,7 +386,6 @@ func (m *routerAccountManager) Isolate(ctx context.Context, deviceID, serviceTyp
 		}
 	}
 	// Tandai IP pelanggan agar rule dst-nat mengenai trafiknya.
-	ip := m.activeAddress(ctx, driver, serviceType, username)
 	if ip != "" && opt.AddressList != "" {
 		if err := m.fw.AddToAddressList(ctx, driver, opt.AddressList, ip, "isolir:"+username); err != nil {
 			return fmt.Errorf("address-list add %s: %w", ip, err)
@@ -509,12 +529,19 @@ func (m *routerAccountManager) kickPPP(ctx context.Context, driver port.DeviceDr
 
 func (m *routerAccountManager) kickHotspotIfActive(ctx context.Context, driver port.DeviceDriver, username string) {
 	sessions, err := m.hot.ListActiveSessions(ctx, driver)
-	if err != nil {
-		return
+	if err == nil {
+		for _, s := range sessions {
+			if s.User == username {
+				_, _ = m.hot.RemoveActiveSession(ctx, driver, s.RosID)
+			}
+		}
 	}
-	for _, s := range sessions {
-		if s.User == username {
-			_, _ = m.hot.RemoveActiveSession(ctx, driver, s.RosID)
+	cookies, err := m.hot.ListCookies(ctx, driver)
+	if err == nil {
+		for _, c := range cookies {
+			if c.User == username {
+				_, _ = m.hot.DeleteCookie(ctx, driver, c.RosID)
+			}
 		}
 	}
 }
@@ -603,6 +630,419 @@ func deref(s *string) string {
 		return ""
 	}
 	return *s
+}
+
+func (m *routerAccountManager) EnsureIsolationInfrastructure(ctx context.Context, deviceID string, cfg domainDevice.IsolationConfig) error {
+	driver, err := m.resolve(ctx, deviceID)
+	if err != nil {
+		return err
+	}
+	rate := cfg.RateLimit
+	if rate == "" {
+		rate = "0/0"
+	}
+	pppoeProf := cfg.PPPoEProfileName
+	if pppoeProf == "" {
+		pppoeProf = "ISOLIR"
+	}
+	hotspotProf := cfg.HotspotProfileName
+	if hotspotProf == "" {
+		hotspotProf = "ISOLIR"
+	}
+	addrList := cfg.AddressListName
+	if addrList == "" {
+		addrList = "ISOLIR_USERS"
+	}
+
+	localAddr := cfg.LocalAddress
+	if localAddr == "" {
+		localAddr = "10.100.0.1"
+	}
+	remotePool := cfg.RemoteAddressPool
+	if remotePool == "" {
+		remotePool = "pool-isolir"
+	}
+
+	// 1. Ensure dedicated IP pool for PPPoE isolation
+	poolRes, err := driver.Execute(ctx, domainCommand.Command{
+		Raw:  "/ip/pool/print",
+		Args: map[string]string{"?name": remotePool},
+	})
+	if err == nil && len(poolRes.Rows) == 0 {
+		_, _ = driver.Execute(ctx, domainCommand.Command{
+			Raw: "/ip/pool/add",
+			Args: map[string]string{
+				"name":    remotePool,
+				"ranges":  "10.100.0.10-10.100.0.250",
+				"comment": "polyglot:isolation",
+			},
+		})
+	}
+
+	// 2. Ensure DNS static entries for isolation domains pointing to redirect IP
+	if cfg.RedirectIP != "" {
+		for _, domain := range cfg.WalledGardenDomains {
+			if strings.HasSuffix(domain, ".test") || strings.HasSuffix(domain, ".isp.net") {
+				cleanDom := strings.TrimPrefix(domain, "*")
+				dnsRes, _ := driver.Execute(ctx, domainCommand.Command{
+					Raw:  "/ip/dns/static/print",
+					Args: map[string]string{"?name": cleanDom},
+				})
+				if len(dnsRes.Rows) == 0 {
+					_, _ = driver.Execute(ctx, domainCommand.Command{
+						Raw: "/ip/dns/static/add",
+						Args: map[string]string{
+							"name":    cleanDom,
+							"address": cfg.RedirectIP,
+							"comment": "polyglot:isolation",
+						},
+					})
+				}
+			}
+		}
+	}
+
+	// 4. Ensure PPPoE isolation profile
+	if err := m.ensurePlanProfile(ctx, driver, "PPPOE", port.SubscriberAccount{
+		Profile:           pppoeProf,
+		RateLimit:         rate,
+		AddressList:       addrList,
+		LocalAddress:      localAddr,
+		RemoteAddressPool: remotePool,
+		DNSServer:         localAddr + ",8.8.8.8",
+	}); err != nil {
+		return fmt.Errorf("ensure pppoe isolir profile: %w", err)
+	}
+
+	// 5. Ensure Hotspot isolation profile
+	if err := m.ensurePlanProfile(ctx, driver, "HOTSPOT", port.SubscriberAccount{
+		Profile:     hotspotProf,
+		RateLimit:   rate,
+		AddressList: addrList,
+	}); err != nil {
+		return fmt.Errorf("ensure hotspot isolir profile: %w", err)
+	}
+
+	// 6. Ensure NAT Redirect and Firewall Filter rules if configured
+	if cfg.NATRedirectEnabled && cfg.RedirectIP != "" {
+		redirCfg := port.IsolationRedirectConfig{
+			SrcAddressList: addrList,
+			PaymentHost:    cfg.RedirectIP,
+			PaymentPort:    strconv.Itoa(cfg.RedirectPort),
+		}
+		if err := m.fw.EnsureIsolationRedirect(ctx, driver, redirCfg); err != nil {
+			return fmt.Errorf("ensure isolation redirect: %w", err)
+		}
+		if err := m.fw.EnsureIsolationFilter(ctx, driver, addrList, cfg.RedirectIP); err != nil {
+			return fmt.Errorf("ensure isolation filter: %w", err)
+		}
+	}
+
+	// 7. Ensure Hotspot Walled Garden for domains and portal
+	if len(cfg.WalledGardenDomains) > 0 || cfg.RedirectIP != "" {
+		portStr := ""
+		if cfg.RedirectPort > 0 {
+			portStr = strconv.Itoa(cfg.RedirectPort)
+		}
+		if err := m.hot.EnsureWalledGarden(ctx, driver, cfg.WalledGardenDomains, cfg.RedirectIP, portStr); err != nil {
+			return fmt.Errorf("ensure walled garden: %w", err)
+		}
+	}
+	return nil
+}
+
+func (m *routerAccountManager) GetIsolationInfrastructureStatus(ctx context.Context, deviceID string) (domainDevice.IsolationStatus, error) {
+	driver, err := m.resolve(ctx, deviceID)
+	if err != nil {
+		return domainDevice.IsolationStatus{}, err
+	}
+	status := domainDevice.IsolationStatus{
+		Config: domainDevice.DefaultIsolationConfig(),
+	}
+
+	// Check PPP profile
+	pppProfiles, err := m.ppp.ListProfiles(ctx, driver, "")
+	if err == nil {
+		for _, p := range pppProfiles {
+			if strings.EqualFold(p.Name, status.Config.PPPoEProfileName) {
+				status.PPPoEProfileExists = true
+				break
+			}
+		}
+	}
+
+	// Check Hotspot profile
+	hotProfiles, err := m.hot.GetUserProfiles(ctx, driver)
+	if err == nil {
+		for _, p := range hotProfiles {
+			if strings.EqualFold(p.Name, status.Config.HotspotProfileName) {
+				status.HotspotProfileExists = true
+				break
+			}
+		}
+	}
+
+	// Check NAT redirect rule
+	hasRedirect, err := m.fw.HasIsolationRedirect(ctx, driver, status.Config.AddressListName)
+	if err == nil {
+		status.NATRedirectExists = hasRedirect
+	}
+
+	// Count isolated users in the address list
+	count, err := m.fw.CountAddressListEntries(ctx, driver, status.Config.AddressListName)
+	if err == nil {
+		status.IsolatedUsersCount = count
+	}
+
+	return status, nil
+}
+
+func (m *routerAccountManager) ApplyIntegrationScript(ctx context.Context, deviceID, profileName, serviceType, scriptType, script string) error {
+	driver, err := m.resolve(ctx, deviceID)
+	if err != nil {
+		return err
+	}
+	if isHotspot(serviceType) {
+		profs, err := m.hot.GetUserProfiles(ctx, driver)
+		if err != nil {
+			return fmt.Errorf("get hotspot user profiles: %w", err)
+		}
+		var targetProf *port.HotspotUserProfile
+		for i := range profs {
+			if strings.EqualFold(profs[i].Name, profileName) {
+				targetProf = &profs[i]
+				break
+			}
+		}
+		if targetProf == nil {
+			return fmt.Errorf("hotspot profile %q not found", profileName)
+		}
+		_, err = m.hot.UpdateUserProfile(ctx, driver, targetProf.RosID, port.MikhmonProfileParams{
+			Name:        targetProf.Name,
+			AddressPool: targetProf.AddressPool,
+			SharedUsers: targetProf.SharedUsers,
+			RateLimit:   targetProf.RateLimit,
+			ParentQueue: targetProf.ParentQueue,
+			Comment:     targetProf.Comment,
+			ExpireMode:  port.ExpireModeNone,
+		})
+		if err != nil {
+			return fmt.Errorf("update hotspot user profile: %w", err)
+		}
+		return nil
+	}
+
+	// PPPoE profile
+	profs, err := m.ppp.ListProfiles(ctx, driver, "")
+	if err != nil {
+		return fmt.Errorf("list ppp profiles: %w", err)
+	}
+	var targetProf *port.PPPProfile
+	for i := range profs {
+		if strings.EqualFold(profs[i].Name, profileName) {
+			targetProf = &profs[i]
+			break
+		}
+	}
+	if targetProf == nil {
+		return fmt.Errorf("ppp profile %q not found", profileName)
+	}
+	onUp := targetProf.OnUp
+	onDown := targetProf.OnDown
+	switch scriptType {
+	case "on-up":
+		onUp = script
+	case "on-down":
+		onDown = script
+	}
+	_, err = m.ppp.UpdateProfile(ctx, driver, targetProf.RosID, port.PPPProfileParams{
+		Name:          targetProf.Name,
+		LocalAddress:  targetProf.LocalAddress,
+		RemoteAddress: targetProf.RemoteAddress,
+		RateLimit:     targetProf.RateLimit,
+		ParentQueue:   targetProf.ParentQueue,
+		Comment:       targetProf.Comment,
+		OnUp:          onUp,
+		OnDown:        onDown,
+	})
+	if err != nil {
+		return fmt.Errorf("update ppp profile: %w", err)
+	}
+	return nil
+}
+
+// SyncPlanProfile creates or updates the corresponding profile on the target router.
+func (m *routerAccountManager) SyncPlanProfile(ctx context.Context, deviceID string, pl domainPlan.ServicePlan) error {
+	if deviceID == "" || pl.Name == "" {
+		return nil
+	}
+	driver, err := m.resolve(ctx, deviceID)
+	if err != nil {
+		return err
+	}
+
+	rate := pl.RateLimitWithBurst()
+	if !isHotspot(pl.ServiceType) {
+		// PPPoE Profile
+		remotePool := pl.RemoteAddressPool
+		if pl.PPPoE != nil && pl.PPPoE.RemoteAddressPool != "" {
+			remotePool = pl.PPPoE.RemoteAddressPool
+		}
+		addrList := pl.AddressList
+		if pl.PPPoE != nil && pl.PPPoE.AddressList != "" {
+			addrList = pl.PPPoE.AddressList
+		}
+		sessionTimeout := pl.SessionTimeout
+		if pl.PPPoE != nil && pl.PPPoE.SessionTimeout != "" {
+			sessionTimeout = pl.PPPoE.SessionTimeout
+		}
+		idleTimeout := pl.IdleTimeout
+		if pl.PPPoE != nil && pl.PPPoE.IdleTimeout != "" {
+			idleTimeout = pl.PPPoE.IdleTimeout
+		}
+
+		profs, err := m.ppp.ListProfiles(ctx, driver, "")
+		if err != nil {
+			return fmt.Errorf("list ppp profiles: %w", err)
+		}
+		var existing *port.PPPProfile
+		for i := range profs {
+			if strings.EqualFold(profs[i].Name, pl.Name) {
+				existing = &profs[i]
+				break
+			}
+		}
+
+		params := port.PPPProfileParams{
+			Name:           pl.Name,
+			RateLimit:      rate,
+			RemoteAddress:  remotePool,
+			AddressList:    addrList,
+			ParentQueue:    pl.ParentQueue,
+			SessionTimeout: sessionTimeout,
+			IdleTimeout:    idleTimeout,
+			Comment:        "polyglot plan:" + pl.ID,
+		}
+		if existing != nil {
+			params.LocalAddress = existing.LocalAddress
+			params.OnUp = existing.OnUp
+			params.OnDown = existing.OnDown
+			_, err = m.ppp.UpdateProfile(ctx, driver, existing.RosID, params)
+			if err != nil {
+				return fmt.Errorf("update ppp profile %s: %w", pl.Name, err)
+			}
+		} else {
+			_, err = m.ppp.AddProfile(ctx, driver, params)
+			if err != nil {
+				return fmt.Errorf("create ppp profile %s: %w", pl.Name, err)
+			}
+		}
+		return nil
+	}
+
+	// Hotspot User Profile
+	ipPool := pl.IPPoolName
+	if pl.Hotspot != nil && pl.Hotspot.IPPoolName != "" {
+		ipPool = pl.Hotspot.IPPoolName
+	}
+	addrList := pl.AddressList
+	if pl.Hotspot != nil && pl.Hotspot.AddressList != "" {
+		addrList = pl.Hotspot.AddressList
+	}
+	sharedUsers := 1
+	if pl.Hotspot != nil && pl.Hotspot.SharedUsers > 0 {
+		sharedUsers = pl.Hotspot.SharedUsers
+	} else if pl.SharedUsers > 0 {
+		sharedUsers = pl.SharedUsers
+	}
+	sessionTimeout := pl.SessionTimeout
+	if pl.Hotspot != nil && pl.Hotspot.SessionTimeout != "" {
+		sessionTimeout = pl.Hotspot.SessionTimeout
+	}
+	idleTimeout := pl.IdleTimeout
+	if pl.Hotspot != nil && pl.Hotspot.IdleTimeout != "" {
+		idleTimeout = pl.Hotspot.IdleTimeout
+	}
+
+	profs, err := m.hot.GetUserProfiles(ctx, driver)
+	if err != nil {
+		return fmt.Errorf("list hotspot profiles: %w", err)
+	}
+	var existing *port.HotspotUserProfile
+	for i := range profs {
+		if strings.EqualFold(profs[i].Name, pl.Name) {
+			existing = &profs[i]
+			break
+		}
+	}
+
+	params := port.MikhmonProfileParams{
+		Name:           pl.Name,
+		RateLimit:      rate,
+		AddressPool:    ipPool,
+		AddressList:    addrList,
+		SharedUsers:    intToStrOr(sharedUsers, "1"),
+		ParentQueue:    pl.ParentQueue,
+		SessionTimeout: sessionTimeout,
+		IdleTimeout:    idleTimeout,
+		Comment:        "polyglot plan:" + pl.ID,
+	}
+	if existing != nil {
+		params.OnLogin = existing.OnLogin
+		_, err = m.hot.UpdateUserProfile(ctx, driver, existing.RosID, params)
+		if err != nil {
+			return fmt.Errorf("update hotspot profile %s: %w", pl.Name, err)
+		}
+	} else {
+		_, err = m.hot.CreateUserProfile(ctx, driver, params)
+		if err != nil {
+			return fmt.Errorf("create hotspot profile %s: %w", pl.Name, err)
+		}
+	}
+	return nil
+}
+
+// DeletePlanProfile removes the corresponding profile from the router if it exists.
+func (m *routerAccountManager) DeletePlanProfile(ctx context.Context, deviceID string, serviceType, profileName string) error {
+	if deviceID == "" || profileName == "" {
+		return nil
+	}
+	driver, err := m.resolve(ctx, deviceID)
+	if err != nil {
+		return err
+	}
+
+	if !isHotspot(serviceType) {
+		profs, err := m.ppp.ListProfiles(ctx, driver, "")
+		if err != nil {
+			return fmt.Errorf("list ppp profiles: %w", err)
+		}
+		for _, pr := range profs {
+			if strings.EqualFold(pr.Name, profileName) {
+				_, err := m.ppp.RemoveProfile(ctx, driver, pr.RosID)
+				if err != nil {
+					return fmt.Errorf("remove ppp profile: %w", err)
+				}
+				return nil
+			}
+		}
+		return nil
+	}
+
+	profs, err := m.hot.GetUserProfiles(ctx, driver)
+	if err != nil {
+		return fmt.Errorf("get hotspot user profiles: %w", err)
+	}
+	for _, pr := range profs {
+		if strings.EqualFold(pr.Name, profileName) {
+			_, err := m.hot.DeleteUserProfile(ctx, driver, pr.RosID)
+			if err != nil {
+				return fmt.Errorf("delete hotspot user profile: %w", err)
+			}
+			return nil
+		}
+	}
+	return nil
 }
 
 func timeNowUTC() time.Time {

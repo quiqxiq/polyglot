@@ -1,7 +1,6 @@
 package billing
 
 import (
-	"strconv"
 	"testing"
 
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
@@ -14,9 +13,7 @@ func TestSubscriberAccountFromPlan_Hotspot(t *testing.T) {
 		BandwidthDownloadKbps: 10240, BandwidthUploadKbps: 5120,
 		SharedUsers: 2, IPPoolName: "pool-hs", ParentQueue: "pq-all",
 		AddressList: "paid",
-		Price:       40000, SellingPrice: 50000, Validity: "30d",
-		ExpireMode: domainPlan.ExpireRemove, LockUser: true,
-		LockServer: true,
+		Price:       40000,
 	}
 	sub := domainSubscription.Subscription{
 		RemoteUsername: "0812xxx", RemotePassword: "secret",
@@ -31,11 +28,8 @@ func TestSubscriberAccountFromPlan_Hotspot(t *testing.T) {
 		t.Errorf("RateLimit=%q want 10M/5M", acct.RateLimit)
 	}
 	if acct.SharedUsers != 2 || acct.AddressPool != "pool-hs" ||
-		acct.ParentQueue != "pq-all" || acct.AddressList != "paid" ||
-		acct.Price != "50000" || acct.SellingPrice != "40000" ||
-		acct.Validity != "30d" || acct.ExpireMode != "rem" ||
-		!acct.LockUser || !acct.LockServer {
-		t.Errorf("parameter mikhmon tidak lengkap: %+v", acct)
+		acct.ParentQueue != "pq-all" || acct.AddressList != "paid" {
+		t.Errorf("parameter hotspot tidak lengkap: %+v", acct)
 	}
 }
 
@@ -64,47 +58,26 @@ func TestSubscriberAccountFromPlan_CustomRateOverride(t *testing.T) {
 	}
 }
 
-func TestSubscriberAccountFromPlan_ExpireNone_NoValidity(t *testing.T) {
+func TestBuildHotspotProvisionSpec(t *testing.T) {
 	pl := domainPlan.ServicePlan{
-		Name: "HS-FREE", ServiceType: domainPlan.TypeHotspot,
-		BandwidthDownloadKbps: 1024, BandwidthUploadKbps: 1024,
-		Validity: "30d", ExpireMode: domainPlan.ExpireNone, // "0"
+		Name:                  "HS-10M",
+		ServiceType:           domainPlan.TypeHotspot,
+		BandwidthDownloadKbps: 10240,
+		BandwidthUploadKbps:   5120,
+		SharedUsers:           3,
+		IPPoolName:            "hs-pool",
+		AddressList:           "VIP",
 	}
-	acct := subscriberAccountFromPlan(domainSubscription.Subscription{}, pl)
-	if acct.Validity != "" {
-		t.Errorf("Validity=%q, harus kosong untuk expire mode 0", acct.Validity)
+	sub := domainSubscription.Subscription{
+		ID:             "sub-hs-1",
+		RemoteUsername: "user1",
+		RemotePassword: "pwd",
 	}
-	if acct.ExpireMode != "0" {
-		t.Errorf("ExpireMode=%q, harus tetap diteruskan", acct.ExpireMode)
+	spec := BuildHotspotProvisionSpec(sub, pl)
+	if spec.User.Username != "user1" || spec.User.Password != "pwd" || spec.User.Profile != "HS-10M" {
+		t.Fatalf("spec user salah: %+v", spec.User)
 	}
-}
-
-func TestSubscriberAccountFromPlan_KeepsValidityForOtherModes(t *testing.T) {
-	pl := domainPlan.ServicePlan{
-		Name: "HS-30D", ServiceType: domainPlan.TypeHotspot,
-		BandwidthDownloadKbps: 1024, BandwidthUploadKbps: 1024,
-		Validity: "30d", ExpireMode: domainPlan.ExpireRemove,
-	}
-	acct := subscriberAccountFromPlan(domainSubscription.Subscription{}, pl)
-	if acct.Validity != "30d" {
-		t.Errorf("Validity=%q, harus tetap 30d untuk mode rem", acct.Validity)
-	}
-}
-
-func TestFormatMoney(t *testing.T) {
-	cases := []struct {
-		selling, base, want string
-	}{
-		{"50000", "40000", "50000"},
-		{"0", "40000", "40000"},
-		{"0", "0", ""},
-	}
-	for _, c := range cases {
-		s, _ := strconv.ParseFloat(c.selling, 64)
-		b, _ := strconv.ParseFloat(c.base, 64)
-		jual, _ := formatMoney(s, b)
-		if jual != c.want {
-			t.Errorf("formatMoney(%v,%v)=%q want %q", c.selling, c.base, jual, c.want)
-		}
+	if spec.Profile.Name != "HS-10M" || spec.Profile.RateLimit != "10M/5M" || spec.Profile.SharedUsers != 3 || spec.Profile.AddressPool != "hs-pool" || spec.Profile.AddressList != "VIP" {
+		t.Fatalf("spec profile salah: %+v", spec.Profile)
 	}
 }

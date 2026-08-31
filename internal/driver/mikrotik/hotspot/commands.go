@@ -153,7 +153,7 @@ func NewAddUserProfileCommand(p HotspotProfileParams) command.Command {
 	setIfNonEmpty(args, "shared-users", p.SharedUsers)
 	setIfNonEmpty(args, "parent-queue", p.ParentQueue)
 	setIfNonEmpty(args, "address-pool", p.AddressPool)
-	setIfNonEmpty(args, "comment", p.Comment)
+	setIfNonEmpty(args, "address-list", p.AddressList)
 	setIfNonEmpty(args, "on-login", p.OnLogin)
 	return command.Command{Raw: "/ip/hotspot/user/profile/add", Args: args}
 }
@@ -168,7 +168,7 @@ func NewSetUserProfileCommand(rosID string, p HotspotProfileParams) command.Comm
 	setIfNonEmpty(args, "shared-users", p.SharedUsers)
 	setIfNonEmpty(args, "parent-queue", p.ParentQueue)
 	setIfNonEmpty(args, "address-pool", p.AddressPool)
-	setIfNonEmpty(args, "comment", p.Comment)
+	setIfNonEmpty(args, "address-list", p.AddressList)
 	setIfNonEmpty(args, "on-login", p.OnLogin)
 	return command.Command{Raw: "/ip/hotspot/user/profile/set", Args: args}
 }

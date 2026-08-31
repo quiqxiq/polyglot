@@ -11,6 +11,9 @@ type SubscriptionsDialogType =
   | 'resume'
   | 'terminate'
   | 'activate'
+  | 'isolate'
+  | 'restore'
+
 
 type SubscriptionsContextType = {
   open: SubscriptionsDialogType | null

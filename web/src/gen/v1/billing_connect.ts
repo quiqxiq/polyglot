@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ActivateSubscriptionRequest, ActivateSubscriptionResponse, CashierPayRequest, CashierPayResponse, CashierResolveRequest, CashierResolveResponse, ChangePlanRequest, ChangePlanResponse, CreatePlanRequest, CreatePlanResponse, CreateSubscriptionRequest, CreateSubscriptionResponse, DeletePlanRequest, DeletePlanResponse, DeleteSubscriptionRequest, DeleteSubscriptionResponse, GenerateInvoicesRequest, GenerateInvoicesResponse, GetInvoiceRequest, GetInvoiceResponse, GetPlanRequest, GetPlanResponse, GetSubscriptionRequest, GetSubscriptionResponse, ListInvoicesRequest, ListInvoicesResponse, ListPlansRequest, ListPlansResponse, ListSubscriptionsRequest, ListSubscriptionsResponse, ResumeSubscriptionRequest, ResumeSubscriptionResponse, SuspendSubscriptionRequest, SuspendSubscriptionResponse, TerminateSubscriptionRequest, TerminateSubscriptionResponse, UpdatePlanRequest, UpdatePlanResponse, UpdateSubscriptionRequest, UpdateSubscriptionResponse } from "./billing_pb.js";
+import { ActivateSubscriptionRequest, ActivateSubscriptionResponse, CashierPayRequest, CashierPayResponse, CashierResolveRequest, CashierResolveResponse, ChangePlanRequest, ChangePlanResponse, CreatePlanRequest, CreatePlanResponse, CreateSubscriptionRequest, CreateSubscriptionResponse, DeletePlanRequest, DeletePlanResponse, DeleteSubscriptionRequest, DeleteSubscriptionResponse, GenerateInvoicesRequest, GenerateInvoicesResponse, GetInvoiceRequest, GetInvoiceResponse, GetPlanRequest, GetPlanResponse, GetSubscriptionRequest, GetSubscriptionResponse, IsolateSubscriptionRequest, IsolateSubscriptionResponse, ListInvoicesRequest, ListInvoicesResponse, ListPlansRequest, ListPlansResponse, ListSubscriptionsRequest, ListSubscriptionsResponse, RestoreSubscriptionRequest, RestoreSubscriptionResponse, ResumeSubscriptionRequest, ResumeSubscriptionResponse, SuspendSubscriptionRequest, SuspendSubscriptionResponse, TerminateSubscriptionRequest, TerminateSubscriptionResponse, UpdatePlanRequest, UpdatePlanResponse, UpdateSubscriptionRequest, UpdateSubscriptionResponse } from "./billing_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -115,6 +115,24 @@ export const BillingService = {
       name: "ActivateSubscription",
       I: ActivateSubscriptionRequest,
       O: ActivateSubscriptionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.IsolateSubscription
+     */
+    isolateSubscription: {
+      name: "IsolateSubscription",
+      I: IsolateSubscriptionRequest,
+      O: IsolateSubscriptionResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.RestoreSubscription
+     */
+    restoreSubscription: {
+      name: "RestoreSubscription",
+      I: RestoreSubscriptionRequest,
+      O: RestoreSubscriptionResponse,
       kind: MethodKind.Unary,
     },
     /**

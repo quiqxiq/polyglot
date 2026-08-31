@@ -134,23 +134,41 @@ describe('CustomersMutateDrawer', () => {
     expect(createMutateAsync).not.toHaveBeenCalled()
   })
 
-  it('toggles the coordinate inputs with the hasCoordinates switch', async () => {
+  it('renders coordinate inputs directly without switch and submits coordinates', async () => {
     const { getByRole } = await render(
       <CustomersMutateDrawer open onOpenChange={() => {}} currentRow={null} />
     )
 
-    // Latitude/longitude inputs are hidden until the switch is on.
-    expect(
-      getByRole('spinbutton', { name: /Latitude/i }).elements()
-    ).toHaveLength(0)
-
-    await userEvent.click(getByRole('switch'))
-
+    // Latitude and Longitude inputs are always directly visible without switch button
     await expect
       .element(getByRole('spinbutton', { name: /Latitude/i }))
       .toBeInTheDocument()
     await expect
       .element(getByRole('spinbutton', { name: /Longitude/i }))
       .toBeInTheDocument()
+
+    // Ensure there is no switch button in the form
+    expect(getByRole('switch').elements()).toHaveLength(0)
+
+    await userEvent.fill(getByRole('textbox', { name: /^Nama$/i }), 'Siti Aminah')
+    await userEvent.fill(getByRole('textbox', { name: /Nomor HP/i }), '089876543210')
+    await userEvent.fill(getByRole('spinbutton', { name: /Latitude/i }), '-6.2088')
+    await userEvent.fill(getByRole('spinbutton', { name: /Longitude/i }), '106.8456')
+
+    const saveButton = getByRole('button', { name: /^Save$/i })
+    await userEvent.click(saveButton)
+
+    await vi.waitFor(() => expect(createMutateAsync).toHaveBeenCalledOnce())
+    expect(createMutateAsync).toHaveBeenCalledWith(
+      expect.objectContaining({
+        customer: expect.objectContaining({
+          name: 'Siti Aminah',
+          phone: '089876543210',
+          latitude: -6.2088,
+          longitude: 106.8456,
+          hasCoordinates: true,
+        }),
+      })
+    )
   })
 })

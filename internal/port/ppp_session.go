@@ -39,6 +39,8 @@ type PPPProfileParams struct {
 	ParentQueue    string
 	AddressList    string
 	Comment        string
+	SessionTimeout string
+	IdleTimeout    string
 	SharedUsers    string
 	OnlyOne        string
 	UseMPLS        string
@@ -46,4 +48,6 @@ type PPPProfileParams struct {
 	UseEncryption  string
 	ChangeTCPMSS   string
 	BridgeLearning string
+	OnUp           string
+	OnDown         string
 }

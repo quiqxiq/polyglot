@@ -175,6 +175,8 @@ func NewAddProfileCommand(p PPPProfileParams) command.Command {
 	setIfNonEmpty(args, "dns-server", p.DNSServer)
 	setIfNonEmpty(args, "parent-queue", p.ParentQueue)
 	setIfNonEmpty(args, "address-list", p.AddressList)
+	setIfNonEmpty(args, "session-timeout", p.SessionTimeout)
+	setIfNonEmpty(args, "idle-timeout", p.IdleTimeout)
 	setIfNonEmpty(args, "comment", p.Comment)
 	setIfNonEmpty(args, "shared-users", p.SharedUsers)
 	setIfNonEmpty(args, "only-one", p.OnlyOne)
@@ -183,6 +185,8 @@ func NewAddProfileCommand(p PPPProfileParams) command.Command {
 	setIfNonEmpty(args, "use-encryption", p.UseEncryption)
 	setIfNonEmpty(args, "change-tcp-mss", p.ChangeTCPMSS)
 	setIfNonEmpty(args, "bridge-learning", p.BridgeLearning)
+	setIfNonEmpty(args, "on-up", p.OnUp)
+	setIfNonEmpty(args, "on-down", p.OnDown)
 	return command.Command{Raw: "/ppp/profile/add", Args: args}
 }
 
@@ -196,6 +200,8 @@ func NewSetProfileCommand(rosID string, p PPPProfileParams) command.Command {
 	setIfNonEmpty(args, "dns-server", p.DNSServer)
 	setIfNonEmpty(args, "parent-queue", p.ParentQueue)
 	setIfNonEmpty(args, "address-list", p.AddressList)
+	setIfNonEmpty(args, "session-timeout", p.SessionTimeout)
+	setIfNonEmpty(args, "idle-timeout", p.IdleTimeout)
 	setIfNonEmpty(args, "comment", p.Comment)
 	setIfNonEmpty(args, "shared-users", p.SharedUsers)
 	setIfNonEmpty(args, "only-one", p.OnlyOne)
@@ -204,6 +210,8 @@ func NewSetProfileCommand(rosID string, p PPPProfileParams) command.Command {
 	setIfNonEmpty(args, "use-encryption", p.UseEncryption)
 	setIfNonEmpty(args, "change-tcp-mss", p.ChangeTCPMSS)
 	setIfNonEmpty(args, "bridge-learning", p.BridgeLearning)
+	setIfNonEmpty(args, "on-up", p.OnUp)
+	setIfNonEmpty(args, "on-down", p.OnDown)
 	return command.Command{Raw: "/ppp/profile/set", Args: args}
 }
 

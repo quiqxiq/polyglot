@@ -8,6 +8,9 @@ export type DevicesDialogType =
   | 'terminal'
   | 'ping-settings'
   | 'ping-analytics'
+  | 'isolation'
+  | 'webhook-scripts'
+
 
 export type ViewMode = 'card' | 'table'
 

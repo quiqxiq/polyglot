@@ -2,17 +2,23 @@ import type { Device } from '@/gen/v1/device_pb'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { useDevicesContext } from '../devices-provider'
+import type { DevicesDialogType } from '../../types'
 import {
   BarChart2,
+  Code,
   Code2,
   Edit2,
+  MoreVertical,
   Settings2,
+  ShieldAlert,
   Trash2,
   Zap,
 } from 'lucide-react'
@@ -30,7 +36,7 @@ export function DeviceCardHeader({
 }: DeviceCardHeaderProps) {
   const { setOpen, setCurrentRow } = useDevicesContext()
 
-  const handleAction = (action: 'terminal' | 'test' | 'edit' | 'delete' | 'ping-analytics' | 'ping-settings') => {
+  const handleAction = (action: DevicesDialogType) => {
     setCurrentRow(device)
     setOpen(action)
   }
@@ -77,115 +83,73 @@ export function DeviceCardHeader({
       </div>
 
       {/* Badges & Action Toolbar */}
-      <div className='flex items-center gap-0.5 sm:gap-1 shrink-0'>
+      <div className='flex items-center gap-1.5 shrink-0'>
         {boardName && (
           <Badge
             variant='outline'
-            className='text-[10px] font-mono uppercase hidden sm:inline-flex px-1.5 py-0 bg-muted/30 mr-0.5'
+            className='text-[10px] font-mono uppercase px-1.5 py-0 bg-muted/30'
           >
             {boardName}
           </Badge>
         )}
 
-        <TooltipProvider delayDuration={200}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant='ghost'
-                size='icon'
-                className='h-7 w-7 text-muted-foreground hover:text-blue-500 hover:bg-blue-500/10 transition-colors'
-                onClick={() => handleAction('ping-analytics')}
-              >
-                <BarChart2 className='h-3.5 w-3.5' />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side='bottom' className='text-xs'>
-              Analisis Ping Historis
-            </TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant='ghost'
-                size='icon'
-                className='h-7 w-7 text-muted-foreground hover:text-indigo-500 hover:bg-indigo-500/10 transition-colors'
-                onClick={() => handleAction('ping-settings')}
-              >
-                <Settings2 className='h-3.5 w-3.5' />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side='bottom' className='text-xs'>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant='ghost'
+              size='icon'
+              className='h-8 w-8 text-muted-foreground hover:text-foreground data-[state=open]:bg-muted'
+            >
+              <MoreVertical className='h-4 w-4' />
+              <span className='sr-only'>Menu opsi router</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align='end' className='w-56'>
+            <DropdownMenuLabel className='text-[11px] font-normal text-muted-foreground'>
+              Operasi & Integrasi
+            </DropdownMenuLabel>
+            <DropdownMenuItem onClick={() => handleAction('isolation')}>
+              <ShieldAlert className='me-2 h-4 w-4 text-amber-500' />
+              Profil Isolir Router
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleAction('webhook-scripts')}>
+              <Code className='me-2 h-4 w-4 text-blue-500' />
+              Script Webhook Event
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleAction('ping-analytics')}>
+              <BarChart2 className='me-2 h-4 w-4 text-blue-500' />
+              Ping Analytics
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleAction('ping-settings')}>
+              <Settings2 className='me-2 h-4 w-4 text-indigo-500' />
               Pengaturan Ping
-            </TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant='ghost'
-                size='icon'
-                className='h-7 w-7 text-muted-foreground hover:text-emerald-500 hover:bg-emerald-500/10 transition-colors'
-                onClick={() => handleAction('terminal')}
-              >
-                <Code2 className='h-3.5 w-3.5' />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side='bottom' className='text-xs'>
-              Terminal SSH Web
-            </TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant='ghost'
-                size='icon'
-                className='h-7 w-7 text-muted-foreground hover:text-amber-500 hover:bg-amber-500/10 transition-colors'
-                onClick={() => handleAction('test')}
-              >
-                <Zap className='h-3.5 w-3.5' />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side='bottom' className='text-xs'>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleAction('terminal')}>
+              <Code2 className='me-2 h-4 w-4 text-emerald-500' />
+              SSH Terminal
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleAction('test')}>
+              <Zap className='me-2 h-4 w-4 text-amber-500' />
               Uji Koneksi
-            </TooltipContent>
-          </Tooltip>
+            </DropdownMenuItem>
 
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant='ghost'
-                size='icon'
-                className='h-7 w-7 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors'
-                onClick={() => handleAction('edit')}
-              >
-                <Edit2 className='h-3.5 w-3.5' />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side='bottom' className='text-xs'>
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem onClick={() => handleAction('edit')}>
+              <Edit2 className='me-2 h-4 w-4' />
               Edit Perangkat
-            </TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant='ghost'
-                size='icon'
-                className='h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors'
-                onClick={() => handleAction('delete')}
-              >
-                <Trash2 className='h-3.5 w-3.5' />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side='bottom' className='text-xs'>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className='text-destructive focus:text-destructive'
+              onClick={() => handleAction('delete')}
+            >
+              <Trash2 className='me-2 h-4 w-4' />
               Hapus Perangkat
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   )
 }
-

@@ -110,7 +110,7 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
       {
         accessorKey: 'deviceId',
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title='Router BRAS' />
+          <DataTableColumnHeader column={column} title='Router' />
         ),
         cell: ({ row }) => {
           const deviceLabel = row.original.deviceName || row.original.deviceId || '-'

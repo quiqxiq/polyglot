@@ -142,3 +142,26 @@ func TestPostgresDeviceRepository_CRUD(t *testing.T) {
 	_, err = repo.FindByID(ctx, dev.ID)
 	assert.ErrorIs(t, err, device.ErrNotFound)
 }
+
+func TestCredentialVault_MultiKeyFallback(t *testing.T) {
+	db := setupTestDB(t)
+	ctx := context.Background()
+
+	// 1. Vault dengan default test key (atau string kosong) menyimpan kredensial.
+	vaultOld := postgres.NewCredentialVault(db, "12345678901234567890123456789012")
+	creds := device.Credentials{
+		Username: "admin",
+		Password: "supersecretpassword",
+	}
+	err := vaultOld.Save(ctx, "router-fallback-1", creds)
+	require.NoError(t, err)
+
+	// 2. Vault baru diinisialisasi dengan ENCRYPTION_KEY dari .env ("polyglot_secret_key_32bytes_long").
+	vaultNew := postgres.NewCredentialVault(db, "polyglot_secret_key_32bytes_long")
+
+	// 3. Vault baru harus tetap bisa mendekripsi kredensial lama tanpa error message authentication failed.
+	decrypted, err := vaultNew.Get(ctx, "router-fallback-1")
+	require.NoError(t, err)
+	assert.Equal(t, "admin", decrypted.Username)
+	assert.Equal(t, "supersecretpassword", decrypted.Password)
+}

@@ -1,42 +1,41 @@
 export type ServiceType = 'PPPOE' | 'HOTSPOT' | 'DEDICATED'
 
 // TYPE_ONLY_FIELDS: field yang HANYA relevan untuk tipe tertentu.
-// Semua field lain yang tidak ada di ANY_TYPE_ONLY (nama, harga bulanan, bandwidth dasar, instalasi, pajak, deskripsi)
-// bersifat umum dan selalu tampil.
+// Semua field umum (nama, harga bulanan, bandwidth dasar, instalasi, pajak, deskripsi)
+// tidak ada di ANY_TYPE_ONLY dan selalu tampil.
 const TYPE_ONLY_FIELDS: Record<ServiceType, ReadonlySet<string>> = {
-  // PPPoE langganan bulanan: pool IP pelanggan, address-list, parent queue, burst.
-  // Tidak ada konsep voucher/Mikhmon (validity, expireMode, sharedUsers, sellingPrice, lockUser).
+  // PPPoE langganan bulanan: pool IP pelanggan, address-list, parent queue, burst, timeout.
   PPPOE: new Set([
     'parentQueue',
     'addressList',
     'remoteAddressPool',
-    'simultaneousUse',
+    'sessionTimeout',
+    'idleTimeout',
     'burstDownloadKbps',
     'burstUploadKbps',
     'burstThresholdKbps',
     'burstTimeSeconds',
   ]),
-  // Hotspot Mikhmon/Voucher: harga jual reseller, validity/expire, shared users, lock MAC/server, IP pool.
+  // Hotspot Permanent: shared users (jumlah gadget login bersamaan), pool IP hotspot, address-list, parent queue, burst, timeout.
   HOTSPOT: new Set([
-    'sellingPrice',
-    'validity',
-    'validityMode',
-    'expireMode',
     'sharedUsers',
     'ipPoolName',
+    'addressList',
     'parentQueue',
-    'lockUser',
-    'lockServer',
+    'sessionTimeout',
+    'idleTimeout',
     'burstDownloadKbps',
     'burstUploadKbps',
     'burstThresholdKbps',
     'burstTimeSeconds',
   ]),
-  // Dedicated CIR: queue + routing saja; tanpa validity/voucher/selling price.
+  // Dedicated CIR: queue + routing/pool + burst, timeout.
   DEDICATED: new Set([
     'parentQueue',
     'addressList',
     'remoteAddressPool',
+    'sessionTimeout',
+    'idleTimeout',
     'burstDownloadKbps',
     'burstUploadKbps',
     'burstThresholdKbps',
@@ -58,9 +57,9 @@ export function isFieldVisible(field: string, serviceType: string): boolean {
 
 // HIDDEN_FOR_TYPE: pengecualian eksplisit bila ada
 const HIDDEN_FOR_TYPE: Record<ServiceType, ReadonlySet<string>> = {
-  PPPOE: new Set(['expireMode', 'validity', 'validityMode', 'sellingPrice', 'sharedUsers', 'lockUser', 'lockServer']),
-  HOTSPOT: new Set(['remoteAddressPool', 'addressList']),
-  DEDICATED: new Set(['expireMode', 'validity', 'validityMode', 'sellingPrice', 'sharedUsers', 'lockUser', 'lockServer']),
+  PPPOE: new Set(['sharedUsers', 'ipPoolName']),
+  HOTSPOT: new Set(['remoteAddressPool']),
+  DEDICATED: new Set(['sharedUsers', 'ipPoolName']),
 }
 
 export function isFieldHidden(field: string, serviceType: string): boolean {

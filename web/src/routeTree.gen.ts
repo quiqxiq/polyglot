@@ -22,6 +22,7 @@ import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
 import { Route as authOtpRouteImport } from './routes/(auth)/otp'
 import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-password'
 import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authenticated/settings/route'
+import { Route as PortalIsolateIndexRouteImport } from './routes/portal/isolate/index'
 import { Route as AuthenticatedWhatsappIndexRouteImport } from './routes/_authenticated/whatsapp/index'
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
 import { Route as AuthenticatedSubscriptionsIndexRouteImport } from './routes/_authenticated/subscriptions/index'
@@ -39,6 +40,8 @@ import { Route as AuthenticatedDevicesIndexRouteImport } from './routes/_authent
 import { Route as AuthenticatedCustomersIndexRouteImport } from './routes/_authenticated/customers/index'
 import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
+import { Route as PortalIsolatePppoeRouteImport } from './routes/portal/isolate/pppoe'
+import { Route as PortalIsolateHotspotRouteImport } from './routes/portal/isolate/hotspot'
 import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
 import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_authenticated/settings/display'
 import { Route as AuthenticatedSettingsBotRouteImport } from './routes/_authenticated/settings/bot'
@@ -111,6 +114,11 @@ const AuthenticatedSettingsRouteRoute =
     path: '/settings',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const PortalIsolateIndexRoute = PortalIsolateIndexRouteImport.update({
+  id: '/portal/isolate/',
+  path: '/portal/isolate/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedWhatsappIndexRoute =
   AuthenticatedWhatsappIndexRouteImport.update({
     id: '/whatsapp/',
@@ -206,6 +214,16 @@ const AuthenticatedAppsIndexRoute = AuthenticatedAppsIndexRouteImport.update({
   path: '/apps/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const PortalIsolatePppoeRoute = PortalIsolatePppoeRouteImport.update({
+  id: '/portal/isolate/pppoe',
+  path: '/portal/isolate/pppoe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalIsolateHotspotRoute = PortalIsolateHotspotRouteImport.update({
+  id: '/portal/isolate/hotspot',
+  path: '/portal/isolate/hotspot',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedSettingsNotificationsRoute =
   AuthenticatedSettingsNotificationsRouteImport.update({
     id: '/notifications',
@@ -262,6 +280,8 @@ export interface FileRoutesByFullPath {
   '/settings/bot': typeof AuthenticatedSettingsBotRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
+  '/portal/isolate/hotspot': typeof PortalIsolateHotspotRoute
+  '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
   '/apps/': typeof AuthenticatedAppsIndexRoute
   '/chats/': typeof AuthenticatedChatsIndexRoute
   '/customers/': typeof AuthenticatedCustomersIndexRoute
@@ -279,6 +299,7 @@ export interface FileRoutesByFullPath {
   '/subscriptions/': typeof AuthenticatedSubscriptionsIndexRoute
   '/users/': typeof AuthenticatedUsersIndexRoute
   '/whatsapp/': typeof AuthenticatedWhatsappIndexRoute
+  '/portal/isolate/': typeof PortalIsolateIndexRoute
 }
 export interface FileRoutesByTo {
   '/forgot-password': typeof authForgotPasswordRoute
@@ -298,6 +319,8 @@ export interface FileRoutesByTo {
   '/settings/bot': typeof AuthenticatedSettingsBotRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
+  '/portal/isolate/hotspot': typeof PortalIsolateHotspotRoute
+  '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
   '/customers': typeof AuthenticatedCustomersIndexRoute
@@ -315,6 +338,7 @@ export interface FileRoutesByTo {
   '/subscriptions': typeof AuthenticatedSubscriptionsIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
   '/whatsapp': typeof AuthenticatedWhatsappIndexRoute
+  '/portal/isolate': typeof PortalIsolateIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -337,6 +361,8 @@ export interface FileRoutesById {
   '/_authenticated/settings/bot': typeof AuthenticatedSettingsBotRoute
   '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
+  '/portal/isolate/hotspot': typeof PortalIsolateHotspotRoute
+  '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
   '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
   '/_authenticated/customers/': typeof AuthenticatedCustomersIndexRoute
@@ -354,6 +380,7 @@ export interface FileRoutesById {
   '/_authenticated/subscriptions/': typeof AuthenticatedSubscriptionsIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
   '/_authenticated/whatsapp/': typeof AuthenticatedWhatsappIndexRoute
+  '/portal/isolate/': typeof PortalIsolateIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -376,6 +403,8 @@ export interface FileRouteTypes {
     | '/settings/bot'
     | '/settings/display'
     | '/settings/notifications'
+    | '/portal/isolate/hotspot'
+    | '/portal/isolate/pppoe'
     | '/apps/'
     | '/chats/'
     | '/customers/'
@@ -393,6 +422,7 @@ export interface FileRouteTypes {
     | '/subscriptions/'
     | '/users/'
     | '/whatsapp/'
+    | '/portal/isolate/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/forgot-password'
@@ -412,6 +442,8 @@ export interface FileRouteTypes {
     | '/settings/bot'
     | '/settings/display'
     | '/settings/notifications'
+    | '/portal/isolate/hotspot'
+    | '/portal/isolate/pppoe'
     | '/apps'
     | '/chats'
     | '/customers'
@@ -429,6 +461,7 @@ export interface FileRouteTypes {
     | '/subscriptions'
     | '/users'
     | '/whatsapp'
+    | '/portal/isolate'
   id:
     | '__root__'
     | '/_authenticated'
@@ -450,6 +483,8 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/bot'
     | '/_authenticated/settings/display'
     | '/_authenticated/settings/notifications'
+    | '/portal/isolate/hotspot'
+    | '/portal/isolate/pppoe'
     | '/_authenticated/apps/'
     | '/_authenticated/chats/'
     | '/_authenticated/customers/'
@@ -467,6 +502,7 @@ export interface FileRouteTypes {
     | '/_authenticated/subscriptions/'
     | '/_authenticated/users/'
     | '/_authenticated/whatsapp/'
+    | '/portal/isolate/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -481,6 +517,9 @@ export interface RootRouteChildren {
   errors404Route: typeof errors404Route
   errors500Route: typeof errors500Route
   errors503Route: typeof errors503Route
+  PortalIsolateHotspotRoute: typeof PortalIsolateHotspotRoute
+  PortalIsolatePppoeRoute: typeof PortalIsolatePppoeRoute
+  PortalIsolateIndexRoute: typeof PortalIsolateIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -575,6 +614,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/settings'
       preLoaderRoute: typeof AuthenticatedSettingsRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/portal/isolate/': {
+      id: '/portal/isolate/'
+      path: '/portal/isolate'
+      fullPath: '/portal/isolate/'
+      preLoaderRoute: typeof PortalIsolateIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/whatsapp/': {
       id: '/_authenticated/whatsapp/'
@@ -694,6 +740,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/apps/'
       preLoaderRoute: typeof AuthenticatedAppsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/portal/isolate/pppoe': {
+      id: '/portal/isolate/pppoe'
+      path: '/portal/isolate/pppoe'
+      fullPath: '/portal/isolate/pppoe'
+      preLoaderRoute: typeof PortalIsolatePppoeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portal/isolate/hotspot': {
+      id: '/portal/isolate/hotspot'
+      path: '/portal/isolate/hotspot'
+      fullPath: '/portal/isolate/hotspot'
+      preLoaderRoute: typeof PortalIsolateHotspotRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/settings/notifications': {
       id: '/_authenticated/settings/notifications'
@@ -824,6 +884,9 @@ const rootRouteChildren: RootRouteChildren = {
   errors404Route: errors404Route,
   errors500Route: errors500Route,
   errors503Route: errors503Route,
+  PortalIsolateHotspotRoute: PortalIsolateHotspotRoute,
+  PortalIsolatePppoeRoute: PortalIsolatePppoeRoute,
+  PortalIsolateIndexRoute: PortalIsolateIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

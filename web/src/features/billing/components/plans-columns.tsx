@@ -1,5 +1,5 @@
 import { type ColumnDef } from '@tanstack/react-table'
-import { Zap } from 'lucide-react'
+import { Zap, Users } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { DataTableColumnHeader } from '@/components/data-table'
 import type { Plan } from '@/gen/v1/billing_pb'
@@ -27,7 +27,7 @@ export const plansColumns: ColumnDef<Plan>[] = [
   {
     accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Nama' />
+      <DataTableColumnHeader column={column} title='Nama Paket' />
     ),
     cell: ({ row }) => (
       <span className='font-semibold'>{row.original.name}</span>
@@ -36,7 +36,7 @@ export const plansColumns: ColumnDef<Plan>[] = [
   {
     accessorKey: 'serviceType',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Tipe' />
+      <DataTableColumnHeader column={column} title='Tipe Layanan' />
     ),
     cell: ({ row }) => (
       <Badge
@@ -51,7 +51,7 @@ export const plansColumns: ColumnDef<Plan>[] = [
   {
     id: 'bandwidth',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Bandwidth' />
+      <DataTableColumnHeader column={column} title='Bandwidth (DL / UL)' />
     ),
     cell: ({ row }) => (
       <span className='font-mono text-xs'>
@@ -64,7 +64,7 @@ export const plansColumns: ColumnDef<Plan>[] = [
   {
     accessorKey: 'price',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Harga' />
+      <DataTableColumnHeader column={column} title='Biaya Langganan' />
     ),
     cell: ({ row }) => (
       <span className='font-mono text-xs'>
@@ -74,15 +74,21 @@ export const plansColumns: ColumnDef<Plan>[] = [
     enableSorting: true,
   },
   {
-    accessorKey: 'validity',
+    accessorKey: 'sharedUsers',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Validity' />
+      <DataTableColumnHeader column={column} title='Perangkat (Hotspot)' />
     ),
-    cell: ({ row }) => (
-      <span className='text-xs text-muted-foreground'>
-        {row.original.validity || '-'}
-      </span>
-    ),
+    cell: ({ row }) => {
+      if (row.original.serviceType !== 'HOTSPOT') {
+        return <span className='text-xs text-muted-foreground'>-</span>
+      }
+      return (
+        <Badge variant='outline' className='gap-1 text-xs'>
+          <Users className='h-3 w-3' />
+          {row.original.sharedUsers || 1} Device
+        </Badge>
+      )
+    },
     meta: { className: 'hidden md:table-cell' },
   },
   {
@@ -97,7 +103,7 @@ export const plansColumns: ColumnDef<Plan>[] = [
           burst
         </Badge>
       ) : (
-        <span className='text-muted-foreground'>-</span>
+        <span className='text-muted-foreground text-xs'>-</span>
       ),
     enableSorting: false,
   },
@@ -112,14 +118,14 @@ export const plansColumns: ColumnDef<Plan>[] = [
           variant='outline'
           className='bg-emerald-500/15 text-xs text-emerald-700 dark:text-emerald-400 border-emerald-500/30'
         >
-          Active
+          Aktif
         </Badge>
       ) : (
         <Badge
           variant='outline'
           className='bg-slate-500/15 text-xs text-slate-700 dark:text-slate-400 border-slate-500/30'
         >
-          Inactive
+          Nonaktif
         </Badge>
       ),
   },

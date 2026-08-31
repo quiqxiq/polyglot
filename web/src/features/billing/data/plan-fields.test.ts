@@ -4,13 +4,7 @@ import { isFieldHidden, isFieldVisible } from './plan-fields'
 describe('isFieldVisible', () => {
   it('hides hotspot-only fields for PPPOE', () => {
     expect(isFieldVisible('sharedUsers', 'PPPOE')).toBe(false)
-    expect(isFieldVisible('expireMode', 'PPPOE')).toBe(false)
     expect(isFieldVisible('ipPoolName', 'PPPOE')).toBe(false)
-    expect(isFieldVisible('lockUser', 'PPPOE')).toBe(false)
-    expect(isFieldVisible('lockServer', 'PPPOE')).toBe(false)
-    expect(isFieldVisible('sellingPrice', 'PPPOE')).toBe(false)
-    expect(isFieldVisible('validity', 'PPPOE')).toBe(false)
-    expect(isFieldVisible('validityMode', 'PPPOE')).toBe(false)
   })
   it('shows ppp fields for PPPOE', () => {
     expect(isFieldVisible('parentQueue', 'PPPOE')).toBe(true)
@@ -18,29 +12,19 @@ describe('isFieldVisible', () => {
     expect(isFieldVisible('remoteAddressPool', 'PPPOE')).toBe(true)
     expect(isFieldVisible('burstDownloadKbps', 'PPPOE')).toBe(true)
   })
-  it('hotspot shows mikhmon fields, hides addressList & remoteAddressPool', () => {
-    expect(isFieldVisible('sellingPrice', 'HOTSPOT')).toBe(true)
-    expect(isFieldVisible('expireMode', 'HOTSPOT')).toBe(true)
+  it('hotspot shows sharedUsers and ipPoolName, hides remoteAddressPool', () => {
     expect(isFieldVisible('sharedUsers', 'HOTSPOT')).toBe(true)
     expect(isFieldVisible('ipPoolName', 'HOTSPOT')).toBe(true)
-    expect(isFieldVisible('lockUser', 'HOTSPOT')).toBe(true)
-    expect(isFieldVisible('lockServer', 'HOTSPOT')).toBe(true)
-    expect(isFieldVisible('addressList', 'HOTSPOT')).toBe(false)
+    expect(isFieldVisible('addressList', 'HOTSPOT')).toBe(true)
     expect(isFieldVisible('remoteAddressPool', 'HOTSPOT')).toBe(false)
-    expect(isFieldVisible('validity', 'HOTSPOT')).toBe(true)
   })
   it('dedicated shows cir fields only', () => {
     expect(isFieldVisible('parentQueue', 'DEDICATED')).toBe(true)
     expect(isFieldVisible('addressList', 'DEDICATED')).toBe(true)
     expect(isFieldVisible('remoteAddressPool', 'DEDICATED')).toBe(true)
     expect(isFieldVisible('burstDownloadKbps', 'DEDICATED')).toBe(true)
-    expect(isFieldVisible('sellingPrice', 'DEDICATED')).toBe(false)
     expect(isFieldVisible('sharedUsers', 'DEDICATED')).toBe(false)
-    expect(isFieldVisible('validity', 'DEDICATED')).toBe(false)
-    expect(isFieldVisible('validityMode', 'DEDICATED')).toBe(false)
-    expect(isFieldVisible('expireMode', 'DEDICATED')).toBe(false)
     expect(isFieldVisible('ipPoolName', 'DEDICATED')).toBe(false)
-    expect(isFieldVisible('lockUser', 'DEDICATED')).toBe(false)
   })
   it('common fields always visible for all types', () => {
     const common = [
@@ -65,14 +49,13 @@ describe('isFieldVisible', () => {
 })
 
 describe('isFieldHidden', () => {
-  it('hides expireMode for PPPOE only', () => {
-    expect(isFieldHidden('expireMode', 'PPPOE')).toBe(true)
-    expect(isFieldHidden('expireMode', 'HOTSPOT')).toBe(false)
-    expect(isFieldHidden('expireMode', 'DEDICATED')).toBe(true)
+  it('hides sharedUsers for PPPOE & DEDICATED', () => {
+    expect(isFieldHidden('sharedUsers', 'PPPOE')).toBe(true)
+    expect(isFieldHidden('sharedUsers', 'HOTSPOT')).toBe(false)
+    expect(isFieldHidden('sharedUsers', 'DEDICATED')).toBe(true)
   })
-  it('hides sellingPrice for PPPOE & DEDICATED', () => {
-    expect(isFieldHidden('sellingPrice', 'PPPOE')).toBe(true)
-    expect(isFieldHidden('sellingPrice', 'HOTSPOT')).toBe(false)
-    expect(isFieldHidden('sellingPrice', 'DEDICATED')).toBe(true)
+  it('hides remoteAddressPool for HOTSPOT', () => {
+    expect(isFieldHidden('remoteAddressPool', 'HOTSPOT')).toBe(true)
+    expect(isFieldHidden('remoteAddressPool', 'PPPOE')).toBe(false)
   })
 })

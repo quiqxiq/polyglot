@@ -25,9 +25,31 @@ const (
 // Canonical definition lives in internal/port (see port.MikhmonProfileParams docs).
 type MikhmonProfileParams = port.MikhmonProfileParams
 
+// BuildPermanentHotspotOnLoginScript generates a clean on-login script for permanent
+// hotspot members/subscriptions without voucher expiration or transaction recording scripts.
+func BuildPermanentHotspotOnLoginScript(lockUser, lockServer bool) string {
+	var sb strings.Builder
+	if lockUser {
+		sb.WriteString(`[:local mac $"mac-address"; /ip hotspot user set mac-address=$mac [find where name=$user]]; `)
+	}
+	if lockServer {
+		sb.WriteString(`[:local mac $"mac-address"; :local srv [/ip hotspot host get [find where mac-address="$mac"] server]; /ip hotspot user set server=$srv [find where name=$user]]; `)
+	}
+	return strings.TrimSpace(sb.String())
+}
+
+// BuildVoucherOnLoginScript is an alias for BuildOnLoginScript used for voucher profiles.
+func BuildVoucherOnLoginScript(p MikhmonProfileParams) string {
+	return BuildOnLoginScript(p)
+}
+
 // BuildOnLoginScript generates the exact RouterOS RouterScript string used by
 // Mikhmon v4 in the profile's on-login event. Directly ported from Mikhmon v4.
 func BuildOnLoginScript(p MikhmonProfileParams) string {
+	if p.OnLogin != "" {
+		return p.OnLogin
+	}
+
 	expModeCode := string(p.ExpireMode)
 	if expModeCode == "" {
 		expModeCode = "ntf"
@@ -122,13 +144,16 @@ func NewAddMikhmonProfileCommand(p MikhmonProfileParams) command.Command {
 	}
 
 	return NewAddUserProfileCommand(HotspotProfileParams{
-		Name:        p.Name,
-		AddressPool: p.AddressPool,
-		SharedUsers: sharedUsers,
-		RateLimit:   p.RateLimit,
-		ParentQueue: p.ParentQueue,
-		Comment:     p.Comment,
-		OnLogin:     onLoginScript,
+		Name:           p.Name,
+		AddressPool:    p.AddressPool,
+		SharedUsers:    sharedUsers,
+		RateLimit:      p.RateLimit,
+		ParentQueue:    p.ParentQueue,
+		AddressList:    p.AddressList,
+		SessionTimeout: p.SessionTimeout,
+		IdleTimeout:    p.IdleTimeout,
+		Comment:        p.Comment,
+		OnLogin:        onLoginScript,
 	})
 }
 
@@ -159,35 +184,41 @@ func ParseOnLoginScript(onLogin string) (ProfileMeta, error) {
 		return meta, nil
 	}
 
-	start := strings.Index(onLogin, ":put (")
-	if start < 0 {
-		return meta, fmt.Errorf("parse on-login: no :put payload")
+	// Extract the CSV inside :put ("...")
+	start := strings.Index(onLogin, ":put (\",")
+	if start == -1 {
+		return meta, fmt.Errorf("on-login script does not contain Mikhmon metadata payload")
 	}
-	rest := onLogin[start+len(":put ("):]
-	end := strings.Index(rest, ")")
-	if end < 0 {
-		return meta, fmt.Errorf("parse on-login: unterminated :put payload")
+	start += len(":put (\"") // point to the first comma
+	end := strings.Index(onLogin[start:], "\")")
+	if end == -1 {
+		return meta, fmt.Errorf("malformed Mikhmon metadata payload in on-login script")
 	}
-	payload := strings.Trim(rest[:end], `"`)
-	tokens := strings.Split(payload, ",")
-	if len(tokens) < 8 {
-		return meta, fmt.Errorf("parse on-login: unexpected payload %q", payload)
+	payload := onLogin[start : start+end]
+
+	parts := strings.Split(payload, ",")
+	if len(parts) < 8 {
+		return meta, fmt.Errorf("unexpected field count in Mikhmon payload: %d (expected at least 8)", len(parts))
 	}
 
-	meta.ExpireMode = tokens[1]
-	// noexp layout puts the "noexp" marker at index 5 with mode empty.
-	if meta.ExpireMode == "" && tokens[5] == "noexp" {
+	meta.ExpireMode = parts[1]
+	if meta.ExpireMode == "" && len(parts) > 5 && parts[5] == "noexp" {
 		meta.ExpireMode = "0"
 	}
-	meta.Price, _ = strconv.ParseFloat(tokens[2], 64)
-	meta.Validity = tokens[3]
-	meta.SellingPrice, _ = strconv.ParseFloat(tokens[4], 64)
-	meta.LockUser = tokens[6]
-	meta.LockServer = tokens[7]
+	if p, err := strconv.ParseFloat(parts[2], 64); err == nil {
+		meta.Price = p
+	}
+	meta.Validity = parts[3]
+	if sp, err := strconv.ParseFloat(parts[4], 64); err == nil {
+		meta.SellingPrice = sp
+	}
+	meta.LockUser = parts[6]
+	meta.LockServer = parts[7]
+
 	return meta, nil
 }
 
-// NormalizeProfileName replaces every whitespace run with "-", mirroring the
+// NormalizeProfileName replaces all whitespace sequences with single hyphens, matching Mikhmon's
 // legacy preg_replace('/\s+/','-') applied to profile names before they are
 // embedded in report script names (report names are split by "-|-").
 func NormalizeProfileName(name string) string {
@@ -200,12 +231,15 @@ func NewSetMikhmonProfileCommand(rosID string, p MikhmonProfileParams) command.C
 	onLoginScript := BuildOnLoginScript(p)
 
 	return NewSetUserProfileCommand(rosID, HotspotProfileParams{
-		Name:        p.Name,
-		AddressPool: p.AddressPool,
-		SharedUsers: p.SharedUsers,
-		RateLimit:   p.RateLimit,
-		ParentQueue: p.ParentQueue,
-		Comment:     p.Comment,
-		OnLogin:     onLoginScript,
+		Name:           p.Name,
+		AddressPool:    p.AddressPool,
+		SharedUsers:    p.SharedUsers,
+		RateLimit:      p.RateLimit,
+		ParentQueue:    p.ParentQueue,
+		AddressList:    p.AddressList,
+		SessionTimeout: p.SessionTimeout,
+		IdleTimeout:    p.IdleTimeout,
+		Comment:        p.Comment,
+		OnLogin:        onLoginScript,
 	})
 }

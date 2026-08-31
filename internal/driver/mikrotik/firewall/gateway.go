@@ -64,6 +64,7 @@ func (g *Gateway) EnsureIsolationRedirect(ctx context.Context, driver port.Devic
 		SrcAddressList: cfg.SrcAddressList,
 		Protocol:       "tcp",
 		DstPort:        "80,443",
+		PlaceBefore:    "0",
 		Comment:        comment,
 		Disabled:       cfg.Disabled,
 	}
@@ -84,6 +85,107 @@ func (g *Gateway) EnsureIsolationRedirect(ctx context.Context, driver port.Devic
 	return nil
 }
 
+// EnsureIsolationFilter ensures filter rules are configured to restrict
+// forward traffic for isolated subscribers.
+func (g *Gateway) EnsureIsolationFilter(ctx context.Context, driver port.DeviceDriver, srcAddressList, paymentHost string) error {
+	comment := fmt.Sprintf("ISOLATION_FILTER_%s", srcAddressList)
+	res, err := g.exec(ctx, driver, NewPrintFiltersCommand(FirewallFilterPrintParams{
+		Chain:          "forward",
+		SrcAddressList: srcAddressList,
+	}))
+	if err != nil {
+		return fmt.Errorf("list filter rules: %w", err)
+	}
+
+	// 1. Ensure accept to portal paymentHost
+	if paymentHost != "" {
+		found := false
+		for _, row := range res.Rows {
+			if row["action"] == "accept" && row["dst-address"] == paymentHost {
+				found = true
+				break
+			}
+		}
+		if !found {
+			cmd := NewAddFilterCommand(FirewallFilterParams{
+				Chain:          "forward",
+				Action:         "accept",
+				SrcAddressList: srcAddressList,
+				DstAddress:     paymentHost,
+				Comment:        comment + "_PORTAL",
+			})
+			if _, err := g.exec(ctx, driver, cmd); err != nil {
+				return fmt.Errorf("add isolation filter portal: %w", err)
+			}
+		}
+	}
+
+	// 2. Ensure accept DNS UDP 53
+	dnsUDPFound := false
+	dnsTCPFound := false
+	dropFound := false
+	for _, row := range res.Rows {
+		if row["action"] == "accept" && row["protocol"] == "udp" {
+			dnsUDPFound = true
+		}
+		if row["action"] == "accept" && row["protocol"] == "tcp" {
+			dnsTCPFound = true
+		}
+		if row["action"] == "drop" {
+			dropFound = true
+		}
+	}
+
+	if !dnsUDPFound {
+		cmd := command.Command{
+			Raw: "/ip/firewall/filter/add",
+			Args: map[string]string{
+				"chain":            "forward",
+				"action":           "accept",
+				"src-address-list": srcAddressList,
+				"protocol":         "udp",
+				"dst-port":         "53",
+				"comment":          comment + "_DNS_UDP",
+			},
+		}
+		if _, err := g.exec(ctx, driver, cmd); err != nil {
+			return fmt.Errorf("add isolation filter dns udp: %w", err)
+		}
+	}
+
+	if !dnsTCPFound {
+		cmd := command.Command{
+			Raw: "/ip/firewall/filter/add",
+			Args: map[string]string{
+				"chain":            "forward",
+				"action":           "accept",
+				"src-address-list": srcAddressList,
+				"protocol":         "tcp",
+				"dst-port":         "53",
+				"comment":          comment + "_DNS_TCP",
+			},
+		}
+		if _, err := g.exec(ctx, driver, cmd); err != nil {
+			return fmt.Errorf("add isolation filter dns tcp: %w", err)
+		}
+	}
+
+	// 3. Ensure drop all other traffic
+	if !dropFound {
+		cmd := NewAddFilterCommand(FirewallFilterParams{
+			Chain:          "forward",
+			Action:         "drop",
+			SrcAddressList: srcAddressList,
+			Comment:        comment + "_DROP",
+		})
+		if _, err := g.exec(ctx, driver, cmd); err != nil {
+			return fmt.Errorf("add isolation filter drop: %w", err)
+		}
+	}
+
+	return nil
+}
+
 // DisableIsolationRedirect disables any isolation redirect rules matching the app convention.
 func (g *Gateway) DisableIsolationRedirect(ctx context.Context, driver port.DeviceDriver) error {
 	res, err := g.exec(ctx, driver, NewPrintNATCommand("dstnat", "", ""))
@@ -95,7 +197,7 @@ func (g *Gateway) DisableIsolationRedirect(ctx context.Context, driver port.Devi
 		if strings.Contains(r.Comment, "ISOLATION_REDIRECT") && !r.Disabled {
 			cmd := command.Command{
 				Raw:  "/ip/firewall/nat/set",
-				Args: map[string]string{".id": r.RosID, "disabled": "yes"},
+				Args: map[string]string{"numbers": r.RosID, "disabled": "yes"},
 			}
 			if _, err := g.exec(ctx, driver, cmd); err != nil {
 				return fmt.Errorf("disable nat rule %s: %w", r.RosID, err)
@@ -163,4 +265,29 @@ func (g *Gateway) ListNATRules(ctx context.Context, driver port.DeviceDriver, ch
 		return nil, err
 	}
 	return ParseNATRules(res), nil
+}
+
+// HasIsolationRedirect checks if an active isolation redirect NAT rule exists.
+func (g *Gateway) HasIsolationRedirect(ctx context.Context, driver port.DeviceDriver, srcAddressList string) (bool, error) {
+	rules, err := g.ListNATRules(ctx, driver, "dstnat", "", srcAddressList)
+	if err != nil {
+		return false, err
+	}
+	for _, r := range rules {
+		if strings.Contains(r.Comment, "ISOLATION_REDIRECT") && !r.Disabled {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
+// CountAddressListEntries counts how many items are in the specified address list.
+func (g *Gateway) CountAddressListEntries(ctx context.Context, driver port.DeviceDriver, listName string) (int, error) {
+	res, err := g.exec(ctx, driver, NewPrintAddressListCommand(AddressListPrintParams{
+		List: listName,
+	}))
+	if err != nil {
+		return 0, err
+	}
+	return len(ParseAddressList(res)), nil
 }

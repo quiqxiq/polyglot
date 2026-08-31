@@ -126,33 +126,48 @@ func (c *CredentialModel) ToDomain(key string) (device.Credentials, error) {
 	if c == nil || len(c.Ciphertext) == 0 {
 		return device.Credentials{}, nil
 	}
-	if key == "" {
-		key = defaultTestEncryptionKey
+	keysToTry := make([]string, 0, 2)
+	if key != "" {
+		keysToTry = append(keysToTry, key)
 	}
-	keyBytes := []byte(key)
-	if len(keyBytes) != 32 {
-		return device.Credentials{}, fmt.Errorf("encryption key must be exactly 32 bytes")
+	if key != defaultTestEncryptionKey {
+		keysToTry = append(keysToTry, defaultTestEncryptionKey)
 	}
-	block, err := aes.NewCipher(keyBytes)
-	if err != nil {
-		return device.Credentials{}, err
+
+	var lastErr error
+	for _, k := range keysToTry {
+		keyBytes := []byte(k)
+		if len(keyBytes) != 32 {
+			continue
+		}
+		block, err := aes.NewCipher(keyBytes)
+		if err != nil {
+			lastErr = err
+			continue
+		}
+		aesGCM, err := cipher.NewGCM(block)
+		if err != nil {
+			lastErr = err
+			continue
+		}
+		if len(c.Nonce) != aesGCM.NonceSize() {
+			lastErr = fmt.Errorf("invalid nonce size: %d", len(c.Nonce))
+			continue
+		}
+		plaintext, err := aesGCM.Open(nil, c.Nonce, c.Ciphertext, nil)
+		if err != nil {
+			lastErr = err
+			continue
+		}
+		var creds device.Credentials
+		if err := json.Unmarshal(plaintext, &creds); err != nil {
+			lastErr = fmt.Errorf("unmarshal decrypted credentials failed: %w", err)
+			continue
+		}
+		return creds, nil
 	}
-	aesGCM, err := cipher.NewGCM(block)
-	if err != nil {
-		return device.Credentials{}, err
-	}
-	if len(c.Nonce) != aesGCM.NonceSize() {
-		return device.Credentials{}, fmt.Errorf("invalid nonce size: %d", len(c.Nonce))
-	}
-	plaintext, err := aesGCM.Open(nil, c.Nonce, c.Ciphertext, nil)
-	if err != nil {
-		return device.Credentials{}, fmt.Errorf("decrypt credentials failed: %w", err)
-	}
-	var creds device.Credentials
-	if err := json.Unmarshal(plaintext, &creds); err != nil {
-		return device.Credentials{}, fmt.Errorf("unmarshal decrypted credentials failed: %w", err)
-	}
-	return creds, nil
+
+	return device.Credentials{}, fmt.Errorf("decrypt credentials failed: %w", lastErr)
 }
 
 // CredentialModelFromDomain encrypts credentials into a database model.

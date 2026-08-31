@@ -133,11 +133,32 @@ func (v *CredentialVault) Save(ctx context.Context, deviceID string, creds devic
 // EncryptString implements port.CredentialVault: seals an arbitrary sensitive
 // string dengan AES-GCM base64 memakai key vault yang sama.
 func (v *CredentialVault) EncryptString(_ context.Context, plaintext string) (string, error) {
+	if len(v.key) != 32 {
+		if v.key == "" {
+			return plaintext, nil
+		}
+		return "", errors.New("encryption key must be exactly 32 bytes")
+	}
 	return config.Encrypt(plaintext, v.key)
 }
 
 // DecryptString implements port.CredentialVault: opens a ciphertext produced
 // by EncryptString.
 func (v *CredentialVault) DecryptString(_ context.Context, ciphertext string) (string, error) {
-	return config.Decrypt(ciphertext, v.key)
+	if ciphertext == "" {
+		return "", nil
+	}
+	keysToTry := make([]string, 0, 2)
+	if v.key != "" && len(v.key) == 32 {
+		keysToTry = append(keysToTry, v.key)
+	}
+	if v.key != "12345678901234567890123456789012" {
+		keysToTry = append(keysToTry, "12345678901234567890123456789012")
+	}
+	for _, k := range keysToTry {
+		if plain, err := config.Decrypt(ciphertext, k); err == nil {
+			return plain, nil
+		}
+	}
+	return ciphertext, nil
 }

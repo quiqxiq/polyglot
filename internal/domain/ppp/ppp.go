@@ -58,4 +58,6 @@ type Profile struct {
 	UseEncryption  string
 	ChangeTCPMSS   string
 	BridgeLearning string
+	OnUp           string
+	OnDown         string
 }

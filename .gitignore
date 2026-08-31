@@ -1,14 +1,18 @@
 /bin/
 /dist/
 /server
+/probe
+/seed
 server.exe
 *.env
 .env.local
 wa_stores/
 .ref-wa-multidevice/
+/node_modules/
 web/node_modules/
 web/dist/
 *.exe
+.tanstack/
 # Added by code-review-graph
 .code-review-graph/
 

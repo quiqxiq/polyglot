@@ -14,6 +14,8 @@ const LIFECYCLE_DIALOGS: SubscriptionsDialogType[] = [
   'resume',
   'terminate',
   'activate',
+  'isolate',
+  'restore',
 ]
 
 export function SubscriptionsDialogs() {
@@ -71,10 +73,10 @@ export function SubscriptionsDialogs() {
       )}
       {currentRow && open !== null && LIFECYCLE_DIALOGS.includes(open) && (
         <LifecycleConfirmDialog
-          action={open as 'resume' | 'terminate' | 'activate'}
+          action={open as 'resume' | 'terminate' | 'activate' | 'isolate' | 'restore'}
           open={LIFECYCLE_DIALOGS.includes(open)}
           onOpenChange={() =>
-            close(open as 'resume' | 'terminate' | 'activate')
+            close(open as 'resume' | 'terminate' | 'activate' | 'isolate' | 'restore')
           }
           currentRow={currentRow}
         />
@@ -82,3 +84,4 @@ export function SubscriptionsDialogs() {
     </>
   )
 }
+

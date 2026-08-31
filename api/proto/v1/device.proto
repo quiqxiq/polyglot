@@ -228,6 +228,88 @@ message QueryDevicePingMetricsResponse {
   bool timescaledb_available = 7;
 }
 
+// ─── Manajemen Profil Isolir & Integrasi Script Router ──────────────────────
+
+message IsolationConfig {
+  string pppoe_profile_name = 1;      // e.g. "ISOLIR" (default)
+  string hotspot_profile_name = 2;    // e.g. "ISOLIR" (default)
+  string address_list_name = 3;       // e.g. "ISOLIR_USERS"
+  string rate_limit = 4;              // e.g. "0/0" or "512k/512k"
+  string local_address = 5;           // e.g. "10.0.99.1"
+  string remote_address_pool = 6;     // e.g. "pool-isolir"
+  string redirect_ip = 7;             // e.g. "192.168.1.10"
+  int32 redirect_port = 8;            // e.g. 80
+  bool nat_redirect_enabled = 9;      // Pasang dst-nat redirect rule
+  string pppoe_redirect_url = 10;     // e.g. "/portal/isolate/pppoe" or "https://portal.isp.id/isolated/pppoe"
+  string hotspot_redirect_url = 11;   // e.g. "/portal/isolate/hotspot" or "https://portal.isp.id/isolated/hotspot"
+  repeated string walled_garden_domains = 12; // e.g. ["tripay.co.id", "api.tripay.co.id", "midtrans.com", "whatsapp.com"]
+}
+
+
+message IsolationStatus {
+  bool pppoe_profile_exists = 1;
+  bool hotspot_profile_exists = 2;
+  bool address_list_exists = 3;
+  bool nat_redirect_exists = 4;
+  int32 isolated_users_count = 5;
+  IsolationConfig config = 6;
+}
+
+message GetIsolationStatusRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message GetIsolationStatusResponse {
+  IsolationStatus status = 1;
+}
+
+message CreateIsolationProfileRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  IsolationConfig config = 2;
+}
+message CreateIsolationProfileResponse {
+  IsolationStatus status = 1;
+  string message = 2;
+}
+
+message UpdateIsolationProfileRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  IsolationConfig config = 2;
+}
+message UpdateIsolationProfileResponse {
+  IsolationStatus status = 1;
+  string message = 2;
+}
+
+message DeleteIsolationProfileRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  bool remove_firewall_rules = 2;
+}
+message DeleteIsolationProfileResponse {
+  string message = 1;
+}
+
+message GetRouterIntegrationScriptRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string service_type = 2; // "pppoe" | "hotspot" | "all"
+  string webhook_url = 3;  // optional override
+}
+message GetRouterIntegrationScriptResponse {
+  string ppp_on_up_script = 1;
+  string ppp_on_down_script = 2;
+  string hotspot_on_login_script = 3;
+  string hotspot_on_logout_script = 4;
+  string webhook_token = 5;
+}
+
+message ApplyRouterIntegrationScriptRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string profile_name = 2 [(buf.validate.field).string.min_len = 1];
+  string service_type = 3 [(buf.validate.field).string.min_len = 1]; // "pppoe" | "hotspot"
+}
+message ApplyRouterIntegrationScriptResponse {
+  string message = 1;
+}
+
 // DeviceService defines gRPC procedures for network device inventory and streaming telemetry.
 service DeviceService {
   rpc ListDevices(ListDevicesRequest) returns (ListDevicesResponse);
@@ -242,4 +324,13 @@ service DeviceService {
   rpc GetDevicePingConfig(GetDevicePingConfigRequest) returns (GetDevicePingConfigResponse);
   rpc UpdateDevicePingConfig(UpdateDevicePingConfigRequest) returns (UpdateDevicePingConfigResponse);
   rpc QueryDevicePingMetrics(QueryDevicePingMetricsRequest) returns (QueryDevicePingMetricsResponse);
+
+  // Profil Isolir & Integrasi Script Router
+  rpc GetIsolationStatus(GetIsolationStatusRequest) returns (GetIsolationStatusResponse);
+  rpc CreateIsolationProfile(CreateIsolationProfileRequest) returns (CreateIsolationProfileResponse);
+  rpc UpdateIsolationProfile(UpdateIsolationProfileRequest) returns (UpdateIsolationProfileResponse);
+  rpc DeleteIsolationProfile(DeleteIsolationProfileRequest) returns (DeleteIsolationProfileResponse);
+  rpc GetRouterIntegrationScript(GetRouterIntegrationScriptRequest) returns (GetRouterIntegrationScriptResponse);
+  rpc ApplyRouterIntegrationScript(ApplyRouterIntegrationScriptRequest) returns (ApplyRouterIntegrationScriptResponse);
 }
+

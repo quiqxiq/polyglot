@@ -171,6 +171,11 @@ func TestToTransportCommand(t *testing.T) {
 			cmd:  command.Command{Raw: "system/resource/print"},
 			want: &transport.Command{Path: "system/resource", Verb: "print", Attributes: map[string]string{}},
 		},
+		{
+			name: "dot id mapped to numbers for schema validation",
+			cmd:  command.Command{Raw: "/ip/firewall/nat/set", Args: map[string]string{".id": "*1", "disabled": "yes"}},
+			want: &transport.Command{Path: "/ip/firewall/nat", Verb: "set", Attributes: map[string]string{"numbers": "*1", "disabled": "yes"}},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -248,6 +248,36 @@ func (h *BillingConnectHandler) ActivateSubscription(ctx context.Context, req *c
 	}), nil
 }
 
+// IsolateSubscription isolates a customer subscription.
+func (h *BillingConnectHandler) IsolateSubscription(ctx context.Context, req *connect.Request[devicepb.IsolateSubscriptionRequest]) (*connect.Response[devicepb.IsolateSubscriptionResponse], error) {
+	if h.lifecycleUC == nil {
+		return nil, response.Unavailable("lifecycle usecase unavailable")
+	}
+	sub, err := h.lifecycleUC.Isolate(ctx, req.Msg.SubscriptionId, req.Msg.Reason)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.IsolateSubscriptionResponse{
+		Subscription: toProtoSubscription(&sub),
+		Message:      "Pelanggan berhasil diisolir",
+	}), nil
+}
+
+// RestoreSubscription restores an isolated customer subscription.
+func (h *BillingConnectHandler) RestoreSubscription(ctx context.Context, req *connect.Request[devicepb.RestoreSubscriptionRequest]) (*connect.Response[devicepb.RestoreSubscriptionResponse], error) {
+	if h.lifecycleUC == nil {
+		return nil, response.Unavailable("lifecycle usecase unavailable")
+	}
+	sub, err := h.lifecycleUC.Restore(ctx, req.Msg.SubscriptionId)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.RestoreSubscriptionResponse{
+		Subscription: toProtoSubscription(&sub),
+		Message:      "Layanan pelanggan berhasil dipulihkan",
+	}), nil
+}
+
 // ─── CRUD langganan ─────────────────────────────────────────────────────
 
 func (h *BillingConnectHandler) CreateSubscription(ctx context.Context, req *connect.Request[devicepb.CreateSubscriptionRequest]) (*connect.Response[devicepb.CreateSubscriptionResponse], error) {
@@ -382,7 +412,7 @@ func (h *BillingConnectHandler) CreatePlan(ctx context.Context, req *connect.Req
 		return nil, response.Unavailable("plan usecase unavailable")
 	}
 	p := fromProtoPlan(req.Msg.Plan)
-	created, err := h.planUC.Create(ctx, p)
+	created, err := h.planUC.Create(ctx, p, req.Msg.DeviceId)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
@@ -396,7 +426,7 @@ func (h *BillingConnectHandler) UpdatePlan(ctx context.Context, req *connect.Req
 		return nil, response.Unavailable("plan usecase unavailable")
 	}
 	p := fromProtoPlan(req.Msg.Plan)
-	updated, err := h.planUC.Update(ctx, p)
+	updated, err := h.planUC.Update(ctx, p, req.Msg.DeviceId)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
@@ -409,7 +439,7 @@ func (h *BillingConnectHandler) DeletePlan(ctx context.Context, req *connect.Req
 	if h.planUC == nil {
 		return nil, response.Unavailable("plan usecase unavailable")
 	}
-	if err := h.planUC.Delete(ctx, req.Msg.Id); err != nil {
+	if err := h.planUC.Delete(ctx, req.Msg.Id, req.Msg.DeviceId); err != nil {
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.DeletePlanResponse{

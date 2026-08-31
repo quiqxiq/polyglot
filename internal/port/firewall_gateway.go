@@ -22,9 +22,19 @@ type FirewallGateway interface {
 	// diduplikasi.
 	EnsureIsolationRedirect(ctx context.Context, driver DeviceDriver, cfg IsolationRedirectConfig) error
 
+	// EnsureIsolationFilter memastikan rule filter forward untuk pelanggan terisolir
+	// (accept ke portal IP & DNS, drop internet lainnya).
+	EnsureIsolationFilter(ctx context.Context, driver DeviceDriver, srcAddressList, paymentHost string) error
+
 	// DisableIsolationRedirect menonaktifkan (bukan menghapus) semua rule
 	// redirect milik app pada router tersebut.
 	DisableIsolationRedirect(ctx context.Context, driver DeviceDriver) error
+
+	// HasIsolationRedirect memeriksa apakah rule dst-nat isolir aktif di router.
+	HasIsolationRedirect(ctx context.Context, driver DeviceDriver, srcAddressList string) (bool, error)
+
+	// CountAddressListEntries menghitung jumlah entri pada address list tertentu.
+	CountAddressListEntries(ctx context.Context, driver DeviceDriver, listName string) (int, error)
 
 	// AddToAddressList menandai IP pelanggan ke list (mis. ISOLIR_USERS).
 	AddToAddressList(ctx context.Context, driver DeviceDriver, listName, address, comment string) error

@@ -5,7 +5,12 @@ import type {
   UpdateDeviceRequest,
   DeleteDeviceRequest,
   TestDeviceConnectionRequest,
+  CreateIsolationProfileRequest,
+  UpdateIsolationProfileRequest,
+  DeleteIsolationProfileRequest,
+  ApplyRouterIntegrationScriptRequest,
 } from '@/gen/v1/device_pb'
+
 
 export function useDevicesQuery() {
   return useQuery({
@@ -106,7 +111,7 @@ export function useDevicePingMetricsQuery(
   },
   enabled = true
 ) {
-	const hasRange = Boolean(req.startTime && req.endTime && req.startTime < req.endTime)
+  const hasRange = Boolean(req.startTime && req.endTime && req.startTime < req.endTime)
 
   return useQuery({
     queryKey: [
@@ -127,5 +132,98 @@ export function useDevicePingMetricsQuery(
     placeholderData: keepPreviousData,
     enabled: Boolean(req.deviceId) && hasRange && enabled,
     retry: 1,
+  })
+}
+
+// ─── Profil Isolir & Integrasi Webhook Router ─────────────────────────────
+
+export function useIsolationStatusQuery(deviceId: string, enabled = true) {
+  return useQuery({
+    queryKey: [...deviceKeys.detail(deviceId), 'isolation-status'],
+    queryFn: async () => {
+      return await deviceClient.getIsolationStatus({ deviceId })
+    },
+    enabled: Boolean(deviceId) && enabled,
+    staleTime: 10_000,
+  })
+}
+
+export function useCreateIsolationProfileMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: CreateIsolationProfileRequest) => {
+      return await deviceClient.createIsolationProfile(req)
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [...deviceKeys.detail(variables.deviceId), 'isolation-status'],
+      })
+    },
+  })
+}
+
+export function useUpdateIsolationProfileMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: UpdateIsolationProfileRequest) => {
+      return await deviceClient.updateIsolationProfile(req)
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [...deviceKeys.detail(variables.deviceId), 'isolation-status'],
+      })
+    },
+  })
+}
+
+export function useDeleteIsolationProfileMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: DeleteIsolationProfileRequest) => {
+      return await deviceClient.deleteIsolationProfile(req)
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [...deviceKeys.detail(variables.deviceId), 'isolation-status'],
+      })
+    },
+  })
+}
+
+export function useRouterIntegrationScriptQuery(
+  deviceId: string,
+  serviceType = 'all',
+  webhookUrl = '',
+  enabled = true
+) {
+  return useQuery({
+    queryKey: [...deviceKeys.detail(deviceId), 'integration-scripts', serviceType, webhookUrl],
+    queryFn: async () => {
+      return await deviceClient.getRouterIntegrationScript({
+        deviceId,
+        serviceType,
+        webhookUrl,
+      })
+    },
+    enabled: Boolean(deviceId) && enabled,
+    staleTime: 60_000,
+  })
+}
+
+export function useApplyRouterIntegrationScriptMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: ApplyRouterIntegrationScriptRequest) => {
+      return await deviceClient.applyRouterIntegrationScript(req)
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [...deviceKeys.detail(variables.deviceId), 'integration-scripts'],
+      })
+    },
   })
 }

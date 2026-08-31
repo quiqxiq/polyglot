@@ -18,43 +18,44 @@ import (
 
 func TestPlanCreate_Defaults_AndDuplicate(t *testing.T) {
 	plans := mocktest.NewFakeServicePlanRepo()
-	usecase := uc.NewPlanUseCase(plans, mocktest.NewFakeSubscriptionRepo())
+	manager := mocktest.NewFakeRouterAccountManager()
+	usecase := uc.NewPlanUseCase(plans, mocktest.NewFakeSubscriptionRepo(), manager)
 	ctx := context.Background()
 
 	created, err := usecase.Create(ctx, domainPlan.ServicePlan{
 		Name: "100-RB-100", ServiceType: "PPPOE",
 		BandwidthDownloadKbps: 5120, BandwidthUploadKbps: 5120,
 		Price: 100000,
-	})
+	}, "dev-1")
 	require.NoError(t, err)
 	assert.NotEmpty(t, created.ID)
-	assert.Equal(t, "30d", created.Validity)
-	assert.Equal(t, domainPlan.ValidityCalendar, created.ValidityMode)
 	assert.True(t, created.IsActive)
+	assert.Equal(t, 1, manager.Count("SyncPlanProfile:dev-1:100-RB-100"))
 
 	_, err = usecase.Create(ctx, domainPlan.ServicePlan{
 		Name: "100-RB-100", ServiceType: "PPPOE",
 		BandwidthDownloadKbps: 5120, BandwidthUploadKbps: 5120, Price: 1,
-	})
+	}, "")
 	assert.ErrorIs(t, err, domainBilling.ErrInvalidInput)
 
 	_, err = usecase.Create(ctx, domainPlan.ServicePlan{
 		Name: "BAD", ServiceType: "WIFI",
 		BandwidthDownloadKbps: 1, BandwidthUploadKbps: 1,
-	})
+	}, "")
 	assert.ErrorContains(t, err, "service_type")
 
 	_, err = usecase.Create(ctx, domainPlan.ServicePlan{
 		Name: "NEG", ServiceType: "PPPOE",
 		BandwidthDownloadKbps: -5, BandwidthUploadKbps: 5,
-	})
+	}, "")
 	assert.ErrorContains(t, err, "bandwidth")
 }
 
 func TestPlanDelete_GuardAktif(t *testing.T) {
 	plans := mocktest.NewFakeServicePlanRepo()
 	subs := mocktest.NewFakeSubscriptionRepo()
-	usecase := uc.NewPlanUseCase(plans, subs)
+	manager := mocktest.NewFakeRouterAccountManager()
+	usecase := uc.NewPlanUseCase(plans, subs, manager)
 	ctx := context.Background()
 
 	p := newPlan("plan-guard", "GUARD")
@@ -67,16 +68,16 @@ func TestPlanDelete_GuardAktif(t *testing.T) {
 		Status: domainSubscription.StatusActive,
 	}
 	require.NoError(t, subs.Save(ctx, sub))
-	err := usecase.Delete(ctx, p.ID)
+	err := usecase.Delete(ctx, p.ID, deviceID)
 	assert.ErrorIs(t, err, domainBilling.ErrPlanInUse)
 
-	// Tidak ada langganan aktif lagi → terhapus.
-	_ = deviceID
+	// Tidak ada langganan aktif lagi → terhapus dan router profil dihapus.
 	sub.Status = domainSubscription.StatusTerminated
 	require.NoError(t, subs.Save(ctx, sub))
-	require.NoError(t, usecase.Delete(ctx, p.ID))
+	require.NoError(t, usecase.Delete(ctx, p.ID, deviceID))
 	_, err = plans.FindByID(ctx, p.ID)
 	assert.ErrorIs(t, err, mocktest.ErrFakeNotFound)
+	assert.Equal(t, 1, manager.Count("DeletePlanProfile:dev-g:PPPOE:GUARD"))
 }
 
 // ─── SubscriptionLifecycleUseCase ───────────────────────────────────────
@@ -226,11 +227,11 @@ func TestActivate_ProvisionSuccessAndFailure(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, domainSubscription.ProvisionOK, sub.ProvisionStatus)
 	assert.Equal(t, "PLAN-A", sub.RouterProfile)
-	assert.Equal(t, 1, fx.manager.Count("Provision:LCUSER@PLAN-A"))
+	assert.Equal(t, 1, fx.manager.Count("ProvisionPPPoE:LCUSER@PLAN-A"))
 
 	// Gagal router → PENDING (worker retry), error jelas.
 	fx2 := newLifecycleFixture(t, domainSubscription.StatusActive, false)
-	fx2.manager.Fail = map[string]error{"Provision:LCUSER@PLAN-A": assert_AnError()}
+	fx2.manager.Fail = map[string]error{"ProvisionPPPoE:LCUSER@PLAN-A": assert_AnError()}
 	sub2, err := fx2.usecase.Activate(ctx, "sub-lc", "dev-act2")
 	require.Error(t, err)
 	assert.Equal(t, domainSubscription.ProvisionPending, sub2.ProvisionStatus)
@@ -238,18 +239,20 @@ func TestActivate_ProvisionSuccessAndFailure(t *testing.T) {
 
 func TestPlanUpdateAndGet(t *testing.T) {
 	plans := mocktest.NewFakeServicePlanRepo()
-	usecase := uc.NewPlanUseCase(plans, mocktest.NewFakeSubscriptionRepo())
+	manager := mocktest.NewFakeRouterAccountManager()
+	usecase := uc.NewPlanUseCase(plans, mocktest.NewFakeSubscriptionRepo(), manager)
 	ctx := context.Background()
 
-	created, err := usecase.Create(ctx, newPlan("plan-u", "OLD"))
+	created, err := usecase.Create(ctx, newPlan("plan-u", "OLD"), "dev-u")
 	require.NoError(t, err)
 
 	created.Name = "NEW"
 	created.Price = 150000
-	updated, err := usecase.Update(ctx, created)
+	updated, err := usecase.Update(ctx, created, "dev-u")
 	require.NoError(t, err)
 	assert.Equal(t, "NEW", updated.Name)
 	assert.InDelta(t, 150000, updated.Price, 0.01)
+	assert.Equal(t, 1, manager.Count("SyncPlanProfile:dev-u:NEW"))
 
 	got, err := usecase.Get(ctx, "plan-u")
 	require.NoError(t, err)
@@ -260,7 +263,7 @@ func TestPlanUpdateAndGet(t *testing.T) {
 	assert.Len(t, list, 1)
 
 	// ID kosong / tidak ada.
-	_, err = usecase.Update(ctx, domainPlan.ServicePlan{})
+	_, err = usecase.Update(ctx, domainPlan.ServicePlan{}, "")
 	assert.ErrorIs(t, err, domainBilling.ErrInvalidInput)
 	_, err = usecase.Get(ctx, "missing")
 	assert.ErrorIs(t, err, mocktest.ErrFakeNotFound)

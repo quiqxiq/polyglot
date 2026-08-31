@@ -29,7 +29,9 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
 	portalHTTP "github.com/quixiq/polyglot/internal/adapter/http/portal"
 	reportsHTTP "github.com/quixiq/polyglot/internal/adapter/http/reports"
+	webhookHTTP "github.com/quixiq/polyglot/internal/adapter/http/webhook"
 	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
+
 	"github.com/quixiq/polyglot/internal/adapter/mcp"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
@@ -166,7 +168,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		}
 	}
 
-	repo, vault := loadInitialDevices(pgStore)
+	repo, vault := loadInitialDevices(pgStore, cfg.EncryptionKey)
 	factories := map[string]registry.DriverFactory{
 		"mikrotik": func(ctx context.Context, target device.Target) (port.DeviceDriver, error) {
 			return mikrotik.NewDriver(ctx, target)
@@ -216,7 +218,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	invUC := billingUC.NewInvoiceUseCase(invRepo)
 	subUC := billingUC.NewSubscriptionUseCase(subRepo)
-	planUC := billingUC.NewPlanUseCase(planRepo, subRepo)
+	planUC := billingUC.NewPlanUseCase(planRepo, subRepo, accountMgr)
 	checkoutUC := billingUC.NewCheckoutUseCase(invRepo, customerRepo, paymentProc)
 	lifecycleUC := billingUC.NewSubscriptionLifecycleUseCase(subRepo, planRepo, accountMgr, auditLogRepo)
 	runBillingUC := billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo).WithSettings(settingRepo)
@@ -250,6 +252,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	deviceAuthorizer := auth.NewDeviceAuthorizer(userRepo)
 	metricsRepo := postgres.NewMetricsRepository(pgStore.DB())
 	metricsUseCase := deviceUC.NewManageMetricsUseCase(repo, metricsRepo, deviceAuthorizer)
+	manageIsolationUseCase := deviceUC.NewManageIsolationUseCase(accountMgr, repo)
 
 	pingStreamMgr := metricsUC.NewPingStreamWorker(repo, metricsRepo, func(c context.Context, id string) (port.DeviceDriver, error) {
 		return reg.Get(c, id)
@@ -280,6 +283,9 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	// ─── 3. Routing (net/http ServeMux) ─────────────────────────────────────
 	rootMux := http.NewServeMux()
+
+	webhookHTTPHandler := webhookHTTP.NewHandler()
+	webhookHTTPHandler.RegisterPublic(rootMux)
 
 	authPath, authHandler := authConnect.NewAuthServiceHandler(
 		authUseCase, refreshUseCase, manageUserUseCase, cfg.AppEnv == "production",
@@ -314,7 +320,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		protectedPaths = append(protectedPaths, servicePath)
 	}
 
-	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(devUC, openTermUC, connectDriverProvider, metricsUseCase)
+	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(devUC, openTermUC, connectDriverProvider, metricsUseCase, manageIsolationUseCase)
 	registerProtected(devPath, devHandler)
 
 	custPath, custHandler := customerConnect.NewCustomerServiceHandler(custUC)
@@ -466,8 +472,8 @@ func (a *App) Shutdown(ctx context.Context) error {
 	return nil
 }
 
-func loadInitialDevices(pgStore *postgres.Store) (port.DeviceRepository, port.CredentialVault) {
-	return postgres.NewDeviceRepository(pgStore.DB()), postgres.NewCredentialVault(pgStore.DB())
+func loadInitialDevices(pgStore *postgres.Store, encKey string) (port.DeviceRepository, port.CredentialVault) {
+	return postgres.NewDeviceRepository(pgStore.DB()), postgres.NewCredentialVault(pgStore.DB(), encKey)
 }
 
 var _ = devicepb.Registration{}

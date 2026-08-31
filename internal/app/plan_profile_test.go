@@ -3,7 +3,6 @@ package app
 import (
 	"testing"
 
-	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -58,12 +57,10 @@ func TestPPPProfileParams(t *testing.T) {
 }
 
 func TestExpireModeMapping(t *testing.T) {
-	// Konvensi domain (ntf/ntfc/rem/remc/0) lolos apa adanya; port layer
+	// Konvensi (ntf/ntfc/rem/remc/0) lolos apa adanya; port layer
 	// hanya meneruskan string ke Mikhmon expire monitor.
 	for _, m := range []string{
-		domainPlan.ExpireNotFiltered, domainPlan.ExpireNotFilteredCom,
-		domainPlan.ExpireRemove, domainPlan.ExpireRemoveComment,
-		domainPlan.ExpireNone,
+		"ntf", "ntfc", "rem", "remc", "0",
 	} {
 		if string(hotspotExpireMode(m)) != m {
 			t.Errorf("mode %q berubah saat dipetakan", m)

@@ -154,6 +154,8 @@ func toTransportCommand(cmd command.Command) *transport.Command {
 				q += "=" + value
 			}
 			tc.Queries = append(tc.Queries, q)
+		case key == ".id":
+			tc.Attributes["numbers"] = value
 		default:
 			tc.Attributes[key] = value
 		}

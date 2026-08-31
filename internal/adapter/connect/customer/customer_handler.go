@@ -49,11 +49,12 @@ func (h *CustomerConnectHandler) CreateCustomer(ctx context.Context, req *connec
 		return nil, response.Unavailable("customer usecase unavailable")
 	}
 	c := fromProtoCustomer(req.Msg.Customer)
-	if err := h.customerUC.CreateCustomer(ctx, c); err != nil {
+	created, err := h.customerUC.CreateCustomer(ctx, c)
+	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.CreateCustomerResponse{
-		Customer: toProtoCustomer(&c),
+		Customer: toProtoCustomer(&created),
 		Message:  "Customer created successfully",
 	}), nil
 }
@@ -63,11 +64,12 @@ func (h *CustomerConnectHandler) UpdateCustomer(ctx context.Context, req *connec
 		return nil, response.Unavailable("customer usecase unavailable")
 	}
 	c := fromProtoCustomer(req.Msg.Customer)
-	if err := h.customerUC.UpdateCustomer(ctx, c); err != nil {
+	updated, err := h.customerUC.UpdateCustomer(ctx, c)
+	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.UpdateCustomerResponse{
-		Customer: toProtoCustomer(&c),
+		Customer: toProtoCustomer(&updated),
 		Message:  "Customer updated successfully",
 	}), nil
 }

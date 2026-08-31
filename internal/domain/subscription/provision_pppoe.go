@@ -22,6 +22,8 @@ type PPPoEProfileSpec struct {
 	LocalAddress      string // gateway IP pool (opsional)
 	ParentQueue       string // nama parent queue di Simple Queue / Queue Tree
 	AddressList       string // nama address-list firewall
+	SessionTimeout    string // session-timeout di MikroTik (opsional)
+	IdleTimeout       string // idle-timeout di MikroTik (opsional)
 	Comment           string
 }
 

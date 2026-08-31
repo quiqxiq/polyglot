@@ -89,4 +89,6 @@ type HotspotGateway interface {
 	// ParseUserComment parses a Mikhmon-formatted user comment. Pure parse —
 	// driver is unused and kept only for a uniform interface shape.
 	ParseUserComment(comment string) (MikhmonComment, error)
+	// EnsureWalledGarden ensures that the specified domains and portal destination are allowed in Hotspot Walled Garden.
+	EnsureWalledGarden(ctx context.Context, driver DeviceDriver, domains []string, portalHost, portalPort string) error
 }

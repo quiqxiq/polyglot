@@ -8,11 +8,8 @@ import (
 
 // ServicePlanModel is the GORM model for ISP service plans with full
 // MikroTik profile parameters (DATABASE-SCHEMA-ISP.md §2.2).
-// Tabel berganti nama dari `plans` (migrasi 000006) menjadi `service_plans`;
-// migrasi SQL prod untuk rename + copy data menyusul di fase berikutnya.
 type ServicePlanModel struct {
-	ID string `gorm:"primaryKey"`
-	// Nama paket unik per tenant (mis. "100-RB-100", "HOME-20M").
+	ID                    string `gorm:"primaryKey"`
 	TenantID              string `gorm:"type:text;not null;default:tenant-default;uniqueIndex:uq_service_plans_tenant_name"`
 	Name                  string `gorm:"type:varchar(100);not null;uniqueIndex:uq_service_plans_tenant_name"`
 	ServiceType           string `gorm:"type:varchar(20);not null;index"`
@@ -22,28 +19,15 @@ type ServicePlanModel struct {
 	BurstUploadKbps       int
 	BurstThresholdKbps    int
 	BurstTimeSeconds      int
+	Price                 float64 `gorm:"type:numeric(15,2);not null"`
+	InstallationFee       float64 `gorm:"type:numeric(15,2)"`
+	TaxPercent            float64 `gorm:"type:numeric(5,2)"`
 
-	Price           float64 `gorm:"type:numeric(15,2);not null"`
-	SellingPrice    float64 `gorm:"type:numeric(15,2)"`
-	InstallationFee float64 `gorm:"type:numeric(15,2)"`
-	TaxPercent      float64 `gorm:"type:numeric(5,2)"`
-
-	Validity        string `gorm:"type:varchar(20);default:30d"`
-	ValidityMode    string `gorm:"type:varchar(20);default:CALENDAR"`
-	SimultaneousUse int    `gorm:"default:1"`
-
-	IPPoolName  string `gorm:"type:varchar(50)"`
-	ParentQueue string `gorm:"type:varchar(50);default:none"`
-	AddressList string `gorm:"type:varchar(50)"`
-	SharedUsers int    `gorm:"default:1"`
-	ExpireMode  string `gorm:"type:varchar(10);default:ntf"`
-	LockUser    bool   `gorm:"default:false"`
-	LockServer  bool   `gorm:"default:false"`
-	// RemoteAddressPool: pool IP sumber alamat pelanggan (kolom remote-address
-	// pada /ppp/profile RouterOS) — relevan untuk PPPOE/DEDICATED.
+	IPPoolName        string `gorm:"type:varchar(50)"`
 	RemoteAddressPool string `gorm:"type:varchar(50)"`
-	LimitUptime       string `gorm:"type:varchar(20)"`
-	LimitBytes        string `gorm:"type:varchar(20)"` // NULL/empty = unlimited flat rate
+	ParentQueue       string `gorm:"type:varchar(50);default:none"`
+	AddressList       string `gorm:"type:varchar(50)"`
+	SharedUsers       int    `gorm:"default:1"`
 	IsActive          bool   `gorm:"not null;default:true;index"`
 	Description       string `gorm:"type:text"`
 
@@ -61,6 +45,10 @@ func (m *ServicePlanModel) ToDomain() plan.ServicePlan {
 	if m == nil {
 		return plan.ServicePlan{}
 	}
+	sharedUsers := m.SharedUsers
+	if sharedUsers <= 0 {
+		sharedUsers = 1
+	}
 	p := plan.ServicePlan{
 		ID:                    m.ID,
 		TenantID:              m.TenantID,
@@ -73,22 +61,13 @@ func (m *ServicePlanModel) ToDomain() plan.ServicePlan {
 		BurstThresholdKbps:    m.BurstThresholdKbps,
 		BurstTimeSeconds:      m.BurstTimeSeconds,
 		Price:                 m.Price,
-		SellingPrice:          m.SellingPrice,
 		InstallationFee:       m.InstallationFee,
 		TaxPercent:            m.TaxPercent,
-		Validity:              m.Validity,
-		ValidityMode:          m.ValidityMode,
-		SimultaneousUse:       m.SimultaneousUse,
 		IPPoolName:            m.IPPoolName,
 		RemoteAddressPool:     m.RemoteAddressPool,
 		ParentQueue:           m.ParentQueue,
 		AddressList:           m.AddressList,
-		SharedUsers:           m.SharedUsers,
-		ExpireMode:            m.ExpireMode,
-		LockUser:              m.LockUser,
-		LockServer:            m.LockServer,
-		LimitUptime:           m.LimitUptime,
-		LimitBytes:            m.LimitBytes,
+		SharedUsers:           sharedUsers,
 		IsActive:              m.IsActive,
 		Description:           m.Description,
 		CreatedAt:             m.CreatedAt,
@@ -97,16 +76,9 @@ func (m *ServicePlanModel) ToDomain() plan.ServicePlan {
 
 	if m.ServiceType == plan.TypeHotspot {
 		p.Hotspot = &plan.HotspotPlanConfig{
-			IPPoolName:   m.IPPoolName,
-			SharedUsers:  m.SharedUsers,
-			Validity:     m.Validity,
-			ValidityMode: m.ValidityMode,
-			ExpireMode:   m.ExpireMode,
-			LockUser:     m.LockUser,
-			LockServer:   m.LockServer,
-			SellingPrice: m.SellingPrice,
-			LimitUptime:  m.LimitUptime,
-			LimitBytes:   m.LimitBytes,
+			IPPoolName:  m.IPPoolName,
+			AddressList: m.AddressList,
+			SharedUsers: sharedUsers,
 		}
 	} else {
 		p.PPPoE = &plan.PPPoEPlanConfig{
@@ -119,6 +91,10 @@ func (m *ServicePlanModel) ToDomain() plan.ServicePlan {
 
 // ServicePlanModelFromDomain converts a service plan domain entity to a database model.
 func ServicePlanModelFromDomain(p plan.ServicePlan) *ServicePlanModel {
+	sharedUsers := p.SharedUsers
+	if sharedUsers <= 0 {
+		sharedUsers = 1
+	}
 	m := &ServicePlanModel{
 		ID:                    p.ID,
 		TenantID:              p.TenantID,
@@ -131,22 +107,13 @@ func ServicePlanModelFromDomain(p plan.ServicePlan) *ServicePlanModel {
 		BurstThresholdKbps:    p.BurstThresholdKbps,
 		BurstTimeSeconds:      p.BurstTimeSeconds,
 		Price:                 p.Price,
-		SellingPrice:          p.SellingPrice,
 		InstallationFee:       p.InstallationFee,
 		TaxPercent:            p.TaxPercent,
-		Validity:              p.Validity,
-		ValidityMode:          p.ValidityMode,
-		SimultaneousUse:       p.SimultaneousUse,
 		IPPoolName:            p.IPPoolName,
 		RemoteAddressPool:     p.RemoteAddressPool,
 		ParentQueue:           p.ParentQueue,
 		AddressList:           p.AddressList,
-		SharedUsers:           p.SharedUsers,
-		ExpireMode:            p.ExpireMode,
-		LockUser:              p.LockUser,
-		LockServer:            p.LockServer,
-		LimitUptime:           p.LimitUptime,
-		LimitBytes:            p.LimitBytes,
+		SharedUsers:           sharedUsers,
 		IsActive:              p.IsActive,
 		Description:           p.Description,
 		CreatedAt:             p.CreatedAt,
@@ -165,28 +132,11 @@ func ServicePlanModelFromDomain(p plan.ServicePlan) *ServicePlanModel {
 		if p.Hotspot.IPPoolName != "" {
 			m.IPPoolName = p.Hotspot.IPPoolName
 		}
+		if p.Hotspot.AddressList != "" {
+			m.AddressList = p.Hotspot.AddressList
+		}
 		if p.Hotspot.SharedUsers > 0 {
 			m.SharedUsers = p.Hotspot.SharedUsers
-		}
-		if p.Hotspot.Validity != "" {
-			m.Validity = p.Hotspot.Validity
-		}
-		if p.Hotspot.ValidityMode != "" {
-			m.ValidityMode = p.Hotspot.ValidityMode
-		}
-		if p.Hotspot.ExpireMode != "" {
-			m.ExpireMode = p.Hotspot.ExpireMode
-		}
-		m.LockUser = p.Hotspot.LockUser
-		m.LockServer = p.Hotspot.LockServer
-		if p.Hotspot.SellingPrice > 0 {
-			m.SellingPrice = p.Hotspot.SellingPrice
-		}
-		if p.Hotspot.LimitUptime != "" {
-			m.LimitUptime = p.Hotspot.LimitUptime
-		}
-		if p.Hotspot.LimitBytes != "" {
-			m.LimitBytes = p.Hotspot.LimitBytes
 		}
 	}
 	return m

@@ -62,8 +62,7 @@ func TestServicePlanRepository_CRUD(t *testing.T) {
 		ServiceType:           domainPlan.TypePPPoE,
 		BandwidthDownloadKbps: 5120, BandwidthUploadKbps: 5120,
 		Price: 100000, TaxPercent: 10, IsActive: true,
-		SimultaneousUse: 1, SharedUsers: 1, ExpireMode: domainPlan.ExpireNotFiltered,
-		Validity: "30d", ValidityMode: domainPlan.ValidityCalendar,
+		SharedUsers: 1,
 		ParentQueue: "none",
 	}
 	require.NoError(t, repo.Save(ctx, p))

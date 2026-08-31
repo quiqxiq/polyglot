@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react'
-import { useForm, useWatch } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -12,7 +12,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import {
   Sheet,
@@ -49,9 +48,8 @@ function defaultFormValues(currentRow: Customer | null): CustomerFormValues {
       phone: '',
       email: '',
       address: '',
-      latitude: 0,
-      longitude: 0,
-      hasCoordinates: false,
+      latitude: '',
+      longitude: '',
       status: 'ACTIVE',
       notes: '',
     }
@@ -61,9 +59,8 @@ function defaultFormValues(currentRow: Customer | null): CustomerFormValues {
     phone: currentRow.phone,
     email: currentRow.email ?? '',
     address: currentRow.address ?? '',
-    latitude: currentRow.latitude ?? 0,
-    longitude: currentRow.longitude ?? 0,
-    hasCoordinates: currentRow.hasCoordinates ?? false,
+    latitude: currentRow.hasCoordinates || currentRow.latitude ? currentRow.latitude : '',
+    longitude: currentRow.hasCoordinates || currentRow.longitude ? currentRow.longitude : '',
     status: toFormStatus(currentRow.status),
     notes: currentRow.notes ?? '',
   }
@@ -99,22 +96,36 @@ export function CustomersMutateDrawer({
     if (isOpen) form.reset(initialValues)
   }, [isOpen, initialValues, form])
 
-  const hasCoordinates = useWatch({ control: form.control, name: 'hasCoordinates' })
-  const showCoordinates = hasCoordinates ?? false
-
   const onSubmit = async (values: CustomerFormValues) => {
     try {
+      const parsedLat = typeof values.latitude === 'number' ? values.latitude : (values.latitude ? parseFloat(String(values.latitude)) : NaN)
+      const parsedLon = typeof values.longitude === 'number' ? values.longitude : (values.longitude ? parseFloat(String(values.longitude)) : NaN)
+      const hasCoordinates = !isNaN(parsedLat) && !isNaN(parsedLon) && (parsedLat !== 0 || parsedLon !== 0)
+
+      const customerData = new Customer({
+        name: values.name,
+        phone: values.phone,
+        email: values.email ?? '',
+        address: values.address ?? '',
+        status: values.status,
+        notes: values.notes ?? '',
+        latitude: !isNaN(parsedLat) ? parsedLat : 0,
+        longitude: !isNaN(parsedLon) ? parsedLon : 0,
+        hasCoordinates,
+      })
+
       if (isUpdate && currentRow) {
+        customerData.id = currentRow.id
         await updateMutation.mutateAsync(
           new UpdateCustomerRequest({
-            customer: new Customer({ ...values, id: currentRow.id }),
+            customer: customerData,
           })
         )
         toast.success('Pelanggan diperbarui')
       } else {
         await createMutation.mutateAsync(
           new CreateCustomerRequest({
-            customer: new Customer({ ...values, email: values.email ?? '' }),
+            customer: customerData,
           })
         )
         toast.success('Pelanggan disimpan')
@@ -223,65 +234,46 @@ export function CustomersMutateDrawer({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name='hasCoordinates'
-              render={({ field }) => (
-                <FormItem className='flex flex-row items-center justify-between rounded-lg border p-3 shadow-xs'>
-                  <div className='space-y-0.5'>
-                    <FormLabel>Pakai Koordinat</FormLabel>
-                    <p className='text-muted-foreground text-xs'>
-                      Simpan titik lokasi pemasangan untuk ditampilkan di peta.
-                    </p>
-                  </div>
-                  <FormControl>
-                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            {showCoordinates && (
-              <div className='grid grid-cols-2 gap-4'>
-                <FormField
-                  control={form.control}
-                  name='latitude'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Latitude</FormLabel>
-                      <FormControl>
-                        <Input
-                          type='number'
-                          step='any'
-                          placeholder='-6.2088'
-                          {...field}
-                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='longitude'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Longitude</FormLabel>
-                      <FormControl>
-                        <Input
-                          type='number'
-                          step='any'
-                          placeholder='106.8456'
-                          {...field}
-                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            )}
+            <div className='grid grid-cols-2 gap-4'>
+              <FormField
+                control={form.control}
+                name='latitude'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Latitude</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='number'
+                        step='any'
+                        placeholder='-6.2088 (opsional)'
+                        value={field.value ?? ''}
+                        onChange={(e) => field.onChange(e.target.value)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='longitude'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Longitude</FormLabel>
+                    <FormControl>
+                      <Input
+                        type='number'
+                        step='any'
+                        placeholder='106.8456 (opsional)'
+                        value={field.value ?? ''}
+                        onChange={(e) => field.onChange(e.target.value)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={form.control}
               name='notes'

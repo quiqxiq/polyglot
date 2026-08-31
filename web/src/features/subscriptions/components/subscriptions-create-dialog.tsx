@@ -26,18 +26,14 @@ import { SelectDropdown } from '@/components/select-dropdown'
 import { CreateSubscriptionRequest } from '@/gen/v1/billing_pb'
 import { useCustomersQuery } from '@/features/customer/api/use-customer'
 import { usePlansQuery } from '@/features/billing/api/use-plans'
-import { useDevicesQuery } from '@/features/devices/api/use-devices'
 import { useCreateSubscriptionMutation } from '@/features/billing/api/use-billing'
+import { useDeviceStore } from '@/stores/device-store'
 
 const SERVICE_TYPES = ['PPPOE', 'HOTSPOT', 'DEDICATED'] as const
-
-// Sentinel untuk "tanpa device" — Radix Select melarang value string kosong.
-const NO_DEVICE = '__none__'
 
 const createSubscriptionSchema = z.object({
   customerId: z.string().min(1, 'Pelanggan wajib dipilih'),
   planId: z.string().min(1, 'Paket wajib dipilih'),
-  deviceId: z.string(),
   serviceType: z.enum(SERVICE_TYPES),
   remoteUsername: z.string(),
   remotePassword: z.string(),
@@ -71,7 +67,7 @@ export function SubscriptionsCreateDialog({
   const { data: customers = [], isPending: customersLoading } =
     useCustomersQuery()
   const { data: plans = [], isPending: plansLoading } = usePlansQuery(true)
-  const { data: devices = [] } = useDevicesQuery()
+  const selectedDeviceId = useDeviceStore((s) => s.selectedDeviceId)
   const createMutation = useCreateSubscriptionMutation()
 
   const form = useForm<CreateSubscriptionValues>({
@@ -79,7 +75,6 @@ export function SubscriptionsCreateDialog({
     defaultValues: {
       customerId: initialCustomerId,
       planId: '',
-      deviceId: '',
       serviceType: 'PPPOE',
       remoteUsername: '',
       remotePassword: '',
@@ -118,13 +113,6 @@ export function SubscriptionsCreateDialog({
     label: `${p.name} — Rp${Number(p.price).toLocaleString('id-ID')} (${p.serviceType})`,
     value: p.id,
   }))
-  const deviceItems = [
-    { label: '— tanpa device —', value: NO_DEVICE },
-    ...devices.map((d) => ({
-      label: d.name ? `${d.name} (${d.id})` : d.id,
-      value: d.id,
-    })),
-  ]
 
   const handleSubmit = async (values: CreateSubscriptionValues) => {
     try {
@@ -132,7 +120,7 @@ export function SubscriptionsCreateDialog({
         new CreateSubscriptionRequest({
           customerId: values.customerId,
           planId: values.planId,
-          deviceId: values.deviceId === NO_DEVICE ? '' : values.deviceId,
+          deviceId: selectedDeviceId || '',
           serviceType: values.serviceType,
           remoteUsername: values.remoteUsername,
           remotePassword: values.remotePassword,
@@ -232,25 +220,6 @@ export function SubscriptionsCreateDialog({
               )}
             />
 
-            <FormField
-              control={form.control}
-              name='deviceId'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Router BRAS (Opsional)</FormLabel>
-                  <FormControl>
-                    <SelectDropdown
-                      isControlled
-                      defaultValue={field.value}
-                      onValueChange={field.onChange}
-                      placeholder='Pilih Router BRAS'
-                      items={deviceItems}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
             <FormField
               control={form.control}

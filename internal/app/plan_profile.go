@@ -43,7 +43,9 @@ func pppProfileParams(a port.SubscriberAccount) port.PPPProfileParams {
 		RateLimit:     a.RateLimit,
 		ParentQueue:   a.ParentQueue,
 		AddressList:   a.AddressList,
+		LocalAddress:  a.LocalAddress,
 		RemoteAddress: a.RemoteAddressPool,
+		DNSServer:     a.DNSServer,
 		Comment:       planProfileComment,
 	}
 }
@@ -72,18 +74,17 @@ func hotspotProfileParamsFromSpec(spec domainSub.HotspotProfileSpec) port.Mikhmo
 		cmt = planProfileComment
 	}
 	return port.MikhmonProfileParams{
-		Name:         spec.Name,
-		AddressPool:  spec.AddressPool,
-		SharedUsers:  intToStrOr(spec.SharedUsers, "1"),
-		RateLimit:    spec.RateLimit,
-		ParentQueue:  spec.ParentQueue,
-		Price:        spec.Price,
-		SellingPrice: spec.SellingPrice,
-		Validity:     spec.Validity,
-		ExpireMode:   hotspotExpireMode(spec.ExpireMode),
-		LockUser:     spec.LockUser,
-		LockServer:   spec.LockServer,
-		Comment:      cmt,
+		Name:           spec.Name,
+		AddressPool:    spec.AddressPool,
+		AddressList:    spec.AddressList,
+		SharedUsers:    intToStrOr(spec.SharedUsers, "1"),
+		RateLimit:      spec.RateLimit,
+		ParentQueue:    spec.ParentQueue,
+		SessionTimeout: spec.SessionTimeout,
+		IdleTimeout:    spec.IdleTimeout,
+		Comment:        cmt,
+		OnLogin:        spec.OnLogin,
+		OnLogout:       spec.OnLogout,
 	}
 }
 

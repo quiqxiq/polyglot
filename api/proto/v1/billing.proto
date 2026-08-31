@@ -45,19 +45,16 @@ message InvoiceItem {
 message PPPoEPlanConfig {
   string remote_address_pool = 1;
   string address_list = 2;
+  string session_timeout = 3;
+  string idle_timeout = 4;
 }
 
 message HotspotPlanConfig {
   string ip_pool_name = 1;
-  int32 shared_users = 2;
-  string validity = 3;
-  string validity_mode = 4;
-  string expire_mode = 5;
-  bool lock_user = 6;
-  bool lock_server = 7;
-  string limit_uptime = 8;
-  string limit_bytes = 9;
-  double selling_price = 10;
+  string address_list = 2;
+  int32 shared_users = 3;
+  string session_timeout = 4;
+  string idle_timeout = 5;
 }
 
 message PPPoESubscriptionConfig {
@@ -163,25 +160,21 @@ message Plan {
   int32 burst_time_seconds = 25;
   string remote_address_pool = 26;
   double price = 8;
-  double selling_price = 9;
   double installation_fee = 10;
   double tax_percent = 11;
-  string validity = 12;
-  string validity_mode = 13;
-  int32 simultaneous_use = 14;
   string ip_pool_name = 15;
   string parent_queue = 16;
   string address_list = 17;
   int32 shared_users = 18;
-  string expire_mode = 19;
-  bool lock_user = 20;
-  bool lock_server = 21;
   bool is_active = 22;
   string description = 23;
 
   // Sub-message spesifik (Opsi 2)
   PPPoEPlanConfig pppoe_config = 27;
   HotspotPlanConfig hotspot_config = 28;
+
+  string session_timeout = 29;
+  string idle_timeout = 30;
 }
 
 // ─── Faktur ─────────────────────────────────────────────────────────────
@@ -272,6 +265,24 @@ message ActivateSubscriptionRequest {
 }
 message ActivateSubscriptionResponse { Subscription subscription = 1; }
 
+message IsolateSubscriptionRequest {
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
+  string reason = 2;
+}
+message IsolateSubscriptionResponse {
+  Subscription subscription = 1;
+  string message = 2;
+}
+
+message RestoreSubscriptionRequest {
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message RestoreSubscriptionResponse {
+  Subscription subscription = 1;
+  string message = 2;
+}
+
+
 // ─── Paket layanan ──────────────────────────────────────────────────────
 
 message ListPlansRequest { bool active_only = 1; }
@@ -284,16 +295,19 @@ message GetPlanResponse { Plan plan = 1; }
 
 message CreatePlanRequest {
   Plan plan = 1 [(buf.validate.field).required = true];
+  string device_id = 2;
 }
 message CreatePlanResponse { Plan plan = 1; }
 
 message UpdatePlanRequest {
   Plan plan = 1 [(buf.validate.field).required = true];
+  string device_id = 2;
 }
 message UpdatePlanResponse { Plan plan = 1; }
 
 message DeletePlanRequest {
   string id = 1 [(buf.validate.field).string.min_len = 1];
+  string device_id = 2;
 }
 message DeletePlanResponse { string message = 1; }
 
@@ -324,6 +338,9 @@ service BillingService {
   rpc ResumeSubscription(ResumeSubscriptionRequest) returns (ResumeSubscriptionResponse);
   rpc TerminateSubscription(TerminateSubscriptionRequest) returns (TerminateSubscriptionResponse);
   rpc ActivateSubscription(ActivateSubscriptionRequest) returns (ActivateSubscriptionResponse);
+  rpc IsolateSubscription(IsolateSubscriptionRequest) returns (IsolateSubscriptionResponse);
+  rpc RestoreSubscription(RestoreSubscriptionRequest) returns (RestoreSubscriptionResponse);
+
 
   // CRUD langsung (walk-in / operasional). Create juga tersedia dari
   // halaman Customer detail. Ganti paket tetap via ChangePlan.

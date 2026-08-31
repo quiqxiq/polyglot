@@ -9,40 +9,21 @@ const (
 	TypeDedicated = "DEDICATED"
 )
 
-// Mode expired mengikuti konvensi Mikhmon/RouterOS agar perilaku
-// migrasi dari Mikhmon 1:1.
-const (
-	ExpireNotFiltered    = "ntf"  // ntf  — nonaktifkan user
-	ExpireNotFilteredCom = "ntfc" // ntfc — nonaktifkan + comment
-	ExpireRemove         = "rem"  // rem  — hapus user
-	ExpireRemoveComment  = "remc" // remc — hapus + comment
-	ExpireNone           = "0"    // 0    — tanpa auto-expire
-)
-
-// Mode validity.
-const (
-	ValidityCalendar = "CALENDAR"
-	ValidityUptime   = "UPTIME"
-)
-
 // PPPoEPlanConfig mendefinisikan parameter profil PPPoE di MikroTik.
 type PPPoEPlanConfig struct {
 	RemoteAddressPool string `json:"remote_address_pool,omitempty"`
 	AddressList       string `json:"address_list,omitempty"`
+	SessionTimeout    string `json:"session_timeout,omitempty"`
+	IdleTimeout       string `json:"idle_timeout,omitempty"`
 }
 
-// HotspotPlanConfig mendefinisikan parameter profil Hotspot (Mikhmon/RouterOS).
+// HotspotPlanConfig mendefinisikan parameter profil Hotspot Permanent di MikroTik.
 type HotspotPlanConfig struct {
-	IPPoolName   string  `json:"ip_pool_name,omitempty"`
-	SharedUsers  int     `json:"shared_users,omitempty"`
-	Validity     string  `json:"validity,omitempty"`
-	ValidityMode string  `json:"validity_mode,omitempty"`
-	ExpireMode   string  `json:"expire_mode,omitempty"`
-	LockUser     bool    `json:"lock_user,omitempty"`
-	LockServer   bool    `json:"lock_server,omitempty"`
-	SellingPrice float64 `json:"selling_price,omitempty"`
-	LimitUptime  string  `json:"limit_uptime,omitempty"`
-	LimitBytes   string  `json:"limit_bytes,omitempty"`
+	IPPoolName     string `json:"ip_pool_name,omitempty"`
+	AddressList    string `json:"address_list,omitempty"`
+	SharedUsers    int    `json:"shared_users,omitempty"`
+	SessionTimeout string `json:"session_timeout,omitempty"`
+	IdleTimeout    string `json:"idle_timeout,omitempty"`
 }
 
 // ServicePlan represents an ISP service offering with full MikroTik profile
@@ -71,18 +52,11 @@ type ServicePlan struct {
 	PPPoE   *PPPoEPlanConfig   `json:"pppoe,omitempty"`
 	Hotspot *HotspotPlanConfig `json:"hotspot,omitempty"`
 
-	// Flat fields dipertahankan untuk kompatibilitas DB & query
-	SellingPrice      float64 `json:"selling_price,omitempty"`
-	Validity          string  `json:"validity,omitempty"`
-	ValidityMode      string  `json:"validity_mode,omitempty"`
-	SimultaneousUse   int     `json:"simultaneous_use,omitempty"`
-	IPPoolName        string  `json:"ip_pool_name,omitempty"`
-	RemoteAddressPool string  `json:"remote_address_pool,omitempty"`
-	AddressList       string  `json:"address_list,omitempty"`
-	SharedUsers       int     `json:"shared_users,omitempty"`
-	ExpireMode        string  `json:"expire_mode,omitempty"`
-	LockUser          bool    `json:"lock_user,omitempty"`
-	LockServer        bool    `json:"lock_server,omitempty"`
-	LimitUptime       string  `json:"limit_uptime,omitempty"`
-	LimitBytes        string  `json:"limit_bytes,omitempty"`
+	// Flat fields untuk akses langsung & kompatibilitas DB
+	IPPoolName        string `json:"ip_pool_name,omitempty"`
+	RemoteAddressPool string `json:"remote_address_pool,omitempty"`
+	AddressList       string `json:"address_list,omitempty"`
+	SharedUsers       int    `json:"shared_users,omitempty"`
+	SessionTimeout    string `json:"session_timeout,omitempty"`
+	IdleTimeout       string `json:"idle_timeout,omitempty"`
 }

@@ -13,7 +13,6 @@ const plans = [
     bandwidthUploadKbps: 20480,
     burstDownloadKbps: 0,
     price: 250000,
-    validity: '30d',
     isActive: true,
   }),
   new Plan({
@@ -24,7 +23,6 @@ const plans = [
     bandwidthUploadKbps: 2048,
     burstDownloadKbps: 6144,
     price: 15000,
-    validity: '3h',
     isActive: false,
   }),
 ]

@@ -3,6 +3,8 @@ package port
 import (
 	"context"
 
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
+	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSub "github.com/quixiq/polyglot/internal/domain/subscription"
 )
 
@@ -40,4 +42,13 @@ type RouterAccountManager interface {
 	Restore(ctx context.Context, deviceID, serviceType, username, normalProfile, addressList string) error
 	Suspend(ctx context.Context, deviceID, serviceType, username string) error
 	Terminate(ctx context.Context, deviceID, serviceType, username string) error
+
+	// Manajemen Infrastruktur Isolir & Integrasi Script
+	EnsureIsolationInfrastructure(ctx context.Context, deviceID string, cfg domainDevice.IsolationConfig) error
+	GetIsolationInfrastructureStatus(ctx context.Context, deviceID string) (domainDevice.IsolationStatus, error)
+	ApplyIntegrationScript(ctx context.Context, deviceID, profileName, serviceType, scriptType, script string) error
+
+	// Sinkronisasi Profil Paket Layanan ke Router
+	SyncPlanProfile(ctx context.Context, deviceID string, plan domainPlan.ServicePlan) error
+	DeletePlanProfile(ctx context.Context, deviceID string, serviceType, profileName string) error
 }

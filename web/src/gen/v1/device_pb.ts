@@ -1696,3 +1696,725 @@ export class QueryDevicePingMetricsResponse extends Message<QueryDevicePingMetri
   }
 }
 
+/**
+ * @generated from message polyglot.v1.IsolationConfig
+ */
+export class IsolationConfig extends Message<IsolationConfig> {
+  /**
+   * e.g. "ISOLIR" (default)
+   *
+   * @generated from field: string pppoe_profile_name = 1;
+   */
+  pppoeProfileName = "";
+
+  /**
+   * e.g. "ISOLIR" (default)
+   *
+   * @generated from field: string hotspot_profile_name = 2;
+   */
+  hotspotProfileName = "";
+
+  /**
+   * e.g. "ISOLIR_USERS"
+   *
+   * @generated from field: string address_list_name = 3;
+   */
+  addressListName = "";
+
+  /**
+   * e.g. "0/0" or "512k/512k"
+   *
+   * @generated from field: string rate_limit = 4;
+   */
+  rateLimit = "";
+
+  /**
+   * e.g. "10.0.99.1"
+   *
+   * @generated from field: string local_address = 5;
+   */
+  localAddress = "";
+
+  /**
+   * e.g. "pool-isolir"
+   *
+   * @generated from field: string remote_address_pool = 6;
+   */
+  remoteAddressPool = "";
+
+  /**
+   * e.g. "192.168.1.10"
+   *
+   * @generated from field: string redirect_ip = 7;
+   */
+  redirectIp = "";
+
+  /**
+   * e.g. 80
+   *
+   * @generated from field: int32 redirect_port = 8;
+   */
+  redirectPort = 0;
+
+  /**
+   * Pasang dst-nat redirect rule
+   *
+   * @generated from field: bool nat_redirect_enabled = 9;
+   */
+  natRedirectEnabled = false;
+
+  /**
+   * e.g. "/portal/isolate/pppoe" or "https://portal.isp.id/isolated/pppoe"
+   *
+   * @generated from field: string pppoe_redirect_url = 10;
+   */
+  pppoeRedirectUrl = "";
+
+  /**
+   * e.g. "/portal/isolate/hotspot" or "https://portal.isp.id/isolated/hotspot"
+   *
+   * @generated from field: string hotspot_redirect_url = 11;
+   */
+  hotspotRedirectUrl = "";
+
+  /**
+   * e.g. ["tripay.co.id", "api.tripay.co.id", "midtrans.com", "whatsapp.com"]
+   *
+   * @generated from field: repeated string walled_garden_domains = 12;
+   */
+  walledGardenDomains: string[] = [];
+
+  constructor(data?: PartialMessage<IsolationConfig>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.IsolationConfig";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "pppoe_profile_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "hotspot_profile_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "address_list_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "rate_limit", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "local_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "remote_address_pool", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "redirect_ip", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "redirect_port", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 9, name: "nat_redirect_enabled", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 10, name: "pppoe_redirect_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 11, name: "hotspot_redirect_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 12, name: "walled_garden_domains", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): IsolationConfig {
+    return new IsolationConfig().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): IsolationConfig {
+    return new IsolationConfig().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): IsolationConfig {
+    return new IsolationConfig().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: IsolationConfig | PlainMessage<IsolationConfig> | undefined, b: IsolationConfig | PlainMessage<IsolationConfig> | undefined): boolean {
+    return proto3.util.equals(IsolationConfig, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.IsolationStatus
+ */
+export class IsolationStatus extends Message<IsolationStatus> {
+  /**
+   * @generated from field: bool pppoe_profile_exists = 1;
+   */
+  pppoeProfileExists = false;
+
+  /**
+   * @generated from field: bool hotspot_profile_exists = 2;
+   */
+  hotspotProfileExists = false;
+
+  /**
+   * @generated from field: bool address_list_exists = 3;
+   */
+  addressListExists = false;
+
+  /**
+   * @generated from field: bool nat_redirect_exists = 4;
+   */
+  natRedirectExists = false;
+
+  /**
+   * @generated from field: int32 isolated_users_count = 5;
+   */
+  isolatedUsersCount = 0;
+
+  /**
+   * @generated from field: polyglot.v1.IsolationConfig config = 6;
+   */
+  config?: IsolationConfig;
+
+  constructor(data?: PartialMessage<IsolationStatus>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.IsolationStatus";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "pppoe_profile_exists", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 2, name: "hotspot_profile_exists", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 3, name: "address_list_exists", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 4, name: "nat_redirect_exists", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 5, name: "isolated_users_count", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 6, name: "config", kind: "message", T: IsolationConfig },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): IsolationStatus {
+    return new IsolationStatus().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): IsolationStatus {
+    return new IsolationStatus().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): IsolationStatus {
+    return new IsolationStatus().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: IsolationStatus | PlainMessage<IsolationStatus> | undefined, b: IsolationStatus | PlainMessage<IsolationStatus> | undefined): boolean {
+    return proto3.util.equals(IsolationStatus, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetIsolationStatusRequest
+ */
+export class GetIsolationStatusRequest extends Message<GetIsolationStatusRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  constructor(data?: PartialMessage<GetIsolationStatusRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetIsolationStatusRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetIsolationStatusRequest {
+    return new GetIsolationStatusRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetIsolationStatusRequest {
+    return new GetIsolationStatusRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetIsolationStatusRequest {
+    return new GetIsolationStatusRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetIsolationStatusRequest | PlainMessage<GetIsolationStatusRequest> | undefined, b: GetIsolationStatusRequest | PlainMessage<GetIsolationStatusRequest> | undefined): boolean {
+    return proto3.util.equals(GetIsolationStatusRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetIsolationStatusResponse
+ */
+export class GetIsolationStatusResponse extends Message<GetIsolationStatusResponse> {
+  /**
+   * @generated from field: polyglot.v1.IsolationStatus status = 1;
+   */
+  status?: IsolationStatus;
+
+  constructor(data?: PartialMessage<GetIsolationStatusResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetIsolationStatusResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "status", kind: "message", T: IsolationStatus },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetIsolationStatusResponse {
+    return new GetIsolationStatusResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetIsolationStatusResponse {
+    return new GetIsolationStatusResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetIsolationStatusResponse {
+    return new GetIsolationStatusResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetIsolationStatusResponse | PlainMessage<GetIsolationStatusResponse> | undefined, b: GetIsolationStatusResponse | PlainMessage<GetIsolationStatusResponse> | undefined): boolean {
+    return proto3.util.equals(GetIsolationStatusResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CreateIsolationProfileRequest
+ */
+export class CreateIsolationProfileRequest extends Message<CreateIsolationProfileRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: polyglot.v1.IsolationConfig config = 2;
+   */
+  config?: IsolationConfig;
+
+  constructor(data?: PartialMessage<CreateIsolationProfileRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CreateIsolationProfileRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "config", kind: "message", T: IsolationConfig },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateIsolationProfileRequest {
+    return new CreateIsolationProfileRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateIsolationProfileRequest {
+    return new CreateIsolationProfileRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateIsolationProfileRequest {
+    return new CreateIsolationProfileRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateIsolationProfileRequest | PlainMessage<CreateIsolationProfileRequest> | undefined, b: CreateIsolationProfileRequest | PlainMessage<CreateIsolationProfileRequest> | undefined): boolean {
+    return proto3.util.equals(CreateIsolationProfileRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CreateIsolationProfileResponse
+ */
+export class CreateIsolationProfileResponse extends Message<CreateIsolationProfileResponse> {
+  /**
+   * @generated from field: polyglot.v1.IsolationStatus status = 1;
+   */
+  status?: IsolationStatus;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<CreateIsolationProfileResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CreateIsolationProfileResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "status", kind: "message", T: IsolationStatus },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateIsolationProfileResponse {
+    return new CreateIsolationProfileResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateIsolationProfileResponse {
+    return new CreateIsolationProfileResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateIsolationProfileResponse {
+    return new CreateIsolationProfileResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateIsolationProfileResponse | PlainMessage<CreateIsolationProfileResponse> | undefined, b: CreateIsolationProfileResponse | PlainMessage<CreateIsolationProfileResponse> | undefined): boolean {
+    return proto3.util.equals(CreateIsolationProfileResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.UpdateIsolationProfileRequest
+ */
+export class UpdateIsolationProfileRequest extends Message<UpdateIsolationProfileRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: polyglot.v1.IsolationConfig config = 2;
+   */
+  config?: IsolationConfig;
+
+  constructor(data?: PartialMessage<UpdateIsolationProfileRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.UpdateIsolationProfileRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "config", kind: "message", T: IsolationConfig },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateIsolationProfileRequest {
+    return new UpdateIsolationProfileRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateIsolationProfileRequest {
+    return new UpdateIsolationProfileRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateIsolationProfileRequest {
+    return new UpdateIsolationProfileRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateIsolationProfileRequest | PlainMessage<UpdateIsolationProfileRequest> | undefined, b: UpdateIsolationProfileRequest | PlainMessage<UpdateIsolationProfileRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateIsolationProfileRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.UpdateIsolationProfileResponse
+ */
+export class UpdateIsolationProfileResponse extends Message<UpdateIsolationProfileResponse> {
+  /**
+   * @generated from field: polyglot.v1.IsolationStatus status = 1;
+   */
+  status?: IsolationStatus;
+
+  /**
+   * @generated from field: string message = 2;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<UpdateIsolationProfileResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.UpdateIsolationProfileResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "status", kind: "message", T: IsolationStatus },
+    { no: 2, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateIsolationProfileResponse {
+    return new UpdateIsolationProfileResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateIsolationProfileResponse {
+    return new UpdateIsolationProfileResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateIsolationProfileResponse {
+    return new UpdateIsolationProfileResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateIsolationProfileResponse | PlainMessage<UpdateIsolationProfileResponse> | undefined, b: UpdateIsolationProfileResponse | PlainMessage<UpdateIsolationProfileResponse> | undefined): boolean {
+    return proto3.util.equals(UpdateIsolationProfileResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.DeleteIsolationProfileRequest
+ */
+export class DeleteIsolationProfileRequest extends Message<DeleteIsolationProfileRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: bool remove_firewall_rules = 2;
+   */
+  removeFirewallRules = false;
+
+  constructor(data?: PartialMessage<DeleteIsolationProfileRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.DeleteIsolationProfileRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "remove_firewall_rules", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteIsolationProfileRequest {
+    return new DeleteIsolationProfileRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteIsolationProfileRequest {
+    return new DeleteIsolationProfileRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteIsolationProfileRequest {
+    return new DeleteIsolationProfileRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteIsolationProfileRequest | PlainMessage<DeleteIsolationProfileRequest> | undefined, b: DeleteIsolationProfileRequest | PlainMessage<DeleteIsolationProfileRequest> | undefined): boolean {
+    return proto3.util.equals(DeleteIsolationProfileRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.DeleteIsolationProfileResponse
+ */
+export class DeleteIsolationProfileResponse extends Message<DeleteIsolationProfileResponse> {
+  /**
+   * @generated from field: string message = 1;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<DeleteIsolationProfileResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.DeleteIsolationProfileResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteIsolationProfileResponse {
+    return new DeleteIsolationProfileResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteIsolationProfileResponse {
+    return new DeleteIsolationProfileResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteIsolationProfileResponse {
+    return new DeleteIsolationProfileResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteIsolationProfileResponse | PlainMessage<DeleteIsolationProfileResponse> | undefined, b: DeleteIsolationProfileResponse | PlainMessage<DeleteIsolationProfileResponse> | undefined): boolean {
+    return proto3.util.equals(DeleteIsolationProfileResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetRouterIntegrationScriptRequest
+ */
+export class GetRouterIntegrationScriptRequest extends Message<GetRouterIntegrationScriptRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * "pppoe" | "hotspot" | "all"
+   *
+   * @generated from field: string service_type = 2;
+   */
+  serviceType = "";
+
+  /**
+   * optional override
+   *
+   * @generated from field: string webhook_url = 3;
+   */
+  webhookUrl = "";
+
+  constructor(data?: PartialMessage<GetRouterIntegrationScriptRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetRouterIntegrationScriptRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "service_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "webhook_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetRouterIntegrationScriptRequest {
+    return new GetRouterIntegrationScriptRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetRouterIntegrationScriptRequest {
+    return new GetRouterIntegrationScriptRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetRouterIntegrationScriptRequest {
+    return new GetRouterIntegrationScriptRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetRouterIntegrationScriptRequest | PlainMessage<GetRouterIntegrationScriptRequest> | undefined, b: GetRouterIntegrationScriptRequest | PlainMessage<GetRouterIntegrationScriptRequest> | undefined): boolean {
+    return proto3.util.equals(GetRouterIntegrationScriptRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.GetRouterIntegrationScriptResponse
+ */
+export class GetRouterIntegrationScriptResponse extends Message<GetRouterIntegrationScriptResponse> {
+  /**
+   * @generated from field: string ppp_on_up_script = 1;
+   */
+  pppOnUpScript = "";
+
+  /**
+   * @generated from field: string ppp_on_down_script = 2;
+   */
+  pppOnDownScript = "";
+
+  /**
+   * @generated from field: string hotspot_on_login_script = 3;
+   */
+  hotspotOnLoginScript = "";
+
+  /**
+   * @generated from field: string hotspot_on_logout_script = 4;
+   */
+  hotspotOnLogoutScript = "";
+
+  /**
+   * @generated from field: string webhook_token = 5;
+   */
+  webhookToken = "";
+
+  constructor(data?: PartialMessage<GetRouterIntegrationScriptResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.GetRouterIntegrationScriptResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "ppp_on_up_script", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "ppp_on_down_script", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "hotspot_on_login_script", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "hotspot_on_logout_script", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "webhook_token", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetRouterIntegrationScriptResponse {
+    return new GetRouterIntegrationScriptResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetRouterIntegrationScriptResponse {
+    return new GetRouterIntegrationScriptResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetRouterIntegrationScriptResponse {
+    return new GetRouterIntegrationScriptResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetRouterIntegrationScriptResponse | PlainMessage<GetRouterIntegrationScriptResponse> | undefined, b: GetRouterIntegrationScriptResponse | PlainMessage<GetRouterIntegrationScriptResponse> | undefined): boolean {
+    return proto3.util.equals(GetRouterIntegrationScriptResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ApplyRouterIntegrationScriptRequest
+ */
+export class ApplyRouterIntegrationScriptRequest extends Message<ApplyRouterIntegrationScriptRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string profile_name = 2;
+   */
+  profileName = "";
+
+  /**
+   * "pppoe" | "hotspot"
+   *
+   * @generated from field: string service_type = 3;
+   */
+  serviceType = "";
+
+  constructor(data?: PartialMessage<ApplyRouterIntegrationScriptRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ApplyRouterIntegrationScriptRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "profile_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "service_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ApplyRouterIntegrationScriptRequest {
+    return new ApplyRouterIntegrationScriptRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ApplyRouterIntegrationScriptRequest {
+    return new ApplyRouterIntegrationScriptRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ApplyRouterIntegrationScriptRequest {
+    return new ApplyRouterIntegrationScriptRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ApplyRouterIntegrationScriptRequest | PlainMessage<ApplyRouterIntegrationScriptRequest> | undefined, b: ApplyRouterIntegrationScriptRequest | PlainMessage<ApplyRouterIntegrationScriptRequest> | undefined): boolean {
+    return proto3.util.equals(ApplyRouterIntegrationScriptRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.ApplyRouterIntegrationScriptResponse
+ */
+export class ApplyRouterIntegrationScriptResponse extends Message<ApplyRouterIntegrationScriptResponse> {
+  /**
+   * @generated from field: string message = 1;
+   */
+  message = "";
+
+  constructor(data?: PartialMessage<ApplyRouterIntegrationScriptResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.ApplyRouterIntegrationScriptResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ApplyRouterIntegrationScriptResponse {
+    return new ApplyRouterIntegrationScriptResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ApplyRouterIntegrationScriptResponse {
+    return new ApplyRouterIntegrationScriptResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ApplyRouterIntegrationScriptResponse {
+    return new ApplyRouterIntegrationScriptResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ApplyRouterIntegrationScriptResponse | PlainMessage<ApplyRouterIntegrationScriptResponse> | undefined, b: ApplyRouterIntegrationScriptResponse | PlainMessage<ApplyRouterIntegrationScriptResponse> | undefined): boolean {
+    return proto3.util.equals(ApplyRouterIntegrationScriptResponse, a, b);
+  }
+}
+

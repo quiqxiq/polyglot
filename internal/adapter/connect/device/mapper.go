@@ -92,3 +92,49 @@ func ToProtoInterfaceDetails(details []deviceUC.DeviceInterfaceDetail) []*device
 func parsePingLatency(row map[string]string) (int64, string) {
 	return ping.ParsePingLatency(row)
 }
+
+// IsolationConfigToDomain converts proto isolation config to domain model.
+func IsolationConfigToDomain(pb *devicepb.IsolationConfig) device.IsolationConfig {
+	if pb == nil {
+		return device.DefaultIsolationConfig()
+	}
+	return device.IsolationConfig{
+		PPPoEProfileName:    pb.PppoeProfileName,
+		HotspotProfileName:  pb.HotspotProfileName,
+		AddressListName:     pb.AddressListName,
+		RateLimit:           pb.RateLimit,
+		LocalAddress:        pb.LocalAddress,
+		RemoteAddressPool:   pb.RemoteAddressPool,
+		RedirectIP:          pb.RedirectIp,
+		RedirectPort:        int(pb.RedirectPort),
+		NATRedirectEnabled:  pb.NatRedirectEnabled,
+		PPPoERedirectURL:    pb.PppoeRedirectUrl,
+		HotspotRedirectURL:  pb.HotspotRedirectUrl,
+		WalledGardenDomains: pb.WalledGardenDomains,
+	}
+}
+
+// IsolationStatusToPb converts domain isolation status to proto message.
+func IsolationStatusToPb(s device.IsolationStatus) *devicepb.IsolationStatus {
+	return &devicepb.IsolationStatus{
+		PppoeProfileExists:   s.PPPoEProfileExists,
+		HotspotProfileExists: s.HotspotProfileExists,
+		AddressListExists:    s.AddressListExists,
+		NatRedirectExists:    s.NATRedirectExists,
+		IsolatedUsersCount:   int32(s.IsolatedUsersCount),
+		Config: &devicepb.IsolationConfig{
+			PppoeProfileName:    s.Config.PPPoEProfileName,
+			HotspotProfileName:  s.Config.HotspotProfileName,
+			AddressListName:     s.Config.AddressListName,
+			RateLimit:           s.Config.RateLimit,
+			LocalAddress:        s.Config.LocalAddress,
+			RemoteAddressPool:   s.Config.RemoteAddressPool,
+			RedirectIp:          s.Config.RedirectIP,
+			RedirectPort:        int32(s.Config.RedirectPort),
+			NatRedirectEnabled:  s.Config.NATRedirectEnabled,
+			PppoeRedirectUrl:    s.Config.PPPoERedirectURL,
+			HotspotRedirectUrl:  s.Config.HotspotRedirectURL,
+			WalledGardenDomains: s.Config.WalledGardenDomains,
+		},
+	}
+}

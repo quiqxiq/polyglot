@@ -180,8 +180,22 @@ func (g *Gateway) EnsureIsolationRedirect(ctx context.Context, driver port.Devic
 	return g.fireGW.EnsureIsolationRedirect(ctx, driver, cfg)
 }
 
+func (g *Gateway) EnsureIsolationFilter(ctx context.Context, driver port.DeviceDriver, srcAddressList, paymentHost string) error {
+	return g.fireGW.EnsureIsolationFilter(ctx, driver, srcAddressList, paymentHost)
+}
+
 func (g *Gateway) DisableIsolationRedirect(ctx context.Context, driver port.DeviceDriver) error {
 	return g.fireGW.DisableIsolationRedirect(ctx, driver)
+}
+
+// HasIsolationRedirect checks if isolation redirect rule exists.
+func (g *Gateway) HasIsolationRedirect(ctx context.Context, driver port.DeviceDriver, srcAddressList string) (bool, error) {
+	return g.fireGW.HasIsolationRedirect(ctx, driver, srcAddressList)
+}
+
+// CountAddressListEntries counts entries in address list.
+func (g *Gateway) CountAddressListEntries(ctx context.Context, driver port.DeviceDriver, listName string) (int, error) {
+	return g.fireGW.CountAddressListEntries(ctx, driver, listName)
 }
 
 func (g *Gateway) AddToAddressList(ctx context.Context, driver port.DeviceDriver, listName, address, comment string) error {

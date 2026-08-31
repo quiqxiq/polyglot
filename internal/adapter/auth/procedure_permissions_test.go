@@ -66,7 +66,10 @@ func TestIspProceduresMapped(t *testing.T) {
 		"/polyglot.v1.BillingService/ResumeSubscription",
 		"/polyglot.v1.BillingService/TerminateSubscription",
 		"/polyglot.v1.BillingService/ActivateSubscription",
+		"/polyglot.v1.BillingService/IsolateSubscription",
+		"/polyglot.v1.BillingService/RestoreSubscription",
 		"/polyglot.v1.BillingService/ListPlans",
+
 		"/polyglot.v1.BillingService/GetPlan",
 		"/polyglot.v1.BillingService/CreatePlan",
 		"/polyglot.v1.BillingService/UpdatePlan",
@@ -106,7 +109,14 @@ func TestIspProceduresMapped(t *testing.T) {
 		"/polyglot.v1.IspAdminService/ImportRouter",
 		"/polyglot.v1.IspAdminService/ExportCustomers",
 		"/polyglot.v1.IspAdminService/Reconcile",
+		"/polyglot.v1.DeviceService/GetIsolationStatus",
+		"/polyglot.v1.DeviceService/CreateIsolationProfile",
+		"/polyglot.v1.DeviceService/UpdateIsolationProfile",
+		"/polyglot.v1.DeviceService/DeleteIsolationProfile",
+		"/polyglot.v1.DeviceService/GetRouterIntegrationScript",
+		"/polyglot.v1.DeviceService/ApplyRouterIntegrationScript",
 	}
+
 	for _, proc := range required {
 		perm, ok := PermissionFor(proc)
 		if !ok || perm == "" {

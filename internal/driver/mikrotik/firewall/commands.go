@@ -37,7 +37,7 @@ func NewAddFilterCommand(p FirewallFilterParams) command.Command {
 
 // NewSetFilterCommand builds the command.Command for /ip/firewall/filter/set.
 func NewSetFilterCommand(rosID string, p FirewallFilterParams) command.Command {
-	args := map[string]string{".id": rosID}
+	args := map[string]string{"numbers": rosID}
 	setIfNonEmpty(args, "chain", p.Chain)
 	setIfNonEmpty(args, "action", p.Action)
 	setIfNonEmpty(args, "src-address", p.SrcAddress)
@@ -52,7 +52,7 @@ func NewSetFilterCommand(rosID string, p FirewallFilterParams) command.Command {
 func NewRemoveFilterCommand(rosID string) command.Command {
 	return command.Command{
 		Raw:  "/ip/firewall/filter/remove",
-		Args: map[string]string{".id": rosID},
+		Args: map[string]string{"numbers": rosID},
 	}
 }
 
@@ -115,7 +115,7 @@ func NewAddNATCommand(p NATRuleParams) command.Command {
 
 // NewSetNATCommand builds the command.Command for /ip/firewall/nat/set.
 func NewSetNATCommand(rosID string, p NATRuleParams) command.Command {
-	args := map[string]string{".id": rosID}
+	args := map[string]string{"numbers": rosID}
 	setIfNonEmpty(args, "action", p.Action)
 	setIfNonEmpty(args, "to-addresses", p.ToAddresses)
 	setIfNonEmpty(args, "to-ports", p.ToPorts)
@@ -135,7 +135,7 @@ func NewSetNATCommand(rosID string, p NATRuleParams) command.Command {
 func NewRemoveNATCommand(rosID string) command.Command {
 	return command.Command{
 		Raw:  "/ip/firewall/nat/remove",
-		Args: map[string]string{".id": rosID},
+		Args: map[string]string{"numbers": rosID},
 	}
 }
 

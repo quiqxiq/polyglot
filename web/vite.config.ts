@@ -21,6 +21,11 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    host: '0.0.0.0',
+    port: 5176,
+    allowedHosts: true,
+  },
   test: {
     silent: 'passed-only',
     unstubEnvs: true,
