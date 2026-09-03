@@ -48,12 +48,22 @@ func (u *ManageSkillUseCase) AddGitRepo(ctx context.Context, repoURL string) (*s
 	// Trigger background clone
 	if u.gitSyncer != nil {
 		go func() {
+			defer func() {
+				if r := recover(); r != nil {
+					logger.WithComponent("ManageSkill").WithFields(map[string]any{
+						"repo_url": repoURL,
+						"panic":    r,
+					}).Error("panic during background git clone")
+				}
+			}()
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+			defer cancel()
 			targetDir := filepath.Join(u.store.GetSkillsDir(), repoName)
-			if err := u.gitSyncer.SyncRepo(context.Background(), targetDir, repoURL); err != nil {
+			if err := u.gitSyncer.SyncRepo(ctx, targetDir, repoURL); err != nil {
 				logger.WithComponent("ManageSkill").WithError(err).WithField("repo_url", repoURL).Error("background git clone failed")
 				return
 			}
-			u.persistMetadata(context.Background(), "", repoName, "git", repoURL)
+			u.persistMetadata(ctx, "", repoName, "git", repoURL)
 		}()
 	}
 
@@ -122,12 +132,22 @@ func (u *ManageSkillUseCase) SyncGitRepo(ctx context.Context, id string) error {
 
 	if u.gitSyncer != nil {
 		go func() {
+			defer func() {
+				if r := recover(); r != nil {
+					logger.WithComponent("ManageSkill").WithFields(map[string]any{
+						"repo_url": repo.URL,
+						"panic":    r,
+					}).Error("panic during manual git sync")
+				}
+			}()
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+			defer cancel()
 			targetDir := filepath.Join(u.store.GetSkillsDir(), repo.Name)
-			if err := u.gitSyncer.SyncRepo(context.Background(), targetDir, repo.URL); err != nil {
+			if err := u.gitSyncer.SyncRepo(ctx, targetDir, repo.URL); err != nil {
 				logger.WithComponent("ManageSkill").WithError(err).WithField("repo_url", repo.URL).Error("manual git sync failed")
 				return
 			}
-			u.persistMetadata(context.Background(), "", repo.Name, "git", repo.URL)
+			u.persistMetadata(ctx, "", repo.Name, "git", repo.URL)
 		}()
 	}
 	return nil

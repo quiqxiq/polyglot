@@ -28,14 +28,32 @@ func BuildPPPoEProvisionSpec(sub domainSubscription.Subscription, pl domainPlan.
 	if pl.PPPoE != nil && pl.PPPoE.IdleTimeout != "" {
 		idleTimeout = pl.PPPoE.IdleTimeout
 	}
+
+	localAddr := sub.LocalAddress
+	remoteAddr := sub.RemoteAddress
+	callerID := ""
+	routes := ""
+	if sub.PPPoE != nil {
+		if sub.PPPoE.LocalAddress != "" {
+			localAddr = sub.PPPoE.LocalAddress
+		}
+		if sub.PPPoE.RemoteAddress != "" {
+			remoteAddr = sub.PPPoE.RemoteAddress
+		}
+		callerID = sub.PPPoE.CallerID
+		routes = sub.PPPoE.Routes
+	}
+
 	return domainSubscription.PPPoEProvisionSpec{
 		Secret: domainSubscription.PPPoESecretSpec{
 			Username:      sub.RemoteUsername,
 			Password:      sub.RemotePassword,
 			Profile:       pl.Name,
 			Service:       "pppoe",
-			LocalAddress:  sub.LocalAddress,
-			RemoteAddress: sub.RemoteAddress,
+			LocalAddress:  localAddr,
+			RemoteAddress: remoteAddr,
+			CallerID:      callerID,
+			Routes:        routes,
 			Comment:       "polyglot:" + sub.ID,
 			Disabled:      sub.Status == domainSubscription.StatusSuspended,
 		},
@@ -81,14 +99,33 @@ func BuildHotspotProvisionSpec(sub domainSubscription.Subscription, pl domainPla
 		idleTimeout = pl.Hotspot.IdleTimeout
 	}
 
+	server := "all"
+	macAddr := ""
+	ipAddr := ""
+	limitUptime := ""
+	limitBytes := ""
+	if sub.Hotspot != nil {
+		if sub.Hotspot.Server != "" {
+			server = sub.Hotspot.Server
+		}
+		macAddr = sub.Hotspot.MacAddress
+		ipAddr = sub.Hotspot.IPAddress
+		limitUptime = sub.Hotspot.LimitUptime
+		limitBytes = sub.Hotspot.LimitBytes
+	}
+
 	return domainSubscription.HotspotProvisionSpec{
 		User: domainSubscription.HotspotUserSpec{
-			Username: sub.RemoteUsername,
-			Password: sub.RemotePassword,
-			Profile:  pl.Name,
-			Server:   "all",
-			Comment:  "polyglot:" + sub.ID,
-			Disabled: sub.Status == domainSubscription.StatusSuspended,
+			Username:    sub.RemoteUsername,
+			Password:    sub.RemotePassword,
+			Profile:     pl.Name,
+			Server:      server,
+			MacAddress:  macAddr,
+			IPAddress:   ipAddr,
+			LimitUptime: limitUptime,
+			LimitBytes:  limitBytes,
+			Comment:     "polyglot:" + sub.ID,
+			Disabled:    sub.Status == domainSubscription.StatusSuspended,
 		},
 		Profile: domainSubscription.HotspotProfileSpec{
 			Name:           pl.Name,

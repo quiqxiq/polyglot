@@ -42,6 +42,8 @@ type CreateInput struct {
 	BillingCycle   string
 	BillingDay     int
 	Notes          string
+	PPPoE          *domainSub.PPPoESubscriptionConfig
+	Hotspot        *domainSub.HotspotSubscriptionConfig
 }
 
 // UpdateInput memakai pointer semantics: hanya field non-nil yang diubah.
@@ -57,6 +59,8 @@ type UpdateInput struct {
 	BillingDay     *int
 	DeviceID       *string
 	Notes          *string
+	PPPoE          *domainSub.PPPoESubscriptionConfig
+	Hotspot        *domainSub.HotspotSubscriptionConfig
 }
 
 func isHotspot(s string) bool   { return strings.EqualFold(s, "HOTSPOT") }
@@ -225,6 +229,28 @@ func (u *ManageSubscriptionUseCase) Create(ctx context.Context, in CreateInput) 
 		UpdatedAt:       now,
 	}
 
+	if in.PPPoE != nil {
+		sub.PPPoE = in.PPPoE
+		if sub.LocalAddress == "" {
+			sub.LocalAddress = in.PPPoE.LocalAddress
+		}
+		if sub.RemoteAddress == "" {
+			sub.RemoteAddress = in.PPPoE.RemoteAddress
+		}
+		if sub.RateLimit == "" {
+			sub.RateLimit = in.PPPoE.RateLimit
+		}
+	}
+	if in.Hotspot != nil {
+		sub.Hotspot = in.Hotspot
+		if sub.RemoteAddress == "" {
+			sub.RemoteAddress = in.Hotspot.IPAddress
+		}
+		if sub.RateLimit == "" {
+			sub.RateLimit = in.Hotspot.RateLimit
+		}
+	}
+
 	if sub.DeviceID != nil && *sub.DeviceID != "" && u.manager != nil {
 		var perr error
 		if isHotspot(sub.ServiceType) {
@@ -292,6 +318,27 @@ func (u *ManageSubscriptionUseCase) Update(ctx context.Context, subID string, in
 	}
 	if in.Notes != nil {
 		sub.Notes = *in.Notes
+	}
+	if in.PPPoE != nil {
+		sub.PPPoE = in.PPPoE
+		if in.PPPoE.LocalAddress != "" {
+			sub.LocalAddress = in.PPPoE.LocalAddress
+		}
+		if in.PPPoE.RemoteAddress != "" {
+			sub.RemoteAddress = in.PPPoE.RemoteAddress
+		}
+		if in.PPPoE.RateLimit != "" {
+			sub.RateLimit = in.PPPoE.RateLimit
+		}
+	}
+	if in.Hotspot != nil {
+		sub.Hotspot = in.Hotspot
+		if in.Hotspot.IPAddress != "" {
+			sub.RemoteAddress = in.Hotspot.IPAddress
+		}
+		if in.Hotspot.RateLimit != "" {
+			sub.RateLimit = in.Hotspot.RateLimit
+		}
 	}
 	sub.UpdatedAt = u.now()
 

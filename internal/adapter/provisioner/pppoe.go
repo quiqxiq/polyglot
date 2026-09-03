@@ -26,6 +26,7 @@ func (p *Provisioner) ProvisionPPPoE(ctx context.Context, deviceID string, spec 
 		Service:       spec.Secret.Service,
 		LocalAddress:  spec.Secret.LocalAddress,
 		RemoteAddress: spec.Secret.RemoteAddress,
+		CallerID:      spec.Secret.CallerID,
 		Comment:       spec.Secret.Comment,
 		Disabled:      spec.Secret.Disabled,
 	}

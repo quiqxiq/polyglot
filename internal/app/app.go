@@ -63,6 +63,7 @@ type App struct {
 	redisStore    *redisAdapter.Store
 	sseHub        *wsAdapter.SSEHub
 	pingStreamMgr *metricsUC.PingStreamWorker
+	scheduler     *Scheduler
 }
 
 func New(ctx context.Context, cfg config.Config) (*App, error) {
@@ -335,6 +336,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	})
 
 	// ─── 4. Scheduler (Cron) ────────────────────────────────────────────────
+	var sched *Scheduler
 	if cfg.SchedulerEnabled && cfg.BillingCronSpec != "" && cfg.IsolationCronSpec != "" {
 		isolateWorker := billingUC.NewIsolateWorker(
 			subRepo, invRepo, customerRepo, planRepo, accountMgr, notifRepo, settingRepo,
@@ -343,7 +345,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		snapshotJob := func(ctx context.Context) error {
 			return reportingRepo.RecomputeDaily(ctx, "tenant-default", timeNowUTC())
 		}
-		sched := newScheduler(schedulerJobs{
+		sched = newScheduler(schedulerJobs{
 			billing:  runBillingUC,
 			isolate:  isolateWorker,
 			waSend:   waWorker,
@@ -354,7 +356,6 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 			waSend:    cfg.WaSendCronSpec,
 			snapshot:  cfg.SnapshotCronSpec,
 		}, "tenant-default")
-		defer sched.Stop()
 		sched.Start()
 		logger.WithComponent("App").WithFields(map[string]any{
 			"billing_cron":   cfg.BillingCronSpec,
@@ -380,6 +381,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		redisStore:    redisStore,
 		sseHub:        sseHub,
 		pingStreamMgr: pingStreamMgr,
+		scheduler:     sched,
 	}, nil
 }
 
@@ -393,6 +395,9 @@ func (a *App) Run() error {
 
 func (a *App) Shutdown(ctx context.Context) error {
 	logger.WithComponent("App").Info("shutting down server...")
+	if a.scheduler != nil {
+		a.scheduler.Stop()
+	}
 	if a.pingStreamMgr != nil {
 		a.pingStreamMgr.Stop()
 	}

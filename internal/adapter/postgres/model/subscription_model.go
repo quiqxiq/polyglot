@@ -90,6 +90,7 @@ func (m *SubscriptionModel) ToDomain() subscription.Subscription {
 	if m.ServiceType == "HOTSPOT" {
 		s.Hotspot = &subscription.HotspotSubscriptionConfig{
 			Server:        "all",
+			IPAddress:     m.RemoteAddress,
 			RateLimit:     m.RateLimit,
 			RouterProfile: m.RouterProfile,
 		}
@@ -152,6 +153,9 @@ func SubscriptionModelFromDomain(s subscription.Subscription) *SubscriptionModel
 		}
 	}
 	if s.Hotspot != nil {
+		if s.Hotspot.IPAddress != "" {
+			m.RemoteAddress = s.Hotspot.IPAddress
+		}
 		if s.Hotspot.RateLimit != "" {
 			m.RateLimit = s.Hotspot.RateLimit
 		}

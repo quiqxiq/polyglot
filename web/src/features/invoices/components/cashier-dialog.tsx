@@ -1,3 +1,4 @@
+// DEVIASI: CashierDialog combines invoice lookup, cashier form, and multi-channel Tripay payment
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -39,7 +40,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent } from '@/components/ui/card'
 import { type Invoice, CashierPayRequest, ResolveMethod } from '@/gen/v1/billing_pb'
 import { useCashAccountsQuery, useCashCategoriesQuery } from '@/features/cashbook/api/use-cashbook'
@@ -48,6 +49,7 @@ import { useCashierPayMutation, useCashierResolveQuery } from '../api/use-invoic
 import { cashierPaySchema, type CashierPayFormValues } from '../data/schema'
 import { invoiceStatusBadge } from '../data/constants'
 import { useInvoices } from './invoices-provider'
+import { CashierOnlineCharge } from './cashier-online-charge'
 
 interface CashierDialogProps {
   open: boolean
@@ -83,6 +85,7 @@ export function CashierDialog({
   const [identifierInput, setIdentifierInput] = useState('')
   const [resolvedInvoice, setResolvedInvoice] = useState<Invoice | null>(currentInvoice || null)
   const [paymentSuccess, setPaymentSuccess] = useState<{ paymentNo: string; invoice: Invoice } | null>(null)
+  const [payMode, setPayMode] = useState<'cash' | 'online'>('cash')
 
   const { data: accounts = [] } = useCashAccountsQuery(true)
   const { data: categories = [] } = useCashCategoriesQuery(true)
@@ -371,166 +374,160 @@ export function CashierDialog({
 
             {/* 3. Form Eksekusi Pembayaran */}
             {resolvedInvoice && (
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3.5'>
-                  <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
-                    {/* Nominal Bayar */}
-                    <FormField
-                      control={form.control}
-                      name='amount'
-                      render={({ field }) => (
-                        <FormItem className='sm:col-span-2'>
-                          <FormLabel>Nominal Pembayaran (Rp)</FormLabel>
-                          <FormControl>
-                            <Input
-                              type='number'
-                              min={1}
-                              max={outstanding}
-                              step='any'
-                              className='font-mono text-sm font-bold text-emerald-600 dark:text-emerald-400'
-                              {...field}
-                              value={field.value || ''}
-                              onChange={(e) => field.onChange(Number(e.target.value))}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+              <div className='space-y-3 pt-1'>
+                <Tabs value={payMode} onValueChange={(v) => setPayMode(v as 'cash' | 'online')}>
+                  <TabsList className='grid grid-cols-2 w-full h-8'>
+                    <TabsTrigger value='cash' className='text-xs gap-1.5'>
+                      <Wallet className='h-3.5 w-3.5' /> Kasir Tunai / Manual
+                    </TabsTrigger>
+                    <TabsTrigger value='online' className='text-xs gap-1.5'>
+                      <QrCode className='h-3.5 w-3.5' /> Online QRIS / VA (Tripay)
+                    </TabsTrigger>
+                  </TabsList>
 
-                    {/* Rekening Kas Penampung */}
-                    <FormField
-                      control={form.control}
-                      name='cashAccountId'
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className='flex items-center gap-1'>
-                            <Wallet className='h-3.5 w-3.5 text-emerald-600' />
-                            Rekening Kas Penampung
-                          </FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value}>
-                            <FormControl>
-                              <SelectTrigger className='text-xs'>
-                                <SelectValue placeholder='Pilih rekening kas' />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {accounts.map((acc) => (
-                                <SelectItem key={acc.id} value={acc.id}>
-                                  {acc.name} ({acc.type === 'BANK' ? 'Bank' : 'Kasir'})
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                  <TabsContent value='cash' className='mt-3'>
+                    <Form {...form}>
+                      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3.5'>
+                        <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
+                          {/* Nominal Bayar */}
+                          <FormField
+                            control={form.control}
+                            name='amount'
+                            render={({ field }) => (
+                              <FormItem className='sm:col-span-2'>
+                                <FormLabel>Nominal Pembayaran (Rp)</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    type='number'
+                                    min={1}
+                                    max={outstanding}
+                                    step='any'
+                                    className='font-mono text-sm font-bold text-emerald-600 dark:text-emerald-400'
+                                    {...field}
+                                    value={field.value || ''}
+                                    onChange={(e) => field.onChange(Number(e.target.value))}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                    {/* Kategori Kas Pendapatan */}
-                    <FormField
-                      control={form.control}
-                      name='incomeCategoryId'
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Kategori Pos Pendapatan</FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value}>
-                            <FormControl>
-                              <SelectTrigger className='text-xs'>
-                                <SelectValue placeholder='Pilih pos pendapatan' />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {categories
-                                .filter((c) => c.type === 'INCOME')
-                                .map((cat) => (
-                                  <SelectItem key={cat.id} value={cat.id}>
-                                    {cat.name}
-                                  </SelectItem>
-                                ))}
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                          {/* Rekening Kas Penampung */}
+                          <FormField
+                            control={form.control}
+                            name='cashAccountId'
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className='flex items-center gap-1'>
+                                  <Wallet className='h-3.5 w-3.5 text-emerald-600' />
+                                  Rekening Kas Penampung
+                                </FormLabel>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                  <FormControl>
+                                    <SelectTrigger className='text-xs'>
+                                      <SelectValue placeholder='Pilih rekening kas' />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {accounts.map((acc) => (
+                                      <SelectItem key={acc.id} value={acc.id}>
+                                        {acc.name} ({acc.type === 'BANK' ? 'Bank' : 'Kasir'})
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                    {/* Metode Scan / Input */}
-                    <FormField
-                      control={form.control}
-                      name='scanMethod'
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Metode Transaksi</FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value}>
-                            <FormControl>
-                              <SelectTrigger className='text-xs'>
-                                <SelectValue placeholder='Pilih metode' />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value='CODE_INPUT'>Kode Bayar / Input Manual</SelectItem>
-                              <SelectItem value='QR_SCAN'>QRIS / Scan QR Code</SelectItem>
-                              <SelectItem value='MANUAL'>Kasir Tunai di Kantor</SelectItem>
-                              <SelectItem value='PAYMENT_GATEWAY'>Transfer Bank / Gateway</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                          {/* Kategori Kas Pendapatan */}
+                          <FormField
+                            control={form.control}
+                            name='incomeCategoryId'
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Kategori Pos Pendapatan</FormLabel>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                  <FormControl>
+                                    <SelectTrigger className='text-xs'>
+                                      <SelectValue placeholder='Pilih pos pendapatan' />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {categories
+                                      .filter((c) => c.type === 'INCOME')
+                                      .map((cat) => (
+                                        <SelectItem key={cat.id} value={cat.id}>
+                                          {cat.name}
+                                        </SelectItem>
+                                      ))}
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
 
-                    {/* Nomor Referensi */}
-                    <FormField
-                      control={form.control}
-                      name='reference'
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>No. Referensi / Bukti (Opsional)</FormLabel>
-                          <FormControl>
-                            <Input placeholder='Contoh: REF-BCA-98124' className='text-xs font-mono' {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                          {/* Nomor Referensi */}
+                          <FormField
+                            control={form.control}
+                            name='reference'
+                            render={({ field }) => (
+                              <FormItem className='sm:col-span-2'>
+                                <FormLabel>Nomor Referensi Transfer / Struk (Opsional)</FormLabel>
+                                <FormControl>
+                                  <Input placeholder='Contoh: TRF-BCA-8891' className='text-xs font-mono' {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
 
-                  {/* Catatan */}
-                  <FormField
-                    control={form.control}
-                    name='notes'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Catatan Tambahan (Opsional)</FormLabel>
-                        <FormControl>
-                          <Textarea placeholder='Keterangan kasir...' rows={2} className='text-xs' {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                        {/* Catatan Tambahan */}
+                        <FormField
+                          control={form.control}
+                          name='notes'
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Catatan Tambahan (Opsional)</FormLabel>
+                              <FormControl>
+                                <Textarea placeholder='Keterangan kasir...' rows={2} className='text-xs' {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
 
-                  <DialogFooter className='pt-3'>
-                    <Button
-                      type='button'
-                      variant='outline'
-                      onClick={() => onOpenChange(false)}
-                      disabled={cashierPay.isPending}
-                    >
-                      Batal
-                    </Button>
-                    <Button
-                      type='submit'
-                      disabled={cashierPay.isPending || form.watch('amount') <= 0}
-                      className='gap-1.5'
-                    >
-                      <CreditCard className='h-4 w-4' />
-                      {cashierPay.isPending ? 'Memproses Transaksi...' : `Terima Pembayaran ${formatCurrency(form.watch('amount'))}`}
-                    </Button>
-                  </DialogFooter>
-                </form>
-              </Form>
+                        <DialogFooter className='pt-3'>
+                          <Button
+                            type='button'
+                            variant='outline'
+                            onClick={() => onOpenChange(false)}
+                            disabled={cashierPay.isPending}
+                          >
+                            Batal
+                          </Button>
+                          <Button
+                            type='submit'
+                            disabled={cashierPay.isPending || form.watch('amount') <= 0}
+                            className='gap-1.5'
+                          >
+                            <CreditCard className='h-4 w-4' />
+                            {cashierPay.isPending ? 'Memproses Transaksi...' : `Terima Pembayaran ${formatCurrency(form.watch('amount'))}`}
+                          </Button>
+                        </DialogFooter>
+                      </form>
+                    </Form>
+                  </TabsContent>
+
+                  <TabsContent value='online' className='mt-3'>
+                    <CashierOnlineCharge invoice={resolvedInvoice} />
+                  </TabsContent>
+                </Tabs>
+              </div>
             )}
           </div>
         )}

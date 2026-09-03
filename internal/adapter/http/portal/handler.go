@@ -23,10 +23,11 @@ func NewHandler(u *uc.UseCase) *Handler {
 	return &Handler{usecase: u}
 }
 
-// RegisterPublic mounts login/OTP endpoints (tanpa auth).
+// RegisterPublic mounts login/OTP and public bill lookup endpoints (tanpa auth).
 func (h *Handler) RegisterPublic(mux *http.ServeMux) {
 	mux.HandleFunc("POST /api/portal/otp/request", h.requestOTP)
 	mux.HandleFunc("POST /api/portal/login", h.login)
+	mux.HandleFunc("GET /api/portal/bill", h.lookupBill)
 }
 
 // RegisterAuthenticated mounts data-mandiri endpoints (bearer token portal).
@@ -88,6 +89,24 @@ func (h *Handler) login(w http.ResponseWriter, r *http.Request) {
 		"token":    token,
 		"customer": publicCustomer(cust),
 	})
+}
+
+func (h *Handler) lookupBill(w http.ResponseWriter, r *http.Request) {
+	ident := r.URL.Query().Get("identifier")
+	if ident == "" {
+		response.WriteHTTPStatusError(w, http.StatusBadRequest, "identifier is required")
+		return
+	}
+	bill, err := h.usecase.LookupBill(r.Context(), ident)
+	if err != nil {
+		if fault.KindOf(err) == fault.KindNotFound {
+			response.WriteHTTPStatusError(w, http.StatusNotFound, "tagihan tidak ditemukan")
+			return
+		}
+		response.WriteHTTPError(w, err)
+		return
+	}
+	writeJSON(w, bill)
 }
 
 func (h *Handler) me(w http.ResponseWriter, r *http.Request, cust domainCustomer.Customer) {

@@ -137,7 +137,7 @@ func TestIsolateWorker_ProvisionRetry(t *testing.T) {
 	got, _ := subs.FindByID(context.Background(), sub.ID)
 	assert.Equal(t, domainSubscription.ProvisionOK, got.ProvisionStatus)
 	assert.Equal(t, "HOME-20M", got.RouterProfile)
-	assert.Equal(t, 1, isolator.Count("Provision:PROVUSER@HOME-20M"))
+	assert.Equal(t, 1, isolator.Count("ProvisionPPPoE:PROVUSER@HOME-20M"))
 
 	// Siklus kedua tidak provision ulang.
 	res2, err := worker.Run(context.Background())

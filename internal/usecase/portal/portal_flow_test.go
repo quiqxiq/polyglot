@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/port/mocktest"
 	uc "github.com/quixiq/polyglot/internal/usecase/portal"
@@ -108,4 +109,46 @@ func lastCodeFromSender(sender *mocktest.FakeNotificationSender) string {
 		}
 	}
 	return ""
+}
+
+func TestLookupBill_ByPhoneAndPaymentCode(t *testing.T) {
+	ctx := context.Background()
+	portals := mocktest.NewFakePortalRepo()
+	customers := mocktest.NewFakeCustomerRepo()
+	invoices := mocktest.NewFakeInvoiceRepo()
+	sender := &mocktest.FakeNotificationSender{}
+	settings := mocktest.NewFakeSettingReader(map[string]string{})
+	usecase := uc.NewUseCase(portals, customers,
+		mocktest.NewFakeSubscriptionRepo(), invoices,
+		mocktest.NewFakePaymentReader(), sender, settings)
+
+	require.NoError(t, customers.Save(ctx, domainCustomer.Customer{
+		ID: "c1", TenantID: "tenant-default", CustomerCode: "CUST-100",
+		Name: "Budi Santoso", Phone: "081234567890", Address: "Jl. Merdeka",
+		Status: domainCustomer.StatusIsolated, PortalAccessCode: "88888888",
+	}))
+
+	// Save an unpaid invoice
+	require.NoError(t, invoices.Save(ctx, domainBilling.Invoice{
+		ID: "inv-1", CustomerID: "c1", InvoiceNumber: "INV-2026-001",
+		Period: "2026-09", Total: 150000, PaidAmount: 0,
+		Status: "UNPAID", ManualPaymentCode: "PAY-1234",
+	}))
+
+	// 1. Lookup by phone
+	bill, err := usecase.LookupBill(ctx, "081234567890")
+	require.NoError(t, err)
+	assert.Equal(t, "B**i S*****o", bill.CustomerName)
+	assert.Equal(t, "CUST-100", bill.CustomerCode)
+	assert.Equal(t, "inv-1", bill.InvoiceID)
+	assert.Equal(t, float64(150000), bill.Outstanding)
+
+	// 2. Lookup by payment code
+	billByCode, err := usecase.LookupBill(ctx, "PAY-1234")
+	require.NoError(t, err)
+	assert.Equal(t, "inv-1", billByCode.InvoiceID)
+
+	// 3. Lookup unknown
+	_, err = usecase.LookupBill(ctx, "089999999999")
+	assert.Error(t, err)
 }

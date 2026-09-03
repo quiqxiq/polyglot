@@ -45,4 +45,5 @@ lerna-debug.log*
 mikhmon4
 mikhmon_v4/
 .hermes/
+.codebuddy/
 

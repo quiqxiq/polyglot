@@ -94,17 +94,36 @@ func (w *IsolateWorker) retryProvisioning(ctx context.Context, sub domainSubscri
 		res.SkippedNoRouter++
 		return nil
 	}
-	acct := w.accountForRetry(ctx, sub)
-	if err := w.manager.Provision(ctx, *sub.DeviceID, sub.ServiceType, acct); err != nil {
+	pl, plErr := w.plans.FindByID(ctx, sub.PlanID)
+	var perr error
+	if plErr == nil {
+		if isHotspotService(sub.ServiceType) {
+			hotSpec := planUC.BuildHotspotProvisionSpec(sub, pl)
+			perr = w.manager.ProvisionHotspot(ctx, *sub.DeviceID, hotSpec)
+		} else if isDedicatedService(sub.ServiceType) {
+			dedSpec := planUC.BuildDedicatedProvisionSpec(sub, pl)
+			perr = w.manager.ProvisionDedicated(ctx, *sub.DeviceID, dedSpec)
+		} else {
+			pppSpec := planUC.BuildPPPoEProvisionSpec(sub, pl)
+			perr = w.manager.ProvisionPPPoE(ctx, *sub.DeviceID, pppSpec)
+		}
+	} else {
+		acct := w.accountForRetry(ctx, sub)
+		perr = w.manager.Provision(ctx, *sub.DeviceID, sub.ServiceType, acct)
+	}
+
+	if perr != nil {
 		res.ProvisionFailed++
 		logger.WithComponent("IsolateWorker").WithFields(map[string]any{
 			"subscription_id": sub.ID,
-		}).WithError(err).Warn("provisioning failed")
+		}).WithError(perr).Warn("provisioning failed")
 		sub.ProvisionStatus = domainSubscription.ProvisionFailed
 	} else {
 		res.Provisioned++
 		sub.ProvisionStatus = domainSubscription.ProvisionOK
-		sub.RouterProfile = acct.Profile
+		if plErr == nil {
+			sub.RouterProfile = pl.Name
+		}
 	}
 	return w.subs.Save(ctx, sub)
 }
@@ -292,4 +311,8 @@ func splitHostPort(s string) (host, portStr string, ok bool) {
 
 func isHotspotService(serviceType string) bool {
 	return strings.EqualFold(serviceType, "HOTSPOT")
+}
+
+func isDedicatedService(serviceType string) bool {
+	return strings.EqualFold(serviceType, "DEDICATED")
 }

@@ -17,6 +17,7 @@ import {
   type RestoreSubscriptionRequest,
 } from '@/gen/v1/subscription_pb'
 import { billingClient, subscriptionClient } from '@/lib/api-client'
+import { useAuthStore } from '@/stores/auth-store'
 import { billingKeys } from './keys'
 
 export function useInvoicesQuery(
@@ -114,6 +115,43 @@ export function useCashierPayMutation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: billingKeys.invoices.all() })
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
+    },
+  })
+}
+
+export interface CashierChargeRequest {
+  invoice_id: string
+  channel?: string
+  expire_minutes?: number
+}
+
+export interface CashierChargeResponse {
+  external_id: string
+  payment_url: string
+  qr_string: string
+  va_number: string
+  status: string
+  amount: number
+}
+
+export function useCashierChargeMutation() {
+  return useMutation({
+    mutationFn: async (req: CashierChargeRequest): Promise<CashierChargeResponse> => {
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+      const token = useAuthStore.getState().auth.accessToken
+      const res = await fetch(`${baseUrl}/api/cashier/charge`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify(req),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.message || 'Gagal membuat tagihan online')
+      }
+      return res.json()
     },
   })
 }

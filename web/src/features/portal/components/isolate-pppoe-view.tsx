@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   ShieldAlert,
   Phone,
@@ -11,6 +11,7 @@ import {
   HelpCircle,
   Clock,
   RefreshCw,
+  ExternalLink,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
@@ -22,34 +23,109 @@ import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { toast } from 'sonner'
 
+interface PublicBill {
+  customer_name: string
+  customer_code: string
+  invoice_id: string
+  invoice_number: string
+  period: string
+  total: number
+  paid_amount: number
+  outstanding: number
+  due_date: string
+  status: string
+  manual_payment_code: string
+}
+
 export function IsolatePPPoEView() {
   const [identifier, setIdentifier] = useState('')
   const [isSearching, setIsSearching] = useState(false)
   const [searched, setSearched] = useState(false)
+  const [bill, setBill] = useState<PublicBill | null>(null)
+  const [chargeResult, setChargeResult] = useState<{
+    external_id?: string
+    payment_url?: string
+    qr_string?: string
+    va_number?: string
+    status?: string
+    amount?: number
+  } | null>(null)
+  const [isGenerating, setIsGenerating] = useState(false)
 
-  // Contoh data tagihan mockup saat user mencari
-  const mockBill = {
-    customerName: 'Pelanggan Internet Polyglot',
-    customerCode: identifier ? identifier.toUpperCase() : 'CUST-00921',
-    planName: 'Home Fiber Ultra 50 Mbps',
-    period: 'Periode Tagihan Bulan Berjalan',
-    dueDate: '20 Agustus 2026',
-    amount: 175000,
-    status: 'UNPAID / TERISOLIR',
-  }
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!identifier.trim()) {
-      toast.error('Masukkan Nomor HP, Kode Pelanggan, atau Username PPPoE Anda')
+  const fetchBill = async (query: string) => {
+    const term = query.trim()
+    if (!term) {
+      toast.error('Masukkan Nomor HP, Kode Pelanggan, atau Kode Bayar Anda')
       return
     }
     setIsSearching(true)
-    setTimeout(() => {
-      setIsSearching(false)
+    setChargeResult(null)
+    try {
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+      const res = await fetch(`${baseUrl}/api/portal/bill?identifier=${encodeURIComponent(term)}`)
+      if (!res.ok) {
+        setBill(null)
+        setSearched(true)
+        toast.error('Tagihan tidak ditemukan atau sudah lunas')
+        return
+      }
+      const data: PublicBill = await res.json()
+      setBill(data)
       setSearched(true)
-      toast.success('Data tagihan ditemukan')
-    }, 600)
+      toast.success(`Tagihan untuk ${data.customer_name} ditemukan`)
+    } catch (err) {
+      setBill(null)
+      setSearched(true)
+      toast.error('Gagal mengambil data tagihan', {
+        description: err instanceof Error ? err.message : undefined,
+      })
+    } finally {
+      setIsSearching(false)
+    }
+  }
+
+  // Auto-search jika parameter query tersedia di URL
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const params = new URLSearchParams(window.location.search)
+    const paramId = params.get('identifier') || params.get('inv') || params.get('code') || params.get('user')
+    if (paramId) {
+      setIdentifier(paramId)
+      fetchBill(paramId)
+    }
+  }, [])
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    fetchBill(identifier)
+  }
+
+  const handleGenerateCharge = async (channel: string) => {
+    if (!bill) {
+      toast.error('Pilih atau cari tagihan terlebih dahulu')
+      return
+    }
+    setIsGenerating(true)
+    try {
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+      const res = await fetch(`${baseUrl}/api/portal/charge`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ invoice_id: bill.invoice_id, channel, expire_minutes: 60 }),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.message || 'Gagal memproses pembayaran online')
+      }
+      const data = await res.json()
+      setChargeResult(data)
+      toast.success('Tagihan online Tripay berhasil dibuat')
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Gagal membuat tagihan online'
+      toast.error('Gagal membuat tagihan online', { description: message })
+    } finally {
+      setIsGenerating(false)
+    }
   }
 
   const formatCurrency = (val: number) => {
@@ -114,22 +190,28 @@ export function IsolatePPPoEView() {
             </form>
 
             {/* Rincian Tagihan */}
-            {searched && (
+            {searched && bill && (
               <div className='rounded-xl border bg-muted/30 p-4 space-y-4 animate-in fade-in-50 duration-300'>
                 <div className='flex items-start justify-between gap-2 border-b pb-3'>
                   <div>
-                    <h3 className='font-semibold text-sm text-foreground'>{mockBill.customerName}</h3>
-                    <p className='text-xs font-mono text-muted-foreground'>{mockBill.customerCode} • {mockBill.planName}</p>
+                    <h3 className='font-semibold text-sm text-foreground'>{bill.customer_name}</h3>
+                    <p className='text-xs font-mono text-muted-foreground'>
+                      {bill.customer_code} • No. Faktur {bill.invoice_number} ({bill.period})
+                    </p>
                   </div>
-                  <Badge variant='destructive' className='text-[10px] uppercase'>
-                    {mockBill.status}
+                  <Badge variant={chargeResult?.status === 'PAID' ? 'default' : 'destructive'} className='text-[10px] uppercase'>
+                    {chargeResult?.status === 'PAID'
+                      ? 'LUNAS / PULIH'
+                      : bill.status === 'OVERDUE'
+                      ? 'JATUH TEMPO'
+                      : 'TERISOLIR'}
                   </Badge>
                 </div>
 
                 <div className='flex items-center justify-between text-sm py-1'>
                   <span className='text-muted-foreground text-xs'>Total Tagihan Belum Dibayar:</span>
                   <span className='text-lg font-bold text-red-600 dark:text-red-400 font-mono'>
-                    {formatCurrency(mockBill.amount)}
+                    {formatCurrency(chargeResult?.amount || bill.outstanding)}
                   </span>
                 </div>
 
@@ -150,68 +232,137 @@ export function IsolatePPPoEView() {
                     </TabsList>
 
                     <TabsContent value='qris' className='space-y-3 pt-3 text-center'>
-                      <div className='p-4 bg-white rounded-lg border inline-block shadow-sm'>
-                        <div className='w-36 h-36 bg-zinc-100 flex items-center justify-center rounded border border-dashed border-zinc-300 text-zinc-400 text-xs font-mono'>
-                          [ QRIS BARCODE ]
+                      {chargeResult?.payment_url ? (
+                        <div className='space-y-3'>
+                          <div className='p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-center space-y-2'>
+                            <p className='text-xs font-semibold text-emerald-800 dark:text-emerald-300'>Tagihan Online Tripay Siap Dibayar</p>
+                            <Button
+                              className='w-full gap-2'
+                              onClick={() => window.open(chargeResult.payment_url, '_blank')}
+                            >
+                              <ExternalLink className='h-4 w-4' />
+                              Buka Halaman Scan QRIS Sekarang
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-                      <p className='text-xs text-muted-foreground'>
-                        Scan QRIS di atas dengan <strong>BCA Mobile, Livin, GoPay, OVO, ShopeePay, DANA,</strong> atau aplikasi m-Banking apa saja.
-                      </p>
+                      ) : (
+                        <div className='space-y-3'>
+                          <Button
+                            className='w-full gap-2'
+                            onClick={() => handleGenerateCharge('QRIS')}
+                            disabled={isGenerating}
+                          >
+                            <QrCode className='h-4 w-4' />
+                            {isGenerating ? 'Menghubungkan ke Tripay...' : 'Buat Kode QRIS Resmi Tripay'}
+                          </Button>
+                          <p className='text-xs text-muted-foreground'>
+                            Mendukung <strong>BCA Mobile, Livin by Mandiri, GoPay, OVO, ShopeePay, DANA,</strong> atau aplikasi m-Banking apa saja.
+                          </p>
+                        </div>
+                      )}
                     </TabsContent>
 
                     <TabsContent value='va' className='space-y-2 pt-2 text-xs'>
-                      <div className='rounded-lg border p-3 bg-background flex items-center justify-between'>
-                        <div>
-                          <p className='font-semibold'>BCA Virtual Account</p>
-                          <p className='font-mono text-muted-foreground text-[11px]'>8277 0812 3456 7890</p>
+                      {chargeResult?.va_number ? (
+                        <div className='rounded-lg border bg-emerald-500/10 border-emerald-500/30 p-3 flex items-center justify-between'>
+                          <div>
+                            <p className='font-semibold text-emerald-800 dark:text-emerald-300'>Nomor Virtual Account Anda</p>
+                            <p className='font-mono font-bold text-sm mt-0.5'>{chargeResult.va_number}</p>
+                          </div>
+                          <Button
+                            variant='outline'
+                            size='sm'
+                            onClick={() => {
+                              navigator.clipboard.writeText(chargeResult.va_number || '')
+                              toast.success('Nomor VA disalin')
+                            }}
+                          >
+                            Salin
+                          </Button>
                         </div>
-                        <Button variant='outline' size='sm' onClick={() => { navigator.clipboard.writeText('8277081234567890'); toast.success('Nomor VA disalin') }}>
-                          Salin
-                        </Button>
-                      </div>
-                      <div className='rounded-lg border p-3 bg-background flex items-center justify-between'>
-                        <div>
-                          <p className='font-semibold'>BRI Virtual Account (BRIVA)</p>
-                          <p className='font-mono text-muted-foreground text-[11px]'>1029 8812 3456 7890</p>
+                      ) : (
+                        <div className='space-y-2'>
+                          <Button
+                            variant='outline'
+                            className='w-full justify-between h-10 text-xs'
+                            onClick={() => handleGenerateCharge('BRIVA')}
+                            disabled={isGenerating}
+                          >
+                            <span>BRI Virtual Account (BRIVA)</span>
+                            <span className='text-[11px] text-muted-foreground'>Klik untuk buat VA</span>
+                          </Button>
+                          <Button
+                            variant='outline'
+                            className='w-full justify-between h-10 text-xs'
+                            onClick={() => handleGenerateCharge('BNIVA')}
+                            disabled={isGenerating}
+                          >
+                            <span>BNI Virtual Account (BNIVA)</span>
+                            <span className='text-[11px] text-muted-foreground'>Klik untuk buat VA</span>
+                          </Button>
+                          <Button
+                            variant='outline'
+                            className='w-full justify-between h-10 text-xs'
+                            onClick={() => handleGenerateCharge('MANDIRIVA')}
+                            disabled={isGenerating}
+                          >
+                            <span>Mandiri Virtual Account</span>
+                            <span className='text-[11px] text-muted-foreground'>Klik untuk buat VA</span>
+                          </Button>
                         </div>
-                        <Button variant='outline' size='sm' onClick={() => { navigator.clipboard.writeText('1029881234567890'); toast.success('Nomor VA disalin') }}>
-                          Salin
-                        </Button>
-                      </div>
-                      <div className='rounded-lg border p-3 bg-background flex items-center justify-between'>
-                        <div>
-                          <p className='font-semibold'>Mandiri Virtual Account</p>
-                          <p className='font-mono text-muted-foreground text-[11px]'>8890 0812 3456 7890</p>
-                        </div>
-                        <Button variant='outline' size='sm' onClick={() => { navigator.clipboard.writeText('8890081234567890'); toast.success('Nomor VA disalin') }}>
-                          Salin
-                        </Button>
-                      </div>
+                      )}
                     </TabsContent>
 
                     <TabsContent value='retail' className='space-y-2 pt-2 text-xs'>
                       <div className='rounded-lg border p-3 bg-background flex items-center justify-between'>
                         <div>
                           <p className='font-semibold'>Indomaret</p>
-                          <p className='font-mono text-muted-foreground text-[11px]'>Kode Bayar: PLG-998123</p>
+                          <p className='font-mono text-muted-foreground text-[11px]'>
+                            Kode Bayar: {bill.manual_payment_code || bill.invoice_number}
+                          </p>
                         </div>
-                        <Button variant='outline' size='sm' onClick={() => { navigator.clipboard.writeText('PLG-998123'); toast.success('Kode bayar disalin') }}>
+                        <Button
+                          variant='outline'
+                          size='sm'
+                          onClick={() => {
+                            navigator.clipboard.writeText(bill.manual_payment_code || bill.invoice_number)
+                            toast.success('Kode bayar disalin')
+                          }}
+                        >
                           Salin
                         </Button>
                       </div>
                       <div className='rounded-lg border p-3 bg-background flex items-center justify-between'>
                         <div>
                           <p className='font-semibold'>Alfamart / Alfamidi</p>
-                          <p className='font-mono text-muted-foreground text-[11px]'>Kode Bayar: PLG-998123</p>
+                          <p className='font-mono text-muted-foreground text-[11px]'>
+                            Kode Bayar: {bill.manual_payment_code || bill.invoice_number}
+                          </p>
                         </div>
-                        <Button variant='outline' size='sm' onClick={() => { navigator.clipboard.writeText('PLG-998123'); toast.success('Kode bayar disalin') }}>
+                        <Button
+                          variant='outline'
+                          size='sm'
+                          onClick={() => {
+                            navigator.clipboard.writeText(bill.manual_payment_code || bill.invoice_number)
+                            toast.success('Kode bayar disalin')
+                          }}
+                        >
                           Salin
                         </Button>
                       </div>
                     </TabsContent>
                   </Tabs>
                 </div>
+              </div>
+            )}
+
+            {/* State Tagihan Tidak Ditemukan */}
+            {searched && !bill && !isSearching && (
+              <div className='rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-center space-y-2 animate-in fade-in-50'>
+                <p className='text-sm font-semibold text-destructive'>Tagihan Tidak Ditemukan</p>
+                <p className='text-xs text-muted-foreground max-w-md mx-auto'>
+                  Tidak ada tagihan tertunggak yang ditemukan untuk data tersebut. Jika status internet Anda masih terisolir, mohon hubungi layanan pelanggan kami.
+                </p>
               </div>
             )}
 

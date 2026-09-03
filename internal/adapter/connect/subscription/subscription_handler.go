@@ -184,10 +184,37 @@ func (h *SubscriptionConnectHandler) CreateSubscription(ctx context.Context, req
 		customPrice = &msg.CustomPrice
 	}
 	var localAddr, remoteAddr, rateLimit string
+	var pppoeConf *domainSub.PPPoESubscriptionConfig
 	if msg.PppoeConfig != nil {
 		localAddr = msg.PppoeConfig.LocalAddress
 		remoteAddr = msg.PppoeConfig.RemoteAddress
 		rateLimit = msg.PppoeConfig.RateLimit
+		pppoeConf = &domainSub.PPPoESubscriptionConfig{
+			LocalAddress:  msg.PppoeConfig.LocalAddress,
+			RemoteAddress: msg.PppoeConfig.RemoteAddress,
+			CallerID:      msg.PppoeConfig.CallerId,
+			Routes:        msg.PppoeConfig.Routes,
+			RateLimit:     msg.PppoeConfig.RateLimit,
+			RouterProfile: msg.PppoeConfig.RouterProfile,
+		}
+	}
+	var hotConf *domainSub.HotspotSubscriptionConfig
+	if msg.HotspotConfig != nil {
+		if remoteAddr == "" {
+			remoteAddr = msg.HotspotConfig.IpAddress
+		}
+		if rateLimit == "" {
+			rateLimit = msg.HotspotConfig.RateLimit
+		}
+		hotConf = &domainSub.HotspotSubscriptionConfig{
+			Server:        msg.HotspotConfig.Server,
+			MacAddress:    msg.HotspotConfig.MacAddress,
+			IPAddress:     msg.HotspotConfig.IpAddress,
+			RateLimit:     msg.HotspotConfig.RateLimit,
+			RouterProfile: msg.HotspotConfig.RouterProfile,
+			LimitUptime:   msg.HotspotConfig.LimitUptime,
+			LimitBytes:    msg.HotspotConfig.LimitBytes,
+		}
 	}
 	sub, err := h.subUC.Create(ctx, subUC.CreateInput{
 		CustomerID:     msg.CustomerId,
@@ -203,6 +230,8 @@ func (h *SubscriptionConnectHandler) CreateSubscription(ctx context.Context, req
 		BillingCycle:   msg.BillingCycle,
 		BillingDay:     int(msg.BillingDay),
 		Notes:          msg.Notes,
+		PPPoE:          pppoeConf,
+		Hotspot:        hotConf,
 	})
 	if err != nil {
 		return nil, response.MapDomainError(err)
@@ -247,6 +276,31 @@ func (h *SubscriptionConnectHandler) UpdateSubscription(ctx context.Context, req
 		}
 		if msg.PppoeConfig.RateLimit != "" {
 			in.RateLimit = &msg.PppoeConfig.RateLimit
+		}
+		in.PPPoE = &domainSub.PPPoESubscriptionConfig{
+			LocalAddress:  msg.PppoeConfig.LocalAddress,
+			RemoteAddress: msg.PppoeConfig.RemoteAddress,
+			CallerID:      msg.PppoeConfig.CallerId,
+			Routes:        msg.PppoeConfig.Routes,
+			RateLimit:     msg.PppoeConfig.RateLimit,
+			RouterProfile: msg.PppoeConfig.RouterProfile,
+		}
+	}
+	if msg.HotspotConfig != nil {
+		if msg.HotspotConfig.IpAddress != "" {
+			in.RemoteAddress = &msg.HotspotConfig.IpAddress
+		}
+		if msg.HotspotConfig.RateLimit != "" {
+			in.RateLimit = &msg.HotspotConfig.RateLimit
+		}
+		in.Hotspot = &domainSub.HotspotSubscriptionConfig{
+			Server:        msg.HotspotConfig.Server,
+			MacAddress:    msg.HotspotConfig.MacAddress,
+			IPAddress:     msg.HotspotConfig.IpAddress,
+			RateLimit:     msg.HotspotConfig.RateLimit,
+			RouterProfile: msg.HotspotConfig.RouterProfile,
+			LimitUptime:   msg.HotspotConfig.LimitUptime,
+			LimitBytes:    msg.HotspotConfig.LimitBytes,
 		}
 	}
 	sub, err := h.subUC.Update(ctx, msg.Id, in)

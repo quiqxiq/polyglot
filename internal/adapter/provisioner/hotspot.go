@@ -20,13 +20,16 @@ func (p *Provisioner) ProvisionHotspot(ctx context.Context, deviceID string, spe
 		}
 	}
 	userParams := port.HotspotUserParams{
-		Name:        spec.User.Username,
-		Password:    spec.User.Password,
-		Profile:     spec.User.Profile,
-		Server:      spec.User.Server,
-		LimitUptime: spec.User.LimitUptime,
-		Comment:     spec.User.Comment,
-		Disabled:    spec.User.Disabled,
+		Name:          spec.User.Username,
+		Password:      spec.User.Password,
+		Profile:       spec.User.Profile,
+		Server:        spec.User.Server,
+		MACAddress:    spec.User.MacAddress,
+		Address:       spec.User.IPAddress,
+		LimitUptime:   spec.User.LimitUptime,
+		LimitBytesOut: spec.User.LimitBytes,
+		Comment:       spec.User.Comment,
+		Disabled:      spec.User.Disabled,
 	}
 	if userParams.Server == "" {
 		userParams.Server = "all"

@@ -258,9 +258,18 @@ func (u *ManageSkillUseCase) removeMetadata(ctx context.Context, userID, name st
 }
 
 func extractRepoName(repoURL string) string {
-	parts := strings.Split(strings.TrimSuffix(repoURL, ".git"), "/")
-	if len(parts) > 0 {
-		return strings.ToLower(parts[len(parts)-1])
+	cleaned := strings.TrimSpace(repoURL)
+	cleaned = strings.TrimRight(cleaned, "/")
+	cleaned = strings.TrimSuffix(cleaned, ".git")
+	if idx := strings.LastIndex(cleaned, ":"); idx != -1 && !strings.Contains(cleaned[idx:], "/") {
+		cleaned = cleaned[idx+1:]
+	}
+	parts := strings.Split(cleaned, "/")
+	for i := len(parts) - 1; i >= 0; i-- {
+		name := strings.TrimSpace(parts[i])
+		if name != "" {
+			return strings.ToLower(name)
+		}
 	}
 	return "repo"
 }

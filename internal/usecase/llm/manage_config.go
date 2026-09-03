@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/quixiq/polyglot/internal/config"
 	domainllm "github.com/quixiq/polyglot/internal/domain/llm"
 	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/pkg/crypto"
 	"github.com/quixiq/polyglot/pkg/fault"
 	"github.com/quixiq/polyglot/pkg/llmcost"
 )
@@ -96,7 +96,7 @@ func (uc *ManageConfigUseCase) Create(ctx context.Context, input CreateConfigInp
 
 	var encryptedKey string
 	if input.APIKey != "" {
-		enc, err := config.Encrypt(input.APIKey, uc.encryptionKey)
+		enc, err := crypto.Encrypt(input.APIKey, uc.encryptionKey)
 		if err != nil {
 			return nil, fault.Wrap(fault.KindUnknown, fmt.Errorf("failed to encrypt api key: %w", err))
 		}
@@ -161,7 +161,7 @@ func (uc *ManageConfigUseCase) Update(ctx context.Context, input UpdateConfigInp
 		cfg.MaxOutputTokens = input.MaxTokens
 	}
 	if input.APIKey != "" {
-		enc, err := config.Encrypt(input.APIKey, uc.encryptionKey)
+		enc, err := crypto.Encrypt(input.APIKey, uc.encryptionKey)
 		if err != nil {
 			return nil, fault.Wrap(fault.KindUnknown, fmt.Errorf("failed to encrypt api key: %w", err))
 		}
@@ -208,7 +208,7 @@ func (uc *ManageConfigUseCase) TestConnection(ctx context.Context, id uint) (str
 
 	var apiKey string
 	if cfg.APIKeyEncrypted != "" {
-		dec, err := config.Decrypt(cfg.APIKeyEncrypted, uc.encryptionKey)
+		dec, err := crypto.Decrypt(cfg.APIKeyEncrypted, uc.encryptionKey)
 		if err != nil {
 			return "", fmt.Errorf("failed to decrypt api key: %w", err)
 		}

@@ -1,3 +1,4 @@
+// DEVIASI: YAML frontmatter parsing for SKILL.md is co-located with domain skill metadata.
 package skill
 
 import (

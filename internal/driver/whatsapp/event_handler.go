@@ -98,6 +98,14 @@ func (eh *EventHandler) handleStatusUpdate(sessionID uint, status string, qrCode
 func (eh *EventHandler) MakeMessageCallback(engineHandler func(ctx context.Context, sessionID uint, chatJID string, customerNumber string, content string) error) MessageCallback {
 	return func(sessionID uint, chatJID string, customerNumber string, content string) {
 		go func() {
+			defer func() {
+				if r := recover(); r != nil {
+					logger.WithComponent("EventHandler").WithFields(map[string]any{
+						"session_id": sessionID,
+						"panic":      r,
+					}).Error("panic during incoming message processing")
+				}
+			}()
 			ctx := context.Background()
 			if err := engineHandler(ctx, sessionID, chatJID, customerNumber, content); err != nil {
 				logger.WithComponent("EventHandler").WithError(err).WithField("session_id", sessionID).Error("failed to process incoming message")

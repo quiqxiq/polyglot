@@ -1,70 +1,25 @@
 package config
 
 import (
-	"crypto/aes"
-	"crypto/cipher"
-	"crypto/rand"
-	"encoding/base64"
-	"errors"
-	"io"
+	"fmt"
+
+	"github.com/quixiq/polyglot/pkg/crypto"
 )
 
+// Encrypt encrypts plaintext using AES-256-GCM via pkg/crypto.
 func Encrypt(plaintext string, key string) (string, error) {
-	keyBytes := []byte(key)
-	if len(keyBytes) != 32 {
-		return "", errors.New("encryption key must be exactly 32 bytes")
-	}
-
-	block, err := aes.NewCipher(keyBytes)
+	ciphertext, err := crypto.Encrypt(plaintext, key)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("config encrypt: %w", err)
 	}
-
-	aesGCM, err := cipher.NewGCM(block)
-	if err != nil {
-		return "", err
-	}
-
-	nonce := make([]byte, aesGCM.NonceSize())
-	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
-		return "", err
-	}
-
-	ciphertext := aesGCM.Seal(nonce, nonce, []byte(plaintext), nil)
-	return base64.StdEncoding.EncodeToString(ciphertext), nil
+	return ciphertext, nil
 }
 
+// Decrypt decodes base64 ciphertext and decrypts it using AES-256-GCM via pkg/crypto.
 func Decrypt(ciphertext string, key string) (string, error) {
-	keyBytes := []byte(key)
-	if len(keyBytes) != 32 {
-		return "", errors.New("encryption key must be exactly 32 bytes")
-	}
-
-	data, err := base64.StdEncoding.DecodeString(ciphertext)
+	plaintext, err := crypto.Decrypt(ciphertext, key)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("config decrypt: %w", err)
 	}
-
-	block, err := aes.NewCipher(keyBytes)
-	if err != nil {
-		return "", err
-	}
-
-	aesGCM, err := cipher.NewGCM(block)
-	if err != nil {
-		return "", err
-	}
-
-	nonceSize := aesGCM.NonceSize()
-	if len(data) < nonceSize {
-		return "", errors.New("ciphertext too short")
-	}
-
-	nonce, encrypted := data[:nonceSize], data[nonceSize:]
-	plaintext, err := aesGCM.Open(nil, nonce, encrypted, nil)
-	if err != nil {
-		return "", err
-	}
-
-	return string(plaintext), nil
+	return plaintext, nil
 }

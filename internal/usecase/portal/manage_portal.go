@@ -224,6 +224,88 @@ func (u *UseCase) Payments(ctx context.Context, customerID string, limit int) ([
 	return u.pays.ListByCustomer(ctx, customerID, limit)
 }
 
+// PublicBillView merangkum data tagihan publik untuk halaman isolir / lookup cepat.
+type PublicBillView struct {
+	CustomerName      string  `json:"customer_name"`
+	CustomerCode      string  `json:"customer_code"`
+	InvoiceID         string  `json:"invoice_id"`
+	InvoiceNumber     string  `json:"invoice_number"`
+	Period            string  `json:"period"`
+	Total             float64 `json:"total"`
+	PaidAmount        float64 `json:"paid_amount"`
+	Outstanding       float64 `json:"outstanding"`
+	DueDate           string  `json:"due_date"`
+	Status            string  `json:"status"`
+	ManualPaymentCode string  `json:"manual_payment_code"`
+}
+
+// LookupBill mencari tagihan terbuka berdasarkan kode bayar, no faktur, no HP, atau kode portal.
+func (u *UseCase) LookupBill(ctx context.Context, identifier string) (PublicBillView, error) {
+	ident := strings.TrimSpace(identifier)
+	if ident == "" {
+		return PublicBillView{}, domainCustomer.ErrInvalidInput
+	}
+
+	// 1. Coba cari faktur langsung via kode bayar manual atau nomor faktur
+	inv, err := u.invs.FindByPaymentCode(ctx, ident)
+	if err != nil {
+		inv, err = u.invs.FindByID(ctx, ident)
+	}
+	if err == nil {
+		cust, _ := u.customs.FindByID(ctx, inv.CustomerID)
+		outstanding := inv.Total - inv.PaidAmount
+		return PublicBillView{
+			CustomerName:      maskName(cust.Name),
+			CustomerCode:      cust.CustomerCode,
+			InvoiceID:         inv.ID,
+			InvoiceNumber:     inv.InvoiceNumber,
+			Period:            inv.Period,
+			Total:             inv.Total,
+			PaidAmount:        inv.PaidAmount,
+			Outstanding:       outstanding,
+			DueDate:           inv.DueDate.Format("2006-01-02"),
+			Status:            inv.Status,
+			ManualPaymentCode: inv.ManualPaymentCode,
+		}, nil
+	}
+
+	// 2. Coba cari pelanggan via no HP, kode portal, atau kode pelanggan
+	cust, err := u.resolve(ctx, ident)
+	if err != nil {
+		cust, err = u.customs.FindByCustomerCode(ctx, ident)
+	}
+	if err != nil {
+		return PublicBillView{}, domainCustomer.ErrCustomerNotFound
+	}
+
+	invoices, err := u.invs.FindByCustomerID(ctx, cust.ID)
+	if err != nil || len(invoices) == 0 {
+		return PublicBillView{}, domainCustomer.ErrCustomerNotFound
+	}
+
+	// Cari tagihan tertua yang belum lunas
+	for _, inv := range invoices {
+		outstanding := inv.Total - inv.PaidAmount
+		if outstanding > 0.01 {
+			return PublicBillView{
+				CustomerName:      maskName(cust.Name),
+				CustomerCode:      cust.CustomerCode,
+				InvoiceID:         inv.ID,
+				InvoiceNumber:     inv.InvoiceNumber,
+				Period:            inv.Period,
+				Total:             inv.Total,
+				PaidAmount:        inv.PaidAmount,
+				Outstanding:       outstanding,
+				DueDate:           inv.DueDate.Format("2006-01-02"),
+				Status:            inv.Status,
+				ManualPaymentCode: inv.ManualPaymentCode,
+			}, nil
+		}
+	}
+
+	return PublicBillView{}, domainCustomer.ErrCustomerNotFound
+}
+
 // ─── helpers ────────────────────────────────────────────────────────────
 
 func (u *UseCase) resolve(ctx context.Context, identifier string) (domainCustomer.Customer, error) {
@@ -286,4 +368,20 @@ func strPtrOrNil(s string) *string {
 		return nil
 	}
 	return &s
+}
+
+func maskName(name string) string {
+	parts := strings.Fields(name)
+	for i, p := range parts {
+		r := []rune(p)
+		if len(r) > 2 {
+			for j := 1; j < len(r)-1; j++ {
+				r[j] = '*'
+			}
+			parts[i] = string(r)
+		} else if len(r) == 2 {
+			parts[i] = string(r[0]) + "*"
+		}
+	}
+	return strings.Join(parts, " ")
 }

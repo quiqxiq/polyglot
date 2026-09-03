@@ -20,9 +20,11 @@ func NewHandler(u *uc.GatewayChargeUseCase) *Handler {
 	return &Handler{usecase: u}
 }
 
-// RegisterPublic mounts webhook callback (tanpa auth; diverifikasi signature).
+// RegisterPublic mounts webhook callback (tanpa auth; diverifikasi signature)
+// dan pembuatan tagihan pembayaran mandiri portal.
 func (h *Handler) RegisterPublic(mux *http.ServeMux) {
 	mux.HandleFunc("POST /api/webhook/tripay", h.tripayWebhook)
+	mux.HandleFunc("POST /api/portal/charge", h.charge)
 }
 
 // RegisterProtected mounts kasir endpoints (di balik middleware JWT).
