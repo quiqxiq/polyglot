@@ -61,7 +61,7 @@ func TestNetworkConnectHandler_ListDHCPLeases(t *testing.T) {
 		},
 	}
 
-	hotUC := hotspotUC.New("internal/template", &mockHotspotGateway{})
+	hotUC := hotspotUC.New(&mockHotspotGateway{})
 	activeUC := networkUC.NewActiveSessionsUseCase(activeGW)
 
 	provider := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {

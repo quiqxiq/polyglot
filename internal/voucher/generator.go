@@ -1,7 +1,8 @@
 // Package voucher provides a template-based HTML renderer for Mikhmon-style
 // hotspot voucher print sheets. It reads the header/row/footer templates from
-// the internal/template directory and fills each voucher row with the supplied
-// data, including an inline base64-encoded QR code image.
+// an fs.FS (typically the embedded internal/template.FS) and fills each
+// voucher row with the supplied data, including an inline base64-encoded QR
+// code image.
 //
 // Supported layouts: "default", "small", "thermal".
 package voucher
@@ -9,9 +10,8 @@ package voucher
 import (
 	"encoding/base64"
 	"fmt"
+	"io/fs"
 	"net/url"
-	"os"
-	"path/filepath"
 	"strings"
 	"time"
 
@@ -129,13 +129,12 @@ func generateQRBase64(content string) string {
 	return fmt.Sprintf(`<img src="data:image/png;base64,%s" alt="QR" style="height:%dpx;width:%dpx;">`, b64, QRSize, QRSize)
 }
 
-// readTemplate reads a template file from the templateDir and returns its
-// content as a string. Returns an error if the file cannot be read.
-func readTemplate(templateDir, name string) (string, error) {
-	path := filepath.Join(templateDir, name)
-	data, err := os.ReadFile(path)
+// readTemplate reads a template file from templateFS and returns its content
+// as a string. Returns an error if the file cannot be read.
+func readTemplate(templateFS fs.FS, name string) (string, error) {
+	data, err := fs.ReadFile(templateFS, name)
 	if err != nil {
-		return "", fmt.Errorf("voucher: read template %q: %w", path, err)
+		return "", fmt.Errorf("voucher: read template %q: %w", name, err)
 	}
 	return string(data), nil
 }
@@ -167,23 +166,23 @@ func renderRow(rowTemplate string, v VoucherData, num int, opts Options) string 
 }
 
 // RenderWithOptions assembles a complete printable HTML page for the given
-// vouchers, honoring opts (QR mode etc.). See Render for the layout/templateDir
+// vouchers, honoring opts (QR mode etc.). See Render for the layout/templateFS
 // contract.
-func RenderWithOptions(vouchers []VoucherData, layout Layout, templateDir string, opts Options) (string, error) {
+func RenderWithOptions(vouchers []VoucherData, layout Layout, templateFS fs.FS, opts Options) (string, error) {
 	if layout == "" {
 		layout = LayoutDefault
 	}
 	l := string(layout)
 
-	header, err := readTemplate(templateDir, TemplateFile(l, SectionHeader))
+	header, err := readTemplate(templateFS, TemplateFile(l, SectionHeader))
 	if err != nil {
 		return "", err
 	}
-	rowTpl, err := readTemplate(templateDir, TemplateFile(l, SectionRow))
+	rowTpl, err := readTemplate(templateFS, TemplateFile(l, SectionRow))
 	if err != nil {
 		return "", err
 	}
-	footer, err := readTemplate(templateDir, TemplateFile(l, SectionFooter))
+	footer, err := readTemplate(templateFS, TemplateFile(l, SectionFooter))
 	if err != nil {
 		return "", err
 	}
@@ -199,14 +198,12 @@ func RenderWithOptions(vouchers []VoucherData, layout Layout, templateDir string
 
 // Render assembles a complete printable HTML page for the given vouchers.
 // layout selects which set of template files to use ("default", "small", "thermal").
-// templateDir is the path to the directory containing the *.txt template files
-// (e.g. "internal/template"). An absolute path or a path relative to the
-// working directory are both accepted.
+// templateFS provides the *.txt template files (pass internal/template.FS).
 //
 // The returned string is a self-contained HTML document ready to be sent as
 // the body of an HTTP response with Content-Type: text/html; charset=utf-8.
 // QR content defaults to QRModeCredentials; use RenderWithOptions for other
 // modes (e.g. QRModeLoginURL).
-func Render(vouchers []VoucherData, layout Layout, templateDir string) (string, error) {
-	return RenderWithOptions(vouchers, layout, templateDir, Options{QRMode: QRModeCredentials})
+func Render(vouchers []VoucherData, layout Layout, templateFS fs.FS) (string, error) {
+	return RenderWithOptions(vouchers, layout, templateFS, Options{QRMode: QRModeCredentials})
 }

@@ -102,7 +102,7 @@ func TestHotspotUseCase(t *testing.T) {
 				return command.Result{}, nil
 			},
 		}
-		uc := New("", gw)
+		uc := New(gw)
 		_, err := uc.CreateProfile(ctx, driver, port.MikhmonProfileParams{
 			Name:  "1Day_10K",
 			Price: "10000",
@@ -121,7 +121,7 @@ func TestHotspotUseCase(t *testing.T) {
 				}, nil
 			},
 		}
-		uc := New("", gw)
+		uc := New(gw)
 		batch, err := uc.GenerateVouchers(ctx, driver, port.VoucherGenerateParams{
 			Profile: "1Day_10K",
 		}, 3)
@@ -154,7 +154,7 @@ func TestHotspotUseCase(t *testing.T) {
 				}, nil
 			},
 		}
-		uc := New("", gw)
+		uc := New(gw)
 
 		summary, err := uc.GetDashboardSummary(ctx, driver)
 		require.NoError(t, err)

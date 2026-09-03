@@ -13,9 +13,9 @@ import (
 	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	templatefs "github.com/quixiq/polyglot/internal/template"
+	"github.com/quixiq/polyglot/internal/voucher"
 	"github.com/quixiq/polyglot/pkg/fault"
 	"github.com/quixiq/polyglot/pkg/response"
-	"github.com/quixiq/polyglot/pkg/voucher"
 )
 
 // ListTemplates returns the supported voucher template layouts and their
@@ -61,7 +61,7 @@ func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect
 
 	// Preview: dummy data, no router access needed.
 	if req.Msg.Preview {
-		html, err := voucher.RenderWithOptions(previewVoucherData(), voucher.Layout(layout), h.useCase.TemplateDir, voucher.Options{QRMode: voucher.QRModeLoginURL})
+		html, err := voucher.RenderWithOptions(previewVoucherData(), voucher.Layout(layout), templatefs.FS, voucher.Options{QRMode: voucher.QRModeLoginURL})
 		if err != nil {
 			return nil, response.MapDomainError(err)
 		}
@@ -166,7 +166,7 @@ func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect
 		})
 	}
 
-	html, err := voucher.RenderWithOptions(data, voucher.Layout(layout), h.useCase.TemplateDir, voucher.Options{QRMode: voucher.QRModeLoginURL})
+	html, err := voucher.RenderWithOptions(data, voucher.Layout(layout), templatefs.FS, voucher.Options{QRMode: voucher.QRModeLoginURL})
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}

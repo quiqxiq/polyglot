@@ -197,7 +197,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	custUC := customerUC.NewManageCustomerUseCase(customerRepo, subRepo, invRepo, accountMgr)
 	devUC := deviceUC.NewManageDeviceUseCase(repo, vault, reg, sessionGateway)
 	openTermUC := networkUC.NewOpenTerminalUseCase(repo, vault, genericssh.DialSSHPty)
-	hotUC := hotspotUC.New("internal/template", hotGateway)
+	hotUC := hotspotUC.New(hotGateway)
 	activeSessionsUC := networkUC.NewActiveSessionsUseCase(sessionGateway)
 	pppUseCase := pppUC.New(sessionGateway)
 

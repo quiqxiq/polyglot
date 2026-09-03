@@ -27,16 +27,12 @@ type DashboardSummary struct {
 // on port.HotspotGateway — all vendor-native command construction and
 // parsing knowledge lives in the driver implementation behind that seam.
 type UseCase struct {
-	TemplateDir string
-	gateway     port.HotspotGateway
+	gateway port.HotspotGateway
 }
 
 // New creates a new UseCase instance. gateway must be non-nil.
-func New(templateDir string, gateway port.HotspotGateway) *UseCase {
-	if templateDir == "" {
-		templateDir = "internal/template"
-	}
-	return &UseCase{TemplateDir: templateDir, gateway: gateway}
+func New(gateway port.HotspotGateway) *UseCase {
+	return &UseCase{gateway: gateway}
 }
 
 // GetSystemResource retrieves system resource metrics from the device.

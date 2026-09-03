@@ -1,25 +1,18 @@
 package voucher_test
 
 import (
-	"os"
-	"path/filepath"
 	"strings"
 	"testing"
+	"testing/fstest"
 
-	"github.com/quixiq/polyglot/pkg/voucher"
+	templatefs "github.com/quixiq/polyglot/internal/template"
+	"github.com/quixiq/polyglot/internal/voucher"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-// templateDir returns the absolute path to internal/template relative to this
-// test file's location (pkg/voucher/ → ../../internal/template).
-func templateDir(t *testing.T) string {
-	t.Helper()
-	// Resolve from pkg/voucher to project root then into internal/template.
-	cwd, err := os.Getwd()
-	require.NoError(t, err)
-	return filepath.Join(cwd, "..", "..", "internal", "template")
-}
+// templates is the embedded template FS used by all render tests.
+var templates = templatefs.FS
 
 func sampleVoucher(n int) voucher.VoucherData {
 	return voucher.VoucherData{
@@ -39,10 +32,9 @@ func sampleVoucher(n int) voucher.VoucherData {
 }
 
 func TestRender_DefaultLayout(t *testing.T) {
-	tdir := templateDir(t)
 	v := sampleVoucher(1)
 
-	html, err := voucher.Render([]voucher.VoucherData{v}, voucher.LayoutDefault, tdir)
+	html, err := voucher.Render([]voucher.VoucherData{v}, voucher.LayoutDefault, templates)
 	require.NoError(t, err)
 
 	assert.Contains(t, html, "user123", "HTML should contain username")
@@ -54,10 +46,9 @@ func TestRender_DefaultLayout(t *testing.T) {
 }
 
 func TestRender_SmallLayout(t *testing.T) {
-	tdir := templateDir(t)
 	v := sampleVoucher(1)
 
-	html, err := voucher.Render([]voucher.VoucherData{v}, voucher.LayoutSmall, tdir)
+	html, err := voucher.Render([]voucher.VoucherData{v}, voucher.LayoutSmall, templates)
 	require.NoError(t, err)
 
 	assert.Contains(t, html, "user123")
@@ -65,10 +56,9 @@ func TestRender_SmallLayout(t *testing.T) {
 }
 
 func TestRender_ThermalLayout(t *testing.T) {
-	tdir := templateDir(t)
 	v := sampleVoucher(1)
 
-	html, err := voucher.Render([]voucher.VoucherData{v}, voucher.LayoutThermal, tdir)
+	html, err := voucher.Render([]voucher.VoucherData{v}, voucher.LayoutThermal, templates)
 	require.NoError(t, err)
 
 	assert.Contains(t, html, "user123")
@@ -77,13 +67,12 @@ func TestRender_ThermalLayout(t *testing.T) {
 }
 
 func TestRender_MultiplVouchers(t *testing.T) {
-	tdir := templateDir(t)
 	vouchers := []voucher.VoucherData{
 		{Username: "a1b2c3", Password: "a1b2c3", Number: 1, HotspotName: "HS", DNSName: "192.168.1.1"},
 		{Username: "d4e5f6", Password: "xyz789", Number: 2, HotspotName: "HS", DNSName: "192.168.1.1"},
 	}
 
-	html, err := voucher.Render(vouchers, voucher.LayoutDefault, tdir)
+	html, err := voucher.Render(vouchers, voucher.LayoutDefault, templates)
 	require.NoError(t, err)
 
 	assert.Contains(t, html, "a1b2c3", "first voucher username should appear")
@@ -92,10 +81,9 @@ func TestRender_MultiplVouchers(t *testing.T) {
 }
 
 func TestRender_QRCodeEmbedded(t *testing.T) {
-	tdir := templateDir(t)
 	v := sampleVoucher(1)
 
-	html, err := voucher.Render([]voucher.VoucherData{v}, voucher.LayoutDefault, tdir)
+	html, err := voucher.Render([]voucher.VoucherData{v}, voucher.LayoutDefault, templates)
 	require.NoError(t, err)
 
 	// QR code should be embedded as base64 data URI in an <img> tag.
@@ -104,25 +92,23 @@ func TestRender_QRCodeEmbedded(t *testing.T) {
 }
 
 func TestRender_EmptyLayout_FallsBackToDefault(t *testing.T) {
-	tdir := templateDir(t)
 	v := sampleVoucher(1)
 
-	html, err := voucher.Render([]voucher.VoucherData{v}, "", tdir)
+	html, err := voucher.Render([]voucher.VoucherData{v}, "", templates)
 	require.NoError(t, err)
 	assert.Contains(t, html, "user123")
 }
 
 func TestRender_InvalidLayout_ReturnsError(t *testing.T) {
-	tdir := templateDir(t)
 	v := sampleVoucher(1)
 
-	_, err := voucher.Render([]voucher.VoucherData{v}, "nonexistent", tdir)
+	_, err := voucher.Render([]voucher.VoucherData{v}, "nonexistent", templates)
 	assert.Error(t, err, "invalid layout should return error")
 }
 
-func TestRender_InvalidTemplateDir_ReturnsError(t *testing.T) {
+func TestRender_MissingTemplateFS_ReturnsError(t *testing.T) {
 	v := sampleVoucher(1)
-	_, err := voucher.Render([]voucher.VoucherData{v}, voucher.LayoutDefault, "/nonexistent/path")
+	_, err := voucher.Render([]voucher.VoucherData{v}, voucher.LayoutDefault, fstest.MapFS{})
 	assert.Error(t, err)
 }
 
@@ -142,11 +128,10 @@ func TestQRContent_LoginURLMode(t *testing.T) {
 }
 
 func TestRenderWithOptions_LoginURLQR(t *testing.T) {
-	tdir := templateDir(t)
 	v := sampleVoucher(1)
 	v.DNSName = "192.168.1.1"
 
-	html, err := voucher.RenderWithOptions([]voucher.VoucherData{v}, voucher.LayoutDefault, tdir, voucher.Options{QRMode: voucher.QRModeLoginURL})
+	html, err := voucher.RenderWithOptions([]voucher.VoucherData{v}, voucher.LayoutDefault, templates, voucher.Options{QRMode: voucher.QRModeLoginURL})
 	require.NoError(t, err)
 
 	assert.Contains(t, html, "data:image/png;base64,", "QR code should still be embedded as base64")
@@ -168,14 +153,13 @@ func TestTemplateFile(t *testing.T) {
 }
 
 func TestRender_SequentialNumbers(t *testing.T) {
-	tdir := templateDir(t)
 	vouchers := []voucher.VoucherData{
 		{Username: "u1", Password: "u1", Number: 1, HotspotName: "HS", DNSName: "192.168.1.1"},
 		{Username: "u2", Password: "u2", Number: 2, HotspotName: "HS", DNSName: "192.168.1.1"},
 		{Username: "u3", Password: "u3", Number: 3, HotspotName: "HS", DNSName: "192.168.1.1"},
 	}
 
-	html, err := voucher.Render(vouchers, voucher.LayoutDefault, tdir)
+	html, err := voucher.Render(vouchers, voucher.LayoutDefault, templates)
 	require.NoError(t, err)
 
 	// Sequential numbers [%#%] should appear in output.
