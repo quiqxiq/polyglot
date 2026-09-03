@@ -8,7 +8,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -35,7 +35,7 @@ func (h *HotspotConnectHandler) CreateUser(ctx context.Context, req *connect.Req
 		return nil, err
 	}
 
-	comment := hotspot.BuildCreateUserComment(req.Msg.Name, req.Msg.Password, req.Msg.Comment, time.Now())
+	comment := domainHotspot.BuildCreateUserComment(req.Msg.Name, req.Msg.Password, req.Msg.Comment, time.Now())
 	params := HotspotUserParamsFromProto(req.Msg, comment)
 
 	if _, err := h.useCase.AddUser(ctx, driver, params); err != nil {
@@ -72,7 +72,7 @@ func (h *HotspotConnectHandler) UpdateUser(ctx context.Context, req *connect.Req
 		}
 	}
 
-	comment := hotspot.BuildUpdatedComment(req.Msg.ExpireDate, req.Msg.UserCode, req.Msg.Comment, time.Now())
+	comment := domainHotspot.BuildUpdatedComment(req.Msg.ExpireDate, req.Msg.UserCode, req.Msg.Comment, time.Now())
 	params := HotspotUserParamsUpdateFromProto(req.Msg, comment)
 
 	if _, err := h.useCase.UpdateUser(ctx, driver, req.Msg.RosId, params); err != nil {

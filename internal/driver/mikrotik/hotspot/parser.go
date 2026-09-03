@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 )
 
 // ParseActiveSessions converts command.Result rows from /ip/hotspot/active/print into typed HotspotActiveSession values.
@@ -127,15 +128,5 @@ func ParseUserProfiles(result command.Result) []HotspotUserProfile {
 
 // FilterInactiveUsers compares all registered Hotspot users against active sessions and returns inactive users.
 func FilterInactiveUsers(users []HotspotUser, active []HotspotActiveSession) []HotspotUser {
-	activeMap := make(map[string]bool, len(active))
-	for _, s := range active {
-		activeMap[s.User] = true
-	}
-	inactive := make([]HotspotUser, 0)
-	for _, u := range users {
-		if !activeMap[u.Name] {
-			inactive = append(inactive, u)
-		}
-	}
-	return inactive
+	return domainHotspot.FilterInactiveUsers(users, active)
 }

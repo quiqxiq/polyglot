@@ -50,10 +50,12 @@ import (
 	"github.com/quixiq/polyglot/internal/usecase/importer"
 	llmUC "github.com/quixiq/polyglot/internal/usecase/llm"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
+	notificationUC "github.com/quixiq/polyglot/internal/usecase/notification"
 	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
 	portalUC "github.com/quixiq/polyglot/internal/usecase/portal"
 	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
 	registrationUC "github.com/quixiq/polyglot/internal/usecase/registration"
+	reportUC "github.com/quixiq/polyglot/internal/usecase/report"
 	settingUC "github.com/quixiq/polyglot/internal/usecase/setting"
 	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	subUC "github.com/quixiq/polyglot/internal/usecase/subscription"
@@ -106,6 +108,9 @@ type routerDeps struct {
 	exportUC               *importer.ExportUseCase
 	metricsUseCase         *deviceUC.ManageMetricsUseCase
 	manageIsolationUseCase *deviceUC.ManageIsolationUseCase
+	notifManagerUC         *notificationUC.ManageNotificationUseCase
+	reportManagerUC        *reportUC.ManageReportUseCase
+	streamGW               port.MonitorStreamGateway
 	connectDriverProvider  func(ctx context.Context, deviceID string) (port.DeviceDriver, error)
 	driverResolverConnect  func(ctx context.Context, deviceID string) (port.DeviceDriver, bool)
 }
@@ -149,7 +154,7 @@ func buildRouter(d routerDeps) http.Handler {
 		protectedPaths = append(protectedPaths, servicePath)
 	}
 
-	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(d.devUC, d.openTermUC, d.connectDriverProvider, d.metricsUseCase, d.manageIsolationUseCase)
+	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(d.devUC, d.openTermUC, d.connectDriverProvider, d.metricsUseCase, d.manageIsolationUseCase, d.streamGW)
 	registerProtected(devPath, devHandler)
 
 	custPath, custHandler := customerConnect.NewCustomerServiceHandler(d.custUC)
@@ -173,16 +178,16 @@ func buildRouter(d routerDeps) http.Handler {
 	billingPath, billingHandler := billingConnect.NewBillingServiceHandler(d.invUC, d.checkoutUC, d.runBillingUC)
 	registerProtected(billingPath, billingHandler)
 
-	regPath, regHandler := registrationConnect.NewRegistrationServiceHandler(d.regManagerUC, d.regConvertUC, d.regRepo)
+	regPath, regHandler := registrationConnect.NewRegistrationServiceHandler(d.regManagerUC, d.regConvertUC)
 	registerProtected(regPath, regHandler)
 
 	cashbookPath, cashbookHandler := cashbookConnect.NewCashbookServiceHandler(d.cashbookUseCase)
 	registerProtected(cashbookPath, cashbookHandler)
 
-	notifPath, notifHandler := notificationConnect.NewNotificationServiceHandler(d.notifRepo, d.waSender)
+	notifPath, notifHandler := notificationConnect.NewNotificationServiceHandler(d.notifManagerUC)
 	registerProtected(notifPath, notifHandler)
 
-	reportPath, reportHandler := reportConnect.NewReportServiceHandler(d.reportingRepo, d.reportingRepo)
+	reportPath, reportHandler := reportConnect.NewReportServiceHandler(d.reportManagerUC)
 	registerProtected(reportPath, reportHandler)
 
 	adminPath, adminHandler := ispadminConnect.NewISPAdminServiceHandler(
@@ -195,10 +200,10 @@ func buildRouter(d routerDeps) http.Handler {
 	networkPath, networkHandler := networkConnect.NewNetworkServiceHandler(d.hotUC, d.activeSessionsUC, d.connectDriverProvider)
 	registerProtected(networkPath, networkHandler)
 
-	monitorPath, monitorHandler := monitorConnect.NewNetworkMonitorServiceHandler(d.hotUC, d.activeSessionsUC, d.connectDriverProvider)
+	monitorPath, monitorHandler := monitorConnect.NewNetworkMonitorServiceHandler(d.hotUC, d.activeSessionsUC, d.connectDriverProvider, d.streamGW)
 	registerProtected(monitorPath, monitorHandler)
 
-	pppPath, pppHandler := pppConnect.NewPPPServiceHandler(d.pppUseCase, d.connectDriverProvider)
+	pppPath, pppHandler := pppConnect.NewPPPServiceHandler(d.pppUseCase, d.connectDriverProvider, d.streamGW)
 	registerProtected(pppPath, pppHandler)
 
 	waPath, waHandler := botConnect.NewWhatsAppServiceHandler(d.pgStore, d.waManager, d.chatService)

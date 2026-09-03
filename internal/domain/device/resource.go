@@ -21,3 +21,48 @@ type SystemResource struct {
 	Version       string
 	BoardName     string
 }
+
+// SystemIdentity holds the router's configured identity name.
+type SystemIdentity struct {
+	Name string
+}
+
+// LogEntry represents one log event from the device.
+type LogEntry struct {
+	RosID   string
+	Time    string
+	Topics  string
+	Message string
+}
+
+// SystemHealth holds the parsed sensor data from system health.
+type SystemHealth struct {
+	Voltage        string
+	Temperature    string
+	CPUTemperature string
+	PSUVoltage     string
+	PSUCurrent     string
+	PSUTemperature string
+	Fan1Speed      string
+	Fan2Speed      string
+}
+
+// SystemClock holds the parsed clock data.
+type SystemClock struct {
+	Time         string
+	Date         string
+	TimeZoneName string
+	GMTOffset    string
+	DSTActive    bool
+}
+
+// SystemRouterboard holds the parsed routerboard hardware details.
+type SystemRouterboard struct {
+	BoardName       string
+	Model           string
+	SerialNumber    string
+	FirmwareType    string
+	FactoryFirmware string
+	CurrentFirmware string
+	UpgradeFirmware string
+}

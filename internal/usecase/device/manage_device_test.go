@@ -6,7 +6,6 @@ import (
 
 	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/domain/device"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -120,13 +119,57 @@ func (m *mockDriver) Close() error {
 	return nil
 }
 
+type mockDeviceDiagnostics struct {
+	getSystemResourceFn  func(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error)
+	getSystemIdentityFn  func(ctx context.Context, driver port.DeviceDriver) (string, error)
+	listInterfacesFn     func(ctx context.Context, driver port.DeviceDriver, typeFilter, nameFilter string) ([]port.Interface, error)
+	monitorTrafficOnceFn func(ctx context.Context, driver port.DeviceDriver, ifaceName string) (port.InterfaceTrafficStats, error)
+}
+
+func (m *mockDeviceDiagnostics) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error) {
+	if m.getSystemResourceFn != nil {
+		return m.getSystemResourceFn(ctx, driver)
+	}
+	return port.SystemResource{}, nil
+}
+
+func (m *mockDeviceDiagnostics) GetSystemIdentity(ctx context.Context, driver port.DeviceDriver) (string, error) {
+	if m.getSystemIdentityFn != nil {
+		return m.getSystemIdentityFn(ctx, driver)
+	}
+	return "", nil
+}
+
+func (m *mockDeviceDiagnostics) ListInterfaces(ctx context.Context, driver port.DeviceDriver, typeFilter, nameFilter string) ([]port.Interface, error) {
+	if m.listInterfacesFn != nil {
+		return m.listInterfacesFn(ctx, driver, typeFilter, nameFilter)
+	}
+	return nil, nil
+}
+
+func (m *mockDeviceDiagnostics) MonitorTrafficOnce(ctx context.Context, driver port.DeviceDriver, ifaceName string) (port.InterfaceTrafficStats, error) {
+	if m.monitorTrafficOnceFn != nil {
+		return m.monitorTrafficOnceFn(ctx, driver, ifaceName)
+	}
+	return port.InterfaceTrafficStats{}, nil
+}
+
 func TestManageDeviceUseCase(t *testing.T) {
 	repo := newMockDeviceRepo()
 	vault := newMockVault()
-	exec := func(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
-		return driver.Execute(ctx, cmd)
+	diag := &mockDeviceDiagnostics{
+		getSystemResourceFn: func(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error) {
+			return port.SystemResource{
+				Uptime:    "3d",
+				Version:   "7.10",
+				BoardName: "hEX",
+			}, nil
+		},
+		getSystemIdentityFn: func(ctx context.Context, driver port.DeviceDriver) (string, error) {
+			return "Router-Sim", nil
+		},
 	}
-	uc := NewManageDeviceUseCase(repo, vault, nil, mikrotik.NewGateway(exec))
+	uc := NewManageDeviceUseCase(repo, vault, nil, diag)
 	ctx := context.Background()
 
 	t.Run("Create and Get Device", func(t *testing.T) {
@@ -179,21 +222,7 @@ func TestManageDeviceUseCase(t *testing.T) {
 	})
 
 	t.Run("TestConnection", func(t *testing.T) {
-		driver := &mockDriver{
-			executeFn: func(ctx context.Context, cmd command.Command) (command.Result, error) {
-				if cmd.Raw == "/system/resource/print" {
-					return command.Result{Rows: []map[string]string{
-						{"uptime": "3d", "version": "7.10", "board-name": "hEX"},
-					}}, nil
-				}
-				if cmd.Raw == "/system/identity/print" {
-					return command.Result{Rows: []map[string]string{
-						{"name": "Router-Sim"},
-					}}, nil
-				}
-				return command.Result{}, nil
-			},
-		}
+		driver := &mockDriver{}
 
 		res, err := uc.TestConnection(ctx, driver, "dev-1", "", "ether", "")
 		require.NoError(t, err)

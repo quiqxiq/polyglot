@@ -10,7 +10,7 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
-	mikrotikppp "github.com/quixiq/polyglot/internal/driver/mikrotik/ppp"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -61,7 +61,7 @@ func (h *NetworkMonitorConnectHandler) StreamPPPActive(ctx context.Context, req 
 		Sessions:      initialItems,
 	})
 
-	handle, err := sd.Stream(ctx, mikrotikppp.NewStreamActiveCommand(""))
+	handle, err := h.streamGW.StreamPPPActive(ctx, sd, "")
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -209,7 +209,7 @@ func (s *pppSessionState) inactive() []port.PPPoESecret {
 	for _, a := range s.activeMap {
 		active = append(active, a)
 	}
-	return mikrotikppp.FilterInactiveSecrets(secrets, active)
+	return domainPPP.FilterInactiveSecrets(secrets, active)
 }
 
 // StreamPPPInactive computes the inactive PPPoE subscriber list from two
@@ -266,11 +266,11 @@ func (h *NetworkMonitorConnectHandler) StreamPPPInactive(ctx context.Context, re
 	doneCh := make(chan struct{})
 	var wg sync.WaitGroup
 
-	start := func(cmd command.Command, apply func(row map[string]string)) {
+	start := func(openStream func() (port.StreamHandle, error), apply func(row map[string]string)) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			handle, err := sd.Stream(ctx, cmd)
+			handle, err := openStream()
 			if err != nil {
 				return
 			}
@@ -299,10 +299,14 @@ func (h *NetworkMonitorConnectHandler) StreamPPPInactive(ctx context.Context, re
 		Raw:  "/ppp/secret/print",
 		Args: map[string]string{"follow": ""},
 	}
-	start(streamSecretsCmd, func(row map[string]string) {
+	start(func() (port.StreamHandle, error) {
+		return sd.Stream(ctx, streamSecretsCmd)
+	}, func(row map[string]string) {
 		state.updateSecret(row)
 	})
-	start(mikrotikppp.NewStreamActiveCommand(""), func(row map[string]string) {
+	start(func() (port.StreamHandle, error) {
+		return h.streamGW.StreamPPPActive(ctx, sd, "")
+	}, func(row map[string]string) {
 		state.updateActive(row)
 	})
 

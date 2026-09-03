@@ -6,6 +6,7 @@ import (
 	"connectrpc.com/connect"
 
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
+	"github.com/quixiq/polyglot/internal/port"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 )
@@ -15,8 +16,9 @@ func NewNetworkMonitorServiceHandler(
 	hsUC *hotspotUC.UseCase,
 	activeUC *networkUC.ActiveSessionsUseCase,
 	provider ConnectDriverProvider,
+	streamGW port.MonitorStreamGateway,
 ) (string, http.Handler) {
-	handler := NewNetworkMonitorConnectHandler(hsUC, activeUC, provider)
+	handler := NewNetworkMonitorConnectHandler(hsUC, activeUC, provider, streamGW)
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()
 

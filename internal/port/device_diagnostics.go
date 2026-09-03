@@ -2,7 +2,24 @@ package port
 
 import (
 	"context"
+
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 )
+
+// SystemIdentity alias to domain model.
+type SystemIdentity = domainDevice.SystemIdentity
+
+// LogEntry alias to domain model.
+type LogEntry = domainDevice.LogEntry
+
+// SystemHealth alias to domain model.
+type SystemHealth = domainDevice.SystemHealth
+
+// SystemClock alias to domain model.
+type SystemClock = domainDevice.SystemClock
+
+// SystemRouterboard alias to domain model.
+type SystemRouterboard = domainDevice.SystemRouterboard
 
 // DeviceDiagnostics abstracts vendor-specific live diagnostics operations
 // used for connectivity testing and monitoring. It is implemented by the

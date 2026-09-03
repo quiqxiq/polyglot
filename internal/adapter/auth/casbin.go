@@ -18,10 +18,11 @@ type CasbinEnforcer struct {
 	enforcer *casbin.Enforcer
 }
 
-// Compile-time assertion that *CasbinEnforcer implements port.Authorizer and port.RoleAuthorizer
+// Compile-time assertion that *CasbinEnforcer implements port.Authorizer, port.RoleAuthorizer, and port.RBACManager
 var (
 	_ port.Authorizer     = (*CasbinEnforcer)(nil)
 	_ port.RoleAuthorizer = (*CasbinEnforcer)(nil)
+	_ port.RBACManager    = (*CasbinEnforcer)(nil)
 )
 
 // NewCasbinEnforcer initializes the Casbin Enforcer with GORM PostgreSQL storage.

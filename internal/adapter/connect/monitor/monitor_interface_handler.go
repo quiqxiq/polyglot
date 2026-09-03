@@ -8,7 +8,6 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik/iface"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -30,8 +29,7 @@ func (h *NetworkMonitorConnectHandler) StreamTraffic(ctx context.Context, req *c
 		ifaceName = "ether1"
 	}
 
-	cmd := iface.NewMonitorTrafficStreamCommand(ifaceName)
-	handle, err := sd.Stream(ctx, cmd)
+	handle, err := h.streamGW.StreamTraffic(ctx, sd, ifaceName)
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -45,7 +43,7 @@ func (h *NetworkMonitorConnectHandler) StreamTraffic(ctx context.Context, req *c
 			if !ok {
 				return handle.Err()
 			}
-			stats := iface.ParseInterfaceTrafficStats(res)
+			stats := h.streamGW.ParseInterfaceTraffic(res)
 			rx, _ := strconv.ParseInt(stats.RxBitsPerSecond, 10, 64)
 			tx, _ := strconv.ParseInt(stats.TxBitsPerSecond, 10, 64)
 
@@ -80,7 +78,7 @@ func (h *NetworkMonitorConnectHandler) StreamInterfaceEthernet(ctx context.Conte
 		interval = "1s"
 	}
 
-	handle, err := sd.Stream(ctx, iface.NewStreamInterfacesCommand(req.Msg.TypeFilter, req.Msg.NameFilter, interval))
+	handle, err := h.streamGW.StreamInterfaces(ctx, sd, req.Msg.TypeFilter, req.Msg.NameFilter, interval)
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -94,7 +92,7 @@ func (h *NetworkMonitorConnectHandler) StreamInterfaceEthernet(ctx context.Conte
 			if !ok {
 				return handle.Err()
 			}
-			ifaces := iface.ParseInterfaces(res)
+			ifaces := h.streamGW.ParseInterfaces(res)
 			items := make([]*devicepb.InterfaceEthernetItem, 0, len(ifaces))
 			for _, ifc := range ifaces {
 				items = append(items, &devicepb.InterfaceEthernetItem{

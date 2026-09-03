@@ -61,3 +61,36 @@ type Profile struct {
 	OnUp           string
 	OnDown         string
 }
+
+// FilterInactiveSecrets returns secrets that do not appear in the active sessions list.
+func FilterInactiveSecrets(secrets []PPPoESecret, active []ActiveSession) []PPPoESecret {
+	activeMap := make(map[string]bool, len(active))
+	for _, s := range active {
+		activeMap[s.Name] = true
+	}
+	inactive := make([]PPPoESecret, 0)
+	for _, s := range secrets {
+		if !activeMap[s.Name] {
+			inactive = append(inactive, s)
+		}
+	}
+	return inactive
+}
+
+// EnrichActiveSessionsWithProfiles enriches PPP active sessions with profile from secrets.
+func EnrichActiveSessionsWithProfiles(active []ActiveSession, secrets []PPPoESecret) []ActiveSession {
+	secretMap := make(map[string]string, len(secrets))
+	for _, s := range secrets {
+		if s.Profile != "" {
+			secretMap[s.Name] = s.Profile
+		}
+	}
+	for i := range active {
+		if active[i].Profile == "" {
+			if prof, ok := secretMap[active[i].Name]; ok {
+				active[i].Profile = prof
+			}
+		}
+	}
+	return active
+}

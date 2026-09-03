@@ -5,20 +5,14 @@ import (
 	"testing"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
-	mikhmon "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-type mockDriver struct {
-	executeFn func(ctx context.Context, cmd command.Command) (command.Result, error)
-}
+type mockDriver struct{}
 
 func (m *mockDriver) Execute(ctx context.Context, cmd command.Command) (command.Result, error) {
-	if m.executeFn != nil {
-		return m.executeFn(ctx, cmd)
-	}
 	return command.Result{}, nil
 }
 
@@ -34,76 +28,133 @@ func (m *mockDriver) Close() error {
 	return nil
 }
 
-func TestHotspotUseCase(t *testing.T) {
-	// Real driver gateway bound to a policy-bypassing executor: the test
-	// asserts command construction/parsing through the full seam without
-	// needing the policy gate (mock driver classifies everything read-only).
-	exec := func(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
-		return driver.Execute(ctx, cmd)
+type mockHotspotGateway struct {
+	port.HotspotGateway
+	createUserProfileFn  func(ctx context.Context, driver port.DeviceDriver, p port.MikhmonProfileParams) (command.Result, error)
+	generateVouchersFn   func(ctx context.Context, driver port.DeviceDriver, p port.VoucherGenerateParams, count int) (port.VoucherBatch, error)
+	getSystemResourceFn  func(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error)
+	getSystemIdentityFn  func(ctx context.Context, driver port.DeviceDriver) (string, error)
+	listUsersFn          func(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error)
+	listActiveSessionsFn func(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotActiveSession, error)
+	listReportsFn        func(ctx context.Context, driver port.DeviceDriver, f port.ReportFilter) ([]port.MikhmonTransaction, error)
+}
+
+func (m *mockHotspotGateway) ListReports(ctx context.Context, driver port.DeviceDriver, f port.ReportFilter) ([]port.MikhmonTransaction, error) {
+	if m.listReportsFn != nil {
+		return m.listReportsFn(ctx, driver, f)
 	}
-	uc := New("", mikhmon.NewGateway(exec))
+	return nil, nil
+}
+
+func (m *mockHotspotGateway) CreateUserProfile(ctx context.Context, driver port.DeviceDriver, p port.MikhmonProfileParams) (command.Result, error) {
+	if m.createUserProfileFn != nil {
+		return m.createUserProfileFn(ctx, driver, p)
+	}
+	return command.Result{}, nil
+}
+
+func (m *mockHotspotGateway) GenerateVouchers(ctx context.Context, driver port.DeviceDriver, p port.VoucherGenerateParams, count int) (port.VoucherBatch, error) {
+	if m.generateVouchersFn != nil {
+		return m.generateVouchersFn(ctx, driver, p, count)
+	}
+	return port.VoucherBatch{}, nil
+}
+
+func (m *mockHotspotGateway) GetSystemResource(ctx context.Context, driver port.DeviceDriver) (port.SystemResource, error) {
+	if m.getSystemResourceFn != nil {
+		return m.getSystemResourceFn(ctx, driver)
+	}
+	return port.SystemResource{}, nil
+}
+
+func (m *mockHotspotGateway) GetSystemIdentity(ctx context.Context, driver port.DeviceDriver) (string, error) {
+	if m.getSystemIdentityFn != nil {
+		return m.getSystemIdentityFn(ctx, driver)
+	}
+	return "", nil
+}
+
+func (m *mockHotspotGateway) ListUsers(ctx context.Context, driver port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error) {
+	if m.listUsersFn != nil {
+		return m.listUsersFn(ctx, driver, f)
+	}
+	return nil, nil
+}
+
+func (m *mockHotspotGateway) ListActiveSessions(ctx context.Context, driver port.DeviceDriver) ([]port.HotspotActiveSession, error) {
+	if m.listActiveSessionsFn != nil {
+		return m.listActiveSessionsFn(ctx, driver)
+	}
+	return nil, nil
+}
+
+func TestHotspotUseCase(t *testing.T) {
 	ctx := context.Background()
+	driver := &mockDriver{}
 
 	t.Run("CreateProfile", func(t *testing.T) {
-		driver := &mockDriver{
-			executeFn: func(ctx context.Context, cmd command.Command) (command.Result, error) {
-				assert.Equal(t, "/ip/hotspot/user/profile/add", cmd.Raw)
-				assert.Equal(t, "1Day_10K", cmd.Args["name"])
+		called := false
+		gw := &mockHotspotGateway{
+			createUserProfileFn: func(ctx context.Context, drv port.DeviceDriver, p port.MikhmonProfileParams) (command.Result, error) {
+				assert.Equal(t, "1Day_10K", p.Name)
+				assert.Equal(t, "10000", p.Price)
+				called = true
 				return command.Result{}, nil
 			},
 		}
-		_, err := uc.CreateProfile(ctx, driver, mikhmon.MikhmonProfileParams{
+		uc := New("", gw)
+		_, err := uc.CreateProfile(ctx, driver, port.MikhmonProfileParams{
 			Name:  "1Day_10K",
 			Price: "10000",
 		})
 		require.NoError(t, err)
+		assert.True(t, called)
 	})
 
 	t.Run("GenerateVouchers", func(t *testing.T) {
-		executedCount := 0
-		driver := &mockDriver{
-			executeFn: func(ctx context.Context, cmd command.Command) (command.Result, error) {
-				assert.Equal(t, "/ip/hotspot/user/add", cmd.Raw)
-				executedCount++
-				return command.Result{}, nil
+		gw := &mockHotspotGateway{
+			generateVouchersFn: func(ctx context.Context, drv port.DeviceDriver, p port.VoucherGenerateParams, count int) (port.VoucherBatch, error) {
+				assert.Equal(t, "1Day_10K", p.Profile)
+				assert.Equal(t, 3, count)
+				return port.VoucherBatch{
+					Vouchers: make([]port.GeneratedVoucher, count),
+				}, nil
 			},
 		}
-		batch, err := uc.GenerateVouchers(ctx, driver, mikhmon.VoucherGenerateParams{
+		uc := New("", gw)
+		batch, err := uc.GenerateVouchers(ctx, driver, port.VoucherGenerateParams{
 			Profile: "1Day_10K",
 		}, 3)
 		require.NoError(t, err)
 		assert.Len(t, batch.Vouchers, 3)
-		assert.Equal(t, 3, executedCount)
 	})
 
 	t.Run("GetDashboardSummary", func(t *testing.T) {
-		driver := &mockDriver{
-			executeFn: func(ctx context.Context, cmd command.Command) (command.Result, error) {
-				switch cmd.Raw {
-				case "/system/resource/print":
-					return command.Result{Rows: []map[string]string{
-						{"cpu-load": "12", "uptime": "1d", "version": "7.10", "board-name": "hEX"},
-					}}, nil
-				case "/system/identity/print":
-					return command.Result{Rows: []map[string]string{
-						{"name": "Router-Hotspot"},
-					}}, nil
-				case "/ip/hotspot/user/print":
-					return command.Result{Rows: []map[string]string{
-						{".id": "*1", "name": "user1"},
-						{".id": "*2", "name": "user2"},
-					}}, nil
-				case "/ip/hotspot/active/print":
-					return command.Result{Rows: []map[string]string{
-						{".id": "*1", "user": "user1"},
-					}}, nil
-				case "/system/script/print":
-					return command.Result{Rows: []map[string]string{}}, nil
-				default:
-					return command.Result{}, nil
-				}
+		gw := &mockHotspotGateway{
+			getSystemResourceFn: func(ctx context.Context, drv port.DeviceDriver) (port.SystemResource, error) {
+				return port.SystemResource{
+					CPULoad:   12,
+					Uptime:    "1d",
+					Version:   "7.10",
+					BoardName: "hEX",
+				}, nil
+			},
+			getSystemIdentityFn: func(ctx context.Context, drv port.DeviceDriver) (string, error) {
+				return "Router-Hotspot", nil
+			},
+			listUsersFn: func(ctx context.Context, drv port.DeviceDriver, f port.ListUsersFilter) ([]port.HotspotUser, error) {
+				return []port.HotspotUser{
+					{RosID: "*1", Name: "user1"},
+					{RosID: "*2", Name: "user2"},
+				}, nil
+			},
+			listActiveSessionsFn: func(ctx context.Context, drv port.DeviceDriver) ([]port.HotspotActiveSession, error) {
+				return []port.HotspotActiveSession{
+					{RosID: "*1", User: "user1"},
+				}, nil
 			},
 		}
+		uc := New("", gw)
 
 		summary, err := uc.GetDashboardSummary(ctx, driver)
 		require.NoError(t, err)

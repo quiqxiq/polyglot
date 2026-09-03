@@ -17,13 +17,15 @@ type ConnectDriverProvider = iconnect.DriverProvider
 type PPPConnectHandler struct {
 	useCase        *pppUC.UseCase
 	driverProvider ConnectDriverProvider
+	streamGW       port.MonitorStreamGateway
 }
 
 // NewPPPConnectHandler constructs a new PPPConnectHandler.
-func NewPPPConnectHandler(uc *pppUC.UseCase, provider ConnectDriverProvider) *PPPConnectHandler {
+func NewPPPConnectHandler(uc *pppUC.UseCase, provider ConnectDriverProvider, streamGW port.MonitorStreamGateway) *PPPConnectHandler {
 	return &PPPConnectHandler{
 		useCase:        uc,
 		driverProvider: provider,
+		streamGW:       streamGW,
 	}
 }
 

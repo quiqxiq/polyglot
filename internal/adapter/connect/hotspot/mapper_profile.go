@@ -2,7 +2,7 @@ package hotspot
 
 import (
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -29,7 +29,7 @@ func ProfileParamsFromProto(p *devicepb.HotspotProfileParams) port.MikhmonProfil
 // toProtoHotspotProfile converts a single hotspot profile to proto, parsing
 // the Mikhmon metadata out of the on-login script (mode/price/validity/locks).
 func toProtoHotspotProfile(p port.HotspotUserProfile) *devicepb.HotspotProfile {
-	meta, _ := hotspot.ParseOnLoginScript(p.OnLogin)
+	meta, _ := domainHotspot.ParseOnLoginScript(p.OnLogin)
 	return &devicepb.HotspotProfile{
 		Id:           p.RosID,
 		Name:         p.Name,

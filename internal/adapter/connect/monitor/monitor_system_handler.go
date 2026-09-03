@@ -9,7 +9,6 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
-	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -19,26 +18,26 @@ import (
 // so this state is always a complete view of the last received frame.
 type systemSnapshotState struct {
 	mu          sync.Mutex
-	clock       mikrotiksystem.SystemClock
-	resource    mikrotiksystem.SystemResource
-	routerboard mikrotiksystem.SystemRouterboard
+	clock       port.SystemClock
+	resource    port.SystemResource
+	routerboard port.SystemRouterboard
 	identity    string
-	health      mikrotiksystem.SystemHealth
+	health      port.SystemHealth
 }
 
-func (s *systemSnapshotState) setClock(c mikrotiksystem.SystemClock) {
+func (s *systemSnapshotState) setClock(c port.SystemClock) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.clock = c
 }
 
-func (s *systemSnapshotState) setResource(r mikrotiksystem.SystemResource) {
+func (s *systemSnapshotState) setResource(r port.SystemResource) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.resource = r
 }
 
-func (s *systemSnapshotState) setRouterboard(r mikrotiksystem.SystemRouterboard) {
+func (s *systemSnapshotState) setRouterboard(r port.SystemRouterboard) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.routerboard = r
@@ -50,7 +49,7 @@ func (s *systemSnapshotState) setIdentity(name string) {
 	s.identity = name
 }
 
-func (s *systemSnapshotState) setHealth(h mikrotiksystem.SystemHealth) {
+func (s *systemSnapshotState) setHealth(h port.SystemHealth) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.health = h
@@ -133,11 +132,11 @@ func (h *NetworkMonitorConnectHandler) StreamSystemSnapshot(ctx context.Context,
 	doneCh := make(chan struct{})
 	var wg sync.WaitGroup
 
-	start := func(cmd command.Command, apply func(res command.Result)) {
+	start := func(openStream func() (port.StreamHandle, error), apply func(res command.Result)) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			handle, err := sd.Stream(ctx, cmd)
+			handle, err := openStream()
 			if err != nil {
 				return
 			}
@@ -160,20 +159,30 @@ func (h *NetworkMonitorConnectHandler) StreamSystemSnapshot(ctx context.Context,
 		}()
 	}
 
-	start(mikrotiksystem.NewStreamClockCommand(interval), func(res command.Result) {
-		state.setClock(mikrotiksystem.ParseClock(res))
+	start(func() (port.StreamHandle, error) {
+		return h.streamGW.StreamClock(ctx, sd, interval)
+	}, func(res command.Result) {
+		state.setClock(h.streamGW.ParseClock(res))
 	})
-	start(mikrotiksystem.NewStreamResourceCommand(interval), func(res command.Result) {
-		state.setResource(mikrotiksystem.ParseResource(res))
+	start(func() (port.StreamHandle, error) {
+		return h.streamGW.StreamResource(ctx, sd, interval)
+	}, func(res command.Result) {
+		state.setResource(h.streamGW.ParseResource(res))
 	})
-	start(mikrotiksystem.NewStreamRouterboardCommand(interval), func(res command.Result) {
-		state.setRouterboard(mikrotiksystem.ParseRouterboard(res))
+	start(func() (port.StreamHandle, error) {
+		return h.streamGW.StreamRouterboard(ctx, sd, interval)
+	}, func(res command.Result) {
+		state.setRouterboard(h.streamGW.ParseRouterboard(res))
 	})
-	start(mikrotiksystem.NewStreamIdentityCommand(interval), func(res command.Result) {
-		state.setIdentity(mikrotiksystem.ParseIdentity(res).Name)
+	start(func() (port.StreamHandle, error) {
+		return h.streamGW.StreamIdentity(ctx, sd, interval)
+	}, func(res command.Result) {
+		state.setIdentity(h.streamGW.ParseIdentity(res).Name)
 	})
-	start(mikrotiksystem.NewStreamHealthCommand(interval), func(res command.Result) {
-		state.setHealth(mikrotiksystem.ParseHealth(res))
+	start(func() (port.StreamHandle, error) {
+		return h.streamGW.StreamHealth(ctx, sd, interval)
+	}, func(res command.Result) {
+		state.setHealth(h.streamGW.ParseHealth(res))
 	})
 
 	go func() { wg.Wait(); close(doneCh) }()
@@ -217,7 +226,7 @@ func (h *NetworkMonitorConnectHandler) StreamResource(ctx context.Context, req *
 		return response.Unimplemented("driver does not support streaming")
 	}
 
-	handle, err := sd.Stream(ctx, mikrotiksystem.NewStreamResourceCommand("1s"))
+	handle, err := h.streamGW.StreamResource(ctx, sd, "1s")
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -231,7 +240,7 @@ func (h *NetworkMonitorConnectHandler) StreamResource(ctx context.Context, req *
 			if !ok {
 				return handle.Err()
 			}
-			sysRes := mikrotiksystem.ParseResource(res)
+			sysRes := h.streamGW.ParseResource(res)
 			err := stream.Send(&devicepb.ResourceStreamData{
 				DeviceId:      req.Msg.DeviceId,
 				CpuLoad:       int32(sysRes.CPULoad),

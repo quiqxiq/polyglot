@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -17,59 +18,19 @@ var ErrInvalidMikhmonComment = errors.New("mikhmon: invalid comment format")
 // Canonical definition lives in internal/port (see port.MikhmonComment docs).
 type MikhmonComment = port.MikhmonComment
 
-// FormatPreLoginComment formats the initial comment string when creating a new voucher.
-// Format: "<type>-<code>-<date>-<tag>" e.g. "vc-A3X-08.03.26-MyTag"
+// FormatPreLoginComment delegates to domainHotspot.FormatPreLoginComment.
 func FormatPreLoginComment(vcType, code, tag string, t time.Time) string {
-	if vcType == "" {
-		vcType = "vc"
-	}
-	dateStr := t.Format("01.02.06") // MM.DD.YY
-	if tag != "" {
-		return fmt.Sprintf("%s-%s-%s-%s", vcType, code, dateStr, tag)
-	}
-	return fmt.Sprintf("%s-%s-%s", vcType, code, dateStr)
+	return domainHotspot.FormatPreLoginComment(vcType, code, tag, t)
 }
 
-// BuildCreateUserComment returns the initial comment for a newly created
-// hotspot user, mirroring legacy Mikhmon post_add_user.php: when comment is
-// empty the type prefix is "vc" when name == password, "up" otherwise, and a
-// full pre-login comment ("vc/up-<code>-<date>[-tag]") is built. Non-empty
-// comments are returned unchanged.
+// BuildCreateUserComment delegates to domainHotspot.BuildCreateUserComment.
 func BuildCreateUserComment(name, password, comment string, now time.Time) string {
-	if comment == "" {
-		vcType := "up"
-		if name == password {
-			vcType = "vc"
-		}
-		code := GenerateVoucherCode(3, CharSetUpperNum)
-		comment = FormatPreLoginComment(vcType, code, "", now)
-	}
-	return comment
+	return domainHotspot.BuildCreateUserComment(name, password, comment, now)
 }
 
-// BuildUpdatedComment rebuilds a hotspot user comment when updating a user via
-// the Mikhmon admin UI, mirroring legacy post_update_user.php rules:
-//   - expireDate == "" && userCode == "" → newComment returned unchanged.
-//   - expireDate == "" && userCode != "" → keep the legacy prefix ("vc"/"up"/
-//     "X") and rebuild with a fresh code and today's date.
-//   - expireDate != "" && userCode == "" → "<expireDate> <newComment>"
-//     (persists the expiry date inside the comment).
+// BuildUpdatedComment delegates to domainHotspot.BuildUpdatedComment.
 func BuildUpdatedComment(expireDate, userCode, newComment string, now time.Time) string {
-	if expireDate != "" && userCode == "" {
-		return expireDate + " " + newComment
-	}
-	if expireDate == "" && userCode != "" {
-		vcType := "up"
-		switch {
-		case strings.HasPrefix(userCode, "vc"):
-			vcType = "vc"
-		case strings.HasPrefix(userCode, "X"):
-			vcType = "X"
-		}
-		code := GenerateVoucherCode(3, CharSetUpperNum)
-		return FormatPreLoginComment(vcType, code, newComment, now)
-	}
-	return newComment
+	return domainHotspot.BuildUpdatedComment(expireDate, userCode, newComment, now)
 }
 
 // ParseMikhmonComment parses a MikroTik Hotspot user comment string into a typed

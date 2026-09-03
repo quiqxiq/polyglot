@@ -2,10 +2,10 @@ package hotspot
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -157,72 +157,17 @@ func NewAddMikhmonProfileCommand(p MikhmonProfileParams) command.Command {
 	})
 }
 
-// ProfileMeta holds the structured Mikhmon metadata embedded in a profile's
-// on-login script CSV payload (the ":put (\",...\")" string built by
-// BuildOnLoginScript). Legacy Mikhmon parses this CSV on every edit screen;
-// this is the Go equivalent.
-type ProfileMeta struct {
-	ExpireMode   string  // "0" (noexp), "ntf", "ntfc", "rem", "remc"
-	Price        float64 // index [2] — selling price
-	Validity     string  // index [3] — e.g. "1h", "1d" (empty for noexp)
-	SellingPrice float64 // index [4] — cost price
-	LockUser     string  // index [6] — "Enable" | "Disable"
-	LockServer   string  // index [7] — "Enable" | "Disable"
-}
+// ProfileMeta alias to domain model.
+type ProfileMeta = domainHotspot.ProfileMeta
 
-// ParseOnLoginScript extracts structured ProfileMeta from a profile's on-login
-// script. Both layouts produced by BuildOnLoginScript are recognised:
-//
-//	standard: :put (",<mode>,<price>,<validity>,<sprice>,,<lockUser>,<lockServer>,")
-//	noexp   : :put (",,<price>,,<sprice>,noexp,<lockUser>,<lockServer>,")
-//
-// An empty script (noexp with zero price) returns zero metadata without error;
-// a script without a ":put (\",...\")" payload returns an error.
+// ParseOnLoginScript delegates to domainHotspot.ParseOnLoginScript.
 func ParseOnLoginScript(onLogin string) (ProfileMeta, error) {
-	meta := ProfileMeta{}
-	if strings.TrimSpace(onLogin) == "" {
-		return meta, nil
-	}
-
-	// Extract the CSV inside :put ("...")
-	start := strings.Index(onLogin, ":put (\",")
-	if start == -1 {
-		return meta, fmt.Errorf("on-login script does not contain Mikhmon metadata payload")
-	}
-	start += len(":put (\"") // point to the first comma
-	end := strings.Index(onLogin[start:], "\")")
-	if end == -1 {
-		return meta, fmt.Errorf("malformed Mikhmon metadata payload in on-login script")
-	}
-	payload := onLogin[start : start+end]
-
-	parts := strings.Split(payload, ",")
-	if len(parts) < 8 {
-		return meta, fmt.Errorf("unexpected field count in Mikhmon payload: %d (expected at least 8)", len(parts))
-	}
-
-	meta.ExpireMode = parts[1]
-	if meta.ExpireMode == "" && len(parts) > 5 && parts[5] == "noexp" {
-		meta.ExpireMode = "0"
-	}
-	if p, err := strconv.ParseFloat(parts[2], 64); err == nil {
-		meta.Price = p
-	}
-	meta.Validity = parts[3]
-	if sp, err := strconv.ParseFloat(parts[4], 64); err == nil {
-		meta.SellingPrice = sp
-	}
-	meta.LockUser = parts[6]
-	meta.LockServer = parts[7]
-
-	return meta, nil
+	return domainHotspot.ParseOnLoginScript(onLogin)
 }
 
-// NormalizeProfileName replaces all whitespace sequences with single hyphens, matching Mikhmon's
-// legacy preg_replace('/\s+/','-') applied to profile names before they are
-// embedded in report script names (report names are split by "-|-").
+// NormalizeProfileName delegates to domainHotspot.NormalizeProfileName.
 func NormalizeProfileName(name string) string {
-	return strings.Join(strings.Fields(name), "-")
+	return domainHotspot.NormalizeProfileName(name)
 }
 
 // NewSetMikhmonProfileCommand builds the command.Command for /ip/hotspot/user/profile/set

@@ -7,7 +7,6 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -25,7 +24,7 @@ func (h *NetworkMonitorConnectHandler) StreamLogs(ctx context.Context, req *conn
 		return response.Unimplemented("driver does not support streaming")
 	}
 
-	handle, err := sd.Stream(ctx, mikrotiksystem.NewStreamLogsCommand(req.Msg.Topics))
+	handle, err := h.streamGW.StreamLogs(ctx, sd, req.Msg.Topics)
 	if err != nil {
 		logger.WithComponent("NetworkMonitorConnectHandler").WithError(err).Warn("starting log stream failed")
 		return response.MapDomainError(err)
@@ -40,7 +39,7 @@ func (h *NetworkMonitorConnectHandler) StreamLogs(ctx context.Context, req *conn
 			if !ok {
 				return handle.Err()
 			}
-			logs := mikrotiksystem.ParseLogs(res)
+			logs := h.streamGW.ParseLogEntries(res)
 			if len(logs) == 0 {
 				continue
 			}

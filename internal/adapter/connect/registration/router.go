@@ -6,7 +6,6 @@ import (
 	"connectrpc.com/connect"
 
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
-	"github.com/quixiq/polyglot/internal/port"
 	uc "github.com/quixiq/polyglot/internal/usecase/registration"
 )
 
@@ -15,9 +14,8 @@ import (
 func NewRegistrationServiceHandler(
 	managerUC *uc.ManageRegistrationUseCase,
 	convertUC *uc.ConvertUseCase,
-	repo port.RegistrationRepository,
 ) (string, http.Handler) {
-	handler := NewRegistrationConnectHandler(managerUC, convertUC, repo)
+	handler := NewRegistrationConnectHandler(managerUC, convertUC)
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()
 
@@ -37,7 +35,7 @@ func NewRegistrationServiceHandler(
 // NewPublicSubmitHandler mounts SubmitRegistration secara publik (calon
 // pelanggan tanpa JWT) pada rootMux.
 func NewPublicSubmitHandler(managerUC *uc.ManageRegistrationUseCase) (string, http.Handler) {
-	handler := NewRegistrationConnectHandler(managerUC, nil, nil)
+	handler := NewRegistrationConnectHandler(managerUC, nil)
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()
 

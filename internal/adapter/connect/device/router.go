@@ -5,6 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
+	"github.com/quixiq/polyglot/internal/port"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	"github.com/quixiq/polyglot/internal/usecase/network"
 )
@@ -16,6 +17,7 @@ func NewDeviceServiceHandler(
 	getter DriverGetter,
 	metricsUC *deviceUC.ManageMetricsUseCase,
 	isolationUC *deviceUC.ManageIsolationUseCase,
+	streamGW port.MonitorStreamGateway,
 ) (string, http.Handler) {
 	handler := &DeviceConnectHandler{
 		useCase:      uc,
@@ -23,6 +25,7 @@ func NewDeviceServiceHandler(
 		driverGetter: getter,
 		metricsUC:    metricsUC,
 		isolationUC:  isolationUC,
+		streamGW:     streamGW,
 	}
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()

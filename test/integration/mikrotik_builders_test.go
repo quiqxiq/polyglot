@@ -293,7 +293,7 @@ func TestMikrotikBuilders_StreamQueueStats(t *testing.T) {
 	sd, ok := port.DeviceDriver(drv).(port.StreamingDeviceDriver)
 	require.True(t, ok)
 
-	streamCmd := mikrotikqueue.NewStreamQueueStatsCommand(mikrotikqueue.QueueStreamParams{
+	streamCmd := mikrotikqueue.NewStreamQueueStatsCommand(mikrotikqueue.StreamParams{
 		NameFilter:  testQueueName,
 		ParentsOnly: true,
 		Interval:    "1s",

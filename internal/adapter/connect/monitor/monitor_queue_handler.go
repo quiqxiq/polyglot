@@ -7,7 +7,6 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	mikrotikqueue "github.com/quixiq/polyglot/internal/driver/mikrotik/queue"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -24,7 +23,7 @@ func (h *NetworkMonitorConnectHandler) StreamQueueStats(ctx context.Context, req
 		return response.Unimplemented("driver does not support streaming")
 	}
 
-	params := mikrotikqueue.QueueStreamParams{
+	params := port.QueueStreamParams{
 		NameFilter:   req.Msg.Name,
 		ParentFilter: req.Msg.Parent,
 		ParentsOnly:  req.Msg.ParentsOnly,
@@ -34,7 +33,7 @@ func (h *NetworkMonitorConnectHandler) StreamQueueStats(ctx context.Context, req
 		params.Interval = "1s"
 	}
 
-	handle, err := sd.Stream(ctx, mikrotikqueue.NewStreamQueueStatsCommand(params))
+	handle, err := h.streamGW.StreamQueueStats(ctx, sd, params)
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -48,7 +47,7 @@ func (h *NetworkMonitorConnectHandler) StreamQueueStats(ctx context.Context, req
 			if !ok {
 				return handle.Err()
 			}
-			queues := mikrotikqueue.ParseSimpleQueues(res)
+			queues := h.streamGW.ParseQueues(res)
 			items := make([]*devicepb.QueueStatsItem, 0, len(queues))
 			for _, q := range queues {
 				items = append(items, &devicepb.QueueStatsItem{

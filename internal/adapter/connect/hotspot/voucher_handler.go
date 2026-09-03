@@ -8,7 +8,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -26,12 +26,12 @@ func (h *HotspotConnectHandler) GenerateVouchers(ctx context.Context, req *conne
 		count = 1
 	}
 
-	params := hotspot.VoucherGenerateParams{
+	params := domainHotspot.VoucherGenerateParams{
 		Server:      req.Msg.Server,
 		Profile:     req.Msg.Profile,
 		Prefix:      sanitizeBatchTag(req.Msg.Prefix),
 		UserLength:  int(req.Msg.UserLength),
-		CharSet:     hotspot.CharSet(req.Msg.CharacterSet),
+		CharSet:     domainHotspot.CharSet(req.Msg.CharacterSet),
 		LimitUptime: req.Msg.TimeLimit,
 		LimitBytes:  req.Msg.DataLimit,
 		CommentTag:  sanitizeBatchTag(req.Msg.Comment),

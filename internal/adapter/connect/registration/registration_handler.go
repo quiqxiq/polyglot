@@ -17,15 +17,13 @@ import (
 type RegistrationConnectHandler struct {
 	managerUC *uc.ManageRegistrationUseCase
 	convertUC *uc.ConvertUseCase
-	repo      port.RegistrationRepository
 }
 
 func NewRegistrationConnectHandler(
 	managerUC *uc.ManageRegistrationUseCase,
 	convertUC *uc.ConvertUseCase,
-	repo port.RegistrationRepository,
 ) *RegistrationConnectHandler {
-	return &RegistrationConnectHandler{managerUC: managerUC, convertUC: convertUC, repo: repo}
+	return &RegistrationConnectHandler{managerUC: managerUC, convertUC: convertUC}
 }
 
 // SubmitRegistration — PUBLIC (calon pelanggan).
@@ -58,10 +56,10 @@ func (h *RegistrationConnectHandler) SubmitRegistration(ctx context.Context, req
 }
 
 func (h *RegistrationConnectHandler) ListRegistrations(ctx context.Context, req *connect.Request[devicepb.ListRegistrationsRequest]) (*connect.Response[devicepb.ListRegistrationsResponse], error) {
-	if h.repo == nil {
-		return nil, response.Unavailable("registration repository unavailable")
+	if h.managerUC == nil {
+		return nil, response.Unavailable("registration usecase unavailable")
 	}
-	list, err := h.repo.List(ctx, port.RegistrationFilter{
+	list, err := h.managerUC.List(ctx, port.RegistrationFilter{
 		Status: req.Msg.Status,
 		Phone:  req.Msg.Phone,
 	})
@@ -74,10 +72,10 @@ func (h *RegistrationConnectHandler) ListRegistrations(ctx context.Context, req 
 }
 
 func (h *RegistrationConnectHandler) GetRegistration(ctx context.Context, req *connect.Request[devicepb.GetRegistrationRequest]) (*connect.Response[devicepb.GetRegistrationResponse], error) {
-	if h.repo == nil {
-		return nil, response.Unavailable("registration repository unavailable")
+	if h.managerUC == nil {
+		return nil, response.Unavailable("registration usecase unavailable")
 	}
-	reg, err := h.repo.FindByID(ctx, req.Msg.Id)
+	reg, err := h.managerUC.FindByID(ctx, req.Msg.Id)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}

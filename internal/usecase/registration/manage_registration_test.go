@@ -11,6 +11,7 @@ import (
 
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainRegistration "github.com/quixiq/polyglot/internal/domain/registration"
+	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/internal/port/mocktest"
 	uc "github.com/quixiq/polyglot/internal/usecase/registration"
 )
@@ -247,6 +248,29 @@ func TestConvert_Guards(t *testing.T) {
 	require.NoError(t, repo.Save(ctx, reg))
 	_, err = conv.Convert(ctx, sub.ID, "1")
 	assert.ErrorContains(t, err, "plan plan-1")
+}
+
+func TestManageRegistrationUseCase_ListAndFindByID(t *testing.T) {
+	usecase, repo, _, _ := newUC(t)
+	ctx := context.Background()
+
+	sub, err := usecase.Submit(ctx, validRegistration())
+	require.NoError(t, err)
+
+	// List
+	list, err := usecase.List(ctx, port.RegistrationFilter{Status: string(domainRegistration.StatusPending)})
+	require.NoError(t, err)
+	assert.Len(t, list, 1)
+
+	// FindByID
+	found, err := usecase.FindByID(ctx, sub.ID)
+	require.NoError(t, err)
+	assert.Equal(t, sub.ID, found.ID)
+
+	// Not found
+	_, err = usecase.FindByID(ctx, "nonexistent")
+	assert.Error(t, err)
+	_ = repo
 }
 
 // ─── helpers ────────────────────────────────────────────────────────────

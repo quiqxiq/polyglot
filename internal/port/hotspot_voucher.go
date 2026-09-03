@@ -5,20 +5,28 @@ import (
 )
 
 // CharSet defines character set types used for generating voucher usernames and passwords.
-type CharSet string
+// Aliased to domain model per DEVELOPMENT-GUIDELINES.md §4.2.
+type CharSet = domainHotspot.CharSet
 
-// VoucherGenerateParams holds parameters for mass-generating Mikhmon vouchers.
-type VoucherGenerateParams struct {
-	Server      string  // Hotspot server name (empty = "all")
-	Profile     string  // Hotspot user profile name (required)
-	Prefix      string  // Code prefix (e.g. "vc")
-	UserLength  int     // Length of generated username
-	PassLength  int     // Length of generated password (0 = username is password)
-	CharSet     CharSet // Character set to use
-	LimitUptime string  // Time limit (e.g. "1d", "3h")
-	LimitBytes  string  // Data quota in bytes
-	CommentTag  string  // Label tag in comment
-}
+// Supported character sets for voucher code generation (re-exported from domain).
+const (
+	// CharSetNumeric uses digits only (0-9).
+	CharSetNumeric = domainHotspot.CharSetNumeric
+	// CharSetLower uses lowercase letters only (a-z).
+	CharSetLower = domainHotspot.CharSetLower
+	// CharSetUpper uses uppercase letters only (A-Z).
+	CharSetUpper = domainHotspot.CharSetUpper
+	// CharSetLowerNum uses lowercase letters and digits.
+	CharSetLowerNum = domainHotspot.CharSetLowerNum
+	// CharSetUpperNum uses uppercase letters and digits.
+	CharSetUpperNum = domainHotspot.CharSetUpperNum
+	// CharSetMixed uses mixed-case letters and digits.
+	CharSetMixed = domainHotspot.CharSetMixed
+)
+
+// VoucherGenerateParams holds parameters for mass-generating vouchers.
+// Aliased to domain model per DEVELOPMENT-GUIDELINES.md §4.2.
+type VoucherGenerateParams = domainHotspot.VoucherGenerateParams
 
 // GeneratedVoucher alias to domain model.
 type GeneratedVoucher = domainHotspot.GeneratedVoucher

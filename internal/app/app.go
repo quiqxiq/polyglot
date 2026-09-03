@@ -45,6 +45,7 @@ import (
 	portalUC "github.com/quixiq/polyglot/internal/usecase/portal"
 	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
 	registrationUC "github.com/quixiq/polyglot/internal/usecase/registration"
+	reportUC "github.com/quixiq/polyglot/internal/usecase/report"
 	settingUC "github.com/quixiq/polyglot/internal/usecase/setting"
 	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 	subUC "github.com/quixiq/polyglot/internal/usecase/subscription"
@@ -276,11 +277,18 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		return drv, true
 	}
 
+	reportManagerUC := reportUC.NewManageReportUseCase(reportingRepo, reportingRepo)
+	notifManagerUC := notificationUC.NewManageNotificationUseCase(notifRepo, waSender)
+	streamGW := mikrotik.NewMonitorStreamGateway()
+
 	routerHandler := buildRouter(routerDeps{
 		cfg:                    cfg,
 		jwtService:             jwtService,
 		casbinEnforcer:         casbinEnforcer,
 		reportingRepo:          reportingRepo,
+		reportManagerUC:        reportManagerUC,
+		notifManagerUC:         notifManagerUC,
+		streamGW:               streamGW,
 		userRepo:               userRepo,
 		customerRepo:           customerRepo,
 		regRepo:                regRepo,

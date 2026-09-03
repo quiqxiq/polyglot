@@ -54,63 +54,6 @@ func (u *ManageUserUseCase) GetUser(ctx context.Context, id uint) (*customer.Use
 	return user, nil
 }
 
-func (u *ManageUserUseCase) GetRoles(ctx context.Context, id uint) ([]string, error) {
-	if u.roles == nil {
-		return nil, nil
-	}
-	return u.roles.GetRolesForUser(fmt.Sprintf("%d", id))
-}
-
-func (u *ManageUserUseCase) GetPermissions(ctx context.Context, id uint) ([]string, error) {
-	if u.roles == nil {
-		return nil, nil
-	}
-	return u.roles.GetImplicitPermissionsForUser(fmt.Sprintf("%d", id))
-}
-
-func isOwnerRole(roles []string) bool {
-	for _, r := range roles {
-		if strings.EqualFold(r, "owner") {
-			return true
-		}
-	}
-	return false
-}
-
-func (u *ManageUserUseCase) countActiveOwners(ctx context.Context) (int, error) {
-	users, _, err := u.repo.List(ctx, 1, 1000, "")
-	if err != nil {
-		return 0, err
-	}
-	count := 0
-	for _, usr := range users {
-		if strings.EqualFold(usr.Role, "owner") && usr.IsActive {
-			count++
-		}
-	}
-	return count, nil
-}
-
-func (u *ManageUserUseCase) validateDeviceAssignments(ctx context.Context, actorID uint, actorRoles []string, deviceIDs []string) error {
-	if len(deviceIDs) == 0 || isOwnerRole(actorRoles) {
-		return nil
-	}
-	for _, devID := range deviceIDs {
-		devID = strings.TrimSpace(devID)
-		if devID == "" {
-			continue
-		}
-		accessible, err := u.repo.IsDeviceAccessibleByUser(ctx, actorID, devID)
-		if err != nil {
-			return err
-		}
-		if !accessible {
-			return fmt.Errorf("%w: device %s", customer.ErrUnauthorizedDeviceAssign, devID)
-		}
-	}
-	return nil
-}
-
 func (u *ManageUserUseCase) CreateUser(
 	ctx context.Context,
 	actorID uint,
@@ -301,63 +244,6 @@ func (u *ManageUserUseCase) UpdateUser(
 		"actor_id":  actorID,
 	}).Info("user updated successfully")
 	return targetUser, nil
-}
-
-func (u *ManageUserUseCase) AssignDevicesToUser(
-	ctx context.Context,
-	actorID uint,
-	actorRoles []string,
-	targetUserID uint,
-	deviceIDs []string,
-) ([]string, error) {
-	if targetUserID == 0 {
-		return nil, customer.ErrUserNotFound
-	}
-	targetUser, err := u.repo.FindByID(ctx, targetUserID)
-	if err != nil {
-		return nil, customer.ErrUserNotFound
-	}
-
-	actorIsOwner := isOwnerRole(actorRoles)
-	if strings.EqualFold(targetUser.Role, "owner") && !actorIsOwner {
-		return nil, customer.ErrCannotModifyOwner
-	}
-	if strings.EqualFold(targetUser.Role, "admin") && !actorIsOwner && actorID != targetUserID {
-		return nil, customer.ErrCannotModifyAdmin
-	}
-
-	if err := u.validateDeviceAssignments(ctx, actorID, actorRoles, deviceIDs); err != nil {
-		return nil, err
-	}
-
-	var assignedBy *uint
-	if actorID > 0 {
-		assignedBy = &actorID
-	}
-	if err := u.repo.AssignDevices(ctx, targetUserID, deviceIDs, assignedBy); err != nil {
-		return nil, err
-	}
-
-	return u.repo.GetAssignedDeviceIDs(ctx, targetUserID)
-}
-
-func (u *ManageUserUseCase) ListUserAccessibleDevices(
-	ctx context.Context,
-	actorID uint,
-	actorRoles []string,
-	targetUserID uint,
-) ([]string, error) {
-	if targetUserID == 0 {
-		targetUserID = actorID
-	}
-	targetUser, err := u.repo.FindByID(ctx, targetUserID)
-	if err != nil {
-		return nil, customer.ErrUserNotFound
-	}
-	if strings.EqualFold(targetUser.Role, "owner") {
-		return []string{"*"}, nil
-	}
-	return u.repo.GetAssignedDeviceIDs(ctx, targetUserID)
 }
 
 func (u *ManageUserUseCase) DeleteUser(ctx context.Context, actorID uint, actorRoles []string, targetID uint) error {

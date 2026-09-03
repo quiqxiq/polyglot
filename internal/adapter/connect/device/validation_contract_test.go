@@ -46,7 +46,7 @@ func TestValidationInterceptorPreservesViolationDetails(t *testing.T) {
 }
 
 func TestDeviceServiceValidationRejectsInvalidUnaryRequest(t *testing.T) {
-	_, handler := connectDevice.NewDeviceServiceHandler(nil, nil, nil, nil, nil)
+	_, handler := connectDevice.NewDeviceServiceHandler(nil, nil, nil, nil, nil, nil)
 	recorder := httptest.NewRecorder()
 	req := httptest.NewRequest(
 		http.MethodPost,
@@ -63,7 +63,7 @@ func TestDeviceServiceValidationRejectsInvalidUnaryRequest(t *testing.T) {
 }
 
 func TestDeviceServiceValidationRejectsInvalidStreamingRequest(t *testing.T) {
-	_, handler := connectDevice.NewDeviceServiceHandler(nil, nil, nil, nil, nil)
+	_, handler := connectDevice.NewDeviceServiceHandler(nil, nil, nil, nil, nil, nil)
 
 	recorder := httptest.NewRecorder()
 	payload := []byte(`{"id":""}`)

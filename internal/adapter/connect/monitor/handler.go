@@ -21,6 +21,7 @@ type NetworkMonitorConnectHandler struct {
 	hotspotUC             *hotspotUC.UseCase
 	activeSessionsUseCase *networkUC.ActiveSessionsUseCase
 	driverProvider        ConnectDriverProvider
+	streamGW              port.MonitorStreamGateway
 }
 
 // NewNetworkMonitorConnectHandler constructs a NetworkMonitorConnectHandler.
@@ -28,11 +29,13 @@ func NewNetworkMonitorConnectHandler(
 	hsUC *hotspotUC.UseCase,
 	activeUC *networkUC.ActiveSessionsUseCase,
 	provider ConnectDriverProvider,
+	streamGW port.MonitorStreamGateway,
 ) *NetworkMonitorConnectHandler {
 	return &NetworkMonitorConnectHandler{
 		hotspotUC:             hsUC,
 		activeSessionsUseCase: activeUC,
 		driverProvider:        provider,
+		streamGW:              streamGW,
 	}
 }
 

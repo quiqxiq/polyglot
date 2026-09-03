@@ -14,8 +14,6 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
-	mikrotikiface "github.com/quixiq/polyglot/internal/driver/mikrotik/iface"
-	mikrotiksystem "github.com/quixiq/polyglot/internal/driver/mikrotik/system"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/fault"
 	"github.com/quixiq/polyglot/pkg/ping"
@@ -110,11 +108,11 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 	doneCh := make(chan struct{})
 	var wg sync.WaitGroup
 
-	startStream := func(cmd command.Command, apply func(res command.Result)) {
+	startStream := func(openStream func() (port.StreamHandle, error), apply func(res command.Result)) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			handle, sErr := sDrv.Stream(ctx, cmd)
+			handle, sErr := openStream()
 			if sErr != nil {
 				return
 			}
@@ -139,8 +137,10 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 	}
 
 	// 1. Native stream /system/resource/print interval=1s (CPU, memory, uptime, version)
-	startStream(mikrotiksystem.NewStreamResourceCommand("1s"), func(res command.Result) {
-		sysRes := mikrotiksystem.ParseResource(res)
+	startStream(func() (port.StreamHandle, error) {
+		return h.streamGW.StreamResource(ctx, sDrv, "1s")
+	}, func(res command.Result) {
+		sysRes := h.streamGW.ParseResource(res)
 		freeMem, _ := strconv.ParseInt(sysRes.FreeMemory, 10, 64)
 		totalMem, _ := strconv.ParseInt(sysRes.TotalMemory, 10, 64)
 
@@ -162,8 +162,10 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 	})
 
 	// 2. Native stream /interface/print interval=2s (Interface list & running status)
-	startStream(mikrotikiface.NewStreamInterfacesCommand(req.Msg.InterfaceTypeFilter, req.Msg.InterfaceNameFilter, "2s"), func(res command.Result) {
-		ifaces := mikrotikiface.ParseInterfaces(res)
+	startStream(func() (port.StreamHandle, error) {
+		return h.streamGW.StreamInterfaces(ctx, sDrv, req.Msg.InterfaceTypeFilter, req.Msg.InterfaceNameFilter, "2s")
+	}, func(res command.Result) {
+		ifaces := h.streamGW.ParseInterfaces(res)
 		if len(ifaces) == 0 {
 			return
 		}
@@ -199,8 +201,10 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 	})
 
 	// 3. Native stream /system/identity/print interval=5s (Identity update)
-	startStream(mikrotiksystem.NewStreamIdentityCommand("5s"), func(res command.Result) {
-		ident := mikrotiksystem.ParseIdentity(res)
+	startStream(func() (port.StreamHandle, error) {
+		return h.streamGW.StreamIdentity(ctx, sDrv, "5s")
+	}, func(res command.Result) {
+		ident := h.streamGW.ParseIdentity(res)
 		if ident.Name != "" {
 			state.mu.Lock()
 			state.metrics.Identity = ident.Name
@@ -294,8 +298,7 @@ func (h *DeviceConnectHandler) StreamPing(
 		pingTarget = hostOnly
 	}
 
-	pingCmd := mikrotiksystem.NewPingStreamCommand(pingTarget)
-	pingHandle, err := sDrv.Stream(ctx, pingCmd)
+	pingHandle, err := h.streamGW.StreamPing(ctx, sDrv, pingTarget)
 	if err != nil {
 		return response.MapDomainError(fmt.Errorf("failed to start ping stream: %w", err))
 	}
@@ -358,6 +361,7 @@ func (h *DeviceConnectHandler) StreamPing(
 	}
 }
 
+// StreamInterfaceTraffic streams real-time traffic statistics for a specific interface.
 func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 	ctx context.Context,
 	req *connect.Request[devicepb.StreamDeviceTrafficRequest],
@@ -370,10 +374,6 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 	dev, err := h.useCase.GetDevice(ctx, req.Msg.Id)
 	if err != nil {
 		return response.MapDomainError(err)
-	}
-
-	if !dev.Enabled || h.driverGetter == nil {
-		return response.Unavailable("device streaming is unavailable")
 	}
 
 	drv, err := h.driverGetter(ctx, dev.ID)
@@ -394,8 +394,7 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 		ifaceName = "ether1"
 	}
 
-	trafficCmd := mikrotikiface.NewMonitorTrafficStreamCommand(ifaceName)
-	trafficHandle, err := sDrv.Stream(ctx, trafficCmd)
+	trafficHandle, err := h.streamGW.StreamTraffic(ctx, sDrv, ifaceName)
 	if err != nil {
 		return response.MapDomainError(fmt.Errorf("failed to start traffic stream: %w", err))
 	}
@@ -412,7 +411,7 @@ func (h *DeviceConnectHandler) StreamInterfaceTraffic(
 				}
 				return nil
 			}
-			stats := mikrotikiface.ParseInterfaceTrafficStats(res)
+			stats := h.streamGW.ParseInterfaceTraffic(res)
 			rx, _ := strconv.ParseInt(stats.RxBitsPerSecond, 10, 64)
 			tx, _ := strconv.ParseInt(stats.TxBitsPerSecond, 10, 64)
 			frame := &devicepb.StreamDeviceTrafficFrame{

@@ -11,7 +11,7 @@ import (
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/domain/command"
-	mikrotikhotspot "github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -54,7 +54,7 @@ func (h *NetworkMonitorConnectHandler) StreamActiveSessions(ctx context.Context,
 		TimestampUnix: time.Now().Unix(),
 	})
 
-	handle, err := sd.Stream(ctx, mikrotikhotspot.NewStreamActiveCommand(req.Msg.UserFilter))
+	handle, err := h.streamGW.StreamHotspotActive(ctx, sd, req.Msg.UserFilter)
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -142,7 +142,7 @@ func (h *NetworkMonitorConnectHandler) StreamActiveStats(ctx context.Context, re
 		interval = "1s"
 	}
 
-	handle, err := sd.Stream(ctx, mikrotikhotspot.NewStreamActiveStatsCommand(interval))
+	handle, err := h.streamGW.StreamHotspotActiveStats(ctx, sd, interval)
 	if err != nil {
 		return response.MapDomainError(err)
 	}
@@ -156,7 +156,7 @@ func (h *NetworkMonitorConnectHandler) StreamActiveStats(ctx context.Context, re
 			if !ok {
 				return handle.Err()
 			}
-			stats := mikrotikhotspot.ParseActiveStats(res)
+			stats := h.streamGW.ParseHotspotActiveStats(res)
 			if len(stats) == 0 {
 				continue
 			}
@@ -255,7 +255,7 @@ func (s *hotspotSessionState) inactive() []port.HotspotUser {
 	for _, a := range s.activeMap {
 		active = append(active, a)
 	}
-	return mikrotikhotspot.FilterInactiveUsers(users, active)
+	return domainHotspot.FilterInactiveUsers(users, active)
 }
 
 // StreamHotspotInactive computes the inactive hotspot user list from two
@@ -295,11 +295,11 @@ func (h *NetworkMonitorConnectHandler) StreamHotspotInactive(ctx context.Context
 	doneCh := make(chan struct{})
 	var wg sync.WaitGroup
 
-	start := func(cmd command.Command, apply func(row map[string]string)) {
+	start := func(openStream func() (port.StreamHandle, error), apply func(row map[string]string)) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			handle, err := sd.Stream(ctx, cmd)
+			handle, err := openStream()
 			if err != nil {
 				return
 			}
@@ -328,10 +328,14 @@ func (h *NetworkMonitorConnectHandler) StreamHotspotInactive(ctx context.Context
 		Raw:  "/ip/hotspot/user/print",
 		Args: map[string]string{"follow": ""},
 	}
-	start(streamUsersCmd, func(row map[string]string) {
+	start(func() (port.StreamHandle, error) {
+		return sd.Stream(ctx, streamUsersCmd)
+	}, func(row map[string]string) {
 		state.updateUser(row)
 	})
-	start(mikrotikhotspot.NewStreamActiveCommand(""), func(row map[string]string) {
+	start(func() (port.StreamHandle, error) {
+		return h.streamGW.StreamHotspotActive(ctx, sd, "")
+	}, func(row map[string]string) {
 		state.updateActive(row)
 	})
 

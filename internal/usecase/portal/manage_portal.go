@@ -134,12 +134,13 @@ func (u *UseCase) Logout(ctx context.Context, token string) error {
 type CustomerOverview struct {
 	Customer       domainCustomer.Customer `json:"customer"`
 	Status         string                  `json:"status"`
-	Subscription   *subscriptionView       `json:"subscription,omitempty"`
-	UnpaidInvoices []invoiceView           `json:"unpaid_invoices"`
+	Subscription   *SubscriptionView       `json:"subscription,omitempty"`
+	UnpaidInvoices []InvoiceView           `json:"unpaid_invoices"`
 	PaymentURL     string                  `json:"payment_url,omitempty"`
 }
 
-type subscriptionView struct {
+// SubscriptionView represents the customer's subscription summary for portal view.
+type SubscriptionView struct {
 	ID          string  `json:"id"`
 	PlanID      string  `json:"plan_id"`
 	ServiceType string  `json:"service_type"`
@@ -149,7 +150,8 @@ type subscriptionView struct {
 	EndDate     *string `json:"end_date,omitempty"`
 }
 
-type invoiceView struct {
+// InvoiceView represents an unpaid invoice summary for portal view.
+type InvoiceView struct {
 	ID                string  `json:"id"`
 	InvoiceNumber     string  `json:"invoice_number"`
 	Period            string  `json:"period"`
@@ -186,7 +188,7 @@ func (u *UseCase) Overview(ctx context.Context, customerID string) (CustomerOver
 		if s.EndDate != nil {
 			endDate = s.EndDate.Format("2006-01-02")
 		}
-		ov.Subscription = &subscriptionView{
+		ov.Subscription = &SubscriptionView{
 			ID: s.ID, PlanID: s.PlanID, ServiceType: s.ServiceType,
 			Status: s.Status, RateLimit: s.RateLimit, BillingDay: s.BillingDay,
 			EndDate: strPtrOrNil(endDate),
@@ -199,7 +201,7 @@ func (u *UseCase) Overview(ctx context.Context, customerID string) (CustomerOver
 		if outstanding <= 0.001 {
 			continue
 		}
-		ov.UnpaidInvoices = append(ov.UnpaidInvoices, invoiceView{
+		ov.UnpaidInvoices = append(ov.UnpaidInvoices, InvoiceView{
 			ID: inv.ID, InvoiceNumber: inv.InvoiceNumber, Period: inv.Period,
 			Total: inv.Total, PaidAmount: inv.PaidAmount, Outstanding: outstanding,
 			DueDate: inv.DueDate.Format("2006-01-02"), Status: inv.Status,

@@ -230,6 +230,30 @@ func (u *ManageRegistrationUseCase) queueTemplate(ctx context.Context, tenantID,
 	}
 }
 
+// List retrieves registrations matching the given filter.
+func (u *ManageRegistrationUseCase) List(ctx context.Context, filter port.RegistrationFilter) ([]domainRegistration.Registration, error) {
+	if u.repo == nil {
+		return nil, domainRegistration.ErrNotFound
+	}
+	list, err := u.repo.List(ctx, filter)
+	if err != nil {
+		return nil, fmt.Errorf("list registrations: %w", err)
+	}
+	return list, nil
+}
+
+// FindByID retrieves a registration by its unique identifier.
+func (u *ManageRegistrationUseCase) FindByID(ctx context.Context, id string) (domainRegistration.Registration, error) {
+	if u.repo == nil {
+		return domainRegistration.Registration{}, domainRegistration.ErrNotFound
+	}
+	reg, err := u.repo.FindByID(ctx, id)
+	if err != nil {
+		return domainRegistration.Registration{}, fmt.Errorf("find registration by id: %w", err)
+	}
+	return reg, nil
+}
+
 func actorStr(id *uint) string {
 	if id == nil {
 		return ""

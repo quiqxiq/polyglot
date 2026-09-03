@@ -8,16 +8,17 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/adapter/auth"
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
+	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
 type RBACConnectHandler struct {
-	enforcer *auth.CasbinEnforcer
+	enforcer port.RBACManager
 }
 
-func NewRBACConnectHandler(enforcer *auth.CasbinEnforcer) *RBACConnectHandler {
+// NewRBACConnectHandler constructs a new RBACConnectHandler.
+func NewRBACConnectHandler(enforcer port.RBACManager) *RBACConnectHandler {
 	return &RBACConnectHandler{enforcer: enforcer}
 }
 
@@ -154,7 +155,8 @@ func (h *RBACConnectHandler) DeleteRole(ctx context.Context, req *connect.Reques
 	}), nil
 }
 
-func NewRBACServiceHandler(enforcer *auth.CasbinEnforcer) (string, http.Handler) {
+// NewRBACServiceHandler creates the Connect HTTP handler for RBACService.
+func NewRBACServiceHandler(enforcer port.RBACManager) (string, http.Handler) {
 	handler := NewRBACConnectHandler(enforcer)
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()

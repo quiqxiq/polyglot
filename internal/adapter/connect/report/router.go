@@ -6,11 +6,12 @@ import (
 	"connectrpc.com/connect"
 
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
-	"github.com/quixiq/polyglot/internal/port"
+	reportUC "github.com/quixiq/polyglot/internal/usecase/report"
 )
 
-func NewReportServiceHandler(repo port.ReportingRepository, snapshotter port.SnapshotComputer) (string, http.Handler) {
-	handler := NewReportConnectHandler(repo, snapshotter)
+// NewReportServiceHandler creates the Connect HTTP handler for ReportService.
+func NewReportServiceHandler(uc *reportUC.ManageReportUseCase) (string, http.Handler) {
+	handler := NewReportConnectHandler(uc)
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()
 

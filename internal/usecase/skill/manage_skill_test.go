@@ -2,16 +2,90 @@ package skill_test
 
 import (
 	"context"
-	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/quixiq/polyglot/internal/adapter/storage"
 	"github.com/quixiq/polyglot/internal/domain/skill"
 	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 )
+
+type fakeSkillStore struct {
+	skills map[string]*skill.Skill
+}
+
+func newFakeSkillStore() *fakeSkillStore {
+	return &fakeSkillStore{skills: make(map[string]*skill.Skill)}
+}
+
+func (s *fakeSkillStore) ListSkillsFromDisk() ([]skill.Skill, error) {
+	var list []skill.Skill
+	for _, sk := range s.skills {
+		list = append(list, *sk)
+	}
+	return list, nil
+}
+
+func (s *fakeSkillStore) ReadSkillFromDisk(name string) (*skill.Skill, error) {
+	sk, ok := s.skills[name]
+	if !ok {
+		return nil, skill.ErrSkillNotFound
+	}
+	return sk, nil
+}
+
+func (s *fakeSkillStore) CreateSkillOnDisk(name, description, content, license, compatibility, allowedTools string, metadata map[string]string) (*skill.Skill, error) {
+	sk := &skill.Skill{
+		Name:          name,
+		Description:   description,
+		Content:       content,
+		License:       license,
+		Compatibility: compatibility,
+		AllowedTools:  allowedTools,
+		Metadata:      metadata,
+	}
+	s.skills[name] = sk
+	return sk, nil
+}
+
+func (s *fakeSkillStore) UpdateSkillOnDisk(name, description, content, license, compatibility, allowedTools string, metadata map[string]string) (*skill.Skill, error) {
+	sk, ok := s.skills[name]
+	if !ok {
+		return nil, skill.ErrSkillNotFound
+	}
+	sk.Description = description
+	sk.Content = content
+	sk.License = license
+	sk.Compatibility = compatibility
+	sk.AllowedTools = allowedTools
+	sk.Metadata = metadata
+	return sk, nil
+}
+
+func (s *fakeSkillStore) DeleteSkillFromDisk(name string) error {
+	delete(s.skills, name)
+	return nil
+}
+
+func (s *fakeSkillStore) ExportSkillZip(name string) ([]byte, error) { return nil, nil }
+func (s *fakeSkillStore) ImportSkillZip(archiveData []byte) (*skill.Skill, error) {
+	return nil, nil
+}
+func (s *fakeSkillStore) ListResources(skillName string) ([]skill.SkillResource, error) {
+	return nil, nil
+}
+func (s *fakeSkillStore) ReadResource(skillName, path string) (*skill.ResourceContent, *skill.SkillResource, error) {
+	return nil, nil, nil
+}
+func (s *fakeSkillStore) WriteResource(skillName, path string, data []byte) error { return nil }
+func (s *fakeSkillStore) DeleteResource(skillName, path string) error             { return nil }
+func (s *fakeSkillStore) ListGitRepos() ([]skill.GitRepoInfo, error)              { return nil, nil }
+func (s *fakeSkillStore) SaveGitRepo(repo skill.GitRepoInfo) error                { return nil }
+func (s *fakeSkillStore) DeleteGitRepo(id string) error                           { return nil }
+func (s *fakeSkillStore) GetSkillsDir() string                                    { return "/tmp/skills" }
+func (s *fakeSkillStore) ReadGlobalPromptFromDisk() (string, error)               { return "", nil }
+func (s *fakeSkillStore) WriteGlobalPromptToDisk(content string) error            { return nil }
 
 type fakeSkillRepo struct {
 	records      map[string]*skill.SkillMetadataRecord
@@ -79,13 +153,7 @@ func (f *fakeSkillRepo) SaveGlobalSystemPrompt(ctx context.Context, content stri
 }
 
 func TestManageSkillUseCase_Lifecycle(t *testing.T) {
-	tempDir, err := os.MkdirTemp("", "manage_skill_uc_test")
-	require.NoError(t, err)
-	defer func() { _ = os.RemoveAll(tempDir) }()
-
-	fsStore, err := storage.NewFSSkillStore(tempDir)
-	require.NoError(t, err)
-
+	fsStore := newFakeSkillStore()
 	repo := newFakeSkillRepo()
 	uc := skillUC.NewManageSkillUseCase(repo, fsStore, nil)
 	ctx := context.Background()

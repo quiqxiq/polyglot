@@ -44,13 +44,13 @@ func ParseResource(result command.Result) SystemResource {
 	}
 }
 
-// ParseHealth converts a command.Result from /system/health/print into a SystemHealth struct.
-func ParseHealth(result command.Result) SystemHealth {
+// ParseHealth converts a command.Result from /system/health/print into a Health struct.
+func ParseHealth(result command.Result) Health {
 	if len(result.Rows) == 0 {
-		return SystemHealth{}
+		return Health{}
 	}
 	row := result.Rows[0]
-	return SystemHealth{
+	return Health{
 		Voltage:        row["voltage"],
 		Temperature:    row["temperature"],
 		CPUTemperature: row["cpu-temperature"],
@@ -62,13 +62,13 @@ func ParseHealth(result command.Result) SystemHealth {
 	}
 }
 
-// ParseClock converts command.Result from /system/clock/print into a SystemClock struct.
-func ParseClock(result command.Result) SystemClock {
+// ParseClock converts command.Result from /system/clock/print into a Clock struct.
+func ParseClock(result command.Result) Clock {
 	if len(result.Rows) == 0 {
-		return SystemClock{}
+		return Clock{}
 	}
 	row := result.Rows[0]
-	return SystemClock{
+	return Clock{
 		Time:         row["time"],
 		Date:         row["date"],
 		TimeZoneName: row["time-zone-name"],
@@ -77,21 +77,21 @@ func ParseClock(result command.Result) SystemClock {
 	}
 }
 
-// ParseIdentity converts a command.Result from /system/identity/print into a SystemIdentity struct.
-func ParseIdentity(result command.Result) SystemIdentity {
+// ParseIdentity converts a command.Result from /system/identity/print into a Identity struct.
+func ParseIdentity(result command.Result) Identity {
 	if len(result.Rows) == 0 {
-		return SystemIdentity{}
+		return Identity{}
 	}
-	return SystemIdentity{Name: result.Rows[0]["name"]}
+	return Identity{Name: result.Rows[0]["name"]}
 }
 
-// ParseRouterboard converts a command.Result from /system/routerboard/print into a SystemRouterboard struct.
-func ParseRouterboard(result command.Result) SystemRouterboard {
+// ParseRouterboard converts a command.Result from /system/routerboard/print into a Routerboard struct.
+func ParseRouterboard(result command.Result) Routerboard {
 	if len(result.Rows) == 0 {
-		return SystemRouterboard{}
+		return Routerboard{}
 	}
 	row := result.Rows[0]
-	return SystemRouterboard{
+	return Routerboard{
 		BoardName:       row["board-name"],
 		Model:           row["model"],
 		SerialNumber:    row["serial-number"],

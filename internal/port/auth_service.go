@@ -20,6 +20,18 @@ type RoleAuthorizer interface {
 	DeleteRolesForUser(user string) (bool, error)
 }
 
+// RBACManager defines the contract for managing roles, policies, and permissions.
+type RBACManager interface {
+	GetPolicies() ([][]string, error)
+	AddPolicy(sub, obj, act string) (bool, error)
+	RemovePolicy(sub, obj, act string) (bool, error)
+	GetGroupingPolicies() ([][]string, error)
+	AddRoleForUser(user, role string) (bool, error)
+	DeleteRoleForUser(user, role string) (bool, error)
+	SyncRolePermissions(role string, permissions []string) error
+	DeleteRole(role string) error
+}
+
 // TokenService defines the contract for generating, validating, and revoking JWT tokens.
 type TokenService interface {
 	GenerateAccessToken(userID, username, role string) (string, error)

@@ -38,7 +38,7 @@ func newHandlerFixture(t *testing.T) (*connectReg.RegistrationConnectHandler, *m
 		Subs: subs, Invoices: invoices, Audit: audit,
 	})
 
-	handler := connectReg.NewRegistrationConnectHandler(mgr, conv, repo)
+	handler := connectReg.NewRegistrationConnectHandler(mgr, conv)
 	return handler, repo, plans
 }
 

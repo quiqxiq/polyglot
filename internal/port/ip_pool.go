@@ -1,10 +1,7 @@
 package port
 
+import "github.com/quixiq/polyglot/internal/domain/device"
+
 // IPPool represents one row returned by /ip/pool/print.
-type IPPool struct {
-	RosID    string
-	Name     string
-	Ranges   string
-	NextPool string
-	Comment  string
-}
+// Aliased to domain model per DEVELOPMENT-GUIDELINES.md §4.2.
+type IPPool = device.IPPool

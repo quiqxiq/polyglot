@@ -45,7 +45,7 @@ func NewPrintParentQueuesCommand() command.Command {
 }
 
 // NewStreamQueueStatsCommand builds the command.Command for streaming /queue/simple/print.
-func NewStreamQueueStatsCommand(p QueueStreamParams) command.Command {
+func NewStreamQueueStatsCommand(p StreamParams) command.Command {
 	interval := p.Interval
 	if interval == "" {
 		interval = "1s"

@@ -30,6 +30,7 @@ type DeviceConnectHandler struct {
 	metricsUC    *deviceUC.ManageMetricsUseCase
 	isolationUC  *deviceUC.ManageIsolationUseCase
 	driverGetter DriverGetter
+	streamGW     port.MonitorStreamGateway
 }
 
 // NewDeviceConnectHandler constructs a device ConnectRPC handler.
@@ -39,6 +40,7 @@ func NewDeviceConnectHandler(
 	getter DriverGetter,
 	metricsUC *deviceUC.ManageMetricsUseCase,
 	isolationUC *deviceUC.ManageIsolationUseCase,
+	streamGW port.MonitorStreamGateway,
 ) *DeviceConnectHandler {
 	return &DeviceConnectHandler{
 		useCase:      uc,
@@ -46,6 +48,7 @@ func NewDeviceConnectHandler(
 		driverGetter: getter,
 		metricsUC:    metricsUC,
 		isolationUC:  isolationUC,
+		streamGW:     streamGW,
 	}
 }
 

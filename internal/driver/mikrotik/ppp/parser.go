@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 )
 
 // ParseSecrets converts command.Result rows from /ppp/secret/print into typed PPPoESecret values.
@@ -108,33 +109,10 @@ func ParseProfiles(result command.Result) []PPPProfile {
 
 // FilterInactiveSecrets returns the secrets of subscribers who are currently offline.
 func FilterInactiveSecrets(secrets []PPPoESecret, active []PPPActiveSession) []PPPoESecret {
-	activeMap := make(map[string]bool, len(active))
-	for _, s := range active {
-		activeMap[s.Name] = true
-	}
-	inactive := make([]PPPoESecret, 0)
-	for _, s := range secrets {
-		if !activeMap[s.Name] {
-			inactive = append(inactive, s)
-		}
-	}
-	return inactive
+	return domainPPP.FilterInactiveSecrets(secrets, active)
 }
 
 // EnrichActiveSessionsWithProfiles enriches PPP active sessions with profile from /ppp/secret.
 func EnrichActiveSessionsWithProfiles(active []PPPActiveSession, secrets []PPPoESecret) []PPPActiveSession {
-	secretMap := make(map[string]string, len(secrets))
-	for _, s := range secrets {
-		if s.Profile != "" {
-			secretMap[s.Name] = s.Profile
-		}
-	}
-	for i := range active {
-		if active[i].Profile == "" {
-			if prof, ok := secretMap[active[i].Name]; ok {
-				active[i].Profile = prof
-			}
-		}
-	}
-	return active
+	return domainPPP.EnrichActiveSessionsWithProfiles(active, secrets)
 }

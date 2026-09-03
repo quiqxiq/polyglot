@@ -10,7 +10,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	templatefs "github.com/quixiq/polyglot/internal/template"
 	"github.com/quixiq/polyglot/pkg/fault"
@@ -140,10 +140,10 @@ func (h *HotspotConnectHandler) RenderVouchers(ctx context.Context, req *connect
 		}
 	}
 
-	profileMeta := map[string]hotspot.ProfileMeta{}
+	profileMeta := map[string]domainHotspot.ProfileMeta{}
 	if profiles, err := h.useCase.GetProfiles(ctx, driver); err == nil {
 		for _, p := range profiles {
-			if meta, perr := hotspot.ParseOnLoginScript(p.OnLogin); perr == nil {
+			if meta, perr := domainHotspot.ParseOnLoginScript(p.OnLogin); perr == nil {
 				profileMeta[p.Name] = meta
 			}
 		}

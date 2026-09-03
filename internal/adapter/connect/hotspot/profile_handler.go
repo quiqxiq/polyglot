@@ -8,7 +8,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -23,7 +23,7 @@ func (h *HotspotConnectHandler) CreateProfile(ctx context.Context, req *connect.
 	}
 
 	params := ProfileParamsFromProto(req.Msg.Profile)
-	params.Name = hotspot.NormalizeProfileName(params.Name)
+	params.Name = domainHotspot.NormalizeProfileName(params.Name)
 
 	if _, err := h.useCase.CreateProfile(ctx, driver, params); err != nil {
 		return nil, response.MapDomainError(err)

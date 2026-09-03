@@ -5,12 +5,13 @@ import (
 
 	"connectrpc.com/connect"
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
+	"github.com/quixiq/polyglot/internal/port"
 	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
 )
 
 // NewPPPServiceHandler creates the Connect http.Handler for PPPService.
-func NewPPPServiceHandler(uc *pppUC.UseCase, provider ConnectDriverProvider) (string, http.Handler) {
-	handler := NewPPPConnectHandler(uc, provider)
+func NewPPPServiceHandler(uc *pppUC.UseCase, provider ConnectDriverProvider, streamGW port.MonitorStreamGateway) (string, http.Handler) {
+	handler := NewPPPConnectHandler(uc, provider, streamGW)
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()
 

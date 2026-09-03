@@ -6,12 +6,12 @@ import (
 	"connectrpc.com/connect"
 
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
-	"github.com/quixiq/polyglot/internal/port"
+	notificationUC "github.com/quixiq/polyglot/internal/usecase/notification"
 )
 
 // NewNotificationServiceHandler creates the notification ConnectRPC service handler.
-func NewNotificationServiceHandler(repo port.NotificationRepository, sender port.NotificationSender) (string, http.Handler) {
-	handler := NewNotificationConnectHandler(repo, sender)
+func NewNotificationServiceHandler(uc *notificationUC.ManageNotificationUseCase) (string, http.Handler) {
+	handler := NewNotificationConnectHandler(uc)
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()
 
