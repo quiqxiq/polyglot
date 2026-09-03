@@ -103,7 +103,7 @@ flowchart TD
     Q5 -- Ya --> A5["internal/driver/<vendor>/<driver|commands|modul>.go"]
     Q5 -- Tidak --> Q6{"6. Apakah ini implementasi storage/infra (Postgres/Redis/Vault/Auth)?"}
     
-    Q6 -- Ya --> A6["internal/adapter/<postgres|redis|vault|auth>/<file>.go"]
+    Q6 -- Ya --> A6["internal/adapter/<postgres|redis|auth|storage|tripay|llm|provisioner|whatsapp>/<file>.go"]
     Q6 -- Tidak --> Q7{"7. Apakah utilitas generik murni (mis. logger, parser latency, retry)?"}
     
     Q7 -- Ya --> A7["pkg/<nama_utilitas>/<nama>.go"]
@@ -129,6 +129,15 @@ flowchart TD
 | `internal/adapter/ws/` | SSE Event Hub & WebSocket Terminal | `sse_hub.go`, `device_stream_handler.go`, `router.go` | `internal/adapter/ws/sse_hub.go` |
 | `internal/adapter/postgres/` | Implementasi GORM Repository | `<resource>_repository.go`, `store.go` | `internal/adapter/postgres/user_repository.go` |
 | `internal/adapter/auth/` | Implementasi JWT & Casbin Enforcer | `jwt.go`, `casbin.go`, `refresh_token.go` | `internal/adapter/auth/jwt.go` |
+| `internal/adapter/redis/` | Implementasi cache/rate-limit Redis | `<name>.go` | `internal/adapter/redis/` |
+| `internal/adapter/storage/` | Penyimpanan file/skill di filesystem | `fs_skill_store.go` | `internal/adapter/storage/fs_skill_store.go` |
+| `internal/adapter/llm/` | Klien provider LLM | `<name>.go` | `internal/adapter/llm/` |
+| `internal/adapter/mcp/` | MCP server handler | `<name>.go` | `internal/adapter/mcp/` |
+| `internal/adapter/provisioner/` | Orkestrasi provisi/isolir pelanggan | `<name>.go` | `internal/adapter/provisioner/` |
+| `internal/adapter/tripay/` | Payment gateway Tripay | `adapter.go` | `internal/adapter/tripay/adapter.go` |
+| `internal/adapter/whatsapp/` | Adapter gateway WhatsApp | `<name>.go` | `internal/adapter/whatsapp/` |
+| `internal/template/` | Asset template statis (embed.FS) | `embed.go`, `*.txt` | `internal/template/embed.go` |
+| `internal/voucher/` | Renderer HTML voucher hotspot (membaca `internal/template.FS`) | `generator.go` | `internal/voucher/generator.go` |
 | `internal/driver/<vendor>/` | Komunikasi vendor hardware jaringan | `driver.go`, `commands.go`, `<submodul>.go` | `internal/driver/mikrotik/system_resource.go` |
 | `pkg/<utilitas>/` | Utilitas mandiri non-domain | `<utilitas>.go` | `pkg/logger/logger.go` |
 | `migrations/` | File migrasi skema database PostgreSQL | `NNNNNN_<name>.up.sql`, `.down.sql` | `migrations/000001_create_devices_table.up.sql` |
@@ -415,6 +424,12 @@ Driver adalah tempat isolasi vendor jaringan. Setiap vendor driver memiliki:
 // Bukti compile-time bahwa struct memenuhi port.DeviceDriver
 var _ port.DeviceDriver = (*Driver)(nil)
 ```
+
+**Pengecualian terdokumentasi di `internal/driver/`:**
+- `genericcli/`: shared engine scrapligo untuk vendor terkurasi (ADR-0004) — bukan driver mandiri, tidak mengimplementasikan `port.DeviceDriver`; katalognya di `catalog.go`.
+- `generictelnet/`: `Classify`/`Translate` ditulis inline di `driver.go` (tidak ada `commands.go` terpisah) karena katalognya kecil.
+- `whatsapp/`: klien messaging (session manager, sender, QR) — BUKAN `DeviceDriver`; ditempatkan di `driver/` karena berkomunikasi langsung dengan protokol eksternal, bukan karena kontrak device.
+- `mikrotik/`: dual-connection + streaming (ADR-0003) sehingga dipecah menjadi `driver.go`, `connect.go`, `stream.go`, `commands.go` — ditandai `// DEVIASI:` di `driver.go`.
 
 ---
 
