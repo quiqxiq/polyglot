@@ -35,4 +35,9 @@ var (
 	ErrOTPLocked            = fault.New(fault.KindResourceExhausted, "portal: otp locked: too many failed attempts")
 	ErrOTPExpired           = fault.New(fault.KindUnauthenticated, "portal: otp expired")
 	ErrOTPNotFound          = fault.New(fault.KindNotFound, "portal: otp not found or already used")
+
+	// Customer import errors (CSV/XLSX bulk import).
+	ErrImportFileEmpty = fault.New(fault.KindInvalidInput, "customer: import file empty or header only")
+	ErrImportHeader    = fault.New(fault.KindInvalidInput, "customer: unrecognized import header, download the export template as reference")
+	ErrImportNoSheet   = fault.New(fault.KindInvalidInput, "customer: import xlsx has no sheet")
 )

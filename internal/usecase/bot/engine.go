@@ -2,7 +2,6 @@ package bot
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -108,11 +107,11 @@ func (e *Engine) HandleIncomingMessage(ctx context.Context, sessionID uint, chat
 	}
 
 	if e.waGateway == nil {
-		return errors.New("bot engine: whatsapp gateway not initialized")
+		return bot.ErrGatewayNotInitialized
 	}
 
 	if e.convService == nil {
-		return errors.New("bot engine: conversation service not initialized")
+		return bot.ErrConversationServiceNotInitialized
 	}
 
 	sessionTimeout := 30

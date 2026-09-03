@@ -2,7 +2,6 @@ package setting
 
 import (
 	"context"
-	"errors"
 
 	"github.com/quixiq/polyglot/internal/domain/setting"
 	"github.com/quixiq/polyglot/internal/port"
@@ -21,21 +20,21 @@ func NewManageSettingUseCase(repo port.SettingRepository) *ManageSettingUseCase 
 
 func (u *ManageSettingUseCase) GetAllSettings(ctx context.Context) ([]setting.Setting, error) {
 	if u.repo == nil {
-		return nil, errors.New("setting repository is nil")
+		return nil, setting.ErrRepositoryNotConfigured
 	}
 	return u.repo.GetAll(ctx)
 }
 
 func (u *ManageSettingUseCase) GetSettingsByCategory(ctx context.Context, category string) ([]setting.Setting, error) {
 	if u.repo == nil {
-		return nil, errors.New("setting repository is nil")
+		return nil, setting.ErrRepositoryNotConfigured
 	}
 	return u.repo.GetByCategory(ctx, category)
 }
 
 func (u *ManageSettingUseCase) UpdateSetting(ctx context.Context, key, value string) (*setting.Setting, error) {
 	if u.repo == nil {
-		return nil, errors.New("setting repository is nil")
+		return nil, setting.ErrRepositoryNotConfigured
 	}
 
 	existing, err := u.repo.Get(ctx, key)
@@ -56,7 +55,7 @@ func (u *ManageSettingUseCase) UpdateSetting(ctx context.Context, key, value str
 
 func (u *ManageSettingUseCase) BatchUpdateSettings(ctx context.Context, settings []setting.Setting) error {
 	if u.repo == nil {
-		return errors.New("setting repository is nil")
+		return setting.ErrRepositoryNotConfigured
 	}
 	if len(settings) == 0 {
 		return nil
@@ -79,7 +78,7 @@ func (u *ManageSettingUseCase) GetBotSettings(ctx context.Context) (*setting.Bot
 
 func (u *ManageSettingUseCase) UpdateBotSettings(ctx context.Context, s *setting.BotSettings) error {
 	if u.repo == nil {
-		return errors.New("setting repository is nil")
+		return setting.ErrRepositoryNotConfigured
 	}
 	if err := u.repo.SaveBotSettings(ctx, s); err != nil {
 		return err

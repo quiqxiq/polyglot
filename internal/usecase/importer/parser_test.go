@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
 )
 
@@ -82,7 +83,7 @@ func TestCSXXLSX_RoundTrip(t *testing.T) {
 
 func TestParseCSV_BadHeader(t *testing.T) {
 	_, err := importer.ParseCSV(strings.NewReader("kolom_asal,kolom_ngasal\n1,2\n"))
-	assert.ErrorContains(t, err, "unrecognized header")
+	assert.ErrorIs(t, err, domainCustomer.ErrImportHeader)
 }
 
 func TestParseCSV_EmptyFile(t *testing.T) {

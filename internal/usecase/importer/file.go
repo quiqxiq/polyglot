@@ -3,13 +3,14 @@ package importer
 import (
 	"bytes"
 	"encoding/csv"
-	"errors"
 	"fmt"
 	"io"
 	"strconv"
 	"strings"
 
 	"github.com/xuri/excelize/v2"
+
+	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
 )
 
 // ParseCSV membaca baris data dari CSV (baris pertama = header).
@@ -32,7 +33,7 @@ func ParseXLSX(data []byte) ([]Row, error) {
 	defer func() { _ = f.Close() }()
 	sheet := f.GetSheetList()
 	if len(sheet) == 0 {
-		return nil, errors.New("XLSX tanpa sheet")
+		return nil, domainCustomer.ErrImportNoSheet
 	}
 	rows, err := f.GetRows(sheet[0])
 	if err != nil {
@@ -101,11 +102,11 @@ func WriteXLSX(rows []Row) ([]byte, error) {
 
 func parseRecords(records [][]string) ([]Row, error) {
 	if len(records) < 2 {
-		return nil, errors.New("importer: file empty or header only")
+		return nil, domainCustomer.ErrImportFileEmpty
 	}
 	m := mapHeaders(records[0])
 	if len(m) == 0 {
-		return nil, errors.New("importer: unrecognized header: download the export template as reference")
+		return nil, domainCustomer.ErrImportHeader
 	}
 	rows := make([]Row, 0, len(records)-1)
 	for i, cells := range records[1:] {

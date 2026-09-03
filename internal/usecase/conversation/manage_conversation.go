@@ -2,7 +2,6 @@ package conversation
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"time"
 
@@ -86,7 +85,7 @@ func (s *ConversationUseCase) GetOrCreateConversation(ctx context.Context, sessi
 
 func (s *ConversationUseCase) AddMessageWithConfig(ctx context.Context, convID uint, senderType string, content string, tokenIn, tokenOut int, llmConfigID *uint) (*bot.Message, error) {
 	if convID == 0 {
-		return nil, errors.New("conversation id is required")
+		return nil, bot.ErrConversationIDRequired
 	}
 	msg := &bot.Message{
 		ConversationID: convID,
