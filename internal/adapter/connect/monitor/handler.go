@@ -11,7 +11,7 @@ import (
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
-// ConnectDriverProvider signature to obtain a port.DeviceDriver for a given deviceId.
+// ConnectDriverProvider signature to obtain a port.DeviceDriver for a given deviceID.
 type ConnectDriverProvider = iconnect.DriverProvider
 
 // NetworkMonitorConnectHandler implements the NetworkMonitorService ConnectRPC service.
