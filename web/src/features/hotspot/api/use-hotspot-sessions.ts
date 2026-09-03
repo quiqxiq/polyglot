@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { hotspotClient } from '@/lib/api-client'
+import { hotspotClient, networkClient } from '@/lib/api-client'
 import { hotspotKeys } from './keys'
 import {
   KickHotspotSessionRequest,
   RemoveHotspotHostRequest,
-  BlockDHCPLeaseRequest,
 } from '@/gen/v1/hotspot_pb'
+import { BlockDHCPLeaseRequest } from '@/gen/v1/network_pb'
 
 export function useHotspotActiveSessionsQuery(deviceId: string, enabled = true) {
   return useQuery({
@@ -44,7 +44,7 @@ export function useDHCPLeasesQuery(deviceId: string, macFilter = '', enabled = t
   return useQuery({
     queryKey: hotspotKeys.dhcpLeases(deviceId, macFilter),
     queryFn: async () => {
-      const res = await hotspotClient.listDHCPLeases({ deviceId, macFilter })
+      const res = await networkClient.listDHCPLeases({ deviceId, macFilter })
       return res.leases
     },
     enabled: Boolean(deviceId) && enabled,
@@ -79,7 +79,7 @@ export function useBlockDHCPLeaseMutation() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (params: { deviceId: string; rosId: string; blocked: boolean; comment?: string }) => {
-      return await hotspotClient.blockDHCPLease(new BlockDHCPLeaseRequest(params))
+      return await networkClient.blockDHCPLease(new BlockDHCPLeaseRequest(params))
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: hotspotKeys.dhcpLeases(variables.deviceId) })

@@ -1,6 +1,6 @@
 import { toast } from 'sonner'
 import { ConfirmDialog } from '@/components/confirm-dialog'
-import { DeletePlanRequest } from '@/gen/v1/billing_pb'
+import { DeletePlanRequest } from '@/gen/v1/plan_pb'
 import { useDeviceStore } from '@/stores/device-store'
 import { useDeletePlanMutation } from '../api/use-plans'
 import { usePlans } from './plans-provider'

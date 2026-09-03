@@ -1,3 +1,4 @@
+// DEVIASI: Test harness aggregating mock fakes for all core repositories.
 package mocktest
 
 import (
@@ -506,4 +507,26 @@ func (f *FakeInvoiceRepo) HasForSubscription(_ context.Context, subID string) (b
 		}
 	}
 	return false, nil
+}
+
+// Delete removes an invoice and its items by ID.
+func (f *FakeInvoiceRepo) Delete(_ context.Context, id string) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	delete(f.byID, id)
+	delete(f.items, id)
+	return nil
+}
+
+// DeleteByCustomerID removes all invoices and items for a customer.
+func (f *FakeInvoiceRepo) DeleteByCustomerID(_ context.Context, customerID string) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	for id, inv := range f.byID {
+		if inv.CustomerID == customerID {
+			delete(f.byID, id)
+			delete(f.items, id)
+		}
+	}
+	return nil
 }

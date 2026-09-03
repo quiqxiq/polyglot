@@ -7,7 +7,7 @@ import {
   ResumeSubscriptionRequest,
   TerminateSubscriptionRequest,
   type Subscription,
-} from '@/gen/v1/billing_pb'
+} from '@/gen/v1/subscription_pb'
 import {
   useActivateSubscriptionMutation,
   useIsolateSubscriptionMutation,

@@ -134,3 +134,29 @@ func (r *InvoiceRepository) HasForSubscription(ctx context.Context, subID string
 		Count(&n).Error
 	return n > 0, err
 }
+
+// Delete hard-deletes an invoice by id.
+func (r *InvoiceRepository) Delete(ctx context.Context, id string) error {
+	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		if err := tx.Where("invoice_id = ?", id).Delete(&model.InvoiceItemModel{}).Error; err != nil {
+			return err
+		}
+		return tx.Where("id = ?", id).Delete(&model.InvoiceModel{}).Error
+	})
+}
+
+// DeleteByCustomerID hard-deletes all invoices and invoice items belonging to customerID.
+func (r *InvoiceRepository) DeleteByCustomerID(ctx context.Context, customerID string) error {
+	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		var invoiceIDs []string
+		if err := tx.Model(&model.InvoiceModel{}).Where("customer_id = ?", customerID).Pluck("id", &invoiceIDs).Error; err != nil {
+			return err
+		}
+		if len(invoiceIDs) > 0 {
+			if err := tx.Where("invoice_id IN ?", invoiceIDs).Delete(&model.InvoiceItemModel{}).Error; err != nil {
+				return err
+			}
+		}
+		return tx.Where("customer_id = ?", customerID).Delete(&model.InvoiceModel{}).Error
+	})
+}

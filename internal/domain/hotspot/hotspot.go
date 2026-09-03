@@ -1,5 +1,10 @@
 package hotspot
 
+import (
+	"fmt"
+	"strings"
+)
+
 // HotspotUser represents a hotspot user account on a network device.
 type HotspotUser struct {
 	RosID         string
@@ -141,4 +146,29 @@ type MikhmonComment struct {
 	ExpireTime  string
 	ExpireMode  string
 	RawComment  string
+}
+
+// ParseDataLimit converts human-readable data limit strings like "100m", "1g", "500k"
+// into integer byte counts.
+func ParseDataLimit(s string) int64 {
+	s = strings.TrimSpace(strings.ToLower(s))
+	if s == "" {
+		return 0
+	}
+	unit := s[len(s)-1]
+	valStr := s[:len(s)-1]
+	var multiplier int64 = 1
+	switch unit {
+	case 'k':
+		multiplier = 1024
+	case 'm':
+		multiplier = 1024 * 1024
+	case 'g':
+		multiplier = 1024 * 1024 * 1024
+	default:
+		valStr = s
+	}
+	var val int64
+	_, _ = fmt.Sscanf(valStr, "%d", &val)
+	return val * multiplier
 }

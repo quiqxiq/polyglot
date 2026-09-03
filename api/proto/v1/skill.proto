@@ -1,0 +1,266 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// -----------------------------------------------------------------------------
+// Skill Messages (LocalAI Standard)
+// -----------------------------------------------------------------------------
+
+message Skill {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string content = 4;
+  string license = 5;
+  string compatibility = 6;
+  string allowed_tools = 7;
+  map<string, string> metadata = 8;
+  bool read_only = 9;
+  string source_type = 10;
+  string source_url = 11;
+  string created_at = 12;
+  string updated_at = 13;
+}
+
+message SkillResource {
+  string path = 1;
+  string name = 2;
+  string type = 3;
+  int64 size = 4;
+  string mime_type = 5;
+  bool readable = 6;
+  string modified = 7;
+}
+
+message ResourceContent {
+  string content = 1;
+  string encoding = 2;
+  string mime_type = 3;
+  int64 size = 4;
+}
+
+message GitRepoInfo {
+  string id = 1;
+  string url = 2;
+  string name = 3;
+  bool enabled = 4;
+  string last_synced_at = 5;
+}
+
+message ListSkillsRequest {
+  string user_id = 1;
+}
+
+message ListSkillsResponse {
+  repeated Skill skills = 1;
+}
+
+message GetSkillRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string user_id = 2;
+}
+
+message GetSkillResponse {
+  Skill skill = 1;
+}
+
+message CreateSkillRequest {
+  string user_id = 1;
+  string name = 2 [(buf.validate.field).string.min_len = 1];
+  string description = 3;
+  string content = 4;
+  string license = 5;
+  string compatibility = 6;
+  string allowed_tools = 7;
+  map<string, string> metadata = 8;
+}
+
+message CreateSkillResponse {
+  Skill skill = 1;
+}
+
+message UpdateSkillRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string user_id = 2;
+  string name = 3;
+  string description = 4;
+  string content = 5;
+  string license = 6;
+  string compatibility = 7;
+  string allowed_tools = 8;
+  map<string, string> metadata = 9;
+}
+
+message UpdateSkillResponse {
+  Skill skill = 1;
+}
+
+message DeleteSkillRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string user_id = 2;
+}
+
+message DeleteSkillResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ExportSkillRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message ExportSkillResponse {
+  bytes archive = 1;
+  string filename = 2;
+}
+
+message ImportSkillRequest {
+  bytes archive = 1 [(buf.validate.field).bytes.min_len = 1];
+  string user_id = 2;
+}
+
+message ImportSkillResponse {
+  Skill skill = 1;
+}
+
+message ListResourcesRequest {
+  string skill_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message ListResourcesResponse {
+  repeated SkillResource resources = 1;
+}
+
+message GetResourceRequest {
+  string skill_id = 1 [(buf.validate.field).string.min_len = 1];
+  string path = 2 [(buf.validate.field).string.min_len = 1];
+}
+
+message GetResourceResponse {
+  ResourceContent content = 1;
+  SkillResource metadata = 2;
+}
+
+message SaveResourceRequest {
+  string skill_id = 1 [(buf.validate.field).string.min_len = 1];
+  string path = 2 [(buf.validate.field).string.min_len = 1];
+  bytes data = 3;
+}
+
+message SaveResourceResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message DeleteResourceRequest {
+  string skill_id = 1 [(buf.validate.field).string.min_len = 1];
+  string path = 2 [(buf.validate.field).string.min_len = 1];
+}
+
+message DeleteResourceResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ListGitReposRequest {}
+
+message ListGitReposResponse {
+  repeated GitRepoInfo repos = 1;
+}
+
+message AddGitRepoRequest {
+  string url = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message AddGitRepoResponse {
+  GitRepoInfo repo = 1;
+}
+
+message UpdateGitRepoRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string url = 2;
+  optional bool enabled = 3;
+}
+
+message UpdateGitRepoResponse {
+  GitRepoInfo repo = 1;
+}
+
+message DeleteGitRepoRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message DeleteGitRepoResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message SyncGitRepoRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message SyncGitRepoResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ToggleGitRepoRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message ToggleGitRepoResponse {
+  GitRepoInfo repo = 1;
+}
+
+message ToggleSkillRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string user_id = 2;
+  bool enabled = 3;
+}
+
+message ToggleSkillResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GetGlobalPromptRequest {}
+
+message GetGlobalPromptResponse {
+  string content = 1;
+}
+
+message SaveGlobalPromptRequest {
+  string content = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message SaveGlobalPromptResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+service SkillService {
+  rpc ListSkills (ListSkillsRequest) returns (ListSkillsResponse);
+  rpc GetSkill (GetSkillRequest) returns (GetSkillResponse);
+  rpc CreateSkill (CreateSkillRequest) returns (CreateSkillResponse);
+  rpc UpdateSkill (UpdateSkillRequest) returns (UpdateSkillResponse);
+  rpc DeleteSkill (DeleteSkillRequest) returns (DeleteSkillResponse);
+  rpc ExportSkill (ExportSkillRequest) returns (ExportSkillResponse);
+  rpc ImportSkill (ImportSkillRequest) returns (ImportSkillResponse);
+  rpc ListResources (ListResourcesRequest) returns (ListResourcesResponse);
+  rpc GetResource (GetResourceRequest) returns (GetResourceResponse);
+  rpc SaveResource (SaveResourceRequest) returns (SaveResourceResponse);
+  rpc DeleteResource (DeleteResourceRequest) returns (DeleteResourceResponse);
+  rpc ListGitRepos (ListGitReposRequest) returns (ListGitReposResponse);
+  rpc AddGitRepo (AddGitRepoRequest) returns (AddGitRepoResponse);
+  rpc UpdateGitRepo (UpdateGitRepoRequest) returns (UpdateGitRepoResponse);
+  rpc DeleteGitRepo (DeleteGitRepoRequest) returns (DeleteGitRepoResponse);
+  rpc SyncGitRepo (SyncGitRepoRequest) returns (SyncGitRepoResponse);
+  rpc ToggleGitRepo (ToggleGitRepoRequest) returns (ToggleGitRepoResponse);
+  rpc ToggleSkill (ToggleSkillRequest) returns (ToggleSkillResponse);
+  rpc GetGlobalPrompt (GetGlobalPromptRequest) returns (GetGlobalPromptResponse);
+  rpc SaveGlobalPrompt (SaveGlobalPromptRequest) returns (SaveGlobalPromptResponse);
+}

@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
-import { Plan, CreatePlanRequest, UpdatePlanRequest } from '@/gen/v1/billing_pb'
+import { Plan, CreatePlanRequest, UpdatePlanRequest } from '@/gen/v1/plan_pb'
 import { useDeviceStore } from '@/stores/device-store'
 import { Button } from '@/components/ui/button'
 import {

@@ -24,7 +24,7 @@ import {
   useDeleteSkillFile,
   useToggleSkill,
 } from './api/use-skills'
-import { botClient } from '@/lib/api-client'
+import { skillClient } from '@/lib/api-client'
 
 export function Skills() {
   const { data: serverSkills, isLoading: isSkillsLoading } = useSkills()
@@ -107,7 +107,7 @@ export function Skills() {
     setActiveSkill(skill)
     if (!file.content && file.path !== 'SKILL.md' && !file.isGlobal) {
       try {
-        const resp = await botClient.getResource({
+        const resp = await skillClient.getResource({
           skillId: skill.id,
           path: file.filePath || file.path,
         })

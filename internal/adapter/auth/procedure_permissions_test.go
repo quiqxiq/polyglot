@@ -1,50 +1,46 @@
 package auth
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestPermissionFor(t *testing.T) {
 	tests := []struct {
-		name      string
 		procedure string
 		want      string
-		wantOK    bool
+		ok        bool
 	}{
-		{"skill create", "/polyglot.v1.BotService/CreateSkill", "skill:manage", true},
-		{"device stream terminal", "/polyglot.v1.DeviceService/StreamTerminal", "device:terminal:exec", true},
-		{"device get ping config", "/polyglot.v1.DeviceService/GetDevicePingConfig", "device:read", true},
-		{"device update ping config", "/polyglot.v1.DeviceService/UpdateDevicePingConfig", "device:manage", true},
-		{"device query ping metrics", "/polyglot.v1.DeviceService/QueryDevicePingMetrics", "device:read", true},
-		{"rbac manage", "/polyglot.v1.RBACService/AssignRole", "rbac:manage", true},
-		{"hotspot stream", "/polyglot.v1.HotspotService/StreamTraffic", "hotspot:read", true},
-		{"hotspot stream logs", "/polyglot.v1.HotspotService/StreamLogs", "log:read", true},
-		{"hotspot create user", "/polyglot.v1.HotspotService/CreateUser", "hotspot:user:write", true},
-		{"hotspot create profile", "/polyglot.v1.HotspotService/CreateProfile", "hotspot:profile:write", true},
-		{"hotspot list hosts", "/polyglot.v1.HotspotService/ListHosts", "hotspot:host:read", true},
-		{"hotspot remove host", "/polyglot.v1.HotspotService/RemoveHost", "hotspot:host:manage", true},
-		{"hotspot voucher batch", "/polyglot.v1.HotspotService/GetVoucherBatch", "hotspot:voucher:generate", true},
-		{"hotspot list reports", "/polyglot.v1.HotspotService/ListReports", "hotspot:report:read", true},
-		{"hotspot delete report", "/polyglot.v1.HotspotService/DeleteReport", "hotspot:report:manage", true},
-		{"hotspot expire status", "/polyglot.v1.HotspotService/GetExpireMonitorStatus", "hotspot:expire:read", true},
-		{"hotspot expire setup", "/polyglot.v1.HotspotService/SetupExpireMonitor", "hotspot:expire:manage", true},
-		{"hotspot expire disable", "/polyglot.v1.HotspotService/DisableExpireMonitor", "hotspot:expire:manage", true},
-		{"hotspot expire remove", "/polyglot.v1.HotspotService/RemoveExpireMonitor", "hotspot:expire:manage", true},
-		{"hotspot list templates", "/polyglot.v1.HotspotService/ListTemplates", "hotspot:template:read", true},
-		{"hotspot get template section", "/polyglot.v1.HotspotService/GetTemplateSection", "hotspot:template:read", true},
-		{"hotspot render vouchers", "/polyglot.v1.HotspotService/RenderVouchers", "hotspot:voucher:generate", true},
-		{"ppp list secrets", "/polyglot.v1.PPPService/ListSecrets", "ppp:secret:read", true},
-		{"ppp create secret", "/polyglot.v1.PPPService/CreateSecret", "ppp:secret:write", true},
-		{"ppp kick active", "/polyglot.v1.PPPService/KickActiveSession", "ppp:active:kick", true},
-		{"ppp list profiles", "/polyglot.v1.PPPService/ListProfiles", "ppp:profile:read", true},
-		{"probe stream", "/polyglot.v1.ProbeService/StreamTelemetry", "probe:read", true},
-		{"unknown procedure", "/polyglot.v1.KnowledgeService/SomeNewRPC", "", false},
-		{"empty", "", "", false},
+		{"/polyglot.v1.DeviceService/ListDevices", "device:read", true},
+		{"/polyglot.v1.DeviceService/UpdateDevice", "device:manage", true},
+		{"/polyglot.v1.WhatsAppService/SendTextMessage", "whatsapp:message", true},
+		{"/polyglot.v1.BotService/ListConversations", "conversation:read", true},
+		{"/polyglot.v1.SkillService/ListSkills", "skill:read", true},
+		{"/polyglot.v1.SkillService/CreateSkill", "skill:manage", true},
+		{"/polyglot.v1.SkillService/SaveResource", "skill:manage", true},
+		{"/polyglot.v1.SkillService/SyncGitRepo", "skill:manage", true},
+		{"/polyglot.v1.LLMConfigService/ListLLMConfigs", "llmconfig:read", true},
+		{"/polyglot.v1.LLMConfigService/ActivateLLMConfig", "llmconfig:manage", true},
+		{"/polyglot.v1.BotService/ListTechnicians", "technician:read", true},
+		{"/polyglot.v1.HotspotService/ListProfiles", "hotspot:profile:read", true},
+		{"/polyglot.v1.HotspotService/GenerateVouchers", "hotspot:voucher:generate", true},
+		{"/polyglot.v1.NetworkService/ListDHCPLeases", "network:read", true},
+		{"/polyglot.v1.NetworkMonitorService/StreamTraffic", "monitor:read", true},
+		{"/polyglot.v1.PlanService/ListPlans", "plan:read", true},
+		{"/polyglot.v1.SubscriptionService/ListSubscriptions", "subscription:read", true},
+		{"/polyglot.v1.BillingService/ListInvoices", "billing:read", true},
+		{"/polyglot.v1.PPPService/ListSecrets", "ppp:secret:read", true},
+		{"/polyglot.v1.ProbeService/StreamTelemetry", "probe:read", true},
+		{"/polyglot.v1.UserService/ListUsers", "user:read", true},
+		{"/polyglot.v1.RBACService/ListPolicies", "rbac:manage", true},
+		{"/polyglot.v1.UnknownService/UnknownMethod", "", false},
+		{"", "", false},
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(tt.procedure, func(t *testing.T) {
 			got, ok := PermissionFor(tt.procedure)
-			if ok != tt.wantOK {
-				t.Fatalf("PermissionFor(%q) ok = %v, want %v", tt.procedure, ok, tt.wantOK)
+			if ok != tt.ok {
+				t.Fatalf("PermissionFor(%q) ok = %v, want %v", tt.procedure, ok, tt.ok)
 			}
 			if got != tt.want {
 				t.Fatalf("PermissionFor(%q) = %q, want %q", tt.procedure, got, tt.want)
@@ -59,22 +55,24 @@ func TestIspProceduresMapped(t *testing.T) {
 		"/polyglot.v1.BillingService/GetInvoice",
 		"/polyglot.v1.BillingService/CashierResolve",
 		"/polyglot.v1.BillingService/CashierPay",
-		"/polyglot.v1.BillingService/ListSubscriptions",
-		"/polyglot.v1.BillingService/GetSubscription",
-		"/polyglot.v1.BillingService/ChangePlan",
-		"/polyglot.v1.BillingService/SuspendSubscription",
-		"/polyglot.v1.BillingService/ResumeSubscription",
-		"/polyglot.v1.BillingService/TerminateSubscription",
-		"/polyglot.v1.BillingService/ActivateSubscription",
-		"/polyglot.v1.BillingService/IsolateSubscription",
-		"/polyglot.v1.BillingService/RestoreSubscription",
-		"/polyglot.v1.BillingService/ListPlans",
-
-		"/polyglot.v1.BillingService/GetPlan",
-		"/polyglot.v1.BillingService/CreatePlan",
-		"/polyglot.v1.BillingService/UpdatePlan",
-		"/polyglot.v1.BillingService/DeletePlan",
 		"/polyglot.v1.BillingService/GenerateInvoices",
+		"/polyglot.v1.SubscriptionService/ListSubscriptions",
+		"/polyglot.v1.SubscriptionService/GetSubscription",
+		"/polyglot.v1.SubscriptionService/CreateSubscription",
+		"/polyglot.v1.SubscriptionService/UpdateSubscription",
+		"/polyglot.v1.SubscriptionService/DeleteSubscription",
+		"/polyglot.v1.SubscriptionService/ChangePlan",
+		"/polyglot.v1.SubscriptionService/SuspendSubscription",
+		"/polyglot.v1.SubscriptionService/ResumeSubscription",
+		"/polyglot.v1.SubscriptionService/TerminateSubscription",
+		"/polyglot.v1.SubscriptionService/ActivateSubscription",
+		"/polyglot.v1.SubscriptionService/IsolateSubscription",
+		"/polyglot.v1.SubscriptionService/RestoreSubscription",
+		"/polyglot.v1.PlanService/ListPlans",
+		"/polyglot.v1.PlanService/GetPlan",
+		"/polyglot.v1.PlanService/CreatePlan",
+		"/polyglot.v1.PlanService/UpdatePlan",
+		"/polyglot.v1.PlanService/DeletePlan",
 		"/polyglot.v1.CustomerService/FindByPhone",
 		"/polyglot.v1.CustomerService/FindByCustomerCode",
 		"/polyglot.v1.CustomerService/FindByPortalCode",

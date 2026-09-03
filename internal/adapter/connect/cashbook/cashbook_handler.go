@@ -2,7 +2,6 @@ package cashbook
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"connectrpc.com/connect"
@@ -10,26 +9,28 @@ import (
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	domainCashbook "github.com/quixiq/polyglot/internal/domain/cashbook"
 	"github.com/quixiq/polyglot/internal/port"
-	"github.com/quixiq/polyglot/pkg/idgen"
+	cashbookUC "github.com/quixiq/polyglot/internal/usecase/cashbook"
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // CashbookConnectHandler implements the cashbook ConnectRPC service.
+//
+//nolint:revive // Explicit transport role is part of the project naming convention.
 type CashbookConnectHandler struct {
-	repo port.CashbookRepository
+	useCase *cashbookUC.ManageCashbookUseCase
 }
 
 // NewCashbookConnectHandler constructs a cashbook ConnectRPC handler.
-func NewCashbookConnectHandler(repo port.CashbookRepository) *CashbookConnectHandler {
-	return &CashbookConnectHandler{repo: repo}
+func NewCashbookConnectHandler(useCase *cashbookUC.ManageCashbookUseCase) *CashbookConnectHandler {
+	return &CashbookConnectHandler{useCase: useCase}
 }
 
 // ListAccounts returns cash accounts.
 func (h *CashbookConnectHandler) ListAccounts(ctx context.Context, req *connect.Request[devicepb.ListAccountsRequest]) (*connect.Response[devicepb.ListAccountsResponse], error) {
-	if h.repo == nil {
-		return nil, response.Unavailable("cashbook repository unavailable")
+	if h.useCase == nil {
+		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
-	list, err := h.repo.FindAccounts(ctx, req.Msg.ActiveOnly)
+	list, err := h.useCase.ListAccounts(ctx, req.Msg.ActiveOnly)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
@@ -40,35 +41,31 @@ func (h *CashbookConnectHandler) ListAccounts(ctx context.Context, req *connect.
 
 // SaveAccount creates or updates a cash account.
 func (h *CashbookConnectHandler) SaveAccount(ctx context.Context, req *connect.Request[devicepb.SaveAccountRequest]) (*connect.Response[devicepb.SaveAccountResponse], error) {
-	if h.repo == nil {
-		return nil, response.Unavailable("cashbook repository unavailable")
+	if h.useCase == nil {
+		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
 	pb := req.Msg.Account
-	id := pb.Id
-	if id == "" {
-		id = idgen.New("ca")
-	}
-	a := domainCashbook.CashAccount{
-		ID: id, TenantID: "tenant-default", AccountCode: pb.AccountCode,
-		Name: pb.Name, Type: pb.Type, IsActive: pb.IsActive,
-	}
-	if a.Type == "" {
-		a.Type = domainCashbook.AccountTypeCash
-	}
-	if err := h.repo.SaveAccount(ctx, a); err != nil {
+	a, err := h.useCase.SaveAccount(ctx, domainCashbook.CashAccount{
+		ID:          pb.Id,
+		AccountCode: pb.AccountCode,
+		Name:        pb.Name,
+		Type:        pb.Type,
+		IsActive:    pb.IsActive,
+	})
+	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.SaveAccountResponse{
-		Account: toProtoAccount(&a),
+		Account: toProtoAccount(a),
 	}), nil
 }
 
 // ListCategories returns cash categories.
 func (h *CashbookConnectHandler) ListCategories(ctx context.Context, req *connect.Request[devicepb.ListCategoriesRequest]) (*connect.Response[devicepb.ListCategoriesResponse], error) {
-	if h.repo == nil {
-		return nil, response.Unavailable("cashbook repository unavailable")
+	if h.useCase == nil {
+		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
-	list, err := h.repo.FindCategories(ctx, req.Msg.ActiveOnly)
+	list, err := h.useCase.ListCategories(ctx, req.Msg.ActiveOnly)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
@@ -79,64 +76,48 @@ func (h *CashbookConnectHandler) ListCategories(ctx context.Context, req *connec
 
 // SaveCategory creates or updates a cash category.
 func (h *CashbookConnectHandler) SaveCategory(ctx context.Context, req *connect.Request[devicepb.SaveCategoryRequest]) (*connect.Response[devicepb.SaveCategoryResponse], error) {
-	if h.repo == nil {
-		return nil, response.Unavailable("cashbook repository unavailable")
+	if h.useCase == nil {
+		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
 	pb := req.Msg.Category
-	id := pb.Id
-	if id == "" {
-		id = idgen.New("cc")
-	}
-	c := domainCashbook.CashCategory{
-		ID: id, TenantID: "tenant-default", Name: pb.Name,
-		Type: pb.Type, IsActive: pb.IsActive,
-	}
-	if c.Type == "" {
-		c.Type = domainCashbook.CategoryTypeExpense
-	}
-	if err := h.repo.SaveCategory(ctx, c); err != nil {
+	c, err := h.useCase.SaveCategory(ctx, domainCashbook.CashCategory{
+		ID:       pb.Id,
+		Name:     pb.Name,
+		Type:     pb.Type,
+		IsActive: pb.IsActive,
+	})
+	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.SaveCategoryResponse{
-		Category: toProtoCategory(&c),
+		Category: toProtoCategory(c),
 	}), nil
 }
 
 // AddTransaction records a cash transaction.
 func (h *CashbookConnectHandler) AddTransaction(ctx context.Context, req *connect.Request[devicepb.AddTransactionRequest]) (*connect.Response[devicepb.AddTransactionResponse], error) {
-	if h.repo == nil {
-		return nil, response.Unavailable("cashbook repository unavailable")
+	if h.useCase == nil {
+		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
-	now := time.Now()
-	dir := req.Msg.Direction
-	if dir == "" {
-		dir = domainCashbook.DirectionOut
-	}
-	t := domainCashbook.CashTransaction{
-		ID:            idgen.New("trx"),
-		TenantID:      "tenant-default",
-		TransactionNo: fmt.Sprintf("TRX-%s-%06d", now.Format("200601"), now.UnixNano()%1000000),
-		AccountID:     req.Msg.AccountId,
-		CategoryID:    req.Msg.CategoryId,
-		Direction:     dir,
-		Amount:        req.Msg.Amount,
-		TrxDate:       now,
-		SourceType:    domainCashbook.SourceExpense,
-		Description:   req.Msg.Description,
-		CreatedAt:     now,
-	}
-	if err := h.repo.SaveTransaction(ctx, t); err != nil {
+	t, err := h.useCase.AddTransaction(ctx, cashbookUC.AddTransactionInput{
+		AccountID:   req.Msg.AccountId,
+		CategoryID:  req.Msg.CategoryId,
+		Direction:   req.Msg.Direction,
+		Amount:      req.Msg.Amount,
+		Description: req.Msg.Description,
+	})
+	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.AddTransactionResponse{
-		Transaction: toProtoTransaction(&t),
+		Transaction: toProtoTransaction(t),
 	}), nil
 }
 
 // ListTransactions returns cash transactions matching the filter.
 func (h *CashbookConnectHandler) ListTransactions(ctx context.Context, req *connect.Request[devicepb.ListTransactionsFilter]) (*connect.Response[devicepb.ListTransactionsResponse], error) {
-	if h.repo == nil {
-		return nil, response.Unavailable("cashbook repository unavailable")
+	if h.useCase == nil {
+		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
 	f := port.CashTransactionFilter{
 		AccountID:  req.Msg.AccountId,
@@ -150,7 +131,7 @@ func (h *CashbookConnectHandler) ListTransactions(ctx context.Context, req *conn
 	if req.Msg.ToUnix > 0 {
 		f.To = time.Unix(req.Msg.ToUnix, 0)
 	}
-	list, err := h.repo.FindTransactions(ctx, f)
+	list, err := h.useCase.ListTransactions(ctx, f)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
@@ -161,8 +142,8 @@ func (h *CashbookConnectHandler) ListTransactions(ctx context.Context, req *conn
 
 // Balances returns account balances for the selected period.
 func (h *CashbookConnectHandler) Balances(ctx context.Context, req *connect.Request[devicepb.BalancesRequest]) (*connect.Response[devicepb.BalancesResponse], error) {
-	if h.repo == nil {
-		return nil, response.Unavailable("cashbook repository unavailable")
+	if h.useCase == nil {
+		return nil, response.Unavailable("cashbook usecase unavailable")
 	}
 	f := port.CashTransactionFilter{}
 	if req.Msg.FromUnix > 0 {
@@ -171,7 +152,7 @@ func (h *CashbookConnectHandler) Balances(ctx context.Context, req *connect.Requ
 	if req.Msg.ToUnix > 0 {
 		f.To = time.Unix(req.Msg.ToUnix, 0)
 	}
-	balances, err := h.repo.BalanceByAccounts(ctx, f)
+	balances, err := h.useCase.Balances(ctx, f)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}

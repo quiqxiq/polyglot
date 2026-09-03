@@ -22,7 +22,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { DataTablePagination } from '@/components/data-table'
-import type { Plan } from '@/gen/v1/billing_pb'
+import type { Plan } from '@/gen/v1/plan_pb'
 import { plansColumns as columns } from './plans-columns'
 
 interface PlansTableProps {

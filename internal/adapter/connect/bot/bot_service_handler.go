@@ -8,10 +8,8 @@ import (
 
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	"github.com/quixiq/polyglot/internal/domain/bot"
-	"github.com/quixiq/polyglot/internal/port"
 	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
-	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
 )
 
 // ConversationContextProvider abstracts the engine's ability to aggregate the
@@ -25,35 +23,23 @@ type ConversationContextProvider interface {
 type BotConnectHandler struct {
 	convService     *convUC.ConversationUseCase
 	contextProvider ConversationContextProvider
-	skillHandler    *SkillConnectHandler
-	llmRepo         port.LLMConfigRepository
-	encryptionKey   string
 }
 
 func NewBotConnectHandler(
 	convService *convUC.ConversationUseCase,
 	contextProvider ConversationContextProvider,
-	skillUC *skillUC.ManageSkillUseCase,
-	llmRepo port.LLMConfigRepository,
-	encryptionKey string,
 ) *BotConnectHandler {
 	return &BotConnectHandler{
 		convService:     convService,
 		contextProvider: contextProvider,
-		skillHandler:    NewSkillConnectHandler(skillUC),
-		llmRepo:         llmRepo,
-		encryptionKey:   encryptionKey,
 	}
 }
 
 func NewBotServiceHandler(
 	convService *convUC.ConversationUseCase,
 	contextProvider ConversationContextProvider,
-	skillUC *skillUC.ManageSkillUseCase,
-	llmRepo port.LLMConfigRepository,
-	encryptionKey string,
 ) (string, http.Handler) {
-	handler := NewBotConnectHandler(convService, contextProvider, skillUC, llmRepo, encryptionKey)
+	handler := NewBotConnectHandler(convService, contextProvider)
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()
 
@@ -96,142 +82,6 @@ func NewBotServiceHandler(
 	mux.Handle("/"+serviceName+"/GetRateLimitStatus", connect.NewUnaryHandler(
 		"/"+serviceName+"/GetRateLimitStatus",
 		handler.GetRateLimitStatus,
-		opts...,
-	))
-
-	// Skill RPCs (LocalAI Standard)
-	if handler.skillHandler != nil {
-		mux.Handle("/"+serviceName+"/ListSkills", connect.NewUnaryHandler(
-			"/"+serviceName+"/ListSkills",
-			handler.skillHandler.ListSkills,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/GetSkill", connect.NewUnaryHandler(
-			"/"+serviceName+"/GetSkill",
-			handler.skillHandler.GetSkill,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/CreateSkill", connect.NewUnaryHandler(
-			"/"+serviceName+"/CreateSkill",
-			handler.skillHandler.CreateSkill,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/UpdateSkill", connect.NewUnaryHandler(
-			"/"+serviceName+"/UpdateSkill",
-			handler.skillHandler.UpdateSkill,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/DeleteSkill", connect.NewUnaryHandler(
-			"/"+serviceName+"/DeleteSkill",
-			handler.skillHandler.DeleteSkill,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/ExportSkill", connect.NewUnaryHandler(
-			"/"+serviceName+"/ExportSkill",
-			handler.skillHandler.ExportSkill,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/ImportSkill", connect.NewUnaryHandler(
-			"/"+serviceName+"/ImportSkill",
-			handler.skillHandler.ImportSkill,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/ListResources", connect.NewUnaryHandler(
-			"/"+serviceName+"/ListResources",
-			handler.skillHandler.ListResources,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/GetResource", connect.NewUnaryHandler(
-			"/"+serviceName+"/GetResource",
-			handler.skillHandler.GetResource,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/SaveResource", connect.NewUnaryHandler(
-			"/"+serviceName+"/SaveResource",
-			handler.skillHandler.SaveResource,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/DeleteResource", connect.NewUnaryHandler(
-			"/"+serviceName+"/DeleteResource",
-			handler.skillHandler.DeleteResource,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/ListGitRepos", connect.NewUnaryHandler(
-			"/"+serviceName+"/ListGitRepos",
-			handler.skillHandler.ListGitRepos,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/AddGitRepo", connect.NewUnaryHandler(
-			"/"+serviceName+"/AddGitRepo",
-			handler.skillHandler.AddGitRepo,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/UpdateGitRepo", connect.NewUnaryHandler(
-			"/"+serviceName+"/UpdateGitRepo",
-			handler.skillHandler.UpdateGitRepo,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/DeleteGitRepo", connect.NewUnaryHandler(
-			"/"+serviceName+"/DeleteGitRepo",
-			handler.skillHandler.DeleteGitRepo,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/SyncGitRepo", connect.NewUnaryHandler(
-			"/"+serviceName+"/SyncGitRepo",
-			handler.skillHandler.SyncGitRepo,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/ToggleGitRepo", connect.NewUnaryHandler(
-			"/"+serviceName+"/ToggleGitRepo",
-			handler.skillHandler.ToggleGitRepo,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/ToggleSkill", connect.NewUnaryHandler(
-			"/"+serviceName+"/ToggleSkill",
-			handler.skillHandler.ToggleSkill,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/GetGlobalPrompt", connect.NewUnaryHandler(
-			"/"+serviceName+"/GetGlobalPrompt",
-			handler.skillHandler.GetGlobalPrompt,
-			opts...,
-		))
-		mux.Handle("/"+serviceName+"/SaveGlobalPrompt", connect.NewUnaryHandler(
-			"/"+serviceName+"/SaveGlobalPrompt",
-			handler.skillHandler.SaveGlobalPrompt,
-			opts...,
-		))
-	}
-
-	// LLM Config RPCs
-	mux.Handle("/"+serviceName+"/ListLLMConfigs", connect.NewUnaryHandler(
-		"/"+serviceName+"/ListLLMConfigs",
-		handler.ListLLMConfigs,
-		opts...,
-	))
-	mux.Handle("/"+serviceName+"/CreateLLMConfig", connect.NewUnaryHandler(
-		"/"+serviceName+"/CreateLLMConfig",
-		handler.CreateLLMConfig,
-		opts...,
-	))
-	mux.Handle("/"+serviceName+"/UpdateLLMConfig", connect.NewUnaryHandler(
-		"/"+serviceName+"/UpdateLLMConfig",
-		handler.UpdateLLMConfig,
-		opts...,
-	))
-	mux.Handle("/"+serviceName+"/ActivateLLMConfig", connect.NewUnaryHandler(
-		"/"+serviceName+"/ActivateLLMConfig",
-		handler.ActivateLLMConfig,
-		opts...,
-	))
-	mux.Handle("/"+serviceName+"/TestLLMConfig", connect.NewUnaryHandler(
-		"/"+serviceName+"/TestLLMConfig",
-		handler.TestLLMConfig,
-		opts...,
-	))
-	mux.Handle("/"+serviceName+"/DeleteLLMConfig", connect.NewUnaryHandler(
-		"/"+serviceName+"/DeleteLLMConfig",
-		handler.DeleteLLMConfig,
 		opts...,
 	))
 

@@ -106,6 +106,8 @@ export function useDeleteCustomerMutation() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: customerKeys.all })
+      queryClient.invalidateQueries({ queryKey: ['subscriptions'] })
+      queryClient.invalidateQueries({ queryKey: ['invoices'] })
     },
   })
 }

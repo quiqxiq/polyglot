@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { hotspotClient } from '@/lib/api-client'
+import { networkMonitorClient } from '@/lib/api-client'
 import { LogItem } from '../types'
 import { classifySeverity } from '../lib/log-formatter'
 
@@ -71,7 +71,7 @@ export function useLogStream({
           setIsLoading(true)
           setError(null)
 
-          const stream = hotspotClient.streamLogs(
+          const stream = networkMonitorClient.streamLogs(
             { deviceId, topics },
             { signal: abortController.signal }
           )

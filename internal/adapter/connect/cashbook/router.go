@@ -6,12 +6,12 @@ import (
 	"connectrpc.com/connect"
 
 	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
-	"github.com/quixiq/polyglot/internal/port"
+	cashbookUC "github.com/quixiq/polyglot/internal/usecase/cashbook"
 )
 
 // NewCashbookServiceHandler creates the cashbook ConnectRPC service handler.
-func NewCashbookServiceHandler(repo port.CashbookRepository) (string, http.Handler) {
-	handler := NewCashbookConnectHandler(repo)
+func NewCashbookServiceHandler(useCase *cashbookUC.ManageCashbookUseCase) (string, http.Handler) {
+	handler := NewCashbookConnectHandler(useCase)
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()
 

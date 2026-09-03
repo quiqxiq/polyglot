@@ -25,6 +25,7 @@ type ManageCustomerUseCase struct {
 	repo    port.CustomerRepository
 	subRepo port.SubscriptionRepository
 	invRepo port.InvoiceRepository
+	router  port.RouterAccountManager
 }
 
 // NewManageCustomerUseCase constructs a new ManageCustomerUseCase.
@@ -32,11 +33,13 @@ func NewManageCustomerUseCase(
 	repo port.CustomerRepository,
 	subRepo port.SubscriptionRepository,
 	invRepo port.InvoiceRepository,
+	router port.RouterAccountManager,
 ) *ManageCustomerUseCase {
 	return &ManageCustomerUseCase{
 		repo:    repo,
 		subRepo: subRepo,
 		invRepo: invRepo,
+		router:  router,
 	}
 }
 
@@ -199,10 +202,33 @@ func (uc *ManageCustomerUseCase) UpdateCustomer(ctx context.Context, c customer.
 	return c, nil
 }
 
+// DeleteCustomer removes a customer and cascade-deletes their subscriptions (including router accounts) and invoices.
 func (uc *ManageCustomerUseCase) DeleteCustomer(ctx context.Context, id string) error {
 	if id == "" {
 		return customer.ErrInvalidInput
 	}
+
+	// 1. Terminate router accounts & delete associated subscriptions
+	if uc.subRepo != nil {
+		subs, err := uc.subRepo.FindByCustomerID(ctx, id)
+		if err == nil {
+			for _, sub := range subs {
+				if uc.router != nil && sub.DeviceID != nil && *sub.DeviceID != "" && sub.RemoteUsername != "" {
+					_ = uc.router.Terminate(ctx, *sub.DeviceID, sub.ServiceType, sub.RemoteUsername)
+				}
+				_ = uc.subRepo.Delete(ctx, sub.ID)
+			}
+		}
+	}
+
+	// 2. Delete all invoices belonging to the customer
+	if uc.invRepo != nil {
+		if err := uc.invRepo.DeleteByCustomerID(ctx, id); err != nil {
+			return fmt.Errorf("delete customer invoices: %w", err)
+		}
+	}
+
+	// 3. Delete the customer record
 	if err := uc.repo.Delete(ctx, id); err != nil {
 		return fmt.Errorf("delete customer %s: %w", id, err)
 	}

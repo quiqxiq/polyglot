@@ -45,35 +45,3 @@ func (h *HotspotConnectHandler) KickActiveSession(ctx context.Context, req *conn
 		Message: fmt.Sprintf("session kicked: output=%s", res.Output),
 	}), nil
 }
-
-func (h *HotspotConnectHandler) ListDHCPLeases(ctx context.Context, req *connect.Request[devicepb.ListDHCPLeasesRequest]) (*connect.Response[devicepb.ListDHCPLeasesResponse], error) {
-	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
-	if err != nil {
-		return nil, err
-	}
-
-	leases, err := h.activeSessionsUseCase.GetDHCPLeases(ctx, driver, req.Msg.MacFilter)
-	if err != nil {
-		return nil, response.MapDomainError(err)
-	}
-
-	return connect.NewResponse(&devicepb.ListDHCPLeasesResponse{
-		Leases: toProtoDHCPLeases(leases),
-	}), nil
-}
-
-func (h *HotspotConnectHandler) BlockDHCPLease(ctx context.Context, req *connect.Request[devicepb.BlockDHCPLeaseRequest]) (*connect.Response[devicepb.BlockDHCPLeaseResponse], error) {
-	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := h.activeSessionsUseCase.SetDHCPLeaseBlock(ctx, driver, req.Msg.RosId, req.Msg.Blocked, req.Msg.Comment)
-	if err != nil {
-		return nil, response.MapDomainError(err)
-	}
-
-	return connect.NewResponse(&devicepb.BlockDHCPLeaseResponse{
-		Message: fmt.Sprintf("lease block status updated: output=%s", res.Output),
-	}), nil
-}

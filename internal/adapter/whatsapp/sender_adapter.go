@@ -1,30 +1,31 @@
-// Package whatsappadapter menjembatani port.NotificationSender ke
+// Package whatsapp menjembatani port.NotificationSender ke
 // SessionManager WhatsApp yang sudah berjalan (pilih session CONNECTED).
-package whatsappadapter
+package whatsapp
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/bot"
-	"github.com/quixiq/polyglot/internal/driver/whatsapp"
+	"github.com/quixiq/polyglot/internal/domain/notification"
+	driverWA "github.com/quixiq/polyglot/internal/driver/whatsapp"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/phone"
 )
 
-var ErrNoConnectedSession = errors.New("no connected whatsapp session")
+// ErrNoConnectedSession indicates no connected WhatsApp session is available.
+var ErrNoConnectedSession = notification.ErrNoWASession
 
 type SenderAdapter struct {
-	sessions *whatsapp.SessionManager
+	sessions *driverWA.SessionManager
 	list     func(ctx context.Context) ([]bot.WASession, error)
 }
 
 var _ port.NotificationSender = (*SenderAdapter)(nil)
 
 // NewSenderAdapter constructs the adapter. list biasanya pgStore.FindAllSessions.
-func NewSenderAdapter(sessions *whatsapp.SessionManager, list func(ctx context.Context) ([]bot.WASession, error)) *SenderAdapter {
+func NewSenderAdapter(sessions *driverWA.SessionManager, list func(ctx context.Context) ([]bot.WASession, error)) *SenderAdapter {
 	return &SenderAdapter{sessions: sessions, list: list}
 }
 

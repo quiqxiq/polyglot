@@ -11,14 +11,15 @@ import (
 	"github.com/quixiq/polyglot/internal/usecase/importer"
 )
 
-func NewIspAdminServiceHandler(
+// NewISPAdminServiceHandler mounts the IspAdminService ConnectRPC routes.
+func NewISPAdminServiceHandler(
 	upsert *importer.UpsertUseCase,
 	routerSrc *importer.RouterSource,
 	reconciler *importer.Reconciler,
 	exporter *importer.ExportUseCase,
 	resolver func(ctx context.Context, deviceID string) (port.DeviceDriver, bool),
 ) (string, http.Handler) {
-	handler := NewIspAdminConnectHandler(upsert, routerSrc, reconciler, exporter, resolver)
+	handler := NewISPAdminConnectHandler(upsert, routerSrc, reconciler, exporter, resolver)
 	mux := http.NewServeMux()
 	opts := iconnect.DefaultHandlerOptions()
 
@@ -30,3 +31,6 @@ func NewIspAdminServiceHandler(
 
 	return "/" + serviceName + "/", mux
 }
+
+// NewIspAdminServiceHandler preserves backward compatibility.
+var NewIspAdminServiceHandler = NewISPAdminServiceHandler

@@ -1,11 +1,11 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 	"runtime/debug"
 
 	"github.com/quixiq/polyglot/pkg/logger"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // Recovery returns standard net/http middleware that recovers from panics and logs with Logrus.
@@ -16,7 +16,7 @@ func Recovery() Middleware {
 				if rec := recover(); rec != nil {
 					stack := string(debug.Stack())
 					logger.WithComponent("HTTP").WithFields(map[string]any{"stack": stack, "panic": rec}).Error("panic recovered")
-					writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("Internal Server Error: %v", rec))
+					response.WriteHTTPStatusError(w, http.StatusInternalServerError, "internal server error")
 				}
 			}()
 			next.ServeHTTP(w, r)

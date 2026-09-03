@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ActivateSubscriptionRequest, ActivateSubscriptionResponse, CashierPayRequest, CashierPayResponse, CashierResolveRequest, CashierResolveResponse, ChangePlanRequest, ChangePlanResponse, CreatePlanRequest, CreatePlanResponse, CreateSubscriptionRequest, CreateSubscriptionResponse, DeletePlanRequest, DeletePlanResponse, DeleteSubscriptionRequest, DeleteSubscriptionResponse, GenerateInvoicesRequest, GenerateInvoicesResponse, GetInvoiceRequest, GetInvoiceResponse, GetPlanRequest, GetPlanResponse, GetSubscriptionRequest, GetSubscriptionResponse, IsolateSubscriptionRequest, IsolateSubscriptionResponse, ListInvoicesRequest, ListInvoicesResponse, ListPlansRequest, ListPlansResponse, ListSubscriptionsRequest, ListSubscriptionsResponse, RestoreSubscriptionRequest, RestoreSubscriptionResponse, ResumeSubscriptionRequest, ResumeSubscriptionResponse, SuspendSubscriptionRequest, SuspendSubscriptionResponse, TerminateSubscriptionRequest, TerminateSubscriptionResponse, UpdatePlanRequest, UpdatePlanResponse, UpdateSubscriptionRequest, UpdateSubscriptionResponse } from "./billing_pb.js";
+import { CashierPayRequest, CashierPayResponse, CashierResolveRequest, CashierResolveResponse, GenerateInvoicesRequest, GenerateInvoicesResponse, GetInvoiceRequest, GetInvoiceResponse, ListInvoicesRequest, ListInvoicesResponse } from "./billing_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -33,6 +33,15 @@ export const BillingService = {
       kind: MethodKind.Unary,
     },
     /**
+     * @generated from rpc polyglot.v1.BillingService.GenerateInvoices
+     */
+    generateInvoices: {
+      name: "GenerateInvoices",
+      I: GenerateInvoicesRequest,
+      O: GenerateInvoicesResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
      * Kasir
      *
      * @generated from rpc polyglot.v1.BillingService.CashierResolve
@@ -50,177 +59,6 @@ export const BillingService = {
       name: "CashierPay",
       I: CashierPayRequest,
       O: CashierPayResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * Langganan & lifecycle
-     *
-     * @generated from rpc polyglot.v1.BillingService.ListSubscriptions
-     */
-    listSubscriptions: {
-      name: "ListSubscriptions",
-      I: ListSubscriptionsRequest,
-      O: ListSubscriptionsResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.GetSubscription
-     */
-    getSubscription: {
-      name: "GetSubscription",
-      I: GetSubscriptionRequest,
-      O: GetSubscriptionResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.ChangePlan
-     */
-    changePlan: {
-      name: "ChangePlan",
-      I: ChangePlanRequest,
-      O: ChangePlanResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.SuspendSubscription
-     */
-    suspendSubscription: {
-      name: "SuspendSubscription",
-      I: SuspendSubscriptionRequest,
-      O: SuspendSubscriptionResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.ResumeSubscription
-     */
-    resumeSubscription: {
-      name: "ResumeSubscription",
-      I: ResumeSubscriptionRequest,
-      O: ResumeSubscriptionResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.TerminateSubscription
-     */
-    terminateSubscription: {
-      name: "TerminateSubscription",
-      I: TerminateSubscriptionRequest,
-      O: TerminateSubscriptionResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.ActivateSubscription
-     */
-    activateSubscription: {
-      name: "ActivateSubscription",
-      I: ActivateSubscriptionRequest,
-      O: ActivateSubscriptionResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.IsolateSubscription
-     */
-    isolateSubscription: {
-      name: "IsolateSubscription",
-      I: IsolateSubscriptionRequest,
-      O: IsolateSubscriptionResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.RestoreSubscription
-     */
-    restoreSubscription: {
-      name: "RestoreSubscription",
-      I: RestoreSubscriptionRequest,
-      O: RestoreSubscriptionResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * CRUD langsung (walk-in / operasional). Create juga tersedia dari
-     * halaman Customer detail. Ganti paket tetap via ChangePlan.
-     *
-     * @generated from rpc polyglot.v1.BillingService.CreateSubscription
-     */
-    createSubscription: {
-      name: "CreateSubscription",
-      I: CreateSubscriptionRequest,
-      O: CreateSubscriptionResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.UpdateSubscription
-     */
-    updateSubscription: {
-      name: "UpdateSubscription",
-      I: UpdateSubscriptionRequest,
-      O: UpdateSubscriptionResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.DeleteSubscription
-     */
-    deleteSubscription: {
-      name: "DeleteSubscription",
-      I: DeleteSubscriptionRequest,
-      O: DeleteSubscriptionResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * Paket layanan
-     *
-     * @generated from rpc polyglot.v1.BillingService.ListPlans
-     */
-    listPlans: {
-      name: "ListPlans",
-      I: ListPlansRequest,
-      O: ListPlansResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.GetPlan
-     */
-    getPlan: {
-      name: "GetPlan",
-      I: GetPlanRequest,
-      O: GetPlanResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.CreatePlan
-     */
-    createPlan: {
-      name: "CreatePlan",
-      I: CreatePlanRequest,
-      O: CreatePlanResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.UpdatePlan
-     */
-    updatePlan: {
-      name: "UpdatePlan",
-      I: UpdatePlanRequest,
-      O: UpdatePlanResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * @generated from rpc polyglot.v1.BillingService.DeletePlan
-     */
-    deletePlan: {
-      name: "DeletePlan",
-      I: DeletePlanRequest,
-      O: DeletePlanResponse,
-      kind: MethodKind.Unary,
-    },
-    /**
-     * Generator tagihan
-     *
-     * @generated from rpc polyglot.v1.BillingService.GenerateInvoices
-     */
-    generateInvoices: {
-      name: "GenerateInvoices",
-      I: GenerateInvoicesRequest,
-      O: GenerateInvoicesResponse,
       kind: MethodKind.Unary,
     },
   }

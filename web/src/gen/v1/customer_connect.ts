@@ -5,7 +5,7 @@
 
 import { CreateCustomerRequest, CreateCustomerResponse, DeleteCustomerRequest, DeleteCustomerResponse, FindCustomerByCodeRequest, FindCustomerByPhoneRequest, FindCustomerByPortalCodeRequest, FindCustomerResponse, GetCustomerRequest, GetCustomerResponse, ListCustomersRequest, ListCustomersResponse, UpdateCustomerRequest, UpdateCustomerResponse } from "./customer_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
-import { ListSubscriptionsRequest, ListSubscriptionsResponse } from "./billing_pb.js";
+import { ListSubscriptionsRequest, ListSubscriptionsResponse } from "./subscription_pb.js";
 
 /**
  * @generated from service polyglot.v1.CustomerService

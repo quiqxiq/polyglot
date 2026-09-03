@@ -2,7 +2,7 @@ import { type ColumnDef } from '@tanstack/react-table'
 import { Zap, Users } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { DataTableColumnHeader } from '@/components/data-table'
-import type { Plan } from '@/gen/v1/billing_pb'
+import type { Plan } from '@/gen/v1/plan_pb'
 import { PlansRowActions } from './plans-row-actions'
 
 const SERVICE_TYPE_BADGE: Record<string, string> = {

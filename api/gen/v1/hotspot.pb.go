@@ -162,6 +162,546 @@ func (x *HotspotProfile) GetLockServer() string {
 	return ""
 }
 
+type HotspotProfileParams struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Name            string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	AddressPool     string                 `protobuf:"bytes,2,opt,name=address_pool,json=addressPool,proto3" json:"address_pool,omitempty"`
+	SharedUsers     string                 `protobuf:"bytes,3,opt,name=shared_users,json=sharedUsers,proto3" json:"shared_users,omitempty"`
+	RateLimit       string                 `protobuf:"bytes,4,opt,name=rate_limit,json=rateLimit,proto3" json:"rate_limit,omitempty"` // "5M/5M"
+	ParentQueue     string                 `protobuf:"bytes,5,opt,name=parent_queue,json=parentQueue,proto3" json:"parent_queue,omitempty"`
+	Price           string                 `protobuf:"bytes,6,opt,name=price,proto3" json:"price,omitempty"`
+	SellingPrice    string                 `protobuf:"bytes,7,opt,name=selling_price,json=sellingPrice,proto3" json:"selling_price,omitempty"`
+	Validity        string                 `protobuf:"bytes,8,opt,name=validity,proto3" json:"validity,omitempty"`                       // "1d", "7d", "30d"
+	ExpireMode      string                 `protobuf:"bytes,9,opt,name=expire_mode,json=expireMode,proto3" json:"expire_mode,omitempty"` // "0" | "ntf" | "ntfc" | "rem" | "remc"
+	LockUser        bool                   `protobuf:"varint,10,opt,name=lock_user,json=lockUser,proto3" json:"lock_user,omitempty"`
+	LockServer      bool                   `protobuf:"varint,11,opt,name=lock_server,json=lockServer,proto3" json:"lock_server,omitempty"`
+	EnableRecording bool                   `protobuf:"varint,12,opt,name=enable_recording,json=enableRecording,proto3" json:"enable_recording,omitempty"`
+	Comment         string                 `protobuf:"bytes,13,opt,name=comment,proto3" json:"comment,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *HotspotProfileParams) Reset() {
+	*x = HotspotProfileParams{}
+	mi := &file_v1_hotspot_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HotspotProfileParams) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HotspotProfileParams) ProtoMessage() {}
+
+func (x *HotspotProfileParams) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HotspotProfileParams.ProtoReflect.Descriptor instead.
+func (*HotspotProfileParams) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *HotspotProfileParams) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *HotspotProfileParams) GetAddressPool() string {
+	if x != nil {
+		return x.AddressPool
+	}
+	return ""
+}
+
+func (x *HotspotProfileParams) GetSharedUsers() string {
+	if x != nil {
+		return x.SharedUsers
+	}
+	return ""
+}
+
+func (x *HotspotProfileParams) GetRateLimit() string {
+	if x != nil {
+		return x.RateLimit
+	}
+	return ""
+}
+
+func (x *HotspotProfileParams) GetParentQueue() string {
+	if x != nil {
+		return x.ParentQueue
+	}
+	return ""
+}
+
+func (x *HotspotProfileParams) GetPrice() string {
+	if x != nil {
+		return x.Price
+	}
+	return ""
+}
+
+func (x *HotspotProfileParams) GetSellingPrice() string {
+	if x != nil {
+		return x.SellingPrice
+	}
+	return ""
+}
+
+func (x *HotspotProfileParams) GetValidity() string {
+	if x != nil {
+		return x.Validity
+	}
+	return ""
+}
+
+func (x *HotspotProfileParams) GetExpireMode() string {
+	if x != nil {
+		return x.ExpireMode
+	}
+	return ""
+}
+
+func (x *HotspotProfileParams) GetLockUser() bool {
+	if x != nil {
+		return x.LockUser
+	}
+	return false
+}
+
+func (x *HotspotProfileParams) GetLockServer() bool {
+	if x != nil {
+		return x.LockServer
+	}
+	return false
+}
+
+func (x *HotspotProfileParams) GetEnableRecording() bool {
+	if x != nil {
+		return x.EnableRecording
+	}
+	return false
+}
+
+func (x *HotspotProfileParams) GetComment() string {
+	if x != nil {
+		return x.Comment
+	}
+	return ""
+}
+
+type ListHotspotProfilesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListHotspotProfilesRequest) Reset() {
+	*x = ListHotspotProfilesRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListHotspotProfilesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListHotspotProfilesRequest) ProtoMessage() {}
+
+func (x *ListHotspotProfilesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListHotspotProfilesRequest.ProtoReflect.Descriptor instead.
+func (*ListHotspotProfilesRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ListHotspotProfilesRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+type ListHotspotProfilesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Profiles      []*HotspotProfile      `protobuf:"bytes,1,rep,name=profiles,proto3" json:"profiles,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListHotspotProfilesResponse) Reset() {
+	*x = ListHotspotProfilesResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListHotspotProfilesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListHotspotProfilesResponse) ProtoMessage() {}
+
+func (x *ListHotspotProfilesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListHotspotProfilesResponse.ProtoReflect.Descriptor instead.
+func (*ListHotspotProfilesResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ListHotspotProfilesResponse) GetProfiles() []*HotspotProfile {
+	if x != nil {
+		return x.Profiles
+	}
+	return nil
+}
+
+type CreateHotspotProfileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Profile       *HotspotProfileParams  `protobuf:"bytes,2,opt,name=profile,proto3" json:"profile,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateHotspotProfileRequest) Reset() {
+	*x = CreateHotspotProfileRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateHotspotProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateHotspotProfileRequest) ProtoMessage() {}
+
+func (x *CreateHotspotProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateHotspotProfileRequest.ProtoReflect.Descriptor instead.
+func (*CreateHotspotProfileRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CreateHotspotProfileRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *CreateHotspotProfileRequest) GetProfile() *HotspotProfileParams {
+	if x != nil {
+		return x.Profile
+	}
+	return nil
+}
+
+type CreateHotspotProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Profile       *HotspotProfile        `protobuf:"bytes,1,opt,name=profile,proto3" json:"profile,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateHotspotProfileResponse) Reset() {
+	*x = CreateHotspotProfileResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateHotspotProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateHotspotProfileResponse) ProtoMessage() {}
+
+func (x *CreateHotspotProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateHotspotProfileResponse.ProtoReflect.Descriptor instead.
+func (*CreateHotspotProfileResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *CreateHotspotProfileResponse) GetProfile() *HotspotProfile {
+	if x != nil {
+		return x.Profile
+	}
+	return nil
+}
+
+func (x *CreateHotspotProfileResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type UpdateHotspotProfileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	RosId         string                 `protobuf:"bytes,2,opt,name=ros_id,json=rosId,proto3" json:"ros_id,omitempty"`
+	Profile       *HotspotProfileParams  `protobuf:"bytes,3,opt,name=profile,proto3" json:"profile,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateHotspotProfileRequest) Reset() {
+	*x = UpdateHotspotProfileRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateHotspotProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateHotspotProfileRequest) ProtoMessage() {}
+
+func (x *UpdateHotspotProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateHotspotProfileRequest.ProtoReflect.Descriptor instead.
+func (*UpdateHotspotProfileRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *UpdateHotspotProfileRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *UpdateHotspotProfileRequest) GetRosId() string {
+	if x != nil {
+		return x.RosId
+	}
+	return ""
+}
+
+func (x *UpdateHotspotProfileRequest) GetProfile() *HotspotProfileParams {
+	if x != nil {
+		return x.Profile
+	}
+	return nil
+}
+
+type UpdateHotspotProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Profile       *HotspotProfile        `protobuf:"bytes,1,opt,name=profile,proto3" json:"profile,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateHotspotProfileResponse) Reset() {
+	*x = UpdateHotspotProfileResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateHotspotProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateHotspotProfileResponse) ProtoMessage() {}
+
+func (x *UpdateHotspotProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateHotspotProfileResponse.ProtoReflect.Descriptor instead.
+func (*UpdateHotspotProfileResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *UpdateHotspotProfileResponse) GetProfile() *HotspotProfile {
+	if x != nil {
+		return x.Profile
+	}
+	return nil
+}
+
+func (x *UpdateHotspotProfileResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type DeleteHotspotProfileRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	RosId         string                 `protobuf:"bytes,2,opt,name=ros_id,json=rosId,proto3" json:"ros_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteHotspotProfileRequest) Reset() {
+	*x = DeleteHotspotProfileRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteHotspotProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteHotspotProfileRequest) ProtoMessage() {}
+
+func (x *DeleteHotspotProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteHotspotProfileRequest.ProtoReflect.Descriptor instead.
+func (*DeleteHotspotProfileRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *DeleteHotspotProfileRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *DeleteHotspotProfileRequest) GetRosId() string {
+	if x != nil {
+		return x.RosId
+	}
+	return ""
+}
+
+type DeleteHotspotProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteHotspotProfileResponse) Reset() {
+	*x = DeleteHotspotProfileResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteHotspotProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteHotspotProfileResponse) ProtoMessage() {}
+
+func (x *DeleteHotspotProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteHotspotProfileResponse.ProtoReflect.Descriptor instead.
+func (*DeleteHotspotProfileResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *DeleteHotspotProfileResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 type HotspotUser struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -182,7 +722,7 @@ type HotspotUser struct {
 
 func (x *HotspotUser) Reset() {
 	*x = HotspotUser{}
-	mi := &file_v1_hotspot_proto_msgTypes[1]
+	mi := &file_v1_hotspot_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -194,7 +734,7 @@ func (x *HotspotUser) String() string {
 func (*HotspotUser) ProtoMessage() {}
 
 func (x *HotspotUser) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[1]
+	mi := &file_v1_hotspot_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -207,7 +747,7 @@ func (x *HotspotUser) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HotspotUser.ProtoReflect.Descriptor instead.
 func (*HotspotUser) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{1}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *HotspotUser) GetId() string {
@@ -294,362 +834,6 @@ func (x *HotspotUser) GetServer() string {
 	return ""
 }
 
-type HotspotActiveSession struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Server        string                 `protobuf:"bytes,2,opt,name=server,proto3" json:"server,omitempty"`
-	User          string                 `protobuf:"bytes,3,opt,name=user,proto3" json:"user,omitempty"`
-	Address       string                 `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
-	MacAddress    string                 `protobuf:"bytes,5,opt,name=mac_address,json=macAddress,proto3" json:"mac_address,omitempty"`
-	Comment       string                 `protobuf:"bytes,6,opt,name=comment,proto3" json:"comment,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *HotspotActiveSession) Reset() {
-	*x = HotspotActiveSession{}
-	mi := &file_v1_hotspot_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *HotspotActiveSession) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*HotspotActiveSession) ProtoMessage() {}
-
-func (x *HotspotActiveSession) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use HotspotActiveSession.ProtoReflect.Descriptor instead.
-func (*HotspotActiveSession) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *HotspotActiveSession) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *HotspotActiveSession) GetServer() string {
-	if x != nil {
-		return x.Server
-	}
-	return ""
-}
-
-func (x *HotspotActiveSession) GetUser() string {
-	if x != nil {
-		return x.User
-	}
-	return ""
-}
-
-func (x *HotspotActiveSession) GetAddress() string {
-	if x != nil {
-		return x.Address
-	}
-	return ""
-}
-
-func (x *HotspotActiveSession) GetMacAddress() string {
-	if x != nil {
-		return x.MacAddress
-	}
-	return ""
-}
-
-func (x *HotspotActiveSession) GetComment() string {
-	if x != nil {
-		return x.Comment
-	}
-	return ""
-}
-
-type DHCPLease struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
-	MacAddress    string                 `protobuf:"bytes,3,opt,name=mac_address,json=macAddress,proto3" json:"mac_address,omitempty"`
-	HostName      string                 `protobuf:"bytes,4,opt,name=host_name,json=hostName,proto3" json:"host_name,omitempty"`
-	Status        string                 `protobuf:"bytes,5,opt,name=status,proto3" json:"status,omitempty"`
-	Blocked       bool                   `protobuf:"varint,6,opt,name=blocked,proto3" json:"blocked,omitempty"`
-	Comment       string                 `protobuf:"bytes,7,opt,name=comment,proto3" json:"comment,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DHCPLease) Reset() {
-	*x = DHCPLease{}
-	mi := &file_v1_hotspot_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DHCPLease) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DHCPLease) ProtoMessage() {}
-
-func (x *DHCPLease) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DHCPLease.ProtoReflect.Descriptor instead.
-func (*DHCPLease) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *DHCPLease) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *DHCPLease) GetAddress() string {
-	if x != nil {
-		return x.Address
-	}
-	return ""
-}
-
-func (x *DHCPLease) GetMacAddress() string {
-	if x != nil {
-		return x.MacAddress
-	}
-	return ""
-}
-
-func (x *DHCPLease) GetHostName() string {
-	if x != nil {
-		return x.HostName
-	}
-	return ""
-}
-
-func (x *DHCPLease) GetStatus() string {
-	if x != nil {
-		return x.Status
-	}
-	return ""
-}
-
-func (x *DHCPLease) GetBlocked() bool {
-	if x != nil {
-		return x.Blocked
-	}
-	return false
-}
-
-func (x *DHCPLease) GetComment() string {
-	if x != nil {
-		return x.Comment
-	}
-	return ""
-}
-
-type HotspotReport struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Date          string                 `protobuf:"bytes,2,opt,name=date,proto3" json:"date,omitempty"`
-	Time          string                 `protobuf:"bytes,3,opt,name=time,proto3" json:"time,omitempty"`
-	Username      string                 `protobuf:"bytes,4,opt,name=username,proto3" json:"username,omitempty"`
-	Profile       string                 `protobuf:"bytes,5,opt,name=profile,proto3" json:"profile,omitempty"`
-	Price         float64                `protobuf:"fixed64,6,opt,name=price,proto3" json:"price,omitempty"`
-	Comment       string                 `protobuf:"bytes,7,opt,name=comment,proto3" json:"comment,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *HotspotReport) Reset() {
-	*x = HotspotReport{}
-	mi := &file_v1_hotspot_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *HotspotReport) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*HotspotReport) ProtoMessage() {}
-
-func (x *HotspotReport) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use HotspotReport.ProtoReflect.Descriptor instead.
-func (*HotspotReport) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *HotspotReport) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *HotspotReport) GetDate() string {
-	if x != nil {
-		return x.Date
-	}
-	return ""
-}
-
-func (x *HotspotReport) GetTime() string {
-	if x != nil {
-		return x.Time
-	}
-	return ""
-}
-
-func (x *HotspotReport) GetUsername() string {
-	if x != nil {
-		return x.Username
-	}
-	return ""
-}
-
-func (x *HotspotReport) GetProfile() string {
-	if x != nil {
-		return x.Profile
-	}
-	return ""
-}
-
-func (x *HotspotReport) GetPrice() float64 {
-	if x != nil {
-		return x.Price
-	}
-	return 0
-}
-
-func (x *HotspotReport) GetComment() string {
-	if x != nil {
-		return x.Comment
-	}
-	return ""
-}
-
-type ListHotspotProfilesRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListHotspotProfilesRequest) Reset() {
-	*x = ListHotspotProfilesRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListHotspotProfilesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListHotspotProfilesRequest) ProtoMessage() {}
-
-func (x *ListHotspotProfilesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListHotspotProfilesRequest.ProtoReflect.Descriptor instead.
-func (*ListHotspotProfilesRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *ListHotspotProfilesRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-type ListHotspotProfilesResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Profiles      []*HotspotProfile      `protobuf:"bytes,1,rep,name=profiles,proto3" json:"profiles,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListHotspotProfilesResponse) Reset() {
-	*x = ListHotspotProfilesResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListHotspotProfilesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListHotspotProfilesResponse) ProtoMessage() {}
-
-func (x *ListHotspotProfilesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListHotspotProfilesResponse.ProtoReflect.Descriptor instead.
-func (*ListHotspotProfilesResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *ListHotspotProfilesResponse) GetProfiles() []*HotspotProfile {
-	if x != nil {
-		return x.Profiles
-	}
-	return nil
-}
-
 type ListHotspotUsersRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
@@ -662,7 +846,7 @@ type ListHotspotUsersRequest struct {
 
 func (x *ListHotspotUsersRequest) Reset() {
 	*x = ListHotspotUsersRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[7]
+	mi := &file_v1_hotspot_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -674,7 +858,7 @@ func (x *ListHotspotUsersRequest) String() string {
 func (*ListHotspotUsersRequest) ProtoMessage() {}
 
 func (x *ListHotspotUsersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[7]
+	mi := &file_v1_hotspot_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -687,7 +871,7 @@ func (x *ListHotspotUsersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHotspotUsersRequest.ProtoReflect.Descriptor instead.
 func (*ListHotspotUsersRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{7}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ListHotspotUsersRequest) GetDeviceId() string {
@@ -727,7 +911,7 @@ type ListHotspotUsersResponse struct {
 
 func (x *ListHotspotUsersResponse) Reset() {
 	*x = ListHotspotUsersResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[8]
+	mi := &file_v1_hotspot_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -739,7 +923,7 @@ func (x *ListHotspotUsersResponse) String() string {
 func (*ListHotspotUsersResponse) ProtoMessage() {}
 
 func (x *ListHotspotUsersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[8]
+	mi := &file_v1_hotspot_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -752,7 +936,7 @@ func (x *ListHotspotUsersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHotspotUsersResponse.ProtoReflect.Descriptor instead.
 func (*ListHotspotUsersResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{8}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ListHotspotUsersResponse) GetUsers() []*HotspotUser {
@@ -762,575 +946,6 @@ func (x *ListHotspotUsersResponse) GetUsers() []*HotspotUser {
 	return nil
 }
 
-type ListHotspotActiveSessionsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListHotspotActiveSessionsRequest) Reset() {
-	*x = ListHotspotActiveSessionsRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListHotspotActiveSessionsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListHotspotActiveSessionsRequest) ProtoMessage() {}
-
-func (x *ListHotspotActiveSessionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[9]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListHotspotActiveSessionsRequest.ProtoReflect.Descriptor instead.
-func (*ListHotspotActiveSessionsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *ListHotspotActiveSessionsRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-type ListHotspotActiveSessionsResponse struct {
-	state         protoimpl.MessageState  `protogen:"open.v1"`
-	Sessions      []*HotspotActiveSession `protobuf:"bytes,1,rep,name=sessions,proto3" json:"sessions,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListHotspotActiveSessionsResponse) Reset() {
-	*x = ListHotspotActiveSessionsResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListHotspotActiveSessionsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListHotspotActiveSessionsResponse) ProtoMessage() {}
-
-func (x *ListHotspotActiveSessionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListHotspotActiveSessionsResponse.ProtoReflect.Descriptor instead.
-func (*ListHotspotActiveSessionsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *ListHotspotActiveSessionsResponse) GetSessions() []*HotspotActiveSession {
-	if x != nil {
-		return x.Sessions
-	}
-	return nil
-}
-
-type KickHotspotSessionRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	RosId         string                 `protobuf:"bytes,2,opt,name=ros_id,json=rosId,proto3" json:"ros_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *KickHotspotSessionRequest) Reset() {
-	*x = KickHotspotSessionRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *KickHotspotSessionRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*KickHotspotSessionRequest) ProtoMessage() {}
-
-func (x *KickHotspotSessionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use KickHotspotSessionRequest.ProtoReflect.Descriptor instead.
-func (*KickHotspotSessionRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *KickHotspotSessionRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *KickHotspotSessionRequest) GetRosId() string {
-	if x != nil {
-		return x.RosId
-	}
-	return ""
-}
-
-type KickHotspotSessionResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *KickHotspotSessionResponse) Reset() {
-	*x = KickHotspotSessionResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *KickHotspotSessionResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*KickHotspotSessionResponse) ProtoMessage() {}
-
-func (x *KickHotspotSessionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use KickHotspotSessionResponse.ProtoReflect.Descriptor instead.
-func (*KickHotspotSessionResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *KickHotspotSessionResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-type ListDHCPLeasesRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	MacFilter     string                 `protobuf:"bytes,2,opt,name=mac_filter,json=macFilter,proto3" json:"mac_filter,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListDHCPLeasesRequest) Reset() {
-	*x = ListDHCPLeasesRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListDHCPLeasesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListDHCPLeasesRequest) ProtoMessage() {}
-
-func (x *ListDHCPLeasesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListDHCPLeasesRequest.ProtoReflect.Descriptor instead.
-func (*ListDHCPLeasesRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *ListDHCPLeasesRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *ListDHCPLeasesRequest) GetMacFilter() string {
-	if x != nil {
-		return x.MacFilter
-	}
-	return ""
-}
-
-type ListDHCPLeasesResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Leases        []*DHCPLease           `protobuf:"bytes,1,rep,name=leases,proto3" json:"leases,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListDHCPLeasesResponse) Reset() {
-	*x = ListDHCPLeasesResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[14]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListDHCPLeasesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListDHCPLeasesResponse) ProtoMessage() {}
-
-func (x *ListDHCPLeasesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[14]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListDHCPLeasesResponse.ProtoReflect.Descriptor instead.
-func (*ListDHCPLeasesResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *ListDHCPLeasesResponse) GetLeases() []*DHCPLease {
-	if x != nil {
-		return x.Leases
-	}
-	return nil
-}
-
-type BlockDHCPLeaseRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	RosId         string                 `protobuf:"bytes,2,opt,name=ros_id,json=rosId,proto3" json:"ros_id,omitempty"`
-	Blocked       bool                   `protobuf:"varint,3,opt,name=blocked,proto3" json:"blocked,omitempty"`
-	Comment       string                 `protobuf:"bytes,4,opt,name=comment,proto3" json:"comment,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *BlockDHCPLeaseRequest) Reset() {
-	*x = BlockDHCPLeaseRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[15]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *BlockDHCPLeaseRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*BlockDHCPLeaseRequest) ProtoMessage() {}
-
-func (x *BlockDHCPLeaseRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[15]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use BlockDHCPLeaseRequest.ProtoReflect.Descriptor instead.
-func (*BlockDHCPLeaseRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *BlockDHCPLeaseRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *BlockDHCPLeaseRequest) GetRosId() string {
-	if x != nil {
-		return x.RosId
-	}
-	return ""
-}
-
-func (x *BlockDHCPLeaseRequest) GetBlocked() bool {
-	if x != nil {
-		return x.Blocked
-	}
-	return false
-}
-
-func (x *BlockDHCPLeaseRequest) GetComment() string {
-	if x != nil {
-		return x.Comment
-	}
-	return ""
-}
-
-type BlockDHCPLeaseResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *BlockDHCPLeaseResponse) Reset() {
-	*x = BlockDHCPLeaseResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *BlockDHCPLeaseResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*BlockDHCPLeaseResponse) ProtoMessage() {}
-
-func (x *BlockDHCPLeaseResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use BlockDHCPLeaseResponse.ProtoReflect.Descriptor instead.
-func (*BlockDHCPLeaseResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *BlockDHCPLeaseResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-type GenerateVouchersRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Profile       string                 `protobuf:"bytes,2,opt,name=profile,proto3" json:"profile,omitempty"`
-	Count         int32                  `protobuf:"varint,3,opt,name=count,proto3" json:"count,omitempty"`
-	UserType      string                 `protobuf:"bytes,4,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"`
-	UserLength    int32                  `protobuf:"varint,5,opt,name=user_length,json=userLength,proto3" json:"user_length,omitempty"`
-	Prefix        string                 `protobuf:"bytes,6,opt,name=prefix,proto3" json:"prefix,omitempty"`
-	CharacterSet  string                 `protobuf:"bytes,7,opt,name=character_set,json=characterSet,proto3" json:"character_set,omitempty"`
-	Server        string                 `protobuf:"bytes,8,opt,name=server,proto3" json:"server,omitempty"`
-	TimeLimit     string                 `protobuf:"bytes,9,opt,name=time_limit,json=timeLimit,proto3" json:"time_limit,omitempty"`
-	DataLimit     string                 `protobuf:"bytes,10,opt,name=data_limit,json=dataLimit,proto3" json:"data_limit,omitempty"`
-	Comment       string                 `protobuf:"bytes,11,opt,name=comment,proto3" json:"comment,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GenerateVouchersRequest) Reset() {
-	*x = GenerateVouchersRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GenerateVouchersRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GenerateVouchersRequest) ProtoMessage() {}
-
-func (x *GenerateVouchersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GenerateVouchersRequest.ProtoReflect.Descriptor instead.
-func (*GenerateVouchersRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *GenerateVouchersRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *GenerateVouchersRequest) GetProfile() string {
-	if x != nil {
-		return x.Profile
-	}
-	return ""
-}
-
-func (x *GenerateVouchersRequest) GetCount() int32 {
-	if x != nil {
-		return x.Count
-	}
-	return 0
-}
-
-func (x *GenerateVouchersRequest) GetUserType() string {
-	if x != nil {
-		return x.UserType
-	}
-	return ""
-}
-
-func (x *GenerateVouchersRequest) GetUserLength() int32 {
-	if x != nil {
-		return x.UserLength
-	}
-	return 0
-}
-
-func (x *GenerateVouchersRequest) GetPrefix() string {
-	if x != nil {
-		return x.Prefix
-	}
-	return ""
-}
-
-func (x *GenerateVouchersRequest) GetCharacterSet() string {
-	if x != nil {
-		return x.CharacterSet
-	}
-	return ""
-}
-
-func (x *GenerateVouchersRequest) GetServer() string {
-	if x != nil {
-		return x.Server
-	}
-	return ""
-}
-
-func (x *GenerateVouchersRequest) GetTimeLimit() string {
-	if x != nil {
-		return x.TimeLimit
-	}
-	return ""
-}
-
-func (x *GenerateVouchersRequest) GetDataLimit() string {
-	if x != nil {
-		return x.DataLimit
-	}
-	return ""
-}
-
-func (x *GenerateVouchersRequest) GetComment() string {
-	if x != nil {
-		return x.Comment
-	}
-	return ""
-}
-
-type GenerateVouchersResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Vouchers      []*HotspotUser         `protobuf:"bytes,1,rep,name=vouchers,proto3" json:"vouchers,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GenerateVouchersResponse) Reset() {
-	*x = GenerateVouchersResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[18]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GenerateVouchersResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GenerateVouchersResponse) ProtoMessage() {}
-
-func (x *GenerateVouchersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[18]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GenerateVouchersResponse.ProtoReflect.Descriptor instead.
-func (*GenerateVouchersResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{18}
-}
-
-func (x *GenerateVouchersResponse) GetVouchers() []*HotspotUser {
-	if x != nil {
-		return x.Vouchers
-	}
-	return nil
-}
-
-func (x *GenerateVouchersResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-// ── Modul 04: Hotspot User CRUD ───────────────────────────────────────
 type GetHotspotUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
@@ -1341,7 +956,7 @@ type GetHotspotUserRequest struct {
 
 func (x *GetHotspotUserRequest) Reset() {
 	*x = GetHotspotUserRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[19]
+	mi := &file_v1_hotspot_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1353,7 +968,7 @@ func (x *GetHotspotUserRequest) String() string {
 func (*GetHotspotUserRequest) ProtoMessage() {}
 
 func (x *GetHotspotUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[19]
+	mi := &file_v1_hotspot_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1366,7 +981,7 @@ func (x *GetHotspotUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHotspotUserRequest.ProtoReflect.Descriptor instead.
 func (*GetHotspotUserRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{19}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetHotspotUserRequest) GetDeviceId() string {
@@ -1392,7 +1007,7 @@ type GetHotspotUserResponse struct {
 
 func (x *GetHotspotUserResponse) Reset() {
 	*x = GetHotspotUserResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[20]
+	mi := &file_v1_hotspot_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1404,7 +1019,7 @@ func (x *GetHotspotUserResponse) String() string {
 func (*GetHotspotUserResponse) ProtoMessage() {}
 
 func (x *GetHotspotUserResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[20]
+	mi := &file_v1_hotspot_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1417,7 +1032,7 @@ func (x *GetHotspotUserResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHotspotUserResponse.ProtoReflect.Descriptor instead.
 func (*GetHotspotUserResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{20}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *GetHotspotUserResponse) GetUser() *HotspotUser {
@@ -1444,7 +1059,7 @@ type CreateHotspotUserRequest struct {
 
 func (x *CreateHotspotUserRequest) Reset() {
 	*x = CreateHotspotUserRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[21]
+	mi := &file_v1_hotspot_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1456,7 +1071,7 @@ func (x *CreateHotspotUserRequest) String() string {
 func (*CreateHotspotUserRequest) ProtoMessage() {}
 
 func (x *CreateHotspotUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[21]
+	mi := &file_v1_hotspot_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1469,7 +1084,7 @@ func (x *CreateHotspotUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateHotspotUserRequest.ProtoReflect.Descriptor instead.
 func (*CreateHotspotUserRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{21}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *CreateHotspotUserRequest) GetDeviceId() string {
@@ -1545,7 +1160,7 @@ type CreateHotspotUserResponse struct {
 
 func (x *CreateHotspotUserResponse) Reset() {
 	*x = CreateHotspotUserResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[22]
+	mi := &file_v1_hotspot_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1557,7 +1172,7 @@ func (x *CreateHotspotUserResponse) String() string {
 func (*CreateHotspotUserResponse) ProtoMessage() {}
 
 func (x *CreateHotspotUserResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[22]
+	mi := &file_v1_hotspot_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1570,7 +1185,7 @@ func (x *CreateHotspotUserResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateHotspotUserResponse.ProtoReflect.Descriptor instead.
 func (*CreateHotspotUserResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{22}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *CreateHotspotUserResponse) GetUser() *HotspotUser {
@@ -1608,7 +1223,7 @@ type UpdateHotspotUserRequest struct {
 
 func (x *UpdateHotspotUserRequest) Reset() {
 	*x = UpdateHotspotUserRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[23]
+	mi := &file_v1_hotspot_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1620,7 +1235,7 @@ func (x *UpdateHotspotUserRequest) String() string {
 func (*UpdateHotspotUserRequest) ProtoMessage() {}
 
 func (x *UpdateHotspotUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[23]
+	mi := &file_v1_hotspot_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1633,7 +1248,7 @@ func (x *UpdateHotspotUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHotspotUserRequest.ProtoReflect.Descriptor instead.
 func (*UpdateHotspotUserRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{23}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *UpdateHotspotUserRequest) GetDeviceId() string {
@@ -1737,7 +1352,7 @@ type UpdateHotspotUserResponse struct {
 
 func (x *UpdateHotspotUserResponse) Reset() {
 	*x = UpdateHotspotUserResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[24]
+	mi := &file_v1_hotspot_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1749,7 +1364,7 @@ func (x *UpdateHotspotUserResponse) String() string {
 func (*UpdateHotspotUserResponse) ProtoMessage() {}
 
 func (x *UpdateHotspotUserResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[24]
+	mi := &file_v1_hotspot_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1762,7 +1377,7 @@ func (x *UpdateHotspotUserResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHotspotUserResponse.ProtoReflect.Descriptor instead.
 func (*UpdateHotspotUserResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{24}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *UpdateHotspotUserResponse) GetUser() *HotspotUser {
@@ -1789,7 +1404,7 @@ type ResetHotspotUserCountersRequest struct {
 
 func (x *ResetHotspotUserCountersRequest) Reset() {
 	*x = ResetHotspotUserCountersRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[25]
+	mi := &file_v1_hotspot_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1801,7 +1416,7 @@ func (x *ResetHotspotUserCountersRequest) String() string {
 func (*ResetHotspotUserCountersRequest) ProtoMessage() {}
 
 func (x *ResetHotspotUserCountersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[25]
+	mi := &file_v1_hotspot_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1814,7 +1429,7 @@ func (x *ResetHotspotUserCountersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResetHotspotUserCountersRequest.ProtoReflect.Descriptor instead.
 func (*ResetHotspotUserCountersRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{25}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *ResetHotspotUserCountersRequest) GetDeviceId() string {
@@ -1840,7 +1455,7 @@ type ResetHotspotUserCountersResponse struct {
 
 func (x *ResetHotspotUserCountersResponse) Reset() {
 	*x = ResetHotspotUserCountersResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[26]
+	mi := &file_v1_hotspot_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1852,7 +1467,7 @@ func (x *ResetHotspotUserCountersResponse) String() string {
 func (*ResetHotspotUserCountersResponse) ProtoMessage() {}
 
 func (x *ResetHotspotUserCountersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[26]
+	mi := &file_v1_hotspot_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1865,7 +1480,7 @@ func (x *ResetHotspotUserCountersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResetHotspotUserCountersResponse.ProtoReflect.Descriptor instead.
 func (*ResetHotspotUserCountersResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{26}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *ResetHotspotUserCountersResponse) GetMessage() string {
@@ -1885,7 +1500,7 @@ type DeleteHotspotUserRequest struct {
 
 func (x *DeleteHotspotUserRequest) Reset() {
 	*x = DeleteHotspotUserRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[27]
+	mi := &file_v1_hotspot_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1897,7 +1512,7 @@ func (x *DeleteHotspotUserRequest) String() string {
 func (*DeleteHotspotUserRequest) ProtoMessage() {}
 
 func (x *DeleteHotspotUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[27]
+	mi := &file_v1_hotspot_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1910,7 +1525,7 @@ func (x *DeleteHotspotUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotUserRequest.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotUserRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{27}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *DeleteHotspotUserRequest) GetDeviceId() string {
@@ -1936,7 +1551,7 @@ type DeleteHotspotUserResponse struct {
 
 func (x *DeleteHotspotUserResponse) Reset() {
 	*x = DeleteHotspotUserResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[28]
+	mi := &file_v1_hotspot_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1948,7 +1563,7 @@ func (x *DeleteHotspotUserResponse) String() string {
 func (*DeleteHotspotUserResponse) ProtoMessage() {}
 
 func (x *DeleteHotspotUserResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[28]
+	mi := &file_v1_hotspot_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1961,7 +1576,7 @@ func (x *DeleteHotspotUserResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotUserResponse.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotUserResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{28}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *DeleteHotspotUserResponse) GetMessage() string {
@@ -1971,41 +1586,30 @@ func (x *DeleteHotspotUserResponse) GetMessage() string {
 	return ""
 }
 
-// ── Modul 05: Hotspot Profile CRUD ────────────────────────────────────
-type HotspotProfileParams struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Name            string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	AddressPool     string                 `protobuf:"bytes,2,opt,name=address_pool,json=addressPool,proto3" json:"address_pool,omitempty"`
-	SharedUsers     string                 `protobuf:"bytes,3,opt,name=shared_users,json=sharedUsers,proto3" json:"shared_users,omitempty"`
-	RateLimit       string                 `protobuf:"bytes,4,opt,name=rate_limit,json=rateLimit,proto3" json:"rate_limit,omitempty"` // "5M/5M"
-	ParentQueue     string                 `protobuf:"bytes,5,opt,name=parent_queue,json=parentQueue,proto3" json:"parent_queue,omitempty"`
-	Price           string                 `protobuf:"bytes,6,opt,name=price,proto3" json:"price,omitempty"`
-	SellingPrice    string                 `protobuf:"bytes,7,opt,name=selling_price,json=sellingPrice,proto3" json:"selling_price,omitempty"`
-	Validity        string                 `protobuf:"bytes,8,opt,name=validity,proto3" json:"validity,omitempty"`                       // "1d", "7d", "30d"
-	ExpireMode      string                 `protobuf:"bytes,9,opt,name=expire_mode,json=expireMode,proto3" json:"expire_mode,omitempty"` // "0" | "ntf" | "ntfc" | "rem" | "remc"
-	LockUser        bool                   `protobuf:"varint,10,opt,name=lock_user,json=lockUser,proto3" json:"lock_user,omitempty"`
-	LockServer      bool                   `protobuf:"varint,11,opt,name=lock_server,json=lockServer,proto3" json:"lock_server,omitempty"`
-	EnableRecording bool                   `protobuf:"varint,12,opt,name=enable_recording,json=enableRecording,proto3" json:"enable_recording,omitempty"`
-	Comment         string                 `protobuf:"bytes,13,opt,name=comment,proto3" json:"comment,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+type DeleteHotspotUsersRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Mode          string                 `protobuf:"bytes,2,opt,name=mode,proto3" json:"mode,omitempty"`   // "profile" | "comment" | "expired"
+	Value         string                 `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"` // nama profile atau batch comment
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *HotspotProfileParams) Reset() {
-	*x = HotspotProfileParams{}
-	mi := &file_v1_hotspot_proto_msgTypes[29]
+func (x *DeleteHotspotUsersRequest) Reset() {
+	*x = DeleteHotspotUsersRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HotspotProfileParams) String() string {
+func (x *DeleteHotspotUsersRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HotspotProfileParams) ProtoMessage() {}
+func (*DeleteHotspotUsersRequest) ProtoMessage() {}
 
-func (x *HotspotProfileParams) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[29]
+func (x *DeleteHotspotUsersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2016,125 +1620,190 @@ func (x *HotspotProfileParams) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HotspotProfileParams.ProtoReflect.Descriptor instead.
-func (*HotspotProfileParams) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{29}
+// Deprecated: Use DeleteHotspotUsersRequest.ProtoReflect.Descriptor instead.
+func (*DeleteHotspotUsersRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{23}
 }
 
-func (x *HotspotProfileParams) GetName() string {
+func (x *DeleteHotspotUsersRequest) GetDeviceId() string {
 	if x != nil {
-		return x.Name
+		return x.DeviceId
 	}
 	return ""
 }
 
-func (x *HotspotProfileParams) GetAddressPool() string {
+func (x *DeleteHotspotUsersRequest) GetMode() string {
 	if x != nil {
-		return x.AddressPool
+		return x.Mode
 	}
 	return ""
 }
 
-func (x *HotspotProfileParams) GetSharedUsers() string {
+func (x *DeleteHotspotUsersRequest) GetValue() string {
 	if x != nil {
-		return x.SharedUsers
+		return x.Value
 	}
 	return ""
 }
 
-func (x *HotspotProfileParams) GetRateLimit() string {
+type DeleteHotspotUsersResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeletedCount  int32                  `protobuf:"varint,1,opt,name=deleted_count,json=deletedCount,proto3" json:"deleted_count,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteHotspotUsersResponse) Reset() {
+	*x = DeleteHotspotUsersResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteHotspotUsersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteHotspotUsersResponse) ProtoMessage() {}
+
+func (x *DeleteHotspotUsersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[24]
 	if x != nil {
-		return x.RateLimit
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteHotspotUsersResponse.ProtoReflect.Descriptor instead.
+func (*DeleteHotspotUsersResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *DeleteHotspotUsersResponse) GetDeletedCount() int32 {
+	if x != nil {
+		return x.DeletedCount
+	}
+	return 0
+}
+
+func (x *DeleteHotspotUsersResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
 	}
 	return ""
 }
 
-func (x *HotspotProfileParams) GetParentQueue() string {
+type HotspotActiveSession struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Server        string                 `protobuf:"bytes,2,opt,name=server,proto3" json:"server,omitempty"`
+	User          string                 `protobuf:"bytes,3,opt,name=user,proto3" json:"user,omitempty"`
+	Address       string                 `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
+	MacAddress    string                 `protobuf:"bytes,5,opt,name=mac_address,json=macAddress,proto3" json:"mac_address,omitempty"`
+	Comment       string                 `protobuf:"bytes,6,opt,name=comment,proto3" json:"comment,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HotspotActiveSession) Reset() {
+	*x = HotspotActiveSession{}
+	mi := &file_v1_hotspot_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HotspotActiveSession) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HotspotActiveSession) ProtoMessage() {}
+
+func (x *HotspotActiveSession) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[25]
 	if x != nil {
-		return x.ParentQueue
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HotspotActiveSession.ProtoReflect.Descriptor instead.
+func (*HotspotActiveSession) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *HotspotActiveSession) GetId() string {
+	if x != nil {
+		return x.Id
 	}
 	return ""
 }
 
-func (x *HotspotProfileParams) GetPrice() string {
+func (x *HotspotActiveSession) GetServer() string {
 	if x != nil {
-		return x.Price
+		return x.Server
 	}
 	return ""
 }
 
-func (x *HotspotProfileParams) GetSellingPrice() string {
+func (x *HotspotActiveSession) GetUser() string {
 	if x != nil {
-		return x.SellingPrice
+		return x.User
 	}
 	return ""
 }
 
-func (x *HotspotProfileParams) GetValidity() string {
+func (x *HotspotActiveSession) GetAddress() string {
 	if x != nil {
-		return x.Validity
+		return x.Address
 	}
 	return ""
 }
 
-func (x *HotspotProfileParams) GetExpireMode() string {
+func (x *HotspotActiveSession) GetMacAddress() string {
 	if x != nil {
-		return x.ExpireMode
+		return x.MacAddress
 	}
 	return ""
 }
 
-func (x *HotspotProfileParams) GetLockUser() bool {
-	if x != nil {
-		return x.LockUser
-	}
-	return false
-}
-
-func (x *HotspotProfileParams) GetLockServer() bool {
-	if x != nil {
-		return x.LockServer
-	}
-	return false
-}
-
-func (x *HotspotProfileParams) GetEnableRecording() bool {
-	if x != nil {
-		return x.EnableRecording
-	}
-	return false
-}
-
-func (x *HotspotProfileParams) GetComment() string {
+func (x *HotspotActiveSession) GetComment() string {
 	if x != nil {
 		return x.Comment
 	}
 	return ""
 }
 
-type CreateHotspotProfileRequest struct {
+type ListHotspotActiveSessionsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Profile       *HotspotProfileParams  `protobuf:"bytes,2,opt,name=profile,proto3" json:"profile,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateHotspotProfileRequest) Reset() {
-	*x = CreateHotspotProfileRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[30]
+func (x *ListHotspotActiveSessionsRequest) Reset() {
+	*x = ListHotspotActiveSessionsRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateHotspotProfileRequest) String() string {
+func (x *ListHotspotActiveSessionsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateHotspotProfileRequest) ProtoMessage() {}
+func (*ListHotspotActiveSessionsRequest) ProtoMessage() {}
 
-func (x *CreateHotspotProfileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[30]
+func (x *ListHotspotActiveSessionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2145,48 +1814,40 @@ func (x *CreateHotspotProfileRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateHotspotProfileRequest.ProtoReflect.Descriptor instead.
-func (*CreateHotspotProfileRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{30}
+// Deprecated: Use ListHotspotActiveSessionsRequest.ProtoReflect.Descriptor instead.
+func (*ListHotspotActiveSessionsRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{26}
 }
 
-func (x *CreateHotspotProfileRequest) GetDeviceId() string {
+func (x *ListHotspotActiveSessionsRequest) GetDeviceId() string {
 	if x != nil {
 		return x.DeviceId
 	}
 	return ""
 }
 
-func (x *CreateHotspotProfileRequest) GetProfile() *HotspotProfileParams {
-	if x != nil {
-		return x.Profile
-	}
-	return nil
-}
-
-type CreateHotspotProfileResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Profile       *HotspotProfile        `protobuf:"bytes,1,opt,name=profile,proto3" json:"profile,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+type ListHotspotActiveSessionsResponse struct {
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Sessions      []*HotspotActiveSession `protobuf:"bytes,1,rep,name=sessions,proto3" json:"sessions,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateHotspotProfileResponse) Reset() {
-	*x = CreateHotspotProfileResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[31]
+func (x *ListHotspotActiveSessionsResponse) Reset() {
+	*x = ListHotspotActiveSessionsResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateHotspotProfileResponse) String() string {
+func (x *ListHotspotActiveSessionsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateHotspotProfileResponse) ProtoMessage() {}
+func (*ListHotspotActiveSessionsResponse) ProtoMessage() {}
 
-func (x *CreateHotspotProfileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[31]
+func (x *ListHotspotActiveSessionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2197,138 +1858,19 @@ func (x *CreateHotspotProfileResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateHotspotProfileResponse.ProtoReflect.Descriptor instead.
-func (*CreateHotspotProfileResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{31}
+// Deprecated: Use ListHotspotActiveSessionsResponse.ProtoReflect.Descriptor instead.
+func (*ListHotspotActiveSessionsResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{27}
 }
 
-func (x *CreateHotspotProfileResponse) GetProfile() *HotspotProfile {
+func (x *ListHotspotActiveSessionsResponse) GetSessions() []*HotspotActiveSession {
 	if x != nil {
-		return x.Profile
+		return x.Sessions
 	}
 	return nil
 }
 
-func (x *CreateHotspotProfileResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-type UpdateHotspotProfileRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	RosId         string                 `protobuf:"bytes,2,opt,name=ros_id,json=rosId,proto3" json:"ros_id,omitempty"`
-	Profile       *HotspotProfileParams  `protobuf:"bytes,3,opt,name=profile,proto3" json:"profile,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateHotspotProfileRequest) Reset() {
-	*x = UpdateHotspotProfileRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[32]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateHotspotProfileRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateHotspotProfileRequest) ProtoMessage() {}
-
-func (x *UpdateHotspotProfileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[32]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateHotspotProfileRequest.ProtoReflect.Descriptor instead.
-func (*UpdateHotspotProfileRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{32}
-}
-
-func (x *UpdateHotspotProfileRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *UpdateHotspotProfileRequest) GetRosId() string {
-	if x != nil {
-		return x.RosId
-	}
-	return ""
-}
-
-func (x *UpdateHotspotProfileRequest) GetProfile() *HotspotProfileParams {
-	if x != nil {
-		return x.Profile
-	}
-	return nil
-}
-
-type UpdateHotspotProfileResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Profile       *HotspotProfile        `protobuf:"bytes,1,opt,name=profile,proto3" json:"profile,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpdateHotspotProfileResponse) Reset() {
-	*x = UpdateHotspotProfileResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[33]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateHotspotProfileResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateHotspotProfileResponse) ProtoMessage() {}
-
-func (x *UpdateHotspotProfileResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[33]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateHotspotProfileResponse.ProtoReflect.Descriptor instead.
-func (*UpdateHotspotProfileResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{33}
-}
-
-func (x *UpdateHotspotProfileResponse) GetProfile() *HotspotProfile {
-	if x != nil {
-		return x.Profile
-	}
-	return nil
-}
-
-func (x *UpdateHotspotProfileResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-type DeleteHotspotProfileRequest struct {
+type KickHotspotSessionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
 	RosId         string                 `protobuf:"bytes,2,opt,name=ros_id,json=rosId,proto3" json:"ros_id,omitempty"`
@@ -2336,21 +1878,21 @@ type DeleteHotspotProfileRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeleteHotspotProfileRequest) Reset() {
-	*x = DeleteHotspotProfileRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[34]
+func (x *KickHotspotSessionRequest) Reset() {
+	*x = KickHotspotSessionRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeleteHotspotProfileRequest) String() string {
+func (x *KickHotspotSessionRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteHotspotProfileRequest) ProtoMessage() {}
+func (*KickHotspotSessionRequest) ProtoMessage() {}
 
-func (x *DeleteHotspotProfileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[34]
+func (x *KickHotspotSessionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2361,46 +1903,434 @@ func (x *DeleteHotspotProfileRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteHotspotProfileRequest.ProtoReflect.Descriptor instead.
-func (*DeleteHotspotProfileRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{34}
+// Deprecated: Use KickHotspotSessionRequest.ProtoReflect.Descriptor instead.
+func (*KickHotspotSessionRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{28}
 }
 
-func (x *DeleteHotspotProfileRequest) GetDeviceId() string {
+func (x *KickHotspotSessionRequest) GetDeviceId() string {
 	if x != nil {
 		return x.DeviceId
 	}
 	return ""
 }
 
-func (x *DeleteHotspotProfileRequest) GetRosId() string {
+func (x *KickHotspotSessionRequest) GetRosId() string {
 	if x != nil {
 		return x.RosId
 	}
 	return ""
 }
 
-type DeleteHotspotProfileResponse struct {
+type KickHotspotSessionResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DeleteHotspotProfileResponse) Reset() {
-	*x = DeleteHotspotProfileResponse{}
+func (x *KickHotspotSessionResponse) Reset() {
+	*x = KickHotspotSessionResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *KickHotspotSessionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*KickHotspotSessionResponse) ProtoMessage() {}
+
+func (x *KickHotspotSessionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use KickHotspotSessionResponse.ProtoReflect.Descriptor instead.
+func (*KickHotspotSessionResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *KickHotspotSessionResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type GenerateVouchersRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Profile       string                 `protobuf:"bytes,2,opt,name=profile,proto3" json:"profile,omitempty"`
+	Count         int32                  `protobuf:"varint,3,opt,name=count,proto3" json:"count,omitempty"`
+	UserType      string                 `protobuf:"bytes,4,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"`
+	UserLength    int32                  `protobuf:"varint,5,opt,name=user_length,json=userLength,proto3" json:"user_length,omitempty"`
+	Prefix        string                 `protobuf:"bytes,6,opt,name=prefix,proto3" json:"prefix,omitempty"`
+	CharacterSet  string                 `protobuf:"bytes,7,opt,name=character_set,json=characterSet,proto3" json:"character_set,omitempty"`
+	Server        string                 `protobuf:"bytes,8,opt,name=server,proto3" json:"server,omitempty"`
+	TimeLimit     string                 `protobuf:"bytes,9,opt,name=time_limit,json=timeLimit,proto3" json:"time_limit,omitempty"`
+	DataLimit     string                 `protobuf:"bytes,10,opt,name=data_limit,json=dataLimit,proto3" json:"data_limit,omitempty"`
+	Comment       string                 `protobuf:"bytes,11,opt,name=comment,proto3" json:"comment,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateVouchersRequest) Reset() {
+	*x = GenerateVouchersRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateVouchersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateVouchersRequest) ProtoMessage() {}
+
+func (x *GenerateVouchersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateVouchersRequest.ProtoReflect.Descriptor instead.
+func (*GenerateVouchersRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *GenerateVouchersRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *GenerateVouchersRequest) GetProfile() string {
+	if x != nil {
+		return x.Profile
+	}
+	return ""
+}
+
+func (x *GenerateVouchersRequest) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+func (x *GenerateVouchersRequest) GetUserType() string {
+	if x != nil {
+		return x.UserType
+	}
+	return ""
+}
+
+func (x *GenerateVouchersRequest) GetUserLength() int32 {
+	if x != nil {
+		return x.UserLength
+	}
+	return 0
+}
+
+func (x *GenerateVouchersRequest) GetPrefix() string {
+	if x != nil {
+		return x.Prefix
+	}
+	return ""
+}
+
+func (x *GenerateVouchersRequest) GetCharacterSet() string {
+	if x != nil {
+		return x.CharacterSet
+	}
+	return ""
+}
+
+func (x *GenerateVouchersRequest) GetServer() string {
+	if x != nil {
+		return x.Server
+	}
+	return ""
+}
+
+func (x *GenerateVouchersRequest) GetTimeLimit() string {
+	if x != nil {
+		return x.TimeLimit
+	}
+	return ""
+}
+
+func (x *GenerateVouchersRequest) GetDataLimit() string {
+	if x != nil {
+		return x.DataLimit
+	}
+	return ""
+}
+
+func (x *GenerateVouchersRequest) GetComment() string {
+	if x != nil {
+		return x.Comment
+	}
+	return ""
+}
+
+type GenerateVouchersResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Vouchers      []*HotspotUser         `protobuf:"bytes,1,rep,name=vouchers,proto3" json:"vouchers,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateVouchersResponse) Reset() {
+	*x = GenerateVouchersResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateVouchersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateVouchersResponse) ProtoMessage() {}
+
+func (x *GenerateVouchersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateVouchersResponse.ProtoReflect.Descriptor instead.
+func (*GenerateVouchersResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *GenerateVouchersResponse) GetVouchers() []*HotspotUser {
+	if x != nil {
+		return x.Vouchers
+	}
+	return nil
+}
+
+func (x *GenerateVouchersResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type GetVoucherBatchRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Comment       string                 `protobuf:"bytes,2,opt,name=comment,proto3" json:"comment,omitempty"` // tag batch (gcomment)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetVoucherBatchRequest) Reset() {
+	*x = GetVoucherBatchRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetVoucherBatchRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetVoucherBatchRequest) ProtoMessage() {}
+
+func (x *GetVoucherBatchRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetVoucherBatchRequest.ProtoReflect.Descriptor instead.
+func (*GetVoucherBatchRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *GetVoucherBatchRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *GetVoucherBatchRequest) GetComment() string {
+	if x != nil {
+		return x.Comment
+	}
+	return ""
+}
+
+type GetVoucherBatchResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Vouchers      []*HotspotUser         `protobuf:"bytes,1,rep,name=vouchers,proto3" json:"vouchers,omitempty"`
+	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetVoucherBatchResponse) Reset() {
+	*x = GetVoucherBatchResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetVoucherBatchResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetVoucherBatchResponse) ProtoMessage() {}
+
+func (x *GetVoucherBatchResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetVoucherBatchResponse.ProtoReflect.Descriptor instead.
+func (*GetVoucherBatchResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *GetVoucherBatchResponse) GetVouchers() []*HotspotUser {
+	if x != nil {
+		return x.Vouchers
+	}
+	return nil
+}
+
+func (x *GetVoucherBatchResponse) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+type CheckVoucherStatusRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckVoucherStatusRequest) Reset() {
+	*x = CheckVoucherStatusRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckVoucherStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckVoucherStatusRequest) ProtoMessage() {}
+
+func (x *CheckVoucherStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckVoucherStatusRequest.ProtoReflect.Descriptor instead.
+func (*CheckVoucherStatusRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *CheckVoucherStatusRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *CheckVoucherStatusRequest) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+type CheckVoucherStatusResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Found         bool                   `protobuf:"varint,1,opt,name=found,proto3" json:"found,omitempty"`
+	User          *HotspotUser           `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
+	Profile       *HotspotProfile        `protobuf:"bytes,3,opt,name=profile,proto3" json:"profile,omitempty"`
+	IsOnline      bool                   `protobuf:"varint,4,opt,name=is_online,json=isOnline,proto3" json:"is_online,omitempty"`
+	ActiveSession *HotspotActiveSession  `protobuf:"bytes,5,opt,name=active_session,json=activeSession,proto3" json:"active_session,omitempty"`
+	HasCookie     bool                   `protobuf:"varint,6,opt,name=has_cookie,json=hasCookie,proto3" json:"has_cookie,omitempty"`
+	Cookie        *HotspotCookie         `protobuf:"bytes,7,opt,name=cookie,proto3" json:"cookie,omitempty"`
+	Status        string                 `protobuf:"bytes,8,opt,name=status,proto3" json:"status,omitempty"` // "active" | "expired" | "unused" | "disabled" | "not_found"
+	SisaWaktu     string                 `protobuf:"bytes,9,opt,name=sisa_waktu,json=sisaWaktu,proto3" json:"sisa_waktu,omitempty"`
+	SisaKuota     string                 `protobuf:"bytes,10,opt,name=sisa_kuota,json=sisaKuota,proto3" json:"sisa_kuota,omitempty"`
+	ExpireDate    string                 `protobuf:"bytes,11,opt,name=expire_date,json=expireDate,proto3" json:"expire_date,omitempty"`
+	MacLocked     string                 `protobuf:"bytes,12,opt,name=mac_locked,json=macLocked,proto3" json:"mac_locked,omitempty"`
+	Message       string                 `protobuf:"bytes,13,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckVoucherStatusResponse) Reset() {
+	*x = CheckVoucherStatusResponse{}
 	mi := &file_v1_hotspot_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DeleteHotspotProfileResponse) String() string {
+func (x *CheckVoucherStatusResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteHotspotProfileResponse) ProtoMessage() {}
+func (*CheckVoucherStatusResponse) ProtoMessage() {}
 
-func (x *DeleteHotspotProfileResponse) ProtoReflect() protoreflect.Message {
+func (x *CheckVoucherStatusResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_hotspot_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2412,19 +2342,102 @@ func (x *DeleteHotspotProfileResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteHotspotProfileResponse.ProtoReflect.Descriptor instead.
-func (*DeleteHotspotProfileResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use CheckVoucherStatusResponse.ProtoReflect.Descriptor instead.
+func (*CheckVoucherStatusResponse) Descriptor() ([]byte, []int) {
 	return file_v1_hotspot_proto_rawDescGZIP(), []int{35}
 }
 
-func (x *DeleteHotspotProfileResponse) GetMessage() string {
+func (x *CheckVoucherStatusResponse) GetFound() bool {
+	if x != nil {
+		return x.Found
+	}
+	return false
+}
+
+func (x *CheckVoucherStatusResponse) GetUser() *HotspotUser {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
+func (x *CheckVoucherStatusResponse) GetProfile() *HotspotProfile {
+	if x != nil {
+		return x.Profile
+	}
+	return nil
+}
+
+func (x *CheckVoucherStatusResponse) GetIsOnline() bool {
+	if x != nil {
+		return x.IsOnline
+	}
+	return false
+}
+
+func (x *CheckVoucherStatusResponse) GetActiveSession() *HotspotActiveSession {
+	if x != nil {
+		return x.ActiveSession
+	}
+	return nil
+}
+
+func (x *CheckVoucherStatusResponse) GetHasCookie() bool {
+	if x != nil {
+		return x.HasCookie
+	}
+	return false
+}
+
+func (x *CheckVoucherStatusResponse) GetCookie() *HotspotCookie {
+	if x != nil {
+		return x.Cookie
+	}
+	return nil
+}
+
+func (x *CheckVoucherStatusResponse) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *CheckVoucherStatusResponse) GetSisaWaktu() string {
+	if x != nil {
+		return x.SisaWaktu
+	}
+	return ""
+}
+
+func (x *CheckVoucherStatusResponse) GetSisaKuota() string {
+	if x != nil {
+		return x.SisaKuota
+	}
+	return ""
+}
+
+func (x *CheckVoucherStatusResponse) GetExpireDate() string {
+	if x != nil {
+		return x.ExpireDate
+	}
+	return ""
+}
+
+func (x *CheckVoucherStatusResponse) GetMacLocked() string {
+	if x != nil {
+		return x.MacLocked
+	}
+	return ""
+}
+
+func (x *CheckVoucherStatusResponse) GetMessage() string {
 	if x != nil {
 		return x.Message
 	}
 	return ""
 }
 
-// ── Modul 06: Host & Server ───────────────────────────────────────────
 type HotspotHost struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -2881,3939 +2894,6 @@ func (x *ListHotspotServersResponse) GetServers() []*HotspotServerInfo {
 	return nil
 }
 
-// ── Modul 07: Voucher batch query ─────────────────────────────────────
-type GetVoucherBatchRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Comment       string                 `protobuf:"bytes,2,opt,name=comment,proto3" json:"comment,omitempty"` // tag batch (gcomment)
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetVoucherBatchRequest) Reset() {
-	*x = GetVoucherBatchRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[44]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetVoucherBatchRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetVoucherBatchRequest) ProtoMessage() {}
-
-func (x *GetVoucherBatchRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[44]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetVoucherBatchRequest.ProtoReflect.Descriptor instead.
-func (*GetVoucherBatchRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{44}
-}
-
-func (x *GetVoucherBatchRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *GetVoucherBatchRequest) GetComment() string {
-	if x != nil {
-		return x.Comment
-	}
-	return ""
-}
-
-type GetVoucherBatchResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Vouchers      []*HotspotUser         `protobuf:"bytes,1,rep,name=vouchers,proto3" json:"vouchers,omitempty"`
-	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetVoucherBatchResponse) Reset() {
-	*x = GetVoucherBatchResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[45]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetVoucherBatchResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetVoucherBatchResponse) ProtoMessage() {}
-
-func (x *GetVoucherBatchResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[45]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetVoucherBatchResponse.ProtoReflect.Descriptor instead.
-func (*GetVoucherBatchResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{45}
-}
-
-func (x *GetVoucherBatchResponse) GetVouchers() []*HotspotUser {
-	if x != nil {
-		return x.Vouchers
-	}
-	return nil
-}
-
-func (x *GetVoucherBatchResponse) GetCount() int32 {
-	if x != nil {
-		return x.Count
-	}
-	return 0
-}
-
-type StreamTrafficRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Interface     string                 `protobuf:"bytes,2,opt,name=interface,proto3" json:"interface,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StreamTrafficRequest) Reset() {
-	*x = StreamTrafficRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[46]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StreamTrafficRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StreamTrafficRequest) ProtoMessage() {}
-
-func (x *StreamTrafficRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[46]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StreamTrafficRequest.ProtoReflect.Descriptor instead.
-func (*StreamTrafficRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{46}
-}
-
-func (x *StreamTrafficRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *StreamTrafficRequest) GetInterface() string {
-	if x != nil {
-		return x.Interface
-	}
-	return ""
-}
-
-type TrafficStreamData struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Interface     string                 `protobuf:"bytes,2,opt,name=interface,proto3" json:"interface,omitempty"`
-	RxBps         int64                  `protobuf:"varint,3,opt,name=rx_bps,json=rxBps,proto3" json:"rx_bps,omitempty"`
-	TxBps         int64                  `protobuf:"varint,4,opt,name=tx_bps,json=txBps,proto3" json:"tx_bps,omitempty"`
-	TimestampUnix int64                  `protobuf:"varint,5,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TrafficStreamData) Reset() {
-	*x = TrafficStreamData{}
-	mi := &file_v1_hotspot_proto_msgTypes[47]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TrafficStreamData) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TrafficStreamData) ProtoMessage() {}
-
-func (x *TrafficStreamData) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[47]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TrafficStreamData.ProtoReflect.Descriptor instead.
-func (*TrafficStreamData) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{47}
-}
-
-func (x *TrafficStreamData) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *TrafficStreamData) GetInterface() string {
-	if x != nil {
-		return x.Interface
-	}
-	return ""
-}
-
-func (x *TrafficStreamData) GetRxBps() int64 {
-	if x != nil {
-		return x.RxBps
-	}
-	return 0
-}
-
-func (x *TrafficStreamData) GetTxBps() int64 {
-	if x != nil {
-		return x.TxBps
-	}
-	return 0
-}
-
-func (x *TrafficStreamData) GetTimestampUnix() int64 {
-	if x != nil {
-		return x.TimestampUnix
-	}
-	return 0
-}
-
-type StreamResourceRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StreamResourceRequest) Reset() {
-	*x = StreamResourceRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[48]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StreamResourceRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StreamResourceRequest) ProtoMessage() {}
-
-func (x *StreamResourceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[48]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StreamResourceRequest.ProtoReflect.Descriptor instead.
-func (*StreamResourceRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{48}
-}
-
-func (x *StreamResourceRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-type ResourceStreamData struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	CpuLoad       int32                  `protobuf:"varint,2,opt,name=cpu_load,json=cpuLoad,proto3" json:"cpu_load,omitempty"`
-	FreeMemory    string                 `protobuf:"bytes,3,opt,name=free_memory,json=freeMemory,proto3" json:"free_memory,omitempty"`
-	Uptime        string                 `protobuf:"bytes,4,opt,name=uptime,proto3" json:"uptime,omitempty"`
-	TimestampUnix int64                  `protobuf:"varint,5,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ResourceStreamData) Reset() {
-	*x = ResourceStreamData{}
-	mi := &file_v1_hotspot_proto_msgTypes[49]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ResourceStreamData) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ResourceStreamData) ProtoMessage() {}
-
-func (x *ResourceStreamData) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[49]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ResourceStreamData.ProtoReflect.Descriptor instead.
-func (*ResourceStreamData) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{49}
-}
-
-func (x *ResourceStreamData) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *ResourceStreamData) GetCpuLoad() int32 {
-	if x != nil {
-		return x.CpuLoad
-	}
-	return 0
-}
-
-func (x *ResourceStreamData) GetFreeMemory() string {
-	if x != nil {
-		return x.FreeMemory
-	}
-	return ""
-}
-
-func (x *ResourceStreamData) GetUptime() string {
-	if x != nil {
-		return x.Uptime
-	}
-	return ""
-}
-
-func (x *ResourceStreamData) GetTimestampUnix() int64 {
-	if x != nil {
-		return x.TimestampUnix
-	}
-	return 0
-}
-
-type StreamActiveSessionsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	UserFilter    string                 `protobuf:"bytes,2,opt,name=user_filter,json=userFilter,proto3" json:"user_filter,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StreamActiveSessionsRequest) Reset() {
-	*x = StreamActiveSessionsRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[50]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StreamActiveSessionsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StreamActiveSessionsRequest) ProtoMessage() {}
-
-func (x *StreamActiveSessionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[50]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StreamActiveSessionsRequest.ProtoReflect.Descriptor instead.
-func (*StreamActiveSessionsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{50}
-}
-
-func (x *StreamActiveSessionsRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *StreamActiveSessionsRequest) GetUserFilter() string {
-	if x != nil {
-		return x.UserFilter
-	}
-	return ""
-}
-
-type ActiveSessionsStreamData struct {
-	state         protoimpl.MessageState  `protogen:"open.v1"`
-	DeviceId      string                  `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Sessions      []*HotspotActiveSession `protobuf:"bytes,2,rep,name=sessions,proto3" json:"sessions,omitempty"`
-	TimestampUnix int64                   `protobuf:"varint,3,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ActiveSessionsStreamData) Reset() {
-	*x = ActiveSessionsStreamData{}
-	mi := &file_v1_hotspot_proto_msgTypes[51]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ActiveSessionsStreamData) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ActiveSessionsStreamData) ProtoMessage() {}
-
-func (x *ActiveSessionsStreamData) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[51]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ActiveSessionsStreamData.ProtoReflect.Descriptor instead.
-func (*ActiveSessionsStreamData) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{51}
-}
-
-func (x *ActiveSessionsStreamData) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *ActiveSessionsStreamData) GetSessions() []*HotspotActiveSession {
-	if x != nil {
-		return x.Sessions
-	}
-	return nil
-}
-
-func (x *ActiveSessionsStreamData) GetTimestampUnix() int64 {
-	if x != nil {
-		return x.TimestampUnix
-	}
-	return 0
-}
-
-type HotspotActiveStat struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Uptime          string                 `protobuf:"bytes,2,opt,name=uptime,proto3" json:"uptime,omitempty"`
-	SessionTimeLeft string                 `protobuf:"bytes,3,opt,name=session_time_left,json=sessionTimeLeft,proto3" json:"session_time_left,omitempty"`
-	IdleTime        string                 `protobuf:"bytes,4,opt,name=idle_time,json=idleTime,proto3" json:"idle_time,omitempty"`
-	BytesIn         string                 `protobuf:"bytes,5,opt,name=bytes_in,json=bytesIn,proto3" json:"bytes_in,omitempty"`
-	BytesOut        string                 `protobuf:"bytes,6,opt,name=bytes_out,json=bytesOut,proto3" json:"bytes_out,omitempty"`
-	PacketsIn       string                 `protobuf:"bytes,7,opt,name=packets_in,json=packetsIn,proto3" json:"packets_in,omitempty"`
-	PacketsOut      string                 `protobuf:"bytes,8,opt,name=packets_out,json=packetsOut,proto3" json:"packets_out,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
-}
-
-func (x *HotspotActiveStat) Reset() {
-	*x = HotspotActiveStat{}
-	mi := &file_v1_hotspot_proto_msgTypes[52]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *HotspotActiveStat) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*HotspotActiveStat) ProtoMessage() {}
-
-func (x *HotspotActiveStat) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[52]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use HotspotActiveStat.ProtoReflect.Descriptor instead.
-func (*HotspotActiveStat) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{52}
-}
-
-func (x *HotspotActiveStat) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *HotspotActiveStat) GetUptime() string {
-	if x != nil {
-		return x.Uptime
-	}
-	return ""
-}
-
-func (x *HotspotActiveStat) GetSessionTimeLeft() string {
-	if x != nil {
-		return x.SessionTimeLeft
-	}
-	return ""
-}
-
-func (x *HotspotActiveStat) GetIdleTime() string {
-	if x != nil {
-		return x.IdleTime
-	}
-	return ""
-}
-
-func (x *HotspotActiveStat) GetBytesIn() string {
-	if x != nil {
-		return x.BytesIn
-	}
-	return ""
-}
-
-func (x *HotspotActiveStat) GetBytesOut() string {
-	if x != nil {
-		return x.BytesOut
-	}
-	return ""
-}
-
-func (x *HotspotActiveStat) GetPacketsIn() string {
-	if x != nil {
-		return x.PacketsIn
-	}
-	return ""
-}
-
-func (x *HotspotActiveStat) GetPacketsOut() string {
-	if x != nil {
-		return x.PacketsOut
-	}
-	return ""
-}
-
-type StreamActiveStatsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Interval      string                 `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StreamActiveStatsRequest) Reset() {
-	*x = StreamActiveStatsRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[53]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StreamActiveStatsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StreamActiveStatsRequest) ProtoMessage() {}
-
-func (x *StreamActiveStatsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[53]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StreamActiveStatsRequest.ProtoReflect.Descriptor instead.
-func (*StreamActiveStatsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{53}
-}
-
-func (x *StreamActiveStatsRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *StreamActiveStatsRequest) GetInterval() string {
-	if x != nil {
-		return x.Interval
-	}
-	return ""
-}
-
-type ActiveStatsStreamData struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Stats         []*HotspotActiveStat   `protobuf:"bytes,2,rep,name=stats,proto3" json:"stats,omitempty"`
-	TimestampUnix int64                  `protobuf:"varint,3,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ActiveStatsStreamData) Reset() {
-	*x = ActiveStatsStreamData{}
-	mi := &file_v1_hotspot_proto_msgTypes[54]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ActiveStatsStreamData) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ActiveStatsStreamData) ProtoMessage() {}
-
-func (x *ActiveStatsStreamData) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[54]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ActiveStatsStreamData.ProtoReflect.Descriptor instead.
-func (*ActiveStatsStreamData) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{54}
-}
-
-func (x *ActiveStatsStreamData) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *ActiveStatsStreamData) GetStats() []*HotspotActiveStat {
-	if x != nil {
-		return x.Stats
-	}
-	return nil
-}
-
-func (x *ActiveStatsStreamData) GetTimestampUnix() int64 {
-	if x != nil {
-		return x.TimestampUnix
-	}
-	return 0
-}
-
-// ── Modul 08: Sales Report ────────────────────────────────────────────
-type ListHotspotReportsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Day           string                 `protobuf:"bytes,2,opt,name=day,proto3" json:"day,omitempty"`                                     // legacy get_report: "aug/17/2026" (filter source)
-	Month         string                 `protobuf:"bytes,3,opt,name=month,proto3" json:"month,omitempty"`                                 // legacy get_livereport: "aug2026" (filter owner)
-	Year          string                 `protobuf:"bytes,4,opt,name=year,proto3" json:"year,omitempty"`                                   // filter suffix tanggal ("2026")
-	SummaryOnly   bool                   `protobuf:"varint,5,opt,name=summary_only,json=summaryOnly,proto3" json:"summary_only,omitempty"` // tanpa daftar record, hanya total_income + total
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListHotspotReportsRequest) Reset() {
-	*x = ListHotspotReportsRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[55]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListHotspotReportsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListHotspotReportsRequest) ProtoMessage() {}
-
-func (x *ListHotspotReportsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[55]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListHotspotReportsRequest.ProtoReflect.Descriptor instead.
-func (*ListHotspotReportsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{55}
-}
-
-func (x *ListHotspotReportsRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *ListHotspotReportsRequest) GetDay() string {
-	if x != nil {
-		return x.Day
-	}
-	return ""
-}
-
-func (x *ListHotspotReportsRequest) GetMonth() string {
-	if x != nil {
-		return x.Month
-	}
-	return ""
-}
-
-func (x *ListHotspotReportsRequest) GetYear() string {
-	if x != nil {
-		return x.Year
-	}
-	return ""
-}
-
-func (x *ListHotspotReportsRequest) GetSummaryOnly() bool {
-	if x != nil {
-		return x.SummaryOnly
-	}
-	return false
-}
-
-type ListHotspotReportsResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Reports       []*HotspotReport       `protobuf:"bytes,1,rep,name=reports,proto3" json:"reports,omitempty"`
-	TotalIncome   float64                `protobuf:"fixed64,2,opt,name=total_income,json=totalIncome,proto3" json:"total_income,omitempty"`
-	Total         int32                  `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListHotspotReportsResponse) Reset() {
-	*x = ListHotspotReportsResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[56]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListHotspotReportsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListHotspotReportsResponse) ProtoMessage() {}
-
-func (x *ListHotspotReportsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[56]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListHotspotReportsResponse.ProtoReflect.Descriptor instead.
-func (*ListHotspotReportsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{56}
-}
-
-func (x *ListHotspotReportsResponse) GetReports() []*HotspotReport {
-	if x != nil {
-		return x.Reports
-	}
-	return nil
-}
-
-func (x *ListHotspotReportsResponse) GetTotalIncome() float64 {
-	if x != nil {
-		return x.TotalIncome
-	}
-	return 0
-}
-
-func (x *ListHotspotReportsResponse) GetTotal() int32 {
-	if x != nil {
-		return x.Total
-	}
-	return 0
-}
-
-type DeleteHotspotReportRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	RosId         string                 `protobuf:"bytes,2,opt,name=ros_id,json=rosId,proto3" json:"ros_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteHotspotReportRequest) Reset() {
-	*x = DeleteHotspotReportRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[57]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteHotspotReportRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteHotspotReportRequest) ProtoMessage() {}
-
-func (x *DeleteHotspotReportRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[57]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteHotspotReportRequest.ProtoReflect.Descriptor instead.
-func (*DeleteHotspotReportRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{57}
-}
-
-func (x *DeleteHotspotReportRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *DeleteHotspotReportRequest) GetRosId() string {
-	if x != nil {
-		return x.RosId
-	}
-	return ""
-}
-
-type DeleteHotspotReportResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteHotspotReportResponse) Reset() {
-	*x = DeleteHotspotReportResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[58]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteHotspotReportResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteHotspotReportResponse) ProtoMessage() {}
-
-func (x *DeleteHotspotReportResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[58]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteHotspotReportResponse.ProtoReflect.Descriptor instead.
-func (*DeleteHotspotReportResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{58}
-}
-
-func (x *DeleteHotspotReportResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-// ── Modul 09: Expire Monitor ──────────────────────────────────────────
-type GetExpireMonitorStatusRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetExpireMonitorStatusRequest) Reset() {
-	*x = GetExpireMonitorStatusRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[59]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetExpireMonitorStatusRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetExpireMonitorStatusRequest) ProtoMessage() {}
-
-func (x *GetExpireMonitorStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[59]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetExpireMonitorStatusRequest.ProtoReflect.Descriptor instead.
-func (*GetExpireMonitorStatusRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{59}
-}
-
-func (x *GetExpireMonitorStatusRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-type ExpireMonitorStatusResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	IsInstalled   bool                   `protobuf:"varint,1,opt,name=is_installed,json=isInstalled,proto3" json:"is_installed,omitempty"`
-	IsEnabled     bool                   `protobuf:"varint,2,opt,name=is_enabled,json=isEnabled,proto3" json:"is_enabled,omitempty"`
-	Status        string                 `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"` // "ok" | "not ready" (kompatibel frontend legacy)
-	SchedulerName string                 `protobuf:"bytes,4,opt,name=scheduler_name,json=schedulerName,proto3" json:"scheduler_name,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ExpireMonitorStatusResponse) Reset() {
-	*x = ExpireMonitorStatusResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[60]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ExpireMonitorStatusResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ExpireMonitorStatusResponse) ProtoMessage() {}
-
-func (x *ExpireMonitorStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[60]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ExpireMonitorStatusResponse.ProtoReflect.Descriptor instead.
-func (*ExpireMonitorStatusResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{60}
-}
-
-func (x *ExpireMonitorStatusResponse) GetIsInstalled() bool {
-	if x != nil {
-		return x.IsInstalled
-	}
-	return false
-}
-
-func (x *ExpireMonitorStatusResponse) GetIsEnabled() bool {
-	if x != nil {
-		return x.IsEnabled
-	}
-	return false
-}
-
-func (x *ExpireMonitorStatusResponse) GetStatus() string {
-	if x != nil {
-		return x.Status
-	}
-	return ""
-}
-
-func (x *ExpireMonitorStatusResponse) GetSchedulerName() string {
-	if x != nil {
-		return x.SchedulerName
-	}
-	return ""
-}
-
-type SetupExpireMonitorRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Interval      string                 `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"` // "00:01:00" (HH:MM:SS)
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SetupExpireMonitorRequest) Reset() {
-	*x = SetupExpireMonitorRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[61]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SetupExpireMonitorRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SetupExpireMonitorRequest) ProtoMessage() {}
-
-func (x *SetupExpireMonitorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[61]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SetupExpireMonitorRequest.ProtoReflect.Descriptor instead.
-func (*SetupExpireMonitorRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{61}
-}
-
-func (x *SetupExpireMonitorRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *SetupExpireMonitorRequest) GetInterval() string {
-	if x != nil {
-		return x.Interval
-	}
-	return ""
-}
-
-type SetupExpireMonitorResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SetupExpireMonitorResponse) Reset() {
-	*x = SetupExpireMonitorResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[62]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SetupExpireMonitorResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SetupExpireMonitorResponse) ProtoMessage() {}
-
-func (x *SetupExpireMonitorResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[62]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SetupExpireMonitorResponse.ProtoReflect.Descriptor instead.
-func (*SetupExpireMonitorResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{62}
-}
-
-func (x *SetupExpireMonitorResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-type DisableExpireMonitorRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DisableExpireMonitorRequest) Reset() {
-	*x = DisableExpireMonitorRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[63]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DisableExpireMonitorRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DisableExpireMonitorRequest) ProtoMessage() {}
-
-func (x *DisableExpireMonitorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[63]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DisableExpireMonitorRequest.ProtoReflect.Descriptor instead.
-func (*DisableExpireMonitorRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{63}
-}
-
-func (x *DisableExpireMonitorRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-type DisableExpireMonitorResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DisableExpireMonitorResponse) Reset() {
-	*x = DisableExpireMonitorResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[64]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DisableExpireMonitorResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DisableExpireMonitorResponse) ProtoMessage() {}
-
-func (x *DisableExpireMonitorResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[64]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DisableExpireMonitorResponse.ProtoReflect.Descriptor instead.
-func (*DisableExpireMonitorResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{64}
-}
-
-func (x *DisableExpireMonitorResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-type RemoveExpireMonitorRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RemoveExpireMonitorRequest) Reset() {
-	*x = RemoveExpireMonitorRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[65]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RemoveExpireMonitorRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RemoveExpireMonitorRequest) ProtoMessage() {}
-
-func (x *RemoveExpireMonitorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[65]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RemoveExpireMonitorRequest.ProtoReflect.Descriptor instead.
-func (*RemoveExpireMonitorRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{65}
-}
-
-func (x *RemoveExpireMonitorRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-type RemoveExpireMonitorResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RemoveExpireMonitorResponse) Reset() {
-	*x = RemoveExpireMonitorResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[66]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RemoveExpireMonitorResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RemoveExpireMonitorResponse) ProtoMessage() {}
-
-func (x *RemoveExpireMonitorResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[66]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RemoveExpireMonitorResponse.ProtoReflect.Descriptor instead.
-func (*RemoveExpireMonitorResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{66}
-}
-
-func (x *RemoveExpireMonitorResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-// ── Modul 10: Template & Print ────────────────────────────────────────
-type TemplateInfo struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`         // default | small | thermal
-	Sections      []string               `protobuf:"bytes,2,rep,name=sections,proto3" json:"sections,omitempty"` // header, row, footer
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *TemplateInfo) Reset() {
-	*x = TemplateInfo{}
-	mi := &file_v1_hotspot_proto_msgTypes[67]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *TemplateInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TemplateInfo) ProtoMessage() {}
-
-func (x *TemplateInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[67]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TemplateInfo.ProtoReflect.Descriptor instead.
-func (*TemplateInfo) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{67}
-}
-
-func (x *TemplateInfo) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *TemplateInfo) GetSections() []string {
-	if x != nil {
-		return x.Sections
-	}
-	return nil
-}
-
-type ListTemplatesRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListTemplatesRequest) Reset() {
-	*x = ListTemplatesRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[68]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListTemplatesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListTemplatesRequest) ProtoMessage() {}
-
-func (x *ListTemplatesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[68]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListTemplatesRequest.ProtoReflect.Descriptor instead.
-func (*ListTemplatesRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{68}
-}
-
-type ListTemplatesResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Templates     []*TemplateInfo        `protobuf:"bytes,1,rep,name=templates,proto3" json:"templates,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListTemplatesResponse) Reset() {
-	*x = ListTemplatesResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[69]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListTemplatesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListTemplatesResponse) ProtoMessage() {}
-
-func (x *ListTemplatesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[69]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListTemplatesResponse.ProtoReflect.Descriptor instead.
-func (*ListTemplatesResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{69}
-}
-
-func (x *ListTemplatesResponse) GetTemplates() []*TemplateInfo {
-	if x != nil {
-		return x.Templates
-	}
-	return nil
-}
-
-type GetTemplateSectionRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	TemplateName  string                 `protobuf:"bytes,1,opt,name=template_name,json=templateName,proto3" json:"template_name,omitempty"` // default | small | thermal
-	Section       string                 `protobuf:"bytes,2,opt,name=section,proto3" json:"section,omitempty"`                               // header | row | footer
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetTemplateSectionRequest) Reset() {
-	*x = GetTemplateSectionRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[70]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetTemplateSectionRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetTemplateSectionRequest) ProtoMessage() {}
-
-func (x *GetTemplateSectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[70]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetTemplateSectionRequest.ProtoReflect.Descriptor instead.
-func (*GetTemplateSectionRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{70}
-}
-
-func (x *GetTemplateSectionRequest) GetTemplateName() string {
-	if x != nil {
-		return x.TemplateName
-	}
-	return ""
-}
-
-func (x *GetTemplateSectionRequest) GetSection() string {
-	if x != nil {
-		return x.Section
-	}
-	return ""
-}
-
-type GetTemplateSectionResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Content       string                 `protobuf:"bytes,1,opt,name=content,proto3" json:"content,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetTemplateSectionResponse) Reset() {
-	*x = GetTemplateSectionResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[71]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetTemplateSectionResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetTemplateSectionResponse) ProtoMessage() {}
-
-func (x *GetTemplateSectionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[71]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetTemplateSectionResponse.ProtoReflect.Descriptor instead.
-func (*GetTemplateSectionResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{71}
-}
-
-func (x *GetTemplateSectionResponse) GetContent() string {
-	if x != nil {
-		return x.Content
-	}
-	return ""
-}
-
-type RenderVouchersRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	TemplateName  string                 `protobuf:"bytes,2,opt,name=template_name,json=templateName,proto3" json:"template_name,omitempty"` // default | small | thermal
-	Comment       string                 `protobuf:"bytes,3,opt,name=comment,proto3" json:"comment,omitempty"`                               // tag batch (eksklusif dengan user_id)
-	UserId        string                 `protobuf:"bytes,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                   // single by .id (eksklusif dengan comment)
-	Preview       bool                   `protobuf:"varint,5,opt,name=preview,proto3" json:"preview,omitempty"`                              // data dummy tanpa koneksi router
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RenderVouchersRequest) Reset() {
-	*x = RenderVouchersRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[72]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RenderVouchersRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RenderVouchersRequest) ProtoMessage() {}
-
-func (x *RenderVouchersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[72]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RenderVouchersRequest.ProtoReflect.Descriptor instead.
-func (*RenderVouchersRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{72}
-}
-
-func (x *RenderVouchersRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *RenderVouchersRequest) GetTemplateName() string {
-	if x != nil {
-		return x.TemplateName
-	}
-	return ""
-}
-
-func (x *RenderVouchersRequest) GetComment() string {
-	if x != nil {
-		return x.Comment
-	}
-	return ""
-}
-
-func (x *RenderVouchersRequest) GetUserId() string {
-	if x != nil {
-		return x.UserId
-	}
-	return ""
-}
-
-func (x *RenderVouchersRequest) GetPreview() bool {
-	if x != nil {
-		return x.Preview
-	}
-	return false
-}
-
-type RenderVouchersResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Html          string                 `protobuf:"bytes,1,opt,name=html,proto3" json:"html,omitempty"`
-	TotalVouchers int32                  `protobuf:"varint,2,opt,name=total_vouchers,json=totalVouchers,proto3" json:"total_vouchers,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RenderVouchersResponse) Reset() {
-	*x = RenderVouchersResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[73]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RenderVouchersResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RenderVouchersResponse) ProtoMessage() {}
-
-func (x *RenderVouchersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[73]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RenderVouchersResponse.ProtoReflect.Descriptor instead.
-func (*RenderVouchersResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{73}
-}
-
-func (x *RenderVouchersResponse) GetHtml() string {
-	if x != nil {
-		return x.Html
-	}
-	return ""
-}
-
-func (x *RenderVouchersResponse) GetTotalVouchers() int32 {
-	if x != nil {
-		return x.TotalVouchers
-	}
-	return 0
-}
-
-type ListParentQueuesRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListParentQueuesRequest) Reset() {
-	*x = ListParentQueuesRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[74]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListParentQueuesRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListParentQueuesRequest) ProtoMessage() {}
-
-func (x *ListParentQueuesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[74]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListParentQueuesRequest.ProtoReflect.Descriptor instead.
-func (*ListParentQueuesRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{74}
-}
-
-func (x *ListParentQueuesRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-type ParentQueueEntry struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RosId         string                 `protobuf:"bytes,1,opt,name=ros_id,json=rosId,proto3" json:"ros_id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	MaxLimit      string                 `protobuf:"bytes,3,opt,name=max_limit,json=maxLimit,proto3" json:"max_limit,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ParentQueueEntry) Reset() {
-	*x = ParentQueueEntry{}
-	mi := &file_v1_hotspot_proto_msgTypes[75]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ParentQueueEntry) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ParentQueueEntry) ProtoMessage() {}
-
-func (x *ParentQueueEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[75]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ParentQueueEntry.ProtoReflect.Descriptor instead.
-func (*ParentQueueEntry) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{75}
-}
-
-func (x *ParentQueueEntry) GetRosId() string {
-	if x != nil {
-		return x.RosId
-	}
-	return ""
-}
-
-func (x *ParentQueueEntry) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *ParentQueueEntry) GetMaxLimit() string {
-	if x != nil {
-		return x.MaxLimit
-	}
-	return ""
-}
-
-type ListParentQueuesResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Queues        []*ParentQueueEntry    `protobuf:"bytes,1,rep,name=queues,proto3" json:"queues,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListParentQueuesResponse) Reset() {
-	*x = ListParentQueuesResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[76]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListParentQueuesResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListParentQueuesResponse) ProtoMessage() {}
-
-func (x *ListParentQueuesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[76]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListParentQueuesResponse.ProtoReflect.Descriptor instead.
-func (*ListParentQueuesResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{76}
-}
-
-func (x *ListParentQueuesResponse) GetQueues() []*ParentQueueEntry {
-	if x != nil {
-		return x.Queues
-	}
-	return nil
-}
-
-type ListIPPoolsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListIPPoolsRequest) Reset() {
-	*x = ListIPPoolsRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[77]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListIPPoolsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListIPPoolsRequest) ProtoMessage() {}
-
-func (x *ListIPPoolsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[77]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListIPPoolsRequest.ProtoReflect.Descriptor instead.
-func (*ListIPPoolsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{77}
-}
-
-func (x *ListIPPoolsRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-type IPPoolEntry struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RosId         string                 `protobuf:"bytes,1,opt,name=ros_id,json=rosId,proto3" json:"ros_id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Ranges        string                 `protobuf:"bytes,3,opt,name=ranges,proto3" json:"ranges,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *IPPoolEntry) Reset() {
-	*x = IPPoolEntry{}
-	mi := &file_v1_hotspot_proto_msgTypes[78]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *IPPoolEntry) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*IPPoolEntry) ProtoMessage() {}
-
-func (x *IPPoolEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[78]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use IPPoolEntry.ProtoReflect.Descriptor instead.
-func (*IPPoolEntry) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{78}
-}
-
-func (x *IPPoolEntry) GetRosId() string {
-	if x != nil {
-		return x.RosId
-	}
-	return ""
-}
-
-func (x *IPPoolEntry) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *IPPoolEntry) GetRanges() string {
-	if x != nil {
-		return x.Ranges
-	}
-	return ""
-}
-
-type ListIPPoolsResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Pools         []*IPPoolEntry         `protobuf:"bytes,1,rep,name=pools,proto3" json:"pools,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListIPPoolsResponse) Reset() {
-	*x = ListIPPoolsResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[79]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListIPPoolsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListIPPoolsResponse) ProtoMessage() {}
-
-func (x *ListIPPoolsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[79]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListIPPoolsResponse.ProtoReflect.Descriptor instead.
-func (*ListIPPoolsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{79}
-}
-
-func (x *ListIPPoolsResponse) GetPools() []*IPPoolEntry {
-	if x != nil {
-		return x.Pools
-	}
-	return nil
-}
-
-type StreamSystemSnapshotRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Interval      string                 `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"` // RouterOS duration ("1s", "2s"). Default "1s".
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StreamSystemSnapshotRequest) Reset() {
-	*x = StreamSystemSnapshotRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[80]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StreamSystemSnapshotRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StreamSystemSnapshotRequest) ProtoMessage() {}
-
-func (x *StreamSystemSnapshotRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[80]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StreamSystemSnapshotRequest.ProtoReflect.Descriptor instead.
-func (*StreamSystemSnapshotRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{80}
-}
-
-func (x *StreamSystemSnapshotRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *StreamSystemSnapshotRequest) GetInterval() string {
-	if x != nil {
-		return x.Interval
-	}
-	return ""
-}
-
-type SystemClockInfo struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Time          string                 `protobuf:"bytes,1,opt,name=time,proto3" json:"time,omitempty"`
-	Date          string                 `protobuf:"bytes,2,opt,name=date,proto3" json:"date,omitempty"`
-	TimeZoneName  string                 `protobuf:"bytes,3,opt,name=time_zone_name,json=timeZoneName,proto3" json:"time_zone_name,omitempty"`
-	GmtOffset     string                 `protobuf:"bytes,4,opt,name=gmt_offset,json=gmtOffset,proto3" json:"gmt_offset,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SystemClockInfo) Reset() {
-	*x = SystemClockInfo{}
-	mi := &file_v1_hotspot_proto_msgTypes[81]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SystemClockInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SystemClockInfo) ProtoMessage() {}
-
-func (x *SystemClockInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[81]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SystemClockInfo.ProtoReflect.Descriptor instead.
-func (*SystemClockInfo) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{81}
-}
-
-func (x *SystemClockInfo) GetTime() string {
-	if x != nil {
-		return x.Time
-	}
-	return ""
-}
-
-func (x *SystemClockInfo) GetDate() string {
-	if x != nil {
-		return x.Date
-	}
-	return ""
-}
-
-func (x *SystemClockInfo) GetTimeZoneName() string {
-	if x != nil {
-		return x.TimeZoneName
-	}
-	return ""
-}
-
-func (x *SystemClockInfo) GetGmtOffset() string {
-	if x != nil {
-		return x.GmtOffset
-	}
-	return ""
-}
-
-type SystemResourceInfo struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CpuLoad       int32                  `protobuf:"varint,1,opt,name=cpu_load,json=cpuLoad,proto3" json:"cpu_load,omitempty"`
-	CpuCount      int32                  `protobuf:"varint,2,opt,name=cpu_count,json=cpuCount,proto3" json:"cpu_count,omitempty"`
-	CpuFrequency  string                 `protobuf:"bytes,3,opt,name=cpu_frequency,json=cpuFrequency,proto3" json:"cpu_frequency,omitempty"`
-	FreeMemory    string                 `protobuf:"bytes,4,opt,name=free_memory,json=freeMemory,proto3" json:"free_memory,omitempty"`
-	TotalMemory   string                 `protobuf:"bytes,5,opt,name=total_memory,json=totalMemory,proto3" json:"total_memory,omitempty"`
-	FreeHddSpace  string                 `protobuf:"bytes,6,opt,name=free_hdd_space,json=freeHddSpace,proto3" json:"free_hdd_space,omitempty"`
-	TotalHddSpace string                 `protobuf:"bytes,7,opt,name=total_hdd_space,json=totalHddSpace,proto3" json:"total_hdd_space,omitempty"`
-	Architecture  string                 `protobuf:"bytes,8,opt,name=architecture,proto3" json:"architecture,omitempty"`
-	Model         string                 `protobuf:"bytes,9,opt,name=model,proto3" json:"model,omitempty"`
-	SerialNumber  string                 `protobuf:"bytes,10,opt,name=serial_number,json=serialNumber,proto3" json:"serial_number,omitempty"`
-	FirmwareType  string                 `protobuf:"bytes,11,opt,name=firmware_type,json=firmwareType,proto3" json:"firmware_type,omitempty"`
-	Voltage       string                 `protobuf:"bytes,12,opt,name=voltage,proto3" json:"voltage,omitempty"`
-	Temperature   string                 `protobuf:"bytes,13,opt,name=temperature,proto3" json:"temperature,omitempty"`
-	BadBlocks     string                 `protobuf:"bytes,14,opt,name=bad_blocks,json=badBlocks,proto3" json:"bad_blocks,omitempty"`
-	Uptime        string                 `protobuf:"bytes,15,opt,name=uptime,proto3" json:"uptime,omitempty"`
-	Version       string                 `protobuf:"bytes,16,opt,name=version,proto3" json:"version,omitempty"`
-	BoardName     string                 `protobuf:"bytes,17,opt,name=board_name,json=boardName,proto3" json:"board_name,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SystemResourceInfo) Reset() {
-	*x = SystemResourceInfo{}
-	mi := &file_v1_hotspot_proto_msgTypes[82]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SystemResourceInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SystemResourceInfo) ProtoMessage() {}
-
-func (x *SystemResourceInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[82]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SystemResourceInfo.ProtoReflect.Descriptor instead.
-func (*SystemResourceInfo) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{82}
-}
-
-func (x *SystemResourceInfo) GetCpuLoad() int32 {
-	if x != nil {
-		return x.CpuLoad
-	}
-	return 0
-}
-
-func (x *SystemResourceInfo) GetCpuCount() int32 {
-	if x != nil {
-		return x.CpuCount
-	}
-	return 0
-}
-
-func (x *SystemResourceInfo) GetCpuFrequency() string {
-	if x != nil {
-		return x.CpuFrequency
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetFreeMemory() string {
-	if x != nil {
-		return x.FreeMemory
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetTotalMemory() string {
-	if x != nil {
-		return x.TotalMemory
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetFreeHddSpace() string {
-	if x != nil {
-		return x.FreeHddSpace
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetTotalHddSpace() string {
-	if x != nil {
-		return x.TotalHddSpace
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetArchitecture() string {
-	if x != nil {
-		return x.Architecture
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetModel() string {
-	if x != nil {
-		return x.Model
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetSerialNumber() string {
-	if x != nil {
-		return x.SerialNumber
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetFirmwareType() string {
-	if x != nil {
-		return x.FirmwareType
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetVoltage() string {
-	if x != nil {
-		return x.Voltage
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetTemperature() string {
-	if x != nil {
-		return x.Temperature
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetBadBlocks() string {
-	if x != nil {
-		return x.BadBlocks
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetUptime() string {
-	if x != nil {
-		return x.Uptime
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetVersion() string {
-	if x != nil {
-		return x.Version
-	}
-	return ""
-}
-
-func (x *SystemResourceInfo) GetBoardName() string {
-	if x != nil {
-		return x.BoardName
-	}
-	return ""
-}
-
-type SystemRouterboardInfo struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	BoardName       string                 `protobuf:"bytes,1,opt,name=board_name,json=boardName,proto3" json:"board_name,omitempty"`
-	Model           string                 `protobuf:"bytes,2,opt,name=model,proto3" json:"model,omitempty"`
-	SerialNumber    string                 `protobuf:"bytes,3,opt,name=serial_number,json=serialNumber,proto3" json:"serial_number,omitempty"`
-	FirmwareType    string                 `protobuf:"bytes,4,opt,name=firmware_type,json=firmwareType,proto3" json:"firmware_type,omitempty"`
-	FactoryFirmware string                 `protobuf:"bytes,5,opt,name=factory_firmware,json=factoryFirmware,proto3" json:"factory_firmware,omitempty"`
-	CurrentFirmware string                 `protobuf:"bytes,6,opt,name=current_firmware,json=currentFirmware,proto3" json:"current_firmware,omitempty"`
-	UpgradeFirmware string                 `protobuf:"bytes,7,opt,name=upgrade_firmware,json=upgradeFirmware,proto3" json:"upgrade_firmware,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
-}
-
-func (x *SystemRouterboardInfo) Reset() {
-	*x = SystemRouterboardInfo{}
-	mi := &file_v1_hotspot_proto_msgTypes[83]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SystemRouterboardInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SystemRouterboardInfo) ProtoMessage() {}
-
-func (x *SystemRouterboardInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[83]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SystemRouterboardInfo.ProtoReflect.Descriptor instead.
-func (*SystemRouterboardInfo) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{83}
-}
-
-func (x *SystemRouterboardInfo) GetBoardName() string {
-	if x != nil {
-		return x.BoardName
-	}
-	return ""
-}
-
-func (x *SystemRouterboardInfo) GetModel() string {
-	if x != nil {
-		return x.Model
-	}
-	return ""
-}
-
-func (x *SystemRouterboardInfo) GetSerialNumber() string {
-	if x != nil {
-		return x.SerialNumber
-	}
-	return ""
-}
-
-func (x *SystemRouterboardInfo) GetFirmwareType() string {
-	if x != nil {
-		return x.FirmwareType
-	}
-	return ""
-}
-
-func (x *SystemRouterboardInfo) GetFactoryFirmware() string {
-	if x != nil {
-		return x.FactoryFirmware
-	}
-	return ""
-}
-
-func (x *SystemRouterboardInfo) GetCurrentFirmware() string {
-	if x != nil {
-		return x.CurrentFirmware
-	}
-	return ""
-}
-
-func (x *SystemRouterboardInfo) GetUpgradeFirmware() string {
-	if x != nil {
-		return x.UpgradeFirmware
-	}
-	return ""
-}
-
-type SystemHealthInfo struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Voltage        string                 `protobuf:"bytes,1,opt,name=voltage,proto3" json:"voltage,omitempty"`
-	Temperature    string                 `protobuf:"bytes,2,opt,name=temperature,proto3" json:"temperature,omitempty"`
-	CpuTemperature string                 `protobuf:"bytes,3,opt,name=cpu_temperature,json=cpuTemperature,proto3" json:"cpu_temperature,omitempty"`
-	PsuVoltage     string                 `protobuf:"bytes,4,opt,name=psu_voltage,json=psuVoltage,proto3" json:"psu_voltage,omitempty"`
-	PsuCurrent     string                 `protobuf:"bytes,5,opt,name=psu_current,json=psuCurrent,proto3" json:"psu_current,omitempty"`
-	PsuTemperature string                 `protobuf:"bytes,6,opt,name=psu_temperature,json=psuTemperature,proto3" json:"psu_temperature,omitempty"`
-	Fan1Speed      string                 `protobuf:"bytes,7,opt,name=fan1_speed,json=fan1Speed,proto3" json:"fan1_speed,omitempty"`
-	Fan2Speed      string                 `protobuf:"bytes,8,opt,name=fan2_speed,json=fan2Speed,proto3" json:"fan2_speed,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *SystemHealthInfo) Reset() {
-	*x = SystemHealthInfo{}
-	mi := &file_v1_hotspot_proto_msgTypes[84]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SystemHealthInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SystemHealthInfo) ProtoMessage() {}
-
-func (x *SystemHealthInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[84]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SystemHealthInfo.ProtoReflect.Descriptor instead.
-func (*SystemHealthInfo) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{84}
-}
-
-func (x *SystemHealthInfo) GetVoltage() string {
-	if x != nil {
-		return x.Voltage
-	}
-	return ""
-}
-
-func (x *SystemHealthInfo) GetTemperature() string {
-	if x != nil {
-		return x.Temperature
-	}
-	return ""
-}
-
-func (x *SystemHealthInfo) GetCpuTemperature() string {
-	if x != nil {
-		return x.CpuTemperature
-	}
-	return ""
-}
-
-func (x *SystemHealthInfo) GetPsuVoltage() string {
-	if x != nil {
-		return x.PsuVoltage
-	}
-	return ""
-}
-
-func (x *SystemHealthInfo) GetPsuCurrent() string {
-	if x != nil {
-		return x.PsuCurrent
-	}
-	return ""
-}
-
-func (x *SystemHealthInfo) GetPsuTemperature() string {
-	if x != nil {
-		return x.PsuTemperature
-	}
-	return ""
-}
-
-func (x *SystemHealthInfo) GetFan1Speed() string {
-	if x != nil {
-		return x.Fan1Speed
-	}
-	return ""
-}
-
-func (x *SystemHealthInfo) GetFan2Speed() string {
-	if x != nil {
-		return x.Fan2Speed
-	}
-	return ""
-}
-
-type SystemSnapshotFrame struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	TimestampUnix int64                  `protobuf:"varint,2,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
-	Clock         *SystemClockInfo       `protobuf:"bytes,3,opt,name=clock,proto3" json:"clock,omitempty"`
-	Resource      *SystemResourceInfo    `protobuf:"bytes,4,opt,name=resource,proto3" json:"resource,omitempty"`
-	Routerboard   *SystemRouterboardInfo `protobuf:"bytes,5,opt,name=routerboard,proto3" json:"routerboard,omitempty"`
-	Identity      string                 `protobuf:"bytes,6,opt,name=identity,proto3" json:"identity,omitempty"`
-	Health        *SystemHealthInfo      `protobuf:"bytes,7,opt,name=health,proto3" json:"health,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SystemSnapshotFrame) Reset() {
-	*x = SystemSnapshotFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[85]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SystemSnapshotFrame) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SystemSnapshotFrame) ProtoMessage() {}
-
-func (x *SystemSnapshotFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[85]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SystemSnapshotFrame.ProtoReflect.Descriptor instead.
-func (*SystemSnapshotFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{85}
-}
-
-func (x *SystemSnapshotFrame) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *SystemSnapshotFrame) GetTimestampUnix() int64 {
-	if x != nil {
-		return x.TimestampUnix
-	}
-	return 0
-}
-
-func (x *SystemSnapshotFrame) GetClock() *SystemClockInfo {
-	if x != nil {
-		return x.Clock
-	}
-	return nil
-}
-
-func (x *SystemSnapshotFrame) GetResource() *SystemResourceInfo {
-	if x != nil {
-		return x.Resource
-	}
-	return nil
-}
-
-func (x *SystemSnapshotFrame) GetRouterboard() *SystemRouterboardInfo {
-	if x != nil {
-		return x.Routerboard
-	}
-	return nil
-}
-
-func (x *SystemSnapshotFrame) GetIdentity() string {
-	if x != nil {
-		return x.Identity
-	}
-	return ""
-}
-
-func (x *SystemSnapshotFrame) GetHealth() *SystemHealthInfo {
-	if x != nil {
-		return x.Health
-	}
-	return nil
-}
-
-type StreamQueueStatsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                   // filter by queue name (?name=)
-	Parent        string                 `protobuf:"bytes,3,opt,name=parent,proto3" json:"parent,omitempty"`                               // filter by parent queue (?parent=)
-	ParentsOnly   bool                   `protobuf:"varint,4,opt,name=parents_only,json=parentsOnly,proto3" json:"parents_only,omitempty"` // non-dynamic static parent queues (?dynamic=false)
-	Interval      string                 `protobuf:"bytes,5,opt,name=interval,proto3" json:"interval,omitempty"`                           // default "1s"
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StreamQueueStatsRequest) Reset() {
-	*x = StreamQueueStatsRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[86]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StreamQueueStatsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StreamQueueStatsRequest) ProtoMessage() {}
-
-func (x *StreamQueueStatsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[86]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StreamQueueStatsRequest.ProtoReflect.Descriptor instead.
-func (*StreamQueueStatsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{86}
-}
-
-func (x *StreamQueueStatsRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *StreamQueueStatsRequest) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *StreamQueueStatsRequest) GetParent() string {
-	if x != nil {
-		return x.Parent
-	}
-	return ""
-}
-
-func (x *StreamQueueStatsRequest) GetParentsOnly() bool {
-	if x != nil {
-		return x.ParentsOnly
-	}
-	return false
-}
-
-func (x *StreamQueueStatsRequest) GetInterval() string {
-	if x != nil {
-		return x.Interval
-	}
-	return ""
-}
-
-type QueueStatsItem struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Target        string                 `protobuf:"bytes,3,opt,name=target,proto3" json:"target,omitempty"`
-	Parent        string                 `protobuf:"bytes,4,opt,name=parent,proto3" json:"parent,omitempty"`
-	MaxLimit      string                 `protobuf:"bytes,5,opt,name=max_limit,json=maxLimit,proto3" json:"max_limit,omitempty"`
-	LimitAt       string                 `protobuf:"bytes,6,opt,name=limit_at,json=limitAt,proto3" json:"limit_at,omitempty"`
-	Queue         string                 `protobuf:"bytes,7,opt,name=queue,proto3" json:"queue,omitempty"`
-	Bytes         string                 `protobuf:"bytes,8,opt,name=bytes,proto3" json:"bytes,omitempty"`
-	Packets       string                 `protobuf:"bytes,9,opt,name=packets,proto3" json:"packets,omitempty"`
-	Dropped       string                 `protobuf:"bytes,10,opt,name=dropped,proto3" json:"dropped,omitempty"`
-	Rate          string                 `protobuf:"bytes,11,opt,name=rate,proto3" json:"rate,omitempty"`
-	PacketRate    string                 `protobuf:"bytes,12,opt,name=packet_rate,json=packetRate,proto3" json:"packet_rate,omitempty"`
-	Disabled      bool                   `protobuf:"varint,13,opt,name=disabled,proto3" json:"disabled,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *QueueStatsItem) Reset() {
-	*x = QueueStatsItem{}
-	mi := &file_v1_hotspot_proto_msgTypes[87]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *QueueStatsItem) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*QueueStatsItem) ProtoMessage() {}
-
-func (x *QueueStatsItem) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[87]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use QueueStatsItem.ProtoReflect.Descriptor instead.
-func (*QueueStatsItem) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{87}
-}
-
-func (x *QueueStatsItem) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *QueueStatsItem) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *QueueStatsItem) GetTarget() string {
-	if x != nil {
-		return x.Target
-	}
-	return ""
-}
-
-func (x *QueueStatsItem) GetParent() string {
-	if x != nil {
-		return x.Parent
-	}
-	return ""
-}
-
-func (x *QueueStatsItem) GetMaxLimit() string {
-	if x != nil {
-		return x.MaxLimit
-	}
-	return ""
-}
-
-func (x *QueueStatsItem) GetLimitAt() string {
-	if x != nil {
-		return x.LimitAt
-	}
-	return ""
-}
-
-func (x *QueueStatsItem) GetQueue() string {
-	if x != nil {
-		return x.Queue
-	}
-	return ""
-}
-
-func (x *QueueStatsItem) GetBytes() string {
-	if x != nil {
-		return x.Bytes
-	}
-	return ""
-}
-
-func (x *QueueStatsItem) GetPackets() string {
-	if x != nil {
-		return x.Packets
-	}
-	return ""
-}
-
-func (x *QueueStatsItem) GetDropped() string {
-	if x != nil {
-		return x.Dropped
-	}
-	return ""
-}
-
-func (x *QueueStatsItem) GetRate() string {
-	if x != nil {
-		return x.Rate
-	}
-	return ""
-}
-
-func (x *QueueStatsItem) GetPacketRate() string {
-	if x != nil {
-		return x.PacketRate
-	}
-	return ""
-}
-
-func (x *QueueStatsItem) GetDisabled() bool {
-	if x != nil {
-		return x.Disabled
-	}
-	return false
-}
-
-type QueueStatsFrame struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	TimestampUnix int64                  `protobuf:"varint,2,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
-	Queues        []*QueueStatsItem      `protobuf:"bytes,3,rep,name=queues,proto3" json:"queues,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *QueueStatsFrame) Reset() {
-	*x = QueueStatsFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[88]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *QueueStatsFrame) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*QueueStatsFrame) ProtoMessage() {}
-
-func (x *QueueStatsFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[88]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use QueueStatsFrame.ProtoReflect.Descriptor instead.
-func (*QueueStatsFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{88}
-}
-
-func (x *QueueStatsFrame) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *QueueStatsFrame) GetTimestampUnix() int64 {
-	if x != nil {
-		return x.TimestampUnix
-	}
-	return 0
-}
-
-func (x *QueueStatsFrame) GetQueues() []*QueueStatsItem {
-	if x != nil {
-		return x.Queues
-	}
-	return nil
-}
-
-type StreamLogsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Topics        string                 `protobuf:"bytes,2,opt,name=topics,proto3" json:"topics,omitempty"` // filter (?topics~=)
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StreamLogsRequest) Reset() {
-	*x = StreamLogsRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[89]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StreamLogsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StreamLogsRequest) ProtoMessage() {}
-
-func (x *StreamLogsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[89]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StreamLogsRequest.ProtoReflect.Descriptor instead.
-func (*StreamLogsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{89}
-}
-
-func (x *StreamLogsRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *StreamLogsRequest) GetTopics() string {
-	if x != nil {
-		return x.Topics
-	}
-	return ""
-}
-
-type LogEntryItem struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Time          string                 `protobuf:"bytes,2,opt,name=time,proto3" json:"time,omitempty"`
-	Topics        string                 `protobuf:"bytes,3,opt,name=topics,proto3" json:"topics,omitempty"`
-	Message       string                 `protobuf:"bytes,4,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *LogEntryItem) Reset() {
-	*x = LogEntryItem{}
-	mi := &file_v1_hotspot_proto_msgTypes[90]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *LogEntryItem) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*LogEntryItem) ProtoMessage() {}
-
-func (x *LogEntryItem) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[90]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use LogEntryItem.ProtoReflect.Descriptor instead.
-func (*LogEntryItem) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{90}
-}
-
-func (x *LogEntryItem) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *LogEntryItem) GetTime() string {
-	if x != nil {
-		return x.Time
-	}
-	return ""
-}
-
-func (x *LogEntryItem) GetTopics() string {
-	if x != nil {
-		return x.Topics
-	}
-	return ""
-}
-
-func (x *LogEntryItem) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
-type LogsStreamFrame struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	TimestampUnix int64                  `protobuf:"varint,2,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
-	Logs          []*LogEntryItem        `protobuf:"bytes,3,rep,name=logs,proto3" json:"logs,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *LogsStreamFrame) Reset() {
-	*x = LogsStreamFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[91]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *LogsStreamFrame) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*LogsStreamFrame) ProtoMessage() {}
-
-func (x *LogsStreamFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[91]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use LogsStreamFrame.ProtoReflect.Descriptor instead.
-func (*LogsStreamFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{91}
-}
-
-func (x *LogsStreamFrame) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *LogsStreamFrame) GetTimestampUnix() int64 {
-	if x != nil {
-		return x.TimestampUnix
-	}
-	return 0
-}
-
-func (x *LogsStreamFrame) GetLogs() []*LogEntryItem {
-	if x != nil {
-		return x.Logs
-	}
-	return nil
-}
-
-type StreamInterfaceEthernetRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Interval      string                 `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"` // default "1s"
-	TypeFilter    string                 `protobuf:"bytes,3,opt,name=type_filter,json=typeFilter,proto3" json:"type_filter,omitempty"`
-	NameFilter    string                 `protobuf:"bytes,4,opt,name=name_filter,json=nameFilter,proto3" json:"name_filter,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StreamInterfaceEthernetRequest) Reset() {
-	*x = StreamInterfaceEthernetRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[92]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StreamInterfaceEthernetRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StreamInterfaceEthernetRequest) ProtoMessage() {}
-
-func (x *StreamInterfaceEthernetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[92]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StreamInterfaceEthernetRequest.ProtoReflect.Descriptor instead.
-func (*StreamInterfaceEthernetRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{92}
-}
-
-func (x *StreamInterfaceEthernetRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *StreamInterfaceEthernetRequest) GetInterval() string {
-	if x != nil {
-		return x.Interval
-	}
-	return ""
-}
-
-func (x *StreamInterfaceEthernetRequest) GetTypeFilter() string {
-	if x != nil {
-		return x.TypeFilter
-	}
-	return ""
-}
-
-func (x *StreamInterfaceEthernetRequest) GetNameFilter() string {
-	if x != nil {
-		return x.NameFilter
-	}
-	return ""
-}
-
-type InterfaceEthernetItem struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Type          string                 `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
-	Mtu           string                 `protobuf:"bytes,4,opt,name=mtu,proto3" json:"mtu,omitempty"`
-	MacAddress    string                 `protobuf:"bytes,5,opt,name=mac_address,json=macAddress,proto3" json:"mac_address,omitempty"`
-	Running       bool                   `protobuf:"varint,6,opt,name=running,proto3" json:"running,omitempty"`
-	Disabled      bool                   `protobuf:"varint,7,opt,name=disabled,proto3" json:"disabled,omitempty"`
-	RxByte        string                 `protobuf:"bytes,8,opt,name=rx_byte,json=rxByte,proto3" json:"rx_byte,omitempty"`
-	TxByte        string                 `protobuf:"bytes,9,opt,name=tx_byte,json=txByte,proto3" json:"tx_byte,omitempty"`
-	RxPacket      string                 `protobuf:"bytes,10,opt,name=rx_packet,json=rxPacket,proto3" json:"rx_packet,omitempty"`
-	TxPacket      string                 `protobuf:"bytes,11,opt,name=tx_packet,json=txPacket,proto3" json:"tx_packet,omitempty"`
-	Comment       string                 `protobuf:"bytes,12,opt,name=comment,proto3" json:"comment,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *InterfaceEthernetItem) Reset() {
-	*x = InterfaceEthernetItem{}
-	mi := &file_v1_hotspot_proto_msgTypes[93]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *InterfaceEthernetItem) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*InterfaceEthernetItem) ProtoMessage() {}
-
-func (x *InterfaceEthernetItem) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[93]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use InterfaceEthernetItem.ProtoReflect.Descriptor instead.
-func (*InterfaceEthernetItem) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{93}
-}
-
-func (x *InterfaceEthernetItem) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *InterfaceEthernetItem) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *InterfaceEthernetItem) GetType() string {
-	if x != nil {
-		return x.Type
-	}
-	return ""
-}
-
-func (x *InterfaceEthernetItem) GetMtu() string {
-	if x != nil {
-		return x.Mtu
-	}
-	return ""
-}
-
-func (x *InterfaceEthernetItem) GetMacAddress() string {
-	if x != nil {
-		return x.MacAddress
-	}
-	return ""
-}
-
-func (x *InterfaceEthernetItem) GetRunning() bool {
-	if x != nil {
-		return x.Running
-	}
-	return false
-}
-
-func (x *InterfaceEthernetItem) GetDisabled() bool {
-	if x != nil {
-		return x.Disabled
-	}
-	return false
-}
-
-func (x *InterfaceEthernetItem) GetRxByte() string {
-	if x != nil {
-		return x.RxByte
-	}
-	return ""
-}
-
-func (x *InterfaceEthernetItem) GetTxByte() string {
-	if x != nil {
-		return x.TxByte
-	}
-	return ""
-}
-
-func (x *InterfaceEthernetItem) GetRxPacket() string {
-	if x != nil {
-		return x.RxPacket
-	}
-	return ""
-}
-
-func (x *InterfaceEthernetItem) GetTxPacket() string {
-	if x != nil {
-		return x.TxPacket
-	}
-	return ""
-}
-
-func (x *InterfaceEthernetItem) GetComment() string {
-	if x != nil {
-		return x.Comment
-	}
-	return ""
-}
-
-type InterfaceEthernetFrame struct {
-	state         protoimpl.MessageState   `protogen:"open.v1"`
-	DeviceId      string                   `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	TimestampUnix int64                    `protobuf:"varint,2,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
-	Interfaces    []*InterfaceEthernetItem `protobuf:"bytes,3,rep,name=interfaces,proto3" json:"interfaces,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *InterfaceEthernetFrame) Reset() {
-	*x = InterfaceEthernetFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[94]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *InterfaceEthernetFrame) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*InterfaceEthernetFrame) ProtoMessage() {}
-
-func (x *InterfaceEthernetFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[94]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use InterfaceEthernetFrame.ProtoReflect.Descriptor instead.
-func (*InterfaceEthernetFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{94}
-}
-
-func (x *InterfaceEthernetFrame) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *InterfaceEthernetFrame) GetTimestampUnix() int64 {
-	if x != nil {
-		return x.TimestampUnix
-	}
-	return 0
-}
-
-func (x *InterfaceEthernetFrame) GetInterfaces() []*InterfaceEthernetItem {
-	if x != nil {
-		return x.Interfaces
-	}
-	return nil
-}
-
-// Inactive hotspot users = /ip/hotspot/user/print interval −
-// /ip/hotspot/active/print interval (users without an active session).
-type StreamHotspotInactiveRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Interval      string                 `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"` // default "1s"
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StreamHotspotInactiveRequest) Reset() {
-	*x = StreamHotspotInactiveRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[95]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StreamHotspotInactiveRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StreamHotspotInactiveRequest) ProtoMessage() {}
-
-func (x *StreamHotspotInactiveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[95]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StreamHotspotInactiveRequest.ProtoReflect.Descriptor instead.
-func (*StreamHotspotInactiveRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{95}
-}
-
-func (x *StreamHotspotInactiveRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *StreamHotspotInactiveRequest) GetInterval() string {
-	if x != nil {
-		return x.Interval
-	}
-	return ""
-}
-
-type HotspotInactiveFrame struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	TimestampUnix int64                  `protobuf:"varint,2,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
-	Users         []*HotspotUser         `protobuf:"bytes,3,rep,name=users,proto3" json:"users,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *HotspotInactiveFrame) Reset() {
-	*x = HotspotInactiveFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[96]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *HotspotInactiveFrame) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*HotspotInactiveFrame) ProtoMessage() {}
-
-func (x *HotspotInactiveFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[96]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use HotspotInactiveFrame.ProtoReflect.Descriptor instead.
-func (*HotspotInactiveFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{96}
-}
-
-func (x *HotspotInactiveFrame) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *HotspotInactiveFrame) GetTimestampUnix() int64 {
-	if x != nil {
-		return x.TimestampUnix
-	}
-	return 0
-}
-
-func (x *HotspotInactiveFrame) GetUsers() []*HotspotUser {
-	if x != nil {
-		return x.Users
-	}
-	return nil
-}
-
-// PPPoE active sessions (/ppp/active/print interval).
-type StreamPPPActiveRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Interval      string                 `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"` // default "1s"
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StreamPPPActiveRequest) Reset() {
-	*x = StreamPPPActiveRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[97]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StreamPPPActiveRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StreamPPPActiveRequest) ProtoMessage() {}
-
-func (x *StreamPPPActiveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[97]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StreamPPPActiveRequest.ProtoReflect.Descriptor instead.
-func (*StreamPPPActiveRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{97}
-}
-
-func (x *StreamPPPActiveRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *StreamPPPActiveRequest) GetInterval() string {
-	if x != nil {
-		return x.Interval
-	}
-	return ""
-}
-
-type PPPActiveSessionItem struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Service       string                 `protobuf:"bytes,3,opt,name=service,proto3" json:"service,omitempty"`
-	CallerId      string                 `protobuf:"bytes,4,opt,name=caller_id,json=callerId,proto3" json:"caller_id,omitempty"`
-	Address       string                 `protobuf:"bytes,5,opt,name=address,proto3" json:"address,omitempty"`
-	Uptime        string                 `protobuf:"bytes,6,opt,name=uptime,proto3" json:"uptime,omitempty"`
-	Encoding      string                 `protobuf:"bytes,7,opt,name=encoding,proto3" json:"encoding,omitempty"`
-	SessionId     string                 `protobuf:"bytes,8,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
-	LimitBytesIn  string                 `protobuf:"bytes,9,opt,name=limit_bytes_in,json=limitBytesIn,proto3" json:"limit_bytes_in,omitempty"`
-	LimitBytesOut string                 `protobuf:"bytes,10,opt,name=limit_bytes_out,json=limitBytesOut,proto3" json:"limit_bytes_out,omitempty"`
-	Radius        bool                   `protobuf:"varint,11,opt,name=radius,proto3" json:"radius,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PPPActiveSessionItem) Reset() {
-	*x = PPPActiveSessionItem{}
-	mi := &file_v1_hotspot_proto_msgTypes[98]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PPPActiveSessionItem) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PPPActiveSessionItem) ProtoMessage() {}
-
-func (x *PPPActiveSessionItem) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[98]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PPPActiveSessionItem.ProtoReflect.Descriptor instead.
-func (*PPPActiveSessionItem) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{98}
-}
-
-func (x *PPPActiveSessionItem) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *PPPActiveSessionItem) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *PPPActiveSessionItem) GetService() string {
-	if x != nil {
-		return x.Service
-	}
-	return ""
-}
-
-func (x *PPPActiveSessionItem) GetCallerId() string {
-	if x != nil {
-		return x.CallerId
-	}
-	return ""
-}
-
-func (x *PPPActiveSessionItem) GetAddress() string {
-	if x != nil {
-		return x.Address
-	}
-	return ""
-}
-
-func (x *PPPActiveSessionItem) GetUptime() string {
-	if x != nil {
-		return x.Uptime
-	}
-	return ""
-}
-
-func (x *PPPActiveSessionItem) GetEncoding() string {
-	if x != nil {
-		return x.Encoding
-	}
-	return ""
-}
-
-func (x *PPPActiveSessionItem) GetSessionId() string {
-	if x != nil {
-		return x.SessionId
-	}
-	return ""
-}
-
-func (x *PPPActiveSessionItem) GetLimitBytesIn() string {
-	if x != nil {
-		return x.LimitBytesIn
-	}
-	return ""
-}
-
-func (x *PPPActiveSessionItem) GetLimitBytesOut() string {
-	if x != nil {
-		return x.LimitBytesOut
-	}
-	return ""
-}
-
-func (x *PPPActiveSessionItem) GetRadius() bool {
-	if x != nil {
-		return x.Radius
-	}
-	return false
-}
-
-type PPPActiveFrame struct {
-	state         protoimpl.MessageState  `protogen:"open.v1"`
-	DeviceId      string                  `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	TimestampUnix int64                   `protobuf:"varint,2,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
-	Sessions      []*PPPActiveSessionItem `protobuf:"bytes,3,rep,name=sessions,proto3" json:"sessions,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PPPActiveFrame) Reset() {
-	*x = PPPActiveFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[99]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PPPActiveFrame) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PPPActiveFrame) ProtoMessage() {}
-
-func (x *PPPActiveFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[99]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PPPActiveFrame.ProtoReflect.Descriptor instead.
-func (*PPPActiveFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{99}
-}
-
-func (x *PPPActiveFrame) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *PPPActiveFrame) GetTimestampUnix() int64 {
-	if x != nil {
-		return x.TimestampUnix
-	}
-	return 0
-}
-
-func (x *PPPActiveFrame) GetSessions() []*PPPActiveSessionItem {
-	if x != nil {
-		return x.Sessions
-	}
-	return nil
-}
-
-// Inactive PPPoE = /ppp/secret/print interval − /ppp/active/print interval
-// (secrets without an active session).
-type StreamPPPInactiveRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Interval      string                 `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"` // default "1s"
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StreamPPPInactiveRequest) Reset() {
-	*x = StreamPPPInactiveRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[100]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StreamPPPInactiveRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StreamPPPInactiveRequest) ProtoMessage() {}
-
-func (x *StreamPPPInactiveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[100]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StreamPPPInactiveRequest.ProtoReflect.Descriptor instead.
-func (*StreamPPPInactiveRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{100}
-}
-
-func (x *StreamPPPInactiveRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *StreamPPPInactiveRequest) GetInterval() string {
-	if x != nil {
-		return x.Interval
-	}
-	return ""
-}
-
-type PPPSecretItem struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Profile       string                 `protobuf:"bytes,3,opt,name=profile,proto3" json:"profile,omitempty"`
-	Service       string                 `protobuf:"bytes,4,opt,name=service,proto3" json:"service,omitempty"`
-	LocalAddress  string                 `protobuf:"bytes,5,opt,name=local_address,json=localAddress,proto3" json:"local_address,omitempty"`
-	RemoteAddress string                 `protobuf:"bytes,6,opt,name=remote_address,json=remoteAddress,proto3" json:"remote_address,omitempty"`
-	Comment       string                 `protobuf:"bytes,7,opt,name=comment,proto3" json:"comment,omitempty"`
-	Disabled      bool                   `protobuf:"varint,8,opt,name=disabled,proto3" json:"disabled,omitempty"`
-	LastLoggedOut string                 `protobuf:"bytes,9,opt,name=last_logged_out,json=lastLoggedOut,proto3" json:"last_logged_out,omitempty"`
-	CallerId      string                 `protobuf:"bytes,10,opt,name=caller_id,json=callerId,proto3" json:"caller_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PPPSecretItem) Reset() {
-	*x = PPPSecretItem{}
-	mi := &file_v1_hotspot_proto_msgTypes[101]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PPPSecretItem) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PPPSecretItem) ProtoMessage() {}
-
-func (x *PPPSecretItem) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[101]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PPPSecretItem.ProtoReflect.Descriptor instead.
-func (*PPPSecretItem) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{101}
-}
-
-func (x *PPPSecretItem) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *PPPSecretItem) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *PPPSecretItem) GetProfile() string {
-	if x != nil {
-		return x.Profile
-	}
-	return ""
-}
-
-func (x *PPPSecretItem) GetService() string {
-	if x != nil {
-		return x.Service
-	}
-	return ""
-}
-
-func (x *PPPSecretItem) GetLocalAddress() string {
-	if x != nil {
-		return x.LocalAddress
-	}
-	return ""
-}
-
-func (x *PPPSecretItem) GetRemoteAddress() string {
-	if x != nil {
-		return x.RemoteAddress
-	}
-	return ""
-}
-
-func (x *PPPSecretItem) GetComment() string {
-	if x != nil {
-		return x.Comment
-	}
-	return ""
-}
-
-func (x *PPPSecretItem) GetDisabled() bool {
-	if x != nil {
-		return x.Disabled
-	}
-	return false
-}
-
-func (x *PPPSecretItem) GetLastLoggedOut() string {
-	if x != nil {
-		return x.LastLoggedOut
-	}
-	return ""
-}
-
-func (x *PPPSecretItem) GetCallerId() string {
-	if x != nil {
-		return x.CallerId
-	}
-	return ""
-}
-
-type PPPInactiveFrame struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	TimestampUnix int64                  `protobuf:"varint,2,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
-	Secrets       []*PPPSecretItem       `protobuf:"bytes,3,rep,name=secrets,proto3" json:"secrets,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PPPInactiveFrame) Reset() {
-	*x = PPPInactiveFrame{}
-	mi := &file_v1_hotspot_proto_msgTypes[102]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PPPInactiveFrame) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PPPInactiveFrame) ProtoMessage() {}
-
-func (x *PPPInactiveFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[102]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PPPInactiveFrame.ProtoReflect.Descriptor instead.
-func (*PPPInactiveFrame) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{102}
-}
-
-func (x *PPPInactiveFrame) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *PPPInactiveFrame) GetTimestampUnix() int64 {
-	if x != nil {
-		return x.TimestampUnix
-	}
-	return 0
-}
-
-func (x *PPPInactiveFrame) GetSecrets() []*PPPSecretItem {
-	if x != nil {
-		return x.Secrets
-	}
-	return nil
-}
-
-type DeleteHotspotUsersRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Mode          string                 `protobuf:"bytes,2,opt,name=mode,proto3" json:"mode,omitempty"`   // "profile" | "comment" | "expired"
-	Value         string                 `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"` // nama profile atau batch comment
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteHotspotUsersRequest) Reset() {
-	*x = DeleteHotspotUsersRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[103]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteHotspotUsersRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteHotspotUsersRequest) ProtoMessage() {}
-
-func (x *DeleteHotspotUsersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[103]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteHotspotUsersRequest.ProtoReflect.Descriptor instead.
-func (*DeleteHotspotUsersRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{103}
-}
-
-func (x *DeleteHotspotUsersRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *DeleteHotspotUsersRequest) GetMode() string {
-	if x != nil {
-		return x.Mode
-	}
-	return ""
-}
-
-func (x *DeleteHotspotUsersRequest) GetValue() string {
-	if x != nil {
-		return x.Value
-	}
-	return ""
-}
-
-type DeleteHotspotUsersResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeletedCount  int32                  `protobuf:"varint,1,opt,name=deleted_count,json=deletedCount,proto3" json:"deleted_count,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteHotspotUsersResponse) Reset() {
-	*x = DeleteHotspotUsersResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[104]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteHotspotUsersResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteHotspotUsersResponse) ProtoMessage() {}
-
-func (x *DeleteHotspotUsersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[104]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteHotspotUsersResponse.ProtoReflect.Descriptor instead.
-func (*DeleteHotspotUsersResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{104}
-}
-
-func (x *DeleteHotspotUsersResponse) GetDeletedCount() int32 {
-	if x != nil {
-		return x.DeletedCount
-	}
-	return 0
-}
-
-func (x *DeleteHotspotUsersResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
 type HotspotIPBinding struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -6830,7 +2910,7 @@ type HotspotIPBinding struct {
 
 func (x *HotspotIPBinding) Reset() {
 	*x = HotspotIPBinding{}
-	mi := &file_v1_hotspot_proto_msgTypes[105]
+	mi := &file_v1_hotspot_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6842,7 +2922,7 @@ func (x *HotspotIPBinding) String() string {
 func (*HotspotIPBinding) ProtoMessage() {}
 
 func (x *HotspotIPBinding) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[105]
+	mi := &file_v1_hotspot_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6855,7 +2935,7 @@ func (x *HotspotIPBinding) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HotspotIPBinding.ProtoReflect.Descriptor instead.
 func (*HotspotIPBinding) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{105}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *HotspotIPBinding) GetId() string {
@@ -6923,7 +3003,7 @@ type ListHotspotIPBindingsRequest struct {
 
 func (x *ListHotspotIPBindingsRequest) Reset() {
 	*x = ListHotspotIPBindingsRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[106]
+	mi := &file_v1_hotspot_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6935,7 +3015,7 @@ func (x *ListHotspotIPBindingsRequest) String() string {
 func (*ListHotspotIPBindingsRequest) ProtoMessage() {}
 
 func (x *ListHotspotIPBindingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[106]
+	mi := &file_v1_hotspot_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6948,7 +3028,7 @@ func (x *ListHotspotIPBindingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHotspotIPBindingsRequest.ProtoReflect.Descriptor instead.
 func (*ListHotspotIPBindingsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{106}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *ListHotspotIPBindingsRequest) GetDeviceId() string {
@@ -6967,7 +3047,7 @@ type ListHotspotIPBindingsResponse struct {
 
 func (x *ListHotspotIPBindingsResponse) Reset() {
 	*x = ListHotspotIPBindingsResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[107]
+	mi := &file_v1_hotspot_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -6979,7 +3059,7 @@ func (x *ListHotspotIPBindingsResponse) String() string {
 func (*ListHotspotIPBindingsResponse) ProtoMessage() {}
 
 func (x *ListHotspotIPBindingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[107]
+	mi := &file_v1_hotspot_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6992,7 +3072,7 @@ func (x *ListHotspotIPBindingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHotspotIPBindingsResponse.ProtoReflect.Descriptor instead.
 func (*ListHotspotIPBindingsResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{107}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *ListHotspotIPBindingsResponse) GetBindings() []*HotspotIPBinding {
@@ -7018,7 +3098,7 @@ type CreateHotspotIPBindingRequest struct {
 
 func (x *CreateHotspotIPBindingRequest) Reset() {
 	*x = CreateHotspotIPBindingRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[108]
+	mi := &file_v1_hotspot_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7030,7 +3110,7 @@ func (x *CreateHotspotIPBindingRequest) String() string {
 func (*CreateHotspotIPBindingRequest) ProtoMessage() {}
 
 func (x *CreateHotspotIPBindingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[108]
+	mi := &file_v1_hotspot_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7043,7 +3123,7 @@ func (x *CreateHotspotIPBindingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateHotspotIPBindingRequest.ProtoReflect.Descriptor instead.
 func (*CreateHotspotIPBindingRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{108}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *CreateHotspotIPBindingRequest) GetDeviceId() string {
@@ -7112,7 +3192,7 @@ type CreateHotspotIPBindingResponse struct {
 
 func (x *CreateHotspotIPBindingResponse) Reset() {
 	*x = CreateHotspotIPBindingResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[109]
+	mi := &file_v1_hotspot_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7124,7 +3204,7 @@ func (x *CreateHotspotIPBindingResponse) String() string {
 func (*CreateHotspotIPBindingResponse) ProtoMessage() {}
 
 func (x *CreateHotspotIPBindingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[109]
+	mi := &file_v1_hotspot_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7137,7 +3217,7 @@ func (x *CreateHotspotIPBindingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateHotspotIPBindingResponse.ProtoReflect.Descriptor instead.
 func (*CreateHotspotIPBindingResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{109}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *CreateHotspotIPBindingResponse) GetBinding() *HotspotIPBinding {
@@ -7171,7 +3251,7 @@ type UpdateHotspotIPBindingRequest struct {
 
 func (x *UpdateHotspotIPBindingRequest) Reset() {
 	*x = UpdateHotspotIPBindingRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[110]
+	mi := &file_v1_hotspot_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7183,7 +3263,7 @@ func (x *UpdateHotspotIPBindingRequest) String() string {
 func (*UpdateHotspotIPBindingRequest) ProtoMessage() {}
 
 func (x *UpdateHotspotIPBindingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[110]
+	mi := &file_v1_hotspot_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7196,7 +3276,7 @@ func (x *UpdateHotspotIPBindingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHotspotIPBindingRequest.ProtoReflect.Descriptor instead.
 func (*UpdateHotspotIPBindingRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{110}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *UpdateHotspotIPBindingRequest) GetDeviceId() string {
@@ -7272,7 +3352,7 @@ type UpdateHotspotIPBindingResponse struct {
 
 func (x *UpdateHotspotIPBindingResponse) Reset() {
 	*x = UpdateHotspotIPBindingResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[111]
+	mi := &file_v1_hotspot_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7284,7 +3364,7 @@ func (x *UpdateHotspotIPBindingResponse) String() string {
 func (*UpdateHotspotIPBindingResponse) ProtoMessage() {}
 
 func (x *UpdateHotspotIPBindingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[111]
+	mi := &file_v1_hotspot_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7297,7 +3377,7 @@ func (x *UpdateHotspotIPBindingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHotspotIPBindingResponse.ProtoReflect.Descriptor instead.
 func (*UpdateHotspotIPBindingResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{111}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *UpdateHotspotIPBindingResponse) GetBinding() *HotspotIPBinding {
@@ -7324,7 +3404,7 @@ type DeleteHotspotIPBindingRequest struct {
 
 func (x *DeleteHotspotIPBindingRequest) Reset() {
 	*x = DeleteHotspotIPBindingRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[112]
+	mi := &file_v1_hotspot_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7336,7 +3416,7 @@ func (x *DeleteHotspotIPBindingRequest) String() string {
 func (*DeleteHotspotIPBindingRequest) ProtoMessage() {}
 
 func (x *DeleteHotspotIPBindingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[112]
+	mi := &file_v1_hotspot_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7349,7 +3429,7 @@ func (x *DeleteHotspotIPBindingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotIPBindingRequest.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotIPBindingRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{112}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *DeleteHotspotIPBindingRequest) GetDeviceId() string {
@@ -7375,7 +3455,7 @@ type DeleteHotspotIPBindingResponse struct {
 
 func (x *DeleteHotspotIPBindingResponse) Reset() {
 	*x = DeleteHotspotIPBindingResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[113]
+	mi := &file_v1_hotspot_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7387,7 +3467,7 @@ func (x *DeleteHotspotIPBindingResponse) String() string {
 func (*DeleteHotspotIPBindingResponse) ProtoMessage() {}
 
 func (x *DeleteHotspotIPBindingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[113]
+	mi := &file_v1_hotspot_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7400,7 +3480,7 @@ func (x *DeleteHotspotIPBindingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotIPBindingResponse.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotIPBindingResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{113}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *DeleteHotspotIPBindingResponse) GetMessage() string {
@@ -7423,7 +3503,7 @@ type HotspotCookie struct {
 
 func (x *HotspotCookie) Reset() {
 	*x = HotspotCookie{}
-	mi := &file_v1_hotspot_proto_msgTypes[114]
+	mi := &file_v1_hotspot_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7435,7 +3515,7 @@ func (x *HotspotCookie) String() string {
 func (*HotspotCookie) ProtoMessage() {}
 
 func (x *HotspotCookie) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[114]
+	mi := &file_v1_hotspot_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7448,7 +3528,7 @@ func (x *HotspotCookie) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HotspotCookie.ProtoReflect.Descriptor instead.
 func (*HotspotCookie) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{114}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *HotspotCookie) GetId() string {
@@ -7495,7 +3575,7 @@ type ListHotspotCookiesRequest struct {
 
 func (x *ListHotspotCookiesRequest) Reset() {
 	*x = ListHotspotCookiesRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[115]
+	mi := &file_v1_hotspot_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7507,7 +3587,7 @@ func (x *ListHotspotCookiesRequest) String() string {
 func (*ListHotspotCookiesRequest) ProtoMessage() {}
 
 func (x *ListHotspotCookiesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[115]
+	mi := &file_v1_hotspot_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7520,7 +3600,7 @@ func (x *ListHotspotCookiesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHotspotCookiesRequest.ProtoReflect.Descriptor instead.
 func (*ListHotspotCookiesRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{115}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *ListHotspotCookiesRequest) GetDeviceId() string {
@@ -7539,7 +3619,7 @@ type ListHotspotCookiesResponse struct {
 
 func (x *ListHotspotCookiesResponse) Reset() {
 	*x = ListHotspotCookiesResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[116]
+	mi := &file_v1_hotspot_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7551,7 +3631,7 @@ func (x *ListHotspotCookiesResponse) String() string {
 func (*ListHotspotCookiesResponse) ProtoMessage() {}
 
 func (x *ListHotspotCookiesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[116]
+	mi := &file_v1_hotspot_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7564,7 +3644,7 @@ func (x *ListHotspotCookiesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListHotspotCookiesResponse.ProtoReflect.Descriptor instead.
 func (*ListHotspotCookiesResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{116}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *ListHotspotCookiesResponse) GetCookies() []*HotspotCookie {
@@ -7584,7 +3664,7 @@ type DeleteHotspotCookieRequest struct {
 
 func (x *DeleteHotspotCookieRequest) Reset() {
 	*x = DeleteHotspotCookieRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[117]
+	mi := &file_v1_hotspot_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7596,7 +3676,7 @@ func (x *DeleteHotspotCookieRequest) String() string {
 func (*DeleteHotspotCookieRequest) ProtoMessage() {}
 
 func (x *DeleteHotspotCookieRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[117]
+	mi := &file_v1_hotspot_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7609,7 +3689,7 @@ func (x *DeleteHotspotCookieRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotCookieRequest.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotCookieRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{117}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *DeleteHotspotCookieRequest) GetDeviceId() string {
@@ -7635,7 +3715,7 @@ type DeleteHotspotCookieResponse struct {
 
 func (x *DeleteHotspotCookieResponse) Reset() {
 	*x = DeleteHotspotCookieResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[118]
+	mi := &file_v1_hotspot_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -7647,7 +3727,7 @@ func (x *DeleteHotspotCookieResponse) String() string {
 func (*DeleteHotspotCookieResponse) ProtoMessage() {}
 
 func (x *DeleteHotspotCookieResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[118]
+	mi := &file_v1_hotspot_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7660,7 +3740,7 @@ func (x *DeleteHotspotCookieResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHotspotCookieResponse.ProtoReflect.Descriptor instead.
 func (*DeleteHotspotCookieResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{118}
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *DeleteHotspotCookieResponse) GetMessage() string {
@@ -7670,29 +3750,34 @@ func (x *DeleteHotspotCookieResponse) GetMessage() string {
 	return ""
 }
 
-type CheckVoucherStatusRequest struct {
+type HotspotReport struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Username      string                 `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Date          string                 `protobuf:"bytes,2,opt,name=date,proto3" json:"date,omitempty"`
+	Time          string                 `protobuf:"bytes,3,opt,name=time,proto3" json:"time,omitempty"`
+	Username      string                 `protobuf:"bytes,4,opt,name=username,proto3" json:"username,omitempty"`
+	Profile       string                 `protobuf:"bytes,5,opt,name=profile,proto3" json:"profile,omitempty"`
+	Price         float64                `protobuf:"fixed64,6,opt,name=price,proto3" json:"price,omitempty"`
+	Comment       string                 `protobuf:"bytes,7,opt,name=comment,proto3" json:"comment,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CheckVoucherStatusRequest) Reset() {
-	*x = CheckVoucherStatusRequest{}
-	mi := &file_v1_hotspot_proto_msgTypes[119]
+func (x *HotspotReport) Reset() {
+	*x = HotspotReport{}
+	mi := &file_v1_hotspot_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CheckVoucherStatusRequest) String() string {
+func (x *HotspotReport) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CheckVoucherStatusRequest) ProtoMessage() {}
+func (*HotspotReport) ProtoMessage() {}
 
-func (x *CheckVoucherStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[119]
+func (x *HotspotReport) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7703,59 +3788,86 @@ func (x *CheckVoucherStatusRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CheckVoucherStatusRequest.ProtoReflect.Descriptor instead.
-func (*CheckVoucherStatusRequest) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{119}
+// Deprecated: Use HotspotReport.ProtoReflect.Descriptor instead.
+func (*HotspotReport) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{58}
 }
 
-func (x *CheckVoucherStatusRequest) GetDeviceId() string {
+func (x *HotspotReport) GetId() string {
 	if x != nil {
-		return x.DeviceId
+		return x.Id
 	}
 	return ""
 }
 
-func (x *CheckVoucherStatusRequest) GetUsername() string {
+func (x *HotspotReport) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *HotspotReport) GetTime() string {
+	if x != nil {
+		return x.Time
+	}
+	return ""
+}
+
+func (x *HotspotReport) GetUsername() string {
 	if x != nil {
 		return x.Username
 	}
 	return ""
 }
 
-type CheckVoucherStatusResponse struct {
+func (x *HotspotReport) GetProfile() string {
+	if x != nil {
+		return x.Profile
+	}
+	return ""
+}
+
+func (x *HotspotReport) GetPrice() float64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *HotspotReport) GetComment() string {
+	if x != nil {
+		return x.Comment
+	}
+	return ""
+}
+
+type ListHotspotReportsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Found         bool                   `protobuf:"varint,1,opt,name=found,proto3" json:"found,omitempty"`
-	User          *HotspotUser           `protobuf:"bytes,2,opt,name=user,proto3" json:"user,omitempty"`
-	Profile       *HotspotProfile        `protobuf:"bytes,3,opt,name=profile,proto3" json:"profile,omitempty"`
-	IsOnline      bool                   `protobuf:"varint,4,opt,name=is_online,json=isOnline,proto3" json:"is_online,omitempty"`
-	ActiveSession *HotspotActiveSession  `protobuf:"bytes,5,opt,name=active_session,json=activeSession,proto3" json:"active_session,omitempty"`
-	HasCookie     bool                   `protobuf:"varint,6,opt,name=has_cookie,json=hasCookie,proto3" json:"has_cookie,omitempty"`
-	Cookie        *HotspotCookie         `protobuf:"bytes,7,opt,name=cookie,proto3" json:"cookie,omitempty"`
-	Status        string                 `protobuf:"bytes,8,opt,name=status,proto3" json:"status,omitempty"` // "active" | "expired" | "unused" | "disabled" | "not_found"
-	SisaWaktu     string                 `protobuf:"bytes,9,opt,name=sisa_waktu,json=sisaWaktu,proto3" json:"sisa_waktu,omitempty"`
-	SisaKuota     string                 `protobuf:"bytes,10,opt,name=sisa_kuota,json=sisaKuota,proto3" json:"sisa_kuota,omitempty"`
-	ExpireDate    string                 `protobuf:"bytes,11,opt,name=expire_date,json=expireDate,proto3" json:"expire_date,omitempty"`
-	MacLocked     string                 `protobuf:"bytes,12,opt,name=mac_locked,json=macLocked,proto3" json:"mac_locked,omitempty"`
-	Message       string                 `protobuf:"bytes,13,opt,name=message,proto3" json:"message,omitempty"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Day           string                 `protobuf:"bytes,2,opt,name=day,proto3" json:"day,omitempty"`                                     // legacy get_report: "aug/17/2026" (filter source)
+	Month         string                 `protobuf:"bytes,3,opt,name=month,proto3" json:"month,omitempty"`                                 // legacy get_livereport: "aug2026" (filter owner)
+	Year          string                 `protobuf:"bytes,4,opt,name=year,proto3" json:"year,omitempty"`                                   // filter suffix tanggal ("2026")
+	SummaryOnly   bool                   `protobuf:"varint,5,opt,name=summary_only,json=summaryOnly,proto3" json:"summary_only,omitempty"` // tanpa daftar record, hanya total_income + total
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CheckVoucherStatusResponse) Reset() {
-	*x = CheckVoucherStatusResponse{}
-	mi := &file_v1_hotspot_proto_msgTypes[120]
+func (x *ListHotspotReportsRequest) Reset() {
+	*x = ListHotspotReportsRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CheckVoucherStatusResponse) String() string {
+func (x *ListHotspotReportsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CheckVoucherStatusResponse) ProtoMessage() {}
+func (*ListHotspotReportsRequest) ProtoMessage() {}
 
-func (x *CheckVoucherStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_hotspot_proto_msgTypes[120]
+func (x *ListHotspotReportsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7766,100 +3878,940 @@ func (x *CheckVoucherStatusResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CheckVoucherStatusResponse.ProtoReflect.Descriptor instead.
-func (*CheckVoucherStatusResponse) Descriptor() ([]byte, []int) {
-	return file_v1_hotspot_proto_rawDescGZIP(), []int{120}
+// Deprecated: Use ListHotspotReportsRequest.ProtoReflect.Descriptor instead.
+func (*ListHotspotReportsRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{59}
 }
 
-func (x *CheckVoucherStatusResponse) GetFound() bool {
+func (x *ListHotspotReportsRequest) GetDeviceId() string {
 	if x != nil {
-		return x.Found
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *ListHotspotReportsRequest) GetDay() string {
+	if x != nil {
+		return x.Day
+	}
+	return ""
+}
+
+func (x *ListHotspotReportsRequest) GetMonth() string {
+	if x != nil {
+		return x.Month
+	}
+	return ""
+}
+
+func (x *ListHotspotReportsRequest) GetYear() string {
+	if x != nil {
+		return x.Year
+	}
+	return ""
+}
+
+func (x *ListHotspotReportsRequest) GetSummaryOnly() bool {
+	if x != nil {
+		return x.SummaryOnly
 	}
 	return false
 }
 
-func (x *CheckVoucherStatusResponse) GetUser() *HotspotUser {
+type ListHotspotReportsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Reports       []*HotspotReport       `protobuf:"bytes,1,rep,name=reports,proto3" json:"reports,omitempty"`
+	TotalIncome   float64                `protobuf:"fixed64,2,opt,name=total_income,json=totalIncome,proto3" json:"total_income,omitempty"`
+	Total         int32                  `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListHotspotReportsResponse) Reset() {
+	*x = ListHotspotReportsResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[60]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListHotspotReportsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListHotspotReportsResponse) ProtoMessage() {}
+
+func (x *ListHotspotReportsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[60]
 	if x != nil {
-		return x.User
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListHotspotReportsResponse.ProtoReflect.Descriptor instead.
+func (*ListHotspotReportsResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{60}
+}
+
+func (x *ListHotspotReportsResponse) GetReports() []*HotspotReport {
+	if x != nil {
+		return x.Reports
 	}
 	return nil
 }
 
-func (x *CheckVoucherStatusResponse) GetProfile() *HotspotProfile {
+func (x *ListHotspotReportsResponse) GetTotalIncome() float64 {
 	if x != nil {
-		return x.Profile
+		return x.TotalIncome
 	}
-	return nil
+	return 0
 }
 
-func (x *CheckVoucherStatusResponse) GetIsOnline() bool {
+func (x *ListHotspotReportsResponse) GetTotal() int32 {
 	if x != nil {
-		return x.IsOnline
+		return x.Total
+	}
+	return 0
+}
+
+type DeleteHotspotReportRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	RosId         string                 `protobuf:"bytes,2,opt,name=ros_id,json=rosId,proto3" json:"ros_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteHotspotReportRequest) Reset() {
+	*x = DeleteHotspotReportRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[61]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteHotspotReportRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteHotspotReportRequest) ProtoMessage() {}
+
+func (x *DeleteHotspotReportRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[61]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteHotspotReportRequest.ProtoReflect.Descriptor instead.
+func (*DeleteHotspotReportRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{61}
+}
+
+func (x *DeleteHotspotReportRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *DeleteHotspotReportRequest) GetRosId() string {
+	if x != nil {
+		return x.RosId
+	}
+	return ""
+}
+
+type DeleteHotspotReportResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteHotspotReportResponse) Reset() {
+	*x = DeleteHotspotReportResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[62]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteHotspotReportResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteHotspotReportResponse) ProtoMessage() {}
+
+func (x *DeleteHotspotReportResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[62]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteHotspotReportResponse.ProtoReflect.Descriptor instead.
+func (*DeleteHotspotReportResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{62}
+}
+
+func (x *DeleteHotspotReportResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type ExpireMonitorStatusResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IsInstalled   bool                   `protobuf:"varint,1,opt,name=is_installed,json=isInstalled,proto3" json:"is_installed,omitempty"`
+	IsEnabled     bool                   `protobuf:"varint,2,opt,name=is_enabled,json=isEnabled,proto3" json:"is_enabled,omitempty"`
+	Status        string                 `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"` // "ok" | "not ready" (kompatibel frontend legacy)
+	SchedulerName string                 `protobuf:"bytes,4,opt,name=scheduler_name,json=schedulerName,proto3" json:"scheduler_name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExpireMonitorStatusResponse) Reset() {
+	*x = ExpireMonitorStatusResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[63]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExpireMonitorStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExpireMonitorStatusResponse) ProtoMessage() {}
+
+func (x *ExpireMonitorStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[63]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExpireMonitorStatusResponse.ProtoReflect.Descriptor instead.
+func (*ExpireMonitorStatusResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{63}
+}
+
+func (x *ExpireMonitorStatusResponse) GetIsInstalled() bool {
+	if x != nil {
+		return x.IsInstalled
 	}
 	return false
 }
 
-func (x *CheckVoucherStatusResponse) GetActiveSession() *HotspotActiveSession {
+func (x *ExpireMonitorStatusResponse) GetIsEnabled() bool {
 	if x != nil {
-		return x.ActiveSession
-	}
-	return nil
-}
-
-func (x *CheckVoucherStatusResponse) GetHasCookie() bool {
-	if x != nil {
-		return x.HasCookie
+		return x.IsEnabled
 	}
 	return false
 }
 
-func (x *CheckVoucherStatusResponse) GetCookie() *HotspotCookie {
-	if x != nil {
-		return x.Cookie
-	}
-	return nil
-}
-
-func (x *CheckVoucherStatusResponse) GetStatus() string {
+func (x *ExpireMonitorStatusResponse) GetStatus() string {
 	if x != nil {
 		return x.Status
 	}
 	return ""
 }
 
-func (x *CheckVoucherStatusResponse) GetSisaWaktu() string {
+func (x *ExpireMonitorStatusResponse) GetSchedulerName() string {
 	if x != nil {
-		return x.SisaWaktu
+		return x.SchedulerName
 	}
 	return ""
 }
 
-func (x *CheckVoucherStatusResponse) GetSisaKuota() string {
+type GetExpireMonitorStatusRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetExpireMonitorStatusRequest) Reset() {
+	*x = GetExpireMonitorStatusRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[64]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetExpireMonitorStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetExpireMonitorStatusRequest) ProtoMessage() {}
+
+func (x *GetExpireMonitorStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[64]
 	if x != nil {
-		return x.SisaKuota
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetExpireMonitorStatusRequest.ProtoReflect.Descriptor instead.
+func (*GetExpireMonitorStatusRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{64}
+}
+
+func (x *GetExpireMonitorStatusRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
 	}
 	return ""
 }
 
-func (x *CheckVoucherStatusResponse) GetExpireDate() string {
+type SetupExpireMonitorRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Interval      string                 `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"` // "00:01:00" (HH:MM:SS)
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetupExpireMonitorRequest) Reset() {
+	*x = SetupExpireMonitorRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[65]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetupExpireMonitorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetupExpireMonitorRequest) ProtoMessage() {}
+
+func (x *SetupExpireMonitorRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[65]
 	if x != nil {
-		return x.ExpireDate
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetupExpireMonitorRequest.ProtoReflect.Descriptor instead.
+func (*SetupExpireMonitorRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{65}
+}
+
+func (x *SetupExpireMonitorRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
 	}
 	return ""
 }
 
-func (x *CheckVoucherStatusResponse) GetMacLocked() string {
+func (x *SetupExpireMonitorRequest) GetInterval() string {
 	if x != nil {
-		return x.MacLocked
+		return x.Interval
 	}
 	return ""
 }
 
-func (x *CheckVoucherStatusResponse) GetMessage() string {
+type SetupExpireMonitorResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SetupExpireMonitorResponse) Reset() {
+	*x = SetupExpireMonitorResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[66]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SetupExpireMonitorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetupExpireMonitorResponse) ProtoMessage() {}
+
+func (x *SetupExpireMonitorResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[66]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetupExpireMonitorResponse.ProtoReflect.Descriptor instead.
+func (*SetupExpireMonitorResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{66}
+}
+
+func (x *SetupExpireMonitorResponse) GetMessage() string {
 	if x != nil {
 		return x.Message
 	}
 	return ""
+}
+
+type DisableExpireMonitorRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DisableExpireMonitorRequest) Reset() {
+	*x = DisableExpireMonitorRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[67]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DisableExpireMonitorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DisableExpireMonitorRequest) ProtoMessage() {}
+
+func (x *DisableExpireMonitorRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[67]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DisableExpireMonitorRequest.ProtoReflect.Descriptor instead.
+func (*DisableExpireMonitorRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{67}
+}
+
+func (x *DisableExpireMonitorRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+type DisableExpireMonitorResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DisableExpireMonitorResponse) Reset() {
+	*x = DisableExpireMonitorResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[68]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DisableExpireMonitorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DisableExpireMonitorResponse) ProtoMessage() {}
+
+func (x *DisableExpireMonitorResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[68]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DisableExpireMonitorResponse.ProtoReflect.Descriptor instead.
+func (*DisableExpireMonitorResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{68}
+}
+
+func (x *DisableExpireMonitorResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type RemoveExpireMonitorRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RemoveExpireMonitorRequest) Reset() {
+	*x = RemoveExpireMonitorRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[69]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemoveExpireMonitorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveExpireMonitorRequest) ProtoMessage() {}
+
+func (x *RemoveExpireMonitorRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[69]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveExpireMonitorRequest.ProtoReflect.Descriptor instead.
+func (*RemoveExpireMonitorRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{69}
+}
+
+func (x *RemoveExpireMonitorRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+type RemoveExpireMonitorResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RemoveExpireMonitorResponse) Reset() {
+	*x = RemoveExpireMonitorResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[70]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemoveExpireMonitorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveExpireMonitorResponse) ProtoMessage() {}
+
+func (x *RemoveExpireMonitorResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[70]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveExpireMonitorResponse.ProtoReflect.Descriptor instead.
+func (*RemoveExpireMonitorResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{70}
+}
+
+func (x *RemoveExpireMonitorResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+type TemplateInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`         // default | small | thermal
+	Sections      []string               `protobuf:"bytes,2,rep,name=sections,proto3" json:"sections,omitempty"` // header, row, footer
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TemplateInfo) Reset() {
+	*x = TemplateInfo{}
+	mi := &file_v1_hotspot_proto_msgTypes[71]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TemplateInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TemplateInfo) ProtoMessage() {}
+
+func (x *TemplateInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[71]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TemplateInfo.ProtoReflect.Descriptor instead.
+func (*TemplateInfo) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{71}
+}
+
+func (x *TemplateInfo) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *TemplateInfo) GetSections() []string {
+	if x != nil {
+		return x.Sections
+	}
+	return nil
+}
+
+type ListTemplatesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTemplatesRequest) Reset() {
+	*x = ListTemplatesRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[72]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTemplatesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTemplatesRequest) ProtoMessage() {}
+
+func (x *ListTemplatesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[72]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTemplatesRequest.ProtoReflect.Descriptor instead.
+func (*ListTemplatesRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{72}
+}
+
+type ListTemplatesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Templates     []*TemplateInfo        `protobuf:"bytes,1,rep,name=templates,proto3" json:"templates,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTemplatesResponse) Reset() {
+	*x = ListTemplatesResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[73]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTemplatesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTemplatesResponse) ProtoMessage() {}
+
+func (x *ListTemplatesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[73]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTemplatesResponse.ProtoReflect.Descriptor instead.
+func (*ListTemplatesResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{73}
+}
+
+func (x *ListTemplatesResponse) GetTemplates() []*TemplateInfo {
+	if x != nil {
+		return x.Templates
+	}
+	return nil
+}
+
+type GetTemplateSectionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TemplateName  string                 `protobuf:"bytes,1,opt,name=template_name,json=templateName,proto3" json:"template_name,omitempty"` // default | small | thermal
+	Section       string                 `protobuf:"bytes,2,opt,name=section,proto3" json:"section,omitempty"`                               // header | row | footer
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTemplateSectionRequest) Reset() {
+	*x = GetTemplateSectionRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[74]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTemplateSectionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTemplateSectionRequest) ProtoMessage() {}
+
+func (x *GetTemplateSectionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[74]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTemplateSectionRequest.ProtoReflect.Descriptor instead.
+func (*GetTemplateSectionRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{74}
+}
+
+func (x *GetTemplateSectionRequest) GetTemplateName() string {
+	if x != nil {
+		return x.TemplateName
+	}
+	return ""
+}
+
+func (x *GetTemplateSectionRequest) GetSection() string {
+	if x != nil {
+		return x.Section
+	}
+	return ""
+}
+
+type GetTemplateSectionResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Content       string                 `protobuf:"bytes,1,opt,name=content,proto3" json:"content,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTemplateSectionResponse) Reset() {
+	*x = GetTemplateSectionResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[75]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTemplateSectionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTemplateSectionResponse) ProtoMessage() {}
+
+func (x *GetTemplateSectionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[75]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTemplateSectionResponse.ProtoReflect.Descriptor instead.
+func (*GetTemplateSectionResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{75}
+}
+
+func (x *GetTemplateSectionResponse) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+type RenderVouchersRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	TemplateName  string                 `protobuf:"bytes,2,opt,name=template_name,json=templateName,proto3" json:"template_name,omitempty"` // default | small | thermal
+	Comment       string                 `protobuf:"bytes,3,opt,name=comment,proto3" json:"comment,omitempty"`                               // tag batch (eksklusif dengan user_id)
+	UserId        string                 `protobuf:"bytes,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                   // single by .id (eksklusif dengan comment)
+	Preview       bool                   `protobuf:"varint,5,opt,name=preview,proto3" json:"preview,omitempty"`                              // data dummy tanpa koneksi router
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RenderVouchersRequest) Reset() {
+	*x = RenderVouchersRequest{}
+	mi := &file_v1_hotspot_proto_msgTypes[76]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RenderVouchersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RenderVouchersRequest) ProtoMessage() {}
+
+func (x *RenderVouchersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[76]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RenderVouchersRequest.ProtoReflect.Descriptor instead.
+func (*RenderVouchersRequest) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{76}
+}
+
+func (x *RenderVouchersRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *RenderVouchersRequest) GetTemplateName() string {
+	if x != nil {
+		return x.TemplateName
+	}
+	return ""
+}
+
+func (x *RenderVouchersRequest) GetComment() string {
+	if x != nil {
+		return x.Comment
+	}
+	return ""
+}
+
+func (x *RenderVouchersRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *RenderVouchersRequest) GetPreview() bool {
+	if x != nil {
+		return x.Preview
+	}
+	return false
+}
+
+type RenderVouchersResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Html          string                 `protobuf:"bytes,1,opt,name=html,proto3" json:"html,omitempty"`
+	TotalVouchers int32                  `protobuf:"varint,2,opt,name=total_vouchers,json=totalVouchers,proto3" json:"total_vouchers,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RenderVouchersResponse) Reset() {
+	*x = RenderVouchersResponse{}
+	mi := &file_v1_hotspot_proto_msgTypes[77]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RenderVouchersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RenderVouchersResponse) ProtoMessage() {}
+
+func (x *RenderVouchersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_hotspot_proto_msgTypes[77]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RenderVouchersResponse.ProtoReflect.Descriptor instead.
+func (*RenderVouchersResponse) Descriptor() ([]byte, []int) {
+	return file_v1_hotspot_proto_rawDescGZIP(), []int{77}
+}
+
+func (x *RenderVouchersResponse) GetHtml() string {
+	if x != nil {
+		return x.Html
+	}
+	return ""
+}
+
+func (x *RenderVouchersResponse) GetTotalVouchers() int32 {
+	if x != nil {
+		return x.TotalVouchers
+	}
+	return 0
 }
 
 var File_v1_hotspot_proto protoreflect.FileDescriptor
@@ -7884,7 +4836,47 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\acomment\x18\v \x01(\tR\acomment\x12!\n" +
 	"\faddress_pool\x18\f \x01(\tR\vaddressPool\x12\x1f\n" +
 	"\vlock_server\x18\r \x01(\tR\n" +
-	"lockServer\"\xc9\x02\n" +
+	"lockServer\"\xb6\x03\n" +
+	"\x14HotspotProfileParams\x12\x1b\n" +
+	"\x04name\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x04name\x12!\n" +
+	"\faddress_pool\x18\x02 \x01(\tR\vaddressPool\x12!\n" +
+	"\fshared_users\x18\x03 \x01(\tR\vsharedUsers\x12\x1d\n" +
+	"\n" +
+	"rate_limit\x18\x04 \x01(\tR\trateLimit\x12!\n" +
+	"\fparent_queue\x18\x05 \x01(\tR\vparentQueue\x12\x14\n" +
+	"\x05price\x18\x06 \x01(\tR\x05price\x12#\n" +
+	"\rselling_price\x18\a \x01(\tR\fsellingPrice\x12\x1a\n" +
+	"\bvalidity\x18\b \x01(\tR\bvalidity\x12\x1f\n" +
+	"\vexpire_mode\x18\t \x01(\tR\n" +
+	"expireMode\x12\x1b\n" +
+	"\tlock_user\x18\n" +
+	" \x01(\bR\blockUser\x12\x1f\n" +
+	"\vlock_server\x18\v \x01(\bR\n" +
+	"lockServer\x12)\n" +
+	"\x10enable_recording\x18\f \x01(\bR\x0fenableRecording\x12\x18\n" +
+	"\acomment\x18\r \x01(\tR\acomment\"B\n" +
+	"\x1aListHotspotProfilesRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"V\n" +
+	"\x1bListHotspotProfilesResponse\x127\n" +
+	"\bprofiles\x18\x01 \x03(\v2\x1b.polyglot.v1.HotspotProfileR\bprofiles\"\x88\x01\n" +
+	"\x1bCreateHotspotProfileRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12C\n" +
+	"\aprofile\x18\x02 \x01(\v2!.polyglot.v1.HotspotProfileParamsB\x06\xbaH\x03\xc8\x01\x01R\aprofile\"o\n" +
+	"\x1cCreateHotspotProfileResponse\x125\n" +
+	"\aprofile\x18\x01 \x01(\v2\x1b.polyglot.v1.HotspotProfileR\aprofile\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\xa8\x01\n" +
+	"\x1bUpdateHotspotProfileRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1e\n" +
+	"\x06ros_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05rosId\x12C\n" +
+	"\aprofile\x18\x03 \x01(\v2!.polyglot.v1.HotspotProfileParamsB\x06\xbaH\x03\xc8\x01\x01R\aprofile\"o\n" +
+	"\x1cUpdateHotspotProfileResponse\x125\n" +
+	"\aprofile\x18\x01 \x01(\v2\x1b.polyglot.v1.HotspotProfileR\aprofile\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"c\n" +
+	"\x1bDeleteHotspotProfileRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1e\n" +
+	"\x06ros_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05rosId\"8\n" +
+	"\x1cDeleteHotspotProfileResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\xc9\x02\n" +
 	"\vHotspotUser\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
@@ -7899,36 +4891,7 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\acomment\x18\n" +
 	" \x01(\tR\acomment\x12\x1a\n" +
 	"\bdisabled\x18\v \x01(\bR\bdisabled\x12\x16\n" +
-	"\x06server\x18\f \x01(\tR\x06server\"\xa7\x01\n" +
-	"\x14HotspotActiveSession\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
-	"\x06server\x18\x02 \x01(\tR\x06server\x12\x12\n" +
-	"\x04user\x18\x03 \x01(\tR\x04user\x12\x18\n" +
-	"\aaddress\x18\x04 \x01(\tR\aaddress\x12\x1f\n" +
-	"\vmac_address\x18\x05 \x01(\tR\n" +
-	"macAddress\x12\x18\n" +
-	"\acomment\x18\x06 \x01(\tR\acomment\"\xbf\x01\n" +
-	"\tDHCPLease\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x18\n" +
-	"\aaddress\x18\x02 \x01(\tR\aaddress\x12\x1f\n" +
-	"\vmac_address\x18\x03 \x01(\tR\n" +
-	"macAddress\x12\x1b\n" +
-	"\thost_name\x18\x04 \x01(\tR\bhostName\x12\x16\n" +
-	"\x06status\x18\x05 \x01(\tR\x06status\x12\x18\n" +
-	"\ablocked\x18\x06 \x01(\bR\ablocked\x12\x18\n" +
-	"\acomment\x18\a \x01(\tR\acomment\"\xad\x01\n" +
-	"\rHotspotReport\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04date\x18\x02 \x01(\tR\x04date\x12\x12\n" +
-	"\x04time\x18\x03 \x01(\tR\x04time\x12\x1a\n" +
-	"\busername\x18\x04 \x01(\tR\busername\x12\x18\n" +
-	"\aprofile\x18\x05 \x01(\tR\aprofile\x12\x14\n" +
-	"\x05price\x18\x06 \x01(\x01R\x05price\x12\x18\n" +
-	"\acomment\x18\a \x01(\tR\acomment\"B\n" +
-	"\x1aListHotspotProfilesRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"V\n" +
-	"\x1bListHotspotProfilesResponse\x127\n" +
-	"\bprofiles\x18\x01 \x03(\v2\x1b.polyglot.v1.HotspotProfileR\bprofiles\"\x94\x01\n" +
+	"\x06server\x18\f \x01(\tR\x06server\"\x94\x01\n" +
 	"\x17ListHotspotUsersRequest\x12$\n" +
 	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x18\n" +
 	"\aprofile\x18\x02 \x01(\tR\aprofile\x12\x18\n" +
@@ -7936,48 +4899,7 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\vonly_unused\x18\x04 \x01(\bR\n" +
 	"onlyUnused\"J\n" +
 	"\x18ListHotspotUsersResponse\x12.\n" +
-	"\x05users\x18\x01 \x03(\v2\x18.polyglot.v1.HotspotUserR\x05users\"H\n" +
-	" ListHotspotActiveSessionsRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"b\n" +
-	"!ListHotspotActiveSessionsResponse\x12=\n" +
-	"\bsessions\x18\x01 \x03(\v2!.polyglot.v1.HotspotActiveSessionR\bsessions\"a\n" +
-	"\x19KickHotspotSessionRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1e\n" +
-	"\x06ros_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05rosId\"6\n" +
-	"\x1aKickHotspotSessionResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"\\\n" +
-	"\x15ListDHCPLeasesRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1d\n" +
-	"\n" +
-	"mac_filter\x18\x02 \x01(\tR\tmacFilter\"H\n" +
-	"\x16ListDHCPLeasesResponse\x12.\n" +
-	"\x06leases\x18\x01 \x03(\v2\x16.polyglot.v1.DHCPLeaseR\x06leases\"\x91\x01\n" +
-	"\x15BlockDHCPLeaseRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1e\n" +
-	"\x06ros_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05rosId\x12\x18\n" +
-	"\ablocked\x18\x03 \x01(\bR\ablocked\x12\x18\n" +
-	"\acomment\x18\x04 \x01(\tR\acomment\"2\n" +
-	"\x16BlockDHCPLeaseResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"\xec\x02\n" +
-	"\x17GenerateVouchersRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12!\n" +
-	"\aprofile\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\aprofile\x12\x1d\n" +
-	"\x05count\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02 \x00R\x05count\x12\x1b\n" +
-	"\tuser_type\x18\x04 \x01(\tR\buserType\x12\x1f\n" +
-	"\vuser_length\x18\x05 \x01(\x05R\n" +
-	"userLength\x12\x16\n" +
-	"\x06prefix\x18\x06 \x01(\tR\x06prefix\x12#\n" +
-	"\rcharacter_set\x18\a \x01(\tR\fcharacterSet\x12\x16\n" +
-	"\x06server\x18\b \x01(\tR\x06server\x12\x1d\n" +
-	"\n" +
-	"time_limit\x18\t \x01(\tR\ttimeLimit\x12\x1d\n" +
-	"\n" +
-	"data_limit\x18\n" +
-	" \x01(\tR\tdataLimit\x12\x18\n" +
-	"\acomment\x18\v \x01(\tR\acomment\"j\n" +
-	"\x18GenerateVouchersResponse\x124\n" +
-	"\bvouchers\x18\x01 \x03(\v2\x18.polyglot.v1.HotspotUserR\bvouchers\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"]\n" +
+	"\x05users\x18\x01 \x03(\v2\x18.polyglot.v1.HotspotUserR\x05users\"]\n" +
 	"\x15GetHotspotUserRequest\x12$\n" +
 	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1e\n" +
 	"\x06ros_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05rosId\"F\n" +
@@ -8030,43 +4952,79 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1e\n" +
 	"\x06ros_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05rosId\"5\n" +
 	"\x19DeleteHotspotUserResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"\xb6\x03\n" +
-	"\x14HotspotProfileParams\x12\x1b\n" +
-	"\x04name\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x04name\x12!\n" +
-	"\faddress_pool\x18\x02 \x01(\tR\vaddressPool\x12!\n" +
-	"\fshared_users\x18\x03 \x01(\tR\vsharedUsers\x12\x1d\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\x8d\x01\n" +
+	"\x19DeleteHotspotUsersRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x124\n" +
+	"\x04mode\x18\x02 \x01(\tB \xbaH\x1dr\x1bR\aprofileR\acommentR\aexpiredR\x04mode\x12\x14\n" +
+	"\x05value\x18\x03 \x01(\tR\x05value\"[\n" +
+	"\x1aDeleteHotspotUsersResponse\x12#\n" +
+	"\rdeleted_count\x18\x01 \x01(\x05R\fdeletedCount\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\xa7\x01\n" +
+	"\x14HotspotActiveSession\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
+	"\x06server\x18\x02 \x01(\tR\x06server\x12\x12\n" +
+	"\x04user\x18\x03 \x01(\tR\x04user\x12\x18\n" +
+	"\aaddress\x18\x04 \x01(\tR\aaddress\x12\x1f\n" +
+	"\vmac_address\x18\x05 \x01(\tR\n" +
+	"macAddress\x12\x18\n" +
+	"\acomment\x18\x06 \x01(\tR\acomment\"H\n" +
+	" ListHotspotActiveSessionsRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"b\n" +
+	"!ListHotspotActiveSessionsResponse\x12=\n" +
+	"\bsessions\x18\x01 \x03(\v2!.polyglot.v1.HotspotActiveSessionR\bsessions\"a\n" +
+	"\x19KickHotspotSessionRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1e\n" +
+	"\x06ros_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05rosId\"6\n" +
+	"\x1aKickHotspotSessionResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\xec\x02\n" +
+	"\x17GenerateVouchersRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12!\n" +
+	"\aprofile\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\aprofile\x12\x1d\n" +
+	"\x05count\x18\x03 \x01(\x05B\a\xbaH\x04\x1a\x02 \x00R\x05count\x12\x1b\n" +
+	"\tuser_type\x18\x04 \x01(\tR\buserType\x12\x1f\n" +
+	"\vuser_length\x18\x05 \x01(\x05R\n" +
+	"userLength\x12\x16\n" +
+	"\x06prefix\x18\x06 \x01(\tR\x06prefix\x12#\n" +
+	"\rcharacter_set\x18\a \x01(\tR\fcharacterSet\x12\x16\n" +
+	"\x06server\x18\b \x01(\tR\x06server\x12\x1d\n" +
 	"\n" +
-	"rate_limit\x18\x04 \x01(\tR\trateLimit\x12!\n" +
-	"\fparent_queue\x18\x05 \x01(\tR\vparentQueue\x12\x14\n" +
-	"\x05price\x18\x06 \x01(\tR\x05price\x12#\n" +
-	"\rselling_price\x18\a \x01(\tR\fsellingPrice\x12\x1a\n" +
-	"\bvalidity\x18\b \x01(\tR\bvalidity\x12\x1f\n" +
-	"\vexpire_mode\x18\t \x01(\tR\n" +
-	"expireMode\x12\x1b\n" +
-	"\tlock_user\x18\n" +
-	" \x01(\bR\blockUser\x12\x1f\n" +
-	"\vlock_server\x18\v \x01(\bR\n" +
-	"lockServer\x12)\n" +
-	"\x10enable_recording\x18\f \x01(\bR\x0fenableRecording\x12\x18\n" +
-	"\acomment\x18\r \x01(\tR\acomment\"\x88\x01\n" +
-	"\x1bCreateHotspotProfileRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12C\n" +
-	"\aprofile\x18\x02 \x01(\v2!.polyglot.v1.HotspotProfileParamsB\x06\xbaH\x03\xc8\x01\x01R\aprofile\"o\n" +
-	"\x1cCreateHotspotProfileResponse\x125\n" +
-	"\aprofile\x18\x01 \x01(\v2\x1b.polyglot.v1.HotspotProfileR\aprofile\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"\xa8\x01\n" +
-	"\x1bUpdateHotspotProfileRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1e\n" +
-	"\x06ros_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05rosId\x12C\n" +
-	"\aprofile\x18\x03 \x01(\v2!.polyglot.v1.HotspotProfileParamsB\x06\xbaH\x03\xc8\x01\x01R\aprofile\"o\n" +
-	"\x1cUpdateHotspotProfileResponse\x125\n" +
-	"\aprofile\x18\x01 \x01(\v2\x1b.polyglot.v1.HotspotProfileR\aprofile\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"c\n" +
-	"\x1bDeleteHotspotProfileRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1e\n" +
-	"\x06ros_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05rosId\"8\n" +
-	"\x1cDeleteHotspotProfileResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"\xe5\x01\n" +
+	"time_limit\x18\t \x01(\tR\ttimeLimit\x12\x1d\n" +
+	"\n" +
+	"data_limit\x18\n" +
+	" \x01(\tR\tdataLimit\x12\x18\n" +
+	"\acomment\x18\v \x01(\tR\acomment\"j\n" +
+	"\x18GenerateVouchersResponse\x124\n" +
+	"\bvouchers\x18\x01 \x03(\v2\x18.polyglot.v1.HotspotUserR\bvouchers\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"a\n" +
+	"\x16GetVoucherBatchRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12!\n" +
+	"\acomment\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\acomment\"e\n" +
+	"\x17GetVoucherBatchResponse\x124\n" +
+	"\bvouchers\x18\x01 \x03(\v2\x18.polyglot.v1.HotspotUserR\bvouchers\x12\x14\n" +
+	"\x05count\x18\x02 \x01(\x05R\x05count\"f\n" +
+	"\x19CheckVoucherStatusRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12#\n" +
+	"\busername\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\busername\"\x81\x04\n" +
+	"\x1aCheckVoucherStatusResponse\x12\x14\n" +
+	"\x05found\x18\x01 \x01(\bR\x05found\x12,\n" +
+	"\x04user\x18\x02 \x01(\v2\x18.polyglot.v1.HotspotUserR\x04user\x125\n" +
+	"\aprofile\x18\x03 \x01(\v2\x1b.polyglot.v1.HotspotProfileR\aprofile\x12\x1b\n" +
+	"\tis_online\x18\x04 \x01(\bR\bisOnline\x12H\n" +
+	"\x0eactive_session\x18\x05 \x01(\v2!.polyglot.v1.HotspotActiveSessionR\ractiveSession\x12\x1d\n" +
+	"\n" +
+	"has_cookie\x18\x06 \x01(\bR\thasCookie\x122\n" +
+	"\x06cookie\x18\a \x01(\v2\x1a.polyglot.v1.HotspotCookieR\x06cookie\x12\x16\n" +
+	"\x06status\x18\b \x01(\tR\x06status\x12\x1d\n" +
+	"\n" +
+	"sisa_waktu\x18\t \x01(\tR\tsisaWaktu\x12\x1d\n" +
+	"\n" +
+	"sisa_kuota\x18\n" +
+	" \x01(\tR\tsisaKuota\x12\x1f\n" +
+	"\vexpire_date\x18\v \x01(\tR\n" +
+	"expireDate\x12\x1d\n" +
+	"\n" +
+	"mac_locked\x18\f \x01(\tR\tmacLocked\x12\x18\n" +
+	"\amessage\x18\r \x01(\tR\amessage\"\xe5\x01\n" +
 	"\vHotspotHost\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vmac_address\x18\x02 \x01(\tR\n" +
@@ -8099,310 +5057,7 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\x19ListHotspotServersRequest\x12$\n" +
 	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"V\n" +
 	"\x1aListHotspotServersResponse\x128\n" +
-	"\aservers\x18\x01 \x03(\v2\x1e.polyglot.v1.HotspotServerInfoR\aservers\"a\n" +
-	"\x16GetVoucherBatchRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12!\n" +
-	"\acomment\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\acomment\"e\n" +
-	"\x17GetVoucherBatchResponse\x124\n" +
-	"\bvouchers\x18\x01 \x03(\v2\x18.polyglot.v1.HotspotUserR\bvouchers\x12\x14\n" +
-	"\x05count\x18\x02 \x01(\x05R\x05count\"Z\n" +
-	"\x14StreamTrafficRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1c\n" +
-	"\tinterface\x18\x02 \x01(\tR\tinterface\"\xa3\x01\n" +
-	"\x11TrafficStreamData\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x1c\n" +
-	"\tinterface\x18\x02 \x01(\tR\tinterface\x12\x15\n" +
-	"\x06rx_bps\x18\x03 \x01(\x03R\x05rxBps\x12\x15\n" +
-	"\x06tx_bps\x18\x04 \x01(\x03R\x05txBps\x12%\n" +
-	"\x0etimestamp_unix\x18\x05 \x01(\x03R\rtimestampUnix\"=\n" +
-	"\x15StreamResourceRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"\xac\x01\n" +
-	"\x12ResourceStreamData\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12\x19\n" +
-	"\bcpu_load\x18\x02 \x01(\x05R\acpuLoad\x12\x1f\n" +
-	"\vfree_memory\x18\x03 \x01(\tR\n" +
-	"freeMemory\x12\x16\n" +
-	"\x06uptime\x18\x04 \x01(\tR\x06uptime\x12%\n" +
-	"\x0etimestamp_unix\x18\x05 \x01(\x03R\rtimestampUnix\"d\n" +
-	"\x1bStreamActiveSessionsRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1f\n" +
-	"\vuser_filter\x18\x02 \x01(\tR\n" +
-	"userFilter\"\x9d\x01\n" +
-	"\x18ActiveSessionsStreamData\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12=\n" +
-	"\bsessions\x18\x02 \x03(\v2!.polyglot.v1.HotspotActiveSessionR\bsessions\x12%\n" +
-	"\x0etimestamp_unix\x18\x03 \x01(\x03R\rtimestampUnix\"\xfc\x01\n" +
-	"\x11HotspotActiveStat\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
-	"\x06uptime\x18\x02 \x01(\tR\x06uptime\x12*\n" +
-	"\x11session_time_left\x18\x03 \x01(\tR\x0fsessionTimeLeft\x12\x1b\n" +
-	"\tidle_time\x18\x04 \x01(\tR\bidleTime\x12\x19\n" +
-	"\bbytes_in\x18\x05 \x01(\tR\abytesIn\x12\x1b\n" +
-	"\tbytes_out\x18\x06 \x01(\tR\bbytesOut\x12\x1d\n" +
-	"\n" +
-	"packets_in\x18\a \x01(\tR\tpacketsIn\x12\x1f\n" +
-	"\vpackets_out\x18\b \x01(\tR\n" +
-	"packetsOut\"\\\n" +
-	"\x18StreamActiveStatsRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1a\n" +
-	"\binterval\x18\x02 \x01(\tR\binterval\"\x91\x01\n" +
-	"\x15ActiveStatsStreamData\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x124\n" +
-	"\x05stats\x18\x02 \x03(\v2\x1e.polyglot.v1.HotspotActiveStatR\x05stats\x12%\n" +
-	"\x0etimestamp_unix\x18\x03 \x01(\x03R\rtimestampUnix\"\xa0\x01\n" +
-	"\x19ListHotspotReportsRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x10\n" +
-	"\x03day\x18\x02 \x01(\tR\x03day\x12\x14\n" +
-	"\x05month\x18\x03 \x01(\tR\x05month\x12\x12\n" +
-	"\x04year\x18\x04 \x01(\tR\x04year\x12!\n" +
-	"\fsummary_only\x18\x05 \x01(\bR\vsummaryOnly\"\x8b\x01\n" +
-	"\x1aListHotspotReportsResponse\x124\n" +
-	"\areports\x18\x01 \x03(\v2\x1a.polyglot.v1.HotspotReportR\areports\x12!\n" +
-	"\ftotal_income\x18\x02 \x01(\x01R\vtotalIncome\x12\x14\n" +
-	"\x05total\x18\x03 \x01(\x05R\x05total\"b\n" +
-	"\x1aDeleteHotspotReportRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1e\n" +
-	"\x06ros_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05rosId\"7\n" +
-	"\x1bDeleteHotspotReportResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"E\n" +
-	"\x1dGetExpireMonitorStatusRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"\x9e\x01\n" +
-	"\x1bExpireMonitorStatusResponse\x12!\n" +
-	"\fis_installed\x18\x01 \x01(\bR\visInstalled\x12\x1d\n" +
-	"\n" +
-	"is_enabled\x18\x02 \x01(\bR\tisEnabled\x12\x16\n" +
-	"\x06status\x18\x03 \x01(\tR\x06status\x12%\n" +
-	"\x0escheduler_name\x18\x04 \x01(\tR\rschedulerName\"]\n" +
-	"\x19SetupExpireMonitorRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1a\n" +
-	"\binterval\x18\x02 \x01(\tR\binterval\"6\n" +
-	"\x1aSetupExpireMonitorResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"C\n" +
-	"\x1bDisableExpireMonitorRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"8\n" +
-	"\x1cDisableExpireMonitorResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"B\n" +
-	"\x1aRemoveExpireMonitorRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"7\n" +
-	"\x1bRemoveExpireMonitorResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\">\n" +
-	"\fTemplateInfo\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1a\n" +
-	"\bsections\x18\x02 \x03(\tR\bsections\"\x16\n" +
-	"\x14ListTemplatesRequest\"P\n" +
-	"\x15ListTemplatesResponse\x127\n" +
-	"\ttemplates\x18\x01 \x03(\v2\x19.polyglot.v1.TemplateInfoR\ttemplates\"l\n" +
-	"\x19GetTemplateSectionRequest\x12,\n" +
-	"\rtemplate_name\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\ftemplateName\x12!\n" +
-	"\asection\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\asection\"6\n" +
-	"\x1aGetTemplateSectionResponse\x12\x18\n" +
-	"\acontent\x18\x01 \x01(\tR\acontent\"\xb8\x01\n" +
-	"\x15RenderVouchersRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12,\n" +
-	"\rtemplate_name\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\ftemplateName\x12\x18\n" +
-	"\acomment\x18\x03 \x01(\tR\acomment\x12\x17\n" +
-	"\auser_id\x18\x04 \x01(\tR\x06userId\x12\x18\n" +
-	"\apreview\x18\x05 \x01(\bR\apreview\"S\n" +
-	"\x16RenderVouchersResponse\x12\x12\n" +
-	"\x04html\x18\x01 \x01(\tR\x04html\x12%\n" +
-	"\x0etotal_vouchers\x18\x02 \x01(\x05R\rtotalVouchers\"?\n" +
-	"\x17ListParentQueuesRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"Z\n" +
-	"\x10ParentQueueEntry\x12\x15\n" +
-	"\x06ros_id\x18\x01 \x01(\tR\x05rosId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1b\n" +
-	"\tmax_limit\x18\x03 \x01(\tR\bmaxLimit\"Q\n" +
-	"\x18ListParentQueuesResponse\x125\n" +
-	"\x06queues\x18\x01 \x03(\v2\x1d.polyglot.v1.ParentQueueEntryR\x06queues\":\n" +
-	"\x12ListIPPoolsRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"P\n" +
-	"\vIPPoolEntry\x12\x15\n" +
-	"\x06ros_id\x18\x01 \x01(\tR\x05rosId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x16\n" +
-	"\x06ranges\x18\x03 \x01(\tR\x06ranges\"E\n" +
-	"\x13ListIPPoolsResponse\x12.\n" +
-	"\x05pools\x18\x01 \x03(\v2\x18.polyglot.v1.IPPoolEntryR\x05pools\"_\n" +
-	"\x1bStreamSystemSnapshotRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1a\n" +
-	"\binterval\x18\x02 \x01(\tR\binterval\"~\n" +
-	"\x0fSystemClockInfo\x12\x12\n" +
-	"\x04time\x18\x01 \x01(\tR\x04time\x12\x12\n" +
-	"\x04date\x18\x02 \x01(\tR\x04date\x12$\n" +
-	"\x0etime_zone_name\x18\x03 \x01(\tR\ftimeZoneName\x12\x1d\n" +
-	"\n" +
-	"gmt_offset\x18\x04 \x01(\tR\tgmtOffset\"\xb3\x04\n" +
-	"\x12SystemResourceInfo\x12\x19\n" +
-	"\bcpu_load\x18\x01 \x01(\x05R\acpuLoad\x12\x1b\n" +
-	"\tcpu_count\x18\x02 \x01(\x05R\bcpuCount\x12#\n" +
-	"\rcpu_frequency\x18\x03 \x01(\tR\fcpuFrequency\x12\x1f\n" +
-	"\vfree_memory\x18\x04 \x01(\tR\n" +
-	"freeMemory\x12!\n" +
-	"\ftotal_memory\x18\x05 \x01(\tR\vtotalMemory\x12$\n" +
-	"\x0efree_hdd_space\x18\x06 \x01(\tR\ffreeHddSpace\x12&\n" +
-	"\x0ftotal_hdd_space\x18\a \x01(\tR\rtotalHddSpace\x12\"\n" +
-	"\farchitecture\x18\b \x01(\tR\farchitecture\x12\x14\n" +
-	"\x05model\x18\t \x01(\tR\x05model\x12#\n" +
-	"\rserial_number\x18\n" +
-	" \x01(\tR\fserialNumber\x12#\n" +
-	"\rfirmware_type\x18\v \x01(\tR\ffirmwareType\x12\x18\n" +
-	"\avoltage\x18\f \x01(\tR\avoltage\x12 \n" +
-	"\vtemperature\x18\r \x01(\tR\vtemperature\x12\x1d\n" +
-	"\n" +
-	"bad_blocks\x18\x0e \x01(\tR\tbadBlocks\x12\x16\n" +
-	"\x06uptime\x18\x0f \x01(\tR\x06uptime\x12\x18\n" +
-	"\aversion\x18\x10 \x01(\tR\aversion\x12\x1d\n" +
-	"\n" +
-	"board_name\x18\x11 \x01(\tR\tboardName\"\x97\x02\n" +
-	"\x15SystemRouterboardInfo\x12\x1d\n" +
-	"\n" +
-	"board_name\x18\x01 \x01(\tR\tboardName\x12\x14\n" +
-	"\x05model\x18\x02 \x01(\tR\x05model\x12#\n" +
-	"\rserial_number\x18\x03 \x01(\tR\fserialNumber\x12#\n" +
-	"\rfirmware_type\x18\x04 \x01(\tR\ffirmwareType\x12)\n" +
-	"\x10factory_firmware\x18\x05 \x01(\tR\x0ffactoryFirmware\x12)\n" +
-	"\x10current_firmware\x18\x06 \x01(\tR\x0fcurrentFirmware\x12)\n" +
-	"\x10upgrade_firmware\x18\a \x01(\tR\x0fupgradeFirmware\"\xa0\x02\n" +
-	"\x10SystemHealthInfo\x12\x18\n" +
-	"\avoltage\x18\x01 \x01(\tR\avoltage\x12 \n" +
-	"\vtemperature\x18\x02 \x01(\tR\vtemperature\x12'\n" +
-	"\x0fcpu_temperature\x18\x03 \x01(\tR\x0ecpuTemperature\x12\x1f\n" +
-	"\vpsu_voltage\x18\x04 \x01(\tR\n" +
-	"psuVoltage\x12\x1f\n" +
-	"\vpsu_current\x18\x05 \x01(\tR\n" +
-	"psuCurrent\x12'\n" +
-	"\x0fpsu_temperature\x18\x06 \x01(\tR\x0epsuTemperature\x12\x1d\n" +
-	"\n" +
-	"fan1_speed\x18\a \x01(\tR\tfan1Speed\x12\x1d\n" +
-	"\n" +
-	"fan2_speed\x18\b \x01(\tR\tfan2Speed\"\xe3\x02\n" +
-	"\x13SystemSnapshotFrame\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
-	"\x0etimestamp_unix\x18\x02 \x01(\x03R\rtimestampUnix\x122\n" +
-	"\x05clock\x18\x03 \x01(\v2\x1c.polyglot.v1.SystemClockInfoR\x05clock\x12;\n" +
-	"\bresource\x18\x04 \x01(\v2\x1f.polyglot.v1.SystemResourceInfoR\bresource\x12D\n" +
-	"\vrouterboard\x18\x05 \x01(\v2\".polyglot.v1.SystemRouterboardInfoR\vrouterboard\x12\x1a\n" +
-	"\bidentity\x18\x06 \x01(\tR\bidentity\x125\n" +
-	"\x06health\x18\a \x01(\v2\x1d.polyglot.v1.SystemHealthInfoR\x06health\"\xaa\x01\n" +
-	"\x17StreamQueueStatsRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x16\n" +
-	"\x06parent\x18\x03 \x01(\tR\x06parent\x12!\n" +
-	"\fparents_only\x18\x04 \x01(\bR\vparentsOnly\x12\x1a\n" +
-	"\binterval\x18\x05 \x01(\tR\binterval\"\xcd\x02\n" +
-	"\x0eQueueStatsItem\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x16\n" +
-	"\x06target\x18\x03 \x01(\tR\x06target\x12\x16\n" +
-	"\x06parent\x18\x04 \x01(\tR\x06parent\x12\x1b\n" +
-	"\tmax_limit\x18\x05 \x01(\tR\bmaxLimit\x12\x19\n" +
-	"\blimit_at\x18\x06 \x01(\tR\alimitAt\x12\x14\n" +
-	"\x05queue\x18\a \x01(\tR\x05queue\x12\x14\n" +
-	"\x05bytes\x18\b \x01(\tR\x05bytes\x12\x18\n" +
-	"\apackets\x18\t \x01(\tR\apackets\x12\x18\n" +
-	"\adropped\x18\n" +
-	" \x01(\tR\adropped\x12\x12\n" +
-	"\x04rate\x18\v \x01(\tR\x04rate\x12\x1f\n" +
-	"\vpacket_rate\x18\f \x01(\tR\n" +
-	"packetRate\x12\x1a\n" +
-	"\bdisabled\x18\r \x01(\bR\bdisabled\"\x8a\x01\n" +
-	"\x0fQueueStatsFrame\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
-	"\x0etimestamp_unix\x18\x02 \x01(\x03R\rtimestampUnix\x123\n" +
-	"\x06queues\x18\x03 \x03(\v2\x1b.polyglot.v1.QueueStatsItemR\x06queues\"Q\n" +
-	"\x11StreamLogsRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x16\n" +
-	"\x06topics\x18\x02 \x01(\tR\x06topics\"d\n" +
-	"\fLogEntryItem\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04time\x18\x02 \x01(\tR\x04time\x12\x16\n" +
-	"\x06topics\x18\x03 \x01(\tR\x06topics\x12\x18\n" +
-	"\amessage\x18\x04 \x01(\tR\amessage\"\x84\x01\n" +
-	"\x0fLogsStreamFrame\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
-	"\x0etimestamp_unix\x18\x02 \x01(\x03R\rtimestampUnix\x12-\n" +
-	"\x04logs\x18\x03 \x03(\v2\x19.polyglot.v1.LogEntryItemR\x04logs\"\xa4\x01\n" +
-	"\x1eStreamInterfaceEthernetRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1a\n" +
-	"\binterval\x18\x02 \x01(\tR\binterval\x12\x1f\n" +
-	"\vtype_filter\x18\x03 \x01(\tR\n" +
-	"typeFilter\x12\x1f\n" +
-	"\vname_filter\x18\x04 \x01(\tR\n" +
-	"nameFilter\"\xbe\x02\n" +
-	"\x15InterfaceEthernetItem\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
-	"\x04type\x18\x03 \x01(\tR\x04type\x12\x10\n" +
-	"\x03mtu\x18\x04 \x01(\tR\x03mtu\x12\x1f\n" +
-	"\vmac_address\x18\x05 \x01(\tR\n" +
-	"macAddress\x12\x18\n" +
-	"\arunning\x18\x06 \x01(\bR\arunning\x12\x1a\n" +
-	"\bdisabled\x18\a \x01(\bR\bdisabled\x12\x17\n" +
-	"\arx_byte\x18\b \x01(\tR\x06rxByte\x12\x17\n" +
-	"\atx_byte\x18\t \x01(\tR\x06txByte\x12\x1b\n" +
-	"\trx_packet\x18\n" +
-	" \x01(\tR\brxPacket\x12\x1b\n" +
-	"\ttx_packet\x18\v \x01(\tR\btxPacket\x12\x18\n" +
-	"\acomment\x18\f \x01(\tR\acomment\"\xa0\x01\n" +
-	"\x16InterfaceEthernetFrame\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
-	"\x0etimestamp_unix\x18\x02 \x01(\x03R\rtimestampUnix\x12B\n" +
-	"\n" +
-	"interfaces\x18\x03 \x03(\v2\".polyglot.v1.InterfaceEthernetItemR\n" +
-	"interfaces\"`\n" +
-	"\x1cStreamHotspotInactiveRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1a\n" +
-	"\binterval\x18\x02 \x01(\tR\binterval\"\x8a\x01\n" +
-	"\x14HotspotInactiveFrame\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
-	"\x0etimestamp_unix\x18\x02 \x01(\x03R\rtimestampUnix\x12.\n" +
-	"\x05users\x18\x03 \x03(\v2\x18.polyglot.v1.HotspotUserR\x05users\"Z\n" +
-	"\x16StreamPPPActiveRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1a\n" +
-	"\binterval\x18\x02 \x01(\tR\binterval\"\xc4\x02\n" +
-	"\x14PPPActiveSessionItem\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x18\n" +
-	"\aservice\x18\x03 \x01(\tR\aservice\x12\x1b\n" +
-	"\tcaller_id\x18\x04 \x01(\tR\bcallerId\x12\x18\n" +
-	"\aaddress\x18\x05 \x01(\tR\aaddress\x12\x16\n" +
-	"\x06uptime\x18\x06 \x01(\tR\x06uptime\x12\x1a\n" +
-	"\bencoding\x18\a \x01(\tR\bencoding\x12\x1d\n" +
-	"\n" +
-	"session_id\x18\b \x01(\tR\tsessionId\x12$\n" +
-	"\x0elimit_bytes_in\x18\t \x01(\tR\flimitBytesIn\x12&\n" +
-	"\x0flimit_bytes_out\x18\n" +
-	" \x01(\tR\rlimitBytesOut\x12\x16\n" +
-	"\x06radius\x18\v \x01(\bR\x06radius\"\x93\x01\n" +
-	"\x0ePPPActiveFrame\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
-	"\x0etimestamp_unix\x18\x02 \x01(\x03R\rtimestampUnix\x12=\n" +
-	"\bsessions\x18\x03 \x03(\v2!.polyglot.v1.PPPActiveSessionItemR\bsessions\"\\\n" +
-	"\x18StreamPPPInactiveRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1a\n" +
-	"\binterval\x18\x02 \x01(\tR\binterval\"\xae\x02\n" +
-	"\rPPPSecretItem\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x18\n" +
-	"\aprofile\x18\x03 \x01(\tR\aprofile\x12\x18\n" +
-	"\aservice\x18\x04 \x01(\tR\aservice\x12#\n" +
-	"\rlocal_address\x18\x05 \x01(\tR\flocalAddress\x12%\n" +
-	"\x0eremote_address\x18\x06 \x01(\tR\rremoteAddress\x12\x18\n" +
-	"\acomment\x18\a \x01(\tR\acomment\x12\x1a\n" +
-	"\bdisabled\x18\b \x01(\bR\bdisabled\x12&\n" +
-	"\x0flast_logged_out\x18\t \x01(\tR\rlastLoggedOut\x12\x1b\n" +
-	"\tcaller_id\x18\n" +
-	" \x01(\tR\bcallerId\"\x8c\x01\n" +
-	"\x10PPPInactiveFrame\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
-	"\x0etimestamp_unix\x18\x02 \x01(\x03R\rtimestampUnix\x124\n" +
-	"\asecrets\x18\x03 \x03(\v2\x1a.polyglot.v1.PPPSecretItemR\asecrets\"\x8d\x01\n" +
-	"\x19DeleteHotspotUsersRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x124\n" +
-	"\x04mode\x18\x02 \x01(\tB \xbaH\x1dr\x1bR\aprofileR\acommentR\aexpiredR\x04mode\x12\x14\n" +
-	"\x05value\x18\x03 \x01(\tR\x05value\"[\n" +
-	"\x1aDeleteHotspotUsersResponse\x12#\n" +
-	"\rdeleted_count\x18\x01 \x01(\x05R\fdeletedCount\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"\xde\x01\n" +
+	"\aservers\x18\x01 \x03(\v2\x1e.polyglot.v1.HotspotServerInfoR\aservers\"\xde\x01\n" +
 	"\x10HotspotIPBinding\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vmac_address\x18\x02 \x01(\tR\n" +
@@ -8468,39 +5123,77 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x15\n" +
 	"\x06ros_id\x18\x02 \x01(\tR\x05rosId\"7\n" +
 	"\x1bDeleteHotspotCookieResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"f\n" +
-	"\x19CheckVoucherStatusRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12#\n" +
-	"\busername\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\busername\"\x81\x04\n" +
-	"\x1aCheckVoucherStatusResponse\x12\x14\n" +
-	"\x05found\x18\x01 \x01(\bR\x05found\x12,\n" +
-	"\x04user\x18\x02 \x01(\v2\x18.polyglot.v1.HotspotUserR\x04user\x125\n" +
-	"\aprofile\x18\x03 \x01(\v2\x1b.polyglot.v1.HotspotProfileR\aprofile\x12\x1b\n" +
-	"\tis_online\x18\x04 \x01(\bR\bisOnline\x12H\n" +
-	"\x0eactive_session\x18\x05 \x01(\v2!.polyglot.v1.HotspotActiveSessionR\ractiveSession\x12\x1d\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\xad\x01\n" +
+	"\rHotspotReport\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04date\x18\x02 \x01(\tR\x04date\x12\x12\n" +
+	"\x04time\x18\x03 \x01(\tR\x04time\x12\x1a\n" +
+	"\busername\x18\x04 \x01(\tR\busername\x12\x18\n" +
+	"\aprofile\x18\x05 \x01(\tR\aprofile\x12\x14\n" +
+	"\x05price\x18\x06 \x01(\x01R\x05price\x12\x18\n" +
+	"\acomment\x18\a \x01(\tR\acomment\"\xa0\x01\n" +
+	"\x19ListHotspotReportsRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x10\n" +
+	"\x03day\x18\x02 \x01(\tR\x03day\x12\x14\n" +
+	"\x05month\x18\x03 \x01(\tR\x05month\x12\x12\n" +
+	"\x04year\x18\x04 \x01(\tR\x04year\x12!\n" +
+	"\fsummary_only\x18\x05 \x01(\bR\vsummaryOnly\"\x8b\x01\n" +
+	"\x1aListHotspotReportsResponse\x124\n" +
+	"\areports\x18\x01 \x03(\v2\x1a.polyglot.v1.HotspotReportR\areports\x12!\n" +
+	"\ftotal_income\x18\x02 \x01(\x01R\vtotalIncome\x12\x14\n" +
+	"\x05total\x18\x03 \x01(\x05R\x05total\"b\n" +
+	"\x1aDeleteHotspotReportRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1e\n" +
+	"\x06ros_id\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x05rosId\"7\n" +
+	"\x1bDeleteHotspotReportResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\x9e\x01\n" +
+	"\x1bExpireMonitorStatusResponse\x12!\n" +
+	"\fis_installed\x18\x01 \x01(\bR\visInstalled\x12\x1d\n" +
 	"\n" +
-	"has_cookie\x18\x06 \x01(\bR\thasCookie\x122\n" +
-	"\x06cookie\x18\a \x01(\v2\x1a.polyglot.v1.HotspotCookieR\x06cookie\x12\x16\n" +
-	"\x06status\x18\b \x01(\tR\x06status\x12\x1d\n" +
-	"\n" +
-	"sisa_waktu\x18\t \x01(\tR\tsisaWaktu\x12\x1d\n" +
-	"\n" +
-	"sisa_kuota\x18\n" +
-	" \x01(\tR\tsisaKuota\x12\x1f\n" +
-	"\vexpire_date\x18\v \x01(\tR\n" +
-	"expireDate\x12\x1d\n" +
-	"\n" +
-	"mac_locked\x18\f \x01(\tR\tmacLocked\x12\x18\n" +
-	"\amessage\x18\r \x01(\tR\amessage2\x86&\n" +
+	"is_enabled\x18\x02 \x01(\bR\tisEnabled\x12\x16\n" +
+	"\x06status\x18\x03 \x01(\tR\x06status\x12%\n" +
+	"\x0escheduler_name\x18\x04 \x01(\tR\rschedulerName\"E\n" +
+	"\x1dGetExpireMonitorStatusRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"]\n" +
+	"\x19SetupExpireMonitorRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1a\n" +
+	"\binterval\x18\x02 \x01(\tR\binterval\"6\n" +
+	"\x1aSetupExpireMonitorResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"C\n" +
+	"\x1bDisableExpireMonitorRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"8\n" +
+	"\x1cDisableExpireMonitorResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"B\n" +
+	"\x1aRemoveExpireMonitorRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"7\n" +
+	"\x1bRemoveExpireMonitorResponse\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\">\n" +
+	"\fTemplateInfo\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1a\n" +
+	"\bsections\x18\x02 \x03(\tR\bsections\"\x16\n" +
+	"\x14ListTemplatesRequest\"P\n" +
+	"\x15ListTemplatesResponse\x127\n" +
+	"\ttemplates\x18\x01 \x03(\v2\x19.polyglot.v1.TemplateInfoR\ttemplates\"l\n" +
+	"\x19GetTemplateSectionRequest\x12,\n" +
+	"\rtemplate_name\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\ftemplateName\x12!\n" +
+	"\asection\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\asection\"6\n" +
+	"\x1aGetTemplateSectionResponse\x12\x18\n" +
+	"\acontent\x18\x01 \x01(\tR\acontent\"\xb8\x01\n" +
+	"\x15RenderVouchersRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12,\n" +
+	"\rtemplate_name\x18\x02 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\ftemplateName\x12\x18\n" +
+	"\acomment\x18\x03 \x01(\tR\acomment\x12\x17\n" +
+	"\auser_id\x18\x04 \x01(\tR\x06userId\x12\x18\n" +
+	"\apreview\x18\x05 \x01(\bR\apreview\"S\n" +
+	"\x16RenderVouchersResponse\x12\x12\n" +
+	"\x04html\x18\x01 \x01(\tR\x04html\x12%\n" +
+	"\x0etotal_vouchers\x18\x02 \x01(\x05R\rtotalVouchers2\x87\x1b\n" +
 	"\x0eHotspotService\x12a\n" +
-	"\fListProfiles\x12'.polyglot.v1.ListHotspotProfilesRequest\x1a(.polyglot.v1.ListHotspotProfilesResponse\x12X\n" +
-	"\tListUsers\x12$.polyglot.v1.ListHotspotUsersRequest\x1a%.polyglot.v1.ListHotspotUsersResponse\x12s\n" +
-	"\x12ListActiveSessions\x12-.polyglot.v1.ListHotspotActiveSessionsRequest\x1a..polyglot.v1.ListHotspotActiveSessionsResponse\x12d\n" +
-	"\x11KickActiveSession\x12&.polyglot.v1.KickHotspotSessionRequest\x1a'.polyglot.v1.KickHotspotSessionResponse\x12Y\n" +
-	"\x0eListDHCPLeases\x12\".polyglot.v1.ListDHCPLeasesRequest\x1a#.polyglot.v1.ListDHCPLeasesResponse\x12Y\n" +
-	"\x0eBlockDHCPLease\x12\".polyglot.v1.BlockDHCPLeaseRequest\x1a#.polyglot.v1.BlockDHCPLeaseResponse\x12_\n" +
-	"\x10GenerateVouchers\x12$.polyglot.v1.GenerateVouchersRequest\x1a%.polyglot.v1.GenerateVouchersResponse\x12\\\n" +
-	"\x0fGetVoucherBatch\x12#.polyglot.v1.GetVoucherBatchRequest\x1a$.polyglot.v1.GetVoucherBatchResponse\x12R\n" +
+	"\fListProfiles\x12'.polyglot.v1.ListHotspotProfilesRequest\x1a(.polyglot.v1.ListHotspotProfilesResponse\x12d\n" +
+	"\rCreateProfile\x12(.polyglot.v1.CreateHotspotProfileRequest\x1a).polyglot.v1.CreateHotspotProfileResponse\x12d\n" +
+	"\rUpdateProfile\x12(.polyglot.v1.UpdateHotspotProfileRequest\x1a).polyglot.v1.UpdateHotspotProfileResponse\x12d\n" +
+	"\rDeleteProfile\x12(.polyglot.v1.DeleteHotspotProfileRequest\x1a).polyglot.v1.DeleteHotspotProfileResponse\x12X\n" +
+	"\tListUsers\x12$.polyglot.v1.ListHotspotUsersRequest\x1a%.polyglot.v1.ListHotspotUsersResponse\x12R\n" +
 	"\aGetUser\x12\".polyglot.v1.GetHotspotUserRequest\x1a#.polyglot.v1.GetHotspotUserResponse\x12[\n" +
 	"\n" +
 	"CreateUser\x12%.polyglot.v1.CreateHotspotUserRequest\x1a&.polyglot.v1.CreateHotspotUserResponse\x12[\n" +
@@ -8509,10 +5202,12 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\x11ResetUserCounters\x12,.polyglot.v1.ResetHotspotUserCountersRequest\x1a-.polyglot.v1.ResetHotspotUserCountersResponse\x12[\n" +
 	"\n" +
 	"DeleteUser\x12%.polyglot.v1.DeleteHotspotUserRequest\x1a&.polyglot.v1.DeleteHotspotUserResponse\x12e\n" +
-	"\x12DeleteHotspotUsers\x12&.polyglot.v1.DeleteHotspotUsersRequest\x1a'.polyglot.v1.DeleteHotspotUsersResponse\x12d\n" +
-	"\rCreateProfile\x12(.polyglot.v1.CreateHotspotProfileRequest\x1a).polyglot.v1.CreateHotspotProfileResponse\x12d\n" +
-	"\rUpdateProfile\x12(.polyglot.v1.UpdateHotspotProfileRequest\x1a).polyglot.v1.UpdateHotspotProfileResponse\x12d\n" +
-	"\rDeleteProfile\x12(.polyglot.v1.DeleteHotspotProfileRequest\x1a).polyglot.v1.DeleteHotspotProfileResponse\x12X\n" +
+	"\x12DeleteHotspotUsers\x12&.polyglot.v1.DeleteHotspotUsersRequest\x1a'.polyglot.v1.DeleteHotspotUsersResponse\x12s\n" +
+	"\x12ListActiveSessions\x12-.polyglot.v1.ListHotspotActiveSessionsRequest\x1a..polyglot.v1.ListHotspotActiveSessionsResponse\x12d\n" +
+	"\x11KickActiveSession\x12&.polyglot.v1.KickHotspotSessionRequest\x1a'.polyglot.v1.KickHotspotSessionResponse\x12_\n" +
+	"\x10GenerateVouchers\x12$.polyglot.v1.GenerateVouchersRequest\x1a%.polyglot.v1.GenerateVouchersResponse\x12\\\n" +
+	"\x0fGetVoucherBatch\x12#.polyglot.v1.GetVoucherBatchRequest\x1a$.polyglot.v1.GetVoucherBatchResponse\x12e\n" +
+	"\x12CheckVoucherStatus\x12&.polyglot.v1.CheckVoucherStatusRequest\x1a'.polyglot.v1.CheckVoucherStatusResponse\x12X\n" +
 	"\tListHosts\x12$.polyglot.v1.ListHotspotHostsRequest\x1a%.polyglot.v1.ListHotspotHostsResponse\x12[\n" +
 	"\n" +
 	"RemoveHost\x12%.polyglot.v1.RemoveHotspotHostRequest\x1a&.polyglot.v1.RemoveHotspotHostResponse\x12e\n" +
@@ -8522,20 +5217,7 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\x16UpdateHotspotIPBinding\x12*.polyglot.v1.UpdateHotspotIPBindingRequest\x1a+.polyglot.v1.UpdateHotspotIPBindingResponse\x12q\n" +
 	"\x16DeleteHotspotIPBinding\x12*.polyglot.v1.DeleteHotspotIPBindingRequest\x1a+.polyglot.v1.DeleteHotspotIPBindingResponse\x12e\n" +
 	"\x12ListHotspotCookies\x12&.polyglot.v1.ListHotspotCookiesRequest\x1a'.polyglot.v1.ListHotspotCookiesResponse\x12h\n" +
-	"\x13DeleteHotspotCookie\x12'.polyglot.v1.DeleteHotspotCookieRequest\x1a(.polyglot.v1.DeleteHotspotCookieResponse\x12e\n" +
-	"\x12CheckVoucherStatus\x12&.polyglot.v1.CheckVoucherStatusRequest\x1a'.polyglot.v1.CheckVoucherStatusResponse\x12T\n" +
-	"\rStreamTraffic\x12!.polyglot.v1.StreamTrafficRequest\x1a\x1e.polyglot.v1.TrafficStreamData0\x01\x12W\n" +
-	"\x0eStreamResource\x12\".polyglot.v1.StreamResourceRequest\x1a\x1f.polyglot.v1.ResourceStreamData0\x01\x12i\n" +
-	"\x14StreamActiveSessions\x12(.polyglot.v1.StreamActiveSessionsRequest\x1a%.polyglot.v1.ActiveSessionsStreamData0\x01\x12`\n" +
-	"\x11StreamActiveStats\x12%.polyglot.v1.StreamActiveStatsRequest\x1a\".polyglot.v1.ActiveStatsStreamData0\x01\x12d\n" +
-	"\x14StreamSystemSnapshot\x12(.polyglot.v1.StreamSystemSnapshotRequest\x1a .polyglot.v1.SystemSnapshotFrame0\x01\x12m\n" +
-	"\x17StreamInterfaceEthernet\x12+.polyglot.v1.StreamInterfaceEthernetRequest\x1a#.polyglot.v1.InterfaceEthernetFrame0\x01\x12X\n" +
-	"\x10StreamQueueStats\x12$.polyglot.v1.StreamQueueStatsRequest\x1a\x1c.polyglot.v1.QueueStatsFrame0\x01\x12L\n" +
-	"\n" +
-	"StreamLogs\x12\x1e.polyglot.v1.StreamLogsRequest\x1a\x1c.polyglot.v1.LogsStreamFrame0\x01\x12g\n" +
-	"\x15StreamHotspotInactive\x12).polyglot.v1.StreamHotspotInactiveRequest\x1a!.polyglot.v1.HotspotInactiveFrame0\x01\x12U\n" +
-	"\x0fStreamPPPActive\x12#.polyglot.v1.StreamPPPActiveRequest\x1a\x1b.polyglot.v1.PPPActiveFrame0\x01\x12[\n" +
-	"\x11StreamPPPInactive\x12%.polyglot.v1.StreamPPPInactiveRequest\x1a\x1d.polyglot.v1.PPPInactiveFrame0\x01\x12^\n" +
+	"\x13DeleteHotspotCookie\x12'.polyglot.v1.DeleteHotspotCookieRequest\x1a(.polyglot.v1.DeleteHotspotCookieResponse\x12^\n" +
 	"\vListReports\x12&.polyglot.v1.ListHotspotReportsRequest\x1a'.polyglot.v1.ListHotspotReportsResponse\x12a\n" +
 	"\fDeleteReport\x12'.polyglot.v1.DeleteHotspotReportRequest\x1a(.polyglot.v1.DeleteHotspotReportResponse\x12n\n" +
 	"\x16GetExpireMonitorStatus\x12*.polyglot.v1.GetExpireMonitorStatusRequest\x1a(.polyglot.v1.ExpireMonitorStatusResponse\x12e\n" +
@@ -8544,9 +5226,7 @@ const file_v1_hotspot_proto_rawDesc = "" +
 	"\x13RemoveExpireMonitor\x12'.polyglot.v1.RemoveExpireMonitorRequest\x1a(.polyglot.v1.RemoveExpireMonitorResponse\x12V\n" +
 	"\rListTemplates\x12!.polyglot.v1.ListTemplatesRequest\x1a\".polyglot.v1.ListTemplatesResponse\x12e\n" +
 	"\x12GetTemplateSection\x12&.polyglot.v1.GetTemplateSectionRequest\x1a'.polyglot.v1.GetTemplateSectionResponse\x12Y\n" +
-	"\x0eRenderVouchers\x12\".polyglot.v1.RenderVouchersRequest\x1a#.polyglot.v1.RenderVouchersResponse\x12_\n" +
-	"\x10ListParentQueues\x12$.polyglot.v1.ListParentQueuesRequest\x1a%.polyglot.v1.ListParentQueuesResponse\x12P\n" +
-	"\vListIPPools\x12\x1f.polyglot.v1.ListIPPoolsRequest\x1a .polyglot.v1.ListIPPoolsResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\x0eRenderVouchers\x12\".polyglot.v1.RenderVouchersRequest\x1a#.polyglot.v1.RenderVouchersResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_hotspot_proto_rawDescOnce sync.Once
@@ -8560,44 +5240,44 @@ func file_v1_hotspot_proto_rawDescGZIP() []byte {
 	return file_v1_hotspot_proto_rawDescData
 }
 
-var file_v1_hotspot_proto_msgTypes = make([]protoimpl.MessageInfo, 121)
+var file_v1_hotspot_proto_msgTypes = make([]protoimpl.MessageInfo, 78)
 var file_v1_hotspot_proto_goTypes = []any{
 	(*HotspotProfile)(nil),                    // 0: polyglot.v1.HotspotProfile
-	(*HotspotUser)(nil),                       // 1: polyglot.v1.HotspotUser
-	(*HotspotActiveSession)(nil),              // 2: polyglot.v1.HotspotActiveSession
-	(*DHCPLease)(nil),                         // 3: polyglot.v1.DHCPLease
-	(*HotspotReport)(nil),                     // 4: polyglot.v1.HotspotReport
-	(*ListHotspotProfilesRequest)(nil),        // 5: polyglot.v1.ListHotspotProfilesRequest
-	(*ListHotspotProfilesResponse)(nil),       // 6: polyglot.v1.ListHotspotProfilesResponse
-	(*ListHotspotUsersRequest)(nil),           // 7: polyglot.v1.ListHotspotUsersRequest
-	(*ListHotspotUsersResponse)(nil),          // 8: polyglot.v1.ListHotspotUsersResponse
-	(*ListHotspotActiveSessionsRequest)(nil),  // 9: polyglot.v1.ListHotspotActiveSessionsRequest
-	(*ListHotspotActiveSessionsResponse)(nil), // 10: polyglot.v1.ListHotspotActiveSessionsResponse
-	(*KickHotspotSessionRequest)(nil),         // 11: polyglot.v1.KickHotspotSessionRequest
-	(*KickHotspotSessionResponse)(nil),        // 12: polyglot.v1.KickHotspotSessionResponse
-	(*ListDHCPLeasesRequest)(nil),             // 13: polyglot.v1.ListDHCPLeasesRequest
-	(*ListDHCPLeasesResponse)(nil),            // 14: polyglot.v1.ListDHCPLeasesResponse
-	(*BlockDHCPLeaseRequest)(nil),             // 15: polyglot.v1.BlockDHCPLeaseRequest
-	(*BlockDHCPLeaseResponse)(nil),            // 16: polyglot.v1.BlockDHCPLeaseResponse
-	(*GenerateVouchersRequest)(nil),           // 17: polyglot.v1.GenerateVouchersRequest
-	(*GenerateVouchersResponse)(nil),          // 18: polyglot.v1.GenerateVouchersResponse
-	(*GetHotspotUserRequest)(nil),             // 19: polyglot.v1.GetHotspotUserRequest
-	(*GetHotspotUserResponse)(nil),            // 20: polyglot.v1.GetHotspotUserResponse
-	(*CreateHotspotUserRequest)(nil),          // 21: polyglot.v1.CreateHotspotUserRequest
-	(*CreateHotspotUserResponse)(nil),         // 22: polyglot.v1.CreateHotspotUserResponse
-	(*UpdateHotspotUserRequest)(nil),          // 23: polyglot.v1.UpdateHotspotUserRequest
-	(*UpdateHotspotUserResponse)(nil),         // 24: polyglot.v1.UpdateHotspotUserResponse
-	(*ResetHotspotUserCountersRequest)(nil),   // 25: polyglot.v1.ResetHotspotUserCountersRequest
-	(*ResetHotspotUserCountersResponse)(nil),  // 26: polyglot.v1.ResetHotspotUserCountersResponse
-	(*DeleteHotspotUserRequest)(nil),          // 27: polyglot.v1.DeleteHotspotUserRequest
-	(*DeleteHotspotUserResponse)(nil),         // 28: polyglot.v1.DeleteHotspotUserResponse
-	(*HotspotProfileParams)(nil),              // 29: polyglot.v1.HotspotProfileParams
-	(*CreateHotspotProfileRequest)(nil),       // 30: polyglot.v1.CreateHotspotProfileRequest
-	(*CreateHotspotProfileResponse)(nil),      // 31: polyglot.v1.CreateHotspotProfileResponse
-	(*UpdateHotspotProfileRequest)(nil),       // 32: polyglot.v1.UpdateHotspotProfileRequest
-	(*UpdateHotspotProfileResponse)(nil),      // 33: polyglot.v1.UpdateHotspotProfileResponse
-	(*DeleteHotspotProfileRequest)(nil),       // 34: polyglot.v1.DeleteHotspotProfileRequest
-	(*DeleteHotspotProfileResponse)(nil),      // 35: polyglot.v1.DeleteHotspotProfileResponse
+	(*HotspotProfileParams)(nil),              // 1: polyglot.v1.HotspotProfileParams
+	(*ListHotspotProfilesRequest)(nil),        // 2: polyglot.v1.ListHotspotProfilesRequest
+	(*ListHotspotProfilesResponse)(nil),       // 3: polyglot.v1.ListHotspotProfilesResponse
+	(*CreateHotspotProfileRequest)(nil),       // 4: polyglot.v1.CreateHotspotProfileRequest
+	(*CreateHotspotProfileResponse)(nil),      // 5: polyglot.v1.CreateHotspotProfileResponse
+	(*UpdateHotspotProfileRequest)(nil),       // 6: polyglot.v1.UpdateHotspotProfileRequest
+	(*UpdateHotspotProfileResponse)(nil),      // 7: polyglot.v1.UpdateHotspotProfileResponse
+	(*DeleteHotspotProfileRequest)(nil),       // 8: polyglot.v1.DeleteHotspotProfileRequest
+	(*DeleteHotspotProfileResponse)(nil),      // 9: polyglot.v1.DeleteHotspotProfileResponse
+	(*HotspotUser)(nil),                       // 10: polyglot.v1.HotspotUser
+	(*ListHotspotUsersRequest)(nil),           // 11: polyglot.v1.ListHotspotUsersRequest
+	(*ListHotspotUsersResponse)(nil),          // 12: polyglot.v1.ListHotspotUsersResponse
+	(*GetHotspotUserRequest)(nil),             // 13: polyglot.v1.GetHotspotUserRequest
+	(*GetHotspotUserResponse)(nil),            // 14: polyglot.v1.GetHotspotUserResponse
+	(*CreateHotspotUserRequest)(nil),          // 15: polyglot.v1.CreateHotspotUserRequest
+	(*CreateHotspotUserResponse)(nil),         // 16: polyglot.v1.CreateHotspotUserResponse
+	(*UpdateHotspotUserRequest)(nil),          // 17: polyglot.v1.UpdateHotspotUserRequest
+	(*UpdateHotspotUserResponse)(nil),         // 18: polyglot.v1.UpdateHotspotUserResponse
+	(*ResetHotspotUserCountersRequest)(nil),   // 19: polyglot.v1.ResetHotspotUserCountersRequest
+	(*ResetHotspotUserCountersResponse)(nil),  // 20: polyglot.v1.ResetHotspotUserCountersResponse
+	(*DeleteHotspotUserRequest)(nil),          // 21: polyglot.v1.DeleteHotspotUserRequest
+	(*DeleteHotspotUserResponse)(nil),         // 22: polyglot.v1.DeleteHotspotUserResponse
+	(*DeleteHotspotUsersRequest)(nil),         // 23: polyglot.v1.DeleteHotspotUsersRequest
+	(*DeleteHotspotUsersResponse)(nil),        // 24: polyglot.v1.DeleteHotspotUsersResponse
+	(*HotspotActiveSession)(nil),              // 25: polyglot.v1.HotspotActiveSession
+	(*ListHotspotActiveSessionsRequest)(nil),  // 26: polyglot.v1.ListHotspotActiveSessionsRequest
+	(*ListHotspotActiveSessionsResponse)(nil), // 27: polyglot.v1.ListHotspotActiveSessionsResponse
+	(*KickHotspotSessionRequest)(nil),         // 28: polyglot.v1.KickHotspotSessionRequest
+	(*KickHotspotSessionResponse)(nil),        // 29: polyglot.v1.KickHotspotSessionResponse
+	(*GenerateVouchersRequest)(nil),           // 30: polyglot.v1.GenerateVouchersRequest
+	(*GenerateVouchersResponse)(nil),          // 31: polyglot.v1.GenerateVouchersResponse
+	(*GetVoucherBatchRequest)(nil),            // 32: polyglot.v1.GetVoucherBatchRequest
+	(*GetVoucherBatchResponse)(nil),           // 33: polyglot.v1.GetVoucherBatchResponse
+	(*CheckVoucherStatusRequest)(nil),         // 34: polyglot.v1.CheckVoucherStatusRequest
+	(*CheckVoucherStatusResponse)(nil),        // 35: polyglot.v1.CheckVoucherStatusResponse
 	(*HotspotHost)(nil),                       // 36: polyglot.v1.HotspotHost
 	(*ListHotspotHostsRequest)(nil),           // 37: polyglot.v1.ListHotspotHostsRequest
 	(*ListHotspotHostsResponse)(nil),          // 38: polyglot.v1.ListHotspotHostsResponse
@@ -8606,227 +5286,139 @@ var file_v1_hotspot_proto_goTypes = []any{
 	(*HotspotServerInfo)(nil),                 // 41: polyglot.v1.HotspotServerInfo
 	(*ListHotspotServersRequest)(nil),         // 42: polyglot.v1.ListHotspotServersRequest
 	(*ListHotspotServersResponse)(nil),        // 43: polyglot.v1.ListHotspotServersResponse
-	(*GetVoucherBatchRequest)(nil),            // 44: polyglot.v1.GetVoucherBatchRequest
-	(*GetVoucherBatchResponse)(nil),           // 45: polyglot.v1.GetVoucherBatchResponse
-	(*StreamTrafficRequest)(nil),              // 46: polyglot.v1.StreamTrafficRequest
-	(*TrafficStreamData)(nil),                 // 47: polyglot.v1.TrafficStreamData
-	(*StreamResourceRequest)(nil),             // 48: polyglot.v1.StreamResourceRequest
-	(*ResourceStreamData)(nil),                // 49: polyglot.v1.ResourceStreamData
-	(*StreamActiveSessionsRequest)(nil),       // 50: polyglot.v1.StreamActiveSessionsRequest
-	(*ActiveSessionsStreamData)(nil),          // 51: polyglot.v1.ActiveSessionsStreamData
-	(*HotspotActiveStat)(nil),                 // 52: polyglot.v1.HotspotActiveStat
-	(*StreamActiveStatsRequest)(nil),          // 53: polyglot.v1.StreamActiveStatsRequest
-	(*ActiveStatsStreamData)(nil),             // 54: polyglot.v1.ActiveStatsStreamData
-	(*ListHotspotReportsRequest)(nil),         // 55: polyglot.v1.ListHotspotReportsRequest
-	(*ListHotspotReportsResponse)(nil),        // 56: polyglot.v1.ListHotspotReportsResponse
-	(*DeleteHotspotReportRequest)(nil),        // 57: polyglot.v1.DeleteHotspotReportRequest
-	(*DeleteHotspotReportResponse)(nil),       // 58: polyglot.v1.DeleteHotspotReportResponse
-	(*GetExpireMonitorStatusRequest)(nil),     // 59: polyglot.v1.GetExpireMonitorStatusRequest
-	(*ExpireMonitorStatusResponse)(nil),       // 60: polyglot.v1.ExpireMonitorStatusResponse
-	(*SetupExpireMonitorRequest)(nil),         // 61: polyglot.v1.SetupExpireMonitorRequest
-	(*SetupExpireMonitorResponse)(nil),        // 62: polyglot.v1.SetupExpireMonitorResponse
-	(*DisableExpireMonitorRequest)(nil),       // 63: polyglot.v1.DisableExpireMonitorRequest
-	(*DisableExpireMonitorResponse)(nil),      // 64: polyglot.v1.DisableExpireMonitorResponse
-	(*RemoveExpireMonitorRequest)(nil),        // 65: polyglot.v1.RemoveExpireMonitorRequest
-	(*RemoveExpireMonitorResponse)(nil),       // 66: polyglot.v1.RemoveExpireMonitorResponse
-	(*TemplateInfo)(nil),                      // 67: polyglot.v1.TemplateInfo
-	(*ListTemplatesRequest)(nil),              // 68: polyglot.v1.ListTemplatesRequest
-	(*ListTemplatesResponse)(nil),             // 69: polyglot.v1.ListTemplatesResponse
-	(*GetTemplateSectionRequest)(nil),         // 70: polyglot.v1.GetTemplateSectionRequest
-	(*GetTemplateSectionResponse)(nil),        // 71: polyglot.v1.GetTemplateSectionResponse
-	(*RenderVouchersRequest)(nil),             // 72: polyglot.v1.RenderVouchersRequest
-	(*RenderVouchersResponse)(nil),            // 73: polyglot.v1.RenderVouchersResponse
-	(*ListParentQueuesRequest)(nil),           // 74: polyglot.v1.ListParentQueuesRequest
-	(*ParentQueueEntry)(nil),                  // 75: polyglot.v1.ParentQueueEntry
-	(*ListParentQueuesResponse)(nil),          // 76: polyglot.v1.ListParentQueuesResponse
-	(*ListIPPoolsRequest)(nil),                // 77: polyglot.v1.ListIPPoolsRequest
-	(*IPPoolEntry)(nil),                       // 78: polyglot.v1.IPPoolEntry
-	(*ListIPPoolsResponse)(nil),               // 79: polyglot.v1.ListIPPoolsResponse
-	(*StreamSystemSnapshotRequest)(nil),       // 80: polyglot.v1.StreamSystemSnapshotRequest
-	(*SystemClockInfo)(nil),                   // 81: polyglot.v1.SystemClockInfo
-	(*SystemResourceInfo)(nil),                // 82: polyglot.v1.SystemResourceInfo
-	(*SystemRouterboardInfo)(nil),             // 83: polyglot.v1.SystemRouterboardInfo
-	(*SystemHealthInfo)(nil),                  // 84: polyglot.v1.SystemHealthInfo
-	(*SystemSnapshotFrame)(nil),               // 85: polyglot.v1.SystemSnapshotFrame
-	(*StreamQueueStatsRequest)(nil),           // 86: polyglot.v1.StreamQueueStatsRequest
-	(*QueueStatsItem)(nil),                    // 87: polyglot.v1.QueueStatsItem
-	(*QueueStatsFrame)(nil),                   // 88: polyglot.v1.QueueStatsFrame
-	(*StreamLogsRequest)(nil),                 // 89: polyglot.v1.StreamLogsRequest
-	(*LogEntryItem)(nil),                      // 90: polyglot.v1.LogEntryItem
-	(*LogsStreamFrame)(nil),                   // 91: polyglot.v1.LogsStreamFrame
-	(*StreamInterfaceEthernetRequest)(nil),    // 92: polyglot.v1.StreamInterfaceEthernetRequest
-	(*InterfaceEthernetItem)(nil),             // 93: polyglot.v1.InterfaceEthernetItem
-	(*InterfaceEthernetFrame)(nil),            // 94: polyglot.v1.InterfaceEthernetFrame
-	(*StreamHotspotInactiveRequest)(nil),      // 95: polyglot.v1.StreamHotspotInactiveRequest
-	(*HotspotInactiveFrame)(nil),              // 96: polyglot.v1.HotspotInactiveFrame
-	(*StreamPPPActiveRequest)(nil),            // 97: polyglot.v1.StreamPPPActiveRequest
-	(*PPPActiveSessionItem)(nil),              // 98: polyglot.v1.PPPActiveSessionItem
-	(*PPPActiveFrame)(nil),                    // 99: polyglot.v1.PPPActiveFrame
-	(*StreamPPPInactiveRequest)(nil),          // 100: polyglot.v1.StreamPPPInactiveRequest
-	(*PPPSecretItem)(nil),                     // 101: polyglot.v1.PPPSecretItem
-	(*PPPInactiveFrame)(nil),                  // 102: polyglot.v1.PPPInactiveFrame
-	(*DeleteHotspotUsersRequest)(nil),         // 103: polyglot.v1.DeleteHotspotUsersRequest
-	(*DeleteHotspotUsersResponse)(nil),        // 104: polyglot.v1.DeleteHotspotUsersResponse
-	(*HotspotIPBinding)(nil),                  // 105: polyglot.v1.HotspotIPBinding
-	(*ListHotspotIPBindingsRequest)(nil),      // 106: polyglot.v1.ListHotspotIPBindingsRequest
-	(*ListHotspotIPBindingsResponse)(nil),     // 107: polyglot.v1.ListHotspotIPBindingsResponse
-	(*CreateHotspotIPBindingRequest)(nil),     // 108: polyglot.v1.CreateHotspotIPBindingRequest
-	(*CreateHotspotIPBindingResponse)(nil),    // 109: polyglot.v1.CreateHotspotIPBindingResponse
-	(*UpdateHotspotIPBindingRequest)(nil),     // 110: polyglot.v1.UpdateHotspotIPBindingRequest
-	(*UpdateHotspotIPBindingResponse)(nil),    // 111: polyglot.v1.UpdateHotspotIPBindingResponse
-	(*DeleteHotspotIPBindingRequest)(nil),     // 112: polyglot.v1.DeleteHotspotIPBindingRequest
-	(*DeleteHotspotIPBindingResponse)(nil),    // 113: polyglot.v1.DeleteHotspotIPBindingResponse
-	(*HotspotCookie)(nil),                     // 114: polyglot.v1.HotspotCookie
-	(*ListHotspotCookiesRequest)(nil),         // 115: polyglot.v1.ListHotspotCookiesRequest
-	(*ListHotspotCookiesResponse)(nil),        // 116: polyglot.v1.ListHotspotCookiesResponse
-	(*DeleteHotspotCookieRequest)(nil),        // 117: polyglot.v1.DeleteHotspotCookieRequest
-	(*DeleteHotspotCookieResponse)(nil),       // 118: polyglot.v1.DeleteHotspotCookieResponse
-	(*CheckVoucherStatusRequest)(nil),         // 119: polyglot.v1.CheckVoucherStatusRequest
-	(*CheckVoucherStatusResponse)(nil),        // 120: polyglot.v1.CheckVoucherStatusResponse
+	(*HotspotIPBinding)(nil),                  // 44: polyglot.v1.HotspotIPBinding
+	(*ListHotspotIPBindingsRequest)(nil),      // 45: polyglot.v1.ListHotspotIPBindingsRequest
+	(*ListHotspotIPBindingsResponse)(nil),     // 46: polyglot.v1.ListHotspotIPBindingsResponse
+	(*CreateHotspotIPBindingRequest)(nil),     // 47: polyglot.v1.CreateHotspotIPBindingRequest
+	(*CreateHotspotIPBindingResponse)(nil),    // 48: polyglot.v1.CreateHotspotIPBindingResponse
+	(*UpdateHotspotIPBindingRequest)(nil),     // 49: polyglot.v1.UpdateHotspotIPBindingRequest
+	(*UpdateHotspotIPBindingResponse)(nil),    // 50: polyglot.v1.UpdateHotspotIPBindingResponse
+	(*DeleteHotspotIPBindingRequest)(nil),     // 51: polyglot.v1.DeleteHotspotIPBindingRequest
+	(*DeleteHotspotIPBindingResponse)(nil),    // 52: polyglot.v1.DeleteHotspotIPBindingResponse
+	(*HotspotCookie)(nil),                     // 53: polyglot.v1.HotspotCookie
+	(*ListHotspotCookiesRequest)(nil),         // 54: polyglot.v1.ListHotspotCookiesRequest
+	(*ListHotspotCookiesResponse)(nil),        // 55: polyglot.v1.ListHotspotCookiesResponse
+	(*DeleteHotspotCookieRequest)(nil),        // 56: polyglot.v1.DeleteHotspotCookieRequest
+	(*DeleteHotspotCookieResponse)(nil),       // 57: polyglot.v1.DeleteHotspotCookieResponse
+	(*HotspotReport)(nil),                     // 58: polyglot.v1.HotspotReport
+	(*ListHotspotReportsRequest)(nil),         // 59: polyglot.v1.ListHotspotReportsRequest
+	(*ListHotspotReportsResponse)(nil),        // 60: polyglot.v1.ListHotspotReportsResponse
+	(*DeleteHotspotReportRequest)(nil),        // 61: polyglot.v1.DeleteHotspotReportRequest
+	(*DeleteHotspotReportResponse)(nil),       // 62: polyglot.v1.DeleteHotspotReportResponse
+	(*ExpireMonitorStatusResponse)(nil),       // 63: polyglot.v1.ExpireMonitorStatusResponse
+	(*GetExpireMonitorStatusRequest)(nil),     // 64: polyglot.v1.GetExpireMonitorStatusRequest
+	(*SetupExpireMonitorRequest)(nil),         // 65: polyglot.v1.SetupExpireMonitorRequest
+	(*SetupExpireMonitorResponse)(nil),        // 66: polyglot.v1.SetupExpireMonitorResponse
+	(*DisableExpireMonitorRequest)(nil),       // 67: polyglot.v1.DisableExpireMonitorRequest
+	(*DisableExpireMonitorResponse)(nil),      // 68: polyglot.v1.DisableExpireMonitorResponse
+	(*RemoveExpireMonitorRequest)(nil),        // 69: polyglot.v1.RemoveExpireMonitorRequest
+	(*RemoveExpireMonitorResponse)(nil),       // 70: polyglot.v1.RemoveExpireMonitorResponse
+	(*TemplateInfo)(nil),                      // 71: polyglot.v1.TemplateInfo
+	(*ListTemplatesRequest)(nil),              // 72: polyglot.v1.ListTemplatesRequest
+	(*ListTemplatesResponse)(nil),             // 73: polyglot.v1.ListTemplatesResponse
+	(*GetTemplateSectionRequest)(nil),         // 74: polyglot.v1.GetTemplateSectionRequest
+	(*GetTemplateSectionResponse)(nil),        // 75: polyglot.v1.GetTemplateSectionResponse
+	(*RenderVouchersRequest)(nil),             // 76: polyglot.v1.RenderVouchersRequest
+	(*RenderVouchersResponse)(nil),            // 77: polyglot.v1.RenderVouchersResponse
 }
 var file_v1_hotspot_proto_depIdxs = []int32{
-	0,   // 0: polyglot.v1.ListHotspotProfilesResponse.profiles:type_name -> polyglot.v1.HotspotProfile
-	1,   // 1: polyglot.v1.ListHotspotUsersResponse.users:type_name -> polyglot.v1.HotspotUser
-	2,   // 2: polyglot.v1.ListHotspotActiveSessionsResponse.sessions:type_name -> polyglot.v1.HotspotActiveSession
-	3,   // 3: polyglot.v1.ListDHCPLeasesResponse.leases:type_name -> polyglot.v1.DHCPLease
-	1,   // 4: polyglot.v1.GenerateVouchersResponse.vouchers:type_name -> polyglot.v1.HotspotUser
-	1,   // 5: polyglot.v1.GetHotspotUserResponse.user:type_name -> polyglot.v1.HotspotUser
-	1,   // 6: polyglot.v1.CreateHotspotUserResponse.user:type_name -> polyglot.v1.HotspotUser
-	1,   // 7: polyglot.v1.UpdateHotspotUserResponse.user:type_name -> polyglot.v1.HotspotUser
-	29,  // 8: polyglot.v1.CreateHotspotProfileRequest.profile:type_name -> polyglot.v1.HotspotProfileParams
-	0,   // 9: polyglot.v1.CreateHotspotProfileResponse.profile:type_name -> polyglot.v1.HotspotProfile
-	29,  // 10: polyglot.v1.UpdateHotspotProfileRequest.profile:type_name -> polyglot.v1.HotspotProfileParams
-	0,   // 11: polyglot.v1.UpdateHotspotProfileResponse.profile:type_name -> polyglot.v1.HotspotProfile
-	36,  // 12: polyglot.v1.ListHotspotHostsResponse.hosts:type_name -> polyglot.v1.HotspotHost
-	41,  // 13: polyglot.v1.ListHotspotServersResponse.servers:type_name -> polyglot.v1.HotspotServerInfo
-	1,   // 14: polyglot.v1.GetVoucherBatchResponse.vouchers:type_name -> polyglot.v1.HotspotUser
-	2,   // 15: polyglot.v1.ActiveSessionsStreamData.sessions:type_name -> polyglot.v1.HotspotActiveSession
-	52,  // 16: polyglot.v1.ActiveStatsStreamData.stats:type_name -> polyglot.v1.HotspotActiveStat
-	4,   // 17: polyglot.v1.ListHotspotReportsResponse.reports:type_name -> polyglot.v1.HotspotReport
-	67,  // 18: polyglot.v1.ListTemplatesResponse.templates:type_name -> polyglot.v1.TemplateInfo
-	75,  // 19: polyglot.v1.ListParentQueuesResponse.queues:type_name -> polyglot.v1.ParentQueueEntry
-	78,  // 20: polyglot.v1.ListIPPoolsResponse.pools:type_name -> polyglot.v1.IPPoolEntry
-	81,  // 21: polyglot.v1.SystemSnapshotFrame.clock:type_name -> polyglot.v1.SystemClockInfo
-	82,  // 22: polyglot.v1.SystemSnapshotFrame.resource:type_name -> polyglot.v1.SystemResourceInfo
-	83,  // 23: polyglot.v1.SystemSnapshotFrame.routerboard:type_name -> polyglot.v1.SystemRouterboardInfo
-	84,  // 24: polyglot.v1.SystemSnapshotFrame.health:type_name -> polyglot.v1.SystemHealthInfo
-	87,  // 25: polyglot.v1.QueueStatsFrame.queues:type_name -> polyglot.v1.QueueStatsItem
-	90,  // 26: polyglot.v1.LogsStreamFrame.logs:type_name -> polyglot.v1.LogEntryItem
-	93,  // 27: polyglot.v1.InterfaceEthernetFrame.interfaces:type_name -> polyglot.v1.InterfaceEthernetItem
-	1,   // 28: polyglot.v1.HotspotInactiveFrame.users:type_name -> polyglot.v1.HotspotUser
-	98,  // 29: polyglot.v1.PPPActiveFrame.sessions:type_name -> polyglot.v1.PPPActiveSessionItem
-	101, // 30: polyglot.v1.PPPInactiveFrame.secrets:type_name -> polyglot.v1.PPPSecretItem
-	105, // 31: polyglot.v1.ListHotspotIPBindingsResponse.bindings:type_name -> polyglot.v1.HotspotIPBinding
-	105, // 32: polyglot.v1.CreateHotspotIPBindingResponse.binding:type_name -> polyglot.v1.HotspotIPBinding
-	105, // 33: polyglot.v1.UpdateHotspotIPBindingResponse.binding:type_name -> polyglot.v1.HotspotIPBinding
-	114, // 34: polyglot.v1.ListHotspotCookiesResponse.cookies:type_name -> polyglot.v1.HotspotCookie
-	1,   // 35: polyglot.v1.CheckVoucherStatusResponse.user:type_name -> polyglot.v1.HotspotUser
-	0,   // 36: polyglot.v1.CheckVoucherStatusResponse.profile:type_name -> polyglot.v1.HotspotProfile
-	2,   // 37: polyglot.v1.CheckVoucherStatusResponse.active_session:type_name -> polyglot.v1.HotspotActiveSession
-	114, // 38: polyglot.v1.CheckVoucherStatusResponse.cookie:type_name -> polyglot.v1.HotspotCookie
-	5,   // 39: polyglot.v1.HotspotService.ListProfiles:input_type -> polyglot.v1.ListHotspotProfilesRequest
-	7,   // 40: polyglot.v1.HotspotService.ListUsers:input_type -> polyglot.v1.ListHotspotUsersRequest
-	9,   // 41: polyglot.v1.HotspotService.ListActiveSessions:input_type -> polyglot.v1.ListHotspotActiveSessionsRequest
-	11,  // 42: polyglot.v1.HotspotService.KickActiveSession:input_type -> polyglot.v1.KickHotspotSessionRequest
-	13,  // 43: polyglot.v1.HotspotService.ListDHCPLeases:input_type -> polyglot.v1.ListDHCPLeasesRequest
-	15,  // 44: polyglot.v1.HotspotService.BlockDHCPLease:input_type -> polyglot.v1.BlockDHCPLeaseRequest
-	17,  // 45: polyglot.v1.HotspotService.GenerateVouchers:input_type -> polyglot.v1.GenerateVouchersRequest
-	44,  // 46: polyglot.v1.HotspotService.GetVoucherBatch:input_type -> polyglot.v1.GetVoucherBatchRequest
-	19,  // 47: polyglot.v1.HotspotService.GetUser:input_type -> polyglot.v1.GetHotspotUserRequest
-	21,  // 48: polyglot.v1.HotspotService.CreateUser:input_type -> polyglot.v1.CreateHotspotUserRequest
-	23,  // 49: polyglot.v1.HotspotService.UpdateUser:input_type -> polyglot.v1.UpdateHotspotUserRequest
-	25,  // 50: polyglot.v1.HotspotService.ResetUserCounters:input_type -> polyglot.v1.ResetHotspotUserCountersRequest
-	27,  // 51: polyglot.v1.HotspotService.DeleteUser:input_type -> polyglot.v1.DeleteHotspotUserRequest
-	103, // 52: polyglot.v1.HotspotService.DeleteHotspotUsers:input_type -> polyglot.v1.DeleteHotspotUsersRequest
-	30,  // 53: polyglot.v1.HotspotService.CreateProfile:input_type -> polyglot.v1.CreateHotspotProfileRequest
-	32,  // 54: polyglot.v1.HotspotService.UpdateProfile:input_type -> polyglot.v1.UpdateHotspotProfileRequest
-	34,  // 55: polyglot.v1.HotspotService.DeleteProfile:input_type -> polyglot.v1.DeleteHotspotProfileRequest
-	37,  // 56: polyglot.v1.HotspotService.ListHosts:input_type -> polyglot.v1.ListHotspotHostsRequest
-	39,  // 57: polyglot.v1.HotspotService.RemoveHost:input_type -> polyglot.v1.RemoveHotspotHostRequest
-	42,  // 58: polyglot.v1.HotspotService.ListHotspotServers:input_type -> polyglot.v1.ListHotspotServersRequest
-	106, // 59: polyglot.v1.HotspotService.ListHotspotIPBindings:input_type -> polyglot.v1.ListHotspotIPBindingsRequest
-	108, // 60: polyglot.v1.HotspotService.CreateHotspotIPBinding:input_type -> polyglot.v1.CreateHotspotIPBindingRequest
-	110, // 61: polyglot.v1.HotspotService.UpdateHotspotIPBinding:input_type -> polyglot.v1.UpdateHotspotIPBindingRequest
-	112, // 62: polyglot.v1.HotspotService.DeleteHotspotIPBinding:input_type -> polyglot.v1.DeleteHotspotIPBindingRequest
-	115, // 63: polyglot.v1.HotspotService.ListHotspotCookies:input_type -> polyglot.v1.ListHotspotCookiesRequest
-	117, // 64: polyglot.v1.HotspotService.DeleteHotspotCookie:input_type -> polyglot.v1.DeleteHotspotCookieRequest
-	119, // 65: polyglot.v1.HotspotService.CheckVoucherStatus:input_type -> polyglot.v1.CheckVoucherStatusRequest
-	46,  // 66: polyglot.v1.HotspotService.StreamTraffic:input_type -> polyglot.v1.StreamTrafficRequest
-	48,  // 67: polyglot.v1.HotspotService.StreamResource:input_type -> polyglot.v1.StreamResourceRequest
-	50,  // 68: polyglot.v1.HotspotService.StreamActiveSessions:input_type -> polyglot.v1.StreamActiveSessionsRequest
-	53,  // 69: polyglot.v1.HotspotService.StreamActiveStats:input_type -> polyglot.v1.StreamActiveStatsRequest
-	80,  // 70: polyglot.v1.HotspotService.StreamSystemSnapshot:input_type -> polyglot.v1.StreamSystemSnapshotRequest
-	92,  // 71: polyglot.v1.HotspotService.StreamInterfaceEthernet:input_type -> polyglot.v1.StreamInterfaceEthernetRequest
-	86,  // 72: polyglot.v1.HotspotService.StreamQueueStats:input_type -> polyglot.v1.StreamQueueStatsRequest
-	89,  // 73: polyglot.v1.HotspotService.StreamLogs:input_type -> polyglot.v1.StreamLogsRequest
-	95,  // 74: polyglot.v1.HotspotService.StreamHotspotInactive:input_type -> polyglot.v1.StreamHotspotInactiveRequest
-	97,  // 75: polyglot.v1.HotspotService.StreamPPPActive:input_type -> polyglot.v1.StreamPPPActiveRequest
-	100, // 76: polyglot.v1.HotspotService.StreamPPPInactive:input_type -> polyglot.v1.StreamPPPInactiveRequest
-	55,  // 77: polyglot.v1.HotspotService.ListReports:input_type -> polyglot.v1.ListHotspotReportsRequest
-	57,  // 78: polyglot.v1.HotspotService.DeleteReport:input_type -> polyglot.v1.DeleteHotspotReportRequest
-	59,  // 79: polyglot.v1.HotspotService.GetExpireMonitorStatus:input_type -> polyglot.v1.GetExpireMonitorStatusRequest
-	61,  // 80: polyglot.v1.HotspotService.SetupExpireMonitor:input_type -> polyglot.v1.SetupExpireMonitorRequest
-	63,  // 81: polyglot.v1.HotspotService.DisableExpireMonitor:input_type -> polyglot.v1.DisableExpireMonitorRequest
-	65,  // 82: polyglot.v1.HotspotService.RemoveExpireMonitor:input_type -> polyglot.v1.RemoveExpireMonitorRequest
-	68,  // 83: polyglot.v1.HotspotService.ListTemplates:input_type -> polyglot.v1.ListTemplatesRequest
-	70,  // 84: polyglot.v1.HotspotService.GetTemplateSection:input_type -> polyglot.v1.GetTemplateSectionRequest
-	72,  // 85: polyglot.v1.HotspotService.RenderVouchers:input_type -> polyglot.v1.RenderVouchersRequest
-	74,  // 86: polyglot.v1.HotspotService.ListParentQueues:input_type -> polyglot.v1.ListParentQueuesRequest
-	77,  // 87: polyglot.v1.HotspotService.ListIPPools:input_type -> polyglot.v1.ListIPPoolsRequest
-	6,   // 88: polyglot.v1.HotspotService.ListProfiles:output_type -> polyglot.v1.ListHotspotProfilesResponse
-	8,   // 89: polyglot.v1.HotspotService.ListUsers:output_type -> polyglot.v1.ListHotspotUsersResponse
-	10,  // 90: polyglot.v1.HotspotService.ListActiveSessions:output_type -> polyglot.v1.ListHotspotActiveSessionsResponse
-	12,  // 91: polyglot.v1.HotspotService.KickActiveSession:output_type -> polyglot.v1.KickHotspotSessionResponse
-	14,  // 92: polyglot.v1.HotspotService.ListDHCPLeases:output_type -> polyglot.v1.ListDHCPLeasesResponse
-	16,  // 93: polyglot.v1.HotspotService.BlockDHCPLease:output_type -> polyglot.v1.BlockDHCPLeaseResponse
-	18,  // 94: polyglot.v1.HotspotService.GenerateVouchers:output_type -> polyglot.v1.GenerateVouchersResponse
-	45,  // 95: polyglot.v1.HotspotService.GetVoucherBatch:output_type -> polyglot.v1.GetVoucherBatchResponse
-	20,  // 96: polyglot.v1.HotspotService.GetUser:output_type -> polyglot.v1.GetHotspotUserResponse
-	22,  // 97: polyglot.v1.HotspotService.CreateUser:output_type -> polyglot.v1.CreateHotspotUserResponse
-	24,  // 98: polyglot.v1.HotspotService.UpdateUser:output_type -> polyglot.v1.UpdateHotspotUserResponse
-	26,  // 99: polyglot.v1.HotspotService.ResetUserCounters:output_type -> polyglot.v1.ResetHotspotUserCountersResponse
-	28,  // 100: polyglot.v1.HotspotService.DeleteUser:output_type -> polyglot.v1.DeleteHotspotUserResponse
-	104, // 101: polyglot.v1.HotspotService.DeleteHotspotUsers:output_type -> polyglot.v1.DeleteHotspotUsersResponse
-	31,  // 102: polyglot.v1.HotspotService.CreateProfile:output_type -> polyglot.v1.CreateHotspotProfileResponse
-	33,  // 103: polyglot.v1.HotspotService.UpdateProfile:output_type -> polyglot.v1.UpdateHotspotProfileResponse
-	35,  // 104: polyglot.v1.HotspotService.DeleteProfile:output_type -> polyglot.v1.DeleteHotspotProfileResponse
-	38,  // 105: polyglot.v1.HotspotService.ListHosts:output_type -> polyglot.v1.ListHotspotHostsResponse
-	40,  // 106: polyglot.v1.HotspotService.RemoveHost:output_type -> polyglot.v1.RemoveHotspotHostResponse
-	43,  // 107: polyglot.v1.HotspotService.ListHotspotServers:output_type -> polyglot.v1.ListHotspotServersResponse
-	107, // 108: polyglot.v1.HotspotService.ListHotspotIPBindings:output_type -> polyglot.v1.ListHotspotIPBindingsResponse
-	109, // 109: polyglot.v1.HotspotService.CreateHotspotIPBinding:output_type -> polyglot.v1.CreateHotspotIPBindingResponse
-	111, // 110: polyglot.v1.HotspotService.UpdateHotspotIPBinding:output_type -> polyglot.v1.UpdateHotspotIPBindingResponse
-	113, // 111: polyglot.v1.HotspotService.DeleteHotspotIPBinding:output_type -> polyglot.v1.DeleteHotspotIPBindingResponse
-	116, // 112: polyglot.v1.HotspotService.ListHotspotCookies:output_type -> polyglot.v1.ListHotspotCookiesResponse
-	118, // 113: polyglot.v1.HotspotService.DeleteHotspotCookie:output_type -> polyglot.v1.DeleteHotspotCookieResponse
-	120, // 114: polyglot.v1.HotspotService.CheckVoucherStatus:output_type -> polyglot.v1.CheckVoucherStatusResponse
-	47,  // 115: polyglot.v1.HotspotService.StreamTraffic:output_type -> polyglot.v1.TrafficStreamData
-	49,  // 116: polyglot.v1.HotspotService.StreamResource:output_type -> polyglot.v1.ResourceStreamData
-	51,  // 117: polyglot.v1.HotspotService.StreamActiveSessions:output_type -> polyglot.v1.ActiveSessionsStreamData
-	54,  // 118: polyglot.v1.HotspotService.StreamActiveStats:output_type -> polyglot.v1.ActiveStatsStreamData
-	85,  // 119: polyglot.v1.HotspotService.StreamSystemSnapshot:output_type -> polyglot.v1.SystemSnapshotFrame
-	94,  // 120: polyglot.v1.HotspotService.StreamInterfaceEthernet:output_type -> polyglot.v1.InterfaceEthernetFrame
-	88,  // 121: polyglot.v1.HotspotService.StreamQueueStats:output_type -> polyglot.v1.QueueStatsFrame
-	91,  // 122: polyglot.v1.HotspotService.StreamLogs:output_type -> polyglot.v1.LogsStreamFrame
-	96,  // 123: polyglot.v1.HotspotService.StreamHotspotInactive:output_type -> polyglot.v1.HotspotInactiveFrame
-	99,  // 124: polyglot.v1.HotspotService.StreamPPPActive:output_type -> polyglot.v1.PPPActiveFrame
-	102, // 125: polyglot.v1.HotspotService.StreamPPPInactive:output_type -> polyglot.v1.PPPInactiveFrame
-	56,  // 126: polyglot.v1.HotspotService.ListReports:output_type -> polyglot.v1.ListHotspotReportsResponse
-	58,  // 127: polyglot.v1.HotspotService.DeleteReport:output_type -> polyglot.v1.DeleteHotspotReportResponse
-	60,  // 128: polyglot.v1.HotspotService.GetExpireMonitorStatus:output_type -> polyglot.v1.ExpireMonitorStatusResponse
-	62,  // 129: polyglot.v1.HotspotService.SetupExpireMonitor:output_type -> polyglot.v1.SetupExpireMonitorResponse
-	64,  // 130: polyglot.v1.HotspotService.DisableExpireMonitor:output_type -> polyglot.v1.DisableExpireMonitorResponse
-	66,  // 131: polyglot.v1.HotspotService.RemoveExpireMonitor:output_type -> polyglot.v1.RemoveExpireMonitorResponse
-	69,  // 132: polyglot.v1.HotspotService.ListTemplates:output_type -> polyglot.v1.ListTemplatesResponse
-	71,  // 133: polyglot.v1.HotspotService.GetTemplateSection:output_type -> polyglot.v1.GetTemplateSectionResponse
-	73,  // 134: polyglot.v1.HotspotService.RenderVouchers:output_type -> polyglot.v1.RenderVouchersResponse
-	76,  // 135: polyglot.v1.HotspotService.ListParentQueues:output_type -> polyglot.v1.ListParentQueuesResponse
-	79,  // 136: polyglot.v1.HotspotService.ListIPPools:output_type -> polyglot.v1.ListIPPoolsResponse
-	88,  // [88:137] is the sub-list for method output_type
-	39,  // [39:88] is the sub-list for method input_type
-	39,  // [39:39] is the sub-list for extension type_name
-	39,  // [39:39] is the sub-list for extension extendee
-	0,   // [0:39] is the sub-list for field type_name
+	0,  // 0: polyglot.v1.ListHotspotProfilesResponse.profiles:type_name -> polyglot.v1.HotspotProfile
+	1,  // 1: polyglot.v1.CreateHotspotProfileRequest.profile:type_name -> polyglot.v1.HotspotProfileParams
+	0,  // 2: polyglot.v1.CreateHotspotProfileResponse.profile:type_name -> polyglot.v1.HotspotProfile
+	1,  // 3: polyglot.v1.UpdateHotspotProfileRequest.profile:type_name -> polyglot.v1.HotspotProfileParams
+	0,  // 4: polyglot.v1.UpdateHotspotProfileResponse.profile:type_name -> polyglot.v1.HotspotProfile
+	10, // 5: polyglot.v1.ListHotspotUsersResponse.users:type_name -> polyglot.v1.HotspotUser
+	10, // 6: polyglot.v1.GetHotspotUserResponse.user:type_name -> polyglot.v1.HotspotUser
+	10, // 7: polyglot.v1.CreateHotspotUserResponse.user:type_name -> polyglot.v1.HotspotUser
+	10, // 8: polyglot.v1.UpdateHotspotUserResponse.user:type_name -> polyglot.v1.HotspotUser
+	25, // 9: polyglot.v1.ListHotspotActiveSessionsResponse.sessions:type_name -> polyglot.v1.HotspotActiveSession
+	10, // 10: polyglot.v1.GenerateVouchersResponse.vouchers:type_name -> polyglot.v1.HotspotUser
+	10, // 11: polyglot.v1.GetVoucherBatchResponse.vouchers:type_name -> polyglot.v1.HotspotUser
+	10, // 12: polyglot.v1.CheckVoucherStatusResponse.user:type_name -> polyglot.v1.HotspotUser
+	0,  // 13: polyglot.v1.CheckVoucherStatusResponse.profile:type_name -> polyglot.v1.HotspotProfile
+	25, // 14: polyglot.v1.CheckVoucherStatusResponse.active_session:type_name -> polyglot.v1.HotspotActiveSession
+	53, // 15: polyglot.v1.CheckVoucherStatusResponse.cookie:type_name -> polyglot.v1.HotspotCookie
+	36, // 16: polyglot.v1.ListHotspotHostsResponse.hosts:type_name -> polyglot.v1.HotspotHost
+	41, // 17: polyglot.v1.ListHotspotServersResponse.servers:type_name -> polyglot.v1.HotspotServerInfo
+	44, // 18: polyglot.v1.ListHotspotIPBindingsResponse.bindings:type_name -> polyglot.v1.HotspotIPBinding
+	44, // 19: polyglot.v1.CreateHotspotIPBindingResponse.binding:type_name -> polyglot.v1.HotspotIPBinding
+	44, // 20: polyglot.v1.UpdateHotspotIPBindingResponse.binding:type_name -> polyglot.v1.HotspotIPBinding
+	53, // 21: polyglot.v1.ListHotspotCookiesResponse.cookies:type_name -> polyglot.v1.HotspotCookie
+	58, // 22: polyglot.v1.ListHotspotReportsResponse.reports:type_name -> polyglot.v1.HotspotReport
+	71, // 23: polyglot.v1.ListTemplatesResponse.templates:type_name -> polyglot.v1.TemplateInfo
+	2,  // 24: polyglot.v1.HotspotService.ListProfiles:input_type -> polyglot.v1.ListHotspotProfilesRequest
+	4,  // 25: polyglot.v1.HotspotService.CreateProfile:input_type -> polyglot.v1.CreateHotspotProfileRequest
+	6,  // 26: polyglot.v1.HotspotService.UpdateProfile:input_type -> polyglot.v1.UpdateHotspotProfileRequest
+	8,  // 27: polyglot.v1.HotspotService.DeleteProfile:input_type -> polyglot.v1.DeleteHotspotProfileRequest
+	11, // 28: polyglot.v1.HotspotService.ListUsers:input_type -> polyglot.v1.ListHotspotUsersRequest
+	13, // 29: polyglot.v1.HotspotService.GetUser:input_type -> polyglot.v1.GetHotspotUserRequest
+	15, // 30: polyglot.v1.HotspotService.CreateUser:input_type -> polyglot.v1.CreateHotspotUserRequest
+	17, // 31: polyglot.v1.HotspotService.UpdateUser:input_type -> polyglot.v1.UpdateHotspotUserRequest
+	19, // 32: polyglot.v1.HotspotService.ResetUserCounters:input_type -> polyglot.v1.ResetHotspotUserCountersRequest
+	21, // 33: polyglot.v1.HotspotService.DeleteUser:input_type -> polyglot.v1.DeleteHotspotUserRequest
+	23, // 34: polyglot.v1.HotspotService.DeleteHotspotUsers:input_type -> polyglot.v1.DeleteHotspotUsersRequest
+	26, // 35: polyglot.v1.HotspotService.ListActiveSessions:input_type -> polyglot.v1.ListHotspotActiveSessionsRequest
+	28, // 36: polyglot.v1.HotspotService.KickActiveSession:input_type -> polyglot.v1.KickHotspotSessionRequest
+	30, // 37: polyglot.v1.HotspotService.GenerateVouchers:input_type -> polyglot.v1.GenerateVouchersRequest
+	32, // 38: polyglot.v1.HotspotService.GetVoucherBatch:input_type -> polyglot.v1.GetVoucherBatchRequest
+	34, // 39: polyglot.v1.HotspotService.CheckVoucherStatus:input_type -> polyglot.v1.CheckVoucherStatusRequest
+	37, // 40: polyglot.v1.HotspotService.ListHosts:input_type -> polyglot.v1.ListHotspotHostsRequest
+	39, // 41: polyglot.v1.HotspotService.RemoveHost:input_type -> polyglot.v1.RemoveHotspotHostRequest
+	42, // 42: polyglot.v1.HotspotService.ListHotspotServers:input_type -> polyglot.v1.ListHotspotServersRequest
+	45, // 43: polyglot.v1.HotspotService.ListHotspotIPBindings:input_type -> polyglot.v1.ListHotspotIPBindingsRequest
+	47, // 44: polyglot.v1.HotspotService.CreateHotspotIPBinding:input_type -> polyglot.v1.CreateHotspotIPBindingRequest
+	49, // 45: polyglot.v1.HotspotService.UpdateHotspotIPBinding:input_type -> polyglot.v1.UpdateHotspotIPBindingRequest
+	51, // 46: polyglot.v1.HotspotService.DeleteHotspotIPBinding:input_type -> polyglot.v1.DeleteHotspotIPBindingRequest
+	54, // 47: polyglot.v1.HotspotService.ListHotspotCookies:input_type -> polyglot.v1.ListHotspotCookiesRequest
+	56, // 48: polyglot.v1.HotspotService.DeleteHotspotCookie:input_type -> polyglot.v1.DeleteHotspotCookieRequest
+	59, // 49: polyglot.v1.HotspotService.ListReports:input_type -> polyglot.v1.ListHotspotReportsRequest
+	61, // 50: polyglot.v1.HotspotService.DeleteReport:input_type -> polyglot.v1.DeleteHotspotReportRequest
+	64, // 51: polyglot.v1.HotspotService.GetExpireMonitorStatus:input_type -> polyglot.v1.GetExpireMonitorStatusRequest
+	65, // 52: polyglot.v1.HotspotService.SetupExpireMonitor:input_type -> polyglot.v1.SetupExpireMonitorRequest
+	67, // 53: polyglot.v1.HotspotService.DisableExpireMonitor:input_type -> polyglot.v1.DisableExpireMonitorRequest
+	69, // 54: polyglot.v1.HotspotService.RemoveExpireMonitor:input_type -> polyglot.v1.RemoveExpireMonitorRequest
+	72, // 55: polyglot.v1.HotspotService.ListTemplates:input_type -> polyglot.v1.ListTemplatesRequest
+	74, // 56: polyglot.v1.HotspotService.GetTemplateSection:input_type -> polyglot.v1.GetTemplateSectionRequest
+	76, // 57: polyglot.v1.HotspotService.RenderVouchers:input_type -> polyglot.v1.RenderVouchersRequest
+	3,  // 58: polyglot.v1.HotspotService.ListProfiles:output_type -> polyglot.v1.ListHotspotProfilesResponse
+	5,  // 59: polyglot.v1.HotspotService.CreateProfile:output_type -> polyglot.v1.CreateHotspotProfileResponse
+	7,  // 60: polyglot.v1.HotspotService.UpdateProfile:output_type -> polyglot.v1.UpdateHotspotProfileResponse
+	9,  // 61: polyglot.v1.HotspotService.DeleteProfile:output_type -> polyglot.v1.DeleteHotspotProfileResponse
+	12, // 62: polyglot.v1.HotspotService.ListUsers:output_type -> polyglot.v1.ListHotspotUsersResponse
+	14, // 63: polyglot.v1.HotspotService.GetUser:output_type -> polyglot.v1.GetHotspotUserResponse
+	16, // 64: polyglot.v1.HotspotService.CreateUser:output_type -> polyglot.v1.CreateHotspotUserResponse
+	18, // 65: polyglot.v1.HotspotService.UpdateUser:output_type -> polyglot.v1.UpdateHotspotUserResponse
+	20, // 66: polyglot.v1.HotspotService.ResetUserCounters:output_type -> polyglot.v1.ResetHotspotUserCountersResponse
+	22, // 67: polyglot.v1.HotspotService.DeleteUser:output_type -> polyglot.v1.DeleteHotspotUserResponse
+	24, // 68: polyglot.v1.HotspotService.DeleteHotspotUsers:output_type -> polyglot.v1.DeleteHotspotUsersResponse
+	27, // 69: polyglot.v1.HotspotService.ListActiveSessions:output_type -> polyglot.v1.ListHotspotActiveSessionsResponse
+	29, // 70: polyglot.v1.HotspotService.KickActiveSession:output_type -> polyglot.v1.KickHotspotSessionResponse
+	31, // 71: polyglot.v1.HotspotService.GenerateVouchers:output_type -> polyglot.v1.GenerateVouchersResponse
+	33, // 72: polyglot.v1.HotspotService.GetVoucherBatch:output_type -> polyglot.v1.GetVoucherBatchResponse
+	35, // 73: polyglot.v1.HotspotService.CheckVoucherStatus:output_type -> polyglot.v1.CheckVoucherStatusResponse
+	38, // 74: polyglot.v1.HotspotService.ListHosts:output_type -> polyglot.v1.ListHotspotHostsResponse
+	40, // 75: polyglot.v1.HotspotService.RemoveHost:output_type -> polyglot.v1.RemoveHotspotHostResponse
+	43, // 76: polyglot.v1.HotspotService.ListHotspotServers:output_type -> polyglot.v1.ListHotspotServersResponse
+	46, // 77: polyglot.v1.HotspotService.ListHotspotIPBindings:output_type -> polyglot.v1.ListHotspotIPBindingsResponse
+	48, // 78: polyglot.v1.HotspotService.CreateHotspotIPBinding:output_type -> polyglot.v1.CreateHotspotIPBindingResponse
+	50, // 79: polyglot.v1.HotspotService.UpdateHotspotIPBinding:output_type -> polyglot.v1.UpdateHotspotIPBindingResponse
+	52, // 80: polyglot.v1.HotspotService.DeleteHotspotIPBinding:output_type -> polyglot.v1.DeleteHotspotIPBindingResponse
+	55, // 81: polyglot.v1.HotspotService.ListHotspotCookies:output_type -> polyglot.v1.ListHotspotCookiesResponse
+	57, // 82: polyglot.v1.HotspotService.DeleteHotspotCookie:output_type -> polyglot.v1.DeleteHotspotCookieResponse
+	60, // 83: polyglot.v1.HotspotService.ListReports:output_type -> polyglot.v1.ListHotspotReportsResponse
+	62, // 84: polyglot.v1.HotspotService.DeleteReport:output_type -> polyglot.v1.DeleteHotspotReportResponse
+	63, // 85: polyglot.v1.HotspotService.GetExpireMonitorStatus:output_type -> polyglot.v1.ExpireMonitorStatusResponse
+	66, // 86: polyglot.v1.HotspotService.SetupExpireMonitor:output_type -> polyglot.v1.SetupExpireMonitorResponse
+	68, // 87: polyglot.v1.HotspotService.DisableExpireMonitor:output_type -> polyglot.v1.DisableExpireMonitorResponse
+	70, // 88: polyglot.v1.HotspotService.RemoveExpireMonitor:output_type -> polyglot.v1.RemoveExpireMonitorResponse
+	73, // 89: polyglot.v1.HotspotService.ListTemplates:output_type -> polyglot.v1.ListTemplatesResponse
+	75, // 90: polyglot.v1.HotspotService.GetTemplateSection:output_type -> polyglot.v1.GetTemplateSectionResponse
+	77, // 91: polyglot.v1.HotspotService.RenderVouchers:output_type -> polyglot.v1.RenderVouchersResponse
+	58, // [58:92] is the sub-list for method output_type
+	24, // [24:58] is the sub-list for method input_type
+	24, // [24:24] is the sub-list for extension type_name
+	24, // [24:24] is the sub-list for extension extendee
+	0,  // [0:24] is the sub-list for field type_name
 }
 
 func init() { file_v1_hotspot_proto_init() }
@@ -8840,7 +5432,7 @@ func file_v1_hotspot_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_hotspot_proto_rawDesc), len(file_v1_hotspot_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   121,
+			NumMessages:   78,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

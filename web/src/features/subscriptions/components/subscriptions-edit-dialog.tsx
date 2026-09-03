@@ -29,7 +29,7 @@ import {
   PPPoESubscriptionConfig,
   HotspotSubscriptionConfig,
   type Subscription,
-} from '@/gen/v1/billing_pb'
+} from '@/gen/v1/subscription_pb'
 import { useUpdateSubscriptionMutation } from '@/features/billing/api/use-billing'
 import { useDeviceStore } from '@/stores/device-store'
 

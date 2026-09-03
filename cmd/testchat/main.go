@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/adapter/llm"
@@ -18,6 +17,7 @@ import (
 	usecaseBot "github.com/quixiq/polyglot/internal/usecase/bot"
 	usecaseConv "github.com/quixiq/polyglot/internal/usecase/conversation"
 	usecaseSkill "github.com/quixiq/polyglot/internal/usecase/skill"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 type mockGateway struct {
@@ -54,25 +54,26 @@ type mockPublisher struct{}
 func (p *mockPublisher) PublishEvent(eventType string, payload any) {}
 
 func main() {
+	logger.Init("info", "development")
 	cfg := config.Load()
 	if err := cfg.Validate(); err != nil {
-		log.Fatalf("Invalid config: %v", err)
+		logger.WithComponent("TestChat").WithError(err).Fatal("invalid configuration")
 	}
 
 	ctx := context.Background()
 	pgStore, err := postgres.NewStore(cfg.DatabaseURL)
 	if err != nil {
-		log.Fatalf("Failed to connect to Postgres: %v", err)
+		logger.WithComponent("TestChat").WithError(err).Fatal("failed to connect to postgres")
 	}
 
 	redisStore, err := redis.NewStore(cfg.RedisURL)
 	if err != nil {
-		log.Fatalf("Failed to connect to Redis: %v", err)
+		logger.WithComponent("TestChat").WithError(err).Fatal("failed to connect to redis")
 	}
 
 	fsSkillStore, err := storage.NewFSSkillStore("data")
 	if err != nil {
-		log.Fatalf("Failed to init skill store: %v", err)
+		logger.WithComponent("TestChat").WithError(err).Fatal("failed to init skill store")
 	}
 
 	skillUseCase := usecaseSkill.NewManageSkillUseCase(pgStore, fsSkillStore, nil)
@@ -136,7 +137,7 @@ func main() {
 	// Baca active LLM config dari database
 	activeConfig, err := pgStore.FindActive(ctx)
 	if err != nil {
-		log.Fatalf("No active LLM config found: %v", err)
+		logger.WithComponent("TestChat").WithError(err).Fatal("no active llm config found")
 	}
 	fmt.Printf("=== [LIVE TEST] Active LLM Config: ID=%d, Provider=%s, Model=%s, EnableSkills=%v, SkillsMode=%s ===\n",
 		activeConfig.ID, activeConfig.Provider, activeConfig.Model, activeConfig.EnableSkills, activeConfig.SkillsMode)
@@ -157,7 +158,7 @@ func main() {
 
 	err = engine.HandleIncomingMessage(ctx, 1, chatJID, customerPhone, "Halo kak, internet saya mati total dan lampu modem saya warna merah, bagaimana solusinya?")
 	if err != nil {
-		log.Fatalf("HandleIncomingMessage failed: %v", err)
+		logger.WithComponent("TestChat").WithError(err).Fatal("handle incoming message failed")
 	}
 
 	fmt.Println("\n[HASIL JAWABAN BOT (Menggunakan SOP Ghaib Network)]:")
@@ -170,7 +171,7 @@ func main() {
 
 	err = engine.HandleIncomingMessage(ctx, 1, chatJID, customerPhone, "Kak, bisa tolong buatkan website toko online dan pasang CCTV di rumah saya?")
 	if err != nil {
-		log.Fatalf("HandleIncomingMessage failed: %v", err)
+		logger.WithComponent("TestChat").WithError(err).Fatal("handle incoming message scenario 2 failed")
 	}
 
 	fmt.Println("\n[HASIL JAWABAN BOT (Pengalihan di Luar Cakupan SOP)]:")
@@ -189,7 +190,7 @@ func main() {
 		"Kabel optik rumah saya putus tertimpa dahan pohon kak. Tolong kirim teknisi ke rumah. Nama saya Budi Santoso, alamat di Jl. Mawar No. 12 RT 02/03 Sukajadi, no HP aktif 081234567890",
 	)
 	if err != nil {
-		log.Fatalf("HandleIncomingMessage failed: %v", err)
+		logger.WithComponent("TestChat").WithError(err).Fatal("handle incoming message scenario 3 failed")
 	}
 
 	fmt.Println("\n[HASIL JAWABAN BOT KE PELANGGAN (Turn 1)]:")
@@ -201,7 +202,7 @@ func main() {
 		"Kelurahan Sukajadi, Kecamatan Sukajadi, Kota Bandung kak. Tolong segera diteruskan ke teknisi ya.",
 	)
 	if err != nil {
-		log.Fatalf("HandleIncomingMessage turn 2 failed: %v", err)
+		logger.WithComponent("TestChat").WithError(err).Fatal("handle incoming message turn 2 failed")
 	}
 
 	fmt.Println("\n[HASIL JAWABAN BOT KE PELANGGAN (Turn 2)]:")

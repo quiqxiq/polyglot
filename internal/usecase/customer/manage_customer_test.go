@@ -17,7 +17,7 @@ import (
 func TestManageCustomerUseCase_CreateCustomer(t *testing.T) {
 	ctx := context.Background()
 	repo := mocktest.NewFakeCustomerRepo()
-	uc := customerUC.NewManageCustomerUseCase(repo, nil, nil)
+	uc := customerUC.NewManageCustomerUseCase(repo, nil, nil, nil)
 
 	t.Run("creates customer with auto-generated id, customer_code, and portal_code", func(t *testing.T) {
 		lat := -6.2088
@@ -61,7 +61,7 @@ func TestManageCustomerUseCase_CreateCustomer(t *testing.T) {
 func TestManageCustomerUseCase_UpdateCustomer(t *testing.T) {
 	ctx := context.Background()
 	repo := mocktest.NewFakeCustomerRepo()
-	uc := customerUC.NewManageCustomerUseCase(repo, nil, nil)
+	uc := customerUC.NewManageCustomerUseCase(repo, nil, nil, nil)
 
 	c := domainCustomer.Customer{
 		Name:    "Joko",
@@ -89,17 +89,52 @@ func TestManageCustomerUseCase_UpdateCustomer(t *testing.T) {
 
 func TestManageCustomerUseCase_DeleteCustomer(t *testing.T) {
 	ctx := context.Background()
-	repo := mocktest.NewFakeCustomerRepo()
-	uc := customerUC.NewManageCustomerUseCase(repo, nil, nil)
+	custRepo := mocktest.NewFakeCustomerRepo()
+	subRepo := mocktest.NewFakeSubscriptionRepo()
+	invRepo := mocktest.NewFakeInvoiceRepo()
+	router := mocktest.NewFakeRouterAccountManager()
+
+	uc := customerUC.NewManageCustomerUseCase(custRepo, subRepo, invRepo, router)
 
 	created, err := uc.CreateCustomer(ctx, domainCustomer.Customer{Name: "Ahmad", Phone: "0822222222"})
 	require.NoError(t, err)
 
+	devID := "dev-1"
+	err = subRepo.Save(ctx, domainSub.Subscription{
+		ID:             "sub-1",
+		CustomerID:     created.ID,
+		DeviceID:       &devID,
+		ServiceType:    "PPPOE",
+		RemoteUsername: "ahmad_pppoe",
+		Status:         domainSub.StatusActive,
+	})
+	require.NoError(t, err)
+
+	err = invRepo.Save(ctx, domainBilling.Invoice{
+		ID:         "inv-1",
+		CustomerID: created.ID,
+		Status:     domainBilling.StatusUnpaid,
+	})
+	require.NoError(t, err)
+
+	// Delete customer should cascade delete subscriptions and invoices
 	err = uc.DeleteCustomer(ctx, created.ID)
 	require.NoError(t, err)
 
 	_, err = uc.GetCustomer(ctx, created.ID)
 	assert.Error(t, err)
+
+	// Subscriptions and invoices must be deleted
+	subs, err := subRepo.FindByCustomerID(ctx, created.ID)
+	require.NoError(t, err)
+	assert.Empty(t, subs)
+
+	invoices, err := invRepo.FindByCustomerID(ctx, created.ID)
+	require.NoError(t, err)
+	assert.Empty(t, invoices)
+
+	// Router account termination recorded
+	assert.Equal(t, 1, router.Count("Terminate:ahmad_pppoe"))
 }
 
 func TestManageCustomerUseCase_ListAndGetEnriched(t *testing.T) {
@@ -108,7 +143,7 @@ func TestManageCustomerUseCase_ListAndGetEnriched(t *testing.T) {
 	subRepo := mocktest.NewFakeSubscriptionRepo()
 	invRepo := mocktest.NewFakeInvoiceRepo()
 
-	uc := customerUC.NewManageCustomerUseCase(custRepo, subRepo, invRepo)
+	uc := customerUC.NewManageCustomerUseCase(custRepo, subRepo, invRepo, nil)
 
 	c1, err := uc.CreateCustomer(ctx, domainCustomer.Customer{Name: "Pelanggan 1", Phone: "081111111"})
 	require.NoError(t, err)

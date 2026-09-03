@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { render } from 'vitest-browser-react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Subscription } from '@/gen/v1/billing_pb'
+import { Subscription } from '@/gen/v1/subscription_pb'
 import { SubscriptionsProvider } from './subscriptions-provider'
 import { SubscriptionsTable } from './subscriptions-table'
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import useDialogState from '@/hooks/use-dialog-state'
-import { type Plan } from '@/gen/v1/billing_pb'
+import { type Plan } from '@/gen/v1/plan_pb'
 
 type PlansDialogType = 'create' | 'update' | 'delete'
 

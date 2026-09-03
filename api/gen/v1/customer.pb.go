@@ -823,7 +823,7 @@ var File_v1_customer_proto protoreflect.FileDescriptor
 
 const file_v1_customer_proto_rawDesc = "" +
 	"\n" +
-	"\x11v1/customer.proto\x12\vpolyglot.v1\x1a\x10v1/billing.proto\x1a\x1bbuf/validate/validate.proto\"\xbd\x04\n" +
+	"\x11v1/customer.proto\x12\vpolyglot.v1\x1a\x15v1/subscription.proto\x1a\x1bbuf/validate/validate.proto\"\xbd\x04\n" +
 	"\bCustomer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1b\n" +
 	"\ttenant_id\x18\x02 \x01(\tR\btenantId\x12#\n" +
@@ -953,7 +953,7 @@ func file_v1_customer_proto_init() {
 	if File_v1_customer_proto != nil {
 		return
 	}
-	file_v1_billing_proto_init()
+	file_v1_subscription_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

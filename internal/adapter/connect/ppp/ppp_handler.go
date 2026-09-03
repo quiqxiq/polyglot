@@ -3,6 +3,7 @@ package ppp
 import (
 	"context"
 
+	iconnect "github.com/quixiq/polyglot/internal/adapter/connect"
 	"github.com/quixiq/polyglot/internal/port"
 	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
 	"github.com/quixiq/polyglot/pkg/fault"
@@ -10,7 +11,7 @@ import (
 )
 
 // ConnectDriverProvider signature to obtain a port.DeviceDriver for a given deviceId.
-type ConnectDriverProvider func(ctx context.Context, deviceID string) (port.DeviceDriver, error)
+type ConnectDriverProvider = iconnect.DriverProvider
 
 // PPPConnectHandler orchestrates ConnectRPC procedures for the PPPService.
 type PPPConnectHandler struct {

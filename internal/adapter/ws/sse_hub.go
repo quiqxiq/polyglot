@@ -8,6 +8,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 type SSEEvent struct {
@@ -31,7 +32,7 @@ func NewSSEHub() *SSEHub {
 func (h *SSEHub) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	flusher, ok := w.(http.Flusher)
 	if !ok {
-		http.Error(w, "Streaming unsupported", http.StatusInternalServerError)
+		response.WriteHTTPStatusError(w, http.StatusInternalServerError, "streaming unsupported")
 		return
 	}
 

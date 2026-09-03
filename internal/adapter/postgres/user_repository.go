@@ -12,9 +12,8 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-// ErrInvalidArgument is returned when a store mutation is called with
-// missing/invalid required values (empty ID, empty password hash, ...).
-var ErrInvalidArgument = errors.New("invalid argument")
+// ErrInvalidArgument indicates invalid user repository input parameters.
+var ErrInvalidArgument = customer.ErrInvalidInput
 
 type UserRepository struct {
 	db *gorm.DB

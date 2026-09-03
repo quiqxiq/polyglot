@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net"
 	"net/http"
 	"os"
@@ -14,17 +13,24 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
+	logLevel := envOr("LOG_LEVEL", "info")
+	appEnv := envOr("APP_ENV", "production")
+	logger.Init(logLevel, appEnv)
+
 	serverURL := envOr("PROBE_SERVER_URL", "http://localhost:8080")
 	probeID := envOr("PROBE_ID", "pop-remote-01")
 
-	log.Printf("[POP Remote Probe Agent] Starting lightweight probe agent %s...", probeID)
-	log.Printf("[POP Remote Probe Agent] Target server: %s", serverURL)
+	logger.WithComponent("ProbeAgent").WithFields(map[string]any{
+		"probe_id":   probeID,
+		"server_url": serverURL,
+	}).Info("starting lightweight probe agent")
 
 	client := newJSONConnectClient(serverURL)
 
@@ -35,7 +41,7 @@ func main() {
 	go runTelemetryLoop(ctx, client, probeID)
 
 	<-ctx.Done()
-	log.Println("[POP Remote Probe Agent] Shutting down probe agent...")
+	logger.WithComponent("ProbeAgent").Info("shutting down probe agent")
 }
 
 func runHeartbeatLoop(ctx context.Context, client *probeClient, probeID string) {
@@ -57,9 +63,12 @@ func runHeartbeatLoop(ctx context.Context, client *probeClient, probeID string) 
 			})
 			resp, err := client.ReportStatus(ctx, req)
 			if err != nil {
-				log.Printf("[Probe Heartbeat Warning] Failed to report status: %v", err)
+				logger.WithComponent("ProbeAgent").WithError(err).Warn("failed to report probe status")
 			} else {
-				log.Printf("[Probe Heartbeat OK] Server ack=%v (Server Time: %d)", resp.Msg.Acknowledged, resp.Msg.ServerTimeUnix)
+				logger.WithComponent("ProbeAgent").WithFields(map[string]any{
+					"acknowledged":     resp.Msg.Acknowledged,
+					"server_time_unix": resp.Msg.ServerTimeUnix,
+				}).Debug("probe heartbeat acknowledged")
 			}
 		}
 	}
@@ -81,7 +90,11 @@ func runTelemetryLoop(ctx context.Context, client *probeClient, probeID string) 
 			idx++
 
 			latency, alive := measureTargetLatency(target)
-			log.Printf("[Probe Telemetry] Polled target %s: Latency %dms (Alive=%v)", target, latency, alive)
+			logger.WithComponent("ProbeAgent").WithFields(map[string]any{
+				"target":     target,
+				"latency_ms": latency,
+				"alive":      alive,
+			}).Debug("probe telemetry polled target")
 		}
 	}
 }

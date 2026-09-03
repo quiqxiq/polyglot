@@ -5,19 +5,19 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/quixiq/polyglot/internal/domain/session"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 // ErrInvalidRefreshToken indicates the presented refresh token is unknown,
 // expired, or malformed — the caller should treat the session as invalid.
-var ErrInvalidRefreshToken = errors.New("invalid or expired refresh token")
+var ErrInvalidRefreshToken = session.ErrInvalidRefreshToken
 
 // RefreshTokenLifetime is the default 7-day TTL.
 const RefreshTokenLifetime = 7 * 24 * time.Hour

@@ -28,4 +28,10 @@ type InvoiceRepository interface {
 	// HasForSubscription melaporkan ada tidaknya faktur yang menunjuk
 	// langganan — guard delete subscription pada manage_subscription.
 	HasForSubscription(ctx context.Context, subID string) (bool, error)
+
+	// Delete menghapus permanen faktur dan item-nya berdasarkan id.
+	Delete(ctx context.Context, id string) error
+
+	// DeleteByCustomerID menghapus seluruh faktur dan item-nya untuk seorang pelanggan.
+	DeleteByCustomerID(ctx context.Context, customerID string) error
 }

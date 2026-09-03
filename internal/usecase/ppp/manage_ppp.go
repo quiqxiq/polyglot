@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainPPP "github.com/quixiq/polyglot/internal/domain/ppp"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -28,7 +29,7 @@ func (u *UseCase) ListSecrets(ctx context.Context, driver port.DeviceDriver, nam
 // GetSecret fetches a single PPPoE secret by its RouterOS ID.
 func (u *UseCase) GetSecret(ctx context.Context, driver port.DeviceDriver, rosID string) (port.PPPoESecret, error) {
 	if rosID == "" {
-		return port.PPPoESecret{}, fmt.Errorf("ros_id is required")
+		return port.PPPoESecret{}, fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)
 	}
 	return u.gateway.GetSecret(ctx, driver, rosID)
 }
@@ -36,7 +37,7 @@ func (u *UseCase) GetSecret(ctx context.Context, driver port.DeviceDriver, rosID
 // AddSecret creates a new PPPoE secret.
 func (u *UseCase) AddSecret(ctx context.Context, driver port.DeviceDriver, p port.PPPoESecretParams) (command.Result, error) {
 	if p.Name == "" {
-		return command.Result{}, fmt.Errorf("secret name (username) is required")
+		return command.Result{}, fmt.Errorf("%w: secret name (username) is required", domainPPP.ErrInvalidInput)
 	}
 	return u.gateway.AddSecret(ctx, driver, p)
 }
@@ -44,7 +45,7 @@ func (u *UseCase) AddSecret(ctx context.Context, driver port.DeviceDriver, p por
 // UpdateSecret modifies an existing PPPoE secret.
 func (u *UseCase) UpdateSecret(ctx context.Context, driver port.DeviceDriver, rosID string, p port.PPPoESecretParams) (command.Result, error) {
 	if rosID == "" {
-		return command.Result{}, fmt.Errorf("ros_id is required")
+		return command.Result{}, fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)
 	}
 	return u.gateway.UpdateSecret(ctx, driver, rosID, p)
 }
@@ -52,7 +53,7 @@ func (u *UseCase) UpdateSecret(ctx context.Context, driver port.DeviceDriver, ro
 // RemoveSecret deletes a PPPoE secret by its RouterOS ID.
 func (u *UseCase) RemoveSecret(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	if rosID == "" {
-		return command.Result{}, fmt.Errorf("ros_id is required")
+		return command.Result{}, fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)
 	}
 	return u.gateway.RemoveSecret(ctx, driver, rosID)
 }
@@ -60,7 +61,7 @@ func (u *UseCase) RemoveSecret(ctx context.Context, driver port.DeviceDriver, ro
 // SetSecretDisabled enables or disables a PPPoE secret.
 func (u *UseCase) SetSecretDisabled(ctx context.Context, driver port.DeviceDriver, rosID string, disabled bool) (command.Result, error) {
 	if rosID == "" {
-		return command.Result{}, fmt.Errorf("ros_id is required")
+		return command.Result{}, fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)
 	}
 	return u.gateway.SetSecretDisabled(ctx, driver, rosID, disabled)
 }
@@ -73,7 +74,7 @@ func (u *UseCase) ListProfiles(ctx context.Context, driver port.DeviceDriver, na
 // GetProfile fetches a single PPP profile by its RouterOS ID.
 func (u *UseCase) GetProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (port.PPPProfile, error) {
 	if rosID == "" {
-		return port.PPPProfile{}, fmt.Errorf("ros_id is required")
+		return port.PPPProfile{}, fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)
 	}
 	return u.gateway.GetProfile(ctx, driver, rosID)
 }
@@ -81,7 +82,7 @@ func (u *UseCase) GetProfile(ctx context.Context, driver port.DeviceDriver, rosI
 // AddProfile creates a new PPP profile.
 func (u *UseCase) AddProfile(ctx context.Context, driver port.DeviceDriver, p port.PPPProfileParams) (command.Result, error) {
 	if p.Name == "" {
-		return command.Result{}, fmt.Errorf("profile name is required")
+		return command.Result{}, fmt.Errorf("%w: profile name is required", domainPPP.ErrInvalidInput)
 	}
 	return u.gateway.AddProfile(ctx, driver, p)
 }
@@ -89,7 +90,7 @@ func (u *UseCase) AddProfile(ctx context.Context, driver port.DeviceDriver, p po
 // UpdateProfile modifies an existing PPP profile.
 func (u *UseCase) UpdateProfile(ctx context.Context, driver port.DeviceDriver, rosID string, p port.PPPProfileParams) (command.Result, error) {
 	if rosID == "" {
-		return command.Result{}, fmt.Errorf("ros_id is required")
+		return command.Result{}, fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)
 	}
 	return u.gateway.UpdateProfile(ctx, driver, rosID, p)
 }
@@ -97,7 +98,7 @@ func (u *UseCase) UpdateProfile(ctx context.Context, driver port.DeviceDriver, r
 // RemoveProfile deletes a PPP profile by its RouterOS ID.
 func (u *UseCase) RemoveProfile(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	if rosID == "" {
-		return command.Result{}, fmt.Errorf("ros_id is required")
+		return command.Result{}, fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)
 	}
 	return u.gateway.RemoveProfile(ctx, driver, rosID)
 }
@@ -110,7 +111,7 @@ func (u *UseCase) ListActive(ctx context.Context, driver port.DeviceDriver, name
 // KickActive forcibly disconnects an active PPP session by its RouterOS ID.
 func (u *UseCase) KickActive(ctx context.Context, driver port.DeviceDriver, rosID string) (command.Result, error) {
 	if rosID == "" {
-		return command.Result{}, fmt.Errorf("ros_id is required")
+		return command.Result{}, fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)
 	}
 	return u.gateway.KickActive(ctx, driver, rosID)
 }

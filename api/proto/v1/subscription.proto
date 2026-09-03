@@ -1,0 +1,167 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+message PPPoESubscriptionConfig {
+  string local_address = 1;
+  string remote_address = 2;
+  string caller_id = 3;
+  string routes = 4;
+  string rate_limit = 5;
+  string router_profile = 6;
+}
+
+message HotspotSubscriptionConfig {
+  string server = 1;
+  string mac_address = 2;
+  string ip_address = 3;
+  string rate_limit = 4;
+  string router_profile = 5;
+  string limit_uptime = 6;
+  string limit_bytes = 7;
+}
+
+message Subscription {
+  string id = 1;
+  string tenant_id = 2;
+  string customer_id = 3;
+  string plan_id = 4;
+  string device_id = 5; // Router BRAS target
+  string service_type = 6; // PPPOE | HOTSPOT | DEDICATED
+  string remote_username = 7;
+  string rate_limit = 8;
+  string router_profile = 9;
+  string provision_status = 10; // NONE | PENDING | OK | FAILED
+  string billing_cycle = 11;
+  int32 billing_day = 12;
+  bool auto_isolate = 13;
+  int32 isolation_grace_days = 14;
+  string status = 15; // ACTIVE | ISOLATED | SUSPENDED | TERMINATED | PENDING
+  int64 start_date_unix = 16;
+  int64 end_date_unix = 17;
+  double custom_price = 18;
+  string notes = 19;
+
+  // Sub-messages bertipe (Opsi 2)
+  PPPoESubscriptionConfig pppoe_config = 20;
+  HotspotSubscriptionConfig hotspot_config = 21;
+
+  // Denormalisasi Tampilan (Zero Waterfall di Frontend)
+  string customer_name = 22;
+  string customer_phone = 23;
+  string customer_code = 24;
+  string plan_name = 25;
+  double plan_price = 26;
+  string device_name = 27;
+  string device_host = 28;
+}
+
+message CreateSubscriptionRequest {
+  string customer_id = 1 [(buf.validate.field).string.min_len = 1];
+  string plan_id = 2 [(buf.validate.field).string.min_len = 1];
+  string device_id = 3;       // kosong = belum ditugaskan (provision PENDING)
+  string service_type = 4;    // PPPOE | HOTSPOT | DEDICATED (default dari plan)
+  string remote_username = 5; // kosong = auto-generate dari setting
+  string remote_password = 6; // kosong = auto-generate
+  double custom_price = 7;    // 0 = ikut harga plan
+  string billing_cycle = 8;
+  int32 billing_day = 9;
+  string notes = 10;
+  PPPoESubscriptionConfig pppoe_config = 11;
+  HotspotSubscriptionConfig hotspot_config = 12;
+}
+message CreateSubscriptionResponse { Subscription subscription = 1; }
+
+message UpdateSubscriptionRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string remote_username = 2;
+  string remote_password = 3; // kosong = tidak diubah
+  double custom_price = 4;
+  string billing_cycle = 5;
+  int32 billing_day = 6;
+  string device_id = 7;       // reassignment; kosong = tidak diubah
+  string notes = 8;
+  PPPoESubscriptionConfig pppoe_config = 9;
+  HotspotSubscriptionConfig hotspot_config = 10;
+}
+message UpdateSubscriptionResponse { Subscription subscription = 1; }
+
+message DeleteSubscriptionRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message DeleteSubscriptionResponse { string message = 1; }
+
+message ListSubscriptionsRequest {
+  string customer_id = 1; // kosong = semua lifecycle
+}
+message ListSubscriptionsResponse { repeated Subscription subscriptions = 1; }
+
+message GetSubscriptionRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message GetSubscriptionResponse { Subscription subscription = 1; }
+
+message ChangePlanRequest {
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
+  string new_plan_id = 2 [(buf.validate.field).string.min_len = 1];
+}
+message ChangePlanResponse { Subscription subscription = 1; }
+
+message SuspendSubscriptionRequest {
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
+  string reason = 2;
+}
+message SuspendSubscriptionResponse { Subscription subscription = 1; }
+
+message ResumeSubscriptionRequest {
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message ResumeSubscriptionResponse { Subscription subscription = 1; }
+
+message TerminateSubscriptionRequest {
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
+  string reason = 2;
+}
+message TerminateSubscriptionResponse { Subscription subscription = 1; }
+
+message ActivateSubscriptionRequest {
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
+  string device_id = 2;
+}
+message ActivateSubscriptionResponse { Subscription subscription = 1; }
+
+message IsolateSubscriptionRequest {
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
+  string reason = 2;
+}
+message IsolateSubscriptionResponse {
+  Subscription subscription = 1;
+  string message = 2;
+}
+
+message RestoreSubscriptionRequest {
+  string subscription_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message RestoreSubscriptionResponse {
+  Subscription subscription = 1;
+  string message = 2;
+}
+
+service SubscriptionService {
+  rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse);
+  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse);
+  rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionResponse);
+  rpc UpdateSubscription(UpdateSubscriptionRequest) returns (UpdateSubscriptionResponse);
+  rpc DeleteSubscription(DeleteSubscriptionRequest) returns (DeleteSubscriptionResponse);
+  rpc ChangePlan(ChangePlanRequest) returns (ChangePlanResponse);
+  rpc SuspendSubscription(SuspendSubscriptionRequest) returns (SuspendSubscriptionResponse);
+  rpc ResumeSubscription(ResumeSubscriptionRequest) returns (ResumeSubscriptionResponse);
+  rpc TerminateSubscription(TerminateSubscriptionRequest) returns (TerminateSubscriptionResponse);
+  rpc ActivateSubscription(ActivateSubscriptionRequest) returns (ActivateSubscriptionResponse);
+  rpc IsolateSubscription(IsolateSubscriptionRequest) returns (IsolateSubscriptionResponse);
+  rpc RestoreSubscription(RestoreSubscriptionRequest) returns (RestoreSubscriptionResponse);
+}

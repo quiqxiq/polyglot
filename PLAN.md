@@ -1,164 +1,279 @@
-# PLAN: Standardisasi Backend Golang — Polyglot
+# Plan Standardisasi & Perbaikan Konsistensi Backend Polyglot
 
-## Temuan Kunci yang Mendasari Plan
-
-| # | Masalah | Bukti |
-|---|---|---|
-| 1 | 🔴 .env berisi secret ter-track git | `git ls-files .env` |
-| 2 | 🔴 Arsitektur error terbalik: `pkg/response` mengimpor `internal/usecase` (5 paket) — `pkg` seharusnya generik. Setiap error baru memaksa edit `pkg/response` (tidak scalable) | `pkg/response/errors.go:8-14` |
-| 3 | 🔴 Sentinel error tersebar di usecase (`login.go`, `manage_user.go`, `billing/errors.go`), padahal guidelines §6 mewajibkan di `domain/<x>/errors.go`. Hanya 2 dari 16 domain punya `errors.go` | audit direktori domain |
-| 4 | 🟠 259 pemakaian `connect.NewError` langsung di handler, bypass `MapDomainError` (122 di antaranya validasi `InvalidArgument` manual) | `grep adapter/connect` |
-| 5 | 🟠 Pesan error campur bahasa (EN/ID): `"file kosong atau hanya header"` vs `"device: not found"`; gaya prefix campur: `"device: not found"` vs `ErrNotFoundBilling` | sampel `errors.New` |
-| 6 | 🟠 Boundary: `usecase/metrics` → `driver/mikrotik/system` | `ping_stream_manager.go:12` |
-| 7 | 🟡 Suffix tipe usecase campur: `*UseCase` (20), `*Service` (2), `*Manager` (2), `Engine`, `Guardrail`; `WaSenderWorker` (akronim salah, harusnya WA) | `grep type` |
-| 8 | 🟡 File usecase melanggar pola `<verb>_<noun>.go`: `hotspot_usecase.go`, `chat_service.go`, `portal.go` | listing usecase |
-| 9 | 🟡 Mapper campur exported/unexported: `ToProtoDHCPLease` vs `toProtoInvoice` tanpa alasan konsisten | `grep mapper` |
-| 10 | 🟡 Port duplikat/ambigu: `AuditWriter` vs `AuditLogWriter`; `PaymentGateway`/`PaymentProcessor`/`PaymentReader`; ~40+ struct data tinggal di `port/` (mis. `PPPProfile`, `VoucherBatch`, `SystemResource`) yang secara konsep milik `domain/` | listing port |
-| 11 | 🟡 Transisi mikrotik setengah jalan: file root (`dhcp.go`, `ppp.go`, dst) duplikat dengan subpaket (`dhcp/`, `ppp/`) | listing driver |
-| 12 | 🟡 Dokumentasi (`AGENTS.md` §1.1) tertinggal dari struktur aktual | perbandingan |
-
-> **Keputusan Anda yang sudah dikunci:** error message Inggris, protovalidate, hybrid semantik (*UseCase/*Worker), refactor menyeluruh bertahap, wire/proto tidak berubah.
+Dokumen ini memuat temuan analisis mendalam terhadap seluruh codebase Polyglot berdasarkan acuan [EFFECTIVE_GO.md](file:///home/quixiq/projects/polyground/polyglot/EFFECTIVE_GO.md), [DEVELOPMENT-GUIDELINES.md](file:///home/quixiq/projects/polyground/polyglot/DEVELOPMENT-GUIDELINES.md), dan [AGENTS.md](file:///home/quixiq/projects/polyground/polyglot/AGENTS.md), serta rencana perbaikan bertahap (actionable implementation plan).
 
 ---
 
-## FASE 0 — Keamanan & Hygiene (prasyarat, ~30 menit)
+## 1. Temuan Analisis Mendalam (Current State & Violations)
 
-1. `git rm --cached .env` + commit; verifikasi `*.env` di `.gitignore` efektif.
-2. Rotasi semua kredensial yang pernah ter-commit (manual oleh Anda).
-3. Hapus artefak: `.understand-anything/.trash-*`.
-4. Baseline hijau: `go build ./... && go test ./... && golangci-lint run` — catat hasil sebagai acuan setiap fase.
+### 1.1 Logging (`pkg/logger` vs `log.Printf` vs `fmt.Print`)
+- **Pelanggaran di Runtime Entrypoints**:
+  - [cmd/probe/main.go](file:///home/quixiq/projects/polyground/polyglot/cmd/probe/main.go): Menggunakan `log.Printf` dan `log.Println` untuk log probe lifecycle, telemetry, dan heartbeat warnings alih-alih `pkg/logger`.
+  - [cmd/seed/main.go](file:///home/quixiq/projects/polyground/polyglot/cmd/seed/main.go): Menggunakan `log.Printf` dan `log.Println` untuk database seeding, hashing error, dan RBAC policy sync alih-alih `pkg/logger`.
+  - [cmd/testchat/main.go](file:///home/quixiq/projects/polyground/polyglot/cmd/testchat/main.go): Menggunakan `fmt.Printf` dan `fmt.Println` di seluruh skenario chatbot.
+- **Middleware Request Logging Terlewat**:
+  - [internal/adapter/http/middleware/logger.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/http/middleware/logger.go) sudah memiliki `RequestLogger()`, namun di [internal/app/app.go:452](file:///home/quixiq/projects/polyground/polyglot/internal/app/app.go#L452), middleware ini **tidak dimasukkan ke dalam `middleware.Chain`**. Akibatnya, request HTTP/Connect yang masuk tidak tercatat secara otomatis.
+- **Dynamic String Formatting pada Log Message**:
+  - [internal/usecase/metrics/ping_stream_manager.go:306](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/metrics/ping_stream_manager.go#L306): Menggunakan `.Warn(fmt.Sprintf("cleanup metrics error: %v", err))` alih-alih pesan statis dengan `.WithError(err).Warn("cleanup metrics failed")`.
+- **Inkonsistensi Nama Komponen**:
+  - Pada [app.go](file:///home/quixiq/projects/polyground/polyglot/internal/app/app.go), tercampur penggunaan `logger.WithComponent("Polyglot")` dan `logger.WithComponent("App")`.
 
 ---
 
-## FASE 1 — Arsitektur Error Baru (fondasi semua fase lain)
+### 1.2 Request & Response Standardization
+- **Inkonsistensi HTTP Error Envelope**:
+  - [internal/adapter/http/middleware/auth.go:50](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/http/middleware/auth.go#L50): Menggunakan fungsi lokal `writeJSONError` yang menghasilkan payload `{"error": msg}` (bukan envelope standar `pkg/response`).
+  - [internal/adapter/http/middleware/rbac.go:33,69](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/http/middleware/rbac.go#L33): Mengencode ad-hoc maps `{"error": "...", "object": "..."}` dan `{"error": "...", "roles": ...}` langsung ke `ResponseWriter`.
+  - [internal/adapter/ws/device_stream_handler.go:34](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/ws/device_stream_handler.go#L34): Menggunakan `http.Error(w, `{"error":"device id is required"}`, http.StatusBadRequest)` yang mengeset header `text/plain` dengan raw JSON string.
+  - [internal/adapter/ws/sse_hub.go:34](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/ws/sse_hub.go#L34): Menggunakan `http.Error(w, "Streaming unsupported", http.StatusInternalServerError)`.
+- **Ad-hoc `connect.NewError` di Luar `pkg/response`**:
+  - [internal/app/app.go:278](file:///home/quixiq/projects/polyground/polyglot/internal/app/app.go#L278): Memanggil `connect.NewError(connect.CodePermissionDenied, fmt.Errorf("access to device %s denied", deviceID))` langsung di dalam resolver closure, melanggar aturan sentralisasi Connect error di `pkg/response`.
+- **Validasi Manual di Handler vs Protovalidate**:
+  - Masih terdapat validasi manual di connect handlers, seperti di [session_handler.go:35](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/hotspot/session_handler.go#L35) (`if req.Msg.RosId == ""`), [template_handler.go:71](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/hotspot/template_handler.go#L71), dan [device/stream_handler.go:38,261,367](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/device/stream_handler.go#L38) yang seharusnya ditegakkan via protovalidate di `.proto`.
 
-Desain `pkg/fault` — paket generik (nol dependensi internal) berisi error kind:
+---
 
-```go
-// pkg/fault/fault.go
-type Kind int
-const (
-    KindUnknown Kind = iota
-    KindNotFound; KindInvalidInput; KindAlreadyExists
-    KindPermissionDenied; KindUnauthenticated
-    KindFailedPrecondition; KindConflict; KindUnavailable; KindResourceExhausted
-)
-func New(kind Kind, msg string) error      // sentinel constructor
-func Wrap(kind Kind, err error) error      // wrap dengan kind
-func KindOf(err error) Kind                // errors.As traversal
+### 1.3 Error Handling & Classification (`pkg/fault` & Sentinels)
+- **Domain yang Belum Memiliki `errors.go` / Sentinel `fault.New`**:
+  - `internal/domain/audit`
+  - `internal/domain/cashbook`
+  - `internal/domain/llm`
+  - `internal/domain/ppp`
+  - `internal/domain/reporting`
+  - `internal/domain/setting`
+- **Raw `errors.New` di Layer Adapter (Bypass `fault.Kind`)**:
+  - [internal/adapter/auth/jwt.go:15](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/auth/jwt.go#L15): `ErrInvalidToken = errors.New(...)` (seharusnya `KindUnauthenticated`).
+  - [internal/adapter/auth/refresh_token.go:20](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/auth/refresh_token.go#L20): `ErrInvalidRefreshToken = errors.New(...)`.
+  - [internal/adapter/postgres/bot_repository.go:14](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/postgres/bot_repository.go#L14): `ErrNotFound = errors.New(...)` (seharusnya `KindNotFound`).
+  - [internal/adapter/postgres/user_repository.go:17](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/postgres/user_repository.go#L17): `ErrInvalidArgument = errors.New(...)`.
+  - [internal/adapter/whatsapp/sender_adapter.go:17](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/whatsapp/sender_adapter.go#L17): `ErrNoConnectedSession = errors.New(...)`.
+  > [!WARNING]
+  > Karena error di atas tidak membawa `fault.Kind`, saat diteruskan ke `response.MapDomainError(err)`, fungsi tersebut mengklasifikasikannya sebagai `fault.KindUnknown` -> `connect.CodeInternal` (HTTP 500), sehingga status HTTP / Connect menjadi salah (misal: token expired menjadi 500 alih-alih 401 Unauthenticated).
+- **Error di Usecase Tanpa `%w` dan Tanpa Sentinel**:
+  - [internal/usecase/ppp/manage_ppp.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/ppp/manage_ppp.go): Terdapat 9 lokasi `fmt.Errorf("... is required")` tanpa `%w` dan tanpa sentinel domain.
+  - [internal/usecase/network/open_terminal.go:37,42](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/network/open_terminal.go#L37): `fmt.Errorf("open_terminal: device id is required")` dan `fmt.Errorf("open_terminal: terminal dialer not configured")` tanpa `%w`.
+  - [internal/usecase/device/manage_isolation.go:118](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/device/manage_isolation.go#L118): `fmt.Errorf("unsupported service type: %s", serviceType)` tanpa `%w`.
+  - [internal/usecase/importer/upsert.go:138](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/importer/upsert.go#L138): Mengembalikan string berbahasa Indonesia `fmt.Errorf("paket kosong")` tanpa `%w` dan tanpa classification.
+
+---
+
+### 1.4 Pelanggaran Batasan Lapisan Arsitektur (Architectural Invariants)
+- **ConnectRPC Handler Bypass Usecase (Langsung Inject Repository & Logika Bisnis)**:
+  - [internal/adapter/connect/llm/llm_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/llm/llm_handler.go): Menginject `port.LLMConfigRepository` langsung dan menjalankan logika enkripsi key, kalkulasi pricing, serta active status switching di dalam handler. Layer `internal/usecase/llm` tidak ada.
+  - [internal/adapter/connect/cashbook/cashbook_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/cashbook/cashbook_handler.go): Menginject `port.CashbookRepository` langsung dan melakukan generate ID, fallback tenant ID, dan default account type di handler. Layer `internal/usecase/cashbook` tidak ada.
+  - [internal/adapter/connect/report/report_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/report/report_handler.go): Langsung memanggil `port.ReportingRepository` dan `port.SnapshotComputer`.
+  - [internal/adapter/connect/notification/notification_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/notification/notification_handler.go): Langsung memanggil `port.NotificationRepository` dan `port.NotificationSender`.
+- **Adapter Mengimpor Driver Vendor Hardware Secara Langsung**:
+  - [internal/adapter/connect/device/stream_handler.go:17-18](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/device/stream_handler.go#L17): Mengimpor `driver/mikrotik/iface` dan `driver/mikrotik/system` secara langsung untuk parse status.
+  - [internal/adapter/connect/monitor/](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/monitor/): 6 file monitor handler mengimpor subpackage `driver/mikrotik/*`.
+  - [internal/adapter/connect/hotspot/mapper_user.go:7](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/hotspot/mapper_user.go#L7): Mengimpor `driver/mikrotik/hotspot` untuk fungsi utility `hotspot.ParseDataLimit`.
+- **Model Bisnis Didefinisikan di `internal/port/`**:
+  - `port.DHCPLease` ([internal/port/dhcp.go](file:///home/quixiq/projects/polyground/polyglot/internal/port/dhcp.go)), `port.SimpleQueue` ([internal/port/simple_queue.go](file:///home/quixiq/projects/polyground/polyglot/internal/port/simple_queue.go)), `port.IPPool` ([internal/port/ip_pool.go](file:///home/quixiq/projects/polyground/polyglot/internal/port/ip_pool.go)), dan `port.Interface` ([internal/port/device_interface.go](file:///home/quixiq/projects/polyground/polyglot/internal/port/device_interface.go)) adalah model entitas, bukan interface kontrak.
+- **Dead Code / Duplikasi di `internal/usecase/billing/`**:
+  - `internal/usecase/billing/` masih menyimpan `manage_plan.go`, `manage_subscription.go`, `lifecycle.go`, `subscription.go`, dan `plan_account.go` beserta file test-nya, padahal implementasi aktif sudah dipisahkan ke [internal/usecase/plan/](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/plan/) dan [internal/usecase/subscription/](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/subscription/).
+- **Usecase Test Mengimpor Driver / Adapter Konkret**:
+  - [internal/usecase/device/manage_device_test.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/device/manage_device_test.go#L9) & [internal/usecase/network/get_active_sessions_test.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/network/get_active_sessions_test.go#L8): Mengimpor `driver/mikrotik`.
+  - [internal/usecase/skill/manage_skill_test.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/skill/manage_skill_test.go#L11): Mengimpor `adapter/storage`.
+
+---
+
+### 1.5 Konvensi Penamaan & Effective Go
+- **Penamaan Package Jamak (Plural)**:
+  - [internal/adapter/http/reports](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/http/reports): Menggunakan nama paket `reports` (plural). Standar mengharuskan singular (`report`).
+- **Mismatch Nama Package vs Folder**:
+  - [internal/adapter/whatsapp/sender_adapter.go:3](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/whatsapp/sender_adapter.go#L3): Direktori bernama `whatsapp`, namun deklarasi paketnya `package whatsappadapter`.
+- **Akronim / Initialisms**:
+  - [internal/adapter/connect/ispadmin/ispadmin_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/ispadmin/ispadmin_handler.go): `IspAdminConnectHandler` alih-alih `ISPAdminConnectHandler`.
+- **Batas Ukuran File (> 500 baris tanpa `// DEVIASI:`)**:
+  - [internal/adapter/connect/device/stream_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/device/stream_handler.go) (519 baris).
+  - [internal/app/app.go](file:///home/quixiq/projects/polyground/polyglot/internal/app/app.go) (509 baris).
+  - [internal/port/mocktest/fakes_core.go](file:///home/quixiq/projects/polyground/polyglot/internal/port/mocktest/fakes_core.go) (531 baris).
+- **Duplikasi Tipe Kontrak**:
+  - `type ConnectDriverProvider func(ctx context.Context, deviceID string) (port.DeviceDriver, error)` didefinisikan duplikat di 4 file berbeda ([network_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/network/network_handler.go#L18), [monitor/handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/monitor/handler.go#L13), [ppp_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/ppp/ppp_handler.go#L12), [hotspot_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/hotspot/hotspot_handler.go#L13)).
+
+---
+
+## 2. Rencana Kerja Perbaikan (Remediation Plan)
+
+Perbaikan dibagi menjadi 5 fase berurutan agar setiap langkah tetap **buildable, testable, dan lulus linter** tanpa downtime atau breaking change.
+
+```mermaid
+graph TD
+    F1["Fase 1: Standardisasi Logging & Redaction (pkg/logger)"] --> F2["Fase 2: Unifikasi Response Envelope & Interceptor"]
+    F2 --> F3["Fase 3: Refactoring Error Handling (pkg/fault & Sentinels)"]
+    F3 --> F4["Fase 4: Restrukturisasi Boundary & Pembersihan Dead Code"]
+    F4 --> F5["Fase 5: Penamaan, Naming Stutter & File Split"]
 ```
 
-**Lalu:**
-1. Buat `errors.go` di seluruh 16 domain (billing, customer, bot, cashbook, plan, subscription, registration, setting, notification, session, llm, command, audit, reporting + rapikan device, skill). Format: `var ErrNotFound = fault.New(fault.KindNotFound, "billing: not found")` — prefix domain, pesan Inggris.
-2. Migrasi sentinel dari usecase → domain: `authuc.ErrInvalidCredentials`, `useruc.ErrUserAlreadyExists`, `billing.ErrNotFoundBilling` → `domain/billing.ErrNotFound`, dst. Error murni-orkestrasi (mis. `networkuc.ErrApprovalRequired`) boleh tetap di usecase tapi wajib dibungkus `fault.Wrap`.
-3. Tulis ulang `pkg/response/errors.go`: `MapDomainError` cukup switch atas `fault.KindOf(err)` → `connect.Code`. Hapus semua import `internal/*`. Error baru di masa depan tidak perlu menyentuh file ini lagi.
-4. Standarkan wrapping: `fmt.Errorf("find user %d: %w", id, err)` — sweep `errors.New`/`fmt.Errorf` tanpa `%w` di jalur propagasi (temuan: ~15 file).
-5. Terjemahkan semua pesan error ID → EN (`"file kosong atau hanya header"` → `"importer: file empty or header only"`).
-6. Update `DEVELOPMENT-GUIDELINES.md` §6 dengan pola baru.
+---
 
-**Verifikasi:** build + test hijau; `rg 'internal/(usecase|adapter|driver)' pkg/` kosong; test unit `pkg/fault`.
+### Fase 1: Standardisasi Logging & Redaction Terpusat (`pkg/logger`)
+
+**Tujuan**: Menghilangkan seluruh `log.Printf` dan `fmt.Print` di binary production, mengaktifkan request logging di HTTP/Connect boundary, dan menstandarkan pesan log statis dengan snake_case fields.
+
+#### Rincian Perubahan:
+1. **[cmd/probe/main.go](file:///home/quixiq/projects/polyground/polyglot/cmd/probe/main.go)**:
+   - Inisialisasi `logger.Init("info", "production")`.
+   - Ganti seluruh `log.Printf` dan `log.Println` dengan `logger.WithComponent("ProbeAgent")`.
+   - Gunakan static message + structured fields:
+     - `"starting lightweight probe agent"`, field: `probe_id`, `server_url`
+     - `"probe heartbeat warning"`, field: `error`
+     - `"telemetry polled target"`, fields: `target`, `latency_ms`, `alive`.
+2. **[cmd/seed/main.go](file:///home/quixiq/projects/polyground/polyglot/cmd/seed/main.go)**:
+   - Inisialisasi `logger.Init("info", "development")`.
+   - Ganti seluruh `log.Printf` dan `log.Println` dengan `logger.WithComponent("Seeder")`.
+   - Gunakan `.WithError(err)` dan field `username`, `role`, `email`.
+3. **[internal/app/app.go](file:///home/quixiq/projects/polyground/polyglot/internal/app/app.go)**:
+   - Tambahkan `middleware.RequestLogger()` ke dalam `middleware.Chain(rootMux, ...)` agar seluruh request tercatat dengan `request_id`, `method`, `path`, `status`, `duration_ms`.
+   - Standarisasi nama komponen: seragamkan semua panggilan log di `app.go` menjadi `logger.WithComponent("App")`.
+4. **[internal/usecase/metrics/ping_stream_manager.go:306](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/metrics/ping_stream_manager.go#L306)**:
+   - Ganti `Warn(fmt.Sprintf(...))` menjadi `logger.WithComponent("PingStreamWorker").WithError(err).WithField("device_id", dev.ID).Warn("cleanup metrics failed")`.
 
 ---
 
-## FASE 2 — Validasi Request via protovalidate
+### Fase 2: Unifikasi Request & Response Envelope
 
-1. Tambah `buf.build/bufbuild/protovalidate` ke `buf.gen.yaml`/deps; anotasi `buf.validate.field` di 18 file proto (required, min_len, pattern untuk ID) — hanya anotasi, tidak mengubah field/wire format.
-2. Buat interceptor ConnectRPC `internal/adapter/http/middleware/validate.go` (atau connect interceptor) yang menjalankan protovalidate untuk semua unary+stream.
-3. Hapus 122 validasi manual `req.Msg.X == ""` di handler — handler jadi tipis: map → usecase → `MapDomainError`.
-4. Validasi aturan bisnis tetap di usecase, kembalikan `fault.KindInvalidInput`.
-5. Regenerasi kode: `make proto && make proto-web` (TS ikut regenerate, tidak mengubah perilaku FE).
+**Tujuan**: Memastikan semua transport (ConnectRPC, plain HTTP, SSE, WebSocket) menghasilkan format response dan error yang konsisten sesuai standar.
 
-**Verifikasi:** build + test; uji manual satu endpoint dengan field kosong → `CodeInvalidArgument` dari interceptor.
-
----
-
-## FASE 3 — Boundary & Penempatan
-
-1. `usecase/metrics/ping_stream_manager.go`: definisikan interface/tipe yang dibutuhkan di `internal/port` (atau pindah tipe data ke domain), driver mengimplementasi. Hapus import driver.
-2. Pindah `usecase/importer/router_live_e2e_test.go` → `test/integration/` (konsisten dengan test integrasi lain).
-3. Test usecase yang import adapter/driver (4 file lain): ganti ke mock `port/mocktest` bila memungkinkan; sisanya beri `// DEVIASI`.
-4. Bersihkan sisa referensi gin di `ws/sse_hub_test.go`.
-
-**Verifikasi:** `rg 'internal/(adapter|driver)' internal/usecase --glob '!*e2e*'` hanya menyisakan yang ber-DEVIASI; build + test.
-
----
-
-## FASE 4 — Penamaan (tipe, file, fungsi) — via gopls rename, per-commit kecil
-
-**Tipe usecase (hybrid semantik):**
-
-| Sekarang | Menjadi |
-|---|---|
-| `ChatService` | `ChatUseCase` |
-| `ConversationService` | `ConversationUseCase` |
-| `ContextManager` (bot) | tetap (komponen internal engine) — atau `contextBuilder` jika unexported memungkinkan |
-| `PingStreamManager` | `PingStreamWorker` (long-running background) |
-| `WaSenderWorker` | `WASenderWorker` |
-| `Engine`, `Guardrail` (bot) | tetap — nama domain yang deskriptif, dicatat sebagai pengecualian sah di guidelines |
-
-**File usecase (`<verb>_<noun>.go`):**
-- `hotspot/hotspot_usecase.go` → pecah `manage_user.go` + `manage_voucher.go` + `manage_profile.go` (sekalian turunkan 421 baris)
-- `chat/chat_service.go` → `chat/manage_chat.go`
-- `portal/portal.go` → `portal/manage_portal.go`
-
-**Mapper (aturan baru: unexported kecuali dipakai lintas paket):**
-- Audit `ToProto*` exported di `connect/hotspot` — jika hanya dipakai dalam paket, turunkan ke `toProto*`. Arah konversi konsisten: `toProto<Entity>` / `fromProto<Entity>`.
-
-**Konvensi yang sudah benar & dipertahankan (dicatat di guidelines):** `*ConnectHandler`, `New<Type>`, receiver 1–2 huruf, `Id` dari proto-generated = pengecualian sah.
-
-**Verifikasi:** build + test per rename; `golangci-lint run` (revive exported docs ikut menjaga).
+#### Rincian Perubahan:
+1. **[internal/adapter/http/middleware/auth.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/http/middleware/auth.go)**:
+   - Hapus fungsi lokal `writeJSONError`.
+   - Ganti pemanggilan error dengan `response.WriteHTTPStatusError(w, http.StatusUnauthorized, "...")` sehingga envelope yang dihasilkan konsisten:
+     ```json
+     {"error": {"code": "UNAUTHENTICATED", "message": "..."}}
+     ```
+2. **[internal/adapter/http/middleware/rbac.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/http/middleware/rbac.go)**:
+   - Ganti serialisasi error manual dengan `response.WriteHTTPStatusError(w, http.StatusForbidden, "access denied")` atau `response.WriteHTTPError(w, ...)`.
+3. **[internal/adapter/ws/device_stream_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/ws/device_stream_handler.go) & [sse_hub.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/ws/sse_hub.go)**:
+   - Ganti `http.Error(...)` dengan `response.WriteHTTPStatusError(w, ...)`.
+4. **[internal/app/app.go:278](file:///home/quixiq/projects/polyground/polyglot/internal/app/app.go#L278)**:
+   - Ganti `connect.NewError(connect.CodePermissionDenied, ...)` dengan `response.PermissionDenied(fmt.Sprintf("access to device %s denied", deviceID))`.
+5. **ConnectRPC Request Validation**:
+   - Pindahkan validasi manual `if req.Msg.RosId == ""` di `session_handler.go` dan `report_handler.go` ke schema Protobuf dengan `[(buf.validate.field).string.min_len = 1]`.
 
 ---
 
-## FASE 5 — Perapian Layer Port
+### Fase 3: Rekonstruksi Error Handling (`pkg/fault` & Sentinels)
 
-1. Gabung/perjelas audit: `AuditWriter` + `AuditLogWriter` → satu file `audit.go` berisi keduanya dengan doc pembeda, atau rename `AuditWriter` → `CommandAuditWriter` agar self-explanatory.
-2. Payment trio: dokumentasikan pembagian `PaymentGateway` (provider eksternal) / `PaymentProcessor` (persist) / `PaymentReader` (query) di satu file `payment.go`, atau merge jika overlap.
-3. Relokasi struct data dari `port` → `domain`: `PPPProfile`, `PPPoESecret`, `VoucherBatch`, `SystemResource`, `SubscriberAccount`, dll → `internal/domain/<domain sesuai>/`. Port hanya berisi interface + tipe param tipis. (Ini perubahan terbesar fase ini; dikerjakan per kelompok domain: ppp → hotspot → device → billing.)
-4. Pecah `hotspot_gateway.go` (6.5K) jika >1 interface besar.
+**Tujuan**: Menghilangkan `errors.New` raw tanpa kind di adapter, melengkapi sentinel domain yang hilang, dan memastikan seluruh error usecase di-wrap dengan `%w`.
 
-**Verifikasi:** build + test per kelompok; boundary check tetap bersih.
-
----
-
-## FASE 6 — Tuntaskan Modularisasi Mikrotik (lanjutan branch aktif)
-
-1. Migrasi sisa file root ke subpaket: `hotspot_active.go`, `hotspot_profile.go`, `hotspot_user.go` → `hotspot/`; `ppp_active.go`, `ppp_profile.go` → `ppp/`; `ip.go`, `nat.go`, `pool.go` → subpaket sesuai (`firewall/`/`iface/` atau paket baru `ip/`).
-2. Hapus duplikasi `queue_gateway.go` root vs `queue/gateway.go`.
-3. File root yang tersisa = facade tipis `driver.go` + `gateway.go` saja; dokumentasikan polanya.
-4. Ekstrak helper duplikat `setIfNonEmpty` (firewall, ppp, +lainnya) → satu paket internal `mikrotik/internal/rosutil`.
-
-**Verifikasi:** build + test driver + `test/integration` mikrotik.
-
----
-
-## FASE 7 — Penegakan & Dokumentasi (agar tidak drift lagi)
-
-1. `golangci-lint`: tambah `errorlint` (salah pakai `==` vs `errors.Is`), `wrapcheck` atau `err113` (paksa `%w`), `forbidigo` dengan pattern `connect\.NewError` di luar `pkg/response` & interceptor (penegak fase 1–2 permanen).
-2. `Makefile`: target `make check` = build+lint+test; pastikan dipakai CI (`.github/`).
-3. Update `AGENTS.md` §1.1 + `DEVELOPMENT-GUIDELINES.md`: struktur aktual lengkap, pola error fault, aturan validasi protovalidate, tabel suffix penamaan, pengecualian sah (Id proto, Engine/Guardrail).
-4. Jadikan satu sumber kebenaran struktur folder (file lain merujuk, tidak menduplikasi).
+#### Rincian Perubahan:
+1. **Lengkapi Sentinel di Seluruh Domain**:
+   - [internal/domain/cashbook/errors.go](file:///home/quixiq/projects/polyground/polyglot/internal/domain/cashbook/errors.go) [NEW]:
+     - `ErrNotFound = fault.New(fault.KindNotFound, "cashbook: not found")`
+     - `ErrInvalidInput = fault.New(fault.KindInvalidInput, "cashbook: validation failed")`
+   - [internal/domain/llm/errors.go](file:///home/quixiq/projects/polyground/polyglot/internal/domain/llm/errors.go) [NEW]:
+     - `ErrConfigNotFound = fault.New(fault.KindNotFound, "llm: config not found")`
+     - `ErrInvalidConfig = fault.New(fault.KindInvalidInput, "llm: invalid configuration")`
+     - `ErrProviderUnavailable = fault.New(fault.KindUnavailable, "llm: provider unavailable")`
+   - [internal/domain/ppp/errors.go](file:///home/quixiq/projects/polyground/polyglot/internal/domain/ppp/errors.go) [NEW]:
+     - `ErrSecretNotFound = fault.New(fault.KindNotFound, "ppp: secret not found")`
+     - `ErrProfileNotFound = fault.New(fault.KindNotFound, "ppp: profile not found")`
+     - `ErrInvalidInput = fault.New(fault.KindInvalidInput, "ppp: validation failed")`
+   - [internal/domain/setting/errors.go](file:///home/quixiq/projects/polyground/polyglot/internal/domain/setting/errors.go) [NEW] & `reporting/errors.go` [NEW].
+2. **Migrasi Adapter Raw Errors ke Domain Sentinels**:
+   - Di [internal/adapter/auth/jwt.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/auth/jwt.go) dan [refresh_token.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/auth/refresh_token.go): gunakan sentinel dari `domain/session` atau `domain/customer` yang membawa `fault.KindUnauthenticated`.
+   - Di [internal/adapter/postgres/bot_repository.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/postgres/bot_repository.go): gunakan `domain/bot.ErrNotFound`.
+   - Di [internal/adapter/postgres/user_repository.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/postgres/user_repository.go): gunakan `domain/customer.ErrInvalidInput`.
+3. **Perbaiki Usecase Errors Tanpa `%w`**:
+   - Di [internal/usecase/ppp/manage_ppp.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/ppp/manage_ppp.go): ganti `fmt.Errorf("ros_id is required")` menjadi `fmt.Errorf("%w: ros_id is required", domainPPP.ErrInvalidInput)`.
+   - Di [internal/usecase/network/open_terminal.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/network/open_terminal.go): wrap dengan `domainDevice.ErrInvalidInput` dan `domainDevice.ErrDiagnosticsUnconfigured`.
+   - Di [internal/usecase/importer/upsert.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/importer/upsert.go): ganti `"paket kosong"` menjadi `fmt.Errorf("%w: plan name is required", domainPlan.ErrInvalidInput)`.
 
 ---
 
-## FASE 8 (paralel/opsional) — Gap Test Prioritas
+### Fase 4: Restrukturisasi Boundary & Pembersihan Dead Code
 
-`usecase/metrics` (baru saja di-refactor fase 3), `usecase/chat`, `usecase/customer`, handler streaming SSE (`StreamActiveSessions`, `StreamPing`, `StreamSystemSnapshot`), `Guardrail.MarkdownToWhatsApp`, `BuildExpireMonitorScript`, repo postgres (6/29 → bertahap).
+**Tujuan**: Menegakkan Clean Architecture di seluruh Connect handlers (membuat usecase yang belum ada), menghapus coupling adapter->driver, dan membuang duplikasi kode.
+
+#### Rincian Perubahan:
+1. **Buat Usecase yang Hilang (Pemisahan Tanggung Jawab Handler)**:
+   - [internal/usecase/llm/manage_config.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/llm/manage_config.go) [NEW]:
+     Pindahkan enkripsi API key, penentuan active config, dan logika kalkulasi harga dari [internal/adapter/connect/llm/llm_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/llm/llm_handler.go) ke usecase ini. Handler menjadi tipis.
+   - [internal/usecase/cashbook/manage_cashbook.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/cashbook/manage_cashbook.go) [NEW]:
+     Pindahkan ID generation, tenant defaulting, dan validasi dari [internal/adapter/connect/cashbook/cashbook_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/cashbook/cashbook_handler.go) ke usecase ini.
+2. **Hapus Dead/Duplicate Files di `internal/usecase/billing/`**:
+   - Hapus file duplikat lama:
+     - [internal/usecase/billing/manage_plan.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/billing/manage_plan.go) [DELETE]
+     - [internal/usecase/billing/manage_subscription.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/billing/manage_subscription.go) [DELETE]
+     - [internal/usecase/billing/lifecycle.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/billing/lifecycle.go) [DELETE]
+     - [internal/usecase/billing/subscription.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/billing/subscription.go) [DELETE]
+     - [internal/usecase/billing/plan_account.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/billing/plan_account.go) [DELETE]
+     - Serta unit test terkait di billing (`lifecycle_plan_test.go`, `manage_subscription_test.go`, `plan_account_test.go`, `subscription_test.go`).
+3. **Unifikasi Shared Connect Driver Provider**:
+   - Buat satu definisi `type ConnectDriverProvider func(ctx context.Context, deviceID string) (port.DeviceDriver, error)` di [internal/adapter/connect/provider.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/provider.go) [NEW] dan gunakan kembali di `network`, `monitor`, `ppp`, dan `hotspot`.
+4. **Isolasi Driver Coupling dari Adapter**:
+   - Pindahkan helper `hotspot.ParseDataLimit` dari driver MikroTik ke package utilitas/domain (misal `internal/domain/hotspot` atau `pkg/format`) sehingga [mapper_user.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/hotspot/mapper_user.go) tidak lagi mengimpor driver MikroTik.
 
 ---
 
-## Urutan, Estimasi & Aturan Main
+### Fase 5: Konsistensi Penamaan, Naming Stutter & File Split
 
-```text
-F0 (0.5h) → F1 (besar, inti) → F2 (sedang) → F3 (kecil) → F4 (sedang) → F5 (sedang-besar) → F6 (sedang) → F7 (kecil)
-                                                                       F8 berjalan paralel sejak F3
-```
+**Tujuan**: Mematuhi Effective Go dan Development Guidelines untuk penamaan package, nama struct, dan ukuran file maksimal 500 baris.
 
-- Setiap fase = 1 branch/PR sendiri, selesai dalam keadaan hijau (`go build ./... && go test ./... && golangci-lint run`) sebelum lanjut.
-- Proto wire format tidak berubah di semua fase → frontend tidak terdampak (hanya regenerate di F2).
-- Fase 1–2 adalah pengungkit terbesar untuk tujuan "konsisten & mudah dikembangkan": setelahnya, menambah fitur baru = tambah sentinel di domain + anotasi proto, tanpa menyentuh `pkg/response` atau menulis validasi manual.
-- Catatan: F6 sebaiknya menunggu branch `refactor/mikrotik-driver-modularization` yang sedang berjalan selesai/merge dulu agar tidak konflik.
+#### Rincian Perubahan:
+1. **Rename Package Jamak & Mismatch**:
+   - Rename package [internal/adapter/http/reports](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/http/reports) -> `package report` (singular).
+   - Di [internal/adapter/whatsapp/sender_adapter.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/whatsapp/sender_adapter.go): ubah `package whatsappadapter` -> `package whatsapp` agar konsisten dengan direktori pembungkusnya.
+2. **Perbaiki Initialisms & Acronyms**:
+   - Di [internal/adapter/connect/ispadmin/](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/ispadmin/): ubah `IspAdminConnectHandler` -> `ISPAdminConnectHandler`.
+3. **Pecah File yang Melebihi Batas 500 Baris**:
+   - [internal/adapter/connect/device/stream_handler.go](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/connect/device/stream_handler.go) (519 baris):
+     Pecah menjadi `stream_status_handler.go` (status, ping, interfaces) dan `stream_terminal_handler.go` (PTY streaming).
+   - [internal/app/app.go](file:///home/quixiq/projects/polyground/polyglot/internal/app/app.go) (509 baris):
+     Pindahkan deklarasi pembuatan router/ServeMux ke `internal/app/router.go` [NEW] sehingga `app.go` fokus murni pada lifecycle server & startup/shutdown (< 300 baris).
 
 ---
 
-**Apakah plan ini sesuai? Jika ya, saya mulai dari Fase 0 + Fase 1 (arsitektur error pkg/fault + migrasi sentinel ke domain).**
+## 3. Rencana Verifikasi (Verification Plan)
+
+### Automated Tests:
+1. **Pemeriksaan Kompilasi & Build**:
+   ```bash
+   make build
+   ```
+2. **Verifikasi Boundary & Connect Error Scripts**:
+   ```bash
+   make check-connect-errors check-layer-boundaries
+   ```
+3. **GolangCI-Lint**:
+   ```bash
+   make lint
+   ```
+4. **Unit & Race Detection Tests**:
+   ```bash
+   make test
+   ```
+5. **Protobuf & Schema Consistency**:
+   ```bash
+   make proto-check
+   ```
+6. **Integration Tests (bila database tersedia)**:
+   ```bash
+   make test-integration
+   ```
+
+### Manual Verification:
+1. Jalankan `go run ./cmd/probe --help` dan `go run ./cmd/seed` untuk memastikan output logging kini structured dan seragam via `pkg/logger`.
+2. Kirim curl request invalid ke endpoint HTTP (mis. `/api/v1/auth` atau protected endpoint) untuk memverifikasi JSON error envelope selalu berbentuk `{"error": {"code": "...", "message": "..."}}`.
+
+---
+
+## 4. Status Implementasi & Hasil Verifikasi (Execution Summary)
+
+| Fase | Deskripsi | Status | Verifikasi |
+|---|---|---|---|
+| **Fase 1** | Standardisasi Logging & Redaction Terpusat (`pkg/logger`) | **SELESAI (100%)** | `cmd/probe`, `cmd/seed`, `cmd/testchat`, `internal/app` bersih dari `log.Printf`/`log.Println` |
+| **Fase 2** | Unifikasi Response Envelope & Interceptor | **SELESAI (100%)** | Seluruh HTTP middleware & WS handler menggunakan `response.WriteHTTPStatusError`; `check-connect-errors.sh` lolos |
+| **Fase 3** | Refactoring Error Handling (`pkg/fault` & Sentinels) | **SELESAI (100%)** | Domain sentinels dibuat di `audit`, `cashbook`, `llm`, `ppp`, `reporting`, `setting`; adapter raw error dipetakan ke `fault.Kind` |
+| **Fase 4** | Restrukturisasi Boundary & Pembersihan Dead Code | **SELESAI (100%)** | Usecase `llm` & `cashbook` dibuat; coupling driver diisolasi via `domain/hotspot`; dead code billing dihapus; `ConnectDriverProvider` diunifikasi |
+| **Fase 5** | Konsistensi Penamaan, Naming Stutter & File Split | **SELESAI (100%)** | `package report`, `package whatsapp`, `ISPAdminConnectHandler`; `app.go` & `stream_handler.go` dipangkas di bawah 500 baris |
+
+### Rekapitulasi Perintah Verifikasi:
+- `make build`: **LULUS (Code 0)**
+- `make vet`: **LULUS (Code 0)**
+- `make check-connect-errors`: **LULUS (Code 0 - ConnectRPC error boundary check passed)**
+- `make check-layer-boundaries`: **LULUS (Code 0 - layer boundary check passed)**
+- `make lint`: **LULUS (Code 0 - 0 issues)**
+- `make test`: **LULUS (Code 0 - Seluruh unit test lulus dengan -race dan coverage aktif)**
+

@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// -----------------------------------------------------------------------------
+// LLM Config Messages
+// -----------------------------------------------------------------------------
+
+message LLMConfig {
+  string id = 1;
+  string provider = 2; // e.g. "openai", "gemini", "ollama", "groq", "claude"
+  string model_name = 3;
+  string api_key_masked = 4;
+  string base_url = 5;
+  bool is_active = 6;
+  double temperature = 7;
+  int32 max_tokens = 8;
+  string system_prompt = 9;
+  string skills_mode = 10;
+  bool enable_skills = 11;
+  string skills_prompt = 12;
+  repeated string selected_skills = 13;
+}
+
+message ListLLMConfigsRequest {}
+message ListLLMConfigsResponse {
+  repeated LLMConfig configs = 1;
+}
+
+message CreateLLMConfigRequest {
+  string provider = 1 [(buf.validate.field).string.min_len = 1];
+  string model_name = 2 [(buf.validate.field).string.min_len = 1];
+  string api_key = 3;
+  string base_url = 4;
+  double temperature = 5;
+  int32 max_tokens = 6;
+  string system_prompt = 7;
+  string skills_mode = 8;
+  bool enable_skills = 9;
+  string skills_prompt = 10;
+  repeated string selected_skills = 11;
+}
+message CreateLLMConfigResponse {
+  LLMConfig config = 1;
+}
+
+message UpdateLLMConfigRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string provider = 2;
+  string model_name = 3;
+  string api_key = 4;
+  string base_url = 5;
+  double temperature = 6;
+  int32 max_tokens = 7;
+  string system_prompt = 8;
+  string skills_mode = 9;
+  bool enable_skills = 10;
+  string skills_prompt = 11;
+  repeated string selected_skills = 12;
+}
+message UpdateLLMConfigResponse {
+  LLMConfig config = 1;
+}
+
+message ActivateLLMConfigRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message ActivateLLMConfigResponse {
+  string message = 1;
+}
+
+message TestLLMConfigRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string test_prompt = 2;
+}
+message TestLLMConfigResponse {
+  bool success = 1;
+  string response_text = 2;
+  string error_message = 3;
+}
+
+message DeleteLLMConfigRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message DeleteLLMConfigResponse {
+  string message = 1;
+}
+
+service LLMConfigService {
+  rpc ListLLMConfigs (ListLLMConfigsRequest) returns (ListLLMConfigsResponse);
+  rpc CreateLLMConfig (CreateLLMConfigRequest) returns (CreateLLMConfigResponse);
+  rpc UpdateLLMConfig (UpdateLLMConfigRequest) returns (UpdateLLMConfigResponse);
+  rpc ActivateLLMConfig (ActivateLLMConfigRequest) returns (ActivateLLMConfigResponse);
+  rpc TestLLMConfig (TestLLMConfigRequest) returns (TestLLMConfigResponse);
+  rpc DeleteLLMConfig (DeleteLLMConfigRequest) returns (DeleteLLMConfigResponse);
+}

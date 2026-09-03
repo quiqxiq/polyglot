@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package polyglot.v1;
 
-import "v1/billing.proto";
+import "v1/subscription.proto";
 import "buf/validate/validate.proto";
 
 option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";

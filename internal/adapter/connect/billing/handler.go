@@ -5,37 +5,25 @@ import (
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 )
 
-// BillingConnectHandler implements the billing ConnectRPC service.
+// BillingConnectHandler implements the billing & invoice ConnectRPC service.
 //
 //nolint:revive // Explicit transport role is part of the project naming convention.
 type BillingConnectHandler struct {
-	invoiceUC   *billingUC.InvoiceUseCase
-	checkoutUC  *billingUC.CheckoutUseCase
-	subUC       *billingUC.SubscriptionUseCase
-	lifecycleUC *billingUC.SubscriptionLifecycleUseCase
-	planUC      *billingUC.PlanUseCase
-	runBilling  *billingUC.RunBillingUseCase
-	manageSubUC *billingUC.ManageSubscriptionUseCase
+	invoiceUC  *billingUC.InvoiceUseCase
+	checkoutUC *billingUC.CheckoutUseCase
+	runBilling *billingUC.RunBillingUseCase
 }
 
 // NewBillingConnectHandler constructs a billing ConnectRPC handler.
 func NewBillingConnectHandler(
 	invUC *billingUC.InvoiceUseCase,
 	checkoutUC *billingUC.CheckoutUseCase,
-	subUC *billingUC.SubscriptionUseCase,
-	lifecycleUC *billingUC.SubscriptionLifecycleUseCase,
-	planUC *billingUC.PlanUseCase,
 	runBilling *billingUC.RunBillingUseCase,
-	manageSubUC *billingUC.ManageSubscriptionUseCase,
 ) *BillingConnectHandler {
 	return &BillingConnectHandler{
-		invoiceUC:   invUC,
-		checkoutUC:  checkoutUC,
-		subUC:       subUC,
-		lifecycleUC: lifecycleUC,
-		planUC:      planUC,
-		runBilling:  runBilling,
-		manageSubUC: manageSubUC,
+		invoiceUC:  invUC,
+		checkoutUC: checkoutUC,
+		runBilling: runBilling,
 	}
 }
 

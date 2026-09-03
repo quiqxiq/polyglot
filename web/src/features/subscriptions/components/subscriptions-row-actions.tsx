@@ -18,7 +18,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import type { Subscription } from '@/gen/v1/billing_pb'
+import type { Subscription } from '@/gen/v1/subscription_pb'
 import { useAuthStore } from '@/stores/auth-store'
 import { canPermission } from '@/hooks/use-can'
 import { useSubscriptions } from './subscriptions-provider'

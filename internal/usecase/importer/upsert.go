@@ -135,7 +135,7 @@ func (u *UpsertUseCase) importRow(ctx context.Context, r Row, res *Result) error
 func (u *UpsertUseCase) ensurePlan(ctx context.Context, r Row) (string, error) {
 	planName := strings.TrimSpace(r.PlanName)
 	if planName == "" {
-		return "", fmt.Errorf("paket kosong")
+		return "", fmt.Errorf("%w: plan name is required", domainPlan.ErrInvalidInput)
 	}
 	if pl, err := u.plans.FindByName(ctx, "tenant-default", planName); err == nil {
 		return pl.ID, nil

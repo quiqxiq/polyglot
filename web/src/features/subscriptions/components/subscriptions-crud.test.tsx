@@ -1,6 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 import { render } from 'vitest-browser-react'
-import { Subscription } from '@/gen/v1/billing_pb'
+import { Subscription } from '@/gen/v1/subscription_pb'
 import { useAuthStore } from '@/stores/auth-store'
 import { SubscriptionsProvider } from './subscriptions-provider'
 import { SubscriptionsDialogs } from './subscriptions-dialogs'

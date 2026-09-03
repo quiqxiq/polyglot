@@ -43,7 +43,7 @@ import {
   ActivateLLMConfigRequest,
   DeleteLLMConfigRequest,
   TestLLMConfigRequest,
-} from '@/gen/v1/bot_pb'
+} from '@/gen/v1/llm_pb'
 import { ConfirmDialog } from '@/components/confirm-dialog'
 import { toast } from 'sonner'
 

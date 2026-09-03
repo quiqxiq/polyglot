@@ -115,5 +115,5 @@ func (u *ManageIsolationUseCase) ApplyRouterIntegrationScript(ctx context.Contex
 		return nil
 	}
 
-	return fmt.Errorf("unsupported service type: %s", serviceType)
+	return fmt.Errorf("%w: unsupported service type: %s", device.ErrInvalidInput, serviceType)
 }

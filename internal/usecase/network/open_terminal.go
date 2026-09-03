@@ -30,10 +30,10 @@ func NewOpenTerminalUseCase(repo port.DeviceRepository, vault port.CredentialVau
 // Execute resolves device inventory and credentials, constructs target, and opens an SSH PTY session.
 func (u *OpenTerminalUseCase) Execute(ctx context.Context, deviceID string, cols, rows int) (port.TerminalSession, error) {
 	if deviceID == "" {
-		return nil, fmt.Errorf("open_terminal: device id is required")
+		return nil, fmt.Errorf("%w: device id is required", device.ErrInvalidInput)
 	}
 	if u.dialer == nil {
-		return nil, fmt.Errorf("open_terminal: terminal dialer not configured")
+		return nil, fmt.Errorf("%w: terminal dialer not configured", device.ErrDiagnosticsUnconfigured)
 	}
 
 	dev, err := u.repo.FindByID(ctx, deviceID)

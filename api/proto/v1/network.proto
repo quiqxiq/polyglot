@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// ── DHCP Leases ─────────────────────────────────────────────────────────
+
+message DHCPLease {
+  string id = 1;
+  string address = 2;
+  string mac_address = 3;
+  string host_name = 4;
+  string status = 5;
+  bool blocked = 6;
+  string comment = 7;
+}
+
+message ListDHCPLeasesRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string mac_filter = 2;
+}
+
+message ListDHCPLeasesResponse {
+  repeated DHCPLease leases = 1;
+}
+
+message BlockDHCPLeaseRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string ros_id = 2 [(buf.validate.field).string.min_len = 1];
+  bool blocked = 3;
+  string comment = 4;
+}
+
+message BlockDHCPLeaseResponse {
+  string message = 1;
+}
+
+// ── Parent Queues & IP Pools ──────────────────────────────────────────
+
+message ParentQueueEntry {
+  string ros_id = 1;
+  string name = 2;
+  string max_limit = 3;
+}
+
+message ListParentQueuesRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message ListParentQueuesResponse {
+  repeated ParentQueueEntry queues = 1;
+}
+
+message IPPoolEntry {
+  string ros_id = 1;
+  string name = 2;
+  string ranges = 3;
+}
+
+message ListIPPoolsRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message ListIPPoolsResponse {
+  repeated IPPoolEntry pools = 1;
+}
+
+service NetworkService {
+  rpc ListDHCPLeases(ListDHCPLeasesRequest) returns (ListDHCPLeasesResponse);
+  rpc BlockDHCPLease(BlockDHCPLeaseRequest) returns (BlockDHCPLeaseResponse);
+  rpc ListParentQueues(ListParentQueuesRequest) returns (ListParentQueuesResponse);
+  rpc ListIPPools(ListIPPoolsRequest) returns (ListIPPoolsResponse);
+}

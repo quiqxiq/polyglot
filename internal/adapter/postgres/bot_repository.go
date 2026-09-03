@@ -11,7 +11,8 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
-var ErrNotFound = errors.New("record not found")
+// ErrNotFound indicates the requested bot record was not found.
+var ErrNotFound = bot.ErrNotFound
 
 // WASessionRepository implements port.WASessionRepository for GORM/Postgres.
 type WASessionRepository struct {

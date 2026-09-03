@@ -20,7 +20,7 @@ import {
 import {
   ChangePlanRequest,
   type Subscription,
-} from '@/gen/v1/billing_pb'
+} from '@/gen/v1/subscription_pb'
 import { usePlansQuery } from '@/features/billing/api/use-plans'
 import { useChangePlanMutation } from '@/features/billing/api/use-billing'
 

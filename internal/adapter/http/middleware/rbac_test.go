@@ -55,7 +55,7 @@ func TestAuthorizeProcedureMiddleware(t *testing.T) {
 	t.Run("allowed admin", func(t *testing.T) {
 		h := newMux(1, []string{"admin"})
 		w := httptest.NewRecorder()
-		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.BotService/CreateSkill", nil)
+		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.SkillService/CreateSkill", nil)
 		h.ServeHTTP(w, req)
 		if w.Code != http.StatusOK {
 			t.Fatalf("status = %d, want 200 (body: %s)", w.Code, w.Body.String())
@@ -65,7 +65,7 @@ func TestAuthorizeProcedureMiddleware(t *testing.T) {
 	t.Run("fallback to JWT role when casbin has none", func(t *testing.T) {
 		h := newMux(2, []string{"admin"})
 		w := httptest.NewRecorder()
-		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.BotService/CreateSkill", nil)
+		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.SkillService/CreateSkill", nil)
 		h.ServeHTTP(w, req)
 		if w.Code != http.StatusOK {
 			t.Fatalf("status = %d, want 200 via fallback (body: %s)", w.Code, w.Body.String())
@@ -75,7 +75,7 @@ func TestAuthorizeProcedureMiddleware(t *testing.T) {
 	t.Run("no identity at all -> 401", func(t *testing.T) {
 		h := newMux(0, nil)
 		w := httptest.NewRecorder()
-		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.BotService/CreateSkill", nil)
+		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.SkillService/CreateSkill", nil)
 		h.ServeHTTP(w, req)
 		if w.Code != http.StatusUnauthorized {
 			t.Fatalf("status = %d, want 401 (body: %s)", w.Code, w.Body.String())
@@ -86,7 +86,7 @@ func TestAuthorizeProcedureMiddleware(t *testing.T) {
 		ce.roles["4"] = []string{"agent"}
 		h := newMux(4, []string{"agent"})
 		w := httptest.NewRecorder()
-		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.BotService/CreateSkill", nil)
+		req := httptest.NewRequest(http.MethodPost, "/polyglot.v1.SkillService/CreateSkill", nil)
 		h.ServeHTTP(w, req)
 		if w.Code != http.StatusForbidden {
 			t.Fatalf("status = %d, want 403 (body: %s)", w.Code, w.Body.String())

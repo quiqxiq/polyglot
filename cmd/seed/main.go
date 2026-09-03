@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -15,33 +14,35 @@ import (
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/customer"
 	"github.com/quixiq/polyglot/internal/domain/llm"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 func main() {
 	if err := godotenv.Load(); err != nil {
-		log.Println("No .env file found, using default environment variables")
+		logger.WithComponent("Seeder").Debug("no .env file found, using default environment variables")
 	}
 
 	cfg := config.Load()
+	logger.Init(cfg.LogLevel, cfg.AppEnv)
 	if err := cfg.Validate(); err != nil {
-		log.Fatalf("invalid configuration: %v", err)
+		logger.WithComponent("Seeder").WithError(err).Fatal("invalid configuration")
 	}
 
-	log.Println("Connecting to database for seeding...")
+	logger.WithComponent("Seeder").Info("connecting to database for seeding")
 
 	pgStore, err := postgres.NewStore(cfg.DatabaseURL)
 	if err != nil {
-		log.Fatalf("Database connection failed: %v", err)
+		logger.WithComponent("Seeder").WithError(err).Fatal("database connection failed")
 	}
 
-	log.Println("Seeding database data...")
+	logger.WithComponent("Seeder").Info("seeding database data")
 
 	ctx := context.Background()
 	seedUsers(ctx, pgStore)
 	seedLLMConfig(ctx, pgStore, cfg)
 	seedCasbin(ctx, pgStore)
 
-	log.Println("✅ Database seeding completed successfully!")
+	logger.WithComponent("Seeder").Info("database seeding completed successfully")
 }
 
 func seedUsers(ctx context.Context, pgStore *postgres.Store) {
@@ -111,13 +112,13 @@ func seedUsers(ctx context.Context, pgStore *postgres.Store) {
 
 	for _, u := range users {
 		if !validatePassword(u.password) {
-			log.Fatalf("Password for %s does not meet strength requirements (min 8 chars)", u.username)
+			logger.WithComponent("Seeder").WithField("username", u.username).Fatal("password does not meet strength requirements (min 8 chars)")
 		}
 
 		existing, err := pgStore.FindUserByUsername(ctx, u.username)
 		hash, errHash := bcrypt.GenerateFromPassword([]byte(u.password), bcrypt.DefaultCost)
 		if errHash != nil {
-			log.Printf("Failed to hash password for %s: %v", u.username, errHash)
+			logger.WithComponent("Seeder").WithError(errHash).WithField("username", u.username).Error("failed to hash password")
 			continue
 		}
 
@@ -131,9 +132,13 @@ func seedUsers(ctx context.Context, pgStore *postgres.Store) {
 				"is_active":      true,
 			}
 			if err := pgStore.DB().WithContext(ctx).Model(&model.UserModel{}).Where("username = ?", u.username).Updates(updates).Error; err != nil {
-				log.Printf("Failed to update existing user %s: %v", u.username, err)
+				logger.WithComponent("Seeder").WithError(err).WithField("username", u.username).Error("failed to update existing user")
 			} else {
-				log.Printf("Updated existing user: %s [Role: %s, Email: %s]", u.username, u.role, u.email)
+				logger.WithComponent("Seeder").WithFields(map[string]any{
+					"username": u.username,
+					"role":     u.role,
+					"email":    u.email,
+				}).Info("updated existing user")
 			}
 			continue
 		}
@@ -151,9 +156,13 @@ func seedUsers(ctx context.Context, pgStore *postgres.Store) {
 		}
 
 		if err := pgStore.CreateUser(ctx, user); err != nil {
-			log.Printf("Failed to create user %s: %v", u.username, err)
+			logger.WithComponent("Seeder").WithError(err).WithField("username", u.username).Error("failed to create user")
 		} else {
-			log.Printf("Created user: %s [Role: %s, Email: %s]", u.username, u.role, u.email)
+			logger.WithComponent("Seeder").WithFields(map[string]any{
+				"username": u.username,
+				"role":     u.role,
+				"email":    u.email,
+			}).Info("created user")
 		}
 	}
 }
@@ -161,16 +170,16 @@ func seedUsers(ctx context.Context, pgStore *postgres.Store) {
 func seedCasbin(ctx context.Context, pgStore *postgres.Store) {
 	enforcer, err := auth.NewCasbinEnforcer(ctx, pgStore.DB())
 	if err != nil {
-		log.Printf("Failed to initialize Casbin enforcer for seeding: %v", err)
+		logger.WithComponent("Seeder").WithError(err).Error("failed to initialize casbin enforcer for seeding")
 		return
 	}
 
 	auth.SeedSystemPolicies(enforcer)
-	log.Println("Seeded full Polyglot system Casbin RBAC policies into Postgres database")
+	logger.WithComponent("Seeder").Info("seeded system casbin RBAC policies into postgres database")
 
 	users, err := pgStore.FindAllUsers(ctx)
 	if err != nil {
-		log.Printf("Failed to load users for role assignment sync: %v", err)
+		logger.WithComponent("Seeder").WithError(err).Error("failed to load users for role assignment sync")
 		return
 	}
 	refs := make([]*auth.UserRef, 0, len(users))
@@ -178,19 +187,19 @@ func seedCasbin(ctx context.Context, pgStore *postgres.Store) {
 		refs = append(refs, &auth.UserRef{ID: fmt.Sprintf("%d", u.ID), Role: u.Role})
 	}
 	auth.EnsureUserRoleAssignments(enforcer, refs)
-	log.Println("Synced user role assignments into Casbin grouping policies")
+	logger.WithComponent("Seeder").Info("synced user role assignments into casbin grouping policies")
 }
 
 func seedLLMConfig(ctx context.Context, pgStore *postgres.Store, cfg config.Config) {
 	configs, _ := pgStore.FindAll(ctx)
 	if len(configs) > 0 {
-		log.Printf("LLM configs already exist, skipping.")
+		logger.WithComponent("Seeder").Info("llm configs already exist, skipping")
 		return
 	}
 
 	encryptedPlaceholder, err := config.Encrypt("REPLACE_WITH_YOUR_GEMINI_API_KEY", cfg.EncryptionKey)
 	if err != nil {
-		log.Printf("Failed to encrypt default API key: %v", err)
+		logger.WithComponent("Seeder").WithError(err).Error("failed to encrypt default api key")
 		return
 	}
 
@@ -203,8 +212,11 @@ func seedLLMConfig(ctx context.Context, pgStore *postgres.Store, cfg config.Conf
 	}
 
 	if err := pgStore.Create(ctx, defaultConfig); err != nil {
-		log.Printf("Failed to seed LLM config: %v", err)
+		logger.WithComponent("Seeder").WithError(err).Error("failed to seed llm config")
 	} else {
-		log.Printf("Created default LLM Config (Google Gemini 2.0 Flash - Active)")
+		logger.WithComponent("Seeder").WithFields(map[string]any{
+			"provider": defaultConfig.Provider,
+			"model":    defaultConfig.Model,
+		}).Info("created default llm config")
 	}
 }

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { botClient } from '@/lib/api-client'
+import { skillClient } from '@/lib/api-client'
 import { toast } from 'sonner'
 import type { Skill, SkillFile } from '../types'
 
@@ -36,12 +36,12 @@ export function useSkills() {
   return useQuery({
     queryKey: skillKeys.lists(),
     queryFn: async () => {
-      const resp = await botClient.listSkills({})
+      const resp = await skillClient.listSkills({})
       const mapped: Skill[] = await Promise.all(
         resp.skills.map(async (s) => {
           let resourceFiles: SkillFile[] = []
           try {
-            const resResp = await botClient.listResources({ skillId: s.id })
+            const resResp = await skillClient.listResources({ skillId: s.id })
             resourceFiles = (resResp.resources || []).map((r) => ({
               id: `${s.id}-${r.path}`,
               skillId: s.id,
@@ -94,7 +94,7 @@ export function useGlobalPrompt() {
   return useQuery({
     queryKey: skillKeys.globalPrompt(),
     queryFn: async () => {
-      const resp = await botClient.getGlobalPrompt({})
+      const resp = await skillClient.getGlobalPrompt({})
       return resp.content
     },
   })
@@ -104,7 +104,7 @@ export function useSaveGlobalPrompt() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (content: string) => {
-      return await botClient.saveGlobalPrompt({ content })
+      return await skillClient.saveGlobalPrompt({ content })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: skillKeys.globalPrompt() })
@@ -129,7 +129,7 @@ export function useCreateSkill() {
       description: string
     }) => {
       const skillName = (slug || name).toLowerCase().replace(/\s+/g, '-')
-      return await botClient.createSkill({
+      return await skillClient.createSkill({
         name: skillName,
         description,
         content: `# ${name}\n\n${description}\n`,
@@ -159,13 +159,13 @@ export function useSaveSkillFile() {
       isReference?: boolean
     }) => {
       if (filePath === 'SKILL.md' || !filePath) {
-        return await botClient.updateSkill({
+        return await skillClient.updateSkill({
           id: slug,
           name: slug,
           content: content,
         })
       }
-      return await botClient.saveResource({
+      return await skillClient.saveResource({
         skillId: slug,
         path: filePath,
         data: new TextEncoder().encode(content),
@@ -186,7 +186,7 @@ export function useDeleteSkill() {
   return useMutation({
     mutationFn: async ({ id, slug }: { id: number | string; slug: string }) => {
       const targetId = slug || String(id)
-      return await botClient.deleteSkill({ id: targetId })
+      return await skillClient.deleteSkill({ id: targetId })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: skillKeys.lists() })
@@ -209,7 +209,7 @@ export function useDeleteSkillFile() {
       fileId?: number | string
       filePath: string
     }) => {
-      return await botClient.deleteResource({
+      return await skillClient.deleteResource({
         skillId: slug,
         path: filePath,
       })
@@ -228,7 +228,7 @@ export function useToggleSkill() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async ({ slug, enabled }: { slug: string; enabled: boolean }) => {
-      return await botClient.toggleSkill({ id: slug, enabled })
+      return await skillClient.toggleSkill({ id: slug, enabled })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: skillKeys.lists() })
@@ -239,3 +239,4 @@ export function useToggleSkill() {
     },
   })
 }
+

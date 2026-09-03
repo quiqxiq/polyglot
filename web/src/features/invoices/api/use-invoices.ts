@@ -2,6 +2,7 @@ export {
   useInvoicesQuery,
   useInvoiceQuery,
   useCashierResolveQuery,
+  useCashierResolveMutation,
   useCashierPayMutation,
   useGenerateInvoicesMutation,
   useSubscriptionsQuery,

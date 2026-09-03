@@ -1,6 +1,6 @@
 import { toast } from 'sonner'
 import { ConfirmDialog } from '@/components/confirm-dialog'
-import { DeleteSubscriptionRequest, type Subscription } from '@/gen/v1/billing_pb'
+import { DeleteSubscriptionRequest, type Subscription } from '@/gen/v1/subscription_pb'
 import { useDeleteSubscriptionMutation } from '@/features/billing/api/use-billing'
 
 interface SubscriptionsDeleteDialogProps {

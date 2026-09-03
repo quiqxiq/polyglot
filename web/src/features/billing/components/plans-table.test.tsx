@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { render } from 'vitest-browser-react'
-import { Plan } from '@/gen/v1/billing_pb'
+import { Plan } from '@/gen/v1/plan_pb'
 import { PlansProvider } from './plans-provider'
 import { PlansTable } from './plans-table'
 

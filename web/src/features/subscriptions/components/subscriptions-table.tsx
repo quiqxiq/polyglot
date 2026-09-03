@@ -22,7 +22,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { DataTablePagination } from '@/components/data-table'
-import type { Subscription } from '@/gen/v1/billing_pb'
+import type { Subscription } from '@/gen/v1/subscription_pb'
 import { useSubscriptionsColumns } from './subscriptions-columns'
 
 interface SubscriptionsTableProps {

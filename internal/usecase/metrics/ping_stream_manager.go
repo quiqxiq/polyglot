@@ -2,7 +2,6 @@ package metrics
 
 import (
 	"context"
-	"fmt"
 	"net"
 	"strconv"
 	"sync"
@@ -303,7 +302,7 @@ func (m *PingStreamWorker) cleanupLoop(ctx context.Context) {
 					retentionDays = 7
 				}
 				if err := m.metricsRepo.CleanupExpiredMetrics(ctx, dev.ID, retentionDays); err != nil {
-					logger.WithComponent("PingStreamWorker").WithField("device_id", dev.ID).Warn(fmt.Sprintf("cleanup metrics error: %v", err))
+					logger.WithComponent("PingStreamWorker").WithError(err).WithField("device_id", dev.ID).Warn("cleanup metrics failed")
 				}
 			}
 		}

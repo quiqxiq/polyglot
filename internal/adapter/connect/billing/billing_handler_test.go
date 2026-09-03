@@ -26,71 +26,13 @@ func newBillingConnectFixture(t *testing.T) (*connectBilling.BillingConnectHandl
 	paymentProc := &mocktest.FakePaymentProcessor{
 		Pay: domainBilling.Payment{ID: "pay-1", PaymentNo: "PAY-001"},
 	}
-	manager := mocktest.NewFakeRouterAccountManager()
-	audit := &mocktest.FakeAuditWriter{}
 
 	invUC := billingUC.NewInvoiceUseCase(invRepo)
 	checkoutUC := billingUC.NewCheckoutUseCase(invRepo, custRepo, paymentProc)
-	subUC := billingUC.NewSubscriptionUseCase(subRepo, planRepo, custRepo, nil)
-	lifecycleUC := billingUC.NewSubscriptionLifecycleUseCase(subRepo, planRepo, manager, audit)
-	planUC := billingUC.NewPlanUseCase(planRepo, subRepo, manager)
 	runBillingUC := billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo)
 
-	handler := connectBilling.NewBillingConnectHandler(
-		invUC, checkoutUC, subUC, lifecycleUC, planUC, runBillingUC,
-		billingUC.NewManageSubscriptionUseCase(subRepo, planRepo, custRepo, manager, audit, invRepo),
-	)
+	handler := connectBilling.NewBillingConnectHandler(invUC, checkoutUC, runBillingUC)
 	return handler, invRepo, subRepo, planRepo
-}
-
-func TestBillingConnectHandler_PlanCRUD(t *testing.T) {
-	handler, _, _, _ := newBillingConnectFixture(t)
-	ctx := context.Background()
-
-	// 1. Create Plan
-	createResp, err := handler.CreatePlan(ctx, connect.NewRequest(&devicepb.CreatePlanRequest{
-		Plan: &devicepb.Plan{
-			Name:                  "PAKET-50M",
-			ServiceType:           "PPPOE",
-			BandwidthDownloadKbps: 50000,
-			BandwidthUploadKbps:   50000,
-			Price:                 250000,
-		},
-	}))
-	require.NoError(t, err)
-	planID := createResp.Msg.Plan.Id
-	assert.NotEmpty(t, planID)
-	assert.Equal(t, "PAKET-50M", createResp.Msg.Plan.Name)
-
-	// 2. Get Plan
-	getResp, err := handler.GetPlan(ctx, connect.NewRequest(&devicepb.GetPlanRequest{Id: planID}))
-	require.NoError(t, err)
-	assert.Equal(t, "PAKET-50M", getResp.Msg.Plan.Name)
-
-	// 3. List Plans
-	listResp, err := handler.ListPlans(ctx, connect.NewRequest(&devicepb.ListPlansRequest{ActiveOnly: true}))
-	require.NoError(t, err)
-	assert.Len(t, listResp.Msg.Plans, 1)
-
-	// 4. Update Plan
-	updateResp, err := handler.UpdatePlan(ctx, connect.NewRequest(&devicepb.UpdatePlanRequest{
-		Plan: &devicepb.Plan{
-			Id:                    planID,
-			Name:                  "PAKET-50M-PROMO",
-			ServiceType:           "PPPOE",
-			BandwidthDownloadKbps: 50000,
-			BandwidthUploadKbps:   50000,
-			Price:                 225000,
-		},
-	}))
-	require.NoError(t, err)
-	assert.Equal(t, "PAKET-50M-PROMO", updateResp.Msg.Plan.Name)
-	assert.InDelta(t, 225000, updateResp.Msg.Plan.Price, 0.01)
-
-	// 5. Delete Plan
-	delResp, err := handler.DeletePlan(ctx, connect.NewRequest(&devicepb.DeletePlanRequest{Id: planID}))
-	require.NoError(t, err)
-	assert.Contains(t, delResp.Msg.Message, "deleted")
 }
 
 func TestBillingConnectHandler_CashierPay(t *testing.T) {
@@ -106,7 +48,6 @@ func TestBillingConnectHandler_CashierPay(t *testing.T) {
 		ManualPaymentCode: "PAY-101010",
 	}))
 
-	// CashierPay via RPC
 	payResp, err := handler.CashierPay(ctx, connect.NewRequest(&devicepb.CashierPayRequest{
 		InvoiceId:        "inv-10",
 		Amount:           100000,
@@ -137,45 +78,4 @@ func TestBillingConnectHandler_GenerateInvoices(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, int32(1), genResp.Msg.Created)
 	assert.Equal(t, int32(0), genResp.Msg.Skipped)
-}
-
-func TestBillingConnectHandler_SubscriptionEnrichment(t *testing.T) {
-	handler, _, subRepo, planRepo := newBillingConnectFixture(t)
-	ctx := context.Background()
-
-	planRepo.Seed(domainPlan.ServicePlan{
-		ID:                    "plan-50m",
-		Name:                  "PAKET-50M",
-		ServiceType:           "PPPOE",
-		BandwidthDownloadKbps: 50000,
-		BandwidthUploadKbps:   50000,
-		Price:                 250000,
-		IsActive:              true,
-	})
-	subRepo.Seed(domainSub.Subscription{
-		ID:             "sub-100",
-		CustomerID:     "cust-1",
-		PlanID:         "plan-50m",
-		ServiceType:    "PPPOE",
-		RemoteUsername: "user_pppoe",
-		Status:         domainSub.StatusActive,
-	})
-
-	// 1. GetSubscription
-	getResp, err := handler.GetSubscription(ctx, connect.NewRequest(&devicepb.GetSubscriptionRequest{Id: "sub-100"}))
-	require.NoError(t, err)
-	sub := getResp.Msg.Subscription
-	assert.Equal(t, "sub-100", sub.Id)
-	assert.Equal(t, "PAKET-50M", sub.PlanName)
-	assert.Equal(t, "50M/50M", sub.RateLimit)
-	require.NotNil(t, sub.PppoeConfig)
-	assert.Equal(t, "50M/50M", sub.PppoeConfig.RateLimit)
-	assert.Equal(t, "PAKET-50M", sub.PppoeConfig.RouterProfile)
-
-	// 2. ListSubscriptions
-	listResp, err := handler.ListSubscriptions(ctx, connect.NewRequest(&devicepb.ListSubscriptionsRequest{CustomerId: "cust-1"}))
-	require.NoError(t, err)
-	require.Len(t, listResp.Msg.Subscriptions, 1)
-	assert.Equal(t, "PAKET-50M", listResp.Msg.Subscriptions[0].PlanName)
-	assert.Equal(t, "50M/50M", listResp.Msg.Subscriptions[0].RateLimit)
 }

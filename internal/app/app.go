@@ -7,38 +7,15 @@ import (
 	"strings"
 	"time"
 
-	"connectrpc.com/connect"
-	devicepb "github.com/quixiq/polyglot/api/gen/v1"
 	"github.com/quixiq/polyglot/internal/adapter/auth"
-	authConnect "github.com/quixiq/polyglot/internal/adapter/connect/auth"
-	billingConnect "github.com/quixiq/polyglot/internal/adapter/connect/billing"
-	botConnect "github.com/quixiq/polyglot/internal/adapter/connect/bot"
-	cashbookConnect "github.com/quixiq/polyglot/internal/adapter/connect/cashbook"
-	customerConnect "github.com/quixiq/polyglot/internal/adapter/connect/customer"
-	deviceConnect "github.com/quixiq/polyglot/internal/adapter/connect/device"
-	hotspotConnect "github.com/quixiq/polyglot/internal/adapter/connect/hotspot"
-	ispadminConnect "github.com/quixiq/polyglot/internal/adapter/connect/ispadmin"
-	notificationConnect "github.com/quixiq/polyglot/internal/adapter/connect/notification"
-	portalConnect "github.com/quixiq/polyglot/internal/adapter/connect/portal"
-	pppConnect "github.com/quixiq/polyglot/internal/adapter/connect/ppp"
-	registrationConnect "github.com/quixiq/polyglot/internal/adapter/connect/registration"
-	reportConnect "github.com/quixiq/polyglot/internal/adapter/connect/report"
-	settingConnect "github.com/quixiq/polyglot/internal/adapter/connect/setting"
-	adminapi "github.com/quixiq/polyglot/internal/adapter/http/adminapi"
-	gatewayHTTP "github.com/quixiq/polyglot/internal/adapter/http/gateway"
-	"github.com/quixiq/polyglot/internal/adapter/http/middleware"
-	portalHTTP "github.com/quixiq/polyglot/internal/adapter/http/portal"
-	reportsHTTP "github.com/quixiq/polyglot/internal/adapter/http/reports"
-	webhookHTTP "github.com/quixiq/polyglot/internal/adapter/http/webhook"
 	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
-
-	"github.com/quixiq/polyglot/internal/adapter/mcp"
+	"github.com/quixiq/polyglot/internal/adapter/llm/genkit"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/adapter/provisioner"
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
 	storageAdapter "github.com/quixiq/polyglot/internal/adapter/storage"
 	tripay "github.com/quixiq/polyglot/internal/adapter/tripay"
-	whatsappadapter "github.com/quixiq/polyglot/internal/adapter/whatsapp"
+	waAdapter "github.com/quixiq/polyglot/internal/adapter/whatsapp"
 	wsAdapter "github.com/quixiq/polyglot/internal/adapter/ws"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/device"
@@ -53,22 +30,27 @@ import (
 	authUC "github.com/quixiq/polyglot/internal/usecase/auth"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	botUC "github.com/quixiq/polyglot/internal/usecase/bot"
+	cashbookUC "github.com/quixiq/polyglot/internal/usecase/cashbook"
 	chatUC "github.com/quixiq/polyglot/internal/usecase/chat"
 	convUC "github.com/quixiq/polyglot/internal/usecase/conversation"
 	customerUC "github.com/quixiq/polyglot/internal/usecase/customer"
 	deviceUC "github.com/quixiq/polyglot/internal/usecase/device"
 	hotspotUC "github.com/quixiq/polyglot/internal/usecase/hotspot"
 	"github.com/quixiq/polyglot/internal/usecase/importer"
+	llmUC "github.com/quixiq/polyglot/internal/usecase/llm"
 	metricsUC "github.com/quixiq/polyglot/internal/usecase/metrics"
 	networkUC "github.com/quixiq/polyglot/internal/usecase/network"
 	notificationUC "github.com/quixiq/polyglot/internal/usecase/notification"
+	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
 	portalUC "github.com/quixiq/polyglot/internal/usecase/portal"
 	pppUC "github.com/quixiq/polyglot/internal/usecase/ppp"
 	registrationUC "github.com/quixiq/polyglot/internal/usecase/registration"
 	settingUC "github.com/quixiq/polyglot/internal/usecase/setting"
 	skillUC "github.com/quixiq/polyglot/internal/usecase/skill"
+	subUC "github.com/quixiq/polyglot/internal/usecase/subscription"
 	userUC "github.com/quixiq/polyglot/internal/usecase/user"
 	"github.com/quixiq/polyglot/pkg/logger"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 type App struct {
@@ -84,7 +66,7 @@ type App struct {
 
 func New(ctx context.Context, cfg config.Config) (*App, error) {
 	logger.Init(cfg.LogLevel, cfg.AppEnv)
-	logger.WithComponent("Polyglot").Info("initializing application container...")
+	logger.WithComponent("App").Info("initializing application container...")
 
 	dbURL := strings.TrimSpace(cfg.DatabaseURL)
 	pgStore, err := postgres.NewStore(dbURL)
@@ -95,7 +77,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	redisURL := strings.TrimSpace(cfg.RedisURL)
 	redisStore, err := redisAdapter.NewStore(redisURL)
 	if err != nil {
-		logger.WithComponent("Polyglot").WithError(err).Warn("failed to connect to Redis; falling back to in-memory cache")
+		logger.WithComponent("App").WithError(err).Warn("failed to connect to Redis; falling back to in-memory cache")
 	}
 
 	jwtService := auth.NewJWTService(cfg.JWTSecret, cfg.JWTExpiryHours)
@@ -107,7 +89,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	casbinEnforcer, err := auth.NewCasbinEnforcer(ctx, pgStore.DB())
 	if err != nil {
-		logger.WithComponent("Polyglot").WithError(err).Warn("failed to initialize Casbin enforcer")
+		logger.WithComponent("App").WithError(err).Warn("failed to initialize Casbin enforcer")
 	} else {
 		auth.SeedSystemPolicies(casbinEnforcer)
 		if users, err := pgStore.FindAllUsers(ctx); err == nil {
@@ -117,7 +99,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 			}
 			auth.EnsureUserRoleAssignments(casbinEnforcer, refs)
 		} else {
-			logger.WithComponent("Polyglot").WithError(err).Warn("failed to load users for role assignment sync")
+			logger.WithComponent("App").WithError(err).Warn("failed to load users for role assignment sync")
 		}
 	}
 
@@ -127,7 +109,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	chatService := chatUC.NewChatUseCase(pgStore)
 	waManager, err := whatsapp.NewSessionManager(cfg.DatabaseURL, pgStore, nil, eventHandler.MakeStatusCallback())
 	if err != nil {
-		logger.WithComponent("Polyglot").WithError(err).Warn("failed to initialize WhatsApp session manager")
+		logger.WithComponent("App").WithError(err).Warn("failed to initialize WhatsApp session manager")
 	}
 
 	convService := convUC.NewConversationUseCase(pgStore)
@@ -185,7 +167,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	sessionGateway := mikrotik.NewGateway(exec)
 	queueGateway := mikrotik.NewQueueGateway(exec)
 
-	// ─── 1. Repositori & Manajer Infrastruktur ──────────────────────────────
+	// ─── 1. Repositories ────────────────────────────────────────────────────
 	customerRepo := postgres.NewCustomerRepository(pgStore.DB())
 	invRepo := postgres.NewInvoiceRepository(pgStore.DB())
 	subRepo := postgres.NewSubscriptionRepository(pgStore.DB(), vault)
@@ -202,7 +184,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	accountMgr := provisioner.New(reg, sessionGateway, hotGateway, sessionGateway, queueGateway)
 	paymentProc := postgres.NewPaymentProcessor(pgStore.DB())
 	paymentProc.OnPaid = provisioner.BuildOnPaidRestore(accountMgr, subRepo, planRepo, settingRepo)
-	waSender := whatsappadapter.NewSenderAdapter(waManager, pgStore.FindAllSessions)
+	waSender := waAdapter.NewSenderAdapter(waManager, pgStore.FindAllSessions)
 	tripayAdapter := tripay.NewAdapter(settingRepo)
 
 	// ─── 2. Use Cases ───────────────────────────────────────────────────────
@@ -210,7 +192,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	refreshUseCase := authUC.NewRefreshTokenUseCase(userRepo, jwtService, refreshSvc, casbinEnforcer)
 	manageUserUseCase := userUC.NewManageUserUseCase(userRepo, casbinEnforcer)
 	manageSettingUseCase := settingUC.NewManageSettingUseCase(settingRepo)
-	custUC := customerUC.NewManageCustomerUseCase(customerRepo, subRepo, invRepo)
+	custUC := customerUC.NewManageCustomerUseCase(customerRepo, subRepo, invRepo, accountMgr)
 	devUC := deviceUC.NewManageDeviceUseCase(repo, vault, reg, sessionGateway)
 	openTermUC := networkUC.NewOpenTerminalUseCase(repo, vault, genericssh.DialSSHPty)
 	hotUC := hotspotUC.New("internal/template", hotGateway)
@@ -218,10 +200,10 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	pppUseCase := pppUC.New(sessionGateway)
 
 	invUC := billingUC.NewInvoiceUseCase(invRepo)
-	subUC := billingUC.NewSubscriptionUseCase(subRepo, planRepo, customerRepo, repo)
-	planUC := billingUC.NewPlanUseCase(planRepo, subRepo, accountMgr)
+	planUCase := planUC.NewManagePlanUseCase(planRepo, subRepo, accountMgr)
+	subUCase := subUC.NewManageSubscriptionUseCase(subRepo, planRepo, customerRepo, repo, accountMgr, auditLogRepo, invRepo)
 	checkoutUC := billingUC.NewCheckoutUseCase(invRepo, customerRepo, paymentProc)
-	lifecycleUC := billingUC.NewSubscriptionLifecycleUseCase(subRepo, planRepo, accountMgr, auditLogRepo)
+	lifecycleUC := subUC.NewLifecycleUseCase(subRepo, planRepo, accountMgr, auditLogRepo)
 	runBillingUC := billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo).WithSettings(settingRepo)
 	chargeUC := billingUC.NewGatewayChargeUseCase(invRepo, customerRepo, gwtxRepo, tripayAdapter, paymentProc, settingRepo)
 
@@ -268,11 +250,23 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 				return nil, err
 			}
 			if !canAccess {
-				return nil, connect.NewError(connect.CodePermissionDenied, fmt.Errorf("access to device %s denied", deviceID))
+				return nil, response.PermissionDenied(fmt.Sprintf("access to device %s denied", deviceID))
 			}
 		}
 		return reg.Get(ctx, deviceID)
 	}
+
+	cashbookUseCase := cashbookUC.NewManageCashbookUseCase(cashRepo)
+	llmConfigUseCase := llmUC.NewManageConfigUseCase(pgStore, cfg.EncryptionKey, func(c context.Context, llmCfg *domainllm.Config, apiKey string) error {
+		prov, err := genkit.NewProvider(c, llmCfg, apiKey)
+		if err != nil {
+			return fmt.Errorf("init genkit provider: %w", err)
+		}
+		if err := prov.TestConnection(c); err != nil {
+			return fmt.Errorf("test genkit connection: %w", err)
+		}
+		return nil
+	})
 
 	driverResolverConnect := func(ctx context.Context, deviceID string) (port.DeviceDriver, bool) {
 		drv, err := reg.Get(ctx, deviceID)
@@ -282,117 +276,55 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		return drv, true
 	}
 
-	// ─── 3. Routing (net/http ServeMux) ─────────────────────────────────────
-	rootMux := http.NewServeMux()
-
-	webhookHTTPHandler := webhookHTTP.NewHandler()
-	webhookHTTPHandler.RegisterPublic(rootMux)
-
-	authPath, authHandler := authConnect.NewAuthServiceHandler(
-		authUseCase, refreshUseCase, manageUserUseCase, cfg.AppEnv == "production",
-	)
-	rootMux.Handle(authPath, authHandler)
-
-	pubRegPath, pubRegHandler := registrationConnect.NewPublicSubmitHandler(regManagerUC)
-	rootMux.Handle(pubRegPath, pubRegHandler)
-
-	portalConnectPath, portalConnectHandler := portalConnect.NewPortalServiceHandler(portalUCase)
-	rootMux.Handle(portalConnectPath, portalConnectHandler)
-
-	portalHTTPHandler := portalHTTP.NewHandler(portalUCase)
-	portalHTTPHandler.RegisterPublic(rootMux)
-	portalHTTPHandler.RegisterAuthenticated(rootMux)
-
-	gatewayHTTPHandler := gatewayHTTP.NewHandler(chargeUC)
-	gatewayHTTPHandler.RegisterPublic(rootMux)
-
-	mcpServer := mcp.New(reg, nil).
-		WithMikhmonUseCase(hotUC).
-		WithCustomerRepository(customerRepo)
-	rootMux.Handle("/mcp", mcpServer.HTTPHandler())
-
-	wsAdapter.RegisterEventRoutes(rootMux, sseHub, openTermUC)
-
-	protectedMux := http.NewServeMux()
-
-	var protectedPaths []string
-	registerProtected := func(servicePath string, handler http.Handler) {
-		protectedMux.Handle(servicePath, handler)
-		protectedPaths = append(protectedPaths, servicePath)
-	}
-
-	devPath, devHandler := deviceConnect.NewDeviceServiceHandler(devUC, openTermUC, connectDriverProvider, metricsUseCase, manageIsolationUseCase)
-	registerProtected(devPath, devHandler)
-
-	custPath, custHandler := customerConnect.NewCustomerServiceHandler(custUC)
-	registerProtected(custPath, custHandler)
-
-	rbacPath, rbacHandler := authConnect.NewRBACServiceHandler(casbinEnforcer)
-	registerProtected(rbacPath, rbacHandler)
-
-	userPath, userHandler := authConnect.NewUserServiceHandler(manageUserUseCase)
-	registerProtected(userPath, userHandler)
-
-	settingPath, settingHandler := settingConnect.NewSettingServiceHandler(manageSettingUseCase)
-	registerProtected(settingPath, settingHandler)
-
-	billingPath, billingHandler := billingConnect.NewBillingServiceHandler(
-		invUC, checkoutUC, subUC, lifecycleUC, planUC, runBillingUC,
-		billingUC.NewManageSubscriptionUseCase(subRepo, planRepo, customerRepo, accountMgr, auditLogRepo, invRepo))
-	registerProtected(billingPath, billingHandler)
-
-	regPath, regHandler := registrationConnect.NewRegistrationServiceHandler(regManagerUC, regConvertUC, regRepo)
-	registerProtected(regPath, regHandler)
-
-	cashbookPath, cashbookHandler := cashbookConnect.NewCashbookServiceHandler(cashRepo)
-	registerProtected(cashbookPath, cashbookHandler)
-
-	notifPath, notifHandler := notificationConnect.NewNotificationServiceHandler(notifRepo, waSender)
-	registerProtected(notifPath, notifHandler)
-
-	reportPath, reportHandler := reportConnect.NewReportServiceHandler(reportingRepo, reportingRepo)
-	registerProtected(reportPath, reportHandler)
-
-	adminPath, adminHandler := ispadminConnect.NewIspAdminServiceHandler(
-		upsertImport, routerSource, reconciler, exportUC, driverResolverConnect)
-	registerProtected(adminPath, adminHandler)
-
-	mikhmonPath, mikhmonHandler := hotspotConnect.NewHotspotServiceHandler(hotUC, activeSessionsUC, connectDriverProvider)
-	registerProtected(mikhmonPath, mikhmonHandler)
-
-	pppPath, pppHandler := pppConnect.NewPPPServiceHandler(pppUseCase, connectDriverProvider)
-	registerProtected(pppPath, pppHandler)
-
-	waPath, waHandler := botConnect.NewWhatsAppServiceHandler(pgStore, waManager, chatService)
-	registerProtected(waPath, waHandler)
-
-	botPath, botHandler := botConnect.NewBotServiceHandler(convService, botEngine, skillUseCase, pgStore, cfg.EncryptionKey)
-	registerProtected(botPath, botHandler)
-
-	probePath, probeHandler := deviceConnect.NewProbeServiceHandler()
-	registerProtected(probePath, probeHandler)
-
-	gatewayHTTPHandler.RegisterProtected(protectedMux)
-	reportsHTTP.NewHandler(reportingRepo).Register(protectedMux)
-	adminapi.NewHandler(upsertImport, routerSource, reconciler, reportingRepo, exportUC, driverResolverConnect).
-		RegisterProtected(protectedMux)
-
-	protectedHandler := middleware.Chain(
-		protectedMux,
-		middleware.AuthenticateJWT(jwtService),
-		middleware.AuthorizeProcedure(casbinEnforcer),
-	)
-	for _, path := range protectedPaths {
-		rootMux.Handle(path, protectedHandler)
-	}
-	for _, plainPath := range []string{
-		"/api/cashier/charge",
-		"/api/reports/daily", "/api/reports/monthly", "/api/reports/yearly",
-		"/api/admin/import", "/api/admin/import-router", "/api/admin/reconcile",
-		"/api/admin/export", "/api/admin/snapshot/refresh",
-	} {
-		rootMux.Handle(plainPath, protectedHandler)
-	}
+	routerHandler := buildRouter(routerDeps{
+		cfg:                    cfg,
+		jwtService:             jwtService,
+		casbinEnforcer:         casbinEnforcer,
+		reportingRepo:          reportingRepo,
+		userRepo:               userRepo,
+		customerRepo:           customerRepo,
+		regRepo:                regRepo,
+		cashbookUseCase:        cashbookUseCase,
+		notifRepo:              notifRepo,
+		pgStore:                pgStore,
+		reg:                    reg,
+		waManager:              waManager,
+		sseHub:                 sseHub,
+		waSender:               waSender,
+		chatService:            chatService,
+		skillUseCase:           skillUseCase,
+		convService:            convService,
+		botEngine:              botEngine,
+		llmConfigUseCase:       llmConfigUseCase,
+		authUseCase:            authUseCase,
+		refreshUseCase:         refreshUseCase,
+		manageUserUseCase:      manageUserUseCase,
+		manageSettingUseCase:   manageSettingUseCase,
+		custUC:                 custUC,
+		devUC:                  devUC,
+		openTermUC:             openTermUC,
+		hotUC:                  hotUC,
+		activeSessionsUC:       activeSessionsUC,
+		pppUseCase:             pppUseCase,
+		invUC:                  invUC,
+		planUCase:              planUCase,
+		subUCase:               subUCase,
+		checkoutUC:             checkoutUC,
+		lifecycleUC:            lifecycleUC,
+		runBillingUC:           runBillingUC,
+		chargeUC:               chargeUC,
+		regManagerUC:           regManagerUC,
+		regConvertUC:           regConvertUC,
+		portalUCase:            portalUCase,
+		upsertImport:           upsertImport,
+		routerSource:           routerSource,
+		reconciler:             reconciler,
+		exportUC:               exportUC,
+		metricsUseCase:         metricsUseCase,
+		manageIsolationUseCase: manageIsolationUseCase,
+		connectDriverProvider:  connectDriverProvider,
+		driverResolverConnect:  driverResolverConnect,
+	})
 
 	// ─── 4. Scheduler (Cron) ────────────────────────────────────────────────
 	if cfg.SchedulerEnabled && cfg.BillingCronSpec != "" && cfg.IsolationCronSpec != "" {
@@ -416,7 +348,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		}, "tenant-default")
 		defer sched.Stop()
 		sched.Start()
-		logger.WithComponent("Polyglot").WithFields(map[string]any{
+		logger.WithComponent("App").WithFields(map[string]any{
 			"billing_cron":   cfg.BillingCronSpec,
 			"isolation_cron": cfg.IsolationCronSpec,
 			"wa_send_cron":   cfg.WaSendCronSpec,
@@ -426,7 +358,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 
 	server := &http.Server{
 		Addr:        ":" + cfg.Port,
-		Handler:     middleware.Chain(rootMux, middleware.RequestID(), middleware.CORS(cfg.CORSOrigins, cfg.AppEnv), middleware.Recovery()),
+		Handler:     routerHandler,
 		ReadTimeout: 30 * time.Second,
 		IdleTimeout: 120 * time.Second,
 	}
@@ -444,7 +376,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 }
 
 func (a *App) Run() error {
-	logger.WithComponent("Polyglot").WithField("address", a.httpServer.Addr).Info("engine starting")
+	logger.WithComponent("App").WithField("address", a.httpServer.Addr).Info("engine starting")
 	if err := a.httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		return fmt.Errorf("http server failed: %w", err)
 	}
@@ -452,7 +384,7 @@ func (a *App) Run() error {
 }
 
 func (a *App) Shutdown(ctx context.Context) error {
-	logger.WithComponent("Polyglot").Info("shutting down server...")
+	logger.WithComponent("App").Info("shutting down server...")
 	if a.pingStreamMgr != nil {
 		a.pingStreamMgr.Stop()
 	}
@@ -460,7 +392,7 @@ func (a *App) Shutdown(ctx context.Context) error {
 		a.sseHub.Close()
 	}
 	if err := a.httpServer.Shutdown(ctx); err != nil {
-		logger.WithComponent("Polyglot").WithError(err).Warn("error shutting down HTTP server")
+		logger.WithComponent("App").WithError(err).Warn("error shutting down HTTP server")
 		_ = a.httpServer.Close()
 	}
 	if a.waManager != nil {
@@ -469,7 +401,7 @@ func (a *App) Shutdown(ctx context.Context) error {
 	if a.registry != nil {
 		_ = a.registry.Close()
 	}
-	logger.WithComponent("Polyglot").Info("shutdown complete")
+	logger.WithComponent("App").Info("shutdown complete")
 	return nil
 }
 
@@ -481,5 +413,3 @@ func timeNowUTC() time.Time {
 	n := time.Now().UTC()
 	return time.Date(n.Year(), n.Month(), n.Day(), 0, 0, 0, 0, time.UTC)
 }
-
-var _ = devicepb.Registration{}

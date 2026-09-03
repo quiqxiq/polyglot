@@ -9,6 +9,7 @@ import (
 
 	"github.com/quixiq/polyglot/internal/usecase/network"
 	"github.com/quixiq/polyglot/pkg/logger"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 type TerminalMessage struct {
@@ -31,7 +32,7 @@ func NewTerminalHandler(openTermUC *network.OpenTerminalUseCase) *TerminalHandle
 func (h *TerminalHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	deviceID := r.PathValue("id")
 	if deviceID == "" {
-		http.Error(w, `{"error":"device id is required"}`, http.StatusBadRequest)
+		response.WriteHTTPStatusError(w, http.StatusBadRequest, "device id is required")
 		return
 	}
 

@@ -14,7 +14,7 @@ import { Textarea } from '@/components/ui/textarea'
 import {
   SuspendSubscriptionRequest,
   type Subscription,
-} from '@/gen/v1/billing_pb'
+} from '@/gen/v1/subscription_pb'
 import { useSuspendSubscriptionMutation } from '@/features/billing/api/use-billing'
 
 interface SuspendDialogProps {

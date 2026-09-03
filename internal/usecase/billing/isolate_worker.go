@@ -10,6 +10,7 @@ import (
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
+	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
@@ -245,7 +246,7 @@ func (w *IsolateWorker) accountForRetry(ctx context.Context, sub domainSubscript
 		Comment:  "polyglot:" + sub.ID,
 	}
 	if pl, err := w.plans.FindByID(ctx, sub.PlanID); err == nil {
-		full := subscriberAccountFromPlan(sub, pl)
+		full := planUC.SubscriberAccountFromPlan(sub, pl)
 		full.Profile = acct.Profile
 		full.Comment = acct.Comment
 		return full

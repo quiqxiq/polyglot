@@ -14,7 +14,11 @@ import (
 	"github.com/quixiq/polyglot/pkg/response"
 )
 
-type IspAdminConnectHandler struct {
+// ISPAdminConnectHandler implements ConnectRPC procedures for ISP administration
+// (customer import, reconciliation, router data pull, and bulk export).
+//
+//nolint:revive // Explicit transport role is part of the project naming convention.
+type ISPAdminConnectHandler struct {
 	upsert     *importer.UpsertUseCase
 	routerSrc  *importer.RouterSource
 	reconciler *importer.Reconciler
@@ -22,20 +26,25 @@ type IspAdminConnectHandler struct {
 	resolve    func(ctx context.Context, deviceID string) (port.DeviceDriver, bool)
 }
 
-func NewIspAdminConnectHandler(
+// NewISPAdminConnectHandler constructs an ISP admin ConnectRPC handler.
+func NewISPAdminConnectHandler(
 	upsert *importer.UpsertUseCase,
 	routerSrc *importer.RouterSource,
 	reconciler *importer.Reconciler,
 	exporter *importer.ExportUseCase,
 	resolver func(ctx context.Context, deviceID string) (port.DeviceDriver, bool),
-) *IspAdminConnectHandler {
-	return &IspAdminConnectHandler{
-		upsert: upsert, routerSrc: routerSrc, reconciler: reconciler,
-		exporter: exporter, resolve: resolver,
+) *ISPAdminConnectHandler {
+	return &ISPAdminConnectHandler{
+		upsert:     upsert,
+		routerSrc:  routerSrc,
+		reconciler: reconciler,
+		exporter:   exporter,
+		resolve:    resolver,
 	}
 }
 
-func (h *IspAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Request[devicepb.ImportFileRequest]) (*connect.Response[devicepb.ImportFileResponse], error) {
+// ImportFile parses an uploaded CSV or XLSX file and upserts subscriber records.
+func (h *ISPAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Request[devicepb.ImportFileRequest]) (*connect.Response[devicepb.ImportFileResponse], error) {
 	if h.upsert == nil {
 		return nil, response.Unavailable("importer unavailable")
 	}
@@ -58,7 +67,8 @@ func (h *IspAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Re
 	}), nil
 }
 
-func (h *IspAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.Request[devicepb.ImportRouterRequest]) (*connect.Response[devicepb.ImportRouterResponse], error) {
+// ImportRouter pulls PPPoE accounts from a connected MikroTik router and registers them.
+func (h *ISPAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.Request[devicepb.ImportRouterRequest]) (*connect.Response[devicepb.ImportRouterResponse], error) {
 	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
 	if !ok || driver == nil {
 		return nil, response.MapDomainError(device.ErrNotFound)
@@ -102,7 +112,8 @@ func (h *IspAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.
 	}), nil
 }
 
-func (h *IspAdminConnectHandler) ExportCustomers(ctx context.Context, req *connect.Request[devicepb.ExportCustomersRequest]) (*connect.Response[devicepb.ExportCustomersResponse], error) {
+// ExportCustomers dumps customer records to CSV or XLSX format.
+func (h *ISPAdminConnectHandler) ExportCustomers(ctx context.Context, req *connect.Request[devicepb.ExportCustomersRequest]) (*connect.Response[devicepb.ExportCustomersResponse], error) {
 	if h.exporter == nil {
 		return nil, response.Unavailable("exporter unavailable")
 	}
@@ -123,7 +134,8 @@ func (h *IspAdminConnectHandler) ExportCustomers(ctx context.Context, req *conne
 	}), nil
 }
 
-func (h *IspAdminConnectHandler) Reconcile(ctx context.Context, req *connect.Request[devicepb.ReconcileRequest]) (*connect.Response[devicepb.ReconcileResponse], error) {
+// Reconcile compares router state against database subscriptions and flags mismatches.
+func (h *ISPAdminConnectHandler) Reconcile(ctx context.Context, req *connect.Request[devicepb.ReconcileRequest]) (*connect.Response[devicepb.ReconcileResponse], error) {
 	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
 	if !ok || driver == nil {
 		return nil, response.MapDomainError(device.ErrNotFound)

@@ -1,6 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   type CashierPayRequest,
+  type GenerateInvoicesRequest,
+  ResolveMethod,
+} from '@/gen/v1/billing_pb'
+import {
   type CreateSubscriptionRequest,
   type UpdateSubscriptionRequest,
   type DeleteSubscriptionRequest,
@@ -11,11 +15,8 @@ import {
   type ActivateSubscriptionRequest,
   type IsolateSubscriptionRequest,
   type RestoreSubscriptionRequest,
-  type GenerateInvoicesRequest,
-
-  ResolveMethod,
-} from '@/gen/v1/billing_pb'
-import { billingClient } from '@/lib/api-client'
+} from '@/gen/v1/subscription_pb'
+import { billingClient, subscriptionClient } from '@/lib/api-client'
 import { billingKeys } from './keys'
 
 export function useInvoicesQuery(
@@ -54,7 +55,7 @@ export function useSubscriptionsQuery(
   return useQuery({
     queryKey: billingKeys.subscriptions.list(customerId),
     queryFn: async () => {
-      const res = await billingClient.listSubscriptions({
+      const res = await subscriptionClient.listSubscriptions({
         customerId,
       })
       return res.subscriptions
@@ -67,20 +68,39 @@ export function useSubscriptionQuery(id: string) {
   return useQuery({
     queryKey: billingKeys.subscriptions.detail(id),
     queryFn: async () => {
-      const res = await billingClient.getSubscription({ id })
+      const res = await subscriptionClient.getSubscription({ id })
       return res.subscription
     },
     enabled: Boolean(id),
   })
 }
 
-export function useCashierResolveQuery(identifier: string, method: ResolveMethod = ResolveMethod.RESOLVE_CODE, enabled = false) {
+export function useCashierResolveQuery(
+  identifier: string,
+  method: ResolveMethod,
+  enabled = true
+) {
   return useQuery({
     queryKey: billingKeys.cashier.resolve(identifier, method),
     queryFn: async () => {
+      if (!identifier) return null
       return await billingClient.cashierResolve({ identifier, method })
     },
     enabled: Boolean(identifier) && enabled,
+  })
+}
+
+export function useCashierResolveMutation() {
+  return useMutation({
+    mutationFn: async ({
+      identifier,
+      method,
+    }: {
+      identifier: string
+      method: ResolveMethod
+    }) => {
+      return await billingClient.cashierResolve({ identifier, method })
+    },
   })
 }
 
@@ -94,8 +114,6 @@ export function useCashierPayMutation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: billingKeys.invoices.all() })
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
-      queryClient.invalidateQueries({ queryKey: ['cashbook'] })
-      queryClient.invalidateQueries({ queryKey: ['reports'] })
     },
   })
 }
@@ -105,11 +123,13 @@ export function useChangePlanMutation() {
 
   return useMutation({
     mutationFn: async (req: ChangePlanRequest) => {
-      return await billingClient.changePlan(req)
+      return await subscriptionClient.changePlan(req)
     },
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.detail(vars.subscriptionId) })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
+      })
     },
   })
 }
@@ -119,11 +139,13 @@ export function useSuspendSubscriptionMutation() {
 
   return useMutation({
     mutationFn: async (req: SuspendSubscriptionRequest) => {
-      return await billingClient.suspendSubscription(req)
+      return await subscriptionClient.suspendSubscription(req)
     },
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.detail(vars.subscriptionId) })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
+      })
     },
   })
 }
@@ -133,11 +155,13 @@ export function useResumeSubscriptionMutation() {
 
   return useMutation({
     mutationFn: async (req: ResumeSubscriptionRequest) => {
-      return await billingClient.resumeSubscription(req)
+      return await subscriptionClient.resumeSubscription(req)
     },
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.detail(vars.subscriptionId) })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
+      })
     },
   })
 }
@@ -147,11 +171,13 @@ export function useTerminateSubscriptionMutation() {
 
   return useMutation({
     mutationFn: async (req: TerminateSubscriptionRequest) => {
-      return await billingClient.terminateSubscription(req)
+      return await subscriptionClient.terminateSubscription(req)
     },
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.detail(vars.subscriptionId) })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
+      })
     },
   })
 }
@@ -161,11 +187,13 @@ export function useActivateSubscriptionMutation() {
 
   return useMutation({
     mutationFn: async (req: ActivateSubscriptionRequest) => {
-      return await billingClient.activateSubscription(req)
+      return await subscriptionClient.activateSubscription(req)
     },
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.detail(vars.subscriptionId) })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
+      })
     },
   })
 }
@@ -175,11 +203,13 @@ export function useIsolateSubscriptionMutation() {
 
   return useMutation({
     mutationFn: async (req: IsolateSubscriptionRequest) => {
-      return await billingClient.isolateSubscription(req)
+      return await subscriptionClient.isolateSubscription(req)
     },
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.detail(vars.subscriptionId) })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
+      })
     },
   })
 }
@@ -189,30 +219,26 @@ export function useRestoreSubscriptionMutation() {
 
   return useMutation({
     mutationFn: async (req: RestoreSubscriptionRequest) => {
-      return await billingClient.restoreSubscription(req)
+      return await subscriptionClient.restoreSubscription(req)
     },
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
-      queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.detail(vars.subscriptionId) })
+      queryClient.invalidateQueries({
+        queryKey: billingKeys.subscriptions.detail(vars.subscriptionId),
+      })
     },
   })
 }
-
 
 export function useCreateSubscriptionMutation() {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: async (req: CreateSubscriptionRequest) => {
-      return await billingClient.createSubscription(req)
+      return await subscriptionClient.createSubscription(req)
     },
-    onSuccess: (res) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
-      if (res.subscription) {
-        queryClient.invalidateQueries({
-          queryKey: billingKeys.subscriptions.detail(res.subscription.id),
-        })
-      }
     },
   })
 }
@@ -222,13 +248,15 @@ export function useUpdateSubscriptionMutation() {
 
   return useMutation({
     mutationFn: async (req: UpdateSubscriptionRequest) => {
-      return await billingClient.updateSubscription(req)
+      return await subscriptionClient.updateSubscription(req)
     },
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
-      queryClient.invalidateQueries({
-        queryKey: billingKeys.subscriptions.detail(vars.id),
-      })
+      if (vars.id) {
+        queryClient.invalidateQueries({
+          queryKey: billingKeys.subscriptions.detail(vars.id),
+        })
+      }
     },
   })
 }
@@ -238,7 +266,7 @@ export function useDeleteSubscriptionMutation() {
 
   return useMutation({
     mutationFn: async (req: DeleteSubscriptionRequest) => {
-      return await billingClient.deleteSubscription(req)
+      return await subscriptionClient.deleteSubscription(req)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: billingKeys.subscriptions.all() })
@@ -255,7 +283,6 @@ export function useGenerateInvoicesMutation() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: billingKeys.invoices.all() })
-      queryClient.invalidateQueries({ queryKey: ['reports'] })
     },
   })
 }

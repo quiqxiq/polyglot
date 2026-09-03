@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
-	"github.com/quixiq/polyglot/internal/driver/mikrotik/hotspot"
+	domainHotspot "github.com/quixiq/polyglot/internal/domain/hotspot"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
@@ -66,7 +66,7 @@ func HotspotUserParamsUpdateFromProto(req *devicepb.UpdateHotspotUserRequest, co
 // dataLimitBytes converts a human-readable data limit ("1000M", "1g") to a
 // RouterOS byte string ("1048576000"); empty when unparseable or zero.
 func dataLimitBytes(s string) string {
-	if b := hotspot.ParseDataLimit(s); b > 0 {
+	if b := domainHotspot.ParseDataLimit(s); b > 0 {
 		return fmt.Sprintf("%d", b)
 	}
 	return ""

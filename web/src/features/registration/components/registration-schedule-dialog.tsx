@@ -21,8 +21,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { SelectDropdown } from '@/components/select-dropdown'
-import { useUsersQuery } from '@/features/users/api/use-users'
 import {
   useApproveRegistrationMutation,
   useScheduleInstallMutation,
@@ -49,7 +47,6 @@ export function RegistrationScheduleDialog({
   onOpenChange,
   registration,
 }: RegistrationScheduleDialogProps) {
-  const { data: usersData, isLoading: usersLoading } = useUsersQuery()
   const approveMutation = useApproveRegistrationMutation()
   const scheduleMutation = useScheduleInstallMutation()
 
@@ -59,7 +56,6 @@ export function RegistrationScheduleDialog({
       id: registration?.id || '',
       installDate: new Date().toISOString().split('T')[0],
       installTimeHhmm: '09:00',
-      technicianId: registration?.assignedTechnicianId || '',
       adminNotes: registration?.notes || '',
     },
   })
@@ -77,27 +73,15 @@ export function RegistrationScheduleDialog({
         id: registration.id,
         installDate: defaultDate,
         installTimeHhmm: registration.scheduledInstallTime || '09:00',
-        technicianId: registration.assignedTechnicianId || '',
         adminNotes: registration.notes || '',
       })
     }
   }, [registration, form])
 
-  const usersList = usersData?.users || []
-  const technicianOptions = [
-    { label: '— Belum Ditugaskan —', value: '' },
-    ...usersList
-      .filter((u) => u.role === 'teknisi' || u.role === 'admin' || u.role === 'owner')
-      .map((u) => ({
-        label: `${u.fullName || u.username} (${u.role})`,
-        value: String(u.id),
-      })),
-  ]
-
   const handleSubmit = async (values: ScheduleInstallValues) => {
     if (!registration) return
     try {
-      // 1. Jika masih PENDING, approve dulu
+      // 1. Jika status masih PENDING, otomatis approve terlebih dahulu
       if (registration.status === REGISTRATION_STATUS.PENDING) {
         await approveMutation.mutateAsync(
           new ApproveRegistrationRequest({
@@ -116,7 +100,7 @@ export function RegistrationScheduleDialog({
           id: registration.id,
           installDateUnix: BigInt(unixDate),
           installTimeHhmm: values.installTimeHhmm || '',
-          technicianId: values.technicianId || '',
+          technicianId: '',
         })
       )
 
@@ -137,7 +121,7 @@ export function RegistrationScheduleDialog({
         <DialogHeader>
           <DialogTitle>Setujui & Jadwalkan Pemasangan</DialogTitle>
           <DialogDescription>
-            Tentukan tanggal pasang dan teknisi lapangan yang bertugas untuk{' '}
+            Tentukan tanggal dan jam rencana pemasangan untuk{' '}
             <span className='font-semibold'>{registration?.fullName}</span>.
           </DialogDescription>
         </DialogHeader>
@@ -172,32 +156,11 @@ export function RegistrationScheduleDialog({
                     <FormControl>
                       <Input type='time' {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-
-            <FormField
-              control={form.control}
-              name='technicianId'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Teknisi yang Ditugaskan</FormLabel>
-                  <FormControl>
-                    <SelectDropdown
-                      isControlled
-                      defaultValue={field.value || ''}
-                      onValueChange={field.onChange}
-                      placeholder={
-                        usersLoading ? 'Memuat teknisi...' : 'Pilih teknisi'
-                      }
-                      items={technicianOptions}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
             <FormField
               control={form.control}
@@ -212,6 +175,7 @@ export function RegistrationScheduleDialog({
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />

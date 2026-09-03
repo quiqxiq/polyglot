@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { hotspotClient } from '@/lib/api-client'
-import type { HotspotActiveSession, HotspotActiveStat, HotspotUser } from '@/gen/v1/hotspot_pb'
+import { networkMonitorClient } from '@/lib/api-client'
+import type { HotspotActiveSession, HotspotUser } from '@/gen/v1/hotspot_pb'
+import type { HotspotActiveStat } from '@/gen/v1/network_monitor_pb'
 
 export type EnrichedHotspotActiveSession = HotspotActiveSession & {
   uptime?: string
@@ -39,7 +40,7 @@ export function useStreamActiveSessions(
     // 1. Session Presence Stream (Lifecycle via follow)
     async function startSessionStream() {
       try {
-        const stream = hotspotClient.streamActiveSessions(
+        const stream = networkMonitorClient.streamActiveSessions(
           { deviceId },
           { signal: abortController.signal }
         )
@@ -83,7 +84,7 @@ export function useStreamActiveSessions(
     // 2. Realtime Telemetry Stats Stream (Dynamic counters via stats interval=1s)
     async function startStatsStream() {
       try {
-        const stream = hotspotClient.streamActiveStats(
+        const stream = networkMonitorClient.streamActiveStats(
           { deviceId, interval },
           { signal: abortController.signal }
         )
@@ -153,7 +154,7 @@ export function useStreamHotspotInactive(deviceId: string, enabled = true) {
 
     async function startStream() {
       try {
-        const stream = hotspotClient.streamHotspotInactive(
+        const stream = networkMonitorClient.streamHotspotInactive(
           { deviceId, interval: '1s' },
           { signal: abortController.signal }
         )

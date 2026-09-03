@@ -1,12 +1,12 @@
 package middleware
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	"github.com/quixiq/polyglot/pkg/logger"
+	"github.com/quixiq/polyglot/pkg/response"
 )
 
 // PolicyEnforcer is the subset of auth.CasbinEnforcer the RBAC middleware needs.
@@ -21,31 +21,26 @@ func AuthorizeProcedure(enforcer PolicyEnforcer) Middleware {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if enforcer == nil {
 				logger.WithComponent("RBAC").WithField("path", r.URL.Path).Warn("enforcer unavailable; denying request")
-				writeJSONError(w, http.StatusInternalServerError, "Authorization service unavailable")
+				response.WriteHTTPStatusError(w, http.StatusInternalServerError, "Authorization service unavailable")
 				return
 			}
 
 			obj, ok := auth.PermissionFor(r.URL.Path)
 			if !ok {
 				logger.WithComponent("RBAC").WithField("path", r.URL.Path).Warn("unknown procedure; denying request")
-				w.Header().Set("Content-Type", "application/json")
-				w.WriteHeader(http.StatusForbidden)
-				_ = json.NewEncoder(w).Encode(map[string]string{
-					"error":  "Access denied. Unknown resource.",
-					"object": r.URL.Path,
-				})
+				response.WriteHTTPStatusError(w, http.StatusForbidden, "Access denied. Unknown resource.")
 				return
 			}
 
 			userID, roles, exists := auth.IdentityFromContext(r.Context())
 			if !exists || userID == 0 {
-				writeJSONError(w, http.StatusUnauthorized, "User identity missing in request context")
+				response.WriteHTTPStatusError(w, http.StatusUnauthorized, "User identity missing in request context")
 				return
 			}
 
 			effectiveRoles := rolesForUser(enforcer, fmt.Sprintf("%d", userID), roles)
 			if len(effectiveRoles) == 0 {
-				writeJSONError(w, http.StatusUnauthorized, "User has no roles assigned")
+				response.WriteHTTPStatusError(w, http.StatusUnauthorized, "User has no roles assigned")
 				return
 			}
 
@@ -54,7 +49,7 @@ func AuthorizeProcedure(enforcer PolicyEnforcer) Middleware {
 				ok, err := enforcer.Enforce(role, obj, "*")
 				if err != nil {
 					logger.WithComponent("RBAC").WithError(err).WithFields(map[string]any{"role": role, "object": obj}).Error("policy evaluation failed")
-					writeJSONError(w, http.StatusInternalServerError, "Failed to evaluate authorization policy")
+					response.WriteHTTPStatusError(w, http.StatusInternalServerError, "Failed to evaluate authorization policy")
 					return
 				}
 				if ok {
@@ -64,13 +59,7 @@ func AuthorizeProcedure(enforcer PolicyEnforcer) Middleware {
 			}
 
 			if !allowed {
-				w.Header().Set("Content-Type", "application/json")
-				w.WriteHeader(http.StatusForbidden)
-				_ = json.NewEncoder(w).Encode(map[string]any{
-					"error":  "Access denied. You do not have permission to perform this action.",
-					"roles":  effectiveRoles,
-					"object": obj,
-				})
+				response.WriteHTTPStatusError(w, http.StatusForbidden, "Access denied. You do not have permission to perform this action.")
 				return
 			}
 

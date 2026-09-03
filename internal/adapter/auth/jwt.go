@@ -1,18 +1,18 @@
 package auth
 
 import (
-	"errors"
 	"fmt"
 	"strconv"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/quixiq/polyglot/internal/domain/session"
 	"github.com/quixiq/polyglot/internal/port"
 )
 
 var (
 	// ErrInvalidToken indicates a missing, expired, or malformed JWT.
-	ErrInvalidToken = errors.New("invalid or expired JWT token")
+	ErrInvalidToken = session.ErrInvalidToken
 )
 
 // Claims contains the authenticated user claims stored in a JWT.

@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+message PPPoEPlanConfig {
+  string remote_address_pool = 1;
+  string address_list = 2;
+  string session_timeout = 3;
+  string idle_timeout = 4;
+}
+
+message HotspotPlanConfig {
+  string ip_pool_name = 1;
+  string address_list = 2;
+  int32 shared_users = 3;
+  string session_timeout = 4;
+  string idle_timeout = 5;
+}
+
+message Plan {
+  string id = 1;
+  string name = 2;
+  string service_type = 3; // PPPOE | HOTSPOT | DEDICATED
+  int32 bandwidth_download_kbps = 4;
+  int32 bandwidth_upload_kbps = 5;
+  int32 burst_download_kbps = 6;
+  int32 burst_upload_kbps = 7;
+  int32 burst_threshold_kbps = 24;
+  int32 burst_time_seconds = 25;
+  string remote_address_pool = 26;
+  double price = 8;
+  double installation_fee = 10;
+  double tax_percent = 11;
+  string ip_pool_name = 15;
+  string parent_queue = 16;
+  string address_list = 17;
+  int32 shared_users = 18;
+  bool is_active = 22;
+  string description = 23;
+
+  // Sub-message spesifik (Opsi 2)
+  PPPoEPlanConfig pppoe_config = 27;
+  HotspotPlanConfig hotspot_config = 28;
+
+  string session_timeout = 29;
+  string idle_timeout = 30;
+}
+
+message ListPlansRequest { bool active_only = 1; }
+message ListPlansResponse { repeated Plan plans = 1; }
+
+message GetPlanRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+message GetPlanResponse { Plan plan = 1; }
+
+message CreatePlanRequest {
+  Plan plan = 1 [(buf.validate.field).required = true];
+  string device_id = 2;
+}
+message CreatePlanResponse { Plan plan = 1; }
+
+message UpdatePlanRequest {
+  Plan plan = 1 [(buf.validate.field).required = true];
+  string device_id = 2;
+}
+message UpdatePlanResponse { Plan plan = 1; }
+
+message DeletePlanRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string device_id = 2;
+}
+message DeletePlanResponse { string message = 1; }
+
+service PlanService {
+  rpc ListPlans(ListPlansRequest) returns (ListPlansResponse);
+  rpc GetPlan(GetPlanRequest) returns (GetPlanResponse);
+  rpc CreatePlan(CreatePlanRequest) returns (CreatePlanResponse);
+  rpc UpdatePlan(UpdatePlanRequest) returns (UpdatePlanResponse);
+  rpc DeletePlan(DeletePlanRequest) returns (DeletePlanResponse);
+}

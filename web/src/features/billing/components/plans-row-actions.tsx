@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import type { Plan } from '@/gen/v1/billing_pb'
+import type { Plan } from '@/gen/v1/plan_pb'
 import { useAuthStore } from '@/stores/auth-store'
 import { canPermission } from '@/hooks/use-can'
 import { usePlans } from './plans-provider'

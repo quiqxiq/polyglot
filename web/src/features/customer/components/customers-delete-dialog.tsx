@@ -41,7 +41,7 @@ export function CustomersDeleteDialog({
       desc={
         <>
           Kamu akan menghapus pelanggan <strong>{currentRow?.name}</strong>{' '}
-          secara permanen. Tindakan ini tidak dapat dibatalkan.
+          beserta seluruh langganan, akun router, dan invoice terkait secara permanen. Tindakan ini tidak dapat dibatalkan.
         </>
       }
       confirmText='Delete'

@@ -1,0 +1,299 @@
+syntax = "proto3";
+
+package polyglot.v1;
+
+import "v1/hotspot.proto";
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/quixiq/polyglot/api/gen/v1;devicepb";
+
+// ── Traffic Stream ──────────────────────────────────────────────────────
+
+message StreamTrafficRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string interface = 2;
+}
+
+message TrafficStreamData {
+  string device_id = 1;
+  string interface = 2;
+  int64 rx_bps = 3;
+  int64 tx_bps = 4;
+  int64 timestamp_unix = 5;
+}
+
+// ── Resource Stream ─────────────────────────────────────────────────────
+
+message StreamResourceRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message ResourceStreamData {
+  string device_id = 1;
+  int32 cpu_load = 2;
+  string free_memory = 3;
+  string uptime = 4;
+  int64 timestamp_unix = 5;
+}
+
+// ── Active Sessions Stream ──────────────────────────────────────────────
+
+message StreamActiveSessionsRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string user_filter = 2;
+}
+
+message ActiveSessionsStreamData {
+  string device_id = 1;
+  repeated HotspotActiveSession sessions = 2;
+  int64 timestamp_unix = 3;
+}
+
+// ── Active Stats Stream ─────────────────────────────────────────────────
+
+message HotspotActiveStat {
+  string id = 1;
+  string uptime = 2;
+  string session_time_left = 3;
+  string idle_time = 4;
+  string bytes_in = 5;
+  string bytes_out = 6;
+  string packets_in = 7;
+  string packets_out = 8;
+}
+
+message StreamActiveStatsRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string interval = 2;
+}
+
+message ActiveStatsStreamData {
+  string device_id = 1;
+  repeated HotspotActiveStat stats = 2;
+  int64 timestamp_unix = 3;
+}
+
+// ── System Snapshot Stream ──────────────────────────────────────────────
+
+message StreamSystemSnapshotRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string interval = 2; // RouterOS duration ("1s", "2s"). Default "1s".
+}
+
+message SystemClockInfo {
+  string time = 1;
+  string date = 2;
+  string time_zone_name = 3;
+  string gmt_offset = 4;
+}
+
+message SystemResourceInfo {
+  int32 cpu_load = 1;
+  int32 cpu_count = 2;
+  string cpu_frequency = 3;
+  string free_memory = 4;
+  string total_memory = 5;
+  string free_hdd_space = 6;
+  string total_hdd_space = 7;
+  string architecture = 8;
+  string model = 9;
+  string serial_number = 10;
+  string firmware_type = 11;
+  string voltage = 12;
+  string temperature = 13;
+  string bad_blocks = 14;
+  string uptime = 15;
+  string version = 16;
+  string board_name = 17;
+}
+
+message SystemRouterboardInfo {
+  string board_name = 1;
+  string model = 2;
+  string serial_number = 3;
+  string firmware_type = 4;
+  string factory_firmware = 5;
+  string current_firmware = 6;
+  string upgrade_firmware = 7;
+}
+
+message SystemHealthInfo {
+  string voltage = 1;
+  string temperature = 2;
+  string cpu_temperature = 3;
+  string psu_voltage = 4;
+  string psu_current = 5;
+  string psu_temperature = 6;
+  string fan1_speed = 7;
+  string fan2_speed = 8;
+}
+
+message SystemSnapshotFrame {
+  string device_id = 1;
+  int64 timestamp_unix = 2;
+  SystemClockInfo clock = 3;
+  SystemResourceInfo resource = 4;
+  SystemRouterboardInfo routerboard = 5;
+  string identity = 6;
+  SystemHealthInfo health = 7;
+}
+
+// ── Queue Stats Stream ──────────────────────────────────────────────────
+
+message StreamQueueStatsRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string name = 2;        // filter by queue name (?name=)
+  string parent = 3;      // filter by parent queue (?parent=)
+  bool parents_only = 4;  // non-dynamic static parent queues (?dynamic=false)
+  string interval = 5;    // default "1s"
+}
+
+message QueueStatsItem {
+  string id = 1;
+  string name = 2;
+  string target = 3;
+  string parent = 4;
+  string max_limit = 5;
+  string limit_at = 6;
+  string queue = 7;
+  string bytes = 8;
+  string packets = 9;
+  string dropped = 10;
+  string rate = 11;
+  string packet_rate = 12;
+  bool disabled = 13;
+}
+
+message QueueStatsFrame {
+  string device_id = 1;
+  int64 timestamp_unix = 2;
+  repeated QueueStatsItem queues = 3;
+}
+
+// ── Logs Stream ─────────────────────────────────────────────────────────
+
+message StreamLogsRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string topics = 2; // filter (?topics~=)
+}
+
+message LogEntryItem {
+  string id = 1;
+  string time = 2;
+  string topics = 3;
+  string message = 4;
+}
+
+message LogsStreamFrame {
+  string device_id = 1;
+  int64 timestamp_unix = 2;
+  repeated LogEntryItem logs = 3;
+}
+
+// ── Interface Ethernet Stream ───────────────────────────────────────────
+
+message StreamInterfaceEthernetRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string interval = 2; // default "1s"
+  string type_filter = 3;
+  string name_filter = 4;
+}
+
+message InterfaceEthernetItem {
+  string id = 1;
+  string name = 2;
+  string type = 3;
+  string mtu = 4;
+  string mac_address = 5;
+  bool running = 6;
+  bool disabled = 7;
+  string rx_byte = 8;
+  string tx_byte = 9;
+  string rx_packet = 10;
+  string tx_packet = 11;
+  string comment = 12;
+}
+
+message InterfaceEthernetFrame {
+  string device_id = 1;
+  int64 timestamp_unix = 2;
+  repeated InterfaceEthernetItem interfaces = 3;
+}
+
+// ── Hotspot Inactive Stream ─────────────────────────────────────────────
+
+message StreamHotspotInactiveRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string interval = 2; // default "1s"
+}
+
+message HotspotInactiveFrame {
+  string device_id = 1;
+  int64 timestamp_unix = 2;
+  repeated HotspotUser users = 3;
+}
+
+// ── PPP Active & Inactive Streams ───────────────────────────────────────
+
+message StreamPPPActiveRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string interval = 2; // default "1s"
+}
+
+message PPPActiveSessionItem {
+  string id = 1;
+  string name = 2;
+  string service = 3;
+  string caller_id = 4;
+  string address = 5;
+  string uptime = 6;
+  string encoding = 7;
+  string session_id = 8;
+  string limit_bytes_in = 9;
+  string limit_bytes_out = 10;
+  bool radius = 11;
+}
+
+message PPPActiveFrame {
+  string device_id = 1;
+  int64 timestamp_unix = 2;
+  repeated PPPActiveSessionItem sessions = 3;
+}
+
+message StreamPPPInactiveRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string interval = 2; // default "1s"
+}
+
+message PPPSecretItem {
+  string id = 1;
+  string name = 2;
+  string profile = 3;
+  string service = 4;
+  string local_address = 5;
+  string remote_address = 6;
+  string comment = 7;
+  bool disabled = 8;
+  string last_logged_out = 9;
+  string caller_id = 10;
+}
+
+message PPPInactiveFrame {
+  string device_id = 1;
+  int64 timestamp_unix = 2;
+  repeated PPPSecretItem secrets = 3;
+}
+
+service NetworkMonitorService {
+  rpc StreamTraffic(StreamTrafficRequest) returns (stream TrafficStreamData);
+  rpc StreamResource(StreamResourceRequest) returns (stream ResourceStreamData);
+  rpc StreamActiveSessions(StreamActiveSessionsRequest) returns (stream ActiveSessionsStreamData);
+  rpc StreamActiveStats(StreamActiveStatsRequest) returns (stream ActiveStatsStreamData);
+  rpc StreamSystemSnapshot(StreamSystemSnapshotRequest) returns (stream SystemSnapshotFrame);
+  rpc StreamInterfaceEthernet(StreamInterfaceEthernetRequest) returns (stream InterfaceEthernetFrame);
+  rpc StreamQueueStats(StreamQueueStatsRequest) returns (stream QueueStatsFrame);
+  rpc StreamLogs(StreamLogsRequest) returns (stream LogsStreamFrame);
+  rpc StreamHotspotInactive(StreamHotspotInactiveRequest) returns (stream HotspotInactiveFrame);
+  rpc StreamPPPActive(StreamPPPActiveRequest) returns (stream PPPActiveFrame);
+  rpc StreamPPPInactive(StreamPPPInactiveRequest) returns (stream PPPInactiveFrame);
+}
