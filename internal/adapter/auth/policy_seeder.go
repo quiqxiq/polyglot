@@ -52,6 +52,8 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"admin", "registration:.*", "*"},
 		{"admin", "cashbook:.*", "*"},
 		{"admin", "notification:.*", "*"},
+		{"admin", "monitor:.*", "*"},
+		{"admin", "network:.*", "*"},
 
 		// Agent / CS — customer service, voucher generator, & knowledge lookup.
 		{"agent", "conversation:.*", "*"},
@@ -93,6 +95,8 @@ func SeedSystemPolicies(ce *CasbinEnforcer) {
 		{"teknisi", "profile:.*", "*"},
 		{"teknisi", "registration:read", "*"},
 		{"teknisi", "registration:install", "*"},
+		{"teknisi", "monitor:read", "*"},
+		{"teknisi", "network:read", "*"},
 	}
 
 	added := 0

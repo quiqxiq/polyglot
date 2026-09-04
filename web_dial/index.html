@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - GNet Dial</title>
+  <link rel="shortcut icon" href="assets/g.ico" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800">
+  <!-- Layout Containers -->
+  <div id="sidebar-container"></div>
+  <div id="header-container"></div>
+  <div id="mobile-nav-container"></div>
+  <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2"></div>
+
+  <!-- Main Content Wrapper -->
+  <main class="pt-20 pb-12 lg:ml-64 lg:pt-20 px-4 sm:px-8 max-w-7xl space-y-6">
+    <!-- Header Title -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <div>
+        <h1 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          Dashboard Monitoring
+        </h1>
+        <p class="text-sm text-slate-500 mt-0.5">Pantau status resource router dan cari data sesi PPP secara instan</p>
+      </div>
+    </div>
+
+    <!-- Quick Stats Grid -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs">
+        <div class="flex items-center justify-between text-slate-500 mb-2">
+          <span class="text-xs font-semibold uppercase tracking-wider">PPP Aktif</span>
+          <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+          </div>
+        </div>
+        <div class="text-2xl font-bold text-slate-900" id="stat-active">-</div>
+        <a href="ppp-active.html" class="text-[11px] font-semibold text-emerald-600 hover:underline mt-1 inline-block">Lihat Semua &rarr;</a>
+      </div>
+
+      <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs">
+        <div class="flex items-center justify-between text-slate-500 mb-2">
+          <span class="text-xs font-semibold uppercase tracking-wider">PPP Non-Aktif</span>
+          <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="m2 2 20 20"/></svg>
+          </div>
+        </div>
+        <div class="text-2xl font-bold text-slate-900" id="stat-inactive">-</div>
+        <a href="ppp-non-active.html" class="text-[11px] font-semibold text-slate-600 hover:underline mt-1 inline-block">Lihat Offline &rarr;</a>
+      </div>
+
+      <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs">
+        <div class="flex items-center justify-between text-slate-500 mb-2">
+          <span class="text-xs font-semibold uppercase tracking-wider">Total Secrets</span>
+          <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="text-2xl font-bold text-slate-900" id="stat-secrets">-</div>
+        <a href="ppp-secrets.html" class="text-[11px] font-semibold text-blue-600 hover:underline mt-1 inline-block">Lihat Secrets &rarr;</a>
+      </div>
+
+      <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs">
+        <div class="flex items-center justify-between text-slate-500 mb-2">
+          <span class="text-xs font-semibold uppercase tracking-wider">Total Profiles</span>
+          <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/></svg>
+          </div>
+        </div>
+        <div class="text-2xl font-bold text-slate-900" id="stat-profiles">-</div>
+        <a href="ppp-profiles.html" class="text-[11px] font-semibold text-indigo-600 hover:underline mt-1 inline-block">Lihat Profiles &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Quick Search Section -->
+    <div class="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xs">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-lg font-bold text-slate-900 mb-1">Pencarian Cepat PPP</h2>
+        <p class="text-xs text-slate-500 mb-4">Ketik nama pengguna, MAC address, atau IP untuk pencarian otomatis</p>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>
+          </div>
+          <input 
+            type="text" 
+            id="search-input"
+            class="w-full pl-10 pr-10 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all shadow-inner"
+            placeholder="Cari nama pengguna atau IP..."
+            autocomplete="off"
+          >
+          <div id="search-loading" class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center">
+            <svg class="animate-spin h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Results Area -->
+      <div id="search-results-section" class="hidden mt-6 pt-6 border-t border-slate-100">
+        <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Hasil Pencarian</h3>
+        <div id="search-results"></div>
+      </div>
+    </div>
+
+    <!-- Live Streaming System Resources Section -->
+    <div class="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xs space-y-6">
+      <!-- Router Header & Live Badge -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-5 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h3 class="font-bold text-slate-900 text-base leading-tight" id="sys-identity">MikroTik Router</h3>
+              <span class="text-xs font-semibold px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md" id="sys-board">Memuat...</span>
+              <span class="text-xs font-mono text-slate-500 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded" id="sys-arch">-</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5" id="sys-host">Menghubungkan stream resource...</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 self-start sm:self-auto">
+          <!-- Live Streaming Badge -->
+          <div id="resource-stream-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="resource-stream-text">LIVE STREAM</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Specs Meta Bar -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+        <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3">
+          <span class="text-slate-400 block text-[10px] uppercase font-semibold tracking-wider">Uptime</span>
+          <span class="font-mono font-semibold text-slate-800 text-xs mt-1 block truncate" id="sys-uptime">-</span>
+        </div>
+        <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3">
+          <span class="text-slate-400 block text-[10px] uppercase font-semibold tracking-wider">RouterOS</span>
+          <span class="font-mono font-semibold text-blue-600 text-xs mt-1 block truncate" id="sys-version">-</span>
+        </div>
+        <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3">
+          <span class="text-slate-400 block text-[10px] uppercase font-semibold tracking-wider">Serial Number</span>
+          <span class="font-mono font-semibold text-slate-700 text-xs mt-1 block truncate" id="sys-serial">-</span>
+        </div>
+        <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-3">
+          <span class="text-slate-400 block text-[10px] uppercase font-semibold tracking-wider">Status Router</span>
+          <span class="font-semibold text-emerald-600 text-xs mt-1 block" id="sys-status">Tersambung</span>
+        </div>
+      </div>
+
+      <!-- 3 Resource Meters Grid: CPU, RAM, HDD -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- 1. CPU Load Card -->
+        <div class="bg-slate-50/70 border border-slate-200/70 rounded-2xl p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="font-semibold text-slate-700 flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+                Beban CPU
+              </span>
+              <span class="font-mono font-bold text-slate-900 text-sm" id="sys-cpu-text">0%</span>
+            </div>
+            <div class="w-full bg-slate-200/80 h-3 rounded-full overflow-hidden mt-1 mb-2">
+              <div id="sys-cpu-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-400 font-mono" id="sys-cpu-freq">Frekuensi: - MHz</p>
+        </div>
+
+        <!-- 2. Memory RAM Card -->
+        <div class="bg-slate-50/70 border border-slate-200/70 rounded-2xl p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="font-semibold text-slate-700 flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600"><line x1="22" x2="2" y1="12" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><line x1="6" x2="6.01" y1="16" y2="16"/><line x1="10" x2="10.01" y1="16" y2="16"/></svg>
+                RAM Memory
+              </span>
+              <span class="font-mono font-bold text-slate-900 text-sm" id="sys-mem-text">0%</span>
+            </div>
+            <div class="w-full bg-slate-200/80 h-3 rounded-full overflow-hidden mt-1 mb-2">
+              <div id="sys-mem-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-400 font-mono" id="sys-mem-detail">Memuat memori...</p>
+        </div>
+
+        <!-- 3. Storage HDD Card -->
+        <div class="bg-slate-50/70 border border-slate-200/70 rounded-2xl p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="font-semibold text-slate-700 flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-600"><line x1="22" x2="2" y1="12" y2="12"/><path d="M2 12V7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5"/><rect width="20" height="8" x="2" y="12" rx="2"/><circle cx="6" cy="16" r=".5" fill="currentColor"/><circle cx="10" cy="16" r=".5" fill="currentColor"/></svg>
+                HDD Storage
+              </span>
+              <span class="font-mono font-bold text-slate-900 text-sm" id="sys-hdd-text">0%</span>
+            </div>
+            <div class="w-full bg-slate-200/80 h-3 rounded-full overflow-hidden mt-1 mb-2">
+              <div id="sys-hdd-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-400 font-mono" id="sys-hdd-detail">Memuat storage...</p>
+        </div>
+      </div>
+
+      <!-- Interface Link Status Chips -->
+      <div class="pt-4 border-t border-slate-100">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-semibold text-slate-600">Status Link Interface</span>
+          <a href="monitor-interface.html" class="text-[11px] font-semibold text-blue-600 hover:underline">Buka Monitor Traffic &rarr;</a>
+        </div>
+        <div id="sys-interfaces" class="flex flex-wrap gap-1.5 min-h-[28px] items-center">
+          <span class="text-xs text-slate-400 italic">Mendeteksi interface router...</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js?v=2"></script>
+  <script src="js/auth.js?v=2"></script>
+  <script src="js/router-selector.js?v=2"></script>
+  <script src="js/layout.js?v=2"></script>
+  <script src="js/dashboard.js?v=2"></script>
+  <script>
+    if (Auth.requireAuth()) {
+      Layout.init('index.html');
+      Dashboard.init();
+    }
+  </script>
+</body>
+</html>

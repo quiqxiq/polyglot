@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitor Traffic & Antrean - GNet Dial</title>
+  <link rel="shortcut icon" href="assets/g.ico" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800">
+  <div id="sidebar-container"></div>
+  <div id="header-container"></div>
+  <div id="mobile-nav-container"></div>
+  <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2"></div>
+
+  <main class="pt-20 pb-12 lg:ml-64 lg:pt-20 px-4 sm:px-8 max-w-7xl space-y-6">
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Monitor Traffic & Antrean
+          </h1>
+          <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">On-Demand Stream</span>
+        </div>
+        <p class="text-sm text-slate-500 mt-0.5">Daftar seluruh interface dan simple queue router &bull; Klik untuk memantau traffic RX/TX realtime</p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="refresh-btn" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-50 shadow-xs cursor-pointer transition-colors">
+          <svg id="refresh-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+          <span>Segarkan Data</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Container Card -->
+    <div class="bg-white border border-slate-200/80 rounded-2xl shadow-xs overflow-hidden">
+      <!-- Toolbar & Tabs -->
+      <div class="px-6 py-4 border-b border-slate-100 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <!-- Tab Switcher -->
+        <div class="flex items-center gap-2 bg-slate-100/80 p-1 rounded-xl w-fit">
+          <button id="tab-interfaces-btn" onclick="MonitorInterface.switchTab('interfaces')" class="px-4 py-1.5 rounded-lg text-xs font-bold transition-all bg-white text-slate-900 shadow-xs cursor-pointer flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 8h10"/><path d="M7 12h10"/><path d="M7 16h10"/></svg>
+            Semua Interface <span id="count-interfaces" class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-200 text-slate-700 text-[11px]">0</span>
+          </button>
+          <button id="tab-queues-btn" onclick="MonitorInterface.switchTab('queues')" class="px-4 py-1.5 rounded-lg text-xs font-semibold text-slate-500 hover:text-slate-900 transition-all cursor-pointer flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+            Simple Queues <span id="count-queues" class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-200 text-slate-700 text-[11px]">0</span>
+          </button>
+        </div>
+
+        <!-- Search Input -->
+        <div class="relative w-full md:w-72">
+          <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="search-input" placeholder="Cari nama, tipe, atau target..." class="w-full pl-9 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          <button id="clear-search-btn" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div id="loading-state" class="p-16 text-center text-slate-400">
+        <svg class="animate-spin h-8 w-8 mx-auto mb-3 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <p class="text-sm font-medium">Memuat data router...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden p-16 text-center text-slate-500">
+        <svg class="h-10 w-10 mx-auto mb-2 text-slate-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect width="18" height="18" x="3" y="3" rx="2"/><line x1="9" x2="15" y1="9" y2="15"/><line x1="15" x2="9" y1="9" y2="15"/></svg>
+        <h3 class="text-base font-semibold text-slate-800">Tidak ada data ditemukan</h3>
+        <p class="text-xs text-slate-400 mt-1" id="empty-state-msg">Data interface atau antrean tidak tersedia pada router ini.</p>
+      </div>
+
+      <!-- Interfaces Table -->
+      <div id="interface-table" class="hidden overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-50/80 border-b border-slate-200 text-slate-600 text-xs font-semibold uppercase tracking-wider">
+              <th class="py-3 px-4 w-12">#</th>
+              <th class="py-3 px-4">Nama Interface</th>
+              <th class="py-3 px-4">Tipe</th>
+              <th class="py-3 px-4">Status Link</th>
+              <th class="py-3 px-4">MAC Address</th>
+              <th class="py-3 px-4 text-right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="interface-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Queues Table -->
+      <div id="queue-table" class="hidden overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-50/80 border-b border-slate-200 text-slate-600 text-xs font-semibold uppercase tracking-wider">
+              <th class="py-3 px-4 w-12">#</th>
+              <th class="py-3 px-4">Nama Antrean (Queue)</th>
+              <th class="py-3 px-4">Target (IP / Subnet)</th>
+              <th class="py-3 px-4">Max Limit (Up / Down)</th>
+              <th class="py-3 px-4">Total Data</th>
+              <th class="py-3 px-4">Status</th>
+              <th class="py-3 px-4 text-right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="queue-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Live Traffic Monitor (On-Demand Streaming) -->
+  <div id="traffic-modal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl max-w-2xl w-full p-6 text-white space-y-5">
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between pb-4 border-b border-slate-800">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h3 class="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-400"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Monitor Traffic: <span id="modal-target-title" class="text-emerald-400 font-mono">ether1</span>
+            </h3>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Streaming 1s
+            </span>
+          </div>
+          <p id="modal-target-subtitle" class="text-xs text-slate-400 mt-1">Interface Ethernet &bull; Status Link: Running</p>
+        </div>
+
+        <button id="close-traffic-modal-btn" onclick="MonitorInterface.closeTrafficModal()" class="p-1.5 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Realtime KPI Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-slate-800/60 border border-slate-700/50 p-3.5 rounded-xl">
+          <div class="text-[11px] font-semibold uppercase text-emerald-400 tracking-wider">Download (RX)</div>
+          <div id="rx-rate-display" class="text-xl font-bold font-mono text-white mt-1">0 bps</div>
+          <div id="rx-peak-display" class="text-[10px] text-slate-400 mt-0.5 font-mono">Peak: 0 bps</div>
+        </div>
+
+        <div class="bg-slate-800/60 border border-slate-700/50 p-3.5 rounded-xl">
+          <div class="text-[11px] font-semibold uppercase text-indigo-400 tracking-wider">Upload (TX)</div>
+          <div id="tx-rate-display" class="text-xl font-bold font-mono text-white mt-1">0 bps</div>
+          <div id="tx-peak-display" class="text-[10px] text-slate-400 mt-0.5 font-mono">Peak: 0 bps</div>
+        </div>
+
+        <div class="bg-slate-800/60 border border-slate-700/50 p-3.5 rounded-xl">
+          <div class="text-[11px] font-semibold uppercase text-slate-400 tracking-wider">Total Data</div>
+          <div id="total-bytes-display" class="text-base font-bold font-mono text-white mt-1">-</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Akumulasi counter</div>
+        </div>
+
+        <div class="bg-slate-800/60 border border-slate-700/50 p-3.5 rounded-xl">
+          <div class="text-[11px] font-semibold uppercase text-slate-400 tracking-wider">Paket / Dropped</div>
+          <div id="packets-display" class="text-base font-bold font-mono text-white mt-1">-</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">Status frame transfer</div>
+        </div>
+      </div>
+
+      <!-- Canvas Realtime Rolling Chart -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs text-slate-400 px-1">
+          <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1.5 font-semibold text-emerald-400">
+              <span class="w-3 h-1 bg-emerald-400 rounded-full"></span> RX (Download)
+            </span>
+            <span class="flex items-center gap-1.5 font-semibold text-indigo-400">
+              <span class="w-3 h-1 bg-indigo-400 rounded-full"></span> TX (Upload)
+            </span>
+          </div>
+          <span class="text-[11px] text-slate-500 font-mono">Window 60 detik</span>
+        </div>
+
+        <div class="relative w-full h-56 bg-slate-950 rounded-xl border border-slate-800 p-2 overflow-hidden">
+          <canvas id="traffic-canvas" width="600" height="210" class="w-full h-full block"></canvas>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex items-center justify-between pt-3 border-t border-slate-800 text-xs text-slate-400">
+        <span class="flex items-center gap-1.5 text-slate-500">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="10"/><line x1="12" x2="12" y1="16" y2="12"/><line x1="12" x2="12.01" y1="8" y2="8"/></svg>
+          Stream otomatis berhenti saat modal ini ditutup
+        </span>
+        <button onclick="MonitorInterface.closeTrafficModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-semibold transition-colors cursor-pointer">
+          Tutup Monitor
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js?v=2"></script>
+  <script src="js/auth.js?v=2"></script>
+  <script src="js/router-selector.js?v=2"></script>
+  <script src="js/layout.js?v=2"></script>
+  <script src="js/monitor-interface.js?v=2"></script>
+  <script>
+    if (Auth.requireAuth()) {
+      Layout.init('monitor-interface.html');
+      MonitorInterface.init();
+    }
+  </script>
+</body>
+</html>

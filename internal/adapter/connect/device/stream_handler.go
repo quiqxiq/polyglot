@@ -46,10 +46,13 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 	}
 
 	var drv port.DeviceDriver
+	var drvErr error
 	if h.driverGetter != nil {
 		d, err := h.driverGetter(ctx, dev.ID)
 		if err == nil {
 			drv = d
+		} else {
+			drvErr = err
 		}
 	}
 
@@ -61,6 +64,9 @@ func (h *DeviceConnectHandler) StreamDeviceStatus(
 		req.Msg.InterfaceTypeFilter,
 		req.Msg.InterfaceNameFilter,
 	)
+	if drv == nil && drvErr != nil {
+		initialRes.Message = fmt.Sprintf("Failed to connect to device: %v", drvErr)
+	}
 	pbIfaces := ToProtoInterfaceDetails(initialRes.InterfaceDetails)
 
 	metrics := &devicepb.DeviceTestMetrics{

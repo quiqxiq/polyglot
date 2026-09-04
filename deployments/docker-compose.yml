@@ -1,36 +1,84 @@
 services:
+  # ─── 1. PostgreSQL + TimescaleDB ───────────────────────────────────────────
   postgres:
     image: timescale/timescaledb:latest-pg16
-    container_name: polyglot-postgres
+    container_name: polyglot-postgres-dev
     command: postgres -c shared_preload_libraries=timescaledb
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: netops
-      POSTGRES_DB: netops
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-netops}
+      POSTGRES_DB: ${POSTGRES_DB:-netops}
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata_dev:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d netops"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-postgres} -d $${POSTGRES_DB:-netops}"]
       interval: 3s
       timeout: 3s
       retries: 5
 
+  # ─── 2. Redis Cache ───────────────────────────────────────────────────────
   redis:
     image: docker.io/library/redis:7-alpine
-    container_name: polyglot-redis
+    container_name: polyglot-redis-dev
+    restart: unless-stopped
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT:-6379}:6379"
     volumes:
-      - redisdata:/data
+      - redisdata_dev:/data
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 3s
       timeout: 3s
       retries: 5
 
+  # ─── 3. Polyglot Backend Engine (Go Dev) ──────────────────────────────────
+  server:
+    container_name: polyglot-server-dev
+    build:
+      context: ..
+      dockerfile: deployments/docker/Dockerfile.server
+      target: dev
+    restart: unless-stopped
+    ports:
+      - "${SERVER_PORT:-8080}:8080"
+      - "8085:8080"
+    environment:
+      - PORT=8080
+      - APP_ENV=development
+      - LOG_LEVEL=debug
+      - DATABASE_URL=postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-netops}@postgres:5432/${POSTGRES_DB:-netops}?sslmode=disable
+      - REDIS_URL=redis://redis:6379/0
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-12345678901234567890123456789012}
+      - JWT_SECRET=${JWT_SECRET:-polyglot-super-secret-jwt-key-dev-32b}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:5173,http://localhost:5176,http://localhost,http://localhost:80,http://localhost:8088,http://dial.localhost,http://dial.localhost:8088}
+      - SCHEDULER_ENABLED=true
+    volumes:
+      - ..:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # ─── 4. Nginx Gateway (Reverse Proxy & Static Frontend Server) ─────────────
+  gateway:
+    image: nginx:alpine
+    container_name: polyglot-gateway-dev
+    restart: unless-stopped
+    ports:
+      - "${GATEWAY_PORT:-80}:80"
+      - "8088:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ../web/dist:/usr/share/nginx/html/app:ro
+      - ../web_dial:/usr/share/nginx/html/dial:ro
+    depends_on:
+      - server
 
 volumes:
-  pgdata:
-  redisdata:
+  pgdata_dev:
+  redisdata_dev:

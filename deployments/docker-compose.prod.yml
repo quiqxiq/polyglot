@@ -1,29 +1,5 @@
 services:
-  server:
-    container_name: polyglot-server-prod
-    build:
-      context: ..
-      dockerfile: deployments/docker/Dockerfile
-      target: prod
-    restart: always
-    ports:
-      - "8080:8080"
-    environment:
-      - PORT=8080
-      - APP_ENV=production
-      - DATABASE_URL=postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-netops}@postgres:5432/${POSTGRES_DB:-netops}?sslmode=disable
-      - REDIS_URL=redis://redis:6379/0
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_USER=${POSTGRES_USER:-postgres}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-netops}
-      - POSTGRES_DB=${POSTGRES_DB:-netops}
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-
+  # ─── 1. PostgreSQL + TimescaleDB ───────────────────────────────────────────
   postgres:
     image: timescale/timescaledb:latest-pg16
     container_name: polyglot-postgres-prod
@@ -34,7 +10,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-netops}
       POSTGRES_DB: ${POSTGRES_DB:-netops}
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pgdata_prod:/var/lib/postgresql/data
     healthcheck:
@@ -43,12 +19,13 @@ services:
       timeout: 5s
       retries: 5
 
+  # ─── 2. Redis Cache ───────────────────────────────────────────────────────
   redis:
     image: docker.io/library/redis:7-alpine
     container_name: polyglot-redis-prod
     restart: always
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT:-6379}:6379"
     volumes:
       - redisdata_prod:/data
     healthcheck:
@@ -56,6 +33,42 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  # ─── 3. Polyglot Backend Engine (Hardened Alpine Container) ───────────────
+  server:
+    container_name: polyglot-server-prod
+    build:
+      context: ..
+      dockerfile: deployments/docker/Dockerfile.server
+      target: prod
+    restart: always
+    environment:
+      - PORT=8080
+      - APP_ENV=production
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - DATABASE_URL=postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-netops}@postgres:5432/${POSTGRES_DB:-netops}?sslmode=disable
+      - REDIS_URL=redis://redis:6379/0
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-12345678901234567890123456789012}
+      - JWT_SECRET=${JWT_SECRET:-polyglot-super-secret-jwt-key-prod-32b}
+      - SCHEDULER_ENABLED=${SCHEDULER_ENABLED:-true}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # ─── 4. Production Nginx Gateway (Bundles Web App & Web Dial) ──────────────
+  gateway:
+    container_name: polyglot-gateway-prod
+    build:
+      context: ..
+      dockerfile: deployments/docker/Dockerfile.gateway
+      target: prod
+    restart: always
+    ports:
+      - "${GATEWAY_PORT:-80}:80"
+    depends_on:
+      - server
 
 volumes:
   pgdata_prod:

@@ -32,6 +32,9 @@ func validateIfSupported(ctx context.Context, driver port.DeviceDriver, cmd comm
 }
 
 func ExecuteCommand(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
+	if driver == nil {
+		return command.Result{}, command.ErrDriverUnavailable
+	}
 	if err := validateIfSupported(ctx, driver, cmd); err != nil {
 		return command.Result{}, err
 	}
@@ -56,6 +59,9 @@ func ExecuteCommand(ctx context.Context, driver port.DeviceDriver, cmd command.C
 // hard policy deny. This preserves defense-in-depth: even if a buggy or
 // malicious client calls a denied tool, the server refuses.
 func ExecuteCommandPreApproved(ctx context.Context, driver port.DeviceDriver, cmd command.Command) (command.Result, error) {
+	if driver == nil {
+		return command.Result{}, command.ErrDriverUnavailable
+	}
 	if command.Decide(driver.Classify(cmd)) == command.DecisionDeny {
 		return command.Result{}, command.ErrDenied
 	}

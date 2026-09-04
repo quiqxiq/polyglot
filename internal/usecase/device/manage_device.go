@@ -175,6 +175,15 @@ func (uc *ManageDeviceUseCase) TestConnection(
 	}
 	start := time.Now()
 
+	if driver == nil {
+		return DeviceTestResult{
+			DeviceID:  deviceID,
+			Status:    "failed",
+			LatencyMS: time.Since(start).Milliseconds(),
+			Message:   "device driver unavailable or disconnected",
+		}, nil
+	}
+
 	// Execute /system/resource/print to test device response
 	sysRes, err := uc.diag.GetSystemResource(ctx, driver)
 	latency := time.Since(start).Milliseconds()

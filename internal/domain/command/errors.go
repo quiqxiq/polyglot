@@ -13,4 +13,6 @@ var (
 	// ErrDriverNotStreaming indicates the device driver does not support
 	// streaming output.
 	ErrDriverNotStreaming = fault.New(fault.KindFailedPrecondition, "command: device driver does not support streaming")
+	// ErrDriverUnavailable indicates the device driver is nil or disconnected.
+	ErrDriverUnavailable = fault.New(fault.KindUnavailable, "command: device driver unavailable")
 )

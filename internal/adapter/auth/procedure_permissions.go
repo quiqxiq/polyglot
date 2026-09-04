@@ -150,7 +150,7 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.NetworkMonitorService/StreamSystemSnapshot":    "monitor:read",
 	"/polyglot.v1.NetworkMonitorService/StreamInterfaceEthernet": "monitor:read",
 	"/polyglot.v1.NetworkMonitorService/StreamQueueStats":        "monitor:read",
-	"/polyglot.v1.NetworkMonitorService/StreamLogs":              "monitor:read",
+	"/polyglot.v1.NetworkMonitorService/StreamLogs":              "log:read",
 	"/polyglot.v1.NetworkMonitorService/StreamHotspotInactive":   "monitor:read",
 	"/polyglot.v1.NetworkMonitorService/StreamPPPActive":         "monitor:read",
 	"/polyglot.v1.NetworkMonitorService/StreamPPPInactive":       "monitor:read",
