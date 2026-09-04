@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreatePPPProfileRequest, CreatePPPProfileResponse, CreatePPPSecretRequest, CreatePPPSecretResponse, DeletePPPProfileRequest, DeletePPPProfileResponse, DeletePPPSecretRequest, DeletePPPSecretResponse, GetPPPProfileRequest, GetPPPProfileResponse, GetPPPSecretRequest, GetPPPSecretResponse, KickPPPActiveSessionRequest, KickPPPActiveSessionResponse, KickPPPActiveSessionsRequest, KickPPPActiveSessionsResponse, ListPPPActiveSessionsRequest, ListPPPActiveSessionsResponse, ListPPPInactiveSecretsRequest, ListPPPInactiveSecretsResponse, ListPPPProfilesRequest, ListPPPProfilesResponse, ListPPPSecretsRequest, ListPPPSecretsResponse, PPPActiveSessionsFrame, PPPActiveStatsFrame, PPPInactiveSecretsFrame, SetPPPSecretDisabledRequest, SetPPPSecretDisabledResponse, StreamPPPActiveSessionsRequest, StreamPPPActiveStatsRequest, StreamPPPInactiveSecretsRequest, UpdatePPPProfileRequest, UpdatePPPProfileResponse, UpdatePPPSecretRequest, UpdatePPPSecretResponse } from "./ppp_pb.js";
+import { CreatePPPProfileRequest, CreatePPPProfileResponse, CreatePPPSecretRequest, CreatePPPSecretResponse, DeletePPPProfileRequest, DeletePPPProfileResponse, DeletePPPSecretRequest, DeletePPPSecretResponse, GetPPPProfileRequest, GetPPPProfileResponse, GetPPPSecretRequest, GetPPPSecretResponse, KickPPPActiveSessionRequest, KickPPPActiveSessionResponse, KickPPPActiveSessionsRequest, KickPPPActiveSessionsResponse, ListPPPActiveSessionsRequest, ListPPPActiveSessionsResponse, ListPPPInactiveSecretsRequest, ListPPPInactiveSecretsResponse, ListPPPProfilesRequest, ListPPPProfilesResponse, ListPPPSecretsRequest, ListPPPSecretsResponse, PPPActiveSessionsFrame, PPPInactiveSecretsFrame, SetPPPSecretDisabledRequest, SetPPPSecretDisabledResponse, StreamPPPActiveSessionsRequest, StreamPPPInactiveSecretsRequest, UpdatePPPProfileRequest, UpdatePPPProfileResponse, UpdatePPPSecretRequest, UpdatePPPSecretResponse } from "./ppp_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -162,15 +162,6 @@ export const PPPService = {
       name: "StreamActiveSessions",
       I: StreamPPPActiveSessionsRequest,
       O: PPPActiveSessionsFrame,
-      kind: MethodKind.ServerStreaming,
-    },
-    /**
-     * @generated from rpc polyglot.v1.PPPService.StreamActiveStats
-     */
-    streamActiveStats: {
-      name: "StreamActiveStats",
-      I: StreamPPPActiveStatsRequest,
-      O: PPPActiveStatsFrame,
       kind: MethodKind.ServerStreaming,
     },
     /**

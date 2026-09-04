@@ -74,6 +74,7 @@ func toProtoPPPActiveSession(s port.PPPActiveSession) *devicepb.PPPActiveSession
 		SessionId: s.SessionID,
 		Radius:    s.Radius,
 		Profile:   s.Profile,
+		Uptime:    s.Uptime,
 	}
 }
 
@@ -82,25 +83,6 @@ func toProtoPPPActiveSessions(sessions []port.PPPActiveSession) []*devicepb.PPPA
 	res := make([]*devicepb.PPPActiveSession, len(sessions))
 	for i, s := range sessions {
 		res[i] = toProtoPPPActiveSession(s)
-	}
-	return res
-}
-
-// toProtoPPPActiveStat converts a domain port.PPPActiveStat to protobuf PPPActiveStat.
-func toProtoPPPActiveStat(s port.PPPActiveStat) *devicepb.PPPActiveStat {
-	return &devicepb.PPPActiveStat{
-		Id:            s.RosID,
-		Uptime:        s.Uptime,
-		LimitBytesIn:  s.LimitBytesIn,
-		LimitBytesOut: s.LimitBytesOut,
-	}
-}
-
-// toProtoPPPActiveStats converts a slice of domain port.PPPActiveStat to protobuf PPPActiveStats.
-func toProtoPPPActiveStats(stats []port.PPPActiveStat) []*devicepb.PPPActiveStat {
-	res := make([]*devicepb.PPPActiveStat, len(stats))
-	for i, s := range stats {
-		res[i] = toProtoPPPActiveStat(s)
 	}
 	return res
 }

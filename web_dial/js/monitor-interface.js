@@ -115,13 +115,57 @@ const MonitorInterface = {
     }
   },
 
+  escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  },
+
   async loadQueues() {
     try {
-      const frame = await API.streamOnce('/polyglot.v1.NetworkMonitorService/StreamQueueStats', {
-        deviceId: this.currentDeviceId,
-        interval: '1s'
+      this.queues = [];
+      const queueMap = new Map();
+
+      await new Promise((resolve) => {
+        const controller = new AbortController();
+        let debounceTimer = null;
+        const maxTimeout = setTimeout(() => {
+          controller.abort();
+          resolve();
+        }, 3500);
+
+        API.stream(
+          '/polyglot.v1.NetworkMonitorService/StreamQueueStats',
+          { deviceId: this.currentDeviceId, interval: '1s' },
+          (frame) => {
+            const list = frame.queues || [];
+            list.forEach(q => {
+              if (q && q.name) {
+                queueMap.set(q.id || q.name, q);
+              }
+            });
+            if (debounceTimer) clearTimeout(debounceTimer);
+            // Begitu tidak ada frame baru selama 250ms, snapshot burst selesai
+            debounceTimer = setTimeout(() => {
+              clearTimeout(maxTimeout);
+              controller.abort();
+              resolve();
+            }, 250);
+          },
+          () => {
+            clearTimeout(maxTimeout);
+            if (debounceTimer) clearTimeout(debounceTimer);
+            resolve();
+          },
+          controller.signal
+        );
       });
-      this.queues = frame?.queues || [];
+
+      this.queues = Array.from(queueMap.values());
       const countEl = document.getElementById('count-queues');
       if (countEl) countEl.textContent = this.queues.length;
     } catch (err) {
@@ -182,15 +226,18 @@ const MonitorInterface = {
         statusBadge = '<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Running</span>';
       }
 
+      const encodedName = encodeURIComponent(iface.name || '');
+      const encodedSubtitle = encodeURIComponent(`Type: ${iface.type || 'ether'} &bull; MAC: ${iface.macAddress || iface.mac_address || '-'}`);
+
       return `
         <tr class="hover:bg-slate-50 transition-colors border-b border-slate-100 text-sm">
           <td class="py-3 px-4 font-mono text-xs text-slate-400">${idx + 1}</td>
-          <td class="py-3 px-4 font-bold text-slate-900">${iface.name}</td>
-          <td class="py-3 px-4"><span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-slate-100 text-slate-700">${iface.type || 'ether'}</span></td>
+          <td class="py-3 px-4 font-bold text-slate-900 font-mono">${this.escapeHtml(iface.name)}</td>
+          <td class="py-3 px-4"><span class="inline-block px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-slate-100 text-slate-700">${this.escapeHtml(iface.type || 'ether')}</span></td>
           <td class="py-3 px-4">${statusBadge}</td>
-          <td class="py-3 px-4 font-mono text-xs text-slate-500">${iface.macAddress || iface.mac_address || '-'}</td>
+          <td class="py-3 px-4 font-mono text-xs text-slate-500">${this.escapeHtml(iface.macAddress || iface.mac_address || '-')}</td>
           <td class="py-3 px-4 text-right">
-            <button onclick="MonitorInterface.openTrafficModal('interface', '${iface.name}', '${iface.type || 'ether'}', ${isRunning})" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-xs font-bold transition-colors cursor-pointer">
+            <button onclick="MonitorInterface.openTrafficModal('interface', decodeURIComponent('${encodedName}'), decodeURIComponent('${encodedSubtitle}'), ${isRunning})" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-xs font-bold transition-colors cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               Monitor Traffic
             </button>
@@ -240,16 +287,19 @@ const MonitorInterface = {
         ? '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-500">Disabled</span>'
         : '<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Aktif</span>';
 
+      const encodedName = encodeURIComponent(q.name || '');
+      const encodedSubtitle = encodeURIComponent(`Target: ${targetStr} &bull; Max: ${maxLimitStr}`);
+
       return `
         <tr class="hover:bg-slate-50 transition-colors border-b border-slate-100 text-sm">
           <td class="py-3 px-4 font-mono text-xs text-slate-400">${idx + 1}</td>
-          <td class="py-3 px-4 font-bold text-slate-900">${q.name}</td>
-          <td class="py-3 px-4 font-mono text-xs text-blue-600">${targetStr}</td>
-          <td class="py-3 px-4 font-mono text-xs text-slate-700">${maxLimitStr}</td>
-          <td class="py-3 px-4 font-mono text-xs text-slate-600">${this.formatBytes(q.bytes)}</td>
+          <td class="py-3 px-4 font-bold text-slate-900 font-mono">${this.escapeHtml(q.name)}</td>
+          <td class="py-3 px-4 font-mono text-xs text-blue-600">${this.escapeHtml(targetStr)}</td>
+          <td class="py-3 px-4 font-mono text-xs text-slate-700">${this.escapeHtml(maxLimitStr)}</td>
+          <td class="py-3 px-4 font-mono text-xs text-slate-600" title="${q.bytes || ''}">${bytesStr}</td>
           <td class="py-3 px-4">${statusBadge}</td>
           <td class="py-3 px-4 text-right">
-            <button onclick="MonitorInterface.openTrafficModal('queue', '${q.name}', 'Target: ${targetStr} &bull; Max: ${maxLimitStr}', ${!isDisabled})" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-bold transition-colors cursor-pointer">
+            <button onclick="MonitorInterface.openTrafficModal('queue', decodeURIComponent('${encodedName}'), decodeURIComponent('${encodedSubtitle}'), ${!isDisabled})" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-bold transition-colors cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               Monitor Traffic
             </button>
@@ -270,7 +320,7 @@ const MonitorInterface = {
     const subtitleEl = document.getElementById('modal-target-subtitle');
     if (titleEl) titleEl.textContent = targetName;
     if (subtitleEl) {
-      subtitleEl.innerHTML = `${type === 'interface' ? 'Interface' : 'Simple Queue'} &bull; ${subtitle} &bull; Status: ${isRunning ? '<span class="text-emerald-400 font-semibold">Running</span>' : '<span class="text-amber-400 font-semibold">Offline</span>'}`;
+      subtitleEl.innerHTML = `${type === 'interface' ? 'Interface' : 'Simple Queue'} &bull; ${subtitle} &bull; Status: ${isRunning ? '<span class="text-emerald-600 font-semibold">Running</span>' : '<span class="text-amber-600 font-semibold">Offline</span>'}`;
     }
 
     this.trafficHistory = [];
@@ -288,8 +338,16 @@ const MonitorInterface = {
       const el = document.getElementById(id);
       if (el) el.textContent = 'Peak: 0 bps';
     });
-    document.getElementById('total-bytes-display').textContent = '-';
-    document.getElementById('packets-display').textContent = '-';
+    const totalBytesEl = document.getElementById('total-bytes-display');
+    const packetsEl = document.getElementById('packets-display');
+    if (totalBytesEl) {
+      totalBytesEl.textContent = '-';
+      totalBytesEl.removeAttribute('title');
+    }
+    if (packetsEl) {
+      packetsEl.textContent = '-';
+      packetsEl.removeAttribute('title');
+    }
 
     if (modal) modal.classList.remove('hidden');
     this.trafficController = new AbortController();
@@ -338,12 +396,16 @@ const MonitorInterface = {
           if (q.bytes.includes('/')) {
             const bParts = q.bytes.split('/');
             totalBytesEl.textContent = `${this.formatBytes(bParts[0])} / ${this.formatBytes(bParts[1])}`;
+            totalBytesEl.setAttribute('title', `Upload: ${this.formatBytes(bParts[0])} (${bParts[0]} B) | Download: ${this.formatBytes(bParts[1])} (${bParts[1]} B)`);
           } else {
             totalBytesEl.textContent = this.formatBytes(q.bytes);
+            totalBytesEl.setAttribute('title', `${q.bytes} B`);
           }
         }
         if (packetsEl && q.packets) {
-          packetsEl.textContent = q.packets.includes('/') ? `${q.packets} pkt` : `${Number(q.packets).toLocaleString()} pkt`;
+          packetsEl.textContent = this.formatPackets(q.packets);
+          const dropInfo = q.dropped ? ` | Dropped: ${this.formatPackets(q.dropped)}` : '';
+          packetsEl.setAttribute('title', `Packets: ${q.packets}${q.dropped ? ' | Dropped: ' + q.dropped : ''}`);
         }
 
         this.updateTrafficMetrics(rx, tx);
@@ -400,7 +462,7 @@ const MonitorInterface = {
     ctx.clearRect(0, 0, width, height);
 
     const maxY = Math.max(this.peakRx, this.peakTx, 100000) * 1.15;
-    ctx.strokeStyle = 'rgba(51, 65, 85, 0.4)';
+    ctx.strokeStyle = 'rgba(226, 232, 240, 0.9)';
     ctx.lineWidth = 1 * dpr;
 
     for (let i = 1; i <= 3; i++) {
@@ -410,7 +472,7 @@ const MonitorInterface = {
       ctx.lineTo(width, y);
       ctx.stroke();
 
-      ctx.fillStyle = 'rgba(148, 163, 184, 0.6)';
+      ctx.fillStyle = 'rgba(100, 116, 139, 0.8)';
       ctx.font = `${9 * dpr}px monospace`;
       ctx.fillText(this.formatBps(maxY * (i / 4)), 8 * dpr, y - 4 * dpr);
     }
@@ -436,7 +498,7 @@ const MonitorInterface = {
 
       const gradient = ctx.createLinearGradient(0, 0, 0, height);
       gradient.addColorStop(0, fillColor);
-      gradient.addColorStop(1, 'rgba(15, 23, 42, 0)');
+      gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
       ctx.fillStyle = gradient;
       ctx.fill(fillPath);
 
@@ -445,8 +507,8 @@ const MonitorInterface = {
       ctx.stroke();
     };
 
-    renderSeries('rx', '#10b981', 'rgba(16, 185, 129, 0.25)');
-    renderSeries('tx', '#6366f1', 'rgba(99, 102, 241, 0.25)');
+    renderSeries('rx', '#059669', 'rgba(16, 185, 129, 0.20)');
+    renderSeries('tx', '#4f46e5', 'rgba(99, 102, 241, 0.20)');
   },
 
   formatBps(bps) {
@@ -455,6 +517,24 @@ const MonitorInterface = {
     if (bps >= 1000000) return (bps / 1000000).toFixed(2) + ' Mbps';
     if (bps >= 1000) return (bps / 1000).toFixed(1) + ' Kbps';
     return bps + ' bps';
+  },
+
+  formatCount(val) {
+    const n = Number(val);
+    if (isNaN(n) || n < 0) return val || '0';
+    if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B';
+    if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
+    if (n >= 1e3) return (n / 1e3).toFixed(1) + 'k';
+    return n.toLocaleString();
+  },
+
+  formatPackets(pktStr) {
+    if (!pktStr || pktStr === '0') return '0 pkt';
+    if (pktStr.includes('/')) {
+      const parts = pktStr.split('/');
+      return `${this.formatCount(parts[0])} / ${this.formatCount(parts[1])} pkt`;
+    }
+    return `${this.formatCount(pktStr)} pkt`;
   },
 
   formatBytes(bytes) {

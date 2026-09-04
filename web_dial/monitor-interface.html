@@ -120,81 +120,81 @@
   </main>
 
   <!-- Modal Live Traffic Monitor (On-Demand Streaming) -->
-  <div id="traffic-modal" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl max-w-2xl w-full p-6 text-white space-y-5">
+  <div id="traffic-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-2xl max-w-2xl w-full p-6 text-slate-900 space-y-5">
       <!-- Modal Header -->
-      <div class="flex items-start justify-between pb-4 border-b border-slate-800">
+      <div class="flex items-start justify-between pb-4 border-b border-slate-100">
         <div>
           <div class="flex items-center gap-2.5">
-            <h3 class="text-lg font-bold text-white tracking-tight flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-400"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-              Monitor Traffic: <span id="modal-target-title" class="text-emerald-400 font-mono">ether1</span>
+            <h3 class="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-blue-600"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Monitor Traffic: <span id="modal-target-title" class="text-blue-600 font-mono font-bold">ether1</span>
             </h3>
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Streaming 1s
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Streaming 1s
             </span>
           </div>
-          <p id="modal-target-subtitle" class="text-xs text-slate-400 mt-1">Interface Ethernet &bull; Status Link: Running</p>
+          <p id="modal-target-subtitle" class="text-xs text-slate-500 mt-1">Interface Ethernet &bull; Status Link: Running</p>
         </div>
 
-        <button id="close-traffic-modal-btn" onclick="MonitorInterface.closeTrafficModal()" class="p-1.5 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer">
+        <button id="close-traffic-modal-btn" onclick="MonitorInterface.closeTrafficModal()" class="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer" title="Tutup Modal (Esc)">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
       </div>
 
       <!-- Realtime KPI Grid -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div class="bg-slate-800/60 border border-slate-700/50 p-3.5 rounded-xl">
-          <div class="text-[11px] font-semibold uppercase text-emerald-400 tracking-wider">Download (RX)</div>
-          <div id="rx-rate-display" class="text-xl font-bold font-mono text-white mt-1">0 bps</div>
-          <div id="rx-peak-display" class="text-[10px] text-slate-400 mt-0.5 font-mono">Peak: 0 bps</div>
+        <div class="bg-emerald-50/70 border border-emerald-100/80 p-3.5 rounded-xl min-w-0">
+          <div class="text-[11px] font-bold uppercase text-emerald-700 tracking-wider">Download (RX)</div>
+          <div id="rx-rate-display" class="text-xl font-bold font-mono text-emerald-950 mt-1 truncate">0 bps</div>
+          <div id="rx-peak-display" class="text-[10px] text-emerald-600 mt-0.5 font-mono truncate">Peak: 0 bps</div>
         </div>
 
-        <div class="bg-slate-800/60 border border-slate-700/50 p-3.5 rounded-xl">
-          <div class="text-[11px] font-semibold uppercase text-indigo-400 tracking-wider">Upload (TX)</div>
-          <div id="tx-rate-display" class="text-xl font-bold font-mono text-white mt-1">0 bps</div>
-          <div id="tx-peak-display" class="text-[10px] text-slate-400 mt-0.5 font-mono">Peak: 0 bps</div>
+        <div class="bg-indigo-50/70 border border-indigo-100/80 p-3.5 rounded-xl min-w-0">
+          <div class="text-[11px] font-bold uppercase text-indigo-700 tracking-wider">Upload (TX)</div>
+          <div id="tx-rate-display" class="text-xl font-bold font-mono text-indigo-950 mt-1 truncate">0 bps</div>
+          <div id="tx-peak-display" class="text-[10px] text-indigo-600 mt-0.5 font-mono truncate">Peak: 0 bps</div>
         </div>
 
-        <div class="bg-slate-800/60 border border-slate-700/50 p-3.5 rounded-xl">
-          <div class="text-[11px] font-semibold uppercase text-slate-400 tracking-wider">Total Data</div>
-          <div id="total-bytes-display" class="text-base font-bold font-mono text-white mt-1">-</div>
-          <div class="text-[10px] text-slate-400 mt-0.5">Akumulasi counter</div>
+        <div class="bg-slate-50 border border-slate-200/80 p-3.5 rounded-xl min-w-0">
+          <div class="text-[11px] font-bold uppercase text-slate-500 tracking-wider">Total Data</div>
+          <div id="total-bytes-display" class="text-xs sm:text-sm font-bold font-mono text-slate-900 mt-1 truncate" title="Total Rx / Tx Data">-</div>
+          <div class="text-[10px] text-slate-400 mt-0.5 truncate">Akumulasi counter</div>
         </div>
 
-        <div class="bg-slate-800/60 border border-slate-700/50 p-3.5 rounded-xl">
-          <div class="text-[11px] font-semibold uppercase text-slate-400 tracking-wider">Paket / Dropped</div>
-          <div id="packets-display" class="text-base font-bold font-mono text-white mt-1">-</div>
-          <div class="text-[10px] text-slate-400 mt-0.5">Status frame transfer</div>
+        <div class="bg-slate-50 border border-slate-200/80 p-3.5 rounded-xl min-w-0">
+          <div class="text-[11px] font-bold uppercase text-slate-500 tracking-wider">Paket / Dropped</div>
+          <div id="packets-display" class="text-xs sm:text-sm font-bold font-mono text-slate-900 mt-1 truncate" title="Status Frame & Dropped">-</div>
+          <div class="text-[10px] text-slate-400 mt-0.5 truncate">Status frame transfer</div>
         </div>
       </div>
 
       <!-- Canvas Realtime Rolling Chart -->
       <div class="space-y-2">
-        <div class="flex items-center justify-between text-xs text-slate-400 px-1">
+        <div class="flex items-center justify-between text-xs text-slate-500 px-1">
           <div class="flex items-center gap-4">
-            <span class="flex items-center gap-1.5 font-semibold text-emerald-400">
-              <span class="w-3 h-1 bg-emerald-400 rounded-full"></span> RX (Download)
+            <span class="flex items-center gap-1.5 font-semibold text-emerald-600">
+              <span class="w-3 h-1 bg-emerald-500 rounded-full"></span> RX (Download)
             </span>
-            <span class="flex items-center gap-1.5 font-semibold text-indigo-400">
-              <span class="w-3 h-1 bg-indigo-400 rounded-full"></span> TX (Upload)
+            <span class="flex items-center gap-1.5 font-semibold text-indigo-600">
+              <span class="w-3 h-1 bg-indigo-500 rounded-full"></span> TX (Upload)
             </span>
           </div>
-          <span class="text-[11px] text-slate-500 font-mono">Window 60 detik</span>
+          <span class="text-[11px] text-slate-400 font-mono">Window 60 detik</span>
         </div>
 
-        <div class="relative w-full h-56 bg-slate-950 rounded-xl border border-slate-800 p-2 overflow-hidden">
+        <div class="relative w-full h-56 bg-slate-50/80 rounded-xl border border-slate-200 p-2 overflow-hidden shadow-inner">
           <canvas id="traffic-canvas" width="600" height="210" class="w-full h-full block"></canvas>
         </div>
       </div>
 
       <!-- Modal Footer -->
-      <div class="flex items-center justify-between pt-3 border-t border-slate-800 text-xs text-slate-400">
-        <span class="flex items-center gap-1.5 text-slate-500">
+      <div class="flex items-center justify-between pt-3 border-t border-slate-100 text-xs text-slate-400">
+        <span class="flex items-center gap-1.5 text-slate-400">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="10"/><line x1="12" x2="12" y1="16" y2="12"/><line x1="12" x2="12.01" y1="8" y2="8"/></svg>
           Stream otomatis berhenti saat modal ini ditutup
         </span>
-        <button onclick="MonitorInterface.closeTrafficModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-semibold transition-colors cursor-pointer">
+        <button onclick="MonitorInterface.closeTrafficModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 rounded-xl font-semibold transition-colors cursor-pointer">
           Tutup Monitor
         </button>
       </div>
@@ -205,7 +205,7 @@
   <script src="js/auth.js?v=2"></script>
   <script src="js/router-selector.js?v=2"></script>
   <script src="js/layout.js?v=2"></script>
-  <script src="js/monitor-interface.js?v=2"></script>
+  <script src="js/monitor-interface.js?v=3"></script>
   <script>
     if (Auth.requireAuth()) {
       Layout.init('monitor-interface.html');

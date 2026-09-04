@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from '@/components/data-table'
 import type { EnrichedPPPActiveSession } from '../../api/use-ppp-stream'
+import { formatUptime } from '../../utils/format-uptime'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Activity, Clock, Globe, Network } from 'lucide-react'
 import { ActiveRowActions } from './active-row-actions'
@@ -91,10 +92,11 @@ export const activeColumns: ColumnDef<EnrichedPPPActiveSession>[] = [
     ),
     cell: ({ row }) => {
       const uptime = row.original.uptime || (row.getValue('uptime') as string) || ''
+      const displayUptime = formatUptime(uptime)
       return (
         <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
           <Clock className="h-3.5 w-3.5 text-primary" />
-          <span>{uptime || '-'}</span>
+          <span>{displayUptime || '-'}</span>
         </div>
       )
     },

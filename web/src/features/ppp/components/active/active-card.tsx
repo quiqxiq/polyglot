@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge'
 import type { EnrichedPPPActiveSession } from '../../api/use-ppp-stream'
+import { formatUptime } from '../../utils/format-uptime'
 import { Clock, Globe, Network, UserCheck } from 'lucide-react'
 import { ActiveRowActions } from './active-row-actions'
 
@@ -10,7 +11,7 @@ interface ActiveCardProps {
 export function ActiveCard({ session }: ActiveCardProps) {
   const profile = session.profile || 'default'
   const ip = session.address || '-'
-  const uptime = session.uptime || '-'
+  const uptime = formatUptime(session.uptime)
   const mac = session.callerId || '-'
   const service = session.service || 'pppoe'
 

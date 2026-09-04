@@ -21,7 +21,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
       <div>
         <h1 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-rose-500"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
           Monitoring PPP Non-Aktif
         </h1>
         <p class="text-sm text-slate-500 mt-0.5">Daftar pelanggan yang saat ini sedang offline / terputus</p>
@@ -40,7 +40,7 @@
           type="text" 
           id="search-input"
           class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Cari nama atau IP..."
+          placeholder="Cari nama, MAC, atau profile..."
         >
         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>
@@ -59,39 +59,29 @@
       </div>
     </div>
 
-    <!-- Table Container -->
-    <div class="bg-white border border-slate-200/80 rounded-2xl shadow-xs overflow-hidden">
-      <div id="loading-state" class="p-12 text-center text-slate-400">
-        <svg class="animate-spin h-8 w-8 mx-auto mb-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <!-- Results Section -->
+    <div id="results-section">
+      <!-- Loading State -->
+      <div id="loading-state" class="bg-white border border-slate-200/80 rounded-2xl p-12 text-center text-slate-400 shadow-xs">
+        <svg class="animate-spin h-8 w-8 mx-auto mb-3 text-rose-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
         <p class="text-sm font-medium">Memuat data PPP offline...</p>
       </div>
 
-      <div id="empty-state" class="hidden p-12 text-center text-slate-500">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-3 text-slate-300"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden bg-white border border-slate-200/80 rounded-2xl p-12 text-center text-slate-500 shadow-xs">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-3 text-slate-300"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         <h3 class="text-base font-semibold text-slate-800">Semua pelanggan sedang online</h3>
         <p class="text-xs text-slate-400 mt-1">Tidak ada pelanggan PPP yang berstatus offline</p>
       </div>
 
-      <div id="inactive-table" class="hidden overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="bg-slate-50/80 border-b border-slate-200 text-slate-600 text-xs font-semibold uppercase tracking-wider">
-              <th class="py-3 px-4 w-12">#</th>
-              <th class="py-3 px-4">Pengguna</th>
-              <th class="py-3 px-4">Profile</th>
-              <th class="py-3 px-4">Remote Address</th>
-              <th class="py-3 px-4">Terakhir Logout</th>
-              <th class="py-3 px-4">Comment</th>
-              <th class="py-3 px-4 text-right">Status</th>
-            </tr>
-          </thead>
-          <tbody id="inactive-tbody"></tbody>
-        </table>
-        <div id="pagination-container" class="px-4"></div>
-      </div>
+      <!-- Cards Grid -->
+      <div id="results-grid" class="space-y-3"></div>
+
+      <!-- Pagination Container -->
+      <div id="pagination-container" class="mt-6"></div>
     </div>
   </main>
 

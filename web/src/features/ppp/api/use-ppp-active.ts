@@ -7,6 +7,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { pppKeys } from './keys'
+import { formatUptime } from '../utils/format-uptime'
 
 export function usePPPActiveSessionsQuery(deviceId?: string, nameFilter?: string) {
   return useQuery({
@@ -19,7 +20,12 @@ export function usePPPActiveSessionsQuery(deviceId?: string, nameFilter?: string
           nameFilter: nameFilter || '',
         })
       )
-      return res.sessions
+      return res.sessions.map((s) => {
+        if (s.uptime) {
+          s.uptime = formatUptime(s.uptime)
+        }
+        return s
+      })
     },
     enabled: !!deviceId,
   })

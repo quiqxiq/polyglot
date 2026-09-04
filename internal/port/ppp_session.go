@@ -7,9 +7,6 @@ import (
 // PPPActiveSession alias to domain struct.
 type PPPActiveSession = domainPPP.ActiveSession
 
-// PPPActiveStat alias to domain struct.
-type PPPActiveStat = domainPPP.ActiveStat
-
 // PPPoESecret alias to domain struct.
 type PPPoESecret = domainPPP.PPPoESecret
 

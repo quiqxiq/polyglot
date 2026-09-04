@@ -263,6 +263,126 @@ const API = {
   }
 };
 
+// Global UI Utilities (Aligned with gnet_dial design)
+const UIUtils = {
+  getProfileInitials(name) {
+    if (!name || name === 'N/A' || name === '-') return 'NA';
+    const words = name.trim().split(/[\s._-]+/).filter(Boolean);
+    if (words.length >= 2) {
+      return (words[0][0] + words[1][0]).toUpperCase();
+    }
+    const clean = name.trim();
+    if (clean.length >= 2) {
+      return (clean[0] + clean[clean.length - 1]).toUpperCase();
+    }
+    return (clean[0] || 'U').toUpperCase();
+  },
+
+  getAvatarColor(name) {
+    const colors = [
+      'bg-blue-600', 'bg-emerald-600', 'bg-purple-600', 'bg-amber-600', 'bg-rose-600',
+      'bg-indigo-600', 'bg-cyan-600', 'bg-teal-600', 'bg-orange-600', 'bg-violet-600'
+    ];
+    let hash = 0;
+    const str = name || 'default';
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash = hash & hash;
+    }
+    return colors[Math.abs(hash) % colors.length];
+  },
+
+  formatUptime(uptime) {
+    if (!uptime || uptime === 'N/A' || uptime === '-' || uptime === '0s') return '-';
+    let days = 0, hours = 0, minutes = 0, seconds = 0;
+
+    // Check RouterOS formats: e.g. "2d01:17:03", "01:17:03", "2d1h17m3s", "15m20s"
+    const colonMatch = uptime.match(/(?:(\d+)d)?(?:(\d+)h)?(\d{2}):(\d{2}):(\d{2})/);
+    if (colonMatch) {
+      if (colonMatch[1]) days = parseInt(colonMatch[1], 10);
+      if (colonMatch[2]) hours = parseInt(colonMatch[2], 10);
+      hours = parseInt(colonMatch[3], 10);
+      minutes = parseInt(colonMatch[4], 10);
+      seconds = parseInt(colonMatch[5], 10);
+    } else {
+      const dMatch = uptime.match(/(\d+)d/);
+      const hMatch = uptime.match(/(\d+)h/);
+      const mMatch = uptime.match(/(\d+)m/);
+      const sMatch = uptime.match(/(\d+)s/);
+      if (dMatch) days = parseInt(dMatch[1], 10);
+      if (hMatch) hours = parseInt(hMatch[1], 10);
+      if (mMatch) minutes = parseInt(mMatch[1], 10);
+      if (sMatch) seconds = parseInt(sMatch[1], 10);
+    }
+
+    const parts = [];
+    if (days > 0) parts.push(`${days} hari`);
+    const hStr = hours.toString().padStart(2, '0');
+    const mStr = minutes.toString().padStart(2, '0');
+    const sStr = seconds.toString().padStart(2, '0');
+    parts.push(`${hStr}:${mStr}:${sStr}`);
+    return parts.join(' ');
+  },
+
+  formatLastLogout(datetime) {
+    if (!datetime || datetime === 'N/A' || datetime === '-' || datetime === '') return '-';
+    try {
+      // RouterOS format e.g. "mar/04/2026 18:23:45" or "2026-03-04 18:23:45"
+      let d = new Date(datetime.replace(' ', 'T'));
+      if (isNaN(d.getTime())) {
+        // Parse "mmm/dd/yyyy hh:mm:ss"
+        const parts = datetime.split(/[\s/:]+/);
+        if (parts.length >= 6) {
+          const monthNames = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+          const m = monthNames[parts[0].toLowerCase()] ?? 0;
+          d = new Date(parseInt(parts[2]), m, parseInt(parts[1]), parseInt(parts[3]), parseInt(parts[4]), parseInt(parts[5] || 0));
+        }
+      }
+      if (isNaN(d.getTime())) return datetime;
+
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+      const day = d.getDate();
+      const month = months[d.getMonth()];
+      const year = d.getFullYear();
+      const hours = d.getHours().toString().padStart(2, '0');
+      const minutes = d.getMinutes().toString().padStart(2, '0');
+      return `${day} ${month} ${year}, ${hours}:${minutes}`;
+    } catch {
+      return datetime;
+    }
+  },
+
+  getProfileIcon(profile = '', extraClass = '') {
+    const p = (profile || '').toLowerCase();
+    const cls = `lucide ${extraClass}`;
+    if (p.includes('pppoe')) {
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${cls}"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>`;
+    } else if (p.includes('hotspot')) {
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${cls}"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>`;
+    } else if (p.includes('vpn')) {
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${cls}"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`;
+    }
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${cls}"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+  }
+};
+
+// Global click listener to toggle and close action menus (three-dot mobile menu)
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.action-menu-btn');
+  if (btn) {
+    e.stopPropagation();
+    const menu = btn.parentElement.querySelector('.action-menu');
+    document.querySelectorAll('.action-menu').forEach(m => {
+      if (m !== menu) m.classList.add('hidden');
+    });
+    if (menu) menu.classList.toggle('hidden');
+    return;
+  }
+  // Click outside closes all open menus
+  document.querySelectorAll('.action-menu').forEach(m => m.classList.add('hidden'));
+});
+
 // Expose to window
 window.API = API;
+window.UIUtils = UIUtils;
 

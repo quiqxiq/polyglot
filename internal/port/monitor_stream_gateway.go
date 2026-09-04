@@ -24,7 +24,7 @@ type MonitorStreamGateway interface {
 	StreamLogs(ctx context.Context, driver StreamingDeviceDriver, topics string) (StreamHandle, error)
 	StreamQueueStats(ctx context.Context, driver StreamingDeviceDriver, params QueueStreamParams) (StreamHandle, error)
 	StreamPPPActive(ctx context.Context, driver StreamingDeviceDriver, nameFilter string) (StreamHandle, error)
-	StreamPPPActiveStats(ctx context.Context, driver StreamingDeviceDriver, interval string) (StreamHandle, error)
+	StreamPPPSecrets(ctx context.Context, driver StreamingDeviceDriver, nameFilter string) (StreamHandle, error)
 	StreamHotspotActive(ctx context.Context, driver StreamingDeviceDriver, userFilter string) (StreamHandle, error)
 	StreamHotspotActiveStats(ctx context.Context, driver StreamingDeviceDriver, interval string) (StreamHandle, error)
 	StreamClock(ctx context.Context, driver StreamingDeviceDriver, interval string) (StreamHandle, error)
@@ -38,7 +38,6 @@ type MonitorStreamGateway interface {
 	ParseLogEntries(res command.Result) []LogEntry
 	ParseQueues(res command.Result) []SimpleQueue
 	ParsePPPActive(res command.Result) []PPPActiveSession
-	ParsePPPActiveStats(res command.Result) []PPPActiveStat
 	ParseHotspotActive(res command.Result) []HotspotActiveSession
 	ParseHotspotActiveStats(res command.Result) []HotspotActiveStat
 	ParseClock(res command.Result) SystemClock

@@ -13,15 +13,7 @@ type ActiveSession struct {
 	SessionID string
 	Radius    bool
 	Profile   string
-}
-
-// ActiveStat represents real-time telemetry metrics returned by
-// /ppp/active/print stats interval=.
-type ActiveStat struct {
-	RosID         string
-	Uptime        string
-	LimitBytesIn  string
-	LimitBytesOut string
+	Uptime    string
 }
 
 // PPPoESecret represents one row returned by /ppp/secret/print. Only fields

@@ -51,8 +51,8 @@ func (g *monitorStreamGateway) StreamPPPActive(ctx context.Context, driver port.
 	return driver.Stream(ctx, mikrotikppp.NewStreamActiveCommand(nameFilter))
 }
 
-func (g *monitorStreamGateway) StreamPPPActiveStats(ctx context.Context, driver port.StreamingDeviceDriver, interval string) (port.StreamHandle, error) {
-	return driver.Stream(ctx, mikrotikppp.NewStreamActiveStatsCommand(interval))
+func (g *monitorStreamGateway) StreamPPPSecrets(ctx context.Context, driver port.StreamingDeviceDriver, nameFilter string) (port.StreamHandle, error) {
+	return driver.Stream(ctx, mikrotikppp.NewStreamSecretsCommand(nameFilter))
 }
 
 func (g *monitorStreamGateway) StreamHotspotActive(ctx context.Context, driver port.StreamingDeviceDriver, userFilter string) (port.StreamHandle, error) {
@@ -101,10 +101,6 @@ func (g *monitorStreamGateway) ParseQueues(res command.Result) []port.SimpleQueu
 
 func (g *monitorStreamGateway) ParsePPPActive(res command.Result) []port.PPPActiveSession {
 	return mikrotikppp.ParseActiveSessions(res)
-}
-
-func (g *monitorStreamGateway) ParsePPPActiveStats(res command.Result) []port.PPPActiveStat {
-	return mikrotikppp.ParseActiveStats(res)
 }
 
 func (g *monitorStreamGateway) ParseHotspotActive(res command.Result) []port.HotspotActiveSession {

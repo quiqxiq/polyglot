@@ -16,6 +16,10 @@ func ParseSecrets(result command.Result) []PPPoESecret {
 		if id == "" || name == "" {
 			continue
 		}
+		callerID := row["caller-id"]
+		if callerID == "" {
+			callerID = row["last-caller-id"]
+		}
 		secrets = append(secrets, PPPoESecret{
 			RosID:         id,
 			Name:          name,
@@ -26,7 +30,7 @@ func ParseSecrets(result command.Result) []PPPoESecret {
 			Comment:       row["comment"],
 			Disabled:      strings.EqualFold(row["disabled"], "true"),
 			LastLoggedOut: row["last-logged-out"],
-			CallerID:      row["caller-id"],
+			CallerID:      callerID,
 		})
 	}
 	return secrets
@@ -51,27 +55,10 @@ func ParseActiveSessions(result command.Result) []PPPActiveSession {
 			SessionID: row["session-id"],
 			Radius:    strings.EqualFold(row["radius"], "true"),
 			Profile:   row["profile"],
+			Uptime:    row["uptime"],
 		})
 	}
 	return sessions
-}
-
-// ParseActiveStats converts command.Result rows from /ppp/active/print stats into typed PPPActiveStat values.
-func ParseActiveStats(result command.Result) []PPPActiveStat {
-	stats := make([]PPPActiveStat, 0, len(result.Rows))
-	for _, row := range result.Rows {
-		id := row[".id"]
-		if id == "" {
-			continue
-		}
-		stats = append(stats, PPPActiveStat{
-			RosID:         id,
-			Uptime:        row["uptime"],
-			LimitBytesIn:  row["limit-bytes-in"],
-			LimitBytesOut: row["limit-bytes-out"],
-		})
-	}
-	return stats
 }
 
 // ParseProfiles converts command.Result rows from /ppp/profile/print into typed PPPProfile values.

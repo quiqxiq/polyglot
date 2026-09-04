@@ -19,9 +19,6 @@ type PPPProfileParams = port.PPPProfileParams
 // PPPActiveSession is the vendor-neutral PPP active session row.
 type PPPActiveSession = port.PPPActiveSession
 
-// PPPActiveStat is the vendor-neutral PPP active session telemetry stats row.
-type PPPActiveStat = port.PPPActiveStat
-
 // IsolirProfileParams returns a pre-filled PPPProfileParams for the standard
 // "isolir" (suspension) profile used in ISP billing.
 func IsolirProfileParams() PPPProfileParams {

@@ -172,7 +172,6 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.PPPService/KickActiveSessions":    "ppp:active:kick",
 	"/polyglot.v1.PPPService/ListInactiveSecrets":   "ppp:active:read",
 	"/polyglot.v1.PPPService/StreamActiveSessions":  "ppp:active:read",
-	"/polyglot.v1.PPPService/StreamActiveStats":     "ppp:active:read",
 	"/polyglot.v1.PPPService/StreamInactiveSecrets": "ppp:active:read",
 
 	// UserService — manajemen user (CRUD, reset password, aktif/nonaktif, device assignment).

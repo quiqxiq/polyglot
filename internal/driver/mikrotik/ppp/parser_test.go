@@ -17,15 +17,26 @@ func TestParseSecrets(t *testing.T) {
 				"service":  "pppoe",
 				"disabled": "false",
 			},
+			{
+				".id":             "*2",
+				"name":            "user2",
+				"profile":         "20mbps",
+				"service":         "pppoe",
+				"last-caller-id":  "AA:BB:CC:DD:EE:FF",
+				"last-logged-out": "mar/04/2026 18:23:45",
+			},
 		},
 	}
 
 	secrets := ParseSecrets(res)
-	if len(secrets) != 1 {
-		t.Fatalf("expected 1 secret, got %d", len(secrets))
+	if len(secrets) != 2 {
+		t.Fatalf("expected 2 secrets, got %d", len(secrets))
 	}
 	if secrets[0].Name != "user1" || secrets[0].Profile != "10mbps" || secrets[0].Disabled {
 		t.Fatalf("unexpected secret parsed: %+v", secrets[0])
+	}
+	if secrets[1].CallerID != "AA:BB:CC:DD:EE:FF" || secrets[1].LastLoggedOut != "mar/04/2026 18:23:45" {
+		t.Fatalf("expected last-caller-id and last-logged-out to be parsed: %+v", secrets[1])
 	}
 }
 
@@ -40,6 +51,7 @@ func TestParseActiveSessions(t *testing.T) {
 				"address":    "10.10.10.2",
 				"session-id": "0x81000001",
 				"radius":     "false",
+				"uptime":     "1d02:15:30",
 			},
 		},
 	}
@@ -48,7 +60,7 @@ func TestParseActiveSessions(t *testing.T) {
 	if len(active) != 1 {
 		t.Fatalf("expected 1 active session, got %d", len(active))
 	}
-	if active[0].Name != "user1" || active[0].Address != "10.10.10.2" {
+	if active[0].Name != "user1" || active[0].Address != "10.10.10.2" || active[0].Uptime != "1d02:15:30" {
 		t.Fatalf("unexpected active session parsed: %+v", active[0])
 	}
 }

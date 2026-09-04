@@ -79,7 +79,7 @@ func NewPrintSecretsCommand(nameFilter string) command.Command {
 func NewStreamSecretsCommand(nameFilter string) command.Command {
 	args := map[string]string{
 		"follow":    "",
-		".proplist": ".id,name,service,profile,local-address,remote-address,comment,disabled,last-logged-out",
+		".proplist": ".id,name,service,profile,caller-id,last-caller-id,last-logged-out,disabled,local-address,remote-address,comment",
 	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
@@ -118,7 +118,7 @@ func NewPrintActiveCommand(nameFilter string) command.Command {
 func NewStreamActiveCommand(nameFilter string) command.Command {
 	args := map[string]string{
 		"follow":    "",
-		".proplist": ".id,name,service,caller-id,address,encoding,session-id,radius",
+		".proplist": ".id,name,service,caller-id,address,encoding,session-id,radius,uptime",
 	}
 	if nameFilter != "" {
 		args["?name"] = nameFilter
@@ -126,21 +126,6 @@ func NewStreamActiveCommand(nameFilter string) command.Command {
 	return command.Command{
 		Raw:  "/ppp/active/print",
 		Args: args,
-	}
-}
-
-// NewStreamActiveStatsCommand builds the command.Command for /ppp/active/print stats.
-func NewStreamActiveStatsCommand(interval string) command.Command {
-	if interval == "" {
-		interval = "1s"
-	}
-	return command.Command{
-		Raw: "/ppp/active/print",
-		Args: map[string]string{
-			"stats":     "",
-			"interval":  interval,
-			".proplist": ".id,uptime,limit-bytes-in,limit-bytes-out",
-		},
 	}
 }
 

@@ -40,7 +40,6 @@ func NewPPPServiceHandler(uc *pppUC.UseCase, provider ConnectDriverProvider, str
 
 	// Streaming Live Updates
 	mux.Handle("/"+serviceName+"/StreamActiveSessions", connect.NewServerStreamHandler("/"+serviceName+"/StreamActiveSessions", handler.StreamActiveSessions, opts...))
-	mux.Handle("/"+serviceName+"/StreamActiveStats", connect.NewServerStreamHandler("/"+serviceName+"/StreamActiveStats", handler.StreamActiveStats, opts...))
 	mux.Handle("/"+serviceName+"/StreamInactiveSecrets", connect.NewServerStreamHandler("/"+serviceName+"/StreamInactiveSecrets", handler.StreamInactiveSecrets, opts...))
 
 	return "/" + serviceName + "/", mux

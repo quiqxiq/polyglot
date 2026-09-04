@@ -7,6 +7,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	"github.com/quixiq/polyglot/internal/domain/command"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -47,7 +48,25 @@ func (h *NetworkMonitorConnectHandler) StreamQueueStats(ctx context.Context, req
 			if !ok {
 				return handle.Err()
 			}
-			queues := h.streamGW.ParseQueues(res)
+			rows := append([]map[string]string(nil), res.Rows...)
+		drain:
+			for {
+				select {
+				case next, nextOk := <-handle.Chan():
+					if !nextOk {
+						break drain
+					}
+					rows = append(rows, next.Rows...)
+				default:
+					break drain
+				}
+			}
+
+			queues := h.streamGW.ParseQueues(command.Result{Rows: rows})
+			if len(queues) == 0 {
+				continue
+			}
+
 			items := make([]*devicepb.QueueStatsItem, 0, len(queues))
 			for _, q := range queues {
 				items = append(items, &devicepb.QueueStatsItem{

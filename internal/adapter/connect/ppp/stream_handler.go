@@ -88,7 +88,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 				if id == "" {
 					continue
 				}
-				if strings.EqualFold(row[".dead"], "yes") || strings.EqualFold(row[".dead"], "true") {
+				if strings.EqualFold(row[".dead"], "yes") || strings.EqualFold(row[".dead"], "true") || strings.EqualFold(row[".action"], "remove") {
 					delete(activeMap, id)
 					continue
 				}
@@ -112,6 +112,7 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 					SessionID: row["session-id"],
 					Radius:    strings.EqualFold(row["radius"], "true"),
 					Profile:   profile,
+					Uptime:    row["uptime"],
 				}
 			}
 
@@ -134,9 +135,8 @@ func (h *PPPConnectHandler) StreamActiveSessions(ctx context.Context, req *conne
 	}
 }
 
-// StreamActiveStats streams /ppp/active/print stats interval=<interval> natively from RouterOS.
-// It pumps dynamic telemetry stats (uptime, bytes-in/out, packets-in/out) per interval with minimal .proplist payload.
-func (h *PPPConnectHandler) StreamActiveStats(ctx context.Context, req *connect.Request[devicepb.StreamPPPActiveStatsRequest], stream *connect.ServerStream[devicepb.PPPActiveStatsFrame]) error {
+// StreamInactiveSecrets streams offline subscribers via dual native RouterOS follow (/ppp/active/print follow and /ppp/secret/print follow).
+func (h *PPPConnectHandler) StreamInactiveSecrets(ctx context.Context, req *connect.Request[devicepb.StreamPPPInactiveSecretsRequest], stream *connect.ServerStream[devicepb.PPPInactiveSecretsFrame]) error {
 	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
 	if err != nil {
 		return err
@@ -147,74 +147,170 @@ func (h *PPPConnectHandler) StreamActiveStats(ctx context.Context, req *connect.
 		return response.Unimplemented("driver does not support streaming")
 	}
 
-	interval := req.Msg.Interval
-	if interval == "" {
-		interval = "1s"
-	}
-
-	handle, err := h.streamGW.StreamPPPActiveStats(ctx, sd, interval)
+	secretsList, err := h.useCase.ListSecrets(ctx, driver, "")
 	if err != nil {
 		return response.MapDomainError(err)
 	}
-	defer func() { _ = handle.Cancel() }()
+	activeList, err := h.useCase.ListActive(ctx, driver, "")
+	if err != nil {
+		return response.MapDomainError(err)
+	}
 
-	for {
-		select {
-		case <-ctx.Done():
-			return nil
-		case res, ok := <-handle.Chan():
-			if !ok {
-				return handle.Err()
-			}
-			stats := h.streamGW.ParsePPPActiveStats(res)
-			if len(stats) == 0 {
-				continue
-			}
+	secretsMap := make(map[string]port.PPPoESecret)
+	for _, s := range secretsList {
+		secretsMap[s.RosID] = s
+	}
 
-			if err := stream.Send(&devicepb.PPPActiveStatsFrame{
-				DeviceId:      req.Msg.DeviceId,
-				TimestampUnix: time.Now().Unix(),
-				Stats:         toProtoPPPActiveStats(stats),
-			}); err != nil {
-				return err
+	activeNames := make(map[string]bool)
+	for _, a := range activeList {
+		activeNames[a.Name] = true
+	}
+
+	getInactiveList := func() []*devicepb.PPPSecret {
+		inactive := make([]*devicepb.PPPSecret, 0)
+		for _, s := range secretsMap {
+			if !activeNames[s.Name] {
+				inactive = append(inactive, toProtoPPPSecret(s))
 			}
 		}
+		sort.Slice(inactive, func(i, j int) bool {
+			return inactive[i].Name < inactive[j].Name
+		})
+		return inactive
 	}
-}
 
-// StreamInactiveSecrets streams offline subscribers via periodic push over ConnectRPC.
-func (h *PPPConnectHandler) StreamInactiveSecrets(ctx context.Context, req *connect.Request[devicepb.StreamPPPInactiveSecretsRequest], stream *connect.ServerStream[devicepb.PPPInactiveSecretsFrame]) error {
-	driver, err := h.getDriver(ctx, req.Msg.DeviceId)
-	if err != nil {
+	// Send initial snapshot immediately
+	if err := stream.Send(&devicepb.PPPInactiveSecretsFrame{
+		DeviceId:      req.Msg.DeviceId,
+		TimestampUnix: time.Now().Unix(),
+		Secrets:       getInactiveList(),
+	}); err != nil {
 		return err
 	}
 
-	sendSnapshot := func() error {
-		inactive, err := h.useCase.ListInactive(ctx, driver)
-		if err != nil {
-			return err
-		}
-		return stream.Send(&devicepb.PPPInactiveSecretsFrame{
-			DeviceId:      req.Msg.DeviceId,
-			TimestampUnix: time.Now().Unix(),
-			Secrets:       toProtoPPPSecrets(inactive),
-		})
-	}
-
-	if err := sendSnapshot(); err != nil {
+	handleActive, err := h.streamGW.StreamPPPActive(ctx, sd, "")
+	if err != nil {
 		return response.MapDomainError(err)
 	}
+	defer func() { _ = handleActive.Cancel() }()
 
-	ticker := time.NewTicker(3 * time.Second)
-	defer ticker.Stop()
+	handleSecrets, err := h.streamGW.StreamPPPSecrets(ctx, sd, "")
+	if err != nil {
+		return response.MapDomainError(err)
+	}
+	defer func() { _ = handleSecrets.Cancel() }()
 
 	for {
 		select {
 		case <-ctx.Done():
 			return nil
-		case <-ticker.C:
-			if err := sendSnapshot(); err != nil {
-				return response.MapDomainError(err)
+		case res, ok := <-handleActive.Chan():
+			if !ok {
+				return handleActive.Err()
+			}
+			rows := append([]map[string]string(nil), res.Rows...)
+		drainActive:
+			for {
+				select {
+				case next, nextOk := <-handleActive.Chan():
+					if !nextOk {
+						break drainActive
+					}
+					rows = append(rows, next.Rows...)
+				default:
+					break drainActive
+				}
+			}
+			changed := false
+			for _, row := range rows {
+				name := row["name"]
+				if name == "" {
+					continue
+				}
+				isDead := strings.EqualFold(row[".dead"], "yes") || strings.EqualFold(row[".dead"], "true") || strings.EqualFold(row[".action"], "remove")
+				if isDead {
+					if activeNames[name] {
+						delete(activeNames, name)
+						changed = true
+					}
+				} else {
+					if !activeNames[name] {
+						activeNames[name] = true
+						changed = true
+					}
+				}
+			}
+			if changed {
+				if err := stream.Send(&devicepb.PPPInactiveSecretsFrame{
+					DeviceId:      req.Msg.DeviceId,
+					TimestampUnix: time.Now().Unix(),
+					Secrets:       getInactiveList(),
+				}); err != nil {
+					return err
+				}
+			}
+		case res, ok := <-handleSecrets.Chan():
+			if !ok {
+				return handleSecrets.Err()
+			}
+			rows := append([]map[string]string(nil), res.Rows...)
+		drainSecrets:
+			for {
+				select {
+				case next, nextOk := <-handleSecrets.Chan():
+					if !nextOk {
+						break drainSecrets
+					}
+					rows = append(rows, next.Rows...)
+				default:
+					break drainSecrets
+				}
+			}
+			changed := false
+			for _, row := range rows {
+				id := row[".id"]
+				if id == "" {
+					continue
+				}
+				isDead := strings.EqualFold(row[".dead"], "yes") || strings.EqualFold(row[".dead"], "true") || strings.EqualFold(row[".action"], "remove")
+				if isDead {
+					if _, ok := secretsMap[id]; ok {
+						delete(secretsMap, id)
+						changed = true
+					}
+					continue
+				}
+				name := row["name"]
+				if name == "" {
+					continue
+				}
+				callerID := row["caller-id"]
+				if callerID == "" {
+					callerID = row["last-caller-id"]
+				}
+				disabled := strings.EqualFold(row["disabled"], "yes") || strings.EqualFold(row["disabled"], "true")
+				secretsMap[id] = port.PPPoESecret{
+					RosID:         id,
+					Name:          name,
+					Profile:       row["profile"],
+					Service:       row["service"],
+					LocalAddress:  row["local-address"],
+					RemoteAddress: row["remote-address"],
+					Comment:       row["comment"],
+					Disabled:      disabled,
+					LastLoggedOut: row["last-logged-out"],
+					CallerID:      callerID,
+				}
+				changed = true
+			}
+			if changed {
+				if err := stream.Send(&devicepb.PPPInactiveSecretsFrame{
+					DeviceId:      req.Msg.DeviceId,
+					TimestampUnix: time.Now().Unix(),
+					Secrets:       getInactiveList(),
+				}); err != nil {
+					return err
+				}
 			}
 		}
 	}

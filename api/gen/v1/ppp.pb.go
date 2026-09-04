@@ -321,6 +321,7 @@ type PPPActiveSession struct {
 	SessionId     string                 `protobuf:"bytes,7,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	Radius        bool                   `protobuf:"varint,8,opt,name=radius,proto3" json:"radius,omitempty"`
 	Profile       string                 `protobuf:"bytes,9,opt,name=profile,proto3" json:"profile,omitempty"`
+	Uptime        string                 `protobuf:"bytes,10,opt,name=uptime,proto3" json:"uptime,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -414,6 +415,13 @@ func (x *PPPActiveSession) GetRadius() bool {
 func (x *PPPActiveSession) GetProfile() string {
 	if x != nil {
 		return x.Profile
+	}
+	return ""
+}
+
+func (x *PPPActiveSession) GetUptime() string {
+	if x != nil {
+		return x.Uptime
 	}
 	return ""
 }
@@ -2370,218 +2378,6 @@ func (x *PPPActiveSessionsFrame) GetSessions() []*PPPActiveSession {
 	return nil
 }
 
-type PPPActiveStat struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Uptime        string                 `protobuf:"bytes,2,opt,name=uptime,proto3" json:"uptime,omitempty"`
-	LimitBytesIn  string                 `protobuf:"bytes,3,opt,name=limit_bytes_in,json=limitBytesIn,proto3" json:"limit_bytes_in,omitempty"`
-	LimitBytesOut string                 `protobuf:"bytes,4,opt,name=limit_bytes_out,json=limitBytesOut,proto3" json:"limit_bytes_out,omitempty"`
-	BytesIn       string                 `protobuf:"bytes,5,opt,name=bytes_in,json=bytesIn,proto3" json:"bytes_in,omitempty"`
-	BytesOut      string                 `protobuf:"bytes,6,opt,name=bytes_out,json=bytesOut,proto3" json:"bytes_out,omitempty"`
-	PacketsIn     string                 `protobuf:"bytes,7,opt,name=packets_in,json=packetsIn,proto3" json:"packets_in,omitempty"`
-	PacketsOut    string                 `protobuf:"bytes,8,opt,name=packets_out,json=packetsOut,proto3" json:"packets_out,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PPPActiveStat) Reset() {
-	*x = PPPActiveStat{}
-	mi := &file_v1_ppp_proto_msgTypes[35]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PPPActiveStat) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PPPActiveStat) ProtoMessage() {}
-
-func (x *PPPActiveStat) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_ppp_proto_msgTypes[35]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PPPActiveStat.ProtoReflect.Descriptor instead.
-func (*PPPActiveStat) Descriptor() ([]byte, []int) {
-	return file_v1_ppp_proto_rawDescGZIP(), []int{35}
-}
-
-func (x *PPPActiveStat) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *PPPActiveStat) GetUptime() string {
-	if x != nil {
-		return x.Uptime
-	}
-	return ""
-}
-
-func (x *PPPActiveStat) GetLimitBytesIn() string {
-	if x != nil {
-		return x.LimitBytesIn
-	}
-	return ""
-}
-
-func (x *PPPActiveStat) GetLimitBytesOut() string {
-	if x != nil {
-		return x.LimitBytesOut
-	}
-	return ""
-}
-
-func (x *PPPActiveStat) GetBytesIn() string {
-	if x != nil {
-		return x.BytesIn
-	}
-	return ""
-}
-
-func (x *PPPActiveStat) GetBytesOut() string {
-	if x != nil {
-		return x.BytesOut
-	}
-	return ""
-}
-
-func (x *PPPActiveStat) GetPacketsIn() string {
-	if x != nil {
-		return x.PacketsIn
-	}
-	return ""
-}
-
-func (x *PPPActiveStat) GetPacketsOut() string {
-	if x != nil {
-		return x.PacketsOut
-	}
-	return ""
-}
-
-type StreamPPPActiveStatsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	Interval      string                 `protobuf:"bytes,2,opt,name=interval,proto3" json:"interval,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *StreamPPPActiveStatsRequest) Reset() {
-	*x = StreamPPPActiveStatsRequest{}
-	mi := &file_v1_ppp_proto_msgTypes[36]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StreamPPPActiveStatsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StreamPPPActiveStatsRequest) ProtoMessage() {}
-
-func (x *StreamPPPActiveStatsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_ppp_proto_msgTypes[36]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StreamPPPActiveStatsRequest.ProtoReflect.Descriptor instead.
-func (*StreamPPPActiveStatsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_ppp_proto_rawDescGZIP(), []int{36}
-}
-
-func (x *StreamPPPActiveStatsRequest) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *StreamPPPActiveStatsRequest) GetInterval() string {
-	if x != nil {
-		return x.Interval
-	}
-	return ""
-}
-
-type PPPActiveStatsFrame struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	TimestampUnix int64                  `protobuf:"varint,2,opt,name=timestamp_unix,json=timestampUnix,proto3" json:"timestamp_unix,omitempty"`
-	Stats         []*PPPActiveStat       `protobuf:"bytes,3,rep,name=stats,proto3" json:"stats,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PPPActiveStatsFrame) Reset() {
-	*x = PPPActiveStatsFrame{}
-	mi := &file_v1_ppp_proto_msgTypes[37]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PPPActiveStatsFrame) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PPPActiveStatsFrame) ProtoMessage() {}
-
-func (x *PPPActiveStatsFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_ppp_proto_msgTypes[37]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PPPActiveStatsFrame.ProtoReflect.Descriptor instead.
-func (*PPPActiveStatsFrame) Descriptor() ([]byte, []int) {
-	return file_v1_ppp_proto_rawDescGZIP(), []int{37}
-}
-
-func (x *PPPActiveStatsFrame) GetDeviceId() string {
-	if x != nil {
-		return x.DeviceId
-	}
-	return ""
-}
-
-func (x *PPPActiveStatsFrame) GetTimestampUnix() int64 {
-	if x != nil {
-		return x.TimestampUnix
-	}
-	return 0
-}
-
-func (x *PPPActiveStatsFrame) GetStats() []*PPPActiveStat {
-	if x != nil {
-		return x.Stats
-	}
-	return nil
-}
-
 type StreamPPPInactiveSecretsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
@@ -2591,7 +2387,7 @@ type StreamPPPInactiveSecretsRequest struct {
 
 func (x *StreamPPPInactiveSecretsRequest) Reset() {
 	*x = StreamPPPInactiveSecretsRequest{}
-	mi := &file_v1_ppp_proto_msgTypes[38]
+	mi := &file_v1_ppp_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2603,7 +2399,7 @@ func (x *StreamPPPInactiveSecretsRequest) String() string {
 func (*StreamPPPInactiveSecretsRequest) ProtoMessage() {}
 
 func (x *StreamPPPInactiveSecretsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_ppp_proto_msgTypes[38]
+	mi := &file_v1_ppp_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2616,7 +2412,7 @@ func (x *StreamPPPInactiveSecretsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamPPPInactiveSecretsRequest.ProtoReflect.Descriptor instead.
 func (*StreamPPPInactiveSecretsRequest) Descriptor() ([]byte, []int) {
-	return file_v1_ppp_proto_rawDescGZIP(), []int{38}
+	return file_v1_ppp_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *StreamPPPInactiveSecretsRequest) GetDeviceId() string {
@@ -2637,7 +2433,7 @@ type PPPInactiveSecretsFrame struct {
 
 func (x *PPPInactiveSecretsFrame) Reset() {
 	*x = PPPInactiveSecretsFrame{}
-	mi := &file_v1_ppp_proto_msgTypes[39]
+	mi := &file_v1_ppp_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2649,7 +2445,7 @@ func (x *PPPInactiveSecretsFrame) String() string {
 func (*PPPInactiveSecretsFrame) ProtoMessage() {}
 
 func (x *PPPInactiveSecretsFrame) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_ppp_proto_msgTypes[39]
+	mi := &file_v1_ppp_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2662,7 +2458,7 @@ func (x *PPPInactiveSecretsFrame) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PPPInactiveSecretsFrame.ProtoReflect.Descriptor instead.
 func (*PPPInactiveSecretsFrame) Descriptor() ([]byte, []int) {
-	return file_v1_ppp_proto_rawDescGZIP(), []int{39}
+	return file_v1_ppp_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *PPPInactiveSecretsFrame) GetDeviceId() string {
@@ -2724,7 +2520,7 @@ const file_v1_ppp_proto_rawDesc = "" +
 	"\x0fuse_compression\x18\r \x01(\tR\x0euseCompression\x12%\n" +
 	"\x0euse_encryption\x18\x0e \x01(\tR\ruseEncryption\x12$\n" +
 	"\x0echange_tcp_mss\x18\x0f \x01(\tR\fchangeTcpMss\x12'\n" +
-	"\x0fbridge_learning\x18\x10 \x01(\tR\x0ebridgeLearning\"\xf4\x01\n" +
+	"\x0fbridge_learning\x18\x10 \x01(\tR\x0ebridgeLearning\"\x8c\x02\n" +
 	"\x10PPPActiveSession\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x18\n" +
@@ -2735,7 +2531,9 @@ const file_v1_ppp_proto_rawDesc = "" +
 	"\n" +
 	"session_id\x18\a \x01(\tR\tsessionId\x12\x16\n" +
 	"\x06radius\x18\b \x01(\bR\x06radius\x12\x18\n" +
-	"\aprofile\x18\t \x01(\tR\aprofile\"^\n" +
+	"\aprofile\x18\t \x01(\tR\aprofile\x12\x16\n" +
+	"\x06uptime\x18\n" +
+	" \x01(\tR\x06uptime\"^\n" +
 	"\x15ListPPPSecretsRequest\x12$\n" +
 	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1f\n" +
 	"\vname_filter\x18\x02 \x01(\tR\n" +
@@ -2879,31 +2677,13 @@ const file_v1_ppp_proto_rawDesc = "" +
 	"\x16PPPActiveSessionsFrame\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
 	"\x0etimestamp_unix\x18\x02 \x01(\x03R\rtimestampUnix\x129\n" +
-	"\bsessions\x18\x03 \x03(\v2\x1d.polyglot.v1.PPPActiveSessionR\bsessions\"\xfd\x01\n" +
-	"\rPPPActiveStat\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
-	"\x06uptime\x18\x02 \x01(\tR\x06uptime\x12$\n" +
-	"\x0elimit_bytes_in\x18\x03 \x01(\tR\flimitBytesIn\x12&\n" +
-	"\x0flimit_bytes_out\x18\x04 \x01(\tR\rlimitBytesOut\x12\x19\n" +
-	"\bbytes_in\x18\x05 \x01(\tR\abytesIn\x12\x1b\n" +
-	"\tbytes_out\x18\x06 \x01(\tR\bbytesOut\x12\x1d\n" +
-	"\n" +
-	"packets_in\x18\a \x01(\tR\tpacketsIn\x12\x1f\n" +
-	"\vpackets_out\x18\b \x01(\tR\n" +
-	"packetsOut\"_\n" +
-	"\x1bStreamPPPActiveStatsRequest\x12$\n" +
-	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1a\n" +
-	"\binterval\x18\x02 \x01(\tR\binterval\"\x8b\x01\n" +
-	"\x13PPPActiveStatsFrame\x12\x1b\n" +
-	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
-	"\x0etimestamp_unix\x18\x02 \x01(\x03R\rtimestampUnix\x120\n" +
-	"\x05stats\x18\x03 \x03(\v2\x1a.polyglot.v1.PPPActiveStatR\x05stats\"G\n" +
+	"\bsessions\x18\x03 \x03(\v2\x1d.polyglot.v1.PPPActiveSessionR\bsessions\"G\n" +
 	"\x1fStreamPPPInactiveSecretsRequest\x12$\n" +
 	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\"\x8f\x01\n" +
 	"\x17PPPInactiveSecretsFrame\x12\x1b\n" +
 	"\tdevice_id\x18\x01 \x01(\tR\bdeviceId\x12%\n" +
 	"\x0etimestamp_unix\x18\x02 \x01(\x03R\rtimestampUnix\x120\n" +
-	"\asecrets\x18\x03 \x03(\v2\x16.polyglot.v1.PPPSecretR\asecrets2\xed\r\n" +
+	"\asecrets\x18\x03 \x03(\v2\x16.polyglot.v1.PPPSecretR\asecrets2\x8a\r\n" +
 	"\n" +
 	"PPPService\x12V\n" +
 	"\vListSecrets\x12\".polyglot.v1.ListPPPSecretsRequest\x1a#.polyglot.v1.ListPPPSecretsResponse\x12P\n" +
@@ -2922,8 +2702,7 @@ const file_v1_ppp_proto_rawDesc = "" +
 	"\x11KickActiveSession\x12(.polyglot.v1.KickPPPActiveSessionRequest\x1a).polyglot.v1.KickPPPActiveSessionResponse\x12k\n" +
 	"\x12KickActiveSessions\x12).polyglot.v1.KickPPPActiveSessionsRequest\x1a*.polyglot.v1.KickPPPActiveSessionsResponse\x12n\n" +
 	"\x13ListInactiveSecrets\x12*.polyglot.v1.ListPPPInactiveSecretsRequest\x1a+.polyglot.v1.ListPPPInactiveSecretsResponse\x12j\n" +
-	"\x14StreamActiveSessions\x12+.polyglot.v1.StreamPPPActiveSessionsRequest\x1a#.polyglot.v1.PPPActiveSessionsFrame0\x01\x12a\n" +
-	"\x11StreamActiveStats\x12(.polyglot.v1.StreamPPPActiveStatsRequest\x1a .polyglot.v1.PPPActiveStatsFrame0\x01\x12m\n" +
+	"\x14StreamActiveSessions\x12+.polyglot.v1.StreamPPPActiveSessionsRequest\x1a#.polyglot.v1.PPPActiveSessionsFrame0\x01\x12m\n" +
 	"\x15StreamInactiveSecrets\x12,.polyglot.v1.StreamPPPInactiveSecretsRequest\x1a$.polyglot.v1.PPPInactiveSecretsFrame0\x01B0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
@@ -2938,7 +2717,7 @@ func file_v1_ppp_proto_rawDescGZIP() []byte {
 	return file_v1_ppp_proto_rawDescData
 }
 
-var file_v1_ppp_proto_msgTypes = make([]protoimpl.MessageInfo, 40)
+var file_v1_ppp_proto_msgTypes = make([]protoimpl.MessageInfo, 37)
 var file_v1_ppp_proto_goTypes = []any{
 	(*PPPSecret)(nil),                       // 0: polyglot.v1.PPPSecret
 	(*PPPProfile)(nil),                      // 1: polyglot.v1.PPPProfile
@@ -2975,11 +2754,8 @@ var file_v1_ppp_proto_goTypes = []any{
 	(*ListPPPInactiveSecretsResponse)(nil),  // 32: polyglot.v1.ListPPPInactiveSecretsResponse
 	(*StreamPPPActiveSessionsRequest)(nil),  // 33: polyglot.v1.StreamPPPActiveSessionsRequest
 	(*PPPActiveSessionsFrame)(nil),          // 34: polyglot.v1.PPPActiveSessionsFrame
-	(*PPPActiveStat)(nil),                   // 35: polyglot.v1.PPPActiveStat
-	(*StreamPPPActiveStatsRequest)(nil),     // 36: polyglot.v1.StreamPPPActiveStatsRequest
-	(*PPPActiveStatsFrame)(nil),             // 37: polyglot.v1.PPPActiveStatsFrame
-	(*StreamPPPInactiveSecretsRequest)(nil), // 38: polyglot.v1.StreamPPPInactiveSecretsRequest
-	(*PPPInactiveSecretsFrame)(nil),         // 39: polyglot.v1.PPPInactiveSecretsFrame
+	(*StreamPPPInactiveSecretsRequest)(nil), // 35: polyglot.v1.StreamPPPInactiveSecretsRequest
+	(*PPPInactiveSecretsFrame)(nil),         // 36: polyglot.v1.PPPInactiveSecretsFrame
 }
 var file_v1_ppp_proto_depIdxs = []int32{
 	0,  // 0: polyglot.v1.ListPPPSecretsResponse.secrets:type_name -> polyglot.v1.PPPSecret
@@ -2993,49 +2769,46 @@ var file_v1_ppp_proto_depIdxs = []int32{
 	2,  // 8: polyglot.v1.ListPPPActiveSessionsResponse.sessions:type_name -> polyglot.v1.PPPActiveSession
 	0,  // 9: polyglot.v1.ListPPPInactiveSecretsResponse.secrets:type_name -> polyglot.v1.PPPSecret
 	2,  // 10: polyglot.v1.PPPActiveSessionsFrame.sessions:type_name -> polyglot.v1.PPPActiveSession
-	35, // 11: polyglot.v1.PPPActiveStatsFrame.stats:type_name -> polyglot.v1.PPPActiveStat
-	0,  // 12: polyglot.v1.PPPInactiveSecretsFrame.secrets:type_name -> polyglot.v1.PPPSecret
-	3,  // 13: polyglot.v1.PPPService.ListSecrets:input_type -> polyglot.v1.ListPPPSecretsRequest
-	5,  // 14: polyglot.v1.PPPService.GetSecret:input_type -> polyglot.v1.GetPPPSecretRequest
-	7,  // 15: polyglot.v1.PPPService.CreateSecret:input_type -> polyglot.v1.CreatePPPSecretRequest
-	9,  // 16: polyglot.v1.PPPService.UpdateSecret:input_type -> polyglot.v1.UpdatePPPSecretRequest
-	11, // 17: polyglot.v1.PPPService.DeleteSecret:input_type -> polyglot.v1.DeletePPPSecretRequest
-	13, // 18: polyglot.v1.PPPService.SetSecretDisabled:input_type -> polyglot.v1.SetPPPSecretDisabledRequest
-	15, // 19: polyglot.v1.PPPService.ListProfiles:input_type -> polyglot.v1.ListPPPProfilesRequest
-	17, // 20: polyglot.v1.PPPService.GetProfile:input_type -> polyglot.v1.GetPPPProfileRequest
-	19, // 21: polyglot.v1.PPPService.CreateProfile:input_type -> polyglot.v1.CreatePPPProfileRequest
-	21, // 22: polyglot.v1.PPPService.UpdateProfile:input_type -> polyglot.v1.UpdatePPPProfileRequest
-	23, // 23: polyglot.v1.PPPService.DeleteProfile:input_type -> polyglot.v1.DeletePPPProfileRequest
-	25, // 24: polyglot.v1.PPPService.ListActiveSessions:input_type -> polyglot.v1.ListPPPActiveSessionsRequest
-	27, // 25: polyglot.v1.PPPService.KickActiveSession:input_type -> polyglot.v1.KickPPPActiveSessionRequest
-	29, // 26: polyglot.v1.PPPService.KickActiveSessions:input_type -> polyglot.v1.KickPPPActiveSessionsRequest
-	31, // 27: polyglot.v1.PPPService.ListInactiveSecrets:input_type -> polyglot.v1.ListPPPInactiveSecretsRequest
-	33, // 28: polyglot.v1.PPPService.StreamActiveSessions:input_type -> polyglot.v1.StreamPPPActiveSessionsRequest
-	36, // 29: polyglot.v1.PPPService.StreamActiveStats:input_type -> polyglot.v1.StreamPPPActiveStatsRequest
-	38, // 30: polyglot.v1.PPPService.StreamInactiveSecrets:input_type -> polyglot.v1.StreamPPPInactiveSecretsRequest
-	4,  // 31: polyglot.v1.PPPService.ListSecrets:output_type -> polyglot.v1.ListPPPSecretsResponse
-	6,  // 32: polyglot.v1.PPPService.GetSecret:output_type -> polyglot.v1.GetPPPSecretResponse
-	8,  // 33: polyglot.v1.PPPService.CreateSecret:output_type -> polyglot.v1.CreatePPPSecretResponse
-	10, // 34: polyglot.v1.PPPService.UpdateSecret:output_type -> polyglot.v1.UpdatePPPSecretResponse
-	12, // 35: polyglot.v1.PPPService.DeleteSecret:output_type -> polyglot.v1.DeletePPPSecretResponse
-	14, // 36: polyglot.v1.PPPService.SetSecretDisabled:output_type -> polyglot.v1.SetPPPSecretDisabledResponse
-	16, // 37: polyglot.v1.PPPService.ListProfiles:output_type -> polyglot.v1.ListPPPProfilesResponse
-	18, // 38: polyglot.v1.PPPService.GetProfile:output_type -> polyglot.v1.GetPPPProfileResponse
-	20, // 39: polyglot.v1.PPPService.CreateProfile:output_type -> polyglot.v1.CreatePPPProfileResponse
-	22, // 40: polyglot.v1.PPPService.UpdateProfile:output_type -> polyglot.v1.UpdatePPPProfileResponse
-	24, // 41: polyglot.v1.PPPService.DeleteProfile:output_type -> polyglot.v1.DeletePPPProfileResponse
-	26, // 42: polyglot.v1.PPPService.ListActiveSessions:output_type -> polyglot.v1.ListPPPActiveSessionsResponse
-	28, // 43: polyglot.v1.PPPService.KickActiveSession:output_type -> polyglot.v1.KickPPPActiveSessionResponse
-	30, // 44: polyglot.v1.PPPService.KickActiveSessions:output_type -> polyglot.v1.KickPPPActiveSessionsResponse
-	32, // 45: polyglot.v1.PPPService.ListInactiveSecrets:output_type -> polyglot.v1.ListPPPInactiveSecretsResponse
-	34, // 46: polyglot.v1.PPPService.StreamActiveSessions:output_type -> polyglot.v1.PPPActiveSessionsFrame
-	37, // 47: polyglot.v1.PPPService.StreamActiveStats:output_type -> polyglot.v1.PPPActiveStatsFrame
-	39, // 48: polyglot.v1.PPPService.StreamInactiveSecrets:output_type -> polyglot.v1.PPPInactiveSecretsFrame
-	31, // [31:49] is the sub-list for method output_type
-	13, // [13:31] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	0,  // 11: polyglot.v1.PPPInactiveSecretsFrame.secrets:type_name -> polyglot.v1.PPPSecret
+	3,  // 12: polyglot.v1.PPPService.ListSecrets:input_type -> polyglot.v1.ListPPPSecretsRequest
+	5,  // 13: polyglot.v1.PPPService.GetSecret:input_type -> polyglot.v1.GetPPPSecretRequest
+	7,  // 14: polyglot.v1.PPPService.CreateSecret:input_type -> polyglot.v1.CreatePPPSecretRequest
+	9,  // 15: polyglot.v1.PPPService.UpdateSecret:input_type -> polyglot.v1.UpdatePPPSecretRequest
+	11, // 16: polyglot.v1.PPPService.DeleteSecret:input_type -> polyglot.v1.DeletePPPSecretRequest
+	13, // 17: polyglot.v1.PPPService.SetSecretDisabled:input_type -> polyglot.v1.SetPPPSecretDisabledRequest
+	15, // 18: polyglot.v1.PPPService.ListProfiles:input_type -> polyglot.v1.ListPPPProfilesRequest
+	17, // 19: polyglot.v1.PPPService.GetProfile:input_type -> polyglot.v1.GetPPPProfileRequest
+	19, // 20: polyglot.v1.PPPService.CreateProfile:input_type -> polyglot.v1.CreatePPPProfileRequest
+	21, // 21: polyglot.v1.PPPService.UpdateProfile:input_type -> polyglot.v1.UpdatePPPProfileRequest
+	23, // 22: polyglot.v1.PPPService.DeleteProfile:input_type -> polyglot.v1.DeletePPPProfileRequest
+	25, // 23: polyglot.v1.PPPService.ListActiveSessions:input_type -> polyglot.v1.ListPPPActiveSessionsRequest
+	27, // 24: polyglot.v1.PPPService.KickActiveSession:input_type -> polyglot.v1.KickPPPActiveSessionRequest
+	29, // 25: polyglot.v1.PPPService.KickActiveSessions:input_type -> polyglot.v1.KickPPPActiveSessionsRequest
+	31, // 26: polyglot.v1.PPPService.ListInactiveSecrets:input_type -> polyglot.v1.ListPPPInactiveSecretsRequest
+	33, // 27: polyglot.v1.PPPService.StreamActiveSessions:input_type -> polyglot.v1.StreamPPPActiveSessionsRequest
+	35, // 28: polyglot.v1.PPPService.StreamInactiveSecrets:input_type -> polyglot.v1.StreamPPPInactiveSecretsRequest
+	4,  // 29: polyglot.v1.PPPService.ListSecrets:output_type -> polyglot.v1.ListPPPSecretsResponse
+	6,  // 30: polyglot.v1.PPPService.GetSecret:output_type -> polyglot.v1.GetPPPSecretResponse
+	8,  // 31: polyglot.v1.PPPService.CreateSecret:output_type -> polyglot.v1.CreatePPPSecretResponse
+	10, // 32: polyglot.v1.PPPService.UpdateSecret:output_type -> polyglot.v1.UpdatePPPSecretResponse
+	12, // 33: polyglot.v1.PPPService.DeleteSecret:output_type -> polyglot.v1.DeletePPPSecretResponse
+	14, // 34: polyglot.v1.PPPService.SetSecretDisabled:output_type -> polyglot.v1.SetPPPSecretDisabledResponse
+	16, // 35: polyglot.v1.PPPService.ListProfiles:output_type -> polyglot.v1.ListPPPProfilesResponse
+	18, // 36: polyglot.v1.PPPService.GetProfile:output_type -> polyglot.v1.GetPPPProfileResponse
+	20, // 37: polyglot.v1.PPPService.CreateProfile:output_type -> polyglot.v1.CreatePPPProfileResponse
+	22, // 38: polyglot.v1.PPPService.UpdateProfile:output_type -> polyglot.v1.UpdatePPPProfileResponse
+	24, // 39: polyglot.v1.PPPService.DeleteProfile:output_type -> polyglot.v1.DeletePPPProfileResponse
+	26, // 40: polyglot.v1.PPPService.ListActiveSessions:output_type -> polyglot.v1.ListPPPActiveSessionsResponse
+	28, // 41: polyglot.v1.PPPService.KickActiveSession:output_type -> polyglot.v1.KickPPPActiveSessionResponse
+	30, // 42: polyglot.v1.PPPService.KickActiveSessions:output_type -> polyglot.v1.KickPPPActiveSessionsResponse
+	32, // 43: polyglot.v1.PPPService.ListInactiveSecrets:output_type -> polyglot.v1.ListPPPInactiveSecretsResponse
+	34, // 44: polyglot.v1.PPPService.StreamActiveSessions:output_type -> polyglot.v1.PPPActiveSessionsFrame
+	36, // 45: polyglot.v1.PPPService.StreamInactiveSecrets:output_type -> polyglot.v1.PPPInactiveSecretsFrame
+	29, // [29:46] is the sub-list for method output_type
+	12, // [12:29] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_v1_ppp_proto_init() }
@@ -3049,7 +2822,7 @@ func file_v1_ppp_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_ppp_proto_rawDesc), len(file_v1_ppp_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   40,
+			NumMessages:   37,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

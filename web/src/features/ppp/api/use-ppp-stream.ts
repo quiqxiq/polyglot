@@ -1,29 +1,30 @@
 import { useEffect, useRef, useState } from 'react'
 import { pppClient } from '@/lib/api-client'
-import type { PPPActiveSession, PPPActiveStat, PPPSecret } from '@/gen/v1/ppp_pb'
+import type { PPPActiveSession, PPPSecret } from '@/gen/v1/ppp_pb'
+import { formatUptime } from '../utils/format-uptime'
 
 export type EnrichedPPPActiveSession = PPPActiveSession & {
   uptime?: string
   limitBytesIn?: string
   limitBytesOut?: string
+  rawUptime?: string
+  receivedAt?: number
 }
 
 export function useStreamPPPActiveSessions(
   deviceId?: string,
   enabled = true,
-  interval = '1s'
+  _interval = '1s'
 ) {
   const [sessions, setSessions] = useState<EnrichedPPPActiveSession[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
   const sessionsMapRef = useRef<Map<string, EnrichedPPPActiveSession>>(new Map())
-  const statsMapRef = useRef<Map<string, PPPActiveStat>>(new Map())
 
   useEffect(() => {
     if (!deviceId || !enabled) {
       setSessions([])
       sessionsMapRef.current.clear()
-      statsMapRef.current.clear()
       setIsLoading(false)
       return
     }
@@ -32,7 +33,27 @@ export function useStreamPPPActiveSessions(
     setIsLoading(true)
     setError(null)
 
-    // 1. Session Presence Stream (Lifecycle via follow)
+    // Helper to generate current live sessions array with ticking uptimes
+    const getTickedSessions = (): EnrichedPPPActiveSession[] => {
+      const now = Date.now()
+      const result: EnrichedPPPActiveSession[] = []
+      for (const sess of sessionsMapRef.current.values()) {
+        const raw = sess.rawUptime || sess.uptime || ''
+        const elapsedSec = sess.receivedAt ? Math.floor((now - sess.receivedAt) / 1000) : 0
+        const tickedUptime = formatUptime(raw, elapsedSec)
+
+        const cloned: EnrichedPPPActiveSession = sess.clone
+          ? sess.clone()
+          : Object.assign(Object.create(Object.getPrototypeOf(sess)), sess)
+        cloned.uptime = tickedUptime
+        cloned.rawUptime = raw
+        cloned.receivedAt = sess.receivedAt
+        result.push(cloned)
+      }
+      return result
+    }
+
+    // 1. Session Presence Stream (Lifecycle via RouterOS follow)
     async function startSessionStream() {
       try {
         const stream = pppClient.streamActiveSessions(
@@ -42,18 +63,19 @@ export function useStreamPPPActiveSessions(
         for await (const frame of stream) {
           if (abortController.signal.aborted) break
           const newMap = new Map<string, EnrichedPPPActiveSession>()
+          const now = Date.now()
           for (const s of frame.sessions) {
-            const existing = sessionsMapRef.current.get(s.id)
-            const stat = statsMapRef.current.get(s.id)
+            const rawUptime = s.uptime || ''
+            const formatted = formatUptime(rawUptime, 0)
             const enriched = Object.assign(s, {
-              uptime: stat?.uptime || existing?.uptime || '',
-              limitBytesIn: stat?.limitBytesIn || existing?.limitBytesIn || '',
-              limitBytesOut: stat?.limitBytesOut || existing?.limitBytesOut || '',
+              uptime: formatted,
+              rawUptime: rawUptime,
+              receivedAt: now,
             }) as EnrichedPPPActiveSession
             newMap.set(s.id, enriched)
           }
           sessionsMapRef.current = newMap
-          setSessions(Array.from(newMap.values()))
+          setSessions(getTickedSessions())
           setIsLoading(false)
         }
       } catch (err: unknown) {
@@ -72,56 +94,24 @@ export function useStreamPPPActiveSessions(
       }
     }
 
-    // 2. Realtime Telemetry Stats Stream (Dynamic counters via stats interval=1s)
-    async function startStatsStream() {
-      try {
-        const stream = pppClient.streamActiveStats(
-          { deviceId: deviceId!, interval },
-          { signal: abortController.signal }
-        )
-        for await (const frame of stream) {
-          if (abortController.signal.aborted) break
-          let changed = false
-          for (const st of frame.stats) {
-            statsMapRef.current.set(st.id, st)
-            const sess = sessionsMapRef.current.get(st.id)
-            if (sess) {
-              const updated: EnrichedPPPActiveSession = Object.assign(sess.clone ? sess.clone() : { ...sess }, {
-                uptime: st.uptime || sess.uptime || '',
-                limitBytesIn: st.limitBytesIn || sess.limitBytesIn || '',
-                limitBytesOut: st.limitBytesOut || sess.limitBytesOut || '',
-              }) as EnrichedPPPActiveSession
-              sessionsMapRef.current.set(st.id, updated)
-              changed = true
-            }
-          }
-          if (changed) {
-            setSessions(Array.from(sessionsMapRef.current.values()))
-          }
-        }
-      } catch {
-        // Fall back gracefully if stats stream encounters network blip
-      } finally {
-        if (!abortController.signal.aborted) {
-          setTimeout(() => {
-            if (!abortController.signal.aborted) {
-              startStatsStream()
-            }
-          }, 3000)
-        }
-      }
-    }
-
     startSessionStream()
-    startStatsStream()
+
+    // 2. Local Ticker (1-second interval in browser memory, 0 network requests)
+    const tickerInterval = setInterval(() => {
+      if (sessionsMapRef.current.size > 0) {
+        setSessions(getTickedSessions())
+      }
+    }, 1000)
 
     return () => {
       abortController.abort()
+      clearInterval(tickerInterval)
     }
-  }, [deviceId, enabled, interval])
+  }, [deviceId, enabled])
 
   return { sessions, isLoading, error }
 }
+
 
 export function useStreamPPPInactiveSecrets(deviceId?: string, enabled = true) {
   const [secrets, setSecrets] = useState<PPPSecret[]>([])
