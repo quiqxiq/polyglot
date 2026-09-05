@@ -6,10 +6,7 @@
   <title>PPP Aktif - GNet Dial</title>
   <link rel="shortcut icon" href="assets/g.ico" type="image/x-icon" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
+  <link rel="stylesheet" href="assets/dial.css">
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-800">
   <div id="sidebar-container"></div>
@@ -17,7 +14,9 @@
   <div id="mobile-nav-container"></div>
   <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2"></div>
 
-  <main class="pt-20 pb-12 lg:ml-64 lg:pt-20 px-4 sm:px-8 max-w-7xl space-y-6">
+  <!-- Main Content Desktop Centered Wrapper -->
+  <div class="lg:pl-64 min-h-screen flex flex-col w-full">
+    <main class="w-full max-w-7xl mx-auto pt-20 pb-28 lg:pb-12 px-4 sm:px-8 space-y-6 flex-1">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
       <div>
         <h1 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
@@ -31,9 +30,8 @@
         <button id="batch-kick-btn" class="hidden px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-semibold shadow-xs cursor-pointer transition-colors">
           Putus Terpilih
         </button>
-        <button id="refresh-btn" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 shadow-xs cursor-pointer">
+        <button id="refresh-btn" title="Segarkan Data" class="inline-flex items-center justify-center w-9 h-9 bg-white border border-slate-300 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-blue-600 shadow-xs cursor-pointer transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
-          Segarkan
         </button>
       </div>
     </div>
@@ -89,6 +87,7 @@
       <div id="pagination-container" class="mt-6"></div>
     </div>
   </main>
+</div>
 
   <!-- Ping Modal -->
   <div id="ping-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">

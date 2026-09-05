@@ -6,11 +6,7 @@
   <title>Log Sistem MikroTik - GNet Dial</title>
   <link rel="shortcut icon" href="assets/g.ico" type="image/x-icon" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    .font-mono { font-family: 'JetBrains Mono', monospace; }
-  </style>
+  <link rel="stylesheet" href="assets/dial.css">
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-800">
   <div id="sidebar-container"></div>
@@ -18,39 +14,35 @@
   <div id="mobile-nav-container"></div>
   <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2"></div>
 
-  <main class="pt-20 pb-12 lg:ml-64 lg:pt-20 px-4 sm:px-8 max-w-7xl space-y-4">
+  <!-- Main Content Desktop Centered Wrapper -->
+  <div class="lg:pl-64 min-h-screen flex flex-col w-full">
+    <main class="w-full max-w-7xl mx-auto pt-20 pb-28 lg:pb-12 px-4 sm:px-8 space-y-4 flex-1 flex flex-col">
     <!-- Header Section -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
       <div>
-        <div class="flex items-center gap-2">
-          <h1 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1z"/></svg>
-            Log Sistem MikroTik
-          </h1>
-          <span id="stream-badge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">
-            <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Menghubungkan...
-          </span>
-        </div>
-        <p class="text-sm text-slate-500 mt-0.5">Streaming aktivitas dan peringatan sistem RouterOS secara realtime &bull; Selaras dengan Portal Utama</p>
+        <h1 class="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1z"/></svg>
+          Log Sistem MikroTik
+        </h1>
+        <p class="text-sm text-slate-500 mt-0.5">Catatan riwayat sistem dan peringatan RouterOS &bull; Selaras dengan Portal Utama</p>
       </div>
 
-      <!-- Action Buttons: Pause, Clear, Export -->
+      <!-- Action Buttons: Refresh (Icon Only), Clear, Export -->
       <div class="flex items-center gap-2">
-        <button id="pause-btn" onclick="MikroTikLogs.togglePause()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 shadow-xs cursor-pointer transition-colors">
-          <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-          <span id="pause-label">Jeda</span>
+        <button id="refresh-btn" onclick="MikroTikLogs.refresh()" title="Segarkan Data" class="inline-flex items-center justify-center w-9 h-9 bg-white border border-slate-300 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-blue-600 shadow-xs cursor-pointer transition-colors">
+          <svg id="refresh-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
         </button>
 
-        <button id="clear-btn" onclick="MikroTikLogs.clearLogs()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 shadow-xs cursor-pointer transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-          Bersihkan
+        <button id="clear-btn" onclick="MikroTikLogs.clearLogs()" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white border border-slate-300 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 shadow-xs cursor-pointer transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+          <span>Bersihkan</span>
         </button>
 
         <!-- Export Dropdown -->
         <div class="relative">
-          <button id="export-menu-btn" onclick="MikroTikLogs.toggleExportMenu()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-300 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 shadow-xs cursor-pointer transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-            Ekspor
+          <button id="export-menu-btn" onclick="MikroTikLogs.toggleExportMenu()" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white border border-slate-300 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 shadow-xs cursor-pointer transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            <span>Ekspor</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div id="export-dropdown" class="hidden absolute right-0 mt-1.5 w-36 bg-white border border-slate-200 rounded-xl shadow-xl z-20 py-1 text-xs text-slate-700">
@@ -111,8 +103,8 @@
       </div>
     </div>
 
-    <!-- Main Log Viewer Container -->
-    <div class="relative bg-white border border-slate-200/80 rounded-2xl shadow-xs overflow-hidden flex flex-col h-[600px]">
+    <!-- Main Log Viewer Container: Full Height to Bottom -->
+    <div class="relative bg-white border border-slate-200/80 rounded-2xl shadow-xs overflow-hidden flex flex-col flex-1 min-h-[calc(100vh-14rem)]">
       <!-- Header Bar with macOS Window Dots and View Mode Switcher -->
       <div class="shrink-0 flex items-center justify-between border-b border-slate-200/80 bg-slate-50 px-4 py-2 text-xs text-slate-500 select-none">
         <div class="flex items-center gap-3">
@@ -124,7 +116,7 @@
           </div>
           <span class="font-mono text-xs font-semibold text-slate-700 flex items-center gap-1.5">
             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-600"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
-            RouterOS Live Log Stream
+            Log Sistem RouterOS
           </span>
         </div>
 
@@ -175,12 +167,13 @@
       </button>
     </div>
   </main>
+</div>
 
-  <script src="js/api.js?v=2"></script>
-  <script src="js/auth.js?v=2"></script>
-  <script src="js/router-selector.js?v=2"></script>
-  <script src="js/layout.js?v=2"></script>
-  <script src="js/mikrotik-logs.js?v=2"></script>
+  <script src="js/api.js?v=3"></script>
+  <script src="js/auth.js?v=3"></script>
+  <script src="js/router-selector.js?v=3"></script>
+  <script src="js/layout.js?v=3"></script>
+  <script src="js/mikrotik-logs.js?v=3"></script>
   <script>
     if (Auth.requireAuth()) {
       Layout.init('mikrotik-logs.html');

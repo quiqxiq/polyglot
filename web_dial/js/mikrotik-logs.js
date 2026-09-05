@@ -34,8 +34,14 @@ const MikroTikLogs = {
     RouterSelector.onDeviceChange((deviceId) => {
       if (!deviceId) return;
       this.currentDeviceId = deviceId;
-      this.restartStream();
+      this.refresh();
     });
+
+    const initialDevId = RouterSelector.getSelectedDeviceId();
+    if (initialDevId && !this.currentDeviceId) {
+      this.currentDeviceId = initialDevId;
+      this.refresh();
+    }
 
     // Inisialisasi search input
     const searchInput = document.getElementById('log-search-input');
@@ -75,31 +81,37 @@ const MikroTikLogs = {
     });
   },
 
-  restartStream() {
+  cleanupStream() {
     if (this.streamController) {
-      this.streamController.abort();
+      try {
+        this.streamController.abort();
+      } catch (_) {}
       this.streamController = null;
     }
-    this.isStreaming = false;
-    this.updateStreamBadge('connecting');
-    this.startStream();
   },
 
   startStream() {
     if (!this.currentDeviceId) return;
 
-    this.streamController = new AbortController();
-    this.isStreaming = true;
-    this.updateStreamBadge('live');
+    this.cleanupStream();
 
+    const icon = document.getElementById('refresh-icon');
+    if (icon) icon.classList.add('animate-spin');
+    setTimeout(() => {
+      if (icon) icon.classList.remove('animate-spin');
+    }, 800);
+
+    this.streamController = new AbortController();
+    const signal = this.streamController.signal;
+
+    // Follow streaming: Biarkan stream tetap aktif mengalirkan hingga 1000 log secara realtime
     API.stream(
       '/polyglot.v1.NetworkMonitorService/StreamLogs',
       {
         deviceId: this.currentDeviceId,
-        topics: this.selectedTopic
+        topics: '' // Mengalirkan seluruh topik dari router sehingga filter topik instan di client
       },
       (frame) => {
-        if (this.isPaused) return;
         const incoming = frame.logs || [];
         if (incoming.length === 0) return;
 
@@ -127,15 +139,61 @@ const MikroTikLogs = {
               this.seenFingerprints.delete(`${r.id}|${r.time}|${r.topics}|${r.message}`);
             });
           }
+          this.updateTopicDropdown();
           this.renderLogs();
         }
       },
       (err) => {
-        this.isStreaming = false;
-        this.updateStreamBadge('disconnected');
+        if (signal.aborted) return;
+        setTimeout(() => {
+          if (!signal.aborted) this.startStream();
+        }, 5000);
       },
-      this.streamController.signal
+      signal
     );
+  },
+
+  refresh() {
+    this.logs = [];
+    this.seenFingerprints.clear();
+    this._lastTopicKey = '';
+    this.updateTopicDropdown();
+    this.renderLogs();
+    this.startStream();
+  },
+
+  userScrolledUp: false,
+  _lastTopicKey: '',
+
+  updateTopicDropdown() {
+    const select = document.getElementById('topic-select');
+    if (!select || document.activeElement === select) return;
+
+    const currentVal = this.selectedTopic;
+    const topicCounts = new Map();
+
+    this.logs.forEach(l => {
+      if (!l.topics) return;
+      const tokens = l.topics.split(',').map(t => t.trim()).filter(Boolean);
+      tokens.forEach(t => {
+        topicCounts.set(t, (topicCounts.get(t) || 0) + 1);
+      });
+    });
+
+    const sortedTopics = Array.from(topicCounts.keys()).sort();
+    const optionsKey = sortedTopics.map(t => `${t}:${topicCounts.get(t)}`).join('|');
+    if (this._lastTopicKey === optionsKey) return;
+    this._lastTopicKey = optionsKey;
+
+    let html = `<option value="">Semua Topik (${this.logs.length})</option>`;
+    sortedTopics.forEach(t => {
+      const count = topicCounts.get(t);
+      const sel = (t.toLowerCase() === currentVal.toLowerCase()) ? ' selected' : '';
+      html += `<option value="${this.escapeHtml(t)}"${sel}>${this.escapeHtml(t)} (${count})</option>`;
+    });
+
+    select.innerHTML = html;
+    select.value = currentVal;
   },
 
   classifySeverity(topics, message) {
@@ -166,18 +224,27 @@ const MikroTikLogs = {
 
   getFilteredLogs() {
     return this.logs.filter(item => {
-      if (this.severityFilter !== 'all' && item.severity !== this.severityFilter) {
-        return false;
+      if (this.severityFilter !== 'all') {
+        if (this.severityFilter === 'info') {
+          if (item.severity !== 'info' && item.severity !== 'debug') return false;
+        } else if (item.severity !== this.severityFilter) {
+          return false;
+        }
       }
-      if (this.selectedTopic && !item.topics.toLowerCase().includes(this.selectedTopic.toLowerCase())) {
-        return false;
+      if (this.selectedTopic) {
+        const itemTopics = (item.topics || '').toLowerCase();
+        const target = this.selectedTopic.toLowerCase();
+        const topicList = itemTopics.split(',').map(s => s.trim());
+        if (!topicList.includes(target) && !itemTopics.includes(target)) {
+          return false;
+        }
       }
       if (this.searchTerm) {
         const q = this.searchTerm;
         return (
-          item.message.toLowerCase().includes(q) ||
-          item.topics.toLowerCase().includes(q) ||
-          item.time.toLowerCase().includes(q)
+          (item.message || '').toLowerCase().includes(q) ||
+          (item.topics || '').toLowerCase().includes(q) ||
+          (item.time || '').toLowerCase().includes(q)
         );
       }
       return true;
@@ -188,7 +255,7 @@ const MikroTikLogs = {
     const filtered = this.getFilteredLogs();
     const counterEl = document.getElementById('log-counter');
     if (counterEl) {
-      counterEl.textContent = `Menampilkan ${filtered.length} dari ${this.logs.length} log`;
+      counterEl.textContent = `Menampilkan ${filtered.length} dari ${this.logs.length} log (Maks. ${this.maxLogs})`;
     }
 
     if (this.viewMode === 'table') {
@@ -197,8 +264,10 @@ const MikroTikLogs = {
       this.renderRaw(filtered);
     }
 
-    if (this.isAutoScroll) {
-      this.scrollToBottom(false);
+    if (this.isAutoScroll && !this.userScrolledUp) {
+      requestAnimationFrame(() => {
+        this.scrollToBottom(false);
+      });
     }
   },
 
@@ -229,12 +298,21 @@ const MikroTikLogs = {
 
       const highlightedMsg = this.highlightText(l.message, this.searchTerm);
 
+      const topicBadges = (l.topics || 'system').split(',').map(t => {
+        const trimmed = t.trim();
+        const isSelected = this.selectedTopic.toLowerCase() === trimmed.toLowerCase();
+        const badgeClass = isSelected
+          ? 'bg-blue-600 text-white font-bold shadow-xs'
+          : 'bg-slate-100 text-slate-600 hover:bg-blue-50 hover:text-blue-700';
+        return `<button onclick="MikroTikLogs.selectTopicBadge('${this.escapeHtml(trimmed)}')" title="Filter topik ${this.escapeHtml(trimmed)}" class="inline-block px-1.5 py-0.5 rounded text-[10px] font-mono cursor-pointer transition-colors ${badgeClass}">${this.escapeHtml(trimmed)}</button>`;
+      }).join(' ');
+
       return `
         <tr class="hover:bg-slate-50/80 transition-colors font-mono">
           <td class="py-2.5 px-4 text-[11px] text-slate-500 whitespace-nowrap">${l.time || '-'}</td>
           <td class="py-2.5 px-4 whitespace-nowrap">${sevBadge}</td>
           <td class="py-2.5 px-4 whitespace-nowrap">
-            <span class="inline-block px-1.5 py-0.5 bg-slate-100 rounded text-[10px] font-medium text-slate-600">${l.topics}</span>
+            <div class="flex flex-wrap items-center gap-1">${topicBadges}</div>
           </td>
           <td class="py-2.5 px-4 text-[11px] text-slate-800 break-words leading-relaxed">${highlightedMsg}</td>
           <td class="py-2.5 px-4 text-right">
@@ -263,11 +341,20 @@ const MikroTikLogs = {
 
       const highlightedMsg = this.highlightText(l.message, this.searchTerm);
 
+      const rawTopicBadges = (l.topics || 'system').split(',').map(t => {
+        const trimmed = t.trim();
+        const isSelected = this.selectedTopic.toLowerCase() === trimmed.toLowerCase();
+        const badgeClass = isSelected
+          ? 'bg-blue-600 text-white'
+          : 'bg-slate-900 text-slate-400 border border-slate-800 hover:text-white';
+        return `<button onclick="MikroTikLogs.selectTopicBadge('${this.escapeHtml(trimmed)}')" title="Filter topik ${this.escapeHtml(trimmed)}" class="text-[10px] px-1 rounded cursor-pointer ${badgeClass}">${this.escapeHtml(trimmed)}</button>`;
+      }).join(' ');
+
       return `
         <div class="hover:bg-slate-900/80 px-2 py-0.5 rounded flex items-start gap-2.5 leading-relaxed">
           <span class="text-slate-500 text-[11px] shrink-0 select-none">${l.time}</span>
           <span class="${sevColor} text-[11px] shrink-0 uppercase w-14 font-semibold">[${l.severity}]</span>
-          <span class="text-slate-400 text-[11px] shrink-0 bg-slate-900 px-1 rounded border border-slate-800">${l.topics}</span>
+          <div class="flex items-center gap-1 shrink-0">${rawTopicBadges}</div>
           <span class="text-slate-200 text-[11px] break-words flex-1">${highlightedMsg}</span>
         </div>
       `;
@@ -338,8 +425,20 @@ const MikroTikLogs = {
   },
 
   setTopic(topic) {
-    this.selectedTopic = topic;
-    this.restartStream();
+    this.selectedTopic = (topic || '').trim();
+    const select = document.getElementById('topic-select');
+    if (select && select.value !== this.selectedTopic) {
+      select.value = this.selectedTopic;
+    }
+    this.renderLogs();
+  },
+
+  selectTopicBadge(topic) {
+    if (this.selectedTopic.toLowerCase() === topic.toLowerCase()) {
+      this.setTopic('');
+    } else {
+      this.setTopic(topic);
+    }
   },
 
   clearSearch() {
@@ -365,23 +464,33 @@ const MikroTikLogs = {
 
   toggleAutoScroll(enabled) {
     this.isAutoScroll = enabled;
+    if (enabled) {
+      this.scrollToBottom(false);
+    }
   },
 
   clearLogs() {
     this.logs = [];
     this.seenFingerprints.clear();
+    this._lastTopicKey = '';
+    this.updateTopicDropdown();
     this.renderLogs();
   },
 
   handleScroll(container) {
     const distanceToBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+    this.userScrolledUp = distanceToBottom > 60;
     const jumpBtn = document.getElementById('jump-to-latest-btn');
     if (jumpBtn) {
-      jumpBtn.classList.toggle('hidden', distanceToBottom <= 60);
+      jumpBtn.classList.toggle('hidden', !this.userScrolledUp);
     }
   },
 
   scrollToBottom(smooth = true) {
+    this.userScrolledUp = false;
+    const jumpBtn = document.getElementById('jump-to-latest-btn');
+    if (jumpBtn) jumpBtn.classList.add('hidden');
+
     const activeEl = this.viewMode === 'table'
       ? document.getElementById('container-table-view')
       : document.getElementById('container-raw-view');
