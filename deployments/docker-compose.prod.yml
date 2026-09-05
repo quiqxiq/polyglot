@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-netops}
       POSTGRES_DB: ${POSTGRES_DB:-netops}
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pgdata_prod:/var/lib/postgresql/data
     healthcheck:
@@ -25,7 +25,7 @@ services:
     container_name: polyglot-redis-prod
     restart: always
     ports:
-      - "${REDIS_PORT:-6379}:6379"
+      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
     volumes:
       - redisdata_prod:/data
     healthcheck:
@@ -51,6 +51,11 @@ services:
       - ENCRYPTION_KEY=${ENCRYPTION_KEY:-12345678901234567890123456789012}
       - JWT_SECRET=${JWT_SECRET:-polyglot-super-secret-jwt-key-prod-32b}
       - SCHEDULER_ENABLED=${SCHEDULER_ENABLED:-true}
+      - CORS_ORIGINS=${CORS_ORIGINS:-https://polyglot.ghaibnet.co.id,http://polyglot.ghaibnet.co.id,http://localhost:3000}
+      - WA_STORE_DIR=${WA_STORE_DIR:-/app/wa_stores}
+    volumes:
+      - ../data:/app/data
+      - ../wa_stores:/app/wa_stores
     depends_on:
       postgres:
         condition: service_healthy
@@ -66,10 +71,12 @@ services:
       target: prod
     restart: always
     ports:
-      - "${GATEWAY_PORT:-80}:80"
+      - "127.0.0.1:${GATEWAY_PORT:-8088}:80"
     depends_on:
       - server
 
 volumes:
   pgdata_prod:
+    name: deployments_pgdata
   redisdata_prod:
+    name: deployments_redisdata

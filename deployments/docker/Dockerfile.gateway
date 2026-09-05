@@ -8,6 +8,8 @@ RUN npm install -g pnpm
 COPY web/package.json web/pnpm-lock.yaml web/pnpm-workspace.yaml* ./
 RUN pnpm install --frozen-lockfile
 COPY web/ ./
+ARG VITE_API_URL=https://polyglot.ghaibnet.co.id
+ENV VITE_API_URL=$VITE_API_URL
 RUN pnpm run build
 
 # 2. Production Nginx Gateway
