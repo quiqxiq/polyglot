@@ -3,6 +3,7 @@ package ispadmin
 import (
 	"bytes"
 	"context"
+	"fmt"
 
 	"connectrpc.com/connect"
 
@@ -58,7 +59,36 @@ func (h *ISPAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Re
 	if err != nil {
 		return nil, response.MapDomainError(fault.Wrap(fault.KindInvalidInput, err))
 	}
-	res, uerr := h.upsert.Import(ctx, rows)
+
+	verrs := importer.ValidateRows(rows)
+	errMsgs := make([]string, 0, len(verrs))
+	for _, e := range verrs {
+		errMsgs = append(errMsgs, e.Error())
+	}
+
+	if req.Msg.DryRun {
+		preview := make([]string, 0, 20)
+		for i, r := range rows {
+			if i >= 20 {
+				break
+			}
+			preview = append(preview, fmt.Sprintf("%s | %s | %s | %s", r.Name, r.Username, r.PlanName, r.DeviceName))
+		}
+		return connect.NewResponse(&devicepb.ImportFileResponse{
+			Result:           &devicepb.ImportResult{RowsTotal: int32(len(rows))},
+			PreviewRows:      preview,
+			ValidationErrors: errMsgs,
+		}), nil
+	}
+
+	if len(verrs) > 0 {
+		return connect.NewResponse(&devicepb.ImportFileResponse{
+			Result:           &devicepb.ImportResult{RowsTotal: int32(len(rows))},
+			ValidationErrors: errMsgs,
+		}), nil
+	}
+
+	res, uerr := h.upsert.ImportWithDevice(ctx, rows, req.Msg.DefaultDeviceId)
 	if uerr != nil {
 		return nil, response.MapDomainError(uerr)
 	}
@@ -67,7 +97,7 @@ func (h *ISPAdminConnectHandler) ImportFile(ctx context.Context, req *connect.Re
 	}), nil
 }
 
-// ImportRouter pulls PPPoE accounts from a connected MikroTik router and registers them.
+// ImportRouter pulls PPPoE and/or Hotspot accounts from a connected MikroTik router and registers them.
 func (h *ISPAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.Request[devicepb.ImportRouterRequest]) (*connect.Response[devicepb.ImportRouterResponse], error) {
 	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
 	if !ok || driver == nil {
@@ -77,38 +107,61 @@ func (h *ISPAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.
 	if devName == "" {
 		devName = req.Msg.DeviceId
 	}
-	rows, err := h.routerSrc.PullPPPoERows(ctx, driver, devName)
+
+	opts := importer.PullOptions{
+		ServiceType:       req.Msg.ServiceType,
+		IncludeIPBindings: req.Msg.IncludeIpBindings,
+		IncludeVouchers:   req.Msg.IncludeVouchers,
+	}
+
+	pullRes, err := h.routerSrc.PullRouterRows(ctx, driver, devName, opts)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
-	if verrs := importer.ValidateRows(rows); len(verrs) > 0 {
-		errMsgs := make([]string, len(verrs))
-		for i, e := range verrs {
-			errMsgs[i] = e.Error()
+	rows := pullRes.Rows
+
+	verrs := importer.ValidateRows(rows)
+	errMsgs := make([]string, 0, len(verrs))
+	for _, e := range verrs {
+		errMsgs = append(errMsgs, e.Error())
+	}
+
+	if req.Msg.DryRun {
+		preview := make([]string, 0, 20)
+		for i, r := range rows {
+			if i >= 20 {
+				break
+			}
+			preview = append(preview, fmt.Sprintf("[%s] %s @ %s (%s)", r.ServiceType, r.Username, r.PlanName, r.Status))
 		}
 		return connect.NewResponse(&devicepb.ImportRouterResponse{
+			Result:                   &devicepb.ImportResult{RowsTotal: int32(len(rows))},
+			PreviewRows:              preview,
+			ValidationErrors:         errMsgs,
+			PppoeDetected:            int32(pullRes.PPPoEDetected),
+			HotspotPermanentDetected: int32(pullRes.HotspotPermanentDetected),
+			HotspotIpBindingDetected: int32(pullRes.HotspotIPBindingDetected),
+			VouchersSkipped:          int32(pullRes.VouchersSkipped),
+		}), nil
+	}
+
+	if len(verrs) > 0 {
+		return connect.NewResponse(&devicepb.ImportRouterResponse{
+			Result:           &devicepb.ImportResult{RowsTotal: int32(len(rows))},
 			ValidationErrors: errMsgs,
 		}), nil
 	}
-	if req.Msg.DryRun {
-		preview := make([]string, 0, 10)
-		for i, r := range rows {
-			if i >= 10 {
-				break
-			}
-			preview = append(preview, r.Username+"@"+r.PlanName)
-		}
-		return connect.NewResponse(&devicepb.ImportRouterResponse{
-			PreviewRows: preview,
-			Result:      &devicepb.ImportResult{RowsTotal: int32(len(rows))},
-		}), nil
-	}
-	res, uerr := h.upsert.Import(ctx, rows)
+
+	res, uerr := h.upsert.ImportWithDevice(ctx, rows, req.Msg.DeviceId)
 	if uerr != nil {
 		return nil, response.MapDomainError(uerr)
 	}
 	return connect.NewResponse(&devicepb.ImportRouterResponse{
-		Result: toProtoImportResult(res),
+		Result:                   toProtoImportResult(res),
+		PppoeDetected:            int32(pullRes.PPPoEDetected),
+		HotspotPermanentDetected: int32(pullRes.HotspotPermanentDetected),
+		HotspotIpBindingDetected: int32(pullRes.HotspotIPBindingDetected),
+		VouchersSkipped:          int32(pullRes.VouchersSkipped),
 	}), nil
 }
 
@@ -125,7 +178,7 @@ func (h *ISPAdminConnectHandler) ExportCustomers(ctx context.Context, req *conne
 		contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 		filename = "pelanggan.xlsx"
 	}
-	bytesOut, err := h.exporter.ExportAll(ctx, format)
+	bytesOut, err := h.exporter.ExportAll(ctx, format, req.Msg.DeviceId)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}

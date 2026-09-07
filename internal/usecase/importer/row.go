@@ -28,6 +28,9 @@ type Row struct {
 	LocalAddress string
 	RemoteAddr   string
 	ParentQueue  string
+	BillingDay   int    // hari jatuh tempo (1-31)
+	MACAddress   string // opsional: mac address binding
+	HotspotType  string // "PERMANENT_USER" | "IP_BINDING" | "VOUCHER"
 
 	RowNumber int // untuk pesan error ramah
 }
@@ -35,23 +38,24 @@ type Row struct {
 // Header alias yang diterima per kolom kanonik.
 var headerAliases = map[string][]string{
 	"customer_code": {"id_pelanggan", "customer_code", "kode", "kode_pelanggan"},
-	"name":          {"nama", "name", "pelanggan"},
-	"phone":         {"nomor_telepon", "phone", "no_hp", "telepon", "wa"},
+	"name":          {"nama", "name", "pelanggan", "customer"},
+	"phone":         {"nomor_telepon", "phone", "no_hp", "telepon", "wa", "whatsapp", "hp"},
 	"email":         {"email"},
 	"address":       {"alamat", "address"},
 	"latitude":      {"latitude", "lat"},
 	"longitude":     {"longitude", "lng", "lon", "long"},
-	"service_type":  {"tipe", "service_type", "jenis"},
-	"device_name":   {"server", "device_name", "router"},
-	"username":      {"username", "user"},
-	"password":      {"password", "pass"},
-	"plan_name":     {"paket", "plan_name", "profile", "profil"},
-	"price":         {"harga", "price", "biaya"},
-	"rate_limit":    {"rate_limit", "ratelimit"},
+	"service_type":  {"tipe", "service_type", "jenis", "layanan", "service"},
+	"device_name":   {"server", "device_name", "router", "mikrotik", "perangkat"},
+	"username":      {"username", "user", "secret", "login"},
+	"password":      {"password", "pass", "sandi"},
+	"plan_name":     {"paket", "plan_name", "profile", "profil", "nama_paket"},
+	"price":         {"harga", "price", "biaya", "tarif", "tagihan"},
+	"rate_limit":    {"rate_limit", "ratelimit", "kecepatan", "bandwidth"},
 	"status":        {"status"},
 	"local_address": {"local_address", "local"},
 	"remote_addr":   {"remote_address", "remote_addr", "remote"},
 	"parent_queue":  {"parent_queue", "queue"},
+	"billing_day":   {"billing_day", "tgl_tagihan", "jatuh_tempo", "tgl_jatuh_tempo"},
 }
 
 // mapHeaders memetakan indeks kolom → field kanonik dari baris header.
@@ -120,6 +124,11 @@ func buildRow(m map[int]string, cells []string, rowNo int) Row {
 		clean := strings.NewReplacer("Rp", "", ".", "", ",", ".", " ", "").Replace(v)
 		if f, err := strconv.ParseFloat(strings.TrimSuffix(clean, "."), 64); err == nil {
 			r.Price = f
+		}
+	}
+	if v := get("billing_day"); v != "" {
+		if bd, err := strconv.Atoi(strings.TrimSpace(v)); err == nil && bd >= 1 && bd <= 31 {
+			r.BillingDay = bd
 		}
 	}
 	return r

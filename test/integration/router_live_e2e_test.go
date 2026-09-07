@@ -82,7 +82,7 @@ func TestImportFromRouter_E2E(t *testing.T) {
 	require.NoError(t, err, "connect router")
 
 	gw := mikrotik.NewGateway(networkExecutePreApproved)
-	src := importer.NewRouterSource(gw)
+	src := importer.NewRouterSource(gw, nil)
 
 	rows, err := src.PullPPPoERows(ctx, drv, "E2E-ROUTER")
 	require.NoError(t, err, "pull secrets dari router")

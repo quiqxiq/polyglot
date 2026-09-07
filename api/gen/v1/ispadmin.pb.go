@@ -71,11 +71,13 @@ func (ImportFormat) EnumDescriptor() ([]byte, []int) {
 // bytes dibatasi secara efektif ±15MB setelah overhead JSON/base64 oleh
 // transport Connect — cukup untuk file pelanggan ISP tipikal.
 type ImportFileRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Payload       []byte                 `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
-	Format        ImportFormat           `protobuf:"varint,2,opt,name=format,proto3,enum=polyglot.v1.ImportFormat" json:"format,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Payload         []byte                 `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
+	Format          ImportFormat           `protobuf:"varint,2,opt,name=format,proto3,enum=polyglot.v1.ImportFormat" json:"format,omitempty"`
+	DefaultDeviceId string                 `protobuf:"bytes,3,opt,name=default_device_id,json=defaultDeviceId,proto3" json:"default_device_id,omitempty"` // Fallback jika kolom router kosong
+	DryRun          bool                   `protobuf:"varint,4,opt,name=dry_run,json=dryRun,proto3" json:"dry_run,omitempty"`                             // Preview validasi tanpa menulis DB
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *ImportFileRequest) Reset() {
@@ -120,6 +122,20 @@ func (x *ImportFileRequest) GetFormat() ImportFormat {
 		return x.Format
 	}
 	return ImportFormat_IMPORT_FORMAT_CSV
+}
+
+func (x *ImportFileRequest) GetDefaultDeviceId() string {
+	if x != nil {
+		return x.DefaultDeviceId
+	}
+	return ""
+}
+
+func (x *ImportFileRequest) GetDryRun() bool {
+	if x != nil {
+		return x.DryRun
+	}
+	return false
 }
 
 type ImportResult struct {
@@ -207,10 +223,12 @@ func (x *ImportResult) GetSkipped() []string {
 }
 
 type ImportFileResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Result        *ImportResult          `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Result           *ImportResult          `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	PreviewRows      []string               `protobuf:"bytes,2,rep,name=preview_rows,json=previewRows,proto3" json:"preview_rows,omitempty"`
+	ValidationErrors []string               `protobuf:"bytes,3,rep,name=validation_errors,json=validationErrors,proto3" json:"validation_errors,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *ImportFileResponse) Reset() {
@@ -250,14 +268,31 @@ func (x *ImportFileResponse) GetResult() *ImportResult {
 	return nil
 }
 
+func (x *ImportFileResponse) GetPreviewRows() []string {
+	if x != nil {
+		return x.PreviewRows
+	}
+	return nil
+}
+
+func (x *ImportFileResponse) GetValidationErrors() []string {
+	if x != nil {
+		return x.ValidationErrors
+	}
+	return nil
+}
+
 // Tarik akun langsung dari router (read-only di router).
 type ImportRouterRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
-	DeviceName    string                 `protobuf:"bytes,2,opt,name=device_name,json=deviceName,proto3" json:"device_name,omitempty"` // nama server untuk baris impor (label)
-	DryRun        bool                   `protobuf:"varint,3,opt,name=dry_run,json=dryRun,proto3" json:"dry_run,omitempty"`            // true = preview tanpa menulis DB
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId          string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	DeviceName        string                 `protobuf:"bytes,2,opt,name=device_name,json=deviceName,proto3" json:"device_name,omitempty"`                         // nama server untuk baris impor (label)
+	DryRun            bool                   `protobuf:"varint,3,opt,name=dry_run,json=dryRun,proto3" json:"dry_run,omitempty"`                                    // true = preview tanpa menulis DB
+	ServiceType       string                 `protobuf:"bytes,4,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"`                      // "PPPOE", "HOTSPOT", "ALL"
+	IncludeIpBindings bool                   `protobuf:"varint,5,opt,name=include_ip_bindings,json=includeIpBindings,proto3" json:"include_ip_bindings,omitempty"` // Tarik IP Binding statis / bypass
+	IncludeVouchers   bool                   `protobuf:"varint,6,opt,name=include_vouchers,json=includeVouchers,proto3" json:"include_vouchers,omitempty"`         // Default false: lewati voucher sementara
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *ImportRouterRequest) Reset() {
@@ -311,13 +346,38 @@ func (x *ImportRouterRequest) GetDryRun() bool {
 	return false
 }
 
+func (x *ImportRouterRequest) GetServiceType() string {
+	if x != nil {
+		return x.ServiceType
+	}
+	return ""
+}
+
+func (x *ImportRouterRequest) GetIncludeIpBindings() bool {
+	if x != nil {
+		return x.IncludeIpBindings
+	}
+	return false
+}
+
+func (x *ImportRouterRequest) GetIncludeVouchers() bool {
+	if x != nil {
+		return x.IncludeVouchers
+	}
+	return false
+}
+
 type ImportRouterResponse struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	Result           *ImportResult          `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
-	PreviewRows      []string               `protobuf:"bytes,2,rep,name=preview_rows,json=previewRows,proto3" json:"preview_rows,omitempty"` // username@paket (maks 20)
-	ValidationErrors []string               `protobuf:"bytes,3,rep,name=validation_errors,json=validationErrors,proto3" json:"validation_errors,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state                    protoimpl.MessageState `protogen:"open.v1"`
+	Result                   *ImportResult          `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	PreviewRows              []string               `protobuf:"bytes,2,rep,name=preview_rows,json=previewRows,proto3" json:"preview_rows,omitempty"` // username@paket (maks 20)
+	ValidationErrors         []string               `protobuf:"bytes,3,rep,name=validation_errors,json=validationErrors,proto3" json:"validation_errors,omitempty"`
+	PppoeDetected            int32                  `protobuf:"varint,4,opt,name=pppoe_detected,json=pppoeDetected,proto3" json:"pppoe_detected,omitempty"`
+	HotspotPermanentDetected int32                  `protobuf:"varint,5,opt,name=hotspot_permanent_detected,json=hotspotPermanentDetected,proto3" json:"hotspot_permanent_detected,omitempty"`
+	HotspotIpBindingDetected int32                  `protobuf:"varint,6,opt,name=hotspot_ip_binding_detected,json=hotspotIpBindingDetected,proto3" json:"hotspot_ip_binding_detected,omitempty"`
+	VouchersSkipped          int32                  `protobuf:"varint,7,opt,name=vouchers_skipped,json=vouchersSkipped,proto3" json:"vouchers_skipped,omitempty"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
 }
 
 func (x *ImportRouterResponse) Reset() {
@@ -371,9 +431,38 @@ func (x *ImportRouterResponse) GetValidationErrors() []string {
 	return nil
 }
 
+func (x *ImportRouterResponse) GetPppoeDetected() int32 {
+	if x != nil {
+		return x.PppoeDetected
+	}
+	return 0
+}
+
+func (x *ImportRouterResponse) GetHotspotPermanentDetected() int32 {
+	if x != nil {
+		return x.HotspotPermanentDetected
+	}
+	return 0
+}
+
+func (x *ImportRouterResponse) GetHotspotIpBindingDetected() int32 {
+	if x != nil {
+		return x.HotspotIpBindingDetected
+	}
+	return 0
+}
+
+func (x *ImportRouterResponse) GetVouchersSkipped() int32 {
+	if x != nil {
+		return x.VouchersSkipped
+	}
+	return 0
+}
+
 type ExportCustomersRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Format        ImportFormat           `protobuf:"varint,1,opt,name=format,proto3,enum=polyglot.v1.ImportFormat" json:"format,omitempty"`
+	DeviceId      string                 `protobuf:"bytes,2,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"` // Opsional: filter ekspor per router
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -413,6 +502,13 @@ func (x *ExportCustomersRequest) GetFormat() ImportFormat {
 		return x.Format
 	}
 	return ImportFormat_IMPORT_FORMAT_CSV
+}
+
+func (x *ExportCustomersRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
 }
 
 type ExportCustomersResponse struct {
@@ -583,10 +679,12 @@ var File_v1_ispadmin_proto protoreflect.FileDescriptor
 
 const file_v1_ispadmin_proto_rawDesc = "" +
 	"\n" +
-	"\x11v1/ispadmin.proto\x12\vpolyglot.v1\x1a\x1bbuf/validate/validate.proto\"i\n" +
+	"\x11v1/ispadmin.proto\x12\vpolyglot.v1\x1a\x1bbuf/validate/validate.proto\"\xae\x01\n" +
 	"\x11ImportFileRequest\x12!\n" +
 	"\apayload\x18\x01 \x01(\fB\a\xbaH\x04z\x02\x10\x01R\apayload\x121\n" +
-	"\x06format\x18\x02 \x01(\x0e2\x19.polyglot.v1.ImportFormatR\x06format\"\xfb\x01\n" +
+	"\x06format\x18\x02 \x01(\x0e2\x19.polyglot.v1.ImportFormatR\x06format\x12*\n" +
+	"\x11default_device_id\x18\x03 \x01(\tR\x0fdefaultDeviceId\x12\x17\n" +
+	"\adry_run\x18\x04 \x01(\bR\x06dryRun\"\xfb\x01\n" +
 	"\fImportResult\x12\x1d\n" +
 	"\n" +
 	"rows_total\x18\x01 \x01(\x05R\trowsTotal\x12+\n" +
@@ -594,20 +692,30 @@ const file_v1_ispadmin_proto_rawDesc = "" +
 	"\x11customers_updated\x18\x03 \x01(\x05R\x10customersUpdated\x123\n" +
 	"\x15subscriptions_created\x18\x04 \x01(\x05R\x14subscriptionsCreated\x12#\n" +
 	"\rplans_created\x18\x05 \x01(\x05R\fplansCreated\x12\x18\n" +
-	"\askipped\x18\x06 \x03(\tR\askipped\"G\n" +
+	"\askipped\x18\x06 \x03(\tR\askipped\"\x97\x01\n" +
 	"\x12ImportFileResponse\x121\n" +
-	"\x06result\x18\x01 \x01(\v2\x19.polyglot.v1.ImportResultR\x06result\"u\n" +
+	"\x06result\x18\x01 \x01(\v2\x19.polyglot.v1.ImportResultR\x06result\x12!\n" +
+	"\fpreview_rows\x18\x02 \x03(\tR\vpreviewRows\x12+\n" +
+	"\x11validation_errors\x18\x03 \x03(\tR\x10validationErrors\"\xf3\x01\n" +
 	"\x13ImportRouterRequest\x12$\n" +
 	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12\x1f\n" +
 	"\vdevice_name\x18\x02 \x01(\tR\n" +
 	"deviceName\x12\x17\n" +
-	"\adry_run\x18\x03 \x01(\bR\x06dryRun\"\x99\x01\n" +
+	"\adry_run\x18\x03 \x01(\bR\x06dryRun\x12!\n" +
+	"\fservice_type\x18\x04 \x01(\tR\vserviceType\x12.\n" +
+	"\x13include_ip_bindings\x18\x05 \x01(\bR\x11includeIpBindings\x12)\n" +
+	"\x10include_vouchers\x18\x06 \x01(\bR\x0fincludeVouchers\"\xe8\x02\n" +
 	"\x14ImportRouterResponse\x121\n" +
 	"\x06result\x18\x01 \x01(\v2\x19.polyglot.v1.ImportResultR\x06result\x12!\n" +
 	"\fpreview_rows\x18\x02 \x03(\tR\vpreviewRows\x12+\n" +
-	"\x11validation_errors\x18\x03 \x03(\tR\x10validationErrors\"K\n" +
+	"\x11validation_errors\x18\x03 \x03(\tR\x10validationErrors\x12%\n" +
+	"\x0epppoe_detected\x18\x04 \x01(\x05R\rpppoeDetected\x12<\n" +
+	"\x1ahotspot_permanent_detected\x18\x05 \x01(\x05R\x18hotspotPermanentDetected\x12=\n" +
+	"\x1bhotspot_ip_binding_detected\x18\x06 \x01(\x05R\x18hotspotIpBindingDetected\x12)\n" +
+	"\x10vouchers_skipped\x18\a \x01(\x05R\x0fvouchersSkipped\"h\n" +
 	"\x16ExportCustomersRequest\x121\n" +
-	"\x06format\x18\x01 \x01(\x0e2\x19.polyglot.v1.ImportFormatR\x06format\"r\n" +
+	"\x06format\x18\x01 \x01(\x0e2\x19.polyglot.v1.ImportFormatR\x06format\x12\x1b\n" +
+	"\tdevice_id\x18\x02 \x01(\tR\bdeviceId\"r\n" +
 	"\x17ExportCustomersResponse\x12\x18\n" +
 	"\apayload\x18\x01 \x01(\fR\apayload\x12!\n" +
 	"\fcontent_type\x18\x02 \x01(\tR\vcontentType\x12\x1a\n" +

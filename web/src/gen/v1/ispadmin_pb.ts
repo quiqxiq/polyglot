@@ -43,6 +43,20 @@ export class ImportFileRequest extends Message<ImportFileRequest> {
    */
   format = ImportFormat.CSV;
 
+  /**
+   * Fallback jika kolom router kosong
+   *
+   * @generated from field: string default_device_id = 3;
+   */
+  defaultDeviceId = "";
+
+  /**
+   * Preview validasi tanpa menulis DB
+   *
+   * @generated from field: bool dry_run = 4;
+   */
+  dryRun = false;
+
   constructor(data?: PartialMessage<ImportFileRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -53,6 +67,8 @@ export class ImportFileRequest extends Message<ImportFileRequest> {
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "payload", kind: "scalar", T: 12 /* ScalarType.BYTES */ },
     { no: 2, name: "format", kind: "enum", T: proto3.getEnumType(ImportFormat) },
+    { no: 3, name: "default_device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "dry_run", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ImportFileRequest {
@@ -150,6 +166,16 @@ export class ImportFileResponse extends Message<ImportFileResponse> {
    */
   result?: ImportResult;
 
+  /**
+   * @generated from field: repeated string preview_rows = 2;
+   */
+  previewRows: string[] = [];
+
+  /**
+   * @generated from field: repeated string validation_errors = 3;
+   */
+  validationErrors: string[] = [];
+
   constructor(data?: PartialMessage<ImportFileResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -159,6 +185,8 @@ export class ImportFileResponse extends Message<ImportFileResponse> {
   static readonly typeName = "polyglot.v1.ImportFileResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "result", kind: "message", T: ImportResult },
+    { no: 2, name: "preview_rows", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 3, name: "validation_errors", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ImportFileResponse {
@@ -203,6 +231,27 @@ export class ImportRouterRequest extends Message<ImportRouterRequest> {
    */
   dryRun = false;
 
+  /**
+   * "PPPOE", "HOTSPOT", "ALL"
+   *
+   * @generated from field: string service_type = 4;
+   */
+  serviceType = "";
+
+  /**
+   * Tarik IP Binding statis / bypass
+   *
+   * @generated from field: bool include_ip_bindings = 5;
+   */
+  includeIpBindings = false;
+
+  /**
+   * Default false: lewati voucher sementara
+   *
+   * @generated from field: bool include_vouchers = 6;
+   */
+  includeVouchers = false;
+
   constructor(data?: PartialMessage<ImportRouterRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -214,6 +263,9 @@ export class ImportRouterRequest extends Message<ImportRouterRequest> {
     { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "device_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "dry_run", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 4, name: "service_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "include_ip_bindings", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 6, name: "include_vouchers", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ImportRouterRequest {
@@ -254,6 +306,26 @@ export class ImportRouterResponse extends Message<ImportRouterResponse> {
    */
   validationErrors: string[] = [];
 
+  /**
+   * @generated from field: int32 pppoe_detected = 4;
+   */
+  pppoeDetected = 0;
+
+  /**
+   * @generated from field: int32 hotspot_permanent_detected = 5;
+   */
+  hotspotPermanentDetected = 0;
+
+  /**
+   * @generated from field: int32 hotspot_ip_binding_detected = 6;
+   */
+  hotspotIpBindingDetected = 0;
+
+  /**
+   * @generated from field: int32 vouchers_skipped = 7;
+   */
+  vouchersSkipped = 0;
+
   constructor(data?: PartialMessage<ImportRouterResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -265,6 +337,10 @@ export class ImportRouterResponse extends Message<ImportRouterResponse> {
     { no: 1, name: "result", kind: "message", T: ImportResult },
     { no: 2, name: "preview_rows", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
     { no: 3, name: "validation_errors", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 4, name: "pppoe_detected", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "hotspot_permanent_detected", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 6, name: "hotspot_ip_binding_detected", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 7, name: "vouchers_skipped", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ImportRouterResponse {
@@ -293,6 +369,13 @@ export class ExportCustomersRequest extends Message<ExportCustomersRequest> {
    */
   format = ImportFormat.CSV;
 
+  /**
+   * Opsional: filter ekspor per router
+   *
+   * @generated from field: string device_id = 2;
+   */
+  deviceId = "";
+
   constructor(data?: PartialMessage<ExportCustomersRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -302,6 +385,7 @@ export class ExportCustomersRequest extends Message<ExportCustomersRequest> {
   static readonly typeName = "polyglot.v1.ExportCustomersRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "format", kind: "enum", T: proto3.getEnumType(ImportFormat) },
+    { no: 2, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ExportCustomersRequest {

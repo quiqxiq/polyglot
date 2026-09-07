@@ -18,6 +18,8 @@ enum ImportFormat {
 message ImportFileRequest {
   bytes payload = 1 [(buf.validate.field).bytes.min_len = 1];
   ImportFormat format = 2;
+  string default_device_id = 3; // Fallback jika kolom router kosong
+  bool dry_run = 4;             // Preview validasi tanpa menulis DB
 }
 message ImportResult {
   int32 rows_total = 1;
@@ -27,22 +29,34 @@ message ImportResult {
   int32 plans_created = 5;
   repeated string skipped = 6; // "baris N (nama): alasan"
 }
-message ImportFileResponse { ImportResult result = 1; }
+message ImportFileResponse {
+  ImportResult result = 1;
+  repeated string preview_rows = 2;
+  repeated string validation_errors = 3;
+}
 
 // Tarik akun langsung dari router (read-only di router).
 message ImportRouterRequest {
   string device_id = 1 [(buf.validate.field).string.min_len = 1];
-  string device_name = 2; // nama server untuk baris impor (label)
-  bool dry_run = 3;       // true = preview tanpa menulis DB
+  string device_name = 2;        // nama server untuk baris impor (label)
+  bool dry_run = 3;              // true = preview tanpa menulis DB
+  string service_type = 4;       // "PPPOE", "HOTSPOT", "ALL"
+  bool include_ip_bindings = 5; // Tarik IP Binding statis / bypass
+  bool include_vouchers = 6;    // Default false: lewati voucher sementara
 }
 message ImportRouterResponse {
   ImportResult result = 1;
   repeated string preview_rows = 2; // username@paket (maks 20)
   repeated string validation_errors = 3;
+  int32 pppoe_detected = 4;
+  int32 hotspot_permanent_detected = 5;
+  int32 hotspot_ip_binding_detected = 6;
+  int32 vouchers_skipped = 7;
 }
 
 message ExportCustomersRequest {
   ImportFormat format = 1;
+  string device_id = 2; // Opsional: filter ekspor per router
 }
 message ExportCustomersResponse {
   bytes payload = 1;

@@ -56,16 +56,21 @@ type Result struct {
 }
 
 func (u *UpsertUseCase) Import(ctx context.Context, rows []Row) (*Result, error) {
+	return u.ImportWithDevice(ctx, rows, u.defaultDevice)
+}
+
+// ImportWithDevice mengimpor baris data dengan menetapkan defaultDeviceID jika kolom router kosong.
+func (u *UpsertUseCase) ImportWithDevice(ctx context.Context, rows []Row, defaultDeviceID string) (*Result, error) {
 	res := &Result{RowsTotal: len(rows)}
 	for _, r := range rows {
-		if err := u.importRow(ctx, r, res); err != nil {
+		if err := u.importRow(ctx, r, res, defaultDeviceID); err != nil {
 			res.Skipped = append(res.Skipped, fmt.Sprintf("baris %d (%s): %v", r.RowNumber, orDash(r.Name), err))
 		}
 	}
 	return res, nil
 }
 
-func (u *UpsertUseCase) importRow(ctx context.Context, r Row, res *Result) error {
+func (u *UpsertUseCase) importRow(ctx context.Context, r Row, res *Result, fallbackDevice string) error {
 	now := u.now()
 
 	planID, err := u.ensurePlan(ctx, r)
@@ -74,6 +79,9 @@ func (u *UpsertUseCase) importRow(ctx context.Context, r Row, res *Result) error
 	}
 
 	deviceID := u.defaultDevice
+	if fallbackDevice != "" {
+		deviceID = fallbackDevice
+	}
 	if r.DeviceName != "" && u.deviceResolver != nil {
 		if id, ok := u.deviceResolver(r.DeviceName); ok && id != "" {
 			deviceID = id
@@ -93,6 +101,11 @@ func (u *UpsertUseCase) importRow(ctx context.Context, r Row, res *Result) error
 	status := mapStatus(r.Status)
 	price := r.Price
 
+	billingDay := clampDay(now.Day())
+	if r.BillingDay >= 1 && r.BillingDay <= 31 {
+		billingDay = r.BillingDay
+	}
+
 	if existing.ID == "" {
 		end := now.AddDate(1, 0, 0)
 		sub := domainSubscription.Subscription{
@@ -104,7 +117,7 @@ func (u *UpsertUseCase) importRow(ctx context.Context, r Row, res *Result) error
 			ParentQueue:     orValue(r.ParentQueue, "none"),
 			RateLimit:       r.RateLimit,
 			BillingCycle:    domainSubscription.CycleMonthly,
-			BillingDay:      clampDay(now.Day()),
+			BillingDay:      billingDay,
 			Status:          status,
 			StartDate:       dayStart(now),
 			EndDate:         &end,
@@ -123,6 +136,12 @@ func (u *UpsertUseCase) importRow(ctx context.Context, r Row, res *Result) error
 		existing.RateLimit = orValue(r.RateLimit, existing.RateLimit)
 		existing.RouterProfile = orValue(r.PlanName, existing.RouterProfile)
 		existing.ProvisionStatus = domainSubscription.ProvisionOK
+		if deviceID != "" && (existing.DeviceID == nil || *existing.DeviceID == "") {
+			existing.DeviceID = &deviceID
+		}
+		if r.BillingDay >= 1 && r.BillingDay <= 31 {
+			existing.BillingDay = r.BillingDay
+		}
 		existing.UpdatedAt = now
 		_ = price
 		if err := u.subs.Save(ctx, existing); err != nil {
@@ -178,8 +197,9 @@ func (u *UpsertUseCase) upsertCustomer(ctx context.Context, r Row, now time.Time
 	}
 	cust := domainCustomer.Customer{
 		ID: idgen.New("cust"), TenantID: "tenant-default",
-		CustomerCode: orValue(r.CustomerCode, "IMP-"+idgen.Digits(6)),
-		Name:         r.Name, Phone: phoneN, Email: r.Email,
+		CustomerCode:     orValue(r.CustomerCode, "IMP-"+idgen.Digits(6)),
+		PortalAccessCode: idgen.Digits(8),
+		Name:             r.Name, Phone: phoneN, Email: r.Email,
 		Address: r.Address, Latitude: r.Latitude, Longitude: r.Longitude,
 		Status:       domainCustomer.StatusActive,
 		RegisteredAt: dayStart(now), CreatedAt: now, UpdatedAt: now,

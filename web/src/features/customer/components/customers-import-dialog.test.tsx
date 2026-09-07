@@ -1,14 +1,12 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 import { render } from 'vitest-browser-react'
 import { userEvent } from 'vitest/browser'
-import { useEffect } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { CustomersProvider, useCustomers } from './customers-provider'
-import { CustomersDialogs } from './customers-dialogs'
 import { CustomersImportDialog } from './customers-import-dialog'
 
-const { importMutateAsync } = vi.hoisted(() => ({
+const { importMutateAsync, importRouterMutateAsync } = vi.hoisted(() => ({
   importMutateAsync: vi.fn(),
+  importRouterMutateAsync: vi.fn(),
 }))
 
 vi.mock('../api/use-customer', async (orig) => {
@@ -19,8 +17,19 @@ vi.mock('../api/use-customer', async (orig) => {
       mutateAsync: importMutateAsync,
       isPending: false,
     }),
+    useImportRouterMutation: () => ({
+      mutateAsync: importRouterMutateAsync,
+      isPending: false,
+    }),
   }
 })
+
+vi.mock('@/features/devices/api/use-devices', () => ({
+  useDevicesQuery: () => ({
+    data: [{ id: 'dev-1', name: 'ROUTER-TEST', host: '192.168.88.1' }],
+    isLoading: false,
+  }),
+}))
 
 vi.mock('sonner', () => ({
   toast: {
@@ -30,25 +39,12 @@ vi.mock('sonner', () => ({
   },
 }))
 
-function OpenImportOnce() {
-  const { setOpen } = useCustomers()
-  useEffect(() => {
-    setOpen('import')
-    // useDialogState's setter toggles — call exactly once, no deps churn.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  return null
-}
-
 const queryClient = new QueryClient()
 
 function Harness() {
   return (
     <QueryClientProvider client={queryClient}>
-      <CustomersProvider>
-        <OpenImportOnce />
-        <CustomersDialogs />
-      </CustomersProvider>
+      <CustomersImportDialog open onOpenChange={() => {}} />
     </QueryClientProvider>
   )
 }
@@ -93,7 +89,7 @@ describe('CustomersImportDialog', () => {
     await userEvent.upload(input, csv)
 
     // Explicitly pick the CSV format from the dropdown.
-    await userEvent.click(getByRole('combobox'))
+    await userEvent.click(getByRole('combobox', { name: /Format file/i }))
     await userEvent.click(
       getByRole('option', { name: /CSV \(Comma Separated Values\)/i })
     )
@@ -116,5 +112,48 @@ describe('CustomersImportDialog', () => {
     await expect
       .element(getByRole('heading', { level: 2, name: /Import Pelanggan/i }))
       .toBeInTheDocument()
+  })
+
+  it('handles router live pull preview and execution in Metode A', async () => {
+    importRouterMutateAsync.mockResolvedValueOnce({
+      result: {
+        rowsTotal: 3,
+        customersCreated: 3,
+        customersUpdated: 0,
+        subscriptionsCreated: 3,
+        plansCreated: 1,
+        skipped: [],
+      },
+      pppoeDetected: 2,
+      hotspotPermanentDetected: 1,
+      hotspotIpBindingDetected: 0,
+      vouchersSkipped: 25,
+      previewRows: ['[PPPOE] user1 (paket-10m)', '[HOTSPOT-MEMBER] user2 (hotspot-5m)'],
+      validationErrors: [],
+    })
+
+    const { getByRole, getByText } = await render(<Harness />)
+
+    // Switch to tab "Metode A: Tarik dari Router"
+    await userEvent.click(getByRole('tab', { name: /Metode A: Tarik dari Router/i }))
+
+    // Open router select and pick ROUTER-TEST
+    await userEvent.click(getByRole('combobox'))
+    await userEvent.click(getByRole('option', { name: /ROUTER-TEST/i }))
+
+    // Click "Tarik & Pratinjau Akun"
+    await userEvent.click(getByRole('button', { name: /Tarik & Pratinjau Akun/i }))
+
+    await vi.waitFor(() => expect(importRouterMutateAsync).toHaveBeenCalledOnce())
+    expect(importRouterMutateAsync).toHaveBeenCalledWith(
+      expect.objectContaining({
+        deviceId: 'dev-1',
+        dryRun: true,
+      })
+    )
+
+    // Verify preview stats are rendered
+    await expect.element(getByText(/Hasil Deteksi Router:/i)).toBeInTheDocument()
+    await expect.element(getByText('25')).toBeInTheDocument()
   })
 })
