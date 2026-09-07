@@ -202,6 +202,50 @@ Sistem harus mengadopsi model **Hybrid Dual-State Recording** dengan jaminan ket
 - **Masalah**: Pelanggan yang mengirimkan Voice Note WhatsApp (.ogg opus) tidak mendapatkan respons dari bot karena `whatsmeow` saat ini memfilter hanya pesan bertipe teks.
 - **Rencana**: Tambahkan downloader media audio pada client WhatsApp, integrasikan dengan Speech-to-Text (STT Whisper API / Gemini 1.5 Flash Audio), lalu teruskan hasil transkripsi ke engine bot.
 
+### 2.8 [OPEN] Onboarding & Migrasi Data Eksisting: Import/Export Pelanggan, Langganan (PPPoE & Hotspot) Terikat Router MikroTik
+
+#### 🔴 Latar Belakang & Masalah Aktual:
+- Saat ISP atau pengelola jaringan RT/RW Net beralih ke Polyglot NetOps Engine, mereka telah memiliki ratusan hingga ribuan pelanggan aktif yang sudah berjalan di MikroTik (akun PPPoE di `/ppp/secret` dan akun Hotspot di `/ip/hotspot/user`), atau tersimpan dalam file spreadsheet (ekspor data Mikhmon, aplikasi billing lama, atau file Excel pembukuan).
+- Menginput ulang data satu per satu secara manual sangat memakan waktu dan rentan salah ketik (*human error*).
+- **Asosiasi Kritis ke Router/Device**:
+  - Pelanggan dan langganan aktif (Subscription) **wajib terhubung secara eksplisit ke Router/Device (`DeviceID`)**. Kredensial jaringan (username PPPoE, secret, kuota, paket/profile) dieksekusi dan berjalan di router fisik terkait.
+  - Saat mengimpor data, status langganan harus di-set ke `provision_status = OK` agar sistem tidak menimpa atau memutus kredensial router yang sedang aktif melayani pelanggan di lapangan.
+- Kebutuhan data inti saat migrasi:
+  1. **Pelanggan (Customer)**: Nama Lengkap, Nomor WhatsApp/Telepon, Alamat, Kode Pelanggan (opsional).
+  2. **Langganan (Subscription)**: Router/Device tujuan (`DeviceID`), Jenis Layanan (`PPPOE` atau `HOTSPOT`), Username/Secret di MikroTik, Password, Nama Paket/Profile di MikroTik, Harga Langganan, Hari Jatuh Tempo (`BillingDay`).
+  3. **Paket Layanan (Service Plan)**: Nama Paket, Jenis Layanan (`PPPOE` / `HOTSPOT`), Profil di MikroTik, Alokasi Bandwidth/Rate Limit, Harga Bulanan.
+
+#### 💡 Solusi & Dua Metode Import yang Diterapkan:
+
+##### 1. Metode A: "Tarik Langsung dari Router" (Live Pull from Router)
+- **Alur Kerja**:
+  1. Operator memilih Router MikroTik target dari daftar router yang telah terhubung di Polyglot.
+  2. Operator memilih jenis akun yang ingin ditarik: **PPPoE Secret**, **Hotspot User**, atau **Semua Layanan**.
+  3. Polyglot engine melakukan pembacaan *read-only* langsung ke router (`/ppp/secret/print` dan `/ip/hotspot/user/print`).
+  4. **Auto-Discovery Paket Layanan**: Sistem mengidentifikasi profil paket pada router. Jika profil belum terdaftar di database Service Plan Polyglot, sistem otomatis membuatkan master paket dengan tipe layanan yang sesuai (`PPPOE` atau `HOTSPOT`).
+  5. **Ekstraksi Metadata Cerdas**: Pola komentar (comment) ala Mikhmon diekstrak otomatis untuk mengenali nomor telepon WhatsApp pelanggan dan tarif harga.
+  6. **Pratinjau (Dry-Run Preview)**: Menampilkan tabel daftar akun yang terdeteksi, profil yang dipetakan, dan status duplikasi sebelum disimpan.
+  7. **Upsert Idempotent**: Menyimpan data `Customer`, membuat entri `Subscription` dengan `DeviceID` router tersebut, dan menandai `provision_status = OK` sehingga router operasional tidak terganggu sama sekali.
+
+##### 2. Metode B: "Import via Excel / CSV" (Spreadsheet dengan Mapping Kolom)
+- **Alur Kerja**:
+  1. Operator mengunggah file spreadsheet dalam format `.xlsx` atau `.csv` (kompatibel ekspor Mikhmon, aplikasi billing lain, atau template standar Polyglot).
+  2. **Pilihan Target Router Default**: Menyediakan dropdown router tujuan untuk mengaitkan baris data yang kolom nama server/routernya kosong.
+  3. **Header Alias Mapping Fleksibel**: Parser otomatis mengenali variasi penamaan kolom dari berbagai sumber:
+     - Nama: `nama`, `name`, `pelanggan`, `customer`
+     - Telepon: `nomor_telepon`, `phone`, `no_hp`, `telepon`, `wa`, `whatsapp`
+     - Layanan: `tipe`, `service_type`, `jenis`, `layanan` (PPPoE / Hotspot)
+     - Akun: `username`, `user`, `secret`, `login`
+     - Password: `password`, `pass`, `sandi`
+     - Paket: `paket`, `plan_name`, `profile`, `profil`
+     - Harga: `harga`, `price`, `biaya`, `tarif`
+     - Router: `server`, `device_name`, `router`, `mikrotik`
+     - Jatuh Tempo: `billing_day`, `tgl_tagihan`, `jatuh_tempo`
+  4. **Dry-Run & Validasi Baris**: File divalidasi terlebih dahulu; sistem melaporkan baris valid, baris duplikat, dan kolom yang hilang sebelum data di-commit ke database.
+
+##### 3. Fitur Ekspor Komprehensif (Excel & CSV)
+- Menyediakan tombol ekspor data Pelanggan & Langganan lengkap dengan nama Router (`DeviceName`), tipe layanan, profil paket, harga, dan status aktif ke format Excel (`.xlsx`) dan `.csv` untuk arsip fisik, pelaporan, dan audit.
+
 ---
 
 ## 3. Roadmap Pengembangan Fitur (Feature Roadmap)
@@ -297,6 +341,10 @@ gantt
   - Menambahkan adapter gateway alternatif untuk redundansi pembayaran.
 - [ ] **3.5 Notifikasi Pengingat Tagihan WhatsApp Terjadwal**:
   - Scheduler otomatis pengiriman rincian tagihan dan link pembayaran ke WhatsApp pelanggan (H-3, H-1, dan hari-H jatuh tempo).
+- [ ] **3.6 Migrasi & Onboarding Pelanggan/Langganan Terikat Router (Metode A & B)**:
+  - **Metode A (Tarik Langsung dari Router)**: Tarik akun PPPoE & Hotspot live dari MikroTik, auto-create Service Plan, mapping profil, idempotency upsert `provision_status = OK` tanpa mengganggu router.
+  - **Metode B (Import Spreadsheet Excel/CSV)**: Parser kolom cerdas (header alias), dropdown target router default, validasi baris, dan dry-run preview.
+  - **Ekspor Komprehensif**: Ekspor data Pelanggan dan Langganan lengkap dengan nama Router (`DeviceName`), paket, tarif, dan status ke file Excel (.xlsx) dan CSV.
 
 ---
 
@@ -353,6 +401,7 @@ gantt
 | **Hotspot** | Visual Voucher Designer & Custom Logo | 🟡 P1 (Sedang) | Tinggi | 📋 Rencana |
 | **Hotspot** | Direct Thermal Printing (ESC-POS / Bluetooth) | 🟡 P1 (Sedang) | Sedang | 📋 Rencana |
 | **Billing** | Multi-Gateway (Midtrans, Xendit) & Auto-Posting Kas | 🟡 P1 (Sedang) | Sedang | 📋 Rencana |
+| **Billing / Onboarding** | Import Pelanggan & Langganan (Metode A Live Router & B Spreadsheet) | 🔴 P0 (Mendesak) | Sedang | 📋 Rencana (Implementation Plan) |
 | **Hardware**| OLT ZTE / Huawei ONU Discovery & Power Read | 🔵 P2 (Lanjutan) | Tinggi | 📋 Rencana |
 | **Hardware**| GenieACS TR-069 Auto Provisioning Modem | 🔵 P2 (Lanjutan) | Tinggi | 📋 Rencana |
 | **Core**    | Multi-Tenant ISP & Reseller Deposit Management | 🔵 P2 (Lanjutan) | Tinggi | 📋 Rencana |
