@@ -1,265 +1,337 @@
 # ROADMAP & KNOWN ISSUES — Polyglot NetOps Engine
 
-Dokumen ini merangkum **isu/kendala teknis yang sedang terjadi (Known Issues)**, **akar masalah (Root Cause)**, serta **rencana pengembangan ke depan (Roadmap & Feature Backlog)** untuk platform Polyglot NetOps Engine.
+Dokumen ini merangkum **kondisi aktual proyek**, **isu/kendala teknis yang sedang dihadapi (Known Issues)**, **akar masalah teknis (Root Cause)**, **status implementasi fitur saat ini**, serta **rencana pengembangan strategis ke depan (Roadmap & Feature Backlog)** untuk platform Polyglot NetOps Engine.
 
 ---
 
 ## 📌 DAFTAR ISI
 
-1. [Masalah Kritis Saat Ini (Known Issues)](#1-masalah-kritis-saat-ini-known-issues)
-   - [1.1 Normalisasi Nomor Telepon & Whitelist Bot Tidak Berfungsi Efektif](#11-normalisasi-nomor-telepon--whitelist-bot-tidak-berfungsi-efektif)
-   - [1.2 Format Respons AI Masih Markdown Mentah pada WhatsApp](#12-format-respons-ai-masih-markdown-mentah-pada-whatsapp)
-   - [1.3 Notifikasi Teknisi & Eskalasi Insiden Belum Mendukung Grup WhatsApp](#13-notifikasi-teknisi--eskalasi-insiden-belum-mendukung-grup-whatsapp)
-   - [1.4 Penanganan Pesan Suara / Voice Note (PTT) Belum Tersedia](#14-penanganan-pesan-suara--voice-note-ptt-belum-tersedia)
-2. [Roadmap Pengembangan Fitur (Feature Roadmap)](#2-roadmap-pengembangan-fitur-feature-roadmap)
-   - [Phase 1: Bot WhatsApp & AI Customer Service Hardening](#phase-1-bot-whatsapp--ai-customer-service-hardening)
-   - [Phase 2: Mikhmon v4 Parity & Hotspot Enhancements](#phase-2-mikhmon-v4-parity--hotspot-enhancements)
-   - [Phase 3: ISP Billing, PPPoE Auto-Isolir & Payment Gateway](#phase-3-isp-billing-pppoe-auto-isolir--payment-gateway)
-   - [Phase 4: OLT Provisioning (ZTE & Huawei) & TR-069 GenieACS](#phase-4-olt-provisioning-zte--huawei--tr-069-genieacs)
-   - [Phase 5: Background Daemons, Resilience & Observability](#phase-5-background-daemons-resilience--observability)
-3. [Matriks Prioritas & Status Implementasi](#3-matriks-prioritas--status-implementasi)
+1. [Kondisi Aktual & Status Pengembangan Terkini](#1-kondisi-aktual--status-pengembangan-terkini)
+2. [Isu & Kendala Teknis Kritis (Known Issues)](#2-isu--kendala-teknis-kritis-known-issues)
+   - [2.1 [TERSELESAIKAN] Normalisasi Nomor Telepon & Whitelist Universal](#21-terselesaikan-normalisasi-nomor-telepon--whitelist-universal)
+   - [2.2 [TERSELESAIKAN] Format Respons AI Mentah pada WhatsApp](#22-terselesaikan-format-respons-ai-mentah-pada-whatsapp)
+   - [2.3 [TERSELESAIKAN] Bottleneck & Slowdown Ingestion TimescaleDB > 12 Jam](#23-terselesaikan-bottleneck--slowdown-ingestion-timescaledb--12-jam)
+   - [2.4 [KRITIS BARU] Kompatibilitas Skrip MikroTik RouterOS v6 vs RouterOS v7](#24-kritis-baru-kompatibilitas-skrip-mikrotik-routeros-v6-vs-routeros-v7)
+   - [2.5 [KRITIS BARU] Ketergantungan Penyimpanan Laporan di Router & Ketiadaan Offline Sync](#25-kritis-baru-ketergantungan-penyimpanan-laporan-di-router--ketiadaan-offline-sync)
+   - [2.6 [OPEN] Notifikasi Teknisi & Eskalasi Insiden Belum Mendukung Grup WhatsApp](#26-open-notifikasi-teknisi--eskalasi-insiden-belum-mendukung-grup-whatsapp)
+   - [2.7 [OPEN] Penanganan Pesan Suara / Voice Note (PTT) Belum Tersedia](#27-open-penanganan-pesan-suara--voice-note-ptt-belum-tersedia)
+3. [Roadmap Pengembangan Fitur (Feature Roadmap)](#3-roadmap-pengembangan-fitur-feature-roadmap)
+   - [Phase 1: Bot WhatsApp, AI Service & Omnichannel Helpdesk (Chatwoot)](#phase-1-bot-whatsapp-ai-service--omnichannel-helpdesk-chatwoot)
+   - [Phase 2: Mikhmon v4 Parity, Multi-Version ROS Scripts & Voucher Accounting](#phase-2-mikhmon-v4-parity-multi-version-ros-scripts--voucher-accounting)
+   - [Phase 3: ISP Billing, PPPoE Auto-Isolir & Multi-Payment Gateway](#phase-3-isp-billing-pppoe-auto-isolir--multi-payment-gateway)
+   - [Phase 4: Hardware Provisioning (OLT ZTE/Huawei) & TR-069 GenieACS](#phase-4-hardware-provisioning-olt-ztehuawei--tr-069-genieacs)
+   - [Phase 5: Time-Series Telemetry, Observability & Core Daemons](#phase-5-time-series-telemetry-observability--core-daemons)
+   - [Phase 6: Multi-Tenant & Mitra ISP Management](#phase-6-multi-tenant--mitra-isp-management)
+4. [Matriks Prioritas & Status Implementasi](#4-matriks-prioritas--status-implementasi)
 
 ---
 
-## 1. Masalah Kritis Saat Ini (Known Issues)
+## 1. Kondisi Aktual & Status Pengembangan Terkini
 
-### 1.1 Normalisasi Nomor Telepon & Whitelist Bot Tidak Berfungsi Efektif
+Polyglot telah berkembang dari engine monitoring MikroTik dasar menjadi sistem orkestrasi ISP multi-vendor yang komprehensif. Berikut rekapitulasi pencapaian aktual arsitektur saat ini:
+
+```mermaid
+mindmap
+  root((Polyglot NetOps Engine))
+    Core Architecture
+      Clean Architecture Go 1.26
+      ConnectRPC + Protobuf v1
+      PostgreSQL 16 + TimescaleDB
+      React 19 + Vite Frontend
+    Network & Hardware
+      MikroTik Persistent Dual-Connection
+      Live Telemetry Ping Ingestion
+      PPPoE Session & Secret Management
+      Hotspot User & Cookie Management
+    Billing & Provisioning
+      Automated PPPoE Isolation Worker
+      Tripay Payment Gateway Integration
+      Invoice & Cashbook Accounting
+    Customer Communication
+      WhatsApp Engine (whatsmeow)
+      AI Agent Tool Calling
+      Chatwoot Omnichannel Architecture
+```
+
+- **Database & Telemetry High-Throughput**: TimescaleDB telah dioptimasi dengan chunk interval 1 hari, columnar compression (< 2 jam), dan continuous aggregate view `device_ping_metrics_1m` dengan real-time aggregation. Teruji memproses beban **100 router konkuren** dengan throughput **> 8.000 titik/detik** dan query < 15ms.
+- **PPPoE & Billing Automation**: Modul invoice, pencatatan kasir, webhook Tripay, serta worker otomatisasi isolir pelanggan menunggak (`isolate_worker.go`) sudah aktif dan berjalan.
+- **WhatsApp Engine**: Terhubung langsung ke WhatsApp via `whatsmeow` dengan normalisasi nomor E.164 (`pkg/phone`) dan konversi otomatis Markdown ke format resmi WhatsApp (`Guardrail.MarkdownToWhatsApp`).
+
+---
+
+## 2. Isu & Kendala Teknis Kritis (Known Issues)
+
+### 2.1 [TERSELESAIKAN] Normalisasi Nomor Telepon & Whitelist Universal
+- **Status**: ✅ **SELESAI (RESOLVED)**
+- **Implementasi**: 
+  - Utilitas sentral [pkg/phone/phone.go](file:///home/quixiq/projects/polyground/polyglot/pkg/phone/phone.go) dibuat untuk menormalisasi variasi input nomor telepon (`08...`, `+62...`, `0812-xxx`) menjadi format standar digit internasional `628...` tanpa tanda tambah.
+  - Diintegrasikan ke [internal/usecase/bot/ratelimit.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/bot/ratelimit.go) dan `user_repository`, sehingga seluruh staf/teknisi terdaftar otomatis mendapatkan status whitelist tanpa batasan kuota chat AI.
+
+### 2.2 [TERSELESAIKAN] Format Respons AI Mentah pada WhatsApp
+- **Status**: ✅ **SELESAI (RESOLVED)**
+- **Implementasi**:
+  - Dibuat pipeline transformer [MarkdownToWhatsApp](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/bot/guardrail.go#L89-L150) pada modul `Guardrail`.
+  - Mengonversi sintaks Markdown standar (Heading, Bold, Italic, Strikethrough, Hyperlink, Bullet List, Horizontal Rule, dan Tabel) secara mulus menjadi format visual native WhatsApp.
+
+### 2.3 [TERSELESAIKAN] Bottleneck & Slowdown Ingestion TimescaleDB > 12 Jam
+- **Status**: ✅ **SELESAI (RESOLVED)**
+- **Akar Masalah**: Insert row-by-row tanpa batching, chunk interval default 7 hari membuat working set RAM membengkak, dan ketiadaan continuous aggregate memaksa query membaca jutaan baris mentah.
+- **Implementasi**:
+  - Migration `000024_optimize_ping_metrics_timescale.up.sql`: Chunk interval 1 hari, columnar compression otomatis untuk data > 2 jam, dan Materialized Continuous Aggregate View `device_ping_metrics_1m` dengan real-time aggregation (`materialized_only = false`).
+  - Worker Buffer: `PingStreamManager` menggunakan batching threshold 30 item atau interval 15 detik, reuse alokasi memori buffer, dan strict timeout.
+  - GORM Tuning: `Session(&gorm.Session{SkipDefaultTransaction: true})` memangkas overhead transaksi pada bulk insert.
+  - Pool DB: Ditingkatkan menjadi `SetMaxOpenConns(50)` dan `SetMaxIdleConns(25)`.
+
+---
+
+### 2.4 [KRITIS BARU] Kompatibilitas Skrip MikroTik RouterOS v6 vs RouterOS v7
 
 #### 🔴 Masalah & Perilaku Aktual:
-- **Ekspektasi Bisnis**:
-  - Setiap pengguna/staf internal yang terdaftar di database Polyglot (tabel `users` dengan peran `admin`, `teknisi`, `staff`, dll.) yang memiliki nomor WhatsApp **seharusnya secara otomatis berstatus Whitelist**.
-  - Pada **Frontend Web Chat UI** (`web/src/features/chats/index.tsx`), header percakapan dengan nomor yang terdaftar seharusnya menampilkan badge biru **`Whitelist`** dan **tidak menampilkan batasan kuota chat harian (`Kuota AI: x/y`)** serta bebas dari segala bentuk rate limiting/mute.
-- **Kenyataan / Bug Saat Ini**:
-  - Implementasi badge UI dan filter backend sebenarnya sudah dibuat, **tetapi tidak bekerja dengan baik**.
-  - Nomor staf/teknisi terdaftar **tetap tidak terdeteksi sebagai whitelist**:
-    1. Badge `Whitelist` tidak muncul di header chat frontend (malah muncul peringatan `Kuota AI: x/y` atau `Kuota AI Habis`).
-    2. Saat staf/teknisi mencoba chat dengan bot WhatsApp, mereka tetap dibatasi kuota harian, terkena peringatan rate limit, bahkan bisa ter-mute/terblokir otomatis oleh sistem anti-spam bot.
-    3. Tool notifikasi teknisi (`NotifyTechnicianTool`) juga berpotensi gagal mendispatch pesan karena format nomor tujuan tidak seragam.
+- Di lapangan, router pelanggan dan cabang ISP memiliki variasi versi yang ekstrem: mulai dari RouterOS v6.48/v6.49 (pada perangkat arsitektur lama seperti RB750r2/RB951) hingga RouterOS v7.12+ (pada router baru seperti hEX v4, RB5009, CCR2004).
+- Skrip Mikhmon bawaan (seperti skrip on-login, on-logout, expire monitor, tracking traffic, dan scheduler) sering kali **gagal dieksekusi atau memicu `syntax error`** saat dipasang pada RouterOS v7, atau sebaliknya skrip modern v7 gagal di RouterOS v6.
+- **Perbedaan Sintaks Kritis ROS v6 vs ROS v7**:
+  1. **Perintah `/tool fetch`**:
+     - *ROS v6*: Mendukung parameter `mode=http/https`, parsing URL sederhana, dan parameter output terbatas.
+     - *ROS v7*: Mewajibkan parameter `http-method=get/post`, penanganan SSL/TLS strict, dan parameter `output=none` atau penyimpanan file yang berbeda.
+  2. **Variable Scoping & Syntax Looping**:
+     - RouterOS v7 jauh lebih ketat terhadap deklarasi variabel global (`:global`) dan lokal (`:local`). Variabel yang belum diinisialisasi memicu kegagalan runtime.
+     - Sintaks `:foreach k,v in=[...]` di v7 memiliki behavior berbeda dibandingkan `:foreach i in=[...]` di v6.
+  3. **Event On-Login Hotspot**:
+     - Parsing variabel runtime `$user`, `$address`, `$mac`, dan `$interface` pada event script user profile sering kali menghasilkan nilai kosong jika skrip tidak disesuaikan dengan parsing parser v7.
 
-#### 🔍 Akar Masalah Teknis (Root Cause):
-1. **Ketidakcocokan Format Nomor (Discrepancy)**:
-   - Nomor yang diinputkan pengguna ke form profil/tabel `users` tersimpan dalam format beragam: `081234567890`, `+6281234567890`, `0812-3456-7890`, atau `6281234567890`.
-   - Sedangkan nomor pengirim (`customerNumber`) yang diekstrak dari WhatsApp JID (`whatsmeow`) selalu berformat digit internasional tanpa tanda tambah: `6281234567890`.
-2. **Fungsi `cleanPhoneNumber` di `internal/usecase/bot/ratelimit.go` Terlalu Sederhana**:
-   ```go
-   // KONDISI SAAT INI (TIDAK MENORMALISASI KODE NEGARA):
-   func cleanPhoneNumber(phone string) string {
-       phone = strings.TrimSpace(phone)
-       phone = strings.TrimPrefix(phone, "+")
-       phone = strings.Split(phone, "@")[0]
-       return phone 
-       // Input "081234567890" tetap menghasilkan "081234567890"
-       // Input "0812-3456-7890" tetap menghasilkan "0812-3456-7890"
-   }
-   ```
-   Ketika sistem melakukan evaluasi:
-   ```go
-   cleanPhoneNumber("081234567890") == "6281234567890" // HASIL: FALSE!
-   ```
-   Perbandingan string selalu gagal (`false`), sehingga sistem menganggap nomor staf tersebut adalah pelanggan biasa tak dikenal.
-3. **Ketergantungan Flag `WhitelistAllStaff`**:
-   - Jika konfigurasi `WhitelistAllStaff` di database bernilai `false` atau belum diinisialisasi, sistem melewati pengecekan ke tabel `users` sama sekali, padahal secara standar seluruh user terdaftar berhak mendapat prioritas bypass rate limit.
-
-#### 💡 Solusi & Rencana Perbaikan Konkret:
-1. **Utilitas Terpusat `pkg/phone/phone.go`**:
-   Buat fungsi `Normalize(raw string) string`:
-   - Menghapus seluruh karakter non-digit (spasi, strip `-`, tanda kurung `()`, titik `.`).
-   - Mengonversi awalan lokal Indonesia (`08...`, `0...`) menjadi `628...` / `62...`.
-   - Mengonversi awalan `+62...` menjadi `62...`.
-   - Menghapus suffix domain WhatsApp (`@s.whatsapp.net`, `@c.us`, `@g.us`).
-2. **Perbaiki `RateLimiter.isWhitelisted` & `GetRateLimitStatus`**:
-   - Terapkan fungsi `phone.Normalize()` pada kedua sisi perbandingan:
-     ```go
-     if phone.Normalize(u.PhoneNumber) == phone.Normalize(customerNumber) {
-         return true
-     }
-     ```
-   - Pastikan jika nomor cocok dengan salah satu user aktif di tabel `users` ATAU terdaftar di `CustomWhitelistPhones`, `isWhitelisted` **pasti mengembalikan `true`**.
-3. **Sinkronisasi Response RPC `GetRateLimitStatus` ke Web UI**:
-   - Memastikan field `IsWhitelisted: true` terkirim dengan benar ke frontend ConnectRPC, sehingga Web UI (`web/src/features/chats/index.tsx`) merender badge `Whitelist` secara konsisten dan menonaktifkan tampilan kuota.
+#### 💡 Solusi & Rencana Implementasi:
+1. **Version-Aware Script Engine**:
+   - Backend Polyglot memeriksa versi RouterOS router target melalui `/system/resource/print` sebelum melakukan provisioning skrip.
+   - Mengelompokkan target menjadi `ROS_V6` (< 7.0) dan `ROS_V7` (>= 7.0).
+2. **Template Skrip Modular Terpisah**:
+   - Memisahkan template skrip untuk on-login, on-logout, dan scheduler ke dalam registry template berbasis versi:
+     - `templates/mikrotik/v6/on_login.rsc`
+     - `templates/mikrotik/v7/on_login.rsc`
+     - `templates/mikrotik/v6/expire_monitor.rsc`
+     - `templates/mikrotik/v7/expire_monitor.rsc`
+3. **Automated Compatibility Unit & E2E Testing**:
+   - Menambahkan unit test parsing dan integrasi terhadap MikroTik CHR v6 dan v7 untuk memastikan skrip ter-inject dengan bersih tanpa syntax error.
 
 ---
 
-### 1.2 Format Respons AI Masih Markdown Mentah pada WhatsApp
+### 2.5 [KRITIS BARU] Ketergantungan Penyimpanan Laporan di Router & Ketiadaan Offline Sync
 
-#### 🔴 Masalah:
-- Hasil jawaban LLM (OpenAI, Gemini, Ollama, DeepSeek) menggunakan sintaks standar **Markdown** (seperti `### Judul`, `**teks tebal**`, `[link](https://...)`, `~~coret~~`, `- daftar bullet`, tabel markdown).
-- WhatsApp **tidak mendukung** sintaks markdown standar tersebut dan hanya mendukung format khusus WhatsApp (`*teks tebal*`, `_miring_`, `~coret~`, ````monospace````).
-- Akibatnya, pesan yang diterima pelanggan di WhatsApp tampak berantakan dengan simbol bintang ganda `**`, tanda pagar `###`, dan tag markdown link mentah.
+#### 🔴 Masalah & Perilaku Aktual:
+- Sistem Mikhmon konvensional mengandalkan router MikroTik sebagai penyimpan status laporan (misalnya menuliskan catatan penjualan pada *comment* user hotspot `/ip hotspot user`, script global variable, atau file disk router).
+- **Kelemahan Fatal**:
+  1. Jika router reboot, mati lampu, atau di-reset, histori laporan penjualan dan aktivasi voucher bisa **hilang permanen**.
+  2. Beban pembacaan data historis memperberat CPU dan memori router MikroTik.
+  3. Saat server manajemen mati atau sedang dalam masa pemeliharaan (*maintenance*), tidak ada mekanisme pencatatan yang tersinkronisasi.
 
-#### 🔍 Perbandingan Format Sintaks:
-| Elemen Format | Standar Markdown (Output AI) | Format Resmi WhatsApp |
-|---|---|---|
-| **Bold (Tebal)** | `**Teks Tebal**` atau `__Teks__` | `*Teks Tebal*` |
-| **Italic (Miring)** | `*Teks Miring*` atau `_Teks_` | `_Teks Miring_` |
-| **Strikethrough (Coret)** | `~~Teks Coret~~` | `~Teks Coret~` |
-| **Monospace / Code** | `` `teks kode` `` | ````teks kode```` |
-| **Headings (H1 - H6)** | `# Judul`, `## Subjudul`, `### Bagian` | `*JUDUL*` atau `*Subjudul*` |
-| **Hyperlink** | `[Portal Login](http://10.10.10.1)` | `Portal Login (http://10.10.10.1)` atau `http://10.10.10.1` |
-| **Bullet Lists** | `* Item` atau `- Item` | `• Item` |
-| **Horizontal Line** | `---` atau `***` | `━━━━━━━━━━━━━━━━━━━━━` |
-| **Markdown Table** | `| Kolom 1 | Kolom 2 |` | Format teks baris terstruktur / bullet list |
+#### 💡 Solusi & Desain Arsitektur: Dual-State & Offline Catch-Up Sync
 
-#### 💡 Solusi & Rencana Perbaikan:
-- Tambahkan transformer `MarkdownToWhatsApp(md string) string` pada pipeline pembersihan `Guardrail` (`internal/usecase/bot/guardrail.go`):
-  1. Konversi Header `### ...` menjadi `*...*`.
-  2. Konversi `**bold**` menjadi `*bold*`.
-  3. Konversi `[title](url)` menjadi `title: url` atau `title (url)`.
-  4. Konversi `~~strike~~` menjadi `~strike~`.
-  5. Konversi list `* ` atau `- ` menjadi bullet unicode `• `.
-  6. Rapikan multiple blank lines yang berlebihan.
+Sistem harus mengadopsi model **Hybrid Dual-State Recording** dengan jaminan ketahanan offline (*offline resilience*):
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                                 KONDISI NORMAL (ONLINE)                                │
+│                                                                                        │
+│  [Router MikroTik]                                            [Polyglot Server]        │
+│   Voucher Login ──── (API Stream / Webhook / Tool Fetch) ────>  Database PostgreSQL    │
+│                                                                 (Tersimpan Real-Time)  │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                              KONDISI SERVER MATI / MAINTENANCE                         │
+│                                                                                        │
+│  [Router MikroTik]                                            [Polyglot Server]        │
+│   Voucher Login ────> Dicatat di Buffer Log Lokal Router               (OFFLINE)       │
+│                       (Script On-Login mencatat timestamp,                             │
+│                        user, harga, profil ke buffer disk/RAM)                         │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                             KONDISI SERVER KEMBALI ONLINE (SYNC)                       │
+│                                                                                        │
+│  [Router MikroTik]                                            [Polyglot Server]        │
+│   Buffer Transaksi ── (Catch-Up Worker / Pull Reconcile) ───> Reconcile Idempotent     │
+│   Lokal Router                                                -> Simpan ke Database    │
+│                                                               -> Bersihkan Buffer      │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+1. **Penyimpanan Utama di Database Pusat (PostgreSQL)**:
+   - Seluruh transaksi pembuatan voucher, penjualan, aktivasi, dan penggunaan kuota wajib tercatat langsung ke tabel database pusat: `vouchers`, `voucher_sales`, dan `cash_transactions`.
+2. **Offline Fallback Buffer di MikroTik**:
+   - Saat Polyglot server tidak dapat dijangkau, skrip fallback di MikroTik tetap mencatat riwayat login/aktivasi ke dalam storage sementara di router (misalnya tabel log khusus atau komentar terstruktur `OFFLINE_LOG:<timestamp>:<user>:<price>`).
+3. **Auto-Reconciliation & Catch-Up Sync Worker**:
+   - Background worker di Polyglot engine secara berkala memeriksa router. Begitu router dan server kembali terhubung, worker melakukan *pull* terhadap seluruh transaksi offline yang belum tercatat di database.
+   - Menggunakan identifier unik (*idempotency key*) agar tidak terjadi duplikasi pencatatan pada laporan keuangan atau kasir.
+4. **Modul Laporan Lengkap & Akuntansi Terpadu**:
+   - Laporan rekapitulasi omzet: Harian, Mingguan, Bulanan, Tahunan.
+   - Filter multidimensi: Berdasarkan router cabang, profil paket hotspot (misal Paket 2 Jam, Paket 24 Jam), agen/reseller, atau kasir.
+   - Integrasi otomatis ke modul Buku Kas (`cash_transactions` & `cash_accounts`).
+   - Ekspor laporan ke format Excel (`.xlsx`), CSV, dan cetak PDF.
 
 ---
 
-### 1.3 Notifikasi Teknisi & Eskalasi Insiden Belum Mendukung Grup WhatsApp
+### 2.6 [OPEN] Notifikasi Teknisi & Eskalasi Insiden Belum Mendukung Grup WhatsApp
+- **Masalah**: `NotifyTechnicianTool` saat ini mendispatch tiket gangguan hanya ke nomor individu teknisi (DM). Belum mendukung pengiriman ke Grup WhatsApp Teknisi/NOC (`xxx@g.us`).
+- **Rencana**: Tambahkan field `TechnicianGroupID` di `BotSettings` dengan format notifikasi tiket terstruktur yang dilengkapi tombol/perintah klaim tiket (`#ambil <id_tiket>`).
 
-#### 🔴 Masalah:
-- `NotifyTechnicianTool` saat ini mengirimkan laporan tiket gangguan satu per satu via Direct Message (DM) ke nomor individu teknisi.
-- Jika ada 5 teknisi, bot mengirim 5 pesan terpisah. Belum ada opsi mengirimkan broadcast tiket ke **Grup WhatsApp Teknisi / NOC** (`xxx@g.us`) sehingga tim tidak memiliki visibilitas bersama terhadap tiket yang sudah/belum diambil.
-
-#### 💡 Solusi & Rencana Perbaikan:
-- Tambahkan konfigurasi `TechnicianGroupID` (JID grup WhatsApp, misal `120363041234567890@g.us`) di `BotSettings`.
-- Prioritaskan pengiriman notifikasi ke grup teknisi terlebih dahulu, dengan fallback ke DM teknisi jika grup belum diatur.
-- Tambahkan tombol aksi interaktif / perintah cepat bagi teknisi untuk mengambil tiket (misal balas `#ambil <id_tiket>`).
+### 2.7 [OPEN] Penanganan Pesan Suara / Voice Note (PTT) Belum Tersedia
+- **Masalah**: Pelanggan yang mengirimkan Voice Note WhatsApp (.ogg opus) tidak mendapatkan respons dari bot karena `whatsmeow` saat ini memfilter hanya pesan bertipe teks.
+- **Rencana**: Tambahkan downloader media audio pada client WhatsApp, integrasikan dengan Speech-to-Text (STT Whisper API / Gemini 1.5 Flash Audio), lalu teruskan hasil transkripsi ke engine bot.
 
 ---
 
-### 1.4 Penanganan Pesan Suara / Voice Note (PTT) Belum Tersedia
-
-#### 🔴 Masalah:
-- Banyak pelanggan di lapangan lebih suka mengirimkan Voice Note WhatsApp (.ogg opus) ketika melaporkan internet mati.
-- Saat ini `whatsmeow` hanya menangkap pesan teks biasa; pesan bertipe audio/voice note dilewati tanpa respons.
-
-#### 💡 Solusi & Rencana Perbaikan:
-- Tambahkan penanganan pesan media audio pada `internal/driver/whatsapp/client.go`.
-- Unduh payload audio terenkripsi WhatsApp, dekripsi, dan teruskan ke modul Speech-to-Text (Whisper API / Google Gemini Multimodal Audio).
-- Masukkan hasil transkripsi suara ke pipeline `Engine.HandleIncomingMessage` secara transparan.
-
----
-
-## 2. Roadmap Pengembangan Fitur (Feature Roadmap)
+## 3. Roadmap Pengembangan Fitur (Feature Roadmap)
 
 ```mermaid
 gantt
-    title Polyglot NetOps Engine Roadmap
+    title Polyglot NetOps Engine Strategic Roadmap
     dateFormat  YYYY-MM
-    section Phase 1 (Bot & AI)
-    Normalisasi Nomor & Whitelist Fix        :active, 2026-08, 2026-09
-    Markdown-to-WhatsApp Transformer         :active, 2026-08, 2026-09
-    Grup Notifikasi Teknisi & WhatsApp Audio :2026-09, 2026-10
-    section Phase 2 (Hotspot Mikhmon)
-    Visual Template Designer                 :2026-09, 2026-10
-    WebBluetooth / Thermal Print ESC-POS     :2026-09, 2026-10
-    Laporan Rekap Penjualan & Profit         :2026-10, 2026-11
+    section Phase 1 (Bot & Omnichannel)
+    Normalisasi Nomor & Whitelist Fix        :done, 2026-08, 2026-09
+    Markdown-to-WhatsApp Transformer         :done, 2026-08, 2026-09
+    Notifikasi Grup WA & Voice Note STT      :active, 2026-09, 2026-10
+    Integrasi Omnichannel Chatwoot (Docker)  :2026-10, 2026-11
+    section Phase 2 (Hotspot & Laporan)
+    TimescaleDB Telemetry Ingestion Tuning   :done, 2026-08, 2026-09
+    Script Generator Universal (ROS v6 & v7) :active, 2026-09, 2026-10
+    Database Voucher Accounting & Offline Sync:active, 2026-09, 2026-11
+    Laporan Rekap Penjualan, Excel & PDF     :2026-10, 2026-11
+    Visual Voucher Designer & Thermal Print  :2026-11, 2026-12
     section Phase 3 (Billing & PPPoE)
-    Auto-Isolir Expired PPPoE Secrets        :2026-10, 2026-11
-    Payment Gateway Webhook (QRIS/Tripay)    :2026-11, 2026-12
+    Auto-Isolir Expired PPPoE Secrets        :done, 2026-08, 2026-09
+    Payment Gateway Tripay (QRIS & VA)       :done, 2026-08, 2026-09
+    Auto-Posting Pembayaran ke Buku Kas      :active, 2026-09, 2026-10
+    Multi-Gateway (Midtrans, Xendit, QRIS)   :2026-11, 2026-12
+    Portal Mandiri Cek Tagihan & Bayar       :2026-11, 2027-01
     section Phase 4 (Hardware Provisioning)
-    OLT ZTE & Huawei Driver Production Ready :2026-11, 2027-01
-    GenieACS TR-069 Auto-Config Workflow     :2026-12, 2027-01
-    section Phase 5 (Core Engine)
-    Auto-Expire Daemon di App Core           :2026-09, 2026-10
-    Audit Log Append-Only & Multi-Tenancy    :2027-01, 2027-02
+    OLT ZTE C300/C320 Driver Hardening       :2026-11, 2027-01
+    OLT Huawei MA5608T Driver                :2026-12, 2027-01
+    GenieACS TR-069 Auto-Config Workflow     :2027-01, 2027-02
+    section Phase 5 (Core Engine & Daemons)
+    Persistent Background Monitor Daemon     :2026-10, 2026-11
+    Audit Log Append-Only & Live Streaming   :2026-11, 2026-12
+    Multi-Tenant ISP & Reseller Management   :2027-01, 2027-02
 ```
 
 ---
 
-### Phase 1: Bot WhatsApp & AI Customer Service Hardening
+### Phase 1: Bot WhatsApp, AI Service & Omnichannel Helpdesk (Chatwoot)
 
-- [ ] **1.1 Normalisasi Nomor E.164 & Otomatisasi Whitelist Seluruh User Terdaftar**:
-  - Implementasi parser nomor telepon baku Indonesia (`pkg/phone/phone.go`: `08x`, `+628x`, `0812-xxx`, `628x` -> `628x`).
-  - Menjadikan **seluruh user terdaftar di sistem (tabel `users`) secara otomatis ter-whitelist** (bebas dari kuota chat AI harian dan bebas dari pembatasan rate limit / mute).
-  - Memastikan sinkronisasi respons RPC `GetRateLimitStatus` mengembalikan `IsWhitelisted: true` sehingga Web UI Frontend (`web/src/features/chats/index.tsx`) merender badge biru **`Whitelist`** pada header chat.
-  - Memperbaiki pencarian nomor teknisi pada `NotifyTechnicianTool` agar selalu menerima notifikasi dispatch tiket.
-- [ ] **1.2 Converter Format Markdown ke WhatsApp**:
-  - Regex replacement untuk header, bold, italic, strikethrough, monospace, list item, dan link.
-  - Sanitasi respons LLM sebelum masuk ke `waGateway.SendMessage`.
-- [ ] **1.3 Notifikasi Grup WhatsApp & Sistem Tiket**:
+- [x] **1.1 Normalisasi Nomor E.164 & Whitelist Universal**:
+  - Pustaka terpusat [pkg/phone/phone.go](file:///home/quixiq/projects/polyground/polyglot/pkg/phone/phone.go).
+  - Bypass kuota dan rate limit otomatis untuk staf terdaftar di database `users`.
+- [x] **1.2 Converter Format Markdown ke WhatsApp**:
+  - Transformasi teks otomatis di [internal/usecase/bot/guardrail.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/bot/guardrail.go).
+- [ ] **1.3 Notifikasi Grup WhatsApp & Sistem Tiket Teknisi**:
   - Konfigurasi target grup WhatsApp teknisi (`@g.us`).
-  - Format pesan laporan terstruktur dengan ID Tiket unik.
-- [ ] **1.4 Anti-Banned Outbound Dispatcher (Queue & Typing Delay)**:
-  - Antrean pesan keluar berbasis Redis/Memory queue dengan human typing simulation (jeda acak 2–5 detik dan status *typing...* di WhatsApp).
-  - Rate limiting pengiriman outbound untuk mencegah nomor diblokir oleh sistem anti-spam Meta.
-- [ ] **1.5 Integrasi Voice Note (STT / Transkripsi Suara)**:
-  - Unduh file audio WhatsApp PTT `.ogg`.
-  - Integrasi dengan Whisper API / Gemini 1.5 Flash Audio.
+  - Format laporan tiket gangguan terstruktur dengan ID Tiket unik.
+- [ ] **1.4 Penanganan Pesan Suara / Voice Note (PTT)**:
+  - Download payload `.ogg` dari WhatsApp client.
+  - Integrasi Whisper STT / Gemini Flash Audio untuk transkripsi otomatis.
+- [ ] **1.5 Integrasi Omnichannel Chatwoot (Sesuai CHATWOOT_PLAN.md)**:
+  - Menjalankan container Chatwoot (Rails, Sidekiq, PostgreSQL, Redis) di `deployments/chatwoot`.
+  - Sinkronisasi dua arah: pesan masuk WhatsApp (`whatsmeow`) diteruskan ke Chatwoot Inbox, dan balasan agen manusia di Chatwoot diteruskan kembali ke pelanggan.
+  - AgentBot Webhook: Bot AI memproses pesan masuk dan mengeksekusi ISP Tool Calling (`ping_host`, `check_invoice_bill`, `check_subscription_status`, `escalate_to_human`).
 
 ---
 
-### Phase 2: Mikhmon v4 Parity & Hotspot Enhancements
+### Phase 2: Mikhmon v4 Parity, Multi-Version ROS Scripts & Voucher Accounting
 
-- [ ] **2.1 Visual Voucher Template Editor**:
-  - Editor visual drag-and-drop di Web UI untuk mengatur tata letak voucher (Logo, Font, Border, Background, Posisi QR Code, Detail Harga & Masa Aktif).
-  - Live preview cetak ukuran A4 (kisi 3x10, 4x10) dan thermal roll.
-- [ ] **2.2 Direct Thermal Printing (WebBluetooth & RawBT)**:
-  - Pencetakan langsung ke printer kasir Bluetooth (58mm / 80mm ESC/POS) dari peramban tanpa dialog print bawaan browser.
-  - Integrasi protokol RawBT Android intent.
-- [ ] **2.3 Laporan Penjualan & Pembukuan Hotspot**:
-  - Pencatatan otomatis setiap voucher yang dibuat / diaktivasi ke tabel buku besar penjualan.
-  - Grafik omset harian, mingguan, bulanan per router dan per profil paket.
-  - Ekspor laporan penjualan ke format Excel (`.xlsx`) dan PDF.
-- [ ] **2.4 Multi-Router Bulk Generator**:
-  - Generate batch voucher serentak ke beberapa router cabang sekaligus.
-
----
-
-### Phase 3: ISP Billing, PPPoE Auto-Isolir & Payment Gateway
-
-- [ ] **3.1 Otomatisasi Isolir Pelanggan PPPoE Menunggak**:
-  - Scheduler rutin untuk mengecek tanggal jatuh tempo tagihan pelanggan langganan.
-  - Mengubah profil PPPoE secret pelanggan menunggak ke profil `ISOLIR` (pool IP terisolir dengan Web Proxy / Walled Garden halaman peringatan bayar).
-  - Mengembalikan profil normal secara instan setelah pembayaran terkonfirmasi.
-- [ ] **3.2 Integrasi Payment Gateway (Tripay, Midtrans, Xendit, QRIS Dinamis)**:
-  - Pembuatan invoice otomatis dengan QRIS atau Virtual Account.
-  - Endpoint Webhook untuk menerima notifikasi pembayaran masuk (instant auto-settlement).
-  - Pengiriman pesan tanda terima pembayaran otomatis via WhatsApp ke nomor pelanggan.
+- [x] **2.1 Manajemen Pengguna Hotspot & Pembersihan Massal**:
+  - Filter dan bulk cleaner user berdasarkan profil, komentar batch, dan expired status.
+  - Manajemen IP Bindings (`/ip/hotspot/ip-binding`) dan Active Cookies (`/ip/hotspot/cookie`).
+- [ ] **2.2 Universal Multi-Version RouterOS Script Generator (ROS v6 & v7)**:
+  - Pemeriksaan versi otomatis RouterOS target (`system/resource/print`).
+  - Generator skrip khusus yang membedakan sintaks `/tool fetch` (v6: `mode=http`, v7: `http-method=get`), variable scoping, dan loop syntax.
+  - Template terstandarisasi untuk On-Login, On-Logout, dan Expire Scheduler.
+- [ ] **2.3 Database-First Voucher Accounting & Offline Sync Engine**:
+  - **Online Recording**: Pembuatan, aktivasi, dan masa berlaku voucher tersimpan langsung di database pusat (`vouchers`, `voucher_sales`).
+  - **Offline Resilience**: Skrip fallback di MikroTik tetap mencatat penjualan ke buffer lokal router jika server Polyglot sedang offline/maintenance.
+  - **Catch-Up Reconciliation**: Background worker otomatis menarik data offline begitu koneksi kembali tersambung dan mencocokkannya ke database secara idempotent.
+- [ ] **2.4 Laporan Penjualan & Pembukuan Hotspot Terpadu**:
+  - Rekap omzet harian, mingguan, bulanan, tahunan.
+  - Analitik penjualan per router cabang, per profil paket, dan per kasir/agen reseller.
+  - Integrasi otomatis ke modul Buku Kas (`cash_transactions` & `cash_accounts`).
+  - Ekspor laporan ke format Excel (`.xlsx`), CSV, dan cetak PDF.
+- [ ] **2.5 Visual Voucher Template Editor & Direct Thermal Printing**:
+  - Drag-and-drop designer di Web UI untuk mengatur logo, font, tata letak, QR Code, dan barcode voucher.
+  - Pencetakan langsung ke printer kasir Bluetooth (58mm / 80mm ESC/POS) via WebBluetooth API dan intent RawBT Android.
 
 ---
 
-### Phase 4: OLT Provisioning (ZTE & Huawei) & TR-069 GenieACS
+### Phase 3: ISP Billing, PPPoE Auto-Isolir & Multi-Payment Gateway
+
+- [x] **3.1 Otomatisasi Isolir Pelanggan PPPoE Menunggak**:
+  - Worker rutin [isolate_worker.go](file:///home/quixiq/projects/polyground/polyglot/internal/usecase/billing/isolate_worker.go) memeriksa tagihan jatuh tempo.
+  - Mengubah profil PPPoE secret pelanggan menunggak ke profil `ISOLIR` dan memutuskan sesi aktif pelanggan secara otomatis.
+- [x] **3.2 Integrasi Payment Gateway Tripay**:
+  - Pembuatan transaksi QRIS dan Virtual Account via Tripay API ([internal/adapter/tripay/](file:///home/quixiq/projects/polyground/polyglot/internal/adapter/tripay/)).
+  - Webhook endpoint untuk instant auto-settlement faktur dan pemulihan profil normal pelanggan dari isolir.
+- [ ] **3.3 Pembukuan Otomatis Pembayaran Invoice ke Buku Kas**:
+  - Setiap invoice yang lunas otomatis membuat entri mutasi penerimaan (`IN`) di `cash_transactions` dan memperbarui saldo `cash_accounts`.
+- [ ] **3.4 Multi-Gateway Expansion (Midtrans, Xendit, QRIS Dinamis)**:
+  - Menambahkan adapter gateway alternatif untuk redundansi pembayaran.
+- [ ] **3.5 Notifikasi Pengingat Tagihan WhatsApp Terjadwal**:
+  - Scheduler otomatis pengiriman rincian tagihan dan link pembayaran ke WhatsApp pelanggan (H-3, H-1, dan hari-H jatuh tempo).
+
+---
+
+### Phase 4: Hardware Provisioning (OLT ZTE/Huawei) & TR-069 GenieACS
 
 - [ ] **4.1 Driver OLT ZTE C300 / C320 Production Hardening**:
-  - Scan Unconfigured ONU (`show gpon onu uncfg`).
-  - Auto-registrasi ONU baru dengan profile T-CONT, GEM Port, dan VLAN service otomatis.
-  - Pembacaan daya optik Rx/Tx optical power (`show gpon onu rx-power`).
+  - Scanning Unconfigured ONU (`show gpon onu uncfg`).
+  - Registrasi otomatis ONU baru dengan penetapan profile T-CONT, GEM Port, dan VLAN service.
+  - Pembacaan optical power Rx/Tx (`show gpon onu rx-power`).
 - [ ] **4.2 Driver OLT Huawei MA5608T / MA5800**:
-  - Perintah `display ont autofind` dan konfigurasi service-port otomatis via Scrapligo/SSH CLI driver.
+  - Perintah `display ont autofind` dan konfigurasi service-port otomatis via Scrapligo/SSH CLI.
 - [ ] **4.3 Integrasi TR-069 GenieACS**:
-  - Push konfigurasi PPPoE Username/Password dan WiFi SSID/Key ke router modem ONT pelanggan dari Polyglot web dashboard tanpa login fisik ke modem.
+  - Push konfigurasi PPPoE Username/Password dan konfigurasi WiFi SSID/Key ke modem ONT pelanggan langsung dari Web Dashboard Polyglot tanpa perlu login fisik ke modem.
 
 ---
 
-### Phase 5: Background Daemons, Resilience & Observability
+### Phase 5: Time-Series Telemetry, Observability & Core Daemons
 
-- [ ] **5.1 Built-in Expire Monitor Daemon**:
-  - Menjalankan background worker di Go runtime engine (`internal/app/app.go`) untuk memantau user expired setiap interval waktu, menggantikan ketergantungan pada script MikroTik Scheduler.
-- [ ] **5.2 Audit Trail & Log Streaming**:
-  - Pencatatan seluruh aksi destruktif (hapus user massal, ubah IP binding, reboot router, ubah config bot) ke tabel audit log append-only.
-  - Menampilkan live log aktivitas operator di web dashboard.
-- [ ] **5.3 Multi-Tenant & Role Isolation**:
-  - Isolasi data per ISP / Mitra jaringan (tenant isolation) dengan kebijakan Casbin RBAC tingkat lanjut.
+- [x] **5.1 TimescaleDB Telemetry Ingestion & Real-Time Aggregates**:
+  - Columnar compression hypertable untuk data > 2 jam, chunk interval 1 hari, dan Continuous Aggregate `device_ping_metrics_1m`.
+  - Teruji dengan testcontainers dan simulasi 100 router konkuren (> 8.000 titik/detik).
+- [ ] **5.2 Persistent Router Health & Traffic Stream Daemon**:
+  - Daemon internal Go untuk memantau interface traffic, CPU load, memory, dan status link router tanpa ketergantungan pada polling berkala.
+- [ ] **5.3 Audit Trail & Log Streaming Append-Only**:
+  - Pencatatan seluruh aksi operator (reboot router, isolir manual, hapus voucher, ubah tarif) ke tabel audit log append-only.
+  - Live log streaming di Web Dashboard.
 
 ---
 
-## 3. Matriks Prioritas & Status Implementasi
+### Phase 6: Multi-Tenant & Mitra ISP Management
+
+- [ ] **6.1 Multi-Tenant Isolation**:
+  - Pemisahan data per ISP / Mitra jaringan (tenant isolation) dengan kebijakan Casbin RBAC tingkat lanjut.
+- [ ] **6.2 Sistem Reseller & Agen Penjualan Voucher**:
+  - Saldo deposit reseller, pembagian komisi otomatis, dan portal login khusus agen voucher hotspot.
+
+---
+
+## 4. Matriks Prioritas & Status Implementasi
 
 | Modul | Komponen / Fitur | Prioritas | Kompleksitas | Status Saat Ini |
 |---|---|:---:|:---:|:---:|
-| **Bot AI** | Normalisasi Nomor & Whitelist Universal | 🔴 P0 (Tinggi) | Rendah | ⚠️ Perlu Segera Dibereskan |
-| **Bot AI** | Markdown to WhatsApp Text Transformer | 🔴 P0 (Tinggi) | Rendah | ⚠️ Perlu Segera Dibereskan |
+| **Telemetry** | TimescaleDB Continuous Aggregates & Batch Worker | 🟢 P0 | Tinggi | ✅ Selesai |
+| **Bot AI** | Normalisasi Nomor E.164 & Whitelist Universal | 🟢 P0 | Rendah | ✅ Selesai |
+| **Bot AI** | Markdown to WhatsApp Text Transformer | 🟢 P0 | Rendah | ✅ Selesai |
+| **Billing** | Auto-Isolir PPPoE Secret Jatuh Tempo | 🟢 P0 | Sedang | ✅ Selesai |
+| **Billing** | Payment Gateway Tripay Integration (QRIS/VA) | 🟢 P0 | Sedang | ✅ Selesai |
+| **Hotspot** | Multi-Version Script Generator (ROS v6 & ROS v7) | 🔴 P0 (Mendesak) | Sedang | ⚠️ Perlu Segera Dibereskan |
+| **Hotspot** | Database-First Voucher Accounting & Offline Sync | 🔴 P0 (Mendesak) | Tinggi | ⚠️ Sedang Dikerjakan |
+| **Hotspot** | Laporan Penjualan Voucher (Excel, PDF, Kasir) | 🔴 P0 (Mendesak) | Sedang | 📋 Rencana |
+| **Bot AI** | Integrasi Omnichannel Chatwoot (Docker Stack) | 🟡 P1 (Tinggi) | Tinggi | 📋 Rencana (Sesuai Plan) |
 | **Bot AI** | Notifikasi Tiket ke WhatsApp Group Teknisi | 🟡 P1 (Sedang) | Sedang | 📋 Rencana |
-| **Bot AI** | Transkripsi Voice Note (STT Audio) | 🟡 P1 (Sedang) | Sedang | 📋 Rencana |
-| **Hotspot** | Bulk Cleaner Users (Profile, Batch, Expired) | 🟢 P0 (Selesai) | Sedang | ✅ Sudah Selesai |
-| **Hotspot** | IP Bindings Management (`/ip/hotspot/ip-binding`) | 🟢 P0 (Selesai) | Sedang | ✅ Sudah Selesai |
-| **Hotspot** | Cookies Session Management (`/ip/hotspot/cookie`) | 🟢 P0 (Selesai) | Rendah | ✅ Sudah Selesai |
-| **Hotspot** | Quick Voucher Status Checker & Inspector | 🟢 P0 (Selesai) | Sedang | ✅ Sudah Selesai |
+| **Bot AI** | Transkripsi Voice Note (STT Audio Whisper/Gemini) | 🟡 P1 (Sedang) | Sedang | 📋 Rencana |
 | **Hotspot** | Visual Voucher Designer & Custom Logo | 🟡 P1 (Sedang) | Tinggi | 📋 Rencana |
 | **Hotspot** | Direct Thermal Printing (ESC-POS / Bluetooth) | 🟡 P1 (Sedang) | Sedang | 📋 Rencana |
-| **Hotspot** | Laporan Penjualan & Akuntansi Voucher | 🟡 P1 (Sedang) | Sedang | 📋 Rencana |
-| **Billing** | Auto-Isolir PPPoE Secret Jatuh Tempo | 🟡 P1 (Sedang) | Sedang | 📋 Rencana |
-| **Billing** | Payment Gateway Webhook & QRIS | 🟡 P1 (Sedang) | Sedang | 📋 Rencana |
+| **Billing** | Multi-Gateway (Midtrans, Xendit) & Auto-Posting Kas | 🟡 P1 (Sedang) | Sedang | 📋 Rencana |
 | **Hardware**| OLT ZTE / Huawei ONU Discovery & Power Read | 🔵 P2 (Lanjutan) | Tinggi | 📋 Rencana |
-| **Hardware**| GenieACS TR-069 Auto Provisioning | 🔵 P2 (Lanjutan) | Tinggi | 📋 Rencana |
+| **Hardware**| GenieACS TR-069 Auto Provisioning Modem | 🔵 P2 (Lanjutan) | Tinggi | 📋 Rencana |
+| **Core**    | Multi-Tenant ISP & Reseller Deposit Management | 🔵 P2 (Lanjutan) | Tinggi | 📋 Rencana |
 
 ---
 
