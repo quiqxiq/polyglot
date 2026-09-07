@@ -100,17 +100,37 @@ mindmap
      - Parsing variabel runtime `$user`, `$address`, `$mac`, dan `$interface` pada event script user profile sering kali menghasilkan nilai kosong jika skrip tidak disesuaikan dengan parsing parser v7.
 
 #### 💡 Solusi & Rencana Implementasi:
-1. **Version-Aware Script Engine**:
-   - Backend Polyglot memeriksa versi RouterOS router target melalui `/system/resource/print` sebelum melakukan provisioning skrip.
-   - Mengelompokkan target menjadi `ROS_V6` (< 7.0) dan `ROS_V7` (>= 7.0).
-2. **Template Skrip Modular Terpisah**:
-   - Memisahkan template skrip untuk on-login, on-logout, dan scheduler ke dalam registry template berbasis versi:
-     - `templates/mikrotik/v6/on_login.rsc`
-     - `templates/mikrotik/v7/on_login.rsc`
-     - `templates/mikrotik/v6/expire_monitor.rsc`
-     - `templates/mikrotik/v7/expire_monitor.rsc`
+1. **Bukan File `.rsc` Statis, Melainkan Dynamic Template Engine (`.rsc.tmpl`)**:
+   - File `.rsc` statis murni **tidak mungkin langsung dipakai** karena kebutuhan skrip Mikhmon bergantung pada variabel dinamis dari form input admin:
+     - `Validity`: Masa aktif voucher (misal `2h`, `1d`, `30d`).
+     - `Price` & `Selling Price`: Harga modal dan harga jual voucher (misal `5000` dan `6000`).
+     - `Lock User`: Status penguncian MAC address (`true` / `false`).
+     - `Grace Period`: Toleransi waktu sebelum akun dinonaktifkan (misal `5m`).
+     - `ServerURL`: Endpoint webhook Polyglot untuk realtime accounting jika server online.
+   - Oleh karena itu, arsitektur yang digunakan adalah **Go Template Engine (`text/template`)** dengan ekstensi `.rsc.tmpl`:
+     - Backend Go mendefinisikan struct parameter injeksi:
+       ```go
+       type HotspotProfileScriptParams struct {
+           ProfileName  string // "Paket-2Jam"
+           Validity     string // "2h", "1d", "30d"
+           GracePeriod  string // "5m"
+           Price        int    // 5000
+           SellingPrice int    // 6000
+           LockUser     bool   // true / false
+           ServerURL    string // Webhook callback Polyglot
+           IsROSv7      bool   // true jika target router berjalan di ROS v7
+       }
+       ```
+     - Backend Go men-*render* template ini menjadi teks perintah RouterOS CLI, kemudian menyuntikkannya ke properti `on-login` / `on-logout` profil pengguna MikroTik (`/ip/hotspot/user/profile/set on-login=...`) secara transparan via RouterOS API.
+2. **Registry Template Modular Berbasis Versi (ROS v6 vs ROS v7)**:
+   - Memisahkan template skrip ke dalam struktur folder modular:
+     - `templates/mikrotik/v6/hotspot_on_login.rsc.tmpl` (Sintaks `/tool fetch mode=http`, variable scope v6)
+     - `templates/mikrotik/v7/hotspot_on_login.rsc.tmpl` (Sintaks `/tool fetch http-method=post`, strict scoping v7)
+     - `templates/mikrotik/v6/hotspot_expire_scheduler.rsc.tmpl`
+     - `templates/mikrotik/v7/hotspot_expire_scheduler.rsc.tmpl`
+   - Backend Polyglot secara otomatis mendeteksi versi RouterOS target melalui `/system/resource/print` sebelum merender dan menginjeksi skrip.
 3. **Automated Compatibility Unit & E2E Testing**:
-   - Menambahkan unit test parsing dan integrasi terhadap MikroTik CHR v6 dan v7 untuk memastikan skrip ter-inject dengan bersih tanpa syntax error.
+   - Menambahkan unit test parsing dan integrasi terhadap MikroTik CHR v6 dan v7 untuk memastikan skrip ter-render dengan parameter dinamis dan ter-inject dengan bersih tanpa syntax error.
 
 ---
 
@@ -162,7 +182,11 @@ Sistem harus mengadopsi model **Hybrid Dual-State Recording** dengan jaminan ket
 3. **Auto-Reconciliation & Catch-Up Sync Worker**:
    - Background worker di Polyglot engine secara berkala memeriksa router. Begitu router dan server kembali terhubung, worker melakukan *pull* terhadap seluruh transaksi offline yang belum tercatat di database.
    - Menggunakan identifier unik (*idempotency key*) agar tidak terjadi duplikasi pencatatan pada laporan keuangan atau kasir.
-4. **Modul Laporan Lengkap & Akuntansi Terpadu**:
+4. **Laporan Diproses di Database Pusat, Bukan dari `.rsc`**:
+   - Format `.rsc` **sama sekali tidak dipakai untuk menyusun atau menampilkan laporan**.
+   - Peran skrip `.rsc.tmpl` di router hanyalah sebagai sensor pemicu (*trigger*): saat pelanggan login, skrip mengirim sinyal transaksi ke server Polyglot atau menyimpan satu baris log di buffer router jika offline.
+   - Seluruh visualisasi grafik, rekapitulasi omzet, dan laporan akuntansi dikompilasi secara instan dan efisien di sisi server melalui query agregasi PostgreSQL.
+5. **Modul Laporan Lengkap & Akuntansi Terpadu**:
    - Laporan rekapitulasi omzet: Harian, Mingguan, Bulanan, Tahunan.
    - Filter multidimensi: Berdasarkan router cabang, profil paket hotspot (misal Paket 2 Jam, Paket 24 Jam), agen/reseller, atau kasir.
    - Integrasi otomatis ke modul Buku Kas (`cash_transactions` & `cash_accounts`).
