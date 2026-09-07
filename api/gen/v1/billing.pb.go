@@ -631,6 +631,102 @@ func (x *GenerateInvoicesResponse) GetSkipped() int32 {
 	return 0
 }
 
+type CancelInvoiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Reason        string                 `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CancelInvoiceRequest) Reset() {
+	*x = CancelInvoiceRequest{}
+	mi := &file_v1_billing_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelInvoiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelInvoiceRequest) ProtoMessage() {}
+
+func (x *CancelInvoiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CancelInvoiceRequest.ProtoReflect.Descriptor instead.
+func (*CancelInvoiceRequest) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *CancelInvoiceRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *CancelInvoiceRequest) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+type CancelInvoiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Invoice       *Invoice               `protobuf:"bytes,1,opt,name=invoice,proto3" json:"invoice,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CancelInvoiceResponse) Reset() {
+	*x = CancelInvoiceResponse{}
+	mi := &file_v1_billing_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelInvoiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelInvoiceResponse) ProtoMessage() {}
+
+func (x *CancelInvoiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_billing_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CancelInvoiceResponse.ProtoReflect.Descriptor instead.
+func (*CancelInvoiceResponse) Descriptor() ([]byte, []int) {
+	return file_v1_billing_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *CancelInvoiceResponse) GetInvoice() *Invoice {
+	if x != nil {
+		return x.Invoice
+	}
+	return nil
+}
+
 type CashierResolveRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Identifier    string                 `protobuf:"bytes,1,opt,name=identifier,proto3" json:"identifier,omitempty"`
@@ -641,7 +737,7 @@ type CashierResolveRequest struct {
 
 func (x *CashierResolveRequest) Reset() {
 	*x = CashierResolveRequest{}
-	mi := &file_v1_billing_proto_msgTypes[8]
+	mi := &file_v1_billing_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -653,7 +749,7 @@ func (x *CashierResolveRequest) String() string {
 func (*CashierResolveRequest) ProtoMessage() {}
 
 func (x *CashierResolveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[8]
+	mi := &file_v1_billing_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -666,7 +762,7 @@ func (x *CashierResolveRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CashierResolveRequest.ProtoReflect.Descriptor instead.
 func (*CashierResolveRequest) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{8}
+	return file_v1_billing_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *CashierResolveRequest) GetIdentifier() string {
@@ -695,7 +791,7 @@ type CashierResolveResponse struct {
 
 func (x *CashierResolveResponse) Reset() {
 	*x = CashierResolveResponse{}
-	mi := &file_v1_billing_proto_msgTypes[9]
+	mi := &file_v1_billing_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -707,7 +803,7 @@ func (x *CashierResolveResponse) String() string {
 func (*CashierResolveResponse) ProtoMessage() {}
 
 func (x *CashierResolveResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[9]
+	mi := &file_v1_billing_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -720,7 +816,7 @@ func (x *CashierResolveResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CashierResolveResponse.ProtoReflect.Descriptor instead.
 func (*CashierResolveResponse) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{9}
+	return file_v1_billing_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *CashierResolveResponse) GetInvoice() *Invoice {
@@ -766,7 +862,7 @@ type CashierPayRequest struct {
 
 func (x *CashierPayRequest) Reset() {
 	*x = CashierPayRequest{}
-	mi := &file_v1_billing_proto_msgTypes[10]
+	mi := &file_v1_billing_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -778,7 +874,7 @@ func (x *CashierPayRequest) String() string {
 func (*CashierPayRequest) ProtoMessage() {}
 
 func (x *CashierPayRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[10]
+	mi := &file_v1_billing_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -791,7 +887,7 @@ func (x *CashierPayRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CashierPayRequest.ProtoReflect.Descriptor instead.
 func (*CashierPayRequest) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{10}
+	return file_v1_billing_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *CashierPayRequest) GetInvoiceId() string {
@@ -854,7 +950,7 @@ type CashierPayResponse struct {
 
 func (x *CashierPayResponse) Reset() {
 	*x = CashierPayResponse{}
-	mi := &file_v1_billing_proto_msgTypes[11]
+	mi := &file_v1_billing_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -866,7 +962,7 @@ func (x *CashierPayResponse) String() string {
 func (*CashierPayResponse) ProtoMessage() {}
 
 func (x *CashierPayResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_billing_proto_msgTypes[11]
+	mi := &file_v1_billing_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -879,7 +975,7 @@ func (x *CashierPayResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CashierPayResponse.ProtoReflect.Descriptor instead.
 func (*CashierPayResponse) Descriptor() ([]byte, []int) {
-	return file_v1_billing_proto_rawDescGZIP(), []int{11}
+	return file_v1_billing_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *CashierPayResponse) GetPaymentId() string {
@@ -958,7 +1054,12 @@ const file_v1_billing_proto_rawDesc = "" +
 	"\x06period\x18\x01 \x01(\tR\x06period\"N\n" +
 	"\x18GenerateInvoicesResponse\x12\x18\n" +
 	"\acreated\x18\x01 \x01(\x05R\acreated\x12\x18\n" +
-	"\askipped\x18\x02 \x01(\x05R\askipped\"t\n" +
+	"\askipped\x18\x02 \x01(\x05R\askipped\"G\n" +
+	"\x14CancelInvoiceRequest\x12\x17\n" +
+	"\x02id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\x02id\x12\x16\n" +
+	"\x06reason\x18\x02 \x01(\tR\x06reason\"G\n" +
+	"\x15CancelInvoiceResponse\x12.\n" +
+	"\ainvoice\x18\x01 \x01(\v2\x14.polyglot.v1.InvoiceR\ainvoice\"t\n" +
 	"\x15CashierResolveRequest\x12'\n" +
 	"\n" +
 	"identifier\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\n" +
@@ -989,11 +1090,12 @@ const file_v1_billing_proto_rawDesc = "" +
 	"\fRESOLVE_CODE\x10\x00\x12\x0e\n" +
 	"\n" +
 	"RESOLVE_QR\x10\x01\x12\x12\n" +
-	"\x0eRESOLVE_PORTAL\x10\x022\xbf\x03\n" +
+	"\x0eRESOLVE_PORTAL\x10\x022\x97\x04\n" +
 	"\x0eBillingService\x12S\n" +
 	"\fListInvoices\x12 .polyglot.v1.ListInvoicesRequest\x1a!.polyglot.v1.ListInvoicesResponse\x12M\n" +
 	"\n" +
-	"GetInvoice\x12\x1e.polyglot.v1.GetInvoiceRequest\x1a\x1f.polyglot.v1.GetInvoiceResponse\x12_\n" +
+	"GetInvoice\x12\x1e.polyglot.v1.GetInvoiceRequest\x1a\x1f.polyglot.v1.GetInvoiceResponse\x12V\n" +
+	"\rCancelInvoice\x12!.polyglot.v1.CancelInvoiceRequest\x1a\".polyglot.v1.CancelInvoiceResponse\x12_\n" +
 	"\x10GenerateInvoices\x12$.polyglot.v1.GenerateInvoicesRequest\x1a%.polyglot.v1.GenerateInvoicesResponse\x12Y\n" +
 	"\x0eCashierResolve\x12\".polyglot.v1.CashierResolveRequest\x1a#.polyglot.v1.CashierResolveResponse\x12M\n" +
 	"\n" +
@@ -1012,7 +1114,7 @@ func file_v1_billing_proto_rawDescGZIP() []byte {
 }
 
 var file_v1_billing_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_v1_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_v1_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_v1_billing_proto_goTypes = []any{
 	(ResolveMethod)(0),               // 0: polyglot.v1.ResolveMethod
 	(*Invoice)(nil),                  // 1: polyglot.v1.Invoice
@@ -1023,33 +1125,38 @@ var file_v1_billing_proto_goTypes = []any{
 	(*GetInvoiceResponse)(nil),       // 6: polyglot.v1.GetInvoiceResponse
 	(*GenerateInvoicesRequest)(nil),  // 7: polyglot.v1.GenerateInvoicesRequest
 	(*GenerateInvoicesResponse)(nil), // 8: polyglot.v1.GenerateInvoicesResponse
-	(*CashierResolveRequest)(nil),    // 9: polyglot.v1.CashierResolveRequest
-	(*CashierResolveResponse)(nil),   // 10: polyglot.v1.CashierResolveResponse
-	(*CashierPayRequest)(nil),        // 11: polyglot.v1.CashierPayRequest
-	(*CashierPayResponse)(nil),       // 12: polyglot.v1.CashierPayResponse
+	(*CancelInvoiceRequest)(nil),     // 9: polyglot.v1.CancelInvoiceRequest
+	(*CancelInvoiceResponse)(nil),    // 10: polyglot.v1.CancelInvoiceResponse
+	(*CashierResolveRequest)(nil),    // 11: polyglot.v1.CashierResolveRequest
+	(*CashierResolveResponse)(nil),   // 12: polyglot.v1.CashierResolveResponse
+	(*CashierPayRequest)(nil),        // 13: polyglot.v1.CashierPayRequest
+	(*CashierPayResponse)(nil),       // 14: polyglot.v1.CashierPayResponse
 }
 var file_v1_billing_proto_depIdxs = []int32{
 	2,  // 0: polyglot.v1.Invoice.items:type_name -> polyglot.v1.InvoiceItem
 	1,  // 1: polyglot.v1.ListInvoicesResponse.invoices:type_name -> polyglot.v1.Invoice
 	1,  // 2: polyglot.v1.GetInvoiceResponse.invoice:type_name -> polyglot.v1.Invoice
-	0,  // 3: polyglot.v1.CashierResolveRequest.method:type_name -> polyglot.v1.ResolveMethod
-	1,  // 4: polyglot.v1.CashierResolveResponse.invoice:type_name -> polyglot.v1.Invoice
-	1,  // 5: polyglot.v1.CashierPayResponse.invoice:type_name -> polyglot.v1.Invoice
-	3,  // 6: polyglot.v1.BillingService.ListInvoices:input_type -> polyglot.v1.ListInvoicesRequest
-	5,  // 7: polyglot.v1.BillingService.GetInvoice:input_type -> polyglot.v1.GetInvoiceRequest
-	7,  // 8: polyglot.v1.BillingService.GenerateInvoices:input_type -> polyglot.v1.GenerateInvoicesRequest
-	9,  // 9: polyglot.v1.BillingService.CashierResolve:input_type -> polyglot.v1.CashierResolveRequest
-	11, // 10: polyglot.v1.BillingService.CashierPay:input_type -> polyglot.v1.CashierPayRequest
-	4,  // 11: polyglot.v1.BillingService.ListInvoices:output_type -> polyglot.v1.ListInvoicesResponse
-	6,  // 12: polyglot.v1.BillingService.GetInvoice:output_type -> polyglot.v1.GetInvoiceResponse
-	8,  // 13: polyglot.v1.BillingService.GenerateInvoices:output_type -> polyglot.v1.GenerateInvoicesResponse
-	10, // 14: polyglot.v1.BillingService.CashierResolve:output_type -> polyglot.v1.CashierResolveResponse
-	12, // 15: polyglot.v1.BillingService.CashierPay:output_type -> polyglot.v1.CashierPayResponse
-	11, // [11:16] is the sub-list for method output_type
-	6,  // [6:11] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	1,  // 3: polyglot.v1.CancelInvoiceResponse.invoice:type_name -> polyglot.v1.Invoice
+	0,  // 4: polyglot.v1.CashierResolveRequest.method:type_name -> polyglot.v1.ResolveMethod
+	1,  // 5: polyglot.v1.CashierResolveResponse.invoice:type_name -> polyglot.v1.Invoice
+	1,  // 6: polyglot.v1.CashierPayResponse.invoice:type_name -> polyglot.v1.Invoice
+	3,  // 7: polyglot.v1.BillingService.ListInvoices:input_type -> polyglot.v1.ListInvoicesRequest
+	5,  // 8: polyglot.v1.BillingService.GetInvoice:input_type -> polyglot.v1.GetInvoiceRequest
+	9,  // 9: polyglot.v1.BillingService.CancelInvoice:input_type -> polyglot.v1.CancelInvoiceRequest
+	7,  // 10: polyglot.v1.BillingService.GenerateInvoices:input_type -> polyglot.v1.GenerateInvoicesRequest
+	11, // 11: polyglot.v1.BillingService.CashierResolve:input_type -> polyglot.v1.CashierResolveRequest
+	13, // 12: polyglot.v1.BillingService.CashierPay:input_type -> polyglot.v1.CashierPayRequest
+	4,  // 13: polyglot.v1.BillingService.ListInvoices:output_type -> polyglot.v1.ListInvoicesResponse
+	6,  // 14: polyglot.v1.BillingService.GetInvoice:output_type -> polyglot.v1.GetInvoiceResponse
+	10, // 15: polyglot.v1.BillingService.CancelInvoice:output_type -> polyglot.v1.CancelInvoiceResponse
+	8,  // 16: polyglot.v1.BillingService.GenerateInvoices:output_type -> polyglot.v1.GenerateInvoicesResponse
+	12, // 17: polyglot.v1.BillingService.CashierResolve:output_type -> polyglot.v1.CashierResolveResponse
+	14, // 18: polyglot.v1.BillingService.CashierPay:output_type -> polyglot.v1.CashierPayResponse
+	13, // [13:19] is the sub-list for method output_type
+	7,  // [7:13] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_v1_billing_proto_init() }
@@ -1063,7 +1170,7 @@ func file_v1_billing_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_billing_proto_rawDesc), len(file_v1_billing_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   12,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

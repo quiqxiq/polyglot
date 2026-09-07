@@ -14,10 +14,11 @@ import (
 
 // LifecycleUseCase manages subscription status transitions that interact with router.
 type LifecycleUseCase struct {
-	subs    port.SubscriptionRepository
-	plans   port.ServicePlanRepository
-	manager port.RouterAccountManager
-	audit   port.AuditLogWriter
+	subs     port.SubscriptionRepository
+	plans    port.ServicePlanRepository
+	manager  port.RouterAccountManager
+	audit    port.AuditLogWriter
+	settings port.SettingReader
 
 	now func() time.Time
 }
@@ -36,6 +37,12 @@ func NewLifecycleUseCase(
 		audit:   auditW,
 		now:     time.Now,
 	}
+}
+
+// WithSettings attaches dynamic system settings reader.
+func (u *LifecycleUseCase) WithSettings(s port.SettingReader) *LifecycleUseCase {
+	u.settings = s
+	return u
 }
 
 // Activate assigns a device & provisions the account on the router.
@@ -194,9 +201,20 @@ func (u *LifecycleUseCase) Isolate(ctx context.Context, subID, reason string) (d
 		return sub, err
 	}
 	if provisioned(sub) {
+		isolirProfile := "ISOLIR"
+		addressList := "ISOLIR_USERS"
+		if u.settings != nil {
+			cfg := port.LoadISPSettings(ctx, u.settings)
+			if isHotspot(sub.ServiceType) {
+				isolirProfile = cfg.HotspotIsolirProfile
+			} else {
+				isolirProfile = cfg.PPPoEIsolirProfile
+			}
+			addressList = cfg.IsolirAddressList
+		}
 		opt := port.IsolationOptions{
-			IsolirProfile: "ISOLIR",
-			AddressList:   "ISOLIR_USERS",
+			IsolirProfile: isolirProfile,
+			AddressList:   addressList,
 		}
 		if err := u.manager.Isolate(ctx, derefDevice(sub.DeviceID), sub.ServiceType, sub.RemoteUsername, opt); err != nil {
 			return sub, fmt.Errorf("isolate akun router: %w", err)
@@ -220,9 +238,14 @@ func (u *LifecycleUseCase) Restore(ctx context.Context, subID string) (domainSub
 		return sub, err
 	}
 	if provisioned(sub) {
+		addressList := "ISOLIR_USERS"
+		if u.settings != nil {
+			cfg := port.LoadISPSettings(ctx, u.settings)
+			addressList = cfg.IsolirAddressList
+		}
 		normalProfile := u.normalProfile(ctx, sub)
 		if err := u.manager.Restore(ctx, derefDevice(sub.DeviceID), sub.ServiceType,
-			sub.RemoteUsername, normalProfile, "ISOLIR_USERS"); err != nil {
+			sub.RemoteUsername, normalProfile, addressList); err != nil {
 			return sub, fmt.Errorf("restore akun router: %w", err)
 		}
 	}

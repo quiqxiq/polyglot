@@ -30,6 +30,7 @@ func (h *Handler) RegisterPublic(mux *http.ServeMux) {
 // RegisterProtected mounts kasir endpoints (di balik middleware JWT).
 func (h *Handler) RegisterProtected(mux *http.ServeMux) {
 	mux.HandleFunc("POST /api/cashier/charge", h.charge)
+	mux.HandleFunc("POST /api/cashier/check-charge", h.checkCharge)
 }
 
 func (h *Handler) tripayWebhook(w http.ResponseWriter, r *http.Request) {
@@ -76,6 +77,31 @@ func (h *Handler) charge(w http.ResponseWriter, r *http.Request) {
 		"va_number":   res.VANumber,
 		"status":      tx.Status,
 		"amount":      tx.Amount,
+	})
+}
+
+func (h *Handler) checkCharge(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		ExternalID string `json:"external_id"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		respond(w, http.StatusBadRequest, false, "body JSON tidak valid")
+		return
+	}
+	if req.ExternalID == "" {
+		respond(w, http.StatusBadRequest, false, "external_id wajib diisi")
+		return
+	}
+	invoiceID, settled, status, err := h.usecase.CheckPaymentStatus(r.Context(), req.ExternalID)
+	if err != nil {
+		writeMappedError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{
+		"external_id": req.ExternalID,
+		"status":      status,
+		"settled":     settled,
+		"invoice_id":  invoiceID,
 	})
 }
 

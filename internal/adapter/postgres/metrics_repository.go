@@ -24,6 +24,7 @@ var ErrTimescaleDBNotAvailable = errors.New("timescaledb extension is not active
 type MetricsRepository struct {
 	db              *gorm.DB
 	timescaleCached atomic.Bool
+	caggCached      atomic.Bool
 	checkOnce       sync.Once
 }
 
@@ -34,9 +35,28 @@ func NewMetricsRepository(db *gorm.DB) *MetricsRepository {
 	return &MetricsRepository{db: db}
 }
 
+// IsContinuousAggregateAvailable checks whether the device_ping_metrics_1m continuous aggregate view is available.
+func (r *MetricsRepository) IsContinuousAggregateAvailable(ctx context.Context) bool {
+	if r.caggCached.Load() {
+		return true
+	}
+	if r.db.Name() != "postgres" {
+		return false
+	}
+	var count int64
+	err := r.db.WithContext(ctx).
+		Raw(`SELECT count(1) FROM timescaledb_information.continuous_aggregates WHERE view_name = 'device_ping_metrics_1m'`).
+		Scan(&count).Error
+	if err == nil && count > 0 {
+		r.caggCached.Store(true)
+		return true
+	}
+	return false
+}
+
 // IsTimescaleDBAvailable checks whether the TimescaleDB extension is active.
 func (r *MetricsRepository) IsTimescaleDBAvailable(ctx context.Context) (bool, error) {
-	if r.db.Dialector.Name() != "postgres" {
+	if r.db.Name() != "postgres" {
 		// In-memory SQLite or test environments allow mock execution
 		return true, nil
 	}
@@ -100,7 +120,9 @@ func (r *MetricsRepository) SavePingMetricsBatch(ctx context.Context, points []d
 		models[i] = model.PingMetricModelFromDomain(p)
 	}
 
-	return r.db.WithContext(ctx).CreateInBatches(models, 100).Error
+	return r.db.WithContext(ctx).
+		Session(&gorm.Session{SkipDefaultTransaction: true}).
+		CreateInBatches(models, 100).Error
 }
 
 // QueryPingMetrics retrieves time-series ping records and statistics within the filter window.
@@ -123,6 +145,8 @@ func (r *MetricsRepository) QueryPingMetrics(ctx context.Context, filter device.
 		return nil, device.PingSummary{}, err
 	}
 
+	caggAvailable := r.IsContinuousAggregateAvailable(ctx)
+
 	// 1. Calculate overall summary statistics for the time window
 	type statResult struct {
 		MinRTT        *float32
@@ -134,9 +158,16 @@ func (r *MetricsRepository) QueryPingMetrics(ctx context.Context, filter device.
 	}
 
 	var stat statResult
-	summaryQuery := r.db.WithContext(ctx).Model(&model.DevicePingMetricModel{}).
-		Select("MIN(NULLIF(rtt_ms, 0)) AS min_rtt, AVG(NULLIF(rtt_ms, 0)) AS avg_rtt, MAX(NULLIF(rtt_ms, 0)) AS max_rtt, COALESCE(SUM(sent), 0) AS total_sent, COALESCE(SUM(received), 0) AS total_received, COUNT(*) AS total_samples").
-		Where("device_id = ? AND recorded_at >= ? AND recorded_at < ?", filter.DeviceID, filter.StartTime, filter.EndTime)
+	var summaryQuery *gorm.DB
+	if caggAvailable && bucket != "" && bucket != "raw" {
+		summaryQuery = r.db.WithContext(ctx).Table("device_ping_metrics_1m").
+			Select("MIN(min_rtt_ms) AS min_rtt, AVG(avg_rtt_ms) AS avg_rtt, MAX(max_rtt_ms) AS max_rtt, COALESCE(SUM(sent), 0) AS total_sent, COALESCE(SUM(received), 0) AS total_received, COALESCE(SUM(sample_count), 0) AS total_samples").
+			Where("device_id = ? AND bucket_time >= ? AND bucket_time < ?", filter.DeviceID, filter.StartTime, filter.EndTime)
+	} else {
+		summaryQuery = r.db.WithContext(ctx).Model(&model.DevicePingMetricModel{}).
+			Select("MIN(NULLIF(rtt_ms, 0)) AS min_rtt, AVG(NULLIF(rtt_ms, 0)) AS avg_rtt, MAX(NULLIF(rtt_ms, 0)) AS max_rtt, COALESCE(SUM(sent), 0) AS total_sent, COALESCE(SUM(received), 0) AS total_received, COUNT(*) AS total_samples").
+			Where("device_id = ? AND recorded_at >= ? AND recorded_at < ?", filter.DeviceID, filter.StartTime, filter.EndTime)
+	}
 
 	if err := summaryQuery.Scan(&stat).Error; err != nil {
 		return nil, device.PingSummary{}, fmt.Errorf("calculate ping summary: %w", err)
@@ -174,7 +205,7 @@ func (r *MetricsRepository) QueryPingMetrics(ctx context.Context, filter device.
 	if bucket != "" && bucket != "raw" && !supportedBucket[bucket] {
 		return nil, summary, device.ErrInvalidMetricsBucket
 	}
-	if bucket == "" || bucket == "raw" || r.db.Dialector.Name() != "postgres" {
+	if bucket == "" || bucket == "raw" || r.db.Name() != "postgres" {
 		var list []model.DevicePingMetricModel
 		err := r.db.WithContext(ctx).
 			Where("device_id = ? AND recorded_at >= ? AND recorded_at < ?", filter.DeviceID, filter.StartTime, filter.EndTime).
@@ -224,23 +255,62 @@ func (r *MetricsRepository) QueryPingMetrics(ctx context.Context, filter device.
 	}
 
 	var rows []bucketRow
-	err = r.db.WithContext(ctx).
-		Table("device_ping_metrics").
-		Select(`
-			time_bucket(?, recorded_at) AS bucket_time,
-			target,
-			AVG(NULLIF(rtt_ms, 0)) AS rtt_ms,
-			CASE WHEN SUM(sent) > 0 THEN ((SUM(sent) - SUM(received)) * 100.0 / SUM(sent)) ELSE 0 END AS packet_loss,
-			MIN(NULLIF(rtt_ms, 0)) AS min_rtt_ms,
-			AVG(NULLIF(rtt_ms, 0)) AS avg_rtt_ms,
-			MAX(NULLIF(rtt_ms, 0)) AS max_rtt_ms,
-			SUM(sent) AS sent,
-			SUM(received) AS received
-		`, intervalSQL).
-		Where("device_id = ? AND recorded_at >= ? AND recorded_at < ?", filter.DeviceID, filter.StartTime, filter.EndTime).
-		Group("bucket_time, target").
-		Order("bucket_time ASC").
-		Scan(&rows).Error
+	if caggAvailable {
+		if intervalSQL == "1 minute" {
+			err = r.db.WithContext(ctx).
+				Table("device_ping_metrics_1m").
+				Select(`
+					bucket_time,
+					target,
+					avg_rtt_ms AS rtt_ms,
+					CASE WHEN sent > 0 THEN ((sent - received) * 100.0 / sent) ELSE 0 END AS packet_loss,
+					min_rtt_ms,
+					avg_rtt_ms,
+					max_rtt_ms,
+					sent,
+					received
+				`).
+				Where("device_id = ? AND bucket_time >= ? AND bucket_time < ?", filter.DeviceID, filter.StartTime, filter.EndTime).
+				Order("bucket_time ASC").
+				Scan(&rows).Error
+		} else {
+			err = r.db.WithContext(ctx).
+				Table("device_ping_metrics_1m").
+				Select(`
+					time_bucket(?, bucket_time) AS bucket_time,
+					target,
+					AVG(avg_rtt_ms) AS rtt_ms,
+					CASE WHEN SUM(sent) > 0 THEN ((SUM(sent) - SUM(received)) * 100.0 / SUM(sent)) ELSE 0 END AS packet_loss,
+					MIN(min_rtt_ms) AS min_rtt_ms,
+					AVG(avg_rtt_ms) AS avg_rtt_ms,
+					MAX(max_rtt_ms) AS max_rtt_ms,
+					SUM(sent) AS sent,
+					SUM(received) AS received
+				`, intervalSQL).
+				Where("device_id = ? AND bucket_time >= ? AND bucket_time < ?", filter.DeviceID, filter.StartTime, filter.EndTime).
+				Group("1, target").
+				Order("bucket_time ASC").
+				Scan(&rows).Error
+		}
+	} else {
+		err = r.db.WithContext(ctx).
+			Table("device_ping_metrics").
+			Select(`
+				time_bucket(?, recorded_at) AS bucket_time,
+				target,
+				AVG(NULLIF(rtt_ms, 0)) AS rtt_ms,
+				CASE WHEN SUM(sent) > 0 THEN ((SUM(sent) - SUM(received)) * 100.0 / SUM(sent)) ELSE 0 END AS packet_loss,
+				MIN(NULLIF(rtt_ms, 0)) AS min_rtt_ms,
+				AVG(NULLIF(rtt_ms, 0)) AS avg_rtt_ms,
+				MAX(NULLIF(rtt_ms, 0)) AS max_rtt_ms,
+				SUM(sent) AS sent,
+				SUM(received) AS received
+			`, intervalSQL).
+			Where("device_id = ? AND recorded_at >= ? AND recorded_at < ?", filter.DeviceID, filter.StartTime, filter.EndTime).
+			Group("1, target").
+			Order("bucket_time ASC").
+			Scan(&rows).Error
+	}
 	if err != nil {
 		return nil, summary, fmt.Errorf("fetch downsampled ping metrics: %w", err)
 	}

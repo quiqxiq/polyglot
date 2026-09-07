@@ -170,8 +170,7 @@ func (m *PingStreamWorker) runDeviceStream(ctx context.Context, dev device.Devic
 		pingCmd := command.Command{
 			Raw: "/ping",
 			Args: map[string]string{
-				"address":  target,
-				"interval": "1s",
+				"address": target,
 			},
 		}
 		handle, err := sDrv.Stream(ctx, pingCmd)
@@ -192,14 +191,21 @@ func (m *PingStreamWorker) runDeviceStream(ctx context.Context, dev device.Devic
 	}
 }
 
+const (
+	pingBufferCapacity = 60
+	pingFlushThreshold = 30
+	pingFlushInterval  = 15 * time.Second
+	pingWriteTimeout   = 5 * time.Second
+)
+
 func (m *PingStreamWorker) consumeStream(
 	ctx context.Context,
 	deviceID string,
 	target string,
 	handle port.StreamHandle,
 ) {
-	buffer := make([]device.PingMetricPoint, 0, 10)
-	flushTicker := time.NewTicker(3 * time.Second)
+	buffer := make([]device.PingMetricPoint, 0, pingBufferCapacity)
+	flushTicker := time.NewTicker(pingFlushInterval)
 	defer flushTicker.Stop()
 	streamSeq := 0
 
@@ -207,7 +213,16 @@ func (m *PingStreamWorker) consumeStream(
 		if len(buffer) == 0 {
 			return
 		}
-		_ = m.metricsRepo.SavePingMetricsBatch(ctx, buffer)
+		writeCtx, cancel := context.WithTimeout(context.Background(), pingWriteTimeout)
+		err := m.metricsRepo.SavePingMetricsBatch(writeCtx, buffer)
+		cancel()
+		if err != nil {
+			logger.WithComponent("PingStreamWorker").
+				WithError(err).
+				WithField("device_id", deviceID).
+				WithField("points_count", len(buffer)).
+				Warn("failed to persist ping metrics batch")
+		}
 		buffer = buffer[:0]
 	}
 	defer flush()
@@ -222,8 +237,7 @@ func (m *PingStreamWorker) consumeStream(
 			if !ok {
 				return
 			}
-			if len(res.Rows) > 0 {
-				row := res.Rows[0]
+			for _, row := range res.Rows {
 				latency, status := ping.ParsePingLatency(row)
 				seq, _ := strconv.Atoi(row["seq"])
 				if seq == 0 {
@@ -275,7 +289,7 @@ func (m *PingStreamWorker) consumeStream(
 					MaxRTTMS:   maxPtr,
 				})
 
-				if len(buffer) >= 10 {
+				if len(buffer) >= pingFlushThreshold {
 					flush()
 				}
 			}
@@ -301,9 +315,11 @@ func (m *PingStreamWorker) cleanupLoop(ctx context.Context) {
 				if retentionDays <= 0 {
 					retentionDays = 7
 				}
-				if err := m.metricsRepo.CleanupExpiredMetrics(ctx, dev.ID, retentionDays); err != nil {
+				cleanupCtx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+				if err := m.metricsRepo.CleanupExpiredMetrics(cleanupCtx, dev.ID, retentionDays); err != nil {
 					logger.WithComponent("PingStreamWorker").WithError(err).WithField("device_id", dev.ID).Warn("cleanup metrics failed")
 				}
+				cancel()
 			}
 		}
 	}

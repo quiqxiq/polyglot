@@ -19,19 +19,35 @@ func (p *Provisioner) Provision(ctx context.Context, deviceID, serviceType strin
 		return err
 	}
 	if isHotspot(serviceType) {
-		if _, err := p.hot.AddUser(ctx, driver, port.HotspotUserParams{
+		userParams := port.HotspotUserParams{
 			Name: acct.Username, Password: acct.Password, Profile: acct.Profile,
 			Comment: acct.Comment,
-		}); err != nil {
+		}
+		if _, rosID, err := p.findHotspotUser(ctx, driver, acct.Username); err == nil {
+			if _, err := p.hot.UpdateUser(ctx, driver, rosID, userParams); err != nil {
+				return fmt.Errorf("update hotspot user %s: %w", acct.Username, err)
+			}
+			p.kickHotspotIfActive(ctx, driver, acct.Username)
+			return nil
+		}
+		if _, err := p.hot.AddUser(ctx, driver, userParams); err != nil {
 			return fmt.Errorf("add hotspot user %s: %w", acct.Username, err)
 		}
 		return nil
 	}
-	if _, err := p.ppp.AddSecret(ctx, driver, port.PPPoESecretParams{
+	secParams := port.PPPoESecretParams{
 		Name: acct.Username, Password: acct.Password, Profile: acct.Profile,
 		Service: "pppoe", Comment: acct.Comment,
-	}); err != nil {
-		return fmt.Errorf("add ppp secret %s: %w", acct.Username, err)
+	}
+	if sec, err := p.findSecret(ctx, driver, acct.Username); err == nil {
+		if _, err := p.ppp.UpdateSecret(ctx, driver, sec.RosID, secParams); err != nil {
+			return fmt.Errorf("update ppp secret %s: %w", acct.Username, err)
+		}
+		p.kickPPP(ctx, driver, acct.Username)
+	} else {
+		if _, err := p.ppp.AddSecret(ctx, driver, secParams); err != nil {
+			return fmt.Errorf("add ppp secret %s: %w", acct.Username, err)
+		}
 	}
 	if isDedicated(serviceType) {
 		if err := p.ensureDedicatedQueue(ctx, driver, acct); err != nil {

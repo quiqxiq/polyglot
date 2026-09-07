@@ -177,7 +177,7 @@ func buildInvoice(reg domainRegistration.Registration, pl domainPlan.ServicePlan
 	inv := domainBilling.Invoice{
 		ID:                invID,
 		TenantID:          orTenant(reg.TenantID),
-		InvoiceNumber:     fmt.Sprintf("INV-%s-%04d", now.Format("200601"), now.UnixNano()%10000),
+		InvoiceNumber:     fmt.Sprintf("INV-%s-%s", now.Format("200601"), idgen.Digits(6)),
 		CustomerID:        "", // diisi pemanggil setelah customer dibuat
 		SubscriptionID:    &subscriptionID,
 		Period:            period,

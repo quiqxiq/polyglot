@@ -202,13 +202,26 @@ func (uc *ManageCustomerUseCase) UpdateCustomer(ctx context.Context, c customer.
 	return c, nil
 }
 
-// DeleteCustomer removes a customer and cascade-deletes their subscriptions (including router accounts) and invoices.
+// DeleteCustomer removes a customer and cascade-deletes their subscriptions (including router accounts) and unpaid invoices.
+// It rejects deletion if the customer has paid or partially paid invoices to protect financial audit integrity.
 func (uc *ManageCustomerUseCase) DeleteCustomer(ctx context.Context, id string) error {
 	if id == "" {
 		return customer.ErrInvalidInput
 	}
 
-	// 1. Terminate router accounts & delete associated subscriptions
+	// 1. Guard against deleting customer with financial records (PAID or partially paid invoices)
+	if uc.invRepo != nil {
+		invoices, err := uc.invRepo.FindByCustomerID(ctx, id)
+		if err == nil {
+			for _, inv := range invoices {
+				if inv.Status == "PAID" || inv.PaidAmount > 0 {
+					return customer.ErrCustomerHasFinancialRecords
+				}
+			}
+		}
+	}
+
+	// 2. Terminate router accounts & delete associated subscriptions
 	if uc.subRepo != nil {
 		subs, err := uc.subRepo.FindByCustomerID(ctx, id)
 		if err == nil {
@@ -221,14 +234,14 @@ func (uc *ManageCustomerUseCase) DeleteCustomer(ctx context.Context, id string) 
 		}
 	}
 
-	// 2. Delete all invoices belonging to the customer
+	// 3. Delete unpaid/cancelled invoices belonging to the customer
 	if uc.invRepo != nil {
 		if err := uc.invRepo.DeleteByCustomerID(ctx, id); err != nil {
 			return fmt.Errorf("delete customer invoices: %w", err)
 		}
 	}
 
-	// 3. Delete the customer record
+	// 4. Delete the customer record
 	if err := uc.repo.Delete(ctx, id); err != nil {
 		return fmt.Errorf("delete customer %s: %w", id, err)
 	}

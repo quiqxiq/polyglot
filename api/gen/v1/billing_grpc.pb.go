@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	BillingService_ListInvoices_FullMethodName     = "/polyglot.v1.BillingService/ListInvoices"
 	BillingService_GetInvoice_FullMethodName       = "/polyglot.v1.BillingService/GetInvoice"
+	BillingService_CancelInvoice_FullMethodName    = "/polyglot.v1.BillingService/CancelInvoice"
 	BillingService_GenerateInvoices_FullMethodName = "/polyglot.v1.BillingService/GenerateInvoices"
 	BillingService_CashierResolve_FullMethodName   = "/polyglot.v1.BillingService/CashierResolve"
 	BillingService_CashierPay_FullMethodName       = "/polyglot.v1.BillingService/CashierPay"
@@ -33,6 +34,7 @@ type BillingServiceClient interface {
 	// Faktur
 	ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (*ListInvoicesResponse, error)
 	GetInvoice(ctx context.Context, in *GetInvoiceRequest, opts ...grpc.CallOption) (*GetInvoiceResponse, error)
+	CancelInvoice(ctx context.Context, in *CancelInvoiceRequest, opts ...grpc.CallOption) (*CancelInvoiceResponse, error)
 	GenerateInvoices(ctx context.Context, in *GenerateInvoicesRequest, opts ...grpc.CallOption) (*GenerateInvoicesResponse, error)
 	// Kasir
 	CashierResolve(ctx context.Context, in *CashierResolveRequest, opts ...grpc.CallOption) (*CashierResolveResponse, error)
@@ -61,6 +63,16 @@ func (c *billingServiceClient) GetInvoice(ctx context.Context, in *GetInvoiceReq
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetInvoiceResponse)
 	err := c.cc.Invoke(ctx, BillingService_GetInvoice_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) CancelInvoice(ctx context.Context, in *CancelInvoiceRequest, opts ...grpc.CallOption) (*CancelInvoiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CancelInvoiceResponse)
+	err := c.cc.Invoke(ctx, BillingService_CancelInvoice_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -104,6 +116,7 @@ type BillingServiceServer interface {
 	// Faktur
 	ListInvoices(context.Context, *ListInvoicesRequest) (*ListInvoicesResponse, error)
 	GetInvoice(context.Context, *GetInvoiceRequest) (*GetInvoiceResponse, error)
+	CancelInvoice(context.Context, *CancelInvoiceRequest) (*CancelInvoiceResponse, error)
 	GenerateInvoices(context.Context, *GenerateInvoicesRequest) (*GenerateInvoicesResponse, error)
 	// Kasir
 	CashierResolve(context.Context, *CashierResolveRequest) (*CashierResolveResponse, error)
@@ -123,6 +136,9 @@ func (UnimplementedBillingServiceServer) ListInvoices(context.Context, *ListInvo
 }
 func (UnimplementedBillingServiceServer) GetInvoice(context.Context, *GetInvoiceRequest) (*GetInvoiceResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetInvoice not implemented")
+}
+func (UnimplementedBillingServiceServer) CancelInvoice(context.Context, *CancelInvoiceRequest) (*CancelInvoiceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CancelInvoice not implemented")
 }
 func (UnimplementedBillingServiceServer) GenerateInvoices(context.Context, *GenerateInvoicesRequest) (*GenerateInvoicesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GenerateInvoices not implemented")
@@ -186,6 +202,24 @@ func _BillingService_GetInvoice_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingServiceServer).GetInvoice(ctx, req.(*GetInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_CancelInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelInvoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).CancelInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_CancelInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).CancelInvoice(ctx, req.(*CancelInvoiceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -258,6 +292,10 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetInvoice",
 			Handler:    _BillingService_GetInvoice_Handler,
+		},
+		{
+			MethodName: "CancelInvoice",
+			Handler:    _BillingService_CancelInvoice_Handler,
 		},
 		{
 			MethodName: "GenerateInvoices",

@@ -209,6 +209,13 @@ func (f *FakePaymentGateway) ParseWebhook(context.Context, []byte, string) (port
 	}
 	return f.Event, nil
 }
+// CheckStatus returns mocked webhook event or error.
+func (f *FakePaymentGateway) CheckStatus(context.Context, string) (port.WebhookEvent, error) {
+	if f.ParseErr != nil {
+		return port.WebhookEvent{}, f.ParseErr
+	}
+	return f.Event, nil
+}
 
 // All returns a copy of all stored gateway transactions.
 func (f *FakeGatewayTxRepo) All() []domainBilling.GatewayTransaction {

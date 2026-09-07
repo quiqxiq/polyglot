@@ -289,6 +289,9 @@ func (u *ManageSubscriptionUseCase) Update(ctx context.Context, subID string, in
 		return domainSub.Subscription{}, domainSub.ErrNotFound
 	}
 
+	oldUsername := sub.RemoteUsername
+	oldDeviceID := derefDevice(sub.DeviceID)
+
 	if in.RemoteUsername != nil && *in.RemoteUsername != "" {
 		sub.RemoteUsername = *in.RemoteUsername
 	}
@@ -345,6 +348,33 @@ func (u *ManageSubscriptionUseCase) Update(ctx context.Context, subID string, in
 	if err := u.subs.Save(ctx, sub); err != nil {
 		return sub, fmt.Errorf("save subscription: %w", err)
 	}
+
+	if provisioned(sub) && u.manager != nil {
+		if oldUsername != "" && (oldUsername != sub.RemoteUsername || oldDeviceID != derefDevice(sub.DeviceID)) {
+			_ = u.manager.Terminate(ctx, oldDeviceID, sub.ServiceType, oldUsername)
+		}
+		pl, err := u.plans.FindByID(ctx, sub.PlanID)
+		if err == nil {
+			var perr error
+			if isHotspot(sub.ServiceType) {
+				hotSpec := planUC.BuildHotspotProvisionSpec(sub, pl)
+				perr = u.manager.ProvisionHotspot(ctx, *sub.DeviceID, hotSpec)
+			} else if isDedicated(sub.ServiceType) {
+				dedSpec := planUC.BuildDedicatedProvisionSpec(sub, pl)
+				perr = u.manager.ProvisionDedicated(ctx, *sub.DeviceID, dedSpec)
+			} else {
+				pppSpec := planUC.BuildPPPoEProvisionSpec(sub, pl)
+				perr = u.manager.ProvisionPPPoE(ctx, *sub.DeviceID, pppSpec)
+			}
+			if perr != nil {
+				logger.WithComponent("ManageSubscriptionUC").WithError(perr).WithFields(map[string]any{
+					"subscription_id": sub.ID,
+					"device_id":       *sub.DeviceID,
+				}).Warn("sinkronisasi router saat update gagal")
+			}
+		}
+	}
+
 	u.writeAudit(ctx, "UPDATE_SUBSCRIPTION", "subscription", sub.ID)
 	return sub, nil
 }

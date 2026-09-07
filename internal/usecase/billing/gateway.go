@@ -139,6 +139,54 @@ func (u *GatewayChargeUseCase) HandleWebhook(ctx context.Context, body []byte, s
 	return "", false, nil
 }
 
+// CheckPaymentStatus memeriksa status transaksi terkini ke provider dan
+// melunasi tagihan bila status sudah settled (mis. webhook offline/telat).
+func (u *GatewayChargeUseCase) CheckPaymentStatus(ctx context.Context, externalID string) (invoiceID string, settled bool, status string, err error) {
+	ev, err := u.gateway.CheckStatus(ctx, externalID)
+	if err != nil {
+		return "", false, "", fmt.Errorf("check status: %w", err)
+	}
+	tx, err := u.gwt.FindByExternalID(ctx, u.gateway.Name(), externalID)
+	if err != nil {
+		return "", false, ev.Status, fmt.Errorf("%w: %s/%s", domainBilling.ErrGatewayUnknownRef, u.gateway.Name(), externalID)
+	}
+
+	if ev.Status == domainBilling.GatewayStatusSettled && tx.Status != domainBilling.GatewayStatusSettled {
+		if tx.InvoiceID == nil {
+			return "", false, ev.Status, fmt.Errorf("%w: %s", domainBilling.ErrGatewayTxMissingInvoice, tx.ID)
+		}
+		pay, perr := u.processor.ProcessCashPayment(ctx, port.CashPaymentCommand{
+			TenantID:         tx.TenantID,
+			InvoiceID:        *tx.InvoiceID,
+			Amount:           ev.PaidAmount,
+			CashAccountID:    u.reader.GetValue(ctx, "gw.tripay.cash_account_id", "ca-1001-kas-kantor"),
+			IncomeCategoryID: u.reader.GetValue(ctx, "gw.tripay.income_category_id", "cc-tagihan"),
+			ScanMethod:       domainBilling.ScanPaymentGateway,
+			Reference:        tx.ExternalID,
+		})
+		if perr != nil && !errors.Is(perr, domainBilling.ErrInvoiceAlreadyPaid) {
+			return "", false, ev.Status, fmt.Errorf("process cash payment: %w", perr)
+		}
+		if perr == nil {
+			if lerr := u.gwt.LinkPayment(ctx, tx.ID, pay.ID, tx.FeeAmount); lerr != nil {
+				logger.WithComponent("GatewayCharge").WithError(lerr).Warn("link payment gagal")
+			}
+		}
+		tx.Status = domainBilling.GatewayStatusSettled
+		tx.PaidAt = ptrTime(time.Now())
+	} else if ev.Status != "" && ev.Status != tx.Status {
+		tx.Status = ev.Status
+	}
+
+	if err := u.gwt.UpdateStatus(ctx, tx.ID, tx.Status); err != nil {
+		return "", false, tx.Status, fmt.Errorf("update status: %w", err)
+	}
+	if tx.InvoiceID != nil {
+		return *tx.InvoiceID, tx.Status == domainBilling.GatewayStatusSettled, tx.Status, nil
+	}
+	return "", tx.Status == domainBilling.GatewayStatusSettled, tx.Status, nil
+}
+
 func ptrTime(t time.Time) *time.Time { return &t }
 
 func firstNonEmpty(a, b string) string {

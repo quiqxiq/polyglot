@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
+import { Route } from '@/routes/_authenticated/ppp/index'
 import { useDeviceStore } from '@/stores/device-store'
 import { usePPPActiveSessionsQuery } from '../../api/use-ppp-active'
 import { usePPPSecretsQuery } from '../../api/use-ppp-secrets'
@@ -11,6 +12,7 @@ import { useStreamPPPActiveSessions, type EnrichedPPPActiveSession } from '../..
 import { ActiveTable } from './active-table'
 
 export function ActiveTab() {
+  const search = Route.useSearch()
   const selectedDeviceId = useDeviceStore((state) => state.selectedDeviceId)
   const [liveMode, setLiveMode] = useState(true)
 
@@ -81,7 +83,11 @@ export function ActiveTab() {
         </div>
       </CardHeader>
       <CardContent className="px-0">
-        <ActiveTable data={sessions} isLoading={isLoading} />
+        <ActiveTable
+          data={sessions}
+          isLoading={isLoading}
+          defaultGlobalFilter={search.filter}
+        />
       </CardContent>
     </Card>
   )

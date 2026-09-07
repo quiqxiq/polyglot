@@ -3,6 +3,7 @@ package network
 import (
 	"context"
 	"fmt"
+	"net"
 	"strconv"
 	"time"
 
@@ -28,11 +29,14 @@ func StreamPing(ctx context.Context, driver port.DeviceDriver, host string, onRe
 		return command.ErrDriverNotStreaming
 	}
 
+	if hostOnly, _, err := net.SplitHostPort(host); err == nil {
+		host = hostOnly
+	}
+
 	cmd := command.Command{
 		Raw: "/ping",
 		Args: map[string]string{
-			"address":  host,
-			"interval": "1s",
+			"address": host,
 		},
 	}
 
@@ -42,6 +46,7 @@ func StreamPing(ctx context.Context, driver port.DeviceDriver, host string, onRe
 	}
 	defer func() { _ = handle.Cancel() }()
 
+	var streamSeq int32
 	for {
 		select {
 		case <-ctx.Done():
@@ -56,17 +61,27 @@ func StreamPing(ctx context.Context, driver port.DeviceDriver, host string, onRe
 
 			for _, row := range res.Rows {
 				lat, status := ping.ParsePingLatency(row)
-				seq, _ := strconv.ParseInt(row["seq"], 10, 32)
+				seqVal, _ := strconv.ParseInt(row["seq"], 10, 32)
+				if seqVal == 0 {
+					if s, ok := row["sequence"]; ok {
+						seqVal, _ = strconv.ParseInt(s, 10, 32)
+					}
+					if seqVal == 0 {
+						seqVal = int64(streamSeq)
+					}
+				}
+				streamSeq = int32(seqVal + 1)
+
 				ttl, _ := strconv.ParseInt(row["ttl"], 10, 32)
-				loss, _ := strconv.ParseInt(row["packet-loss"], 10, 32)
+				loss := ping.ParsePacketLoss(row["packet-loss"])
 
 				item := PingStreamItem{
-					Seq:           int32(seq),
+					Seq:           int32(seqVal),
 					Host:          host,
 					LatencyMS:     lat,
 					Status:        status,
 					TTL:           int32(ttl),
-					PacketLoss:    int32(loss),
+					PacketLoss:    loss,
 					TimestampUnix: time.Now().Unix(),
 				}
 

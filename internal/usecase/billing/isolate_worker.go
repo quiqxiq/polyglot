@@ -13,6 +13,7 @@ import (
 	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/logger"
+	"github.com/quixiq/polyglot/pkg/phone"
 )
 
 // IsolationResult rekap satu siklus worker lifecycle ISP.
@@ -233,7 +234,7 @@ func (w *IsolateWorker) queueNotice(ctx context.Context, sub domainSubscription.
 		TenantID:       cust.TenantID,
 		CustomerID:     &cust.ID,
 		InvoiceID:      &inv.ID,
-		RecipientPhone: cust.Phone,
+		RecipientPhone: phone.Normalize(cust.Phone),
 		MessageType:    "ISOLATION_NOTICE",
 		MessageContent: content,
 		Status:         domainNotification.StatusQueued,

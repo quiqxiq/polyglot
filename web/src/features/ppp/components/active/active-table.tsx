@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   type ColumnFiltersState,
   type SortingState,
@@ -32,14 +32,21 @@ import { activeColumns } from './active-columns'
 interface ActiveTableProps {
   data: EnrichedPPPActiveSession[]
   isLoading?: boolean
+  defaultGlobalFilter?: string
 }
 
-export function ActiveTable({ data, isLoading }: ActiveTableProps) {
+export function ActiveTable({ data, isLoading, defaultGlobalFilter }: ActiveTableProps) {
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([{ id: 'name', desc: false }])
-  const [globalFilter, setGlobalFilter] = useState('')
+  const [globalFilter, setGlobalFilter] = useState(defaultGlobalFilter ?? '')
+
+  useEffect(() => {
+    if (defaultGlobalFilter !== undefined) {
+      setGlobalFilter(defaultGlobalFilter)
+    }
+  }, [defaultGlobalFilter])
 
   // Derive unique profiles from active data
   const profileOptions = useMemo(() => {

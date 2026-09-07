@@ -1,4 +1,4 @@
-.PHONY: build vet test test-integration test-mikrotik-e2e security check-connect-errors check-layer-boundaries proto-check lint check fmt run setup seed \
+.PHONY: build vet test test-integration test-mikrotik-e2e security check-connect-errors check-layer-boundaries proto-check lint check fmt run dev setup seed \
         proto proto-tools proto-clean \
         dev-up dev-down dev-logs dev-setup \
         prod-build prod-up prod-down prod-logs prod-setup \
@@ -76,6 +76,9 @@ fmt:
 
 run:
 	go run ./cmd/server
+
+dev:
+	air
 
 # ─── Protobuf / gRPC & ConnectRPC Web (api/proto/v1) ───────────────────
 PROTO_FILES := $(shell find $(PROTO_ROOT) -name '*.proto' 2>/dev/null)

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
@@ -55,6 +56,12 @@ func (w *WASenderWorker) Run(ctx context.Context) (SendResult, error) {
 		return res, fmt.Errorf("load pending notifications: %w", err)
 	}
 	for _, n := range pending {
+		if strings.TrimSpace(n.RecipientPhone) == "" {
+			_ = w.notif.MarkFailedWithAttempt(ctx, n.ID,
+				"gave up: empty recipient phone number", maxRetry)
+			res.GaveUp++
+			continue
+		}
 		sendErr := w.sender.Send(ctx, n.RecipientPhone, n.MessageContent)
 		if sendErr == nil {
 			if err := w.notif.MarkSent(ctx, n.ID, w.now()); err != nil {

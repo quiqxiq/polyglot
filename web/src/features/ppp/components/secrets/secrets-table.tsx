@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   type ColumnFiltersState,
   type SortingState,
@@ -32,14 +32,21 @@ import { SecretsCard } from './secrets-card'
 interface SecretsTableProps {
   data: PPPSecret[]
   isLoading?: boolean
+  defaultGlobalFilter?: string
 }
 
-export function SecretsTable({ data, isLoading }: SecretsTableProps) {
+export function SecretsTable({ data, isLoading, defaultGlobalFilter }: SecretsTableProps) {
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
-  const [globalFilter, setGlobalFilter] = useState('')
+  const [globalFilter, setGlobalFilter] = useState(defaultGlobalFilter ?? '')
+
+  useEffect(() => {
+    if (defaultGlobalFilter !== undefined) {
+      setGlobalFilter(defaultGlobalFilter)
+    }
+  }, [defaultGlobalFilter])
 
   // Derive unique profiles from data for faceted filtering
   const profileOptions = useMemo(() => {

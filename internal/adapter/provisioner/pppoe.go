@@ -33,6 +33,13 @@ func (p *Provisioner) ProvisionPPPoE(ctx context.Context, deviceID string, spec 
 	if secParams.Service == "" {
 		secParams.Service = "pppoe"
 	}
+	if sec, err := p.findSecret(ctx, driver, spec.Secret.Username); err == nil {
+		if _, err := p.ppp.UpdateSecret(ctx, driver, sec.RosID, secParams); err != nil {
+			return fmt.Errorf("update ppp secret %s: %w", spec.Secret.Username, err)
+		}
+		p.kickPPP(ctx, driver, spec.Secret.Username)
+		return nil
+	}
 	if _, err := p.ppp.AddSecret(ctx, driver, secParams); err != nil {
 		return fmt.Errorf("add ppp secret %s: %w", spec.Secret.Username, err)
 	}

@@ -61,6 +61,14 @@ message GenerateInvoicesResponse {
   int32 skipped = 2;
 }
 
+message CancelInvoiceRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  string reason = 2;
+}
+message CancelInvoiceResponse {
+  Invoice invoice = 1;
+}
+
 // ─── Kasir: resolve & bayar cepat ───────────────────────────────────────
 
 enum ResolveMethod {
@@ -99,6 +107,7 @@ service BillingService {
   // Faktur
   rpc ListInvoices(ListInvoicesRequest) returns (ListInvoicesResponse);
   rpc GetInvoice(GetInvoiceRequest) returns (GetInvoiceResponse);
+  rpc CancelInvoice(CancelInvoiceRequest) returns (CancelInvoiceResponse);
   rpc GenerateInvoices(GenerateInvoicesRequest) returns (GenerateInvoicesResponse);
 
   // Kasir

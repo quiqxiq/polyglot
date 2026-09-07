@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 
@@ -214,6 +215,61 @@ func (a *Adapter) ParseWebhook(ctx context.Context, body []byte, signatureHeader
 		Status:      status,
 		PaidAmount:  paid,
 		Raw:         body,
+	}, nil
+}
+
+// CheckStatus queries transaction detail directly from Tripay API.
+func (a *Adapter) CheckStatus(ctx context.Context, externalID string) (port.WebhookEvent, error) {
+	cfg := a.cfg(ctx)
+	if !a.Enabled(ctx) || cfg.APIKey == "" {
+		return port.WebhookEvent{}, domainBilling.ErrGatewayDisabled
+	}
+	reqURL := fmt.Sprintf("%s/transaction/detail?reference=%s", cfg.Endpoint, url.QueryEscape(externalID))
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodGet, reqURL, nil)
+	if err != nil {
+		return port.WebhookEvent{}, fmt.Errorf("build request: %w", err)
+	}
+	httpReq.Header.Set("Authorization", "Bearer "+cfg.APIKey)
+	resp, err := a.client.Do(httpReq)
+	if err != nil {
+		return port.WebhookEvent{}, fmt.Errorf("http tripay: %w", err)
+	}
+	defer func() { _ = resp.Body.Close() }()
+	raw, err := io.ReadAll(io.LimitReader(resp.Body, 1<<20))
+	if err != nil {
+		return port.WebhookEvent{}, fmt.Errorf("read tripay: %w", err)
+	}
+	var out struct {
+		Success bool   `json:"success"`
+		Message string `json:"message"`
+		Data    struct {
+			Reference   string  `json:"reference"`
+			MerchantRef string  `json:"merchant_ref"`
+			Status      string  `json:"status"`
+			Amount      float64 `json:"amount"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(raw, &out); err != nil {
+		return port.WebhookEvent{}, fmt.Errorf("parse response: %w", err)
+	}
+	if !out.Success || resp.StatusCode >= 400 {
+		return port.WebhookEvent{}, fmt.Errorf("tripay reject (http %d): %s", resp.StatusCode, out.Message)
+	}
+	status := domainBilling.GatewayStatusPending
+	switch strings.ToUpper(out.Data.Status) {
+	case "PAID", "SETTLED":
+		status = domainBilling.GatewayStatusSettled
+	case "EXPIRED":
+		status = domainBilling.GatewayStatusExpired
+	case "FAILED":
+		status = domainBilling.GatewayStatusFailed
+	}
+	return port.WebhookEvent{
+		ExternalID:  out.Data.Reference,
+		MerchantRef: out.Data.MerchantRef,
+		Status:      status,
+		PaidAmount:  out.Data.Amount,
+		Raw:         raw,
 	}, nil
 }
 

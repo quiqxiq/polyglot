@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CashierPayRequest, CashierPayResponse, CashierResolveRequest, CashierResolveResponse, GenerateInvoicesRequest, GenerateInvoicesResponse, GetInvoiceRequest, GetInvoiceResponse, ListInvoicesRequest, ListInvoicesResponse } from "./billing_pb.js";
+import { CancelInvoiceRequest, CancelInvoiceResponse, CashierPayRequest, CashierPayResponse, CashierResolveRequest, CashierResolveResponse, GenerateInvoicesRequest, GenerateInvoicesResponse, GetInvoiceRequest, GetInvoiceResponse, ListInvoicesRequest, ListInvoicesResponse } from "./billing_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -30,6 +30,15 @@ export const BillingService = {
       name: "GetInvoice",
       I: GetInvoiceRequest,
       O: GetInvoiceResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.BillingService.CancelInvoice
+     */
+    cancelInvoice: {
+      name: "CancelInvoice",
+      I: CancelInvoiceRequest,
+      O: CancelInvoiceResponse,
       kind: MethodKind.Unary,
     },
     /**

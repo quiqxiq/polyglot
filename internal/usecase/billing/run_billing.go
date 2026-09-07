@@ -97,10 +97,14 @@ func buildMonthlyInvoice(sub domainSubscription.Subscription, pl domainPlan.Serv
 	tax := base * pl.TaxPercent / 100
 
 	year, month := parsePeriod(period)
+	billingDay := sub.BillingDay
+	if billingDay <= 0 {
+		billingDay = 1
+	}
 	var due time.Time
 	if dueDays > 0 {
-		// Jatuh tempo = terbit + N hari kalender (settings).
-		due = time.Date(year, month, 1, 23, 59, 59, 0, time.UTC).AddDate(0, 0, dueDays)
+		// Jatuh tempo = tanggal siklus tagihan + N hari kalender (settings).
+		due = time.Date(year, month, billingDay, 23, 59, 59, 0, time.UTC).AddDate(0, 0, dueDays)
 	} else {
 		due = endOfMonthPeriod(year, month)
 	}
@@ -110,7 +114,7 @@ func buildMonthlyInvoice(sub domainSubscription.Subscription, pl domainPlan.Serv
 	inv := domainBilling.Invoice{
 		ID:                invID,
 		TenantID:          orTenantID(sub.TenantID),
-		InvoiceNumber:     fmt.Sprintf("INV-%s-%04d", strings.ReplaceAll(period, "-", ""), now.UnixNano()%10000),
+		InvoiceNumber:     fmt.Sprintf("INV-%s-%s", strings.ReplaceAll(period, "-", ""), idgen.Digits(6)),
 		CustomerID:        sub.CustomerID,
 		SubscriptionID:    &subID,
 		Period:            period,

@@ -1,10 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useDeviceStore } from '@/stores/device-store'
 import { KeyRound } from 'lucide-react'
+import { Route } from '@/routes/_authenticated/ppp/index'
 import { usePPPSecretsQuery } from '../../api/use-ppp-secrets'
 import { SecretsTable } from './secrets-table'
 
 export function SecretsTab() {
+  const search = Route.useSearch()
   const selectedDeviceId = useDeviceStore((state) => state.selectedDeviceId)
   const { data: secrets = [], isLoading } = usePPPSecretsQuery(selectedDeviceId)
 
@@ -24,7 +26,11 @@ export function SecretsTab() {
         </div>
       </CardHeader>
       <CardContent className="px-0">
-        <SecretsTable data={secrets} isLoading={isLoading} />
+        <SecretsTable
+          data={secrets}
+          isLoading={isLoading}
+          defaultGlobalFilter={search.filter}
+        />
       </CardContent>
     </Card>
   )

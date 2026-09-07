@@ -34,6 +34,13 @@ func (p *Provisioner) ProvisionHotspot(ctx context.Context, deviceID string, spe
 	if userParams.Server == "" {
 		userParams.Server = "all"
 	}
+	if _, rosID, err := p.findHotspotUser(ctx, driver, spec.User.Username); err == nil {
+		if _, err := p.hot.UpdateUser(ctx, driver, rosID, userParams); err != nil {
+			return fmt.Errorf("update hotspot user %s: %w", spec.User.Username, err)
+		}
+		p.kickHotspotIfActive(ctx, driver, spec.User.Username)
+		return nil
+	}
 	if _, err := p.hot.AddUser(ctx, driver, userParams); err != nil {
 		return fmt.Errorf("add hotspot user %s: %w", spec.User.Username, err)
 	}

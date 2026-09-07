@@ -59,7 +59,7 @@ func findPPPSecretID(result command.Result, username string) (string, error) {
 			return secret.RosID, nil
 		}
 	}
-	return "", fmt.Errorf("ppp secret %q not found", username)
+	return "", fmt.Errorf("ppp secret %q not found: %w", username, mikrotik.ErrSecretNotFound)
 }
 
 // ─── /system/resource — one-shot ─────────────────────────────────────────

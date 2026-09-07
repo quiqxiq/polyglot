@@ -135,6 +135,20 @@ func TestManageCustomerUseCase_DeleteCustomer(t *testing.T) {
 
 	// Router account termination recorded
 	assert.Equal(t, 1, router.Count("Terminate:ahmad_pppoe"))
+
+	// Trying to delete a customer with PAID invoices must be rejected
+	c2, err := uc.CreateCustomer(ctx, domainCustomer.Customer{Name: "Paid Customer", Phone: "081299999"})
+	require.NoError(t, err)
+	err = invRepo.Save(ctx, domainBilling.Invoice{
+		ID:         "inv-paid-cust",
+		CustomerID: c2.ID,
+		Total:      100000,
+		PaidAmount: 100000,
+		Status:     domainBilling.StatusPaid,
+	})
+	require.NoError(t, err)
+	err = uc.DeleteCustomer(ctx, c2.ID)
+	assert.ErrorIs(t, err, domainCustomer.ErrCustomerHasFinancialRecords)
 }
 
 func TestManageCustomerUseCase_ListAndGetEnriched(t *testing.T) {

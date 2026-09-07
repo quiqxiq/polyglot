@@ -79,3 +79,35 @@ func TestBillingConnectHandler_GenerateInvoices(t *testing.T) {
 	assert.Equal(t, int32(1), genResp.Msg.Created)
 	assert.Equal(t, int32(0), genResp.Msg.Skipped)
 }
+
+func TestBillingConnectHandler_CancelInvoice(t *testing.T) {
+	handler, invRepo, _, _ := newBillingConnectFixture(t)
+	ctx := context.Background()
+
+	require.NoError(t, invRepo.Save(ctx, domainBilling.Invoice{
+		ID:         "inv-cancel-1",
+		CustomerID: "cust-1",
+		Total:      100000,
+		Status:     domainBilling.StatusUnpaid,
+	}))
+
+	resp, err := handler.CancelInvoice(ctx, connect.NewRequest(&devicepb.CancelInvoiceRequest{
+		Id:     "inv-cancel-1",
+		Reason: "salah input oleh admin",
+	}))
+	require.NoError(t, err)
+	assert.Equal(t, domainBilling.StatusCancelled, resp.Msg.Invoice.Status)
+
+	// Invoices that are already paid cannot be cancelled.
+	require.NoError(t, invRepo.Save(ctx, domainBilling.Invoice{
+		ID:         "inv-paid-1",
+		CustomerID: "cust-1",
+		Total:      100000,
+		Status:     domainBilling.StatusPaid,
+	}))
+	_, err = handler.CancelInvoice(ctx, connect.NewRequest(&devicepb.CancelInvoiceRequest{
+		Id:     "inv-paid-1",
+		Reason: "coba batalkan lunas",
+	}))
+	require.Error(t, err)
+}

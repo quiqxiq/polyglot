@@ -2,6 +2,8 @@ package billing
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	"github.com/quixiq/polyglot/internal/port"
@@ -49,6 +51,39 @@ func (u *InvoiceUseCase) CreateInvoice(ctx context.Context, inv domainBilling.In
 	return inv, nil
 }
 
+// CancelInvoice membatalkan faktur UNPAID/OVERDUE/PARTIAL secara resmi.
+// Mengembalikan ErrInvoiceAlreadyPaid bila faktur sudah lunas.
+func (u *InvoiceUseCase) CancelInvoice(ctx context.Context, id, reason string) (domainBilling.Invoice, error) {
+	if u.repo == nil {
+		return domainBilling.Invoice{}, domainBilling.ErrRepositoryUnavailable
+	}
+	if id == "" {
+		return domainBilling.Invoice{}, domainBilling.ErrInvalidInput
+	}
+	inv, err := u.repo.FindByID(ctx, id)
+	if err != nil {
+		return domainBilling.Invoice{}, fmt.Errorf("find invoice %s: %w", id, err)
+	}
+	if inv.Status == domainBilling.StatusPaid {
+		return inv, domainBilling.ErrInvoiceAlreadyPaid
+	}
+	if inv.Status == domainBilling.StatusCancelled {
+		return inv, nil
+	}
+	now := time.Now()
+	inv.Status = domainBilling.StatusCancelled
+	inv.CancelledAt = &now
+	inv.CancelReason = reason
+	inv.UpdatedAt = now
+	if err := u.repo.Save(ctx, inv); err != nil {
+		return domainBilling.Invoice{}, fmt.Errorf("save invoice %s: %w", id, err)
+	}
+	return inv, nil
+}
+
+// Deprecated: Gunakan CheckoutUseCase.PayCash untuk memproses pembayaran
+// kasir yang mencatat receipt pembayaran, mutasi kas, dan restore isolir.
+// PayInvoice hanya disediakan untuk kompatibilitas internal.
 func (u *InvoiceUseCase) PayInvoice(ctx context.Context, id string) (domainBilling.Invoice, error) {
 	if u.repo == nil {
 		return domainBilling.Invoice{}, domainBilling.ErrRepositoryUnavailable
@@ -57,7 +92,17 @@ func (u *InvoiceUseCase) PayInvoice(ctx context.Context, id string) (domainBilli
 	if err != nil {
 		return domainBilling.Invoice{}, err
 	}
+	if inv.Status == domainBilling.StatusPaid {
+		return inv, domainBilling.ErrInvoiceAlreadyPaid
+	}
+	if inv.Status == domainBilling.StatusCancelled {
+		return inv, domainBilling.ErrInvoiceCancelled
+	}
+	now := time.Now()
 	inv.Status = domainBilling.StatusPaid
+	inv.PaidAt = &now
+	inv.PaidAmount = inv.Total
+	inv.UpdatedAt = now
 	if err := u.repo.Save(ctx, inv); err != nil {
 		return domainBilling.Invoice{}, err
 	}

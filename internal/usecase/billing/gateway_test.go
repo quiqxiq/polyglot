@@ -161,3 +161,33 @@ func TestIsolateWorker_ProvisionStatusLifecycle(t *testing.T) {
 	got, _ := subs.FindByID(context.Background(), sub.ID)
 	assert.Equal(t, domainSubscription.ProvisionOK, got.ProvisionStatus)
 }
+
+func TestCheckPaymentStatus_Settled(t *testing.T) {
+	invoices, customers, gwt, gateway, proc := gatewayFixture(t)
+	reader := mocktest.NewFakeSettingReader(map[string]string{
+		"gw.tripay.cash_account_id":    "ca-1",
+		"gw.tripay.income_category_id": "cc-1",
+	})
+	usecase := uc.NewGatewayChargeUseCase(invoices, customers, gwt, gateway, proc, reader)
+
+	subID := "sub-gw-check"
+	require.NoError(t, invoices.Save(context.Background(), unpaidInvoice("inv-gw-check", "cust-gw", subID, 5)))
+	require.NoError(t, customers.Save(context.Background(), customerWithPortal("cust-gw", "99999999")))
+
+	res, _, err := usecase.CreateForInvoice(context.Background(), "inv-gw-check", "", 60)
+	require.NoError(t, err)
+
+	gateway.Event = port.WebhookEvent{
+		ExternalID:  res.ExternalID,
+		MerchantRef: res.ExternalID,
+		Status:      domainBilling.GatewayStatusSettled,
+		PaidAmount:  110000,
+	}
+
+	invoiceID, settled, status, err := usecase.CheckPaymentStatus(context.Background(), res.ExternalID)
+	require.NoError(t, err)
+	assert.True(t, settled)
+	assert.Equal(t, domainBilling.GatewayStatusSettled, status)
+	assert.Equal(t, "inv-gw-check", invoiceID)
+	assert.Len(t, proc.Cmds, 1)
+}

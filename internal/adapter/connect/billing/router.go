@@ -23,6 +23,7 @@ func NewBillingServiceHandler(
 
 	mux.Handle("/"+serviceName+"/ListInvoices", connect.NewUnaryHandler("/"+serviceName+"/ListInvoices", handler.ListInvoices, opts...))
 	mux.Handle("/"+serviceName+"/GetInvoice", connect.NewUnaryHandler("/"+serviceName+"/GetInvoice", handler.GetInvoice, opts...))
+	mux.Handle("/"+serviceName+"/CancelInvoice", connect.NewUnaryHandler("/"+serviceName+"/CancelInvoice", handler.CancelInvoice, opts...))
 	mux.Handle("/"+serviceName+"/GenerateInvoices", connect.NewUnaryHandler("/"+serviceName+"/GenerateInvoices", handler.GenerateInvoices, opts...))
 
 	mux.Handle("/"+serviceName+"/CashierResolve", connect.NewUnaryHandler("/"+serviceName+"/CashierResolve", handler.CashierResolve, opts...))

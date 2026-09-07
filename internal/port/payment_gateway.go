@@ -50,4 +50,6 @@ type PaymentGateway interface {
 	CreateCharge(ctx context.Context, req ChargeRequest) (ChargeResult, error)
 	// ParseWebhook memvalidasi body + signature dan mengembalikan event.
 	ParseWebhook(ctx context.Context, body []byte, signatureHeader string) (WebhookEvent, error)
+	// CheckStatus memeriksa status transaksi terkini langsung ke API provider.
+	CheckStatus(ctx context.Context, externalID string) (WebhookEvent, error)
 }

@@ -29,12 +29,13 @@ var (
 	ErrWrongPassword      = fault.New(fault.KindInvalidInput, "auth: current password is incorrect")
 
 	// Customer and portal errors.
-	ErrCustomerNotFound     = fault.New(fault.KindNotFound, "customer: not found")
-	ErrInvalidInput         = fault.New(fault.KindInvalidInput, "customer: invalid input")
-	ErrPortalBadCredentials = fault.New(fault.KindUnauthenticated, "portal: invalid portal code, phone number, or OTP")
-	ErrOTPLocked            = fault.New(fault.KindResourceExhausted, "portal: otp locked: too many failed attempts")
-	ErrOTPExpired           = fault.New(fault.KindUnauthenticated, "portal: otp expired")
-	ErrOTPNotFound          = fault.New(fault.KindNotFound, "portal: otp not found or already used")
+	ErrCustomerNotFound            = fault.New(fault.KindNotFound, "customer: not found")
+	ErrInvalidInput                = fault.New(fault.KindInvalidInput, "customer: invalid input")
+	ErrCustomerHasFinancialRecords = fault.New(fault.KindFailedPrecondition, "customer: cannot delete customer with financial records")
+	ErrPortalBadCredentials        = fault.New(fault.KindUnauthenticated, "portal: invalid portal code, phone number, or OTP")
+	ErrOTPLocked                   = fault.New(fault.KindResourceExhausted, "portal: otp locked: too many failed attempts")
+	ErrOTPExpired                  = fault.New(fault.KindUnauthenticated, "portal: otp expired")
+	ErrOTPNotFound                 = fault.New(fault.KindNotFound, "portal: otp not found or already used")
 
 	// Customer import errors (CSV/XLSX bulk import).
 	ErrImportFileEmpty = fault.New(fault.KindInvalidInput, "customer: import file empty or header only")

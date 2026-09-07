@@ -205,7 +205,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	planUCase := planUC.NewManagePlanUseCase(planRepo, subRepo, accountMgr)
 	subUCase := subUC.NewManageSubscriptionUseCase(subRepo, planRepo, customerRepo, repo, accountMgr, auditLogRepo, invRepo)
 	checkoutUC := billingUC.NewCheckoutUseCase(invRepo, customerRepo, paymentProc)
-	lifecycleUC := subUC.NewLifecycleUseCase(subRepo, planRepo, accountMgr, auditLogRepo)
+	lifecycleUC := subUC.NewLifecycleUseCase(subRepo, planRepo, accountMgr, auditLogRepo).WithSettings(settingRepo)
 	runBillingUC := billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo).WithSettings(settingRepo)
 	chargeUC := billingUC.NewGatewayChargeUseCase(invRepo, customerRepo, gwtxRepo, tripayAdapter, paymentProc, settingRepo)
 

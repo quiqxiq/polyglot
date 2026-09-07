@@ -3,7 +3,13 @@ services:
   postgres:
     image: timescale/timescaledb:latest-pg16
     container_name: polyglot-postgres-prod
-    command: postgres -c shared_preload_libraries=timescaledb
+    command: >
+      postgres
+      -c shared_preload_libraries=timescaledb
+      -c shared_buffers=512MB
+      -c work_mem=16MB
+      -c maintenance_work_mem=128MB
+      -c max_connections=150
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}

@@ -7,6 +7,7 @@ import (
 	"connectrpc.com/connect"
 
 	devicepb "github.com/quixiq/polyglot/api/gen/v1"
+	iauth "github.com/quixiq/polyglot/internal/adapter/auth"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -44,6 +45,20 @@ func (h *BillingConnectHandler) GetInvoice(ctx context.Context, req *connect.Req
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.GetInvoiceResponse{
+		Invoice: toProtoInvoice(&inv),
+	}), nil
+}
+
+// CancelInvoice cancels an invoice officially.
+func (h *BillingConnectHandler) CancelInvoice(ctx context.Context, req *connect.Request[devicepb.CancelInvoiceRequest]) (*connect.Response[devicepb.CancelInvoiceResponse], error) {
+	if h.invoiceUC == nil {
+		return nil, response.Unavailable("invoice usecase unavailable")
+	}
+	inv, err := h.invoiceUC.CancelInvoice(ctx, req.Msg.Id, req.Msg.Reason)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+	return connect.NewResponse(&devicepb.CancelInvoiceResponse{
 		Invoice: toProtoInvoice(&inv),
 	}), nil
 }
@@ -91,12 +106,18 @@ func (h *BillingConnectHandler) CashierPay(ctx context.Context, req *connect.Req
 		categoryID = "cc-tagihan"
 	}
 
+	var receivedBy *uint
+	if userID, _, exists := iauth.IdentityFromContext(ctx); exists && userID > 0 {
+		receivedBy = &userID
+	}
+
 	pay, err := h.checkoutUC.PayCash(ctx, port.CashPaymentCommand{
 		TenantID:         "tenant-default",
 		InvoiceID:        req.Msg.InvoiceId,
 		Amount:           req.Msg.Amount,
 		CashAccountID:    accountID,
 		IncomeCategoryID: categoryID,
+		ReceivedBy:       receivedBy,
 		ScanMethod:       scanMethod,
 		Reference:        req.Msg.Reference,
 		Notes:            req.Msg.Notes,
