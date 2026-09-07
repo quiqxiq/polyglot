@@ -220,12 +220,24 @@ Sistem harus mengadopsi model **Hybrid Dual-State Recording** dengan jaminan ket
 ##### 1. Metode A: "Tarik Langsung dari Router" (Live Pull from Router)
 - **Alur Kerja**:
   1. Operator memilih Router MikroTik target dari daftar router yang telah terhubung di Polyglot.
-  2. Operator memilih jenis akun yang ingin ditarik: **PPPoE Secret**, **Hotspot User**, atau **Semua Layanan**.
-  3. Polyglot engine melakukan pembacaan *read-only* langsung ke router (`/ppp/secret/print` dan `/ip/hotspot/user/print`).
-  4. **Auto-Discovery Paket Layanan**: Sistem mengidentifikasi profil paket pada router. Jika profil belum terdaftar di database Service Plan Polyglot, sistem otomatis membuatkan master paket dengan tipe layanan yang sesuai (`PPPOE` atau `HOTSPOT`).
-  5. **Ekstraksi Metadata Cerdas**: Pola komentar (comment) ala Mikhmon diekstrak otomatis untuk mengenali nomor telepon WhatsApp pelanggan dan tarif harga.
-  6. **Pratinjau (Dry-Run Preview)**: Menampilkan tabel daftar akun yang terdeteksi, profil yang dipetakan, dan status duplikasi sebelum disimpan.
-  7. **Upsert Idempotent**: Menyimpan data `Customer`, membuat entri `Subscription` dengan `DeviceID` router tersebut, dan menandai `provision_status = OK` sehingga router operasional tidak terganggu sama sekali.
+  2. Operator memilih jenis akun yang ingin ditarik: **PPPoE Secret**, **Hotspot Permanen (Langganan Bulanan)**, atau **Semua Layanan**.
+  3. Polyglot engine melakukan pembacaan *read-only* langsung ke router (`/ppp/secret/print`, `/ip/hotspot/user/print`, `/ip/hotspot/user/profile/print`, dan `/ip/hotspot/ip-binding/print`).
+  4. **Klasifikasi Cerdas Hotspot (Hotspot Permanen vs Voucher Sementara)**:
+     - **Tantangan Kritis**: Di router MikroTik yang menjalankan Mikhmon, terdapat ribuan akun voucher sementara (ephemeral). Jika semua ditarik tanpa filter, tabel `subscriptions` akan tercemar oleh ribuan akun berdurasi 2 jam/1 hari.
+     - **Logika Pembeda 3-Lapis (Tri-Layer Classification Engine)**:
+       - **Lapisan 1: Analisis Profil (`/ip/hotspot/user/profile`)**:
+         - *Profil Voucher*: Di properti `on-login` / `on-logout` terdapat script Mikhmon (mengandung keyword `mikhmon`, `tool fetch`, script manipulasi scheduler/expire, atau comment profil memiliki pola validity).
+         - *Profil Permanen*: Nilai `on-login` kosong (tidak ada skrip kadaluarsa otomatis), `session-timeout` tidak dibatasi, dan digunakan khusus untuk member tetap.
+       - **Lapisan 2: Korelasi IP Binding (`/ip/hotspot/ip-binding`)**:
+         - Pelanggan permanen sering kali menggunakan IP Binding (`type=bypassed` atau `type=regular` dengan IP statis & MAC address terikat). Sistem mengorelasikan IP Binding yang memiliki komentar nama pelanggan/perangkat sebagai kandidat pelanggan tetap.
+       - **Lapisan 3: Analisis Properti User (`/ip/hotspot/user`)**:
+         - Akun voucher memiliki nilai `limit-uptime` / `limit-bytes-total`, username berupa kode acak/angka, dan pola komentar voucher Mikhmon (`vc-xxx`, format tanggal kadaluarsa).
+         - Akun permanen memiliki username representatif (nama/ID pelanggan), tanpa batasan uptime harian, dan menggunakan profil permanen.
+     - **Hasil**: Hanya akun **Hotspot Permanen** yang masuk ke tabel `customers` & `subscriptions` (langganan bulanan). Akun voucher sementara diproteksi agar tidak mengotori modul billing bulanan.
+  5. **Auto-Discovery Paket Layanan**: Sistem mengidentifikasi profil paket pada router. Jika profil belum terdaftar di database Service Plan Polyglot, sistem otomatis membuatkan master paket dengan tipe layanan yang sesuai (`PPPOE` atau `HOTSPOT`).
+  6. **Ekstraksi Metadata Cerdas**: Pola komentar (comment) ala Mikhmon diekstrak otomatis untuk mengenali nomor telepon WhatsApp pelanggan dan tarif harga.
+  7. **Pratinjau (Dry-Run Preview)**: Menampilkan tabel daftar akun yang terdeteksi dengan badge klasifikasi (`[PPPoE]`, `[Hotspot Permanen]`, `[IP Binding Bypass]`), profil yang dipetakan, dan status duplikasi sebelum disimpan.
+  8. **Upsert Idempotent**: Menyimpan data `Customer`, membuat entri `Subscription` dengan `DeviceID` router tersebut, dan menandai `provision_status = OK` sehingga router operasional tidak terganggu sama sekali.
 
 ##### 2. Metode B: "Import via Excel / CSV" (Spreadsheet dengan Mapping Kolom)
 - **Alur Kerja**:
