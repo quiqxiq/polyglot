@@ -25,6 +25,21 @@ services:
       timeout: 5s
       retries: 5
 
+  # ─── 1b. Auto SQL Migrator (TimescaleDB & Schema Initializer) ─────────────
+  migration:
+    image: migrate/migrate:v4.18.2
+    container_name: polyglot-migration-prod
+    volumes:
+      - ../migrations:/migrations:ro
+    command:
+      - -path=/migrations
+      - -database=postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-netops}@postgres:5432/${POSTGRES_DB:-netops}?sslmode=disable
+      - up
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: on-failure
+
   # ─── 2. Redis Cache ───────────────────────────────────────────────────────
   redis:
     image: docker.io/library/redis:7-alpine
@@ -67,6 +82,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      migration:
+        condition: service_completed_successfully
 
   # ─── 4. Production Nginx Gateway (Bundles Web App & Web Dial) ──────────────
   gateway:
