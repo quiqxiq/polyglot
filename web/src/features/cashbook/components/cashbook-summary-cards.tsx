@@ -1,5 +1,6 @@
 import { ArrowDownLeft, ArrowUpRight, Landmark, TrendingUp, Wallet } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import type { CashTransaction } from '@/gen/v1/cashbook_pb'
 import { useCashAccountsQuery, useCashBalancesQuery, useCashTransactionsQuery } from '../api/use-cashbook'
 import { useCashbook } from './cashbook-provider'
 
@@ -11,11 +12,17 @@ function formatCurrency(amount: number) {
   }).format(amount)
 }
 
-export function CashbookSummaryCards() {
+interface CashbookSummaryCardsProps {
+  transactions?: CashTransaction[]
+}
+
+export function CashbookSummaryCards({ transactions: propTransactions }: CashbookSummaryCardsProps = {}) {
   const { filters } = useCashbook()
   const { data: accounts = [] } = useCashAccountsQuery(false)
   const { data: balances = {} } = useCashBalancesQuery(filters.fromUnix, filters.toUnix)
-  const { data: transactions = [] } = useCashTransactionsQuery(filters)
+  const { data: queriedTransactions = [] } = useCashTransactionsQuery(filters)
+
+  const transactions = propTransactions ?? queriedTransactions
 
   // Hitung saldo kas fisik vs bank
   let totalCash = 0

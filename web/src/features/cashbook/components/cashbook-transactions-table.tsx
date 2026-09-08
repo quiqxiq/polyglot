@@ -1,7 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   type SortingState,
   type VisibilityState,
+  type PaginationState,
+  type RowSelectionState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -45,9 +47,14 @@ export function CashbookTransactionsTable({
   isLoading,
 }: CashbookTransactionsTableProps) {
   const { filters, setFilters } = useCashbook()
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [globalFilter, setGlobalFilter] = useState('')
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
   const accountMap = useMemo(() => new Map(accounts.map((a) => [a.id, a])), [accounts])
   const categoryMap = useMemo(() => new Map(categories.map((c) => [c.id, c])), [categories])
@@ -64,15 +71,31 @@ export function CashbookTransactionsTable({
       sorting,
       columnVisibility,
       globalFilter,
+      rowSelection,
+      pagination,
     },
+    enableRowSelection: true,
+    onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: setPagination,
+    autoResetPageIndex: false,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
   })
+
+  const pageCount = table.getPageCount()
+  useEffect(() => {
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({
+        ...prev,
+        pageIndex: Math.max(0, pageCount - 1),
+      }))
+    }
+  }, [pageCount, pagination.pageIndex])
 
   return (
     <div className='flex flex-1 flex-col gap-4'>
@@ -85,12 +108,18 @@ export function CashbookTransactionsTable({
               placeholder='Cari nomor transaksi, deskripsi...'
               className='h-9 pr-8 text-xs sm:text-sm'
               value={globalFilter}
-              onChange={(e) => setGlobalFilter(e.target.value)}
+              onChange={(e) => {
+                setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+                setGlobalFilter(e.target.value)
+              }}
             />
             {globalFilter && (
               <button
                 type='button'
-                onClick={() => setGlobalFilter('')}
+                onClick={() => {
+                  setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+                  setGlobalFilter('')
+                }}
                 className='absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground'
                 title='Clear search'
               >
@@ -98,6 +127,7 @@ export function CashbookTransactionsTable({
               </button>
             )}
           </div>
+
 
           {/* Filter Rekening */}
           <Select
@@ -183,8 +213,12 @@ export function CashbookTransactionsTable({
               </TableRow>
             ) : table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
+
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>

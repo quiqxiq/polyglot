@@ -104,7 +104,18 @@ export function CustomersImportTable({
     getSortedRowModel: getSortedRowModel(),
   })
 
+  const pageCount = table.getPageCount()
+  useEffect(() => {
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({
+        ...prev,
+        pageIndex: Math.max(0, pageCount - 1),
+      }))
+    }
+  }, [pageCount, pagination.pageIndex])
+
   // Sinkronisasi filter status peringatan
+
   useEffect(() => {
     table
       .getColumn('status')

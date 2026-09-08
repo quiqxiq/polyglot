@@ -1,11 +1,13 @@
 import { type ColumnDef } from '@tanstack/react-table'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import { Badge } from '@/components/ui/badge'
 import type { HotspotReport } from '@/gen/v1/hotspot_pb'
 import { ReportsRowActions } from './reports-row-actions'
 
 export const reportsColumns: ColumnDef<HotspotReport>[] = [
+  createSelectColumn<HotspotReport>(),
   {
+
     accessorKey: 'date',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Date & Time' />

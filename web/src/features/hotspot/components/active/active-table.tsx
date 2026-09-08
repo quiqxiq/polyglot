@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
+  type PaginationState,
+  type RowSelectionState,
   type SortingState,
   type VisibilityState,
   flexRender,
@@ -36,21 +38,33 @@ interface ActiveTableProps {
 export function ActiveTable({ data, isLoading }: ActiveTableProps) {
   const [sorting, setSorting] = useState<SortingState>([{ id: 'user', desc: false }])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
   const [globalFilter, setGlobalFilter] = useState('')
 
   const table = useReactTable({
     data,
     columns,
+    autoResetPageIndex: false,
     state: {
       sorting,
       columnVisibility,
+      rowSelection,
       globalFilter,
+      pagination,
     },
     getRowId: (row) => row.id,
-    autoResetPageIndex: false,
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
-    onGlobalFilterChange: setGlobalFilter,
+    onRowSelectionChange: setRowSelection,
+    onPaginationChange: setPagination,
+    onGlobalFilterChange: (updater) => {
+      setGlobalFilter(updater)
+      setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -58,6 +72,14 @@ export function ActiveTable({ data, isLoading }: ActiveTableProps) {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
+
+  // Prevent empty page when deleting last item on current page
+  useEffect(() => {
+    const pageCount = table.getPageCount()
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({ ...prev, pageIndex: Math.max(0, pageCount - 1) }))
+    }
+  }, [data.length, table, pagination.pageIndex])
 
   return (
     <div className='flex flex-1 flex-col gap-4'>
@@ -131,7 +153,10 @@ export function ActiveTable({ data, isLoading }: ActiveTableProps) {
               </TableRow>
             ) : table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}

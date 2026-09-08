@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useDeviceStore } from '@/stores/device-store'
 import { useImportRouterMutation } from '../api/use-customer'
 
 interface CustomersImportDialogRouterTabProps {
@@ -32,8 +33,9 @@ export function CustomersImportDialogRouterTab({
   devicesLoading,
   onSuccess,
 }: CustomersImportDialogRouterTabProps) {
+  const storeDeviceId = useDeviceStore((s) => s.selectedDeviceId)
   const importRouter = useImportRouterMutation()
-  const [selectedDeviceId, setSelectedDeviceId] = useState<string>('')
+  const [selectedDeviceId, setSelectedDeviceId] = useState<string>(storeDeviceId || '')
   const [pullPPPoE, setPullPPPoE] = useState<boolean>(true)
   const [pullHotspotMember, setPullHotspotMember] = useState<boolean>(true)
   const [pullHotspotIPBinding, setPullHotspotIPBinding] =

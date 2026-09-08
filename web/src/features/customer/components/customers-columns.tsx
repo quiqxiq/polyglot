@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
 import { type ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { Customer } from '@/gen/v1/customer_pb'
+
 import { useSubscriptionsQuery, useInvoicesQuery } from '@/features/billing/api/use-billing'
 import { customerStatusBadge } from '../data/constants'
 import { CustomersRowActions } from './customers-row-actions'
@@ -60,7 +61,9 @@ export function useCustomersColumns(): ColumnDef<Customer>[] {
 
   return useMemo(
     () => [
+      createSelectColumn<Customer>(),
       {
+
         accessorKey: 'customerCode',
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title='Kode' />

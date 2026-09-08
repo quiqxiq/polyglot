@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   type ColumnFiltersState,
+  type PaginationState,
+  type RowSelectionState,
   type SortingState,
   type VisibilityState,
   getCoreRowModel,
@@ -31,24 +33,34 @@ type BindingsTableProps = {
 }
 
 export function BindingsTable({ data, isLoading }: BindingsTableProps) {
-  const [rowSelection, setRowSelection] = useState({})
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
   const table = useReactTable({
     data,
     columns: bindingsColumns,
+    autoResetPageIndex: false,
     state: {
       sorting,
       columnVisibility,
       rowSelection,
       columnFilters,
+      pagination,
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    onPaginationChange: setPagination,
+    onColumnFiltersChange: (updater) => {
+      setColumnFilters(updater)
+      setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+    },
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -57,6 +69,14 @@ export function BindingsTable({ data, isLoading }: BindingsTableProps) {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
+
+  // Prevent empty page when deleting last item on current page
+  useEffect(() => {
+    const pageCount = table.getPageCount()
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({ ...prev, pageIndex: Math.max(0, pageCount - 1) }))
+    }
+  }, [data.length, table, pagination.pageIndex])
 
   return (
     <div className='space-y-4'>

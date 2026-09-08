@@ -1,12 +1,14 @@
 import { Badge } from '@/components/ui/badge'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { PPPProfile } from '@/gen/v1/ppp_pb'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Globe, Layers, Users } from 'lucide-react'
 import { ProfilesRowActions } from './profiles-row-actions'
 
 export const profilesColumns: ColumnDef<PPPProfile>[] = [
+  createSelectColumn<PPPProfile>(),
   {
+
     accessorKey: 'name',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Profile Name" />

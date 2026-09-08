@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
 import { type ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { Subscription } from '@/gen/v1/subscription_pb'
+
 import { useCustomersQuery } from '@/features/customer/api/use-customer'
 import { usePlansQuery } from '@/features/billing/api/use-plans'
 import { useDevicesQuery } from '@/features/devices/api/use-devices'
@@ -75,7 +76,9 @@ export function useSubscriptionsColumns(): ColumnDef<Subscription>[] {
 
   return useMemo(
     () => [
+      createSelectColumn<Subscription>(),
       {
+
         accessorKey: 'customerId',
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title='Pelanggan' />

@@ -2,6 +2,7 @@ import { type ColumnDef } from '@tanstack/react-table'
 import { Building2, Edit, Landmark } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { createSelectColumn } from '@/components/data-table'
 import { type CashAccount } from '@/gen/v1/cashbook_pb'
 import { useCashbook } from './cashbook-provider'
 
@@ -17,7 +18,9 @@ export function useAccountColumns(balances: Record<string, number>): ColumnDef<C
   const { setOpen, setCurrentAccount } = useCashbook()
 
   return [
+    createSelectColumn<CashAccount>(),
     {
+
       accessorKey: 'accountCode',
       header: 'Kode Akun',
       cell: ({ row }) => (

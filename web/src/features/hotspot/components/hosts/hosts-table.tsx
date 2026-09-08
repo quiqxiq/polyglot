@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
+  type PaginationState,
+  type RowSelectionState,
   type SortingState,
   type VisibilityState,
   flexRender,
@@ -37,6 +39,11 @@ type HostFlagFilter = 'all' | 'authorized' | 'bypassed'
 export function HostsTable({ data, isLoading }: HostsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
   const [globalFilter, setGlobalFilter] = useState('')
   const [flagFilter, setFlagFilter] = useState<HostFlagFilter>('all')
 
@@ -49,14 +56,22 @@ export function HostsTable({ data, isLoading }: HostsTableProps) {
   const table = useReactTable({
     data: filteredData,
     columns,
+    autoResetPageIndex: false,
     state: {
       sorting,
       columnVisibility,
+      rowSelection,
       globalFilter,
+      pagination,
     },
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
-    onGlobalFilterChange: setGlobalFilter,
+    onRowSelectionChange: setRowSelection,
+    onPaginationChange: setPagination,
+    onGlobalFilterChange: (updater) => {
+      setGlobalFilter(updater)
+      setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -64,6 +79,19 @@ export function HostsTable({ data, isLoading }: HostsTableProps) {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
+
+  // Prevent empty page when deleting last item on current page
+  useEffect(() => {
+    const pageCount = table.getPageCount()
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({ ...prev, pageIndex: Math.max(0, pageCount - 1) }))
+    }
+  }, [filteredData.length, table, pagination.pageIndex])
+
+  const handleFlagFilter = (filter: HostFlagFilter) => {
+    setFlagFilter(filter)
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+  }
 
   return (
     <div className='flex flex-1 flex-col gap-4'>
@@ -93,7 +121,7 @@ export function HostsTable({ data, isLoading }: HostsTableProps) {
               variant={flagFilter === 'all' ? 'secondary' : 'ghost'}
               size='sm'
               className='h-7 text-xs px-2.5'
-              onClick={() => setFlagFilter('all')}
+              onClick={() => handleFlagFilter('all')}
             >
               All ({data.length})
             </Button>
@@ -101,7 +129,7 @@ export function HostsTable({ data, isLoading }: HostsTableProps) {
               variant={flagFilter === 'authorized' ? 'secondary' : 'ghost'}
               size='sm'
               className='h-7 text-xs px-2.5 text-emerald-600 dark:text-emerald-400'
-              onClick={() => setFlagFilter('authorized')}
+              onClick={() => handleFlagFilter('authorized')}
             >
               Authorized (A)
             </Button>
@@ -109,7 +137,7 @@ export function HostsTable({ data, isLoading }: HostsTableProps) {
               variant={flagFilter === 'bypassed' ? 'secondary' : 'ghost'}
               size='sm'
               className='h-7 text-xs px-2.5 text-sky-600 dark:text-sky-400'
-              onClick={() => setFlagFilter('bypassed')}
+              onClick={() => handleFlagFilter('bypassed')}
             >
               Bypassed (P)
             </Button>
@@ -159,7 +187,10 @@ export function HostsTable({ data, isLoading }: HostsTableProps) {
               </TableRow>
             ) : table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -1,8 +1,10 @@
 import { type ColumnDef } from '@tanstack/react-table'
 import { ArrowDownLeft, ArrowUpRight } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import { createSelectColumn } from '@/components/data-table'
 import { type CashTransaction, type CashAccount, type CashCategory } from '@/gen/v1/cashbook_pb'
 import { directionBadge, sourceTypeBadge } from '../data/constants'
+
 
 function formatCurrency(amount: number) {
   return new Intl.NumberFormat('id-ID', {
@@ -29,7 +31,9 @@ export function createTransactionColumns(
   categoryMap: Map<string, CashCategory>
 ): ColumnDef<CashTransaction>[] {
   return [
+    createSelectColumn<CashTransaction>(),
     {
+
       accessorKey: 'transactionNo',
       header: 'No. Transaksi',
       cell: ({ row }) => {

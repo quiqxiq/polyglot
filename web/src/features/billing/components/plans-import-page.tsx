@@ -24,6 +24,7 @@ import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { formatAutoName } from '@/lib/format-name'
 import { useDevicesQuery } from '@/features/devices/api/use-devices'
+import { useDeviceStore } from '@/stores/device-store'
 import {
   usePullRouterPlansMutation,
   useCommitPlansMutation,
@@ -33,8 +34,9 @@ import { PlansImportStats } from './plans-import-stats'
 import { PlansImportTable } from './plans-import-table'
 
 export function PlansImportPage() {
+  const storeDeviceId = useDeviceStore((s) => s.selectedDeviceId)
   const [activeTab, setActiveTab] = useState<'router' | 'file'>('router')
-  const [selectedDeviceId, setSelectedDeviceId] = useState<string>('')
+  const [selectedDeviceId, setSelectedDeviceId] = useState<string>(storeDeviceId || '')
   const [serviceType, setServiceType] = useState<string>('ALL')
   const [rows, setRows] = useState<PlanImportRow[]>([])
   const [commitSuccess, setCommitSuccess] = useState<{

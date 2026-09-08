@@ -25,6 +25,7 @@ import { ThemeSwitch } from '@/components/theme-switch'
 import { formatAutoName, parseUsernameNameAndAddress } from '@/lib/format-name'
 import { usePlansQuery } from '@/features/billing/api/use-plans'
 import { useDevicesQuery } from '@/features/devices/api/use-devices'
+import { useDeviceStore } from '@/stores/device-store'
 import {
   usePullRouterCustomersMutation,
   useCommitCustomersMutation,
@@ -35,10 +36,11 @@ import { CustomersImportStats } from './customers-import-stats'
 import { CustomersImportTable } from './customers-import-table'
 
 export function CustomersImportPage() {
+  const storeDeviceId = useDeviceStore((s) => s.selectedDeviceId)
   const [activeTab, setActiveTab] = useState<'router' | 'file'>('router')
 
   // ─── Filter & Options State ───────────────────────────────────────────────
-  const [selectedDeviceId, setSelectedDeviceId] = useState<string>('')
+  const [selectedDeviceId, setSelectedDeviceId] = useState<string>(storeDeviceId || '')
   const [pullPPPoE, setPullPPPoE] = useState<boolean>(true)
   const [pullHotspotMember, setPullHotspotMember] = useState<boolean>(true)
   const [pullHotspotIPBinding, setPullHotspotIPBinding] =

@@ -2,7 +2,7 @@ import { type ColumnDef } from '@tanstack/react-table'
 import { Trash2 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { HotspotCookie } from '@/gen/v1/hotspot_pb'
 import { useHotspot } from '../../context/hotspot-context'
 
@@ -26,6 +26,7 @@ function CookieActions({ cookie }: { cookie: HotspotCookie }) {
 }
 
 export const cookiesColumns: ColumnDef<HotspotCookie>[] = [
+  createSelectColumn<HotspotCookie>(),
   {
     accessorKey: 'user',
     header: ({ column }) => (

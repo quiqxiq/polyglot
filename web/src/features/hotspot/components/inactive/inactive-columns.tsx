@@ -1,6 +1,6 @@
 import { type ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { HotspotUser } from '@/gen/v1/hotspot_pb'
 import { InactiveRowActions } from './inactive-row-actions'
 
@@ -14,6 +14,7 @@ function formatBytes(bytesStr: string): string {
 }
 
 export const inactiveColumns: ColumnDef<HotspotUser>[] = [
+  createSelectColumn<HotspotUser>(),
   {
     accessorKey: 'name',
     header: ({ column }) => (

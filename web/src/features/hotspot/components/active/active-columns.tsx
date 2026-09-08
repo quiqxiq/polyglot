@@ -1,5 +1,5 @@
 import { type ColumnDef } from '@tanstack/react-table'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { EnrichedHotspotActiveSession } from '../../api/use-hotspot-stream'
 import { ActiveRowActions } from './active-row-actions'
 
@@ -13,6 +13,7 @@ function formatBytes(bytesStr?: string): string {
 }
 
 export const activeColumns: ColumnDef<EnrichedHotspotActiveSession>[] = [
+  createSelectColumn<EnrichedHotspotActiveSession>(),
   {
     accessorKey: 'server',
     header: ({ column }) => (

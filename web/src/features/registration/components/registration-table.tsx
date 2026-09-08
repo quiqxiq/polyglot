@@ -1,7 +1,9 @@
-import { useState, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   type SortingState,
   type VisibilityState,
+  type PaginationState,
+  type RowSelectionState,
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
@@ -33,10 +35,15 @@ interface RegistrationTableProps {
 }
 
 export function RegistrationTable({ data, isLoading }: RegistrationTableProps) {
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [globalFilter, setGlobalFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('ALL')
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
   const columns = useRegistrationColumns()
 
@@ -59,10 +66,16 @@ export function RegistrationTable({ data, isLoading }: RegistrationTableProps) {
       sorting,
       columnVisibility,
       globalFilter,
+      rowSelection,
+      pagination,
     },
+    enableRowSelection: true,
+    onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: setPagination,
+    autoResetPageIndex: false,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -70,6 +83,16 @@ export function RegistrationTable({ data, isLoading }: RegistrationTableProps) {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
+
+  const pageCount = table.getPageCount()
+  useEffect(() => {
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({
+        ...prev,
+        pageIndex: Math.max(0, pageCount - 1),
+      }))
+    }
+  }, [pageCount, pagination.pageIndex])
 
   const countByStatus = useMemo(() => {
     const counts: Record<string, number> = {
@@ -100,7 +123,10 @@ export function RegistrationTable({ data, isLoading }: RegistrationTableProps) {
       <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
         <Tabs
           value={statusFilter}
-          onValueChange={setStatusFilter}
+          onValueChange={(val) => {
+            setPagination((p) => ({ ...p, pageIndex: 0 }))
+            setStatusFilter(val)
+          }}
           className='w-full sm:w-auto'
         >
           <TabsList className='grid grid-cols-3 sm:flex sm:h-9'>
@@ -129,13 +155,19 @@ export function RegistrationTable({ data, isLoading }: RegistrationTableProps) {
           <Input
             placeholder='Cari calon pelanggan...'
             value={globalFilter ?? ''}
-            onChange={(e) => setGlobalFilter(e.target.value)}
+            onChange={(e) => {
+              setPagination((p) => ({ ...p, pageIndex: 0 }))
+              setGlobalFilter(e.target.value)
+            }}
             className='h-9 pr-8 text-sm'
           />
           {globalFilter && (
             <button
               type='button'
-              onClick={() => setGlobalFilter('')}
+              onClick={() => {
+                setPagination((p) => ({ ...p, pageIndex: 0 }))
+                setGlobalFilter('')
+              }}
               className='absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground'
               aria-label='Clear search'
             >
@@ -143,6 +175,7 @@ export function RegistrationTable({ data, isLoading }: RegistrationTableProps) {
             </button>
           )}
         </div>
+
       </div>
 
       <div className='overflow-hidden rounded-md border'>

@@ -1,6 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   type ColumnFiltersState,
+  type PaginationState,
+  type RowSelectionState,
   type SortingState,
   type VisibilityState,
   flexRender,
@@ -31,13 +33,26 @@ import { inactiveColumns } from './inactive-columns'
 interface InactiveTableProps {
   data: PPPSecret[]
   isLoading?: boolean
+  defaultGlobalFilter?: string
 }
 
-export function InactiveTable({ data, isLoading }: InactiveTableProps) {
+export function InactiveTable({ data, isLoading, defaultGlobalFilter }: InactiveTableProps) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
-  const [globalFilter, setGlobalFilter] = useState('')
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
+  const [globalFilter, setGlobalFilter] = useState(defaultGlobalFilter ?? '')
+
+  useEffect(() => {
+    if (defaultGlobalFilter !== undefined) {
+      setGlobalFilter(defaultGlobalFilter)
+    }
+  }, [defaultGlobalFilter])
+
 
   // Derive unique profiles from inactive data
   const profileOptions = useMemo(() => {
@@ -55,16 +70,24 @@ export function InactiveTable({ data, isLoading }: InactiveTableProps) {
   const table = useReactTable({
     data,
     columns: inactiveColumns,
+    autoResetPageIndex: false,
     state: {
       sorting,
       columnVisibility,
+      rowSelection,
       columnFilters,
       globalFilter,
+      pagination,
     },
     onSortingChange: setSorting,
+    onRowSelectionChange: setRowSelection,
+    onPaginationChange: setPagination,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
-    onGlobalFilterChange: setGlobalFilter,
+    onGlobalFilterChange: (updater) => {
+      setGlobalFilter(updater)
+      setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+    },
     globalFilterFn: (row, _, filterValue: string) => {
       const search = filterValue.toLowerCase()
       const name = (row.original.name || '').toLowerCase()
@@ -83,6 +106,14 @@ export function InactiveTable({ data, isLoading }: InactiveTableProps) {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
+
+  // Prevent empty page when deleting last item on current page
+  useEffect(() => {
+    const pageCount = table.getPageCount()
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({ ...prev, pageIndex: Math.max(0, pageCount - 1) }))
+    }
+  }, [data.length, table, pagination.pageIndex])
 
   return (
     <div className="space-y-4">
@@ -137,6 +168,7 @@ export function InactiveTable({ data, isLoading }: InactiveTableProps) {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
                   className={row.original.disabled ? 'opacity-60 bg-muted/30 text-muted-foreground' : ''}
                 >
                   {row.getVisibleCells().map((cell) => (

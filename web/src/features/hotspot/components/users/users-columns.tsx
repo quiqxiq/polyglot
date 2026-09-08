@@ -1,7 +1,6 @@
 import { type ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
-import { Checkbox } from '@/components/ui/checkbox'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { HotspotUser } from '@/gen/v1/hotspot_pb'
 import { UsersRowActions } from './users-row-actions'
 
@@ -15,30 +14,7 @@ function formatBytes(bytesStr: string): string {
 }
 
 export const usersColumns: ColumnDef<HotspotUser>[] = [
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && 'indeterminate')
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label='Select all'
-        className='translate-y-0.5'
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label='Select row'
-        className='translate-y-0.5'
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  createSelectColumn<HotspotUser>(),
   {
     accessorKey: 'name',
     header: ({ column }) => (

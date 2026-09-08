@@ -1,6 +1,5 @@
 import { Badge } from '@/components/ui/badge'
-import { Checkbox } from '@/components/ui/checkbox'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { EnrichedPPPActiveSession } from '../../api/use-ppp-stream'
 import { formatUptime } from '../../utils/format-uptime'
 import type { ColumnDef } from '@tanstack/react-table'
@@ -8,30 +7,7 @@ import { Activity, Clock, Globe, Network } from 'lucide-react'
 import { ActiveRowActions } from './active-row-actions'
 
 export const activeColumns: ColumnDef<EnrichedPPPActiveSession>[] = [
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && 'indeterminate')
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-        className="translate-y-[2px]"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-        className="translate-y-[2px]"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  createSelectColumn<EnrichedPPPActiveSession>(),
   {
     accessorKey: 'name',
     header: ({ column }) => (

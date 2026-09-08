@@ -1,10 +1,11 @@
 import { type ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { HotspotProfile } from '@/gen/v1/hotspot_pb'
 import { ProfilesRowActions } from './profiles-row-actions'
 
 export const profilesColumns: ColumnDef<HotspotProfile>[] = [
+  createSelectColumn<HotspotProfile>(),
   {
     accessorKey: 'name',
     header: ({ column }) => (

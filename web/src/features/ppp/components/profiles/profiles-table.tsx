@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   type ColumnFiltersState,
   type SortingState,
   type VisibilityState,
+  type PaginationState,
+  type RowSelectionState,
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
@@ -34,10 +36,15 @@ interface ProfilesTableProps {
 }
 
 export function ProfilesTable({ data, isLoading }: ProfilesTableProps) {
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = useState('')
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
   const table = useReactTable({
     data,
@@ -47,11 +54,17 @@ export function ProfilesTable({ data, isLoading }: ProfilesTableProps) {
       columnVisibility,
       columnFilters,
       globalFilter,
+      rowSelection,
+      pagination,
     },
+    enableRowSelection: true,
+    onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: setPagination,
+    autoResetPageIndex: false,
     globalFilterFn: (row, _, filterValue: string) => {
       const search = filterValue.toLowerCase()
       const name = (row.original.name || '').toLowerCase()
@@ -70,6 +83,16 @@ export function ProfilesTable({ data, isLoading }: ProfilesTableProps) {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
+
+  const pageCount = table.getPageCount()
+  useEffect(() => {
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({
+        ...prev,
+        pageIndex: Math.max(0, pageCount - 1),
+      }))
+    }
+  }, [pageCount, pagination.pageIndex])
 
   return (
     <div className="space-y-4">
@@ -115,8 +138,12 @@ export function ProfilesTable({ data, isLoading }: ProfilesTableProps) {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
+
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,

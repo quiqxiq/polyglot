@@ -1,7 +1,9 @@
 import { type ColumnDef } from '@tanstack/react-table'
 import { type User } from '@/gen/v1/users_pb'
 import { MoreHorizontal, ShieldCheck, ShieldOff } from 'lucide-react'
+import { createSelectColumn } from '@/components/data-table'
 import { useAuthStore } from '@/stores/auth-store'
+
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -27,7 +29,9 @@ function formatDate(unixSeconds: bigint): string {
 }
 
 export const usersColumns: ColumnDef<User>[] = [
+  createSelectColumn<User>(),
   {
+
     accessorKey: 'username',
     header: 'User',
     cell: ({ row }) => {

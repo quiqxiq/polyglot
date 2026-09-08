@@ -3,6 +3,8 @@ import {
   type ColumnFiltersState,
   type SortingState,
   type VisibilityState,
+  type PaginationState,
+  type RowSelectionState,
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
@@ -36,11 +38,16 @@ interface SecretsTableProps {
 }
 
 export function SecretsTable({ data, isLoading, defaultGlobalFilter }: SecretsTableProps) {
-  const [rowSelection, setRowSelection] = useState({})
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [sorting, setSorting] = useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = useState(defaultGlobalFilter ?? '')
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
+
 
   useEffect(() => {
     if (defaultGlobalFilter !== undefined) {
@@ -98,6 +105,7 @@ export function SecretsTable({ data, isLoading, defaultGlobalFilter }: SecretsTa
       rowSelection,
       columnFilters,
       globalFilter,
+      pagination,
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
@@ -105,6 +113,8 @@ export function SecretsTable({ data, isLoading, defaultGlobalFilter }: SecretsTa
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: setPagination,
+    autoResetPageIndex: false,
     globalFilterFn: (row, _, filterValue: string) => {
       const search = filterValue.toLowerCase()
       const name = (row.original.name || '').toLowerCase()
@@ -127,6 +137,16 @@ export function SecretsTable({ data, isLoading, defaultGlobalFilter }: SecretsTa
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
+
+  const pageCount = table.getPageCount()
+  useEffect(() => {
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({
+        ...prev,
+        pageIndex: Math.max(0, pageCount - 1),
+      }))
+    }
+  }, [pageCount, pagination.pageIndex])
 
   return (
     <div className="space-y-4">

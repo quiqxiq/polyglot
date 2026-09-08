@@ -2,6 +2,7 @@ import { type ColumnDef } from '@tanstack/react-table'
 import { ArrowDownLeft, ArrowUpRight, Edit } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { createSelectColumn } from '@/components/data-table'
 import { type CashCategory } from '@/gen/v1/cashbook_pb'
 import { useCashbook } from './cashbook-provider'
 
@@ -9,7 +10,9 @@ export function useCategoryColumns(): ColumnDef<CashCategory>[] {
   const { setOpen, setCurrentCategory } = useCashbook()
 
   return [
+    createSelectColumn<CashCategory>(),
     {
+
       accessorKey: 'name',
       header: 'Nama Kategori',
       cell: ({ row }) => (

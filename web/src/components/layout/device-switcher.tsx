@@ -22,22 +22,27 @@ import { useAuthStore } from '@/stores/auth-store'
 export function DeviceSwitcher() {
   const { isMobile } = useSidebar()
   const navigate = useNavigate()
-  const { data: devices = [], isLoading } = useDevicesQuery()
-  const { selectedDeviceId, setSelectedDeviceId } = useDeviceStore()
+  const { data: devices = [], isLoading, isSuccess } = useDevicesQuery()
+  const { selectedDeviceId, setSelectedDeviceId, hasHydrated } = useDeviceStore()
 
   const isOwner = Boolean(useAuthStore((s) => s.auth.user?.role?.includes('owner')))
 
-  // Otomatis pilih device pertama jika belum ada yang terpilih dan daftar device tersedia
+  // Kelola default router:
+  // 1. Jika pertama kali buka aplikasi (belum ada router tersimpan): pilih devices[0].id.
+  // 2. Jika sudah pernah memilih router: pertahankan router tersebut seterusnya.
+  // 3. Hanya fallback ke devices[0].id jika router tersimpan sudah tidak ada di inventaris.
   useEffect(() => {
+    if (isLoading || !hasHydrated) return
+
     if (devices.length > 0) {
       const exists = devices.some((d) => d.id === selectedDeviceId)
       if (!selectedDeviceId || !exists) {
         setSelectedDeviceId(devices[0].id)
       }
-    } else if (selectedDeviceId) {
+    } else if (isSuccess && devices.length === 0 && selectedDeviceId) {
       setSelectedDeviceId('')
     }
-  }, [devices, selectedDeviceId, setSelectedDeviceId])
+  }, [devices, isLoading, isSuccess, hasHydrated, selectedDeviceId, setSelectedDeviceId])
 
   const currentDevice = devices.find((d) => d.id === selectedDeviceId)
 

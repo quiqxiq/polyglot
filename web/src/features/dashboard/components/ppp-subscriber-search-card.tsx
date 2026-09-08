@@ -139,10 +139,10 @@ export function PPPSubscriberSearchCard({ deviceId }: PPPSubscriberSearchCardPro
             <div>
               <CardTitle className='text-base font-semibold flex items-center gap-2'>
                 <Network className='size-4 text-primary' />
-                Pencarian Subscriber PPPoE
+                Pencarian PPPoE
               </CardTitle>
               <CardDescription>
-                Cari pelanggan realtime berdasarkan Nama (Username), MAC Address, atau IP
+                Cari pelanggan berdasarkan Nama (Username), MAC Address, atau IP
               </CardDescription>
             </div>
             <Button asChild size='sm' variant='ghost' className='h-8 gap-1 text-xs'>

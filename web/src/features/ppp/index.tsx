@@ -60,9 +60,9 @@ function PPPContent() {
           <div>
             <div className="flex items-center gap-2">
               <Network className="size-6 text-primary" />
-              <h1 className="text-2xl font-bold tracking-tight">PPPoE & PPP Management</h1>
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight">PPPoE & PPP Management</h1>
             </div>
-            <p className="text-sm text-muted-foreground mt-0.5">
+            <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
               {currentDevice ? (
                 <>
                   Router:{' '}

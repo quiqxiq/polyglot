@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   flexRender,
   getCoreRowModel,
@@ -10,6 +10,8 @@ import {
   useReactTable,
   type SortingState,
   type ColumnFiltersState,
+  type PaginationState,
+  type RowSelectionState,
 } from '@tanstack/react-table'
 import {
   Table,
@@ -29,9 +31,13 @@ interface DevicesTableProps {
 }
 
 export function DevicesTable({ data, isLoading }: DevicesTableProps) {
-  const [rowSelection, setRowSelection] = useState({})
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
   const table = useReactTable({
     data,
@@ -40,11 +46,14 @@ export function DevicesTable({ data, isLoading }: DevicesTableProps) {
       sorting,
       columnFilters,
       rowSelection,
+      pagination,
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onPaginationChange: setPagination,
+    autoResetPageIndex: false,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -52,6 +61,17 @@ export function DevicesTable({ data, isLoading }: DevicesTableProps) {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
+
+  const pageCount = table.getPageCount()
+  useEffect(() => {
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({
+        ...prev,
+        pageIndex: Math.max(0, pageCount - 1),
+      }))
+    }
+  }, [pageCount, pagination.pageIndex])
+
 
   if (isLoading) {
     return <div className='py-8 text-center text-muted-foreground'>Loading devices...</div>

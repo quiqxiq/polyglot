@@ -2,11 +2,13 @@ import { type ColumnDef } from '@tanstack/react-table'
 import { CreditCard, Eye } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { createSelectColumn } from '@/components/data-table'
 import { type Invoice } from '@/gen/v1/billing_pb'
 import { type Customer } from '@/gen/v1/customer_pb'
 import { invoiceStatusBadge } from '../data/constants'
 import { InvoicesRowActions } from './invoices-row-actions'
 import { useInvoices } from './invoices-provider'
+
 
 function formatCurrency(amount: number) {
   return new Intl.NumberFormat('id-ID', {
@@ -30,7 +32,9 @@ export function useInvoiceColumns(customerMap: Map<string, Customer>): ColumnDef
   const { setOpen, setCurrentInvoice } = useInvoices()
 
   return [
+    createSelectColumn<Invoice>(),
     {
+
       accessorKey: 'invoiceNumber',
       header: 'No. Faktur',
       cell: ({ row }) => {

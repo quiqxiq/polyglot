@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   flexRender,
   getCoreRowModel,
@@ -6,6 +6,8 @@ import {
   getSortedRowModel,
   useReactTable,
   type SortingState,
+  type PaginationState,
+  type RowSelectionState,
 } from '@tanstack/react-table'
 import { type User } from '@/gen/v1/users_pb'
 import {
@@ -25,17 +27,37 @@ interface UsersTableProps {
 }
 
 export function UsersTable({ data, isLoading }: UsersTableProps) {
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
   const [sorting, setSorting] = useState<SortingState>([])
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
   const table = useReactTable({
     data,
     columns: usersColumns,
-    state: { sorting },
+    state: { sorting, rowSelection, pagination },
+    enableRowSelection: true,
+    onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
+    onPaginationChange: setPagination,
+    autoResetPageIndex: false,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
   })
+
+  const pageCount = table.getPageCount()
+  useEffect(() => {
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({
+        ...prev,
+        pageIndex: Math.max(0, pageCount - 1),
+      }))
+    }
+  }, [pageCount, pagination.pageIndex])
+
 
   return (
     <div className='space-y-4'>
@@ -69,8 +91,12 @@ export function UsersTable({ data, isLoading }: UsersTableProps) {
               </TableRow>
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
+
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,

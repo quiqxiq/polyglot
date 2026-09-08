@@ -1,7 +1,7 @@
 import { type ColumnDef } from '@tanstack/react-table'
 import { Zap, Users } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { Plan } from '@/gen/v1/plan_pb'
 import { PlansRowActions } from './plans-row-actions'
 
@@ -24,7 +24,9 @@ const idrFormat = new Intl.NumberFormat('id-ID', {
 })
 
 export const plansColumns: ColumnDef<Plan>[] = [
+  createSelectColumn<Plan>(),
   {
+
     accessorKey: 'name',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Nama Paket' />

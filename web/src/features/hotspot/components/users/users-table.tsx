@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import {
   type SortingState,
   type VisibilityState,
@@ -78,6 +78,7 @@ export function UsersTable({
   const table = useReactTable({
     data,
     columns,
+    autoResetPageIndex: false,
     state: {
       sorting,
       columnVisibility,
@@ -91,7 +92,10 @@ export function UsersTable({
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
     onColumnFiltersChange: setColumnFilters,
-    onGlobalFilterChange: setGlobalFilter,
+    onGlobalFilterChange: (updater) => {
+      setGlobalFilter(updater)
+      setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+    },
     onPaginationChange: setPagination,
     globalFilterFn: (row, _columnId, filterValue) => {
       const name = String(row.getValue('name') || '').toLowerCase()
@@ -114,6 +118,14 @@ export function UsersTable({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
   })
+
+  // Prevent empty page when deleting last item on current page
+  useEffect(() => {
+    const pageCount = table.getPageCount()
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({ ...prev, pageIndex: Math.max(0, pageCount - 1) }))
+    }
+  }, [data.length, table, pagination.pageIndex])
 
   // Detect if a single batch/comment is filtered to offer a quick print button
   const commentFilterValues =

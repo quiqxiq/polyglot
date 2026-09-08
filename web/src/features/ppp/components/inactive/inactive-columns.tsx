@@ -1,12 +1,14 @@
 import { Badge } from '@/components/ui/badge'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { PPPSecret } from '@/gen/v1/ppp_pb'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Network, UserX } from 'lucide-react'
 import { InactiveRowActions } from './inactive-row-actions'
 
 export const inactiveColumns: ColumnDef<PPPSecret>[] = [
+  createSelectColumn<PPPSecret>(),
   {
+
     accessorKey: 'name',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Username" />

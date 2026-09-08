@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import {
   type SortingState,
   type ColumnFiltersState,
@@ -104,7 +104,18 @@ export function PlansImportTable({
     getSortedRowModel: getSortedRowModel(),
   })
 
+  const pageCount = table.getPageCount()
+  useEffect(() => {
+    if (pageCount > 0 && pagination.pageIndex >= pageCount) {
+      setPagination((prev) => ({
+        ...prev,
+        pageIndex: Math.max(0, pageCount - 1),
+      }))
+    }
+  }, [pageCount, pagination.pageIndex])
+
   const currentTypeFilter =
+
     (table.getColumn('serviceType')?.getFilterValue() as string) ?? 'ALL'
   const currentStatusFilter = table.getColumn('isNew')?.getFilterValue() as
     | boolean

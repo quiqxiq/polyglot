@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
 import { type ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { Registration } from '@/gen/v1/registration_pb'
+
 import { usePlansQuery } from '@/features/billing/api/use-plans'
 import { registrationStatusBadge } from '../data/constants'
 import { RegistrationRowActions } from './registration-row-actions'
@@ -45,7 +46,9 @@ export function useRegistrationColumns(): ColumnDef<Registration>[] {
 
   return useMemo(
     () => [
+      createSelectColumn<Registration>(),
       {
+
         accessorKey: 'registrationNo',
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title='No. Reg' />

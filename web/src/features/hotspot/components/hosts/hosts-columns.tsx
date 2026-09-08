@@ -1,10 +1,11 @@
 import { type ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
-import { DataTableColumnHeader } from '@/components/data-table'
+import { DataTableColumnHeader, createSelectColumn } from '@/components/data-table'
 import type { HotspotHost } from '@/gen/v1/hotspot_pb'
 import { HostsRowActions } from './hosts-row-actions'
 
 export const hostsColumns: ColumnDef<HotspotHost>[] = [
+  createSelectColumn<HotspotHost>(),
   {
     id: 'flags',
     header: ({ column }) => (
