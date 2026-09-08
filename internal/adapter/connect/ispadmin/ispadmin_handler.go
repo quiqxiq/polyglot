@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"strings"
 
 	"connectrpc.com/connect"
 
@@ -120,7 +121,12 @@ func (h *ISPAdminConnectHandler) ImportRouter(ctx context.Context, req *connect.
 	}
 	rows := pullRes.Rows
 
-	verrs := importer.ValidateRows(rows)
+	for i := range rows {
+		if strings.TrimSpace(rows[i].Address) == "" {
+			rows[i].Address = fmt.Sprintf("Area Router %s", devName)
+		}
+	}
+	verrs := importer.ValidateRouterRows(rows)
 	errMsgs := make([]string, 0, len(verrs))
 	for _, e := range verrs {
 		errMsgs = append(errMsgs, e.Error())
@@ -216,4 +222,199 @@ func toProtoImportResult(res *importer.Result) *devicepb.ImportResult {
 		PlansCreated:         int32(res.PlansCreated),
 		Skipped:              res.Skipped,
 	}
+}
+
+// PullRouterPlans mengambil profil PPP dan/atau Hotspot dari router untuk ditampilkan di preview table.
+func (h *ISPAdminConnectHandler) PullRouterPlans(
+	ctx context.Context,
+	req *connect.Request[devicepb.PullRouterPlansRequest],
+) (*connect.Response[devicepb.PullRouterPlansResponse], error) {
+	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
+	if !ok || driver == nil {
+		return nil, response.MapDomainError(device.ErrNotFound)
+	}
+
+	rows, pppoeCount, hotspotCount, err := h.routerSrc.PullRouterPlans(ctx, driver, req.Msg.ServiceType)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
+	protoRows := make([]*devicepb.PlanImportRow, 0, len(rows))
+	for _, r := range rows {
+		protoRows = append(protoRows, &devicepb.PlanImportRow{
+			Name:                  r.Name,
+			ServiceType:           r.ServiceType,
+			RateLimit:             r.RateLimit,
+			BandwidthDownloadKbps: int32(r.BandwidthDownloadKbps),
+			BandwidthUploadKbps:   int32(r.BandwidthUploadKbps),
+			Price:                 r.Price,
+			ParentQueue:           r.ParentQueue,
+			AddressList:           r.AddressList,
+			IpPoolName:            r.IPPoolName,
+			SharedUsers:           int32(r.SharedUsers),
+			SessionTimeout:        r.SessionTimeout,
+			IdleTimeout:           r.IdleTimeout,
+			IsNew:                 r.IsNew,
+			Selected:              r.Selected,
+			RouterProfile:         r.RouterProfile,
+		})
+	}
+
+	return connect.NewResponse(&devicepb.PullRouterPlansResponse{
+		Rows:            protoRows,
+		PppoeDetected:   int32(pppoeCount),
+		HotspotDetected: int32(hotspotCount),
+	}), nil
+}
+
+// CommitPlans mengupsert daftar paket yang telah diedit/dikonfirmasi oleh admin.
+func (h *ISPAdminConnectHandler) CommitPlans(
+	ctx context.Context,
+	req *connect.Request[devicepb.CommitPlansRequest],
+) (*connect.Response[devicepb.CommitPlansResponse], error) {
+	if h.upsert == nil {
+		return nil, response.Unavailable("importer unavailable")
+	}
+
+	rows := make([]importer.PlanRow, 0, len(req.Msg.Rows))
+	for _, r := range req.Msg.Rows {
+		rows = append(rows, importer.PlanRow{
+			Name:                  r.Name,
+			ServiceType:           r.ServiceType,
+			RateLimit:             r.RateLimit,
+			BandwidthDownloadKbps: int(r.BandwidthDownloadKbps),
+			BandwidthUploadKbps:   int(r.BandwidthUploadKbps),
+			Price:                 r.Price,
+			ParentQueue:           r.ParentQueue,
+			AddressList:           r.AddressList,
+			IPPoolName:            r.IpPoolName,
+			SharedUsers:           int(r.SharedUsers),
+			SessionTimeout:        r.SessionTimeout,
+			IdleTimeout:           r.IdleTimeout,
+			Selected:              r.Selected,
+			RouterProfile:         r.RouterProfile,
+		})
+	}
+
+	res, err := h.upsert.CommitPlans(ctx, rows)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
+	return connect.NewResponse(&devicepb.CommitPlansResponse{
+		PlansCreated: int32(res.PlansCreated),
+		PlansUpdated: int32(res.PlansUpdated),
+		Errors:       res.Errors,
+	}), nil
+}
+
+// PullRouterCustomers mengambil akun pelanggan & langganan terstruktur dari router.
+func (h *ISPAdminConnectHandler) PullRouterCustomers(
+	ctx context.Context,
+	req *connect.Request[devicepb.PullRouterCustomersRequest],
+) (*connect.Response[devicepb.PullRouterCustomersResponse], error) {
+	driver, ok := h.resolve(ctx, req.Msg.DeviceId)
+	if !ok || driver == nil {
+		return nil, response.MapDomainError(device.ErrNotFound)
+	}
+
+	opts := importer.PullOptions{
+		ServiceType:       req.Msg.ServiceType,
+		IncludeIPBindings: req.Msg.IncludeIpBindings,
+		IncludeVouchers:   req.Msg.IncludeVouchers,
+	}
+
+	rows, pppoeCount, permCount, ipbCount, vSkipped, err := h.routerSrc.PullRouterCustomerSubscriptionRows(
+		ctx, driver, req.Msg.DeviceId, req.Msg.DeviceId, opts,
+	)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
+	protoRows := make([]*devicepb.CustomerSubscriptionImportRow, 0, len(rows))
+	for _, r := range rows {
+		protoRows = append(protoRows, &devicepb.CustomerSubscriptionImportRow{
+			CustomerCode:       r.CustomerCode,
+			Name:               r.Name,
+			Phone:              r.Phone,
+			Email:              r.Email,
+			Address:            r.Address,
+			ServiceType:        r.ServiceType,
+			Username:           r.Username,
+			Password:           r.Password,
+			PlanName:           r.PlanName,
+			PlanId:             r.PlanID,
+			Price:              r.Price,
+			RateLimit:          r.RateLimit,
+			LocalAddress:       r.LocalAddress,
+			RemoteAddress:      r.RemoteAddress,
+			MacAddress:         r.MACAddress,
+			HotspotType:        r.HotspotType,
+			BillingDay:         int32(r.BillingDay),
+			DeviceId:           r.DeviceID,
+			DeviceName:         r.DeviceName,
+			Selected:           r.Selected,
+			ValidationWarnings: r.ValidationWarnings,
+			RouterProfile:      r.RouterProfile,
+		})
+	}
+
+	return connect.NewResponse(&devicepb.PullRouterCustomersResponse{
+		Rows:                     protoRows,
+		PppoeDetected:            int32(pppoeCount),
+		HotspotPermanentDetected: int32(permCount),
+		HotspotIpBindingDetected: int32(ipbCount),
+		VouchersSkipped:          int32(vSkipped),
+	}), nil
+}
+
+// CommitCustomers mengupsert pelanggan & langganan yang telah diedit/dikonfirmasi dari UI.
+func (h *ISPAdminConnectHandler) CommitCustomers(
+	ctx context.Context,
+	req *connect.Request[devicepb.CommitCustomersRequest],
+) (*connect.Response[devicepb.CommitCustomersResponse], error) {
+	if h.upsert == nil {
+		return nil, response.Unavailable("importer unavailable")
+	}
+
+	rows := make([]importer.CustomerSubscriptionRow, 0, len(req.Msg.Rows))
+	for _, r := range req.Msg.Rows {
+		rows = append(rows, importer.CustomerSubscriptionRow{
+			CustomerCode:  r.CustomerCode,
+			Name:          r.Name,
+			Phone:         r.Phone,
+			Email:         r.Email,
+			Address:       r.Address,
+			ServiceType:   r.ServiceType,
+			Username:      r.Username,
+			Password:      r.Password,
+			PlanName:      r.PlanName,
+			PlanID:        r.PlanId,
+			Price:         r.Price,
+			RateLimit:     r.RateLimit,
+			LocalAddress:  r.LocalAddress,
+			RemoteAddress: r.RemoteAddress,
+			MACAddress:    r.MacAddress,
+			HotspotType:   r.HotspotType,
+			BillingDay:    int(r.BillingDay),
+			DeviceID:      r.DeviceId,
+			DeviceName:    r.DeviceName,
+			Selected:      r.Selected,
+			RouterProfile: r.RouterProfile,
+		})
+	}
+
+	res, err := h.upsert.CommitCustomerSubscriptionRows(ctx, req.Msg.DeviceId, rows)
+	if err != nil {
+		return nil, response.MapDomainError(err)
+	}
+
+	return connect.NewResponse(&devicepb.CommitCustomersResponse{
+		CustomersCreated:     int32(res.CustomersCreated),
+		CustomersUpdated:     int32(res.CustomersUpdated),
+		SubscriptionsCreated: int32(res.SubscriptionsCreated),
+		SubscriptionsUpdated: int32(res.SubscriptionsUpdated),
+		PlansCreated:         int32(res.PlansCreated),
+		Errors:               res.Errors,
+	}), nil
 }

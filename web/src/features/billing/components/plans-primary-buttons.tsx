@@ -1,7 +1,8 @@
-import { Plus } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Link } from '@tanstack/react-router'
+import { Plus, Upload } from 'lucide-react'
 import { useAuthStore } from '@/stores/auth-store'
 import { canPermission } from '@/hooks/use-can'
+import { Button } from '@/components/ui/button'
 import { usePlans } from './plans-provider'
 
 export function PlansPrimaryButtons() {
@@ -12,8 +13,15 @@ export function PlansPrimaryButtons() {
   if (!canManage) return null
 
   return (
-    <Button className='space-x-1' onClick={() => setOpen('create')}>
-      <span>Tambah Paket</span> <Plus size={18} />
-    </Button>
+    <div className='flex items-center gap-2'>
+      <Button variant='outline' className='space-x-1' asChild>
+        <Link to='/plans/import'>
+          <span>Import Paket</span> <Upload size={18} />
+        </Link>
+      </Button>
+      <Button className='space-x-1' onClick={() => setOpen('create')}>
+        <span>Tambah Paket</span> <Plus size={18} />
+      </Button>
+    </div>
   )
 }

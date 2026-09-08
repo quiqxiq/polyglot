@@ -10,27 +10,28 @@ import (
 
 // Row adalah satu baris pelanggan pada file impor/ekspor.
 type Row struct {
-	CustomerCode string
-	Name         string
-	Phone        string
-	Email        string
-	Address      string
-	Latitude     *float64
-	Longitude    *float64
-	ServiceType  string // PPPOE | HOTSPOT (default PPPOE)
-	DeviceName   string // nama router/server tujuan (mis. "JAYA ABADI")
-	Username     string
-	Password     string
-	PlanName     string
-	Price        float64
-	RateLimit    string // "5M/5M" — opsional
-	Status       string // ACTIVE | ISOLATED | SUSPENDED | TERMINATED
-	LocalAddress string
-	RemoteAddr   string
-	ParentQueue  string
-	BillingDay   int    // hari jatuh tempo (1-31)
-	MACAddress   string // opsional: mac address binding
-	HotspotType  string // "PERMANENT_USER" | "IP_BINDING" | "VOUCHER"
+	CustomerCode  string
+	Name          string
+	Phone         string
+	Email         string
+	Address       string
+	Latitude      *float64
+	Longitude     *float64
+	ServiceType   string // PPPOE | HOTSPOT (default PPPOE)
+	DeviceName    string // nama router/server tujuan (mis. "JAYA ABADI")
+	Username      string
+	Password      string
+	PlanName      string
+	Price         float64
+	RateLimit     string // "5M/5M" — opsional
+	Status        string // ACTIVE | ISOLATED | SUSPENDED | TERMINATED
+	LocalAddress  string
+	RemoteAddr    string
+	ParentQueue   string
+	BillingDay    int    // hari jatuh tempo (1-31)
+	MACAddress    string // opsional: mac address binding
+	HotspotType   string // "PERMANENT_USER" | "IP_BINDING" | "VOUCHER"
+	RouterProfile string // nama profil teknis di router
 
 	RowNumber int // untuk pesan error ramah
 }
@@ -154,6 +155,26 @@ func ValidateRows(rows []Row) []error {
 		switch r.Status {
 		case "", "ACTIVE", "PENDING", "ISOLATED", "SUSPENDED", "TERMINATED":
 			// kosong → default ACTIVE saat impor
+		default:
+			errs = append(errs, errf("%s status tidak dikenal: %q", line, r.Status))
+		}
+	}
+	return errs
+}
+
+// ValidateRouterRows memvalidasi baris tarikan router (cukup username dan plan, phone dan address opsional).
+func ValidateRouterRows(rows []Row) []error {
+	var errs []error
+	for _, r := range rows {
+		line := fmtLine(r.RowNumber)
+		if strings.TrimSpace(r.Username) == "" {
+			errs = append(errs, errf("%s username wajib diisi", line))
+		}
+		if strings.TrimSpace(r.PlanName) == "" {
+			errs = append(errs, errf("%s paket/profil wajib diisi", line))
+		}
+		switch r.Status {
+		case "", "ACTIVE", "PENDING", "ISOLATED", "SUSPENDED", "TERMINATED":
 		default:
 			errs = append(errs, errf("%s status tidak dikenal: %q", line, r.Status))
 		}

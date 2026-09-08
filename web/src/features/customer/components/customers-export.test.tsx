@@ -4,11 +4,13 @@ import { userEvent } from 'vitest/browser'
 import { useAuthStore } from '@/stores/auth-store'
 import { CustomersPrimaryButtons } from './customers-primary-buttons'
 
-const { exportMutateAsync, toastSuccessSpy, toastErrorSpy } = vi.hoisted(() => ({
-  exportMutateAsync: vi.fn(),
-  toastSuccessSpy: vi.fn(),
-  toastErrorSpy: vi.fn(),
-}))
+const { exportMutateAsync, toastSuccessSpy, toastErrorSpy } = vi.hoisted(
+  () => ({
+    exportMutateAsync: vi.fn(),
+    toastSuccessSpy: vi.fn(),
+    toastErrorSpy: vi.fn(),
+  })
+)
 
 vi.mock('../api/use-customer', async (orig) => {
   const actual = await orig<typeof import('../api/use-customer')>()
@@ -27,6 +29,27 @@ vi.mock('../api/use-customer', async (orig) => {
 vi.mock('./customers-provider', () => ({
   useCustomers: () => ({ setOpen: vi.fn() }),
 }))
+
+vi.mock('@tanstack/react-router', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@tanstack/react-router')>()
+  return {
+    ...actual,
+    Link: ({
+      children,
+      to,
+      className,
+      ...rest
+    }: {
+      children: React.ReactNode
+      to: string
+      className?: string
+    }) => (
+      <a href={to} className={className} {...rest}>
+        {children}
+      </a>
+    ),
+  }
+})
 
 vi.mock('sonner', () => ({
   toast: {
@@ -106,7 +129,8 @@ describe('CustomersPrimaryButtons export', () => {
   it('requests Excel format when the XLSX item is clicked', async () => {
     exportMutateAsync.mockResolvedValue({
       payload: new Uint8Array([3]),
-      contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      contentType:
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       filename: 'customers.xlsx',
     })
     const { getByRole } = await renderButtons()

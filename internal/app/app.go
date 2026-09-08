@@ -231,6 +231,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		return "", false
 	})
 	routerSource := importer.NewRouterSource(sessionGateway, hotGateway)
+	routerSource.SetPlanRepository(planRepo)
 	reconciler := importer.NewReconciler(subRepo, sessionGateway)
 	exportUC := importer.NewExportUseCase(subRepo, customerRepo, planRepo, repo)
 

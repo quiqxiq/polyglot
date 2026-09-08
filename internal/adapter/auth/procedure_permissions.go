@@ -271,10 +271,14 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.ReportService/RefreshSnapshot": "report:manage",
 
 	// ─── IspAdminService ────────────────────────────────────────────────────
-	"/polyglot.v1.IspAdminService/ImportFile":      "ispadmin:manage",
-	"/polyglot.v1.IspAdminService/ImportRouter":    "ispadmin:manage",
-	"/polyglot.v1.IspAdminService/ExportCustomers": "ispadmin:manage",
-	"/polyglot.v1.IspAdminService/Reconcile":       "ispadmin:manage",
+	"/polyglot.v1.IspAdminService/ImportFile":          "ispadmin:manage",
+	"/polyglot.v1.IspAdminService/ImportRouter":        "ispadmin:manage",
+	"/polyglot.v1.IspAdminService/ExportCustomers":     "ispadmin:manage",
+	"/polyglot.v1.IspAdminService/Reconcile":           "ispadmin:manage",
+	"/polyglot.v1.IspAdminService/PullRouterPlans":     "ispadmin:manage",
+	"/polyglot.v1.IspAdminService/CommitPlans":         "ispadmin:manage",
+	"/polyglot.v1.IspAdminService/PullRouterCustomers": "ispadmin:manage",
+	"/polyglot.v1.IspAdminService/CommitCustomers":     "ispadmin:manage",
 
 	// ─── Plain-HTTP Staff Endpoints (JWT Guarded) ───────────────────────────
 	"/api/cashier/charge":         "billing:manage",

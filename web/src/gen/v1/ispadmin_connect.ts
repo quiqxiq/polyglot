@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ExportCustomersRequest, ExportCustomersResponse, ImportFileRequest, ImportFileResponse, ImportRouterRequest, ImportRouterResponse, ReconcileRequest, ReconcileResponse } from "./ispadmin_pb.js";
+import { CommitCustomersRequest, CommitCustomersResponse, CommitPlansRequest, CommitPlansResponse, ExportCustomersRequest, ExportCustomersResponse, ImportFileRequest, ImportFileResponse, ImportRouterRequest, ImportRouterResponse, PullRouterCustomersRequest, PullRouterCustomersResponse, PullRouterPlansRequest, PullRouterPlansResponse, ReconcileRequest, ReconcileResponse } from "./ispadmin_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -46,6 +46,44 @@ export const IspAdminService = {
       name: "Reconcile",
       I: ReconcileRequest,
       O: ReconcileResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * Dedicated interactive import RPCs
+     *
+     * @generated from rpc polyglot.v1.IspAdminService.PullRouterPlans
+     */
+    pullRouterPlans: {
+      name: "PullRouterPlans",
+      I: PullRouterPlansRequest,
+      O: PullRouterPlansResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.IspAdminService.CommitPlans
+     */
+    commitPlans: {
+      name: "CommitPlans",
+      I: CommitPlansRequest,
+      O: CommitPlansResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.IspAdminService.PullRouterCustomers
+     */
+    pullRouterCustomers: {
+      name: "PullRouterCustomers",
+      I: PullRouterCustomersRequest,
+      O: PullRouterCustomersResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc polyglot.v1.IspAdminService.CommitCustomers
+     */
+    commitCustomers: {
+      name: "CommitCustomers",
+      I: CommitCustomersRequest,
+      O: CommitCustomersResponse,
       kind: MethodKind.Unary,
     },
   }

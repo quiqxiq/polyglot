@@ -295,3 +295,173 @@ func writeAuditImport(ctx context.Context, w port.AuditLogWriter, action, entity
 	}
 	_ = w.Write(ctx, domainAuditEntry(action, entityID))
 }
+
+// CommitCustomersResult hasil eksekusi simpan massal pelanggan & langganan.
+type CommitCustomersResult struct {
+	CustomersCreated     int      `json:"customers_created"`
+	CustomersUpdated     int      `json:"customers_updated"`
+	SubscriptionsCreated int      `json:"subscriptions_created"`
+	SubscriptionsUpdated int      `json:"subscriptions_updated"`
+	PlansCreated         int      `json:"plans_created"`
+	Errors               []string `json:"errors,omitempty"`
+}
+
+// CommitCustomerSubscriptionRows mengupsert daftar CustomerSubscriptionRow ke database
+// dengan proteksi ProvisionStatus = ProvisionOK.
+func (u *UpsertUseCase) CommitCustomerSubscriptionRows(
+	ctx context.Context,
+	deviceID string,
+	rows []CustomerSubscriptionRow,
+) (*CommitCustomersResult, error) {
+	res := &CommitCustomersResult{}
+	now := u.now()
+
+	for _, r := range rows {
+		if !r.Selected {
+			continue
+		}
+		if strings.TrimSpace(r.Username) == "" {
+			res.Errors = append(res.Errors, fmt.Sprintf("baris %s: username kosong dilewati", orDash(r.Name)))
+			continue
+		}
+
+		targetDev := deviceID
+		if targetDev == "" {
+			targetDev = r.DeviceID
+		}
+		if targetDev == "" {
+			targetDev = u.defaultDevice
+		}
+
+		// 1. Pastikan / Cari Plan
+		planID := r.PlanID
+		if planID == "" && strings.TrimSpace(r.PlanName) != "" {
+			trimmedPlan := strings.TrimSpace(r.PlanName)
+			if pl, err := u.plans.FindByName(ctx, "tenant-default", trimmedPlan); err == nil && pl.ID != "" {
+				planID = pl.ID
+			} else {
+				pID, err := u.ensurePlan(ctx, Row{
+					PlanName:    trimmedPlan,
+					RateLimit:   r.RateLimit,
+					ServiceType: r.ServiceType,
+					Price:       r.Price,
+				})
+				if err != nil {
+					res.Errors = append(res.Errors, fmt.Sprintf("paket %q untuk user %s: %v", r.PlanName, r.Username, err))
+					continue
+				}
+				planID = pID
+				res.PlansCreated++
+			}
+		}
+
+		// 2. Upsert Customer
+		custName := strings.TrimSpace(r.Name)
+		if custName == "" {
+			custName = r.Username
+		}
+		phoneN := normalizePhone(r.Phone)
+		var cust domainCustomer.Customer
+
+		if phoneN != "" {
+			if existingCust, err := u.customs.FindByPhone(ctx, phoneN); err == nil && existingCust.ID != "" {
+				existingCust.Name = custName
+				if r.Address != "" {
+					existingCust.Address = r.Address
+				}
+				if r.Email != "" {
+					existingCust.Email = r.Email
+				}
+				existingCust.UpdatedAt = now
+				_ = u.customs.Save(ctx, existingCust)
+				cust = existingCust
+				res.CustomersUpdated++
+			}
+		}
+
+		if cust.ID == "" {
+			cust = domainCustomer.Customer{
+				ID:               idgen.New("cust"),
+				TenantID:         "tenant-default",
+				CustomerCode:     orValue(r.CustomerCode, "IMP-"+idgen.Digits(6)),
+				PortalAccessCode: idgen.Digits(8),
+				Name:             custName,
+				Phone:            phoneN,
+				Email:            r.Email,
+				Address:          orValue(r.Address, fmt.Sprintf("Area Router %s", r.DeviceName)),
+				Status:           domainCustomer.StatusActive,
+				RegisteredAt:     dayStart(now),
+				CreatedAt:        now,
+				UpdatedAt:        now,
+			}
+			if err := u.customs.Save(ctx, cust); err != nil {
+				res.Errors = append(res.Errors, fmt.Sprintf("simpan pelanggan %s: %v", custName, err))
+				continue
+			}
+			res.CustomersCreated++
+			writeAuditImport(ctx, u.audit, "IMPORT_CUSTOMER", cust.ID)
+		}
+
+		// 3. Upsert Subscription per (device, username)
+		existingSub, _ := u.subs.FindByDeviceAndUsername(ctx, targetDev, r.Username)
+		bDay := clampDay(r.BillingDay)
+		if bDay < 1 || bDay > 31 {
+			bDay = clampDay(now.Day())
+		}
+		price := r.Price
+		routerProfile := orValue(r.RouterProfile, r.PlanName)
+
+		if existingSub.ID == "" {
+			end := now.AddDate(1, 0, 0)
+			sub := domainSubscription.Subscription{
+				ID:              idgen.New("sub"),
+				TenantID:        cust.TenantID,
+				CustomerID:      cust.ID,
+				PlanID:          planID,
+				DeviceID:        &targetDev,
+				ServiceType:     serviceTypeOf(r.ServiceType),
+				RemoteUsername:  r.Username,
+				RemotePassword:  orValue(r.Password, "ganti123"),
+				LocalAddress:    r.LocalAddress,
+				RemoteAddress:   r.RemoteAddress,
+				ParentQueue:     "none",
+				RateLimit:       r.RateLimit,
+				BillingCycle:    domainSubscription.CycleMonthly,
+				BillingDay:      bDay,
+				Status:          domainSubscription.StatusActive,
+				StartDate:       dayStart(now),
+				EndDate:         &end,
+				RouterProfile:   routerProfile,
+				CustomPrice:     &price,
+				ProvisionStatus: domainSubscription.ProvisionOK, // Kredensial aktif di router
+				CreatedAt:       now,
+				UpdatedAt:       now,
+			}
+			if err := u.subs.Save(ctx, sub); err != nil {
+				res.Errors = append(res.Errors, fmt.Sprintf("simpan langganan %s: %v", r.Username, err))
+				continue
+			}
+			res.SubscriptionsCreated++
+			writeAuditImport(ctx, u.audit, "IMPORT_SUBSCRIPTION", sub.ID)
+		} else {
+			if planID != "" {
+				existingSub.PlanID = planID
+			}
+			existingSub.RouterProfile = orValue(routerProfile, existingSub.RouterProfile)
+			existingSub.RateLimit = orValue(r.RateLimit, existingSub.RateLimit)
+			existingSub.BillingDay = bDay
+			if price > 0 {
+				existingSub.CustomPrice = &price
+			}
+			existingSub.ProvisionStatus = domainSubscription.ProvisionOK
+			existingSub.UpdatedAt = now
+			if err := u.subs.Save(ctx, existingSub); err != nil {
+				res.Errors = append(res.Errors, fmt.Sprintf("update langganan %s: %v", r.Username, err))
+				continue
+			}
+			res.SubscriptionsUpdated++
+		}
+	}
+
+	return res, nil
+}

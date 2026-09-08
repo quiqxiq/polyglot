@@ -28,6 +28,10 @@ func NewISPAdminServiceHandler(
 	mux.Handle("/"+serviceName+"/ImportRouter", connect.NewUnaryHandler("/"+serviceName+"/ImportRouter", handler.ImportRouter, opts...))
 	mux.Handle("/"+serviceName+"/ExportCustomers", connect.NewUnaryHandler("/"+serviceName+"/ExportCustomers", handler.ExportCustomers, opts...))
 	mux.Handle("/"+serviceName+"/Reconcile", connect.NewUnaryHandler("/"+serviceName+"/Reconcile", handler.Reconcile, opts...))
+	mux.Handle("/"+serviceName+"/PullRouterPlans", connect.NewUnaryHandler("/"+serviceName+"/PullRouterPlans", handler.PullRouterPlans, opts...))
+	mux.Handle("/"+serviceName+"/CommitPlans", connect.NewUnaryHandler("/"+serviceName+"/CommitPlans", handler.CommitPlans, opts...))
+	mux.Handle("/"+serviceName+"/PullRouterCustomers", connect.NewUnaryHandler("/"+serviceName+"/PullRouterCustomers", handler.PullRouterCustomers, opts...))
+	mux.Handle("/"+serviceName+"/CommitCustomers", connect.NewUnaryHandler("/"+serviceName+"/CommitCustomers", handler.CommitCustomers, opts...))
 
 	return "/" + serviceName + "/", mux
 }

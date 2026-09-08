@@ -73,9 +73,113 @@ message ReconcileResponse {
   repeated string profile_mismatch = 3;   // "username: db=X router=Y"
 }
 
+// ─── Service Plan Import ────────────────────────────────────────────────────
+
+message PlanImportRow {
+  string name = 1;                      // Nama Paket Layanan Komersial (Editable)
+  string service_type = 2;              // "PPPOE" | "HOTSPOT"
+  string rate_limit = 3;                // e.g. "5M/10M"
+  int32 bandwidth_download_kbps = 4;
+  int32 bandwidth_upload_kbps = 5;
+  double price = 6;
+  string parent_queue = 7;
+  string address_list = 8;
+  string ip_pool_name = 9;
+  int32 shared_users = 10;
+  string session_timeout = 11;
+  string idle_timeout = 12;
+  bool is_new = 13;                     // True jika belum ada di database
+  bool selected = 14;                   // Flag seleksi UI
+  string router_profile = 15;           // Nama Profil Teknis di Router MikroTik (Read-only)
+}
+
+message PullRouterPlansRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string service_type = 2;              // "PPPOE", "HOTSPOT", "ALL"
+}
+
+message PullRouterPlansResponse {
+  repeated PlanImportRow rows = 1;
+  int32 pppoe_detected = 2;
+  int32 hotspot_detected = 3;
+}
+
+message CommitPlansRequest {
+  repeated PlanImportRow rows = 1;
+}
+
+message CommitPlansResponse {
+  int32 plans_created = 1;
+  int32 plans_updated = 2;
+  repeated string errors = 3;
+}
+
+// ─── Customer & Subscription Import (Structured Table Rows) ─────────────────
+
+message CustomerSubscriptionImportRow {
+  string customer_code = 1;
+  string name = 2;                      // Nama Lengkap Pelanggan (Masuk ke tabel customers.name)
+  string phone = 3;                     // No WhatsApp (Editable)
+  string email = 4;                     // Email (Editable)
+  string address = 5;                   // Alamat Lengkap (Editable)
+  string service_type = 6;              // "PPPOE" | "HOTSPOT"
+  string username = 7;                  // Username Login Router MikroTik (Masuk ke subscriptions.remote_username)
+  string password = 8;                  // Password secret/user
+  string plan_name = 9;                 // Nama Paket Layanan (Ditampilkan di UI)
+  string plan_id = 10;                  // ID Plan di DB (diselesaikan otomatis di background)
+  double price = 11;                    // Harga tagihan bulanan (Editable)
+  string rate_limit = 12;
+  string local_address = 13;
+  string remote_address = 14;
+  string mac_address = 15;
+  string hotspot_type = 16;             // "PERMANENT_USER" | "IP_BINDING" | "VOUCHER"
+  int32 billing_day = 17;               // Hari jatuh tempo 1-31 (Editable)
+  string device_id = 18;
+  string device_name = 19;
+  bool selected = 20;                   // Checkbox di preview table
+  repeated string validation_warnings = 21; // Peringatan lunak (misal: "No HP belum diisi")
+  string router_profile = 22;           // Nama Profil Teknis di Router MikroTik (Read-only rujukan)
+}
+
+message PullRouterCustomersRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  string service_type = 2;              // "PPPOE", "HOTSPOT", "ALL"
+  bool include_ip_bindings = 3;
+  bool include_vouchers = 4;
+}
+
+message PullRouterCustomersResponse {
+  repeated CustomerSubscriptionImportRow rows = 1;
+  int32 pppoe_detected = 2;
+  int32 hotspot_permanent_detected = 3;
+  int32 hotspot_ip_binding_detected = 4;
+  int32 vouchers_skipped = 5;
+}
+
+message CommitCustomersRequest {
+  string device_id = 1 [(buf.validate.field).string.min_len = 1];
+  repeated CustomerSubscriptionImportRow rows = 2;
+}
+
+message CommitCustomersResponse {
+  int32 customers_created = 1;
+  int32 customers_updated = 2;
+  int32 subscriptions_created = 3;
+  int32 subscriptions_updated = 4;
+  int32 plans_created = 5;
+  repeated string errors = 6;
+}
+
 service IspAdminService {
   rpc ImportFile(ImportFileRequest) returns (ImportFileResponse);
   rpc ImportRouter(ImportRouterRequest) returns (ImportRouterResponse);
   rpc ExportCustomers(ExportCustomersRequest) returns (ExportCustomersResponse);
   rpc Reconcile(ReconcileRequest) returns (ReconcileResponse);
+
+  // Dedicated interactive import RPCs
+  rpc PullRouterPlans(PullRouterPlansRequest) returns (PullRouterPlansResponse);
+  rpc CommitPlans(CommitPlansRequest) returns (CommitPlansResponse);
+  rpc PullRouterCustomers(PullRouterCustomersRequest) returns (PullRouterCustomersResponse);
+  rpc CommitCustomers(CommitCustomersRequest) returns (CommitCustomersResponse);
 }
+

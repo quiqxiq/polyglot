@@ -1,10 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
+  type PullRouterPlansRequest,
+  type CommitPlansRequest,
+} from '@/gen/v1/ispadmin_pb'
+import {
   type CreatePlanRequest,
   type UpdatePlanRequest,
   type DeletePlanRequest,
 } from '@/gen/v1/plan_pb'
-import { planClient } from '@/lib/api-client'
+import { planClient, ispAdminClient } from '@/lib/api-client'
 import { billingKeys } from './keys'
 
 export function usePlansQuery(activeOnly = false) {
@@ -53,7 +57,9 @@ export function useUpdatePlanMutation() {
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: billingKeys.plans.all() })
       if (vars.plan?.id) {
-        queryClient.invalidateQueries({ queryKey: billingKeys.plans.detail(vars.plan.id) })
+        queryClient.invalidateQueries({
+          queryKey: billingKeys.plans.detail(vars.plan.id),
+        })
       }
     },
   })
@@ -65,6 +71,27 @@ export function useDeletePlanMutation() {
   return useMutation({
     mutationFn: async (req: DeletePlanRequest) => {
       return await planClient.deletePlan(req)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: billingKeys.plans.all() })
+    },
+  })
+}
+
+export function usePullRouterPlansMutation() {
+  return useMutation({
+    mutationFn: async (req: PullRouterPlansRequest) => {
+      return await ispAdminClient.pullRouterPlans(req)
+    },
+  })
+}
+
+export function useCommitPlansMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: CommitPlansRequest) => {
+      return await ispAdminClient.commitPlans(req)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: billingKeys.plans.all() })

@@ -13,12 +13,20 @@ import (
 
 type mockPPPGateway struct {
 	port.PPPGateway
-	listSecretsFn func(ctx context.Context, driver port.DeviceDriver, service string) ([]port.PPPoESecret, error)
+	listSecretsFn  func(ctx context.Context, driver port.DeviceDriver, service string) ([]port.PPPoESecret, error)
+	listProfilesFn func(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPProfile, error)
 }
 
 func (m *mockPPPGateway) ListSecrets(ctx context.Context, driver port.DeviceDriver, service string) ([]port.PPPoESecret, error) {
 	if m.listSecretsFn != nil {
 		return m.listSecretsFn(ctx, driver, service)
+	}
+	return nil, nil
+}
+
+func (m *mockPPPGateway) ListProfiles(ctx context.Context, driver port.DeviceDriver, nameFilter string) ([]port.PPPProfile, error) {
+	if m.listProfilesFn != nil {
+		return m.listProfilesFn(ctx, driver, nameFilter)
 	}
 	return nil, nil
 }
@@ -132,7 +140,8 @@ func TestPullHotspotRows_PermanentVsVoucher(t *testing.T) {
 	assert.Equal(t, "AA:BB:CC:DD:EE:FF", rows[0].MACAddress)
 
 	// Verifikasi entri user permanen
-	assert.Equal(t, "budi-member", rows[1].Name)
+	assert.Equal(t, "Budi Member", rows[1].Name)
+	assert.Equal(t, "budi-member", rows[1].Username)
 	assert.Equal(t, "Member-Bulanan", rows[1].PlanName)
 	assert.Equal(t, "08123456789", rows[1].Phone)
 	assert.InDelta(t, 100000, rows[1].Price, 0.01)
@@ -178,4 +187,21 @@ func TestPullRouterRows_Unified(t *testing.T) {
 	require.Len(t, res.Rows, 2)
 	assert.Equal(t, "PPPOE", res.Rows[0].ServiceType)
 	assert.Equal(t, "HOTSPOT", res.Rows[1].ServiceType)
+
+	// Test PullRouterCustomerSubscriptionRows
+	cRows, pCount, hCount, ipbCount, vSkipped, err := src.PullRouterCustomerSubscriptionRows(
+		ctx, nil, "dev-1", "ROUTER-1", importer.PullOptions{
+			ServiceType: "ALL",
+		},
+	)
+	require.NoError(t, err)
+	assert.Equal(t, 1, pCount)
+	assert.Equal(t, 1, hCount)
+	assert.Equal(t, 0, ipbCount)
+	assert.Equal(t, 0, vSkipped)
+	assert.Equal(t, 2, len(cRows))
+	assert.True(t, cRows[0].Selected)
+	assert.NotEmpty(t, cRows[0].Address) // ada fallback Area Router
+	assert.Equal(t, "0857123456", cRows[0].Phone)
+	assert.Equal(t, float64(150000), cRows[0].Price)
 }

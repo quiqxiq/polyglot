@@ -1,5 +1,9 @@
+import { Link } from '@tanstack/react-router'
+import { ExportCustomersRequest } from '@/gen/v1/ispadmin_pb'
 import { Download, Plus, Upload } from 'lucide-react'
 import { toast } from 'sonner'
+import { useAuthStore } from '@/stores/auth-store'
+import { canPermission } from '@/hooks/use-can'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -7,10 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { ExportCustomersRequest } from '@/gen/v1/ispadmin_pb'
 import { useExportCustomersMutation } from '../api/use-customer'
-import { useAuthStore } from '@/stores/auth-store'
-import { canPermission } from '@/hooks/use-can'
 import { useCustomers } from './customers-provider'
 
 export function CustomersPrimaryButtons() {
@@ -44,12 +45,10 @@ export function CustomersPrimaryButtons() {
 
   return (
     <div className='flex gap-2'>
-      <Button
-        variant='outline'
-        className='space-x-1'
-        onClick={() => setOpen('import')}
-      >
-        <span>Import</span> <Upload size={18} />
+      <Button variant='outline' className='space-x-1' asChild>
+        <Link to='/customers/import'>
+          <span>Import</span> <Upload size={18} />
+        </Link>
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

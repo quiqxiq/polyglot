@@ -49,7 +49,9 @@ import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_auth
 import { Route as AuthenticatedSettingsBotRouteImport } from './routes/_authenticated/settings/bot'
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
+import { Route as AuthenticatedPlansImportRouteImport } from './routes/_authenticated/plans/import'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
+import { Route as AuthenticatedCustomersImportRouteImport } from './routes/_authenticated/customers/import'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
@@ -268,10 +270,22 @@ const AuthenticatedSettingsAccountRoute =
     path: '/account',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
+const AuthenticatedPlansImportRoute =
+  AuthenticatedPlansImportRouteImport.update({
+    id: '/plans/import',
+    path: '/plans/import',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedErrorsErrorRoute =
   AuthenticatedErrorsErrorRouteImport.update({
     id: '/errors/$error',
     path: '/errors/$error',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCustomersImportRoute =
+  AuthenticatedCustomersImportRouteImport.update({
+    id: '/customers/import',
+    path: '/customers/import',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
@@ -288,7 +302,9 @@ export interface FileRoutesByFullPath {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/customers/import': typeof AuthenticatedCustomersImportRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
+  '/plans/import': typeof AuthenticatedPlansImportRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/bot': typeof AuthenticatedSettingsBotRoute
@@ -329,7 +345,9 @@ export interface FileRoutesByTo {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/': typeof AuthenticatedIndexRoute
+  '/customers/import': typeof AuthenticatedCustomersImportRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
+  '/plans/import': typeof AuthenticatedPlansImportRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/bot': typeof AuthenticatedSettingsBotRoute
@@ -373,7 +391,9 @@ export interface FileRoutesById {
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/customers/import': typeof AuthenticatedCustomersImportRoute
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
+  '/_authenticated/plans/import': typeof AuthenticatedPlansImportRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/_authenticated/settings/bot': typeof AuthenticatedSettingsBotRoute
@@ -417,7 +437,9 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/customers/import'
     | '/errors/$error'
+    | '/plans/import'
     | '/settings/account'
     | '/settings/appearance'
     | '/settings/bot'
@@ -458,7 +480,9 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/'
+    | '/customers/import'
     | '/errors/$error'
+    | '/plans/import'
     | '/settings/account'
     | '/settings/appearance'
     | '/settings/bot'
@@ -501,7 +525,9 @@ export interface FileRouteTypes {
     | '/(errors)/500'
     | '/(errors)/503'
     | '/_authenticated/'
+    | '/_authenticated/customers/import'
     | '/_authenticated/errors/$error'
+    | '/_authenticated/plans/import'
     | '/_authenticated/settings/account'
     | '/_authenticated/settings/appearance'
     | '/_authenticated/settings/bot'
@@ -830,11 +856,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsAccountRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
+    '/_authenticated/plans/import': {
+      id: '/_authenticated/plans/import'
+      path: '/plans/import'
+      fullPath: '/plans/import'
+      preLoaderRoute: typeof AuthenticatedPlansImportRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/errors/$error': {
       id: '/_authenticated/errors/$error'
       path: '/errors/$error'
       fullPath: '/errors/$error'
       preLoaderRoute: typeof AuthenticatedErrorsErrorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/customers/import': {
+      id: '/_authenticated/customers/import'
+      path: '/customers/import'
+      fullPath: '/customers/import'
+      preLoaderRoute: typeof AuthenticatedCustomersImportRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
@@ -868,7 +908,9 @@ const AuthenticatedSettingsRouteRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedCustomersImportRoute: typeof AuthenticatedCustomersImportRoute
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
+  AuthenticatedPlansImportRoute: typeof AuthenticatedPlansImportRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
   AuthenticatedCashbookIndexRoute: typeof AuthenticatedCashbookIndexRoute
   AuthenticatedChatsIndexRoute: typeof AuthenticatedChatsIndexRoute
@@ -892,7 +934,9 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedCustomersImportRoute: AuthenticatedCustomersImportRoute,
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
+  AuthenticatedPlansImportRoute: AuthenticatedPlansImportRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
   AuthenticatedCashbookIndexRoute: AuthenticatedCashbookIndexRoute,
   AuthenticatedChatsIndexRoute: AuthenticatedChatsIndexRoute,

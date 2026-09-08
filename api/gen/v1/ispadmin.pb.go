@@ -675,6 +675,870 @@ func (x *ReconcileResponse) GetProfileMismatch() []string {
 	return nil
 }
 
+type PlanImportRow struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	Name                  string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`                                  // Nama Paket Layanan Komersial (Editable)
+	ServiceType           string                 `protobuf:"bytes,2,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"` // "PPPOE" | "HOTSPOT"
+	RateLimit             string                 `protobuf:"bytes,3,opt,name=rate_limit,json=rateLimit,proto3" json:"rate_limit,omitempty"`       // e.g. "5M/10M"
+	BandwidthDownloadKbps int32                  `protobuf:"varint,4,opt,name=bandwidth_download_kbps,json=bandwidthDownloadKbps,proto3" json:"bandwidth_download_kbps,omitempty"`
+	BandwidthUploadKbps   int32                  `protobuf:"varint,5,opt,name=bandwidth_upload_kbps,json=bandwidthUploadKbps,proto3" json:"bandwidth_upload_kbps,omitempty"`
+	Price                 float64                `protobuf:"fixed64,6,opt,name=price,proto3" json:"price,omitempty"`
+	ParentQueue           string                 `protobuf:"bytes,7,opt,name=parent_queue,json=parentQueue,proto3" json:"parent_queue,omitempty"`
+	AddressList           string                 `protobuf:"bytes,8,opt,name=address_list,json=addressList,proto3" json:"address_list,omitempty"`
+	IpPoolName            string                 `protobuf:"bytes,9,opt,name=ip_pool_name,json=ipPoolName,proto3" json:"ip_pool_name,omitempty"`
+	SharedUsers           int32                  `protobuf:"varint,10,opt,name=shared_users,json=sharedUsers,proto3" json:"shared_users,omitempty"`
+	SessionTimeout        string                 `protobuf:"bytes,11,opt,name=session_timeout,json=sessionTimeout,proto3" json:"session_timeout,omitempty"`
+	IdleTimeout           string                 `protobuf:"bytes,12,opt,name=idle_timeout,json=idleTimeout,proto3" json:"idle_timeout,omitempty"`
+	IsNew                 bool                   `protobuf:"varint,13,opt,name=is_new,json=isNew,proto3" json:"is_new,omitempty"`                        // True jika belum ada di database
+	Selected              bool                   `protobuf:"varint,14,opt,name=selected,proto3" json:"selected,omitempty"`                               // Flag seleksi UI
+	RouterProfile         string                 `protobuf:"bytes,15,opt,name=router_profile,json=routerProfile,proto3" json:"router_profile,omitempty"` // Nama Profil Teknis di Router MikroTik (Read-only)
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *PlanImportRow) Reset() {
+	*x = PlanImportRow{}
+	mi := &file_v1_ispadmin_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlanImportRow) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlanImportRow) ProtoMessage() {}
+
+func (x *PlanImportRow) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_ispadmin_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PlanImportRow.ProtoReflect.Descriptor instead.
+func (*PlanImportRow) Descriptor() ([]byte, []int) {
+	return file_v1_ispadmin_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *PlanImportRow) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PlanImportRow) GetServiceType() string {
+	if x != nil {
+		return x.ServiceType
+	}
+	return ""
+}
+
+func (x *PlanImportRow) GetRateLimit() string {
+	if x != nil {
+		return x.RateLimit
+	}
+	return ""
+}
+
+func (x *PlanImportRow) GetBandwidthDownloadKbps() int32 {
+	if x != nil {
+		return x.BandwidthDownloadKbps
+	}
+	return 0
+}
+
+func (x *PlanImportRow) GetBandwidthUploadKbps() int32 {
+	if x != nil {
+		return x.BandwidthUploadKbps
+	}
+	return 0
+}
+
+func (x *PlanImportRow) GetPrice() float64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *PlanImportRow) GetParentQueue() string {
+	if x != nil {
+		return x.ParentQueue
+	}
+	return ""
+}
+
+func (x *PlanImportRow) GetAddressList() string {
+	if x != nil {
+		return x.AddressList
+	}
+	return ""
+}
+
+func (x *PlanImportRow) GetIpPoolName() string {
+	if x != nil {
+		return x.IpPoolName
+	}
+	return ""
+}
+
+func (x *PlanImportRow) GetSharedUsers() int32 {
+	if x != nil {
+		return x.SharedUsers
+	}
+	return 0
+}
+
+func (x *PlanImportRow) GetSessionTimeout() string {
+	if x != nil {
+		return x.SessionTimeout
+	}
+	return ""
+}
+
+func (x *PlanImportRow) GetIdleTimeout() string {
+	if x != nil {
+		return x.IdleTimeout
+	}
+	return ""
+}
+
+func (x *PlanImportRow) GetIsNew() bool {
+	if x != nil {
+		return x.IsNew
+	}
+	return false
+}
+
+func (x *PlanImportRow) GetSelected() bool {
+	if x != nil {
+		return x.Selected
+	}
+	return false
+}
+
+func (x *PlanImportRow) GetRouterProfile() string {
+	if x != nil {
+		return x.RouterProfile
+	}
+	return ""
+}
+
+type PullRouterPlansRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId      string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	ServiceType   string                 `protobuf:"bytes,2,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"` // "PPPOE", "HOTSPOT", "ALL"
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PullRouterPlansRequest) Reset() {
+	*x = PullRouterPlansRequest{}
+	mi := &file_v1_ispadmin_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PullRouterPlansRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PullRouterPlansRequest) ProtoMessage() {}
+
+func (x *PullRouterPlansRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_ispadmin_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PullRouterPlansRequest.ProtoReflect.Descriptor instead.
+func (*PullRouterPlansRequest) Descriptor() ([]byte, []int) {
+	return file_v1_ispadmin_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *PullRouterPlansRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *PullRouterPlansRequest) GetServiceType() string {
+	if x != nil {
+		return x.ServiceType
+	}
+	return ""
+}
+
+type PullRouterPlansResponse struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Rows            []*PlanImportRow       `protobuf:"bytes,1,rep,name=rows,proto3" json:"rows,omitempty"`
+	PppoeDetected   int32                  `protobuf:"varint,2,opt,name=pppoe_detected,json=pppoeDetected,proto3" json:"pppoe_detected,omitempty"`
+	HotspotDetected int32                  `protobuf:"varint,3,opt,name=hotspot_detected,json=hotspotDetected,proto3" json:"hotspot_detected,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *PullRouterPlansResponse) Reset() {
+	*x = PullRouterPlansResponse{}
+	mi := &file_v1_ispadmin_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PullRouterPlansResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PullRouterPlansResponse) ProtoMessage() {}
+
+func (x *PullRouterPlansResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_ispadmin_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PullRouterPlansResponse.ProtoReflect.Descriptor instead.
+func (*PullRouterPlansResponse) Descriptor() ([]byte, []int) {
+	return file_v1_ispadmin_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *PullRouterPlansResponse) GetRows() []*PlanImportRow {
+	if x != nil {
+		return x.Rows
+	}
+	return nil
+}
+
+func (x *PullRouterPlansResponse) GetPppoeDetected() int32 {
+	if x != nil {
+		return x.PppoeDetected
+	}
+	return 0
+}
+
+func (x *PullRouterPlansResponse) GetHotspotDetected() int32 {
+	if x != nil {
+		return x.HotspotDetected
+	}
+	return 0
+}
+
+type CommitPlansRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Rows          []*PlanImportRow       `protobuf:"bytes,1,rep,name=rows,proto3" json:"rows,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CommitPlansRequest) Reset() {
+	*x = CommitPlansRequest{}
+	mi := &file_v1_ispadmin_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CommitPlansRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CommitPlansRequest) ProtoMessage() {}
+
+func (x *CommitPlansRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_ispadmin_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CommitPlansRequest.ProtoReflect.Descriptor instead.
+func (*CommitPlansRequest) Descriptor() ([]byte, []int) {
+	return file_v1_ispadmin_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *CommitPlansRequest) GetRows() []*PlanImportRow {
+	if x != nil {
+		return x.Rows
+	}
+	return nil
+}
+
+type CommitPlansResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PlansCreated  int32                  `protobuf:"varint,1,opt,name=plans_created,json=plansCreated,proto3" json:"plans_created,omitempty"`
+	PlansUpdated  int32                  `protobuf:"varint,2,opt,name=plans_updated,json=plansUpdated,proto3" json:"plans_updated,omitempty"`
+	Errors        []string               `protobuf:"bytes,3,rep,name=errors,proto3" json:"errors,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CommitPlansResponse) Reset() {
+	*x = CommitPlansResponse{}
+	mi := &file_v1_ispadmin_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CommitPlansResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CommitPlansResponse) ProtoMessage() {}
+
+func (x *CommitPlansResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_ispadmin_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CommitPlansResponse.ProtoReflect.Descriptor instead.
+func (*CommitPlansResponse) Descriptor() ([]byte, []int) {
+	return file_v1_ispadmin_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *CommitPlansResponse) GetPlansCreated() int32 {
+	if x != nil {
+		return x.PlansCreated
+	}
+	return 0
+}
+
+func (x *CommitPlansResponse) GetPlansUpdated() int32 {
+	if x != nil {
+		return x.PlansUpdated
+	}
+	return 0
+}
+
+func (x *CommitPlansResponse) GetErrors() []string {
+	if x != nil {
+		return x.Errors
+	}
+	return nil
+}
+
+type CustomerSubscriptionImportRow struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	CustomerCode       string                 `protobuf:"bytes,1,opt,name=customer_code,json=customerCode,proto3" json:"customer_code,omitempty"`
+	Name               string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                  // Nama Lengkap Pelanggan (Masuk ke tabel customers.name)
+	Phone              string                 `protobuf:"bytes,3,opt,name=phone,proto3" json:"phone,omitempty"`                                // No WhatsApp (Editable)
+	Email              string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`                                // Email (Editable)
+	Address            string                 `protobuf:"bytes,5,opt,name=address,proto3" json:"address,omitempty"`                            // Alamat Lengkap (Editable)
+	ServiceType        string                 `protobuf:"bytes,6,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"` // "PPPOE" | "HOTSPOT"
+	Username           string                 `protobuf:"bytes,7,opt,name=username,proto3" json:"username,omitempty"`                          // Username Login Router MikroTik (Masuk ke subscriptions.remote_username)
+	Password           string                 `protobuf:"bytes,8,opt,name=password,proto3" json:"password,omitempty"`                          // Password secret/user
+	PlanName           string                 `protobuf:"bytes,9,opt,name=plan_name,json=planName,proto3" json:"plan_name,omitempty"`          // Nama Paket Layanan (Ditampilkan di UI)
+	PlanId             string                 `protobuf:"bytes,10,opt,name=plan_id,json=planId,proto3" json:"plan_id,omitempty"`               // ID Plan di DB (diselesaikan otomatis di background)
+	Price              float64                `protobuf:"fixed64,11,opt,name=price,proto3" json:"price,omitempty"`                             // Harga tagihan bulanan (Editable)
+	RateLimit          string                 `protobuf:"bytes,12,opt,name=rate_limit,json=rateLimit,proto3" json:"rate_limit,omitempty"`
+	LocalAddress       string                 `protobuf:"bytes,13,opt,name=local_address,json=localAddress,proto3" json:"local_address,omitempty"`
+	RemoteAddress      string                 `protobuf:"bytes,14,opt,name=remote_address,json=remoteAddress,proto3" json:"remote_address,omitempty"`
+	MacAddress         string                 `protobuf:"bytes,15,opt,name=mac_address,json=macAddress,proto3" json:"mac_address,omitempty"`
+	HotspotType        string                 `protobuf:"bytes,16,opt,name=hotspot_type,json=hotspotType,proto3" json:"hotspot_type,omitempty"` // "PERMANENT_USER" | "IP_BINDING" | "VOUCHER"
+	BillingDay         int32                  `protobuf:"varint,17,opt,name=billing_day,json=billingDay,proto3" json:"billing_day,omitempty"`   // Hari jatuh tempo 1-31 (Editable)
+	DeviceId           string                 `protobuf:"bytes,18,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	DeviceName         string                 `protobuf:"bytes,19,opt,name=device_name,json=deviceName,proto3" json:"device_name,omitempty"`
+	Selected           bool                   `protobuf:"varint,20,opt,name=selected,proto3" json:"selected,omitempty"`                                              // Checkbox di preview table
+	ValidationWarnings []string               `protobuf:"bytes,21,rep,name=validation_warnings,json=validationWarnings,proto3" json:"validation_warnings,omitempty"` // Peringatan lunak (misal: "No HP belum diisi")
+	RouterProfile      string                 `protobuf:"bytes,22,opt,name=router_profile,json=routerProfile,proto3" json:"router_profile,omitempty"`                // Nama Profil Teknis di Router MikroTik (Read-only rujukan)
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CustomerSubscriptionImportRow) Reset() {
+	*x = CustomerSubscriptionImportRow{}
+	mi := &file_v1_ispadmin_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CustomerSubscriptionImportRow) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CustomerSubscriptionImportRow) ProtoMessage() {}
+
+func (x *CustomerSubscriptionImportRow) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_ispadmin_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CustomerSubscriptionImportRow.ProtoReflect.Descriptor instead.
+func (*CustomerSubscriptionImportRow) Descriptor() ([]byte, []int) {
+	return file_v1_ispadmin_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *CustomerSubscriptionImportRow) GetCustomerCode() string {
+	if x != nil {
+		return x.CustomerCode
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetAddress() string {
+	if x != nil {
+		return x.Address
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetServiceType() string {
+	if x != nil {
+		return x.ServiceType
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetPlanName() string {
+	if x != nil {
+		return x.PlanName
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetPlanId() string {
+	if x != nil {
+		return x.PlanId
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetPrice() float64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *CustomerSubscriptionImportRow) GetRateLimit() string {
+	if x != nil {
+		return x.RateLimit
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetLocalAddress() string {
+	if x != nil {
+		return x.LocalAddress
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetRemoteAddress() string {
+	if x != nil {
+		return x.RemoteAddress
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetMacAddress() string {
+	if x != nil {
+		return x.MacAddress
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetHotspotType() string {
+	if x != nil {
+		return x.HotspotType
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetBillingDay() int32 {
+	if x != nil {
+		return x.BillingDay
+	}
+	return 0
+}
+
+func (x *CustomerSubscriptionImportRow) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetDeviceName() string {
+	if x != nil {
+		return x.DeviceName
+	}
+	return ""
+}
+
+func (x *CustomerSubscriptionImportRow) GetSelected() bool {
+	if x != nil {
+		return x.Selected
+	}
+	return false
+}
+
+func (x *CustomerSubscriptionImportRow) GetValidationWarnings() []string {
+	if x != nil {
+		return x.ValidationWarnings
+	}
+	return nil
+}
+
+func (x *CustomerSubscriptionImportRow) GetRouterProfile() string {
+	if x != nil {
+		return x.RouterProfile
+	}
+	return ""
+}
+
+type PullRouterCustomersRequest struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	DeviceId          string                 `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	ServiceType       string                 `protobuf:"bytes,2,opt,name=service_type,json=serviceType,proto3" json:"service_type,omitempty"` // "PPPOE", "HOTSPOT", "ALL"
+	IncludeIpBindings bool                   `protobuf:"varint,3,opt,name=include_ip_bindings,json=includeIpBindings,proto3" json:"include_ip_bindings,omitempty"`
+	IncludeVouchers   bool                   `protobuf:"varint,4,opt,name=include_vouchers,json=includeVouchers,proto3" json:"include_vouchers,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *PullRouterCustomersRequest) Reset() {
+	*x = PullRouterCustomersRequest{}
+	mi := &file_v1_ispadmin_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PullRouterCustomersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PullRouterCustomersRequest) ProtoMessage() {}
+
+func (x *PullRouterCustomersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_ispadmin_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PullRouterCustomersRequest.ProtoReflect.Descriptor instead.
+func (*PullRouterCustomersRequest) Descriptor() ([]byte, []int) {
+	return file_v1_ispadmin_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *PullRouterCustomersRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *PullRouterCustomersRequest) GetServiceType() string {
+	if x != nil {
+		return x.ServiceType
+	}
+	return ""
+}
+
+func (x *PullRouterCustomersRequest) GetIncludeIpBindings() bool {
+	if x != nil {
+		return x.IncludeIpBindings
+	}
+	return false
+}
+
+func (x *PullRouterCustomersRequest) GetIncludeVouchers() bool {
+	if x != nil {
+		return x.IncludeVouchers
+	}
+	return false
+}
+
+type PullRouterCustomersResponse struct {
+	state                    protoimpl.MessageState           `protogen:"open.v1"`
+	Rows                     []*CustomerSubscriptionImportRow `protobuf:"bytes,1,rep,name=rows,proto3" json:"rows,omitempty"`
+	PppoeDetected            int32                            `protobuf:"varint,2,opt,name=pppoe_detected,json=pppoeDetected,proto3" json:"pppoe_detected,omitempty"`
+	HotspotPermanentDetected int32                            `protobuf:"varint,3,opt,name=hotspot_permanent_detected,json=hotspotPermanentDetected,proto3" json:"hotspot_permanent_detected,omitempty"`
+	HotspotIpBindingDetected int32                            `protobuf:"varint,4,opt,name=hotspot_ip_binding_detected,json=hotspotIpBindingDetected,proto3" json:"hotspot_ip_binding_detected,omitempty"`
+	VouchersSkipped          int32                            `protobuf:"varint,5,opt,name=vouchers_skipped,json=vouchersSkipped,proto3" json:"vouchers_skipped,omitempty"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *PullRouterCustomersResponse) Reset() {
+	*x = PullRouterCustomersResponse{}
+	mi := &file_v1_ispadmin_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PullRouterCustomersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PullRouterCustomersResponse) ProtoMessage() {}
+
+func (x *PullRouterCustomersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_ispadmin_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PullRouterCustomersResponse.ProtoReflect.Descriptor instead.
+func (*PullRouterCustomersResponse) Descriptor() ([]byte, []int) {
+	return file_v1_ispadmin_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *PullRouterCustomersResponse) GetRows() []*CustomerSubscriptionImportRow {
+	if x != nil {
+		return x.Rows
+	}
+	return nil
+}
+
+func (x *PullRouterCustomersResponse) GetPppoeDetected() int32 {
+	if x != nil {
+		return x.PppoeDetected
+	}
+	return 0
+}
+
+func (x *PullRouterCustomersResponse) GetHotspotPermanentDetected() int32 {
+	if x != nil {
+		return x.HotspotPermanentDetected
+	}
+	return 0
+}
+
+func (x *PullRouterCustomersResponse) GetHotspotIpBindingDetected() int32 {
+	if x != nil {
+		return x.HotspotIpBindingDetected
+	}
+	return 0
+}
+
+func (x *PullRouterCustomersResponse) GetVouchersSkipped() int32 {
+	if x != nil {
+		return x.VouchersSkipped
+	}
+	return 0
+}
+
+type CommitCustomersRequest struct {
+	state         protoimpl.MessageState           `protogen:"open.v1"`
+	DeviceId      string                           `protobuf:"bytes,1,opt,name=device_id,json=deviceId,proto3" json:"device_id,omitempty"`
+	Rows          []*CustomerSubscriptionImportRow `protobuf:"bytes,2,rep,name=rows,proto3" json:"rows,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CommitCustomersRequest) Reset() {
+	*x = CommitCustomersRequest{}
+	mi := &file_v1_ispadmin_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CommitCustomersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CommitCustomersRequest) ProtoMessage() {}
+
+func (x *CommitCustomersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_ispadmin_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CommitCustomersRequest.ProtoReflect.Descriptor instead.
+func (*CommitCustomersRequest) Descriptor() ([]byte, []int) {
+	return file_v1_ispadmin_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *CommitCustomersRequest) GetDeviceId() string {
+	if x != nil {
+		return x.DeviceId
+	}
+	return ""
+}
+
+func (x *CommitCustomersRequest) GetRows() []*CustomerSubscriptionImportRow {
+	if x != nil {
+		return x.Rows
+	}
+	return nil
+}
+
+type CommitCustomersResponse struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	CustomersCreated     int32                  `protobuf:"varint,1,opt,name=customers_created,json=customersCreated,proto3" json:"customers_created,omitempty"`
+	CustomersUpdated     int32                  `protobuf:"varint,2,opt,name=customers_updated,json=customersUpdated,proto3" json:"customers_updated,omitempty"`
+	SubscriptionsCreated int32                  `protobuf:"varint,3,opt,name=subscriptions_created,json=subscriptionsCreated,proto3" json:"subscriptions_created,omitempty"`
+	SubscriptionsUpdated int32                  `protobuf:"varint,4,opt,name=subscriptions_updated,json=subscriptionsUpdated,proto3" json:"subscriptions_updated,omitempty"`
+	PlansCreated         int32                  `protobuf:"varint,5,opt,name=plans_created,json=plansCreated,proto3" json:"plans_created,omitempty"`
+	Errors               []string               `protobuf:"bytes,6,rep,name=errors,proto3" json:"errors,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *CommitCustomersResponse) Reset() {
+	*x = CommitCustomersResponse{}
+	mi := &file_v1_ispadmin_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CommitCustomersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CommitCustomersResponse) ProtoMessage() {}
+
+func (x *CommitCustomersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_ispadmin_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CommitCustomersResponse.ProtoReflect.Descriptor instead.
+func (*CommitCustomersResponse) Descriptor() ([]byte, []int) {
+	return file_v1_ispadmin_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *CommitCustomersResponse) GetCustomersCreated() int32 {
+	if x != nil {
+		return x.CustomersCreated
+	}
+	return 0
+}
+
+func (x *CommitCustomersResponse) GetCustomersUpdated() int32 {
+	if x != nil {
+		return x.CustomersUpdated
+	}
+	return 0
+}
+
+func (x *CommitCustomersResponse) GetSubscriptionsCreated() int32 {
+	if x != nil {
+		return x.SubscriptionsCreated
+	}
+	return 0
+}
+
+func (x *CommitCustomersResponse) GetSubscriptionsUpdated() int32 {
+	if x != nil {
+		return x.SubscriptionsUpdated
+	}
+	return 0
+}
+
+func (x *CommitCustomersResponse) GetPlansCreated() int32 {
+	if x != nil {
+		return x.PlansCreated
+	}
+	return 0
+}
+
+func (x *CommitCustomersResponse) GetErrors() []string {
+	if x != nil {
+		return x.Errors
+	}
+	return nil
+}
+
 var File_v1_ispadmin_proto protoreflect.FileDescriptor
 
 const file_v1_ispadmin_proto_rawDesc = "" +
@@ -725,16 +1589,101 @@ const file_v1_ispadmin_proto_rawDesc = "" +
 	"\x11ReconcileResponse\x12\"\n" +
 	"\rmissing_in_db\x18\x01 \x03(\tR\vmissingInDb\x12*\n" +
 	"\x11missing_in_router\x18\x02 \x03(\tR\x0fmissingInRouter\x12)\n" +
-	"\x10profile_mismatch\x18\x03 \x03(\tR\x0fprofileMismatch*=\n" +
+	"\x10profile_mismatch\x18\x03 \x03(\tR\x0fprofileMismatch\"\x98\x04\n" +
+	"\rPlanImportRow\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12!\n" +
+	"\fservice_type\x18\x02 \x01(\tR\vserviceType\x12\x1d\n" +
+	"\n" +
+	"rate_limit\x18\x03 \x01(\tR\trateLimit\x126\n" +
+	"\x17bandwidth_download_kbps\x18\x04 \x01(\x05R\x15bandwidthDownloadKbps\x122\n" +
+	"\x15bandwidth_upload_kbps\x18\x05 \x01(\x05R\x13bandwidthUploadKbps\x12\x14\n" +
+	"\x05price\x18\x06 \x01(\x01R\x05price\x12!\n" +
+	"\fparent_queue\x18\a \x01(\tR\vparentQueue\x12!\n" +
+	"\faddress_list\x18\b \x01(\tR\vaddressList\x12 \n" +
+	"\fip_pool_name\x18\t \x01(\tR\n" +
+	"ipPoolName\x12!\n" +
+	"\fshared_users\x18\n" +
+	" \x01(\x05R\vsharedUsers\x12'\n" +
+	"\x0fsession_timeout\x18\v \x01(\tR\x0esessionTimeout\x12!\n" +
+	"\fidle_timeout\x18\f \x01(\tR\vidleTimeout\x12\x15\n" +
+	"\x06is_new\x18\r \x01(\bR\x05isNew\x12\x1a\n" +
+	"\bselected\x18\x0e \x01(\bR\bselected\x12%\n" +
+	"\x0erouter_profile\x18\x0f \x01(\tR\rrouterProfile\"a\n" +
+	"\x16PullRouterPlansRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12!\n" +
+	"\fservice_type\x18\x02 \x01(\tR\vserviceType\"\x9b\x01\n" +
+	"\x17PullRouterPlansResponse\x12.\n" +
+	"\x04rows\x18\x01 \x03(\v2\x1a.polyglot.v1.PlanImportRowR\x04rows\x12%\n" +
+	"\x0epppoe_detected\x18\x02 \x01(\x05R\rpppoeDetected\x12)\n" +
+	"\x10hotspot_detected\x18\x03 \x01(\x05R\x0fhotspotDetected\"D\n" +
+	"\x12CommitPlansRequest\x12.\n" +
+	"\x04rows\x18\x01 \x03(\v2\x1a.polyglot.v1.PlanImportRowR\x04rows\"w\n" +
+	"\x13CommitPlansResponse\x12#\n" +
+	"\rplans_created\x18\x01 \x01(\x05R\fplansCreated\x12#\n" +
+	"\rplans_updated\x18\x02 \x01(\x05R\fplansUpdated\x12\x16\n" +
+	"\x06errors\x18\x03 \x03(\tR\x06errors\"\xc7\x05\n" +
+	"\x1dCustomerSubscriptionImportRow\x12#\n" +
+	"\rcustomer_code\x18\x01 \x01(\tR\fcustomerCode\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
+	"\x05phone\x18\x03 \x01(\tR\x05phone\x12\x14\n" +
+	"\x05email\x18\x04 \x01(\tR\x05email\x12\x18\n" +
+	"\aaddress\x18\x05 \x01(\tR\aaddress\x12!\n" +
+	"\fservice_type\x18\x06 \x01(\tR\vserviceType\x12\x1a\n" +
+	"\busername\x18\a \x01(\tR\busername\x12\x1a\n" +
+	"\bpassword\x18\b \x01(\tR\bpassword\x12\x1b\n" +
+	"\tplan_name\x18\t \x01(\tR\bplanName\x12\x17\n" +
+	"\aplan_id\x18\n" +
+	" \x01(\tR\x06planId\x12\x14\n" +
+	"\x05price\x18\v \x01(\x01R\x05price\x12\x1d\n" +
+	"\n" +
+	"rate_limit\x18\f \x01(\tR\trateLimit\x12#\n" +
+	"\rlocal_address\x18\r \x01(\tR\flocalAddress\x12%\n" +
+	"\x0eremote_address\x18\x0e \x01(\tR\rremoteAddress\x12\x1f\n" +
+	"\vmac_address\x18\x0f \x01(\tR\n" +
+	"macAddress\x12!\n" +
+	"\fhotspot_type\x18\x10 \x01(\tR\vhotspotType\x12\x1f\n" +
+	"\vbilling_day\x18\x11 \x01(\x05R\n" +
+	"billingDay\x12\x1b\n" +
+	"\tdevice_id\x18\x12 \x01(\tR\bdeviceId\x12\x1f\n" +
+	"\vdevice_name\x18\x13 \x01(\tR\n" +
+	"deviceName\x12\x1a\n" +
+	"\bselected\x18\x14 \x01(\bR\bselected\x12/\n" +
+	"\x13validation_warnings\x18\x15 \x03(\tR\x12validationWarnings\x12%\n" +
+	"\x0erouter_profile\x18\x16 \x01(\tR\rrouterProfile\"\xc0\x01\n" +
+	"\x1aPullRouterCustomersRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12!\n" +
+	"\fservice_type\x18\x02 \x01(\tR\vserviceType\x12.\n" +
+	"\x13include_ip_bindings\x18\x03 \x01(\bR\x11includeIpBindings\x12)\n" +
+	"\x10include_vouchers\x18\x04 \x01(\bR\x0fincludeVouchers\"\xac\x02\n" +
+	"\x1bPullRouterCustomersResponse\x12>\n" +
+	"\x04rows\x18\x01 \x03(\v2*.polyglot.v1.CustomerSubscriptionImportRowR\x04rows\x12%\n" +
+	"\x0epppoe_detected\x18\x02 \x01(\x05R\rpppoeDetected\x12<\n" +
+	"\x1ahotspot_permanent_detected\x18\x03 \x01(\x05R\x18hotspotPermanentDetected\x12=\n" +
+	"\x1bhotspot_ip_binding_detected\x18\x04 \x01(\x05R\x18hotspotIpBindingDetected\x12)\n" +
+	"\x10vouchers_skipped\x18\x05 \x01(\x05R\x0fvouchersSkipped\"~\n" +
+	"\x16CommitCustomersRequest\x12$\n" +
+	"\tdevice_id\x18\x01 \x01(\tB\a\xbaH\x04r\x02\x10\x01R\bdeviceId\x12>\n" +
+	"\x04rows\x18\x02 \x03(\v2*.polyglot.v1.CustomerSubscriptionImportRowR\x04rows\"\x9a\x02\n" +
+	"\x17CommitCustomersResponse\x12+\n" +
+	"\x11customers_created\x18\x01 \x01(\x05R\x10customersCreated\x12+\n" +
+	"\x11customers_updated\x18\x02 \x01(\x05R\x10customersUpdated\x123\n" +
+	"\x15subscriptions_created\x18\x03 \x01(\x05R\x14subscriptionsCreated\x123\n" +
+	"\x15subscriptions_updated\x18\x04 \x01(\x05R\x14subscriptionsUpdated\x12#\n" +
+	"\rplans_created\x18\x05 \x01(\x05R\fplansCreated\x12\x16\n" +
+	"\x06errors\x18\x06 \x03(\tR\x06errors*=\n" +
 	"\fImportFormat\x12\x15\n" +
 	"\x11IMPORT_FORMAT_CSV\x10\x00\x12\x16\n" +
-	"\x12IMPORT_FORMAT_XLSX\x10\x012\xdf\x02\n" +
+	"\x12IMPORT_FORMAT_XLSX\x10\x012\xd7\x05\n" +
 	"\x0fIspAdminService\x12M\n" +
 	"\n" +
 	"ImportFile\x12\x1e.polyglot.v1.ImportFileRequest\x1a\x1f.polyglot.v1.ImportFileResponse\x12S\n" +
 	"\fImportRouter\x12 .polyglot.v1.ImportRouterRequest\x1a!.polyglot.v1.ImportRouterResponse\x12\\\n" +
 	"\x0fExportCustomers\x12#.polyglot.v1.ExportCustomersRequest\x1a$.polyglot.v1.ExportCustomersResponse\x12J\n" +
-	"\tReconcile\x12\x1d.polyglot.v1.ReconcileRequest\x1a\x1e.polyglot.v1.ReconcileResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
+	"\tReconcile\x12\x1d.polyglot.v1.ReconcileRequest\x1a\x1e.polyglot.v1.ReconcileResponse\x12\\\n" +
+	"\x0fPullRouterPlans\x12#.polyglot.v1.PullRouterPlansRequest\x1a$.polyglot.v1.PullRouterPlansResponse\x12P\n" +
+	"\vCommitPlans\x12\x1f.polyglot.v1.CommitPlansRequest\x1a .polyglot.v1.CommitPlansResponse\x12h\n" +
+	"\x13PullRouterCustomers\x12'.polyglot.v1.PullRouterCustomersRequest\x1a(.polyglot.v1.PullRouterCustomersResponse\x12\\\n" +
+	"\x0fCommitCustomers\x12#.polyglot.v1.CommitCustomersRequest\x1a$.polyglot.v1.CommitCustomersResponseB0Z.github.com/quixiq/polyglot/api/gen/v1;devicepbb\x06proto3"
 
 var (
 	file_v1_ispadmin_proto_rawDescOnce sync.Once
@@ -749,37 +1698,59 @@ func file_v1_ispadmin_proto_rawDescGZIP() []byte {
 }
 
 var file_v1_ispadmin_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_v1_ispadmin_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_v1_ispadmin_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_v1_ispadmin_proto_goTypes = []any{
-	(ImportFormat)(0),               // 0: polyglot.v1.ImportFormat
-	(*ImportFileRequest)(nil),       // 1: polyglot.v1.ImportFileRequest
-	(*ImportResult)(nil),            // 2: polyglot.v1.ImportResult
-	(*ImportFileResponse)(nil),      // 3: polyglot.v1.ImportFileResponse
-	(*ImportRouterRequest)(nil),     // 4: polyglot.v1.ImportRouterRequest
-	(*ImportRouterResponse)(nil),    // 5: polyglot.v1.ImportRouterResponse
-	(*ExportCustomersRequest)(nil),  // 6: polyglot.v1.ExportCustomersRequest
-	(*ExportCustomersResponse)(nil), // 7: polyglot.v1.ExportCustomersResponse
-	(*ReconcileRequest)(nil),        // 8: polyglot.v1.ReconcileRequest
-	(*ReconcileResponse)(nil),       // 9: polyglot.v1.ReconcileResponse
+	(ImportFormat)(0),                     // 0: polyglot.v1.ImportFormat
+	(*ImportFileRequest)(nil),             // 1: polyglot.v1.ImportFileRequest
+	(*ImportResult)(nil),                  // 2: polyglot.v1.ImportResult
+	(*ImportFileResponse)(nil),            // 3: polyglot.v1.ImportFileResponse
+	(*ImportRouterRequest)(nil),           // 4: polyglot.v1.ImportRouterRequest
+	(*ImportRouterResponse)(nil),          // 5: polyglot.v1.ImportRouterResponse
+	(*ExportCustomersRequest)(nil),        // 6: polyglot.v1.ExportCustomersRequest
+	(*ExportCustomersResponse)(nil),       // 7: polyglot.v1.ExportCustomersResponse
+	(*ReconcileRequest)(nil),              // 8: polyglot.v1.ReconcileRequest
+	(*ReconcileResponse)(nil),             // 9: polyglot.v1.ReconcileResponse
+	(*PlanImportRow)(nil),                 // 10: polyglot.v1.PlanImportRow
+	(*PullRouterPlansRequest)(nil),        // 11: polyglot.v1.PullRouterPlansRequest
+	(*PullRouterPlansResponse)(nil),       // 12: polyglot.v1.PullRouterPlansResponse
+	(*CommitPlansRequest)(nil),            // 13: polyglot.v1.CommitPlansRequest
+	(*CommitPlansResponse)(nil),           // 14: polyglot.v1.CommitPlansResponse
+	(*CustomerSubscriptionImportRow)(nil), // 15: polyglot.v1.CustomerSubscriptionImportRow
+	(*PullRouterCustomersRequest)(nil),    // 16: polyglot.v1.PullRouterCustomersRequest
+	(*PullRouterCustomersResponse)(nil),   // 17: polyglot.v1.PullRouterCustomersResponse
+	(*CommitCustomersRequest)(nil),        // 18: polyglot.v1.CommitCustomersRequest
+	(*CommitCustomersResponse)(nil),       // 19: polyglot.v1.CommitCustomersResponse
 }
 var file_v1_ispadmin_proto_depIdxs = []int32{
-	0, // 0: polyglot.v1.ImportFileRequest.format:type_name -> polyglot.v1.ImportFormat
-	2, // 1: polyglot.v1.ImportFileResponse.result:type_name -> polyglot.v1.ImportResult
-	2, // 2: polyglot.v1.ImportRouterResponse.result:type_name -> polyglot.v1.ImportResult
-	0, // 3: polyglot.v1.ExportCustomersRequest.format:type_name -> polyglot.v1.ImportFormat
-	1, // 4: polyglot.v1.IspAdminService.ImportFile:input_type -> polyglot.v1.ImportFileRequest
-	4, // 5: polyglot.v1.IspAdminService.ImportRouter:input_type -> polyglot.v1.ImportRouterRequest
-	6, // 6: polyglot.v1.IspAdminService.ExportCustomers:input_type -> polyglot.v1.ExportCustomersRequest
-	8, // 7: polyglot.v1.IspAdminService.Reconcile:input_type -> polyglot.v1.ReconcileRequest
-	3, // 8: polyglot.v1.IspAdminService.ImportFile:output_type -> polyglot.v1.ImportFileResponse
-	5, // 9: polyglot.v1.IspAdminService.ImportRouter:output_type -> polyglot.v1.ImportRouterResponse
-	7, // 10: polyglot.v1.IspAdminService.ExportCustomers:output_type -> polyglot.v1.ExportCustomersResponse
-	9, // 11: polyglot.v1.IspAdminService.Reconcile:output_type -> polyglot.v1.ReconcileResponse
-	8, // [8:12] is the sub-list for method output_type
-	4, // [4:8] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	0,  // 0: polyglot.v1.ImportFileRequest.format:type_name -> polyglot.v1.ImportFormat
+	2,  // 1: polyglot.v1.ImportFileResponse.result:type_name -> polyglot.v1.ImportResult
+	2,  // 2: polyglot.v1.ImportRouterResponse.result:type_name -> polyglot.v1.ImportResult
+	0,  // 3: polyglot.v1.ExportCustomersRequest.format:type_name -> polyglot.v1.ImportFormat
+	10, // 4: polyglot.v1.PullRouterPlansResponse.rows:type_name -> polyglot.v1.PlanImportRow
+	10, // 5: polyglot.v1.CommitPlansRequest.rows:type_name -> polyglot.v1.PlanImportRow
+	15, // 6: polyglot.v1.PullRouterCustomersResponse.rows:type_name -> polyglot.v1.CustomerSubscriptionImportRow
+	15, // 7: polyglot.v1.CommitCustomersRequest.rows:type_name -> polyglot.v1.CustomerSubscriptionImportRow
+	1,  // 8: polyglot.v1.IspAdminService.ImportFile:input_type -> polyglot.v1.ImportFileRequest
+	4,  // 9: polyglot.v1.IspAdminService.ImportRouter:input_type -> polyglot.v1.ImportRouterRequest
+	6,  // 10: polyglot.v1.IspAdminService.ExportCustomers:input_type -> polyglot.v1.ExportCustomersRequest
+	8,  // 11: polyglot.v1.IspAdminService.Reconcile:input_type -> polyglot.v1.ReconcileRequest
+	11, // 12: polyglot.v1.IspAdminService.PullRouterPlans:input_type -> polyglot.v1.PullRouterPlansRequest
+	13, // 13: polyglot.v1.IspAdminService.CommitPlans:input_type -> polyglot.v1.CommitPlansRequest
+	16, // 14: polyglot.v1.IspAdminService.PullRouterCustomers:input_type -> polyglot.v1.PullRouterCustomersRequest
+	18, // 15: polyglot.v1.IspAdminService.CommitCustomers:input_type -> polyglot.v1.CommitCustomersRequest
+	3,  // 16: polyglot.v1.IspAdminService.ImportFile:output_type -> polyglot.v1.ImportFileResponse
+	5,  // 17: polyglot.v1.IspAdminService.ImportRouter:output_type -> polyglot.v1.ImportRouterResponse
+	7,  // 18: polyglot.v1.IspAdminService.ExportCustomers:output_type -> polyglot.v1.ExportCustomersResponse
+	9,  // 19: polyglot.v1.IspAdminService.Reconcile:output_type -> polyglot.v1.ReconcileResponse
+	12, // 20: polyglot.v1.IspAdminService.PullRouterPlans:output_type -> polyglot.v1.PullRouterPlansResponse
+	14, // 21: polyglot.v1.IspAdminService.CommitPlans:output_type -> polyglot.v1.CommitPlansResponse
+	17, // 22: polyglot.v1.IspAdminService.PullRouterCustomers:output_type -> polyglot.v1.PullRouterCustomersResponse
+	19, // 23: polyglot.v1.IspAdminService.CommitCustomers:output_type -> polyglot.v1.CommitCustomersResponse
+	16, // [16:24] is the sub-list for method output_type
+	8,  // [8:16] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_v1_ispadmin_proto_init() }
@@ -793,7 +1764,7 @@ func file_v1_ispadmin_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_ispadmin_proto_rawDesc), len(file_v1_ispadmin_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   9,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

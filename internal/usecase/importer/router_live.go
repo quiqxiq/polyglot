@@ -3,55 +3,22 @@ package importer
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"strings"
+	"time"
 
 	"github.com/quixiq/polyglot/internal/port"
 )
-
-// extractPriceFromComment mencoba membaca harga dari komentar secret/user/binding
-// (konvensi Mikhmon / ISP menyimpan metadata harga pada comment).
-func extractPriceFromComment(comment string) float64 {
-	normalized := strings.ReplaceAll(comment, "Rp ", "Rp")
-	normalized = strings.ReplaceAll(normalized, "rp ", "rp")
-	normalized = strings.ReplaceAll(normalized, "RP ", "RP")
-	for _, part := range strings.Fields(normalized) {
-		lower := strings.ToLower(part)
-		if strings.HasPrefix(lower, "rp") {
-			clean := strings.NewReplacer("rp.", "", "rp", "", ".", "", ",", ".").Replace(lower)
-			if v, err := strconv.ParseFloat(clean, 64); err == nil {
-				return v
-			}
-		}
-	}
-	return 0
-}
-
-// extractRateFromProfileHint tidak tersedia di level secret (rate ada di
-// profil); dikembalikan kosong agar mengikuti profil paket.
-func extractRateFromProfileHint(string) string { return "" }
-
-// guessPhone mencari pola nomor di komentar.
-func guessPhone(comment string) string {
-	for _, part := range strings.Fields(comment) {
-		digits := strings.Map(func(r rune) rune {
-			if r >= '0' && r <= '9' || r == '+' {
-				return r
-			}
-			return -1
-		}, part)
-		if len(digits) >= 10 && strings.HasPrefix(digits, "08") ||
-			len(digits) >= 11 && strings.HasPrefix(digits, "628") {
-			return digits
-		}
-	}
-	return ""
-}
 
 // RouterSource membaca akun pelanggan langsung dari router (mikrotik gateway).
 type RouterSource struct {
 	gateway   port.PPPGateway
 	hotspotGw port.HotspotGateway
+	plans     port.ServicePlanRepository
+}
+
+// SetPlanRepository memasang repositori paket layanan untuk mencocokkan planID.
+func (s *RouterSource) SetPlanRepository(plans port.ServicePlanRepository) {
+	s.plans = plans
 }
 
 // NewRouterSource menginstansiasi router source untuk menarik data PPPoE dan Hotspot.
@@ -112,20 +79,22 @@ func (s *RouterSource) PullPPPoERows(ctx context.Context, driver port.DeviceDriv
 		comment := sec.Comment
 		price := extractPriceFromComment(comment)
 		rateLimit := extractRateFromProfileHint(comment)
+		custName := guessCustomerName(name, comment)
 		rows = append(rows, Row{
-			Name:         name, // Mikhmon konvensi: nama = username
-			Phone:        guessPhone(comment),
-			Address:      "",
-			ServiceType:  "PPPOE",
-			DeviceName:   deviceName,
-			Username:     name,
-			PlanName:     orValue(sec.Profile, "UNKNOWN"),
-			Price:        price,
-			RateLimit:    rateLimit,
-			Status:       status,
-			LocalAddress: sec.LocalAddress,
-			RemoteAddr:   sec.RemoteAddress,
-			RowNumber:    len(rows) + 2,
+			Name:          custName,
+			Phone:         guessPhone(comment),
+			Address:       "",
+			ServiceType:   "PPPOE",
+			DeviceName:    deviceName,
+			Username:      name,
+			PlanName:      orValue(sec.Profile, "UNKNOWN"),
+			RouterProfile: sec.Profile,
+			Price:         price,
+			RateLimit:     rateLimit,
+			Status:        status,
+			LocalAddress:  sec.LocalAddress,
+			RemoteAddr:    sec.RemoteAddress,
+			RowNumber:     len(rows) + 2,
 		})
 	}
 	return rows, nil
@@ -143,21 +112,21 @@ func (s *RouterSource) PullHotspotRows(
 		return nil, 0, 0, 0, nil
 	}
 
-	// 1. Ambil profil untuk memeriksa kehadiran skrip Mikhmon
+	permUsersDetected := 0
+	ipBindingsDetected := 0
+	vouchersSkipped := 0
+	rows := make([]Row, 0)
+
+	// 1. Baca profil hotspot untuk deteksi voucher Mikhmon
+	voucherProfiles := make(map[string]bool)
 	profiles, _ := s.hotspotGw.GetUserProfiles(ctx, driver)
-	voucherProfiles := make(map[string]bool, len(profiles))
 	for _, p := range profiles {
 		if IsVoucherProfile(p) {
 			voucherProfiles[p.Name] = true
 		}
 	}
 
-	rows := make([]Row, 0)
-	permUsersDetected := 0
-	ipBindingsDetected := 0
-	vouchersSkipped := 0
-
-	// 2. Tarik IP Binding (Static IP / Bypassed devices) bila diminta
+	// 2. Tarik IP Bindings jika diminta
 	if includeIPBindings {
 		bindings, err := s.hotspotGw.ListIPBindings(ctx, driver)
 		if err == nil {
@@ -175,22 +144,24 @@ func (s *RouterSource) PullHotspotRows(
 				if name == "" {
 					continue
 				}
+				custName := guessCustomerName(name, b.Comment)
 				rows = append(rows, Row{
-					Name:         name,
-					Phone:        guessPhone(b.Comment),
-					Address:      "",
-					ServiceType:  "HOTSPOT",
-					DeviceName:   deviceName,
-					Username:     name,
-					Password:     "",
-					PlanName:     "IP-BINDING",
-					Price:        extractPriceFromComment(b.Comment),
-					Status:       "ACTIVE",
-					LocalAddress: b.ToAddress,
-					RemoteAddr:   b.Address,
-					MACAddress:   b.MACAddress,
-					HotspotType:  "IP_BINDING",
-					RowNumber:    len(rows) + 2,
+					Name:          custName,
+					Phone:         guessPhone(b.Comment),
+					Address:       "",
+					ServiceType:   "HOTSPOT",
+					DeviceName:    deviceName,
+					Username:      name,
+					Password:      "",
+					PlanName:      "IP-BINDING",
+					RouterProfile: "IP-BINDING",
+					Price:         extractPriceFromComment(b.Comment),
+					Status:        "ACTIVE",
+					LocalAddress:  b.ToAddress,
+					RemoteAddr:    b.Address,
+					MACAddress:    b.MACAddress,
+					HotspotType:   "IP_BINDING",
+					RowNumber:     len(rows) + 2,
 				})
 				ipBindingsDetected++
 			}
@@ -236,22 +207,24 @@ func (s *RouterSource) PullHotspotRows(
 		if isVoucher {
 			hotspotType = "VOUCHER"
 		}
+		custName := guessCustomerName(name, comment)
 
 		rows = append(rows, Row{
-			Name:        name,
-			Phone:       guessPhone(comment),
-			Address:     "",
-			ServiceType: "HOTSPOT",
-			DeviceName:  deviceName,
-			Username:    name,
-			Password:    u.Password,
-			PlanName:    orValue(u.Profile, "default"),
-			Price:       price,
-			Status:      status,
-			RemoteAddr:  u.Address,
-			MACAddress:  u.MACAddress,
-			HotspotType: hotspotType,
-			RowNumber:   len(rows) + 2,
+			Name:          custName,
+			Phone:         guessPhone(comment),
+			Address:       "",
+			ServiceType:   "HOTSPOT",
+			DeviceName:    deviceName,
+			Username:      name,
+			Password:      u.Password,
+			PlanName:      orValue(u.Profile, "default"),
+			RouterProfile: u.Profile,
+			Price:         price,
+			Status:        status,
+			RemoteAddr:    u.Address,
+			MACAddress:    u.MACAddress,
+			HotspotType:   hotspotType,
+			RowNumber:     len(rows) + 2,
 		})
 	}
 
@@ -298,6 +271,115 @@ func (s *RouterSource) PullRouterRows(
 	}
 
 	return res, nil
+}
+
+// CustomerSubscriptionRow adalah baris akun pelanggan & langganan terstruktur
+// hasil pembacaan live router yang siap ditampilkan dan diedit pada tabel preview.
+type CustomerSubscriptionRow struct {
+	CustomerCode       string
+	Name               string
+	Phone              string
+	Email              string
+	Address            string
+	ServiceType        string
+	Username           string
+	Password           string
+	PlanName           string
+	PlanID             string
+	Price              float64
+	RateLimit          string
+	LocalAddress       string
+	RemoteAddress      string
+	MACAddress         string
+	HotspotType        string
+	BillingDay         int
+	DeviceID           string
+	DeviceName         string
+	Selected           bool
+	ValidationWarnings []string
+	RouterProfile      string
+}
+
+// PullRouterCustomerSubscriptionRows membaca akun router dan mengembalikannya dalam bentuk terstruktur.
+func (s *RouterSource) PullRouterCustomerSubscriptionRows(
+	ctx context.Context,
+	driver port.DeviceDriver,
+	deviceID, deviceName string,
+	opts PullOptions,
+) ([]CustomerSubscriptionRow, int, int, int, int, error) {
+	pullRes, err := s.PullRouterRows(ctx, driver, deviceName, opts)
+	if err != nil {
+		return nil, 0, 0, 0, 0, err
+	}
+
+	now := time.Now()
+	defaultBillingDay := now.Day()
+	if defaultBillingDay < 1 || defaultBillingDay > 31 {
+		defaultBillingDay = 1
+	}
+
+	rows := make([]CustomerSubscriptionRow, 0, len(pullRes.Rows))
+	for _, r := range pullRes.Rows {
+		warnings := make([]string, 0)
+		name := strings.TrimSpace(r.Name)
+		if name == "" {
+			name = r.Username
+		}
+
+		phone := strings.TrimSpace(r.Phone)
+		if phone == "" {
+			warnings = append(warnings, "Nomor telepon/WA belum diisi")
+		}
+
+		address := strings.TrimSpace(r.Address)
+		if address == "" {
+			address = fmt.Sprintf("Area Router %s", deviceName)
+			warnings = append(warnings, "Alamat default router")
+		}
+
+		bDay := r.BillingDay
+		if bDay < 1 || bDay > 31 {
+			bDay = defaultBillingDay
+		}
+
+		planID := ""
+		price := r.Price
+		if s.plans != nil && r.PlanName != "" {
+			if pl, err := s.plans.FindByName(ctx, "tenant-default", r.PlanName); err == nil && pl.ID != "" {
+				planID = pl.ID
+				if price == 0 && pl.Price > 0 {
+					price = pl.Price
+				}
+			}
+		}
+
+		rows = append(rows, CustomerSubscriptionRow{
+			CustomerCode:       r.CustomerCode,
+			Name:               name,
+			Phone:              phone,
+			Email:              r.Email,
+			Address:            address,
+			ServiceType:        r.ServiceType,
+			Username:           r.Username,
+			Password:           r.Password,
+			PlanName:           r.PlanName,
+			PlanID:             planID,
+			Price:              price,
+			RateLimit:          r.RateLimit,
+			LocalAddress:       r.LocalAddress,
+			RemoteAddress:      r.RemoteAddr,
+			MACAddress:         r.MACAddress,
+			HotspotType:        r.HotspotType,
+			BillingDay:         bDay,
+			DeviceID:           deviceID,
+			DeviceName:         deviceName,
+			Selected:           true,
+			ValidationWarnings: warnings,
+			RouterProfile:      orValue(r.RouterProfile, r.PlanName),
+		})
+	}
+
+	return rows, pullRes.PPPoEDetected, pullRes.HotspotPermanentDetected, pullRes.HotspotIPBindingDetected, pullRes.VouchersSkipped, nil
 }
 
 // Reconciler membandingkan DB (langganan provisioned per device) vs router.

@@ -8,6 +8,8 @@ import {
   type ImportFileRequest,
   type ImportRouterRequest,
   type ExportCustomersRequest,
+  type PullRouterCustomersRequest,
+  type CommitCustomersRequest,
 } from '@/gen/v1/ispadmin_pb'
 import { customerClient, ispAdminClient } from '@/lib/api-client'
 import { customerKeys } from './keys'
@@ -46,7 +48,10 @@ export function useFindCustomerByPhoneQuery(phone: string, enabled = false) {
   })
 }
 
-export function useFindCustomerByCodeQuery(customerCode: string, enabled = false) {
+export function useFindCustomerByCodeQuery(
+  customerCode: string,
+  enabled = false
+) {
   return useQuery({
     queryKey: customerKeys.lookup('code', customerCode),
     queryFn: async () => {
@@ -57,7 +62,10 @@ export function useFindCustomerByCodeQuery(customerCode: string, enabled = false
   })
 }
 
-export function useFindCustomerByPortalCodeQuery(portalAccessCode: string, enabled = false) {
+export function useFindCustomerByPortalCodeQuery(
+  portalAccessCode: string,
+  enabled = false
+) {
   return useQuery({
     queryKey: customerKeys.lookup('portal', portalAccessCode),
     queryFn: async () => {
@@ -91,7 +99,9 @@ export function useUpdateCustomerMutation() {
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: customerKeys.all })
       if (vars.customer?.id) {
-        queryClient.invalidateQueries({ queryKey: customerKeys.detail(vars.customer.id) })
+        queryClient.invalidateQueries({
+          queryKey: customerKeys.detail(vars.customer.id),
+        })
       }
     },
   })
@@ -158,6 +168,29 @@ export function useExportCustomersMutation() {
   return useMutation({
     mutationFn: async (req: ExportCustomersRequest) => {
       return await ispAdminClient.exportCustomers(req)
+    },
+  })
+}
+
+export function usePullRouterCustomersMutation() {
+  return useMutation({
+    mutationFn: async (req: PullRouterCustomersRequest) => {
+      return await ispAdminClient.pullRouterCustomers(req)
+    },
+  })
+}
+
+export function useCommitCustomersMutation() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (req: CommitCustomersRequest) => {
+      return await ispAdminClient.commitCustomers(req)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: customerKeys.all })
+      queryClient.invalidateQueries({ queryKey: ['billing'] })
+      queryClient.invalidateQueries({ queryKey: ['subscriptions'] })
     },
   })
 }

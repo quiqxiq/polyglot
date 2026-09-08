@@ -546,3 +546,737 @@ export class ReconcileResponse extends Message<ReconcileResponse> {
   }
 }
 
+/**
+ * @generated from message polyglot.v1.PlanImportRow
+ */
+export class PlanImportRow extends Message<PlanImportRow> {
+  /**
+   * Nama Paket Layanan Komersial (Editable)
+   *
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  /**
+   * "PPPOE" | "HOTSPOT"
+   *
+   * @generated from field: string service_type = 2;
+   */
+  serviceType = "";
+
+  /**
+   * e.g. "5M/10M"
+   *
+   * @generated from field: string rate_limit = 3;
+   */
+  rateLimit = "";
+
+  /**
+   * @generated from field: int32 bandwidth_download_kbps = 4;
+   */
+  bandwidthDownloadKbps = 0;
+
+  /**
+   * @generated from field: int32 bandwidth_upload_kbps = 5;
+   */
+  bandwidthUploadKbps = 0;
+
+  /**
+   * @generated from field: double price = 6;
+   */
+  price = 0;
+
+  /**
+   * @generated from field: string parent_queue = 7;
+   */
+  parentQueue = "";
+
+  /**
+   * @generated from field: string address_list = 8;
+   */
+  addressList = "";
+
+  /**
+   * @generated from field: string ip_pool_name = 9;
+   */
+  ipPoolName = "";
+
+  /**
+   * @generated from field: int32 shared_users = 10;
+   */
+  sharedUsers = 0;
+
+  /**
+   * @generated from field: string session_timeout = 11;
+   */
+  sessionTimeout = "";
+
+  /**
+   * @generated from field: string idle_timeout = 12;
+   */
+  idleTimeout = "";
+
+  /**
+   * True jika belum ada di database
+   *
+   * @generated from field: bool is_new = 13;
+   */
+  isNew = false;
+
+  /**
+   * Flag seleksi UI
+   *
+   * @generated from field: bool selected = 14;
+   */
+  selected = false;
+
+  /**
+   * Nama Profil Teknis di Router MikroTik (Read-only)
+   *
+   * @generated from field: string router_profile = 15;
+   */
+  routerProfile = "";
+
+  constructor(data?: PartialMessage<PlanImportRow>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PlanImportRow";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "service_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "rate_limit", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "bandwidth_download_kbps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "bandwidth_upload_kbps", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 6, name: "price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 7, name: "parent_queue", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "address_list", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "ip_pool_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 10, name: "shared_users", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 11, name: "session_timeout", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 12, name: "idle_timeout", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 13, name: "is_new", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 14, name: "selected", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 15, name: "router_profile", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PlanImportRow {
+    return new PlanImportRow().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PlanImportRow {
+    return new PlanImportRow().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PlanImportRow {
+    return new PlanImportRow().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PlanImportRow | PlainMessage<PlanImportRow> | undefined, b: PlanImportRow | PlainMessage<PlanImportRow> | undefined): boolean {
+    return proto3.util.equals(PlanImportRow, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.PullRouterPlansRequest
+ */
+export class PullRouterPlansRequest extends Message<PullRouterPlansRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * "PPPOE", "HOTSPOT", "ALL"
+   *
+   * @generated from field: string service_type = 2;
+   */
+  serviceType = "";
+
+  constructor(data?: PartialMessage<PullRouterPlansRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PullRouterPlansRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "service_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PullRouterPlansRequest {
+    return new PullRouterPlansRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PullRouterPlansRequest {
+    return new PullRouterPlansRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PullRouterPlansRequest {
+    return new PullRouterPlansRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PullRouterPlansRequest | PlainMessage<PullRouterPlansRequest> | undefined, b: PullRouterPlansRequest | PlainMessage<PullRouterPlansRequest> | undefined): boolean {
+    return proto3.util.equals(PullRouterPlansRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.PullRouterPlansResponse
+ */
+export class PullRouterPlansResponse extends Message<PullRouterPlansResponse> {
+  /**
+   * @generated from field: repeated polyglot.v1.PlanImportRow rows = 1;
+   */
+  rows: PlanImportRow[] = [];
+
+  /**
+   * @generated from field: int32 pppoe_detected = 2;
+   */
+  pppoeDetected = 0;
+
+  /**
+   * @generated from field: int32 hotspot_detected = 3;
+   */
+  hotspotDetected = 0;
+
+  constructor(data?: PartialMessage<PullRouterPlansResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PullRouterPlansResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "rows", kind: "message", T: PlanImportRow, repeated: true },
+    { no: 2, name: "pppoe_detected", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "hotspot_detected", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PullRouterPlansResponse {
+    return new PullRouterPlansResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PullRouterPlansResponse {
+    return new PullRouterPlansResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PullRouterPlansResponse {
+    return new PullRouterPlansResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PullRouterPlansResponse | PlainMessage<PullRouterPlansResponse> | undefined, b: PullRouterPlansResponse | PlainMessage<PullRouterPlansResponse> | undefined): boolean {
+    return proto3.util.equals(PullRouterPlansResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CommitPlansRequest
+ */
+export class CommitPlansRequest extends Message<CommitPlansRequest> {
+  /**
+   * @generated from field: repeated polyglot.v1.PlanImportRow rows = 1;
+   */
+  rows: PlanImportRow[] = [];
+
+  constructor(data?: PartialMessage<CommitPlansRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CommitPlansRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "rows", kind: "message", T: PlanImportRow, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CommitPlansRequest {
+    return new CommitPlansRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CommitPlansRequest {
+    return new CommitPlansRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CommitPlansRequest {
+    return new CommitPlansRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CommitPlansRequest | PlainMessage<CommitPlansRequest> | undefined, b: CommitPlansRequest | PlainMessage<CommitPlansRequest> | undefined): boolean {
+    return proto3.util.equals(CommitPlansRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CommitPlansResponse
+ */
+export class CommitPlansResponse extends Message<CommitPlansResponse> {
+  /**
+   * @generated from field: int32 plans_created = 1;
+   */
+  plansCreated = 0;
+
+  /**
+   * @generated from field: int32 plans_updated = 2;
+   */
+  plansUpdated = 0;
+
+  /**
+   * @generated from field: repeated string errors = 3;
+   */
+  errors: string[] = [];
+
+  constructor(data?: PartialMessage<CommitPlansResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CommitPlansResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "plans_created", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 2, name: "plans_updated", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "errors", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CommitPlansResponse {
+    return new CommitPlansResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CommitPlansResponse {
+    return new CommitPlansResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CommitPlansResponse {
+    return new CommitPlansResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CommitPlansResponse | PlainMessage<CommitPlansResponse> | undefined, b: CommitPlansResponse | PlainMessage<CommitPlansResponse> | undefined): boolean {
+    return proto3.util.equals(CommitPlansResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CustomerSubscriptionImportRow
+ */
+export class CustomerSubscriptionImportRow extends Message<CustomerSubscriptionImportRow> {
+  /**
+   * @generated from field: string customer_code = 1;
+   */
+  customerCode = "";
+
+  /**
+   * Nama Lengkap Pelanggan (Masuk ke tabel customers.name)
+   *
+   * @generated from field: string name = 2;
+   */
+  name = "";
+
+  /**
+   * No WhatsApp (Editable)
+   *
+   * @generated from field: string phone = 3;
+   */
+  phone = "";
+
+  /**
+   * Email (Editable)
+   *
+   * @generated from field: string email = 4;
+   */
+  email = "";
+
+  /**
+   * Alamat Lengkap (Editable)
+   *
+   * @generated from field: string address = 5;
+   */
+  address = "";
+
+  /**
+   * "PPPOE" | "HOTSPOT"
+   *
+   * @generated from field: string service_type = 6;
+   */
+  serviceType = "";
+
+  /**
+   * Username Login Router MikroTik (Masuk ke subscriptions.remote_username)
+   *
+   * @generated from field: string username = 7;
+   */
+  username = "";
+
+  /**
+   * Password secret/user
+   *
+   * @generated from field: string password = 8;
+   */
+  password = "";
+
+  /**
+   * Nama Paket Layanan (Ditampilkan di UI)
+   *
+   * @generated from field: string plan_name = 9;
+   */
+  planName = "";
+
+  /**
+   * ID Plan di DB (diselesaikan otomatis di background)
+   *
+   * @generated from field: string plan_id = 10;
+   */
+  planId = "";
+
+  /**
+   * Harga tagihan bulanan (Editable)
+   *
+   * @generated from field: double price = 11;
+   */
+  price = 0;
+
+  /**
+   * @generated from field: string rate_limit = 12;
+   */
+  rateLimit = "";
+
+  /**
+   * @generated from field: string local_address = 13;
+   */
+  localAddress = "";
+
+  /**
+   * @generated from field: string remote_address = 14;
+   */
+  remoteAddress = "";
+
+  /**
+   * @generated from field: string mac_address = 15;
+   */
+  macAddress = "";
+
+  /**
+   * "PERMANENT_USER" | "IP_BINDING" | "VOUCHER"
+   *
+   * @generated from field: string hotspot_type = 16;
+   */
+  hotspotType = "";
+
+  /**
+   * Hari jatuh tempo 1-31 (Editable)
+   *
+   * @generated from field: int32 billing_day = 17;
+   */
+  billingDay = 0;
+
+  /**
+   * @generated from field: string device_id = 18;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: string device_name = 19;
+   */
+  deviceName = "";
+
+  /**
+   * Checkbox di preview table
+   *
+   * @generated from field: bool selected = 20;
+   */
+  selected = false;
+
+  /**
+   * Peringatan lunak (misal: "No HP belum diisi")
+   *
+   * @generated from field: repeated string validation_warnings = 21;
+   */
+  validationWarnings: string[] = [];
+
+  /**
+   * Nama Profil Teknis di Router MikroTik (Read-only rujukan)
+   *
+   * @generated from field: string router_profile = 22;
+   */
+  routerProfile = "";
+
+  constructor(data?: PartialMessage<CustomerSubscriptionImportRow>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CustomerSubscriptionImportRow";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "customer_code", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "phone", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "email", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "service_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "username", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "password", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "plan_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 10, name: "plan_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 11, name: "price", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+    { no: 12, name: "rate_limit", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 13, name: "local_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 14, name: "remote_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 15, name: "mac_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 16, name: "hotspot_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 17, name: "billing_day", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 18, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 19, name: "device_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 20, name: "selected", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 21, name: "validation_warnings", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 22, name: "router_profile", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CustomerSubscriptionImportRow {
+    return new CustomerSubscriptionImportRow().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CustomerSubscriptionImportRow {
+    return new CustomerSubscriptionImportRow().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CustomerSubscriptionImportRow {
+    return new CustomerSubscriptionImportRow().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CustomerSubscriptionImportRow | PlainMessage<CustomerSubscriptionImportRow> | undefined, b: CustomerSubscriptionImportRow | PlainMessage<CustomerSubscriptionImportRow> | undefined): boolean {
+    return proto3.util.equals(CustomerSubscriptionImportRow, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.PullRouterCustomersRequest
+ */
+export class PullRouterCustomersRequest extends Message<PullRouterCustomersRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * "PPPOE", "HOTSPOT", "ALL"
+   *
+   * @generated from field: string service_type = 2;
+   */
+  serviceType = "";
+
+  /**
+   * @generated from field: bool include_ip_bindings = 3;
+   */
+  includeIpBindings = false;
+
+  /**
+   * @generated from field: bool include_vouchers = 4;
+   */
+  includeVouchers = false;
+
+  constructor(data?: PartialMessage<PullRouterCustomersRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PullRouterCustomersRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "service_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "include_ip_bindings", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 4, name: "include_vouchers", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PullRouterCustomersRequest {
+    return new PullRouterCustomersRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PullRouterCustomersRequest {
+    return new PullRouterCustomersRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PullRouterCustomersRequest {
+    return new PullRouterCustomersRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PullRouterCustomersRequest | PlainMessage<PullRouterCustomersRequest> | undefined, b: PullRouterCustomersRequest | PlainMessage<PullRouterCustomersRequest> | undefined): boolean {
+    return proto3.util.equals(PullRouterCustomersRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.PullRouterCustomersResponse
+ */
+export class PullRouterCustomersResponse extends Message<PullRouterCustomersResponse> {
+  /**
+   * @generated from field: repeated polyglot.v1.CustomerSubscriptionImportRow rows = 1;
+   */
+  rows: CustomerSubscriptionImportRow[] = [];
+
+  /**
+   * @generated from field: int32 pppoe_detected = 2;
+   */
+  pppoeDetected = 0;
+
+  /**
+   * @generated from field: int32 hotspot_permanent_detected = 3;
+   */
+  hotspotPermanentDetected = 0;
+
+  /**
+   * @generated from field: int32 hotspot_ip_binding_detected = 4;
+   */
+  hotspotIpBindingDetected = 0;
+
+  /**
+   * @generated from field: int32 vouchers_skipped = 5;
+   */
+  vouchersSkipped = 0;
+
+  constructor(data?: PartialMessage<PullRouterCustomersResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.PullRouterCustomersResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "rows", kind: "message", T: CustomerSubscriptionImportRow, repeated: true },
+    { no: 2, name: "pppoe_detected", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "hotspot_permanent_detected", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "hotspot_ip_binding_detected", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "vouchers_skipped", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PullRouterCustomersResponse {
+    return new PullRouterCustomersResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PullRouterCustomersResponse {
+    return new PullRouterCustomersResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PullRouterCustomersResponse {
+    return new PullRouterCustomersResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PullRouterCustomersResponse | PlainMessage<PullRouterCustomersResponse> | undefined, b: PullRouterCustomersResponse | PlainMessage<PullRouterCustomersResponse> | undefined): boolean {
+    return proto3.util.equals(PullRouterCustomersResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CommitCustomersRequest
+ */
+export class CommitCustomersRequest extends Message<CommitCustomersRequest> {
+  /**
+   * @generated from field: string device_id = 1;
+   */
+  deviceId = "";
+
+  /**
+   * @generated from field: repeated polyglot.v1.CustomerSubscriptionImportRow rows = 2;
+   */
+  rows: CustomerSubscriptionImportRow[] = [];
+
+  constructor(data?: PartialMessage<CommitCustomersRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CommitCustomersRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "rows", kind: "message", T: CustomerSubscriptionImportRow, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CommitCustomersRequest {
+    return new CommitCustomersRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CommitCustomersRequest {
+    return new CommitCustomersRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CommitCustomersRequest {
+    return new CommitCustomersRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CommitCustomersRequest | PlainMessage<CommitCustomersRequest> | undefined, b: CommitCustomersRequest | PlainMessage<CommitCustomersRequest> | undefined): boolean {
+    return proto3.util.equals(CommitCustomersRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message polyglot.v1.CommitCustomersResponse
+ */
+export class CommitCustomersResponse extends Message<CommitCustomersResponse> {
+  /**
+   * @generated from field: int32 customers_created = 1;
+   */
+  customersCreated = 0;
+
+  /**
+   * @generated from field: int32 customers_updated = 2;
+   */
+  customersUpdated = 0;
+
+  /**
+   * @generated from field: int32 subscriptions_created = 3;
+   */
+  subscriptionsCreated = 0;
+
+  /**
+   * @generated from field: int32 subscriptions_updated = 4;
+   */
+  subscriptionsUpdated = 0;
+
+  /**
+   * @generated from field: int32 plans_created = 5;
+   */
+  plansCreated = 0;
+
+  /**
+   * @generated from field: repeated string errors = 6;
+   */
+  errors: string[] = [];
+
+  constructor(data?: PartialMessage<CommitCustomersResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "polyglot.v1.CommitCustomersResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "customers_created", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 2, name: "customers_updated", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "subscriptions_created", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "subscriptions_updated", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 5, name: "plans_created", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 6, name: "errors", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CommitCustomersResponse {
+    return new CommitCustomersResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CommitCustomersResponse {
+    return new CommitCustomersResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CommitCustomersResponse {
+    return new CommitCustomersResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CommitCustomersResponse | PlainMessage<CommitCustomersResponse> | undefined, b: CommitCustomersResponse | PlainMessage<CommitCustomersResponse> | undefined): boolean {
+    return proto3.util.equals(CommitCustomersResponse, a, b);
+  }
+}
+

@@ -19,10 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	IspAdminService_ImportFile_FullMethodName      = "/polyglot.v1.IspAdminService/ImportFile"
-	IspAdminService_ImportRouter_FullMethodName    = "/polyglot.v1.IspAdminService/ImportRouter"
-	IspAdminService_ExportCustomers_FullMethodName = "/polyglot.v1.IspAdminService/ExportCustomers"
-	IspAdminService_Reconcile_FullMethodName       = "/polyglot.v1.IspAdminService/Reconcile"
+	IspAdminService_ImportFile_FullMethodName          = "/polyglot.v1.IspAdminService/ImportFile"
+	IspAdminService_ImportRouter_FullMethodName        = "/polyglot.v1.IspAdminService/ImportRouter"
+	IspAdminService_ExportCustomers_FullMethodName     = "/polyglot.v1.IspAdminService/ExportCustomers"
+	IspAdminService_Reconcile_FullMethodName           = "/polyglot.v1.IspAdminService/Reconcile"
+	IspAdminService_PullRouterPlans_FullMethodName     = "/polyglot.v1.IspAdminService/PullRouterPlans"
+	IspAdminService_CommitPlans_FullMethodName         = "/polyglot.v1.IspAdminService/CommitPlans"
+	IspAdminService_PullRouterCustomers_FullMethodName = "/polyglot.v1.IspAdminService/PullRouterCustomers"
+	IspAdminService_CommitCustomers_FullMethodName     = "/polyglot.v1.IspAdminService/CommitCustomers"
 )
 
 // IspAdminServiceClient is the client API for IspAdminService service.
@@ -33,6 +37,11 @@ type IspAdminServiceClient interface {
 	ImportRouter(ctx context.Context, in *ImportRouterRequest, opts ...grpc.CallOption) (*ImportRouterResponse, error)
 	ExportCustomers(ctx context.Context, in *ExportCustomersRequest, opts ...grpc.CallOption) (*ExportCustomersResponse, error)
 	Reconcile(ctx context.Context, in *ReconcileRequest, opts ...grpc.CallOption) (*ReconcileResponse, error)
+	// Dedicated interactive import RPCs
+	PullRouterPlans(ctx context.Context, in *PullRouterPlansRequest, opts ...grpc.CallOption) (*PullRouterPlansResponse, error)
+	CommitPlans(ctx context.Context, in *CommitPlansRequest, opts ...grpc.CallOption) (*CommitPlansResponse, error)
+	PullRouterCustomers(ctx context.Context, in *PullRouterCustomersRequest, opts ...grpc.CallOption) (*PullRouterCustomersResponse, error)
+	CommitCustomers(ctx context.Context, in *CommitCustomersRequest, opts ...grpc.CallOption) (*CommitCustomersResponse, error)
 }
 
 type ispAdminServiceClient struct {
@@ -83,6 +92,46 @@ func (c *ispAdminServiceClient) Reconcile(ctx context.Context, in *ReconcileRequ
 	return out, nil
 }
 
+func (c *ispAdminServiceClient) PullRouterPlans(ctx context.Context, in *PullRouterPlansRequest, opts ...grpc.CallOption) (*PullRouterPlansResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PullRouterPlansResponse)
+	err := c.cc.Invoke(ctx, IspAdminService_PullRouterPlans_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ispAdminServiceClient) CommitPlans(ctx context.Context, in *CommitPlansRequest, opts ...grpc.CallOption) (*CommitPlansResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CommitPlansResponse)
+	err := c.cc.Invoke(ctx, IspAdminService_CommitPlans_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ispAdminServiceClient) PullRouterCustomers(ctx context.Context, in *PullRouterCustomersRequest, opts ...grpc.CallOption) (*PullRouterCustomersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PullRouterCustomersResponse)
+	err := c.cc.Invoke(ctx, IspAdminService_PullRouterCustomers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ispAdminServiceClient) CommitCustomers(ctx context.Context, in *CommitCustomersRequest, opts ...grpc.CallOption) (*CommitCustomersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CommitCustomersResponse)
+	err := c.cc.Invoke(ctx, IspAdminService_CommitCustomers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IspAdminServiceServer is the server API for IspAdminService service.
 // All implementations must embed UnimplementedIspAdminServiceServer
 // for forward compatibility.
@@ -91,6 +140,11 @@ type IspAdminServiceServer interface {
 	ImportRouter(context.Context, *ImportRouterRequest) (*ImportRouterResponse, error)
 	ExportCustomers(context.Context, *ExportCustomersRequest) (*ExportCustomersResponse, error)
 	Reconcile(context.Context, *ReconcileRequest) (*ReconcileResponse, error)
+	// Dedicated interactive import RPCs
+	PullRouterPlans(context.Context, *PullRouterPlansRequest) (*PullRouterPlansResponse, error)
+	CommitPlans(context.Context, *CommitPlansRequest) (*CommitPlansResponse, error)
+	PullRouterCustomers(context.Context, *PullRouterCustomersRequest) (*PullRouterCustomersResponse, error)
+	CommitCustomers(context.Context, *CommitCustomersRequest) (*CommitCustomersResponse, error)
 	mustEmbedUnimplementedIspAdminServiceServer()
 }
 
@@ -112,6 +166,18 @@ func (UnimplementedIspAdminServiceServer) ExportCustomers(context.Context, *Expo
 }
 func (UnimplementedIspAdminServiceServer) Reconcile(context.Context, *ReconcileRequest) (*ReconcileResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Reconcile not implemented")
+}
+func (UnimplementedIspAdminServiceServer) PullRouterPlans(context.Context, *PullRouterPlansRequest) (*PullRouterPlansResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method PullRouterPlans not implemented")
+}
+func (UnimplementedIspAdminServiceServer) CommitPlans(context.Context, *CommitPlansRequest) (*CommitPlansResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CommitPlans not implemented")
+}
+func (UnimplementedIspAdminServiceServer) PullRouterCustomers(context.Context, *PullRouterCustomersRequest) (*PullRouterCustomersResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method PullRouterCustomers not implemented")
+}
+func (UnimplementedIspAdminServiceServer) CommitCustomers(context.Context, *CommitCustomersRequest) (*CommitCustomersResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CommitCustomers not implemented")
 }
 func (UnimplementedIspAdminServiceServer) mustEmbedUnimplementedIspAdminServiceServer() {}
 func (UnimplementedIspAdminServiceServer) testEmbeddedByValue()                         {}
@@ -206,6 +272,78 @@ func _IspAdminService_Reconcile_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IspAdminService_PullRouterPlans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PullRouterPlansRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IspAdminServiceServer).PullRouterPlans(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IspAdminService_PullRouterPlans_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IspAdminServiceServer).PullRouterPlans(ctx, req.(*PullRouterPlansRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IspAdminService_CommitPlans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CommitPlansRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IspAdminServiceServer).CommitPlans(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IspAdminService_CommitPlans_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IspAdminServiceServer).CommitPlans(ctx, req.(*CommitPlansRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IspAdminService_PullRouterCustomers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PullRouterCustomersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IspAdminServiceServer).PullRouterCustomers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IspAdminService_PullRouterCustomers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IspAdminServiceServer).PullRouterCustomers(ctx, req.(*PullRouterCustomersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IspAdminService_CommitCustomers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CommitCustomersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IspAdminServiceServer).CommitCustomers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IspAdminService_CommitCustomers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IspAdminServiceServer).CommitCustomers(ctx, req.(*CommitCustomersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IspAdminService_ServiceDesc is the grpc.ServiceDesc for IspAdminService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +366,22 @@ var IspAdminService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Reconcile",
 			Handler:    _IspAdminService_Reconcile_Handler,
+		},
+		{
+			MethodName: "PullRouterPlans",
+			Handler:    _IspAdminService_PullRouterPlans_Handler,
+		},
+		{
+			MethodName: "CommitPlans",
+			Handler:    _IspAdminService_CommitPlans_Handler,
+		},
+		{
+			MethodName: "PullRouterCustomers",
+			Handler:    _IspAdminService_PullRouterCustomers_Handler,
+		},
+		{
+			MethodName: "CommitCustomers",
+			Handler:    _IspAdminService_CommitCustomers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
