@@ -4,6 +4,7 @@
 -- tanpa migrasi data lama (keputusan owner): DROP + CREATE deterministik.
 
 DROP TABLE IF EXISTS plans;
+DROP TABLE IF EXISTS service_plans CASCADE;
 
 CREATE TABLE service_plans (
     id                      TEXT PRIMARY KEY,
