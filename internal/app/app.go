@@ -10,6 +10,7 @@ import (
 	"github.com/quixiq/polyglot/internal/adapter/auth"
 	llmadapter "github.com/quixiq/polyglot/internal/adapter/llm"
 	"github.com/quixiq/polyglot/internal/adapter/llm/genkit"
+	"github.com/quixiq/polyglot/internal/adapter/midtrans"
 	"github.com/quixiq/polyglot/internal/adapter/postgres"
 	"github.com/quixiq/polyglot/internal/adapter/provisioner"
 	redisAdapter "github.com/quixiq/polyglot/internal/adapter/redis"
@@ -17,6 +18,7 @@ import (
 	tripay "github.com/quixiq/polyglot/internal/adapter/tripay"
 	waAdapter "github.com/quixiq/polyglot/internal/adapter/whatsapp"
 	wsAdapter "github.com/quixiq/polyglot/internal/adapter/ws"
+	"github.com/quixiq/polyglot/internal/adapter/xendit"
 	"github.com/quixiq/polyglot/internal/config"
 	"github.com/quixiq/polyglot/internal/domain/device"
 	domainllm "github.com/quixiq/polyglot/internal/domain/llm"
@@ -128,7 +130,8 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		return llmadapter.NewProvider(c, cfg.EncryptionKey)
 	}
 	userRepo := postgres.NewUserRepository(pgStore.DB())
-	settingRepo := postgres.NewSettingRepository(pgStore.DB())
+	settingRepo := postgres.NewSettingRepository(pgStore.DB()).
+		WithVault(postgres.NewCredentialVault(pgStore.DB(), cfg.EncryptionKey))
 	botEngine := botUC.NewEngine(
 		redisStore,
 		waManager,
@@ -188,6 +191,8 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	paymentProc.OnPaid = provisioner.BuildOnPaidRestore(accountMgr, subRepo, planRepo, settingRepo)
 	waSender := waAdapter.NewSenderAdapter(waManager, pgStore.FindAllSessions)
 	tripayAdapter := tripay.NewAdapter(settingRepo)
+	midtransAdapter := midtrans.NewAdapter(settingRepo)
+	xenditAdapter := xendit.NewAdapter(settingRepo)
 
 	// ─── 2. Use Cases ───────────────────────────────────────────────────────
 	authUseCase := authUC.NewAuthUseCase(userRepo, jwtService, refreshSvc, redisStore, casbinEnforcer)
@@ -201,21 +206,25 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	activeSessionsUC := networkUC.NewActiveSessionsUseCase(sessionGateway)
 	pppUseCase := pppUC.New(sessionGateway)
 
-	invUC := billingUC.NewInvoiceUseCase(invRepo)
+	invUC := billingUC.NewInvoiceUseCase(invRepo).
+		WithCanceller(postgres.NewInvoiceCanceller(pgStore.DB())).
+		WithSettings(settingRepo)
 	planUCase := planUC.NewManagePlanUseCase(planRepo, subRepo, accountMgr)
-	subUCase := subUC.NewManageSubscriptionUseCase(subRepo, planRepo, customerRepo, repo, accountMgr, auditLogRepo, invRepo)
+	subUCase := subUC.NewManageSubscriptionUseCase(subRepo, planRepo, customerRepo, repo, accountMgr, auditLogRepo, invRepo).WithSettings(settingRepo)
 	checkoutUC := billingUC.NewCheckoutUseCase(invRepo, customerRepo, paymentProc)
 	lifecycleUC := subUC.NewLifecycleUseCase(subRepo, planRepo, accountMgr, auditLogRepo).WithSettings(settingRepo)
 	runBillingUC := billingUC.NewRunBillingUseCase(subRepo, planRepo, invRepo).WithSettings(settingRepo)
-	chargeUC := billingUC.NewGatewayChargeUseCase(invRepo, customerRepo, gwtxRepo, tripayAdapter, paymentProc, settingRepo)
+	gatewayRegistry := billingUC.NewGatewayRegistry(settingRepo, tripayAdapter, midtransAdapter, xenditAdapter)
+	chargeUC := billingUC.NewGatewayChargeUseCaseWithRegistry(invRepo, customerRepo, gwtxRepo, gatewayRegistry, paymentProc, settingRepo)
 
 	regManagerUC := registrationUC.NewManageRegistrationUseCase(regRepo, notifRepo, auditLogRepo)
 	regConvertUC := registrationUC.NewConvertUseCase(registrationUC.ConvertDeps{
 		Repo: regRepo, Plans: planRepo, Customers: customerRepo,
-		Subs: subRepo, Invoices: invRepo, Audit: auditLogRepo, Manager: accountMgr,
+		Subs: subRepo, Audit: auditLogRepo, Manager: accountMgr, Settings: settingRepo,
+		Writer: postgres.NewConversionWriter(pgStore.DB(), vault),
 	})
 
-	portalUCase := portalUC.NewUseCase(portalRepo, customerRepo, subRepo, invRepo, paymentReader, waSender, settingRepo)
+	portalUCase := portalUC.NewUseCase(portalRepo, customerRepo, subRepo, invRepo, paymentReader, waSender, notifRepo, settingRepo)
 
 	upsertImport := importer.NewUpsertUseCase(planRepo, customerRepo, subRepo, auditLogRepo, "")
 	upsertImport.SetDeviceResolver(func(deviceName string) (string, bool) {
@@ -293,6 +302,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		streamGW:               streamGW,
 		userRepo:               userRepo,
 		customerRepo:           customerRepo,
+		deviceRepo:             repo,
 		regRepo:                regRepo,
 		cashbookUseCase:        cashbookUseCase,
 		notifRepo:              notifRepo,
@@ -342,6 +352,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		isolateWorker := billingUC.NewIsolateWorker(
 			subRepo, invRepo, customerRepo, planRepo, accountMgr, notifRepo, settingRepo,
 		)
+		reminderWorker := billingUC.NewReminderWorker(subRepo, invRepo, customerRepo, notifRepo)
 		waWorker := notificationUC.NewWASenderWorker(notifRepo, waSender, settingRepo)
 		snapshotJob := func(ctx context.Context) error {
 			return reportingRepo.RecomputeDaily(ctx, "tenant-default", timeNowUTC())
@@ -349,11 +360,13 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		sched = newScheduler(schedulerJobs{
 			billing:  runBillingUC,
 			isolate:  isolateWorker,
+			reminder: reminderWorker,
 			waSend:   waWorker,
 			snapshot: snapshotJob,
 		}, schedulerSpecs{
 			billing:   cfg.BillingCronSpec,
 			isolation: cfg.IsolationCronSpec,
+			reminder:  cfg.ReminderCronSpec,
 			waSend:    cfg.WaSendCronSpec,
 			snapshot:  cfg.SnapshotCronSpec,
 		}, "tenant-default")
@@ -361,9 +374,10 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		logger.WithComponent("App").WithFields(map[string]any{
 			"billing_cron":   cfg.BillingCronSpec,
 			"isolation_cron": cfg.IsolationCronSpec,
+			"reminder_cron":  cfg.ReminderCronSpec,
 			"wa_send_cron":   cfg.WaSendCronSpec,
 			"snapshot_cron":  cfg.SnapshotCronSpec,
-		}).Info("ISP scheduler started (4 jobs)")
+		}).Info("ISP scheduler started (5 jobs)")
 	}
 
 	server := &http.Server{

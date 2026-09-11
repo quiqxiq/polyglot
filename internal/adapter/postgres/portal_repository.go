@@ -73,10 +73,10 @@ func (r *PortalRepository) SaveOTP(ctx context.Context, o domainCustomer.PortalO
 
 // ConsumeOTP implements port.PortalRepository with row-level locking:
 // ambil OTP terbaru aktif untuk phone; cocok → consumed; salah → attempts++;
-// melewati maxAttempts → ErrOTPLocked (dan OTP dikonsumsi agar terkunci).
+// melewati maxAttempts → consumed + ErrOTPLocked. Semua perubahan di-commit
+// sebelum error dikembalikan agar lockout benar-benar tersimpan (F5-1).
 func (r *PortalRepository) ConsumeOTP(ctx context.Context, phone, codeHash string, maxAttempts int) (bool, error) {
-	var matched bool
-	var locked bool
+	var matched, locked, notFound bool
 	err := r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		var m model.PortalOTPModel
 		q := tx
@@ -87,7 +87,8 @@ func (r *PortalRepository) ConsumeOTP(ctx context.Context, phone, codeHash strin
 			Where("phone = ? AND consumed_at IS NULL AND expires_at > ?", phone, time.Now()).
 			Order("created_at desc").First(&m).Error
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return domainCustomer.ErrOTPNotFound
+			notFound = true
+			return nil // commit transaksi kosong; not-found bukan kegagalan DB
 		}
 		if err != nil {
 			return err
@@ -95,8 +96,7 @@ func (r *PortalRepository) ConsumeOTP(ctx context.Context, phone, codeHash strin
 		now := time.Now()
 		if m.Attempts >= maxAttempts {
 			locked = true
-			tx.Model(&m).Update("consumed_at", now)
-			return domainCustomer.ErrOTPLocked
+			return tx.Model(&m).Update("consumed_at", now).Error
 		}
 		if m.CodeHash != codeHash {
 			newAttempts := m.Attempts + 1
@@ -105,21 +105,22 @@ func (r *PortalRepository) ConsumeOTP(ctx context.Context, phone, codeHash strin
 				updates["consumed_at"] = now
 				locked = true
 			}
-			tx.Model(&m).Updates(updates)
-			if locked {
-				return domainCustomer.ErrOTPLocked
-			}
-			return nil
+			return tx.Model(&m).Updates(updates).Error
 		}
 		matched = true
 		return tx.Model(&m).Update("consumed_at", now).Error
 	})
-	if errors.Is(err, domainCustomer.ErrOTPNotFound) || errors.Is(err, domainCustomer.ErrOTPLocked) {
-		return matched, err
-	}
 	if err != nil {
 		return false, err
 	}
-	_ = locked
-	return matched, nil
+	switch {
+	case matched:
+		return true, nil
+	case locked:
+		return false, domainCustomer.ErrOTPLocked
+	case notFound:
+		return false, domainCustomer.ErrOTPNotFound
+	default:
+		return false, nil
+	}
 }

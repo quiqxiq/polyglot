@@ -119,6 +119,7 @@ func (a *Adapter) CreateCharge(ctx context.Context, req port.ChargeRequest) (por
 	}
 	merchantRef := req.InvoiceNumber
 	signature := signHMAC(cfg.PrivateKey, cfg.MerchantCode+merchantRef+fmt.Sprintf("%.0f", req.Amount))
+	expiresAt := time.Now().Add(time.Duration(expire) * time.Minute)
 
 	body := map[string]any{
 		"method":         channel,
@@ -129,7 +130,7 @@ func (a *Adapter) CreateCharge(ctx context.Context, req port.ChargeRequest) (por
 		"customer_phone": req.CustomerPhone,
 		"customer_email": orEmail(req.CustomerEmail),
 		"signature":      signature,
-		"expired_time":   time.Now().Add(time.Duration(expire) * time.Minute).Unix(),
+		"expired_time":   expiresAt.Unix(),
 	}
 	payload, _ := json.Marshal(body)
 
@@ -160,12 +161,15 @@ func (a *Adapter) CreateCharge(ctx context.Context, req port.ChargeRequest) (por
 	}
 
 	result := port.ChargeResult{
-		ExternalID:  merchantRef,
+		ExternalID:  out.Data.Reference,
+		MerchantRef: merchantRef,
 		PaymentURL:  out.Data.PaymentURL,
 		QRString:    out.Data.QRString,
 		VANumber:    out.Data.PayCode,
+		Channel:     channel,
 		FeeAmount:   out.Data.FeeMerchant,
 		Status:      domainBilling.GatewayStatusPending,
+		ExpiresAt:   expiresAt,
 		RawResponse: raw,
 	}
 	return result, nil
@@ -185,14 +189,14 @@ type callbackPayload struct {
 }
 
 // ParseWebhook implements port.PaymentGateway: validasi X-Callback-Signature
-// = HMAC_SHA256(private_key + merchant_ref + status + total_amount).
+// = HMAC_SHA256(private_key, raw JSON body) sesuai dokumentasi resmi Tripay.
 func (a *Adapter) ParseWebhook(ctx context.Context, body []byte, signatureHeader string) (port.WebhookEvent, error) {
 	cfg := a.cfg(ctx)
 	var p callbackPayload
 	if err := json.Unmarshal(body, &p); err != nil {
 		return port.WebhookEvent{}, fmt.Errorf("parse callback: %w", err)
 	}
-	expect := signHMAC(cfg.PrivateKey, p.MerchantRef+p.Status+fmt.Sprintf("%.0f", p.TotalAmount))
+	expect := signHMAC(cfg.PrivateKey, string(body))
 	if !hmac.Equal([]byte(expect), []byte(strings.ToLower(signatureHeader))) {
 		return port.WebhookEvent{}, domainBilling.ErrGatewayBadSign
 	}
@@ -205,9 +209,12 @@ func (a *Adapter) ParseWebhook(ctx context.Context, body []byte, signatureHeader
 	case "FAILED":
 		status = domainBilling.GatewayStatusFailed
 	}
-	paid := p.PaidAmount
+	// Pelunasan memakai total_amount (kewajiban penuh), bukan amount_received
+	// yang sudah dipotong fee merchant — fee adalah biaya provider, bukan
+	// diskon tagihan pelanggan.
+	paid := p.TotalAmount
 	if paid == 0 {
-		paid = p.TotalAmount
+		paid = p.PaidAmount
 	}
 	return port.WebhookEvent{
 		ExternalID:  p.Reference,

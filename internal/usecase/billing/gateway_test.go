@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -27,6 +28,8 @@ func gatewayFixture(t *testing.T) (*mocktest.FakeInvoiceRepo, *mocktest.FakeCust
 		Charge: port.ChargeResult{
 			ExternalID: "INV-GW-1", PaymentURL: "https://pay/x",
 			QRString: "qrcode", FeeAmount: 700, Status: "PENDING",
+			Channel:     "QRIS",
+			ExpiresAt:   time.Now().Add(60 * time.Minute),
 			RawResponse: json.RawMessage(`{"success":true}`),
 		},
 		Event: port.WebhookEvent{
@@ -73,6 +76,8 @@ func TestCreateForInvoice_Happy(t *testing.T) {
 	stored := gwt.Get(tx.ID)
 	assert.Equal(t, "FAKE", stored.Gateway)
 	assert.InDelta(t, 110000, stored.Amount, 0.01)
+	assert.Equal(t, "QRIS", stored.PaymentChannel)
+	assert.NotNil(t, stored.ExpiresAt)
 }
 
 func TestWebhook_Settled_InvokesProcessor(t *testing.T) {
@@ -104,6 +109,9 @@ func TestWebhook_Settled_InvokesProcessor(t *testing.T) {
 	stored := gwt.Get(firstGwtID(gwt))
 	assert.Equal(t, domainBilling.GatewayStatusSettled, stored.Status)
 	require.NotNil(t, stored.PaymentID)
+	assert.Equal(t, 1, stored.CallbackCount)
+	assert.NotEmpty(t, stored.RawCallback)
+	assert.NotNil(t, stored.PaidAt)
 }
 
 func TestWebhook_BadSignature_AndUnknownRef(t *testing.T) {
@@ -190,4 +198,32 @@ func TestCheckPaymentStatus_Settled(t *testing.T) {
 	assert.Equal(t, domainBilling.GatewayStatusSettled, status)
 	assert.Equal(t, "inv-gw-check", invoiceID)
 	assert.Len(t, proc.Cmds, 1)
+}
+
+// ─── Guard pembayaran ganda ─────────────────────────────────────────────
+
+// Pembayaran kedua untuk invoice yang sudah lunas tidak boleh membuat
+// error 500 di webhook: ErrInvoiceAlreadyPaid dianggap idempoten.
+func TestWebhook_AlreadyPaid_IgnoredNoError(t *testing.T) {
+	invoices, customers, gwt, gateway, _ := gatewayFixture(t)
+	proc := &FakeProcessorRecorder{Err: domainBilling.ErrInvoiceAlreadyPaid}
+	usecase := uc.NewGatewayChargeUseCase(invoices, customers, gwt, gateway, proc,
+		mocktest.NewFakeSettingReader(nil))
+
+	ctx := context.Background()
+	require.NoError(t, invoices.Save(ctx, unpaidInvoice("inv-dp", "cust-gw", "sub-gw", 5)))
+	require.NoError(t, customers.Save(ctx, customerWithPortal("cust-gw", "99999999")))
+
+	_, _, err := usecase.CreateForInvoice(ctx, "inv-dp", "", 60)
+	require.NoError(t, err)
+
+	body := []byte(`{"reference":"INV-GW-1","merchant_ref":"INV-GW-1","status":"PAID","total_amount":110000}`)
+	invoiceID, settled, err := usecase.HandleWebhook(ctx, body, "valid")
+	require.NoError(t, err)
+	assert.True(t, settled)
+	assert.Equal(t, "inv-dp", invoiceID)
+
+	stored := gwt.Get(firstGwtID(gwt))
+	assert.Equal(t, domainBilling.GatewayStatusSettled, stored.Status)
+	assert.Nil(t, stored.PaymentID) // tidak ada payment baru yang ditautkan
 }

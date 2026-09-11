@@ -33,6 +33,7 @@ var (
 	ErrInvalidInput                = fault.New(fault.KindInvalidInput, "customer: invalid input")
 	ErrCustomerHasFinancialRecords = fault.New(fault.KindFailedPrecondition, "customer: cannot delete customer with financial records")
 	ErrPortalBadCredentials        = fault.New(fault.KindUnauthenticated, "portal: invalid portal code, phone number, or OTP")
+	ErrPortalForbidden             = fault.New(fault.KindPermissionDenied, "portal: invoice access forbidden")
 	ErrOTPLocked                   = fault.New(fault.KindResourceExhausted, "portal: otp locked: too many failed attempts")
 	ErrOTPExpired                  = fault.New(fault.KindUnauthenticated, "portal: otp expired")
 	ErrOTPNotFound                 = fault.New(fault.KindNotFound, "portal: otp not found or already used")

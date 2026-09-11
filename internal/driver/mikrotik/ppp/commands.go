@@ -26,6 +26,7 @@ func NewAddSecretCommand(p PPPoESecretParams) command.Command {
 	}
 	setIfNonEmpty(args, "local-address", p.LocalAddress)
 	setIfNonEmpty(args, "remote-address", p.RemoteAddress)
+	setIfNonEmpty(args, "caller-id", p.CallerID)
 	setIfNonEmpty(args, "comment", p.Comment)
 	if p.Disabled {
 		args["disabled"] = "yes"
@@ -47,6 +48,7 @@ func NewSetSecretCommand(rosID string, p PPPoESecretParams) command.Command {
 	setIfNonEmpty(args, "service", p.Service)
 	setIfNonEmpty(args, "local-address", p.LocalAddress)
 	setIfNonEmpty(args, "remote-address", p.RemoteAddress)
+	setIfNonEmpty(args, "caller-id", p.CallerID)
 	setIfNonEmpty(args, "comment", p.Comment)
 
 	return command.Command{

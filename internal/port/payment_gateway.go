@@ -3,6 +3,7 @@ package port
 import (
 	"context"
 	"encoding/json"
+	"time"
 )
 
 // Error sentinels untuk payment gateway tinggal di
@@ -24,12 +25,15 @@ type ChargeRequest struct {
 
 // ChargeResult adalah hasil create-transaction dari provider.
 type ChargeResult struct {
-	ExternalID  string // merchant_ref / order id
+	ExternalID  string // ID transaksi provider (Tripay reference / order id) — kunci callback & check-status
+	MerchantRef string // referensi merchant (nomor invoice) — untuk audit/trace
 	PaymentURL  string
 	QRString    string
 	VANumber    string
+	Channel     string
 	FeeAmount   float64
-	Status      string // PENDING | SETTLED | EXPIRED | FAILED
+	Status      string    // PENDING | SETTLED | EXPIRED | FAILED
+	ExpiresAt   time.Time // zero = provider tidak mengembalikan masa berlaku
 	RawResponse json.RawMessage
 }
 

@@ -12,6 +12,7 @@ import (
 
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
+	domainNotification "github.com/quixiq/polyglot/internal/domain/notification"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
@@ -30,6 +31,7 @@ type UseCase struct {
 	invs    port.InvoiceRepository
 	pays    port.PaymentReader
 	sender  port.NotificationSender
+	notif   port.NotificationRepository
 	reader  port.SettingReader
 }
 
@@ -41,10 +43,11 @@ func NewUseCase(
 	invs port.InvoiceRepository,
 	pays port.PaymentReader,
 	sender port.NotificationSender,
+	notif port.NotificationRepository,
 	reader port.SettingReader,
 ) *UseCase {
 	return &UseCase{portals: portals, customs: customs, subs: subs, invs: invs,
-		pays: pays, sender: sender, reader: reader}
+		pays: pays, sender: sender, notif: notif, reader: reader}
 }
 
 // ─── OTP & Login ────────────────────────────────────────────────────────
@@ -72,25 +75,54 @@ func (u *UseCase) RequestOTP(ctx context.Context, identifier string) (string, er
 		return "", err
 	}
 	msg := fmt.Sprintf("Kode login portal Anda: %s (berlaku %d menit). Jangan bagikan kode ini.", code, ttlMin)
-	if err := u.sender.Send(ctx, cust.Phone, msg); err != nil {
+	if err := u.sendOTP(ctx, cust, msg, now); err != nil {
 		return "", fmt.Errorf("send OTP via WhatsApp: %w", err)
 	}
 	return maskPhone(cust.Phone), nil
 }
 
-// Login memverifikasi OTP lalu membuat sesi portal baru.
-func (u *UseCase) Login(ctx context.Context, identifier, otp string) (token string, cust domainCustomer.Customer, err error) {
+// sendOTP mengantre pesan OTP melalui worker WhatsApp (F5-7); bila repo
+// antrean tidak tersedia, kirim langsung sebagai fallback.
+func (u *UseCase) sendOTP(ctx context.Context, cust domainCustomer.Customer, msg string, now time.Time) error {
+	if u.notif != nil {
+		n := domainNotification.WANotification{
+			ID:             idgen.New("wa"),
+			TenantID:       cust.TenantID,
+			CustomerID:     &cust.ID,
+			RecipientPhone: phone.Normalize(cust.Phone),
+			MessageType:    "PORTAL_OTP",
+			MessageContent: msg,
+			Status:         domainNotification.StatusQueued,
+			CreatedAt:      now,
+		}
+		if err := u.notif.Queue(ctx, n); err != nil {
+			return fmt.Errorf("queue portal otp: %w", err)
+		}
+		return nil
+	}
+	if u.sender == nil {
+		return nil
+	}
+	if err := u.sender.Send(ctx, cust.Phone, msg); err != nil {
+		return fmt.Errorf("send portal otp: %w", err)
+	}
+	return nil
+}
+
+// Login memverifikasi OTP lalu membuat sesi portal baru; expiresAt adalah
+// waktu kedaluwarsa sesi sesuai setting isp.portal_session_hours (F5-3).
+func (u *UseCase) Login(ctx context.Context, identifier, otp string) (token string, cust domainCustomer.Customer, expiresAt time.Time, err error) {
 	cust, err = u.resolve(ctx, identifier)
 	if err != nil {
-		return "", cust, domainCustomer.ErrPortalBadCredentials
+		return "", cust, time.Time{}, domainCustomer.ErrPortalBadCredentials
 	}
 	maxAttempts := atoiDefault(u.reader.GetValue(ctx, "isp.otp_max_attempts", "5"), 5)
 	ok, verr := u.portals.ConsumeOTP(ctx, cust.Phone, hashCode(otp), maxAttempts)
 	if verr != nil {
-		return "", cust, verr
+		return "", cust, time.Time{}, fmt.Errorf("consume otp: %w", verr)
 	}
 	if !ok {
-		return "", cust, domainCustomer.ErrPortalBadCredentials
+		return "", cust, time.Time{}, domainCustomer.ErrPortalBadCredentials
 	}
 	hours := atoiDefault(u.reader.GetValue(ctx, "isp.portal_session_hours", "12"), 12)
 	now := time.Now()
@@ -103,9 +135,9 @@ func (u *UseCase) Login(ctx context.Context, identifier, otp string) (token stri
 		CreatedAt:    now,
 	}
 	if err := u.portals.SaveSession(ctx, session); err != nil {
-		return "", cust, err
+		return "", cust, time.Time{}, fmt.Errorf("save portal session: %w", err)
 	}
-	return session.SessionToken, cust, nil
+	return session.SessionToken, cust, session.ExpiresAt, nil
 }
 
 // Authenticate memvalidasi bearer token dan mengembalikan pelanggannya.
@@ -219,15 +251,30 @@ func (u *UseCase) Invoices(ctx context.Context, customerID string) ([]domainBill
 	return u.invs.FindByCustomerID(ctx, customerID)
 }
 
+// InvoiceForCustomer memastikan invoice benar-benar milik pelanggan sesi
+// sebelum charge online portal (F5-4). Invoice tidak ada dan bukan-milik
+// dikembalikan sebagai forbidden yang sama agar tidak bocor keberadaannya.
+func (u *UseCase) InvoiceForCustomer(ctx context.Context, customerID, invoiceID string) (domainBilling.Invoice, error) {
+	if invoiceID == "" {
+		return domainBilling.Invoice{}, domainCustomer.ErrInvalidInput
+	}
+	inv, err := u.invs.FindByID(ctx, invoiceID)
+	if err != nil || inv.CustomerID != customerID {
+		return domainBilling.Invoice{}, domainCustomer.ErrPortalForbidden
+	}
+	return inv, nil
+}
+
 // Payments riwayat pembayaran pelanggan.
 func (u *UseCase) Payments(ctx context.Context, customerID string, limit int) ([]domainBilling.Payment, error) {
 	return u.pays.ListByCustomer(ctx, customerID, limit)
 }
 
-// PublicBillView merangkum data tagihan publik untuk halaman isolir / lookup cepat.
+// PublicBillView merangkum data tagihan publik untuk halaman isolir / lookup
+// cepat. Data dibatasi: tanpa sesi hanya nama tersamar + rincian tagihan
+// (tanpa kode pelanggan) — F5-5.
 type PublicBillView struct {
 	CustomerName      string  `json:"customer_name"`
-	CustomerCode      string  `json:"customer_code"`
 	InvoiceID         string  `json:"invoice_id"`
 	InvoiceNumber     string  `json:"invoice_number"`
 	Period            string  `json:"period"`
@@ -256,7 +303,6 @@ func (u *UseCase) LookupBill(ctx context.Context, identifier string) (PublicBill
 		outstanding := inv.Total - inv.PaidAmount
 		return PublicBillView{
 			CustomerName:      maskName(cust.Name),
-			CustomerCode:      cust.CustomerCode,
 			InvoiceID:         inv.ID,
 			InvoiceNumber:     inv.InvoiceNumber,
 			Period:            inv.Period,
@@ -289,7 +335,6 @@ func (u *UseCase) LookupBill(ctx context.Context, identifier string) (PublicBill
 		if outstanding > 0.01 {
 			return PublicBillView{
 				CustomerName:      maskName(cust.Name),
-				CustomerCode:      cust.CustomerCode,
 				InvoiceID:         inv.ID,
 				InvoiceNumber:     inv.InvoiceNumber,
 				Period:            inv.Period,

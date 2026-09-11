@@ -3,6 +3,7 @@ package postgres
 import (
 	"context"
 	"errors"
+	"time"
 
 	"gorm.io/gorm"
 
@@ -19,7 +20,6 @@ var _ port.InvoiceRepository = (*InvoiceRepository)(nil)
 
 // NewInvoiceRepository returns a port.InvoiceRepository backed by GORM/Postgres.
 func NewInvoiceRepository(db *gorm.DB) *InvoiceRepository {
-	_ = db.AutoMigrate(&model.InvoiceModel{}, &model.ServicePlanModel{})
 	return &InvoiceRepository{db: db}
 }
 
@@ -30,7 +30,7 @@ func (r *InvoiceRepository) Save(ctx context.Context, inv billing.Invoice) error
 
 func (r *InvoiceRepository) FindByID(ctx context.Context, id string) (billing.Invoice, error) {
 	var m model.InvoiceModel
-	err := r.db.WithContext(ctx).First(&m, "id = ?", id).Error
+	err := r.db.WithContext(ctx).First(&m, "id = ? AND deleted_at IS NULL", id).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return billing.Invoice{}, ErrNotFound
 	}
@@ -39,7 +39,7 @@ func (r *InvoiceRepository) FindByID(ctx context.Context, id string) (billing.In
 
 func (r *InvoiceRepository) FindByCustomerID(ctx context.Context, customerID string) ([]billing.Invoice, error) {
 	var mList []model.InvoiceModel
-	err := r.db.WithContext(ctx).Where("customer_id = ?", customerID).Order("created_at desc").Find(&mList).Error
+	err := r.db.WithContext(ctx).Where("customer_id = ? AND deleted_at IS NULL", customerID).Order("created_at desc").Find(&mList).Error
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +52,7 @@ func (r *InvoiceRepository) FindByCustomerID(ctx context.Context, customerID str
 
 func (r *InvoiceRepository) FindAll(ctx context.Context) ([]billing.Invoice, error) {
 	var mList []model.InvoiceModel
-	err := r.db.WithContext(ctx).Order("created_at desc").Find(&mList).Error
+	err := r.db.WithContext(ctx).Where("deleted_at IS NULL").Order("created_at desc").Find(&mList).Error
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (r *InvoiceRepository) UpdateStatus(ctx context.Context, id string, status 
 // FindByPaymentCode implements the cashier quick-pay lookup (§4.2).
 func (r *InvoiceRepository) FindByPaymentCode(ctx context.Context, code string) (billing.Invoice, error) {
 	var m model.InvoiceModel
-	err := r.db.WithContext(ctx).First(&m, "manual_payment_code = ?", code).Error
+	err := r.db.WithContext(ctx).First(&m, "manual_payment_code = ? AND deleted_at IS NULL", code).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return billing.Invoice{}, ErrNotFound
 	}
@@ -87,7 +87,7 @@ func (r *InvoiceRepository) FindByPaymentCode(ctx context.Context, code string) 
 // FindByQRPayload implements the QR-scan lookup (§4.2).
 func (r *InvoiceRepository) FindByQRPayload(ctx context.Context, qr string) (billing.Invoice, error) {
 	var m model.InvoiceModel
-	err := r.db.WithContext(ctx).First(&m, "qr_payload = ?", qr).Error
+	err := r.db.WithContext(ctx).First(&m, "qr_payload = ? AND deleted_at IS NULL", qr).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return billing.Invoice{}, ErrNotFound
 	}
@@ -98,7 +98,7 @@ func (r *InvoiceRepository) FindByQRPayload(ctx context.Context, qr string) (bil
 func (r *InvoiceRepository) FindBySubscriptionPeriod(ctx context.Context, subscriptionID, period string) (billing.Invoice, error) {
 	var m model.InvoiceModel
 	err := r.db.WithContext(ctx).
-		Where("subscription_id = ? AND period = ?", subscriptionID, period).
+		Where("subscription_id = ? AND period = ? AND deleted_at IS NULL", subscriptionID, period).
 		First(&m).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return billing.Invoice{}, ErrNotFound
@@ -135,28 +135,23 @@ func (r *InvoiceRepository) HasForSubscription(ctx context.Context, subID string
 	return n > 0, err
 }
 
-// Delete hard-deletes an invoice by id.
+// Delete soft-deletes an invoice by id (F3-8) — baris item dipertahankan.
 func (r *InvoiceRepository) Delete(ctx context.Context, id string) error {
-	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
-		if err := tx.Where("invoice_id = ?", id).Delete(&model.InvoiceItemModel{}).Error; err != nil {
-			return err
-		}
-		return tx.Where("id = ?", id).Delete(&model.InvoiceModel{}).Error
-	})
+	res := r.db.WithContext(ctx).Model(&model.InvoiceModel{}).
+		Where("id = ? AND deleted_at IS NULL", id).
+		Update("deleted_at", time.Now())
+	if res.Error != nil {
+		return res.Error
+	}
+	if res.RowsAffected == 0 {
+		return ErrNotFound
+	}
+	return nil
 }
 
-// DeleteByCustomerID hard-deletes all invoices and invoice items belonging to customerID.
+// DeleteByCustomerID soft-deletes all invoices belonging to customerID (F3-8).
 func (r *InvoiceRepository) DeleteByCustomerID(ctx context.Context, customerID string) error {
-	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
-		var invoiceIDs []string
-		if err := tx.Model(&model.InvoiceModel{}).Where("customer_id = ?", customerID).Pluck("id", &invoiceIDs).Error; err != nil {
-			return err
-		}
-		if len(invoiceIDs) > 0 {
-			if err := tx.Where("invoice_id IN ?", invoiceIDs).Delete(&model.InvoiceItemModel{}).Error; err != nil {
-				return err
-			}
-		}
-		return tx.Where("customer_id = ?", customerID).Delete(&model.InvoiceModel{}).Error
-	})
+	return r.db.WithContext(ctx).Model(&model.InvoiceModel{}).
+		Where("customer_id = ? AND deleted_at IS NULL", customerID).
+		Update("deleted_at", time.Now()).Error
 }

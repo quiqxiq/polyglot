@@ -55,6 +55,20 @@ func (f *FakeNotificationRepo) Queue(_ context.Context, n domainNotification.WAN
 	return nil
 }
 
+// ExistsForInvoiceSince melaporkan notifikasi bertipe tertentu untuk invoice
+// sudah pernah diantre sejak waktu tertentu.
+func (f *FakeNotificationRepo) ExistsForInvoiceSince(_ context.Context, invoiceID, messageType string, since time.Time) (bool, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	for _, n := range f.queued {
+		if n.InvoiceID != nil && *n.InvoiceID == invoiceID &&
+			n.MessageType == messageType && !n.CreatedAt.Before(since) {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
 func (f *FakeNotificationRepo) Queued() []domainNotification.WANotification {
 	f.mu.Lock()
 	defer f.mu.Unlock()

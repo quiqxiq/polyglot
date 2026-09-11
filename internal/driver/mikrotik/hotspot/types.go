@@ -32,6 +32,8 @@ type HotspotUserParams struct {
 	Name        string
 	Password    string
 	Profile     string
+	MACAddress  string
+	Address     string
 	Comment     string
 	LimitUptime string
 	LimitBytes  string

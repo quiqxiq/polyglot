@@ -56,6 +56,7 @@ func TestIspProceduresMapped(t *testing.T) {
 		"/polyglot.v1.BillingService/CashierResolve",
 		"/polyglot.v1.BillingService/CashierPay",
 		"/polyglot.v1.BillingService/GenerateInvoices",
+		"/polyglot.v1.BillingService/CancelInvoice",
 		"/polyglot.v1.SubscriptionService/ListSubscriptions",
 		"/polyglot.v1.SubscriptionService/GetSubscription",
 		"/polyglot.v1.SubscriptionService/CreateSubscription",

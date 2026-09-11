@@ -2,11 +2,16 @@ package provisioner
 
 import (
 	"context"
+	"errors"
+	"strconv"
 	"testing"
 
+	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	"github.com/quixiq/polyglot/internal/domain/command"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
+	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/internal/port/mocktest"
 )
 
 type mockDriver struct {
@@ -199,5 +204,201 @@ func TestProvisioner_SyncPlanProfile(t *testing.T) {
 	}
 	if len(pppGW.profiles) != 1 || pppGW.profiles[0].Name != "PLAN-20M" {
 		t.Fatalf("PPP profile not created: %+v", pppGW.profiles)
+	}
+}
+
+// ─── Mock hotspot gateway ───────────────────────────────────────────────
+
+type mockHotspotGateway struct {
+	port.HotspotGateway
+	users    []port.HotspotUser
+	profiles []port.HotspotUserProfile
+	seq      int
+}
+
+func (m *mockHotspotGateway) ListUsers(_ context.Context, _ port.DeviceDriver, _ port.ListUsersFilter) ([]port.HotspotUser, error) {
+	return m.users, nil
+}
+
+func (m *mockHotspotGateway) AddUser(_ context.Context, _ port.DeviceDriver, p port.HotspotUserParams) (command.Result, error) {
+	m.seq++
+	m.users = append(m.users, port.HotspotUser{
+		RosID: "*h" + strconv.Itoa(m.seq), Name: p.Name, Profile: p.Profile, Disabled: p.Disabled,
+	})
+	return command.Result{Output: "ok"}, nil
+}
+
+func (m *mockHotspotGateway) UpdateUser(_ context.Context, _ port.DeviceDriver, rosID string, p port.HotspotUserParams) (command.Result, error) {
+	for i := range m.users {
+		if m.users[i].RosID == rosID {
+			m.users[i].Profile = p.Profile
+			m.users[i].Disabled = p.Disabled
+		}
+	}
+	return command.Result{Output: "ok"}, nil
+}
+
+func (m *mockHotspotGateway) ListActiveSessions(_ context.Context, _ port.DeviceDriver) ([]port.HotspotActiveSession, error) {
+	return nil, nil
+}
+
+func (m *mockHotspotGateway) ListCookies(_ context.Context, _ port.DeviceDriver) ([]port.HotspotCookie, error) {
+	return nil, nil
+}
+
+func (m *mockHotspotGateway) GetUserProfiles(_ context.Context, _ port.DeviceDriver) ([]port.HotspotUserProfile, error) {
+	return m.profiles, nil
+}
+
+func (m *mockHotspotGateway) CreateUserProfile(_ context.Context, _ port.DeviceDriver, p port.MikhmonProfileParams) (command.Result, error) {
+	m.profiles = append(m.profiles, port.HotspotUserProfile{Name: p.Name})
+	return command.Result{Output: "ok"}, nil
+}
+
+// ─── F1-7: resume PPP harus re-enable secret ────────────────────────────
+
+func TestProvisioner_PPPoEResumeReEnablesSecret(t *testing.T) {
+	ctx := context.Background()
+	pppGW := &mockPPPGateway{}
+	prov := NewWithResolver(
+		func(_ context.Context, _ string) (port.DeviceDriver, error) { return &mockDriver{}, nil },
+		pppGW, nil, nil, nil,
+	)
+
+	acct := port.SubscriberAccount{Username: "user1", Password: "pass1", Profile: "PLAN-10M"}
+	if err := prov.Provision(ctx, "dev1", "PPPOE", acct); err != nil {
+		t.Fatalf("Provision: %v", err)
+	}
+	if err := prov.Suspend(ctx, "dev1", "PPPOE", "user1"); err != nil {
+		t.Fatalf("Suspend: %v", err)
+	}
+	if !pppGW.secrets[0].Disabled {
+		t.Fatalf("secret harus disabled setelah suspend")
+	}
+	if err := prov.Restore(ctx, "dev1", "PPPOE", "user1", "PLAN-10M", ""); err != nil {
+		t.Fatalf("Restore: %v", err)
+	}
+	if pppGW.secrets[0].Disabled {
+		t.Fatalf("secret masih disabled setelah restore — pelanggan tidak akan bisa dial")
+	}
+}
+
+// ─── F1-6: suspend/restore hotspot harus membersihkan disabled ──────────
+
+func TestProvisioner_HotspotRestoreClearsDisabled(t *testing.T) {
+	ctx := context.Background()
+	hotGW := &mockHotspotGateway{}
+	prov := NewWithResolver(
+		func(_ context.Context, _ string) (port.DeviceDriver, error) { return &mockDriver{}, nil },
+		nil, hotGW, nil, nil,
+	)
+
+	acct := port.SubscriberAccount{Username: "hs1", Password: "pw", Profile: "PLAN-HS"}
+	if err := prov.Provision(ctx, "dev1", "HOTSPOT", acct); err != nil {
+		t.Fatalf("Provision: %v", err)
+	}
+	if err := prov.Suspend(ctx, "dev1", "HOTSPOT", "hs1"); err != nil {
+		t.Fatalf("Suspend: %v", err)
+	}
+	if !hotGW.users[0].Disabled {
+		t.Fatalf("user hotspot harus disabled setelah suspend")
+	}
+	if err := prov.Restore(ctx, "dev1", "HOTSPOT", "hs1", "PLAN-HS", ""); err != nil {
+		t.Fatalf("Restore: %v", err)
+	}
+	if hotGW.users[0].Disabled {
+		t.Fatalf("user hotspot masih disabled setelah restore")
+	}
+}
+
+// ─── F1-8: OnPaid hanya untuk invoice lunas ─────────────────────────────
+
+func seedIsolatedSub(t *testing.T, subs *mocktest.FakeSubscriptionRepo) {
+	t.Helper()
+	dev := "dev-1"
+	subs.Seed(domainSubscription.Subscription{
+		ID: "sub-1", PlanID: "plan-1", DeviceID: &dev,
+		ServiceType: "PPPOE", RemoteUsername: "bs1234",
+		RouterProfile: "PLAN-10M", Status: domainSubscription.StatusIsolated,
+	})
+}
+
+func TestBuildOnPaidRestore_RestoresIsolatedWhenInvoicePaid(t *testing.T) {
+	ctx := context.Background()
+	mgr := mocktest.NewFakeRouterAccountManager()
+	subs := mocktest.NewFakeSubscriptionRepo()
+	planRepo := mocktest.NewFakeServicePlanRepo()
+	settings := mocktest.NewFakeSettingReader(nil)
+	seedIsolatedSub(t, subs)
+
+	subID := "sub-1"
+	hook := BuildOnPaidRestore(mgr, subs, planRepo, settings)
+	hook(ctx, domainBilling.Invoice{
+		ID: "inv-1", SubscriptionID: &subID, Status: domainBilling.StatusPaid,
+	}, domainBilling.Payment{ID: "pay-1"})
+
+	if got := mgr.Count("Restore:"); got != 1 {
+		t.Fatalf("Restore dipanggil %d kali, mau 1", got)
+	}
+	sub, err := subs.FindByID(ctx, "sub-1")
+	if err != nil {
+		t.Fatalf("FindByID: %v", err)
+	}
+	if sub.Status != domainSubscription.StatusActive {
+		t.Fatalf("status subscription = %s, mau ACTIVE", sub.Status)
+	}
+}
+
+func TestBuildOnPaidRestore_FailureMarksProvisionFailed(t *testing.T) {
+	ctx := context.Background()
+	mgr := &mocktest.FakeRouterAccountManager{Fail: map[string]error{
+		"Restore:": errors.New("router unreachable"),
+	}}
+	subs := mocktest.NewFakeSubscriptionRepo()
+	planRepo := mocktest.NewFakeServicePlanRepo()
+	settings := mocktest.NewFakeSettingReader(nil)
+	seedIsolatedSub(t, subs)
+
+	subID := "sub-1"
+	hook := BuildOnPaidRestore(mgr, subs, planRepo, settings)
+	hook(ctx, domainBilling.Invoice{
+		ID: "inv-1", SubscriptionID: &subID, Status: domainBilling.StatusPaid,
+	}, domainBilling.Payment{ID: "pay-1"})
+
+	sub, err := subs.FindByID(ctx, "sub-1")
+	if err != nil {
+		t.Fatalf("FindByID: %v", err)
+	}
+	if sub.ProvisionStatus != domainSubscription.ProvisionFailed {
+		t.Fatalf("provision_status = %s, mau FAILED agar worker retry", sub.ProvisionStatus)
+	}
+	if sub.Status != domainSubscription.StatusIsolated {
+		t.Fatalf("status = %s, harus tetap ISOLATED sampai restore sukses", sub.Status)
+	}
+}
+
+func TestBuildOnPaidRestore_SkipsPartialInvoice(t *testing.T) {
+	ctx := context.Background()
+	mgr := mocktest.NewFakeRouterAccountManager()
+	subs := mocktest.NewFakeSubscriptionRepo()
+	planRepo := mocktest.NewFakeServicePlanRepo()
+	settings := mocktest.NewFakeSettingReader(nil)
+	seedIsolatedSub(t, subs)
+
+	subID := "sub-1"
+	hook := BuildOnPaidRestore(mgr, subs, planRepo, settings)
+	hook(ctx, domainBilling.Invoice{
+		ID: "inv-1", SubscriptionID: &subID, Status: domainBilling.StatusPartial,
+	}, domainBilling.Payment{ID: "pay-1"})
+
+	if got := mgr.Count("Restore:"); got != 0 {
+		t.Fatalf("Restore dipanggil %d kali untuk pembayaran parsial", got)
+	}
+	sub, err := subs.FindByID(ctx, "sub-1")
+	if err != nil {
+		t.Fatalf("FindByID: %v", err)
+	}
+	if sub.Status != domainSubscription.StatusIsolated {
+		t.Fatalf("status subscription = %s, harus tetap ISOLATED", sub.Status)
 	}
 }

@@ -39,8 +39,8 @@ func (u *CheckoutUseCase) ResolveByQR(ctx context.Context, qr string) (domainBil
 	return u.invoices.FindByQRPayload(ctx, qr)
 }
 
-// ResolveByPortalCode finds the oldest UNPAID invoice of the customer that
-// owns the given portal access code.
+// ResolveByPortalCode finds the oldest outstanding invoice of the customer
+// that owns the given portal access code (UNPAID/OVERDUE/PARTIAL).
 func (u *CheckoutUseCase) ResolveByPortalCode(ctx context.Context, portalCode string) (domainBilling.Invoice, error) {
 	if portalCode == "" {
 		return domainBilling.Invoice{}, fmt.Errorf("%w: portal access code is required", domainBilling.ErrInvalidInput)
@@ -55,8 +55,13 @@ func (u *CheckoutUseCase) ResolveByPortalCode(ctx context.Context, portalCode st
 	}
 	var unpaid []domainBilling.Invoice
 	for _, inv := range invoices {
-		if inv.Status == domainBilling.StatusUnpaid || inv.Status == domainBilling.StatusOverdue ||
-			inv.Status == domainBilling.StatusUnpaid && inv.PaidAmount < inv.Total {
+		outstanding := inv.Total - inv.PaidAmount
+		if outstanding <= 0.01 {
+			continue
+		}
+		if inv.Status == domainBilling.StatusUnpaid ||
+			inv.Status == domainBilling.StatusOverdue ||
+			inv.Status == domainBilling.StatusPartial {
 			unpaid = append(unpaid, inv)
 		}
 	}

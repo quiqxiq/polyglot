@@ -3,7 +3,7 @@ package registration
 import (
 	"context"
 	"fmt"
-	"strconv"
+	"strings"
 	"time"
 
 	"github.com/quixiq/polyglot/internal/domain/audit"
@@ -13,6 +13,7 @@ import (
 	domainRegistration "github.com/quixiq/polyglot/internal/domain/registration"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
+	planUC "github.com/quixiq/polyglot/internal/usecase/plan"
 	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
@@ -29,12 +30,14 @@ func planServiceType(pl domainPlan.ServicePlan) string {
 	switch pl.ServiceType {
 	case domainPlan.TypeHotspot:
 		return "HOTSPOT"
+	case domainPlan.TypeDedicated:
+		return "DEDICATED"
 	default:
 		return "PPPOE"
 	}
 }
 
-func (u *ConvertUseCase) createCustomer(ctx context.Context, reg domainRegistration.Registration, now time.Time) (domainCustomer.Customer, error) {
+func (u *ConvertUseCase) buildCustomer(ctx context.Context, reg domainRegistration.Registration, now time.Time) (domainCustomer.Customer, error) {
 	cust := domainCustomer.Customer{
 		ID:           idgen.New("cust"),
 		TenantID:     orTenant(reg.TenantID),
@@ -62,15 +65,28 @@ func (u *ConvertUseCase) createCustomer(ctx context.Context, reg domainRegistrat
 			break
 		}
 	}
-	if err := u.deps.Customers.Save(ctx, cust); err != nil {
-		return domainCustomer.Customer{}, fmt.Errorf("create customer: %w", err)
-	}
-	writeAudit(ctx, u.deps.Audit, "", "CREATE_CUSTOMER", "customer", cust.ID)
 	return cust, nil
 }
 
-func (u *ConvertUseCase) createSubscription(ctx context.Context, reg domainRegistration.Registration, pl domainPlan.ServicePlan, customerID, deviceID string, now time.Time) (domainSubscription.Subscription, error) {
-	username := idgen.GenerateUsername(reg.FullName, "{initials}{digits4}", "", "")
+func (u *ConvertUseCase) buildSubscription(
+	ctx context.Context,
+	reg domainRegistration.Registration,
+	pl domainPlan.ServicePlan,
+	cust domainCustomer.Customer,
+	deviceID string,
+	now time.Time,
+) (domainSubscription.Subscription, error) {
+	pattern, prefix, pwMode := "{initials}{digits4}", "", "digits6"
+	if u.deps.Settings != nil {
+		pattern = u.deps.Settings.GetValue(ctx, "isp.pppoe_username_pattern", pattern)
+		prefix = u.deps.Settings.GetValue(ctx, "isp.pppoe_username_prefix", prefix)
+		pwMode = u.deps.Settings.GetValue(ctx, "isp.pppoe_password_mode", pwMode)
+	}
+	username := idgen.GenerateUsername(reg.FullName, pattern, prefix, cust.CustomerCode)
+	password := idgen.Password(pwMode, cust.Phone)
+	if u.genSecret != nil {
+		password = u.genSecret()
+	}
 	endDate := now.AddDate(0, 0, 30)
 	billingDay := now.Day()
 	if billingDay > 28 {
@@ -85,12 +101,12 @@ func (u *ConvertUseCase) createSubscription(ctx context.Context, reg domainRegis
 	sub := domainSubscription.Subscription{
 		ID:                 idgen.New("sub"),
 		TenantID:           orTenant(reg.TenantID),
-		CustomerID:         customerID,
+		CustomerID:         cust.ID,
 		PlanID:             pl.ID,
 		DeviceID:           devRef,
 		ServiceType:        planServiceType(pl),
 		RemoteUsername:     username,
-		RemotePassword:     u.genSecret(),
+		RemotePassword:     password,
 		BillingCycle:       domainSubscription.CycleMonthly,
 		BillingDay:         billingDay,
 		AutoIsolate:        true,
@@ -102,73 +118,42 @@ func (u *ConvertUseCase) createSubscription(ctx context.Context, reg domainRegis
 		CreatedAt:          now,
 		UpdatedAt:          now,
 	}
-	if err := u.deps.Subs.Save(ctx, sub); err != nil {
-		return domainSubscription.Subscription{}, fmt.Errorf("create subscription: %w", err)
-	}
-
-	// Provisioning langsung bila manager tersedia & device ditugaskan.
-	if deviceID != "" && u.deps.Manager != nil {
-		var provErr error
-		if sub.ServiceType == "HOTSPOT" {
-			hotSpec := domainSubscription.HotspotProvisionSpec{
-				User: domainSubscription.HotspotUserSpec{
-					Username: sub.RemoteUsername,
-					Password: sub.RemotePassword,
-					Profile:  pl.Name,
-					Server:   "all",
-					Comment:  "polyglot:" + sub.ID,
-				},
-				Profile: domainSubscription.HotspotProfileSpec{
-					Name:        pl.Name,
-					RateLimit:   planRate(pl),
-					AddressPool: pl.IPPoolName,
-					AddressList: pl.AddressList,
-					SharedUsers: pl.SharedUsers,
-					ParentQueue: pl.ParentQueue,
-					Comment:     "AUTO plan profile",
-				},
-			}
-			provErr = u.deps.Manager.ProvisionHotspot(ctx, deviceID, hotSpec)
-		} else {
-			pppSpec := domainSubscription.PPPoEProvisionSpec{
-				Secret: domainSubscription.PPPoESecretSpec{
-					Username: sub.RemoteUsername,
-					Password: sub.RemotePassword,
-					Profile:  pl.Name,
-					Service:  "pppoe",
-					Comment:  "polyglot:" + sub.ID,
-				},
-				Profile: domainSubscription.PPPoEProfileSpec{
-					Name:              pl.Name,
-					RateLimit:         planRate(pl),
-					RemoteAddressPool: pl.RemoteAddressPool,
-					ParentQueue:       pl.ParentQueue,
-					AddressList:       pl.AddressList,
-					Comment:           "AUTO plan profile",
-				},
-			}
-			provErr = u.deps.Manager.ProvisionPPPoE(ctx, deviceID, pppSpec)
-		}
-		if provErr != nil {
-			logger.WithComponent("ConvertUC").WithError(provErr).Warn("provisioning gagal; worker akan mencoba ulang")
-		} else {
-			sub.ProvisionStatus = domainSubscription.ProvisionOK
-			sub.RouterProfile = pl.Name
-			if serr := u.deps.Subs.Save(ctx, sub); serr != nil {
-				return domainSubscription.Subscription{}, fmt.Errorf("save provision status: %w", serr)
-			}
-		}
-	}
-	writeAudit(ctx, u.deps.Audit, "", "CREATE_SUBSCRIPTION", "subscription", sub.ID)
 	return sub, nil
 }
 
-// buildInvoice menyusun faktur bulan pertama: fee langganan (+ biaya pasang
-// bila ada), pajak dari tax_percent paket.
+// provisionSubscription membangun spec kanonik dari planUC (termasuk burst,
+// parent queue, timeout, pool, dan config bertipe) lalu menjalankannya ke
+// router. Dipisah dari buildSubscription agar provisi berjalan setelah
+// transaksi konversi commit.
+func provisionSubscription(ctx context.Context, mgr port.RouterAccountManager, deviceID string, sub domainSubscription.Subscription, pl domainPlan.ServicePlan) error {
+	switch {
+	case strings.EqualFold(sub.ServiceType, "HOTSPOT"):
+		spec := planUC.BuildHotspotProvisionSpec(sub, pl)
+		if err := mgr.ProvisionHotspot(ctx, deviceID, spec); err != nil {
+			return fmt.Errorf("provision hotspot %s: %w", sub.RemoteUsername, err)
+		}
+	case strings.EqualFold(sub.ServiceType, "DEDICATED"):
+		spec := planUC.BuildDedicatedProvisionSpec(sub, pl)
+		if err := mgr.ProvisionDedicated(ctx, deviceID, spec); err != nil {
+			return fmt.Errorf("provision dedicated %s: %w", sub.RemoteUsername, err)
+		}
+	default:
+		spec := planUC.BuildPPPoEProvisionSpec(sub, pl)
+		if err := mgr.ProvisionPPPoE(ctx, deviceID, spec); err != nil {
+			return fmt.Errorf("provision pppoe %s: %w", sub.RemoteUsername, err)
+		}
+	}
+	return nil
+}
+
+// buildInvoice menyusun faktur bulan pertama: fee langganan + biaya pasang
+// (bila ada), lalu pajak dari tax_percent paket dihitung dari subtotal.
 func buildInvoice(reg domainRegistration.Registration, pl domainPlan.ServicePlan, subscriptionID string, now time.Time) (domainBilling.Invoice, []domainBilling.InvoiceItem) {
 	base := pl.Price
-	tax := base * pl.TaxPercent / 100
-	total := base + tax
+	fee := pl.InstallationFee
+	subtotal := base + fee
+	tax := subtotal * pl.TaxPercent / 100
+	total := subtotal + tax
 
 	period := now.Format("2006-01")
 	due := endOfMonth(now)
@@ -181,7 +166,7 @@ func buildInvoice(reg domainRegistration.Registration, pl domainPlan.ServicePlan
 		CustomerID:        "", // diisi pemanggil setelah customer dibuat
 		SubscriptionID:    &subscriptionID,
 		Period:            period,
-		Subtotal:          base,
+		Subtotal:          subtotal,
 		TaxAmount:         tax,
 		Total:             total,
 		DueDate:           due,
@@ -202,14 +187,14 @@ func buildInvoice(reg domainRegistration.Registration, pl domainPlan.ServicePlan
 		ItemType:    domainBilling.ItemTypeSubscriptionFee,
 		CreatedAt:   now,
 	}}
-	if pl.InstallationFee > 0 {
+	if fee > 0 {
 		items = append(items, domainBilling.InvoiceItem{
 			ID:          idgen.New("itm"),
 			InvoiceID:   invID,
 			Description: "Biaya pemasangan awal",
 			Quantity:    1,
-			UnitPrice:   pl.InstallationFee,
-			Amount:      pl.InstallationFee,
+			UnitPrice:   fee,
+			Amount:      fee,
 			ItemType:    domainBilling.ItemTypeInstallationFee,
 			CreatedAt:   now,
 		})
@@ -237,22 +222,4 @@ func writeAudit(ctx context.Context, w port.AuditLogWriter, actorID, action, ent
 	if err != nil {
 		logger.WithComponent("RegistrationUC").WithError(err).Warn("audit log write failed")
 	}
-}
-
-// planRate memformat rate-limit MikroTik dari bandwidth paket ("5M/5M").
-func planRate(pl domainPlan.ServicePlan) string {
-	side := func(kbps int) string {
-		if kbps <= 0 {
-			return ""
-		}
-		if kbps >= 1000 {
-			return strconv.Itoa((kbps+500)/1000) + "M"
-		}
-		return strconv.Itoa(kbps) + "k"
-	}
-	dl, ul := side(pl.BandwidthDownloadKbps), side(pl.BandwidthUploadKbps)
-	if dl == "" && ul == "" {
-		return ""
-	}
-	return dl + "/" + ul
 }

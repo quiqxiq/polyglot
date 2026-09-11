@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as PortalIndexRouteImport } from './routes/portal/index'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as PortalLoginRouteImport } from './routes/portal/login'
 import { Route as errors503RouteImport } from './routes/(errors)/503'
 import { Route as errors500RouteImport } from './routes/(errors)/500'
 import { Route as errors404RouteImport } from './routes/(errors)/404'
@@ -45,6 +47,7 @@ import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authentica
 import { Route as PortalIsolatePppoeRouteImport } from './routes/portal/isolate/pppoe'
 import { Route as PortalIsolateHotspotRouteImport } from './routes/portal/isolate/hotspot'
 import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
+import { Route as AuthenticatedSettingsGatewayRouteImport } from './routes/_authenticated/settings/gateway'
 import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_authenticated/settings/display'
 import { Route as AuthenticatedSettingsBotRouteImport } from './routes/_authenticated/settings/bot'
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
@@ -57,10 +60,20 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalIndexRoute = PortalIndexRouteImport.update({
+  id: '/portal/',
+  path: '/portal/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const PortalLoginRoute = PortalLoginRouteImport.update({
+  id: '/portal/login',
+  path: '/portal/login',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const errors503Route = errors503RouteImport.update({
   id: '/(errors)/503',
@@ -246,6 +259,12 @@ const AuthenticatedSettingsNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
+const AuthenticatedSettingsGatewayRoute =
+  AuthenticatedSettingsGatewayRouteImport.update({
+    id: '/gateway',
+    path: '/gateway',
+    getParentRoute: () => AuthenticatedSettingsRouteRoute,
+  } as any)
 const AuthenticatedSettingsDisplayRoute =
   AuthenticatedSettingsDisplayRouteImport.update({
     id: '/display',
@@ -302,6 +321,8 @@ export interface FileRoutesByFullPath {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/portal/login': typeof PortalLoginRoute
+  '/portal/': typeof PortalIndexRoute
   '/customers/import': typeof AuthenticatedCustomersImportRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/plans/import': typeof AuthenticatedPlansImportRoute
@@ -309,6 +330,7 @@ export interface FileRoutesByFullPath {
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/bot': typeof AuthenticatedSettingsBotRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
+  '/settings/gateway': typeof AuthenticatedSettingsGatewayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/portal/isolate/hotspot': typeof PortalIsolateHotspotRoute
   '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
@@ -344,7 +366,9 @@ export interface FileRoutesByTo {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/portal/login': typeof PortalLoginRoute
   '/': typeof AuthenticatedIndexRoute
+  '/portal': typeof PortalIndexRoute
   '/customers/import': typeof AuthenticatedCustomersImportRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/plans/import': typeof AuthenticatedPlansImportRoute
@@ -352,6 +376,7 @@ export interface FileRoutesByTo {
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/bot': typeof AuthenticatedSettingsBotRoute
   '/settings/display': typeof AuthenticatedSettingsDisplayRoute
+  '/settings/gateway': typeof AuthenticatedSettingsGatewayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/portal/isolate/hotspot': typeof PortalIsolateHotspotRoute
   '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
@@ -390,7 +415,9 @@ export interface FileRoutesById {
   '/(errors)/404': typeof errors404Route
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
+  '/portal/login': typeof PortalLoginRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/portal/': typeof PortalIndexRoute
   '/_authenticated/customers/import': typeof AuthenticatedCustomersImportRoute
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/_authenticated/plans/import': typeof AuthenticatedPlansImportRoute
@@ -398,6 +425,7 @@ export interface FileRoutesById {
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/_authenticated/settings/bot': typeof AuthenticatedSettingsBotRoute
   '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayRoute
+  '/_authenticated/settings/gateway': typeof AuthenticatedSettingsGatewayRoute
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/portal/isolate/hotspot': typeof PortalIsolateHotspotRoute
   '/portal/isolate/pppoe': typeof PortalIsolatePppoeRoute
@@ -437,6 +465,8 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/portal/login'
+    | '/portal/'
     | '/customers/import'
     | '/errors/$error'
     | '/plans/import'
@@ -444,6 +474,7 @@ export interface FileRouteTypes {
     | '/settings/appearance'
     | '/settings/bot'
     | '/settings/display'
+    | '/settings/gateway'
     | '/settings/notifications'
     | '/portal/isolate/hotspot'
     | '/portal/isolate/pppoe'
@@ -479,7 +510,9 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/portal/login'
     | '/'
+    | '/portal'
     | '/customers/import'
     | '/errors/$error'
     | '/plans/import'
@@ -487,6 +520,7 @@ export interface FileRouteTypes {
     | '/settings/appearance'
     | '/settings/bot'
     | '/settings/display'
+    | '/settings/gateway'
     | '/settings/notifications'
     | '/portal/isolate/hotspot'
     | '/portal/isolate/pppoe'
@@ -524,7 +558,9 @@ export interface FileRouteTypes {
     | '/(errors)/404'
     | '/(errors)/500'
     | '/(errors)/503'
+    | '/portal/login'
     | '/_authenticated/'
+    | '/portal/'
     | '/_authenticated/customers/import'
     | '/_authenticated/errors/$error'
     | '/_authenticated/plans/import'
@@ -532,6 +568,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/appearance'
     | '/_authenticated/settings/bot'
     | '/_authenticated/settings/display'
+    | '/_authenticated/settings/gateway'
     | '/_authenticated/settings/notifications'
     | '/portal/isolate/hotspot'
     | '/portal/isolate/pppoe'
@@ -569,6 +606,8 @@ export interface RootRouteChildren {
   errors404Route: typeof errors404Route
   errors500Route: typeof errors500Route
   errors503Route: typeof errors503Route
+  PortalLoginRoute: typeof PortalLoginRoute
+  PortalIndexRoute: typeof PortalIndexRoute
   PortalIsolateHotspotRoute: typeof PortalIsolateHotspotRoute
   PortalIsolatePppoeRoute: typeof PortalIsolatePppoeRoute
   PortalIsolateIndexRoute: typeof PortalIsolateIndexRoute
@@ -583,12 +622,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal/': {
+      id: '/portal/'
+      path: '/portal'
+      fullPath: '/portal/'
+      preLoaderRoute: typeof PortalIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/': {
       id: '/_authenticated/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/portal/login': {
+      id: '/portal/login'
+      path: '/portal/login'
+      fullPath: '/portal/login'
+      preLoaderRoute: typeof PortalLoginRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/(errors)/503': {
       id: '/(errors)/503'
@@ -828,6 +881,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsNotificationsRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
+    '/_authenticated/settings/gateway': {
+      id: '/_authenticated/settings/gateway'
+      path: '/gateway'
+      fullPath: '/settings/gateway'
+      preLoaderRoute: typeof AuthenticatedSettingsGatewayRouteImport
+      parentRoute: typeof AuthenticatedSettingsRouteRoute
+    }
     '/_authenticated/settings/display': {
       id: '/_authenticated/settings/display'
       path: '/display'
@@ -885,6 +945,7 @@ interface AuthenticatedSettingsRouteRouteChildren {
   AuthenticatedSettingsAppearanceRoute: typeof AuthenticatedSettingsAppearanceRoute
   AuthenticatedSettingsBotRoute: typeof AuthenticatedSettingsBotRoute
   AuthenticatedSettingsDisplayRoute: typeof AuthenticatedSettingsDisplayRoute
+  AuthenticatedSettingsGatewayRoute: typeof AuthenticatedSettingsGatewayRoute
   AuthenticatedSettingsNotificationsRoute: typeof AuthenticatedSettingsNotificationsRoute
   AuthenticatedSettingsIndexRoute: typeof AuthenticatedSettingsIndexRoute
 }
@@ -895,6 +956,7 @@ const AuthenticatedSettingsRouteRouteChildren: AuthenticatedSettingsRouteRouteCh
     AuthenticatedSettingsAppearanceRoute: AuthenticatedSettingsAppearanceRoute,
     AuthenticatedSettingsBotRoute: AuthenticatedSettingsBotRoute,
     AuthenticatedSettingsDisplayRoute: AuthenticatedSettingsDisplayRoute,
+    AuthenticatedSettingsGatewayRoute: AuthenticatedSettingsGatewayRoute,
     AuthenticatedSettingsNotificationsRoute:
       AuthenticatedSettingsNotificationsRoute,
     AuthenticatedSettingsIndexRoute: AuthenticatedSettingsIndexRoute,
@@ -972,6 +1034,8 @@ const rootRouteChildren: RootRouteChildren = {
   errors404Route: errors404Route,
   errors500Route: errors500Route,
   errors503Route: errors503Route,
+  PortalLoginRoute: PortalLoginRoute,
+  PortalIndexRoute: PortalIndexRoute,
   PortalIsolateHotspotRoute: PortalIsolateHotspotRoute,
   PortalIsolatePppoeRoute: PortalIsolatePppoeRoute,
   PortalIsolateIndexRoute: PortalIsolateIndexRoute,

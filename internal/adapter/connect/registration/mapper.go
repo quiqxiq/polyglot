@@ -53,6 +53,7 @@ func toProtoRegistration(r *domainRegistration.Registration) *devicepb.Registrat
 		ScheduledInstallDateUnix: schedDateUnix,
 		ScheduledInstallTime:     schedTime,
 		AssignedTechnicianId:     techID,
+		TargetDeviceId:           r.TargetDeviceID,
 		InstalledAtUnix:          installedAtUnix,
 		TechnicianNotes:          r.TechnicianNotes,
 		CustomerId:               r.CustomerID,

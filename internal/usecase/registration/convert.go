@@ -2,12 +2,16 @@ package registration
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
+	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainRegistration "github.com/quixiq/polyglot/internal/domain/registration"
+	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/idgen"
+	"github.com/quixiq/polyglot/pkg/logger"
 )
 
 // ConvertDeps adalah port persistensi untuk konversi pendaftaran menjadi
@@ -17,11 +21,17 @@ type ConvertDeps struct {
 	Plans     port.ServicePlanRepository
 	Customers port.CustomerRepository
 	Subs      port.SubscriptionRepository
-	Invoices  port.InvoiceRepository
 	Audit     port.AuditLogWriter
 
+	// Writer mempersistensikan customer + subscription + invoice + registrasi
+	// secara atomik (satu transaksi DB). Wajib diisi.
+	Writer port.ConversionWriter
+
+	// Settings opsional: pola username/password otomatis (migrasi 000023).
+	Settings port.SettingReader
+
 	// Manager opsional: bila diisi dan deviceID diberikan, akun pelanggan
-	// diprovisikan ke router segera setelah artefak DB jadi.
+	// diprovisikan ke router segera setelah artefak DB ter-commit.
 	Manager port.RouterAccountManager
 }
 
@@ -44,7 +54,7 @@ func NewConvertUseCase(deps ConvertDeps) *ConvertUseCase {
 		now:       time.Now,
 		genCode:   func() string { return "CUST-" + idgen.Digits(5) },
 		genPortal: func() string { return idgen.Digits(8) },
-		genSecret: func() string { return idgen.Digits(6) + "pg" },
+		// genSecret nil = ikuti setting isp.pppoe_password_mode / default digits6.
 	}
 }
 
@@ -59,9 +69,11 @@ func (u *ConvertUseCase) Convert(ctx context.Context, regID, actorID string) (do
 	return u.ConvertWithDevice(ctx, regID, "", actorID)
 }
 
-// ConvertWithDevice executes INSTALLED → ACTIVE dan, bila deviceID diberikan,
-// langsung memprovisikan akun ke router. Gagal router TIDAK menggagalkan
-// konversi: status provisi PENDING dan worker lifecycle mencoba ulang.
+// ConvertWithDevice executes INSTALLED → ACTIVE secara atomik: customer,
+// subscription, invoice pertama, dan tautan registrasi disimpan dalam satu
+// transaksi lewat port.ConversionWriter. Bila deviceID diberikan, akun
+// diprovisikan ke router best-effort SETELAH commit — kegagalan router tidak
+// menggagalkan konversi (provision_status PENDING untuk retry worker).
 func (u *ConvertUseCase) ConvertWithDevice(ctx context.Context, regID, deviceID, actorID string) (domainRegistration.Registration, error) {
 	reg, err := u.deps.Repo.FindByID(ctx, regID)
 	if err != nil {
@@ -74,6 +86,14 @@ func (u *ConvertUseCase) ConvertWithDevice(ctx context.Context, regID, deviceID,
 	if reg.CustomerID != "" {
 		return domainRegistration.Registration{}, fmt.Errorf("%w: already converted (%s)", domainRegistration.ErrInvalidTransition, reg.CustomerID)
 	}
+	if u.deps.Writer == nil {
+		return domainRegistration.Registration{}, errors.New("convert: conversion writer not configured")
+	}
+	// Fallback router: pilihan teknisi saat pemasangan (F2-7) bila pemanggil
+	// tidak menentukan device.
+	if deviceID == "" {
+		deviceID = reg.TargetDeviceID
+	}
 
 	pl, err := u.deps.Plans.FindByID(ctx, reg.PlanID)
 	if err != nil {
@@ -81,27 +101,54 @@ func (u *ConvertUseCase) ConvertWithDevice(ctx context.Context, regID, deviceID,
 	}
 	now := u.now()
 
-	cust, err := u.createCustomer(ctx, reg, now)
+	cust, err := u.buildCustomer(ctx, reg, now)
 	if err != nil {
 		return domainRegistration.Registration{}, err
 	}
-	sub, err := u.createSubscription(ctx, reg, pl, cust.ID, deviceID, now)
+	sub, err := u.buildSubscription(ctx, reg, pl, cust, deviceID, now)
 	if err != nil {
 		return domainRegistration.Registration{}, err
 	}
 	inv, items := buildInvoice(reg, pl, sub.ID, now)
 	inv.CustomerID = cust.ID
-	if err := u.deps.Invoices.SaveWithItems(ctx, inv, items); err != nil {
-		return domainRegistration.Registration{}, fmt.Errorf("save invoice: %w", err)
-	}
 
 	reg.CustomerID = cust.ID
 	reg.SubscriptionID = sub.ID
 	reg.InvoiceID = inv.ID
 	reg.Status = domainRegistration.StatusActive
-	if err := u.deps.Repo.Save(ctx, reg); err != nil {
-		return domainRegistration.Registration{}, fmt.Errorf("save registration: %w", err)
+
+	if err := u.deps.Writer.SaveConversion(ctx, port.ConversionArtifacts{
+		Registration: reg,
+		Customer:     cust,
+		Subscription: sub,
+		Invoice:      inv,
+		Items:        items,
+	}); err != nil {
+		return domainRegistration.Registration{}, fmt.Errorf("save conversion: %w", err)
 	}
+
+	writeAudit(ctx, u.deps.Audit, "", "CREATE_CUSTOMER", "customer", cust.ID)
+	writeAudit(ctx, u.deps.Audit, "", "CREATE_SUBSCRIPTION", "subscription", sub.ID)
 	writeAudit(ctx, u.deps.Audit, actorID, "CONVERT_REGISTRATION", "registration", reg.ID)
+
+	u.provisionAfterConvert(ctx, &sub, pl, deviceID)
 	return reg, nil
+}
+
+// provisionAfterConvert menjalankan provisi router pasca-commit (best-effort):
+// kegagalan hanya dicatat, status provisi tetap PENDING agar lifecycle worker
+// mencoba ulang.
+func (u *ConvertUseCase) provisionAfterConvert(ctx context.Context, sub *domainSubscription.Subscription, pl domainPlan.ServicePlan, deviceID string) {
+	if deviceID == "" || u.deps.Manager == nil {
+		return
+	}
+	if err := provisionSubscription(ctx, u.deps.Manager, deviceID, *sub, pl); err != nil {
+		logger.WithComponent("ConvertUC").WithError(err).Warn("provisioning gagal; worker akan mencoba ulang")
+		return
+	}
+	sub.ProvisionStatus = domainSubscription.ProvisionOK
+	sub.RouterProfile = pl.Name
+	if err := u.deps.Subs.Save(ctx, *sub); err != nil {
+		logger.WithComponent("ConvertUC").WithError(err).Warn("gagal simpan provision_status; worker akan mencoba ulang")
+	}
 }

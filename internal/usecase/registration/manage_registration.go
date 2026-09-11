@@ -114,7 +114,8 @@ func (u *ManageRegistrationUseCase) ScheduleInstall(ctx context.Context, id stri
 }
 
 // MarkInstalled records technician completion: APPROVED → INSTALLED.
-func (u *ManageRegistrationUseCase) MarkInstalled(ctx context.Context, id string, installerID *uint, techNotes string) (domainRegistration.Registration, error) {
+// deviceID adalah router BRAS yang dipilih teknisi di lokasi pasang (F2-7).
+func (u *ManageRegistrationUseCase) MarkInstalled(ctx context.Context, id string, installerID *uint, deviceID, techNotes string) (domainRegistration.Registration, error) {
 	reg, err := u.mustGet(ctx, id, domainRegistration.StatusApproved)
 	if err != nil {
 		return domainRegistration.Registration{}, err
@@ -123,6 +124,9 @@ func (u *ManageRegistrationUseCase) MarkInstalled(ctx context.Context, id string
 	reg.Status = domainRegistration.StatusInstalled
 	reg.InstalledAt = &now
 	reg.TechnicianNotes = techNotes
+	if deviceID != "" {
+		reg.TargetDeviceID = deviceID
+	}
 	if installerID != nil {
 		reg.AssignedTechnicianID = installerID
 	}

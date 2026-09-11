@@ -21,6 +21,7 @@ type Registration struct {
 	TenantID             string     `json:"tenant_id"`
 	RegistrationNo       string     `json:"registration_no"` // "REG-202608-0001"
 	PlanID               string     `json:"plan_id"`
+	TargetDeviceID       string     `json:"target_device_id,omitempty"` // router BRAS pilihan teknisi saat pasang
 	FullName             string     `json:"full_name"`
 	Phone                string     `json:"phone"` // nomor WhatsApp aktif
 	Email                string     `json:"email,omitempty"`

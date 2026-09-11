@@ -3,6 +3,7 @@ package mocktest
 import (
 	"context"
 	"sync"
+	"time"
 
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	"github.com/quixiq/polyglot/internal/port"
@@ -163,6 +164,51 @@ func (f *FakeInvoiceRepo) DeleteByCustomerID(_ context.Context, customerID strin
 		}
 	}
 	return nil
+}
+
+// ─── InvoiceCanceller ───────────────────────────────────────────────────
+
+// FakeInvoiceCanceller membatalkan invoice di FakeInvoiceRepo dan merekam
+// command (termasuk parameter jurnal koreksi kas).
+type FakeInvoiceCanceller struct {
+	Invoices *FakeInvoiceRepo
+	Commands []port.CancelInvoiceCommand
+	Fail     error
+}
+
+// NewFakeInvoiceCanceller constructs a canceller backed by the invoice fake.
+func NewFakeInvoiceCanceller(invoices *FakeInvoiceRepo) *FakeInvoiceCanceller {
+	return &FakeInvoiceCanceller{Invoices: invoices}
+}
+
+// Cancel records the command and performs a fake atomic cancellation.
+func (f *FakeInvoiceCanceller) Cancel(ctx context.Context, cmd port.CancelInvoiceCommand) (domainBilling.Invoice, error) {
+	f.Commands = append(f.Commands, cmd)
+	if f.Fail != nil {
+		return domainBilling.Invoice{}, f.Fail
+	}
+	inv, err := f.Invoices.FindByID(ctx, cmd.InvoiceID)
+	if err != nil {
+		return domainBilling.Invoice{}, err
+	}
+	if inv.Status == domainBilling.StatusPaid {
+		return inv, domainBilling.ErrInvoiceAlreadyPaid
+	}
+	if inv.Status == domainBilling.StatusCancelled {
+		return inv, nil
+	}
+	now := cmd.Now
+	if now.IsZero() {
+		now = time.Now()
+	}
+	inv.Status = domainBilling.StatusCancelled
+	inv.CancelReason = cmd.Reason
+	inv.CancelledAt = &now
+	inv.UpdatedAt = now
+	if err := f.Invoices.Save(ctx, inv); err != nil {
+		return domainBilling.Invoice{}, err
+	}
+	return inv, nil
 }
 
 // ─── PaymentProcessor ───────────────────────────────────────────────────

@@ -2,6 +2,7 @@ package billing
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -75,6 +76,9 @@ func (w *IsolateWorker) Run(ctx context.Context) (IsolationResult, error) {
 	now := w.now()
 
 	for _, sub := range lifecycle {
+		if err := w.markOverdueInvoices(ctx, sub, now); err != nil {
+			return res, err
+		}
 		if err := w.retryProvisioning(ctx, sub, cfg, &res); err != nil {
 			return res, err
 		}
@@ -83,6 +87,26 @@ func (w *IsolateWorker) Run(ctx context.Context) (IsolationResult, error) {
 		}
 	}
 	return res, nil
+}
+
+// markOverdueInvoices menandai tagihan UNPAID yang melewati jatuh tempo
+// sebagai OVERDUE (F3-2) agar laporan dan isolir menanganinya seragam.
+func (w *IsolateWorker) markOverdueInvoices(ctx context.Context, sub domainSubscription.Subscription, now time.Time) error {
+	invoices, err := w.invoices.FindByCustomerID(ctx, sub.CustomerID)
+	if err != nil {
+		return fmt.Errorf("list invoices %s: %w", sub.CustomerID, err)
+	}
+	for _, inv := range invoices {
+		if inv.SubscriptionID == nil || *inv.SubscriptionID != sub.ID {
+			continue
+		}
+		if inv.Status == domainBilling.StatusUnpaid && inv.DueDate.Before(now) {
+			if err := w.invoices.UpdateStatus(ctx, inv.ID, domainBilling.StatusOverdue); err != nil {
+				return fmt.Errorf("mark invoice %s overdue: %w", inv.ID, err)
+			}
+		}
+	}
+	return nil
 }
 
 // retryProvisioning mencoba push akun ke router untuk langganan yang belum
@@ -125,6 +149,13 @@ func (w *IsolateWorker) retryProvisioning(ctx context.Context, sub domainSubscri
 		if plErr == nil {
 			sub.RouterProfile = pl.Name
 		}
+		// Langganan ISOLATED yang di-provision ulang = restore pasca-bayar
+		// yang gagal sebelumnya; akun sudah kembali ke profil normal, jadi
+		// statusnya juga dipulihkan (F2-13).
+		if sub.Status == domainSubscription.StatusIsolated {
+			sub.Status = domainSubscription.StatusActive
+			res.Restored++
+		}
 	}
 	return w.subs.Save(ctx, sub)
 }
@@ -138,11 +169,13 @@ func (w *IsolateWorker) processIsolation(ctx context.Context, sub domainSubscrip
 	default:
 		return nil // SUSPENDED/PENDING dsb. bukan ranah worker
 	}
-	if !cfg.AutoIsolate {
-		return nil // isolir otomatis dimatikan via settings
+	// Opt-out per langganan: auto_isolate=false pada subscription menang
+	// atas setting global (F2-11).
+	if !cfg.AutoIsolate || !sub.AutoIsolate {
+		return nil // isolir otomatis dimatikan
 	}
 
-	graceCutoff := now.AddDate(0, 0, -cfg.IsolateGraceDays)
+	graceCutoff := now.AddDate(0, 0, -effectiveGraceDays(cfg, sub))
 	unpaid, found := w.overdueInvoice(ctx, sub, graceCutoff)
 	if !found {
 		return nil
@@ -182,7 +215,7 @@ func (w *IsolateWorker) maybeAutoSuspend(ctx context.Context, sub domainSubscrip
 	if cfg.SuspendAfterDays <= 0 {
 		return nil
 	}
-	suspendCutoff := now.AddDate(0, 0, -(cfg.IsolateGraceDays + cfg.SuspendAfterDays))
+	suspendCutoff := now.AddDate(0, 0, -(effectiveGraceDays(cfg, sub) + cfg.SuspendAfterDays))
 	if _, found := w.overdueInvoice(ctx, sub, suspendCutoff); !found {
 		return nil
 	}
@@ -200,8 +233,8 @@ func (w *IsolateWorker) maybeAutoSuspend(ctx context.Context, sub domainSubscrip
 	return nil
 }
 
-// overdueInvoice returns the first UNPAID invoice of the subscription whose
-// due date passed before cutoff.
+// overdueInvoice returns the first outstanding (UNPAID/OVERDUE/PARTIAL)
+// invoice of the subscription whose due date passed before cutoff.
 func (w *IsolateWorker) overdueInvoice(ctx context.Context, sub domainSubscription.Subscription, cutoff time.Time) (domainBilling.Invoice, bool) {
 	invoices, err := w.invoices.FindByCustomerID(ctx, sub.CustomerID)
 	if err != nil {
@@ -211,11 +244,30 @@ func (w *IsolateWorker) overdueInvoice(ctx context.Context, sub domainSubscripti
 		if inv.SubscriptionID == nil || *inv.SubscriptionID != sub.ID {
 			continue
 		}
-		if inv.Status == domainBilling.StatusUnpaid && inv.DueDate.Before(cutoff) {
+		if isOutstandingInvoice(inv.Status) && inv.DueDate.Before(cutoff) {
 			return inv, true
 		}
 	}
 	return domainBilling.Invoice{}, false
+}
+
+// isOutstandingInvoice melaporkan status tagihan yang masih menunggak.
+func isOutstandingInvoice(status string) bool {
+	switch status {
+	case domainBilling.StatusUnpaid, domainBilling.StatusOverdue, domainBilling.StatusPartial:
+		return true
+	default:
+		return false
+	}
+}
+
+// effectiveGraceDays: isolation_grace_days per-langganan menang atas setting
+// global bila diisi (> 0) — F2-11.
+func effectiveGraceDays(cfg port.ISPSettings, sub domainSubscription.Subscription) int {
+	if sub.IsolationGraceDays > 0 {
+		return sub.IsolationGraceDays
+	}
+	return cfg.IsolateGraceDays
 }
 
 func (w *IsolateWorker) queueNotice(ctx context.Context, sub domainSubscription.Subscription, inv domainBilling.Invoice) {

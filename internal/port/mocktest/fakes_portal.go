@@ -209,6 +209,7 @@ func (f *FakePaymentGateway) ParseWebhook(context.Context, []byte, string) (port
 	}
 	return f.Event, nil
 }
+
 // CheckStatus returns mocked webhook event or error.
 func (f *FakePaymentGateway) CheckStatus(context.Context, string) (port.WebhookEvent, error) {
 	if f.ParseErr != nil {

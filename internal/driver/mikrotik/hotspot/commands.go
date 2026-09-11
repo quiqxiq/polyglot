@@ -100,6 +100,8 @@ func NewAddUserCommand(p HotspotUserParams) command.Command {
 	setIfNonEmpty(args, "server", p.Server)
 	setIfNonEmpty(args, "password", p.Password)
 	setIfNonEmpty(args, "profile", p.Profile)
+	setIfNonEmpty(args, "mac-address", p.MACAddress)
+	setIfNonEmpty(args, "address", p.Address)
 	setIfNonEmpty(args, "comment", p.Comment)
 	setIfNonEmpty(args, "limit-uptime", p.LimitUptime)
 	setIfNonEmpty(args, "limit-bytes-total", p.LimitBytes)
@@ -116,9 +118,16 @@ func NewSetUserCommand(rosID string, p HotspotUserParams) command.Command {
 	setIfNonEmpty(args, "server", p.Server)
 	setIfNonEmpty(args, "password", p.Password)
 	setIfNonEmpty(args, "profile", p.Profile)
+	setIfNonEmpty(args, "mac-address", p.MACAddress)
+	setIfNonEmpty(args, "address", p.Address)
 	setIfNonEmpty(args, "comment", p.Comment)
 	setIfNonEmpty(args, "limit-uptime", p.LimitUptime)
 	setIfNonEmpty(args, "limit-bytes-total", p.LimitBytes)
+	if p.Disabled {
+		args["disabled"] = "yes"
+	} else {
+		args["disabled"] = "no"
+	}
 	return command.Command{Raw: "/ip/hotspot/user/set", Args: args}
 }
 

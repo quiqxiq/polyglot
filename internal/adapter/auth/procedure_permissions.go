@@ -232,6 +232,7 @@ var ProcedurePermissions = map[string]string{
 	"/polyglot.v1.BillingService/ListInvoices":     "billing:read",
 	"/polyglot.v1.BillingService/GetInvoice":       "billing:read",
 	"/polyglot.v1.BillingService/GenerateInvoices": "billing:manage",
+	"/polyglot.v1.BillingService/CancelInvoice":    "billing:manage",
 	"/polyglot.v1.BillingService/CashierResolve":   "billing:read",
 	"/polyglot.v1.BillingService/CashierPay":       "billing:manage",
 

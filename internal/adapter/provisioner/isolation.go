@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	billing "github.com/quixiq/polyglot/internal/domain/billing"
+	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
@@ -15,8 +16,12 @@ func (p *Provisioner) Provision(ctx context.Context, deviceID, serviceType strin
 	if err != nil {
 		return fmt.Errorf("resolve driver %s: %w", deviceID, err)
 	}
-	if err := p.ensurePlanProfile(ctx, driver, serviceType, acct); err != nil {
+	resolved, err := p.ensurePlanProfile(ctx, driver, serviceType, acct)
+	if err != nil {
 		return err
+	}
+	if resolved != "" {
+		acct.Profile = resolved
 	}
 	if isHotspot(serviceType) {
 		userParams := port.HotspotUserParams{
@@ -57,7 +62,9 @@ func (p *Provisioner) Provision(ctx context.Context, deviceID, serviceType strin
 	return nil
 }
 
-// UpdateAccount switches the subscriber's profile on the router and kicks the active session.
+// UpdateAccount switches the subscriber's profile on the router and kicks the
+// active session. Akun yang sebelumnya di-disable (suspend) di-enable kembali:
+// pindah profil berarti akun diaktifkan pada profil tujuan (isolir/restore).
 func (p *Provisioner) UpdateAccount(ctx context.Context, deviceID, serviceType, username, newProfile string) error {
 	driver, err := p.resolve(ctx, deviceID)
 	if err != nil {
@@ -69,6 +76,7 @@ func (p *Provisioner) UpdateAccount(ctx context.Context, deviceID, serviceType, 
 			return err
 		}
 		u.Profile = newProfile
+		u.Disabled = false
 		if _, err := p.hot.UpdateUser(ctx, driver, rosID, u); err != nil {
 			return fmt.Errorf("update hotspot user %s: %w", username, err)
 		}
@@ -83,9 +91,18 @@ func (p *Provisioner) UpdateAccount(ctx context.Context, deviceID, serviceType, 
 	if _, err := p.ppp.UpdateSecret(ctx, driver, sec.RosID, sec.Params()); err != nil {
 		return fmt.Errorf("update ppp secret %s: %w", username, err)
 	}
+	// Pastikan akun aktif kembali: pindah profil (isolir/restore/change-plan)
+	// tidak boleh menyisakan disabled=yes dari suspend (F1-7).
+	if _, err := p.ppp.SetSecretDisabled(ctx, driver, sec.RosID, false); err != nil {
+		return fmt.Errorf("enable ppp secret %s: %w", username, err)
+	}
 	p.kickPPP(ctx, driver, username)
 	return nil
 }
+
+// isolirRateLimit adalah throttle profil isolir. Bukan 0/0 (unlimited):
+// pelanggan terisolir tetap dibatasi walau redirect/filter tidak terpasang.
+const isolirRateLimit = "64k/64k"
 
 // Isolate isolates a subscriber by changing their profile, adding their IP to the isolation address-list,
 // ensuring redirect rules, and kicking active sessions.
@@ -95,8 +112,13 @@ func (p *Provisioner) Isolate(ctx context.Context, deviceID, serviceType, userna
 		return err
 	}
 	if opt.IsolirProfile != "" {
-		if err := p.ensurePlanProfile(ctx, driver, serviceType, isolirAccount(opt.IsolirProfile, "0/0")); err != nil {
+		resolved, err := p.ensurePlanProfile(ctx, driver, serviceType,
+			isolirAccount(opt.IsolirProfile, isolirRateLimit, opt.AddressList))
+		if err != nil {
 			return fmt.Errorf("ensure isolir profile: %w", err)
+		}
+		if resolved != "" {
+			opt.IsolirProfile = resolved
 		}
 	}
 	isolirProfile := opt.IsolirProfile
@@ -205,6 +227,11 @@ func BuildOnPaidRestore(
 		if inv.SubscriptionID == nil || *inv.SubscriptionID == "" {
 			return
 		}
+		// Restore hanya setelah tagihan benar-benar lunas — pembayaran parsial
+		// tidak boleh memulihkan layanan (F1-8).
+		if inv.Status != billing.StatusPaid {
+			return
+		}
 		sub, err := subs.FindByID(ctx, *inv.SubscriptionID)
 		if err != nil || sub.Status != "ISOLATED" {
 			return
@@ -230,6 +257,12 @@ func BuildOnPaidRestore(
 			logger.WithComponent("OnPaidRestore").WithFields(map[string]any{
 				"subscription_id": sub.ID,
 			}).WithError(restoreErr).Warn("router restore failed; worker will retry")
+			// Tandai gagal agar lifecycle worker mencoba restore ulang di
+			// siklus berikutnya (F2-13).
+			sub.ProvisionStatus = domainSubscription.ProvisionFailed
+			if serr := subs.Save(ctx, sub); serr != nil {
+				logger.WithComponent("OnPaidRestore").WithError(serr).Warn("mark provision failed: update subscription failed")
+			}
 			return
 		}
 		if err := subs.UpdateStatus(ctx, sub.ID, "ACTIVE"); err != nil {

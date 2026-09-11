@@ -128,7 +128,7 @@ func (h *RegistrationConnectHandler) MarkInstalled(ctx context.Context, req *con
 	if h.managerUC == nil {
 		return nil, response.Unavailable("registration usecase unavailable")
 	}
-	installed, err := h.managerUC.MarkInstalled(ctx, req.Msg.Id, nil, req.Msg.TechnicianNotes)
+	installed, err := h.managerUC.MarkInstalled(ctx, req.Msg.Id, nil, req.Msg.DeviceId, req.Msg.TechnicianNotes)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}

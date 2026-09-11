@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	"gorm.io/gorm"
@@ -51,7 +52,7 @@ func (p *PaymentProcessor) ProcessCashPayment(ctx context.Context, cmd port.Cash
 			q = q.Clauses(lockingClause())
 		}
 		var inv model.InvoiceModel
-		if err := q.First(&inv, "id = ?", cmd.InvoiceID).Error; err != nil {
+		if err := q.First(&inv, "id = ? AND deleted_at IS NULL", cmd.InvoiceID).Error; err != nil {
 			if errors.Is(err, gorm.ErrRecordNotFound) {
 				return ErrNotFound
 			}
@@ -120,7 +121,8 @@ func (p *PaymentProcessor) ProcessCashPayment(ctx context.Context, cmd port.Cash
 			return err
 		}
 
-		// 5. Antrean WA bukti lunas — dikirim worker bot belakangan.
+		// 5. Antrean WA bukti lunas — konten dirender dari template
+		// PAYMENT_RECEIPT (fallback teks bawaan bila template tiada).
 		waModel := &model.WANotificationModel{
 			ID:             newID("wa"),
 			TenantID:       payModel.TenantID,
@@ -128,12 +130,13 @@ func (p *PaymentProcessor) ProcessCashPayment(ctx context.Context, cmd port.Cash
 			CustomerID:     nil, // diisi ulang bila kolom customer diketahui
 			RecipientPhone: "",  // worker mengisi dari customer saat kirim bila kosong
 			MessageType:    "PAYMENT_RECEIPT",
-			MessageContent: receiptContent(inv.InvoiceNumber, cmd.Amount, now),
 			Status:         notification.StatusQueued,
 		}
-		if err := p.fillCustomerPhone(tx, inv.CustomerID, waModel); err != nil {
+		custName, err := p.fillCustomerPhone(tx, inv.CustomerID, waModel)
+		if err != nil {
 			return err
 		}
+		waModel.MessageContent = p.receiptContent(tx, inv.InvoiceNumber, inv.Period, custName, cmd.Amount, now)
 		if err := tx.Create(waModel).Error; err != nil {
 			return err
 		}
@@ -163,18 +166,38 @@ func (p *PaymentProcessor) invokeOnPaid(ctx context.Context, inv billing.Invoice
 	p.OnPaid(ctx, inv, pay)
 }
 
-// fillCustomerPhone melengkapi nomor tujuan + customer_id pada antrean WA.
-func (p *PaymentProcessor) fillCustomerPhone(tx *gorm.DB, customerID string, wa *model.WANotificationModel) error {
+// fillCustomerPhone melengkapi nomor tujuan + customer_id pada antrean WA
+// dan mengembalikan nama pelanggan untuk render template (kosong bila tidak
+// ditemukan).
+func (p *PaymentProcessor) fillCustomerPhone(tx *gorm.DB, customerID string, wa *model.WANotificationModel) (string, error) {
 	var cust model.CustomerModel
-	if err := tx.Select("id, phone").First(&cust, "id = ?", customerID).Error; err != nil {
+	if err := tx.Select("id, name, phone").First(&cust, "id = ?", customerID).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil // invoice tanpa customer valid tetap boleh tercatat
+			return "", nil // invoice tanpa customer valid tetap boleh tercatat
 		}
-		return err
+		return "", err
 	}
 	wa.CustomerID = &cust.ID
 	wa.RecipientPhone = cust.Phone
-	return nil
+	return cust.Name, nil
+}
+
+// receiptContent merender template PAYMENT_RECEIPT dari DB; fallback ke teks
+// bawaan bila template tidak tersedia (F3-4).
+func (p *PaymentProcessor) receiptContent(tx *gorm.DB, invoiceNo, period, customerName string, amount float64, paidAt time.Time) string {
+	var tpl model.NotificationTemplateModel
+	err := tx.Where("template_key = ? AND is_active = ?", "PAYMENT_RECEIPT", true).
+		Order("created_at asc").First(&tpl).Error
+	if err == nil && strings.TrimSpace(tpl.Content) != "" {
+		rep := strings.NewReplacer(
+			"{{customer_name}}", customerName,
+			"{{amount}}", fmt.Sprintf("%.0f", amount),
+			"{{period}}", period,
+			"{{paid_at}}", paidAt.Format("02 Jan 2006 15:04"),
+		)
+		return rep.Replace(tpl.Content)
+	}
+	return receiptContent(invoiceNo, amount, paidAt)
 }
 
 func receiptContent(invoiceNo string, amount float64, paidAt time.Time) string {

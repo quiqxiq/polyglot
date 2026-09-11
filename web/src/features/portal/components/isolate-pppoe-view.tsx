@@ -22,26 +22,32 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { toast } from 'sonner'
+import { PortalOtpLogin } from './portal-otp-login'
+import {
+  type PublicBill,
+  chargePortalInvoice,
+  clearPortalToken,
+  fetchPublicBill,
+  getPortalToken,
+  isAuthError,
+} from '../api/portal-http'
 
-interface PublicBill {
-  customer_name: string
-  customer_code: string
-  invoice_id: string
-  invoice_number: string
-  period: string
-  total: number
-  paid_amount: number
-  outstanding: number
-  due_date: string
-  status: string
-  manual_payment_code: string
-}
+// initialIdentifier membaca identifier dari query string sekali saat mount
+// (mis. redirect isolir membawa ?identifier=...), tanpa setState di effect.
+const initialIdentifier = (() => {
+  if (typeof window === 'undefined') return ''
+  const params = new URLSearchParams(window.location.search)
+  return (
+    params.get('identifier') || params.get('inv') || params.get('code') || params.get('user') || ''
+  )
+})()
 
 export function IsolatePPPoEView() {
-  const [identifier, setIdentifier] = useState('')
+  const [identifier, setIdentifier] = useState(initialIdentifier)
   const [isSearching, setIsSearching] = useState(false)
   const [searched, setSearched] = useState(false)
   const [bill, setBill] = useState<PublicBill | null>(null)
+  const [token, setToken] = useState(getPortalToken())
   const [chargeResult, setChargeResult] = useState<{
     external_id?: string
     payment_url?: string
@@ -61,22 +67,14 @@ export function IsolatePPPoEView() {
     setIsSearching(true)
     setChargeResult(null)
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080'
-      const res = await fetch(`${baseUrl}/api/portal/bill?identifier=${encodeURIComponent(term)}`)
-      if (!res.ok) {
-        setBill(null)
-        setSearched(true)
-        toast.error('Tagihan tidak ditemukan atau sudah lunas')
-        return
-      }
-      const data: PublicBill = await res.json()
+      const data = await fetchPublicBill(term)
       setBill(data)
       setSearched(true)
       toast.success(`Tagihan untuk ${data.customer_name} ditemukan`)
     } catch (err) {
       setBill(null)
       setSearched(true)
-      toast.error('Gagal mengambil data tagihan', {
+      toast.error('Tagihan tidak ditemukan atau sudah lunas', {
         description: err instanceof Error ? err.message : undefined,
       })
     } finally {
@@ -84,15 +82,14 @@ export function IsolatePPPoEView() {
     }
   }
 
-  // Auto-search jika parameter query tersedia di URL
+  // Auto-search jika parameter query tersedia di URL (deferred agar tidak
+  // memicu cascading render langsung dari body effect).
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    const params = new URLSearchParams(window.location.search)
-    const paramId = params.get('identifier') || params.get('inv') || params.get('code') || params.get('user')
-    if (paramId) {
-      setIdentifier(paramId)
-      fetchBill(paramId)
-    }
+    if (!initialIdentifier) return
+    const timer = setTimeout(() => {
+      void fetchBill(initialIdentifier)
+    }, 0)
+    return () => clearTimeout(timer)
   }, [])
 
   const handleSearch = (e: React.FormEvent) => {
@@ -105,22 +102,26 @@ export function IsolatePPPoEView() {
       toast.error('Pilih atau cari tagihan terlebih dahulu')
       return
     }
+    if (!token) {
+      toast.error('Verifikasi OTP terlebih dahulu sebelum membayar')
+      return
+    }
     setIsGenerating(true)
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080'
-      const res = await fetch(`${baseUrl}/api/portal/charge`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ invoice_id: bill.invoice_id, channel, expire_minutes: 60 }),
+      const data = await chargePortalInvoice(token, {
+        invoice_id: bill.invoice_id,
+        channel,
+        expire_minutes: 60,
       })
-      if (!res.ok) {
-        const data = await res.json().catch(() => null)
-        throw new Error(data?.message || 'Gagal memproses pembayaran online')
-      }
-      const data = await res.json()
       setChargeResult(data)
-      toast.success('Tagihan online Tripay berhasil dibuat')
+      toast.success('Tagihan online berhasil dibuat')
     } catch (err: unknown) {
+      if (isAuthError(err)) {
+        clearPortalToken()
+        setToken('')
+        toast.error('Sesi berakhir — silakan verifikasi OTP ulang')
+        return
+      }
       const message = err instanceof Error ? err.message : 'Gagal membuat tagihan online'
       toast.error('Gagal membuat tagihan online', { description: message })
     } finally {
@@ -196,7 +197,7 @@ export function IsolatePPPoEView() {
                   <div>
                     <h3 className='font-semibold text-sm text-foreground'>{bill.customer_name}</h3>
                     <p className='text-xs font-mono text-muted-foreground'>
-                      {bill.customer_code} • No. Faktur {bill.invoice_number} ({bill.period})
+                      No. Faktur {bill.invoice_number} ({bill.period})
                     </p>
                   </div>
                   <Badge variant={chargeResult?.status === 'PAID' ? 'default' : 'destructive'} className='text-[10px] uppercase'>
@@ -215,10 +216,24 @@ export function IsolatePPPoEView() {
                   </span>
                 </div>
 
-                {/* Metode Pembayaran */}
+                {/* Metode Pembayaran — wajib verifikasi sesi portal (F5-4) */}
                 <div className='space-y-3 pt-2'>
-                  <Label className='text-xs font-semibold'>Pilih Metode Pembayaran Cepat:</Label>
-                  <Tabs defaultValue='qris' className='w-full'>
+                  {!token ? (
+                    <div className='rounded-lg border bg-background p-4'>
+                      <PortalOtpLogin
+                        identifier={identifier}
+                        compact
+                        title='Verifikasi OTP untuk Membayar'
+                        onSuccess={(t) => {
+                          setToken(t)
+                          toast.success('Terverifikasi — silakan pilih metode pembayaran')
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <Label className='text-xs font-semibold'>Pilih Metode Pembayaran Cepat:</Label>
+                      <Tabs defaultValue='qris' className='w-full'>
                     <TabsList className='grid grid-cols-3 w-full h-9'>
                       <TabsTrigger value='qris' className='text-xs gap-1.5'>
                         <QrCode className='h-3.5 w-3.5' /> QRIS
@@ -351,7 +366,9 @@ export function IsolatePPPoEView() {
                         </Button>
                       </div>
                     </TabsContent>
-                  </Tabs>
+                      </Tabs>
+                    </>
+                  )}
                 </div>
               </div>
             )}

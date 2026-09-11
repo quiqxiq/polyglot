@@ -31,7 +31,8 @@ func TestConvert_DefaultGenerators(t *testing.T) {
 	mgr := uc.NewManageRegistrationUseCase(repo, nil, nil)
 	conv := uc.NewConvertUseCase(uc.ConvertDeps{
 		Repo: repo, Plans: plans, Customers: customers,
-		Subs: subs, Invoices: invoices,
+		Subs:   subs,
+		Writer: mocktest.NewFakeConversionWriter(customers, subs, invoices, repo),
 	})
 
 	ctx := context.Background()

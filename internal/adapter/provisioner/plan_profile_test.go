@@ -69,8 +69,40 @@ func TestExpireModeMapping(t *testing.T) {
 }
 
 func TestIsolirAccount(t *testing.T) {
-	acct := isolirAccount("ISOLIR", "0/0")
-	if acct.Profile != "ISOLIR" || acct.RateLimit != "0/0" {
+	acct := isolirAccount("isolir", isolirRateLimit, "ISOLIR_USERS")
+	if acct.Profile != "isolir" || acct.RateLimit != isolirRateLimit || acct.AddressList != "ISOLIR_USERS" {
 		t.Errorf("isolir account salah: %+v", acct)
+	}
+	if isolirRateLimit == "0/0" || isolirRateLimit == "" {
+		t.Errorf("rate isolir tidak boleh unlimited/kosong: %q", isolirRateLimit)
+	}
+}
+
+func TestPlanProfileDiffers(t *testing.T) {
+	acct := port.SubscriberAccount{
+		Profile: "PLAN", RateLimit: "10M/10M", ParentQueue: "pq",
+		AddressList: "paid", RemoteAddressPool: "pool-pppoe",
+	}
+	same := profileSnapshot{rate: "10M/10M", parentQueue: "pq", addressList: "paid", addressPool: "pool-pppoe"}
+	if planProfileDiffers(same, acct) {
+		t.Fatalf("profil identik tidak boleh dianggap berbeda")
+	}
+
+	for name, snap := range map[string]profileSnapshot{
+		"rate":        {rate: "5M/5M", parentQueue: "pq", addressList: "paid", addressPool: "pool-pppoe"},
+		"parentQueue": {rate: "10M/10M", parentQueue: "lain", addressList: "paid", addressPool: "pool-pppoe"},
+		"addressList": {rate: "10M/10M", parentQueue: "pq", addressList: "isolir", addressPool: "pool-pppoe"},
+		"addressPool": {rate: "10M/10M", parentQueue: "pq", addressList: "paid", addressPool: "pool-lain"},
+	} {
+		if !planProfileDiffers(snap, acct) {
+			t.Fatalf("%s berbeda harus terdeteksi", name)
+		}
+	}
+
+	// Field kosong pada akun tidak dianggap perbedaan (tidak menimpa profil
+	// dashboard dengan nilai kosong).
+	sparse := port.SubscriberAccount{Profile: "PLAN", RateLimit: "10M/10M"}
+	if planProfileDiffers(profileSnapshot{rate: "10M/10M", parentQueue: "pq"}, sparse) {
+		t.Fatalf("field kosong tidak boleh memicu update")
 	}
 }

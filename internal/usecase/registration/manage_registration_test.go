@@ -97,7 +97,7 @@ func TestTransitions_InvalidPaths(t *testing.T) {
 			return err
 		}},
 		{"install before approve", func(u *uc.ManageRegistrationUseCase, id string) error {
-			_, err := u.MarkInstalled(context.Background(), id, nil, "")
+			_, err := u.MarkInstalled(context.Background(), id, nil, "", "")
 			return err
 		}},
 		{"reject after approve", func(u *uc.ManageRegistrationUseCase, id string) error {
@@ -135,9 +135,10 @@ func TestScheduleInstall_ThenMarkInstalled(t *testing.T) {
 	assert.Equal(t, "INSTALLATION_SCHEDULED", queued[1].MessageType)
 
 	techID := uint(7)
-	installed, err := usecase.MarkInstalled(ctx, sub.ID, &techID, "ONT terpasang")
+	installed, err := usecase.MarkInstalled(ctx, sub.ID, &techID, "dev-9", "ONT terpasang")
 	require.NoError(t, err)
 	assert.Equal(t, domainRegistration.StatusInstalled, installed.Status)
+	assert.Equal(t, "dev-9", installed.TargetDeviceID)
 	require.NotNil(t, installed.InstalledAt)
 }
 
@@ -172,7 +173,8 @@ func TestConvert_FullFlow_CreatesArtifactsAndLinksBack(t *testing.T) {
 	})
 	conv := uc.NewConvertUseCase(uc.ConvertDeps{
 		Repo: repo, Plans: plans, Customers: customers,
-		Subs: subs, Invoices: invoices, Audit: auditW,
+		Subs: subs, Audit: auditW,
+		Writer: mocktest.NewFakeConversionWriter(customers, subs, invoices, repo),
 	})
 	var codeSeq int
 	conv.WithGenerators(
@@ -187,7 +189,7 @@ func TestConvert_FullFlow_CreatesArtifactsAndLinksBack(t *testing.T) {
 	_, err = mgr.Approve(ctx, sub.ID, 1, "")
 	require.NoError(t, err)
 	tech := uint(3)
-	_, err = mgr.MarkInstalled(ctx, sub.ID, &tech, "")
+	_, err = mgr.MarkInstalled(ctx, sub.ID, &tech, "", "")
 	require.NoError(t, err)
 
 	converted, err := conv.Convert(ctx, sub.ID, "9")
@@ -211,12 +213,12 @@ func TestConvert_FullFlow_CreatesArtifactsAndLinksBack(t *testing.T) {
 
 	inv, err := invoices.FindByID(ctx, converted.InvoiceID)
 	require.NoError(t, err)
-	assert.InDelta(t, 100000, inv.Subtotal, 0.01) // subtotal = harga paket saja
+	assert.InDelta(t, 250000, inv.Subtotal, 0.01) // 100.000 paket + 150.000 biaya pasang
 	assert.Len(t, invoices.ItemsOf(inv.ID), 2)    // fee langganan + biaya pasang
 	for _, it := range invoices.ItemsOf(inv.ID) {
 		assert.Equal(t, inv.ID, it.InvoiceID)
 	}
-	assert.InDelta(t, 110000, inv.Total, 0.01) // 100000 + pajak 10%
+	assert.InDelta(t, 275000, inv.Total, 0.01) // subtotal + pajak 10%
 
 	// Audit trail lengkap.
 	assert.Equal(t, 1, auditW.Count("CREATE_CUSTOMER"))
@@ -227,11 +229,13 @@ func TestConvert_FullFlow_CreatesArtifactsAndLinksBack(t *testing.T) {
 func TestConvert_Guards(t *testing.T) {
 	repo := mocktest.NewFakeRegistrationRepo()
 	plans := mocktest.NewFakeServicePlanRepo()
+	customers := mocktest.NewFakeCustomerRepo()
+	subs := mocktest.NewFakeSubscriptionRepo()
 	conv := uc.NewConvertUseCase(uc.ConvertDeps{
 		Repo: repo, Plans: plans,
-		Customers: mocktest.NewFakeCustomerRepo(),
-		Subs:      mocktest.NewFakeSubscriptionRepo(),
-		Invoices:  mocktest.NewFakeInvoiceRepo(),
+		Customers: customers,
+		Subs:      subs,
+		Writer:    mocktest.NewFakeConversionWriter(customers, subs, mocktest.NewFakeInvoiceRepo(), repo),
 	})
 	ctx := context.Background()
 

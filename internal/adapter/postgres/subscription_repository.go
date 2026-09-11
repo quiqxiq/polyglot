@@ -3,6 +3,7 @@ package postgres
 import (
 	"context"
 	"errors"
+	"time"
 
 	"gorm.io/gorm"
 
@@ -40,7 +41,7 @@ func (r *SubscriptionRepository) Save(ctx context.Context, sub subscription.Subs
 
 func (r *SubscriptionRepository) FindByID(ctx context.Context, id string) (subscription.Subscription, error) {
 	var m model.SubscriptionModel
-	err := r.db.WithContext(ctx).First(&m, "id = ?", id).Error
+	err := r.db.WithContext(ctx).First(&m, "id = ? AND deleted_at IS NULL", id).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return subscription.Subscription{}, ErrNotFound
@@ -54,7 +55,7 @@ func (r *SubscriptionRepository) FindByID(ctx context.Context, id string) (subsc
 
 func (r *SubscriptionRepository) FindByCustomerID(ctx context.Context, customerID string) ([]subscription.Subscription, error) {
 	var mList []model.SubscriptionModel
-	err := r.db.WithContext(ctx).Where("customer_id = ?", customerID).Order("created_at desc").Find(&mList).Error
+	err := r.db.WithContext(ctx).Where("customer_id = ? AND deleted_at IS NULL", customerID).Order("created_at desc").Find(&mList).Error
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +69,7 @@ func (r *SubscriptionRepository) FindByCustomerID(ctx context.Context, customerI
 
 func (r *SubscriptionRepository) FindAll(ctx context.Context) ([]subscription.Subscription, error) {
 	var mList []model.SubscriptionModel
-	err := r.db.WithContext(ctx).Order("created_at desc").Find(&mList).Error
+	err := r.db.WithContext(ctx).Where("deleted_at IS NULL").Order("created_at desc").Find(&mList).Error
 	if err != nil {
 		return nil, err
 	}
@@ -171,9 +172,11 @@ func (r *SubscriptionRepository) HasActiveForPlan(ctx context.Context, planID st
 	return n > 0, err
 }
 
-// Delete implements hard-delete for the manage-subscription flow.
+// Delete implements soft-delete for the manage-subscription flow (F3-8).
 func (r *SubscriptionRepository) Delete(ctx context.Context, id string) error {
-	res := r.db.WithContext(ctx).Where("id = ?", id).Delete(&model.SubscriptionModel{})
+	res := r.db.WithContext(ctx).Model(&model.SubscriptionModel{}).
+		Where("id = ? AND deleted_at IS NULL", id).
+		Update("deleted_at", time.Now())
 	if res.Error != nil {
 		return res.Error
 	}

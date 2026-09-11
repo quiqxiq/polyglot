@@ -28,7 +28,7 @@ func newPortalConnectFixture(t *testing.T) (*connectPortal.PortalConnectHandler,
 	})
 	usecase := uc.NewUseCase(portals, customers,
 		mocktest.NewFakeSubscriptionRepo(), mocktest.NewFakeInvoiceRepo(),
-		mocktest.NewFakePaymentReader(), sender, settings)
+		mocktest.NewFakePaymentReader(), sender, mocktest.NewFakeNotificationRepo(), settings)
 
 	require.NoError(t, customers.Save(context.Background(), domainCustomer.Customer{
 		ID: "c1", TenantID: "tenant-default", CustomerCode: "CUST-1",

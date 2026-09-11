@@ -19,6 +19,10 @@ type NotificationRepository interface {
 	// Queue / log
 	Queue(ctx context.Context, n notification.WANotification) error
 	FindByID(ctx context.Context, id string) (notification.WANotification, error)
+	// ExistsForInvoiceSince melaporkan apakah sudah ada notifikasi bertipe
+	// messageType untuk invoice tertentu sejak waktu tertentu (idempotensi
+	// reminder harian).
+	ExistsForInvoiceSince(ctx context.Context, invoiceID, messageType string, since time.Time) (bool, error)
 	// Pending returns QUEUED notifications oldest-first for the worker.
 	Pending(ctx context.Context, limit int) ([]notification.WANotification, error)
 	MarkSent(ctx context.Context, id string, sentAt time.Time) error

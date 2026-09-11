@@ -69,6 +69,7 @@ type routerDeps struct {
 	reportingRepo          *postgres.ReportingRepository
 	userRepo               port.UserRepository
 	customerRepo           port.CustomerRepository
+	deviceRepo             port.DeviceRepository
 	regRepo                port.RegistrationRepository
 	cashbookUseCase        *cashbookUC.ManageCashbookUseCase
 	notifRepo              port.NotificationRepository
@@ -118,7 +119,7 @@ type routerDeps struct {
 func buildRouter(d routerDeps) http.Handler {
 	rootMux := http.NewServeMux()
 
-	webhookHTTPHandler := webhookHTTP.NewHandler()
+	webhookHTTPHandler := webhookHTTP.NewHandler(d.deviceRepo)
 	webhookHTTPHandler.RegisterPublic(rootMux)
 
 	authPath, authHandler := authConnect.NewAuthServiceHandler(
@@ -132,7 +133,7 @@ func buildRouter(d routerDeps) http.Handler {
 	portalConnectPath, portalConnectHandler := portalConnect.NewPortalServiceHandler(d.portalUCase)
 	rootMux.Handle(portalConnectPath, portalConnectHandler)
 
-	portalHTTPHandler := portalHTTP.NewHandler(d.portalUCase)
+	portalHTTPHandler := portalHTTP.NewHandler(d.portalUCase, d.chargeUC)
 	portalHTTPHandler.RegisterPublic(rootMux)
 	portalHTTPHandler.RegisterAuthenticated(rootMux)
 

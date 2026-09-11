@@ -89,6 +89,16 @@ func (r *NotificationRepository) Pending(ctx context.Context, limit int) ([]noti
 	return out, nil
 }
 
+// ExistsForInvoiceSince melaporkan apakah notifikasi bertipe tertentu untuk
+// invoice sudah pernah diantre sejak waktu tertentu.
+func (r *NotificationRepository) ExistsForInvoiceSince(ctx context.Context, invoiceID, messageType string, since time.Time) (bool, error) {
+	var n int64
+	err := r.db.WithContext(ctx).Model(&model.WANotificationModel{}).
+		Where("invoice_id = ? AND message_type = ? AND created_at >= ?", invoiceID, messageType, since).
+		Count(&n).Error
+	return n > 0, err
+}
+
 func (r *NotificationRepository) MarkSent(ctx context.Context, id string, sentAt time.Time) error {
 	res := r.db.WithContext(ctx).Model(&model.WANotificationModel{}).
 		Where("id = ?", id).

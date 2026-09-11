@@ -21,6 +21,7 @@ func hotspotProfileParams(a port.SubscriberAccount) port.MikhmonProfileParams {
 	return port.MikhmonProfileParams{
 		Name:         a.Profile,
 		AddressPool:  a.AddressPool,
+		AddressList:  a.AddressList,
 		SharedUsers:  intToStrOr(a.SharedUsers, "1"),
 		RateLimit:    a.RateLimit,
 		ParentQueue:  a.ParentQueue,
@@ -83,8 +84,39 @@ func hotspotProfileParamsFromSpec(spec domainSub.HotspotProfileSpec) port.Mikhmo
 	}
 }
 
-func isolirAccount(profileName, rateLimit string) port.SubscriberAccount {
-	return port.SubscriberAccount{Profile: profileName, RateLimit: rateLimit}
+func isolirAccount(profileName, rateLimit, addressList string) port.SubscriberAccount {
+	return port.SubscriberAccount{Profile: profileName, RateLimit: rateLimit, AddressList: addressList}
+}
+
+// profileSnapshot adalah subset field profil di router yang dibandingkan
+// untuk memutuskan update idempoten (F2-4).
+type profileSnapshot struct {
+	rate        string
+	parentQueue string
+	addressList string
+	addressPool string
+}
+
+// planProfileDiffers melaporkan apakah profil existing berbeda dari yang
+// diinginkan akun. Field yang kosong pada akun tidak dianggap perbedaan agar
+// profil yang dibuat dashboard/isoli tidak tertimpa nilai kosong.
+func planProfileDiffers(pr profileSnapshot, acct port.SubscriberAccount) bool {
+	if acct.RateLimit != "" && pr.rate != acct.RateLimit {
+		return true
+	}
+	if acct.ParentQueue != "" && pr.parentQueue != acct.ParentQueue {
+		return true
+	}
+	if acct.AddressList != "" && pr.addressList != acct.AddressList {
+		return true
+	}
+	if acct.RemoteAddressPool != "" && pr.addressPool != acct.RemoteAddressPool {
+		return true
+	}
+	if acct.AddressPool != "" && pr.addressPool != acct.AddressPool {
+		return true
+	}
+	return false
 }
 
 func intToStrOr(v int, def string) string {
@@ -100,55 +132,66 @@ func (p *Provisioner) EnsureProfile(ctx context.Context, deviceID, serviceType, 
 	if err != nil {
 		return err
 	}
-	return p.ensurePlanProfile(ctx, driver, serviceType,
+	_, err = p.ensurePlanProfile(ctx, driver, serviceType,
 		port.SubscriberAccount{Profile: profileName, RateLimit: rateLimit})
+	return err
 }
 
-func (p *Provisioner) ensurePlanProfile(ctx context.Context, driver port.DeviceDriver, serviceType string, acct port.SubscriberAccount) error {
+// ensurePlanProfile memastikan profil akun ada di router dan mengembalikan
+// nama profil AKTUAL yang dipakai router — pencocokan nama case-insensitive
+// agar "isolir" vs "ISOLIR" tidak membuat profil duplikat (F1-9). Profil yang
+// sudah ada di-update bila rate/address-list berbeda (F1-10/F1-11).
+func (p *Provisioner) ensurePlanProfile(ctx context.Context, driver port.DeviceDriver, serviceType string, acct port.SubscriberAccount) (string, error) {
 	if acct.Profile == "" || acct.RateLimit == "" {
-		return nil
+		return acct.Profile, nil
 	}
 	if !isHotspot(serviceType) {
 		existing, err := p.ppp.ListProfiles(ctx, driver, acct.Profile)
 		if err != nil {
-			return fmt.Errorf("list profiles: %w", err)
+			return "", fmt.Errorf("list profiles: %w", err)
 		}
 		for _, pr := range existing {
-			if pr.Name == acct.Profile {
-				if acct.AddressList != "" && pr.AddressList != acct.AddressList {
+			if strings.EqualFold(pr.Name, acct.Profile) {
+				if planProfileDiffers(
+					profileSnapshot{rate: pr.RateLimit, parentQueue: pr.ParentQueue, addressList: pr.AddressList, addressPool: pr.RemoteAddress},
+					acct,
+				) {
 					params := pppProfileParams(acct)
 					if _, err := p.ppp.UpdateProfile(ctx, driver, pr.RosID, params); err != nil {
-						return fmt.Errorf("update profile %s address-list: %w", acct.Profile, err)
+						return "", fmt.Errorf("update profile %s: %w", acct.Profile, err)
 					}
 				}
-				return nil
+				return pr.Name, nil
 			}
 		}
 		if _, err := p.ppp.AddProfile(ctx, driver, pppProfileParams(acct)); err != nil {
-			return fmt.Errorf("add profile %s: %w", acct.Profile, err)
+			return "", fmt.Errorf("add profile %s: %w", acct.Profile, err)
 		}
-		return nil
+		return acct.Profile, nil
 	}
 
 	existing, err := p.hot.GetUserProfiles(ctx, driver)
 	if err != nil {
-		return fmt.Errorf("list hotspot profiles: %w", err)
+		return "", fmt.Errorf("list hotspot profiles: %w", err)
 	}
 	for _, pr := range existing {
-		if pr.Name == acct.Profile {
-			if acct.AddressList != "" && pr.AddressList != acct.AddressList {
+		if strings.EqualFold(pr.Name, acct.Profile) {
+			if planProfileDiffers(
+				profileSnapshot{rate: pr.RateLimit, parentQueue: pr.ParentQueue, addressList: pr.AddressList, addressPool: pr.AddressPool},
+				acct,
+			) {
 				params := hotspotProfileParams(acct)
 				if _, err := p.hot.UpdateUserProfile(ctx, driver, pr.RosID, params); err != nil {
-					return fmt.Errorf("update hotspot profile %s address-list: %w", acct.Profile, err)
+					return "", fmt.Errorf("update hotspot profile %s: %w", acct.Profile, err)
 				}
 			}
-			return nil
+			return pr.Name, nil
 		}
 	}
 	if _, err := p.hot.CreateUserProfile(ctx, driver, hotspotProfileParams(acct)); err != nil {
-		return fmt.Errorf("add hotspot profile %s: %w", acct.Profile, err)
+		return "", fmt.Errorf("add hotspot profile %s: %w", acct.Profile, err)
 	}
-	return nil
+	return acct.Profile, nil
 }
 
 // SyncPlanProfile creates or updates the corresponding profile on the target router.

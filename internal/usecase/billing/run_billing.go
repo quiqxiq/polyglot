@@ -65,6 +65,12 @@ func (u *RunBillingUseCase) Run(ctx context.Context, tenantID, period string) (B
 			res.Skipped++
 			continue // sudah ditagih
 		}
+		// Terbitkan hanya saat siklus tagihan langganan sudah tiba (F3-3);
+		// run untuk periode lampau (backfill) tetap diproses penuh.
+		if period == u.now().Format("2006-01") && !billingCycleDue(sub, u.now()) {
+			res.Skipped++
+			continue
+		}
 		pl, err := u.plans.FindByID(ctx, sub.PlanID)
 		if err != nil {
 			res.Skipped++
@@ -139,6 +145,26 @@ func buildMonthlyInvoice(sub domainSubscription.Subscription, pl domainPlan.Serv
 		CreatedAt:   now,
 	}}
 	return inv, items
+}
+
+// WithClock mengganti sumber waktu (untuk test deterministik).
+func (u *RunBillingUseCase) WithClock(now func() time.Time) *RunBillingUseCase {
+	u.now = now
+	return u
+}
+
+// billingCycleDue melaporkan apakah hari siklus tagihan langganan sudah tiba
+// di bulan berjalan; billing_day di-clamp ke hari terakhir bulan pendek.
+func billingCycleDue(sub domainSubscription.Subscription, now time.Time) bool {
+	day := sub.BillingDay
+	if day <= 0 {
+		day = 1
+	}
+	last := time.Date(now.Year(), now.Month()+1, 0, 0, 0, 0, 0, now.Location()).Day()
+	if day > last {
+		day = last
+	}
+	return now.Day() >= day
 }
 
 func atoiSafe(s string) int {

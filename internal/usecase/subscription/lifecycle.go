@@ -46,8 +46,9 @@ func (u *LifecycleUseCase) WithSettings(s port.SettingReader) *LifecycleUseCase 
 }
 
 // Activate assigns a device & provisions the account on the router.
+// Hanya langganan PENDING yang boleh diaktivasi (F2-2).
 func (u *LifecycleUseCase) Activate(ctx context.Context, subID, deviceID string) (domainSub.Subscription, error) {
-	sub, err := u.mustGet(ctx, subID)
+	sub, err := u.mustGetAny(ctx, subID, domainSub.StatusPending)
 	if err != nil {
 		return sub, err
 	}
@@ -93,9 +94,11 @@ func (u *LifecycleUseCase) Activate(ctx context.Context, subID, deviceID string)
 	return sub, nil
 }
 
-// ChangePlan moves a subscription to a new service plan.
+// ChangePlan moves a subscription to a new service plan. Hanya langganan
+// ACTIVE/ISOLATED yang boleh ganti paket (F2-3); override rate lama direset
+// agar rate paket baru berlaku.
 func (u *LifecycleUseCase) ChangePlan(ctx context.Context, subID, newPlanID string) (domainSub.Subscription, error) {
-	sub, err := u.mustGet(ctx, subID)
+	sub, err := u.mustGetAny(ctx, subID, domainSub.StatusActive, domainSub.StatusIsolated)
 	if err != nil {
 		return sub, err
 	}
@@ -112,16 +115,21 @@ func (u *LifecycleUseCase) ChangePlan(ctx context.Context, subID, newPlanID stri
 
 	provisioned := sub.ProvisionStatus == domainSub.ProvisionOK && sub.DeviceID != nil && *sub.DeviceID != ""
 	if provisioned {
-		if err := u.manager.EnsureProfile(ctx, *sub.DeviceID, sub.ServiceType, pl.Name, pl.RateLimit()); err != nil {
+		if err := u.manager.EnsureProfile(ctx, *sub.DeviceID, sub.ServiceType, pl.Name, pl.RateLimitWithBurst()); err != nil {
 			return sub, fmt.Errorf("ensure profil router: %w", err)
 		}
-		if err := u.manager.UpdateAccount(ctx, *sub.DeviceID, sub.ServiceType, sub.RemoteUsername, pl.Name); err != nil {
-			return sub, fmt.Errorf("update profil router: %w", err)
+		// Langganan ISOLATED tidak boleh dipindah keluar dari profil isolir:
+		// cukup profil baru disiapkan untuk saat restore.
+		if sub.Status == domainSub.StatusActive {
+			if err := u.manager.UpdateAccount(ctx, *sub.DeviceID, sub.ServiceType, sub.RemoteUsername, pl.Name); err != nil {
+				return sub, fmt.Errorf("update profil router: %w", err)
+			}
 		}
 	}
 
 	sub.PlanID = newPlanID
 	sub.CustomPrice = nil
+	sub.RateLimit = "" // rate override lama tidak berlaku untuk paket baru
 	sub.RouterProfile = pl.Name
 	if err := u.subs.Save(ctx, sub); err != nil {
 		return sub, fmt.Errorf("save subscription: %w", err)

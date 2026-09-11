@@ -102,7 +102,7 @@ func TestPostgresMigrationsSmoke(t *testing.T) {
 
 	// ── Seed data awal masuk. ────────────────────────────────────────────
 	assertSeedCount(t, db, "payment_methods", 4)
-	assertSeedCount(t, db, "cash_categories", 4)
+	assertSeedCount(t, db, "cash_categories", 5)
 	assertSeedCount(t, db, "cash_accounts", 1)
 	assertSeedCount(t, db, "notification_templates", 5)
 
@@ -193,6 +193,23 @@ func TestPostgresMigrationsSmoke(t *testing.T) {
 	require.NoError(t, db.QueryRow(`SELECT status FROM invoices WHERE id='inv-ok'`).Scan(&paidStatus))
 	assert.Equal(t, "PAID", paidStatus)
 	assertOne(t, db, "cash_transactions", fmt.Sprintf("source_id='%s' AND direction='IN'", pay.ID))
+
+	// ── F3-9: unique (subscription_id, period) pada invoices. ───────────
+	_, err = db.Exec(`INSERT INTO invoices (id, invoice_number, customer_id, subscription_id, period, subtotal, tax_amount,
+		total, paid_amount, due_date, status, qr_payload, manual_payment_code)
+		VALUES ('inv-uq-1','INV-UQ-1','cust-fk','sub-fk','2026-08',100000,0,100000,0,CURRENT_DATE,'UNPAID',
+		'polyglot://invoice/inv-uq-1','PAY-UQ1')`)
+	require.NoError(t, err)
+	_, err = db.Exec(`INSERT INTO invoices (id, invoice_number, customer_id, subscription_id, period, subtotal, tax_amount,
+		total, paid_amount, due_date, status, qr_payload, manual_payment_code)
+		VALUES ('inv-uq-2','INV-UQ-2','cust-fk','sub-fk','2026-08',100000,0,100000,0,CURRENT_DATE,'UNPAID',
+		'polyglot://invoice/inv-uq-2','PAY-UQ2')`)
+	require.Error(t, err, "duplikat (subscription_id, period) harus ditolak")
+
+	// ── F3-10: unique (device_id, remote_username) pada subscriptions. ──
+	_, err = db.Exec(`INSERT INTO subscriptions (id, customer_id, plan_id, device_id, remote_username, remote_password_cipher)
+		VALUES ('sub-dupe','cust-fk','plan-reg',$1,'BUDI','enc:y')`, devID)
+	require.Error(t, err, "duplikat (device_id, remote_username) harus ditolak")
 
 	// ── Down 1 lalu Up lagi: siklus migrasi sehat. ──────────────────────
 	require.NoError(t, m.Steps(-1))

@@ -153,3 +153,41 @@ func (f *FakeServicePlanRepo) Delete(_ context.Context, id string) error {
 	delete(f.byID, id)
 	return nil
 }
+
+// ─── ConversionWriter ───────────────────────────────────────────────────
+
+// FakeConversionWriter menulis artefak konversi ke fake repository
+// in-memory. Bila Fail diisi, tidak ada artefak yang dipersistensikan —
+// mensimulasikan rollback transaksi atomik.
+type FakeConversionWriter struct {
+	Customers *FakeCustomerRepo
+	Subs      *FakeSubscriptionRepo
+	Invoices  *FakeInvoiceRepo
+	Repo      *FakeRegistrationRepo
+	Fail      error
+}
+
+// NewFakeConversionWriter constructs a writer backed by the given fakes.
+func NewFakeConversionWriter(
+	c *FakeCustomerRepo, s *FakeSubscriptionRepo,
+	i *FakeInvoiceRepo, r *FakeRegistrationRepo,
+) *FakeConversionWriter {
+	return &FakeConversionWriter{Customers: c, Subs: s, Invoices: i, Repo: r}
+}
+
+// SaveConversion persists all artifacts or nothing (when Fail is set).
+func (f *FakeConversionWriter) SaveConversion(ctx context.Context, a port.ConversionArtifacts) error {
+	if f.Fail != nil {
+		return f.Fail
+	}
+	if err := f.Customers.Save(ctx, a.Customer); err != nil {
+		return err
+	}
+	if err := f.Subs.Save(ctx, a.Subscription); err != nil {
+		return err
+	}
+	if err := f.Invoices.SaveWithItems(ctx, a.Invoice, a.Items); err != nil {
+		return err
+	}
+	return f.Repo.Save(ctx, a.Registration)
+}

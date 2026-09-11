@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	domainCustomer "github.com/quixiq/polyglot/internal/domain/customer"
+	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	uc "github.com/quixiq/polyglot/internal/usecase/portal"
 	"github.com/quixiq/polyglot/pkg/fault"
 	"github.com/quixiq/polyglot/pkg/response"
@@ -16,11 +17,13 @@ import (
 // Handler exposes plain HTTP endpoints for the customer portal.
 type Handler struct {
 	usecase *uc.UseCase
+	charge  *billingUC.GatewayChargeUseCase
 }
 
-// NewHandler constructs a customer portal HTTP handler.
-func NewHandler(u *uc.UseCase) *Handler {
-	return &Handler{usecase: u}
+// NewHandler constructs a customer portal HTTP handler; charge boleh nil
+// (endpoint pembayaran dinonaktifkan).
+func NewHandler(u *uc.UseCase, charge *billingUC.GatewayChargeUseCase) *Handler {
+	return &Handler{usecase: u, charge: charge}
 }
 
 // RegisterPublic mounts login/OTP and public bill lookup endpoints (tanpa auth).
@@ -35,6 +38,7 @@ func (h *Handler) RegisterAuthenticated(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/portal/me", h.auth(h.me))
 	mux.HandleFunc("GET /api/portal/invoices", h.auth(h.invoices))
 	mux.HandleFunc("GET /api/portal/payments", h.auth(h.payments))
+	mux.HandleFunc("POST /api/portal/charge", h.auth(h.chargeInvoice))
 	mux.HandleFunc("POST /api/portal/logout", h.auth(h.logout))
 }
 
@@ -80,14 +84,52 @@ func (h *Handler) login(w http.ResponseWriter, r *http.Request) {
 	if !decodeBody(w, r, &req) {
 		return
 	}
-	token, cust, err := h.usecase.Login(r.Context(), req.Identifier, req.OTP)
+	token, cust, expiresAt, err := h.usecase.Login(r.Context(), req.Identifier, req.OTP)
 	if err != nil {
 		response.WriteHTTPError(w, err)
 		return
 	}
 	writeJSON(w, map[string]any{
-		"token":    token,
-		"customer": publicCustomer(cust),
+		"token":           token,
+		"expires_at_unix": expiresAt.Unix(),
+		"customer":        publicCustomer(cust),
+	})
+}
+
+// chargeInvoice membuat tagihan online atas nama pelanggan sesi (F5-4):
+// kepemilikan invoice diverifikasi sebelum gateway dipanggil.
+func (h *Handler) chargeInvoice(w http.ResponseWriter, r *http.Request, cust domainCustomer.Customer) {
+	if h.charge == nil {
+		response.WriteHTTPStatusError(w, http.StatusServiceUnavailable, "payment gateway unavailable")
+		return
+	}
+	var req struct {
+		InvoiceID     string `json:"invoice_id"`
+		Gateway       string `json:"gateway,omitempty"`
+		Channel       string `json:"channel,omitempty"`
+		ExpireMinutes int    `json:"expire_minutes,omitempty"`
+	}
+	if !decodeBody(w, r, &req) {
+		return
+	}
+	inv, err := h.usecase.InvoiceForCustomer(r.Context(), cust.ID, req.InvoiceID)
+	if err != nil {
+		response.WriteHTTPError(w, err)
+		return
+	}
+	res, tx, err := h.charge.CreateForInvoiceVia(r.Context(), inv.ID, req.Gateway, req.Channel, req.ExpireMinutes)
+	if err != nil {
+		response.WriteHTTPError(w, err)
+		return
+	}
+	writeJSON(w, map[string]any{
+		"gateway":     tx.Gateway,
+		"external_id": res.ExternalID,
+		"payment_url": res.PaymentURL,
+		"qr_string":   res.QRString,
+		"va_number":   res.VANumber,
+		"status":      tx.Status,
+		"amount":      tx.Amount,
 	})
 }
 

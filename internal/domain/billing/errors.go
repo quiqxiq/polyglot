@@ -25,6 +25,7 @@ var (
 
 	// Payment gateway callback errors.
 	ErrGatewayDisabled   = fault.New(fault.KindFailedPrecondition, "billing: payment gateway disabled")
+	ErrGatewayNotFound   = fault.New(fault.KindNotFound, "billing: unknown payment gateway")
 	ErrGatewayBadSign    = fault.New(fault.KindPermissionDenied, "billing: invalid callback signature")
 	ErrGatewayUnknownRef = fault.New(fault.KindNotFound, "billing: unknown external_id")
 	// ErrRepositoryUnavailable indicates a missing billing repository dependency.

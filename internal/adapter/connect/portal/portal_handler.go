@@ -2,7 +2,6 @@ package portal
 
 import (
 	"context"
-	"time"
 
 	"connectrpc.com/connect"
 
@@ -37,13 +36,13 @@ func (h *PortalConnectHandler) Login(ctx context.Context, req *connect.Request[d
 	if h.usecase == nil {
 		return nil, response.Unavailable("portal usecase unavailable")
 	}
-	token, cust, err := h.usecase.Login(ctx, req.Msg.Identifier, req.Msg.Otp)
+	token, cust, expiresAt, err := h.usecase.Login(ctx, req.Msg.Identifier, req.Msg.Otp)
 	if err != nil {
 		return nil, response.MapDomainError(err)
 	}
 	return connect.NewResponse(&devicepb.PortalLoginResponse{
 		Token:         token,
-		ExpiresAtUnix: time.Now().Add(12 * time.Hour).Unix(),
+		ExpiresAtUnix: expiresAt.Unix(),
 		Customer:      toProtoCustomerPortal(&cust),
 	}), nil
 }

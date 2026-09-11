@@ -1,5 +1,5 @@
 import { Outlet } from '@tanstack/react-router'
-import { Monitor, Palette, Wrench, UserCog, Bot } from 'lucide-react'
+import { Monitor, Palette, Wrench, UserCog, Bot, CreditCard } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
@@ -24,6 +24,11 @@ const sidebarNavItems = [
     title: 'Bot & Anti-Spam',
     href: '/settings/bot',
     icon: <Bot size={18} />,
+  },
+  {
+    title: 'Payment Gateway',
+    href: '/settings/gateway',
+    icon: <CreditCard size={18} />,
   },
   {
     title: 'Appearance',

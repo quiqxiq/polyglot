@@ -1,11 +1,13 @@
 package webhook
 
 import (
+	"crypto/subtle"
 	"encoding/json"
 	"io"
 	"net/http"
 	"time"
 
+	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
 	"github.com/quixiq/polyglot/pkg/response"
 )
@@ -24,12 +26,16 @@ type RouterEventPayload struct {
 	BytesOut  int64  `json:"bytes_out,omitempty"`
 }
 
-// Handler handles public RouterOS webhook callbacks.
-type Handler struct{}
+// Handler handles public RouterOS webhook callbacks. Setiap event wajib
+// membawa device id (?device=...) dan token yang cocok dengan token perangkat
+// (F5-11). Handler tanpa deviceRepo menolak semua event.
+type Handler struct {
+	devices port.DeviceRepository
+}
 
 // NewHandler constructs a new RouterOS webhook handler.
-func NewHandler() *Handler {
-	return &Handler{}
+func NewHandler(devices port.DeviceRepository) *Handler {
+	return &Handler{devices: devices}
 }
 
 // RegisterPublic registers the webhook endpoint on the public ServeMux.
@@ -50,12 +56,36 @@ func (h *Handler) handleRouterEvent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if ev.Token == "" || ev.User == "" || ev.Event == "" {
-		response.WriteHTTPStatusError(w, http.StatusBadRequest, "missing required fields: token, user, event")
+	deviceID := r.URL.Query().Get("device")
+	if ev.Token == "" || ev.User == "" || ev.Event == "" || deviceID == "" {
+		response.WriteHTTPStatusError(w, http.StatusBadRequest, "missing required fields: token, user, event, device")
+		return
+	}
+	if h.devices == nil {
+		response.WriteHTTPStatusError(w, http.StatusServiceUnavailable, "webhook verification unavailable")
+		return
+	}
+
+	dev, err := h.devices.FindByID(r.Context(), deviceID)
+	if err != nil {
+		response.WriteHTTPStatusError(w, http.StatusUnauthorized, "unknown device token")
+		return
+	}
+	expected := ""
+	if dev.Extra != nil {
+		expected = dev.Extra["webhook_token"]
+	}
+	if expected == "" {
+		// Kompatibilitas skrip lama yang dibuat sebelum token dipersist.
+		expected = "rtr_" + dev.ID
+	}
+	if subtle.ConstantTimeCompare([]byte(expected), []byte(ev.Token)) != 1 {
+		response.WriteHTTPStatusError(w, http.StatusUnauthorized, "invalid device token")
 		return
 	}
 
 	logger.WithComponent("RouterWebhook").WithFields(map[string]any{
+		"device_id": dev.ID,
 		"event":     ev.Event,
 		"service":   ev.Service,
 		"user":      ev.User,

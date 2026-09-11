@@ -83,7 +83,7 @@ func (p *Provisioner) EnsureIsolationInfrastructure(ctx context.Context, deviceI
 	}
 
 	// 3. Ensure PPPoE isolation profile
-	if err := p.ensurePlanProfile(ctx, driver, "PPPOE", port.SubscriberAccount{
+	if _, err := p.ensurePlanProfile(ctx, driver, "PPPOE", port.SubscriberAccount{
 		Profile:           pppoeProf,
 		RateLimit:         rate,
 		AddressList:       addrList,
@@ -95,7 +95,7 @@ func (p *Provisioner) EnsureIsolationInfrastructure(ctx context.Context, deviceI
 	}
 
 	// 4. Ensure Hotspot isolation profile
-	if err := p.ensurePlanProfile(ctx, driver, "HOTSPOT", port.SubscriberAccount{
+	if _, err := p.ensurePlanProfile(ctx, driver, "HOTSPOT", port.SubscriberAccount{
 		Profile:     hotspotProf,
 		RateLimit:   rate,
 		AddressList: addrList,

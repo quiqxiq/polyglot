@@ -65,6 +65,18 @@ func (m *mockNotificationRepo) ListByCustomer(ctx context.Context, customerID st
 	return m.pending, nil
 }
 
+// ExistsForInvoiceSince memenuhi port.NotificationRepository (selalu false
+// untuk test ini).
+func (m *mockNotificationRepo) ExistsForInvoiceSince(ctx context.Context, invoiceID, messageType string, since time.Time) (bool, error) {
+	for _, n := range m.pending {
+		if n.InvoiceID != nil && *n.InvoiceID == invoiceID &&
+			n.MessageType == messageType && !n.CreatedAt.Before(since) {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
 type mockNotificationSender struct {
 	lastPhone   string
 	lastContent string

@@ -32,8 +32,41 @@ func Digits(n int) string {
 	return string(out)
 }
 
-// Slug normalizes a human name into an identifier-friendly uppercase token:
-// non-alphanumeric → '-', trimmed, max 12 char.
+// Password generates an account password based on the configured mode:
+// "digits6" (default), "digits4", "random8" (alfanumerik), atau "phone"
+// (memakai nomor WA pelanggan tanpa tanda plus).
+func Password(mode, phone string) string {
+	switch strings.ToLower(strings.TrimSpace(mode)) {
+	case "phone":
+		normalized := strings.TrimPrefix(strings.TrimSpace(phone), "+")
+		if normalized != "" {
+			return normalized
+		}
+		return Digits(8)
+	case "random8":
+		return randomAlnum(8)
+	case "digits4":
+		return Digits(4)
+	default:
+		return Digits(6)
+	}
+}
+
+func randomAlnum(n int) string {
+	const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789"
+	out := make([]byte, n)
+	for i := range out {
+		v, err := rand.Int(rand.Reader, big.NewInt(int64(len(alphabet))))
+		if err != nil {
+			out[i] = '0'
+			continue
+		}
+		out[i] = alphabet[v.Int64()]
+	}
+	return string(out)
+}
+
+// Slug normalizes a human name into an identifier-friendly uppercase token:// non-alphanumeric → '-', trimmed, max 12 char.
 func Slug(name string) string {
 	var b strings.Builder
 	for _, r := range strings.ToUpper(name) {

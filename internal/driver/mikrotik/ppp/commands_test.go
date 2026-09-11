@@ -30,3 +30,18 @@ func TestNewPrintProfilesCommand(t *testing.T) {
 		t.Fatalf("unexpected print profile command: %+v", cmd)
 	}
 }
+
+// F2-9: binding MAC pelanggan (caller-id) harus diteruskan ke /ppp/secret.
+func TestNewAddSecretCommand_WritesCallerID(t *testing.T) {
+	cmd := NewAddSecretCommand(PPPoESecretParams{Name: "u1", CallerID: "AA:BB:CC:DD:EE:FF"})
+	if cmd.Args["caller-id"] != "AA:BB:CC:DD:EE:FF" {
+		t.Fatalf("caller-id tidak ditulis: %+v", cmd.Args)
+	}
+}
+
+func TestNewSetSecretCommand_WritesCallerID(t *testing.T) {
+	cmd := NewSetSecretCommand("*1", PPPoESecretParams{CallerID: "AA:BB:CC:DD:EE:FF"})
+	if cmd.Args["caller-id"] != "AA:BB:CC:DD:EE:FF" {
+		t.Fatalf("caller-id tidak ditulis: %+v", cmd.Args)
+	}
+}

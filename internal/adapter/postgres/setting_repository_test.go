@@ -2,6 +2,7 @@ package postgres_test
 
 import (
 	"context"
+	"strings"
 	"testing"
 
 	"github.com/glebarez/sqlite"
@@ -76,4 +77,46 @@ func TestSettingRepository_CRUD(t *testing.T) {
 	updatedBotSettings, err := repo.GetBotSettings(ctx)
 	require.NoError(t, err)
 	assert.Equal(t, 10, updatedBotSettings.BurstLimit)
+}
+
+// TestSettingRepository_EncryptsSecretSettings membuktikan key sensitif
+// gateway disimpan terenkripsi (prefix enc:v1:) dan didekripsi transparan
+// saat dibaca (F4-7).
+func TestSettingRepository_EncryptsSecretSettings(t *testing.T) {
+	db := setupSettingTestDB(t)
+	repo := postgres.NewSettingRepository(db).WithVault(fakeVaultForTest{})
+	ctx := context.Background()
+
+	require.NoError(t, repo.Set(ctx, "gw.tripay.private_key", "RAHASIA-123", "gateway", "Tripay private key"))
+	require.NoError(t, repo.Set(ctx, "company_name", "Polyglot", "general", "nama"))
+
+	// Nilai mentah di DB terenkripsi.
+	var raw model.SystemSettingModel
+	require.NoError(t, db.First(&raw, "key = ?", "gw.tripay.private_key").Error)
+	assert.True(t, strings.HasPrefix(raw.Value, "enc:v1:"), raw.Value)
+	assert.NotEqual(t, "RAHASIA-123", raw.Value)
+
+	// GetValue & Get mengembalikan plaintext.
+	assert.Equal(t, "RAHASIA-123", repo.GetValue(ctx, "gw.tripay.private_key", ""))
+	s, err := repo.Get(ctx, "gw.tripay.private_key")
+	require.NoError(t, err)
+	assert.Equal(t, "RAHASIA-123", s.Value)
+
+	// Key non-sensitif tidak dienkripsi.
+	var rawCompany model.SystemSettingModel
+	require.NoError(t, db.First(&rawCompany, "key = ?", "company_name").Error)
+	assert.Equal(t, "Polyglot", rawCompany.Value)
+
+	// BatchSet juga mengenkripsi.
+	require.NoError(t, repo.BatchSet(ctx, []setting.Setting{
+		{Key: "gw.xendit.secret_key", Value: "SK-1", Category: "gateway"},
+	}))
+	var rawX model.SystemSettingModel
+	require.NoError(t, db.First(&rawX, "key = ?", "gw.xendit.secret_key").Error)
+	assert.True(t, strings.HasPrefix(rawX.Value, "enc:v1:"))
+	assert.Equal(t, "SK-1", repo.GetValue(ctx, "gw.xendit.secret_key", ""))
+
+	// Tanpa vault → nilai apa adanya (kompatibel repo lama).
+	plain := postgres.NewSettingRepository(db)
+	assert.True(t, strings.HasPrefix(plain.GetValue(ctx, "gw.tripay.private_key", ""), "enc:v1:"))
 }

@@ -3,6 +3,7 @@ package billing_test
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -22,6 +23,7 @@ func seedActiveSub(t *testing.T, subs *mocktest.FakeSubscriptionRepo, id string,
 		CustomerID:  "cust-" + id,
 		PlanID:      "plan-1",
 		Status:      domainSubscription.StatusActive,
+		AutoIsolate: true,
 		CustomPrice: customPrice,
 	}
 	require.NoError(t, subs.Save(context.Background(), sub))
@@ -71,6 +73,37 @@ func TestRunBilling_HappyPath_And_Idempotent(t *testing.T) {
 		require.Len(t, items, 1)
 		assert.Equal(t, domainBilling.ItemTypeSubscriptionFee, items[0].ItemType)
 	}
+}
+
+func TestRunBilling_BillingDayGating(t *testing.T) {
+	subs := mocktest.NewFakeSubscriptionRepo()
+	plans := mocktest.NewFakeServicePlanRepo()
+	invoices := mocktest.NewFakeInvoiceRepo()
+	plans.Seed(domainPlan.ServicePlan{ID: "plan-1", Name: "P", Price: 100000, IsActive: true})
+
+	clock := time.Date(2026, 9, 5, 6, 0, 0, 0, time.UTC)
+	usecase := uc.NewRunBillingUseCase(subs, plans, invoices).WithClock(func() time.Time { return clock })
+
+	sub := seedActiveSub(t, subs, "sub-day10", nil)
+	sub.BillingDay = 10
+	require.NoError(t, subs.Save(context.Background(), sub))
+
+	// Tanggal 5 < billing_day 10 → belum diterbitkan.
+	res, err := usecase.Run(context.Background(), "tenant-default", "2026-09")
+	require.NoError(t, err)
+	assert.Equal(t, 0, res.Created)
+	assert.Equal(t, 1, res.Skipped)
+
+	// Tanggal 10 → terbit.
+	clock = time.Date(2026, 9, 10, 6, 0, 0, 0, time.UTC)
+	res2, err := usecase.Run(context.Background(), "tenant-default", "2026-09")
+	require.NoError(t, err)
+	assert.Equal(t, 1, res2.Created)
+
+	// Backfill periode lampau tidak digate oleh tanggal berjalan.
+	res3, err := usecase.Run(context.Background(), "tenant-default", "2026-08")
+	require.NoError(t, err)
+	assert.Equal(t, 1, res3.Created)
 }
 
 func TestRunBilling_CustomPriceOverride(t *testing.T) {

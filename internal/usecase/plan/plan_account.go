@@ -151,7 +151,7 @@ func BuildDedicatedProvisionSpec(sub domainSubscription.Subscription, pl domainP
 	return domainSubscription.DedicatedProvisionSpec{
 		PPPoE: pppoeSpec,
 		Queue: domainSubscription.DedicatedQueueSpec{
-			QueueName:   sub.RemoteUsername,
+			QueueName:   "dq-" + sub.RemoteUsername,
 			Target:      target,
 			MaxLimit:    pl.RateLimitWithBurst(),
 			LimitAt:     pl.RateLimit(),

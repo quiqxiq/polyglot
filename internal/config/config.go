@@ -40,6 +40,7 @@ type Config struct {
 
 	// Scheduler fase 4: pengirim WA & snapshot harian.
 	WaSendCronSpec   string
+	ReminderCronSpec string
 	SnapshotCronSpec string
 }
 
@@ -81,6 +82,7 @@ func Load() Config {
 		BillingCronSpec:   getEnv("BILLING_CRON", "0 6 * * *"),
 		IsolationCronSpec: getEnv("ISOLATION_CRON", "@every 10m"),
 		WaSendCronSpec:    getEnv("WA_SEND_CRON", "@every 30s"),
+		ReminderCronSpec:  getEnv("REMINDER_CRON", "0 7 * * *"),
 		SnapshotCronSpec:  getEnv("SNAPSHOT_CRON", "5 0 * * *"),
 		SchedulerEnabled:  getEnv("SCHEDULER_ENABLED", "true") == "true",
 	}

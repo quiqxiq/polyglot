@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	cronv3 "github.com/robfig/cron/v3"
@@ -15,12 +16,13 @@ import (
 type schedulerJobs struct {
 	billing  *billingUC.RunBillingUseCase
 	isolate  *billingUC.IsolateWorker
+	reminder *billingUC.ReminderWorker
 	waSend   *notificationUC.WASenderWorker
 	snapshot func(ctx context.Context) error
 }
 
 type schedulerSpecs struct {
-	billing, isolation, waSend, snapshot string
+	billing, isolation, reminder, waSend, snapshot string
 }
 
 // Scheduler menjalankan pekerjaan periodik ISP:
@@ -97,6 +99,20 @@ func newScheduler(jobs schedulerJobs, specs schedulerSpecs, tenantID string) *Sc
 				}).Info("lifecycle pass summary")
 			}
 			return err
+		})
+	}
+	if s.jobs.reminder != nil {
+		add(specs.reminder, "bill-reminder", func(ctx context.Context) error {
+			res, err := s.jobs.reminder.Run(ctx)
+			if err != nil {
+				return fmt.Errorf("bill reminder: %w", err)
+			}
+			if res.Queued+res.Skipped > 0 {
+				logger.WithComponent("Scheduler").WithFields(map[string]any{
+					"queued": res.Queued, "skipped": res.Skipped,
+				}).Info("bill reminder summary")
+			}
+			return nil
 		})
 	}
 	if s.jobs.waSend != nil {

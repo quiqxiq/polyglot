@@ -29,8 +29,8 @@ func setupTestDB(t *testing.T) *gorm.DB {
 		ssh_port INTEGER NOT NULL DEFAULT 22,
 		timeout_ms INTEGER NOT NULL DEFAULT 10000,
 		poll_interval_ms INTEGER NOT NULL DEFAULT 30000,
-		extra_json TEXT,
-		tags_json TEXT,
+		extra TEXT,
+		tags TEXT,
 		enabled NUMERIC NOT NULL DEFAULT 1,
 		created_at DATETIME,
 		updated_at DATETIME
@@ -42,6 +42,9 @@ func setupTestDB(t *testing.T) *gorm.DB {
 
 	return db
 }
+
+// testEncryptionKey adalah kunci 32 byte valid untuk test kredensial.
+const testEncryptionKey = "12345678901234567890123456789012"
 
 func TestDeviceModel_Conversion(t *testing.T) {
 	dev := device.Device{
@@ -78,13 +81,13 @@ func TestCredentialModel_Conversion(t *testing.T) {
 		Extra:    map[string]string{"api_key": "xyz123"},
 	}
 
-	model, err := model.CredentialModelFromDomain("router-1", creds, "")
+	modelCred, err := model.CredentialModelFromDomain("router-1", creds, testEncryptionKey)
 	require.NoError(t, err)
-	assert.Equal(t, "router-1", model.DeviceID)
-	assert.NotEmpty(t, model.Ciphertext)
-	assert.NotEmpty(t, model.Nonce)
+	assert.Equal(t, "router-1", modelCred.DeviceID)
+	assert.NotEmpty(t, modelCred.Ciphertext)
+	assert.NotEmpty(t, modelCred.Nonce)
 
-	domainCreds, err := model.ToDomain("")
+	domainCreds, err := modelCred.ToDomain(testEncryptionKey)
 	require.NoError(t, err)
 	assert.Equal(t, creds.Username, domainCreds.Username)
 	assert.Equal(t, creds.Password, domainCreds.Password)
@@ -94,7 +97,7 @@ func TestCredentialModel_Conversion(t *testing.T) {
 func TestPostgresDeviceRepository_CRUD(t *testing.T) {
 	db := setupTestDB(t)
 	repo := postgres.NewDeviceRepository(db)
-	vault := postgres.NewCredentialVault(db)
+	vault := postgres.NewCredentialVault(db, testEncryptionKey)
 	ctx := context.Background()
 
 	dev := device.Device{
@@ -143,24 +146,33 @@ func TestPostgresDeviceRepository_CRUD(t *testing.T) {
 	assert.ErrorIs(t, err, device.ErrNotFound)
 }
 
-func TestCredentialVault_MultiKeyFallback(t *testing.T) {
+func TestCredentialVault_RequiresCorrectKey(t *testing.T) {
 	db := setupTestDB(t)
 	ctx := context.Background()
 
-	// 1. Vault dengan default test key (atau string kosong) menyimpan kredensial.
-	vaultOld := postgres.NewCredentialVault(db, "12345678901234567890123456789012")
+	const rightKey = "01234567890123456789012345678901"
+	const wrongKey = "99999999999999999999999999999999"
+
+	vault := postgres.NewCredentialVault(db, rightKey)
 	creds := device.Credentials{
 		Username: "admin",
 		Password: "supersecretpassword",
 	}
-	err := vaultOld.Save(ctx, "router-fallback-1", creds)
-	require.NoError(t, err)
+	require.NoError(t, vault.Save(ctx, "router-key-1", creds))
 
-	// 2. Vault baru diinisialisasi dengan ENCRYPTION_KEY dari .env ("polyglot_secret_key_32bytes_long").
-	vaultNew := postgres.NewCredentialVault(db, "polyglot_secret_key_32bytes_long")
+	// Kunci berbeda tidak bisa mendekripsi — tidak ada fallback hardcoded (F5-8).
+	wrong := postgres.NewCredentialVault(db, wrongKey)
+	_, err := wrong.Get(ctx, "router-key-1")
+	require.Error(t, err)
 
-	// 3. Vault baru harus tetap bisa mendekripsi kredensial lama tanpa error message authentication failed.
-	decrypted, err := vaultNew.Get(ctx, "router-fallback-1")
+	// Vault tanpa key menolak operasi.
+	noKey := postgres.NewCredentialVault(db)
+	_, err = noKey.Get(ctx, "router-key-1")
+	require.Error(t, err)
+	_, err = noKey.EncryptString(ctx, "x")
+	require.Error(t, err)
+
+	decrypted, err := vault.Get(ctx, "router-key-1")
 	require.NoError(t, err)
 	assert.Equal(t, "admin", decrypted.Username)
 	assert.Equal(t, "supersecretpassword", decrypted.Password)

@@ -34,6 +34,9 @@ type RegistrationModel struct {
 	ScheduledInstallTime *time.Time `gorm:"type:time"`
 	AssignedTechnicianID *uint      `gorm:"column:assigned_technician_id;index"`
 
+	// TargetDeviceID — router BRAS yang dipilih teknisi saat pemasangan.
+	TargetDeviceID *string `gorm:"column:target_device_id;type:uuid;index"`
+
 	InstalledAt     *time.Time
 	TechnicianNotes string `gorm:"type:text"`
 
@@ -77,6 +80,7 @@ func (m *RegistrationModel) ToDomain() registration.Registration {
 		ScheduledInstallDate: m.ScheduledInstallDate,
 		ScheduledInstallTime: m.ScheduledInstallTime,
 		AssignedTechnicianID: m.AssignedTechnicianID,
+		TargetDeviceID:       derefOrEmpty(m.TargetDeviceID),
 		InstalledAt:          m.InstalledAt,
 		TechnicianNotes:      m.TechnicianNotes,
 		CustomerID:           m.CustomerID,
@@ -111,6 +115,7 @@ func RegistrationModelFromDomain(r registration.Registration) *RegistrationModel
 		ScheduledInstallDate: r.ScheduledInstallDate,
 		ScheduledInstallTime: r.ScheduledInstallTime,
 		AssignedTechnicianID: r.AssignedTechnicianID,
+		TargetDeviceID:       ptrIfNotEmpty(r.TargetDeviceID),
 		InstalledAt:          r.InstalledAt,
 		TechnicianNotes:      r.TechnicianNotes,
 		CustomerID:           r.CustomerID,
@@ -123,4 +128,18 @@ func RegistrationModelFromDomain(r registration.Registration) *RegistrationModel
 		CreatedAt:            r.CreatedAt,
 		UpdatedAt:            r.UpdatedAt,
 	}
+}
+
+func derefOrEmpty(s *string) string {
+	if s == nil {
+		return ""
+	}
+	return *s
+}
+
+func ptrIfNotEmpty(s string) *string {
+	if s == "" {
+		return nil
+	}
+	return &s
 }

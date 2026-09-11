@@ -88,6 +88,7 @@ type ManageSubscriptionUseCase struct {
 	manager   port.RouterAccountManager
 	audit     port.AuditLogWriter
 	invoices  port.InvoiceRepository // guard delete
+	settings  port.SettingReader     // pola kredensial otomatis (opsional)
 
 	now func() time.Time
 }
@@ -112,6 +113,12 @@ func NewManageSubscriptionUseCase(
 		invoices:  invoices,
 		now:       time.Now,
 	}
+}
+
+// WithSettings menautkan sumber konfigurasi pola username/password otomatis.
+func (u *ManageSubscriptionUseCase) WithSettings(s port.SettingReader) *ManageSubscriptionUseCase {
+	u.settings = s
+	return u
 }
 
 // Enrich memperkaya model domain Subscription dengan metadata Plan, Customer, dan Device.
@@ -197,11 +204,12 @@ func (u *ManageSubscriptionUseCase) Create(ctx context.Context, in CreateInput) 
 	}
 
 	username, password := in.RemoteUsername, in.RemotePassword
+	pattern, prefix, pwMode := u.credentialSettings(ctx)
 	if username == "" {
-		username = idgen.GenerateUsername(cust.Name, "{initials}{digits4}", "", cust.CustomerCode)
+		username = idgen.GenerateUsername(cust.Name, pattern, prefix, cust.CustomerCode)
 	}
 	if password == "" {
-		password = idgen.Digits(6) + "pg"
+		password = idgen.Password(pwMode, cust.Phone)
 	}
 
 	now := u.now()
@@ -221,6 +229,7 @@ func (u *ManageSubscriptionUseCase) Create(ctx context.Context, in CreateInput) 
 		ProvisionStatus: domainSub.ProvisionNone,
 		BillingCycle:    in.BillingCycle,
 		BillingDay:      in.BillingDay,
+		AutoIsolate:     true,
 		Status:          domainSub.StatusPending,
 		StartDate:       now,
 		CustomPrice:     in.CustomPrice,
@@ -371,6 +380,12 @@ func (u *ManageSubscriptionUseCase) Update(ctx context.Context, subID string, in
 					"subscription_id": sub.ID,
 					"device_id":       *sub.DeviceID,
 				}).Warn("sinkronisasi router saat update gagal")
+				// Tandai gagal agar lifecycle worker mencoba sinkronisasi ulang
+				// (F3-7).
+				sub.ProvisionStatus = domainSub.ProvisionFailed
+				if serr := u.subs.Save(ctx, sub); serr != nil {
+					logger.WithComponent("ManageSubscriptionUC").WithError(serr).Warn("gagal menandai provision_status=FAILED")
+				}
 			}
 		}
 	}
@@ -410,6 +425,19 @@ func (u *ManageSubscriptionUseCase) Delete(ctx context.Context, subID string) er
 	}
 	u.writeAudit(ctx, "DELETE_SUBSCRIPTION", "subscription", subID)
 	return nil
+}
+
+// credentialSettings membaca pola username/prefix/mode password dari settings
+// dengan fallback default (migrasi 000023).
+func (u *ManageSubscriptionUseCase) credentialSettings(ctx context.Context) (pattern, prefix, pwMode string) {
+	pattern, prefix, pwMode = "{initials}{digits4}", "", "digits6"
+	if u.settings == nil {
+		return pattern, prefix, pwMode
+	}
+	pattern = u.settings.GetValue(ctx, "isp.pppoe_username_pattern", pattern)
+	prefix = u.settings.GetValue(ctx, "isp.pppoe_username_prefix", prefix)
+	pwMode = u.settings.GetValue(ctx, "isp.pppoe_password_mode", pwMode)
+	return pattern, prefix, pwMode
 }
 
 func (u *ManageSubscriptionUseCase) writeAudit(ctx context.Context, action, entityType, entityID string) {

@@ -35,7 +35,8 @@ func newHandlerFixture(t *testing.T) (*connectReg.RegistrationConnectHandler, *m
 	mgr := uc.NewManageRegistrationUseCase(repo, notif, audit)
 	conv := uc.NewConvertUseCase(uc.ConvertDeps{
 		Repo: repo, Plans: plans, Customers: customers,
-		Subs: subs, Invoices: invoices, Audit: audit,
+		Subs: subs, Audit: audit,
+		Writer: mocktest.NewFakeConversionWriter(customers, subs, invoices, repo),
 	})
 
 	handler := connectReg.NewRegistrationConnectHandler(mgr, conv)
@@ -74,10 +75,12 @@ func TestRegistrationConnectHandler_Submit_Approve_Convert(t *testing.T) {
 	// 4. Mark Installed
 	instResp, err := handler.MarkInstalled(ctx, connect.NewRequest(&devicepb.MarkInstalledRequest{
 		Id:              regID,
+		DeviceId:        "dev-bras-1",
 		TechnicianNotes: "ONT terpasang di ruang tamu",
 	}))
 	require.NoError(t, err)
 	assert.Equal(t, "INSTALLED", instResp.Msg.Registration.Status)
+	assert.Equal(t, "dev-bras-1", instResp.Msg.Registration.TargetDeviceId)
 
 	// 5. Convert
 	convResp, err := handler.ConvertRegistration(ctx, connect.NewRequest(&devicepb.ConvertRegistrationRequest{

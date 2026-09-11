@@ -3,6 +3,8 @@ package device
 import (
 	"context"
 	"fmt"
+	"net/url"
+	"strings"
 
 	"github.com/quixiq/polyglot/internal/domain/device"
 	"github.com/quixiq/polyglot/internal/port"
@@ -79,13 +81,33 @@ func (u *ManageIsolationUseCase) GetRouterIntegrationScript(ctx context.Context,
 	}
 	if token == "" {
 		token = "rtr_" + d.ID
+		// Persist token agar webhook handler bisa memverifikasi (F5-11).
+		if d.Extra == nil {
+			d.Extra = map[string]string{}
+		}
+		d.Extra["webhook_token"] = token
+		if err := u.deviceRepo.Save(ctx, d); err != nil {
+			return device.RouterIntegrationScripts{}, fmt.Errorf("persist webhook token: %w", err)
+		}
 	}
 
 	if webhookURL == "" {
 		webhookURL = "/api/v1/webhooks/mikrotik/events"
 	}
+	// Sertakan identitas device pada URL agar handler tahu token siapa yang
+	// harus dicocokkan (F5-11).
+	webhookURL = withQueryParam(webhookURL, "device", d.ID)
 
 	return device.GenerateRouterIntegrationScripts(webhookURL, token), nil
+}
+
+// withQueryParam menambahkan query param ke URL relatif/absolut sederhana.
+func withQueryParam(rawURL, key, value string) string {
+	sep := "?"
+	if strings.Contains(rawURL, "?") {
+		sep = "&"
+	}
+	return rawURL + sep + url.QueryEscape(key) + "=" + url.QueryEscape(value)
 }
 
 // ApplyRouterIntegrationScript applies generated webhook scripts to the specified router profile.

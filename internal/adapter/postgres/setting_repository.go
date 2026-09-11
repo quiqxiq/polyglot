@@ -2,7 +2,9 @@ package postgres
 
 import (
 	"context"
+	"encoding/base64"
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"sync"
@@ -16,8 +18,19 @@ import (
 	"github.com/quixiq/polyglot/internal/port"
 )
 
+// encryptedSettingPrefix menandai nilai setting yang tersimpan terenkripsi
+// (AES-GCM via vault) — di-dekripsi transparan saat dibaca (F4-7).
+const encryptedSettingPrefix = "enc:v1:"
+
+// secretSettingSuffixes adalah komponen akhir key yang nilainya wajib
+// terenkripsi (dipisah titik atau underscore, mis. `gw.tripay.private_key`).
+var secretSettingSuffixes = []string{
+	"api_key", "private_key", "secret_key", "server_key", "callback_token",
+}
+
 type SettingRepository struct {
 	db        *gorm.DB
+	vault     port.CredentialVault
 	cacheLock sync.RWMutex
 	cache     map[string]string
 	cacheTime time.Time
@@ -33,6 +46,53 @@ func NewSettingRepository(db *gorm.DB) *SettingRepository {
 	}
 }
 
+// WithVault menautkan vault untuk enkripsi transparan key sensitif gateway.
+func (r *SettingRepository) WithVault(v port.CredentialVault) *SettingRepository {
+	r.vault = v
+	return r
+}
+
+// isSecretSettingKey melaporkan apakah nilai key wajib disimpan terenkripsi.
+func isSecretSettingKey(key string) bool {
+	k := strings.ToLower(key)
+	for _, suffix := range secretSettingSuffixes {
+		if k == suffix || strings.HasSuffix(k, "."+suffix) || strings.HasSuffix(k, "_"+suffix) {
+			return true
+		}
+	}
+	return false
+}
+
+// encodeValue mengenkripsi nilai key sensitif; nilai kosong atau yang sudah
+// ber-prefix dibiarkan apa adanya (idempoten).
+func (r *SettingRepository) encodeValue(ctx context.Context, key, value string) (string, error) {
+	if r.vault == nil || !isSecretSettingKey(key) || value == "" || strings.HasPrefix(value, encryptedSettingPrefix) {
+		return value, nil
+	}
+	cipher, err := r.vault.EncryptString(ctx, value)
+	if err != nil {
+		return "", fmt.Errorf("encrypt setting %s: %w", key, err)
+	}
+	return encryptedSettingPrefix + base64.StdEncoding.EncodeToString([]byte(cipher)), nil
+}
+
+// decodeValue mendekripsi nilai ber-prefix; nilai lain dikembalikan apa adanya.
+func (r *SettingRepository) decodeValue(ctx context.Context, value string) string {
+	if r.vault == nil || !strings.HasPrefix(value, encryptedSettingPrefix) {
+		return value
+	}
+	encoded := strings.TrimPrefix(value, encryptedSettingPrefix)
+	raw, err := base64.StdEncoding.DecodeString(encoded)
+	if err != nil {
+		return value
+	}
+	plain, err := r.vault.DecryptString(ctx, string(raw))
+	if err != nil {
+		return value
+	}
+	return plain
+}
+
 func (r *SettingRepository) Get(ctx context.Context, key string) (*setting.Setting, error) {
 	var m model.SystemSettingModel
 	if err := r.db.WithContext(ctx).Where("key = ?", key).First(&m).Error; err != nil {
@@ -41,7 +101,11 @@ func (r *SettingRepository) Get(ctx context.Context, key string) (*setting.Setti
 		}
 		return nil, err
 	}
-	return m.ToDomain(), nil
+	s := m.ToDomain()
+	if s != nil {
+		s.Value = r.decodeValue(ctx, s.Value)
+	}
+	return s, nil
 }
 
 func (r *SettingRepository) GetValue(ctx context.Context, key string, fallback string) string {
@@ -60,7 +124,7 @@ func (r *SettingRepository) GetValue(ctx context.Context, key string, fallback s
 		r.cacheLock.Lock()
 		r.cache = make(map[string]string, len(models))
 		for _, m := range models {
-			r.cache[m.Key] = m.Value
+			r.cache[m.Key] = r.decodeValue(ctx, m.Value)
 		}
 		r.cacheTime = time.Now()
 		val, ok := r.cache[key]
@@ -74,15 +138,19 @@ func (r *SettingRepository) GetValue(ctx context.Context, key string, fallback s
 }
 
 func (r *SettingRepository) Set(ctx context.Context, key, value, category, description string) error {
+	encoded, err := r.encodeValue(ctx, key, value)
+	if err != nil {
+		return err
+	}
 	m := model.SystemSettingModel{
 		Key:         key,
-		Value:       value,
+		Value:       encoded,
 		Category:    category,
 		Description: description,
 		UpdatedAt:   time.Now(),
 	}
 
-	err := r.db.WithContext(ctx).Clauses(clause.OnConflict{
+	err = r.db.WithContext(ctx).Clauses(clause.OnConflict{
 		Columns:   []clause.Column{{Name: "key"}},
 		DoUpdates: clause.AssignmentColumns([]string{"value", "category", "description", "updated_at"}),
 	}).Create(&m).Error
@@ -102,6 +170,7 @@ func (r *SettingRepository) GetByCategory(ctx context.Context, category string) 
 	result := make([]setting.Setting, 0, len(models))
 	for _, m := range models {
 		if d := m.ToDomain(); d != nil {
+			d.Value = r.decodeValue(ctx, d.Value)
 			result = append(result, *d)
 		}
 	}
@@ -117,6 +186,7 @@ func (r *SettingRepository) GetAll(ctx context.Context) ([]setting.Setting, erro
 	result := make([]setting.Setting, 0, len(models))
 	for _, m := range models {
 		if d := m.ToDomain(); d != nil {
+			d.Value = r.decodeValue(ctx, d.Value)
 			result = append(result, *d)
 		}
 	}
@@ -130,9 +200,13 @@ func (r *SettingRepository) BatchSet(ctx context.Context, settings []setting.Set
 
 	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		for _, s := range settings {
+			encoded, err := r.encodeValue(ctx, s.Key, s.Value)
+			if err != nil {
+				return err
+			}
 			m := model.SystemSettingModel{
 				Key:         s.Key,
-				Value:       s.Value,
+				Value:       encoded,
 				Category:    s.Category,
 				Description: s.Description,
 				UpdatedAt:   time.Now(),
