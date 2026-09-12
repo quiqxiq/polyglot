@@ -64,6 +64,15 @@ func TestServicePlanRepository_CRUD(t *testing.T) {
 		Price: 100000, TaxPercent: 10, IsActive: true,
 		SharedUsers: 1,
 		ParentQueue: "none",
+		// Kolom voucher/hotspot (F6-10) harus round-trip.
+		SellingPrice:    120000,
+		Validity:        "30d",
+		ValidityMode:    "CALENDAR",
+		SimultaneousUse: 2,
+		ExpireMode:      "rem",
+		LockUser:        true,
+		LimitUptime:     "24h",
+		LimitBytes:      "10g",
 	}
 	require.NoError(t, repo.Save(ctx, p))
 
@@ -71,6 +80,14 @@ func TestServicePlanRepository_CRUD(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, "100-RB-100", got.Name)
 	assert.InDelta(t, 100000, got.Price, 0.01)
+	assert.InDelta(t, 120000, got.SellingPrice, 0.01)
+	assert.Equal(t, "30d", got.Validity)
+	assert.Equal(t, "CALENDAR", got.ValidityMode)
+	assert.Equal(t, 2, got.SimultaneousUse)
+	assert.Equal(t, "rem", got.ExpireMode)
+	assert.True(t, got.LockUser)
+	assert.Equal(t, "24h", got.LimitUptime)
+	assert.Equal(t, "10g", got.LimitBytes)
 
 	byName, err := repo.FindByName(ctx, "tenant-default", "100-RB-100")
 	require.NoError(t, err)

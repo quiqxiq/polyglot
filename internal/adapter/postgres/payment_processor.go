@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
@@ -14,6 +15,7 @@ import (
 	"github.com/quixiq/polyglot/internal/domain/cashbook"
 	"github.com/quixiq/polyglot/internal/domain/notification"
 	"github.com/quixiq/polyglot/internal/port"
+	"github.com/quixiq/polyglot/pkg/idgen"
 	"github.com/quixiq/polyglot/pkg/logger"
 )
 
@@ -84,11 +86,11 @@ func (p *PaymentProcessor) ProcessCashPayment(ctx context.Context, cmd port.Cash
 			return err
 		}
 
-		// 3. Kwitansi pembayaran.
+		// 3. Kwitansi pembayaran (nomor urut sequence agar anti-tabrakan, F6-2).
 		payModel := &model.PaymentModel{
 			ID:              newID("pay"),
 			TenantID:        orDefault(cmd.TenantID, inv.TenantID),
-			PaymentNo:       fmt.Sprintf("PAY-%s-%06d", now.Format("200601"), now.UnixNano()%1000000),
+			PaymentNo:       fmt.Sprintf("PAY-%s-%06d", now.Format("200601"), nextDocumentSeq(tx, "payments_no_seq")),
 			InvoiceID:       inv.ID,
 			PaymentMethodID: cmd.PaymentMethodID,
 			Amount:          cmd.Amount,
@@ -106,7 +108,7 @@ func (p *PaymentProcessor) ProcessCashPayment(ctx context.Context, cmd port.Cash
 		cashModel := &model.CashTransactionModel{
 			ID:            newID("trx"),
 			TenantID:      payModel.TenantID,
-			TransactionNo: fmt.Sprintf("TRX-%s-%06d", now.Format("200601"), now.UnixNano()%1000000),
+			TransactionNo: fmt.Sprintf("TRX-%s-%06d", now.Format("200601"), nextDocumentSeq(tx, "cash_transactions_no_seq")),
 			AccountID:     cmd.CashAccountID,
 			CategoryID:    cmd.IncomeCategoryID,
 			Direction:     cashbook.DirectionIn,
@@ -203,4 +205,19 @@ func (p *PaymentProcessor) receiptContent(tx *gorm.DB, invoiceNo, period, custom
 func receiptContent(invoiceNo string, amount float64, paidAt time.Time) string {
 	return fmt.Sprintf("Terima kasih, pembayaran Rp%.2f untuk tagihan %s telah kami terima pada %s.",
 		amount, invoiceNo, paidAt.Format("02 Jan 2006 15:04"))
+}
+
+// nextDocumentSeq mengambil nomor urut dokumen dari sequence PostgreSQL;
+// fallback acak untuk dialect non-Postgres (sqlite test) — F6-2.
+func nextDocumentSeq(tx *gorm.DB, sequence string) int64 {
+	if tx.Name() == "postgres" {
+		var n int64
+		if err := tx.Raw(fmt.Sprintf("SELECT nextval('%s')", sequence)).Scan(&n).Error; err == nil && n > 0 {
+			return n
+		}
+	}
+	if v, err := strconv.ParseInt(idgen.Digits(8), 10, 64); err == nil {
+		return v
+	}
+	return time.Now().UnixNano() % 100000000
 }

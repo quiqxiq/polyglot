@@ -152,7 +152,7 @@ func (u *ManageSubscriptionUseCase) ListSubscriptions(ctx context.Context, custo
 	if customerID != "" {
 		subs, err = u.subs.FindByCustomerID(ctx, customerID)
 	} else {
-		subs, err = u.subs.FindAll(ctx)
+		subs, err = u.subs.FindPaged(ctx, port.PageFilter{TenantID: "tenant-default"})
 	}
 	if err != nil {
 		return nil, fmt.Errorf("find subscriptions: %w", err)
@@ -417,6 +417,15 @@ func (u *ManageSubscriptionUseCase) Delete(ctx context.Context, subID string) er
 				"subscription_id": subID,
 				"username":        sub.RemoteUsername,
 			}).Warn("terminate akun router gagal saat delete; lanjut hapus DB")
+		} else {
+			// Bersihkan penanda address-list isolir (F6-3).
+			addressList := "ISOLIR_USERS"
+			if u.settings != nil {
+				addressList = port.LoadISPSettings(ctx, u.settings).IsolirAddressList
+			}
+			if cerr := u.manager.CleanupIsolationAddressList(ctx, derefDevice(sub.DeviceID), addressList, sub.RemoteUsername); cerr != nil {
+				logger.WithComponent("ManageSubscriptionUC").WithError(cerr).Warn("cleanup isolir address-list gagal")
+			}
 		}
 	}
 

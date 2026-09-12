@@ -2,6 +2,7 @@ package mocktest
 
 import (
 	"context"
+	"sort"
 	"sync"
 	"time"
 
@@ -72,6 +73,30 @@ func (f *FakeInvoiceRepo) FindAll(_ context.Context) ([]domainBilling.Invoice, e
 	out := make([]domainBilling.Invoice, 0, len(f.byID))
 	for _, inv := range f.byID {
 		out = append(out, inv)
+	}
+	return out, nil
+}
+
+// FindPaged implements tenant + limit/offset filtering (F6-8).
+func (f *FakeInvoiceRepo) FindPaged(_ context.Context, filter port.PageFilter) ([]domainBilling.Invoice, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	out := make([]domainBilling.Invoice, 0, len(f.byID))
+	for _, inv := range f.byID {
+		if filter.TenantID != "" && inv.TenantID != filter.TenantID {
+			continue
+		}
+		out = append(out, inv)
+	}
+	sort.Slice(out, func(i, j int) bool { return out[i].ID < out[j].ID })
+	if filter.Offset > 0 {
+		if filter.Offset >= len(out) {
+			return []domainBilling.Invoice{}, nil
+		}
+		out = out[filter.Offset:]
+	}
+	if filter.Limit > 0 && filter.Limit < len(out) {
+		out = out[:filter.Limit]
 	}
 	return out, nil
 }

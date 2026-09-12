@@ -104,7 +104,7 @@ func TestPostgresMigrationsSmoke(t *testing.T) {
 	assertSeedCount(t, db, "payment_methods", 4)
 	assertSeedCount(t, db, "cash_categories", 5)
 	assertSeedCount(t, db, "cash_accounts", 1)
-	assertSeedCount(t, db, "notification_templates", 5)
+	assertSeedCount(t, db, "notification_templates", 8)
 
 	var ispKeys int
 	require.NoError(t, db.QueryRow(
@@ -158,6 +158,19 @@ func TestPostgresMigrationsSmoke(t *testing.T) {
 
 	// ── Atomicity: kegagalan FK mengembalikan SELURUH transaksi. ───────
 	insertAtomicInvoice(t, db)
+
+	// ── F6-12: CHECK constraint status menolak nilai liar. ─────────────
+	_, err = db.Exec(`UPDATE subscriptions SET status='WEIRD' WHERE id='sub-fk'`)
+	require.ErrorContains(t, err, "chk_sub_status")
+	_, err = db.Exec(`UPDATE invoices SET status='WEIRD' WHERE id='inv-atomic'`)
+	require.ErrorContains(t, err, "chk_invoice_status")
+
+	// ── F6-2: sequence nomor dokumen tersedia. ─────────────────────────
+	var seqCount int
+	require.NoError(t, db.QueryRow(
+		`SELECT COUNT(*) FROM pg_class WHERE relkind='S' AND relname IN ('payments_no_seq','cash_transactions_no_seq')`).
+		Scan(&seqCount))
+	assert.Equal(t, 2, seqCount, "sequence nomor dokumen harus ada")
 
 	// Processor GORM menunjuk DB yang sama via driver postgres.
 	gormDB, err := gorm.Open(gormpostgres.Open(dsn), &gorm.Config{})

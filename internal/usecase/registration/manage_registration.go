@@ -80,11 +80,13 @@ func (u *ManageRegistrationUseCase) Approve(ctx context.Context, id string, revi
 		return domainRegistration.Registration{}, err
 	}
 	u.writeAudit(ctx, audit.ActorUser, fmt.Sprint(reviewerID), "APPROVE_REGISTRATION", "registration", reg.ID)
-	u.queueTemplate(ctx, reg.TenantID, "REGISTRATION_APPROVED", map[string]string{
-		"full_name":        reg.FullName,
-		"plan_name":        reg.PlanID,
-		"install_schedule": "akan diinformasikan",
-	}, reg.Phone)
+	u.queueTemplate(ctx, reg.TenantID, "REGISTRATION_APPROVED",
+		"Halo {{full_name}}, pendaftaran paket {{plan_name}} Anda disetujui. Jadwal pemasangan: {{install_schedule}}.",
+		map[string]string{
+			"full_name":        reg.FullName,
+			"plan_name":        reg.PlanID,
+			"install_schedule": "akan diinformasikan",
+		}, reg.Phone)
 	return reg, nil
 }
 
@@ -105,11 +107,13 @@ func (u *ManageRegistrationUseCase) ScheduleInstall(ctx context.Context, id stri
 	if err := u.repo.Save(ctx, reg); err != nil {
 		return domainRegistration.Registration{}, err
 	}
-	u.queueTemplate(ctx, reg.TenantID, "INSTALLATION_SCHEDULED", map[string]string{
-		"full_name":        reg.FullName,
-		"install_schedule": date.Format("02 Jan 2006"),
-		"address":          reg.Address,
-	}, reg.Phone)
+	u.queueTemplate(ctx, reg.TenantID, "INSTALLATION_SCHEDULED",
+		"Halo {{full_name}}, teknisi kami akan datang pada {{install_schedule}} ke alamat {{address}}.",
+		map[string]string{
+			"full_name":        reg.FullName,
+			"install_schedule": date.Format("02 Jan 2006"),
+			"address":          reg.Address,
+		}, reg.Phone)
 	return reg, nil
 }
 
@@ -134,6 +138,12 @@ func (u *ManageRegistrationUseCase) MarkInstalled(ctx context.Context, id string
 		return domainRegistration.Registration{}, err
 	}
 	u.writeAudit(ctx, audit.ActorUser, actorStr(installerID), "MARK_INSTALLED", "registration", reg.ID)
+	u.queueTemplate(ctx, reg.TenantID, "INSTALLATION_COMPLETED",
+		"Halo {{full_name}}, pemasangan layanan di {{address}} telah selesai. Akun Anda akan segera aktif.",
+		map[string]string{
+			"full_name": reg.FullName,
+			"address":   reg.Address,
+		}, reg.Phone)
 	return reg, nil
 }
 
@@ -153,6 +163,12 @@ func (u *ManageRegistrationUseCase) Reject(ctx context.Context, id, reason strin
 		return domainRegistration.Registration{}, err
 	}
 	u.writeAudit(ctx, audit.ActorUser, fmt.Sprint(reviewerID), "REJECT_REGISTRATION", "registration", reg.ID)
+	u.queueTemplate(ctx, reg.TenantID, "REGISTRATION_REJECTED",
+		"Halo {{full_name}}, pendaftaran Anda tidak dapat diproses. Alasan: {{reason}}. Hubungi kami untuk informasi lebih lanjut.",
+		map[string]string{
+			"full_name": reg.FullName,
+			"reason":    reason,
+		}, reg.Phone)
 	return reg, nil
 }
 
@@ -174,6 +190,12 @@ func (u *ManageRegistrationUseCase) Cancel(ctx context.Context, id, reason strin
 		return domainRegistration.Registration{}, err
 	}
 	u.writeAudit(ctx, audit.ActorUser, "", "CANCEL_REGISTRATION", "registration", reg.ID)
+	u.queueTemplate(ctx, reg.TenantID, "REGISTRATION_CANCELLED",
+		"Halo {{full_name}}, pendaftaran Anda telah dibatalkan. Alasan: {{reason}}.",
+		map[string]string{
+			"full_name": reg.FullName,
+			"reason":    reason,
+		}, reg.Phone)
 	return reg, nil
 }
 
@@ -205,21 +227,21 @@ func (u *ManageRegistrationUseCase) writeAudit(ctx context.Context, actorType, a
 	}
 }
 
-func (u *ManageRegistrationUseCase) queueTemplate(ctx context.Context, tenantID, key string, vars map[string]string, phone string) {
+// queueTemplate mengantre notifikasi WA dari template DB; fallback dirender
+// dengan variabel yang sama bila template belum tersedia.
+func (u *ManageRegistrationUseCase) queueTemplate(ctx context.Context, tenantID, key, fallback string, vars map[string]string, phone string) {
 	if u.notif == nil || phone == "" {
 		return
 	}
-	tpl, err := u.notif.FindTemplateByKey(ctx, tenantID, key)
-	var content string
-	if err != nil {
-		content = key // fallback teks polos bila template hilang
-	} else {
-		rep := make([]string, 0, len(vars)*2)
-		for k, v := range vars {
-			rep = append(rep, "{{"+k+"}}", v)
-		}
-		content = strings.NewReplacer(rep...).Replace(tpl.Content)
+	content := fallback
+	if tpl, err := u.notif.FindTemplateByKey(ctx, tenantID, key); err == nil && strings.TrimSpace(tpl.Content) != "" {
+		content = tpl.Content
 	}
+	rep := make([]string, 0, len(vars)*2)
+	for k, v := range vars {
+		rep = append(rep, "{{"+k+"}}", v)
+	}
+	content = strings.NewReplacer(rep...).Replace(content)
 	n := domainNotification.WANotification{
 		ID:             idgen.New("wa"),
 		TenantID:       tenantID,

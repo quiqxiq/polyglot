@@ -91,4 +91,7 @@ type HotspotGateway interface {
 	ParseUserComment(comment string) (MikhmonComment, error)
 	// EnsureWalledGarden ensures that the specified domains and portal destination are allowed in Hotspot Walled Garden.
 	EnsureWalledGarden(ctx context.Context, driver DeviceDriver, domains []string, portalHost, portalPort string) error
+	// RemoveWalledGarden menghapus seluruh entri walled-garden milik app
+	// (comment ber-prefix "polyglot:") — F6-6.
+	RemoveWalledGarden(ctx context.Context, driver DeviceDriver) error
 }

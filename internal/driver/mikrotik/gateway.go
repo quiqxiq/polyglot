@@ -226,3 +226,13 @@ const IsolationRedirectComment = firewall.IsolationRedirectComment
 func FindIsolationRedirectRules(rules []firewall.NATRule) []firewall.NATRule {
 	return firewall.FindIsolationRedirectRules(rules)
 }
+
+// RemoveIsolationFilter removes isolation filter rules for a list (F6-6).
+func (g *Gateway) RemoveIsolationFilter(ctx context.Context, driver port.DeviceDriver, srcAddressList string) error {
+	return g.fireGW.RemoveIsolationFilter(ctx, driver, srcAddressList)
+}
+
+// FlushAddressList removes all entries in an address list (F6-6).
+func (g *Gateway) FlushAddressList(ctx context.Context, driver port.DeviceDriver, listName string) error {
+	return g.fireGW.FlushAddressList(ctx, driver, listName)
+}

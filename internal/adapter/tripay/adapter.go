@@ -26,12 +26,11 @@ const Name = "TRIPAY"
 
 // Config contains the Tripay gateway configuration.
 type Config struct {
-	Endpoint       string // https://tripay.co.id/api | api-sandbox
-	MerchantCode   string
-	APIKey         string
-	PrivateKey     string
-	Channel        string
-	CallbackAction func(ctx context.Context, event port.WebhookEvent) error
+	Endpoint     string // https://tripay.co.id/api | api-sandbox
+	MerchantCode string
+	APIKey       string
+	PrivateKey   string
+	Channel      string
 }
 
 // ReadConfig reads Tripay configuration values from the settings repository.

@@ -45,4 +45,11 @@ type FirewallGateway interface {
 	// RemoveFromAddressListByComment menghapus semua entri pada list yang
 	// comment-nya memuat substring tertentu (mis. username pelanggan).
 	RemoveFromAddressListByComment(ctx context.Context, driver DeviceDriver, listName, commentContains string) error
+
+	// RemoveIsolationFilter menghapus rule filter isolir (comment
+	// ISOLATION_FILTER_<list>) untuk list tertentu.
+	RemoveIsolationFilter(ctx context.Context, driver DeviceDriver, srcAddressList string) error
+
+	// FlushAddressList menghapus seluruh entri pada address list.
+	FlushAddressList(ctx context.Context, driver DeviceDriver, listName string) error
 }

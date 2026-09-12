@@ -78,6 +78,16 @@ func (f *FakeRouterAccountManager) Terminate(_ context.Context, _, _, username s
 	return f.record("Terminate:" + username)
 }
 
+// CleanupIsolationAddressList records address-list cleanup on terminate (F6-3).
+func (f *FakeRouterAccountManager) CleanupIsolationAddressList(_ context.Context, _, addressList, username string) error {
+	return f.record("CleanupIsolationAddressList:" + username + "@" + addressList)
+}
+
+// DeleteIsolationInfrastructure records isolation infrastructure deletion (F6-6).
+func (f *FakeRouterAccountManager) DeleteIsolationInfrastructure(_ context.Context, deviceID string, _ domainDevice.IsolationConfig, removeFirewallRules bool) error {
+	return f.record(fmt.Sprintf("DeleteIsolationInfrastructure:%s:fw=%v", deviceID, removeFirewallRules))
+}
+
 // EnsureIsolationInfrastructure records isolation infrastructure provisioning.
 func (f *FakeRouterAccountManager) EnsureIsolationInfrastructure(_ context.Context, deviceID string, _ domainDevice.IsolationConfig) error {
 	return f.record("EnsureIsolationInfrastructure:" + deviceID)

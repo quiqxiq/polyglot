@@ -60,6 +60,7 @@ func (u *RunBillingUseCase) Run(ctx context.Context, tenantID, period string) (B
 	}
 
 	res := BillingRunResult{}
+	now := u.now().UTC()
 	for _, sub := range active {
 		if _, err := u.invoices.FindBySubscriptionPeriod(ctx, sub.ID, period); err == nil {
 			res.Skipped++
@@ -67,7 +68,7 @@ func (u *RunBillingUseCase) Run(ctx context.Context, tenantID, period string) (B
 		}
 		// Terbitkan hanya saat siklus tagihan langganan sudah tiba (F3-3);
 		// run untuk periode lampau (backfill) tetap diproses penuh.
-		if period == u.now().Format("2006-01") && !billingCycleDue(sub, u.now()) {
+		if period == now.Format("2006-01") && !billingCycleDue(sub, now) {
 			res.Skipped++
 			continue
 		}
@@ -84,7 +85,7 @@ func (u *RunBillingUseCase) Run(ctx context.Context, tenantID, period string) (B
 		if u.reader != nil {
 			dueDays = atoiSafe(u.reader.GetValue(ctx, "isp.billing_due_days", "0"))
 		}
-		inv, items := buildMonthlyInvoice(sub, pl, period, u.now(), dueDays)
+		inv, items := buildMonthlyInvoice(sub, pl, period, now, dueDays)
 		if err := u.invoices.SaveWithItems(ctx, inv, items); err != nil {
 			return res, fmt.Errorf("save invoice %s: %w", inv.InvoiceNumber, err)
 		}

@@ -73,7 +73,7 @@ func (c *InvoiceCanceller) Cancel(ctx context.Context, cmd port.CancelInvoiceCom
 			reversal := &model.CashTransactionModel{
 				ID:            newID("trx"),
 				TenantID:      inv.TenantID,
-				TransactionNo: fmt.Sprintf("TRX-%s-%06d", now.Format("200601"), now.UnixNano()%1000000),
+				TransactionNo: fmt.Sprintf("TRX-%s-%06d", now.Format("200601"), nextDocumentSeq(tx, "cash_transactions_no_seq")),
 				AccountID:     cmd.CashAccountID,
 				CategoryID:    cmd.ExpenseCategoryID,
 				Direction:     cashbook.DirectionOut,

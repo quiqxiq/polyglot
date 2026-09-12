@@ -2,15 +2,19 @@ package mocktest
 
 import (
 	"context"
+	"sort"
 	"sync"
 
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
+	"github.com/quixiq/polyglot/internal/port"
 )
 
 // FakeSubscriptionRepo is an in-memory subscription repository for tests.
 type FakeSubscriptionRepo struct {
 	mu   sync.Mutex
 	byID map[string]domainSubscription.Subscription
+	// UpdateStatusErr memaksa error pada UpdateStatus (uji toleransi worker).
+	UpdateStatusErr error
 }
 
 // NewFakeSubscriptionRepo creates an empty fake subscription repository.
@@ -68,6 +72,30 @@ func (f *FakeSubscriptionRepo) FindAll(_ context.Context) ([]domainSubscription.
 	return out, nil
 }
 
+// FindPaged implements tenant + limit/offset filtering (F6-8).
+func (f *FakeSubscriptionRepo) FindPaged(_ context.Context, filter port.PageFilter) ([]domainSubscription.Subscription, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	out := make([]domainSubscription.Subscription, 0, len(f.byID))
+	for _, s := range f.byID {
+		if filter.TenantID != "" && s.TenantID != filter.TenantID {
+			continue
+		}
+		out = append(out, s)
+	}
+	sort.Slice(out, func(i, j int) bool { return out[i].ID < out[j].ID })
+	if filter.Offset > 0 {
+		if filter.Offset >= len(out) {
+			return []domainSubscription.Subscription{}, nil
+		}
+		out = out[filter.Offset:]
+	}
+	if filter.Limit > 0 && filter.Limit < len(out) {
+		out = out[:filter.Limit]
+	}
+	return out, nil
+}
+
 // UpdateStatus updates the status of a subscription.
 func (f *FakeSubscriptionRepo) UpdateStatus(_ context.Context, id, status string) error {
 	f.mu.Lock()
@@ -75,6 +103,9 @@ func (f *FakeSubscriptionRepo) UpdateStatus(_ context.Context, id, status string
 	s, ok := f.byID[id]
 	if !ok {
 		return ErrFakeNotFound
+	}
+	if f.UpdateStatusErr != nil {
+		return f.UpdateStatusErr
 	}
 	s.Status = status
 	f.byID[id] = s

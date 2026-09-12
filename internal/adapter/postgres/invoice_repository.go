@@ -63,6 +63,29 @@ func (r *InvoiceRepository) FindAll(ctx context.Context) ([]billing.Invoice, err
 	return invoices, nil
 }
 
+// FindPaged implements tenant + limit/offset filtering (F6-8).
+func (r *InvoiceRepository) FindPaged(ctx context.Context, f port.PageFilter) ([]billing.Invoice, error) {
+	q := r.db.WithContext(ctx).Where("deleted_at IS NULL")
+	if f.TenantID != "" {
+		q = q.Where("tenant_id = ?", f.TenantID)
+	}
+	if f.Limit > 0 {
+		q = q.Limit(f.Limit)
+	}
+	if f.Offset > 0 {
+		q = q.Offset(f.Offset)
+	}
+	var mList []model.InvoiceModel
+	if err := q.Order("created_at desc").Find(&mList).Error; err != nil {
+		return nil, err
+	}
+	invoices := make([]billing.Invoice, len(mList))
+	for i, m := range mList {
+		invoices[i] = m.ToDomain()
+	}
+	return invoices, nil
+}
+
 func (r *InvoiceRepository) UpdateStatus(ctx context.Context, id string, status string) error {
 	res := r.db.WithContext(ctx).Model(&model.InvoiceModel{}).Where("id = ?", id).Update("status", status)
 	if res.Error != nil {

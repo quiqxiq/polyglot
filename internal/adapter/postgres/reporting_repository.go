@@ -66,16 +66,18 @@ func (r *ReportingRepository) ListRange(ctx context.Context, tenantID string, fr
 }
 
 // RecomputeDaily implements port.SnapshotComputer: agregasi SQL harian →
-// upsert daily_financial_snapshots (idempoten per tanggal).
+// upsert daily_financial_snapshots (idempoten per tanggal). Filter memakai
+// rentang waktu (bukan ::date) agar index tetap terpakai (F6-11).
 func (r *ReportingRepository) RecomputeDaily(ctx context.Context, tenantID string, date time.Time) error {
-	day := date.Format("2006-01-02")
+	dayStart := time.Date(date.Year(), date.Month(), date.Day(), 0, 0, 0, 0, time.UTC)
+	dayEnd := dayStart.AddDate(0, 0, 1)
 
 	var invCount int
 	var invTotal float64
 	err := r.db.WithContext(ctx).Raw(`
 		SELECT COUNT(*), COALESCE(SUM(total),0) FROM invoices
-		WHERE tenant_id = ? AND created_at::date = ? AND deleted_at IS NULL`,
-		tenantID, day).Row().Scan(&invCount, &invTotal)
+		WHERE tenant_id = ? AND created_at >= ? AND created_at < ? AND deleted_at IS NULL`,
+		tenantID, dayStart, dayEnd).Row().Scan(&invCount, &invTotal)
 	if err != nil {
 		return fmt.Errorf("aggregate invoices: %w", err)
 	}
@@ -84,8 +86,8 @@ func (r *ReportingRepository) RecomputeDaily(ctx context.Context, tenantID strin
 	var payTotal float64
 	err = r.db.WithContext(ctx).Raw(`
 		SELECT COUNT(*), COALESCE(SUM(amount),0) FROM payments
-		WHERE tenant_id = ? AND payment_date::date = ?`,
-		tenantID, day).Row().Scan(&payCount, &payTotal)
+		WHERE tenant_id = ? AND payment_date >= ? AND payment_date < ?`,
+		tenantID, dayStart, dayEnd).Row().Scan(&payCount, &payTotal)
 	if err != nil {
 		return fmt.Errorf("aggregate payments: %w", err)
 	}
@@ -93,8 +95,8 @@ func (r *ReportingRepository) RecomputeDaily(ctx context.Context, tenantID strin
 	var expenseTotal float64
 	err = r.db.WithContext(ctx).Raw(`
 		SELECT COALESCE(SUM(amount),0) FROM cash_transactions
-		WHERE tenant_id = ? AND direction = 'OUT' AND trx_date::date = ?`,
-		tenantID, day).Scan(&expenseTotal).Error
+		WHERE tenant_id = ? AND direction = 'OUT' AND trx_date >= ? AND trx_date < ?`,
+		tenantID, dayStart, dayEnd).Scan(&expenseTotal).Error
 	if err != nil {
 		return fmt.Errorf("aggregate expenses: %w", err)
 	}

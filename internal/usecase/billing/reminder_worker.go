@@ -61,8 +61,8 @@ func (w *ReminderWorker) Run(ctx context.Context) (ReminderResult, error) {
 	if err != nil {
 		return res, fmt.Errorf("list active subscriptions: %w", err)
 	}
-	now := w.now()
-	dayStart := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
+	now := w.now().UTC()
+	dayStart := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.UTC)
 
 	for _, sub := range active {
 		invoices, err := w.invoices.FindByCustomerID(ctx, sub.CustomerID)

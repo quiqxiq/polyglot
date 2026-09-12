@@ -12,6 +12,8 @@ type SubscriptionRepository interface {
 	FindByID(ctx context.Context, id string) (subscription.Subscription, error)
 	FindByCustomerID(ctx context.Context, customerID string) ([]subscription.Subscription, error)
 	FindAll(ctx context.Context) ([]subscription.Subscription, error)
+	// FindPaged seperti FindAll dengan filter tenant + limit/offset (F6-8).
+	FindPaged(ctx context.Context, f PageFilter) ([]subscription.Subscription, error)
 	UpdateStatus(ctx context.Context, id string, status string) error
 
 	// Bahan worker isolir/sinkronisasi router: cari langganan aktif

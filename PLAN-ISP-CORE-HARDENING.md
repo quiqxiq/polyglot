@@ -207,6 +207,24 @@ Estimasi: 4–6 hari.
 
 ## Fase 6: Hardening, Observabilitas, & Konsistensi (RENDAH–SEDANG)
 
+> **Status: SELESAI** — F6-1..F6-14 tuntas; seluruh gate hijau (`make build`, `make vet`, `go test ./... -race -cover`, `make lint`).
+
+Catatan implementasi:
+- **F6-1**: `port.JobLocker` + `postgres.AdvisoryLocker` (`pg_try_advisory_lock` pada koneksi tertahan; no-op di dialect non-Postgres); setiap job cron dibungkus lock — siklus dilewati bila instance lain memegang lock; diuji mutual-exclusion di PostgreSQL nyata.
+- **F6-2**: migrasi `000030_document_number_sequences` + `nextDocumentSeq` — nomor `PAY-`/`TRX-` kini dari sequence Postgres (fallback `idgen.Digits` di sqlite), bebas tabrakan pada pembayaran/cancel paralel.
+- **F6-3**: `CleanupIsolationAddressList` dipanggil best-effort saat `Terminate` (lifecycle), delete subscription, dan delete customer.
+- **F6-4**: worker isolasi melanjutkan siklus saat satu subscription gagal (`IsolationResult.Errors`, log + `continue`).
+- **F6-5**: `MarkInstalled`/`Reject`/`Cancel` registrasi mengantre notifikasi WA (`INSTALLATION_COMPLETED`, `REGISTRATION_REJECTED`, `REGISTRATION_CANCELLED`) lewat `queueTemplate` dengan fallback in-code; template di-seed migrasi `000029`.
+- **F6-6**: `DeleteIsolationInfrastructure` menghapus profil isolir PPP/hotspot + opsional redirect/filter/walled-garden; `DeleteIsolationProfile` usecase aktif.
+- **F6-7**: `Isolate` otomatis memasang `EnsureIsolationFilter` saat redirect + address-list tersedia.
+- **F6-8**: `port.PageFilter` + `FindPaged` pada repository customer/subscription/invoice; usecase list memakai tenant `tenant-default`.
+- **F6-9**: perhitungan data (billing run, worker isolasi, reminder) memakai UTC; cron tetap mengikuti TZ server untuk jam operasional.
+- **F6-10**: `ServicePlanModel` memetakan seluruh field domain (selling price, validity, expire/lock, limit).
+- **F6-11**: `RecomputeDaily` memakai predikat range (`>= ? AND < ?`) agar index-friendly.
+- **F6-12**: migrasi `000031_status_check_constraints` menambah CHECK pada status subscription/invoice/payment + service_type; pelanggaran diuji di smoke test.
+- **F6-13**: `.env.example` mendokumentasikan seluruh spec cron.
+- **F6-14**: dead code dihapus (`ppp.IsolirProfileParams`, `InvoiceUseCase.CreateInvoice/PayInvoice`, `tripay.Config.CallbackAction`); `MediaCleanerWorker` ter-wire di `app.go`.
+
 | ID | Task | Detail | File |
 |---|---|---|---|
 | F6-1 | Leader election scheduler (advisory lock PostgreSQL) | `internal/app/scheduler.go:46-64` |

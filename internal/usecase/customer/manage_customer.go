@@ -22,10 +22,11 @@ type Detail struct {
 
 // ManageCustomerUseCase orchestrates customer CRUD and subscription management.
 type ManageCustomerUseCase struct {
-	repo    port.CustomerRepository
-	subRepo port.SubscriptionRepository
-	invRepo port.InvoiceRepository
-	router  port.RouterAccountManager
+	repo     port.CustomerRepository
+	subRepo  port.SubscriptionRepository
+	invRepo  port.InvoiceRepository
+	router   port.RouterAccountManager
+	settings port.SettingReader
 }
 
 // NewManageCustomerUseCase constructs a new ManageCustomerUseCase.
@@ -41,6 +42,12 @@ func NewManageCustomerUseCase(
 		invRepo: invRepo,
 		router:  router,
 	}
+}
+
+// WithSettings menautkan sumber konfigurasi (mis. nama address-list isolir).
+func (uc *ManageCustomerUseCase) WithSettings(s port.SettingReader) *ManageCustomerUseCase {
+	uc.settings = s
+	return uc
 }
 
 // Enrich menghitung activeSubscriptionsCount dan unpaidInvoicesCount untuk 1 customer.
@@ -74,14 +81,15 @@ func (uc *ManageCustomerUseCase) Enrich(ctx context.Context, c customer.Customer
 
 // ListCustomers mengembalikan daftar pelanggan beserta counter langganan dan tagihan aktif.
 func (uc *ManageCustomerUseCase) ListCustomers(ctx context.Context) ([]Detail, error) {
-	customers, err := uc.repo.FindAll(ctx)
+	// Tenant filter di level query (F6-8); paginasi menyusul di endpoint.
+	customers, err := uc.repo.FindPaged(ctx, port.PageFilter{TenantID: "tenant-default"})
 	if err != nil {
 		return nil, fmt.Errorf("list customers: %w", err)
 	}
 
 	subCountByCust := make(map[string]int)
 	if uc.subRepo != nil {
-		if subs, err := uc.subRepo.FindAll(ctx); err == nil {
+		if subs, err := uc.subRepo.FindPaged(ctx, port.PageFilter{TenantID: "tenant-default"}); err == nil {
 			for _, sub := range subs {
 				if sub.Status != subscription.StatusTerminated && sub.Status != subscription.StatusCancelled {
 					subCountByCust[sub.CustomerID]++
@@ -92,7 +100,7 @@ func (uc *ManageCustomerUseCase) ListCustomers(ctx context.Context) ([]Detail, e
 
 	unpaidCountByCust := make(map[string]int)
 	if uc.invRepo != nil {
-		if invoices, err := uc.invRepo.FindAll(ctx); err == nil {
+		if invoices, err := uc.invRepo.FindPaged(ctx, port.PageFilter{TenantID: "tenant-default"}); err == nil {
 			for _, inv := range invoices {
 				if inv.Status != domainBilling.StatusPaid {
 					unpaidCountByCust[inv.CustomerID]++
@@ -228,6 +236,12 @@ func (uc *ManageCustomerUseCase) DeleteCustomer(ctx context.Context, id string) 
 			for _, sub := range subs {
 				if uc.router != nil && sub.DeviceID != nil && *sub.DeviceID != "" && sub.RemoteUsername != "" {
 					_ = uc.router.Terminate(ctx, *sub.DeviceID, sub.ServiceType, sub.RemoteUsername)
+					// Bersihkan penanda address-list isolir (F6-3).
+					addressList := "ISOLIR_USERS"
+					if uc.settings != nil {
+						addressList = port.LoadISPSettings(ctx, uc.settings).IsolirAddressList
+					}
+					_ = uc.router.CleanupIsolationAddressList(ctx, *sub.DeviceID, addressList, sub.RemoteUsername)
 				}
 				_ = uc.subRepo.Delete(ctx, sub.ID)
 			}

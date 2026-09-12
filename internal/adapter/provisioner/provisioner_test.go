@@ -8,6 +8,7 @@ import (
 
 	domainBilling "github.com/quixiq/polyglot/internal/domain/billing"
 	"github.com/quixiq/polyglot/internal/domain/command"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	domainPlan "github.com/quixiq/polyglot/internal/domain/plan"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
@@ -86,13 +87,28 @@ func (m *mockPPPGateway) ListActive(_ context.Context, _ port.DeviceDriver, _ st
 	return nil, nil
 }
 
+func (m *mockPPPGateway) RemoveProfile(_ context.Context, _ port.DeviceDriver, rosID string) (command.Result, error) {
+	filtered := m.profiles[:0]
+	for _, pr := range m.profiles {
+		if pr.RosID != rosID {
+			filtered = append(filtered, pr)
+		}
+	}
+	m.profiles = filtered
+	return command.Result{Output: "ok"}, nil
+}
+
 func (m *mockPPPGateway) KickActive(_ context.Context, _ port.DeviceDriver, _ string) (command.Result, error) {
 	return command.Result{Output: "ok"}, nil
 }
 
 type mockFirewallGateway struct {
 	port.FirewallGateway
-	addressList []string
+	addressList          []string
+	filterCalls          int
+	disableRedirectCalls int
+	flushCalls           int
+	removedByComment     []string
 }
 
 func (m *mockFirewallGateway) AddToAddressList(_ context.Context, _ port.DeviceDriver, list, address, _ string) error {
@@ -100,7 +116,8 @@ func (m *mockFirewallGateway) AddToAddressList(_ context.Context, _ port.DeviceD
 	return nil
 }
 
-func (m *mockFirewallGateway) RemoveFromAddressListByComment(_ context.Context, _ port.DeviceDriver, _, _ string) error {
+func (m *mockFirewallGateway) RemoveFromAddressListByComment(_ context.Context, _ port.DeviceDriver, list, comment string) error {
+	m.removedByComment = append(m.removedByComment, list+":"+comment)
 	return nil
 }
 
@@ -109,6 +126,21 @@ func (m *mockFirewallGateway) EnsureIsolationRedirect(_ context.Context, _ port.
 }
 
 func (m *mockFirewallGateway) EnsureIsolationFilter(_ context.Context, _ port.DeviceDriver, _, _ string) error {
+	m.filterCalls++
+	return nil
+}
+
+func (m *mockFirewallGateway) DisableIsolationRedirect(_ context.Context, _ port.DeviceDriver) error {
+	m.disableRedirectCalls++
+	return nil
+}
+
+func (m *mockFirewallGateway) RemoveIsolationFilter(_ context.Context, _ port.DeviceDriver, _ string) error {
+	return nil
+}
+
+func (m *mockFirewallGateway) FlushAddressList(_ context.Context, _ port.DeviceDriver, _ string) error {
+	m.flushCalls++
 	return nil
 }
 
@@ -211,9 +243,10 @@ func TestProvisioner_SyncPlanProfile(t *testing.T) {
 
 type mockHotspotGateway struct {
 	port.HotspotGateway
-	users    []port.HotspotUser
-	profiles []port.HotspotUserProfile
-	seq      int
+	users              []port.HotspotUser
+	profiles           []port.HotspotUserProfile
+	seq                int
+	walledGardenRemove int
 }
 
 func (m *mockHotspotGateway) ListUsers(_ context.Context, _ port.DeviceDriver, _ port.ListUsersFilter) ([]port.HotspotUser, error) {
@@ -253,6 +286,22 @@ func (m *mockHotspotGateway) GetUserProfiles(_ context.Context, _ port.DeviceDri
 func (m *mockHotspotGateway) CreateUserProfile(_ context.Context, _ port.DeviceDriver, p port.MikhmonProfileParams) (command.Result, error) {
 	m.profiles = append(m.profiles, port.HotspotUserProfile{Name: p.Name})
 	return command.Result{Output: "ok"}, nil
+}
+
+func (m *mockHotspotGateway) DeleteUserProfile(_ context.Context, _ port.DeviceDriver, rosID string) (command.Result, error) {
+	filtered := m.profiles[:0]
+	for _, pr := range m.profiles {
+		if pr.RosID != rosID {
+			filtered = append(filtered, pr)
+		}
+	}
+	m.profiles = filtered
+	return command.Result{Output: "ok"}, nil
+}
+
+func (m *mockHotspotGateway) RemoveWalledGarden(_ context.Context, _ port.DeviceDriver) error {
+	m.walledGardenRemove++
+	return nil
 }
 
 // ─── F1-7: resume PPP harus re-enable secret ────────────────────────────
@@ -400,5 +449,85 @@ func TestBuildOnPaidRestore_SkipsPartialInvoice(t *testing.T) {
 	}
 	if sub.Status != domainSubscription.StatusIsolated {
 		t.Fatalf("status subscription = %s, harus tetap ISOLATED", sub.Status)
+	}
+}
+
+// ─── F6-7: isolir otomatis memasang filter drop ─────────────────────────
+
+func TestProvisioner_IsolateInstallsFilter(t *testing.T) {
+	ctx := context.Background()
+	pppGW := &mockPPPGateway{}
+	fwGW := &mockFirewallGateway{}
+	prov := NewWithResolver(
+		func(_ context.Context, _ string) (port.DeviceDriver, error) { return &mockDriver{}, nil },
+		pppGW, nil, fwGW, nil,
+	)
+	acct := port.SubscriberAccount{Username: "user1", Password: "pass1", Profile: "PLAN-10M"}
+	if err := prov.Provision(ctx, "dev1", "PPPOE", acct); err != nil {
+		t.Fatalf("Provision: %v", err)
+	}
+	opt := port.IsolationOptions{
+		IsolirProfile: "isolir",
+		AddressList:   "ISOLIR_USERS",
+		Redirect: &port.IsolationRedirectConfig{
+			SrcAddressList: "ISOLIR_USERS", PaymentHost: "bayar.example.com", PaymentPort: "8080",
+		},
+	}
+	if err := prov.Isolate(ctx, "dev1", "PPPOE", "user1", opt); err != nil {
+		t.Fatalf("Isolate: %v", err)
+	}
+	if fwGW.filterCalls != 1 {
+		t.Fatalf("EnsureIsolationFilter dipanggil %d kali, mau 1", fwGW.filterCalls)
+	}
+}
+
+// ─── F6-6: hapus infrastruktur isolir ───────────────────────────────────
+
+func TestProvisioner_DeleteIsolationInfrastructure(t *testing.T) {
+	ctx := context.Background()
+	pppGW := &mockPPPGateway{profiles: []port.PPPProfile{{RosID: "*p1", Name: "ISOLIR"}}}
+	hotGW := &mockHotspotGateway{profiles: []port.HotspotUserProfile{{RosID: "*h1", Name: "ISOLIR"}}}
+	fwGW := &mockFirewallGateway{}
+	prov := NewWithResolver(
+		func(_ context.Context, _ string) (port.DeviceDriver, error) { return &mockDriver{}, nil },
+		pppGW, hotGW, fwGW, nil,
+	)
+	cfg := domainDevice.DefaultIsolationConfig()
+	if err := prov.DeleteIsolationInfrastructure(ctx, "dev1", cfg, true); err != nil {
+		t.Fatalf("DeleteIsolationInfrastructure: %v", err)
+	}
+	if len(pppGW.profiles) != 0 {
+		t.Fatalf("profil PPP isolir belum terhapus: %+v", pppGW.profiles)
+	}
+	if len(hotGW.profiles) != 0 {
+		t.Fatalf("profil hotspot isolir belum terhapus: %+v", hotGW.profiles)
+	}
+	if fwGW.disableRedirectCalls != 1 || fwGW.flushCalls != 1 {
+		t.Fatalf("cleanup firewall tidak lengkap: disable=%d flush=%d", fwGW.disableRedirectCalls, fwGW.flushCalls)
+	}
+	if hotGW.walledGardenRemove != 1 {
+		t.Fatalf("walled-garden tidak dibersihkan")
+	}
+}
+
+// ─── F6-3: cleanup address-list saat terminate ──────────────────────────
+
+func TestProvisioner_CleanupIsolationAddressList(t *testing.T) {
+	ctx := context.Background()
+	fwGW := &mockFirewallGateway{}
+	prov := NewWithResolver(
+		func(_ context.Context, _ string) (port.DeviceDriver, error) { return &mockDriver{}, nil },
+		nil, nil, fwGW, nil,
+	)
+	if err := prov.CleanupIsolationAddressList(ctx, "dev1", "ISOLIR_USERS", "bs1234"); err != nil {
+		t.Fatalf("CleanupIsolationAddressList: %v", err)
+	}
+	if len(fwGW.removedByComment) != 1 || fwGW.removedByComment[0] != "ISOLIR_USERS:isolir:bs1234" {
+		t.Fatalf("address-list tidak dibersihkan: %+v", fwGW.removedByComment)
+	}
+
+	// No-op untuk argumen kosong.
+	if err := prov.CleanupIsolationAddressList(ctx, "", "L", "u"); err != nil {
+		t.Fatalf("empty device harus no-op: %v", err)
 	}
 }

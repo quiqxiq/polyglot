@@ -95,27 +95,14 @@ func TestInvoiceUseCase_CancelAndPayGuards(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, domainBilling.StatusCancelled, cancelled2.Status)
 
-	// 4. Cannot cancel or pay cancelled invoice
-	_, err = invUC.PayInvoice(ctx, "inv-cancel-test")
-	assert.ErrorIs(t, err, domainBilling.ErrInvoiceCancelled)
-
-	// 5. Pay active invoice & then try to cancel
+	// 4. Invoice lunas tidak bisa dibatalkan.
 	require.NoError(t, invoices.Save(ctx, domainBilling.Invoice{
 		ID:         "inv-pay-test",
 		CustomerID: "cust-1",
 		Total:      75000,
-		Status:     domainBilling.StatusUnpaid,
+		PaidAmount: 75000,
+		Status:     domainBilling.StatusPaid,
 	}))
-	paid, err := invUC.PayInvoice(ctx, "inv-pay-test")
-	require.NoError(t, err)
-	assert.Equal(t, domainBilling.StatusPaid, paid.Status)
-	assert.Equal(t, 75000.0, paid.PaidAmount)
-
-	// Trying to pay again returns ErrInvoiceAlreadyPaid
-	_, err = invUC.PayInvoice(ctx, "inv-pay-test")
-	assert.ErrorIs(t, err, domainBilling.ErrInvoiceAlreadyPaid)
-
-	// Trying to cancel paid invoice returns ErrInvoiceAlreadyPaid
 	_, err = invUC.CancelInvoice(ctx, "inv-pay-test", "attempt cancel")
 	assert.ErrorIs(t, err, domainBilling.ErrInvoiceAlreadyPaid)
 }

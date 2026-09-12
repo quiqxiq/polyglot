@@ -98,6 +98,8 @@ func TestSubscriptionUseCase_Lifecycle(t *testing.T) {
 	sub, err = lifecycleUC.Terminate(ctx, sub.ID, "Pindah rumah")
 	require.NoError(t, err)
 	assert.Equal(t, domainSub.StatusTerminated, sub.Status)
+	// F6-3: terminate membersihkan penanda address-list isolir.
+	assert.Equal(t, 1, manager.Count("CleanupIsolationAddressList:"))
 }
 
 func TestLifecycle_InvalidTransitionsRejected(t *testing.T) {

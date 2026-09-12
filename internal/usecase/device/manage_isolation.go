@@ -56,12 +56,16 @@ func (u *ManageIsolationUseCase) UpdateIsolationProfile(ctx context.Context, dev
 	return u.CreateIsolationProfile(ctx, deviceID, cfg)
 }
 
-// DeleteIsolationProfile removes the isolation profile from the router.
-func (u *ManageIsolationUseCase) DeleteIsolationProfile(ctx context.Context, deviceID string, _ bool) error {
+// DeleteIsolationProfile removes the isolation profile from the router and,
+// bila diminta, membersihkan rule firewall + walled-garden terkait (F6-6).
+func (u *ManageIsolationUseCase) DeleteIsolationProfile(ctx context.Context, deviceID string, removeFirewallRules bool) error {
 	if deviceID == "" {
 		return fmt.Errorf("%w: device id is required", device.ErrInvalidInput)
 	}
-	// Best-effort: status check to verify presence
+	cfg := device.DefaultIsolationConfig()
+	if err := u.accountMgr.DeleteIsolationInfrastructure(ctx, deviceID, cfg, removeFirewallRules); err != nil {
+		return fmt.Errorf("delete isolation infrastructure: %w", err)
+	}
 	return nil
 }
 

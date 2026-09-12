@@ -291,3 +291,42 @@ func (g *Gateway) CountAddressListEntries(ctx context.Context, driver port.Devic
 	}
 	return len(ParseAddressList(res)), nil
 }
+
+// RemoveIsolationFilter menghapus rule filter isolir (comment
+// ISOLATION_FILTER_<list>) untuk list tertentu — F6-6.
+func (g *Gateway) RemoveIsolationFilter(ctx context.Context, driver port.DeviceDriver, srcAddressList string) error {
+	res, err := g.exec(ctx, driver, NewPrintFiltersCommand(FirewallFilterPrintParams{
+		Chain:          "forward",
+		SrcAddressList: srcAddressList,
+	}))
+	if err != nil {
+		return fmt.Errorf("list filter rules: %w", err)
+	}
+	comment := fmt.Sprintf("ISOLATION_FILTER_%s", srcAddressList)
+	for _, row := range res.Rows {
+		if strings.Contains(row["comment"], comment) {
+			cmd := command.Command{
+				Raw:  "/ip/firewall/filter/remove",
+				Args: map[string]string{".id": row[".id"]},
+			}
+			if _, err := g.exec(ctx, driver, cmd); err != nil {
+				return fmt.Errorf("remove isolation filter %s: %w", row[".id"], err)
+			}
+		}
+	}
+	return nil
+}
+
+// FlushAddressList menghapus seluruh entri pada address list — F6-6.
+func (g *Gateway) FlushAddressList(ctx context.Context, driver port.DeviceDriver, listName string) error {
+	res, err := g.exec(ctx, driver, NewPrintAddressListCommand(AddressListPrintParams{List: listName}))
+	if err != nil {
+		return fmt.Errorf("list address-list entries: %w", err)
+	}
+	for _, e := range ParseAddressList(res) {
+		if _, err := g.exec(ctx, driver, NewRemoveAddressListCommand(e.RosID)); err != nil {
+			return fmt.Errorf("remove address-list entry %s: %w", e.RosID, err)
+		}
+	}
+	return nil
+}

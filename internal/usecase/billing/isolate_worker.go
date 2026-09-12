@@ -26,6 +26,7 @@ type IsolationResult struct {
 	ProvisionFailed int
 	SkippedNoRouter int
 	RouterFailures  int
+	Errors          int // kegagalan per-langganan yang dilewati (F6-4)
 }
 
 // IsolateWorker menjalankan lifecycle otomatis berbasis system_settings:
@@ -73,17 +74,31 @@ func (w *IsolateWorker) Run(ctx context.Context) (IsolationResult, error) {
 	if err != nil {
 		return res, err
 	}
-	now := w.now()
+	// Semua perbandingan waktu memakai UTC agar konsisten dengan due date
+	// invoice yang disimpan UTC (F6-9).
+	now := w.now().UTC()
 
 	for _, sub := range lifecycle {
 		if err := w.markOverdueInvoices(ctx, sub, now); err != nil {
-			return res, err
+			res.Errors++ // F6-4: satu langganan gagal tidak menghentikan siklus
+			logger.WithComponent("IsolateWorker").WithFields(map[string]any{
+				"subscription_id": sub.ID,
+			}).WithError(err).Warn("mark overdue failed; lanjut ke langganan berikutnya")
+			continue
 		}
 		if err := w.retryProvisioning(ctx, sub, cfg, &res); err != nil {
-			return res, err
+			res.Errors++
+			logger.WithComponent("IsolateWorker").WithFields(map[string]any{
+				"subscription_id": sub.ID,
+			}).WithError(err).Warn("provisioning retry failed; lanjut ke langganan berikutnya")
+			continue
 		}
 		if err := w.processIsolation(ctx, sub, cfg, now, &res); err != nil {
-			return res, err
+			res.Errors++
+			logger.WithComponent("IsolateWorker").WithFields(map[string]any{
+				"subscription_id": sub.ID,
+			}).WithError(err).Warn("isolation processing failed; lanjut ke langganan berikutnya")
+			continue
 		}
 	}
 	return res, nil

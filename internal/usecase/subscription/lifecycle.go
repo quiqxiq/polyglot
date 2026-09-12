@@ -190,6 +190,14 @@ func (u *LifecycleUseCase) Terminate(ctx context.Context, subID, reason string) 
 		if err := u.manager.Terminate(ctx, derefDevice(sub.DeviceID), sub.ServiceType, sub.RemoteUsername); err != nil {
 			return sub, fmt.Errorf("terminate akun router: %w", err)
 		}
+		// Bersihkan penanda address-list isolir agar tidak menumpuk (F6-3).
+		addressList := "ISOLIR_USERS"
+		if u.settings != nil {
+			addressList = port.LoadISPSettings(ctx, u.settings).IsolirAddressList
+		}
+		if err := u.manager.CleanupIsolationAddressList(ctx, derefDevice(sub.DeviceID), addressList, sub.RemoteUsername); err != nil {
+			logger.WithComponent("LifecycleUC").WithError(err).Warn("cleanup isolir address-list gagal")
+		}
 	}
 	now := u.now()
 	sub.Status = domainSub.StatusTerminated

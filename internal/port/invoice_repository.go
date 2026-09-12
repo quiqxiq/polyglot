@@ -12,6 +12,8 @@ type InvoiceRepository interface {
 	FindByID(ctx context.Context, id string) (billing.Invoice, error)
 	FindByCustomerID(ctx context.Context, customerID string) ([]billing.Invoice, error)
 	FindAll(ctx context.Context) ([]billing.Invoice, error)
+	// FindPaged seperti FindAll dengan filter tenant + limit/offset (F6-8).
+	FindPaged(ctx context.Context, f PageFilter) ([]billing.Invoice, error)
 	UpdateStatus(ctx context.Context, id string, status string) error
 
 	// Alur kasir scan & bayar cepat (DATABASE-SCHEMA-ISP.md §4.2).

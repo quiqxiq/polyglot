@@ -3,8 +3,10 @@ package provisioner
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	billing "github.com/quixiq/polyglot/internal/domain/billing"
+	domainDevice "github.com/quixiq/polyglot/internal/domain/device"
 	domainSubscription "github.com/quixiq/polyglot/internal/domain/subscription"
 	"github.com/quixiq/polyglot/internal/port"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -129,6 +131,11 @@ func (p *Provisioner) Isolate(ctx context.Context, deviceID, serviceType, userna
 	if opt.Redirect != nil && opt.AddressList != "" {
 		if err := p.fw.EnsureIsolationRedirect(ctx, driver, *opt.Redirect); err != nil {
 			return fmt.Errorf("ensure redirect rules: %w", err)
+		}
+		// Filter drop juga dipasang agar isolir otomatis membatasi trafik
+		// non-HTTP (F6-7).
+		if err := p.fw.EnsureIsolationFilter(ctx, driver, opt.AddressList, opt.Redirect.PaymentHost); err != nil {
+			return fmt.Errorf("ensure isolation filter: %w", err)
 		}
 	}
 	if ip != "" && opt.AddressList != "" {
@@ -280,4 +287,94 @@ func deref(s *string) string {
 		return ""
 	}
 	return *s
+}
+
+// CleanupIsolationAddressList menghapus penanda address-list isolir milik
+// username (F6-3). Best-effort: list kosong/username kosong = no-op.
+func (p *Provisioner) CleanupIsolationAddressList(ctx context.Context, deviceID, addressList, username string) error {
+	if deviceID == "" || addressList == "" || username == "" {
+		return nil
+	}
+	driver, err := p.resolve(ctx, deviceID)
+	if err != nil {
+		return err
+	}
+	if err := p.fw.RemoveFromAddressListByComment(ctx, driver, addressList, "isolir:"+username); err != nil {
+		return fmt.Errorf("cleanup isolir address-list: %w", err)
+	}
+	return nil
+}
+
+// DeleteIsolationInfrastructure menghapus profil isolir PPP/Hotspot dan
+// (opsional) rule firewall + walled-garden terkait (F6-6).
+func (p *Provisioner) DeleteIsolationInfrastructure(ctx context.Context, deviceID string, cfg domainDevice.IsolationConfig, removeFirewallRules bool) error {
+	if deviceID == "" {
+		return fmt.Errorf("device id is required")
+	}
+	driver, err := p.resolve(ctx, deviceID)
+	if err != nil {
+		return err
+	}
+	if cfg.PPPoEProfileName != "" {
+		if err := p.deletePPPProfileByName(ctx, driver, cfg.PPPoEProfileName); err != nil {
+			return err
+		}
+	}
+	if cfg.HotspotProfileName != "" && p.hot != nil {
+		if err := p.deleteHotspotProfileByName(ctx, driver, cfg.HotspotProfileName); err != nil {
+			return err
+		}
+	}
+	if !removeFirewallRules {
+		return nil
+	}
+	if err := p.fw.DisableIsolationRedirect(ctx, driver); err != nil {
+		return fmt.Errorf("disable isolation redirect: %w", err)
+	}
+	if cfg.AddressListName != "" {
+		if err := p.fw.RemoveIsolationFilter(ctx, driver, cfg.AddressListName); err != nil {
+			return fmt.Errorf("remove isolation filter: %w", err)
+		}
+		if err := p.fw.FlushAddressList(ctx, driver, cfg.AddressListName); err != nil {
+			return fmt.Errorf("flush isolation address-list: %w", err)
+		}
+	}
+	if p.hot != nil {
+		if err := p.hot.RemoveWalledGarden(ctx, driver); err != nil {
+			return fmt.Errorf("remove walled garden: %w", err)
+		}
+	}
+	return nil
+}
+
+func (p *Provisioner) deletePPPProfileByName(ctx context.Context, driver port.DeviceDriver, name string) error {
+	profs, err := p.ppp.ListProfiles(ctx, driver, name)
+	if err != nil {
+		return fmt.Errorf("list ppp profiles: %w", err)
+	}
+	for _, pr := range profs {
+		if strings.EqualFold(pr.Name, name) {
+			if _, err := p.ppp.RemoveProfile(ctx, driver, pr.RosID); err != nil {
+				return fmt.Errorf("remove ppp profile %s: %w", name, err)
+			}
+			return nil
+		}
+	}
+	return nil
+}
+
+func (p *Provisioner) deleteHotspotProfileByName(ctx context.Context, driver port.DeviceDriver, name string) error {
+	profs, err := p.hot.GetUserProfiles(ctx, driver)
+	if err != nil {
+		return fmt.Errorf("list hotspot profiles: %w", err)
+	}
+	for _, pr := range profs {
+		if strings.EqualFold(pr.Name, name) {
+			if _, err := p.hot.DeleteUserProfile(ctx, driver, pr.RosID); err != nil {
+				return fmt.Errorf("delete hotspot profile %s: %w", name, err)
+			}
+			return nil
+		}
+	}
+	return nil
 }

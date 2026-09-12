@@ -59,4 +59,16 @@ type ServicePlan struct {
 	SharedUsers       int    `json:"shared_users,omitempty"`
 	SessionTimeout    string `json:"session_timeout,omitempty"`
 	IdleTimeout       string `json:"idle_timeout,omitempty"`
+
+	// Parameter voucher/hotspot (kolom migrasi 000014) — dipertahankan
+	// round-trip walau belum diekspos API (F6-10).
+	SellingPrice    float64 `json:"selling_price,omitempty"`
+	Validity        string  `json:"validity,omitempty"`
+	ValidityMode    string  `json:"validity_mode,omitempty"`
+	SimultaneousUse int     `json:"simultaneous_use,omitempty"`
+	ExpireMode      string  `json:"expire_mode,omitempty"`
+	LockUser        bool    `json:"lock_user,omitempty"`
+	LockServer      bool    `json:"lock_server,omitempty"`
+	LimitUptime     string  `json:"limit_uptime,omitempty"`
+	LimitBytes      string  `json:"limit_bytes,omitempty"`
 }

@@ -7,6 +7,7 @@ import (
 
 	cronv3 "github.com/robfig/cron/v3"
 
+	"github.com/quixiq/polyglot/internal/port"
 	billingUC "github.com/quixiq/polyglot/internal/usecase/billing"
 	notificationUC "github.com/quixiq/polyglot/internal/usecase/notification"
 	"github.com/quixiq/polyglot/pkg/logger"
@@ -36,13 +37,17 @@ type Scheduler struct {
 	cron     *cronv3.Cron
 	jobs     schedulerJobs
 	tenantID string
+	locker   port.JobLocker
 }
 
-func newScheduler(jobs schedulerJobs, specs schedulerSpecs, tenantID string) *Scheduler {
+func newScheduler(jobs schedulerJobs, specs schedulerSpecs, tenantID string, locker port.JobLocker) *Scheduler {
 	s := &Scheduler{
+		// Cron mengikuti timezone server (atur via env TZ); seluruh timestamp
+		// data yang dihitung job memakai UTC (F6-9).
 		cron:     cronv3.New(cronv3.WithLocation(time.Local)),
 		jobs:     jobs,
 		tenantID: tenantID,
+		locker:   locker,
 	}
 
 	safeWrap := func(name string, fn func(ctx context.Context) error) func() {
@@ -69,7 +74,24 @@ func newScheduler(jobs schedulerJobs, specs schedulerSpecs, tenantID string) *Sc
 		if spec == "" {
 			return
 		}
-		if _, err := s.cron.AddFunc(spec, safeWrap(name, fn)); err != nil {
+		locked := func(ctx context.Context) error {
+			if s.locker != nil {
+				unlock, ok, lerr := s.locker.TryLock(ctx, name)
+				if lerr != nil {
+					logger.WithComponent("Scheduler").WithFields(map[string]any{"job": name}).
+						WithError(lerr).Warn("gagal mengambil job lock; job dilewati siklus ini")
+					return nil
+				}
+				if !ok {
+					logger.WithComponent("Scheduler").WithFields(map[string]any{"job": name}).
+						Debug("job dilewati: instance lain memegang lock")
+					return nil
+				}
+				defer unlock()
+			}
+			return fn(ctx)
+		}
+		if _, err := s.cron.AddFunc(spec, safeWrap(name, locked)); err != nil {
 			logger.WithComponent("Scheduler").WithFields(map[string]any{
 				"job": name, "spec": spec,
 			}).WithError(err).Error("spec cron tidak valid — job dilewati")
@@ -78,7 +100,7 @@ func newScheduler(jobs schedulerJobs, specs schedulerSpecs, tenantID string) *Sc
 
 	if s.jobs.billing != nil {
 		add(specs.billing, "run-billing", func(ctx context.Context) error {
-			res, err := s.jobs.billing.Run(ctx, s.tenantID, time.Now().Format("2006-01"))
+			res, err := s.jobs.billing.Run(ctx, s.tenantID, time.Now().UTC().Format("2006-01"))
 			if err == nil {
 				logger.WithComponent("Scheduler").WithFields(map[string]any{
 					"created": res.Created, "skipped": res.Skipped,
@@ -90,12 +112,13 @@ func newScheduler(jobs schedulerJobs, specs schedulerSpecs, tenantID string) *Sc
 	if s.jobs.isolate != nil {
 		add(specs.isolation, "lifecycle-worker", func(ctx context.Context) error {
 			res, err := s.jobs.isolate.Run(ctx)
-			if err == nil && res.Isolated+res.RouterFailures+res.Provisioned+res.Suspended > 0 {
+			if err == nil && res.Isolated+res.RouterFailures+res.Provisioned+res.Suspended+res.Errors > 0 {
 				logger.WithComponent("Scheduler").WithFields(map[string]any{
 					"isolated": res.Isolated, "suspended": res.Suspended,
 					"provisioned": res.Provisioned, "provision_failed": res.ProvisionFailed,
 					"router_failures":   res.RouterFailures,
 					"skipped_no_router": res.SkippedNoRouter,
+					"errors":            res.Errors,
 				}).Info("lifecycle pass summary")
 			}
 			return err

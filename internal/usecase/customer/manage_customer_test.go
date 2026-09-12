@@ -165,12 +165,14 @@ func TestManageCustomerUseCase_ListAndGetEnriched(t *testing.T) {
 	// Tambah 2 subscription aktif untuk c1
 	err = subRepo.Save(ctx, domainSub.Subscription{
 		ID:         "sub-1",
+		TenantID:   "tenant-default",
 		CustomerID: c1.ID,
 		Status:     domainSub.StatusActive,
 	})
 	require.NoError(t, err)
 	err = subRepo.Save(ctx, domainSub.Subscription{
 		ID:         "sub-2",
+		TenantID:   "tenant-default",
 		CustomerID: c1.ID,
 		Status:     domainSub.StatusIsolated,
 	})
@@ -179,6 +181,7 @@ func TestManageCustomerUseCase_ListAndGetEnriched(t *testing.T) {
 	// Tambah 1 invoice unpaid
 	err = invRepo.Save(ctx, domainBilling.Invoice{
 		ID:         "inv-1",
+		TenantID:   "tenant-default",
 		CustomerID: c1.ID,
 		Status:     domainBilling.StatusUnpaid,
 	})

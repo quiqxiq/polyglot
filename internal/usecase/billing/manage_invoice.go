@@ -39,7 +39,11 @@ func (u *InvoiceUseCase) ListInvoices(ctx context.Context, customerID string) ([
 	if customerID != "" {
 		return u.repo.FindByCustomerID(ctx, customerID)
 	}
-	return u.repo.FindAll(ctx)
+	invoices, err := u.repo.FindPaged(ctx, port.PageFilter{TenantID: "tenant-default"})
+	if err != nil {
+		return nil, fmt.Errorf("list invoices: %w", err)
+	}
+	return invoices, nil
 }
 
 func (u *InvoiceUseCase) GetInvoice(ctx context.Context, id string) (domainBilling.Invoice, error) {
@@ -47,22 +51,6 @@ func (u *InvoiceUseCase) GetInvoice(ctx context.Context, id string) (domainBilli
 		return domainBilling.Invoice{}, domainBilling.ErrRepositoryUnavailable
 	}
 	return u.repo.FindByID(ctx, id)
-}
-
-func (u *InvoiceUseCase) CreateInvoice(ctx context.Context, inv domainBilling.Invoice) (domainBilling.Invoice, error) {
-	if u.repo == nil {
-		return domainBilling.Invoice{}, domainBilling.ErrRepositoryUnavailable
-	}
-	if inv.CustomerID == "" || inv.Total <= 0 {
-		return domainBilling.Invoice{}, domainBilling.ErrInvalidInput
-	}
-	if inv.Status == "" {
-		inv.Status = domainBilling.StatusUnpaid
-	}
-	if err := u.repo.Save(ctx, inv); err != nil {
-		return domainBilling.Invoice{}, err
-	}
-	return inv, nil
 }
 
 // CancelInvoice membatalkan faktur UNPAID/OVERDUE/PARTIAL secara resmi.
@@ -106,34 +94,6 @@ func (u *InvoiceUseCase) CancelInvoice(ctx context.Context, id, reason string) (
 	inv.UpdatedAt = now
 	if err := u.repo.Save(ctx, inv); err != nil {
 		return domainBilling.Invoice{}, fmt.Errorf("save invoice %s: %w", id, err)
-	}
-	return inv, nil
-}
-
-// Deprecated: Gunakan CheckoutUseCase.PayCash untuk memproses pembayaran
-// kasir yang mencatat receipt pembayaran, mutasi kas, dan restore isolir.
-// PayInvoice hanya disediakan untuk kompatibilitas internal.
-func (u *InvoiceUseCase) PayInvoice(ctx context.Context, id string) (domainBilling.Invoice, error) {
-	if u.repo == nil {
-		return domainBilling.Invoice{}, domainBilling.ErrRepositoryUnavailable
-	}
-	inv, err := u.repo.FindByID(ctx, id)
-	if err != nil {
-		return domainBilling.Invoice{}, err
-	}
-	if inv.Status == domainBilling.StatusPaid {
-		return inv, domainBilling.ErrInvoiceAlreadyPaid
-	}
-	if inv.Status == domainBilling.StatusCancelled {
-		return inv, domainBilling.ErrInvoiceCancelled
-	}
-	now := time.Now()
-	inv.Status = domainBilling.StatusPaid
-	inv.PaidAt = &now
-	inv.PaidAmount = inv.Total
-	inv.UpdatedAt = now
-	if err := u.repo.Save(ctx, inv); err != nil {
-		return domainBilling.Invoice{}, err
 	}
 	return inv, nil
 }

@@ -49,6 +49,29 @@ func (r *CustomerRepository) FindAll(ctx context.Context) ([]customer.Customer, 
 	return customers, nil
 }
 
+// FindPaged implements tenant + limit/offset filtering (F6-8).
+func (r *CustomerRepository) FindPaged(ctx context.Context, f port.PageFilter) ([]customer.Customer, error) {
+	q := r.db.WithContext(ctx).Where("deleted_at IS NULL")
+	if f.TenantID != "" {
+		q = q.Where("tenant_id = ?", f.TenantID)
+	}
+	if f.Limit > 0 {
+		q = q.Limit(f.Limit)
+	}
+	if f.Offset > 0 {
+		q = q.Offset(f.Offset)
+	}
+	var mList []model.CustomerModel
+	if err := q.Order("created_at desc").Find(&mList).Error; err != nil {
+		return nil, err
+	}
+	out := make([]customer.Customer, len(mList))
+	for i, m := range mList {
+		out[i] = m.ToDomain()
+	}
+	return out, nil
+}
+
 // Delete soft-deletes a customer (F3-8): baris dipertahankan untuk audit.
 func (r *CustomerRepository) Delete(ctx context.Context, id string) error {
 	res := r.db.WithContext(ctx).Model(&model.CustomerModel{}).

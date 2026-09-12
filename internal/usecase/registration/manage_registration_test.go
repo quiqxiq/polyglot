@@ -140,6 +140,12 @@ func TestScheduleInstall_ThenMarkInstalled(t *testing.T) {
 	assert.Equal(t, domainRegistration.StatusInstalled, installed.Status)
 	assert.Equal(t, "dev-9", installed.TargetDeviceID)
 	require.NotNil(t, installed.InstalledAt)
+
+	// F6-5: teknisi selesai → notifikasi INSTALLATION_COMPLETED diantre.
+	queued = notif.Queued()
+	require.Len(t, queued, 3)
+	assert.Equal(t, "INSTALLATION_COMPLETED", queued[2].MessageType)
+	assert.Contains(t, queued[2].MessageContent, "Budi Santoso")
 }
 
 func TestCancel_FromActiveRejected(t *testing.T) {
@@ -275,6 +281,37 @@ func TestManageRegistrationUseCase_ListAndFindByID(t *testing.T) {
 	_, err = usecase.FindByID(ctx, "nonexistent")
 	assert.Error(t, err)
 	_ = repo
+}
+
+// F6-5: penolakan & pembatalan registrasi mengantre notifikasi WhatsApp.
+func TestReject_QueuesNotification(t *testing.T) {
+	usecase, _, notif, _ := newUC(t)
+	ctx := context.Background()
+	sub, err := usecase.Submit(ctx, validRegistration())
+	require.NoError(t, err)
+
+	_, err = usecase.Reject(ctx, sub.ID, "dokumen kurang", 7)
+	require.NoError(t, err)
+
+	queued := notif.Queued()
+	require.Len(t, queued, 1)
+	assert.Equal(t, "REGISTRATION_REJECTED", queued[0].MessageType)
+	assert.Contains(t, queued[0].MessageContent, "dokumen kurang")
+}
+
+func TestCancel_QueuesNotification(t *testing.T) {
+	usecase, _, notif, _ := newUC(t)
+	ctx := context.Background()
+	sub, err := usecase.Submit(ctx, validRegistration())
+	require.NoError(t, err)
+
+	_, err = usecase.Cancel(ctx, sub.ID, "pelanggan mundur")
+	require.NoError(t, err)
+
+	queued := notif.Queued()
+	require.Len(t, queued, 1)
+	assert.Equal(t, "REGISTRATION_CANCELLED", queued[0].MessageType)
+	assert.Contains(t, queued[0].MessageContent, "pelanggan mundur")
 }
 
 // ─── helpers ────────────────────────────────────────────────────────────

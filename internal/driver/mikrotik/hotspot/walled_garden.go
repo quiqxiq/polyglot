@@ -82,3 +82,40 @@ func (g *Gateway) EnsureWalledGarden(ctx context.Context, driver port.DeviceDriv
 
 	return nil
 }
+
+// RemoveWalledGarden menghapus seluruh entri walled-garden milik app
+// (comment ber-prefix "polyglot:") dari domain dan IP — F6-6.
+func (g *Gateway) RemoveWalledGarden(ctx context.Context, driver port.DeviceDriver) error {
+	res, err := g.exec(ctx, driver, command.Command{Raw: "/ip/hotspot/walled-garden/print"})
+	if err != nil {
+		return fmt.Errorf("list walled-garden: %w", err)
+	}
+	for _, row := range res.Rows {
+		if strings.HasPrefix(row["comment"], "polyglot:") {
+			cmd := command.Command{
+				Raw:  "/ip/hotspot/walled-garden/remove",
+				Args: map[string]string{".id": row[".id"]},
+			}
+			if _, err := g.exec(ctx, driver, cmd); err != nil {
+				return fmt.Errorf("remove walled-garden %s: %w", row[".id"], err)
+			}
+		}
+	}
+
+	resIP, err := g.exec(ctx, driver, command.Command{Raw: "/ip/hotspot/walled-garden/ip/print"})
+	if err != nil {
+		return fmt.Errorf("list walled-garden ip: %w", err)
+	}
+	for _, row := range resIP.Rows {
+		if strings.HasPrefix(row["comment"], "polyglot:") {
+			cmd := command.Command{
+				Raw:  "/ip/hotspot/walled-garden/ip/remove",
+				Args: map[string]string{".id": row[".id"]},
+			}
+			if _, err := g.exec(ctx, driver, cmd); err != nil {
+				return fmt.Errorf("remove walled-garden ip %s: %w", row[".id"], err)
+			}
+		}
+	}
+	return nil
+}

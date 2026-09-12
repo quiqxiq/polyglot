@@ -31,6 +31,17 @@ type ServicePlanModel struct {
 	IsActive          bool   `gorm:"not null;default:true;index"`
 	Description       string `gorm:"type:text"`
 
+	// Kolom voucher/hotspot dari migrasi 000014 (F6-10).
+	SellingPrice    float64 `gorm:"type:numeric(15,2)"`
+	Validity        string  `gorm:"type:varchar(20);default:30d"`
+	ValidityMode    string  `gorm:"type:varchar(20);default:CALENDAR"`
+	SimultaneousUse int     `gorm:"default:1"`
+	ExpireMode      string  `gorm:"type:varchar(10);default:ntf"`
+	LockUser        bool    `gorm:"default:false"`
+	LockServer      bool    `gorm:"default:false"`
+	LimitUptime     string  `gorm:"type:varchar(20)"`
+	LimitBytes      string  `gorm:"type:varchar(20)"`
+
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
@@ -70,6 +81,15 @@ func (m *ServicePlanModel) ToDomain() plan.ServicePlan {
 		SharedUsers:           sharedUsers,
 		IsActive:              m.IsActive,
 		Description:           m.Description,
+		SellingPrice:          m.SellingPrice,
+		Validity:              m.Validity,
+		ValidityMode:          m.ValidityMode,
+		SimultaneousUse:       m.SimultaneousUse,
+		ExpireMode:            m.ExpireMode,
+		LockUser:              m.LockUser,
+		LockServer:            m.LockServer,
+		LimitUptime:           m.LimitUptime,
+		LimitBytes:            m.LimitBytes,
 		CreatedAt:             m.CreatedAt,
 		UpdatedAt:             m.UpdatedAt,
 	}
@@ -116,6 +136,15 @@ func ServicePlanModelFromDomain(p plan.ServicePlan) *ServicePlanModel {
 		SharedUsers:           sharedUsers,
 		IsActive:              p.IsActive,
 		Description:           p.Description,
+		SellingPrice:          p.SellingPrice,
+		Validity:              p.Validity,
+		ValidityMode:          p.ValidityMode,
+		SimultaneousUse:       p.SimultaneousUse,
+		ExpireMode:            p.ExpireMode,
+		LockUser:              p.LockUser,
+		LockServer:            p.LockServer,
+		LimitUptime:           p.LimitUptime,
+		LimitBytes:            p.LimitBytes,
 		CreatedAt:             p.CreatedAt,
 		UpdatedAt:             p.UpdatedAt,
 	}

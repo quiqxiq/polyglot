@@ -18,16 +18,3 @@ type PPPProfileParams = port.PPPProfileParams
 
 // PPPActiveSession is the vendor-neutral PPP active session row.
 type PPPActiveSession = port.PPPActiveSession
-
-// IsolirProfileParams returns a pre-filled PPPProfileParams for the standard
-// "isolir" (suspension) profile used in ISP billing.
-func IsolirProfileParams() PPPProfileParams {
-	return PPPProfileParams{
-		Name:          "isolir",
-		LocalAddress:  "0.0.0.0",
-		RemoteAddress: "0.0.0.0",
-		RateLimit:     "0/0",
-		Comment:       "SUSPENDED_PROFILE",
-		SharedUsers:   "1",
-	}
-}

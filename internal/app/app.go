@@ -199,7 +199,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 	refreshUseCase := authUC.NewRefreshTokenUseCase(userRepo, jwtService, refreshSvc, casbinEnforcer)
 	manageUserUseCase := userUC.NewManageUserUseCase(userRepo, casbinEnforcer)
 	manageSettingUseCase := settingUC.NewManageSettingUseCase(settingRepo)
-	custUC := customerUC.NewManageCustomerUseCase(customerRepo, subRepo, invRepo, accountMgr)
+	custUC := customerUC.NewManageCustomerUseCase(customerRepo, subRepo, invRepo, accountMgr).WithSettings(settingRepo)
 	devUC := deviceUC.NewManageDeviceUseCase(repo, vault, reg, sessionGateway)
 	openTermUC := networkUC.NewOpenTerminalUseCase(repo, vault, genericssh.DialSSHPty)
 	hotUC := hotspotUC.New(hotGateway)
@@ -253,6 +253,10 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 		return reg.Get(c, id)
 	})
 	pingStreamMgr.Start(ctx)
+
+	// Pembersih media sementara bot (PDF/gambar hasil generate) — F6-14.
+	mediaCleaner := botUC.NewMediaCleanerWorker(botUC.MediaCleanerConfig{})
+	go mediaCleaner.Start(ctx)
 
 	connectDriverProvider := func(ctx context.Context, deviceID string) (port.DeviceDriver, error) {
 		callerID, callerRoles, hasIdentity := auth.IdentityFromContext(ctx)
@@ -369,7 +373,7 @@ func New(ctx context.Context, cfg config.Config) (*App, error) {
 			reminder:  cfg.ReminderCronSpec,
 			waSend:    cfg.WaSendCronSpec,
 			snapshot:  cfg.SnapshotCronSpec,
-		}, "tenant-default")
+		}, "tenant-default", postgres.NewAdvisoryLocker(pgStore.DB()))
 		sched.Start()
 		logger.WithComponent("App").WithFields(map[string]any{
 			"billing_cron":   cfg.BillingCronSpec,

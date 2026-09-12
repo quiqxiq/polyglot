@@ -5,6 +5,7 @@ package billing_test
 
 import (
 	"context"
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -138,4 +139,31 @@ func TestIsolateWorker_RestoreRetryAfterFailedOnPaid(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, domainSubscription.StatusActive, got.Status)
 	assert.Equal(t, domainSubscription.ProvisionOK, got.ProvisionStatus)
+}
+
+// F6-4: satu langganan gagal tidak menghentikan siklus worker.
+func TestIsolateWorker_ToleratesPerSubscriptionErrors(t *testing.T) {
+	subs := mocktest.NewFakeSubscriptionRepo()
+	invoices := mocktest.NewFakeInvoiceRepo()
+	isolator := mocktest.NewFakeRouterAccountManager()
+	subs.UpdateStatusErr = errors.New("simulated db failure")
+
+	for _, id := range []string{"sub-t1", "sub-t2"} {
+		deviceID := "dev-" + id
+		require.NoError(t, subs.Save(context.Background(), domainSubscription.Subscription{
+			ID: id, TenantID: "tenant-default", CustomerID: "cust-" + id,
+			PlanID: "plan-1", DeviceID: &deviceID, ServiceType: "PPPOE",
+			RemoteUsername: "U-" + id, Status: domainSubscription.StatusActive,
+			ProvisionStatus: domainSubscription.ProvisionOK,
+			AutoIsolate:     true,
+		}))
+		require.NoError(t, invoices.Save(context.Background(), unpaidInvoice("inv-"+id, "cust-"+id, id, -30)))
+	}
+
+	worker := newWorker(subs, invoices, mocktest.NewFakeCustomerRepo(), mocktest.NewFakeServicePlanRepo(),
+		isolator, mocktest.NewFakeNotificationRepo(), defaultSettings(nil))
+	res, err := worker.Run(context.Background())
+	require.NoError(t, err)
+	assert.Equal(t, 2, res.Errors, "kedua langganan dilewati tanpa menghentikan siklus")
+	assert.Equal(t, 2, isolator.Count("Isolate:"), "kedua langganan tetap diproses ke router")
 }

@@ -81,6 +81,30 @@ func (r *SubscriptionRepository) FindAll(ctx context.Context) ([]subscription.Su
 	return subs, nil
 }
 
+// FindPaged implements tenant + limit/offset filtering (F6-8).
+func (r *SubscriptionRepository) FindPaged(ctx context.Context, f port.PageFilter) ([]subscription.Subscription, error) {
+	q := r.db.WithContext(ctx).Where("deleted_at IS NULL")
+	if f.TenantID != "" {
+		q = q.Where("tenant_id = ?", f.TenantID)
+	}
+	if f.Limit > 0 {
+		q = q.Limit(f.Limit)
+	}
+	if f.Offset > 0 {
+		q = q.Offset(f.Offset)
+	}
+	var mList []model.SubscriptionModel
+	if err := q.Order("created_at desc").Find(&mList).Error; err != nil {
+		return nil, err
+	}
+	subs := make([]subscription.Subscription, len(mList))
+	for i := range mList {
+		subs[i] = mList[i].ToDomain()
+		r.decryptPassword(ctx, &subs[i])
+	}
+	return subs, nil
+}
+
 func (r *SubscriptionRepository) UpdateStatus(ctx context.Context, id string, status string) error {
 	res := r.db.WithContext(ctx).Model(&model.SubscriptionModel{}).Where("id = ?", id).Update("status", status)
 	if res.Error != nil {
